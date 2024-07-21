@@ -8,6 +8,8 @@ export interface Stat {
   courses: {
     total: number;
     proposed: number;
+    upcoming: number;
+    resting: number;
     archived: number;
   };
   events: {
@@ -61,12 +63,17 @@ async function getGroups(courses: CourseModel[], events: EventModel[]) {
 }
 
 function calcStats(courses: CourseModel[], events: EventModel[]) {
+  const notArchived = courses.filter((c) => !c.archived);
   return {
+    // inspired from courses.findFilter in /imports/api/courses/courses
     courses: {
-      total: courses.filter((c) => !c.archived).length,
-      proposed: courses.filter((c) => !c.lastEvent && c.futureEvents === 0).length,
+      total: notArchived.length,
+      proposed: notArchived.filter((c) => !c.lastEvent && !c.futureEvents).length,
+      resting: notArchived.filter((c) => c.lastEvent && !c.futureEvents).length,
+      upcoming: notArchived.filter((c) => c.futureEvents > 0).length,
       archived: courses.filter((c) => c.archived).length,
     },
+    // inspired from events.findFilter in /imports/api/events/events
     events: { total: events.length },
   } as Stat;
 }
