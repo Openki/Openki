@@ -20,6 +20,8 @@ export interface Stat {
     passed: number;
     canceled: number;
     fullyBooked: number;
+    totalRsvps: number;
+    futureRsvps: number;
   };
 }
 
@@ -78,6 +80,8 @@ function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
 
   const notArchived = courses.filter((c) => !c.archived);
   const members = courses.flatMap((c) => c.members);
+
+  const future = events.filter((e) => e.start > now);
   return {
     // inspired from courses.findFilter in /imports/api/courses/courses
     courses: {
@@ -92,10 +96,12 @@ function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
     // inspired from events.findFilter in /imports/api/events/events
     events: {
       total: events.length,
-      future: events.filter((e) => e.start > now).length,
+      future: future.length,
       passed: events.filter((e) => e.start <= now).length,
       canceled: events.filter((e) => e.canceled).length,
       fullyBooked: events.filter((e) => e.isFullyBooked()).length,
+      totalRsvps: events.map((e) => e.numberOfParticipants()).reduce((a, b) => a + b, 0),
+      futureRsvps: future.map((e) => e.numberOfParticipants()).reduce((a, b) => a + b, 0),
     },
   };
 }

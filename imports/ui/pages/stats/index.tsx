@@ -22,11 +22,9 @@ function Header() {
       <th className="course-stat" colSpan={7}>
         {t("region.stats.courses", "Courses")}
       </th>
-      <th className="event-stat" colSpan={6}>
+      <th className="event-stat" colSpan={8}>
         {t("region.stats.events", "Events")}
       </th>
-      {/*
-                <th>{t("region.stats.usersParticipating", "Users participating")}</th> */}
     </>
   );
 }
@@ -47,6 +45,8 @@ function SubHeader() {
       <th className="event-stat">{t("region.stats.events.passed", "Passed")}</th>
       <th className="event-stat">{t("region.stats.events.canceled", "Canceled")}</th>
       <th className="event-stat">{t("region.stats.events.fullyBooked", "Fully booked")}</th>
+      <th className="event-stat">{t("region.stats.events.totalRsvps", "RSVPs Total")}</th>
+      <th className="event-stat">{t("region.stats.events.futureRsvps", "RSVPs")}</th>
     </>
   );
 }
@@ -83,6 +83,12 @@ function Descriptions() {
       <td className="event-stat text-center">
         {t("region.stats.events.fullyBooked.description", "in future and passed")}
       </td>
+      <td className="event-stat text-center">
+        {t("region.stats.events.totalRsvps.description", "Total, in future and passed, incl. +1")}
+      </td>
+      <td className="event-stat text-center">
+        {t("region.stats.events.futureRsvps.description", "in upcoming events only, incl. +1")}
+      </td>
     </>
   );
 }
@@ -102,6 +108,8 @@ function Results({ stat }: { stat: Stat }) {
       <td className="event-stat number">{stat.events.passed}</td>
       <td className="event-stat number">{stat.events.canceled}</td>
       <td className="event-stat number">{stat.events.fullyBooked}</td>
+      <td className="event-stat number">{stat.events.totalRsvps}</td>
+      <td className="event-stat number">{stat.events.futureRsvps}</td>
     </>
   );
 }
