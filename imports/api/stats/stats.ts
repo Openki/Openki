@@ -1,36 +1,50 @@
-import moment from "moment";
 import { Mongo } from "meteor/mongo";
 
 import { CourseEntity, CourseModel, Courses } from "/imports/api/courses/courses";
-import { Events } from "/imports/api/events/events";
-import { Groups } from "/imports/api/groups/groups";
+import { EventEntity, EventModel, Events } from "/imports/api/events/events";
+import { Groups } from "../groups/groups";
+
+export interface Stat {
+  courses: {
+    total: number;
+    proposed: number;
+    upcoming: number;
+    resting: number;
+    archived: number;
+    enrolements: number;
+    users: number;
+  };
+  events: {
+    total: number;
+    future: number;
+    passed: number;
+    canceled: number;
+    fullyBooked: number;
+    totalRsvps: number;
+    futureRsvps: number;
+    users: number;
+  };
+}
+
+export interface GroupStat extends Stat {
+  id?: string | undefined;
+  name?: string | undefined;
+  members?: number | undefined;
+}
 
 export interface Stats {
-  total: {
-    numCourses: number;
-    activeCourses: number;
-    passedEvents: number;
-    futureEvents: number;
-    usersParticipating: number;
-  };
-  group: {
-    groups: {
-      id: string | undefined;
-      name: string | undefined;
-      numCourses: number;
-      activeCourses: number;
-      passedEvents: number;
-      futureEvents: number;
-      usersParticipating: number;
-    }[];
-    total: {
-      numCourses: number;
-      activeCourses: number;
-      passedEvents: number;
-      futureEvents: number;
-      usersParticipating: number;
-    };
-  };
+  region: Stat;
+  groups: GroupStat[];
+}
+
+/** Remove duplicates in array. */
+function unique<T>(values: T[]) {
+  return [...new Set(values)];
+}
+
+/** Sum all values in a array. */
+function sum(values: number[]) {
+  return values.reduce((a, b) => a + b, 0);
 }
 
 function getCourses(regionId: string) {
@@ -38,137 +52,110 @@ function getCourses(regionId: string) {
   if (regionId && regionId !== "all") {
     filter.region = regionId;
   }
-  return Courses.find(filter);
+  return Courses.find(filter, {
+    // Do not load any data into the memory that is not required
+    projection: { name: 0, slug: 0, description: 0, image: 0, customFields: 0, history: 0 },
+  }).fetchAsync();
 }
 
-function getGroupIds(courses: Mongo.Cursor<CourseEntity, CourseModel>) {
-  const groupIds: string[] = [];
-  courses.forEach((course) => {
-    course.groups.forEach((group) => {
-      if (!groupIds.includes(group)) groupIds.push(group);
-    });
-  });
-  return groupIds;
+function getEvents(regionId: string) {
+  const filter: Mongo.Selector<EventEntity> = {};
+  if (regionId && regionId !== "all") {
+    filter.region = regionId;
+  }
+  return Events.find(filter, {
+    // Do not load any data into the memory that is not required
+    projection: { title: 0, slug: 0, description: 0, courseImage: 0 },
+  }).fetchAsync();
 }
 
-function getGroupStatsTotal(stats: Stats) {
-  const totalStats = {
-    numCourses: 0,
-    activeCourses: 0,
-    passedEvents: 0,
-    futureEvents: 0,
-    usersParticipating: 0,
-  };
-  stats.group.groups.forEach((stat) => {
-    totalStats.numCourses += stat.numCourses;
-    totalStats.activeCourses += stat.activeCourses;
-    totalStats.passedEvents += stat.passedEvents;
-    totalStats.futureEvents += stat.futureEvents;
-    totalStats.usersParticipating += stat.usersParticipating;
-  });
-  return totalStats;
-}
+/** Get all groups that promotes courses or events */
+async function getGroups(courses: CourseModel[], events: EventModel[]) {
+  let groupIds = [];
+  groupIds.push(...courses.flatMap((c) => c.groups));
+  groupIds.push(...events.flatMap((e) => e.groups));
+  groupIds = unique(groupIds);
 
-function getEventStats(courses: Mongo.Cursor<CourseEntity, CourseModel>) {
-  const now = new Date();
-  let passedEvents = 0;
-  let futureEvents = 0;
-  courses.forEach((course) => {
-    passedEvents += Events.find({ courseId: course._id, end: { $lt: now } }).count();
-    futureEvents += Events.find({ courseId: course._id, end: { $gte: now } }).count();
-  });
-  return { passedEvents, futureEvents };
-}
+  const groupEntities = await Groups.find(
+    {},
+    {
+      projection: { _id: 1, name: 1, members: 1 },
+    },
+  ).fetchAsync();
 
-function getUsersParticpating(courses: Mongo.Cursor<CourseEntity, CourseModel>) {
-  let usersParticipating = 0;
-  courses.forEach((course) => {
-    usersParticipating += course.members.length;
-  });
-  return usersParticipating;
-}
-
-function getActiveCoursesStats(courses: Mongo.Cursor<CourseEntity, CourseModel>) {
-  let activeCourses = 0;
-  courses.forEach((course) => {
-    const query = {
-      courseId: course._id,
-      $and: [
-        { start: { $gte: moment().subtract(2, "weeks").toDate() } },
-        { start: { $lt: moment().add(6, "months").toDate() } },
-      ],
+  return groupIds.map((g) => {
+    const group = groupEntities.find((e) => e._id === g);
+    return {
+      id: g,
+      name: group?.name,
+      members: group?.members.length,
     };
-    const activeEvent = Events.findOne(query, { projection: { groups: 1 } });
-    if (activeEvent) {
-      activeCourses += 1;
-    }
   });
-  return activeCourses;
 }
 
-function getGroupStats(regionId: string, groupId?: string) {
-  const courseFilter: Mongo.Selector<CourseEntity> = {};
+function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
+  const now = new Date();
 
-  if (regionId) {
-    courseFilter.region = regionId;
-  }
+  const notArchived = courses.filter((c) => !c.archived);
+  const members = courses.flatMap((c) => c.members);
 
-  let name: string | undefined;
-  if (groupId) {
-    const groupRow = Groups.findOne({ _id: groupId }, { projection: { name: 1 } });
-    name = groupRow?.name;
-
-    courseFilter.groups = groupId;
-  }
-
-  const courses = Courses.find(courseFilter);
-  const numCourses = courses.count();
-  const activeCourses = getActiveCoursesStats(courses);
-  const { passedEvents, futureEvents } = getEventStats(courses);
-  const usersParticipating = getUsersParticpating(courses);
+  const future = events.filter((e) => e.start > now);
   return {
-    id: groupId,
-    name,
-    numCourses,
-    activeCourses,
-    passedEvents,
-    futureEvents,
-    usersParticipating,
+    // inspired from courses.findFilter in /imports/api/courses/courses
+    courses: {
+      total: notArchived.length,
+      proposed: notArchived.filter((c) => !c.lastEvent && !c.futureEvents).length,
+      resting: notArchived.filter((c) => c.lastEvent && !c.futureEvents).length,
+      upcoming: notArchived.filter((c) => c.futureEvents > 0).length,
+      archived: courses.filter((c) => c.archived).length,
+      enrolements: members.flatMap((m) => m.roles).length,
+      users: unique(members.map((m) => m.user)).length,
+    },
+    // inspired from events.findFilter in /imports/api/events/events
+    events: {
+      total: events.length,
+      future: future.length,
+      passed: events.filter((e) => e.start <= now).length,
+      canceled: events.filter((e) => e.canceled).length,
+      fullyBooked: events.filter((e) => e.isFullyBooked()).length,
+      totalRsvps: sum(events.map((e) => e.numberOfParticipants())),
+      futureRsvps: sum(future.map((e) => e.numberOfParticipants())),
+      users: unique(future.flatMap((e) => e.participants?.map((p) => p.user) || [])).length,
+    },
   };
 }
 
-function getStatsTotal(regionId: string) {
-  const courseFilter: Mongo.Selector<CourseEntity> = {};
+export async function getRegionStats(regionId: string): Promise<Stats> {
+  // load data into memorie
+  const courses = await getCourses(regionId);
+  const events = await getEvents(regionId);
+  const groups = await getGroups(courses, events);
 
-  if (regionId) {
-    courseFilter.region = regionId;
-  }
-
-  const courses = Courses.find(courseFilter);
-  const numCourses = courses.count();
-  const activeCourses = getActiveCoursesStats(courses);
-  const { passedEvents, futureEvents } = getEventStats(courses);
-  const usersParticipating = getUsersParticpating(courses);
   return {
-    numCourses,
-    activeCourses,
-    passedEvents,
-    futureEvents,
-    usersParticipating,
+    // calc stat for overview over all or one region
+    region: calcStats(courses, events),
+    groups: [
+      // calc stat for ungrouped
+      calcStats(
+        courses.filter((c) => !c.groups?.length),
+        events.filter((e) => !e.groups?.length && !e.allGroups?.length),
+      ),
+      // calc stat for every group
+      ...groups.map((g) => ({
+        ...g,
+        ...calcStats(
+          courses.filter((c) => c.groups?.includes(g.id)),
+          events.filter((e) => e.allGroups?.includes(g.id) || e.groups?.includes(g.id)),
+        ),
+      })),
+    ]
+      // sort groups by number of active users in events
+      //        then by number of active users in courses
+      //        then by number of events
+      //        then by number of courses
+      .sort((a, b) => b.courses.total + b.courses.archived - (a.courses.total + a.courses.archived))
+      .sort((a, b) => b.events.total - a.events.total)
+      .sort((a, b) => b.courses.users - a.courses.users)
+      .sort((a, b) => b.events.users - a.events.users),
   };
-}
-
-export function getRegionStats(regionFilter: string) {
-  const groupIds = getGroupIds(getCourses(regionFilter));
-  const stats: Stats = { total: {} as any, group: { groups: [], total: {} as any } };
-
-  groupIds.forEach((groupId) => {
-    stats.group.groups.push(getGroupStats(regionFilter, groupId));
-  });
-  // courses without groups
-  stats.group.groups.push(getGroupStats(regionFilter));
-  stats.group.groups.sort((a, b) => b.numCourses - a.numCourses);
-  stats.group.total = getGroupStatsTotal(stats);
-  stats.total = getStatsTotal(regionFilter);
-  return stats;
 }
