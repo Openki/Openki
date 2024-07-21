@@ -22,7 +22,7 @@ function Header() {
       <th className="course-stat" colSpan={7}>
         {t("region.stats.courses", "Courses")}
       </th>
-      <th className="event-stat" colSpan={2}>
+      <th className="event-stat" colSpan={4}>
         {t("region.stats.events", "Events")}
       </th>
       {/*
@@ -43,8 +43,8 @@ function SubHeader() {
       <th className="course-stat">{t("region.stats.courses.enrolements", "Enrolements")}</th>
       <th className="course-stat">{t("region.stats.courses.users", "Users")}</th>
       <th className="event-stat">{t("region.stats.events.total", "Total")}</th>
-      {/*   <th className="event-stat">{t("region.stats.events.future", "Future")}</th>
-  <th>&nbsp;</th> */}
+      <th className="event-stat">{t("region.stats.events.future", "Future")}</th>
+      <th className="event-stat">{t("region.stats.events.passed", "Passed")}</th>
     </>
   );
 }
@@ -73,6 +73,8 @@ function Descriptions() {
         {t("region.stats.courses.users.description", "unique accounts enrolled")}
       </td>
       <td className="event-stat text-center">&nbsp;</td>
+      <td className="event-stat text-center">&nbsp;</td>
+      <td className="event-stat text-center">&nbsp;</td>
     </>
   );
 }
@@ -88,8 +90,8 @@ function Results({ stat }: { stat: Stat }) {
       <td className="course-stat number">{stat.courses.enrolements}</td>
       <td className="course-stat number">{stat.courses.users}</td>
       <td className="event-stat number">{stat.events.total}</td>
-      {/* <td className="event-stat number">{group.futureEvents}</td>
-                      <td className="number">{group.usersParticipating}</td> */}
+      <td className="event-stat number">{stat.events.future}</td>
+      <td className="event-stat number">{stat.events.passed}</td>
     </>
   );
 }

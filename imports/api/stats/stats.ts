@@ -16,6 +16,8 @@ export interface Stat {
   };
   events: {
     total: number;
+    future: number;
+    passed: number;
   };
 }
 
@@ -70,6 +72,8 @@ async function getGroups(courses: CourseModel[], events: EventModel[]) {
 }
 
 function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
+  const now = new Date();
+
   const notArchived = courses.filter((c) => !c.archived);
   const members = courses.flatMap((c) => c.members);
   return {
@@ -84,7 +88,11 @@ function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
       users: [...new Set(members.map((m) => m.user))].length,
     },
     // inspired from events.findFilter in /imports/api/events/events
-    events: { total: events.length },
+    events: {
+      total: events.length,
+      future: events.filter((e) => e.start > now).length,
+      passed: events.filter((e) => e.start <= now).length,
+    },
   };
 }
 
@@ -114,6 +122,7 @@ export async function getRegionStats(regionId: string) {
             ),
           }) as GroupStat,
       ),
-    ],
+      // sort groups by number of active users
+    ].sort((a, b) => b.courses.users - a.courses.users),
   } as Stats;
 }
