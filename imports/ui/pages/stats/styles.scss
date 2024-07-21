@@ -1,3 +1,5 @@
+@import "{}/imports/ui/stylesheets/variables/index";
+
 .stats {
   margin-left: -5px;
 }
@@ -15,6 +17,14 @@
   text-align: right;
 }
 
-.stats tbody tr:hover {
-  background-color: #ffa500;
+.stats .course-stat {
+  background-color: lighten($blue-lighter, 5%);
+}
+
+.stats .event-stat {
+  background-color: tint-color($green, 65%);
+}
+
+.stats tbody tr:hover td { 
+  background-color: #ffa500 !important;
 }
