@@ -37,6 +37,16 @@ export interface Stats {
   groups: GroupStat[];
 }
 
+/** Remove duplicates in array. */
+function unique<T>(values: T[]) {
+  return [...new Set(values)];
+}
+
+/** Sum all values in a array. */
+function sum(values: number[]) {
+  return values.reduce((a, b) => a + b, 0);
+}
+
 function getCourses(regionId: string) {
   const filter: Mongo.Selector<CourseEntity> = {};
   if (regionId && regionId !== "all") {
@@ -64,7 +74,7 @@ async function getGroups(courses: CourseModel[], events: EventModel[]) {
   let groupIds = [];
   groupIds.push(...courses.flatMap((c) => c.groups));
   groupIds.push(...events.flatMap((e) => e.groups));
-  groupIds = [...new Set(groupIds)];
+  groupIds = unique(groupIds);
 
   const groupEntities = await Groups.find(
     {},
@@ -99,7 +109,7 @@ function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
       upcoming: notArchived.filter((c) => c.futureEvents > 0).length,
       archived: courses.filter((c) => c.archived).length,
       enrolements: members.flatMap((m) => m.roles).length,
-      users: [...new Set(members.map((m) => m.user))].length,
+      users: unique(members.map((m) => m.user)).length,
     },
     // inspired from events.findFilter in /imports/api/events/events
     events: {
@@ -108,14 +118,14 @@ function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
       passed: events.filter((e) => e.start <= now).length,
       canceled: events.filter((e) => e.canceled).length,
       fullyBooked: events.filter((e) => e.isFullyBooked()).length,
-      totalRsvps: events.map((e) => e.numberOfParticipants()).reduce((a, b) => a + b, 0),
-      futureRsvps: future.map((e) => e.numberOfParticipants()).reduce((a, b) => a + b, 0),
-      users: [...new Set(future.flatMap((e) => e.participants?.map((p) => p.user) || []))].length,
+      totalRsvps: sum(events.map((e) => e.numberOfParticipants())),
+      futureRsvps: sum(future.map((e) => e.numberOfParticipants())),
+      users: unique(future.flatMap((e) => e.participants?.map((p) => p.user) || [])).length,
     },
   };
 }
 
-export async function getRegionStats(regionId: string) {
+export async function getRegionStats(regionId: string): Promise<Stats> {
   // load data into memorie
   const courses = await getCourses(regionId);
   const events = await getEvents(regionId);
@@ -131,16 +141,13 @@ export async function getRegionStats(regionId: string) {
         events.filter((e) => !e.groups?.length && !e.allGroups?.length),
       ),
       // calc stat for every group
-      ...groups.map(
-        (g) =>
-          ({
-            ...g,
-            ...calcStats(
-              courses.filter((c) => c.groups?.includes(g.id)),
-              events.filter((e) => e.allGroups?.includes(g.id) || e.groups?.includes(g.id)),
-            ),
-          }) as GroupStat,
-      ),
+      ...groups.map((g) => ({
+        ...g,
+        ...calcStats(
+          courses.filter((c) => c.groups?.includes(g.id)),
+          events.filter((e) => e.allGroups?.includes(g.id) || e.groups?.includes(g.id)),
+        ),
+      })),
     ]
       // sort groups by number of active users in events
       //        then by number of active users in courses
@@ -150,5 +157,5 @@ export async function getRegionStats(regionId: string) {
       .sort((a, b) => b.events.total - a.events.total)
       .sort((a, b) => b.courses.users - a.courses.users)
       .sort((a, b) => b.events.users - a.events.users),
-  } as Stats;
+  };
 }
