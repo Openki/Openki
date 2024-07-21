@@ -120,7 +120,7 @@ function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
       fullyBooked: events.filter((e) => e.isFullyBooked()).length,
       totalRsvps: sum(events.map((e) => e.numberOfParticipants())),
       futureRsvps: sum(future.map((e) => e.numberOfParticipants())),
-      users: unique(future.flatMap((e) => e.participants?.map((p) => p.user) || [])).length,
+      users: unique(events.flatMap((e) => e.participants?.map((p) => p.user) || [])).length,
     },
   };
 }
