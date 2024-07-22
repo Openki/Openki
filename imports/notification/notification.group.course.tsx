@@ -105,18 +105,29 @@ export function Model(entry: { body: Body }) {
       const courseLink = Router.url("showCourse", course, { query: "campaign=groupCourseNotify" });
       return {
         unsubLink: Router.url("profileNotificationsUnsubscribe", { token: unsubToken }),
-        course: Spacebars.SafeString(`<a href="${courseLink}">${course.name}</a>`),
+        course: <a href={courseLink}>{course.name}</a>,
         courseLink,
         courseDescription: course.description,
-        groups: Spacebars.SafeString(
-          recipientsGroups
-            .map(
-              (g) =>
-                `<a href="${Router.url("groupDetails", g, {
-                  query: "campaign=groupCourseNotify",
-                })}">${g.name}</a>`,
-            )
-            .join(", "),
+        groups: (
+          <>
+            {recipientsGroups
+              .map((g) => (
+                <a
+                  href={Router.url("groupDetails", g, {
+                    query: "campaign=groupCourseNotify",
+                  })}
+                >
+                  {g.name}
+                </a>
+              ))
+              .reduce((prev, curr) => (
+                <>
+                  {prev}
+                  {", "}
+                  {curr}
+                </>
+              ))}
+          </>
         ),
         creater,
         subject,
