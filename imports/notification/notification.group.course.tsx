@@ -8,6 +8,8 @@ import { Groups } from "/imports/api/groups/groups";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { Log } from "/imports/api/log/log";
 import { Users, UserModel } from "/imports/api/users/users";
+import { Model as NotificationModel } from "./notification";
+import { GroupCourse, Props } from "../emails/notifications/group.course";
 
 import * as StringTools from "/imports/utils/string-tools";
 import { getSiteName } from "/imports/utils/getSiteName";
@@ -51,7 +53,7 @@ export function record(courseId: string) {
   Log.record("Notification.Send", [course._id], body);
 }
 
-export function Model(entry: { body: Body }): NotificationModel<Props>  {
+export function Model(entry: { body: Body }): NotificationModel<Props> {
   const { body } = entry;
   const course = Courses.findOne(body.courseId);
   if (!course) {
@@ -135,6 +137,6 @@ export function Model(entry: { body: Body }): NotificationModel<Props>  {
         customEmailLogo: emailLogo,
       };
     },
-    template: "notificationGroupCourseEmail",
+    template: (props) => <GroupCourse {...props} />,
   };
 }

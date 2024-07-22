@@ -39,7 +39,6 @@ export function Join({
   const { t } = useTranslation(undefined, { lng });
   return (
     <>
-      {" "}
       <tr>
         <td>
           <h5 className="title">{t("email.base.greeting", { USERNAME: username })}</h5>
