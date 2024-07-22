@@ -10,7 +10,7 @@ import { UserModel, Users } from "/imports/api/users/users";
 // import * as notificationEvent from "/imports/notification/notification.event";
 import * as notificationEventCanceled from "/imports/notification/notification.event.canceled";
 // import * as notificationEventReminder from "/imports/notification/notification.event.reminder";
-// import * as notificationEventContactParticipants from "/imports/notification/notification.event.contact-participants";
+import * as notificationEventContactParticipants from "/imports/notification/notification.event.contact-participants";
 // import * as notificationRsvp from "/imports/notification/notification.rsvp";
 // import * as notificationRsvpTeam from "/imports/notification/notification.rsvp.team";
 import * as notificationComment from "/imports/notification/notification.comment";
@@ -26,7 +26,7 @@ export const Notification = {
   // Event: notificationEvent,
   "Event.Canceled": notificationEventCanceled,
   // "Event.Reminder": notificationEventReminder,
-  // "Event.ContactParticipants": notificationEventContactParticipants,
+  "Event.ContactParticipants": notificationEventContactParticipants,
   // Rsvp: notificationRsvp,
   // "Rsvp.Team": notificationRsvpTeam,
   Comment: notificationComment,
@@ -85,13 +85,13 @@ export type Model<T> = {
     fromAddress?: string | undefined;
   } & RootProps &
     // Remove some props
-    Omit<T, "siteName" | "customSiteName" | "username">;
+    Omit<T, "siteName" | "customSiteName" | "username" | "lng">;
   template: (
     props: {
       fromAddress?: string | undefined;
       siteName: string;
-      locale: string;
       username: string;
+      lng: string;
     } & RootProps &
       T,
   ) => React.JSX.Element;
@@ -164,8 +164,8 @@ export function send(
               siteName,
               // For everything context specifig us customSiteName from the region, eg. courses
               customSiteName: vars.customSiteName || siteName,
-              locale,
               username,
+              lng: locale,
             })}
           </Root>,
         );

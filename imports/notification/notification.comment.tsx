@@ -3,6 +3,7 @@ import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import { _ } from "meteor/underscore";
+import i18next from "i18next";
 
 import { CourseDiscussions } from "/imports/api/course-discussions/course-discussions";
 import { CourseModel, Courses } from "/imports/api/courses/courses";
@@ -14,7 +15,6 @@ import * as StringTools from "/imports/utils/string-tools";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { Model as NotificationModel } from "./notification";
 import { Comment, Props } from "/imports/emails/notifications/comment";
-import i18next from "i18next";
 
 export interface Body {
   commentId: string;
@@ -106,9 +106,9 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       }
     },
 
-    vars(lng, _actualRecipient, unsubToken) {
-      const t = i18next.getFixedT(lng);
-      
+    vars(locale, _actualRecipient, unsubToken) {
+      const t = i18next.getFixedT(locale);
+
       if (!comment) {
         throw new Error("Comment does not exist (0.o)");
       }

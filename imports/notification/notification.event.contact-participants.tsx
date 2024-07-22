@@ -1,18 +1,22 @@
 import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
-import { Spacebars } from "meteor/spacebars";
+import i18next from "i18next";
 
 import { Log } from "/imports/api/log/log";
 import { UserModel, Users } from "/imports/api/users/users";
 import { Regions } from "/imports/api/regions/regions";
 import { Events } from "/imports/api/events/events";
 
-import { i18n } from "/imports/startup/both/i18next";
 import * as HtmlTools from "/imports/utils/html-tools";
 import * as StringTools from "/imports/utils/string-tools";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { LocalTime } from "/imports/utils/local-time";
+import { Model as NotificationModel } from "./notification";
+import {
+  EventContactParticipants,
+  Props,
+} from "../emails/notifications/event.contact-participants";
 
 interface Body {
   sender: string;
@@ -84,7 +88,7 @@ export function record(
   Log.record("Notification.Send", [senderId, eventId, ...recipients], body);
 }
 
-export function Model(entry: { body: Body }) {
+export function Model(entry: { body: Body }): NotificationModel<Props> {
   const { body } = entry;
   const sender = Users.findOne(body.sender);
   const event = Events.findOne(body.event);
@@ -100,7 +104,9 @@ export function Model(entry: { body: Body }) {
       }
     },
 
-    vars(userLocale: string, actualRecipient: UserModel, unsubToken: string) {
+    vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
+      const t = i18next.getFixedT(locale);
+
       if (!sender) {
         throw new Error("Sender does not exist (0.o)");
       }
@@ -111,9 +117,8 @@ export function Model(entry: { body: Body }) {
       const subjectvars = {
         EVENT: StringTools.truncate(event.title, 50),
         SENDER: StringTools.truncate(sender.getDisplayName(), 10),
-        lng: userLocale,
       };
-      const subject = i18n(
+      const subject = t(
         "notification.event.contact-participants.mail.subject",
         "Message from {SENDER} to all attendees of {EVENT}",
         subjectvars,
@@ -136,7 +141,7 @@ export function Model(entry: { body: Body }) {
         unsubLink: Router.url("profilePrivateMessagesUnsubscribe", { token: unsubToken }),
         sender,
         senderLink: senderUrl,
-        senderName: Spacebars.SafeString(`<a href="${senderUrl}">${sender.getDisplayName()}</a>`),
+        senderName: <a href={senderUrl}>{sender.getDisplayName()}</a>,
         subject,
         message: htmlizedMessage,
         senderCopy,
@@ -144,7 +149,7 @@ export function Model(entry: { body: Body }) {
         customSiteName: siteName,
         customEmailLogo: emailLogo,
         fromAddress: "",
-        eventTitle: "",
+        eventTitle: undefined as React.JSX.Element | undefined,
       };
 
       if (body.revealSenderAddress) {
@@ -158,9 +163,9 @@ export function Model(entry: { body: Body }) {
       // Show dates in local time and in users locale
       const regionZone = LocalTime.zone(event.region);
       const startMoment = regionZone.at(event.start);
-      startMoment.locale(userLocale);
+      startMoment.locale(locale);
 
-      const eventFullTitle = i18n(
+      const eventFullTitle = t(
         "notification.event.contact-participants.mail.title",
         "{DATE} — {EVENT}",
         {
@@ -172,10 +177,10 @@ export function Model(entry: { body: Body }) {
         query: "campaign=eventContactParticipants",
       });
 
-      vars.eventTitle = Spacebars.SafeString(`<a href="${eventUrl}">${eventFullTitle}</a>`);
+      vars.eventTitle = <a href={eventUrl}>{eventFullTitle}</a>;
 
       return vars;
     },
-    template: "notificationEventContactParticipantsEmail",
+    template: (props) => <EventContactParticipants {...props} />,
   };
 }
