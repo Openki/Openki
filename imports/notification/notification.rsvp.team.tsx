@@ -1,14 +1,15 @@
 import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
-import { i18n } from "/imports/startup/both/i18next";
-import { Spacebars } from "meteor/spacebars";
+import i18next from "i18next";
 
 import { Courses } from "/imports/api/courses/courses";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { Log } from "/imports/api/log/log";
 import { UserModel, Users } from "/imports/api/users/users";
 import { Events } from "/imports/api/events/events";
+import { Model as NotificationModel } from "./notification";
+import { RsvpTeam, Props } from "../emails/notifications/rsvp.team";
 
 import { getSiteName } from "/imports/utils/getSiteName";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
@@ -64,7 +65,7 @@ export function record(eventId: string, participantId: string, companions: numbe
   Log.record("Notification.Send", [course._id, event._id, participant._id], body);
 }
 
-export function Model(entry: { body: Body }) {
+export function Model(entry: { body: Body }): NotificationModel<Props> {
   const { body } = entry;
   const event = Events.findOne(body.eventId);
   const course = Courses.findOne(body.courseId);
@@ -85,7 +86,9 @@ export function Model(entry: { body: Body }) {
       }
     },
 
-    vars(userLocale: string, _actualRecipient: UserModel, unsubToken: string) {
+    vars(locale: string, _actualRecipient: UserModel, unsubToken: string) {
+      const t = i18next.getFixedT(locale);
+
       if (!newParticipant) {
         throw new Error("New participant does not exist (0.o)");
       }
@@ -103,18 +106,17 @@ export function Model(entry: { body: Body }) {
       const regionZone = LocalTime.zone(event.region);
 
       const startMoment = regionZone.at(event.start);
-      startMoment.locale(userLocale);
+      startMoment.locale(locale);
 
       const endMoment = regionZone.at(event.end);
-      endMoment.locale(userLocale);
+      endMoment.locale(locale);
 
       const subjectvars = {
         TITLE: event.title.substring(0, 30),
         DATE: startMoment.format("LL"),
-        lng: userLocale,
       };
 
-      const subject = i18n(
+      const subject = t(
         "notification.rsvp.team.mail.subject",
         "{DATE} {TITLE} - User just reserved a seat",
         subjectvars,
@@ -123,7 +125,7 @@ export function Model(entry: { body: Body }) {
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);
 
-      const eventFullTitle = i18n("notification.rsvp.team.mail.title", "{DATE} — {EVENT}", {
+      const eventFullTitle = t("notification.rsvp.team.mail.title", "{DATE} — {EVENT}", {
         EVENT: event.title,
         DATE: startMoment.calendar(),
       });
@@ -131,21 +133,21 @@ export function Model(entry: { body: Body }) {
         query: "campaign=rsvpTeamNotify",
       });
 
-      const eventTitle = Spacebars.SafeString(`<a href="${eventUrl}">${eventFullTitle}</a>`);
+      const eventTitle = <a href={eventUrl}>{eventFullTitle}</a>;
       return {
         unsubLink: Router.url("profileNotificationsUnsubscribe", { token: unsubToken }),
         course: course.name,
         event: eventTitle,
-        newParticipant: Spacebars.SafeString(`<strong>${newParticipant.getDisplayName()}</strong>`),
+        newParticipant: <strong>{newParticipant.getDisplayName()}</strong>,
         companionsOfNewParticipant: body.companions,
         subject,
         participantsCount: event.numberOfParticipants(),
-        email: Spacebars.SafeString(`<span style="color:blue">${PrivateSettings.siteEmail}</span>`),
+        email: <span style={{ color: "blue" }}>{PrivateSettings.siteEmail}</span>,
         customSiteUrl: `${Meteor.absoluteUrl()}?campaign=rsvpTeamNotify`,
         customSiteName: siteName,
         customEmailLogo: emailLogo,
       };
     },
-    template: "notificationRsvpTeamEmail",
+    template: (props) => <RsvpTeam {...props} />,
   };
 }
