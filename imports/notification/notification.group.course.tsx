@@ -2,7 +2,6 @@ import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import { i18n } from "/imports/startup/both/i18next";
-import { Spacebars } from "meteor/spacebars";
 
 import { Courses } from "/imports/api/courses/courses";
 import { Groups } from "/imports/api/groups/groups";
