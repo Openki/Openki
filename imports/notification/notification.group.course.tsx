@@ -51,7 +51,7 @@ export function record(courseId: string) {
   Log.record("Notification.Send", [course._id], body);
 }
 
-export function Model(entry: { body: Body }) {
+export function Model(entry: { body: Body }): NotificationModel<Props>  {
   const { body } = entry;
   const course = Courses.findOne(body.courseId);
   if (!course) {

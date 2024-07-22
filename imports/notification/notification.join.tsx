@@ -1,8 +1,7 @@
 import { Match, check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
-import { i18n } from "/imports/startup/both/i18next";
-import { Spacebars } from "meteor/spacebars";
+import i18next from "i18next";
 
 import { Courses } from "/imports/api/courses/courses";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
@@ -13,6 +12,8 @@ import * as HtmlTools from "/imports/utils/html-tools";
 import * as StringTools from "/imports/utils/string-tools";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
+import { Model as NotificationModel } from "./notification";
+import { Join, Props } from "../emails/notifications/join";
 
 interface Body {
   courseId: string;
@@ -63,7 +64,7 @@ export function record(courseId: string, participantId: string, newRole: string,
   Log.record("Notification.Send", [course._id, participant._id], body);
 }
 
-export function Model(entry: { body: Body }) {
+export function Model(entry: { body: Body }): NotificationModel<Props> {
   const { body } = entry;
   const course = Courses.findOne(body.courseId);
   const newParticipant = Users.findOne(body.participantId);
@@ -83,7 +84,9 @@ export function Model(entry: { body: Body }) {
       }
     },
 
-    vars(lng: string, actualRecipient: UserModel, unsubToken: string) {
+    vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
+      const t = i18next.getFixedT(locale);
+
       if (!newParticipant) {
         throw new Error("New participant does not exist (0.o)");
       }
@@ -91,16 +94,16 @@ export function Model(entry: { body: Body }) {
         throw new Error("Course does not exist (0.o)");
       }
 
-      const roleTitle = i18n(`roles.${body.newRole}.short`, { lng });
+      const roleTitle = t(`roles.${body.newRole}.short`);
       const subjectvars = {
         COURSE: StringTools.truncate(course.name, 10),
         USER: StringTools.truncate(newParticipant.getDisplayName(), 50),
         ROLE: roleTitle,
         ROLETYPE: body.newRole,
-        lng,
+        lng: locale,
       };
 
-      const subject = i18n(
+      const subject = t(
         "notification.join.mail.subject",
         "{USER} joined {COURSE}: {ROLE}",
         subjectvars,
@@ -109,7 +112,7 @@ export function Model(entry: { body: Body }) {
       const figures = ["host", "mentor", "participant", "team"]
         .filter((role) => course.roles.includes(role))
         .map((role) => ({
-          role: StringTools.capitalize(i18n(`roles.${role}.short`, { lng })),
+          role: StringTools.capitalize(t(`roles.${role}.short`)),
           count: course.membersWithRole(role).length,
         }));
 
@@ -123,14 +126,12 @@ export function Model(entry: { body: Body }) {
       const courseLink = Router.url("showCourse", course, { query: "campaign=joinNotify" });
       return {
         unsubLink: Router.url("profileNotificationsUnsubscribe", { token: unsubToken }),
-        course: Spacebars.SafeString(`<a href="${courseLink}">${course.name}</a>`),
-        newParticipant: Spacebars.SafeString(`<strong>${newParticipant.getDisplayName()}</strong>`),
-        courseLink,
+        course: <a href={courseLink}>{course.name}</a>,
+        newParticipant: <strong>{newParticipant.getDisplayName()}</strong>,
         subject,
-        memberCount: course.members.length,
         roleTitle,
         roleType: body.newRole,
-        email: Spacebars.SafeString(`<span style="color:blue">${PrivateSettings.siteEmail}</span>`),
+        email: <span style={{ color: "blue" }}>{PrivateSettings.siteEmail}</span>,
         message: body.message ? HtmlTools.plainToHtml(body.message) : undefined,
         // For Team members when a mentor joins, add a hint for possible collaboration or
         // invite into team
@@ -145,6 +146,6 @@ export function Model(entry: { body: Body }) {
         customEmailLogo: emailLogo,
       };
     },
-    template: "notificationJoinEmail",
+    template: (props) => <Join {...props} />,
   };
 }
