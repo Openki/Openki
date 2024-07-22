@@ -1,8 +1,8 @@
 import { Match, check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
-import { i18n } from "/imports/startup/both/i18next";
 import { Spacebars } from "meteor/spacebars";
+import i18next from "i18next";
 
 import { CourseModel, Courses } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
@@ -12,6 +12,8 @@ import { UserModel } from "/imports/api/users/users";
 
 import { LocalTime } from "/imports/utils/local-time";
 import { getSiteName } from "/imports/utils/getSiteName";
+import { Model as NotificationModel } from "./notification";
+import { Event, Props } from "../emails/notifications/event";
 
 interface Body {
   new: boolean;
@@ -60,7 +62,7 @@ export function record(eventId: string, isNew: boolean, additionalMessage?: stri
   Log.record("Notification.Send", course ? [course._id] : [], body);
 }
 
-export function Model(entry: { body: Body }) {
+export function Model(entry: { body: Body }): NotificationModel<Props> {
   const event = Events.findOne(entry.body.eventId);
 
   let course: CourseModel | undefined;
@@ -84,7 +86,9 @@ export function Model(entry: { body: Body }) {
       }
     },
 
-    vars(userLocale: string, actualRecipient: UserModel, unsubToken: string) {
+    vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
+      const t = i18next.getFixedT(locale);
+
       if (!event) {
         throw new Error("Event does not exist (0.o)");
       }
@@ -99,22 +103,21 @@ export function Model(entry: { body: Body }) {
       const regionZone = LocalTime.zone(event.region);
 
       const startMoment = regionZone.at(event.start);
-      startMoment.locale(userLocale);
+      startMoment.locale(locale);
 
       const endMoment = regionZone.at(event.end);
-      endMoment.locale(userLocale);
+      endMoment.locale(locale);
 
       const subjectvars = {
         TITLE: event.title.substring(0, 30),
         DATE: startMoment.format("LL"),
-        lng: userLocale,
       };
 
       let subject;
       if (entry.body.new) {
-        subject = i18n("notification.event.mail.subject.new", "On {DATE}: {TITLE}", subjectvars);
+        subject = t("notification.event.mail.subject.new", "On {DATE}: {TITLE}", subjectvars);
       } else {
-        subject = i18n(
+        subject = t(
           "notification.event.mail.subject.changed",
           "Fixed {DATE}: {TITLE}",
           subjectvars,
@@ -149,7 +152,7 @@ export function Model(entry: { body: Body }) {
           query: "unsubscribe=participant&force=1&campaign=eventNotify",
         }),
         calLink: Router.url("calEvent", event, { query: "campaign=eventNotify" }),
-        new: entry.body.new,
+        isNew: entry.body.new,
         subject,
         additionalMessage: entry.body.additionalMessage,
         customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventNotify`,
@@ -157,6 +160,6 @@ export function Model(entry: { body: Body }) {
         customEmailLogo: emailLogo,
       };
     },
-    template: "notificationEventEmail",
+    template: (props) => <Event {...props} />,
   };
 }

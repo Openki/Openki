@@ -1,111 +1,182 @@
-{{#emailBase subject=subject site=site}}
-  <tr>
-    <td>
-      <h5 class="title">
-        {{i18n "email.base.greeting" USERNAME=username lng=locale}}
-      </h5>
-      <p>
-        {{#if new}}
-          {{i18n 'notification.event.mail.new' 'A new event was just published for {COURSE}:' COURSE=course lng=locale}}
-        {{else}}
-          {{i18n 'notification.event.mail.changed' 'The following event for {COURSE} changed:' COURSE=course lng=locale}}
-        {{/if}}
-      </p>
-      {{#if additionalMessage}}
-        <p>
-          {{i18n "notification.event.mail.personalMessage" 'The organizer left a message for you:' lng=locale}}
-        </p>
-        <table class="comment-box">
-          <tr>
-            <td>
-              <span class="pre">{{additionalMessage}}</span>
-            </td>
-          </tr>
-        </table>
-      {{/if}}
+/* eslint-disable no-nested-ternary */
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { Router } from "meteor/iron:router";
+import { EventModel } from "/imports/api/events/events";
+import { CourseModel } from "/imports/api/courses/courses";
 
-      <table class="event">
-        <tr>
-          <td class="event-header">
-            <a href="{{eventLink}}">
-              <strong>
-                {{eventDate}}
+export type Props = {
+  unsubLink: string;
+  event: EventModel;
+  eventDate: string;
+  eventStart: string;
+  eventEnd: string;
+  eventLink: string;
+  venueLine: string | undefined;
+  recipientTakePart: boolean | undefined;
+  registerToEventLink: string;
+  course: CourseModel;
+  courseName: string;
+  unsubscribeFromCourseLink: string;
+  calLink: string;
+  isNew: boolean;
+  subject: string;
+  additionalMessage: string | undefined;
+  siteName: string;
+  username: string;
+  lng: string;
+};
+
+export function Event({
+  unsubLink,
+  event,
+  eventDate,
+  eventStart,
+  eventEnd,
+  eventLink,
+  venueLine,
+  recipientTakePart,
+  registerToEventLink,
+  course,
+  courseName,
+  unsubscribeFromCourseLink,
+  calLink,
+  isNew,
+  additionalMessage,
+  siteName,
+  username,
+  lng,
+}: Props) {
+  const { t } = useTranslation(undefined, { lng });
+  return (
+    <>
+      <tr>
+        <td>
+          <h5 className="title">{t("email.base.greeting", { USERNAME: username })}</h5>
+          <p>
+            {isNew
+              ? t("notification.event.mail.new", "A new event was just published for {COURSE}:", {
+                  COURSE: course,
+                })
+              : t("notification.event.mail.changed", "The following event for {COURSE} changed:", {
+                  COURSE: course,
+                })}
+          </p>
+          {additionalMessage ? (
+            <>
+              {" "}
+              <p>
+                {t(
+                  "notification.event.mail.personalMessage",
+                  "The organizer left a message for you:",
+                )}
+              </p>
+              <table className="comment-box">
+                <tr>
+                  <td>
+                    <span className="pre">{additionalMessage}</span>
+                  </td>
+                </tr>
+              </table>
+            </>
+          ) : null}
+
+          <table className="event">
+            <tr>
+              <td className="event-header">
+                <a href={eventLink}>
+                  <strong>
+                    {eventDate}
+                    <br />
+                    {eventStart}
+
+                    {eventEnd ? ` - ${eventEnd}` : null}
+                  </strong>
+
+                  {venueLine ? (
+                    <>
+                      <br />
+                      {venueLine}
+                    </>
+                  ) : null}
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td className="event-gap"></td>
+            </tr>
+            <tr>
+              <td className="event-body">
+                <h5 className="title">{event.title}</h5>
+                <p dangerouslySetInnerHTML={{ __html: event.description }}></p>
+              </td>
+            </tr>
+            <tr>
+              <td className="event-link">
+                <a href={calLink}>
+                  {t("notification.event.mail.linkCalendar", "Add this event to my calendar")}
+                </a>
                 <br />
-                {{eventStart}}
-                {{#if eventEnd}}
-                  - {{eventEnd}}
-                {{/if}}
-              </strong>
-              {{#if venueLine}}
-                <br />
-                {{venueLine}}
-              {{/if}}
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <td class="event-gap">
-          </td>
-        </tr>
-        <tr>
-          <td class="event-body">
-            <h5 class="title">
-              {{event.title}}
-            </h5>
-            <p>
-              {{{event.description}}}
-            </p>
-          </td>
-        </tr>
-        <tr>
-          <td class="event-link">
-            <a href="{{calLink}}">
-              {{i18n "notification.event.mail.linkCalendar" "Add this event to my calendar" lng=locale}}
-            </a>
-            <br />
-          </td>
-        </tr>
-      </table>
-      {{#unless event.noRsvp}}
-        {{#unless recipientTakePart}}
-          <p class="gap-md text-center">
-            {{i18n "notification.event.mail.informRegisterEvent" "Let us know if you participate in this event:" lng=locale}}
-          </p>
-          <p class="text-center">
-            <a class="button" href="{{registerToEventLink}}">
-              {{i18n "notification.event.mail.registerEvent" "Yes, I take part." lng=locale}}
-            </a>
-          </p>
-          <p class="gap-md text-center">
-            {{i18n "notification.event.mail.notinterested" "Not interested anymore?" lng=locale}}
-          </p>
-          <p class="text-center">
-            <a href="{{unsubscribeFromCourseLink}}">
-              {{i18n "notification.event.mail.unsubscribe" "Unsubscribe from {COURSE}" COURSE=courseName lng=locale}}
-            </a>
-          </p>
-        {{/unless}}
-      {{/unless}}
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <table class="footer">
-        <tr>
-          <td>
-            {{i18n 'notification.event.mail.notice' 'You receive this e-mail because you are involved in {COURSE}.' COURSE=course lng=locale}}
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <a
-               href="{{unsubLink}}">{{i18n "email.base.unsubscribeLink.automatedNotifications" SITENAME=siteName lng=locale}}</a>
-            &nbsp;
-            <a
-               href="{{urlFor 'profile' query='campaign=eventNotify'}}">{{i18n "email.base.profileLink" lng=locale}}</a>
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-{{/emailBase}}
+              </td>
+            </tr>
+          </table>
+
+          {!event.noRsvp ? (
+            !recipientTakePart ? (
+              <>
+                {" "}
+                <p className="gap-md text-center">
+                  {t(
+                    "notification.event.mail.informRegisterEvent",
+                    "Let us know if you participate in this event:",
+                  )}
+                </p>
+                <p className="text-center">
+                  <a className="button" href={registerToEventLink}>
+                    {t("notification.event.mail.registerEvent", "Yes, I take part.")}
+                  </a>
+                </p>
+                <p className="gap-md text-center">
+                  {t("notification.event.mail.notinterested", "Not interested anymore?")}
+                </p>
+                <p className="text-center">
+                  <a href={unsubscribeFromCourseLink}>
+                    {t("notification.event.mail.unsubscribe", "Unsubscribe from {COURSE}", {
+                      COURSE: courseName,
+                    })}
+                  </a>
+                </p>
+              </>
+            ) : null
+          ) : null}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table className="footer">
+            <tr>
+              <td>
+                {t(
+                  "notification.event.mail.notice",
+                  "You receive this e-mail because you are involved in {COURSE}.",
+                  { COURSE: course },
+                )}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href={unsubLink}>
+                  {t("email.base.unsubscribeLink.automatedNotifications", { SITENAME: siteName })}
+                </a>
+                &nbsp;
+                <a href={Router.url("profile", { query: "campaign=eventNotify" })}>
+                  {t("email.base.profileLink")}
+                </a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </>
+  );
+}
