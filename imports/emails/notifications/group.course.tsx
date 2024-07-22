@@ -1,12 +1,11 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
-import { CourseModel } from "/imports/api/courses/courses";
 import { UserModel } from "/imports/api/users/users";
 
 export type Props = {
   unsubLink: string;
-  course: CourseModel;
+  course: React.JSX.Element;
   courseDescription: string;
   groups: React.JSX.Element;
   creater: UserModel;
@@ -15,7 +14,7 @@ export type Props = {
   lng: string;
 };
 
-export function EventReminder({
+export function GroupCourse({
   unsubLink,
   course,
   courseDescription,

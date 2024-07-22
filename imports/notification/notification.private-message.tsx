@@ -141,8 +141,8 @@ export function Model(entry: { body: Body }) {
         customSiteName: undefined as string | undefined,
         customEmailLogo: undefined as string | undefined,
         fromAddress: "",
-        course: "",
-        event: "",
+        course: undefined as React.JSX.Element | undefined,
+        event: undefined as React.JSX.Element | undefined,
       };
 
       if (body.revealSenderAddress) {
