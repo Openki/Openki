@@ -64,7 +64,6 @@ export function Event({
           </p>
           {additionalMessage ? (
             <>
-              {" "}
               <p>
                 {t(
                   "notification.event.mail.personalMessage",
@@ -89,10 +88,8 @@ export function Event({
                     {eventDate}
                     <br />
                     {eventStart}
-
                     {eventEnd ? ` - ${eventEnd}` : null}
                   </strong>
-
                   {venueLine ? (
                     <>
                       <br />

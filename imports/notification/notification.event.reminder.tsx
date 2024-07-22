@@ -1,17 +1,18 @@
 import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
-import { Spacebars } from "meteor/spacebars";
+import i18next from "i18next";
 
 import { Log } from "/imports/api/log/log";
 import { UserModel } from "/imports/api/users/users";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { Events } from "/imports/api/events/events";
 
-import { i18n } from "/imports/startup/both/i18next";
 import * as StringTools from "/imports/utils/string-tools";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { LocalTime } from "/imports/utils/local-time";
+import { Model as NotificationModel } from "./notification";
+import { EventReminder, Props } from "../emails/notifications/event.reminder";
 
 interface Body {
   event: string;
@@ -47,7 +48,7 @@ export function record(eventId: string) {
   Log.record("Notification.Send", [eventId, ...recipients], body);
 }
 
-export function Model(entry: { body: Body }) {
+export function Model(entry: { body: Body }): NotificationModel<Props> {
   const { body } = entry;
   const event = Events.findOne(body.event);
 
@@ -67,7 +68,9 @@ export function Model(entry: { body: Body }) {
       }
     },
 
-    vars(userLocale: string, actualRecipient: UserModel, unsubToken: string) {
+    vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
+      const t = i18next.getFixedT(locale);
+
       if (!event) {
         throw new Error("Event does not exist (0.o)");
       }
@@ -77,9 +80,8 @@ export function Model(entry: { body: Body }) {
 
       const subjectvars = {
         EVENT: StringTools.truncate(event.title, 50),
-        lng: userLocale,
       };
-      const subject = i18n(
+      const subject = t(
         "notification.event.reminder.mail.subject",
         "Reminder: {EVENT}",
         subjectvars,
@@ -89,10 +91,10 @@ export function Model(entry: { body: Body }) {
       const regionZone = LocalTime.zone(event.region);
 
       const startMoment = regionZone.at(event.start);
-      startMoment.locale(userLocale);
+      startMoment.locale(locale);
 
       const endMoment = regionZone.at(event.end);
-      endMoment.locale(userLocale);
+      endMoment.locale(locale);
 
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);
@@ -121,7 +123,7 @@ export function Model(entry: { body: Body }) {
         customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventReminder`,
         customSiteName: siteName,
         customEmailLogo: emailLogo,
-        eventTitle: "",
+        eventTitle: undefined as React.JSX.Element | undefined,
         eventCalendar: startMoment.calendar(),
       };
 
@@ -129,10 +131,10 @@ export function Model(entry: { body: Body }) {
         query: "campaign=eventReminder",
       });
 
-      vars.eventTitle = Spacebars.SafeString(`<a href="${eventUrl}">${event.title}</a>`);
+      vars.eventTitle = <a href={eventUrl}>{event.title}</a>;
 
       return vars;
     },
-    template: "notificationEventReminderEmail",
+    template: (props) => <EventReminder {...props} />,
   };
 }
