@@ -1,6 +1,7 @@
 import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
+import i18next from "i18next";
 
 import { Log } from "/imports/api/log/log";
 import { UserModel } from "/imports/api/users/users";
@@ -78,7 +79,9 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       }
     },
 
-    vars(lng, _actualRecipient, unsubToken) {
+    vars(locale, _actualRecipient, unsubToken) {
+      const t = i18next.getFixedT(locale);
+
       if (!event) {
         throw new Error("Event does not exist (0.o)");
       }
@@ -99,10 +102,10 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       const regionZone = LocalTime.zone(event.region);
 
       const startMoment = regionZone.at(event.start);
-      startMoment.locale(lng);
+      startMoment.locale(locale);
 
       const endMoment = regionZone.at(event.end);
-      endMoment.locale(lng);
+      endMoment.locale(locale);
 
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);
@@ -127,7 +130,6 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         customEmailLogo: emailLogo,
         eventTitle: undefined as React.JSX.Element | undefined,
         message: entry.body.message,
-      
       };
 
       const eventFullTitle = t("notification.event.canceled.mail.title", "{DATE} — {EVENT}", {
