@@ -1,8 +1,6 @@
-import juice from "juice";
 import { Meteor } from "meteor/meteor";
 import { SSR } from "meteor/meteorhacks:ssr";
 import { Router } from "meteor/iron:router";
-import { Spacebars } from "meteor/spacebars";
 
 import { InvitationEntity, Invitations } from "/imports/api/invitations/invitations";
 import { Tenants } from "/imports/api/tenants/tenants";
@@ -12,9 +10,11 @@ import { Log } from "/imports/api/log/log";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
-import { toEmailLogo } from "/imports/utils/toEmailLogo";
-
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
+
+import { Invitation } from "/imports/emails/invitation";
+import { Root } from "/imports/emails/root";
+import { renderToEmail } from "/imports/utils/renderToEmail";
 
 function sendInvitation(invitation: InvitationEntity) {
   const tenant = Tenants.findOne(invitation.tenant);
@@ -37,39 +37,33 @@ function sendInvitation(invitation: InvitationEntity) {
 
   const subject = `Invitation to ${tenant.name}`;
 
-  const emailLogo = PublicSettings.emailLogo;
-  let message = SSR.render("invitationEmail", {
-    subject,
-    site: {
-      brand: PublicSettings.theme.brand,
-      url: Meteor.absoluteUrl(),
-      logo: toEmailLogo(emailLogo),
-      name: siteName,
-    },
-    tenant,
-    inviter,
-    recipient,
-    invitationLink: Router.url("invitation", invitation, {
-      query: `tenant=${invitation.tenant}&campaign=invitationEmail`,
-    }),
-    moreLink: getLocalizedValue(PublicSettings.aboutLink, locale),
-    reportEmail: Spacebars.SafeString(
-      `<a href="mailto:${PrivateSettings.reporter.recipient}">${PrivateSettings.reporter.recipient}</a>`,
-    ),
-    locale,
-  });
-
-  // Template can't handle DOCTYPE header, so we add the thing here.
-  const DOCTYPE =
-    '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
-  message = DOCTYPE + message;
+  const message = renderToEmail(
+    <Root subject={subject}>
+      <Invitation
+        siteName={siteName}
+        tenant={tenant}
+        inviter={inviter}
+        recipient={recipient}
+        invitationLink={Router.url("invitation", invitation, {
+          query: `tenant=${invitation.tenant}&campaign=invitationEmail`,
+        })}
+        moreLink={getLocalizedValue(PublicSettings.aboutLink, locale)}
+        reportEmail={
+          <a href={`mailto:${PrivateSettings.reporter.recipient}`}>
+            {PrivateSettings.reporter.recipient}
+          </a>
+        }
+        lng={locale}
+      />
+    </Root>,
+  );
 
   const email: Email.EmailOptions = {
     from: Accounts.emailTemplates.from,
     replyTo: PrivateSettings.replyToEmail,
     to: invitation.to,
     subject: subjectPrefix + subject,
-    html: juice(message),
+    html: message,
   };
 
   Email.send(email);
