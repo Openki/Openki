@@ -14,6 +14,8 @@ import * as HtmlTools from "/imports/utils/html-tools";
 import * as StringTools from "/imports/utils/string-tools";
 import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import { getSiteName } from "/imports/utils/getSiteName";
+import { Model as NotificationModel } from "./notification";
+import { PrivateMessage, Props } from "../emails/notifications/privateMessage";
 import { LocalTime } from "/imports/utils/local-time";
 
 interface Body {
@@ -88,7 +90,7 @@ export function record(
   Log.record("Notification.Send", rel, body);
 }
 
-export function Model(entry: { body: Body }) {
+export function Model(entry: { body: Body }): NotificationModel<Props> {
   const { body } = entry;
   const sender = Users.findOne(body.sender);
   const targetRecipient = Users.findOne(body.targetRecipient);
@@ -203,6 +205,6 @@ export function Model(entry: { body: Body }) {
 
       return vars;
     },
-    template: "notificationPrivateMessageEmail",
+    template: (props) => <PrivateMessage {...props} />,
   };
 }

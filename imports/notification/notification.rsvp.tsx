@@ -1,13 +1,15 @@
 import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
-import { i18n } from "/imports/startup/both/i18next";
+import i18next from "i18next";
 
 import { Events } from "/imports/api/events/events";
 import { Log } from "/imports/api/log/log";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { Users, UserModel } from "/imports/api/users/users";
 
+import { Model as NotificationModel } from "./notification";
+import { Rsvp, Props } from "../emails/notifications/rsvp";
 import { LocalTime } from "/imports/utils/local-time";
 import { getSiteName } from "/imports/utils/getSiteName";
 
@@ -45,7 +47,7 @@ export function record(eventId: string, participantId: string, companions: numbe
   Log.record("Notification.Send", [event._id, participant._id], body);
 }
 
-export function Model(entry: { body: Body }) {
+export function Model(entry: { body: Body }): NotificationModel<Props> {
   const { body } = entry;
   const event = Events.findOne(body.eventId);
   const newParticipant = Users.findOne(body.participantId);
@@ -66,7 +68,9 @@ export function Model(entry: { body: Body }) {
       }
     },
 
-    vars(userLocale: string, _actualRecipient: UserModel, unsubToken: string) {
+    vars(locale: string, _actualRecipient: UserModel, unsubToken: string) {
+      const t = i18next.getFixedT(locale);
+
       if (!newParticipant) {
         throw new Error("New participant does not exist (0.o)");
       }
@@ -81,18 +85,17 @@ export function Model(entry: { body: Body }) {
       const regionZone = LocalTime.zone(event.region);
 
       const startMoment = regionZone.at(event.start);
-      startMoment.locale(userLocale);
+      startMoment.locale(locale);
 
       const endMoment = regionZone.at(event.end);
-      endMoment.locale(userLocale);
+      endMoment.locale(locale);
 
       const subjectvars = {
         TITLE: event.title.substring(0, 30),
         DATE: startMoment.format("LL"),
-        lng: userLocale,
       };
 
-      const subject = i18n(
+      const subject = t(
         "notification.rsvp.mail.subject",
         "Confirmation {DATE} {TITLE}",
         subjectvars,
@@ -123,6 +126,6 @@ export function Model(entry: { body: Body }) {
         customEmailLogo: emailLogo,
       };
     },
-    template: "notificationRsvpEmail",
+    template: (props) => <Rsvp {...props} />,
   };
 }

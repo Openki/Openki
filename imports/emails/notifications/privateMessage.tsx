@@ -17,7 +17,7 @@ export type Props = {
   lng: string;
 };
 
-export function Join({
+export function PrivateMessage({
   unsubLink,
   sender,
   senderLink,
