@@ -13,11 +13,7 @@ export type Props = {
   venueLine: string | undefined;
   eventLink: string;
   calLink: string;
-  subject: string;
   siteName: string;
-  customSiteUrl: string;
-  customSiteName: string;
-  customEmailLogo: string | undefined;
   username: string;
   lng: string;
 };
@@ -39,7 +35,6 @@ export function Rsvp({
   const { t } = useTranslation(undefined, { lng });
   return (
     <>
-      {" "}
       <tr>
         <td>
           <h5 className="title">{t("email.base.greeting", { USERNAME: username })}</h5>
