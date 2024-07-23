@@ -7,32 +7,32 @@ import { Log } from "/imports/api/log/log";
 import { LogEntity } from "/imports/api/log/factory";
 import { UserModel, Users } from "/imports/api/users/users";
 
-// import * as notificationEvent from "/imports/notification/notification.event";
+import * as notificationEvent from "/imports/notification/notification.event";
 import * as notificationEventCanceled from "/imports/notification/notification.event.canceled";
-// import * as notificationEventReminder from "/imports/notification/notification.event.reminder";
+import * as notificationEventReminder from "/imports/notification/notification.event.reminder";
 import * as notificationEventContactParticipants from "/imports/notification/notification.event.contact-participants";
-// import * as notificationRsvp from "/imports/notification/notification.rsvp";
-// import * as notificationRsvpTeam from "/imports/notification/notification.rsvp.team";
+import * as notificationRsvp from "/imports/notification/notification.rsvp";
+import * as notificationRsvpTeam from "/imports/notification/notification.rsvp.team";
 import * as notificationComment from "/imports/notification/notification.comment";
-// import * as notificationJoin from "/imports/notification/notification.join";
-// import * as notificationGroupCourse from "/imports/notification/notification.group.course";
-// import * as notificationPrivateMessage from "/imports/notification/notification.private-message";
+import * as notificationJoin from "/imports/notification/notification.join";
+import * as notificationGroupCourse from "/imports/notification/notification.group.course";
+import * as notificationPrivateMessage from "/imports/notification/notification.private-message";
 
 import { PrivateSettings } from "../utils/PrivateSettings";
 import { renderToEmail } from "../utils/renderToEmail";
 import { Root, Props as RootProps } from "../emails/root";
 
 export const Notification = {
-  // Event: notificationEvent,
+  Event: notificationEvent,
   "Event.Canceled": notificationEventCanceled,
-  // "Event.Reminder": notificationEventReminder,
+  "Event.Reminder": notificationEventReminder,
   "Event.ContactParticipants": notificationEventContactParticipants,
-  // Rsvp: notificationRsvp,
-  // "Rsvp.Team": notificationRsvpTeam,
+  Rsvp: notificationRsvp,
+  "Rsvp.Team": notificationRsvpTeam,
   Comment: notificationComment,
-  // Join: notificationJoin,
-  // "Group.Course": notificationGroupCourse,
-  // PrivateMessage: notificationPrivateMessage,
+  Join: notificationJoin,
+  "Group.Course": notificationGroupCourse,
+  PrivateMessage: notificationPrivateMessage,
 };
 
 // eslint-disable-next-line @typescript-eslint/no-namespace

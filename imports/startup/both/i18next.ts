@@ -7,6 +7,7 @@ import LocalStorageBackend from "i18next-localstorage-backend";
 import { LanguagesRaw } from "/imports/api/languages/languages";
 import { Blaze, Handlebars } from "meteor/blaze";
 import { Spacebars } from "meteor/spacebars";
+import { Template } from "meteor/templating";
 import { initReactI18next } from "react-i18next";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
@@ -143,37 +144,39 @@ export const i18n: TFunction = (...args: any[]) => {
   return escapeText !== false ? Blaze._escape(result) : result;
 };
 
-// register a helper to use it in the templates
-Template.registerHelper(
-  "i18n",
-  function (
-    key: string,
-    defaultValueOrData: string | { hash?: Record<string, unknown> } = {},
-    data?: { hash: Record<string, unknown> },
-  ) {
-    // defaultValue is optional
-    if (typeof defaultValueOrData === "string") {
-      // function (key, defaultValue, data)
+if (Meteor.isClient) {
+  // register a helper to use it in the templates
+  Template.registerHelper(
+    "i18n",
+    function (
+      key: string,
+      defaultValueOrData: string | { hash?: Record<string, unknown> } = {},
+      data?: { hash: Record<string, unknown> },
+    ) {
+      // defaultValue is optional
+      if (typeof defaultValueOrData === "string") {
+        // function (key, defaultValue, data)
 
-      if (data?.hash?.attr) {
+        if (data?.hash?.attr) {
+          // eslint-disable-next-line no-param-reassign
+          delete data?.hash?.attr;
+          return i18n(key, defaultValueOrData, { ...data?.hash });
+        }
+        // We can use SafeString because i18n encodes all non-safe strings
+        return Spacebars.SafeString(
+          i18n(key, defaultValueOrData, { ...data?.hash, escapeText: true }),
+        );
+      }
+
+      // function (key, data)
+
+      if (defaultValueOrData?.hash?.attr) {
         // eslint-disable-next-line no-param-reassign
-        delete data?.hash?.attr;
-        return i18n(key, defaultValueOrData, { ...data?.hash });
+        delete defaultValueOrData?.hash?.attr;
+        return i18n(key, { ...defaultValueOrData?.hash });
       }
       // We can use SafeString because i18n encodes all non-safe strings
-      return Spacebars.SafeString(
-        i18n(key, defaultValueOrData, { ...data?.hash, escapeText: true }),
-      );
-    }
-
-    // function (key, data)
-
-    if (defaultValueOrData?.hash?.attr) {
-      // eslint-disable-next-line no-param-reassign
-      delete defaultValueOrData?.hash?.attr;
-      return i18n(key, { ...defaultValueOrData?.hash });
-    }
-    // We can use SafeString because i18n encodes all non-safe strings
-    return Spacebars.SafeString(i18n(key, { ...defaultValueOrData.hash, escapeText: true }));
-  },
-);
+      return Spacebars.SafeString(i18n(key, { ...defaultValueOrData.hash, escapeText: true }));
+    },
+  );
+}
