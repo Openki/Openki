@@ -74,7 +74,7 @@ async function getGroups(courses: CourseModel[], events: EventModel[]) {
   let groupIds = [];
   groupIds.push(...courses.flatMap((c) => c.groups));
   groupIds.push(...events.flatMap((e) => e.groups));
-  groupIds = unique(groupIds);
+  groupIds = unique(groupIds).filter((g) => g);
 
   const groupEntities = await Groups.find(
     {},
@@ -99,7 +99,8 @@ function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
   const notArchived = courses.filter((c) => !c.archived);
   const members = courses.flatMap((c) => c.members);
 
-  const future = events.filter((e) => e.start > now);
+  const notCanceled = events.filter((e) => !e.canceled);
+  const futureAndNotCanceled = notCanceled.filter((e) => e.start > now);
   return {
     // inspired from courses.findFilter in /imports/api/courses/courses
     courses: {
@@ -108,18 +109,18 @@ function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
       resting: notArchived.filter((c) => c.lastEvent && !c.futureEvents).length,
       upcoming: notArchived.filter((c) => c.futureEvents > 0).length,
       archived: courses.filter((c) => c.archived).length,
-      enrollments: members.flatMap((m) => m.roles).length,
+      enrollments: members.length,
       users: unique(members.map((m) => m.user)).length,
     },
     // inspired from events.findFilter in /imports/api/events/events
     events: {
       total: events.length,
-      future: future.length,
-      passed: events.filter((e) => e.start <= now).length,
+      future: futureAndNotCanceled.length,
+      passed: notCanceled.filter((e) => e.start <= now).length,
       canceled: events.filter((e) => e.canceled).length,
       fullyBooked: events.filter((e) => e.isFullyBooked()).length,
       totalRsvps: sum(events.map((e) => e.numberOfParticipants())),
-      futureRsvps: sum(future.map((e) => e.numberOfParticipants())),
+      futureRsvps: sum(notCanceled.map((e) => e.numberOfParticipants())),
       users: unique(events.flatMap((e) => e.participants?.map((p) => p.user) || [])).length,
     },
   };
