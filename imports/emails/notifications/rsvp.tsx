@@ -2,34 +2,26 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 import { EventModel } from "/imports/api/events/events";
+import { EventBox } from "./EventBox";
 
 export type Props = {
   companions: number;
   unsubLink: string;
   event: EventModel;
   eventDate: string;
-  eventStart: string;
-  eventEnd: string;
-  venueLine: string | undefined;
-  eventLink: string;
-  calLink: string;
   siteName: string;
   username: string;
+  campaign: string;
   lng: string;
 };
-
 export function Rsvp({
   companions,
   unsubLink,
   event,
   eventDate,
-  eventStart,
-  eventEnd,
-  venueLine,
-  eventLink,
-  calLink,
   siteName,
   username,
+  campaign,
   lng,
 }: Props) {
   const { t } = useTranslation(undefined, { lng });
@@ -46,46 +38,7 @@ export function Rsvp({
             )}
           </p>
           <p>{t("notification.rsvp.mail.attending", "You are attending the following event:")}</p>
-          <table className="event">
-            <tr>
-              <td className="event-header">
-                <a href={eventLink}>
-                  <strong>
-                    {eventDate}
-                    <br />
-                    {eventStart}
-                    {eventEnd ? ` - ${eventEnd}` : null}
-                  </strong>
-                  {venueLine ? (
-                    <>
-                      <br />
-                      {venueLine}
-                    </>
-                  ) : null}
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td className="event-gap"></td>
-            </tr>
-            <tr>
-              <td className="event-body">
-                <h5 className="title">{event.title}</h5>
-                <p dangerouslySetInnerHTML={{ __html: event.description }}></p>
-                <a className="button event-confirmation-email-button" href={eventLink}>
-                  {t("notification.rsvp.mail.linkEvent", "Visit Event")}
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td className="event-link">
-                <a href={calLink}>
-                  {t("notification.rsvp.mail.linkCalendar", "Add this event to my calendar")}
-                </a>
-                <br />
-              </td>
-            </tr>
-          </table>
+          <EventBox event={event} campaign={campaign} lng={lng} />
         </td>
       </tr>
       <tr>
@@ -97,7 +50,7 @@ export function Rsvp({
                   {t("email.base.unsubscribeLink.automatedNotifications", { SITENAME: siteName })}
                 </a>
                 &nbsp;
-                <a href={Router.url("profile", { query: "campaign=rsvpNotify" })}>
+                <a href={Router.url("profile", { query: `campaign=${campaign}` })}>
                   {t("email.base.profileLink")}
                 </a>
               </td>

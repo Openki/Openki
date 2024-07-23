@@ -11,8 +11,8 @@ import { Users, UserModel } from "/imports/api/users/users";
 
 import { Model as NotificationModel } from "./notification";
 import { Rsvp, Props } from "../emails/notifications/rsvp";
-import { LocalTime } from "/imports/utils/local-time";
 import { getSiteName } from "/imports/utils/getSiteName";
+import { getStartEndDate } from "./utils";
 
 interface Body {
   eventId: string;
@@ -82,14 +82,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         throw new Error("Region does not exist (0.o)");
       }
 
-      // Show dates in local time and in users locale
-      const regionZone = LocalTime.zone(event.region);
-
-      const startMoment = regionZone.at(event.start);
-      startMoment.locale(locale);
-
-      const endMoment = regionZone.at(event.end);
-      endMoment.locale(locale);
+      const { startMoment } = getStartEndDate(event, locale);
 
       const subjectvars = {
         TITLE: event.title.substring(0, 30),
@@ -102,12 +95,6 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         subjectvars,
       );
 
-      const { venue } = event;
-      let venueLine: string | undefined;
-      if (venue) {
-        venueLine = [venue.name, venue.address].filter(Boolean).join(", ");
-      }
-
       const siteName = getSiteName(region);
       const emailLogo = region.custom?.emailLogo;
 
@@ -116,15 +103,11 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         unsubLink: Router.url("profileNotificationsUnsubscribe", { token: unsubToken }),
         event,
         eventDate: startMoment.format("dddd, LL"),
-        eventStart: startMoment.format("LT"),
-        eventEnd: endMoment.format("LT"),
-        venueLine,
-        eventLink: Router.url("showEvent", event, { query: "campaign=rsvpNotify" }),
-        calLink: Router.url("calEvent", event, { query: "campaign=rsvpNotify" }),
         subject,
         customSiteUrl: `${Meteor.absoluteUrl()}?campaign=rsvpNotify`,
         customSiteName: siteName,
         customEmailLogo: emailLogo,
+        campaign: "rsvpNotify",
       };
     },
     template: (props) => <Rsvp {...props} />,

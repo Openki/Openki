@@ -2,19 +2,16 @@ import React from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { EventModel } from "/imports/api/events/events";
+import { EventBox } from "./EventBox";
 
 export type Props = {
   username: string;
   unsubLink: string;
   event: EventModel;
-  eventDate: string;
-  eventStart: string;
-  eventEnd: string;
-  venueLine: string | undefined;
-  eventLink: string;
   siteName: string;
   eventTitle: React.JSX.Element | undefined;
   message: string;
+  campaign: string;
   lng: string;
 };
 
@@ -22,14 +19,10 @@ export function EventCanceled({
   username,
   unsubLink,
   event,
-  eventDate,
-  eventStart,
-  eventEnd,
-  venueLine,
-  eventLink,
   siteName,
   eventTitle,
   message,
+  campaign,
   lng,
 }: Props) {
   const { t } = useTranslation(undefined, { lng });
@@ -56,45 +49,7 @@ export function EventCanceled({
               <td dangerouslySetInnerHTML={{ __html: message }}></td>
             </tr>
           </table>
-          <table className="event">
-            <tr>
-              <td className="event-header">
-                <a href={eventLink}>
-                  <strong>
-                    {eventDate}
-                    <br />
-                    {eventStart}
-                    {eventEnd ? ` - ${eventEnd}` : null}
-                  </strong>
-                  {venueLine ? (
-                    <>
-                      <br />
-                      {venueLine}
-                    </>
-                  ) : null}
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td className="event-gap"></td>
-            </tr>
-            <tr>
-              <td className="event-canceled text-center">
-                <strong>
-                  {t("notification.event.canceled.mail.canceled", "This event got canceled")}
-                </strong>
-              </td>
-            </tr>
-            <tr>
-              <td className="event-gap"></td>
-            </tr>
-            <tr>
-              <td className="event-body">
-                <h5 className="title">{event.title}</h5>
-                <p dangerouslySetInnerHTML={{ __html: event.description }}></p>
-              </td>
-            </tr>
-          </table>
+          <EventBox event={event} campaign={campaign} lng={lng} />
         </td>
       </tr>
       <tr>
@@ -115,7 +70,7 @@ export function EventCanceled({
                   {t("email.base.unsubscribeLink.automatedNotifications", { SITENAME: siteName })}
                 </a>
                 &nbsp;
-                <a href={Router.url("profile", { query: "campaign=eventCanceled" })}>
+                <a href={Router.url("profile", { query: `campaign=${campaign}` })}>
                   {t("email.base.profileLink")}
                 </a>
               </td>

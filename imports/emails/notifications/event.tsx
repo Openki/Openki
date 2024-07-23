@@ -3,48 +3,38 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 import { EventModel } from "/imports/api/events/events";
-import { CourseModel } from "/imports/api/courses/courses";
+import { EventBox } from "./EventBox";
 
 export type Props = {
   unsubLink: string;
   event: EventModel;
-  eventDate: string;
-  eventStart: string;
-  eventEnd: string;
-  eventLink: string;
-  venueLine: string | undefined;
   recipientTakePart: boolean | undefined;
   registerToEventLink: string;
-  course: CourseModel;
+  course: React.JSX.Element;
   courseName: string;
   unsubscribeFromCourseLink: string;
-  calLink: string;
   isNew: boolean;
   subject: string;
   additionalMessage: string | undefined;
   siteName: string;
   username: string;
+  campaign: string;
   lng: string;
 };
 
 export function Event({
   unsubLink,
   event,
-  eventDate,
-  eventStart,
-  eventEnd,
-  eventLink,
-  venueLine,
   recipientTakePart,
   registerToEventLink,
   course,
   courseName,
   unsubscribeFromCourseLink,
-  calLink,
   isNew,
   additionalMessage,
   siteName,
   username,
+  campaign,
   lng,
 }: Props) {
   const { t } = useTranslation(undefined, { lng });
@@ -80,43 +70,7 @@ export function Event({
             </>
           ) : null}
 
-          <table className="event">
-            <tr>
-              <td className="event-header">
-                <a href={eventLink}>
-                  <strong>
-                    {eventDate}
-                    <br />
-                    {eventStart}
-                    {eventEnd ? ` - ${eventEnd}` : null}
-                  </strong>
-                  {venueLine ? (
-                    <>
-                      <br />
-                      {venueLine}
-                    </>
-                  ) : null}
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td className="event-gap"></td>
-            </tr>
-            <tr>
-              <td className="event-body">
-                <h5 className="title">{event.title}</h5>
-                <p dangerouslySetInnerHTML={{ __html: event.description }}></p>
-              </td>
-            </tr>
-            <tr>
-              <td className="event-link">
-                <a href={calLink}>
-                  {t("notification.event.mail.linkCalendar", "Add this event to my calendar")}
-                </a>
-                <br />
-              </td>
-            </tr>
-          </table>
+          <EventBox event={event} campaign={campaign} lng={lng} />
 
           {!event.noRsvp ? (
             !recipientTakePart ? (
@@ -165,7 +119,7 @@ export function Event({
                   {t("email.base.unsubscribeLink.automatedNotifications", { SITENAME: siteName })}
                 </a>
                 &nbsp;
-                <a href={Router.url("profile", { query: "campaign=eventNotify" })}>
+                <a href={Router.url("profile", { query: `campaign=${campaign}` })}>
                   {t("email.base.profileLink")}
                 </a>
               </td>
