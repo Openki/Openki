@@ -1,3 +1,4 @@
+import React from "react";
 import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
@@ -110,27 +111,17 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         course: <a href={courseLink}>{course.name}</a>,
         courseLink,
         courseDescription: course.description,
-        groups: (
-          <>
-            {recipientsGroups
-              .map((g) => (
-                <a
-                  href={Router.url("groupDetails", g, {
-                    query: "campaign=groupCourseNotify",
-                  })}
-                >
-                  {g.name}
-                </a>
-              ))
-              .reduce((prev, curr) => (
-                <>
-                  {prev}
-                  {", "}
-                  {curr}
-                </>
-              ))}
-          </>
-        ),
+        groups: recipientsGroups
+          .map((g) => (
+            <a
+              href={Router.url("groupDetails", g, {
+                query: "campaign=groupCourseNotify",
+              })}
+            >
+              {g.name}
+            </a>
+          ))
+          .reduce((prev, curr) => [prev, <>", "</>, curr] as any),
         creater,
         subject,
         customSiteUrl: `${Meteor.absoluteUrl()}?campaign=groupCourseNotify`,

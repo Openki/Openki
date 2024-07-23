@@ -1,7 +1,7 @@
+import React from "react";
 import { Match, check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
-import { Spacebars } from "meteor/spacebars";
 import i18next from "i18next";
 
 import { Courses } from "/imports/api/courses/courses";
@@ -168,7 +168,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         const courseLink = Router.url("showCourse", course, {
           query: "campaign=privateMessage",
         });
-        vars.course = Spacebars.SafeString(`<a href="${courseLink}">${course.name}</a>`);
+        vars.course = <a href={courseLink}>{course.name}</a>;
 
         regionId = course.region;
       }
@@ -192,7 +192,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         const eventLink = Router.url("showEvent", event, {
           query: "campaign=privateMessage",
         });
-        vars.event = Spacebars.SafeString(`<a href="${eventLink}">${title}</a>`);
+        vars.event = <a href={eventLink}>{title}</a>;
 
         regionId = event.region;
       }
