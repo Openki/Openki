@@ -11,9 +11,9 @@ import { Events } from "/imports/api/events/events";
 
 import * as StringTools from "/imports/utils/string-tools";
 import { getSiteName } from "/imports/utils/getSiteName";
-import { LocalTime } from "/imports/utils/local-time";
 import { Model as NotificationModel } from "./notification";
 import { EventReminder, Props } from "../emails/notifications/event.reminder";
+import { getStartEndDate } from "./utils";
 
 interface Body {
   event: string;
@@ -88,44 +88,26 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         subjectvars,
       );
 
-      // Show dates in local time and in users locale
-      const regionZone = LocalTime.zone(event.region);
-
-      const startMoment = regionZone.at(event.start);
-      startMoment.locale(locale);
-
-      const endMoment = regionZone.at(event.end);
-      endMoment.locale(locale);
+      const { startMoment } = getStartEndDate(event, locale);
 
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);
-
-      const { venue } = event;
-      let venueLine: string | undefined;
-      if (venue) {
-        venueLine = [venue.name, venue.address].filter(Boolean).join(", ");
-      }
 
       const vars = {
         companions:
           event.participants?.filter((p) => p.user === actualRecipient._id)[0].companions || 0,
         unsubLink: Router.url("profileNotificationsUnsubscribe", { token: unsubToken }),
         event,
-        eventDate: startMoment.format("dddd, LL"),
-        eventStart: startMoment.format("LT"),
-        eventEnd: endMoment.format("LT"),
-        venueLine,
-        eventLink: Router.url("showEvent", event, { query: "campaign=eventReminder" }),
         unregisterToEventLink: Router.url("showEvent", event, {
           query: "action=unregister&campaign=eventReminder",
         }),
-        calLink: Router.url("calEvent", event, { query: "campaign=eventReminder" }),
         subject,
         customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventReminder`,
         customSiteName: siteName,
         customEmailLogo: emailLogo,
         eventTitle: undefined as React.JSX.Element | undefined,
         eventCalendar: startMoment.calendar(),
+        campaign: "eventReminder",
       };
 
       const eventUrl = Router.url("showEvent", event, {

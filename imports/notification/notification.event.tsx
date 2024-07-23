@@ -10,10 +10,10 @@ import { Log } from "/imports/api/log/log";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { UserModel } from "/imports/api/users/users";
 
-import { LocalTime } from "/imports/utils/local-time";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { Model as NotificationModel } from "./notification";
 import { Event, Props } from "../emails/notifications/event";
+import { getStartEndDate } from "./utils";
 
 interface Body {
   new: boolean;
@@ -99,14 +99,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         throw new Error("Region does not exist (0.o)");
       }
 
-      // Show dates in local time and in users locale
-      const regionZone = LocalTime.zone(event.region);
-
-      const startMoment = regionZone.at(event.start);
-      startMoment.locale(locale);
-
-      const endMoment = regionZone.at(event.end);
-      endMoment.locale(locale);
+      const { startMoment } = getStartEndDate(event, locale);
 
       const subjectvars = {
         TITLE: event.title.substring(0, 30),
@@ -124,12 +117,6 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         );
       }
 
-      const { venue } = event;
-      let venueLine: string | undefined;
-      if (venue) {
-        venueLine = [venue.name, venue.address].filter(Boolean).join(", ");
-      }
-
       const siteName = getSiteName(region);
       const emailLogo = region.custom?.emailLogo;
 
@@ -137,11 +124,6 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       return {
         unsubLink: Router.url("profileNotificationsUnsubscribe", { token: unsubToken }),
         event,
-        eventDate: startMoment.format("dddd, LL"),
-        eventStart: startMoment.format("LT"),
-        eventEnd: endMoment.format("LT"),
-        venueLine,
-        eventLink: Router.url("showEvent", event, { query: "campaign=eventNotify" }),
         recipientTakePart: event.participants?.some((p) => p.user === actualRecipient._id),
         registerToEventLink: Router.url("showEvent", event, {
           query: "action=register&campaign=eventNotify",
@@ -151,13 +133,13 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         unsubscribeFromCourseLink: Router.url("showCourse", course, {
           query: "unsubscribe=participant&force=1&campaign=eventNotify",
         }),
-        calLink: Router.url("calEvent", event, { query: "campaign=eventNotify" }),
         isNew: entry.body.new,
         subject,
         additionalMessage: entry.body.additionalMessage,
         customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventNotify`,
         customSiteName: siteName,
         customEmailLogo: emailLogo,
+        campaign: "eventNotify",
       };
     },
     template: (props) => <Event {...props} />,

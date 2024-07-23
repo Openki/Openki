@@ -2,22 +2,18 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 import { EventModel } from "/imports/api/events/events";
+import { EventBox } from "./EventBox";
 
 export type Props = {
   companions: number;
   unsubLink: string;
   event: EventModel;
-  eventDate: string;
-  eventStart: string;
-  eventEnd: string;
-  venueLine: string | undefined;
-  eventLink: string;
   unregisterToEventLink: string;
-  calLink: string;
   eventTitle: React.JSX.Element | undefined;
   eventCalendar: string;
   siteName: string;
   username: string;
+  campaign: string;
   lng: string;
 };
 
@@ -25,17 +21,12 @@ export function EventReminder({
   companions,
   unsubLink,
   event,
-  eventDate,
-  eventStart,
-  eventEnd,
-  venueLine,
-  eventLink,
   unregisterToEventLink,
-  calLink,
   eventTitle,
   eventCalendar,
   siteName,
   username,
+  campaign,
   lng,
 }: Props) {
   const { t } = useTranslation(undefined, { lng });
@@ -62,43 +53,7 @@ export function EventReminder({
               {t("notification.event.reminder.unregisterEvent", "Un-enroll")}
             </a>
           </p>
-          <table className="event">
-            <tr>
-              <td className="event-header">
-                <a href={eventLink}>
-                  <strong>
-                    {eventDate}
-                    <br />
-                    {eventStart}
-                    {eventEnd ? ` - ${eventEnd}` : null}
-                  </strong>
-                  {venueLine ? (
-                    <>
-                      <br />
-                      {venueLine}
-                    </>
-                  ) : null}
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td className="event-gap"></td>
-            </tr>
-            <tr>
-              <td className="event-body">
-                <h5 className="title">{event.title}</h5>
-                <p dangerouslySetInnerHTML={{ __html: event.description }}></p>
-              </td>
-            </tr>
-            <tr>
-              <td className="event-link">
-                <a href={calLink}>
-                  {t("notification.event.mail.linkCalendar", "Add this event to my calendar")}
-                </a>
-                <br />
-              </td>
-            </tr>
-          </table>
+          <EventBox event={event} campaign={campaign} lng={lng} />
         </td>
       </tr>
       <tr>
@@ -119,7 +74,7 @@ export function EventReminder({
                   {t("email.base.unsubscribeLink.automatedNotifications", { SITENAME: siteName })}
                 </a>
                 &nbsp;
-                <a href={Router.url("profile", { query: "campaign=eventReminder" })}>
+                <a href={Router.url("profile", { query: `campaign=${campaign}` })}>
                   {t("email.base.profileLink")}
                 </a>
               </td>
