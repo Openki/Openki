@@ -40,7 +40,7 @@
   margin-right: 18px;
 }
 
-.leaflet-marker-pane .leaflet-marker-icon {
+.map .leaflet-marker-icon {
   background: none;
   border: 0;
   color: $blue;
@@ -49,9 +49,10 @@
     5px -10px 10px #ffffffba,
     5px 5px 10px #0009,
     2px 3px 4px #000000bf;
+  -webkit-text-stroke: 1px #0000003d;
 }
 
-.leaflet-marker-pane .leaflet-marker-icon .fa-map-marker {
+.map .leaflet-marker-icon .fa-map-marker {
   color: $black;
 
   &:hover {
