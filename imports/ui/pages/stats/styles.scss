@@ -17,15 +17,39 @@
   text-align: right;
 }
 
-.stats .course-stat {
+.stats .description {
+  text-align: center;
+
+  &::after {
+    background-color: #f1f1f1;
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -2;
+  }
+}
+
+.stats .course-stat::after {
   background-color: lighten($blue-lighter, 5%);
+  content: "";
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -2;
 }
 
-.stats .event-stat {
+.stats .event-stat::after {
   background-color: tint-color($green, 65%);
-}
-
-/* stylelint-disable-next-line selector-max-compound-selectors */
-.stats tbody tr:hover td {
-  background-color: #ffa500 !important;
+  content: "";
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -2;
 }

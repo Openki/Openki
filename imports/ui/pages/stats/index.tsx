@@ -19,10 +19,10 @@ function Header() {
   const { t } = useTranslation();
   return (
     <>
-      <th className="course-stat" colSpan={7}>
+      <th className="course-stat" colSpan={7} style={{ height: "4.5em" }}>
         {t("region.stats.courses", "Courses")}
       </th>
-      <th className="event-stat" colSpan={9}>
+      <th className="event-stat" colSpan={9} style={{ height: "4.5em" }}>
         {t("region.stats.events", "Events")}
       </th>
     </>
@@ -38,7 +38,7 @@ function SubHeader() {
       <th className="course-stat">{t("region.stats.courses.resting", "Resting")}</th>
       <th className="course-stat">{t("region.stats.courses.upcoming", "Upcoming")}</th>
       <th className="course-stat">{t("region.stats.courses.archived", "Archived")}</th>
-      <th className="course-stat">{t("region.stats.courses.enrolements", "Enrolements")}</th>
+      <th className="course-stat">{t("region.stats.courses.enrollments", "Course enrollments")}</th>
       <th className="course-stat">{t("region.stats.courses.users", "Users")}</th>
       <th className="event-stat">{t("region.stats.events.total", "Total")}</th>
       <th className="event-stat">{t("region.stats.events.future", "Future")}</th>
@@ -56,41 +56,48 @@ function Descriptions() {
   const { t } = useTranslation();
   return (
     <>
-      <td className="course-stat text-center">
+      <td className="description">
         {t("region.stats.courses.total.description", "excl. archived")}
       </td>
-      <td className="course-stat text-center">
-        {t("region.stats.courses.proposed.description", "no events")}
-      </td>
-      <td className="course-stat text-center">
+      <td className="description">{t("region.stats.courses.proposed.description", "no events")}</td>
+      <td className="description">
         {t("region.stats.courses.resting.description", "only passed events")}
       </td>
-      <td className="course-stat text-center">
+      <td className="description">
         {t("region.stats.courses.upcoming.description", "with planned event(s)")}
       </td>
-      <td className="course-stat text-center">&nbsp;</td>
-      <td className="course-stat text-center">
-        {t("region.stats.courses.enrolements.description", "interested or any role")}
+      <td className="description">&nbsp;</td>
+      <td className="description">
+        {t("region.stats.courses.enrollments.description", "interested or any role, incl. creater")}
       </td>
-      <td className="course-stat text-center">
+      <td className="description">
         {t("region.stats.courses.users.description", "unique accounts enrolled")}
       </td>
-      <td className="event-stat text-center">&nbsp;</td>
-      <td className="event-stat text-center">&nbsp;</td>
-      <td className="event-stat text-center">&nbsp;</td>
-      <td className="event-stat text-center">
+      <td className="description">
+        {t("region.stats.events.total.description", "incl. canceled")}
+      </td>
+      <td className="description">
+        {t("region.stats.events.future.description", "excl. canceled")}
+      </td>
+      <td className="description">
+        {t("region.stats.events.passed.description", "excl. canceled")}
+      </td>
+      <td className="description">
         {t("region.stats.events.canceled.description", "in future and passed")}
       </td>
-      <td className="event-stat text-center">
+      <td className="description">
         {t("region.stats.events.fullyBooked.description", "in future and passed")}
       </td>
-      <td className="event-stat text-center">
+      <td className="description">
         {t("region.stats.events.totalRsvps.description", "in future and passed, incl. +1")}
       </td>
-      <td className="event-stat text-center">
-        {t("region.stats.events.futureRsvps.description", "in upcoming events only, incl. +1")}
+      <td className="description">
+        {t(
+          "region.stats.events.futureRsvps.description",
+          "in future events only, incl. +1, excl. canceled events",
+        )}
       </td>
-      <td className="event-stat text-center">
+      <td className="description">
         {t("region.stats.events.users.description", "unique accounts registered")}
       </td>
     </>
@@ -105,7 +112,7 @@ function Results({ stat }: { stat: Stat }) {
       <td className="course-stat number">{stat.courses.resting}</td>
       <td className="course-stat number">{stat.courses.upcoming}</td>
       <td className="course-stat number">{stat.courses.archived}</td>
-      <td className="course-stat number">{stat.courses.enrolements}</td>
+      <td className="course-stat number">{stat.courses.enrollments}</td>
       <td className="course-stat number">{stat.courses.users}</td>
       <td className="event-stat number">{stat.events.total}</td>
       <td className="event-stat number">{stat.events.future}</td>
@@ -180,9 +187,9 @@ export function StatsPage() {
           <h1 className="mt-5">
             {regionName()
               ? t("region.list.titleForRegion", "Overview {REGION}", { REGION: regionName })
-              : t("region.list.title", "Regions")}
+              : t("region.list.title", "Overiew")}
           </h1>
-          <table className="stats">
+          <table className="table-hover-vertical stats">
             <thead>
               <tr>
                 <Header />
@@ -202,7 +209,7 @@ export function StatsPage() {
           </table>
           <div className="mt-5">
             <h2>{t("regions.stats.header", "Group statistics")}</h2>
-            <table className="stats">
+            <table className="table-hover-vertical stats">
               <thead>
                 <tr>
                   <th colSpan={2}>{t("region.stats.group", "Group")}</th>
