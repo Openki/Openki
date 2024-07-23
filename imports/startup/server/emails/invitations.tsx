@@ -1,5 +1,4 @@
 import { Meteor } from "meteor/meteor";
-import { SSR } from "meteor/meteorhacks:ssr";
 import { Router } from "meteor/iron:router";
 
 import { InvitationEntity, Invitations } from "/imports/api/invitations/invitations";
@@ -92,8 +91,6 @@ function handleInvitation(invitation: InvitationEntity) {
 // Watch for new invitations
 if (runBackgroundTasks)
   Meteor.startup(() => {
-    SSR.compileTemplate("invitationEmail", Assets.getText("emails/invitation.html"));
-
     Invitations.find({ status: "created" }).observe({
       added: handleInvitation,
       changed: handleInvitation,

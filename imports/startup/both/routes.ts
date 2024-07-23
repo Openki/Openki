@@ -229,8 +229,8 @@ RouterAsync.route("profile", {
         notifications: boolean;
         allowPrivateMessages: boolean;
         tenants: Mongo.Cursor<TenantEntity, TenantModel> | never[];
-        groups: Mongo.Cursor<GroupEntity, GroupModel>;
-        venues: Mongo.Cursor<VenueEntity, VenueModel>;
+        groups: globalThis.Mongo.Cursor<GroupEntity, GroupModel>;
+        venues: globalThis.Mongo.Cursor<VenueEntity, VenueModel>;
         email: string;
         verified: boolean;
       };

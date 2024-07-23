@@ -2,6 +2,7 @@ import { Match, check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import { Spacebars } from "meteor/spacebars";
+import i18next from "i18next";
 
 import { Courses } from "/imports/api/courses/courses";
 import { Log } from "/imports/api/log/log";
@@ -9,7 +10,6 @@ import { UserModel, Users } from "/imports/api/users/users";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { Events } from "/imports/api/events/events";
 
-import { i18n } from "/imports/startup/both/i18next";
 import * as HtmlTools from "/imports/utils/html-tools";
 import * as StringTools from "/imports/utils/string-tools";
 import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
@@ -109,7 +109,9 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       }
     },
 
-    vars(userLocale: string, actualRecipient: UserModel, unsubToken: string) {
+    vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
+      const t = i18next.getFixedT(locale);
+
       if (!sender) {
         throw new Error("Sender does not exist (0.o)");
       }
@@ -119,9 +121,8 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
 
       const subjectvars = {
         SENDER: StringTools.truncate(sender.getDisplayName(), 10),
-        lng: userLocale,
       };
-      const subject = i18n(
+      const subject = t(
         "notification.privateMessage.mail.subject",
         "Private message from {SENDER}",
         subjectvars,
@@ -182,9 +183,9 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         // Show dates in local time and in users locale
         const regionZone = LocalTime.zone(event.region);
         const startMoment = regionZone.at(event.start);
-        startMoment.locale(userLocale);
+        startMoment.locale(locale);
 
-        const title = i18n("notification.privateMessage.mail.title", "{DATE} — {EVENT}", {
+        const title = t("notification.privateMessage.mail.title", "{DATE} — {EVENT}", {
           EVENT: event.title,
           DATE: startMoment.calendar(),
         });

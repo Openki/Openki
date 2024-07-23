@@ -1,7 +1,7 @@
 import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
-import { i18n } from "/imports/startup/both/i18next";
+import i18next from "i18next";
 
 import { Courses } from "/imports/api/courses/courses";
 import { Groups } from "/imports/api/groups/groups";
@@ -79,7 +79,9 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       }
     },
 
-    vars(lng: string, actualRecipient: UserModel, unsubToken: string) {
+    vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
+      const t = i18next.getFixedT(locale);
+
       const recipientsGroups = groups.filter((g) =>
         g.members.some((m) => m.user === actualRecipient._id),
       );
@@ -87,10 +89,9 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       const subjectvars = {
         COURSE: StringTools.truncate(course.name, 10),
         GROUPS: StringTools.truncate(recipientsGroups.map((g) => g.short).join(", "), 30),
-        lng,
       };
 
-      const subject = i18n(
+      const subject = t(
         "notification.group.course.mail.subject",
         "{COURSE} proposed in {GROUPS}",
         subjectvars,
