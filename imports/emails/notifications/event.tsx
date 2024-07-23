@@ -121,7 +121,6 @@ export function Event({
           {!event.noRsvp ? (
             !recipientTakePart ? (
               <>
-                {" "}
                 <p className="gap-md text-center">
                   {t(
                     "notification.event.mail.informRegisterEvent",

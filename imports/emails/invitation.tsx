@@ -7,7 +7,7 @@ export type Props = {
   siteName: string;
   tenant: TenantModel;
   inviter: UserModel;
-  recipient: UserModel;
+  recipient: UserModel | undefined;
   invitationLink: string;
   moreLink: string | undefined;
   reportEmail: JSX.Element;
@@ -30,7 +30,11 @@ export function Invitation({
       <tr>
         <td>
           <h5 className="title">
-            {t("email.base.greeting", { USERNAME: recipient.getDisplayName() })}
+            {recipient
+              ? t("email.base.greeting", {
+                  USERNAME: recipient.getDisplayName(),
+                })
+              : t("email.base.greeting.anoym")}
           </h5>
           <p>
             {t(

@@ -1,7 +1,7 @@
+import React from "react";
 import { Match, check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
-import { Spacebars } from "meteor/spacebars";
 import i18next from "i18next";
 
 import { CourseModel, Courses } from "/imports/api/courses/courses";
@@ -146,7 +146,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         registerToEventLink: Router.url("showEvent", event, {
           query: "action=register&campaign=eventNotify",
         }),
-        course: Spacebars.SafeString(`<a href="${courseLink}">${course.name}</a>`),
+        course: <a href={courseLink}>{course.name}</a>,
         courseName: course.name,
         unsubscribeFromCourseLink: Router.url("showCourse", course, {
           query: "unsubscribe=participant&force=1&campaign=eventNotify",

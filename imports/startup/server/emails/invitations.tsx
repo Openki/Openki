@@ -1,9 +1,10 @@
+import React from "react";
 import { Meteor } from "meteor/meteor";
 import { Router } from "meteor/iron:router";
 
 import { InvitationEntity, Invitations } from "/imports/api/invitations/invitations";
 import { Tenants } from "/imports/api/tenants/tenants";
-import { UserModel, Users } from "/imports/api/users/users";
+import { Users } from "/imports/api/users/users";
 import { Log } from "/imports/api/log/log";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
@@ -26,9 +27,9 @@ function sendInvitation(invitation: InvitationEntity) {
     throw new Error("Inviter does not exist (0.o)");
   }
 
-  const recipient = Users.findOne({ "emails.0.address": invitation.to }) || ({} as UserModel);
+  const recipient = Users.findOne({ "emails.0.address": invitation.to });
 
-  const locale = recipient.locale || inviter.locale || "en";
+  const locale = recipient?.locale || inviter.locale || "en";
 
   const { siteName } = Accounts.emailTemplates;
 
