@@ -180,9 +180,9 @@ export function StatsPage() {
           <h1 className="mt-5">
             {regionName()
               ? t("region.list.titleForRegion", "Overview {REGION}", { REGION: regionName })
-              : t("region.list.title", "Regions")}
+              : t("region.list.title", "Overiew")}
           </h1>
-          <table className="stats">
+          <table className="table-hover-vertical stats">
             <thead>
               <tr>
                 <Header />
@@ -202,7 +202,7 @@ export function StatsPage() {
           </table>
           <div className="mt-5">
             <h2>{t("regions.stats.header", "Group statistics")}</h2>
-            <table className="stats">
+            <table className="table-hover-vertical stats">
               <thead>
                 <tr>
                   <th colSpan={2}>{t("region.stats.group", "Group")}</th>
