@@ -1,4 +1,5 @@
 import React from "react";
+import { Router } from "meteor/iron:router";
 import { check } from "meteor/check";
 import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
