@@ -74,8 +74,20 @@ export const [details, useDetails] = ServerPublishOne(
   },
 );
 
-export const [findFilter, useFindFilter] = ServerPublishMany("userSearch", (search: string) => {
-  check(search, String);
+export const [findFilter, useFindFilter] = ServerPublishMany(
+  "userSearch",
+  (
+    search: string,
+    options?: {
+      exclude?: string[] | undefined;
+    },
+  ) => {
+    check(search, String);
 
-  return userSearchPrefix(search, { projection: { username: 1 }, limit: 10 });
-});
+    return userSearchPrefix(search, {
+      exclude: options?.exclude,
+      projection: { username: 1 },
+      limit: 30,
+    });
+  },
+);
