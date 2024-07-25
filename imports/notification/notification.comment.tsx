@@ -164,7 +164,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
           { query: { campaign } },
         ),
         commenterName,
-        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=${campaign}`,
+        customSiteUrl: Router.url("home", {}, { query: { campaign } }),
         customSiteName: siteName,
         customEmailLogo: emailLogo,
         unsubscribe: { type: "automatedNotifications", token: unsubToken },

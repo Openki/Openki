@@ -136,7 +136,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         isNew: entry.body.new,
         subject,
         additionalMessage: entry.body.additionalMessage,
-        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=${campaign}`,
+        customSiteUrl: Router.url("home", {}, { query: { campaign } }),
         customSiteName: siteName,
         customEmailLogo: emailLogo,
         unsubscribe: { type: "automatedNotifications", token: unsubToken },

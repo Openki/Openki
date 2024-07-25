@@ -140,7 +140,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         message: htmlizedMessage,
         senderCopy,
         recipientName: targetRecipient.getDisplayName(),
-        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=${campaign}`,
+        customSiteUrl: Router.url("home", {}, { query: { campaign } }),
         customSiteName: undefined as string | undefined,
         customEmailLogo: undefined as string | undefined,
         fromAddress: "",

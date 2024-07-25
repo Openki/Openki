@@ -124,7 +124,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
           .reduce((prev, curr) => [prev, <>", "</>, curr] as any),
         creater,
         subject,
-        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=${campaign}`,
+        customSiteUrl: Router.url("home", {}, { query: { campaign } }),
         customSiteName: siteName,
         customEmailLogo: emailLogo,
         unsubscribe: { type: "automatedNotifications", token: unsubToken },
