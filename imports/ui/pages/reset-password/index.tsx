@@ -1,123 +1,151 @@
+import React, { FormEvent, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
-import { ReactiveVar } from "meteor/reactive-var";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 
 import * as Alert from "/imports/api/alerts/alert";
 
 import { AccountsAsync } from "/imports/utils/promisify";
-import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
 
-import "/imports/ui/components/buttons";
+import { ButtonCancel } from "/imports/ui/components/buttons";
 
-import "./template.html";
+export function ResetPasswordPage(data: { token: string }) {
+  const { t } = useTranslation();
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "resetPasswordPage",
-  { token: string },
-  {
-    password: ReactiveVar<string>;
-    passwordValid: ReactiveVar<boolean>;
-    passwordSame: ReactiveVar<boolean>;
-    passwordNotSame: ReactiveVar<boolean>;
-    showPassword: ReactiveVar<boolean>;
-    updatePassword: () => void;
-  }
->;
+  const [isBusy, setIsBusy] = useState<false | "saving">(false);
 
-const template = Template.resetPasswordPage;
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [passwordValid, setPasswordValid] = useState(false);
+  const [passwordSame, setPasswordSame] = useState(false);
+  const [passwordNotSame, setPasswordNotSame] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-template.onCreated(function () {
-  const instance = this;
-
-  instance.autorun(() => {
-    Metatags.setCommonTags(i18n("resetPassword.siteTitle", "Reset password"));
-  });
-
-  instance.busy(false);
-
-  instance.password = new ReactiveVar("");
-  instance.passwordValid = new ReactiveVar(false);
-  instance.passwordSame = new ReactiveVar(false);
-  instance.passwordNotSame = new ReactiveVar(false);
-  instance.showPassword = new ReactiveVar(false);
-
-  instance.updatePassword = function () {
-    const password = $(".js-pwd-reset").val() as string;
-    instance.password.set(password);
-
-    if (instance.showPassword.get()) {
-      instance.passwordValid.set(password.length > 0);
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  function updatePassword(password: string, passwordConfirm: string, showPassword: boolean) {
+    if (showPassword) {
+      setPasswordValid(password.length > 0);
     } else {
-      const passwordConfirm = $(".js-confirm-pwd-reset").val() as string;
-      instance.passwordSame.set(password.length > 0 && password === passwordConfirm);
-      instance.passwordNotSame.set(
+      setPasswordSame(password.length > 0 && password === passwordConfirm);
+      setPasswordNotSame(
         !!passwordConfirm &&
           password.length <= passwordConfirm.length &&
           password !== passwordConfirm,
       );
-      instance.passwordValid.set(password.length > 0 && password === passwordConfirm);
+      setPasswordValid(password.length > 0 && password === passwordConfirm);
     }
-  };
-});
+  }
 
-template.helpers({
-  showPassword() {
-    return Template.instance().showPassword.get();
-  },
-
-  passwordSame() {
-    return Template.instance().passwordSame.get();
-  },
-
-  passwordNotSame() {
-    return Template.instance().passwordNotSame.get();
-  },
-
-  passwordFieldType() {
-    return Template.instance().showPassword.get() ? "text" : "password";
-  },
-
-  submitDisabled() {
-    return Template.instance().passwordValid.get() ? "" : "disabled";
-  },
-});
-
-template.events({
-  "click .js-show-pwd"(_event, instance) {
-    instance.showPassword.set(true);
-    instance.updatePassword();
-  },
-
-  "click .js-hide-pwd"(_event, instance) {
-    instance.showPassword.set(false);
-    instance.updatePassword();
-  },
-
-  "input, keyup, blur"(_event, instance) {
-    instance.updatePassword();
-  },
-
-  async submit(event, instance) {
-    instance.busy("saving");
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setIsBusy("saving");
 
-    const password = instance.$(".js-pwd-reset").val() as string;
-    const { token } = Template.currentData();
+    const { token } = data;
 
     try {
       await AccountsAsync.resetPassword(token, password);
 
-      Alert.success(i18n("resetPassword.passwordReset.", "Your password has been reset."));
+      Alert.success(t("resetPassword.passwordReset.", "Your password has been reset."));
       Router.go("profile");
     } catch (err) {
-      Alert.serverError(err, i18n("resetPassword.passwordResetError", "Unable to reset password"));
+      Alert.serverError(err, t("resetPassword.passwordResetError", "Unable to reset password"));
     } finally {
-      instance.busy(false);
+      setIsBusy(false);
     }
-  },
+  }
 
-  "click .js-cancel-reset-pwd"() {
+  function handelCancel() {
     Router.go("/");
-  },
-});
+  }
+
+  useEffect(() => {
+    Metatags.setCommonTags(t("resetPassword.siteTitle", "Reset password"));
+  });
+
+  return (
+    <div className="container mw-md">
+      <h1>{t("resetPassword.title", "Reset your password")}</h1>
+      <form className="reset-password" onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <div className="btn-group">
+            <button
+              type="button"
+              className={`btn btn-secondary ${!showPassword ? "active" : ""}`}
+              onClick={() => {
+                setShowPassword(false);
+                updatePassword(password, passwordConfirm, false);
+              }}
+            >
+              {t("resetPassword.confirmPasswordByTyping", "Confirm by typing it again")}
+            </button>
+            <button
+              type="button"
+              className={`btn btn-secondary ${showPassword ? "active" : ""}`}
+              onClick={() => {
+                setShowPassword(true);
+                updatePassword(password, passwordConfirm, true);
+              }}
+            >
+              {t("resetPassword.confirmPasswordVisually", "Show what I typed")}
+            </button>
+          </div>
+        </div>
+        <fieldset className="mb-3">
+          <label className="form-label" htmlFor="pass">
+            {t("_inputField.password")}
+          </label>
+          <input
+            className="form-control"
+            id="pass"
+            placeholder={t("profile.input.newPassword")}
+            type={showPassword ? "text" : "password"}
+            onChange={(event) => {
+              setPassword(event.currentTarget.value);
+              updatePassword(event.currentTarget.value, passwordConfirm, showPassword);
+            }}
+            defaultValue={password}
+          />
+        </fieldset>
+        {!showPassword ? (
+          <fieldset className="mb-3">
+            <label className="form-label" htmlFor="passConfirm">
+              {t("passwordReset.label.confirm", "Confirm")}
+            </label>
+            <input
+              className="form-control"
+              id="passConfirm"
+              placeholder={t("profile.input.repeatPassword")}
+              type="password"
+              onChange={(event) => {
+                setPasswordConfirm(event.currentTarget.value);
+                updatePassword(password, event.currentTarget.value, showPassword);
+              }}
+              defaultValue={passwordConfirm}
+            />
+            {passwordSame ? t("resetPassword.message.passwordsSame", "Passwords match") : null}
+            {passwordNotSame
+              ? t("resetPassword.message.passwordsNotSame", "Passwords don't match")
+              : null}
+          </fieldset>
+        ) : null}
+
+        <div className="form-actions">
+          <button
+            type="submit"
+            className="btn btn-save js-reset-pwd"
+            disabled={!passwordValid || !!isBusy}
+          >
+            {t("resetPassword.confirm", "Set my password")}
+          </button>
+          <ButtonCancel onClick={handelCancel} />
+        </div>
+      </form>
+    </div>
+  );
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("ResetPasswordPage", () => ResetPasswordPage);
