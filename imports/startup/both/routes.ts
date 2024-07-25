@@ -266,9 +266,11 @@ RouterAsync.route("proposeCourse", {
 
 RouterAsync.route("resetPassword", {
   path: "reset-password/:token",
-  template: "resetPasswordPage",
+  template: "HandleResetPasswordPage",
   async onRun() {
+    await import("/imports/ui/pages/handle-reset-password");
     await import("/imports/ui/pages/reset-password");
+    await import("/imports/ui/pages/visitor-to-user");
   },
   data() {
     return { token: this.params.token };

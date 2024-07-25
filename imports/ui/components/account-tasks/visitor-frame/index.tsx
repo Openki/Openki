@@ -127,7 +127,6 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
             className={`form-control ${errors.email ? "is-invalid" : ""}`}
             placeholder={t("frame.visitor.email", "E-Mail")}
             type="email"
-            autoFocus={true}
             value={registerData.email}
             onChange={(event) => {
               setRegisterData({

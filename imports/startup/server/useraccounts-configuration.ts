@@ -4,7 +4,7 @@ import { ServiceConfiguration } from "meteor/service-configuration";
 import { Accounts } from "meteor/accounts-base";
 
 import * as usersMethods from "/imports/api/users/methods";
-import { UserModel, UserProfile } from "/imports/api/users/users";
+import { UserModel, UserProfile, Users } from "/imports/api/users/users";
 
 import { isEmail } from "/imports/utils/email-tools";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
@@ -146,13 +146,19 @@ Accounts.onCreateUser((options: any, originalUser) => {
   return user;
 });
 
-Accounts.onLogin(async () => {
+Accounts.onLogin(async (options: any) => {
   await usersMethods.updateLastLogin();
 
   const user = Meteor.user();
+
   // generate a avatar color for every new user
   if (user && user.avatar?.color === undefined) {
     await usersMethods.updateAvatarColor();
+  }
+
+  // Remove visitor flag after passwort reset. https://github.com/meteor/meteor/blob/devel/packages/accounts-password/password_server.js
+  if (options.methodName === "resetPassword" && user?.privileged("visitor")) {
+    Users.update(user._id, { $pull: { privileges: "visitor" } });
   }
 });
 
