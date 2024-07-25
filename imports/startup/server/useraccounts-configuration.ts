@@ -106,6 +106,10 @@ Accounts.onCreateUser((options: any, originalUser) => {
     user.privileges = [];
   }
 
+  if (options.visitor) {
+    user.privileges.push("visitor");
+  }
+
   // Read email-address if provided
   let providedEmail;
   let verified = true; // Assume verified unless there is a flag that says it's not

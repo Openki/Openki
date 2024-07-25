@@ -3,7 +3,7 @@ import { Mongo } from "meteor/mongo";
 import { _ } from "meteor/underscore";
 import { i18n } from "/imports/startup/both/i18next";
 
-export type Role = "admin";
+export type Role = "admin" | "visitor";
 
 export interface UserProfile {
   name: string;
