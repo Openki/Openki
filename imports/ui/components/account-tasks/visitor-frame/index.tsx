@@ -93,8 +93,8 @@ export function VistiorFrame(props: Props) {
               setEmail(event.target.value);
             }}
           />
-        </div>
         {errors.email ? <div className="invalid-feedback">{errors.email}</div> : null}
+        </div>
       </div>
       <div className="mb-3">
         {t(
