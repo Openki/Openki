@@ -102,7 +102,6 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         USER: StringTools.truncate(newParticipant.getDisplayName(), 50),
         ROLE: roleTitle,
         ROLETYPE: body.newRole,
-        lng: locale,
       };
 
       const subject = t(
