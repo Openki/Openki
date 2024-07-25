@@ -12,7 +12,7 @@ import { Users, User, UserModel } from "/imports/api/users/users";
 import { Method } from "/imports/api/courses/methods";
 
 import { hasRole } from "/imports/utils/course-role-utils";
-import { Notification } from "/imports/notification/notification";
+import { Notification } from "../../startup/both/emails/notification";
 import { StringEnum, Type } from "/imports/utils/CustomChecks";
 
 export async function processChange<T>(change: Change<T>, options?: { isSimulation: boolean }) {

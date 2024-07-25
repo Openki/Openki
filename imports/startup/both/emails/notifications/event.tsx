@@ -11,8 +11,8 @@ import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { UserModel } from "/imports/api/users/users";
 
 import { getSiteName } from "/imports/utils/getSiteName";
-import { Model as NotificationModel } from "./notification";
-import { Event, Props } from "../emails/notifications/event";
+import { Model as NotificationModel } from "../notification";
+import { Event, Props } from "../../../../emails/notifications/Event";
 import { getStartEndDate } from "./utils";
 
 interface Body {

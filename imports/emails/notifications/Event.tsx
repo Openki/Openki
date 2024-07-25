@@ -2,9 +2,9 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { EventModel } from "/imports/api/events/events";
-import { EventBox } from "./EventBox";
-import { Footer } from "./Footer";
-import { Props as UnsubscribeLinkProps } from "./UnsubscribeLink";
+import { EventBox } from "./components/EventBox";
+import { Footer } from "./components/Footer";
+import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 
 export type Props = {
   event: EventModel;

@@ -13,8 +13,8 @@ import * as HtmlTools from "/imports/utils/html-tools";
 import * as StringTools from "/imports/utils/string-tools";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
-import { Model as NotificationModel } from "./notification";
-import { Join, Props } from "../emails/notifications/join";
+import { Model as NotificationModel } from "../notification";
+import { Join, Props } from "../../../../emails/notifications/Join";
 
 interface Body {
   courseId: string;

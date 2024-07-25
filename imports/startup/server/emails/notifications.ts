@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 
 import { Log } from "/imports/api/log/log";
-import * as Notification from "/imports/notification/notification";
+import * as Notification from "../../both/emails/notification";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
 // Watch the Log for event notifications

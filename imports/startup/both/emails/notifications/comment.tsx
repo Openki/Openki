@@ -13,7 +13,7 @@ import { Log } from "/imports/api/log/log";
 
 import * as StringTools from "/imports/utils/string-tools";
 import { getSiteName } from "/imports/utils/getSiteName";
-import { Model as NotificationModel } from "./notification";
+import { Model as NotificationModel } from "../notification";
 import { Comment, Props } from "/imports/emails/notifications/comment";
 
 export interface Body {

@@ -8,8 +8,8 @@ import { Log } from "/imports/api/log/log";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { Users, UserModel } from "/imports/api/users/users";
 
-import { Model as NotificationModel } from "./notification";
-import { Rsvp, Props } from "../emails/notifications/rsvp";
+import { Model as NotificationModel } from "../notification";
+import { Rsvp, Props } from "../../../../emails/notifications/Rsvp";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { getStartEndDate } from "./utils";
 

@@ -14,8 +14,8 @@ import * as HtmlTools from "/imports/utils/html-tools";
 import * as StringTools from "/imports/utils/string-tools";
 import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import { getSiteName } from "/imports/utils/getSiteName";
-import { Model as NotificationModel } from "./notification";
-import { PrivateMessage, Props } from "../emails/notifications/privateMessage";
+import { Model as NotificationModel } from "../notification";
+import { PrivateMessage, Props } from "../../../../emails/notifications/PrivateMessage";
 import { LocalTime } from "/imports/utils/local-time";
 
 interface Body {

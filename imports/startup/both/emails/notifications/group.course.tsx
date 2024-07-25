@@ -9,8 +9,8 @@ import { Groups } from "/imports/api/groups/groups";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { Log } from "/imports/api/log/log";
 import { Users, UserModel } from "/imports/api/users/users";
-import { Model as NotificationModel } from "./notification";
-import { GroupCourse, Props } from "../emails/notifications/group.course";
+import { Model as NotificationModel } from "../notification";
+import { GroupCourse, Props } from "../../../../emails/notifications/GroupCourse";
 
 import * as StringTools from "/imports/utils/string-tools";
 import { getSiteName } from "/imports/utils/getSiteName";

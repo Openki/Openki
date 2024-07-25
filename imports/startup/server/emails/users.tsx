@@ -7,10 +7,10 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { UserModel } from "/imports/api/users/users";
 
-import { Root } from "../../../emails/root";
-import { Verify } from "../../../emails/users/verify.html";
+import { Root } from "../../../emails/Root";
+import { Verify } from "../../../emails/users/Verify.html";
 import { verify } from "../../../emails/users/verify.text";
-import { ResetPassword } from "../../../emails/users/resetPassword.html";
+import { ResetPassword } from "../../../emails/users/ResetPassword.html";
 import { renderToEmail } from "/imports/utils/renderToEmail";
 import { resetPassword } from "../../../emails/users/resetPassword.text";
 

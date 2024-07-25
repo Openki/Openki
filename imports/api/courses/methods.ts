@@ -19,7 +19,7 @@ import { UserModel } from "/imports/api/users/users";
 
 import { Subscribe, Unsubscribe, Message } from "./subscription";
 
-import { Notification } from "/imports/notification/notification";
+import { Notification } from "../../startup/both/emails/notification";
 
 import * as AsyncTools from "/imports/utils/async-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";

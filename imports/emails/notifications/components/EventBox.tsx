@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 import { EventModel } from "/imports/api/events/events";
-import { getStartEndDate } from "../../notification/utils";
+import { getStartEndDate } from "../../../startup/both/emails/notifications/utils";
 
 function getVenueLine(event: EventModel) {
   const { venue } = event;

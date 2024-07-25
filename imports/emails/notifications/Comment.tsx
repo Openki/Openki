@@ -2,8 +2,8 @@ import React from "react";
 import { CourseDiscussionEnity } from "/imports/api/course-discussions/course-discussions";
 import { UserModel } from "/imports/api/users/users";
 import { useTranslation } from "react-i18next";
-import { Footer } from "./Footer";
-import { Props as UnsubscribeLinkProps } from "./UnsubscribeLink";
+import { Footer } from "./components/Footer";
+import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 
 export interface Props {
   username: string;

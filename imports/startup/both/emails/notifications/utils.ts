@@ -1,5 +1,5 @@
-import { EventModel } from "../api/events/events";
-import { LocalTime } from "../utils/local-time";
+import { EventModel } from "../../../../api/events/events";
+import { LocalTime } from "../../../../utils/local-time";
 
 export function getStartEndDate(event: EventModel, locale: string) {
   // Show dates in local time and in users locale
