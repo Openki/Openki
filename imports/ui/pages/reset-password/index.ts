@@ -11,7 +11,6 @@ import * as Metatags from "/imports/utils/metatags";
 import "/imports/ui/components/buttons";
 
 import "./template.html";
-import "./styles.scss";
 
 const Template = TemplateAny as TemplateStaticTyped<
   "resetPasswordPage",
