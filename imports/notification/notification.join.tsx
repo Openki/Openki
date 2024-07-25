@@ -142,7 +142,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
           .filter((r) => r._id !== actualRecipient._id)
           .map((r) => r.getDisplayName())
           .join(", "),
-        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=${campaign}`,
+        customSiteUrl: Router.url("home", {}, { query: { campaign } }),
         customSiteName: siteName,
         customEmailLogo: emailLogo,
         unsubscribe: { type: "automatedNotifications", token: unsubToken },

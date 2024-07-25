@@ -42,12 +42,7 @@ export function Rsvp({
           <EventBox event={event} campaign={campaign} lng={lng} />
         </td>
       </tr>
-      <Footer
-        receiveNote={t("email.base.unsubscribeLink.automatedNotifications", { SITENAME: siteName })}
-        unsubscribe={unsubscribe}
-        campaign={campaign}
-        lng={lng}
-      />
+      <Footer unsubscribe={unsubscribe} campaign={campaign} lng={lng} />
     </>
   );
 }

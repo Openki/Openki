@@ -108,7 +108,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       const vars = {
         event,
         subject,
-        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventCanceled`,
+        customSiteUrl: Router.url("home", {}, { query: { campaign } }),
         customSiteName: siteName,
         customEmailLogo: emailLogo,
         eventTitle: undefined as React.JSX.Element | undefined,

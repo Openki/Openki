@@ -144,7 +144,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         subject,
         participantsCount: event.numberOfParticipants(),
         email: <span style={{ color: "blue" }}>{PrivateSettings.siteEmail}</span>,
-        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=${campaign}`,
+        customSiteUrl: Router.url("home", {}, { query: { campaign } }),
         customSiteName: siteName,
         customEmailLogo: emailLogo,
         unsubscribe: { type: "automatedNotifications", token: unsubToken },

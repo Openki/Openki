@@ -102,7 +102,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
           query: { action: "unregister", campaign },
         }),
         subject,
-        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=${campaign}`,
+        customSiteUrl: Router.url("home", {}, { query: { campaign } }),
         customSiteName: siteName,
         customEmailLogo: emailLogo,
         eventTitle: undefined as React.JSX.Element | undefined,

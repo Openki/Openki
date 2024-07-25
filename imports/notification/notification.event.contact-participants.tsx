@@ -146,7 +146,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         subject,
         message: htmlizedMessage,
         senderCopy,
-        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=${campaign}`,
+        customSiteUrl: Router.url("home", {}, { query: { campaign } }),
         customSiteName: siteName,
         customEmailLogo: emailLogo,
         fromAddress: "",
