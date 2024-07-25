@@ -1,7 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { _ } from "meteor/underscore";
-import { i18n } from "/imports/startup/both/i18next";
 
 export type Role = "admin" | "visitor";
 
@@ -118,7 +117,7 @@ export type UserModel = User & UserEntity;
 
 export class User {
   getDisplayName(this: Pick<UserEntity, "username">) {
-    return this.username || i18n("user.visitor", "Visitor");
+    return this.username;
   }
 
   /**
