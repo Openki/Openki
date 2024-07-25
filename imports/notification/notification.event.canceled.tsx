@@ -82,6 +82,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
 
     vars(locale, _actualRecipient, unsubToken) {
       const t = i18next.getFixedT(locale);
+      const campaign = "eventCanceled";
 
       if (!event) {
         throw new Error("Event does not exist (0.o)");
@@ -105,7 +106,6 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       const siteName = getSiteName(region);
 
       const vars = {
-        unsubLink: Router.url("profileNotificationsUnsubscribe", { token: unsubToken }),
         event,
         subject,
         customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventCanceled`,
@@ -113,7 +113,8 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         customEmailLogo: emailLogo,
         eventTitle: undefined as React.JSX.Element | undefined,
         message: entry.body.message,
-        campaign: "eventCanceled",
+        unsubscribe: { type: "automatedNotifications" as const, token: unsubToken },
+        campaign,
       };
 
       const eventFullTitle = t("notification.event.canceled.mail.title", "{DATE} — {EVENT}", {
@@ -121,7 +122,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         DATE: startMoment.calendar(),
       });
       const eventUrl = Router.url("showEvent", event, {
-        query: "campaign=eventCanceled",
+        query: `campaign=${campaign}`,
       });
 
       vars.eventTitle = <a href={eventUrl}>{eventFullTitle}</a>;

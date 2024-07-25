@@ -1,11 +1,11 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { UserModel } from "/imports/api/users/users";
-import { Router } from "meteor/iron:router";
+import { Footer } from "./Footer";
+import { Props as UnsubscribeLinkProps } from "./UnsubscribeLink";
 
 export type Props = {
   username: string;
-  unsubLink: string;
   sender: UserModel;
   senderLink: string;
   senderName: JSX.Element;
@@ -14,12 +14,13 @@ export type Props = {
   siteName: string;
   fromAddress: string;
   eventTitle: React.JSX.Element | undefined;
+  unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
+  campaign: string;
   lng: string;
 };
 
 export function EventContactParticipants({
   username,
-  unsubLink,
   sender,
   senderLink,
   senderName,
@@ -28,6 +29,8 @@ export function EventContactParticipants({
   siteName,
   fromAddress,
   eventTitle,
+  unsubscribe,
+  campaign,
   lng,
 }: Props) {
   const { t } = useTranslation(undefined, { lng });
@@ -90,27 +93,7 @@ export function EventContactParticipants({
           )}
         </td>
       </tr>
-      <tr>
-        <td>
-          <table className="footer">
-            <tr>
-              <td>
-                <a href={unsubLink}>
-                  {t(
-                    "notification.event.contact-participants.mail.unsubLink",
-                    "Unsubscribe from all private messages from users.",
-                    { SITENAME: siteName },
-                  )}
-                </a>
-                &nbsp;
-                <a href={Router.url("profile", { query: "campaign=eventContactParticipants" })}>
-                  {t("email.base.profileLink")}
-                </a>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
+      <Footer unsubscribe={unsubscribe} campaign={campaign} lng={lng} />
     </>
   );
 }

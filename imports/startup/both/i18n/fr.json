@@ -623,7 +623,7 @@
   "notification.privateMessage.mail.replyButton": "Répondre sur {SITENAME}",
   "notification.privateMessage.mail.replyButton.simple": "Répondre",
   "notification.privateMessage.mail.subject": "Message privé de {SENDER}",
-  "notification.privateMessage.mail.unsubLink": "Se désinscrire de tous les messages privées venant des utilisateurs.",
+  "email.base.unsubscribeLink.privateMessage": "Se désinscrire de tous les messages privées venant des utilisateurs.",
   "notification.rsvp.mail.attending": "Vous êtes inscrit à l'événement suivant :",
   "notification.rsvp.mail.intro": "Nous sommes contents de vous voir le {DATE}. Votre place est réservé. Si vous ne pouvez pas être présent à l'événement, veuillez le signaler aux organisateurs en annulant votre enregistrement.",
   "notification.rsvp.mail.linkCalendar": "Ajouter cet événement à mon calendrier",

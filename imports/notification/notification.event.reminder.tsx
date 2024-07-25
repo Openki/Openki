@@ -71,6 +71,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
 
     vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
+      const campaign = "eventReminder";
 
       if (!event) {
         throw new Error("Event does not exist (0.o)");
@@ -96,22 +97,22 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       const vars = {
         companions:
           event.participants?.filter((p) => p.user === actualRecipient._id)[0].companions || 0,
-        unsubLink: Router.url("profileNotificationsUnsubscribe", { token: unsubToken }),
         event,
         unregisterToEventLink: Router.url("showEvent", event, {
-          query: "action=unregister&campaign=eventReminder",
+          query: `action=unregister&campaign=${campaign}`,
         }),
         subject,
-        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventReminder`,
+        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=${campaign}`,
         customSiteName: siteName,
         customEmailLogo: emailLogo,
         eventTitle: undefined as React.JSX.Element | undefined,
         eventCalendar: startMoment.calendar(),
-        campaign: "eventReminder",
+        unsubscribe: { type: "automatedNotifications" as const, token: unsubToken },
+        campaign,
       };
 
       const eventUrl = Router.url("showEvent", event, {
-        query: "campaign=eventReminder",
+        query: `campaign=${campaign}`,
       });
 
       vars.eventTitle = <a href={eventUrl}>{event.title}</a>;

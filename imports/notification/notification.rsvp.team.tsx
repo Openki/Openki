@@ -89,6 +89,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
 
     vars(locale: string, _actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
+      const campaign = "rsvpTeamNotify";
 
       if (!newParticipant) {
         throw new Error("New participant does not exist (0.o)");
@@ -131,12 +132,11 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         DATE: startMoment.calendar(),
       });
       const eventUrl = Router.url("showEvent", event, {
-        query: "campaign=rsvpTeamNotify",
+        query: `campaign=${campaign}`,
       });
 
       const eventTitle = <a href={eventUrl}>{eventFullTitle}</a>;
       return {
-        unsubLink: Router.url("profileNotificationsUnsubscribe", { token: unsubToken }),
         course: course.name,
         event: eventTitle,
         newParticipant: <strong>{newParticipant.getDisplayName()}</strong>,
@@ -144,9 +144,11 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         subject,
         participantsCount: event.numberOfParticipants(),
         email: <span style={{ color: "blue" }}>{PrivateSettings.siteEmail}</span>,
-        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=rsvpTeamNotify`,
+        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=${campaign}`,
         customSiteName: siteName,
         customEmailLogo: emailLogo,
+        unsubscribe: { type: "automatedNotifications", token: unsubToken },
+        campaign,
       };
     },
     template: (props) => <RsvpTeam {...props} />,

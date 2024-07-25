@@ -1,12 +1,12 @@
 /* eslint-disable no-nested-ternary */
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Router } from "meteor/iron:router";
 import { EventModel } from "/imports/api/events/events";
 import { EventBox } from "./EventBox";
+import { Footer } from "./Footer";
+import { Props as UnsubscribeLinkProps } from "./UnsubscribeLink";
 
 export type Props = {
-  unsubLink: string;
   event: EventModel;
   recipientTakePart: boolean | undefined;
   registerToEventLink: string;
@@ -16,14 +16,13 @@ export type Props = {
   isNew: boolean;
   subject: string;
   additionalMessage: string | undefined;
-  siteName: string;
   username: string;
+  unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   campaign: string;
   lng: string;
 };
 
 export function Event({
-  unsubLink,
   event,
   recipientTakePart,
   registerToEventLink,
@@ -32,8 +31,8 @@ export function Event({
   unsubscribeFromCourseLink,
   isNew,
   additionalMessage,
-  siteName,
   username,
+  unsubscribe,
   campaign,
   lng,
 }: Props) {
@@ -101,32 +100,16 @@ export function Event({
           ) : null}
         </td>
       </tr>
-      <tr>
-        <td>
-          <table className="footer">
-            <tr>
-              <td>
-                {t(
-                  "notification.event.mail.notice",
-                  "You receive this e-mail because you are involved in {COURSE}.",
-                  { COURSE: course },
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <a href={unsubLink}>
-                  {t("email.base.unsubscribeLink.automatedNotifications", { SITENAME: siteName })}
-                </a>
-                &nbsp;
-                <a href={Router.url("profile", { query: `campaign=${campaign}` })}>
-                  {t("email.base.profileLink")}
-                </a>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
+      <Footer
+        receiveNote={t(
+          "notification.event.mail.notice",
+          "You receive this e-mail because you are involved in {COURSE}.",
+          { COURSE: course },
+        )}
+        unsubscribe={unsubscribe}
+        campaign={campaign}
+        lng={lng}
+      />
     </>
   );
 }

@@ -88,6 +88,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
 
     vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
+      const campaign = "eventNotify";
 
       if (!event) {
         throw new Error("Event does not exist (0.o)");
@@ -120,26 +121,26 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       const siteName = getSiteName(region);
       const emailLogo = region.custom?.emailLogo;
 
-      const courseLink = Router.url("showCourse", course, { query: "campaign=eventNotify" });
+      const courseLink = Router.url("showCourse", course, { query: `campaign=${campaign}` });
       return {
-        unsubLink: Router.url("profileNotificationsUnsubscribe", { token: unsubToken }),
         event,
         recipientTakePart: event.participants?.some((p) => p.user === actualRecipient._id),
         registerToEventLink: Router.url("showEvent", event, {
-          query: "action=register&campaign=eventNotify",
+          query: `action=register&campaign=${campaign}`,
         }),
         course: <a href={courseLink}>{course.name}</a>,
         courseName: course.name,
         unsubscribeFromCourseLink: Router.url("showCourse", course, {
-          query: "unsubscribe=participant&force=1&campaign=eventNotify",
+          query: `unsubscribe=participant&force=1&campaign=${campaign}`,
         }),
         isNew: entry.body.new,
         subject,
         additionalMessage: entry.body.additionalMessage,
-        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventNotify`,
+        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=${campaign}`,
         customSiteName: siteName,
         customEmailLogo: emailLogo,
-        campaign: "eventNotify",
+        unsubscribe: { type: "automatedNotifications", token: unsubToken },
+        campaign,
       };
     },
     template: (props) => <Event {...props} />,

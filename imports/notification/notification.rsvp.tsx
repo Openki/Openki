@@ -71,6 +71,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
 
     vars(locale: string, _actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
+      const campaign = "rsvpNotify";
 
       if (!newParticipant) {
         throw new Error("New participant does not exist (0.o)");
@@ -100,14 +101,14 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
 
       return {
         companions: body.companions,
-        unsubLink: Router.url("profileNotificationsUnsubscribe", { token: unsubToken }),
         event,
         eventDate: startMoment.format("dddd, LL"),
         subject,
-        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=rsvpNotify`,
+        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=${campaign}`,
         customSiteName: siteName,
         customEmailLogo: emailLogo,
-        campaign: "rsvpNotify",
+        unsubscribe: { type: "automatedNotifications", token: unsubToken },
+        campaign,
       };
     },
     template: (props) => <Rsvp {...props} />,

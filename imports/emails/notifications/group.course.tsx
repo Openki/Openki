@@ -1,27 +1,28 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Router } from "meteor/iron:router";
 import { UserModel } from "/imports/api/users/users";
+import { Footer } from "./Footer";
+import { Props as UnsubscribeLinkProps } from "./UnsubscribeLink";
 
 export type Props = {
-  unsubLink: string;
   course: React.JSX.Element;
   courseDescription: string;
   groups: React.JSX.Element;
   creater: UserModel;
-  siteName: string;
   username: string;
+  unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
+  campaign: string;
   lng: string;
 };
 
 export function GroupCourse({
-  unsubLink,
   course,
   courseDescription,
   groups,
   creater,
-  siteName,
   username,
+  unsubscribe,
+  campaign,
   lng,
 }: Props) {
   const { t } = useTranslation(undefined, { lng });
@@ -55,32 +56,17 @@ export function GroupCourse({
           </p>
         </td>
       </tr>
-      <tr>
-        <td>
-          <table className="footer">
-            <tr>
-              <td>
-                {t(
-                  "notification.group.course.mail.recpnote",
-                  "You receive this message because you're a member of {GROUPS}.",
-                  { GROUPS: groups },
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <a href={unsubLink}>
-                  {t("email.base.unsubscribeLink.automatedNotifications", { SITENAME: siteName })}
-                </a>
-                &nbsp;
-                <a href={Router.url("profile", { query: "campaign=groupCourseNotify" })}>
-                  {t("email.base.profileLink")}
-                </a>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
+
+      <Footer
+        receiveNote={t(
+          "notification.group.course.mail.recpnote",
+          "You receive this message because you're a member of {GROUPS}.",
+          { GROUPS: groups },
+        )}
+        unsubscribe={unsubscribe}
+        campaign={campaign}
+        lng={lng}
+      />
     </>
   );
 }
