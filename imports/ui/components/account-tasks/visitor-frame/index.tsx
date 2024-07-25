@@ -76,6 +76,7 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
         try {
           await AccountsAsync.createUser({
             ...registerData,
+            visitor: true, // used in useraccounts-configuration.ts to set privileges
             password: Random.secret(),
             locale,
           } as any);
