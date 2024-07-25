@@ -1090,6 +1090,7 @@
   "visitorEmail.subject": "[{SITE}] Welcome to {SITE}, {NAME}",
   "visitorToUser.siteTitle": "Create Account",
   "visitorToUser.success.": "Your account is.",
+  "visitorToUser.text": "Please choose a password to create your {USERNAME} account.",
   "visitorToUser.title": "Create Account",
   "warning.emailExists": "This e-mail address is already in use.",
   "warning.emailNotValid": "Your e-mail address seems to have an error.",
