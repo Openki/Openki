@@ -6,6 +6,7 @@ import { useSession } from "/imports/utils/react-meteor-data";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { AccountsAsync } from "/imports/utils/promisify";
 import { PublicSettings } from "/imports/utils/PublicSettings";
+import { Router } from "meteor/iron:router";
 
 import * as UsersMethods from "/imports/api/users/methods";
 
@@ -54,11 +55,17 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
       field: "email",
     },
     "Email already exists.": {
-      text: () =>
-        t(
-          "visitor.warning.emailExists",
-          "This email already exists. Have you tried resetting your password?",
-        ),
+      text: () => (
+        <>
+          {t(
+            "visitor.warning.emailExists",
+            "This Email is already in use. Please create a user to continue with it: ",
+          )}{" "}
+          <a href={Router.path("resetPasswortEmail", {}, { query: { email: registerData.email } })}>
+            {t("visitor.warning.sendEmail", "Send me an email to create my user")}
+          </a>
+        </>
+      ),
       field: "email",
     },
   });

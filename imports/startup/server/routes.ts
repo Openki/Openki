@@ -49,22 +49,3 @@ Router.route("profilePrivateMessagesUnsubscribe", {
   },
   where: "server",
 });
-
-Router.route("resetPasswort", {
-  path: "/profile/reset-passwort",
-  async action() {
-    const email = this.params.query.email as string;
-
-    if (email) {
-      // call the server method for sending reset email. https://github.com/meteor/meteor/blob/master/packages/accounts-password/password_server.js
-      Meteor.call("forgotPassword", { email });
-    }
-
-    this.response.writeHead(302, {
-      Location: Router.url("home", {}, { query: { action: "resetPasswortEmailSended" } }),
-    });
-
-    this.response.end();
-  },
-  where: "server",
-});
