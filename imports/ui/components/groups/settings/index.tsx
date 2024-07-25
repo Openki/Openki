@@ -1,227 +1,428 @@
+/* eslint-disable no-nested-ternary */
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
-import { i18n } from "/imports/startup/both/i18next";
-import { ReactiveVar } from "meteor/reactive-var";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import { PublicSettings } from "/imports/utils/PublicSettings";
+import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useUser, useUserId } from "/imports/utils/react-meteor-data";
+import { useTracker } from "meteor/react-meteor-data";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { GroupModel, GroupEntity, Groups, GroupMemberEntity } from "/imports/api/groups/groups";
+import { GroupModel, Groups, GroupMemberEntity } from "/imports/api/groups/groups";
 import * as GroupsMethods from "/imports/api/groups/methods";
 import { Users } from "/imports/api/users/users";
+import { useFindFilter } from "/imports/api/users/publications";
 
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
-import { userSearchPrefix } from "/imports/utils/user-search-prefix";
+import {
+  type UploadImage,
+  type Data as EditableImageProps,
+  EditableImage,
+} from "/imports/ui/components/editable-image";
+import { getUserName } from "/imports/ui/lib/getUserName";
+import { DeleteConfirm } from "/imports/ui/components/delete-confirm";
+import { ProfileLink } from "/imports/ui/components/profile-link";
 
-import "/imports/ui/components/buttons";
-import "/imports/ui/components/editable-image";
-import "/imports/ui/components/profile-link";
-import "/imports/ui/components/delete-confirm";
-import type { UploadImage, Data as EditableImageData } from "/imports/ui/components/editable-image";
-
-import "./template.html";
 import "./styles.scss";
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "groupSettings",
-  {
-    group: GroupModel;
-  },
-  { userSearch: ReactiveVar<string> }
->;
+function RemoveMember({
+  user,
+  notify,
+  onRemove,
+}: GroupMemberEntity & { onRemove: (memberId: string, memberName: string) => void }) {
+  const { t } = useTranslation();
+  const userName = useTracker(() => getUserName(user));
+  const currentUserId = useUserId();
 
-const template = Template.groupSettings;
+  return (
+    <div className="tag tag-btn group-member-tag-btn-remove ">
+      <button
+        type="button"
+        title={t("group.settings.removeFromGroup", "remove member")}
+        onClick={() => {
+          onRemove(user, userName);
+        }}
+      >
+        <i className="fa-solid fa-xmark fa-fw" aria-hidden="true"></i> {userName}
+        {currentUserId !== user ? (
+          notify ? (
+            <i className="fa-solid fa-bell fa-fw" aria-hidden="true"></i>
+          ) : (
+            <i className="fa-solid fa-bell-slash fa-fw" aria-hidden="true"></i>
+          )
+        ) : null}
+      </button>
+    </div>
+  );
+}
 
-template.onCreated(function () {
-  const instance = this;
+function FoundUsers({
+  group,
+  userSearch,
+  onAdd,
+}: {
+  group: GroupModel;
+  userSearch: string;
+  onAdd: (userId: string) => void;
+}) {
+  const { t } = useTranslation();
 
-  instance.busy(false);
-
-  instance.userSearch = new ReactiveVar("");
-
-  instance.autorun(() => {
-    const search = instance.userSearch.get();
-    if (search.length > 0) {
-      instance.subscribe("userSearch", search);
-    }
+  const [isLoading, users] = useFindFilter(userSearch, {
+    exclude: group.members.map((m) => m.user),
   });
-});
 
-template.helpers({
-  isCurrentUser(userId: string) {
-    return Meteor.userId() === userId;
-  },
+  if (isLoading()) {
+    return null;
+  }
 
-  foundUsers(group: GroupEntity) {
-    const instance = Template.instance();
+  return (
+    <>
+      {users.map((user) => (
+        <React.Fragment key={user._id}>
+          <div className="tag tag-btn group-member-tag-btn-add ">
+            <button
+              title={t("group.settings.addMember", "add as member")}
+              type="button"
+              onClick={() => onAdd(user._id)}
+            >
+              <i className="fa-solid fa-plus fa-fw" aria-hidden="true"></i> {user.username}
+            </button>
+          </div>
+          <div className="tag tag-link group-member-tag-profile addon">
+            <a
+              href={Router.path("userprofile", { _id: user._id })}
+              title={t("group.settings.member.profile")}
+            >
+              <i className="fa-solid fa-user fa-fw" aria-hidden="true"></i>
+            </a>
+          </div>
+        </React.Fragment>
+      ))}
+    </>
+  );
+}
 
-    const search = instance.userSearch.get();
-    if (search === "") {
-      return false;
-    }
+export type Props = {
+  group: GroupModel;
+};
 
-    return userSearchPrefix(search, { exclude: group.members.map((m) => m.user), limit: 30 });
-  },
+export function GroupSettings({ group }: Props) {
+  const { t } = useTranslation();
+  const currentUser = useUser();
+  const { calendarDayFormat } = useDateTimeFormat();
+  const [userSearch, setUserSearch] = useState("");
 
-  logoFileUploadArgs(): EditableImageData {
-    const instance = Template.instance();
+  function logoFileUploadArgs(): EditableImageProps {
     return {
-      thumbnail: { src: instance.data.group?.publicLogoUrl?.(), maxSize: 150 },
+      thumbnail: { src: group?.publicLogoUrl?.(), maxSize: 150 },
       maxSize: 100,
       async onUpload(file: UploadImage) {
-        const parentInstance = instance.parentInstance() as any; // Not available in callback
-
-        instance.busy("saving");
-
-        const groupId = instance.data.group._id;
+        const groupId = group._id;
         try {
           await GroupsMethods.updateLogo(groupId, file);
           const groupName = Groups.findOne(groupId)?.name;
           Alert.success(
-            i18n(
+            t(
               "groupSettings.group.logo.updated",
               'Changes to the "{GROUP}" group settings have been saved.',
               { GROUP: groupName },
             ),
           );
-          parentInstance.editingSettings.set(false);
         } catch (err) {
           Alert.serverError(
             err,
-            i18n("groupSettings.group.logo.updated.error", "Could not save settings"),
+            t("groupSettings.group.logo.updated.error", "Could not save settings"),
           );
-        } finally {
-          instance.busy(false);
         }
       },
-      onDelete: instance.data.group?.logoUrl
+      onDelete: group?.logoUrl
         ? async function () {
-            const parentInstance = instance.parentInstance() as any; // Not available in callback
-
-            instance.busy("deleting");
-
-            const groupId = instance.data.group._id;
+            const groupId = group._id;
             try {
               await GroupsMethods.deleteLogo(groupId);
               const groupName = Groups.findOne(groupId)?.name;
               Alert.success(
-                i18n(
+                t(
                   "groupSettings.group.logo.removed",
                   'Changes to the "{GROUP}" group settings have been saved.',
                   { GROUP: groupName },
                 ),
               );
-              parentInstance.editingSettings.set(false);
             } catch (err) {
               Alert.serverError(
                 err,
-                i18n("groupSettings.group.logo.removed.error", "Could not save settings"),
+                t("groupSettings.group.logo.removed.error", "Could not save settings"),
               );
-            } finally {
-              instance.busy(false);
             }
           }
         : undefined,
     };
-  },
-
-  kioskEventURL(group: GroupEntity) {
+  }
+  function kioskEventURL() {
     return Router.url("kioskEvents", {}, { query: { group: group._id } });
-  },
-  timetableURL(group: GroupEntity) {
+  }
+  function timetableURL() {
     return Router.url("timetable", {}, { query: { group: group._id } });
-  },
-  scheduleURL(group: GroupEntity) {
+  }
+  function scheduleURL() {
     return Router.url("frameSchedule", {}, { query: { group: group._id } });
-  },
-  frameEventsURL(group: GroupEntity) {
+  }
+  function frameEventsURL() {
     return Router.url("frameEvents", {}, { query: { group: group._id } });
-  },
-  frameWeekURL(group: GroupEntity) {
+  }
+  function frameWeekURL() {
     return Router.url("frameWeek", {}, { query: { group: group._id } });
-  },
-  frameCalendarURL(group: GroupEntity) {
+  }
+  function frameCalendarURL() {
     return Router.url("frameCalendar", {}, { query: { group: group._id } });
-  },
-  frameListURL(group: GroupEntity) {
+  }
+  function frameListURL() {
     return Router.url("frameCourselist", {}, { query: { group: group._id } });
-  },
-  isAdmin() {
-    return UserPrivilegeUtils.privilegedTo("admin");
-  },
-  deleteConfirmAttr() {
-    const { group } = Template.instance().data;
+  }
+
+  function deleteConfirmAttr() {
     return {
-      confirmText: i18n(
+      confirmText: t(
         "group.reallydelete",
         "Please confirm that you would like to delete {GROUP}. This cannot be undone.",
         { GROUP: group.name },
       ),
-      confirmButton: i18n("group.delete.confirm.button", "Delete {GROUP}", { GROUP: group.name }),
+      confirmButton: t("group.delete.confirm.button", "Delete {GROUP}", { GROUP: group.name }),
       onRemove: async () => {
         const groupId = group._id;
         await GroupsMethods.remove(groupId);
 
-        Alert.success(i18n("group.deleted", "Group has been deleted"));
+        Alert.success(t("group.deleted", "Group has been deleted"));
       },
-      busyButton: i18n("group.delete.confirm.button.busy", "Deleting group…"),
+      busyButton: t("group.delete.confirm.button.busy", "Deleting group…"),
     };
-  },
-});
+  }
 
-template.events({
-  "keyup .js-search-users"(_event, instance) {
-    instance.userSearch.set(instance.$(".js-search-users").val() as string);
-  },
-
-  async "click .js-member-add-btn"(this: { _id: string }) {
-    const memberId = this._id;
-    const groupId = Router.current().params._id as string;
+  async function handleMemberRemove(memberId: string, memberName: string) {
     try {
-      await GroupsMethods.updateMembership(memberId, groupId, true);
-      const memberName = Users.findOne(memberId)?.getDisplayName();
-      const groupName = Groups.findOne(groupId)?.name;
+      await GroupsMethods.updateMembership(memberId, group._id, false);
       Alert.success(
-        i18n("groupSettings.memberAdded", '"{MEMBER}" has been added to the "{GROUP}" group', {
+        t("groupSettings.memberRemoved", '"{MEMBER}" has been removed from the "{GROUP}" group', {
           MEMBER: memberName,
-          GROUP: groupName,
+          GROUP: group.name,
         }),
       );
     } catch (err) {
-      Alert.serverError(err, i18n("groupSettings.memberAdded.error", "Could not add member"));
+      Alert.serverError(err, t("groupSettings.memberRemoved.error", "Could not remove member"));
     }
-  },
+  }
 
-  async "click .js-member-remove-btn"(this: GroupMemberEntity) {
-    const memberId = this.user;
-    const groupId = Router.current().params._id as string;
+  async function handleMemberAdd(userId: string) {
     try {
-      await GroupsMethods.updateMembership(memberId, groupId, false);
-      const memberName = Users.findOne(memberId)?.getDisplayName();
-      const groupName = Groups.findOne(groupId)?.name;
+      await GroupsMethods.updateMembership(userId, group._id, true);
+      const memberName = Users.findOne(userId)?.getDisplayName();
       Alert.success(
-        i18n(
-          "groupSettings.memberRemoved",
-          '"{MEMBER}" has been removed from the "{GROUP}" group',
-          { MEMBER: memberName, GROUP: groupName },
-        ),
+        t("groupSettings.memberAdded", '"{MEMBER}" has been added to the "{GROUP}" group', {
+          MEMBER: memberName,
+          GROUP: group.name,
+        }),
       );
     } catch (err) {
-      Alert.serverError(err, i18n("groupSettings.memberRemoved.error", "Could not remove member"));
+      Alert.serverError(err, t("groupSettings.memberAdded.error", "Could not add member"));
     }
-  },
+  }
 
-  async "click .js-member-toggle-notify-btn"() {
-    const groupId = Router.current().params._id as string;
+  async function handleMemberToggleNotify() {
     try {
-      await GroupsMethods.toggleMemberNotify(groupId);
+      await GroupsMethods.toggleMemberNotify(group._id);
     } catch (err) {
       Alert.serverError(
         err,
-        i18n("groupSettings.memberToggleNotify.error", "Could not change members notify setting."),
+        t("groupSettings.memberToggleNotify.error", "Could not change members notify setting."),
       );
     }
-  },
+  }
 
-  "click .js-group-edit-cancel"(_event, instance) {
-    (instance.parentInstance() as any).editingSettings.set(false);
-  },
-});
+  return (
+    <form>
+      <div className="details-form group-settings">
+        <div className="row">
+          <div className="col-md">
+            <h3>
+              <span className="fa-solid fa-gear fa-fw" aria-hidden="true"></span>{" "}
+              {t("group.settings.title", "Settings")}
+            </h3>
+            <div className="mb-3">
+              <label className="form-label">{t("group.settings.field.logo", "Logo")}</label>
+              <EditableImage {...logoFileUploadArgs()} />
+            </div>
+          </div>
+
+          <div className="col-md">
+            <h3>
+              <span className="fa-solid fa-users fa-fw" aria-hidden="true"></span>{" "}
+              {t("group.settings.title.Members", "Members")}
+            </h3>
+            <div className="tag-group multiline">
+              {group.members.map((member) => (
+                <React.Fragment key={member.user}>
+                  <RemoveMember {...member} onRemove={handleMemberRemove} />
+
+                  {currentUser?._id === member.user ? (
+                    member.notify ? (
+                      <div className="tag tag-btn group-member-tag-notify addon">
+                        <button
+                          type="button"
+                          title={t(
+                            "group.settings.member.turnNotifyOff",
+                            "Turn my notifications off",
+                          )}
+                          onClick={handleMemberToggleNotify}
+                        >
+                          <i className="fa-solid fa-bell fa-fw" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="tag tag-btn group-member-tag-notify addon">
+                        <button
+                          type="button"
+                          title={t(
+                            "group.settings.member.turnNotifyOn",
+                            "Turn my notifications on",
+                          )}
+                          onClick={handleMemberToggleNotify}
+                        >
+                          <i className="fa-solid fa-bell-slash fa-fw" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    )
+                  ) : null}
+
+                  <div className="tag tag-link group-member-tag-profile addon">
+                    <a
+                      href={Router.path("userprofile", { _id: member.user })}
+                      title={t("group.settings.member.profile", "Visit profile")}
+                    >
+                      <i className="fa-solid fa-user fa-fw" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                </React.Fragment>
+              ))}
+            </div>
+            <div className="mb-3">
+              <label className="form-label">
+                {t("group.settings.field.addMembers", "Add a new member to your group")}
+              </label>
+              <div className="input-group">
+                <span className="input-group-text">
+                  <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
+                </span>
+                <input
+                  className="form-control"
+                  id="AddGroupMember"
+                  placeholder={t(
+                    "group.settings.field.addMember.placeholder",
+                    "Type name of buddy",
+                  )}
+                  size={40}
+                  type="text"
+                  defaultValue={userSearch}
+                  onKeyUp={(ev) => {
+                    setUserSearch(ev.currentTarget.value);
+                  }}
+                />
+              </div>
+            </div>
+            {userSearch ? (
+              <div className="tag-group multiline">
+                <FoundUsers group={group} userSearch={userSearch} onAdd={handleMemberAdd} />
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </div>
+      <div className="details-addition">
+        <h3>
+          <span className="fa-solid fa-link fa-fw" aria-hidden="true"></span>{" "}
+          {t("group.linksCollection.title", "{NAME}-views", { NAME: PublicSettings.siteName })}
+        </h3>
+        <ul className="list-unstyled">
+          <li>
+            Infoscreen-Link:{" "}
+            <a href={kioskEventURL()} target="_blank">
+              {kioskEventURL()}
+            </a>
+          </li>
+          <li>
+            Timetable-Link:{" "}
+            <a href={timetableURL()} target="_blank">
+              {timetableURL()}
+            </a>
+          </li>
+          <li>
+            Schedule-Link:{" "}
+            <a href={scheduleURL()} target="_blank">
+              {scheduleURL()}
+            </a>
+          </li>
+          <li>
+            iframe-Eventboxes-Link:{" "}
+            <a href={frameEventsURL()} target="_blank">
+              {frameEventsURL()}
+            </a>
+          </li>
+          <li>
+            iframe-weekly-calendar-Link:{" "}
+            <a href={frameWeekURL()} target="_blank">
+              {frameWeekURL()}
+            </a>
+          </li>
+          <li>
+            iframe-calendar-Link:{" "}
+            <a href={frameCalendarURL()} target="_blank">
+              {frameCalendarURL()}
+            </a>
+          </li>
+          <li>
+            iframe-List-Link:{" "}
+            <a href={frameListURL()} target="_blank">
+              {frameListURL()}
+            </a>
+          </li>
+        </ul>
+
+        {currentUser?.privileged("admin") ? (
+          <p>
+            {group.createdby ? (
+              <>
+                <strong>{t("group.settings.createdBy", "Created by")}</strong>:{" "}
+                <ProfileLink userId={group.createdby} />
+                <br />
+              </>
+            ) : null}
+            {group.time_created ? (
+              <>
+                <strong>{t("group.settings.timeCreated", "Created at")}</strong>:{" "}
+                {calendarDayFormat(group.time_created)}
+                <br />
+              </>
+            ) : null}
+
+            {group.time_lastedit ? (
+              <>
+                <strong>{t("group.settings.timeLastEdit", "Last edit at")}</strong>:{" "}
+                {calendarDayFormat(group.time_lastedit)}
+              </>
+            ) : null}
+          </p>
+        ) : null}
+      </div>
+
+      {currentUser?.privileged("admin") ? (
+        <div className="actions">
+          <DeleteConfirm {...deleteConfirmAttr()} />
+        </div>
+      ) : null}
+    </form>
+  );
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("GroupSettings", () => GroupSettings);
