@@ -8,7 +8,7 @@ import {
 } from "/imports/api/course-discussions/course-discussions";
 import * as CourseDiscussionUtils from "/imports/utils/course-discussion-utils";
 import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
-import { Notification } from "/imports/notification/notification";
+import { Notification } from "../../startup/both/emails/notification";
 import * as StringTools from "/imports/utils/string-tools";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";

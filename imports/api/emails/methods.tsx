@@ -7,14 +7,14 @@ import { Meteor } from "meteor/meteor";
 import { Version } from "/imports/api/version/version";
 import { Users } from "/imports/api/users/users";
 
-import { Notification } from "/imports/notification/notification";
+import { Notification } from "../../startup/both/emails/notification";
 import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { Type } from "/imports/utils/CustomChecks";
 import { renderToEmail } from "/imports/utils/renderToEmail";
-import { Root } from "../../emails/root";
-import { Report } from "../../emails/report";
+import { Root } from "../../emails/Root";
+import { Report } from "../../emails/Report";
 
 export const sendVerificationEmail = ServerMethod(
   "sendVerificationEmail",
