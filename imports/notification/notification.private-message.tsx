@@ -135,7 +135,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
 
       const vars = {
         sender,
-        senderLink: Router.url("userprofile", sender, { query: `campaign=${campaign}` }),
+        senderLink: Router.url("userprofile", sender, { query: { campaign } }),
         subject,
         message: htmlizedMessage,
         senderCopy,
@@ -168,7 +168,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
           throw new Meteor.Error(404, "course not found");
         }
         const courseLink = Router.url("showCourse", course, {
-          query: `campaign=${campaign}`,
+          query: { campaign },
         });
         vars.course = <a href={courseLink}>{course.name}</a>;
 
@@ -192,7 +192,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
           DATE: startMoment.calendar(),
         });
         const eventLink = Router.url("showEvent", event, {
-          query: `campaign=${campaign}`,
+          query: { campaign },
         });
         vars.event = <a href={eventLink}>{title}</a>;
 

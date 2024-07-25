@@ -45,7 +45,7 @@ function sendInvitation(invitation: InvitationEntity) {
         inviter={inviter}
         recipient={recipient}
         invitationLink={Router.url("invitation", invitation, {
-          query: `tenant=${invitation.tenant}&campaign=invitationEmail`,
+          query: { tenant: invitation.tenant, campaign: "invitationEmail" },
         })}
         moreLink={getLocalizedValue(PublicSettings.aboutLink, locale)}
         reportEmail={

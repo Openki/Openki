@@ -136,7 +136,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       const siteName = getSiteName(region);
 
       const senderUrl = Router.url("userprofile", sender, {
-        query: `campaign=${campaign}`,
+        query: { campaign },
       });
 
       const vars = {
@@ -177,7 +177,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         },
       );
       const eventUrl = Router.url("showEvent", event, {
-        query: `campaign=${campaign}`,
+        query: { campaign },
       });
 
       vars.eventTitle = <a href={eventUrl}>{eventFullTitle}</a>;

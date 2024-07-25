@@ -121,17 +121,17 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       const siteName = getSiteName(region);
       const emailLogo = region.custom?.emailLogo;
 
-      const courseLink = Router.url("showCourse", course, { query: `campaign=${campaign}` });
+      const courseLink = Router.url("showCourse", course, { query: { campaign } });
       return {
         event,
         recipientTakePart: event.participants?.some((p) => p.user === actualRecipient._id),
         registerToEventLink: Router.url("showEvent", event, {
-          query: `action=register&campaign=${campaign}`,
+          query: { action: "register", campaign },
         }),
         course: <a href={courseLink}>{course.name}</a>,
         courseName: course.name,
         unsubscribeFromCourseLink: Router.url("showCourse", course, {
-          query: `unsubscribe=participant&force=1&campaign=${campaign}`,
+          query: { unsubscribe: "participant", force: 1, campaign },
         }),
         isNew: entry.body.new,
         subject,
