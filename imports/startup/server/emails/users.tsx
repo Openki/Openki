@@ -15,6 +15,8 @@ import { resetPassword } from "../../../emails/users/resetPassword.text";
 import { Visitor } from "/imports/emails/users/Visitor.html";
 import { visitor } from "/imports/emails/users/visitor.text";
 import { renderToEmail } from "/imports/utils/renderToEmail";
+import { createAccount } from "/imports/emails/users/createAccount.text";
+import { CreateAccount } from "/imports/emails/users/CreateAccount.html";
 
 Accounts.emailTemplates.siteName = PublicSettings.siteName;
 
@@ -83,16 +85,41 @@ Accounts.emailTemplates.resetPassword = {
   subject(user) {
     const t = i18next.getFixedT(user.locale);
 
+    if ((user as UserModel).privileged("visitor")) {
+      return t("createAccount.subject", "[{SITE}] Create your account on {SITE}", {
+        SITE: Accounts.emailTemplates.siteName,
+      });
+    }
+
+    // normal user account creation
     return t("resetPassword.subject", "[{SITE}] Reset your password on {SITE}", {
       SITE: Accounts.emailTemplates.siteName,
     });
   },
 
   text(user, url) {
+    if ((user as UserModel).privileged("visitor")) {
+      return createAccount((user as UserModel).getDisplayName(), url, user.locale);
+    }
+
+    // normal user account creation
     return resetPassword((user as UserModel).getDisplayName(), url, user.locale);
   },
 
   html(user, url) {
+    if ((user as UserModel).privileged("visitor")) {
+      return renderToEmail(
+        <Root subject={Accounts.emailTemplates.resetPassword.subject?.(user)}>
+          <CreateAccount
+            username={(user as UserModel).getDisplayName()}
+            url={url}
+            lng={user.locale}
+          />
+        </Root>,
+      );
+    }
+
+    // normal user account creation
     return renderToEmail(
       <Root subject={Accounts.emailTemplates.resetPassword.subject?.(user)}>
         <ResetPassword
