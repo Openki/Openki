@@ -5,10 +5,10 @@ import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { UnsubscribeLink, Props as UnsubscribeLinkProps } from "./UnsubscribeLink";
 
 export type Props = {
-  receiveNote?: string;
-  children?: any;
+  receiveNote?: string | undefined;
+  children?: any | undefined;
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
-  spamPrevention?: boolean;
+  spamPrevention?: boolean | undefined;
   campaign: string;
   lng: string;
 };
@@ -41,7 +41,7 @@ export function Footer({
             <td>
               {<UnsubscribeLink {...unsubscribe} lng={lng} />}
               &nbsp;
-              <a href={Router.url("profile", { query: `campaign=${campaign}` })}>
+              <a href={Router.url("profile", {}, { query: { campaign } })}>
                 {t("email.base.profileLink")}
               </a>
             </td>

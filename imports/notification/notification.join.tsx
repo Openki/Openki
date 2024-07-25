@@ -125,7 +125,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);
 
-      const courseLink = Router.url("showCourse", course, { query: `campaign=${campaign}` });
+      const courseLink = Router.url("showCourse", course, { query: { campaign } });
       return {
         course: <a href={courseLink}>{course.name}</a>,
         newParticipant: <strong>{newParticipant.getDisplayName()}</strong>,

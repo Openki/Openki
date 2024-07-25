@@ -27,8 +27,8 @@ export function EventBox({
   const eventStart = startMoment.format("LT");
   const eventEnd = endMoment.format("LT");
   const venueLine = getVenueLine(event);
-  const eventLink = Router.url("showEvent", event, { query: `campaign=${campaign}` });
-  const calLink = Router.url("calEvent", event, { query: `campaign=${campaign}` });
+  const eventLink = Router.url("showEvent", event, { query: campaign });
+  const calLink = Router.url("calEvent", event, { query: campaign });
 
   const { t } = useTranslation(undefined, { lng });
 

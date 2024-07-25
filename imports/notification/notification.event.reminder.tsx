@@ -99,7 +99,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
           event.participants?.filter((p) => p.user === actualRecipient._id)[0].companions || 0,
         event,
         unregisterToEventLink: Router.url("showEvent", event, {
-          query: `action=unregister&campaign=${campaign}`,
+          query: { action: "unregister", campaign },
         }),
         subject,
         customSiteUrl: `${Meteor.absoluteUrl()}?campaign=${campaign}`,
@@ -112,7 +112,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       };
 
       const eventUrl = Router.url("showEvent", event, {
-        query: `campaign=${campaign}`,
+        query: { campaign },
       });
 
       vars.eventTitle = <a href={eventUrl}>{event.title}</a>;

@@ -132,7 +132,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         DATE: startMoment.calendar(),
       });
       const eventUrl = Router.url("showEvent", event, {
-        query: `campaign=${campaign}`,
+        query: { campaign },
       });
 
       const eventTitle = <a href={eventUrl}>{eventFullTitle}</a>;
