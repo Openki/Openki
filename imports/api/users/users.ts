@@ -146,7 +146,7 @@ export class User {
    * @returns String with email address or Boolean false
    */
   emailAddress(this: UserModel) {
-    return this.emails?.[0]?.address || false;
+    return this.emails?.[0]?.address || undefined;
   }
 
   /**
