@@ -9,7 +9,6 @@ export type Props = {
   companions: number;
   event: EventModel;
   eventDate: string;
-  siteName: string;
   username: string;
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   campaign: string;
@@ -19,7 +18,6 @@ export function Rsvp({
   companions,
   event,
   eventDate,
-  siteName,
   username,
   unsubscribe,
   campaign,

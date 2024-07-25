@@ -12,8 +12,8 @@ import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
-import { Invitation } from "/imports/emails/invitation";
-import { Root } from "/imports/emails/root";
+import { Invitation } from "/imports/emails/Invitation";
+import { Root } from "/imports/emails/Root";
 import { renderToEmail } from "/imports/utils/renderToEmail";
 
 function sendInvitation(invitation: InvitationEntity) {
