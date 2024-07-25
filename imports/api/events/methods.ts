@@ -17,7 +17,7 @@ import { Groups } from "/imports/api/groups/groups";
 import { Regions } from "/imports/api/regions/regions";
 import { VenueModel, Venues } from "/imports/api/venues/venues";
 
-import { Notification } from "/imports/notification/notification";
+import { Notification } from "../../startup/both/emails/notification";
 import { AffectedReplicaSelectors } from "/imports/utils/affected-replica-selectors";
 import * as AsyncTools from "/imports/utils/async-tools";
 import * as HtmlTools from "/imports/utils/html-tools";

@@ -4,7 +4,7 @@ import moment from "moment";
 
 import { Events } from "/imports/api/events/events";
 import { Log } from "/imports/api/log/log";
-import { Notification } from "/imports/notification/notification";
+import { Notification } from "../both/emails/notification";
 
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 

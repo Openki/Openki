@@ -11,8 +11,8 @@ import { Events } from "/imports/api/events/events";
 
 import * as StringTools from "/imports/utils/string-tools";
 import { getSiteName } from "/imports/utils/getSiteName";
-import { Model as NotificationModel } from "./notification";
-import { EventReminder, Props } from "../emails/notifications/event.reminder";
+import { Model as NotificationModel } from "../notification";
+import { EventReminder, Props } from "../../../../emails/notifications/EventReminder";
 import { getStartEndDate } from "./utils";
 
 interface Body {

@@ -9,8 +9,8 @@ import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { Log } from "/imports/api/log/log";
 import { UserModel, Users } from "/imports/api/users/users";
 import { Events } from "/imports/api/events/events";
-import { Model as NotificationModel } from "./notification";
-import { RsvpTeam, Props } from "../emails/notifications/rsvp.team";
+import { Model as NotificationModel } from "../notification";
+import { RsvpTeam, Props } from "../../../../emails/notifications/RsvpTeam";
 
 import { getSiteName } from "/imports/utils/getSiteName";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";

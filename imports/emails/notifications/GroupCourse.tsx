@@ -1,8 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { UserModel } from "/imports/api/users/users";
-import { Footer } from "./Footer";
-import { Props as UnsubscribeLinkProps } from "./UnsubscribeLink";
+import { Footer } from "./components/Footer";
+import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 
 export type Props = {
   course: React.JSX.Element;

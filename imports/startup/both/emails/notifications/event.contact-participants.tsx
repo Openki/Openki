@@ -13,11 +13,11 @@ import * as HtmlTools from "/imports/utils/html-tools";
 import * as StringTools from "/imports/utils/string-tools";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { LocalTime } from "/imports/utils/local-time";
-import { Model as NotificationModel } from "./notification";
+import { Model as NotificationModel } from "../notification";
 import {
   EventContactParticipants,
   Props,
-} from "../emails/notifications/event.contact-participants";
+} from "../../../../emails/notifications/EventContactParticipants";
 
 interface Body {
   sender: string;
