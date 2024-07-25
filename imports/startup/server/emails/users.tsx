@@ -42,7 +42,11 @@ Accounts.emailTemplates.verifyEmail = {
 
   text(user, url) {
     if ((user as UserModel).privileged("visitor")) {
-      return visitor((user as UserModel).getDisplayName(), user.locale);
+      return visitor(
+        (user as UserModel).getDisplayName(),
+        (user as UserModel).emailAddress() || "",
+        user.locale,
+      );
     }
 
     // normal user account creation
@@ -53,7 +57,11 @@ Accounts.emailTemplates.verifyEmail = {
     if ((user as UserModel).privileged("visitor")) {
       return renderToEmail(
         <Root subject={Accounts.emailTemplates.verifyEmail.subject?.(user)}>
-          <Visitor username={(user as UserModel).getDisplayName()} lng={user.locale} />
+          <Visitor
+            username={(user as UserModel).getDisplayName()}
+            email={(user as UserModel).emailAddress() || ""}
+            lng={user.locale}
+          />
         </Root>,
       );
     }
