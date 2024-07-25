@@ -87,6 +87,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
 
     vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
+      const campaign = "joinNotify";
 
       if (!newParticipant) {
         throw new Error("New participant does not exist (0.o)");
@@ -124,9 +125,8 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);
 
-      const courseLink = Router.url("showCourse", course, { query: "campaign=joinNotify" });
+      const courseLink = Router.url("showCourse", course, { query: `campaign=${campaign}` });
       return {
-        unsubLink: Router.url("profileNotificationsUnsubscribe", { token: unsubToken }),
         course: <a href={courseLink}>{course.name}</a>,
         newParticipant: <strong>{newParticipant.getDisplayName()}</strong>,
         subject,
@@ -142,9 +142,11 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
           .filter((r) => r._id !== actualRecipient._id)
           .map((r) => r.getDisplayName())
           .join(", "),
-        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=joinNotify`,
+        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=${campaign}`,
         customSiteName: siteName,
         customEmailLogo: emailLogo,
+        unsubscribe: { type: "automatedNotifications", token: unsubToken },
+        campaign,
       };
     },
     template: (props) => <Join {...props} />,

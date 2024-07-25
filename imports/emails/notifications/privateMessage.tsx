@@ -1,10 +1,10 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Router } from "meteor/iron:router";
 import { UserModel } from "/imports/api/users/users";
+import { Footer } from "./Footer";
+import { Props as UnsubscribeLinkProps } from "./UnsubscribeLink";
 
 export type Props = {
-  unsubLink: string;
   sender: UserModel;
   senderLink: string;
   message: string;
@@ -14,11 +14,12 @@ export type Props = {
   fromAddress: string;
   course: React.JSX.Element | undefined;
   event: React.JSX.Element | undefined;
+  unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
+  campaign: string;
   lng: string;
 };
 
 export function PrivateMessage({
-  unsubLink,
   sender,
   senderLink,
   message,
@@ -28,6 +29,8 @@ export function PrivateMessage({
   fromAddress,
   course,
   event,
+  unsubscribe,
+  campaign,
   lng,
 }: Props) {
   const { t } = useTranslation(undefined, { lng });
@@ -109,27 +112,7 @@ export function PrivateMessage({
           )}
         </td>
       </tr>
-      <tr>
-        <td>
-          <table className="footer">
-            <tr>
-              <td>
-                <a href={unsubLink}>
-                  {t(
-                    "notification.privateMessage.mail.unsubLink",
-                    "Unsubscribe from all private messages from users.",
-                    { SITENAME: siteName },
-                  )}
-                </a>
-                &nbsp;
-                <a href={Router.url("profile", { query: "campaign=privateMessage" })}>
-                  {t("email.base.profileLink")}
-                </a>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
+      <Footer unsubscribe={unsubscribe} campaign={campaign} lng={lng} />
     </>
   );
 }

@@ -1,27 +1,26 @@
 import React from "react";
-import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { EventModel } from "/imports/api/events/events";
 import { EventBox } from "./EventBox";
+import { Footer } from "./Footer";
+import { Props as UnsubscribeLinkProps } from "./UnsubscribeLink";
 
 export type Props = {
   username: string;
-  unsubLink: string;
   event: EventModel;
-  siteName: string;
   eventTitle: React.JSX.Element | undefined;
   message: string;
+  unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   campaign: string;
   lng: string;
 };
 
 export function EventCanceled({
   username,
-  unsubLink,
   event,
-  siteName,
   eventTitle,
   message,
+  unsubscribe,
   campaign,
   lng,
 }: Props) {
@@ -52,32 +51,16 @@ export function EventCanceled({
           <EventBox event={event} campaign={campaign} lng={lng} />
         </td>
       </tr>
-      <tr>
-        <td>
-          <table className="footer">
-            <tr>
-              <td>
-                {t(
-                  "notification.event.canceled.mail.notice",
-                  "You receive this e-mail because you are involved in {EVENT}.",
-                  { EVENT: eventTitle },
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <a href={unsubLink}>
-                  {t("email.base.unsubscribeLink.automatedNotifications", { SITENAME: siteName })}
-                </a>
-                &nbsp;
-                <a href={Router.url("profile", { query: `campaign=${campaign}` })}>
-                  {t("email.base.profileLink")}
-                </a>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
+      <Footer
+        receiveNote={t(
+          "notification.event.canceled.mail.notice",
+          "You receive this e-mail because you are involved in {EVENT}.",
+          { EVENT: eventTitle },
+        )}
+        unsubscribe={unsubscribe}
+        campaign={campaign}
+        lng={lng}
+      />
     </>
   );
 }

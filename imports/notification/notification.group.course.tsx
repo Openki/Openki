@@ -82,6 +82,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
 
     vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
+      const campaign = "groupCourseNotify";
 
       const recipientsGroups = groups.filter((g) =>
         g.members.some((m) => m.user === actualRecipient._id),
@@ -105,9 +106,8 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);
 
-      const courseLink = Router.url("showCourse", course, { query: "campaign=groupCourseNotify" });
+      const courseLink = Router.url("showCourse", course, { query: `campaign=${campaign}` });
       return {
-        unsubLink: Router.url("profileNotificationsUnsubscribe", { token: unsubToken }),
         course: <a href={courseLink}>{course.name}</a>,
         courseLink,
         courseDescription: course.description,
@@ -115,7 +115,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
           .map((g) => (
             <a
               href={Router.url("groupDetails", g, {
-                query: "campaign=groupCourseNotify",
+                query: `campaign=${campaign}`,
               })}
             >
               {g.name}
@@ -124,9 +124,11 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
           .reduce((prev, curr) => [prev, <>", "</>, curr] as any),
         creater,
         subject,
-        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=groupCourseNotify`,
+        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=${campaign}`,
         customSiteName: siteName,
         customEmailLogo: emailLogo,
+        unsubscribe: { type: "automatedNotifications", token: unsubToken },
+        campaign,
       };
     },
     template: (props) => <GroupCourse {...props} />,

@@ -1,26 +1,27 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Router } from "meteor/iron:router";
 import { EventModel } from "/imports/api/events/events";
 import { EventBox } from "./EventBox";
+import { Footer } from "./Footer";
+import { Props as UnsubscribeLinkProps } from "./UnsubscribeLink";
 
 export type Props = {
   companions: number;
-  unsubLink: string;
   event: EventModel;
   eventDate: string;
   siteName: string;
   username: string;
+  unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   campaign: string;
   lng: string;
 };
 export function Rsvp({
   companions,
-  unsubLink,
   event,
   eventDate,
   siteName,
   username,
+  unsubscribe,
   campaign,
   lng,
 }: Props) {
@@ -41,23 +42,12 @@ export function Rsvp({
           <EventBox event={event} campaign={campaign} lng={lng} />
         </td>
       </tr>
-      <tr>
-        <td>
-          <table className="footer">
-            <tr>
-              <td>
-                <a href={unsubLink}>
-                  {t("email.base.unsubscribeLink.automatedNotifications", { SITENAME: siteName })}
-                </a>
-                &nbsp;
-                <a href={Router.url("profile", { query: `campaign=${campaign}` })}>
-                  {t("email.base.profileLink")}
-                </a>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
+      <Footer
+        receiveNote={t("email.base.unsubscribeLink.automatedNotifications", { SITENAME: siteName })}
+        unsubscribe={unsubscribe}
+        campaign={campaign}
+        lng={lng}
+      />
     </>
   );
 }

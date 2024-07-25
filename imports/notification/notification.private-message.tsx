@@ -111,6 +111,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
 
     vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
+      const campaign = "privateMessage";
 
       if (!sender) {
         throw new Error("Sender does not exist (0.o)");
@@ -133,19 +134,20 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       const senderCopy = sender._id === actualRecipient._id;
 
       const vars = {
-        unsubLink: Router.url("profilePrivateMessagesUnsubscribe", { token: unsubToken }),
         sender,
-        senderLink: Router.url("userprofile", sender, { query: "campaign=privateMessage" }),
+        senderLink: Router.url("userprofile", sender, { query: `campaign=${campaign}` }),
         subject,
         message: htmlizedMessage,
         senderCopy,
         recipientName: targetRecipient.getDisplayName(),
-        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=privateMessage`,
+        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=${campaign}`,
         customSiteName: undefined as string | undefined,
         customEmailLogo: undefined as string | undefined,
         fromAddress: "",
         course: undefined as React.JSX.Element | undefined,
         event: undefined as React.JSX.Element | undefined,
+        unsubscribe: { type: "privateMessage" as const, token: unsubToken },
+        campaign,
       };
 
       if (body.revealSenderAddress) {
@@ -166,7 +168,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
           throw new Meteor.Error(404, "course not found");
         }
         const courseLink = Router.url("showCourse", course, {
-          query: "campaign=privateMessage",
+          query: `campaign=${campaign}`,
         });
         vars.course = <a href={courseLink}>{course.name}</a>;
 
@@ -190,7 +192,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
           DATE: startMoment.calendar(),
         });
         const eventLink = Router.url("showEvent", event, {
-          query: "campaign=privateMessage",
+          query: `campaign=${campaign}`,
         });
         vars.event = <a href={eventLink}>{title}</a>;
 

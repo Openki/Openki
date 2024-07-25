@@ -107,6 +107,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
 
     vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
+      const campaign = "eventContactParticipants";
 
       if (!sender) {
         throw new Error("Sender does not exist (0.o)");
@@ -135,22 +136,23 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       const siteName = getSiteName(region);
 
       const senderUrl = Router.url("userprofile", sender, {
-        query: "campaign=eventContactParticipants",
+        query: `campaign=${campaign}`,
       });
 
       const vars = {
-        unsubLink: Router.url("profilePrivateMessagesUnsubscribe", { token: unsubToken }),
         sender,
         senderLink: senderUrl,
         senderName: <a href={senderUrl}>{sender.getDisplayName()}</a>,
         subject,
         message: htmlizedMessage,
         senderCopy,
-        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventContactParticipants`,
+        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=${campaign}`,
         customSiteName: siteName,
         customEmailLogo: emailLogo,
         fromAddress: "",
         eventTitle: undefined as React.JSX.Element | undefined,
+        unsubscribe: { type: "privateMessage" as const, token: unsubToken },
+        campaign,
       };
 
       if (body.revealSenderAddress) {
@@ -175,7 +177,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         },
       );
       const eventUrl = Router.url("showEvent", event, {
-        query: "campaign=eventContactParticipants",
+        query: `campaign=${campaign}`,
       });
 
       vars.eventTitle = <a href={eventUrl}>{eventFullTitle}</a>;

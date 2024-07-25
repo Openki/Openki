@@ -1,14 +1,13 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Router } from "meteor/iron:router";
+import { Footer } from "./Footer";
+import { Props as UnsubscribeLinkProps } from "./UnsubscribeLink";
 
 export type Props = {
-  unsubLink: string;
   course: React.JSX.Element;
   newParticipant: React.JSX.Element;
   roleTitle: string;
   roleType: string;
-  email: React.JSX.Element;
   message: string | undefined;
   appendCollaborationHint: boolean;
   figures: {
@@ -16,24 +15,24 @@ export type Props = {
     count: number;
   }[];
   otherRecipients: string;
-  siteName: string;
   username: string;
+  unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
+  campaign: string;
   lng: string;
 };
 
 export function Join({
-  unsubLink,
   course,
   newParticipant,
   roleTitle,
   roleType,
-  email,
   message,
   appendCollaborationHint,
   figures,
   otherRecipients,
-  siteName,
   username,
+  unsubscribe,
+  campaign,
   lng,
 }: Props) {
   const { t } = useTranslation(undefined, { lng });
@@ -83,36 +82,15 @@ export function Join({
           </p>
         </td>
       </tr>
-      <tr>
-        <td>
-          <table className="footer">
-            <tr>
-              <td>{t("email.base.receiveNote.courseTeam", { COURSE: course })}</td>
-            </tr>
-            <tr>
-              <td>
-                {t("email.base.receiveNote.otherRecipients", { OTHERRECIPIENTS: otherRecipients })}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <a href={unsubLink}>
-                  {t("email.base.unsubscribeLink.automatedNotifications", { SITENAME: siteName })}
-                </a>
-                &nbsp;
-                <a href={Router.url("profile", { query: "campaign=joinNotify" })}>
-                  {t("email.base.profileLink")}
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td style={{ paddingTop: "16px" }}>
-                {t("email.base.spamPrevention", { MAIL: email })}
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
+      <Footer
+        receiveNote={t("email.base.receiveNote.courseTeam", { COURSE: course })}
+        unsubscribe={unsubscribe}
+        spamPrevention={true}
+        campaign={campaign}
+        lng={lng}
+      >
+        {t("email.base.receiveNote.otherRecipients", { OTHERRECIPIENTS: otherRecipients })}
+      </Footer>
     </>
   );
 }

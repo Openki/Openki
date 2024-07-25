@@ -108,6 +108,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
 
     vars(locale, _actualRecipient, unsubToken) {
       const t = i18next.getFixedT(locale);
+      const campaign = "commentNotify";
 
       if (!comment) {
         throw new Error("Comment does not exist (0.o)");
@@ -145,14 +146,13 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);
       const courseLink = Router.url("showCourse", course, {
-        query: `campaign=commentNotify`,
+        query: `campaign=${campaign}`,
       });
       const commentLink = Router.url("showCourse", course, {
-        query: `select=${comment._id}&campaign=commentNotify`,
+        query: `select=${comment._id}&campaign=${campaign}`,
       });
 
       return {
-        unsubLink: Router.url("profileNotificationsUnsubscribe", { token: unsubToken }),
         course: <a href={courseLink}>{course.name}</a>,
         commentLink,
         subject,
@@ -161,12 +161,14 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         commenterLink: Router.url(
           "userprofile",
           { _id: comment.userId, username: commenterName },
-          { query: "campaign=commentNotify" },
+          { query: `campaign=${campaign}` },
         ),
         commenterName,
-        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=commentNotify`,
+        customSiteUrl: `${Meteor.absoluteUrl()}?campaign=${campaign}`,
         customSiteName: siteName,
         customEmailLogo: emailLogo,
+        unsubscribe: { type: "automatedNotifications", token: unsubToken },
+        campaign,
       };
     },
     template: (props) => <Comment {...props} />,

@@ -1,30 +1,29 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Router } from "meteor/iron:router";
+import { Footer } from "./Footer";
+import { Props as UnsubscribeLinkProps } from "./UnsubscribeLink";
 
 export type Props = {
-  unsubLink: string;
   course: string;
   event: JSX.Element;
   newParticipant: JSX.Element;
   companionsOfNewParticipant: number;
   participantsCount: number;
-  email: JSX.Element;
-  siteName: string;
   username: string;
+  unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
+  campaign: string;
   lng: string;
 };
 
 export function RsvpTeam({
-  unsubLink,
   course,
   event,
   newParticipant,
   companionsOfNewParticipant,
   participantsCount,
-  email,
-  siteName,
   username,
+  unsubscribe,
+  campaign,
   lng,
 }: Props) {
   const { t } = useTranslation(undefined, { lng });
@@ -49,31 +48,13 @@ export function RsvpTeam({
           </p>
         </td>
       </tr>
-      <tr>
-        <td>
-          <table className="footer">
-            <tr>
-              <td>{t("email.base.receiveNote.courseTeam", { COURSE: course })}</td>
-            </tr>
-            <tr>
-              <td>
-                <a href={unsubLink}>
-                  {t("email.base.unsubscribeLink.automatedNotifications", { SITENAME: siteName })}
-                </a>
-                &nbsp;
-                <a href={Router.url("profile", { query: "campaign=rsvpTeamNotify" })}>
-                  {t("email.base.profileLink")}
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td style={{ paddingTop: "16px;" }}>
-                {t("email.base.spamPrevention", { MAIL: email })}
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
+      <Footer
+        receiveNote={t("email.base.receiveNote.courseTeam", { COURSE: course })}
+        unsubscribe={unsubscribe}
+        spamPrevention={true}
+        campaign={campaign}
+        lng={lng}
+      />
     </>
   );
 }
