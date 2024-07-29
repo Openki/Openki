@@ -1,5 +1,4 @@
 Openki [![pipeline](https://gitlab.com/Openki/Openki/badges/master/pipeline.svg?ignore_skipped=true)](https://gitlab.com/Openki/Openki/-/pipelines) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/250/badge)](https://bestpractices.coreinfrastructure.org/projects/250)
-
 ====
 
 **Platform for open education** – Free software built with [Meteor.js](https://meteor.com) and [React](https://react.dev/)
@@ -73,7 +72,7 @@ In the interest of having an open and welcoming environment for everyone, we agr
 - To install Meteor locally, run: `curl https://install.meteor.com | sh`  (or download the [installer for Windows](https://install.meteor.com/windows))
 - [Download](https://gitlab.com/Openki/Openki/-/archive/master/Openki-master.zip) and unzip or `https://gitlab.com/Openki/Openki.git` Openki into `/some/path`.
 - `cd /some/path/Openki`
-- `meteor npm install`
+- `meteor npm install` (sometimes twice)
 - Run `meteor npm run dev` (We support server side debugging. For help, see: https://nodejs.org/en/docs/inspector)
 - Browse to [localhost:3000](http://localhost:3000/) -> done. 
 
