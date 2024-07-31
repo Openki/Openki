@@ -58,12 +58,14 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
   feature: {
     /** toggle visibility of login services */
     login: { google: Boolean, facebook: Boolean, github: Boolean },
-    /** allow user without name and password */
+    /** allow user without password */
     visitorUser: Boolean,
     /** allow rsvp with +1 / for two seats */
     rsvpWithCompanions: Boolean,
     /** allow to edit whether to remind or not, Default: true */
     sendReminderIsEditable: Boolean,
+    /** replace find with dashboard in group details, Default: false */
+    groupDashboard: Boolean,
   },
   nav: {
     brandLink: String,
@@ -155,6 +157,7 @@ const defaults = {
     visitorUser: false,
     rsvpWithCompanions: false,
     sendReminderIsEditable: true,
+    groupDashboard: false,
   },
   nav: {
     brandLink: "/",

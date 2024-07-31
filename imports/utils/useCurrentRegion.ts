@@ -1,6 +1,15 @@
 import { useTracker } from "meteor/react-meteor-data";
 import { Regions } from "/imports/api/regions/regions";
 import * as Groups from "/imports/api/groups/publications";
+import { CleanedRegion } from "../ui/lib/cleaned-region";
+
+export function useCurrentRegionId() {
+  return useTracker(() => {
+    const regionId = Session.get("region");
+
+    return CleanedRegion(regionId);
+  });
+}
 
 export function useCurrentRegion() {
   return useTracker(() => Regions.currentRegion());

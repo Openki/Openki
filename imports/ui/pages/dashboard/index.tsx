@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
-import { useFeaturedGroup } from "/imports/utils/useCurrentRegion";
+import { useCurrentRegionId, useFeaturedGroup } from "/imports/utils/useCurrentRegion";
 import * as Metatags from "/imports/utils/metatags";
 
 import { Dashboard } from "/imports/ui/components/dashboard";
@@ -9,43 +9,46 @@ import { Dashboard } from "/imports/ui/components/dashboard";
 export function DashboardPage() {
   const { t } = useTranslation();
   const featuredGroup = useFeaturedGroup();
+  const region = useCurrentRegionId();
 
   const list = [
     {
       entity: "course",
       title: featuredGroup?.name ?? "",
-      query: `group=${featuredGroup?._id}`,
+      query: `${region ? `region=${region}&` : ""}group=${featuredGroup?._id}`,
       showAll: `/group/${featuredGroup?._id}`,
     },
     {
       entity: "course",
       title: t("explore.recentActivities.title", "Recent activities"),
-      query: "internal=0",
+      query: `${region ? `region=${region}&` : ""}internal=0`,
     },
     {
       entity: "event",
       title: t("explore.upcomingEvents.title", "Upcoming events"),
-      query: "after=now&sort=start&internal=0&canceled=0",
+      query: `${region ? `region=${region}&` : ""}after=now&sort=start&internal=0&canceled=0`,
     },
     {
       entity: "course",
       title: t("explore.newProposals.title", "New proposals"),
-      query: "state=proposal&internal=0&sort=time_created",
+      query: `${region ? `region=${region}&` : ""}state=proposal&internal=0&sort=time_created`,
     },
     {
       entity: "course",
       title: t("explore.lookingForMentors.title", "Looking for mentors"),
-      query: "needsRole=mentor&state=proposal,resting&internal=0",
+      query: `${
+        region ? `region=${region}&` : ""
+      }needsRole=mentor&state=proposal,resting&internal=0`,
     },
     {
       entity: "course",
       title: t("explore.lookingForVenues.title", "Looking for venues"),
-      query: "needsRole=host&state=proposal,resting&internal=0",
+      query: `${region ? `region=${region}&` : ""}needsRole=host&state=proposal,resting&internal=0`,
     },
     {
       entity: "course",
       title: "ASZ",
-      query: "group=b0f1a82d36",
+      query: `${region ? `region=${region}&` : ""}group=b0f1a82d36`,
       showAll: "/group/b0f1a82d36/ASZ",
     },
     {
