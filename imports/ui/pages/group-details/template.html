@@ -1,5 +1,5 @@
 <template name="groupDetailsPage">
-  <div class="container">
+  <div class="container mb-4">
     {{#if group.isNew}}
       <h2>{{i18n 'group.details.titleNew' "Create new group"}}</h2>
     {{/if}}
@@ -81,8 +81,18 @@
         {{> groupSettings}}
       {{/if}}
     </div>
-    {{#if showCourses}}
-      {{> find courseQuery}}
-    {{/if}}
+    {{#unless PublicSettings.feature.groupDashboard}}
+      {{#if showCourses}}
+        {{> find courseQuery}}
+      {{/if}}
+    {{/unless}}
   </div>
+  {{#if PublicSettings.feature.groupDashboard}}
+    {{#if showCourses}}
+      {{> dashboard dashboardAttr}}
+    {{/if}}
+    <div class="container mw-md">
+      {{> courseEdit newCourse}}
+    </div>
+  {{/if}}
 </template>
