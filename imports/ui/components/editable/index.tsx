@@ -14,13 +14,13 @@ export type Props = {
   text: string;
   multiline?: boolean;
   placeholderText?: string;
-  maxlength?: number;
+  maxlength?: number | undefined;
   onChange?: (
     edited: string | undefined,
     numberOfCharacters: number,
     totalFocusTimeInSeconds: number,
   ) => void;
-  store?: Store;
+  store?: Store | undefined;
 };
 
 export function Editable(data: Props) {
@@ -28,10 +28,10 @@ export function Editable(data: Props) {
   const [numberOfCharacters, setNumberOfCharacters] = useState(0);
   const [changed, setChanged] = useState(!data.store);
 
-  let initialized = false;
-  let changedByUser = false;
-  let totalFocusTimeInSeconds = 0;
-  let startGettingFocus: number | undefined;
+  const [initialized, setInitialized] = useState(false);
+  const [changedByUser, setChangedByUser] = useState(false);
+  const [totalFocusTimeInSeconds, setTotalFocusTimeInSeconds] = useState(0);
+  const [startGettingFocus, setStartGettingFocus] = useState<number | undefined>(undefined);
 
   const elementRef = useRef<HTMLDivElement>(null);
 
@@ -39,12 +39,11 @@ export function Editable(data: Props) {
     if (!changed) {
       return undefined;
     }
-    if (!elementRef.current) {
+    const element = elementRef.current;
+    if (!element) {
       return undefined;
     }
-    return data.multiline
-      ? elementRef.current.innerHTML.trim()
-      : elementRef.current.innerText.trim();
+    return data.multiline ? element.innerHTML.trim() : element.innerText.trim();
   };
 
   // Add error mapping for the FormfieldErrors
@@ -69,8 +68,6 @@ export function Editable(data: Props) {
 
   const isRTL = useSessionEquals("textDirectionality", "rtl");
   const align = !isRTL ? "left" : "right";
-
-  const element = elementRef.current as HTMLDivElement;
 
   function characterLimitReached() {
     if (!data.maxlength) {
@@ -99,7 +96,7 @@ export function Editable(data: Props) {
       classes.push("editable-changed");
     }
 
-    if (data.store) {
+    if (!data.store) {
       classes.push("form-control");
     }
 
@@ -107,6 +104,11 @@ export function Editable(data: Props) {
   }
 
   const reset = () => {
+    const element = elementRef.current;
+    if (!element) {
+      return;
+    }
+
     const text = data.text;
 
     if (data.multiline) {
@@ -134,9 +136,10 @@ export function Editable(data: Props) {
       await data.store?.onSave?.(newText);
 
       setChanged(false);
-      changedByUser = false;
-      startGettingFocus = undefined;
-      totalFocusTimeInSeconds = 0;
+
+      setChangedByUser(false);
+      setStartGettingFocus(undefined);
+      setTotalFocusTimeInSeconds(0);
 
       data.store?.onSuccess?.(newText);
     } catch (err: unknown) {
@@ -157,13 +160,23 @@ export function Editable(data: Props) {
   // protects the user's changes but at the same time it allows overwriting
   // other people's changes.
   useEffect(() => {
-    if (!changedByUser || !initialized) {
+    if (!initialized) {
+      setInitialized(true);
       reset();
-      initialized = true;
+      return;
     }
-  });
+
+    if (changedByUser) {
+      return;
+    }
+    reset();
+  }, [data.text]);
 
   useEffect(() => {
+    const element = elementRef.current;
+    if (!element) {
+      return;
+    }
     const meOptions: MediumEditor.CoreOptions = {
       toolbar: {
         align,
@@ -208,13 +221,13 @@ export function Editable(data: Props) {
     new MediumEditor(element, meOptions);
 
     setNumberOfCharacters(element.innerText.trim().length);
-  }, [align, data.placeholderText, data.multiline, t, element]);
-
-  if (!elementRef.current) {
-    return null;
-  }
+  }, [align, data.placeholderText, data.multiline, t]);
 
   const handleEdit = () => {
+    const element = elementRef.current;
+    if (!element) {
+      return;
+    }
     element.focus();
 
     // Moving the cursor to the end of the editable element?
@@ -253,6 +266,12 @@ export function Editable(data: Props) {
 
   const handleCancel = (event: any) => {
     event.preventDefault();
+
+    const element = elementRef.current;
+    if (!element) {
+      return;
+    }
+
     reset();
     setChanged(false);
 
@@ -278,7 +297,7 @@ export function Editable(data: Props) {
             // Get the number of visible characters
             setNumberOfCharacters(event.currentTarget.innerText.trim().length);
 
-            changedByUser = true;
+            setChangedByUser(true);
             setChanged(true);
 
             data.onChange?.(
@@ -290,12 +309,13 @@ export function Editable(data: Props) {
             );
           }}
           onFocus={() => {
-            startGettingFocus = Date.now();
+            setStartGettingFocus(Date.now());
           }}
           onBlur={() => {
             // persists current total time in seconds
-            totalFocusTimeInSeconds += Math.round(
-              (Date.now() - (startGettingFocus || Date.now())) / 1000,
+            setTotalFocusTimeInSeconds(
+              totalFocusTimeInSeconds +
+                Math.round((Date.now() - (startGettingFocus || Date.now())) / 1000),
             );
           }}
         ></div>
