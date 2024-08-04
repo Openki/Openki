@@ -202,7 +202,7 @@ export function GroupDetailsPage(data: Data) {
   const editableNameAttr: EditableProps = {
     text: data.group.name,
     multiline: false,
-    placeholderText: t(
+    placeholder: t(
       "group.name.placeholder",
       "Name of your group, institution, community or program",
     ),
@@ -222,7 +222,7 @@ export function GroupDetailsPage(data: Data) {
   const editableShortAttr: EditableProps = {
     text: data.group.short,
     multiline: false,
-    placeholderText: t("group.short.placeholder", "Abbreviation"),
+    placeholder: t("group.short.placeholder", "Abbreviation"),
     store: showControls
       ? {
           ...handleSaving,
@@ -239,7 +239,7 @@ export function GroupDetailsPage(data: Data) {
   const editableClaimAttr: EditableProps = {
     text: data.group.claim,
     multiline: false,
-    placeholderText: t("group.claim.placeholder", "The core idea"),
+    placeholder: t("group.claim.placeholder", "The core idea"),
     store: showControls
       ? {
           ...handleSaving,
@@ -256,7 +256,7 @@ export function GroupDetailsPage(data: Data) {
   const editableDescriptionAttr: EditableProps = {
     text: data.group.description,
     multiline: true,
-    placeholderText: t(
+    placeholder: t(
       "group.description.placeholder",
       "Describe the audience, the interests and activities of your group.",
     ),
