@@ -16,7 +16,7 @@ export type Props = {
   placeholderText?: string;
   maxlength?: number | undefined;
   onChange?: (
-    edited: string | undefined,
+    newText: string | undefined,
     numberOfCharacters: number,
     totalFocusTimeInSeconds: number,
   ) => void;
@@ -243,9 +243,7 @@ export function Editable(data: Props) {
     selectEnd(element);
   };
 
-  const handleSave = (event: any) => {
-    event.preventDefault();
-
+  const handleSave = () => {
     resetErrors();
     // Check if input is invalid
     // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -264,9 +262,7 @@ export function Editable(data: Props) {
     store();
   };
 
-  const handleCancel = (event: any) => {
-    event.preventDefault();
-
+  const handleCancel = () => {
     const element = elementRef.current;
     if (!element) {
       return;

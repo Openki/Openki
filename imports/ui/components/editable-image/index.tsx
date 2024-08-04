@@ -142,12 +142,15 @@ export function EditableImage(data: Data) {
     };
   }
   function uploadButtonAttributes() {
-    const attributes: Record<string, unknown> = {
+    const attributes: {
+      onClick: () => void;
+      disabled?: boolean;
+    } = {
       onClick: onUpload,
     };
 
     if (!copyRights) {
-      attributes.disabled = "disabled";
+      attributes.disabled = true;
     }
 
     return attributes;
