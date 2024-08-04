@@ -13,7 +13,7 @@ import "./styles.scss";
 export type Props = {
   text: string;
   multiline?: boolean;
-  placeholderText?: string;
+  placeholder?: string;
   maxlength?: number | undefined;
   onChange?: (
     newText: string | undefined,
@@ -23,17 +23,38 @@ export type Props = {
   store?: Store | undefined;
 };
 
-export function Editable(data: Props) {
+export function Editable({ text, multiline, placeholder, maxlength, onChange, store }: Props) {
   const { t } = useTranslation();
   const [numberOfCharacters, setNumberOfCharacters] = useState(0);
-  const [changed, setChanged] = useState(!data.store);
+  const [changed, setChanged] = useState(!store);
 
   const [initialized, setInitialized] = useState(false);
   const [changedByUser, setChangedByUser] = useState(false);
   const [totalFocusTimeInSeconds, setTotalFocusTimeInSeconds] = useState(0);
   const [startGettingFocus, setStartGettingFocus] = useState<number | undefined>(undefined);
+  const isRTL = useSessionEquals("textDirectionality", "rtl");
 
   const elementRef = useRef<HTMLDivElement>(null);
+
+  // Add error mapping for the FormfieldErrors
+  const errorMapping: Mapping = {};
+  const clientValidations = store?.clientValidations;
+  if (clientValidations) {
+    Object.entries(clientValidations).forEach(([key, validation]) => {
+      errorMapping[key] = {
+        text: validation.errorMessage,
+        field: "input",
+      };
+    });
+  }
+  store?.serverValidationErrors?.forEach((e) => {
+    errorMapping[e.type] = {
+      text: e.message,
+      field: "input",
+    };
+  });
+
+  const [errors, checkValidity, addError, resetErrors] = useValidation(errorMapping);
 
   const getEdited = () => {
     if (!changed) {
@@ -43,51 +64,28 @@ export function Editable(data: Props) {
     if (!element) {
       return undefined;
     }
-    return data.multiline ? element.innerHTML.trim() : element.innerText.trim();
+    return multiline ? element.innerHTML.trim() : element.innerText.trim();
   };
 
-  // Add error mapping for the FormfieldErrors
-  const errorMapping: Mapping = {};
-  const clientValidations = data.store?.clientValidations;
-  if (clientValidations) {
-    Object.entries(clientValidations).forEach(([key, validation]) => {
-      errorMapping[key] = {
-        text: validation.errorMessage,
-        field: "input",
-      };
-    });
-  }
-  data.store?.serverValidationErrors?.forEach((e) => {
-    errorMapping[e.type] = {
-      text: e.message,
-      field: "input",
-    };
-  });
-
-  const [errors, checkValidity, addError, resetErrors] = useValidation(errorMapping);
-
-  const isRTL = useSessionEquals("textDirectionality", "rtl");
-  const align = !isRTL ? "left" : "right";
-
   function characterLimitReached() {
-    if (!data.maxlength) {
+    if (!maxlength) {
       return false;
     }
 
-    return numberOfCharacters > data.maxlength;
+    return numberOfCharacters > maxlength;
   }
   function removeNumberOfCharacters() {
-    if (!data.maxlength) {
+    if (!maxlength) {
       return 0;
     }
 
-    return numberOfCharacters - data.maxlength;
+    return numberOfCharacters - maxlength;
   }
   function showControls() {
-    return !!data.store && changed;
+    return !!store && changed;
   }
   function wrapClasses() {
-    return data.multiline ? "editable-wrap-multiline" : "editable-wrap-singleline";
+    return multiline ? "editable-wrap-multiline" : "editable-wrap-singleline";
   }
   function editableClasses() {
     const classes: string[] = [];
@@ -96,7 +94,7 @@ export function Editable(data: Props) {
       classes.push("editable-changed");
     }
 
-    if (!data.store) {
+    if (!store) {
       classes.push("form-control");
     }
 
@@ -109,9 +107,7 @@ export function Editable(data: Props) {
       return;
     }
 
-    const text = data.text;
-
-    if (data.multiline) {
+    if (multiline) {
       element.innerHTML = text;
     } else {
       element.innerText = text;
@@ -126,14 +122,14 @@ export function Editable(data: Props) {
     resetErrors();
   };
 
-  const store = async () => {
+  const save = async () => {
     const newText = getEdited();
     if (newText === undefined) {
       // Nothing has changed
       return;
     }
     try {
-      await data.store?.onSave?.(newText);
+      await store?.onSave?.(newText);
 
       setChanged(false);
 
@@ -141,7 +137,7 @@ export function Editable(data: Props) {
       setStartGettingFocus(undefined);
       setTotalFocusTimeInSeconds(0);
 
-      data.store?.onSuccess?.(newText);
+      store?.onSuccess?.(newText);
     } catch (err: unknown) {
       if (ValidationError.is(err)) {
         // Handle server validation errors
@@ -150,7 +146,7 @@ export function Editable(data: Props) {
         });
       } else {
         // Handle global error
-        data.store?.onError?.(err, newText);
+        store?.onError?.(err, newText);
       }
     }
   };
@@ -170,13 +166,16 @@ export function Editable(data: Props) {
       return;
     }
     reset();
-  }, [data.text]);
+  }, [text]);
 
   useEffect(() => {
     const element = elementRef.current;
     if (!element) {
       return;
     }
+
+    const align = !isRTL ? "left" : "right";
+
     const meOptions: MediumEditor.CoreOptions = {
       toolbar: {
         align,
@@ -187,7 +186,7 @@ export function Editable(data: Props) {
       disableDoubleReturn: true,
       placeholder: {
         hideOnClick: false,
-        text: data.placeholderText || t("editable.add_text", "Add text here"),
+        text: placeholder || t("editable.add_text", "Add text here"),
       },
       anchor: {
         linkValidation: true,
@@ -202,7 +201,7 @@ export function Editable(data: Props) {
 
     const meButton = meExtensions.button.prototype.defaults;
     meButton.h4.aria = t("richtext.button.h4.title", "subheader");
-    meButton.h4.contentFA = '<i className="fa fa-header">';
+    meButton.h4.contentFA = '<i class="fa fa-header">';
     meButton.bold.aria = t("richtext.button.bold.title", "bold");
     meButton.italic.aria = t("richtext.button.italic.title", "italic");
     meButton.underline.aria = t("richtext.button.underline.title", "underline");
@@ -211,7 +210,7 @@ export function Editable(data: Props) {
 
     meExtensions.anchor.prototype.aria = t("richtext.button.anchor.title", "link");
 
-    if (!data.multiline) {
+    if (!multiline) {
       meOptions.disableReturn = true;
       meOptions.toolbar = false;
     }
@@ -221,7 +220,7 @@ export function Editable(data: Props) {
     new MediumEditor(element, meOptions);
 
     setNumberOfCharacters(element.innerText.trim().length);
-  }, [align, data.placeholderText, data.multiline, t]);
+  }, [placeholder, multiline, t, isRTL]);
 
   const handleEdit = () => {
     const element = elementRef.current;
@@ -247,7 +246,7 @@ export function Editable(data: Props) {
     resetErrors();
     // Check if input is invalid
     // eslint-disable-next-line @typescript-eslint/no-shadow
-    const clientValidations = data.store?.clientValidations;
+    const clientValidations = store?.clientValidations;
     if (clientValidations) {
       Object.entries(clientValidations).forEach(([key, validation]) => {
         if (!validation.check(getEdited())) {
@@ -259,7 +258,7 @@ export function Editable(data: Props) {
       return;
     }
 
-    store();
+    save();
   };
 
   const handleCancel = () => {
@@ -296,7 +295,7 @@ export function Editable(data: Props) {
             setChangedByUser(true);
             setChanged(true);
 
-            data.onChange?.(
+            onChange?.(
               getEdited(),
               numberOfCharacters,
               // send current total time in seconds
@@ -321,7 +320,7 @@ export function Editable(data: Props) {
             <div className="invalid-feedback">
               {t("_inputField.maxlength", {
                 NUMBER: removeNumberOfCharacters,
-                MAXNUMBER: data.maxlength,
+                MAXNUMBER: maxlength,
               })}
             </div>
           ) : (
