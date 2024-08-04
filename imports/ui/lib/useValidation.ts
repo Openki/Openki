@@ -1,11 +1,10 @@
 import { useState } from "react";
 
-export function useValidation(
-  mapping: {
-    [name: string]: { onCheckValidity?: () => boolean; text: () => string; field: string };
-  },
-  initialCheck = false,
-) {
+export type Mapping = {
+  [name: string]: { onCheckValidity?: () => boolean; text: () => string; field: string };
+};
+
+export function useValidation(mapping: Mapping, initialCheck = false) {
   const initialState: { [field: string]: string } = {};
 
   if (initialCheck) {
@@ -28,8 +27,12 @@ export function useValidation(
     }));
   };
 
-  const checkValidity = () => {
+  const resetErrors = () => {
     setErrors(() => ({}));
+  };
+
+  const checkValidity = () => {
+    resetErrors();
     let validity = true;
     Object.keys(mapping).forEach((key) => {
       const m = mapping[key];
@@ -41,9 +44,10 @@ export function useValidation(
     return validity;
   };
 
-  return [errors, checkValidity, add] as readonly [
+  return [errors, checkValidity, add, resetErrors] as readonly [
     errors: { [field: string]: string },
     checkValidity: () => boolean,
     addError: (key: string) => void,
+    resetErrors: () => void,
   ];
 }
