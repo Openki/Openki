@@ -1,72 +1,61 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import { CourseMemberEntity } from "/imports/api/courses/courses";
-import { RoleEntity } from "/imports/api/roles/roles";
-import { useUserId } from "/imports/utils/react-meteor-data";
 
-import { hasRoleUser } from "/imports/utils/course-role-utils";
+export type Props = {
+  type: string;
+  icon: string;
+  enabled: boolean;
+  enroll: boolean;
+  onRole: (checked: boolean) => void;
+  onEnroll: (checked: boolean) => void;
+};
 
-export function Role(data: {
-  selected: string[];
-  role: RoleEntity;
-  members: CourseMemberEntity[];
-  onRole: (checked: boolean, role: string) => void;
-  onEnroll: (checked: boolean, role: string) => void;
-}) {
-  const [checked, setChecked] = useState(data.selected?.includes(data.role.type) || false);
-  const userId = useUserId();
+export function Role(data: Props) {
   const { t } = useTranslation();
 
   function roleDescription() {
-    return `roles.${data.role.type}.description`;
+    return `roles.${data.type}.description`;
   }
   function roleSubscription() {
-    return `roles.${data.role.type}.subscribe`;
-  }
-  function hasRole() {
-    return data.members && hasRoleUser(data.members, data.role.type, userId);
+    return `roles.${data.type}.subscribe`;
   }
 
   return (
     <>
       <div className="form-check">
         <input
-          className={`form-check-input js-check-role ${data.role.type}`}
-          name={data.role.type}
+          className={`form-check-input js-check-role ${data.type}`}
+          name={data.type}
           type="checkbox"
           value=""
-          id={`courseEditRole${data.role.type}Check`}
-          checked={checked}
+          id={`courseEditRole${data.type}Check`}
+          checked={data.enabled}
           onChange={(event) => {
-            setChecked(event.currentTarget.checked);
-            data.onRole(event.currentTarget.checked, data.role.type);
+            data.onRole(event.currentTarget.checked);
           }}
         />
         <label
-          className={`form-check-label ${data.role.type}`}
-          htmlFor={`courseEditRole${data.role.type}Check`}
+          className={`form-check-label ${data.type}`}
+          htmlFor={`courseEditRole${data.type}Check`}
         >
-          <span className={`${data.role.icon} fa-fw`} aria-hidden="true"></span>
+          <span className={`${data.icon} fa-fw`} aria-hidden="true"></span>
 
           {t(roleDescription())}
         </label>
       </div>
-      {checked ? (
+      {data.enabled ? (
         <div className="form-check ms-4">
           <input
-            className={`form-check-input js-check-enroll ${data.role.type}`}
-            name={data.role.type}
+            className={`form-check-input js-check-enroll ${data.type}`}
+            name={data.type}
             type="checkbox"
-            id={`courseEditRole${data.role.type}EnrollCheck`}
-            checked={hasRole()}
+            id={`courseEditRole${data.type}EnrollCheck`}
+            checked={data.enroll}
             onChange={(event) => {
-              data.onEnroll(event.currentTarget.checked, data.role.type);
+              data.onEnroll(event.currentTarget.checked);
             }}
           />
-          <label
-            className="form-check-label"
-            htmlFor={`courseEditRole${data.role.type}EnrollCheck`}
-          >
+          <label className="form-check-label" htmlFor={`courseEditRole${data.type}EnrollCheck`}>
             {t(roleSubscription())}
           </label>
         </div>
@@ -75,4 +64,8 @@ export function Role(data: {
   );
 }
 
+// for Blaze
+// eslint-disable-next-line import/first
 import "./template.html";
+
+Template.registerHelper("CourseEditRole", () => Role);
