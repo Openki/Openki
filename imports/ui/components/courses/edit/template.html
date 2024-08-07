@@ -105,8 +105,8 @@
               <div class="col-md">
                 <label
                        class="form-label">{{i18n 'course.edit.needs.role' 'This course might need…'}}</label>
-                {{#each role in availableRoles}}
-                  {{> courseEditRole selected=roles role=role members=members}}
+                {{#each courseEditRoleAttr in courseEditRolesAttr}}
+                  {{> courseEditRole courseEditRoleAttr}}
                 {{/each}}
               </div>
             {{/if}}

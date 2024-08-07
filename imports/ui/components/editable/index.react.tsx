@@ -13,7 +13,7 @@ import "./styles.scss";
 export type Props = {
   text: string;
   multiline?: boolean;
-  placeholder?: string;
+  placeholder?: string | undefined;
   maxlength?: number | undefined;
   onChange?: (
     newText: string | undefined,

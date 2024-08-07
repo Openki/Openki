@@ -6,7 +6,7 @@ import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating"
 import { Meteor } from "meteor/meteor";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { Course, CourseModel, Courses } from "/imports/api/courses/courses";
+import { Course, CourseMemberEntity, CourseModel, Courses } from "/imports/api/courses/courses";
 import * as CoursesMethods from "/imports/api/courses/methods";
 import { GroupEntityCustomCourseFields, Groups } from "/imports/api/groups/groups";
 import { Regions } from "/imports/api/regions/regions";
@@ -14,6 +14,7 @@ import { Roles } from "/imports/api/roles/roles";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import * as StringTools from "/imports/utils/string-tools";
+import { hasRoleUser } from "/imports/utils/course-role-utils";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 import { Editable } from "/imports/ui/lib/editable";
@@ -26,8 +27,8 @@ import "/imports/ui/components/editable";
 import "/imports/ui/components/price-policy";
 import "/imports/ui/components/regions/tag";
 import "/imports/ui/components/edit-custom-fields";
-
 import "./role";
+import type { Props as CourseEditRoleProps } from "./role";
 import "./title";
 
 import "./template.html";
@@ -68,6 +69,7 @@ const Template = TemplateAny as TemplateStaticTyped<
       type?: "singleLine" | "multiLine" | "boolean",
     ) => GroupEntityCustomCourseFields[];
     resetFields: () => void;
+    roles: ReactiveVar<{ [type: string]: { icon: string; enabled: boolean; enroll: boolean } }>;
   }
 >;
 
@@ -77,6 +79,8 @@ template.onCreated(function () {
   const instance = this;
 
   instance.busy(false);
+
+  const userId = Meteor.userId();
 
   instance.editableDescription = new Editable(
     true,
@@ -100,6 +104,33 @@ template.onCreated(function () {
 
   instance.savedCourseId = new ReactiveVar(undefined);
   instance.showSavedMessage = new ReactiveVar(false);
+
+  function availableRoles() {
+    return Roles.filter((role) => {
+      // Roles that are always on are not selectable here
+      if (role.preset) {
+        return false;
+      }
+
+      return true;
+    });
+  }
+
+  function hasRole(members: CourseMemberEntity[] | undefined, role: string) {
+    return members && hasRoleUser(members, role, userId);
+  }
+
+  const roles: { [type: string]: { icon: string; enabled: boolean; enroll: boolean } } = {};
+
+  availableRoles().forEach((r) => {
+    roles[r.type] = {
+      icon: r.icon,
+      enabled: instance.data.roles.includes(r.type) || false,
+      enroll: hasRole(instance.data.members, r.type) || false,
+    };
+  });
+
+  instance.roles = new ReactiveVar(roles);
 
   function getRegion() {
     const data = Template.currentData();
@@ -233,17 +264,6 @@ template.helpers({
     return "btn-edit";
   },
 
-  availableRoles() {
-    return Roles.filter((role) => {
-      // Roles that are always on are not selectable here
-      if (role.preset) {
-        return false;
-      }
-
-      return true;
-    });
-  },
-
   showMoreInfo() {
     return (
       Template.instance().showRegionSelection() || Template.instance().customFields().length > 0
@@ -340,6 +360,34 @@ template.helpers({
     }
 
     return classes.join(" ");
+  },
+
+  courseEditRolesAttr(): CourseEditRoleProps[] {
+    const { roles } = Template.instance();
+
+    return Object.entries(roles.get()).map((r) => {
+      const type = r[0];
+      return {
+        type,
+        ...r[1],
+        onRole(checked: boolean) {
+          const newRoles = { ...roles.get() };
+          newRoles[type] = {
+            ...r[1],
+            enabled: checked,
+          };
+          roles.set(newRoles);
+        },
+        onEnroll(checked: boolean) {
+          const newRoles = { ...roles.get() };
+          newRoles[type] = {
+            ...r[1],
+            enroll: checked,
+          };
+          roles.set(newRoles);
+        },
+      };
+    });
   },
 
   hasPricePolicy() {
@@ -479,20 +527,20 @@ template.events({
     }
 
     if (instance.state.equals("fullRoleSelection", true)) {
-      instance.$(".js-check-role").each(function () {
-        const inputElement = this as HTMLInputElement;
-        changes.roles[inputElement.name] = inputElement.checked;
+      Object.entries(instance.roles.get()).forEach(function (r) {
+        changes.roles[r[0]] = r[1].enabled;
       });
-      instance.$(".js-check-enroll").each(function () {
-        const inputElement = this as HTMLInputElement;
-        const role = inputElement.name;
-        const subscribe = !!inputElement.checked;
-        if (subscribe) {
-          changes.subs.push(role);
-        } else {
-          changes.unsubs.push(role);
-        }
-      });
+      Object.entries(instance.roles.get())
+        .filter((r) => r[1].enabled)
+        .forEach(function (r) {
+          const role = r[0];
+          const subscribe = !!r[1].enroll;
+          if (subscribe) {
+            changes.subs.push(role);
+          } else {
+            changes.unsubs.push(role);
+          }
+        });
     }
 
     changes.customFields = instance.customFields().map((i) => {

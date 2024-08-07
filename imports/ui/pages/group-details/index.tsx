@@ -16,7 +16,7 @@ import * as Metatags from "/imports/utils/metatags";
 // import { CourseTemplate } from "../../lib/course-template";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
-import { Editable, Props as EditableProps } from "/imports/ui/components/editable/index.tsx";
+import { Editable, Props as EditableProps } from "/imports/ui/components/editable/index.react";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { Dashboard, Props as DashboardProps } from "../../components/dashboard";

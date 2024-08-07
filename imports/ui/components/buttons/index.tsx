@@ -54,7 +54,6 @@ export function ButtonDelete(props: { onClick: () => void; disabled?: boolean | 
 // for Blaze
 // eslint-disable-next-line import/first
 import "./template.html";
-import { useValidation } from "../../lib/useValidation";
 
 const Template = TemplateAny as TemplateStaticTyped<"button", Record<string, string>>;
 
