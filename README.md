@@ -1,4 +1,4 @@
-Openki [![pipeline](https://gitlab.com/Openki/Openki/badges/master/pipeline.svg?ignore_skipped=true)](https://gitlab.com/Openki/Openki/-/pipelines) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/250/badge)](https://bestpractices.coreinfrastructure.org/projects/250)
+Openki
 ====
 
 **Platform for open education** – Free software built with [Meteor.js](https://meteor.com) and [React](https://react.dev/)
