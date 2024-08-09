@@ -868,7 +868,7 @@
 	"region.stats.events.users": "Users",
 	"region.stats.events.users.description": "einzelne Accounts angemeldet",
 	"region.stats.group": "Gruppe",
-	"region.stats.group.members": "Zugehörige",
+	"region.stats.group.members": "Members\n(Admins)",
 	"region.stats.plzLogin": "Bitte als Administrator anmelden!",
 	"region.stats.ungrouped": "Ohne AO",
 	"regionDetails.coordinates": "Kordinaten:",
