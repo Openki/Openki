@@ -1,9 +1,8 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { _ } from "meteor/underscore";
-import { i18n } from "/imports/startup/both/i18next";
 
-export type Role = "admin";
+export type Role = "admin" | "visitor";
 
 export interface UserProfile {
   name: string;
@@ -118,7 +117,7 @@ export type UserModel = User & UserEntity;
 
 export class User {
   getDisplayName(this: Pick<UserEntity, "username">) {
-    return this.username || i18n("user.visitor", "Visitor");
+    return this.username;
   }
 
   /**
@@ -147,7 +146,7 @@ export class User {
    * @returns String with email address or Boolean false
    */
   emailAddress(this: UserModel) {
-    return this.emails?.[0]?.address || false;
+    return this.emails?.[0]?.address || undefined;
   }
 
   /**
