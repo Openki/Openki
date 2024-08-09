@@ -886,7 +886,6 @@
 	"user.acceptsPrivateMessages.false": "Cet utilisateur n'accepte les messages privés venant des utilisateurs",
 	"user.hasContributed": "{USERNAME} a supporté {SITENAME} avec un don. Cliquez sur {ICON} sur savoir comment contribuer.",
 	"user.not.logged_in": "L'événement n'a pu être trouvé. Peut-être devez-vous vous connecter ?",
-	"user.visitor": "Visiteur",
 	"userprofile.groups.header": "Modifier les groupes",
 	"userprofile.infoForUnverifiedMail": "Veuillez vérifier que vous avez reçu une copie par email ou a été attachée à ce message.",
 	"userprofile.noOwnVenues": "Vous n'êtes l'éditeur d'aucun lieu.",
