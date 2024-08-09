@@ -13,6 +13,15 @@
 
       {{> alerts}}
 
+      {{#if resetPasswortEmailSended}}
+        <div class="container mt-3">
+          <div class="alert alert-success" role="alert">
+            <i class="fa-regular fa-envelope fa-lg fa-fw"></i>
+            {{i18n 'resetPasswort.sendEmail' 'An e-mail with further instructions on how to register your account has been sent to you.'}}
+          </div>
+        </div>
+      {{/if}}
+
       {{> introduction hasPricePolicy=hasPricePolicy}}
 
       {{> emailRequest}}

@@ -12,7 +12,7 @@ import * as UsersMethods from "/imports/api/users/methods";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { useValidation } from "/imports/ui/lib/useValidation";
 
-import { DataProtectionLaw } from "./data-protection-law";
+import { DataProtectionLaw } from "../data-protection-law";
 
 export type Props = {
   username: string;
@@ -221,7 +221,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
         </div>
       ) : null}
       <div className="mb-3">
-        <button type="submit" className="btn btn-add form-control js-register" disabled={isBusy}>
+        <button type="submit" className="btn btn-add form-control" disabled={isBusy}>
           {isBusy ? (
             <>
               <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
