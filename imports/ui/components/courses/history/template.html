@@ -5,20 +5,21 @@
         <div class="timeline-start"></div>
       </div>
     </div>
-    <div class="row">
-      {{#each event in pastEventsList}}
+    {{#each event in pastEventsList}}
+      <div class="row">
         <div class="timeline-eventdate col-3" title="{{dateLong event.dateTime}}">
           {{fromNow event.dateTime}}
         </div>
         <div class="timeline-eventline-container col-1">
-          <div class="timeline-eventline"></div>
-          <div class="timeline-eventpoint"></div>
+          <div class="timeline-eventline">
+            <div class="timeline-eventpoint"></div>
+          </div>
         </div>
         <div class="coursehistory-event col-8">
           {{> Template.dynamic template=event.template data=event.data}}
         </div>
-      {{/each}}
-    </div>
+      </div>
+    {{/each}}
     <div class="timeline-post row">
       <div class="col-1 offset-3">
         <div class="timeline-end"></div>
