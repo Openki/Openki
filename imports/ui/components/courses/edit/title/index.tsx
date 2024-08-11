@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { _ } from "meteor/underscore";
 import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
@@ -14,9 +14,14 @@ export function Title(data: { name: string }) {
   const [proposedSearch, setProposedSearch] = useState(data.name || "");
   const [focused, setFocused] = useState(false);
 
+  const titleElement = useRef<HTMLInputElement>(null);
+  const dropdownElement = useRef<HTMLDivElement>(null);
+
   const region = useCurrentRegionId();
   const [isLoading, courses] = useFindFilter(
-    { search: proposedSearch || "lalala", region: region || "all" },
+    proposedSearch ? { search: proposedSearch, region: region || "all" } :
+    
+    { tenants: ["-1"] },
     20,
     undefined,
     [["name", "asc"]],
@@ -32,20 +37,22 @@ export function Title(data: { name: string }) {
   }
 
   useEffect(() => {
-    if (!$(".dropdown").hasClass("open")) {
-      document.querySelectorAll(".js-title").forEach(function (dropdown) {
-        const bsDropdown = new Dropdown(dropdown);
-        bsDropdown.toggle();
-      });
+    if (!focused) return;
+
+    if (!dropdownElement.current?.classList.contains("open")) {
+      if (titleElement.current) {
+        new Dropdown(titleElement.current).toggle();
+      }
     }
   });
 
   return (
     <div className="mb-3 js-proposed-search">
       <label className="form-label">{t("course.edit.title", "Title")}</label>
-      <div className="dropdown">
+      <div className="dropdown" ref={dropdownElement}>
         <input
           className="form-control form-control-lg dropdown-toggle js-title"
+          ref={titleElement}
           id="editform_name"
           placeholder={t("course.title.placeholder", "What are you interested in?")}
           size={40}
@@ -54,7 +61,9 @@ export function Title(data: { name: string }) {
           defaultValue={proposedSearch}
           onKeyDown={(event) => {
             if (event.key === "9") {
-              $(".dropdown-toggle").dropdown("toggle");
+              if (titleElement.current) {
+                new Dropdown(titleElement.current).toggle();
+              }
               setFocused(false);
             }
           }}
@@ -97,7 +106,9 @@ export function Title(data: { name: string }) {
                   role="presentation"
                   onKeyDown={(event) => {
                     if (event.key === "9" && !event.shiftKey) {
-                      $(".dropdown-toggle").dropdown("toggle");
+                      if (titleElement.current) {
+                        new Dropdown(titleElement.current).toggle();
+                      }
                     }
                   }}
                 >
