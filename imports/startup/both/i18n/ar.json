@@ -931,7 +931,6 @@
 	"user.acceptsPrivateMessages.false": "لا يقبل المستخدم الرسائل الخاصة من المستخدمين",
 	"user.hasContributed": "دعم {USERNAME} {SITENAME} من خلال التبرع. انقر فوق {ICON} للتعرف على كيفية المساهمة.",
 	"user.not.logged_in": "تعذر العثور على هذا الحدث. ربما يجب تسجيل الدخول",
-	"user.visitor": "زائر",
 	"userprofile.groups.header": "تحرير المجموعات",
 	"userprofile.infoForUnverifiedMail": "تحقق من عنوان البريد الإلكتروني الخاص بك لتلقي نسخة أو لإرفاقها بالرسالة.",
 	"userprofile.noOwnVenues": "أنت لست محررًا لأي مكان.",

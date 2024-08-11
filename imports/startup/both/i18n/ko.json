@@ -956,7 +956,6 @@
 	"user.acceptsPrivateMessages.false": "다른 사용자들의 개인 메시지를 받지 않습니다",
 	"user.hasContributed": "{USERNAME}(이)가 {SITENAME}를 후원했습니다. {ICON}을 눌러 후원하는 방법을 알아보세요.",
 	"user.not.logged_in": "이벤트를 찾는데 실패했습니다. 이벤트를 보려면 로그인해야 할 수도 있습니다.",
-	"user.visitor": "방문자",
 	"userprofile.groups.header": "그룹 수정",
 	"userprofile.infoForUnverifiedMail": "복사본을 받거나, 메시지에 첨부하려면 이메일을 인증해주세요.",
 	"userprofile.noOwnVenues": "현재 제공 중인 장소가 없습니다.",
