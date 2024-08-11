@@ -30,7 +30,7 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
     >
       <button
         type="button"
-        className="btn btn-sm btn-close"
+        className="btn btn-sm btn-close btn-close-white"
         aria-expanded="false"
         data-bs-toggle="dropdown"
       ></button>
@@ -39,7 +39,7 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
           {isNotPriviledgedSelf()
             ? t("course.details.removeTeam.self.header", "Remove yourself from the team")
             : t("course.details.removeTeam.others.header", "Remove member from the team")}
-          <button type="button" className="btn-close"></button>
+          <button type="button" className="btn-close btn-close-white"></button>
         </li>
         <li>
           <hr className="dropdown-divider" />

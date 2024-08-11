@@ -325,7 +325,7 @@ export function EditableImage(data: Data) {
                 <div className="modal-header">
                   <button
                     type="button"
-                    className="btn-close"
+                    className="btn-close btn-close-white"
                     data-bs-dismiss="modal"
                     aria-label="Close"
                   ></button>

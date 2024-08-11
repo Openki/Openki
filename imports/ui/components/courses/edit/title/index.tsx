@@ -35,7 +35,13 @@ function Courses({
           "proposedCoursesDropdown.joinExistingCourseQuestion",
           "Maybe you would like to join an existing course?",
         )}
-        <button type="button" className="btn btn-close"></button>
+        <button
+          type="button"
+          className="btn btn-close"
+          onClick={() => {
+            onClose();
+          }}
+        ></button>
       </li>
       <li>
         <hr className="dropdown-divider" />
@@ -46,13 +52,13 @@ function Courses({
           className="dropdown-entryprerender"
           role="presentation"
           onKeyDown={(event) => {
-            if (event.key === "9" && !event.shiftKey) {
+            if (event.key === "Tab" && !event.shiftKey) {
               onClose();
             }
           }}
         >
           <a
-            className="dropdown-item"
+            className="dropdown-item js-dropdown-item"
             href={Router.path("showCourse", course)}
             role="menuitem"
             tabIndex={-1}
@@ -68,32 +74,36 @@ function Courses({
 export function Title(data: { name: string }) {
   const { t } = useTranslation();
 
-  const [proposedSearch, setProposedSearch] = useState(data.name || "");
+  const [proposedSearch, setProposedSearch] = useState(data?.name || "");
   const [focused, setFocused] = useState(false);
   const [hasResults, setHasResults] = useState(false);
 
   const titleElement = useRef<HTMLInputElement>(null);
-  const dropdownElement = useRef<HTMLDivElement>(null);
 
   function dropdownVisible() {
     return focused && proposedSearch.length > 3;
   }
 
   useEffect(() => {
+    setProposedSearch(data.name);
+  }, [data.name]);
+
+  useEffect(() => {
     if (!titleElement.current) {
       return;
     }
+    const dropdown = Dropdown.getOrCreateInstance(titleElement.current);
     if (dropdownVisible()) {
-      Dropdown.getOrCreateInstance(titleElement.current).show();
+      dropdown.show();
     } else {
-      Dropdown.getOrCreateInstance(titleElement.current).dispose();
+      dropdown.dispose();
     }
   });
 
   return (
     <div className="mb-3 js-proposed-search">
       <label className="form-label">{t("course.edit.title", "Title")}</label>
-      <div className="dropdown" ref={dropdownElement}>
+      <div className="dropdown">
         <input
           className="form-control form-control-lg dropdown-toggle js-title"
           ref={titleElement}
@@ -103,12 +113,25 @@ export function Title(data: { name: string }) {
           type="text"
           defaultValue={proposedSearch}
           data-bs-toggle="dropdown"
+          data-bs-auto-close="false"
           onKeyDown={(event) => {
-            if (event.key === "9") {
+            if (event.key === "Tab") {
               if (titleElement.current) {
                 Dropdown.getOrCreateInstance(titleElement.current).dispose();
               }
               setFocused(false);
+            } else if (event.key === "ArrowDown") {
+              (
+                titleElement.current?.parentElement?.querySelector(
+                  ".js-dropdown-item",
+                ) as HTMLAnchorElement
+              ).focus();
+            } else if (event.key === "ArrowUp") {
+              const elements = titleElement.current?.parentElement?.querySelectorAll(
+                ".js-dropdown-item",
+              ) as NodeListOf<HTMLAnchorElement>;
+
+              elements.item(elements.length - 1).focus();
             }
           }}
           onInput={_.debounce((event: any) => {
@@ -119,16 +142,11 @@ export function Title(data: { name: string }) {
           }}
         />
         <ul
-          className={`dropdown-menu proposed-courses js-proposed-courses ${
+          className={`dropdown-menu proposed-courses ${
             !dropdownVisible() || !hasResults ? "d-none" : ""
           }`}
           role="menu"
           aria-labelledby="editform_name"
-          onBlur={(event) => {
-            if ($(event.relatedTarget as any).closest(".js-proposed-search").length === 0) {
-              setFocused(false);
-            }
-          }}
         >
           {dropdownVisible() ? (
             <Courses
@@ -137,19 +155,15 @@ export function Title(data: { name: string }) {
                 setHasResults(newHasResults);
               }}
               onClose={() => {
-                if (titleElement.current) {
-                  Dropdown.getOrCreateInstance(titleElement.current).dispose();
-                }
+                setFocused(false);
               }}
             />
-          ) : null}{" "}
+          ) : null}
           <button
             type="button"
             className="btn btn-cancel close-dropdown-button"
             onClick={() => {
-              if (titleElement.current) {
-                Dropdown.getOrCreateInstance(titleElement.current).dispose();
-              }
+              setFocused(false);
             }}
           >
             {t("button.proposedCourses.close", "No thanks")}
@@ -163,6 +177,5 @@ export function Title(data: { name: string }) {
 // for Blaze
 // eslint-disable-next-line import/first
 import "./template.html";
-import { use } from "chai";
 
 Template.registerHelper("CourseTitle", () => Title);
