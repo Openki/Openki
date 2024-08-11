@@ -85,7 +85,7 @@ export function Title(data: { name: string }) {
   }
 
   useEffect(() => {
-    setProposedSearch(data.name);
+    setProposedSearch(data?.name || "");
   }, [data.name]);
 
   useEffect(() => {
