@@ -967,7 +967,6 @@
 	"user.acceptsPrivateMessages.false": "Benutzer_in akzeptiert keine privaten Nachrichten",
 	"user.hasContributed": "{USERNAME} hat {SITENAME} mit einer Spende unterstützt. Klick auf das {ICON}, um zu erfahren, wie du beitragen kannst.",
 	"user.not.logged_in": "Konnte diese Veranstaltung nicht finden. Vielleicht musst du dich einloggen?",
-	"user.visitor": "Gast",
 	"userprofile.groups.header": "Gruppen bearbeiten",
 	"userprofile.infoForUnverifiedMail": "Bestätige deine E-Mail Adresse um sie deiner Nachricht anzufügen und um eine Kopie deiner Nachricht zu erhalten.",
 	"userprofile.noOwnVenues": "Du bist nicht Editor_in eines Veranstaltungsortes.",
