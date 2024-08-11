@@ -1,31 +1,5 @@
 <template name="courseTitle">
-  <div class="mb-3 js-proposed-search">
-    <label class="form-label">{{i18n 'course.edit.title' 'Title'}}</label>
-    <div class="dropdown">
-      <input class="form-control form-control-lg dropdown-toggle js-title" id="editform_name"
-             placeholder="{{i18n 'course.title.placeholder' 'What are you interested in?' attr=true}}"
-             size="40" type="text" data-bs-toggle="dropdown" value="{{name}}" />
-      <ul class="dropdown-menu proposed-courses js-proposed-courses {{#unless proposedCourses.count}}d-none{{/unless}}"
-          role="menu" aria-labelledby="editform_name">
-        {{#if proposedCourses.count}}
-          <li class="dropdown-header">
-            <i class="fa-solid fa-info-circle" aria-hidden="true"></i>
-            {{i18n 'proposedCoursesDropdown.joinExistingCourseQuestion' 'Maybe you would like to join an existing course?'}}
-            <button type="button" class="btn btn-close"></button>
-          </li>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-          {{#each proposedCourses}}
-            <li class="dropdown-entry js-dropdown-entry" role="presentation"><a
-                 class="dropdown-item" href="{{pathFor 'showCourse'}}" role="menuitem"
-                 tabindex="-1">{{name}}</a></li>
-          {{/each}}
-        {{/if}}
-        <button type="button" class="btn btn-cancel js-close-btn close-dropdown-button">
-          {{i18n 'button.proposedCourses.close' 'No thanks'}}
-        </button>
-      </ul>
-    </div>
+  <div>
+    {{> React (component CourseTitle)}}
   </div>
 </template>
