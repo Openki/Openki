@@ -8,41 +8,85 @@ import { useFindFilter } from "/imports/api/courses/publications";
 import "./styles.scss";
 import { Router } from "meteor/iron:router";
 
+function Courses({
+  search,
+  onResult,
+  onClose,
+}: {
+  search: string;
+  onResult: (hasResults: boolean) => void;
+  onClose: () => void;
+}) {
+  const { t } = useTranslation();
+  const region = useCurrentRegionId();
+  const [isLoading, courses] = useFindFilter({ search, region: region || "all" }, 20, undefined, [
+    ["name", "asc"],
+  ]);
+
+  useEffect(() => {
+    onResult(!isLoading() && courses.length > 0);
+  });
+
+  return !isLoading() && courses.length ? (
+    <>
+      <li className="dropdown-header">
+        <i className="fa-solid fa-info-circle" aria-hidden="true"></i>
+        {t(
+          "proposedCoursesDropdown.joinExistingCourseQuestion",
+          "Maybe you would like to join an existing course?",
+        )}
+        <button type="button" className="btn btn-close"></button>
+      </li>
+      <li>
+        <hr className="dropdown-divider" />
+      </li>
+      {courses.map((course) => (
+        <li
+          key={course._id}
+          className="dropdown-entryprerender"
+          role="presentation"
+          onKeyDown={(event) => {
+            if (event.key === "9" && !event.shiftKey) {
+              onClose();
+            }
+          }}
+        >
+          <a
+            className="dropdown-item"
+            href={Router.path("showCourse", course)}
+            role="menuitem"
+            tabIndex={-1}
+          >
+            {course.name}
+          </a>
+        </li>
+      ))}
+    </>
+  ) : null;
+}
+
 export function Title(data: { name: string }) {
   const { t } = useTranslation();
 
   const [proposedSearch, setProposedSearch] = useState(data.name || "");
   const [focused, setFocused] = useState(false);
+  const [hasResults, setHasResults] = useState(false);
 
   const titleElement = useRef<HTMLInputElement>(null);
   const dropdownElement = useRef<HTMLDivElement>(null);
 
-  const region = useCurrentRegionId();
-  const [isLoading, courses] = useFindFilter(
-    proposedSearch ? { search: proposedSearch, region: region || "all" } :
-    
-    { tenants: ["-1"] },
-    20,
-    undefined,
-    [["name", "asc"]],
-  );
-
-  const dropdownVisible = () => focused && proposedSearch.length > 3;
-
-  function proposedCourses() {
-    if (dropdownVisible()) {
-      return courses;
-    }
-    return [];
+  function dropdownVisible() {
+    return focused && proposedSearch.length > 3;
   }
 
   useEffect(() => {
-    if (!focused) return;
-
-    if (!dropdownElement.current?.classList.contains("open")) {
-      if (titleElement.current) {
-        new Dropdown(titleElement.current).toggle();
-      }
+    if (!titleElement.current) {
+      return;
+    }
+    if (dropdownVisible()) {
+      Dropdown.getOrCreateInstance(titleElement.current).show();
+    } else {
+      Dropdown.getOrCreateInstance(titleElement.current).dispose();
     }
   });
 
@@ -57,12 +101,12 @@ export function Title(data: { name: string }) {
           placeholder={t("course.title.placeholder", "What are you interested in?")}
           size={40}
           type="text"
-          data-bs-toggle="dropdown"
           defaultValue={proposedSearch}
+          data-bs-toggle="dropdown"
           onKeyDown={(event) => {
             if (event.key === "9") {
               if (titleElement.current) {
-                new Dropdown(titleElement.current).toggle();
+                Dropdown.getOrCreateInstance(titleElement.current).dispose();
               }
               setFocused(false);
             }
@@ -76,7 +120,7 @@ export function Title(data: { name: string }) {
         />
         <ul
           className={`dropdown-menu proposed-courses js-proposed-courses ${
-            isLoading() || (!isLoading() && !proposedCourses().length) ? "d-none" : ""
+            !dropdownVisible() || !hasResults ? "d-none" : ""
           }`}
           role="menu"
           aria-labelledby="editform_name"
@@ -86,46 +130,28 @@ export function Title(data: { name: string }) {
             }
           }}
         >
-          {!isLoading() && proposedCourses().length ? (
-            <>
-              <li className="dropdown-header">
-                <i className="fa-solid fa-info-circle" aria-hidden="true"></i>
-                {t(
-                  "proposedCoursesDropdown.joinExistingCourseQuestion",
-                  "Maybe you would like to join an existing course?",
-                )}
-                <button type="button" className="btn btn-close"></button>
-              </li>
-              <li>
-                <hr className="dropdown-divider" />
-              </li>
-              {proposedCourses().map((course) => (
-                <li
-                  key={course._id}
-                  className="dropdown-entryprerender"
-                  role="presentation"
-                  onKeyDown={(event) => {
-                    if (event.key === "9" && !event.shiftKey) {
-                      if (titleElement.current) {
-                        new Dropdown(titleElement.current).toggle();
-                      }
-                    }
-                  }}
-                >
-                  <a
-                    className="dropdown-item"
-                    href={Router.path("showCourse", course)}
-                    role="menuitem"
-                    tabIndex={-1}
-                  >
-                    {course.name}
-                  </a>
-                </li>
-              ))}
-            </>
-          ) : null}
-
-          <button type="button" className="btn btn-cancel js-close-btn close-dropdown-button">
+          {dropdownVisible() ? (
+            <Courses
+              search={proposedSearch}
+              onResult={(newHasResults) => {
+                setHasResults(newHasResults);
+              }}
+              onClose={() => {
+                if (titleElement.current) {
+                  Dropdown.getOrCreateInstance(titleElement.current).dispose();
+                }
+              }}
+            />
+          ) : null}{" "}
+          <button
+            type="button"
+            className="btn btn-cancel close-dropdown-button"
+            onClick={() => {
+              if (titleElement.current) {
+                Dropdown.getOrCreateInstance(titleElement.current).dispose();
+              }
+            }}
+          >
             {t("button.proposedCourses.close", "No thanks")}
           </button>
         </ul>
@@ -137,5 +163,6 @@ export function Title(data: { name: string }) {
 // for Blaze
 // eslint-disable-next-line import/first
 import "./template.html";
+import { use } from "chai";
 
 Template.registerHelper("CourseTitle", () => Title);
