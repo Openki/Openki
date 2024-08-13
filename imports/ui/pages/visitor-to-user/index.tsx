@@ -54,7 +54,7 @@ export function VisitorToUserPage({ username, email, token }: Props) {
           try {
             await AccountsAsync.resetPassword(token, password);
 
-            Alert.success(t("visitorToUser.success.", "Your account is."));
+            Alert.success(t("visitorToUser.success.", "Your account is now created."));
             Router.go("profile");
           } catch (err) {
             addError(err.reason);
