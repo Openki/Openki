@@ -232,7 +232,9 @@ export function StatsPage() {
                     <tr>
                       <td>
                         {group.id ? (
-                          <a href={Router.path("groupDetails", { _id: group.id })}>{group.name}</a>
+                          <a href={Router.path("groupDetails", { _id: group.id })}>
+                            {group.name || t("group.missing")}
+                          </a>
                         ) : (
                           t("region.stats.ungrouped", "Ungrouped")
                         )}

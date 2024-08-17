@@ -16,11 +16,15 @@ import { PleaseLogin } from "/imports/ui/lib/please-login";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
+import { CourseTemplate } from "../../lib/course-template";
+import { CleanedRegion } from "../../lib/cleaned-region";
 
 import "/imports/ui/components/courses/find";
 import "/imports/ui/components/buttons";
 import "/imports/ui/components/editable";
 import "/imports/ui/components/groups/settings";
+import "/imports/ui/components/dashboard";
+import type { Props as DashboardProps } from "/imports/ui/components/dashboard";
 
 import "./template.html";
 import "./styles.scss";
@@ -226,6 +230,62 @@ template.helpers({
     const instance = Template.instance();
     const { group } = instance.data;
     return instance.mayEdit.get() && !group.isNew() && instance.editingSettings.get();
+  },
+  dashboardAttr(): DashboardProps {
+    const instance = Template.instance();
+    const { group } = instance.data;
+
+    const region = CleanedRegion(Session.get("region"));
+
+    return {
+      list: [
+        {
+          entity: "course",
+          title: i18n("explore.recentActivities.title", "Recent activities"),
+          query: `${region ? `region=${region}&` : ""}group=${group._id}`,
+        },
+        {
+          entity: "event",
+          title: i18n("explore.upcomingEvents.title", "Upcoming events"),
+          query: `${region ? `region=${region}&` : ""}group=${
+            group._id
+          }&after=now&sort=start&internal=0&canceled=0`,
+        },
+        {
+          entity: "course",
+          title: i18n("explore.newProposals.title", "New proposals"),
+          query: `${region ? `region=${region}&` : ""}group=${
+            group._id
+          }&state=proposal&internal=0&sort=time_created`,
+        },
+        {
+          entity: "course",
+          title: i18n("explore.lookingForMentors.title", "Looking for mentors"),
+          query: `${region ? `region=${region}&` : ""}group=${
+            group._id
+          }&needsRole=mentor&state=proposal,resting&internal=0`,
+        },
+        {
+          entity: "course",
+          title: i18n("explore.lookingForVenues.title", "Looking for venues"),
+          query: `${region ? `region=${region}&` : ""}group=${
+            group._id
+          }&needsRole=host&state=proposal,resting&internal=0`,
+        },
+        {
+          entity: "eventsMap",
+          title: i18n("explore.eventsMap.title", "Events map"),
+          query: `${region ? `region=${region}&` : ""}group=${group._id}&after=now`,
+        },
+      ],
+    };
+  },
+  newCourse() {
+    const instance = Template.instance();
+    const { group } = instance.data;
+    const course = CourseTemplate();
+    course.group = group._id;
+    return course;
   },
 });
 

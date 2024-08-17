@@ -105,16 +105,16 @@ const mapping: {
   },
 };
 
-export function Dashboard({
-  list,
-}: {
+export type Props = {
   list: {
     entity: string;
     title: string;
     query: string;
     showAll?: string;
   }[];
-}) {
+};
+
+export function Dashboard({ list }: Props) {
   const { t } = useTranslation();
 
   const hooks = list.map((i) => {
@@ -167,3 +167,9 @@ export function Dashboard({
     </>
   );
 }
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("Dashboard", () => Dashboard);
