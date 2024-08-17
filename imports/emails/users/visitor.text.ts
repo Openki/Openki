@@ -14,7 +14,7 @@ export function visitor(username: string, email: string, lng: string): string {
 ${t("visitorEmail.email.introduction", { SITE: siteName })}
 
 ${t("visitorEmail.email.instructions", { SITE: siteName })}
-${Router.url("resetPasswortEmail", {}, { query: { email } })}
+${Router.url("resetPasswortEmail", {}, { query: { email, campaign: "visitor" } })}
 
 ${t("visitorEmail.email.weUseYourEmail", { SITE: siteName })}
 
