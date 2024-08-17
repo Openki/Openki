@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { AccountsAsync } from "/imports/utils/promisify";
+import { useSiteName } from "/imports/utils/getSiteName";
 import * as Metatags from "/imports/utils/metatags";
 
 import * as Alert from "/imports/api/alerts/alert";
@@ -18,6 +19,7 @@ export type Props = {
 export function VisitorToUserPage({ username, email, token }: Props) {
   const { t } = useTranslation();
   const user = useUser();
+  const siteName = useSiteName();
 
   const [isBusy, setIsBusy] = useState(false);
   const [password, setPassword] = useState("");
@@ -37,8 +39,12 @@ export function VisitorToUserPage({ username, email, token }: Props) {
     <div className="container mw-md">
       <h1>{t("visitorToUser.title", "Create Account")}</h1>
       <p>
-        {t("visitorToUser.text", "Please choose a password to create your {USERNAME} account.", {
+        {t("visitorToUser.hi", "Hi {USERNAME}", {
           USERNAME: user?.getDisplayName(),
+        })}
+        <br />
+        {t("visitorToUser.text", "Please choose a password to create your {SITENAME} account.", {
+          SITENAME: siteName,
         })}
       </p>
       <form
@@ -96,6 +102,12 @@ export function VisitorToUserPage({ username, email, token }: Props) {
               </div>
             </div>
           </div>
+          <div className="text-body-secondary">
+            {t(
+              "visitorToUser.email.description",
+              "You can change your username and email address in the settings later.",
+            )}
+          </div>
         </div>
         <div className="mb-3">
           <div className="input-group has-validation">
@@ -133,7 +145,7 @@ export function VisitorToUserPage({ username, email, token }: Props) {
               Router.go("/");
             }}
           >
-            {t("login.register.backToLogin", "Go back to login")}
+            {t("_button.cancel")}
           </button>
         </div>
       </form>
