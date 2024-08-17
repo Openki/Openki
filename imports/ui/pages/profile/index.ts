@@ -225,6 +225,9 @@ template.helpers({
   isAdmin() {
     return UserPrivilegeUtils.privilegedTo("admin");
   },
+  isVisitor() {
+    return UserPrivilegeUtils.privilegedTo("visitor");
+  },
   deleteConfirmAttr() {
     return {
       confirmText: i18n(
