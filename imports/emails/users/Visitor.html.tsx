@@ -32,7 +32,10 @@ export function Visitor({
             )}
           </p>
           <p className="text-center">
-            <a className="button" href={Router.url("resetPasswortEmail", {}, { query: { email } })}>
+            <a
+              className="button"
+              href={Router.url("resetPasswortEmail", {}, { query: { email, campaign: "visitor" } })}
+            >
               {t("visitorEmail.email.createAccount", "Create a user account")}
             </a>
           </p>
