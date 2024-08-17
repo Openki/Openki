@@ -18,11 +18,13 @@ if (false) {
   // on the client: https://docs.meteor.com/packages/dynamic-import.html#Using-import-with-dynamic-expressions
   import(`/imports/startup/both/i18n/en.json`);
 
+  import(`/imports/startup/both/i18n/en-ccc.json`);
   import(`/imports/startup/both/i18n/af.json`);
   import(`/imports/startup/both/i18n/am.json`);
   import(`/imports/startup/both/i18n/ar.json`);
   import(`/imports/startup/both/i18n/da.json`);
   import(`/imports/startup/both/i18n/de.json`);
+  import(`/imports/startup/both/i18n/de-ccc.json`);
   import(`/imports/startup/both/i18n/de-ZH.json`);
   import(`/imports/startup/both/i18n/de-zuerich-lernt.json`);
   import(`/imports/startup/both/i18n/el.json`);
