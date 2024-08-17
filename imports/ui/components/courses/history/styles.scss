@@ -48,14 +48,14 @@
 }
 
 .timeline-eventpoint {
-  display: inline-block;
-  position: relative;
-  left: -3px;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
   background: $primary;
+  border-radius: 50%;
+  display: inline-block;
+  height: 7px;
+  left: -3px;
+  position: relative;
   transition: background-color 0.25s;
+  width: 7px;
 
   &.active {
     background: $danger;
@@ -74,8 +74,8 @@
   }
 
   a {
-    overflow-wrap: normal;
     color: $primary;
+    overflow-wrap: normal;
   }
 
   h4 {
