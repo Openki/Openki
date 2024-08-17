@@ -44,6 +44,10 @@ template.helpers({
     );
   },
 
+  resetPasswortEmailSended() {
+    return Router.current().params.query.action === "resetPasswortEmailSended";
+  },
+
   hasPricePolicy() {
     return !Regions.currentRegion()?.isPrivate();
   },

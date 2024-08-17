@@ -34,6 +34,34 @@ export const [simple, useSimple] = ServerPublishOne(
   },
 );
 
+export const [account, useAccount] = ServerPublishOne(
+  "user.account",
+  (token: string) => {
+    check(token, String);
+
+    // Public fields from users
+    const projection: Mongo.FieldSpecifier = {
+      username: 1,
+      emails: 1,
+      privileges: 1,
+      "services.password.reset.token": 1,
+    };
+
+    return Users.find({ "services.password.reset.token": token }, { projection });
+  },
+  (token: string) => {
+    // Public fields from users
+    const projection: Mongo.FieldSpecifier = {
+      username: 1,
+      emails: 1,
+      privileges: 1,
+      "services.password.reset.token": 1,
+    };
+
+    return Users.findOne({ "services.password.reset.token": token }, { projection });
+  },
+);
+
 export const [details, useDetails] = ServerPublishOne(
   "user",
   (userId: string) => {
@@ -74,8 +102,20 @@ export const [details, useDetails] = ServerPublishOne(
   },
 );
 
-export const [findFilter, useFindFilter] = ServerPublishMany("userSearch", (search: string) => {
-  check(search, String);
+export const [findFilter, useFindFilter] = ServerPublishMany(
+  "userSearch",
+  (
+    search: string,
+    options?: {
+      exclude?: string[] | undefined;
+    },
+  ) => {
+    check(search, String);
 
-  return userSearchPrefix(search, { projection: { username: 1 }, limit: 10 });
-});
+    return userSearchPrefix(search, {
+      exclude: options?.exclude,
+      projection: { username: 1 },
+      limit: 30,
+    });
+  },
+);

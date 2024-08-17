@@ -59,7 +59,7 @@ export function TenantRegions({ tenant }: Props) {
       {tenant.editableBy(user) ? (
         <a
           className="btn btn-add"
-          href={Router.url("regionCreate", {}, { query: `tenant=${tenant._id}` })}
+          href={Router.url("regionCreate", {}, { query: { tenant: tenant._id } })}
         >
           {t("tenant.details.regions.createNew.button", "Create a new region")}
         </a>

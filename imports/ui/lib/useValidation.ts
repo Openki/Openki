@@ -2,11 +2,15 @@ import { useState } from "react";
 
 export function useValidation(
   mapping: {
-    [name: string]: { onCheckValidity?: () => boolean; text: () => string; field: string };
+    [name: string]: {
+      onCheckValidity?: () => boolean;
+      text: () => string | React.JSX.Element | undefined | null;
+      field: string;
+    };
   },
   initialCheck = false,
 ) {
-  const initialState: { [field: string]: string } = {};
+  const initialState: { [field: string]: string | React.JSX.Element | undefined | null } = {};
 
   if (initialCheck) {
     Object.keys(mapping).forEach((key) => {

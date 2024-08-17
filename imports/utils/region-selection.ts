@@ -13,7 +13,14 @@ import { Subscriber } from "/imports/utils/ServerPublishBlaze";
 /**
  * List of routes that show different results when the region changes.
  */
-export const regionDependentRoutes = ["home", "calendar", "venuesMap", "eventsMap", "groupDetails"];
+export const regionDependentRoutes = [
+  "home",
+  "dashboard",
+  "calendar",
+  "venuesMap",
+  "eventsMap",
+  "groupDetails",
+];
 
 function persistRegion(region: string) {
   try {
