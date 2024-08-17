@@ -241,6 +241,7 @@ template.helpers({
   newCourse() {
     const instance = Template.instance();
     const course = CourseTemplate();
+    course.filter = instance.filter;
     const search = instance.filter.get("search");
     if (search) {
       course.name = search;
