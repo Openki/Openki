@@ -11,7 +11,7 @@ import { Store } from "../../lib/editable";
 import "./styles.scss";
 
 export type Props = {
-  text: string;
+  text?: string | undefined;
   multiline?: boolean;
   placeholder?: string | undefined;
   maxlength?: number | undefined;
@@ -23,7 +23,7 @@ export type Props = {
   store?: Store | undefined;
 };
 
-export function Editable({ text, multiline, placeholder, maxlength, onChange, store }: Props) {
+export function Editable({ text = "", multiline, placeholder, maxlength, onChange, store }: Props) {
   const { t } = useTranslation();
   const [numberOfCharacters, setNumberOfCharacters] = useState(0);
   const [changed, setChanged] = useState(!store);

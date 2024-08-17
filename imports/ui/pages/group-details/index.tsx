@@ -200,7 +200,7 @@ export function GroupDetailsPage(data: Data) {
   const showControls = !data.group.isNew();
 
   const editableNameAttr: EditableProps = {
-    text: data.group.name || "",
+    text: data.group.name,
     multiline: false,
     placeholder: t(
       "group.name.placeholder",
@@ -220,7 +220,7 @@ export function GroupDetailsPage(data: Data) {
   };
 
   const editableShortAttr: EditableProps = {
-    text: data.group.short || "",
+    text: data.group.short,
     multiline: false,
     placeholder: t("group.short.placeholder", "Abbreviation"),
     store: showControls
@@ -237,7 +237,7 @@ export function GroupDetailsPage(data: Data) {
   };
 
   const editableClaimAttr: EditableProps = {
-    text: data.group.claim || "",
+    text: data.group.claim,
     multiline: false,
     placeholder: t("group.claim.placeholder", "The core idea"),
     store: showControls
@@ -254,7 +254,7 @@ export function GroupDetailsPage(data: Data) {
   };
 
   const editableDescriptionAttr: EditableProps = {
-    text: data.group.description || "",
+    text: data.group.description,
     multiline: true,
     placeholder: t(
       "group.description.placeholder",

@@ -71,7 +71,7 @@ function Courses({
   ) : null;
 }
 
-export function Title(data: { name: string }) {
+export function Title(data: { name?: string | undefined }) {
   const { t } = useTranslation();
 
   const [proposedSearch, setProposedSearch] = useState(data?.name || "");
