@@ -974,7 +974,6 @@
 	"user.acceptsPrivateMessages.false": "L'utente non accetta messaggi privati dagli utenti",
 	"user.hasContributed": "{USERNAME} ha supportato {SITENAME} con una donazione. Clicca sull'{ICON} per sapere come contribuire.",
 	"user.not.logged_in": "Impossibile trovare questo evento. Forse devi effettuare il login?",
-	"user.visitor": "Visitatore",
 	"userprofile.groups.header": "Modifica gruppi",
 	"userprofile.infoForUnverifiedMail": "Verifica il tuo indirizzo e-mail per ricevere una copia o per allegarlo al messaggio.",
 	"userprofile.noOwnVenues": "Non sei un editore di nessun luogo.",

@@ -28,7 +28,6 @@
 .timeline-eventdate {
   @include ellipsis;
   color: rgb(109, 112, 112);
-  height: 20px;
   padding: 0;
   text-align: end;
 
@@ -38,7 +37,6 @@
 }
 
 .timeline-eventline-container {
-  height: 20px;
   padding: 0;
 }
 
@@ -52,9 +50,9 @@
 .timeline-eventpoint {
   background: $primary;
   border-radius: 50%;
-  bottom: 13px;
+  display: inline-block;
   height: 7px;
-  margin: auto;
+  left: -3px;
   position: relative;
   transition: background-color 0.25s;
   width: 7px;
@@ -65,8 +63,6 @@
 }
 
 .coursehistory-event {
-  @include ellipsis;
-  height: 20px;
   padding: 0;
 
   &:hover a {
@@ -79,6 +75,7 @@
 
   a {
     color: $primary;
+    overflow-wrap: normal;
   }
 
   h4 {
