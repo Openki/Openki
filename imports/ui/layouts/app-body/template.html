@@ -15,41 +15,43 @@
 
       {{#if resetPasswortEmailSended}}
         <div class="container mt-3">
-          <div class="alert alert-success" role="alert">
+          <div class="alert alert-success display-1" role="alert">
             <i class="fa-regular fa-envelope fa-lg fa-fw"></i>
             {{i18n 'resetPasswort.sendEmail' 'An e-mail with further instructions on how to register your account has been sent to you.'}}
           </div>
         </div>
-      {{/if}}
+      {{else}}
 
-      {{> introduction hasPricePolicy=hasPricePolicy}}
+        {{> introduction hasPricePolicy=hasPricePolicy}}
 
-      {{> emailRequest}}
+        {{> emailRequest}}
 
-      {{> emailValidation}}
+        {{> emailValidation}}
 
-      <div id="maincontent">
-        {{#if isAdminPage}}
-          <div class="container mw-md">
-            <h1>{{i18n 'adminPanel.heading' 'Admin panel'}}</h1>
-            {{#if isAdmin}}
-              {{#if isNotAdminPanel}}
-                <a href="{{pathFor 'adminPanel'}}" class="admin-back-to-dashboard">
-                  <span class="fa-solid fa-chevron-left fa-fw" aria-hidden="true"></span>
-                  {{i18n 'adminPanel.backToDashboard' 'Go back to dashboard'}}
-                </a>
+        <div id="maincontent">
+          {{#if isAdminPage}}
+            <div class="container mw-md">
+              <h1>{{i18n 'adminPanel.heading' 'Admin panel'}}</h1>
+              {{#if isAdmin}}
+                {{#if isNotAdminPanel}}
+                  <a href="{{pathFor 'adminPanel'}}" class="admin-back-to-dashboard">
+                    <span class="fa-solid fa-chevron-left fa-fw" aria-hidden="true"></span>
+                    {{i18n 'adminPanel.backToDashboard' 'Go back to dashboard'}}
+                  </a>
+                {{/if}}
+                <div class="mt-3">
+                  {{> yield}}
+                </div>
+              {{else}}
+                {{i18n 'adminPanel.pleaseLogin' 'Only for administrators'}}
               {{/if}}
-              <div class="mt-3">
-                {{> yield}}
-              </div>
-            {{else}}
-              {{i18n 'adminPanel.pleaseLogin' 'Only for administrators'}}
-            {{/if}}
-          </div>
-        {{else}}
-          {{> yield}}
-        {{/if}}
-      </div>
+            </div>
+          {{else}}
+            {{> yield}}
+          {{/if}}
+        </div>
+
+      {{/if}}
     </div>
     <div class="push"></div>
   </div>
