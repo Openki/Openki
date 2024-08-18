@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 
@@ -14,13 +14,12 @@ import * as StringTools from "/imports/utils/string-tools";
 import { hasRoleUser } from "/imports/utils/course-role-utils";
 
 import * as Analytics from "/imports/ui/lib/analytics";
-import { Editable } from "/imports/ui/lib/editable";
-import { PleaseLogin } from "/imports/ui/lib/please-login";
+import { Editable, Props as EditableProps } from "/imports/ui/components/editable/index.react";
 
 import { RegionTag } from "../../regions/tag";
 import { Title } from "./title";
 import { PricePolicy } from "../../price-policy";
-import { Role } from "./role";
+import { Role, Props as CourseEditRoleProps } from "./role";
 import { ButtonCancel, ButtonSave } from "../../buttons";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useAll as useRegionsAll } from "/imports/api/regions/publications";
@@ -37,6 +36,141 @@ import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 import { SelectCategories } from "../select-categories";
 import { CourseCategories } from "../categories";
 import { EditCustomFields } from "../../edit-custom-fields";
+import { PleaseLogin } from "../../please-login";
+
+function Header(data: {
+  _id?: string;
+  isFrame?: boolean;
+  group: string;
+  filter: ReturnType<(typeof Courses)["Filtering"]>;
+}) {
+  const { t } = useTranslation();
+  const siteName = useSiteName();
+  const [groupIsLoading, group] = useDetails(data.group);
+
+  const { filter } = data;
+
+  const filterQuery = filter.toQuery();
+  const [coursesIsLoading, courses] = useCoursesFindFilter(filterQuery);
+
+  function proposeFromQuery() {
+    const { search } = filterQuery;
+    if (!search) {
+      return false;
+    }
+
+    return courses.length === 0 && search;
+  }
+  function courseSearch() {
+    const filterParams = filter.toParams();
+
+    return filterParams.search;
+  }
+  function newCourseGroupName() {
+    if (data.group) {
+      if (group) {
+        return group.name;
+      }
+    }
+    return false;
+  }
+
+  if (groupIsLoading() || coursesIsLoading()) {
+    return null;
+  }
+
+  return proposeFromQuery() ? (
+    <h2>
+      {t("find.propose_new_course?", 'Why not propose a new course for "{TERM}"?', {
+        TERM: courseSearch(),
+      })}
+    </h2>
+  ) : data._id ? (
+    <h2>{t("course.edit.edit_course", "Edit course")}</h2>
+  ) : data.isFrame ? (
+    <>
+      <h2>
+        {newCourseGroupName()
+          ? t("course.edit.proposeInGroup", "Propose new course in group {GROUP}", {
+              GROUP: newCourseGroupName(),
+            })
+          : t("course.edit.propose", "Propose new course")}
+      </h2>
+      <div className="icon-text">
+        <div className="icon-text-icon">
+          <i className="fa-solid fa-info fa-fw" aria-hidden="true"></i>
+        </div>
+        <div className="icon-text-text">
+          {t(
+            "course.propose.CourseInfo",
+            "Start your own {SITENAME} course here. Whether as a mentor or participant, you decide what and how you want to learn. More info here:",
+            { SITENAME: siteName },
+          )}
+          <a href={getLocalizedValue(PublicSettings.courseGuideLink)} target="_blank">
+            {t("course.propose.guideLink", "How to organize my first {SITENAME} course?", {
+              SITENAME: siteName,
+            })}
+          </a>
+          ,
+          <a href={getLocalizedValue(PublicSettings.faqLink)} target="_blank">
+            {t("course.propose.faq", "FAQ")}
+          </a>
+        </div>
+      </div>
+    </>
+  ) : null;
+}
+
+function A(data: { isFrame?: boolean | undefined; savedCourseId: string; onClose: () => void }) {
+  const { t } = useTranslation();
+  const siteName = useSiteName();
+  const [savedCourseIsLoading, savedCourse] = useCoursesDetails(data.savedCourseId);
+
+  function savedCourseLink() {
+    if (data.isFrame) {
+      const course = savedCourse;
+      if (course) {
+        return Router.url("showCourse", course);
+      }
+    }
+    return "";
+  }
+  function savedCourseName() {
+    if (data.isFrame) {
+      const course = savedCourse;
+      if (course) {
+        return course.name;
+      }
+    }
+    return false;
+  }
+
+  if (savedCourseIsLoading()) {
+    return null;
+  }
+
+  return (
+    <div className="alert alert-success alert-dismissible fade show" role="alert">
+      <h4>
+        <i className="fa-solid fa-check" aria-hidden="true"></i>
+        {t("course.edit.savedMessage", "Your proposal has been saved!")}
+      </h4>
+      <a className="alert-link" href={savedCourseLink()} target="_blank">
+        {t("course.edit.linkToCourse", 'Click here to see your new "{NAME}" course on {SITENAME}', {
+          NAME: savedCourseName(),
+          SITENAME: siteName,
+        })}
+      </a>
+      <button
+        type="button"
+        className="btn-close btn-close-white"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+        onClick={data.onClose}
+      ></button>
+    </div>
+  );
+}
 
 export type Data = {
   _id?: string;
@@ -59,65 +193,7 @@ export function Edit(data: Data) {
   const user = useUser();
   const [allRegionsIsLoading, allRegions] = useRegionsAll();
   const currentRegion = useCurrentRegion();
-  const [savedCourseIsLoading, savedCourse] = useCoursesDetails(savedCourseId);
-  const [groupsIsLoading, groups] = useGroupsFindFilter({ _id: { $in: getGroups() } });
-  const [newCourseGroupIsLoading, courseGroup] = useDetails(data.group);
-  const siteName = useSiteName();
-
-  const { filter } = data;
-  // if (filter) {
-  //   return false;
-  // }
-  const filterQuery = filter.toQuery();
-  const [coursesIsLoading, courses] = useCoursesFindFilter(filterQuery);
-
-  const editableDescription = new Editable(
-    true,
-    t(
-      "course.description.placeholder",
-      "Describe your idea, so more people find it and know what to expect.",
-    ),
-    PublicSettings.courseDescriptionMax,
-  );
-
-  const [editingCategories, setEditingCategories] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [fullRoleSelection, setFullRoleSelection] = useState(true);
-  // For iframes: On true shows a simple role selection like: [I want to learn] [I can teach]
-  const [simpleRoleSelection, setSimpleRoleSelection] = useState(false);
-  // For iframes: Keep state of simple role selection
-  const [simpleSelectedRole, setSimpleSelectedRole] = useState("participant");
-
-  const [savedCourseId, setSavedCourseId] = useState<string | undefined>(undefined);
-  const [showSavedMessage, setShowSavedMessage] = useState(false);
-
-  function availableRoles() {
-    return Roles.filter((role) => {
-      // Roles that are always on are not selectable here
-      if (role.preset) {
-        return false;
-      }
-
-      return true;
-    });
-  }
-
-  function hasRole(members: CourseMemberEntity[] | undefined, role: string) {
-    return members && hasRoleUser(members, role, user?._id);
-  }
-
-  const initaleRoles: { [type: string]: { icon: string; enabled: boolean; enroll: boolean } } = {};
-
-  availableRoles().forEach((r) => {
-    roles[r.type] = {
-      icon: r.icon,
-      enabled: data.roles.includes(r.type) || false,
-      enroll: hasRole(data.members, r.type) || false,
-    };
-  });
-
-  const [roles, setRoles] = useState(initaleRoles);
-
+  const [isBusy, setIsBusy] = useState(false);
   function getRegion() {
     const courseId = data._id || "";
     const isNew = courseId === "";
@@ -134,8 +210,8 @@ export function Edit(data: Data) {
     }
     return undefined;
   }
-
   const getGroups = () => {
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     const groups = [];
 
     const defaultTeamGroup = getRegion()?.defaultTeamGroup;
@@ -155,6 +231,66 @@ export function Edit(data: Data) {
     // remove double groups
     return [...new Set(groups)];
   };
+  const [savedCourseId, setSavedCourseId] = useState<string | undefined>(undefined);
+
+  const [groupsIsLoading, groups] = useGroupsFindFilter({ _id: { $in: getGroups() } });
+
+  const [selectedRegion, setSelectedRegion] = useState("");
+
+  const [description, setDescription] = useState(data.description);
+  const [numberOfCharacters, setNumberOfCharacters] = useState(0);
+  const [totalFocusTimeInSeconds, setTotalFocusTimeInSeconds] = useState(0);
+  const editableDescription: EditableProps = {
+    text: description,
+    multiline: true,
+    placeholder: t(
+      "course.description.placeholder",
+      "Describe your idea, so more people find it and know what to expect.",
+    ),
+    maxlength: PublicSettings.courseDescriptionMax,
+    onChange: (newDescription, newNumberOfCharacters, newTotalFocusTimeInSeconds) => {
+      setDescription(newDescription);
+      setNumberOfCharacters(newNumberOfCharacters);
+      setTotalFocusTimeInSeconds(newTotalFocusTimeInSeconds);
+    },
+  };
+
+  const [editingCategories, setEditingCategories] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [fullRoleSelection, setFullRoleSelection] = useState(true);
+  // For iframes: On true shows a simple role selection like: [I want to learn] [I can teach]
+  const [simpleRoleSelection, setSimpleRoleSelection] = useState(false);
+  // For iframes: Keep state of simple role selection
+  const [simpleSelectedRole, setSimpleSelectedRole] = useState("participant");
+
+  const [savedMessage, setSavedMessage] = useState(false);
+
+  function availableRoles() {
+    return Roles.filter((role) => {
+      // Roles that are always on are not selectable here
+      if (role.preset) {
+        return false;
+      }
+
+      return true;
+    });
+  }
+
+  function hasRole(members: CourseMemberEntity[] | undefined, role: string) {
+    return members && hasRoleUser(members, role, user?._id);
+  }
+
+  const initaleRoles: { [type: string]: { icon: string; enabled: boolean; enroll: boolean } } = {};
+
+  availableRoles().forEach((r) => {
+    initaleRoles[r.type] = {
+      icon: r.icon,
+      enabled: data.roles.includes(r.type) || false,
+      enroll: hasRole(data.members, r.type) || false,
+    };
+  });
+
+  const [roles, setRoles] = useState(initaleRoles);
 
   const showRegionSelection = () => {
     return (
@@ -195,14 +331,12 @@ export function Edit(data: Data) {
 
   const resetFields = () => {
     $(".js-title").val("");
-    editableDescription.setText("");
+    setDescription("");
     setSelectedCategories([]);
     setSimpleSelectedRole("participant");
   };
 
   useEffect(() => {
-    editableDescription.setText(data.description || "");
-
     // Show category selection right away for new courses
     setEditingCategories(!data._id);
     setSelectedCategories(data.categories);
@@ -212,7 +346,7 @@ export function Edit(data: Data) {
       setSimpleRoleSelection(!data.hideRoleSelection && data.roles.includes("mentor"));
       setFullRoleSelection(false);
     }
-  });
+  }, [data._id, data.categories, data.isFrame, data.hideRoleSelection, data.roles]);
 
   function simpleRoleActiveClass(role: string) {
     // HACK using btn-add and btn-edit to show activation state
@@ -236,62 +370,9 @@ export function Edit(data: Data) {
       },
     };
   }
-
-  function proposeFromQuery() {
-    const { filter } = data;
-    if (!filter) {
-      return false;
-    }
-
-    const filterQuery = filter.toQuery();
-
-    const { search } = filterQuery;
-    if (!search) {
-      return false;
-    }
-
-    return courses.length === 0 && search;
-  }
-  function courseSearch() {
-    const { filter } = data;
-    if (!filter) {
-      return "";
-    }
-
-    const filterParams = filter.toParams();
-
-    return filterParams.search;
-  }
-  function newCourseGroupName() {
-    if (data.group) {
-      const group = courseGroup;
-      if (group) {
-        return group.name;
-      }
-    }
-    return false;
-  }
   function showSavedMessage() {
     if (data.isFrame) {
-      return showSavedMessage;
-    }
-    return false;
-  }
-  function savedCourseLink() {
-    if (data.isFrame) {
-      const course = savedCourse;
-      if (course) {
-        return Router.url("showCourse", course);
-      }
-    }
-    return "";
-  }
-  function savedCourseName() {
-    if (data.isFrame) {
-      const course = savedCourse;
-      if (course) {
-        return course.name;
-      }
+      return savedMessage;
     }
     return false;
   }
@@ -357,11 +438,11 @@ export function Edit(data: Data) {
     return null;
   }
 
-  const handleRoleChange = (event) => {
+  const handleRoleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSimpleSelectedRole(event.target.value);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const hasTeamGroups = !!(data.teamGroups?.length > 0);
 
     let internal;
@@ -388,12 +469,11 @@ export function Edit(data: Data) {
       return;
     }
 
-    const newDescription = instance.editableDescription.getEdited();
+    const newDescription = description;
     if (newDescription) {
       changes.description = newDescription;
     }
 
-    const numberOfCharacters = instance.editableDescription.getNumberOfCharacters();
     if (PublicSettings.courseDescriptionMax && numberOfCharacters) {
       if (numberOfCharacters > PublicSettings.courseDescriptionMax) {
         Alert.error(
@@ -416,7 +496,7 @@ export function Edit(data: Data) {
         // There is only one region
         changes.region = Regions.findOne({})?._id as string;
       } else {
-        changes.region = instance.$(".js-select-region").val() as string;
+        changes.region = selectedRegion;
       }
       if (!changes.region) {
         Alert.serverError(t("course.edit.error.region", "Please select a region") as string);
@@ -433,7 +513,7 @@ export function Edit(data: Data) {
         }
       }
 
-      changes.groups = instance.getGroups();
+      changes.groups = getGroups();
     }
 
     changes.roles = {};
@@ -445,10 +525,7 @@ export function Edit(data: Data) {
         changes.roles[role] = true;
       });
 
-      if (
-        instance.state.equals("simpleRoleSelection", true) &&
-        instance.state.equals("simpleSelectedRole", "mentor")
-      ) {
+      if (simpleRoleSelection && simpleSelectedRole === "mentor") {
         changes.subs.push("mentor");
       }
 
@@ -456,11 +533,11 @@ export function Edit(data: Data) {
       changes.subs = [...new Set([...changes.subs, ...data.creatorsRoles])];
     }
 
-    if (instance.state.equals("fullRoleSelection", true)) {
-      Object.entries(instance.roles.get()).forEach(function (r) {
+    if (fullRoleSelection) {
+      Object.entries(roles).forEach(function (r) {
         changes.roles[r[0]] = r[1].enabled;
       });
-      Object.entries(instance.roles.get())
+      Object.entries(roles)
         .filter((r) => r[1].enabled)
         .forEach(function (r) {
           const role = r[0];
@@ -473,72 +550,70 @@ export function Edit(data: Data) {
         });
     }
 
-    changes.customFields = instance.customFields().map((i) => {
+    changes.customFields = customFields().map((i) => {
       if (i.type !== "boolean")
         return {
           name: i.name,
           displayText: i.displayText,
-          value: instance.$(`.js-custom-field-${i.name}`).val() as string,
+          value: $(`.js-custom-field-${i.name}`).val() as string,
           visibleFor: i.visibleFor,
         };
 
       return {
         name: i.name,
         displayText: i.displayText,
-        value: instance.$(`.js-custom-field-${i.name}`).prop("checked") as boolean,
+        value: $(`.js-custom-field-${i.name}`).prop("checked") as boolean,
         visibleFor: i.visibleFor,
       };
     });
 
-    instance.busy("saving");
-    PleaseLogin(instance, async () => {
-      try {
-        courseId = await CoursesMethods.save(courseId, changes);
+    setIsBusy(true);
+    try {
+      courseId = await CoursesMethods.save(courseId, changes);
 
-        if (data.isFrame) {
-          setSavedCourseId(courseId);
-          setShowSavedMessage(true);
-          resetFields();
+      if (data.isFrame) {
+        setSavedCourseId(courseId);
+        setSavedMessage(true);
+        resetFields();
 
+        Analytics.trackEvent(
+          "Course creations",
+          `Course creations as ${
+            changes.subs.length > 0 ? changes.subs.sort().join(" and ") : "participant"
+          }`,
+          Regions.findOne(changes.region)?.nameEn,
+          totalFocusTimeInSeconds,
+        );
+      } else {
+        if (isNew) {
+          Alert.success(
+            t("message.courseCreated", "{NAME} has been created!", {
+              NAME: changes.name,
+            }),
+          );
           Analytics.trackEvent(
             "Course creations",
             `Course creations as ${
               changes.subs.length > 0 ? changes.subs.sort().join(" and ") : "participant"
             }`,
             Regions.findOne(changes.region)?.nameEn,
-            instance.editableDescription.getTotalFocusTimeInSeconds(),
+            totalFocusTimeInSeconds,
           );
         } else {
-          if (isNew) {
-            Alert.success(
-              t("message.courseCreated", "{NAME} has been created!", {
-                NAME: changes.name,
-              }),
-            );
-            Analytics.trackEvent(
-              "Course creations",
-              `Course creations as ${
-                changes.subs.length > 0 ? changes.subs.sort().join(" and ") : "participant"
-              }`,
-              Regions.findOne(changes.region)?.nameEn,
-              instance.editableDescription.getTotalFocusTimeInSeconds(),
-            );
-          } else {
-            Alert.success(
-              t("message.courseChangesSaved", "Your changes to {NAME} have been saved.", {
-                NAME: changes.name,
-              }),
-            );
-          }
-
-          Router.go("showCourse", { _id: courseId });
+          Alert.success(
+            t("message.courseChangesSaved", "Your changes to {NAME} have been saved.", {
+              NAME: changes.name,
+            }),
+          );
         }
-      } catch (err) {
-        Alert.serverError(err, t("message.courseChangesSaved.error", "Saving went wrong"));
-      } finally {
-        instance.busy(false);
+
+        Router.go("showCourse", { _id: courseId });
       }
-    });
+    } catch (err) {
+      Alert.serverError(err, t("message.courseChangesSaved.error", "Saving went wrong"));
+    } finally {
+      setIsBusy(false);
+    }
   };
 
   const handleCancel = () => {
@@ -551,75 +626,24 @@ export function Edit(data: Data) {
     }
   };
 
+  if (groupsIsLoading()) {
+    return null;
+  }
+
   return (
     <div className="edit-page">
-      <form autoComplete="off" onSubmit={handleSave}>
-        {proposeFromQuery() ? (
-          <h2>
-            {t("find.propose_new_course?", 'Why not propose a new course for "{TERM}"?', {
-              TERM: courseSearch(),
-            })}
-          </h2>
-        ) : data._id ? (
-          <h2>{t("course.edit.edit_course", "Edit course")}</h2>
-        ) : data.isFrame ? (
-          <>
-            <h2>
-              {newCourseGroupName()
-                ? t("course.edit.proposeInGroup", "Propose new course in group {GROUP}", {
-                    GROUP: newCourseGroupName(),
-                  })
-                : t("course.edit.propose", "Propose new course")}
-            </h2>
-            <div className="icon-text">
-              <div className="icon-text-icon">
-                <i className="fa-solid fa-info fa-fw" aria-hidden="true"></i>
-              </div>
-              <div className="icon-text-text">
-                {t(
-                  "course.propose.CourseInfo",
-                  "Start your own {SITENAME} course here. Whether as a mentor or participant, you decide what and how you want to learn. More info here:",
-                  { SITENAME: siteName },
-                )}
-                <a href={getLocalizedValue(PublicSettings.courseGuideLink)} target="_blank">
-                  {t("course.propose.guideLink", "How to organize my first {SITENAME} course?", {
-                    SITENAME: siteName,
-                  })}
-                </a>
-                ,
-                <a href={getLocalizedValue(PublicSettings.faqLink)} target="_blank">
-                  {t("course.propose.faq", "FAQ")}
-                </a>
-              </div>
-            </div>
-          </>
-        ) : null}
-
+      <PleaseLogin type="form" onSubmit={handleSave}>
+        {data.filter ? <Header {...{ ...data, filter: data.filter }} /> : null}
         <div className={`edit-page-body course-edit-body ${editBodyClasses()}`}>
           {data._id && data.region ? <RegionTag region={data.region} /> : null}
-          {showSavedMessage() ? (
-            <div className="alert alert-success alert-dismissible fade show" role="alert">
-              <h4>
-                <i className="fa-solid fa-check" aria-hidden="true"></i>
-                {t("course.edit.savedMessage", "Your proposal has been saved!")}
-              </h4>
-              <a className="alert-link" href={savedCourseLink()} target="_blank">
-                {t(
-                  "course.edit.linkToCourse",
-                  'Click here to see your new "{NAME}" course on {SITENAME}',
-                  { NAME: savedCourseName, SITENAME: siteName },
-                )}
-              </a>
-              <button
-                type="button"
-                className="btn-close btn-close-white"
-                data-bs-dismiss="alert"
-                aria-label="Close"
-                onClick={() => {
-                  setShowSavedMessage(false);
-                }}
-              ></button>
-            </div>
+          {showSavedMessage() && savedCourseId ? (
+            <A
+              isFrame={data.isFrame}
+              savedCourseId={savedCourseId}
+              onClose={() => {
+                setSavedMessage(false);
+              }}
+            />
           ) : null}
 
           {simpleRoleSelection ? (
@@ -666,7 +690,7 @@ export function Edit(data: Data) {
           <Title name={data.name} />
           <div className="mb-3">
             <label className="form-label">{t("course.edit.description", "Description")}</label>
-            <Editable editableDescription />
+            <Editable {...editableDescription} />
           </div>
           {hasPricePolicy() ? <PricePolicy dismissable={true} wrap="mb-3" /> : null}
           <div className="row gap-3 mb-3">
@@ -718,7 +742,13 @@ export function Edit(data: Data) {
                       <div className="input-group-text">
                         <span className="fa-solid fa-location-dot" aria-hidden="true"></span>
                       </div>
-                      <select className="js-select-region form-select" name="region">
+                      <select
+                        className="form-select"
+                        name="region"
+                        onChange={(event) => {
+                          setSelectedRegion(event.target.value);
+                        }}
+                      >
                         <option
                           value=""
                           disabled
@@ -737,13 +767,16 @@ export function Edit(data: Data) {
                   </div>
                 ) : null}
 
-                <EditCustomFields fields={customFields("boolean")} values={customFields()} />
+                <EditCustomFields fields={customFields("boolean")} values={customFields() as any} />
 
-                <EditCustomFields fields={customFields("singleLine")} values={customFields()} />
+                <EditCustomFields
+                  fields={customFields("singleLine")}
+                  values={customFields() as any}
+                />
               </div>
             ) : null}
           </div>
-          <EditCustomFields fields={customFields("multiLine")} values={customFields()} />
+          <EditCustomFields fields={customFields("multiLine")} values={customFields() as any} />
 
           {showInternalCheckbox() ? (
             <div className="mb-3">
@@ -767,13 +800,18 @@ export function Edit(data: Data) {
           ) : null}
 
           <div className="form-actions">
-            <ButtonSave onClick={handleSave} />
-            {/* {{> buttonSave event="js-course-edit-save" saving=saving}} */}
-
+            <ButtonSave onClick={handleSave} disabled={isBusy} />
             {!data.isFrame ? <ButtonCancel onClick={handleCancel} /> : null}
           </div>
         </div>
-      </form>
+      </PleaseLogin>
     </div>
   );
 }
+
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("CourseEdit", () => Edit);
