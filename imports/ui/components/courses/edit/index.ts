@@ -234,9 +234,23 @@ template.helpers({
   },
 
   availableRoles() {
+    const groups = Template.instance().getGroups();
+
+    const disableCreateRoles = [
+      ...new Set(
+        Groups.find({ _id: { $in: groups } })
+          .fetch()
+          .flatMap((g) => g.disableCreateRoles),
+      ),
+    ];
+
     return Roles.filter((role) => {
       // Roles that are always on are not selectable here
       if (role.preset) {
+        return false;
+      }
+
+      if (disableCreateRoles.includes(role.type)) {
         return false;
       }
 
