@@ -38,9 +38,7 @@ export function Role(data: Props) {
           className={`form-check-label ${data.type}`}
           htmlFor={`courseEditRole${data.type}Check`}
         >
-          <span className={`${data.icon} fa-fw`} aria-hidden="true"></span>
-
-          {t(roleDescription())}
+          <span className={`${data.icon} fa-fw`} aria-hidden="true"></span> {t(roleDescription())}
         </label>
       </div>
       {data.enabled ? (
