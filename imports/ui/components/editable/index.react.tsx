@@ -166,6 +166,7 @@ export function Editable({ text = "", multiline, placeholder, maxlength, onChang
       return;
     }
     reset();
+    console.info("c: " + text);
   }, [text]);
 
   useEffect(() => {
@@ -280,7 +281,7 @@ export function Editable({ text = "", multiline, placeholder, maxlength, onChang
         <div
           ref={elementRef}
           className={`editable ${editableClasses()} ${characterLimitReached() ? "is-invalid" : ""}`}
-          onInput={(event) => {
+          onChange={(event) => {
             // Register when the field is being edited
 
             // Fix placeholder position on empty after change
