@@ -121,7 +121,11 @@ function Header(data: {
   ) : null;
 }
 
-function A(data: { isFrame?: boolean | undefined; savedCourseId: string; onClose: () => void }) {
+function AlertMessage(data: {
+  isFrame?: boolean | undefined;
+  savedCourseId: string;
+  onClose: () => void;
+}) {
   const { t } = useTranslation();
   const siteName = useSiteName();
   const [savedCourseIsLoading, savedCourse] = useCoursesDetails(data.savedCourseId);
@@ -233,7 +237,7 @@ export function Edit(data: Data) {
   };
   const [savedCourseId, setSavedCourseId] = useState<string | undefined>(undefined);
 
-  const [groupsIsLoading, groups] = useGroupsFindFilter({ _id: { $in: getGroups() } });
+  const [groupsIsLoading, groups] = useGroupsFindFilter({ ids: getGroups() });
 
   const [selectedRegion, setSelectedRegion] = useState("");
 
@@ -637,7 +641,7 @@ export function Edit(data: Data) {
         <div className={`edit-page-body course-edit-body ${editBodyClasses()}`}>
           {data._id && data.region ? <RegionTag region={data.region} /> : null}
           {showSavedMessage() && savedCourseId ? (
-            <A
+            <AlertMessage
               isFrame={data.isFrame}
               savedCourseId={savedCourseId}
               onClose={() => {
@@ -707,8 +711,7 @@ export function Edit(data: Data) {
                       <CourseCategories categories={data.categories} />
                     ) : (
                       <div>{t("course.edit.no.categories", "No categories")}</div>
-                    )}
-
+                    )}{" "}
                     <button
                       type="button"
                       className="btn btn-edit"
@@ -729,7 +732,7 @@ export function Edit(data: Data) {
                   {t("course.edit.needs.role", "This course might need…")}
                 </label>
                 {courseEditRolesAttr().map((courseEditRoleAttr) => (
-                  <Role {...courseEditRoleAttr} />
+                  <Role key={courseEditRoleAttr.type} {...courseEditRoleAttr} />
                 ))}
               </div>
             ) : null}
@@ -748,17 +751,13 @@ export function Edit(data: Data) {
                         onChange={(event) => {
                           setSelectedRegion(event.target.value);
                         }}
+                        defaultValue={currentRegion?._id || ""}
                       >
-                        <option
-                          value=""
-                          disabled
-                          selected={currentRegion === undefined}
-                          className="select-placeholder"
-                        >
+                        <option value="" disabled className="select-placeholder">
                           {t("_selection.pleaseSelect")}
                         </option>
                         {allRegions.map((region) => (
-                          <option value={region._id} selected={currentRegion?._id === region._id}>
+                          <option key={region._id} value={region._id}>
                             {region.name}
                           </option>
                         ))}
@@ -808,7 +807,6 @@ export function Edit(data: Data) {
     </div>
   );
 }
-
 
 // for Blaze
 // eslint-disable-next-line import/first
