@@ -156,7 +156,7 @@ function AlertMessage(data: {
   return (
     <div className="alert alert-success alert-dismissible fade show" role="alert">
       <h4>
-        <i className="fa-solid fa-check" aria-hidden="true"></i>
+        <i className="fa-solid fa-check" aria-hidden="true"></i>{" "}
         {t("course.edit.savedMessage", "Your proposal has been saved!")}
       </h4>
       <a className="alert-link" href={savedCourseLink()} target="_blank">
@@ -198,6 +198,8 @@ export function Edit(data: Data) {
   const [allRegionsIsLoading, allRegions] = useRegionsAll();
   const currentRegion = useCurrentRegion();
   const [isBusy, setIsBusy] = useState(false);
+  const [title, setTitle] = useState(data.name);
+
   function getRegion() {
     const courseId = data._id || "";
     const isNew = courseId === "";
@@ -239,7 +241,7 @@ export function Edit(data: Data) {
 
   const [groupsIsLoading, groups] = useGroupsFindFilter({ ids: getGroups() });
 
-  const [selectedRegion, setSelectedRegion] = useState("");
+  const [selectedRegion, setSelectedRegion] = useState(currentRegion?._id || "");
 
   const [description, setDescription] = useState(data.description);
   const [numberOfCharacters, setNumberOfCharacters] = useState(0);
@@ -334,7 +336,8 @@ export function Edit(data: Data) {
   };
 
   const resetFields = () => {
-    $(".js-title").val("");
+    console.info("a");
+    setTitle("");
     setDescription("");
     setSelectedCategories([]);
     setSimpleSelectedRole("participant");
@@ -464,7 +467,7 @@ export function Edit(data: Data) {
 
     const changes = {
       internal,
-      name: StringTools.saneTitle($(".js-title").val() as string),
+      name: StringTools.saneTitle(title || ""),
       categories: selectedCategories || [],
     } as unknown as Required<CoursesMethods.SaveFields>;
 
@@ -637,7 +640,7 @@ export function Edit(data: Data) {
   return (
     <div className="edit-page">
       <PleaseLogin type="form" onSubmit={handleSave}>
-        {data.filter ? <Header {...{ ...data, filter: data.filter }} /> : null}
+        {data.filter && data.group ? <Header {...{ ...data, filter: data.filter }} /> : null}
         <div className={`edit-page-body course-edit-body ${editBodyClasses()}`}>
           {data._id && data.region ? <RegionTag region={data.region} /> : null}
           {showSavedMessage() && savedCourseId ? (
@@ -691,7 +694,12 @@ export function Edit(data: Data) {
             </div>
           ) : null}
 
-          <Title name={data.name} />
+          <Title
+            value={data.name}
+            onChange={(newTitle) => {
+              setTitle(newTitle);
+            }}
+          />
           <div className="mb-3">
             <label className="form-label">{t("course.edit.description", "Description")}</label>
             <Editable {...editableDescription} />
@@ -751,7 +759,7 @@ export function Edit(data: Data) {
                         onChange={(event) => {
                           setSelectedRegion(event.target.value);
                         }}
-                        defaultValue={currentRegion?._id || ""}
+                        defaultValue={selectedRegion}
                       >
                         <option value="" disabled className="select-placeholder">
                           {t("_selection.pleaseSelect")}

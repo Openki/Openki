@@ -71,10 +71,11 @@ function Courses({
   ) : null;
 }
 
-export function Title(data: { name?: string | undefined }) {
+export function Title(data: { value?: string | undefined; onChange: (newValue: string) => void }) {
   const { t } = useTranslation();
 
-  const [proposedSearch, setProposedSearch] = useState(data?.name || "");
+  const [proposedSearch, setProposedSearch] = useState(data?.value || "");
+  const [value, setValue] = useState(data?.value || "");
   const [focused, setFocused] = useState(false);
   const [hasResults, setHasResults] = useState(false);
 
@@ -85,8 +86,10 @@ export function Title(data: { name?: string | undefined }) {
   }
 
   useEffect(() => {
-    setProposedSearch(data?.name || "");
-  }, [data.name]);
+    setProposedSearch(data?.value || "");
+    setValue(data?.value || "");
+    console.info("b");
+  }, [data.value]);
 
   useEffect(() => {
     if (!titleElement.current) {
@@ -111,7 +114,7 @@ export function Title(data: { name?: string | undefined }) {
           placeholder={t("course.title.placeholder", "What are you interested in?")}
           size={40}
           type="text"
-          defaultValue={proposedSearch}
+          value={value}
           data-bs-toggle="dropdown"
           data-bs-auto-close="false"
           onKeyDown={(event) => {
@@ -133,6 +136,10 @@ export function Title(data: { name?: string | undefined }) {
 
               elements.item(elements.length - 1).focus();
             }
+          }}
+          onChange={(event) => {
+            setValue(event.target.value);
+            data.onChange(event.target.value);
           }}
           onInput={_.debounce((event: any) => {
             setProposedSearch(event.target.value);
