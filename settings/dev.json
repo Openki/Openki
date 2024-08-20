@@ -1,116 +1,169 @@
-{
-  "admins": ["greg", "FeeLing", "IvanZ"],
-  "testdata": true,
-  "public": {
-    "siteName": "Hmmm",
-    "siteStage": "DEV",
-    "testWarning": false,
-    "headerLogo": { "src": "openki-logo-web-2020.svg", "alt": "Openki Logo" },
-    "headerLogoKiosk": { "src": "openki-logo-kiosk-2020.svg", "alt": "Openki Logo" },
-    "avatarLogo": { "src": "openki-logo-web-avatar-2020.svg", "alt": "User Avatar" },
-    "ogLogo": { "src": "openki_logo_2018.png" },
-    "emailLogo": "emails/openki.png",
-    "theme": { "brand": "#9c3838" },
-    "publicTenants": ["8410c099a7"],
-    "regionSelection": {
-      "minNumber": 5,
-      "aboutLink": {
-        "en": "/info/faq#what-is-an-openki-region",
-        "de": "/info/faq#was-ist-eine-openki-region"
-      }
-    },
-    "i18nHelpLink_commented": "https://gitlab.com/Openki/Openki/-/wikis/translation",
-    "i18nMapping_commented": { "de": "de-zuerich-lernt" },
-    "matomo_commented": { "url": "https://analytics.mydomain.com/", "site": 0 },
-    "pricePolicyEnabled": true,
-    "askNewsletterConsent": true,
-    "sendReminderPreset": true,
-    "feature": {
-      "login": { "google": true, "facebook": true, "github": true },
-      "visitorUser": true,
-      "rsvpWithCompanions": true,
-      "sendReminderIsEditable": true,
-      "groupDashboard": true
-    },
-    "nav": {
-      "brandLink": "/",
-      "home": true,
-      "proposeCourse": true,
-      "calendar": true,
-      "customEntries": []
-    },
-    "footerLinks": [
-      {
-        "link": "https://about.openki.net/",
-        "key": "footer.aboutOpenki",
-        "title_key": "navigation.footer.about.title"
-      },
-      { "link": "/info/faq", "key": "main.faq_link", "title_key": "navigation.footer.faq.title" },
-      {
-        "link": "https://gitlab.com/Openki/Openki/",
-        "key": "navigation.footer.sourceCode",
-        "title_key": "navigation.footer.codeOnGitLab"
-      },
-      {
-        "link": "https://about.openki.net/privacy-policy/",
-        "key": "main.privacyPolicy",
-        "title_key": "main.privacyPolicy.tooltip"
-      }
-    ],
-    "dataProtectionLaw": "By continuing I accept the [Privacy Policy](https://about.openki.net/en/privacy-policy/) and [Terms of Service](https://about.openki.net/terms-and-conditions/)",
-    "faqLink": "/info/faq",
-    "pricePolicyLink": {
-      "en": "/info/faq#why-can-not-i-ask-for-a-fixed-price-as-a-mentor",
-      "de": "/info/faq#dürfen-kurse-etwas-kosten"
-    },
-    "courseGuideLink": {
-      "en": "https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf",
-      "de": "https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf"
-    },
-    "aboutLink": "https://about.openki.net",
-    "contribution": {
-      "icon": "fa-solid fa-heart",
-      "forbiddenChars": ["🖤", "💖", "💔", "💚", "💜", "❤️", "🧡", "💕", "💛", "💝"],
-      "link": {
-        "en": "https://about.openki.net/en/ueber-uns/spenden/",
-        "de": "https://about.openki.net/ueber-uns/spenden/"
-      }
-    },
-    "courseDescriptionMax": 500,
-    "eventDescriptionMax": 500,
-    "categories": {
-      "sports": ["martialarts", "teamsport", "artistry"],
-      "handicraft": ["metalwood", "electronics", "fabric", "gardening", "construction"],
-      "sciences": ["geography", "physics", "medicine", "mathematics", "chemistry", "biology"],
-      "humanities": ["languages", "history", "sociology", "politics", "philosophy", "lawbusiness"],
-      "culture": [
-        "literature",
-        "theatre",
-        "music",
-        "dance",
-        "fineart",
-        "design",
-        "photography",
-        "film",
-        "cooking",
-        "subculture"
-      ],
-      "computer": ["internet", "programming", "operating"],
-      "misc": ["♥undefined♥", "experimental", "spiritual", "education", "ecology"]
-    },
-    "s3": { "publicUrlBase": "https://cz42.objects.nineapis.ch/bucket-openkitest2" }
-  },
-  "siteEmail": "HMMM@legit.example",
-  "replyToEmail": "HMMM@legit.example",
-  "reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net" },
-  "robots": false,
-  "printLog": true,
-  "s3": {
-    "region": "us-east-1",
-    "bucketEndpoint": "https://cz42.objects.nineapis.ch/bucket-openkitest2",
-    "accessKeyId": "63551d5ecx68qL2XqU7eQX-9hxxKs5CK",
-    "secretAccessKey": "srnyHWbj9ZhDFlTQyY40vxBIBs8MVYgp"
-  },
-  "PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" },
-  "startup": { "buildDbCacheAsync": true }
+{ "admins": ["greg", "FeeLing", "IvanZ"]
+, "testdata": true
+, "public":
+	{ "siteName": "Hmmm"
+	, "siteStage": "DEV"
+	, "testWarning": false
+	, "headerLogo":
+		{ "src": "openki-logo-web-2020.svg"
+		, "alt": "Openki Logo"
+		}
+	, "headerLogoKiosk":
+		{ "src": "openki-logo-kiosk-2020.svg"
+		, "alt": "Openki Logo"
+		}
+	, "avatarLogo":
+		{ "src": "openki-logo-web-avatar-2020.svg"
+		, "alt": "User Avatar"
+		}
+	, "ogLogo": { "src": "openki_logo_2018.png"}
+	, "emailLogo": "emails/openki.png"
+	, "theme":
+		{ "brand": "#9c3838"
+		}
+	, "publicTenants": ["8410c099a7"]
+	, "regionSelection":
+		{ "minNumber": 5
+		, "aboutLink":
+			{ "en": "/info/faq#what-is-an-openki-region"
+			, "de": "/info/faq#was-ist-eine-openki-region"
+			}
+		}
+	, "i18nHelpLink_commented": "https://gitlab.com/Openki/Openki/-/wikis/translation"
+	, "i18nMapping_commented": { "de": "de-zuerich-lernt" }
+	, "matomo_commented":
+		{ "url": "https://analytics.mydomain.com/"
+		, "site": 0
+		}
+	, "pricePolicyEnabled": true
+	, "askNewsletterConsent": true
+	, "sendReminderPreset": true
+	, "feature":
+		{ "login":
+			{ "google": true
+			, "facebook": true
+			, "github": true
+			}
+		, "visitorUser": true
+		, "rsvpWithCompanions": true
+		, "sendReminderIsEditable": true
+		, "groupDashboard": true 
+		}
+	, "nav":
+		{ "brandLink": "/"
+		, "home": true
+		, "proposeCourse": true
+		, "calendar": true
+		, "customEntries": [ ]
+		}
+	, "footerLinks":
+		[	{ "link": "https://about.openki.net/"
+			, "key": "footer.aboutOpenki"
+			, "title_key": "navigation.footer.about.title"
+			}
+		,	{ "link": "/info/faq"
+			, "key": "main.faq_link"
+			, "title_key": "navigation.footer.faq.title"
+			}
+		,	{ "link": "https://gitlab.com/Openki/Openki/"
+			, "key": "navigation.footer.sourceCode"
+			, "title_key": "navigation.footer.codeOnGitLab"
+			}
+		,	{ "link": "https://about.openki.net/privacy-policy/"
+			, "key": "main.privacyPolicy"
+			, "title_key": "main.privacyPolicy.tooltip"
+			}
+		]
+	, "dataProtectionLaw": "By continuing I accept the [Privacy Policy](https://about.openki.net/en/privacy-policy/) and [Terms of Service](https://about.openki.net/terms-and-conditions/)"
+	, "faqLink": "/info/faq"
+	, "pricePolicyLink":
+		{ "en": "/info/faq#why-can-not-i-ask-for-a-fixed-price-as-a-mentor"
+		, "de": "/info/faq#dürfen-kurse-etwas-kosten"
+		}
+	, "courseGuideLink":
+		{ "en": "https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf"
+		, "de": "https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf"
+		}
+	, "aboutLink": "https://about.openki.net"
+	, "contribution":
+	    { "icon": "fa-solid fa-heart"
+		, "forbiddenChars": ["🖤", "💖", "💔", "💚", "💜", "❤️", "🧡", "💕", "💛", "💝"]
+		, "link":
+			{ "en": "https://about.openki.net/en/ueber-uns/spenden/"
+			, "de": "https://about.openki.net/ueber-uns/spenden/"
+			}
+		}
+	, "courseDescriptionMax": 500
+	, "eventDescriptionMax": 500
+	, "categories": 
+		{ "sports":
+			[ "martialarts"
+			, "teamsport"
+			, "artistry"
+			]
+		, "handicraft":
+			[ "metalwood"
+			, "electronics"
+			, "fabric"
+			, "gardening"
+			, "construction"
+			]
+		, "sciences":
+			[ "geography"
+			, "physics"
+			, "medicine"
+			, "mathematics"
+			, "chemistry"
+			, "biology"
+			]
+		, "humanities":
+			[ "languages"
+			, "history"
+			, "sociology"
+			, "politics"
+			, "philosophy"
+			, "lawbusiness"
+			]
+		, "culture":
+			[ "literature"
+			, "theatre"
+			, "music"
+			, "dance"
+			, "fineart"
+			, "design"
+			, "photography"
+			, "film"
+			, "cooking"
+			, "subculture"
+			]
+		, "computer":
+			[ "internet"
+			, "programming"
+			, "operating"
+			]
+		, "misc":
+			[ "♥undefined♥"
+			, "experimental"
+			, "spiritual"
+			, "education"
+			, "ecology"
+			]
+		}
+	, "s3":
+		{ "publicUrlBase": "https://cz42.objects.nineapis.ch/bucket-openkitest2"
+		}
+	}
+, "siteEmail": "HMMM@legit.example"
+, "replyToEmail": "HMMM@legit.example"
+, "reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net" }
+, "robots": false
+, "printLog": true
+, "s3":
+	{ "region": "us-east-1"
+	, "bucketEndpoint": "https://cz42.objects.nineapis.ch/bucket-openkitest2"
+	, "accessKeyId": "63551d5ecx68qL2XqU7eQX-9hxxKs5CK"
+	, "secretAccessKey": "srnyHWbj9ZhDFlTQyY40vxBIBs8MVYgp"
+}
+, "PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" }
+, "startup": { "buildDbCacheAsync": true }
 }
