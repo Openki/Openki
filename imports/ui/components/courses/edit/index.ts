@@ -234,6 +234,8 @@ template.helpers({
   },
 
   availableRoles() {
+    const courseId = Template.instance().data._id || "";
+    const isNew = courseId === "";
     const groups = Template.instance().getGroups();
 
     const disableCreateRoles = [
@@ -250,9 +252,10 @@ template.helpers({
         return false;
       }
 
-      if (disableCreateRoles.includes(role.type)) {
-        return false;
-      }
+      if (isNew)
+        if (disableCreateRoles.includes(role.type)) {
+          return false;
+        }
 
       return true;
     });
