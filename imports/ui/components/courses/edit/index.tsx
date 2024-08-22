@@ -280,9 +280,10 @@ export function Edit(data: Data) {
         return false;
       }
 
-      if (disableCreateRoles.includes(role.type)) {
-        return false;
-      }
+      if (data && data instanceof Course && (data as CourseModel).isNew())
+        if (disableCreateRoles.includes(role.type)) {
+          return false;
+        }
 
       return true;
     });
@@ -740,7 +741,7 @@ export function Edit(data: Data) {
               </div>
             ) : null}
 
-            {fullRoleSelection ? (
+            {fullRoleSelection && availableRoles().length ? (
               <div className="col-md">
                 <label className="form-label">
                   {t("course.edit.needs.role", "This course might need…")}
