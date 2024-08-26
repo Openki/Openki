@@ -256,7 +256,7 @@ template.helpers({
           title: i18n("explore.newProposals.title", "New proposals"),
           query: `${region ? `region=${region}&` : ""}group=${
             group._id
-          }&state=proposal&internal=0&sort=time_created`,
+          }&state=proposal&internal=0&sort=-time_created`,
         },
         {
           entity: "course",

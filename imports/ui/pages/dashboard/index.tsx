@@ -31,7 +31,7 @@ export function DashboardPage() {
     {
       entity: "course",
       title: t("explore.newProposals.title", "New proposals"),
-      query: `${region ? `region=${region}&` : ""}state=proposal&internal=0&sort=time_created`,
+      query: `${region ? `region=${region}&` : ""}state=proposal&internal=0&sort=-time_created`,
     },
     {
       entity: "course",
