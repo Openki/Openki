@@ -139,13 +139,13 @@ template.onRendered(function () {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       });
     },
-    "de-ccc"() {
+    "sv"() {
       return L.tileLayer("//{s}.tiles.hack-mas24.c3nav.de/88/{z}/{x}/{y}/0.png", {
         maxZoom,
         attribution: '&copy; <a href="https://github.com/c3nav">c3nav</a>',
       });
     },
-    "en-ccc"() {
+    "tr"() {
       return L.tileLayer("https://tiles.hack-mas24.c3nav.de/88/{z}/{x}/{y}/0.png", {
         maxZoom,
         attribution: '&copy; <a href="https://github.com/c3nav">c3nav</a>',
