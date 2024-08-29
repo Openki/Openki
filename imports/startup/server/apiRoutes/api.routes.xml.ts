@@ -202,8 +202,7 @@ Router.route("api.0.xml", {
                           id: pseudoHash(field.value),
                         })
                         .txt(field.value);
-                    }
-                    console.log(field);                  
+                    }              
                   });
                 } 
                 else {
