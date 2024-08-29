@@ -192,15 +192,30 @@ Router.route("api.0.xml", {
                 .ele("attachements")
                 .up();
 
-              const persons = eventNode.ele("persons");
-              // eslint-disable-next-line no-loop-func
-              event.groups.forEach((group: any) => {
-                persons
-                  .ele("person", {
-                    id: group.id,
-                  })
-                  .txt(group.name);
-              });
+                const fields = event.course.customFields;
+                if (typeof(fields) === `object`) {
+                  const persons = eventNode.ele("persons");
+                  fields.forEach((field: any) => {
+                    if (field.name === `speaker`) {
+                      persons
+                        .ele("person", {
+                          id: pseudoHash(field.value),
+                        })
+                        .txt(field.value);
+                    }              
+                  });
+                } 
+                else {
+                  const persons = eventNode.ele("persons");
+                  // eslint-disable-next-line no-loop-func
+                  event.groups.forEach((group: any) => {
+                    persons
+                      .ele("person", {
+                        id: group.id,
+                      })
+                      .txt(group.name);
+                  });
+                }
             },
           );
         }
