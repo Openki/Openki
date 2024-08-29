@@ -147,10 +147,10 @@ Router.route("api.0.xml", {
                   guid: uuidv5(event.id, OPENKI_UUID_NAMESPACE),
                 })
                 .ele("date")
-                .txt(moment(event.start).format("YYYY-MM-DDTHH:mm:ssZ"))
+                .txt(moment(event.startLocal).format("YYYY-MM-DDTHH:mm:ssZ"))
                 .up()
                 .ele("start")
-                .txt(moment(event.start).format("HH:mm"))
+                .txt(moment(event.startLocal).format("HH:mm"))
                 .up()
                 .ele("duration")
                 .txt(duration)
