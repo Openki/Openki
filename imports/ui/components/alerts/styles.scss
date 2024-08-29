@@ -1,10 +1,10 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .alert-messages {
-  left: 0;
   position: fixed;
   top: $navbar-height;
-  width: 100%;
+  right: calc(var(--bs-gutter-x) * 0.5);
+  left: calc(var(--bs-gutter-x) * 0.5);
   z-index: $zindex-navbar-fixed - 1;
 }
 
