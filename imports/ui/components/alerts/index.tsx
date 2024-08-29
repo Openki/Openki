@@ -1,81 +1,88 @@
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Alerts, AlertEnity } from "/imports/api/alerts/alerts";
+import { Alerts as AlertsCollection } from "/imports/api/alerts/alerts";
 
-import "./template.html";
 import "./styles.scss";
 
-{
-  const Template = TemplateAny as TemplateStaticTyped<
-    "alerts",
-    unknown,
-    { updateSpacerHeight: () => void }
-  >;
+function Alert({
+  _id,
+  message,
+  type,
+  timeout,
+}: {
+  _id: string;
+  message: string;
+  type: string;
+  timeout: number;
+}) {
+  const { t } = useTranslation();
 
-  const template = Template.alerts;
+  const updateSpacerHeight = () => {
+    $(".alert-messages-spacer").height($(".alert-messages").height() || 0);
+  };
 
-  template.onCreated(function () {
-    const instance = this;
+  const remove = (alertId: string) => {
+    const $alert = $(".alert-message");
+    // get 'transition-duration' and convert to miliseconds for fadeOut
+    const duration = Number.parseFloat($alert.css("transition-duration")) * 1000;
+    $alert.fadeOut(duration, () => {
+      updateSpacerHeight();
+      AlertsCollection.remove({ _id: alertId });
+    });
+  };
 
-    instance.updateSpacerHeight = () => {
-      instance.$(".alert-messages-spacer").height(instance.$(".alert-messages").height() || 0);
-    };
+  function contextualClass() {
+    return type === "error" ? "danger" : type;
+  }
+
+  let timedRemove: number;
+
+  useEffect(() => {
+    updateSpacerHeight();
+    $(".alert-message").toggleClass("is-faded-in");
+
+    timedRemove = Meteor.setTimeout(() => remove(_id), timeout);
   });
 
-  template.helpers({
-    alerts() {
-      return Alerts.find();
-    },
-  });
+  return (
+    <div
+      className={`alert alert-${contextualClass()} alert-dismissible alert-message`}
+      role="alert"
+    >
+      {message}
+      <button
+        type="button"
+        className="btn-close"
+        aria-label={t("message.close", "Close message")}
+        onClick={() => {
+          if (timedRemove) {
+            Meteor.clearTimeout(timedRemove);
+          }
+          remove(_id);
+        }}
+      ></button>
+    </div>
+  );
 }
 
-{
-  const Template = TemplateAny as TemplateStaticTyped<
-    "alert",
-    AlertEnity,
-    { remove: (alertId: string) => void; timedRemove: number }
-  >;
-
-  const template = Template.alert;
-
-  template.onCreated(function () {
-    const instance = this;
-    instance.remove = (alertId) => {
-      const $alert = instance.$(".alert-message");
-      // get 'transition-duration' and convert to miliseconds for fadeOut
-      const duration = Number.parseFloat($alert.css("transition-duration")) * 1000;
-      $alert.fadeOut(duration, () => {
-        (instance.parentInstance() as any).updateSpacerHeight();
-        Alerts.remove({ _id: alertId });
-      });
-    };
-  });
-
-  template.onRendered(function () {
-    const instance = this;
-
-    (instance.parentInstance() as any).updateSpacerHeight();
-    const alert = instance.data;
-    instance.$(".alert-message").toggleClass("is-faded-in");
-
-    instance.timedRemove = Meteor.setTimeout(() => instance.remove(alert._id), alert.timeout);
-  });
-
-  template.events({
-    "click .js-remove-alert"(_event, instance) {
-      const alert = instance.data;
-
-      if (instance.timedRemove) {
-        Meteor.clearTimeout(instance.timedRemove);
-      }
-      instance.remove(alert._id);
-    },
-  });
-
-  template.helpers({
-    contextualClass() {
-      const alert = Template.currentData();
-      return alert.type === "error" ? "danger" : alert.type;
-    },
-  });
+export function Alerts() {
+  return (
+    <>
+      <div className="alert-messages container">
+        {AlertsCollection.find()
+          .fetch()
+          .map((a) => (
+            <Alert key={a._id} _id={a._id} message={a.message} type={a.type} timeout={a.timeout} />
+          ))}
+      </div>
+      <div className="alert-messages-spacer"></div>
+    </>
+  );
 }
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("Alerts", () => Alerts);
