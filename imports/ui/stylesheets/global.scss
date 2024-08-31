@@ -47,3 +47,19 @@ a:focus,
 .modal-header .btn-close {
   filter: var(--bs-btn-close-white-filter);
 }
+
+.action-focus {
+  box-shadow: var(--bs-focus-ring-x, 0) var(--bs-focus-ring-y, 0) var(--bs-focus-ring-blur, 0)
+    var(--bs-focus-ring-width) var(--bs-focus-ring-color);
+  animation: fadeOutFocusRing 1s forwards 3s;
+}
+
+@keyframes fadeOutFocusRing {
+  0% {
+    box-shadow: var(--bs-focus-ring-x, 0) var(--bs-focus-ring-y, 0) var(--bs-focus-ring-blur, 0)
+      var(--bs-focus-ring-width) var(--bs-focus-ring-color);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
