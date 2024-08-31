@@ -6,6 +6,9 @@ export interface AlertEnity {
   _id: string;
   type: string;
   message: string;
+  title?: string | undefined;
+
+  links?: { text: string; href: string }[] | undefined;
   /** Integer */
   timeout: number;
 }

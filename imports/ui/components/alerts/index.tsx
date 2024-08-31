@@ -6,13 +6,17 @@ import { Alerts as AlertsCollection } from "/imports/api/alerts/alerts";
 import "./styles.scss";
 
 function Alert({
-  _id,
+  id,
+  title,
   message,
+  links,
   type,
   timeout,
 }: {
-  _id: string;
+  id: string;
+  title: string | undefined;
   message: string;
+  links?: { text: string; href: string }[] | undefined;
   type: string;
   timeout: number;
 }) {
@@ -42,15 +46,29 @@ function Alert({
     updateSpacerHeight();
     $(".alert-message").toggleClass("is-faded-in");
 
-    timedRemove = Meteor.setTimeout(() => remove(_id), timeout);
+    timedRemove = Meteor.setTimeout(() => remove(id), timeout);
   });
 
   return (
     <div
-      className={`alert alert-${contextualClass()} alert-dismissible alert-message`}
+      className={`alert alert-${contextualClass()} alert-dismissible alert-message fs-4`}
       role="alert"
     >
+      {title ? <h3 className="alert-heading">{title}</h3> : null}
       {message}
+      {links ? (
+        <>
+          <hr className="border border-black" />
+          {links.map((l) => (
+            <>
+              {" "}
+              <a className="btn btn-primary" href={l.href}>
+                {l.text}
+              </a>
+            </>
+          ))}
+        </>
+      ) : null}
       <button
         type="button"
         className="btn-close"
@@ -59,7 +77,7 @@ function Alert({
           if (timedRemove) {
             Meteor.clearTimeout(timedRemove);
           }
-          remove(_id);
+          remove(id);
         }}
       ></button>
     </div>
@@ -69,11 +87,19 @@ function Alert({
 export function Alerts() {
   return (
     <>
-      <div className="alert-messages container">
+      <div className="alert-messages container mt-2">
         {AlertsCollection.find()
           .fetch()
           .map((a) => (
-            <Alert key={a._id} _id={a._id} message={a.message} type={a.type} timeout={a.timeout} />
+            <Alert
+              key={a._id}
+              id={a._id}
+              title={a.title}
+              message={a.message}
+              links={a.links}
+              type={a.type}
+              timeout={a.timeout}
+            />
           ))}
       </div>
       <div className="alert-messages-spacer"></div>
