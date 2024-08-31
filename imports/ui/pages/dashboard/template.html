@@ -1,5 +1,9 @@
 <template name="dashboardPage">
-  <div>
-    {{> React (component DashboardPage)}}
+  <div class="container">
+    {{#if region.dashboard}}
+      {{> dashboard list=region.dashboard}}
+    {{else}}
+      {{> find}}
+    {{/if}}
   </div>
 </template>

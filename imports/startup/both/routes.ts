@@ -123,8 +123,20 @@ RouterAsync.route("home", {
 RouterAsync.route("dashboard", {
   path: "dashboard",
   template: "dashboardPage",
+  yieldRegions: {
+    featuredGroup: { to: "aboveContent" },
+  },
   async onRun() {
     await import("/imports/ui/pages/dashboard");
+  },
+  data() {
+    const { query } = this.params;
+
+    // Add filter options for the homepage
+    return _.extend(query, {
+      internal: false,
+      region: Session.get("region"),
+    });
   },
 });
 
