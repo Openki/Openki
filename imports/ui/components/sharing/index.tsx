@@ -34,7 +34,7 @@ export function Sharing() {
   });
 
   return (
-    <div className="shariff-wrapper">
+    <div className="shariff-wrapper" id="share">
       <p>{t("sharing.title", "Share it with your friends")}</p>
       <div
         className="shariff"
