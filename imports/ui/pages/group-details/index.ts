@@ -238,44 +238,38 @@ template.helpers({
     const region = CleanedRegion(Session.get("region"));
 
     return {
+      region: region || "",
+      group: group._id,
       list: [
         {
           entity: "course",
-          title: i18n("explore.recentActivities.title", "Recent activities"),
-          query: `${region ? `region=${region}&` : ""}group=${group._id}`,
+          title: "dashboard.recentActivities.title",
+          query: "",
         },
         {
           entity: "event",
-          title: i18n("explore.upcomingEvents.title", "Upcoming events"),
-          query: `${region ? `region=${region}&` : ""}group=${
-            group._id
-          }&after=now&sort=start&internal=0&canceled=0`,
+          title: "dashboard.upcomingEvents.title",
+          query: `after=now&sort=start&internal=0&canceled=0`,
         },
         {
           entity: "course",
-          title: i18n("explore.newProposals.title", "New proposals"),
-          query: `${region ? `region=${region}&` : ""}group=${
-            group._id
-          }&state=proposal&internal=0&sort=-time_created`,
+          title: "dashboard.newProposals.title",
+          query: `state=proposal&internal=0&sort=-time_created`,
         },
         {
           entity: "course",
-          title: i18n("explore.lookingForMentors.title", "Looking for mentors"),
-          query: `${region ? `region=${region}&` : ""}group=${
-            group._id
-          }&needsRole=mentor&state=proposal,resting&internal=0`,
+          title: "dashboard.lookingForMentors.title",
+          query: `needsRole=mentor&state=proposal,resting&internal=0`,
         },
         {
           entity: "course",
-          title: i18n("explore.lookingForVenues.title", "Looking for venues"),
-          query: `${region ? `region=${region}&` : ""}group=${
-            group._id
-          }&needsRole=host&state=proposal,resting&internal=0`,
+          title: "dashboard.lookingForVenues.title",
+          query: `needsRole=host&state=proposal,resting&internal=0`,
         },
         {
           entity: "eventsMap",
-          title: i18n("explore.eventsMap.title", "Events map"),
-          query: `${region ? `region=${region}&` : ""}group=${group._id}&after=now`,
+          title: "dashboard.eventsMap.title",
+          query: `after=now`,
         },
       ],
     };
