@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Alerts as AlertsCollection } from "/imports/api/alerts/alerts";
+import { Action, Alerts as AlertsCollection } from "/imports/api/alerts/alerts";
 
 import "./styles.scss";
 
@@ -9,14 +9,14 @@ function Alert({
   id,
   title,
   message,
-  links,
+  actions,
   type,
   timeout,
 }: {
   id: string;
   title: string | undefined;
   message: string;
-  links?: { text: string; href: string }[] | undefined;
+  actions?: Action[] | undefined;
   type: string;
   timeout: number;
 }) {
@@ -56,13 +56,26 @@ function Alert({
     >
       {title ? <h3 className="alert-heading">{title}</h3> : null}
       {message}
-      {links ? (
+      {actions ? (
         <>
           <hr className="border border-black" />
-          {links.map((l) => (
+          {actions.map((l) => (
             <>
               {" "}
-              <a className="btn btn-primary" href={l.href}>
+              <a
+                className="btn btn-success"
+                href={l.href}
+                onClick={() => {
+                  const elementId = l.href.split("#")[1];
+                  const element = elementId && document.getElementById(elementId);
+                  if (element) {
+                    element.classList.add("action-focus");
+                    setTimeout(() => {
+                      element.classList.remove("action-focus");
+                    }, 5000);
+                  }
+                }}
+              >
                 {l.text}
               </a>
             </>
@@ -96,7 +109,7 @@ export function Alerts() {
               id={a._id}
               title={a.title}
               message={a.message}
-              links={a.links}
+              actions={a.actions}
               type={a.type}
               timeout={a.timeout}
             />
