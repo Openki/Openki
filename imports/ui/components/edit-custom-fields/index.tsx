@@ -4,7 +4,7 @@ import React from "react";
 import { CourseCustomField } from "/imports/api/courses/courses";
 import { GroupEntityCustomCourseFields } from "/imports/api/groups/groups";
 
-import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
+import {  useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
 export type Props = {
   fields: GroupEntityCustomCourseFields[];
@@ -12,6 +12,7 @@ export type Props = {
 };
 
 export function EditCustomFields(props: Props) {
+  const { getLocalizedValue } = useLocalizedSetting();
   function value(name: string) {
     return props.values?.filter((a) => a.name === name)[0]?.value;
   }

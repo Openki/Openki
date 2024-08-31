@@ -10,7 +10,7 @@ import * as usersMethods from "/imports/api/users/methods";
 import { Regions } from "/imports/api/regions/regions";
 
 import * as Analytics from "/imports/ui/lib/analytics";
-import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
+import {  useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { getSiteName } from "/imports/utils/getSiteName";
 
@@ -37,6 +37,7 @@ function Disclaimer() {
 }
 function More() {
   const { t } = useTranslation();
+  const { getLocalizedValue } = useLocalizedSetting();
   return (
     <a href={getLocalizedValue(PublicSettings.pricePolicyLink)}>
       <div className="icon-text">
