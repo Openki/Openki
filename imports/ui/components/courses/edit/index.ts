@@ -549,10 +549,28 @@ template.events({
           );
         } else {
           if (isNew) {
-            Alert.success(
+            Alert.successNextActions(
               i18n("message.courseCreated", "{NAME} has been created!", {
                 NAME: changes.name,
               }),
+              i18n("message.courseCreated.description", "What do you wanna do next?"),
+              numberOfCharacters === 0
+                ? {
+                    text: i18n("message.courseCreated.addDescription", "Add a desciption"),
+                    href: "#course-description",
+                  }
+                : undefined,
+              { text: i18n("message.courseCreated.addImage", "Add a image"), href: "#files-tab" },
+              { text: i18n("message.courseCreated.subscribe", "Subscribe"), href: "#subscribe" },
+              Regions.findOne(changes.region)?.isPrivate()
+                ? { text: i18n("message.courseCreated.share", "Share it"), href: "#share" }
+                : undefined,
+
+              {
+                text: i18n("message.courseCreated.discussion", "Write a comment"),
+                href: "#discussion",
+              },
+              { text: i18n("message.courseCreated.addEvent", "Add an event"), href: "#add-event" },
             );
             Analytics.trackEvent(
               "Course creations",

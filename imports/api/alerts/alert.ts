@@ -20,8 +20,12 @@ export function success(message: string) {
   _alert("success", message);
 }
 
-export function successNextActions(title: string, message: string, ...actions: Action[]) {
-  _alert("success", message, 60000, title, actions);
+export function successNextActions(
+  title: string,
+  message: string,
+  ...actions: (Action | undefined)[]
+) {
+  _alert("success", message, 60000, title, actions.filter((a) => a) as Action[]);
 }
 
 /**

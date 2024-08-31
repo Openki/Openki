@@ -5,6 +5,20 @@ import { Action, Alerts as AlertsCollection } from "/imports/api/alerts/alerts";
 
 import "./styles.scss";
 
+function scrollIntoView(target: HTMLElement, offestTop: number) {
+  window.scrollTo(0, target.offsetTop - offestTop);
+}
+
+function scrollIntoViewIfNotVisible(target: HTMLElement, offestTop: number) {
+  if (target.getBoundingClientRect().bottom > window.innerHeight) {
+    target.scrollIntoView(false);
+  }
+
+  if (target.getBoundingClientRect().top < 0 + offestTop) {
+    scrollIntoView(target, offestTop);
+  }
+}
+
 function Alert({
   id,
   title,
@@ -23,7 +37,15 @@ function Alert({
   const { t } = useTranslation();
 
   const updateSpacerHeight = () => {
-    $(".alert-messages-spacer").height($(".alert-messages").height() || 0);
+    const height = $(".alert-messages").height() || 0;
+
+    if (height) {
+      $(".alert-message").addClass("is-faded-in");
+    } else {
+      $(".alert-message").removeClass("is-faded-in");
+    }
+
+    $(".alert-messages-spacer").height(height);
   };
 
   const remove = (alertId: string) => {
@@ -44,7 +66,6 @@ function Alert({
 
   useEffect(() => {
     updateSpacerHeight();
-    $(".alert-message").toggleClass("is-faded-in");
 
     timedRemove = Meteor.setTimeout(() => remove(id), timeout);
   });
@@ -65,10 +86,17 @@ function Alert({
               <a
                 className="btn btn-success"
                 href={l.href}
-                onClick={() => {
+                onClick={(event) => {
+                  event.preventDefault();
+
                   const elementId = l.href.split("#")[1];
                   const element = elementId && document.getElementById(elementId);
                   if (element) {
+                    scrollIntoViewIfNotVisible(
+                      element,
+                      ($(".alert-messages")?.height() || 0) + ($(".navbar")?.height() || 0),
+                    );
+
                     element.classList.add("action-focus");
                     setTimeout(() => {
                       element.classList.remove("action-focus");
