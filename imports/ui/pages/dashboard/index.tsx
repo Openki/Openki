@@ -16,7 +16,7 @@ export function DashboardPage() {
       entity: "course",
       title: featuredGroup?.name ?? "",
       query: `${region ? `region=${region}&` : ""}group=${featuredGroup?._id}`,
-      showAll: `/group/${featuredGroup?._id}`,
+      showAll: { link: `/group/${featuredGroup?._id}` },
     },
     {
       entity: "course",
@@ -49,7 +49,7 @@ export function DashboardPage() {
       entity: "course",
       title: "ASZ",
       query: `${region ? `region=${region}&` : ""}group=b0f1a82d36`,
-      showAll: "/group/b0f1a82d36/ASZ",
+      showAll: { link: "/group/b0f1a82d36/ASZ" },
     },
     {
       entity: "group",

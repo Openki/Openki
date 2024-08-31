@@ -284,6 +284,8 @@
   "createAccount.subject": "[{SITE}] Create your account on {SITE}",
   "customField.boolean.no": "No",
   "customField.boolean.yes": "Yes",
+  "dashboard.calendar.showAll": "Show calendar >",
+  "dashboard.eventsMap.showAll": "Show full map >",
   "dashboard.showAll": "Show all >",
   "dashboard.title": "Dashboard",
   "deleteEventsModal.clearSelection": "Clear selection",
