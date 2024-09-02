@@ -4,6 +4,7 @@ import { ReactiveVar } from "meteor/reactive-var";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import { truncate } from "/imports/utils/string-tools";
 import { textPlain } from "/imports/utils/html-tools";
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import { GroupModel, Groups } from "/imports/api/groups/groups";
 import * as GroupsMethods from "/imports/api/groups/methods";
@@ -240,38 +241,7 @@ template.helpers({
     return {
       region: region || "",
       group: group._id,
-      list: [
-        {
-          entity: "course",
-          title: "dashboard.recentActivities.title",
-          query: "",
-        },
-        {
-          entity: "event",
-          title: "dashboard.upcomingEvents.title",
-          query: `after=now&sort=start&internal=0&canceled=0`,
-        },
-        {
-          entity: "course",
-          title: "dashboard.newProposals.title",
-          query: `state=proposal&internal=0&sort=-time_created`,
-        },
-        {
-          entity: "course",
-          title: "dashboard.lookingForMentors.title",
-          query: `needsRole=mentor&state=proposal,resting&internal=0`,
-        },
-        {
-          entity: "course",
-          title: "dashboard.lookingForVenues.title",
-          query: `needsRole=host&state=proposal,resting&internal=0`,
-        },
-        {
-          entity: "eventsMap",
-          title: "dashboard.eventsMap.title",
-          query: `after=now`,
-        },
-      ],
+      list: group.dashboard || PublicSettings.groupDashboardDefault,
     };
   },
   newCourse() {

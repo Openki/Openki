@@ -81,13 +81,13 @@
         {{> groupSettings}}
       {{/if}}
     </div>
-    {{#unless PublicSettings.feature.groupDashboard}}
+    {{#unless dashboardAttr.list}}
       {{#if showCourses}}
         {{> find courseQuery}}
       {{/if}}
     {{/unless}}
   </div>
-  {{#if PublicSettings.feature.groupDashboard}}
+  {{#if dashboardAttr.list}}
     {{#if showCourses}}
       {{> dashboard dashboardAttr}}
     {{/if}}
