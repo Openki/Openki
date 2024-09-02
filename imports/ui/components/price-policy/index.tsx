@@ -10,7 +10,7 @@ import * as usersMethods from "/imports/api/users/methods";
 import { Regions } from "/imports/api/regions/regions";
 
 import * as Analytics from "/imports/ui/lib/analytics";
-import {  useLocalizedSetting } from "/imports/utils/getLocalizedValue";
+import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { getSiteName } from "/imports/utils/getSiteName";
 

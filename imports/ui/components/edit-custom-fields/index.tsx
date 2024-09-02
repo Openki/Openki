@@ -4,7 +4,7 @@ import React from "react";
 import { CourseCustomField } from "/imports/api/courses/courses";
 import { GroupEntityCustomCourseFields } from "/imports/api/groups/groups";
 
-import {  useLocalizedSetting } from "/imports/utils/getLocalizedValue";
+import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
 export type Props = {
   fields: GroupEntityCustomCourseFields[];
