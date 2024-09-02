@@ -117,9 +117,11 @@ export type Props = {
     query: string;
     showAll?: { link?: string; text?: string };
   }[];
+  region?: string;
+  group?: string;
 };
 
-export function Dashboard({ list }: Props) {
+export function Dashboard({ list, region, group }: Props) {
   const { t } = useTranslation();
   const { getLocalizedValue } = useLocalizedSetting();
 
@@ -128,6 +130,13 @@ export function Dashboard({ list }: Props) {
 
     const filter = handler.filter();
     const urlParams = new URLSearchParams(i.query);
+
+    if (region) {
+      urlParams.append("region", region);
+    }
+    if (group) {
+      urlParams.append("group", group);
+    }
     const params = Object.fromEntries(urlParams);
     filter.read(params);
     const query = filter.done().toQuery();
@@ -144,7 +153,8 @@ export function Dashboard({ list }: Props) {
       component: (handler as any).component,
       ...i,
       showAll: {
-        link: i.showAll?.link || Router.path(handler.route, undefined, { query: i.query }),
+        link:
+          i.showAll?.link || Router.path(handler.route, undefined, { query: urlParams.toString() }),
         text:
           getLocalizedValue(i.showAll?.text || handler.showAll?.text) ||
           t("dashboard.showAll", "Show all >"),
@@ -161,7 +171,7 @@ export function Dashboard({ list }: Props) {
               <a className="btn btn-sm btn-success float-end" href={h.showAll.link}>
                 {h.showAll.text}
               </a>
-              <h2>{h.title}</h2>
+              <h2>{getLocalizedValue(h.title)}</h2>
               {h.element ? (
                 <div className="d-flex flex-row flex-nowrap pb-3 overflow-x-scroll">
                   {h.data.map(h.element)}

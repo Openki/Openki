@@ -75,6 +75,12 @@ export interface RegionEntity {
     /** Can be a logo from the /private/* folder or a base64 encoded string. */
     emailLogo?: string;
   };
+  dashboard?: {
+    entity: string;
+    title: string;
+    query: string;
+    showAll?: { link?: string; text?: string };
+  }[];
   createdby?: string;
   created?: Date;
   updated?: Date;

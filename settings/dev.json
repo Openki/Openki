@@ -47,7 +47,6 @@
 		, "visitorUser": true
 		, "rsvpWithCompanions": true
 		, "sendReminderIsEditable": true
-		, "groupDashboard": true 
 		}
 	, "nav":
 		{ "brandLink": "/"
@@ -56,6 +55,58 @@
 		, "calendar": true
 		, "customEntries": [ ]
 		}
+  , "regionDashboardDefault": 
+    [ { "entity": "course"
+      , "title": "dashboard.recentActivities.title"
+      , "query": ""
+      }
+    , { "entity": "event"
+      , "title": "dashboard.upcomingEvents.title"
+      , "query": "after=now&sort=start&internal=0&canceled=0"
+      }
+    , { "entity": "course"
+      , "title": "dashboard.newProposals.title"
+      , "query": "state=proposal&internal=0&sort=-time_created"
+      }
+    , { "entity": "course"
+      , "title": "dashboard.lookingForMentors.title"
+      ,  "query": "needsRole=mentor&state=proposal,resting&internal=0"
+      }
+    , { "entity": "course"
+      , "title": "dashboard.lookingForVenues.title"
+      , "query": "needsRole=host&state=proposal,resting&internal=0"
+      }
+    , { "entity": "eventsMap"
+      , "title": "dashboard.eventsMap.title"
+      , "query": "after=now"
+      }
+    ]
+  , "groupDashboardDefault":
+    [ { "entity": "course"
+      , "title": "dashboard.recentActivities.title"
+      , "query": ""
+      }
+    , { "entity": "event"
+      , "title": "dashboard.upcomingEvents.title"
+      , "query": "after=now&sort=start&internal=0&canceled=0"
+      }
+    , { "entity": "course"
+      , "title": "dashboard.newProposals.title"
+      , "query": "state=proposal&internal=0&sort=-time_created"
+      }
+    , { "entity": "course"
+      , "title": "dashboard.lookingForMentors.title"
+      ,  "query": "needsRole=mentor&state=proposal,resting&internal=0"
+      }
+    , { "entity": "course"
+      , "title": "dashboard.lookingForVenues.title"
+      , "query": "needsRole=host&state=proposal,resting&internal=0"
+      }
+    , { "entity": "eventsMap"
+      , "title": "dashboard.eventsMap.title"
+      , "query": "after=now"
+      }
+    ]
 	, "footerLinks":
 		[	{ "link": "https://about.openki.net/"
 			, "key": "footer.aboutOpenki"
