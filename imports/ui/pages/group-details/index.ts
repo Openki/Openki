@@ -4,6 +4,7 @@ import { ReactiveVar } from "meteor/reactive-var";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import { truncate } from "/imports/utils/string-tools";
 import { textPlain } from "/imports/utils/html-tools";
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import { GroupModel, Groups } from "/imports/api/groups/groups";
 import * as GroupsMethods from "/imports/api/groups/methods";
@@ -238,46 +239,9 @@ template.helpers({
     const region = CleanedRegion(Session.get("region"));
 
     return {
-      list: [
-        {
-          entity: "course",
-          title: i18n("explore.recentActivities.title", "Recent activities"),
-          query: `${region ? `region=${region}&` : ""}group=${group._id}`,
-        },
-        {
-          entity: "event",
-          title: i18n("explore.upcomingEvents.title", "Upcoming events"),
-          query: `${region ? `region=${region}&` : ""}group=${
-            group._id
-          }&after=now&sort=start&internal=0&canceled=0`,
-        },
-        {
-          entity: "course",
-          title: i18n("explore.newProposals.title", "New proposals"),
-          query: `${region ? `region=${region}&` : ""}group=${
-            group._id
-          }&state=proposal&internal=0&sort=-time_created`,
-        },
-        {
-          entity: "course",
-          title: i18n("explore.lookingForMentors.title", "Looking for mentors"),
-          query: `${region ? `region=${region}&` : ""}group=${
-            group._id
-          }&needsRole=mentor&state=proposal,resting&internal=0`,
-        },
-        {
-          entity: "course",
-          title: i18n("explore.lookingForVenues.title", "Looking for venues"),
-          query: `${region ? `region=${region}&` : ""}group=${
-            group._id
-          }&needsRole=host&state=proposal,resting&internal=0`,
-        },
-        {
-          entity: "eventsMap",
-          title: i18n("explore.eventsMap.title", "Events map"),
-          query: `${region ? `region=${region}&` : ""}group=${group._id}&after=now`,
-        },
-      ],
+      region: region || "",
+      group: group._id,
+      list: group.dashboard || PublicSettings.groupDashboardDefault,
     };
   },
   newCourse() {
