@@ -5,6 +5,8 @@ import { Regions } from "/imports/api/regions/regions";
 import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
 
+import { CourseTemplate } from "../../lib/course-template";
+
 import "/imports/ui/components/courses/find";
 import "/imports/ui/components/dashboard";
 
@@ -36,5 +38,12 @@ template.onCreated(function () {
 template.helpers({
   region() {
     return Regions.currentRegion();
+  },
+  newCourse() {
+    const instance = Template.instance();
+    const { group } = instance.data;
+    const course = CourseTemplate();
+    course.group = group;
+    return course;
   },
 });

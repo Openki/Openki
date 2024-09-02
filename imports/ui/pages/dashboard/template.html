@@ -1,9 +1,16 @@
 <template name="dashboardPage">
   <div class="container">
     {{#if region.dashboard}}
-      {{> dashboard list=region.dashboard}}
+      {{> dashboard region=region._id list=region.dashboard}}
     {{else}}
-      {{> find}}
+      {{#if PublicSettings.regionDashboardDefault}}
+        {{> dashboard region=region._id list=PublicSettings.regionDashboardDefault}}
+      {{else}}
+        {{> find}}
+      {{/if}}
     {{/if}}
+  </div>
+  <div class="container mw-md">
+    {{> courseEdit newCourse}}
   </div>
 </template>
