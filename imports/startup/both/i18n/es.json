@@ -213,6 +213,7 @@
 	"dashboard.calendar.showAll": "Mostrar calendario >",
 	"dashboard.eventsMap.showAll": "Mostrar mapa completo >",
 	"dashboard.showAll": "Mostrar todo >",
+	"dashboard.upcomingEvents.title": "Próximos eventos",
 	"deleteEventsModal.clearSelection": "Borrar selección",
 	"deleteEventsModal.confirm": "Confirmar eliminación de eventos",
 	"deleteEventsModal.confirmDeleteEvents": "Borrar {NUM, plural, one{evento} other{eventos} }",
