@@ -10,7 +10,7 @@ import {
 } from "/imports/ui/lib/introduction";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
-import {  useLocalizedSetting } from "/imports/utils/getLocalizedValue";
+import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 import { PricePolicy } from "/imports/ui/components/price-policy";
 import { useViewportSize } from "/imports/ui/lib/useViewportSize";
 import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
