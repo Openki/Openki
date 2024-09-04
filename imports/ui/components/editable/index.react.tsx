@@ -28,8 +28,6 @@ export function Editable({ text = "", multiline, placeholder, maxlength, onChang
   const [numberOfCharacters, setNumberOfCharacters] = useState(0);
   const [changed, setChanged] = useState(!store);
 
-  const [initialized, setInitialized] = useState(false);
-  const [changedByUser, setChangedByUser] = useState(false);
   const [totalFocusTimeInSeconds, setTotalFocusTimeInSeconds] = useState(0);
   const [startGettingFocus, setStartGettingFocus] = useState<number | undefined>(undefined);
   const isRTL = useSessionEquals("textDirectionality", "rtl");
@@ -133,7 +131,6 @@ export function Editable({ text = "", multiline, placeholder, maxlength, onChang
 
       setChanged(false);
 
-      setChangedByUser(false);
       setStartGettingFocus(undefined);
       setTotalFocusTimeInSeconds(0);
 
@@ -150,24 +147,6 @@ export function Editable({ text = "", multiline, placeholder, maxlength, onChang
       }
     }
   };
-
-  // Automatically replace contents when text changes
-  // When the user has already made changes, we don't update the field. This
-  // protects the user's changes but at the same time it allows overwriting
-  // other people's changes.
-  useEffect(() => {
-    if (!initialized) {
-      setInitialized(true);
-      reset();
-      return;
-    }
-
-    if (changedByUser) {
-      return;
-    }
-    reset();
-    console.info("c: " + text);
-  }, [text]);
 
   useEffect(() => {
     const element = elementRef.current;
@@ -293,7 +272,6 @@ export function Editable({ text = "", multiline, placeholder, maxlength, onChang
             // Get the number of visible characters
             setNumberOfCharacters(event.currentTarget.innerText.trim().length);
 
-            setChangedByUser(true);
             setChanged(true);
 
             onChange?.(

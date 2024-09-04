@@ -200,6 +200,10 @@ export function Edit(data: Data) {
   const [isBusy, setIsBusy] = useState(false);
   const [title, setTitle] = useState(data.name);
 
+  useEffect(() => {
+    setTitle(data.name);
+  }, [data.name]);
+
   function getRegion() {
     const courseId = data._id || "";
     const isNew = courseId === "";
@@ -702,7 +706,7 @@ export function Edit(data: Data) {
           ) : null}
 
           <Title
-            value={data.name}
+            value={title}
             onChange={(newTitle) => {
               setTitle(newTitle);
             }}

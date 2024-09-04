@@ -108,7 +108,7 @@ export function Title(data: { value?: string | undefined; onChange: (newValue: s
       <label className="form-label">{t("course.edit.title", "Title")}</label>
       <div className="dropdown">
         <input
-          className="form-control form-control-lg dropdown-toggle js-title"
+          className={"form-control form-control-lg dropdown-toggle js-title " + value}
           ref={titleElement}
           id="editform_name"
           placeholder={t("course.title.placeholder", "What are you interested in?")}
