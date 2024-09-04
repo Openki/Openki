@@ -99,7 +99,7 @@ export function Editable({ text = "", multiline, placeholder, maxlength, onChang
     return classes.join(" ");
   }
 
-  const reset = () => {
+  function reset() {
     const element = elementRef.current;
     if (!element) {
       return;
@@ -118,7 +118,13 @@ export function Editable({ text = "", multiline, placeholder, maxlength, onChang
     }
 
     resetErrors();
-  };
+  }
+
+  useEffect(() => {
+    if (getEdited() !== text) {
+      reset();
+    }
+  }, [text]);
 
   const save = async () => {
     const newText = getEdited();
@@ -253,14 +259,13 @@ export function Editable({ text = "", multiline, placeholder, maxlength, onChang
     // Get the number of visible characters
     setNumberOfCharacters(element.innerText.trim().length);
   };
-
   return (
     <>
       <div className={`editable-wrap ${wrapClasses()} ${errors.input ? "is-invalid" : ""}`}>
         <div
           ref={elementRef}
           className={`editable ${editableClasses()} ${characterLimitReached() ? "is-invalid" : ""}`}
-          onChange={(event) => {
+          onKeyUp={(event) => {
             // Register when the field is being edited
 
             // Fix placeholder position on empty after change
