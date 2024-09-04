@@ -38,63 +38,37 @@ import { CourseCategories } from "../categories";
 import { EditCustomFields } from "../../edit-custom-fields";
 import { PleaseLogin } from "../../please-login";
 
-function Header(data: {
-  _id?: string;
-  isFrame?: boolean;
-  group: string;
-  filter: ReturnType<(typeof Courses)["Filtering"]>;
-}) {
+function GroupHeader({ groupId }: { groupId: string }) {
   const { t } = useTranslation();
-  const siteName = useSiteName();
-  const [groupIsLoading, group] = useDetails(data.group);
+  const [groupIsLoading, group] = useDetails(groupId);
 
-  const { filter } = data;
-
-  const filterQuery = filter.toQuery();
-  const [coursesIsLoading, courses] = useCoursesFindFilter(filterQuery);
-
-  function proposeFromQuery() {
-    const { search } = filterQuery;
-    if (!search) {
-      return false;
-    }
-
-    return courses.length === 0 && search;
-  }
-  function courseSearch() {
-    const filterParams = filter.toParams();
-
-    return filterParams.search;
-  }
-  function newCourseGroupName() {
-    if (data.group) {
-      if (group) {
-        return group.name;
-      }
-    }
-    return false;
-  }
-
-  if (groupIsLoading() || coursesIsLoading()) {
+  if (groupIsLoading()) {
     return null;
   }
 
-  return proposeFromQuery() ? (
-    <h2>
-      {t("find.propose_new_course?", 'Why not propose a new course for "{TERM}"?', {
-        TERM: courseSearch(),
+  return (
+    <>
+      {t("course.edit.proposeInGroup", "Propose new course in group {GROUP}", {
+        GROUP: group?.name,
       })}
-    </h2>
-  ) : data._id ? (
+    </>
+  );
+}
+
+function Header(data: { _id?: string; isFrame?: boolean; group?: string }) {
+  const { t } = useTranslation();
+  const siteName = useSiteName();
+
+  return data._id ? (
     <h2>{t("course.edit.edit_course", "Edit course")}</h2>
-  ) : data.isFrame ? (
+  ) : !data.isFrame ? (
     <>
       <h2>
-        {newCourseGroupName()
-          ? t("course.edit.proposeInGroup", "Propose new course in group {GROUP}", {
-              GROUP: newCourseGroupName(),
-            })
-          : t("course.edit.propose", "Propose new course")}
+        {data.group ? (
+          <GroupHeader groupId={data.group} />
+        ) : (
+          t("course.edit.propose", "Propose new course")
+        )}
       </h2>
       <div className="icon-text">
         <div className="icon-text-icon">
@@ -119,6 +93,48 @@ function Header(data: {
       </div>
     </>
   ) : null;
+}
+
+function FindHeader(data: {
+  _id?: string;
+  isFrame?: boolean;
+  group?: string;
+  filter: ReturnType<(typeof Courses)["Filtering"]>;
+}) {
+  const { t } = useTranslation();
+
+  const { filter } = data;
+
+  const filterQuery = filter.toQuery();
+  const [coursesIsLoading, courses] = useCoursesFindFilter(filterQuery);
+
+  function proposeFromQuery() {
+    const { search } = filterQuery;
+    if (!search) {
+      return false;
+    }
+
+    return courses.length === 0 && search;
+  }
+  function courseSearch() {
+    const filterParams = filter.toParams();
+
+    return filterParams.search;
+  }
+
+  if (coursesIsLoading()) {
+    return null;
+  }
+
+  return proposeFromQuery() ? (
+    <h2>
+      {t("find.propose_new_course?", 'Why not propose a new course for "{TERM}"?', {
+        TERM: courseSearch(),
+      })}
+    </h2>
+  ) : (
+    <Header />
+  );
 }
 
 function AlertMessage(data: {
@@ -178,14 +194,14 @@ function AlertMessage(data: {
 
 export type Data = {
   _id?: string;
-  categories: string[];
+  categories?: string[];
   isFrame?: boolean;
-  group: string;
-  teamGroups: string[];
-  hideRoleSelection: boolean;
-  hidePricePolicy: boolean;
-  roles: string[];
-  creatorsRoles: string[];
+  group?: string;
+  teamGroups?: string[];
+  hideRoleSelection?: boolean;
+  hidePricePolicy?: boolean;
+  roles?: string[];
+  creatorsRoles?: string[];
   singleEvent?: boolean;
   hideCategories?: boolean;
   internal?: boolean;
@@ -235,7 +251,7 @@ export function Edit(data: Data) {
       if (data.group) {
         groups.push(data.group);
       }
-    } else if (data.teamGroups?.length > 0) {
+    } else if (data.teamGroups && data.teamGroups?.length > 0) {
       groups.push(...data.teamGroups);
     }
     // remove double groups
@@ -302,7 +318,7 @@ export function Edit(data: Data) {
   availableRoles().forEach((r) => {
     initaleRoles[r.type] = {
       icon: r.icon,
-      enabled: data.roles.includes(r.type) || false,
+      enabled: data.roles?.includes(r.type) || false,
       enroll: hasRole(data.members, r.type) || false,
     };
   });
@@ -347,7 +363,6 @@ export function Edit(data: Data) {
   };
 
   const resetFields = () => {
-    console.info("a");
     setTitle("");
     setDescription("");
     setSelectedCategories([]);
@@ -357,11 +372,11 @@ export function Edit(data: Data) {
   useEffect(() => {
     // Show category selection right away for new courses
     setEditingCategories(!data._id);
-    setSelectedCategories(data.categories);
+    setSelectedCategories(data.categories || []);
 
     if (data.isFrame) {
       // When we're in the propose frame, show a simplified role selection
-      setSimpleRoleSelection(!data.hideRoleSelection && data.roles.includes("mentor"));
+      setSimpleRoleSelection(!data.hideRoleSelection && !!data.roles?.includes("mentor"));
       setFullRoleSelection(false);
     }
   }, [data._id, data.categories, data.isFrame, data.hideRoleSelection, data.roles]);
@@ -461,7 +476,7 @@ export function Edit(data: Data) {
   };
 
   const handleSave = async () => {
-    const hasTeamGroups = !!(data.teamGroups?.length > 0);
+    const hasTeamGroups = !!(data.teamGroups && data.teamGroups?.length > 0);
 
     let internal;
     if (showInternalCheckbox()) {
@@ -539,7 +554,7 @@ export function Edit(data: Data) {
     changes.unsubs = [];
 
     if (data.isFrame) {
-      data.roles.forEach((role) => {
+      data.roles?.forEach((role) => {
         changes.roles[role] = true;
       });
 
@@ -548,7 +563,7 @@ export function Edit(data: Data) {
       }
 
       // Create unique, merged array
-      changes.subs = [...new Set([...changes.subs, ...data.creatorsRoles])];
+      changes.subs = [...new Set([...changes.subs, ...(data.creatorsRoles || [])])];
     }
 
     if (fullRoleSelection) {
@@ -651,7 +666,7 @@ export function Edit(data: Data) {
   return (
     <div className="edit-page">
       <PleaseLogin type="form" onSubmit={handleSave}>
-        {data.filter && data.group ? <Header {...{ ...data, filter: data.filter }} /> : null}
+        {data.filter ? <FindHeader {...{ ...data, filter: data.filter }} /> : <Header {...data} />}
         <div className={`edit-page-body course-edit-body ${editBodyClasses()}`}>
           {data._id && data.region ? <RegionTag region={data.region} /> : null}
           {showSavedMessage() && savedCourseId ? (

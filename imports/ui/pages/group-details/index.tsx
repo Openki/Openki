@@ -5,6 +5,7 @@ import { textPlain } from "/imports/utils/html-tools";
 import { useTranslation } from "react-i18next";
 import { useValidation } from "../../lib/useValidation";
 import { useUser } from "meteor/react-meteor-accounts";
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import { GroupModel } from "/imports/api/groups/groups";
 import * as GroupsMethods from "/imports/api/groups/methods";
@@ -13,12 +14,12 @@ import * as Alert from "/imports/api/alerts/alert";
 import { Store } from "/imports/ui/lib/editable";
 import * as Analytics from "/imports/ui/lib/analytics";
 import * as Metatags from "/imports/utils/metatags";
-// import { CourseTemplate } from "../../lib/course-template";
+import { CourseTemplate } from "../../lib/course-template";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
 import { Editable, Props as EditableProps } from "/imports/ui/components/editable/index.react";
 
-import { PublicSettings } from "/imports/utils/PublicSettings";
+import { Edit } from "../../components/courses/edit";
 import { Dashboard, Props as DashboardProps } from "../../components/dashboard";
 import { ButtonCancel, ButtonSave } from "/imports/ui/components/buttons";
 import { GroupSettings } from "/imports/ui/components/groups/settings";
@@ -92,54 +93,17 @@ export function GroupDetailsPage(data: Data) {
     const { group } = data;
 
     return {
-      list: [
-        {
-          entity: "course",
-          title: t("explore.recentActivities.title", "Recent activities"),
-          query: `${region ? `region=${region._id}&` : ""}group=${group._id}`,
-        },
-        {
-          entity: "event",
-          title: t("explore.upcomingEvents.title", "Upcoming events"),
-          query: `${region ? `region=${region._id}&` : ""}group=${
-            group._id
-          }&after=now&sort=start&internal=0&canceled=0`,
-        },
-        {
-          entity: "course",
-          title: t("explore.newProposals.title", "New proposals"),
-          query: `${region ? `region=${region._id}&` : ""}group=${
-            group._id
-          }&state=proposal&internal=0&sort=time_created`,
-        },
-        {
-          entity: "course",
-          title: t("explore.lookingForMentors.title", "Looking for mentors"),
-          query: `${region ? `region=${region._id}&` : ""}group=${
-            group._id
-          }&needsRole=mentor&state=proposal,resting&internal=0`,
-        },
-        {
-          entity: "course",
-          title: t("explore.lookingForVenues.title", "Looking for venues"),
-          query: `${region ? `region=${region._id}&` : ""}group=${
-            group._id
-          }&needsRole=host&state=proposal,resting&internal=0`,
-        },
-        {
-          entity: "eventsMap",
-          title: t("explore.eventsMap.title", "Events map"),
-          query: `${region ? `region=${region._id}&` : ""}group=${group._id}&after=now`,
-        },
-      ],
+      region: region?._id || "",
+      group: group._id,
+      list: group.dashboard || PublicSettings.groupDashboardDefault,
     };
   }
-  // function newCourse() {
-  //   const { group } = data;
-  //   const course = CourseTemplate();
-  //   course.group = group._id;
-  //   return course;
-  // }
+  function newCourse() {
+    const { group } = data;
+    const course = CourseTemplate();
+    course.group = group._id;
+    return course;
+  }
 
   const handleSaving: Store = {
     clientValidations: {
@@ -361,12 +325,12 @@ export function GroupDetailsPage(data: Data) {
       {{/if}}
     {{/unless}} */}
       </div>
-      {PublicSettings.feature.groupDashboard && data.showCourses ? (
+      {dashboardAttr().list && data.showCourses ? (
         <>
           <Dashboard {...dashboardAttr()} />
-          {/*    <div className="container mw-md">
-      {{> courseEdit newCourse}}
-    </div>*/}
+          <div className="container mw-md">
+            <Edit {...newCourse()} />
+          </div>
         </>
       ) : null}
     </>

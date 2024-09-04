@@ -53,7 +53,7 @@ import { textPlain } from "/imports/utils/html-tools";
           EVENT: event.title,
           DATE: moment(event.startLocal)
             .locale(Session.get("timeLocale") || "en")
-            .format("ddd, MMM d"),
+            .format("ddd, MMM D"),
         });
         description = truncate(textPlain(event.description), 160);
         appendAsJsonLdToBody(event);

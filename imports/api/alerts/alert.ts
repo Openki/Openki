@@ -1,4 +1,3 @@
-import { check } from "meteor/check";
 import { Alerts } from "./alerts";
 import { i18n } from "/imports/startup/both/i18next";
 
@@ -9,18 +8,15 @@ import { i18n } from "/imports/startup/both/i18next";
  * @param timeout timeout for the alert to disappear
  */
 function _alert(type: string, message: string, timeout = 4000) {
-  check(type, String);
-  check(message, String);
-  check(timeout, Number);
-
-  Alerts.insert({ type, message, timeout });
+  if (message) {
+    Alerts.insert({ type, message, timeout });
+  }
 }
 
 /**
  * @param message the message text
  */
 export function success(message: string) {
-  check(message, String);
   _alert("success", message);
 }
 
@@ -28,7 +24,6 @@ export function success(message: string) {
  * @param message the message text
  */
 export function warning(message: string) {
-  check(message, String);
   _alert("warning", message);
 }
 
@@ -37,8 +32,6 @@ export function warning(message: string) {
  * @param errorString error message
  */
 export function error(errorString: string) {
-  check(errorString, String);
-
   const errorMessage = i18n("_clientError", 'There was an error: "{ERROR}." Sorry about this.', {
     ERROR: errorString,
   });
@@ -53,8 +46,6 @@ export function error(errorString: string) {
  */
 export function serverError(errorOrMessage: Error | string, message?: string) {
   if (typeof message !== "string") {
-    check(errorOrMessage, String);
-
     const errorMessage = i18n(
       "_serverErrorMessageOnly",
       'There was an error on the server: "{MESSAGE}." Sorry about this.',
@@ -63,9 +54,6 @@ export function serverError(errorOrMessage: Error | string, message?: string) {
 
     _alert("error", errorMessage, 60000);
   } else {
-    check(errorOrMessage, Error);
-    check(message, String);
-
     const errorMessage = i18n(
       "_serverError",
       'There was an error on the server: "{MESSAGE} ({ERROR})." Sorry about this.',
