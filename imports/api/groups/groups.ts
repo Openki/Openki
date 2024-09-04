@@ -60,6 +60,12 @@ export interface GroupEntity {
   logoUrl?: string;
   /** Customize the inputs that the user can enter when creating and editing a course. */
   customCourseFields?: GroupEntityCustomCourseFields[];
+  dashboard?: {
+    entity: string;
+    title: string;
+    query: string;
+    showAll?: { link?: string; text?: string };
+  }[];
   /** Hide some role options in the propose new course. */
   disableCreateRoles?: string[];
   /** List of userIds with notify */
