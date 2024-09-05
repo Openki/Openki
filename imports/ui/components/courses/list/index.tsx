@@ -10,17 +10,26 @@ export type Props = {
     onMouseOut: () => Promise<void>;
     onClick: () => Promise<void>;
   };
+  categorieTagEvents: (groupId: string) => {
+    onMouseOver: () => Promise<void>;
+    onMouseOut: () => Promise<void>;
+    onClick: () => Promise<void>;
+  };
   small?: boolean;
 };
 
-export function CourseList({ courses, groupTagEvents, small }: Props) {
+export function CourseList({ courses, groupTagEvents, categorieTagEvents, small }: Props) {
   return (
     <div
       className={`row g-2 row-cols-1 row-cols-sm-2 row-cols-lg-3 ${!small ? "row-cols-xl-4" : ""}`}
     >
       {courses.map((course) => (
         <div key={course._id} className="col">
-          <CourseCompact course={course} groupTagEvents={groupTagEvents} />
+          <CourseCompact
+            course={course}
+            groupTagEvents={groupTagEvents}
+            categorieTagEvents={categorieTagEvents}
+          />
         </div>
       ))}
     </div>
