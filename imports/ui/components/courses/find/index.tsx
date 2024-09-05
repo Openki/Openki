@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
+import { useCurrentRouteName, useParams } from "/imports/utils/react-meteor-router";
 
 import { Courses } from "/imports/api/courses/courses";
 
@@ -34,10 +35,12 @@ export function Find(query: { [key: string]: string }) {
   const [showingFilters, setShowingFilters] = useState(false);
   const courseBlockSize = 36;
   const [courseLimit, setCourseLimit] = useState(courseBlockSize);
-  const filter = Courses.Filtering();
+  const filter = Courses.Filtering().read(query).done();
 
   // Add one to the limit so we know there is more to show
   const [isLoading, courses] = useFindFilter(filter.toQuery(), courseLimit + 1);
+  const searchParams = useParams();
+  const currentRouterName = useCurrentRouteName();
 
   // Reflect filter selection in URI
   // This creates a browser history entry so it is not done on every filter
@@ -64,8 +67,7 @@ export function Find(query: { [key: string]: string }) {
 
     routerAutoscroll.cancelNext();
 
-    const router = Router.current();
-    Router.go(router.route.getName(), { _id: router.params._id }, options);
+    Router.go(currentRouterName, { _id: searchParams._id }, options);
 
     return true;
   }
