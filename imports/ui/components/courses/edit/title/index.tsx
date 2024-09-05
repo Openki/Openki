@@ -88,7 +88,6 @@ export function Title(data: { value?: string | undefined; onChange: (newValue: s
   useEffect(() => {
     setProposedSearch(data?.value || "");
     setValue(data?.value || "");
-    console.info("b");
   }, [data.value]);
 
   useEffect(() => {

@@ -269,13 +269,12 @@ export function Find(query: { [key: string]: string | undefined }) {
   }
 
   function handleToggleFilter() {
-    setShowingFilters(!showingFilters);
-
-    if (!showingFilters) {
+    if (showingFilters) {
       filters.forEach((f) => filter.disable(f as any));
       filter.done();
       updateUrl();
     }
+    setShowingFilters(!showingFilters);
   }
 
   // // Read URL state
