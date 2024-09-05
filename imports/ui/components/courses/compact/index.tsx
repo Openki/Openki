@@ -21,9 +21,14 @@ export type Props = {
     onMouseOut: () => Promise<void>;
     onClick: () => Promise<void>;
   };
+  categorieTagEvents?: (groupId: string) => {
+    onMouseOver: () => Promise<void>;
+    onMouseOut: () => Promise<void>;
+    onClick: () => Promise<void>;
+  };
 };
 
-export function CourseCompact({ course, groupTagEvents }: Props) {
+export function CourseCompact({ course, groupTagEvents, categorieTagEvents }: Props) {
   const elementRef = useRef<HTMLDivElement>(null);
 
   function courseCss() {
@@ -120,11 +125,16 @@ export function CourseCompact({ course, groupTagEvents }: Props) {
         </div>
         <CourseCategories
           categories={course.categories}
-          onMouseOver={async () => {
-            elementRef.current?.classList.add("elevate-child");
+          onClick={async (categorie) => {
+            categorieTagEvents?.(categorie).onClick();
           }}
-          onMouseOut={async () => {
+          onMouseOver={async (categorie) => {
+            elementRef.current?.classList.add("elevate-child");
+            categorieTagEvents?.(categorie).onMouseOver();
+          }}
+          onMouseOut={async (categorie) => {
             elementRef.current?.classList.remove("elevate-child");
+            categorieTagEvents?.(categorie).onMouseOut();
           }}
         />
       </div>

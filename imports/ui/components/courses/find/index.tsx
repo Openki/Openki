@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
 
 import { Courses } from "/imports/api/courses/courses";
@@ -10,8 +10,6 @@ import { CourseTemplate } from "/imports/ui/lib/course-template";
 import * as RegionSelection from "/imports/utils/region-selection";
 import { FilterPreview } from "/imports/ui/lib/filter-preview";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
-import { ScssVars } from "/imports/ui/lib/scss-vars";
-import * as Viewport from "/imports/ui/lib/viewport";
 
 import {
   Filter,
@@ -19,14 +17,14 @@ import {
   type Props as FilterProps,
 } from "/imports/ui/components/courses/filter";
 
-import "./template.html";
-import "./styles.scss";
 import { useTranslation } from "react-i18next";
 import { SearchField } from "/imports/ui/components/search-field";
 import { CourseList } from "/imports/ui/components/courses/list";
 import { Edit } from "/imports/ui/components/courses/edit";
 import { useFindFilter } from "/imports/api/courses/publications";
 import { LoadingPage } from "/imports/ui/pages/loading";
+
+import "./styles.scss";
 
 const hiddenFilters = ["needsRole", "categories"];
 const filters = hiddenFilters.concat(["state"]);
@@ -212,13 +210,10 @@ export function Find(query: { [key: string]: string }) {
     relevantFilters.push("region");
     return relevantFilters.some((f) => !!filter.get(f as any));
   }
-  function isMobile() {
-    return Viewport.get().width <= ScssVars.screenXS;
-  }
   function groupTagEvents() {
     return (groupId: string) => {
       return {
-        onMouseOver:async () => {
+        onMouseOver: async () => {
           FilterPreview({
             property: "group",
             id: groupId,
@@ -226,7 +221,7 @@ export function Find(query: { [key: string]: string }) {
             delayed: true,
           });
         },
-        onMouseOut:async () => {
+        onMouseOut: async () => {
           FilterPreview({
             property: "group",
             id: groupId,
@@ -234,7 +229,7 @@ export function Find(query: { [key: string]: string }) {
             delayed: true,
           });
         },
-        onClick: async() => {
+        onClick: async () => {
           Tooltips.hide();
           window.scrollTo(0, 0);
         },
@@ -242,7 +237,46 @@ export function Find(query: { [key: string]: string }) {
     };
   }
 
-  // Read URL state
+  function categorieTagEvents() {
+    return (category: string) => {
+      return {
+        onMouseOver: async () => {
+          FilterPreview({
+            property: "category",
+            id: category,
+            activate: true,
+            delayed: true,
+          });
+        },
+        onMouseOut: async () => {
+          FilterPreview({
+            property: "category",
+            id: category,
+            activate: false,
+            delayed: true,
+          });
+        },
+        onClick: async () => {
+          Tooltips.hide();
+          filter.add("categories", category).done();
+          updateUrl();
+          window.scrollTo(0, 0);
+        },
+      };
+    };
+  }
+
+  function handleToggleFilter() {
+    setShowingFilters(!showingFilters);
+
+    if (!showingFilters) {
+      filters.forEach((f) => filter.disable(f as any));
+      filter.done();
+      updateUrl();
+    }
+  }
+
+  // // Read URL state
   useEffect(() => {
     filter.clear().read(query).done();
 
@@ -254,7 +288,7 @@ export function Find(query: { [key: string]: string }) {
     } else {
       setCourseLimit(courseBlockSize);
     }
-  }, [filter, query]);
+  }, [query]);
 
   // When there are filters set, show the filtering pane
   useEffect(() => {
@@ -285,10 +319,21 @@ export function Find(query: { [key: string]: string }) {
       <div className="page-component">
         {hasResults() ? (
           <>
-            <CourseList courses={results()} groupTagEvents={groupTagEvents()} />
+            <CourseList
+              courses={results()}
+              groupTagEvents={groupTagEvents()}
+              categorieTagEvents={categorieTagEvents()}
+            />
             {hasMore() ? (
               <div className="text-center mt-3">
-                <button type="button" className="btn btn-success js-more-courses">
+                <button
+                  type="button"
+                  className="btn btn-success"
+                  onClick={() => {
+                    setCourseLimit(courseLimit + courseBlockSize);
+                    updateUrl();
+                  }}
+                >
                   {t("_button.more")}
                 </button>
               </div>
@@ -304,14 +349,20 @@ export function Find(query: { [key: string]: string }) {
               {searchIsLimited() ? (
                 <div className="btn-group">
                   {filteredRegion() ? (
-                    <button type="button" className="btn btn-secondary js-all-regions-btn">
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={() => {
+                        RegionSelection.change("all");
+                      }}
+                    >
                       <span className="fa-solid fa-location-dot" aria-hidden="true"></span>
                       {t("find.searchAllRegions", "Search in all regions")}
                     </button>
                   ) : null}
 
                   {activeFilters() ? (
-                    <button type="button" className="btn btn-cancel js-toggle-filter">
+                    <button type="button" className="btn btn-cancel" onClick={handleToggleFilter}>
                       {t("find.hideFilters")}
                     </button>
                   ) : null}
@@ -330,52 +381,8 @@ export function Find(query: { [key: string]: string }) {
   );
 }
 
-// const template = Template.find;
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
 
-// template.events({
-//   "mouseover .js-category-label"(event, instance) {
-//     FilterPreview({
-//       property: "category",
-//       id: event.target.dataset.category as string,
-//       activate: true,
-//       delayed: true,
-//     });
-//   },
-
-//   "mouseout .js-category-label"(event, instance) {
-//     FilterPreview({
-//       property: "category",
-//       id: event.target.dataset.category as string,
-//       activate: false,
-//       delayed: true,
-//     });
-//   },
-
-//   "click .js-category-label"(_event, instance) {
-//     Tooltips.hide();
-//     instance.filter.add("categories", `${this}`).done();
-//     instance.updateUrl();
-//     window.scrollTo(0, 0);
-//   },
-
-//   "click .js-toggle-filter"(_event, instance) {
-//     const showingFilters = !instance.showingFilters.get();
-//     instance.showingFilters.set(showingFilters);
-
-//     if (!showingFilters) {
-//       filters.forEach((filter) => instance.filter.disable(filter as any));
-//       instance.filter.done();
-//       instance.updateUrl();
-//     }
-//   },
-
-//   "click .js-all-regions-btn"() {
-//     RegionSelection.change("all");
-//   },
-
-//   "click .js-more-courses"(_event, instance) {
-//     const { courseLimit } = instance;
-//     courseLimit.set(courseLimit.get() + instance.courseBlockSize);
-//     instance.updateUrl();
-//   },
-// });
+Template.registerHelper("Find", () => Find);
