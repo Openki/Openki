@@ -23,6 +23,7 @@ import { Edit } from "../../components/courses/edit";
 import { Dashboard, Props as DashboardProps } from "../../components/dashboard";
 import { ButtonCancel, ButtonSave } from "/imports/ui/components/buttons";
 import { GroupSettings } from "/imports/ui/components/groups/settings";
+import { Find } from "../../components/courses/find";
 
 import "./styles.scss";
 
@@ -319,11 +320,14 @@ export function GroupDetailsPage(data: Data) {
           ) : null}
           {allowEditingSettings() ? <GroupSettings group={data.group} /> : null}
         </div>
-        {/* {{#unless PublicSettings.feature.groupDashboard}}
-      {{#if showCourses}}
-        {{> find courseQuery}}
-      {{/if}}
-    {{/unless}} */}
+        {!dashboardAttr().list && data.showCourses ? (
+          <>
+            <Dashboard {...dashboardAttr()} />
+            <div className="container mw-md">
+              <Find {...data.courseQuery} />
+            </div>
+          </>
+        ) : null}
       </div>
       {dashboardAttr().list && data.showCourses ? (
         <>
