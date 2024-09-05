@@ -1,3 +1,4 @@
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
 import { ReactiveVar } from "meteor/reactive-var";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
@@ -26,6 +27,72 @@ import "./styles.scss";
 
 const hiddenFilters = ["needsRole", "categories"];
 const filters = hiddenFilters.concat(["state"]);
+
+
+export function Find(){
+
+  return <> <div class="page-component row {{#if showingFilters}}filter-expanded{{/if}}">
+  <div class="col-12">
+    <h1 class="find-heading">
+      {{i18n 'find.WhatLearn?' 'What do I want to learn?'}}
+    </h1>
+  </div>
+  <div class="col-12 {{#unless showingFilters}}col-md-6 col-lg-7{{/unless}}">
+    {{> searchField searchFieldAttr}}
+  </div>
+  <div class="col-12 {{#if showingFilters}}mb-3{{else}}col-md-6 col-lg-5{{/if}}">
+    {{> filter filterAttr}}
+  </div>
+</div>
+<div class="page-component">
+  {{#if hasResults}}
+    {{> courseList courses=results groupTagEvents=groupTagEvents}}
+
+    {{#unless Template.subscriptionsReady}}
+      {{> loadingPage}}
+    {{/unless}}
+
+    {{#if hasMore}}
+      <div class="text-center mt-3">
+        <button type="button" class="btn btn-success js-more-courses">
+          {{i18n '_button.more'}}
+        </button>
+      </div>
+    {{/if}}
+  {{else}}
+    {{#if Template.subscriptionsReady}}
+      <div class="no-results">
+        <div class="no-results-body">
+          <span class="fa-solid fa-circle-exclamation fa-fw" aria-hidden="true"></span>
+          {{i18n 'find.no-courses-found' 'No Courses found'}}
+        </div>
+        {{#if searchIsLimited}}
+          <div class="btn-group">
+            {{#if filteredRegion}}
+              <button type="button" class="btn btn-secondary js-all-regions-btn">
+                <span class="fa-solid fa-location-dot" aria-hidden="true"></span>
+                {{i18n 'find.searchAllRegions' 'Search in all regions'}}
+              </button>
+            {{/if}}
+            {{#if activeFilters}}
+              <button type="button" class="btn btn-cancel js-toggle-filter">
+                {{i18n 'find.hideFilters'}}
+              </button>
+            {{/if}}
+          </div>
+        {{/if}}
+      </div>
+    {{else}}
+      {{> loadingPage}}
+    {{/if}}
+  {{/if}}
+</div>
+<div class="page-component">
+  <div class="container mw-md">
+    {{> courseEdit newCourse}}
+  </div>
+</div></>
+}
 
 const Template = TemplateAny as TemplateStaticTyped<
   "find",
