@@ -3,6 +3,7 @@ import { Router } from "meteor/iron:router";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import { ReactiveDict } from "meteor/reactive-dict";
 import { Meteor } from "meteor/meteor";
+import { MeteorAsync, TrackerAsync } from "/imports/utils/promisify";
 
 import moment from "moment";
 
@@ -143,6 +144,31 @@ template.onCreated(function () {
 
     Router.go(Router.current().route.getName(), {}, options);
   };
+});
+
+template.onRendered(function () {
+  const instance = Template.instance();
+
+  // change of week does not trigger onRendered again
+  instance.autorun(async () => {
+    const { data } = instance;
+
+    instance.filter = Events.Filtering().read(data).done();
+
+    const date = instance.filter.get("after") || moment(reactiveNow.get());
+
+    // only do this in the current week
+    if (moment().format("w") === date?.format("w")) {
+      if (instance.subscriptionsReady()) {
+        await TrackerAsync.afterFlush();
+        await MeteorAsync.defer();
+        const elem = instance.$(".js-calendar-date").eq(moment().weekday());
+
+        // calendar nav and topnav are together 137px fixed height, we add 3px margin
+        document.querySelector(".frame")?.scrollTo(0, (elem.offset() || { top: 0 }).top - 3);
+      }
+    }
+  });
 });
 
 template.helpers({
