@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useCurrentRouteName, useParams } from "/imports/utils/react-meteor-router";
@@ -77,6 +78,7 @@ export function Find(query: { [key: string]: string | undefined }) {
       search: filter.get("search"),
       onChange: (newValue: string) => {
         filter.add("search", newValue).done();
+        updateUrl();
       },
       onFocusOut: () => {
         updateUrl();
@@ -300,10 +302,6 @@ export function Find(query: { [key: string]: string | undefined }) {
     });
   });
 
-  if (isLoading()) {
-    return <LoadingPage />;
-  }
-
   return (
     <>
       <div className={`page-component row ${showingFilters ? "filter-expanded" : ""}`}>
@@ -318,7 +316,9 @@ export function Find(query: { [key: string]: string | undefined }) {
         </div>
       </div>
       <div className="page-component">
-        {hasResults() ? (
+        {isLoading() ? (
+          <LoadingPage />
+        ) : hasResults() ? (
           <>
             <CourseList
               courses={results()}

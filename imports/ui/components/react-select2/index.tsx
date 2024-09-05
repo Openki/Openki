@@ -14,7 +14,7 @@ import "./styles.scss";
 export function ReactSelect2(props: {
   className?: string;
   multiple?: boolean;
-  defaultValue?: string | number | readonly string[] | undefined;
+  value?: string | number | readonly string[] | undefined;
   placeholder: string;
   noResults: string;
   children: any;
@@ -86,7 +86,7 @@ export function ReactSelect2(props: {
       ref={selectRef}
       className={props.className}
       multiple={props.multiple}
-      defaultValue={props.defaultValue}
+      value={props.value}
     >
       {props.children}
     </select>
