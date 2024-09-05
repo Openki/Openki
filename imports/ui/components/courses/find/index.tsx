@@ -30,7 +30,7 @@ import "./styles.scss";
 const hiddenFilters = ["needsRole", "categories"];
 const filters = hiddenFilters.concat(["state"]);
 
-export function Find(query: { [key: string]: string }) {
+export function Find(query: { [key: string]: string | undefined }) {
   const { t } = useTranslation();
   const [showingFilters, setShowingFilters] = useState(false);
   const courseBlockSize = 36;
