@@ -16,11 +16,13 @@ import "./styles.scss";
 
 export type Props = {
   course: CourseModel;
-  groupTagEvents?: (groupId: string) => {
-    onMouseOver: () => Promise<void>;
-    onMouseOut: () => Promise<void>;
-    onClick: () => Promise<void>;
-  };
+  groupTagEvents?:
+    | ((groupId: string) => {
+        onMouseOver: () => Promise<void>;
+        onMouseOut: () => Promise<void>;
+        onClick: () => Promise<void>;
+      })
+    | undefined;
 };
 
 export function CourseCompact({ course, groupTagEvents }: Props) {
