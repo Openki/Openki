@@ -5,7 +5,7 @@ import { CourseModel } from "/imports/api/courses/courses";
 
 export type Props = {
   courses: CourseModel[];
-  groupTagEvents: (groupId: string) => {
+  groupTagEvents?: (groupId: string) => {
     onMouseOver: () => Promise<void>;
     onMouseOut: () => Promise<void>;
     onClick: () => Promise<void>;

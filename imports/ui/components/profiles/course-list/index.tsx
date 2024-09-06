@@ -1,164 +1,152 @@
-import { Mongo } from "meteor/mongo";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React from "react";
 import { _ } from "meteor/underscore";
+import { useTranslation } from "react-i18next";
 
-import { CourseEntity, CourseModel, Courses } from "/imports/api/courses/courses";
 import { RoleEntity, Roles } from "/imports/api/roles/roles";
 import { UserModel } from "/imports/api/users/users";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 
-import "/imports/ui/components/courses/list";
+import { useFindFilter } from "/imports/api/courses/publications";
+import { LoadingPage } from "/imports/ui/pages/loading";
+import { CourseList } from "/imports/ui/components/courses/list";
 
 import "./styles.scss";
 
-export function CourseList() {
-  return <div class="page-component page-component-seperated profile-courselist">
-  {{#if isInvolved}}
-    <h3 class="badge-title">
-      {{#if ownProfile}}
-        {{i18n 'users.courselist.myCourses' 'I am involved in the following courses'}}
-      {{else}}
-        {{i18n 'users.courselist.userCourses' '{NAME} is involved in the following courses' NAME=getName}}
-      {{/if}}
-    </h3>
-    {{#if Template.subscriptionsReady}}
-      <div>
-        {{#each role in roles}}
-          {{#if coursesByRoleCount role.type false}}
-            <a class="badge role-label js-scroll" href="#{{role.type}}">
-              <span class="{{role.icon}} fa-fw" aria-hidden="true"></span>
-              {{roleShort role.type}}
-              <span class="fa-solid fa-arrow-down fa-fw" aria-hidden="true"></span>
-              {{coursesByRoleCount role.type}}
-            </a>
-          {{/if}}
-        {{/each}}
-      </div>
-      {{#each role in roles}}
-        {{#if coursesByRoleCount role.type false}}
-          <h3 id="{{role.type}}">
-            <div class="badge">
-              <span class="{{role.icon}} fa-fw" aria-hidden="true"></span>
-            </div>
-            {{#if ownProfile}}
-              {{i18n (roleMyList role.type)}}
-            {{else}}
-              {{i18n (roleUserList role.type) NAME=user.getDisplayName}}
-            {{/if}}
-          </h3>
-          {{> courseList courses=(coursesByRole role.type false) small=true}}
-        {{/if}}
-      {{/each}}
-      {{#each role in roles}}
-        {{#if showArchived role}}
-          {{#if coursesByRoleCount role.type true}}
-            <h3 id="{{role.type}}_archived">
-              <div class="badge is-archived">
-                <span class="{{role.icon}} fa-fw" aria-hidden="true"></span>
-              </div>
-              {{#if ownProfile}}
-                {{i18n (roleMyListPast role.type)}}
-              {{else}}
-                {{i18n (roleUserListPast role.type) NAME=user.getDisplayName}}
-              {{/if}}
-            </h3>
-            {{> courseList courses=(coursesByRole role.type true) small=true}}
-          {{/if}}
-        {{/if}}
-      {{/each}}
-    {{else}}
-      {{> loadingPage}}
-    {{/if}}
-  {{/if}}
-</div>
-}
+export function UsersCourselist(data: { user: UserModel; ownProfile: boolean }) {
+  const { t } = useTranslation();
+  const id = data.user._id;
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "usersCourselist",
-  {
-    user: UserModel;
-    ownProfile: boolean;
-  },
-  {
-    coursesByRole: (role: string, archived: boolean) => Mongo.Cursor<CourseEntity, CourseModel>;
-  }
->;
-
-const template = Template.usersCourselist;
-
-template.onCreated(function () {
-  const instance = this;
-  const id = instance.data.user._id;
-
-  instance.subscribe("Courses.findFilter", {
+  const [isLoadingCourses, courses] = useFindFilter({
     userInvolved: id,
     archived: false,
   });
-  instance.subscribe("Courses.findFilter", {
+
+  const [isLoadingArchivedCourses, archivedCourses] = useFindFilter({
     userInvolved: id,
     archived: true,
   });
 
-  instance.coursesByRole = (role: string, archived: boolean) =>
-    Courses.find({
-      members: {
-        $elemMatch: {
-          user: id,
-          roles: role,
-        },
-      },
-      archived: archived ? { $eq: true } : { $ne: true },
-    });
-});
-
-Template.usersCourselist.helpers({
-  roles() {
-    return _.clone(Roles).reverse();
-  },
-
-  coursesByRoleCount(role: string, archived: boolean) {
-    return Template.instance().coursesByRole(role, archived).count();
-  },
-
-  coursesByRole(role: string, archived: boolean) {
-    return Template.instance().coursesByRole(role, archived);
-  },
-
-  roleUserList(role: string) {
-    return `roles.${role}.userList`;
-  },
-
-  roleUserListPast(role: string) {
-    return `roles.${role}.userList.past`;
-  },
-
-  roleMyList(role: string) {
-    return `roles.${role}.myList`;
-  },
-
-  roleMyListPast(role: string) {
-    return `roles.${role}.myList.past`;
-  },
-
-  isInvolved() {
-    const userId = Template.currentData().user._id;
-    return (
-      Courses.findFilter({ userInvolved: userId, archived: false }, 1).count() > 0 ||
-      Courses.findFilter({ userInvolved: userId, archived: true }, 1).count() > 0
+  function coursesByRole(role: string, archived: boolean) {
+    return (!archived ? courses : archivedCourses).filter((c) =>
+      c.members.find((m) => m.user === id && m.roles.includes(role)),
     );
-  },
-  showArchived(role: RoleEntity) {
+  }
+  function roles() {
+    return _.clone(Roles).reverse();
+  }
+  function coursesByRoleCount(role: string, archived: boolean) {
+    return coursesByRole(role, archived).length;
+  }
+  function roleShort(type: string) {
+    return `roles.${type}.short`;
+  }
+  function roleUserList(role: string) {
+    return `roles.${role}.userList`;
+  }
+  function roleUserListPast(role: string) {
+    return `roles.${role}.userList.past`;
+  }
+  function roleMyList(role: string) {
+    return `roles.${role}.myList`;
+  }
+  function roleMyListPast(role: string) {
+    return `roles.${role}.myList.past`;
+  }
+  function isInvolved() {
+    return courses.length > 0 || archivedCourses.length > 0;
+  }
+  function showArchived(role: RoleEntity) {
     return role.type === "team";
-  },
-});
+  }
 
-Template.usersCourselist.events({
-  "click .js-scroll"(event) {
-    const roleLabel = event.currentTarget;
-    const rolePosition = $(roleLabel.getAttribute("href") || "").offset()?.top || 0;
-    // subtract the amount of pixels of the height of the navbar
-    $("html, body").animate({ scrollTop: rolePosition - ScssVars.navbarHeight });
-    event.preventDefault();
-  },
-});
+  return (
+    <div className="page-component page-component-seperated profile-courselist">
+      {isInvolved() ? (
+        <>
+          <h3 className="badge-title">
+            {data.ownProfile
+              ? t("users.courselist.myCourses", "I am involved in the following courses")
+              : t("users.courselist.userCourses", "{NAME} is involved in the following courses", {
+                  NAME: data.user.getDisplayName(),
+                })}
+          </h3>
+          {!isLoadingCourses() && !isLoadingArchivedCourses() ? (
+            <>
+              <div>
+                {roles()
+                  .filter((role) => coursesByRoleCount(role.type, false))
+                  .map((role) => (
+                    <React.Fragment key={role.type}>
+                      <a
+                        className="badge role-label"
+                        href={`#${role.type}`}
+                        onClick={(event) => {
+                          event.preventDefault();
+                          const roleLabel = event.currentTarget;
+                          const rolePosition =
+                            $(roleLabel.getAttribute("href") || "").offset()?.top || 0;
+                          // subtract the amount of pixels of the height of the navbar
+                          $("html, body").animate({
+                            scrollTop: rolePosition - ScssVars.navbarHeight,
+                          });
+                        }}
+                      >
+                        <span className={`${role.icon} fa-fw`} aria-hidden="true"></span>{" "}
+                        {t(roleShort(role.type))}
+                        <span className="fa-solid fa-arrow-down fa-fw" aria-hidden="true"></span>
+                        {coursesByRoleCount(role.type, false)}
+                      </a>{" "}
+                    </React.Fragment>
+                  ))}
+              </div>
+              {roles()
+                .filter((role) => coursesByRoleCount(role.type, false))
+                .map((role) => (
+                  <>
+                    <h3 id={role.type}>
+                      <div className="badge">
+                        <span className={`${role.icon} fa-fw`} aria-hidden="true"></span>
+                      </div>{" "}
+                      {data.ownProfile
+                        ? t(roleMyList(role.type))
+                        : t(roleUserList(role.type), undefined, {
+                            NAME: data.user.getDisplayName(),
+                          })}
+                    </h3>
+                    <CourseList courses={coursesByRole(role.type, false)} small={true} />
+                  </>
+                ))}
+
+              {roles()
+                .filter((role) => coursesByRoleCount(role.type, true) && showArchived(role))
+                .map((role) => (
+                  <>
+                    <h3 id={`${role.type}_archived`}>
+                      <div className="badge is-archived">
+                        <span className={`${role.icon} fa-fw`} aria-hidden="true"></span>
+                      </div>{" "}
+                      {data.ownProfile
+                        ? t(roleMyListPast(role.type))
+                        : t(roleUserListPast(role.type), undefined, {
+                            NAME: data.user.getDisplayName(),
+                          })}
+                    </h3>
+                    <CourseList courses={coursesByRole(role.type, true)} small={true} />
+                  </>
+                ))}
+            </>
+          ) : (
+            <LoadingPage />
+          )}
+        </>
+      ) : null}
+    </div>
+  );
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("UsersCourselist", () => UsersCourselist);
