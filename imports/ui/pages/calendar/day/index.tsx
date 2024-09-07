@@ -1,64 +1,73 @@
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+/* eslint-disable no-nested-ternary */
+import React from "react";
 import moment from "moment";
+import { useUserId } from "/imports/utils/react-meteor-data";
+import { useTranslation } from "react-i18next";
+import { useFindFilter } from "/imports/api/events/publications";
+import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
-import { EventModel, Events, FindFilter } from "/imports/api/events/events";
-import "/imports/ui/components/calendar-nav/multi";
-import "/imports/ui/components/events/list";
+import { Events, FindFilter } from "/imports/api/events/events";
+
+import { EventList } from "/imports/ui/components/events/list";
 
 import "./styles.scss";
 
-export function Day(){
-  return <> 
-   <div class="js-calendar-date calendar-date">
-  {{calendarDayFormat day.start}}
-</div>
-{{#if hasEvents}}
-  <div class="calendar-event-list">
-    {{> eventList dataEvents=(maybeFilteredEvents events isAttendeeFilterOn=isAttendeeFilterOn) withDate=false withImage=true}}
-    {{! maybeFilteredEvents is a template helper that gives back a list of events in function of two arguments: events and isAttendeeFilterOn }}
-  </div>
-{{else}}
-  <br>
-  {{i18n 'calendar.noCoursesThisDay' "There are no events on this day"}}
-{{/if}}
-</>
+export function Day(data: {
+  day: {
+    start: moment.Moment;
+    end: moment.Moment;
+  };
+  filter: ReturnType<(typeof Events)["Filtering"]>;
+  isAttendeeFilterOn: boolean;
+}) {
+  const { t } = useTranslation();
+  const userId = useUserId();
+  const { calendarDayFormat } = useDateTimeFormat();
+
+  const filterQuery: FindFilter = data.filter.toQuery();
+  filterQuery.period = [data.day.start.toDate(), data.day.end.toDate()];
+  const [isLoading, events] = useFindFilter(filterQuery);
+
+  function hasEvents() {
+    return events.length > 0;
+  }
+
+  function maybeFilteredEvents(filters: { hash: { isAttendeeFilterOn: boolean } }) {
+    let evs = [...events];
+    if (filters.hash.isAttendeeFilterOn && userId) {
+      evs = evs.filter((event) => event.attendedBy(userId));
+    }
+    return evs;
+  }
+
+  return (
+    <>
+      <div className="js-calendar-date calendar-date">{calendarDayFormat(data.day.start)}</div>
+      {!isLoading() ? (
+        hasEvents() ? (
+          <div className="calendar-event-list">
+            <EventList
+              dataEvents={maybeFilteredEvents({
+                hash: { isAttendeeFilterOn: data.isAttendeeFilterOn },
+              })}
+              withDate={false}
+              withImage={true}
+            />
+            {/* maybeFilteredEvents is a template helper that gives back a list of events in function of two arguments: events and isAttendeeFilterOn */}
+          </div>
+        ) : (
+          <>
+            <br />
+            {t("calendar.noCoursesThisDay", "There are no events on this day")}
+          </>
+        )
+      ) : null}
+    </>
+  );
 }
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "calendarDay",
-  {
-    day: {
-      start: moment.Moment;
-      end: moment.Moment;
-    };
-    filter: ReturnType<(typeof Events)["Filtering"]>;
-    isAttendeeFilterOn: boolean;
-  }
->;
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
 
-const template = Template.calendarDay;
-
-template.helpers({
-  hasEvents() {
-    const data = Template.instance().data;
-    const filterQuery: FindFilter = data.filter.toQuery();
-    filterQuery.period = [data.day.start.toDate(), data.day.end.toDate()];
-
-    return Events.findFilter(filterQuery, 1).count() > 0;
-  },
-  events() {
-    const data = Template.instance().data;
-    const filterQuery: FindFilter = data.filter.toQuery();
-    filterQuery.period = [data.day.start.toDate(), data.day.end.toDate()];
-
-    return Events.findFilter(filterQuery);
-  },
-  maybeFilteredEvents(events: EventModel[], filters: { hash: { isAttendeeFilterOn: boolean } }) {
-    let maybeFilteredEvents = [...events];
-    const userId = Meteor.userId();
-    if (filters.hash.isAttendeeFilterOn && userId) {
-      maybeFilteredEvents = maybeFilteredEvents.filter((event) => event.attendedBy(userId));
-    }
-    return maybeFilteredEvents;
-  },
-});
+Template.registerHelper("CalendarDay", () => Day);
