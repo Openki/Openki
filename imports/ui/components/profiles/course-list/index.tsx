@@ -1,5 +1,4 @@
 import React from "react";
-import { _ } from "meteor/underscore";
 import { useTranslation } from "react-i18next";
 
 import { RoleEntity, Roles } from "/imports/api/roles/roles";
@@ -33,7 +32,7 @@ export function UsersCourselist(data: { user: UserModel; ownProfile: boolean }) 
     );
   }
   function roles() {
-    return _.clone(Roles).reverse();
+    return Roles.slice().reverse();
   }
   function coursesByRoleCount(role: string, archived: boolean) {
     return coursesByRole(role, archived).length;
