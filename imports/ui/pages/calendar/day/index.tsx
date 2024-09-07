@@ -5,8 +5,24 @@ import { EventModel, Events, FindFilter } from "/imports/api/events/events";
 import "/imports/ui/components/calendar-nav/multi";
 import "/imports/ui/components/events/list";
 
-import "./template.html";
 import "./styles.scss";
+
+export function Day(){
+  return <> 
+   <div class="js-calendar-date calendar-date">
+  {{calendarDayFormat day.start}}
+</div>
+{{#if hasEvents}}
+  <div class="calendar-event-list">
+    {{> eventList dataEvents=(maybeFilteredEvents events isAttendeeFilterOn=isAttendeeFilterOn) withDate=false withImage=true}}
+    {{! maybeFilteredEvents is a template helper that gives back a list of events in function of two arguments: events and isAttendeeFilterOn }}
+  </div>
+{{else}}
+  <br>
+  {{i18n 'calendar.noCoursesThisDay' "There are no events on this day"}}
+{{/if}}
+</>
+}
 
 const Template = TemplateAny as TemplateStaticTyped<
   "calendarDay",
