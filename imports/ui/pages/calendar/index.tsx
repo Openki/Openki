@@ -1,136 +1,110 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
-import { ReactiveDict } from "meteor/reactive-dict";
-import { i18n } from "/imports/startup/both/i18next";
-import { Session } from "meteor/session";
+import { useTranslation } from "react-i18next";
+import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
 import { Events } from "/imports/api/events/events";
-import { Regions } from "/imports/api/regions/regions";
+import { useFindFilter } from "/imports/api/events/publications";
 
-import { MeteorAsync, TrackerAsync } from "/imports/utils/promisify";
 import * as Metatags from "/imports/utils/metatags";
 
-import "/imports/ui/components/calendar-nav/multi";
-import "/imports/ui/components/events/list";
-import "./day";
+import { LoadingPage } from "../loading";
+import { Day } from "./day";
+import { Multi } from "../../components/calendar-nav/multi";
 
 import "./styles.scss";
 
-export function CalendarPage( data:   Record<string, string>){
+export function CalendarPage(data: Record<string, string>) {
+  const { t } = useTranslation();
+  const [isAttendeeFilterOn, setIsAttendeeFilterOn] = useState(false);
 
-  function days() {
-    const start = Template.instance().filter.get("start");
-    const days = [];
-    for (let i = 0; i < 7; i += 1) {
-      days.push({
-        start: moment(start).add(i, "days"),
-        end: moment(start).add(i + 1, "days"),
-      });
-    }
-    return days;
-  }
-  function startDate() {
-    return moment(Template.instance().filter.get("start"));
-  }
-  function setterToBePassedToChild() {
-    // returns a function
-    return Template.instance().setIsAttendeeFilterOn;
-  }
-  function isAttendeeFilterOn() {
-    // returns a value of the state (true / false)
-    return Template.instance().state.get("isAttendeeFilterOn");
-  }
-
-  return   <>{{> calendarNavMulti date=startDate filter=filter setIsAttendeeFilterOn=setterToBePassedToChild}}
-  <div className="container calendar-container">
-    <div className="page-component">
-      {{#if Template.subscriptionsReady}}
-        {{#each day in days}}
-          {{> calendarDay day=day filter=instance.filter isAttendeeFilterOn=isAttendeeFilterOn}}
-          <hr>
-        {{/each}}
-      {{else}}
-        {{> loadingRow}}
-      {{/if}}
-    </div>
-
-  </div></>
-}
-
-const Template = TemplateAny as TemplateStaticTyped<
-  "calendarPage",
-  Record<string, string>,
-  {
-    filter: ReturnType<(typeof Events)["Filtering"]>;
-    state: ReactiveDict<{
-      isAttendeeFilterOn: boolean;
-    }>;
-    setIsAttendeeFilterOn: (state: boolean) => void;
-  }
->;
-
-const template = Template.calendarPage;
-
-template.onCreated(function () {
-  const instance = this;
-
-  instance.autorun(() => {
-    Metatags.setCommonTags(i18n("calendar.windowtitle", "Calendar"));
-  });
+  const region = useCurrentRegion();
 
   const filter = Events.Filtering();
-  instance.filter = filter;
-
-  instance.state = new ReactiveDict();
-  instance.state.setDefault({ isAttendeeFilterOn: false });
-  instance.setIsAttendeeFilterOn = (state: boolean) => {
-    this.state.set("isAttendeeFilterOn", state);
-  };
-
   // Read URL state
-  instance.autorun(() => {
-    const data = Template.currentData();
+  const date = region?.calendarStartDate || new Date();
+  filter.clear().add("start", moment(date).startOf("week").toISOString()).read(data);
+  // Show internal events only when a group or venue is specified
+  if (!data.group && !data.venue && data.internal === undefined) {
+    filter.add("internal", "0");
+  }
+  filter.add("region", region?._id || "all").done();
 
-    // Show internal events only when a group or venue is specified
-    if (!data.group && !data.venue && data.internal === undefined) {
-      data.internal = "0";
+  const filterQuery = filter.toQuery();
+
+  const startMoment = filter.get("start") as moment.Moment;
+  const after = startMoment.toDate();
+  const end = startMoment.add(1, "week").toDate();
+
+  filterQuery.after = after;
+  filterQuery.end = end;
+  const [isLoading, events] = useFindFilter(filterQuery);
+
+  function days() {
+    const start = filter.get("start");
+    const ds = [];
+    for (let i = 0; i < 7; i += 1) {
+      ds.push({
+        date: moment(start).add(i, "days"),
+        events: events.filter(
+          (e) =>
+            moment(e.start) > moment(start).add(i, "days") &&
+            moment(e.start) <= moment(start).add(i + 1, "days"),
+        ),
+      });
     }
 
-    const start = Regions.currentRegion()?.calendarStartDate || new Date();
-    filter
-      .clear()
-      .add("start", moment(start).startOf("week").toISOString())
-      .read(data)
-      .add("region", Session.get("region"))
-      .done();
+    return ds;
+  }
+  function startDate() {
+    return moment(filter.get("start"));
+  }
 
-    const filterQuery = filter.toQuery();
-
-    const startMoment = filter.get("start") as moment.Moment;
-    const after = startMoment.toDate();
-    const end = startMoment.add(1, "week").toDate();
-
-    filterQuery.after = after;
-    filterQuery.end = end;
-    instance.subscribe("Events.findFilter", filterQuery);
-  });
-});
-
-template.onRendered(function () {
-  const instance = Template.instance();
-  // change of week does not trigger onRendered again
-  instance.autorun(async () => {
+  useEffect(() => {
     // only do this in the current week
-    if (moment().format("w") === instance.filter.get("start")?.format("w")) {
-      if (instance.subscriptionsReady()) {
-        await TrackerAsync.afterFlush();
-        await MeteorAsync.defer();
-        const elem = instance.$(".js-calendar-date").eq(moment().weekday());
+    if (moment().format("w") === filter.get("start")?.format("w")) {
+      if (!isLoading()) {
+        const elem = $(".js-calendar-date").eq(moment().weekday());
 
         // calendar nav and topnav are together 137px fixed height, we add 3px margin
         window.scrollTo(0, (elem.offset() || { top: 0 }).top - 140);
       }
     }
   });
-});
 
+  useEffect(() => {
+    Metatags.setCommonTags(t("calendar.windowtitle", "Calendar"));
+  });
+
+  return (
+    <>
+      <Multi
+        date={startDate()}
+        filter={filter}
+        setIsAttendeeFilterOn={(newValue) => {
+          setIsAttendeeFilterOn(newValue);
+        }}
+      />
+      <div className="container calendar-container">
+        <div className="page-component">
+          {!isLoading() ? (
+            days().map((day) => (
+              <>
+                <Day day={day} filter={filter} isAttendeeFilterOn={isAttendeeFilterOn} />
+                <hr />
+              </>
+            ))
+          ) : (
+            <LoadingPage />
+          )}
+        </div>
+      </div>
+    </>
+  );
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("CalendarPage", () => CalendarPage);
