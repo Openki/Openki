@@ -12,10 +12,8 @@ import { EventList } from "/imports/ui/components/events/list";
 import "./styles.scss";
 
 export function Day(data: {
-  day: {
-    date: moment.Moment;
-    events: EventModel[];
-  };
+  date: moment.Moment;
+  events: EventModel[];
   filter: ReturnType<(typeof Events)["Filtering"]>;
   isAttendeeFilterOn: boolean;
 }) {
@@ -24,11 +22,11 @@ export function Day(data: {
   const { calendarDayFormat } = useDateTimeFormat();
 
   function hasEvents() {
-    return data.day.events.length > 0;
+    return data.events.length > 0;
   }
 
   function maybeFilteredEvents(filters: { hash: { isAttendeeFilterOn: boolean } }) {
-    let evs = [...data.day.events];
+    let evs = [...data.events];
     if (filters.hash.isAttendeeFilterOn && userId) {
       evs = evs.filter((event) => event.attendedBy(userId));
     }
@@ -37,7 +35,7 @@ export function Day(data: {
 
   return (
     <>
-      <div className="js-calendar-date calendar-date">{calendarDayFormat(data.day.date)}</div>
+      <div className="js-calendar-date calendar-date">{calendarDayFormat(data.date)}</div>
       {hasEvents() ? (
         <div className="calendar-event-list">
           <EventList
@@ -47,7 +45,6 @@ export function Day(data: {
             withDate={false}
             withImage={true}
           />
-          {/* maybeFilteredEvents is a template helper that gives back a list of events in function of two arguments: events and isAttendeeFilterOn */}
         </div>
       ) : (
         <>

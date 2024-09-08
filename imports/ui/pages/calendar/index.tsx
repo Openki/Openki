@@ -90,7 +90,12 @@ export function CalendarPage(data: Record<string, string>) {
           {!isLoading() ? (
             days().map((day) => (
               <>
-                <Day day={day} filter={filter} isAttendeeFilterOn={isAttendeeFilterOn} />
+                <Day
+                  date={day.date}
+                  events={day.events}
+                  filter={filter}
+                  isAttendeeFilterOn={isAttendeeFilterOn}
+                />
                 <hr />
               </>
             ))
