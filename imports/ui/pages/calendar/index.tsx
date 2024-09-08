@@ -1,4 +1,4 @@
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React from "react";
 import moment from "moment";
 import { ReactiveDict } from "meteor/reactive-dict";
 import { i18n } from "/imports/startup/both/i18next";
@@ -14,8 +14,48 @@ import "/imports/ui/components/calendar-nav/multi";
 import "/imports/ui/components/events/list";
 import "./day";
 
-import "./template.html";
 import "./styles.scss";
+
+export function CalendarPage( data:   Record<string, string>){
+
+  function days() {
+    const start = Template.instance().filter.get("start");
+    const days = [];
+    for (let i = 0; i < 7; i += 1) {
+      days.push({
+        start: moment(start).add(i, "days"),
+        end: moment(start).add(i + 1, "days"),
+      });
+    }
+    return days;
+  }
+  function startDate() {
+    return moment(Template.instance().filter.get("start"));
+  }
+  function setterToBePassedToChild() {
+    // returns a function
+    return Template.instance().setIsAttendeeFilterOn;
+  }
+  function isAttendeeFilterOn() {
+    // returns a value of the state (true / false)
+    return Template.instance().state.get("isAttendeeFilterOn");
+  }
+
+  return   <>{{> calendarNavMulti date=startDate filter=filter setIsAttendeeFilterOn=setterToBePassedToChild}}
+  <div className="container calendar-container">
+    <div className="page-component">
+      {{#if Template.subscriptionsReady}}
+        {{#each day in days}}
+          {{> calendarDay day=day filter=instance.filter isAttendeeFilterOn=isAttendeeFilterOn}}
+          <hr>
+        {{/each}}
+      {{else}}
+        {{> loadingRow}}
+      {{/if}}
+    </div>
+
+  </div></>
+}
 
 const Template = TemplateAny as TemplateStaticTyped<
   "calendarPage",
@@ -94,30 +134,3 @@ template.onRendered(function () {
   });
 });
 
-template.helpers({
-  days() {
-    const start = Template.instance().filter.get("start");
-    const days = [];
-    for (let i = 0; i < 7; i += 1) {
-      days.push({
-        start: moment(start).add(i, "days"),
-        end: moment(start).add(i + 1, "days"),
-      });
-    }
-    return days;
-  },
-  startDate() {
-    return moment(Template.instance().filter.get("start"));
-  },
-  setterToBePassedToChild() {
-    // returns a function
-    return Template.instance().setIsAttendeeFilterOn;
-  },
-  isAttendeeFilterOn() {
-    // returns a value of the state (true / false)
-    return Template.instance().state.get("isAttendeeFilterOn");
-  },
-  filter() {
-    return Template.instance().filter;
-  },
-});
