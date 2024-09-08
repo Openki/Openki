@@ -3,10 +3,9 @@ import React from "react";
 import moment from "moment";
 import { useUserId } from "/imports/utils/react-meteor-data";
 import { useTranslation } from "react-i18next";
-import { useFindFilter } from "/imports/api/events/publications";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
-import { Events, FindFilter } from "/imports/api/events/events";
+import { EventModel, Events } from "/imports/api/events/events";
 
 import { EventList } from "/imports/ui/components/events/list";
 
@@ -14,8 +13,8 @@ import "./styles.scss";
 
 export function Day(data: {
   day: {
-    start: moment.Moment;
-    end: moment.Moment;
+    date: moment.Moment;
+    events: EventModel[];
   };
   filter: ReturnType<(typeof Events)["Filtering"]>;
   isAttendeeFilterOn: boolean;
@@ -24,16 +23,12 @@ export function Day(data: {
   const userId = useUserId();
   const { calendarDayFormat } = useDateTimeFormat();
 
-  const filterQuery: FindFilter = data.filter.toQuery();
-  filterQuery.period = [data.day.start.toDate(), data.day.end.toDate()];
-  const [isLoading, events] = useFindFilter(filterQuery);
-
   function hasEvents() {
-    return events.length > 0;
+    return data.day.events.length > 0;
   }
 
   function maybeFilteredEvents(filters: { hash: { isAttendeeFilterOn: boolean } }) {
-    let evs = [...events];
+    let evs = [...data.day.events];
     if (filters.hash.isAttendeeFilterOn && userId) {
       evs = evs.filter((event) => event.attendedBy(userId));
     }
@@ -42,26 +37,24 @@ export function Day(data: {
 
   return (
     <>
-      <div className="js-calendar-date calendar-date">{calendarDayFormat(data.day.start)}</div>
-      {!isLoading() ? (
-        hasEvents() ? (
-          <div className="calendar-event-list">
-            <EventList
-              dataEvents={maybeFilteredEvents({
-                hash: { isAttendeeFilterOn: data.isAttendeeFilterOn },
-              })}
-              withDate={false}
-              withImage={true}
-            />
-            {/* maybeFilteredEvents is a template helper that gives back a list of events in function of two arguments: events and isAttendeeFilterOn */}
-          </div>
-        ) : (
-          <>
-            <br />
-            {t("calendar.noCoursesThisDay", "There are no events on this day")}
-          </>
-        )
-      ) : null}
+      <div className="js-calendar-date calendar-date">{calendarDayFormat(data.day.date)}</div>
+      {hasEvents() ? (
+        <div className="calendar-event-list">
+          <EventList
+            dataEvents={maybeFilteredEvents({
+              hash: { isAttendeeFilterOn: data.isAttendeeFilterOn },
+            })}
+            withDate={false}
+            withImage={true}
+          />
+          {/* maybeFilteredEvents is a template helper that gives back a list of events in function of two arguments: events and isAttendeeFilterOn */}
+        </div>
+      ) : (
+        <>
+          <br />
+          {t("calendar.noCoursesThisDay", "There are no events on this day")}
+        </>
+      )}
     </>
   );
 }
