@@ -1,89 +1,98 @@
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React from "react";
+import { useTranslation } from "react-i18next";
 
 import { VenueModel, Venues } from "/imports/api/venues/venues";
 
-import "/imports/ui/components/buttons";
-import "/imports/ui/components/richtext";
-import "/imports/ui/components/map";
-
 import "./styles.scss";
 
-export function AdditionalInfo(){
-  return  <div class="venue-edit-additional-info">
-  <div class="mb-3">
-    <label class="form-label">{{i18n 'venue.edit.shortName' 'Abbreviation'}}</label>
-    <div class="input-group">
-      <span class="input-group-text">
-        <span class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></span>
-      </span>
-      <input class="form-control js-short"
-             placeholder="{{i18n 'venue.edit.short.placeholder' 'short name' attr=true}} {{i18n '_inputField.optional' attr=true}}"
-             value="{{short}}">
-    </div>
-  </div>
-  <div class="row gap-3 mb-3">
-    <div class="col-md">
-      <label class="form-label">
-        {{i18n 'venue.edit.max_ppl' 'Max. People'}}
-      </label>
-      <input type="number" class="form-control js-maxPeople" size="4" value="{{maxPeople}}">
-    </div>
-    <div class="col-md">
-      <label class="form-label">
-        {{i18n 'venue.edit.max_workplace' 'Max. Workplaces'}}
-      </label>
-      <input type="number" class="form-control js-maxWorkplaces" size="4"
-             value="{{maxWorkplaces}}">
-    </div>
-  </div>
-  <div class="row gap-3 mb-3">
-    <div class="col-md">
-      <label class="form-label">{{i18n 'venue.edit.infra' 'Infrastructure'}}</label>
-      {{#each facility in facilityOptions}}
-        <div class="form-check">
-          <input {{facilitiesCheck facility}} id="venueEdit{{facility}}Check">
-          <label class="form-check-label" for="venueEdit{{facility}}Check">
-            {{i18n (facilitiesDisplay facility)}}
-          </label>
-        </div>
-      {{/each}}
-    </div>
-    <div class="col-md">
-      <label
-             class="form-label">{{i18n 'venue.edit.additionalEquipment' 'Additional equipment'}}</label>
-      <textarea class="form-control js-otherFacilities">{{otherFacilities}}</textarea>
-    </div>
-  </div>
-</div>
-}
+export function AdditionalInfo(data: VenueModel) {
+  const { t } = useTranslation();
 
-const Template = TemplateAny as TemplateStaticTyped<"venueEditAdditionalInfo", VenueModel>;
-
-const template = Template.venueEditAdditionalInfo;
-
-template.helpers({
-  facilityOptions() {
+  function facilityOptions() {
     return Venues.facilityOptions;
-  },
-  facilitiesCheck(name: string) {
-    const data = Template.currentData();
-
+  }
+  function facilitiesCheck(name: string) {
     const attrs: {
       class: string;
       type: string;
       value: string;
-      checked?: string;
+      checked?: boolean;
     } = {
       class: `form-check-input js-${name}`,
       type: "checkbox",
       value: "",
     };
     if (data.facilities[name]) {
-      attrs.checked = "checked";
+      attrs.checked = true;
     }
     return attrs;
-  },
-  facilitiesDisplay(name: string) {
+  }
+  function facilitiesDisplay(name: string) {
     return `venue.facility.${name}`;
-  },
-});
+  }
+
+  return (
+    <div className="venue-edit-additional-info">
+      <div className="mb-3">
+        <label className="form-label">{t("venue.edit.shortName", "Abbreviation")}</label>
+        <div className="input-group">
+          <span className="input-group-text">
+            <span className="fa-solid fa-hashtag fa-fw" aria-hidden="true"></span>
+          </span>
+          <input
+            className="form-control js-short"
+            placeholder={`${t("venue.edit.short.placeholder", "short name")} ${t(
+              "_inputField.optional",
+            )}`}
+            value={data.short}
+          />
+        </div>
+      </div>
+      <div className="row gap-3 mb-3">
+        <div className="col-md">
+          <label className="form-label">{t("venue.edit.max_ppl", "Max. People")}</label>
+          <input
+            type="number"
+            className="form-control js-maxPeople"
+            size={4}
+            value={data.maxPeople}
+          />
+        </div>
+        <div className="col-md">
+          <label className="form-label">{t("venue.edit.max_workplace", "Max. Workplaces")}</label>
+          <input
+            type="number"
+            className="form-control js-maxWorkplaces"
+            size={4}
+            value={data.maxWorkplaces}
+          />
+        </div>
+      </div>
+      <div className="row gap-3 mb-3">
+        <div className="col-md">
+          <label className="form-label">{t("venue.edit.infra", "Infrastructure")}</label>
+          {facilityOptions().map((facility) => (
+            <div className="form-check" key={facility}>
+              <input {...facilitiesCheck(facility)} id={`venueEdit${facility}Check`} />
+              <label className="form-check-label" htmlFor={`venueEdit${facility}Check`}>
+                {t(facilitiesDisplay(facility))}
+              </label>
+            </div>
+          ))}
+        </div>
+        <div className="col-md">
+          <label className="form-label">
+            {t("venue.edit.additionalEquipment", "Additional equipment")}
+          </label>
+          <textarea className="form-control js-otherFacilities">{data.otherFacilities}</textarea>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("VenueEditAdditionalInfo", () => AdditionalInfo);
