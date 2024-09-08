@@ -1,16 +1,5 @@
 <template name="calendarPage">
-  {{> calendarNavMulti date=startDate filter=filter setIsAttendeeFilterOn=setterToBePassedToChild}}
-  <div class="container calendar-container">
-    <div class="page-component">
-      {{#if Template.subscriptionsReady}}
-        {{#each day in days}}
-          {{> calendarDay day=day filter=instance.filter isAttendeeFilterOn=isAttendeeFilterOn}}
-          <hr>
-        {{/each}}
-      {{else}}
-        {{> loadingRow}}
-      {{/if}}
-    </div>
-
+  <div>
+    {{> React (component CalendarPage)}}
   </div>
 </template>
