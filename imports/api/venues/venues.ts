@@ -14,6 +14,8 @@ import * as StringTools from "/imports/utils/string-tools";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { Type } from "/imports/utils/CustomChecks";
 
+export type FacilityOption = (typeof Venues.facilityOptions)[number];
+
 /** DB-Model */
 export interface VenueEntity {
   /** ID */
@@ -36,9 +38,9 @@ export interface VenueEntity {
   /** Int */
   maxWorkplaces: number;
   /** For keys see: Venues.facilityOptions */
-  facilities: {
-    [key: string]: boolean;
-  };
+  facilities: Partial<{
+    [key in FacilityOption]: boolean;
+  }>;
   otherFacilities?: string;
   createdby: string;
   created: Date;
@@ -92,7 +94,7 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
     "wifi",
     "kitchen",
     "wheelchairs",
-  ];
+  ] as const;
 
   constructor() {
     super("Venues", {

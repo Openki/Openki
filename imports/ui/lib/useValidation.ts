@@ -2,10 +2,10 @@ import { useState } from "react";
 
 export type Mapping = {
   [name: string]: {
-      onCheckValidity?: () => boolean;
-      text: () => string | React.JSX.Element | undefined | null;
-      field: string;
-    };
+    onCheckValidity?: () => boolean;
+    text: () => string | React.JSX.Element | undefined | null;
+    field: string;
+  };
 };
 
 export function useValidation(mapping: Mapping, initialCheck = false) {

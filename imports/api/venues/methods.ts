@@ -25,7 +25,7 @@ export const SaveFieldPattern = {
   short: Match.Optional(String),
   maxPeople: Match.Optional(Match.Integer),
   maxWorkplaces: Match.Optional(Match.Integer),
-  facilities: Match.Optional([String]),
+  facilities: Match.Optional([StringEnum(...Venues.facilityOptions)]),
   otherFacilities: Match.Optional(String),
 };
 export type SaveFields = Type<typeof SaveFieldPattern>;
