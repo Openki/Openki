@@ -23,12 +23,12 @@ export type Props = {
         onClick: () => Promise<void>;
       })
     | undefined;
-  categorieTagEvents?: (groupId: string) =>
-    | {
+  categorieTagEvents?:
+    | ((groupId: string) => {
         onMouseOver: () => Promise<void>;
         onMouseOut: () => Promise<void>;
         onClick: () => Promise<void>;
-      }
+      })
     | undefined;
 };
 

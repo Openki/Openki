@@ -3,8 +3,8 @@ import { Router } from "meteor/iron:router";
 import { truncate } from "/imports/utils/string-tools";
 import { textPlain } from "/imports/utils/html-tools";
 import { useTranslation } from "react-i18next";
-import { useValidation } from "../../lib/useValidation";
 import { useUser } from "meteor/react-meteor-accounts";
+import { useValidation } from "../../lib/useValidation";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import { GroupModel } from "/imports/api/groups/groups";

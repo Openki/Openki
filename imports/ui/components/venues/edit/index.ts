@@ -7,7 +7,7 @@ import { Session } from "meteor/session";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { Regions } from "/imports/api/regions/regions";
-import { VenueModel, Venues } from "/imports/api/venues/venues";
+import { FacilityOption, VenueModel } from "/imports/api/venues/venues";
 import * as VenuesMethods from "/imports/api/venues/methods";
 
 import { LocationTracker, MarkerEntity } from "/imports/ui/lib/location-tracker";
@@ -19,6 +19,7 @@ import "/imports/ui/components/buttons";
 import "/imports/ui/components/richtext";
 import "/imports/ui/components/map";
 import "./additional-info";
+import type { Data as AdditionalInfoData } from "./additional-info";
 
 import "./template.html";
 import "./styles.scss";
@@ -30,6 +31,11 @@ const Template = TemplateAny as TemplateStaticTyped<
     showAdditionalInfo: ReactiveVar<boolean>;
     isNew: boolean;
     locationTracker: LocationTracker;
+    short: ReactiveVar<string>;
+    maxPeople: ReactiveVar<number>;
+    maxWorkplaces: ReactiveVar<number>;
+    facilities: ReactiveVar<FacilityOption[]>;
+    otherFacilities: ReactiveVar<string | undefined>;
     selectedRegion: ReactiveVar<string | undefined | null>;
     regionSelectable: ReactiveVar<boolean>;
   }
@@ -43,10 +49,20 @@ template.onCreated(function () {
   instance.busy(false);
 
   instance.showAdditionalInfo = new ReactiveVar(false);
-  instance.isNew = !this.data._id;
+  instance.isNew = !instance.data._id;
 
   instance.locationTracker = new LocationTracker();
-  instance.locationTracker.setLocation(this.data, true);
+  instance.locationTracker.setLocation(instance.data, true);
+
+  instance.short = new ReactiveVar(instance.data.short);
+  instance.maxPeople = new ReactiveVar(instance.data.maxPeople);
+  instance.maxWorkplaces = new ReactiveVar(instance.data.maxWorkplaces);
+  instance.facilities = new ReactiveVar(
+    Object.entries(instance.data.facilities)
+      .filter((f) => f[1])
+      .map((f) => f[0] as FacilityOption),
+  );
+  instance.otherFacilities = new ReactiveVar(instance.data.otherFacilities);
 
   instance.selectedRegion = new ReactiveVar(undefined);
   instance.regionSelectable = new ReactiveVar(false);
@@ -111,6 +127,38 @@ template.helpers({
     return Template.instance().showAdditionalInfo.get();
   },
 
+  additionalInfoAttr(): AdditionalInfoData {
+    const instance = Template.instance();
+    const data: AdditionalInfoData["data"] = {
+      short: instance.short.get(),
+      maxPeople: instance.maxPeople.get(),
+      maxWorkplaces: instance.maxWorkplaces.get(),
+      facilities: instance.facilities.get(),
+    };
+    const otherFacilities = instance.otherFacilities.get();
+    if (otherFacilities) {
+      data.otherFacilities = otherFacilities;
+    }
+    return {
+      data,
+      onShortChange: (newValue) => {
+        instance.short.set(newValue);
+      },
+      onMaxPeopleChange: (newValue) => {
+        instance.maxPeople.set(newValue);
+      },
+      onMaxWorkplacesChange: (newValue) => {
+        instance.maxWorkplaces.set(newValue);
+      },
+      onFacilitiesChange: (newValue) => {
+        instance.facilities.set(newValue);
+      },
+      onOtherFacilitiesChange: (newValue) => {
+        instance.otherFacilities.set(newValue);
+      },
+    };
+  },
+
   showMapSelection() {
     const instance = Template.instance();
 
@@ -156,20 +204,14 @@ template.events({
       name: instance.$(".js-name").val() as string,
       address: instance.$(".js-address").val() as string,
       route: instance.$(".js-route").val() as string,
-      short: instance.$(".js-short").val() as string,
-      facilities: [],
-      otherFacilities: instance.$(".js-otherFacilities").val() as string,
+      short: instance.short.get(),
+      maxPeople: instance.maxPeople.get(),
+      maxWorkplaces: instance.maxWorkplaces.get(),
+      facilities: instance.facilities.get(),
     };
-
-    const maxPeople = Number.parseInt(instance.$(".js-maxPeople").val() as string, 10) || undefined; // give back undefined in case of NaN or 0
-    if (maxPeople && maxPeople > 0) {
-      changes.maxPeople = maxPeople;
-    }
-
-    const maxWorkplaces =
-      Number.parseInt(instance.$(".js-maxWorkplaces").val() as string, 10) || undefined; // give back undefined in case of NaN or 0
-    if (maxWorkplaces && maxWorkplaces > 0) {
-      changes.maxWorkplaces = maxWorkplaces;
+    const otherFacilities = instance.otherFacilities.get();
+    if (otherFacilities) {
+      changes.otherFacilities = otherFacilities;
     }
 
     if (!changes.name) {
@@ -186,12 +228,6 @@ template.events({
     }
 
     changes.description = $description.html();
-
-    Venues.facilityOptions.forEach((facility) => {
-      if (instance.$(`.js-${facility}`).prop("checked")) {
-        (changes.facilities as string[]).push(facility);
-      }
-    });
 
     if (instance.isNew) {
       const region = instance.selectedRegion.get();
