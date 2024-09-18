@@ -1,71 +1,24 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
-.map-box {
-  height: 200px;
-  width: 200px;
+.location-map .leaflet-attribution-flag {
+  display: none !important;
 }
 
-.map-box,
-.map-fullscreen {
-  .fa-regular,
-  .fa-brands,
-  .fa-solid {
-    font-size: 35px;
-  }
-}
-
-.map-fullscreen {
-  bottom: 0;
-  left: 0;
-  right: 0;
-  // position: fixed; Does not work on iOS check index.ts how it is fixed
-  top: 0;
-  z-index: $zindex-map;
-}
-
-.map-fullscreen .fa-map-marker {
-  font-size: 30px;
-}
-
-.map-fullscreen .fa-close {
-  font-size: 45px;
-}
-
-.map {
-  height: 100%;
-  width: 100%;
-}
-
-.leaflet-right .comp-icon {
-  margin-right: 18px;
-}
-
-.map .leaflet-marker-icon {
+.location-map .leaflet-marker-icon {
   background: none;
   border: 0;
   color: $blue;
-  text-shadow:
-    -5px -5px 10px #ffffffab,
-    5px -10px 10px #ffffffba,
-    5px 5px 10px #0009,
-    2px 3px 4px #000000bf;
   -webkit-text-stroke: 1px #0000003d;
-}
 
-.map .leaflet-marker-icon .fa-map-marker {
-  color: $black;
-
-  &:hover {
-    cursor: grabbing;
+  .fa-regular,
+  .fa-brands,
+  .fa-solid {
+    font-size: 36px;
   }
 }
 
-.leaflet-control-container .leaflet-right .leaflet-control:hover {
-  color: $primary;
-  cursor: pointer;
-}
-
-.leaflet-interactive:hover {
-  cursor: pointer;
-  fill: $yellow-dark;
+.location-map,
+.location-map > .leaflet-container {
+  height: 300px;
+  width: 100%;
 }

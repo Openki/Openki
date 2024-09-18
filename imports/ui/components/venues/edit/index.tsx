@@ -12,6 +12,7 @@ import { useFindFilter } from "/imports/api/regions/publications";
 
 import { LocationTracker, MarkerEntity } from "/imports/ui/lib/location-tracker";
 import * as Analytics from "/imports/ui/lib/analytics";
+import { Location } from "../../location";
 
 import { AdditionalInfo, type Data as AdditionalInfoData } from "./additional-info";
 import { Richtext } from "/imports/ui/components/richtext";
@@ -298,6 +299,7 @@ export function Edit({
                     'Please add location by clicking "+" (on the right inside the map)',
                   )}
                 </label>
+                <Location loc={data.loc} />
                 {/* <Map markers={venueMarkers()} allowPlacing={allowPlacing()} allowRemoving={allowRemoving()}}} */}
               </div>
             ) : null}
