@@ -40,6 +40,10 @@ export function Edit({
   const [isBusy, setIsBusy] = useState(false);
 
   const [changes, setChanges] = useState({
+    name: data.name,
+    description: data.description,
+    address: data.address,
+    route: data.route,
     short: data.short,
     maxPeople: data.maxPeople,
     maxWorkplaces: data.maxWorkplaces,
@@ -62,34 +66,19 @@ export function Edit({
     return {
       data: changes,
       onShortChange: (newValue) => {
-        setChanges((prevState) => ({
-          ...prevState,
-          short: newValue,
-        }));
+        setChanges((prevState) => ({ ...prevState, short: newValue }));
       },
       onMaxPeopleChange: (newValue) => {
-        setChanges((prevState) => ({
-          ...prevState,
-          maxPeople: newValue,
-        }));
+        setChanges((prevState) => ({ ...prevState, maxPeople: newValue }));
       },
       onMaxWorkplacesChange: (newValue) => {
-        setChanges((prevState) => ({
-          ...prevState,
-          maxWorkplaces: newValue,
-        }));
+        setChanges((prevState) => ({ ...prevState, maxWorkplaces: newValue }));
       },
       onFacilitiesChange: (newValue) => {
-        setChanges((prevState) => ({
-          ...prevState,
-          facilities: newValue,
-        }));
+        setChanges((prevState) => ({ ...prevState, facilities: newValue }));
       },
       onOtherFacilitiesChange: (newValue) => {
-        setChanges((prevState) => ({
-          ...prevState,
-          otherFacilities: newValue,
-        }));
+        setChanges((prevState) => ({ ...prevState, otherFacilities: newValue }));
       },
     };
   }
@@ -158,9 +147,9 @@ export function Edit({
 
   const handleSave = async () => {
     const changes1: VenuesMethods.SaveFields = {
-      name: $(".js-name").val() as string,
-      address: $(".js-address").val() as string,
-      route: $(".js-route").val() as string,
+      name: changes.name,
+      address: changes.address,
+      route: changes.route,
       short: changes.short,
       maxPeople: changes.maxPeople,
       maxWorkplaces: changes.maxWorkplaces,
@@ -251,18 +240,25 @@ export function Edit({
           <label className="form-label">{t("venue.edit.name", "Name")}</label>
           <input
             type="text"
-            className="js-name form-control form-control-lg"
+            className="form-control form-control-lg"
             placeholder={t("venue.edit.namePlaceholder", "Full name of venue")}
             size={60}
-            value={data.name}
+            value={changes.name}
+            onChange={(event) => {
+              const value = event.currentTarget.value;
+              setChanges((prevState) => ({ ...prevState, name: value }));
+            }}
           />
         </div>
         <div className="mb-3">
           <label className="form-label">{t("venue.edit.description", "Description")}</label>
           <Richtext
             className="js-description"
-            text={data.description}
+            text={changes.description}
             placeholder={t("venue.edit.description.placeholder", "Some words about this venue")}
+            onChange={(value) => {
+              setChanges((prevState) => ({ ...prevState, description: value }));
+            }}
           />
         </div>
         {showMapSelection() ? (
@@ -279,10 +275,8 @@ export function Edit({
                       name="region"
                       className="form-select"
                       onChange={(event) => {
-                        setChanges((prevState) => ({
-                          ...prevState,
-                          selectedRegion: event.currentTarget.value,
-                        }));
+                        const value = event.currentTarget.value;
+                        setChanges((prevState) => ({ ...prevState, selectedRegion: value }));
                       }}
                     >
                       <option value="">{t("venue.edit.pls_select", "Please select")}</option>
@@ -317,9 +311,13 @@ export function Edit({
               <span className="fa-solid fa-location-dot fa-fw" aria-hidden="true"></span>
             </span>
             <input
-              className="form-control js-address"
+              className="form-control"
               placeholder={t("venue.edit.address.placeholder", "Street, City, State")}
-              value={data.address}
+              value={changes.address}
+              onChange={(event) => {
+                const value = event.currentTarget.value;
+                setChanges((prevState) => ({ ...prevState, address: value }));
+              }}
             />
           </div>
         </div>
@@ -333,13 +331,17 @@ export function Edit({
               <span className="fa-solid fa-signs-post"></span>
             </span>
             <textarea
-              className="form-control js-route"
+              className="form-control"
               id="editform-address"
               placeholder={t(
                 "venue.route.placeholder",
                 "near busstop, cross fence, then backyard, enter the black door… 23rd floor, then left.",
               )}
-              value={data.route}
+              value={changes.route}
+              onChange={(event) => {
+                const value = event.currentTarget.value;
+                setChanges((prevState) => ({ ...prevState, route: value }));
+              }}
             ></textarea>
           </div>
         </div>
