@@ -1,7 +1,7 @@
 <template name="venueDetailsPage">
   <div class="container mw-md">
     {{#if state 'editing'}}
-      {{> venueEdit this.venue}}
+      {{> venueEdit venueEditAttr}}
     {{else}}
       <div class="page-component">
         <div class="details-header location-details-header">

@@ -223,6 +223,19 @@ template.helpers({
       },
     };
   },
+
+  venueEditAttr() {
+    const instance = Template.instance();
+    return {
+      data: instance.data.venue,
+      onSaved: () => {
+        instance.state.set("editing", false);
+      },
+      onCanceled: () => {
+        instance.state.set("editing", false);
+      },
+    };
+  },
 });
 
 template.events({

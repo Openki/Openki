@@ -7,11 +7,11 @@ import MediumEditor from "medium-editor";
 import "./styles.scss";
 
 export type Props = {
-  className?: string;
-  text?: string;
-  placeholder?: string;
-  maxlength?: number;
-  onChange?: (value: string) => void;
+  className?: string | undefined;
+  text?: string | undefined;
+  placeholder?: string | undefined;
+  maxlength?: number | undefined;
+  onChange?: ((value: string) => void) | undefined;
 };
 
 export function Richtext({ className, text, placeholder, maxlength, onChange }: Props) {
