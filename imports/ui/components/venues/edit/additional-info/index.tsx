@@ -7,10 +7,9 @@ import { SaveFields } from "/imports/api/venues/methods";
 import "./styles.scss";
 
 export type Data = {
-  data: Pick<
-    SaveFields,
-    "short" | "maxPeople" | "maxWorkplaces" | "facilities" | "otherFacilities"
-  >;
+  data: Pick<SaveFields, "short" | "maxPeople" | "maxWorkplaces" | "facilities"> & {
+    otherFacilities?: string | undefined;
+  };
   onShortChange: (newValue: string) => void;
   onMaxPeopleChange: (newValue: number) => void;
   onMaxWorkplacesChange: (newValue: number) => void;
