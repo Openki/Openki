@@ -15,7 +15,7 @@ import { Subscriber } from "/imports/utils/ServerPublishBlaze";
  */
 export const regionDependentRoutes = [
   "home",
-  "dashboard",
+  "search",
   "calendar",
   "venuesMap",
   "eventsMap",

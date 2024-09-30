@@ -66,9 +66,13 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
     sendReminderIsEditable: Boolean,
   },
   nav: {
+    /** target link when clicking on the logo Default: "/" */
     brandLink: String,
-    home: Boolean,
+    /** show/hide find/search item in navbar Default: true */
+    search: Boolean,
+    /** show/hide propose item in navbar Default: true */
     proposeCourse: Boolean,
+    /** show/hide calendar item in navbar Default: true */
     calendar: Boolean,
     customEntries: [
       {
@@ -194,7 +198,7 @@ const defaults = {
   },
   nav: {
     brandLink: "/",
-    home: true,
+    search: true,
     proposeCourse: true,
     calendar: true,
     customEntries: [] as { link: string; icon: string; key?: string; text?: string }[],

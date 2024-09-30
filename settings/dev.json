@@ -50,7 +50,7 @@
 		}
 	, "nav":
 		{ "brandLink": "/"
-		, "home": true
+		, "search": true
 		, "proposeCourse": true
 		, "calendar": true
 		, "customEntries": [ ]

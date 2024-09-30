@@ -53,7 +53,7 @@
 		}
 	, "nav":
 		{ "brandLink": "/" // target link when clicking on the logo Default: "/"
-		, "home": true // show/hide find/home item in navbar Default: true
+		, "search": true // show/hide find/search item in navbar Default: true
 		, "proposeCourse": true // show/hide propose item in navbar Default: true
 		, "calendar": true // show/hide calendar item in navbar Default: true
 		, "customEntries": [

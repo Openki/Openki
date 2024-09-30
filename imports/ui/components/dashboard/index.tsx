@@ -51,7 +51,7 @@ const mapping: {
       };
 } = {
   course: {
-    route: "home",
+    route: "search",
     filter: CourseCollection.Filtering,
     find: Courses.useFindFilter,
     element: (course: CourseModel) => (
