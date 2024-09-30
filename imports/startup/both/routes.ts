@@ -102,12 +102,12 @@ if (Meteor.isClient) {
 
 RouterAsync.route("home", {
   path: "/",
-  template: "findPage",
+  template: "dashboardPage",
   yieldRegions: {
     featuredGroup: { to: "aboveContent" },
   },
   async onRun() {
-    await import("/imports/ui/pages/find");
+    await import("/imports/ui/pages/dashboard");
   },
   data() {
     const { query } = this.params;
@@ -120,14 +120,14 @@ RouterAsync.route("home", {
   },
 });
 
-RouterAsync.route("dashboard", {
-  path: "dashboard",
-  template: "dashboardPage",
+RouterAsync.route("search", {
+  path: "search",
+  template: "findPage",
   yieldRegions: {
     featuredGroup: { to: "aboveContent" },
   },
   async onRun() {
-    await import("/imports/ui/pages/dashboard");
+    await import("/imports/ui/pages/find");
   },
   data() {
     const { query } = this.params;

@@ -36,7 +36,7 @@ function CategoryLabelLinked({
         onMouseOver={onMouseOver}
         onMouseOut={onMouseOut}
         onClick={onClick}
-        href={Router.url("home", {}, { query: { categories: category } })}
+        href={Router.url("search", {}, { query: { categories: category } })}
       >
         {t(`category.${category}`)}
       </a>
