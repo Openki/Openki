@@ -21,6 +21,7 @@ export interface Stat {
     canceled: number;
     fullyBooked: number;
     totalRsvps: number;
+    canceledRsvps: number;
     futureRsvps: number;
     users: number;
   };
@@ -100,6 +101,7 @@ function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
   const members = courses.flatMap((c) => c.members);
 
   const notCanceled = events.filter((e) => !e.canceled);
+  const canceled = events.filter((e) => e.canceled);
   const futureAndNotCanceled = notCanceled.filter((e) => e.start > now);
   return {
     // inspired from courses.findFilter in /imports/api/courses/courses
@@ -120,7 +122,8 @@ function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
       canceled: events.filter((e) => e.canceled).length,
       fullyBooked: events.filter((e) => e.isFullyBooked()).length,
       totalRsvps: sum(events.map((e) => e.numberOfParticipants())),
-      futureRsvps: sum(notCanceled.map((e) => e.numberOfParticipants())),
+      canceledRsvps: sum(canceled.map((e) => e.numberOfParticipants())),
+      futureRsvps: sum(futureAndNotCanceled.map((e) => e.numberOfParticipants())),
       users: unique(events.flatMap((e) => e.participants?.map((p) => p.user) || [])).length,
     },
   };
