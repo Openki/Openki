@@ -22,10 +22,10 @@ import { CenteredMarkerEntity, MainMarkerEntity } from "/imports/ui/lib/location
 
 import "/imports/ui/components/buttons";
 import "/imports/ui/components/events/list";
-import "/imports/ui/components/map";
 import "/imports/ui/components/profile-link";
 import "/imports/ui/components/venues/edit";
 import "/imports/ui/components/delete-confirm-dialog";
+import "/imports/ui/components/location/display";
 import type { Props as DeleteConfirmDialogProps } from "/imports/ui/components/delete-confirm-dialog";
 
 import "./template.html";
