@@ -1,7 +1,7 @@
 <template name="venueDetailsPage">
   <div class="container mw-md">
     {{#if state 'editing'}}
-      {{> venueEdit this.venue}}
+      {{> venueEdit venueEditAttr}}
     {{else}}
       <div class="page-component">
         <div class="details-header location-details-header">
@@ -91,7 +91,7 @@
               {{#if this.venue.loc}}
                 <div class="col-md-5">
                   <div class="details-map">
-                    {{> map markers=instance.markers}}
+                    {{> locationDisplay coordinates=this.venue.loc.coordinates}}
                     <div class="coordinates">
                       <a href="{{geoLocationLink this.venue.loc}}">
                         {{i18n 'venueDetails.coordinates' 'Coordinates:'}}

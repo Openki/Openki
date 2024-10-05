@@ -147,10 +147,10 @@ Router.route("api.0.xml", {
                   guid: uuidv5(event.id, OPENKI_UUID_NAMESPACE),
                 })
                 .ele("date")
-                .txt(moment(event.start).format("YYYY-MM-DDTHH:mm:ssZ"))
+                .txt(moment(event.startLocal).format("YYYY-MM-DDTHH:mm:ssZ"))
                 .up()
                 .ele("start")
-                .txt(moment(event.start).format("HH:mm"))
+                .txt(moment(event.startLocal).format("HH:mm"))
                 .up()
                 .ele("duration")
                 .txt(duration)
@@ -192,15 +192,34 @@ Router.route("api.0.xml", {
                 .ele("attachements")
                 .up();
 
-              const persons = eventNode.ele("persons");
-              // eslint-disable-next-line no-loop-func
-              event.groups.forEach((group: any) => {
-                persons
-                  .ele("person", {
-                    id: group.id,
-                  })
-                  .txt(group.name);
-              });
+              let hasPerson = false;
+              const fields = event.course.customFields;
+              if (typeof fields === `object`) {
+                const persons = eventNode.ele("persons");
+                fields.forEach((field: any) => {
+                  if (field.name === `speaker`) {
+                    hasPerson = true;
+                    persons
+                      .ele("person", {
+                        id: pseudoHash(field.value),
+                      })
+                      .txt(field.value);
+                  }
+                });
+              }
+
+              // If no custom field with speaker exists we use de group
+              if (!hasPerson) {
+                const persons = eventNode.ele("persons");
+                // eslint-disable-next-line no-loop-func
+                event.groups.forEach((group: any) => {
+                  persons
+                    .ele("person", {
+                      id: group.id,
+                    })
+                    .txt(group.name);
+                });
+              }
             },
           );
         }

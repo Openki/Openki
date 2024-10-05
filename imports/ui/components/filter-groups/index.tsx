@@ -40,7 +40,7 @@ export function FilterGroups({ availableGroups, selectedGroups, onAdd, onRemove 
     <ReactSelect2
       className="groups-select form-control"
       multiple={true}
-      defaultValue={selectedGroups}
+      value={selectedGroups}
       placeholder={t("filterGroups.placeholder", "Choose group")}
       noResults={t("filterGroups.no-groups-found", "No groups found")}
       onSelect={onAdd}

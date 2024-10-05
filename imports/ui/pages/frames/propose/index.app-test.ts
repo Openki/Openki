@@ -4,7 +4,12 @@ import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 
 import { MeteorAsync } from "/imports/utils/promisify";
-import { waitForSubscriptions, waitFor } from "/imports/ClientUtils.app-test";
+import {
+  waitForSubscriptions,
+  waitFor,
+  setInputValue,
+  setSelectValue,
+} from "/imports/ClientUtils.app-test";
 
 if (Meteor.isClient) {
   describe("Propose course via frame", function () {
@@ -23,9 +28,9 @@ if (Meteor.isClient) {
       await MeteorAsync.loginWithPassword("Seee", "greg");
 
       $("input[value=mentor]:first").trigger("click");
-      $(".js-title").val(randomTitle);
-      $(".js-select-region").val("9JyFCoKWkxnf8LWPh"); // Testistan
-      $(".js-course-edit-save:first").trigger("click");
+      setInputValue(".js-title", randomTitle);
+      setSelectValue("[name='region']", "9JyFCoKWkxnf8LWPh"); // Testistan
+      $(".course-edit-body .btn-save")[0].click();
 
       const link = await waitFor(() => {
         const alertLink = $(".alert a");
@@ -54,9 +59,9 @@ if (Meteor.isClient) {
       await waitFor(haveEditfield);
 
       $("input[value=mentor]:first").trigger("click");
-      $(".js-title").val(randomTitle);
-      $(".js-select-region").val("9JyFCoKWkxnf8LWPh"); // Testistan
-      $(".js-course-edit-save:first").trigger("click");
+      setInputValue(".js-title", randomTitle);
+      setSelectValue("[name='region']", "9JyFCoKWkxnf8LWPh"); // Testistan
+      $(".course-edit-body .btn-save")[0].click();
 
       const link = await waitFor(() => {
         const alertLink = $(".alert a");
@@ -86,9 +91,9 @@ if (Meteor.isClient) {
       await waitFor(haveEditfield);
       await MeteorAsync.loginWithPassword("Seee", "greg");
 
-      $(".js-title").val(randomTitle);
-      $(".js-select-region").val("9JyFCoKWkxnf8LWPh"); // Testistan
-      $(".js-course-edit-save:first").trigger("click");
+      setInputValue(".js-title", randomTitle);
+      setSelectValue("[name='region']", "9JyFCoKWkxnf8LWPh"); // Testistan
+      $(".course-edit-body .btn-save")[0].click();
 
       const link = await waitFor(() => {
         const alertLink = $(".alert a");
@@ -125,9 +130,9 @@ if (Meteor.isClient) {
 
       assert($(".form-check .category-tag").length === 0, "Param hides categories.");
 
-      $(".js-title").val(randomTitle);
-      $(".js-select-region").val("9JyFCoKWkxnf8LWPh"); // Testistan
-      $(".js-course-edit-save:first").trigger("click");
+      setInputValue(".js-title", randomTitle);
+      setSelectValue("[name='region']", "9JyFCoKWkxnf8LWPh"); // Testistan
+      $(".course-edit-body .btn-save")[0].click();
 
       await waitFor(() => {
         assert(

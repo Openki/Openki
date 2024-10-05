@@ -50,11 +50,10 @@
 		, "visitorUser": true // allow user without name and password, Default: false
 		, "rsvpWithCompanions": true // allow rsvp with +1 / for two seats, Default: false
 		, "sendReminderIsEditable": true // allow to edit whether to remind or not, Default: true
-		, "groupDashboard": true // replace find with dashboard in group details, Default: false
 		}
 	, "nav":
 		{ "brandLink": "/" // target link when clicking on the logo Default: "/"
-		, "home": true // show/hide find/home item in navbar Default: true
+		, "search": true // show/hide find/search item in navbar Default: true
 		, "proposeCourse": true // show/hide propose item in navbar Default: true
 		, "calendar": true // show/hide calendar item in navbar Default: true
 		, "customEntries": [
@@ -65,6 +64,26 @@
 				}
 			]
 		}
+  , "regionDashboardDefault": // Standard for all regions, can be overwritten if the "dashboard" property is set in the region, if not set, the ‘find’ page is displayed, default: undefined
+    [	{ "entity": "" // The entity to show: "course", "event", "group", "eventsMap" are supported
+      , "title": "" // Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+      , "query": "" // Query how the data should be filtered and sorted, all options and filters can be found in the wiki, can be an empty string "". The entities are filtered by region.
+      , "showAll": // Overwrite the standard showAll button (Optional)
+        { "link": "" // The target to which the button links.
+        , "text": "" // The text to display. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+        }
+      }
+    ]
+  , "groupDashboardDefault": // Standard for all groups, can be overwritten if the "dashboard" property is set in the group, if not set, the ‘find’ page is displayed, default: undefined
+    [	{ "entity": "" // The entity to show: "course", "event", "group", "eventsMap" are supported
+      , "title": "" // Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+      , "query": "" // Query how the data should be filtered and sorted, all options and filters can be found in the wiki, can be an empty string "". The entities are filtered by region and group.
+      , "showAll": // Overwrite the standard showAll button (Optional)
+        { "link": "" // The target to which the button links.
+        , "text": "" // The text to display. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+        }
+      }
+    ]
 	, "footerLinks":
 		[	{ "link": "https://about.openki.net/"
 			, "key": "footer.aboutOpenki" // text from the entry. The value is a translation key from i18next it must be defined in code

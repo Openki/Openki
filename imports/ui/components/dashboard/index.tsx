@@ -12,6 +12,7 @@ import * as Groups from "/imports/api/groups/publications";
 import { Filtering } from "/imports/utils/filtering";
 import { SortSpec } from "/imports/utils/sort-spec";
 import { Publication } from "/imports/utils/ServerPublishReact";
+import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
 import { CourseCompact } from "../../components/courses/compact";
 import { EventCompact } from "../../components/events/compact";
@@ -36,19 +37,21 @@ const mapping: {
   [name: string]:
     | {
         route: string;
+        showAll?: { text?: string };
         filter: () => Filtering<any>;
         find: Publication<any, any>;
         element: (entity: any) => React.JSX.Element;
       }
     | {
         route: string;
+        showAll?: { text?: string };
         filter: () => Filtering<any>;
         find: Publication<any, any>;
         component: (entitys: any) => React.JSX.Element;
       };
 } = {
   course: {
-    route: "home",
+    route: "search",
     filter: CourseCollection.Filtering,
     find: Courses.useFindFilter,
     element: (course: CourseModel) => (
@@ -63,6 +66,7 @@ const mapping: {
   },
   event: {
     route: "calendar",
+    showAll: { text: "dashboard.calendar.showAll" },
     filter: EventCollection.Filtering,
     find: Events.useFindFilter,
     element: (event: EventModel) => (
@@ -95,6 +99,7 @@ const mapping: {
   },
   eventsMap: {
     route: "eventsMap",
+    showAll: { text: "dashboard.eventsMap.showAll" },
     filter: EventCollection.Filtering,
     find: Events.useFindFilter,
     component: (all: any) => (
@@ -110,18 +115,28 @@ export type Props = {
     entity: string;
     title: string;
     query: string;
-    showAll?: string;
+    showAll?: { link?: string; text?: string };
   }[];
+  region?: string;
+  group?: string;
 };
 
-export function Dashboard({ list }: Props) {
+export function Dashboard({ list, region, group }: Props) {
   const { t } = useTranslation();
+  const { getLocalizedValue } = useLocalizedSetting();
 
   const hooks = list.map((i) => {
     const handler = mapping[i.entity];
 
     const filter = handler.filter();
     const urlParams = new URLSearchParams(i.query);
+
+    if (region) {
+      urlParams.append("region", region);
+    }
+    if (group) {
+      urlParams.append("group", group);
+    }
     const params = Object.fromEntries(urlParams);
     filter.read(params);
     const query = filter.done().toQuery();
@@ -137,6 +152,13 @@ export function Dashboard({ list }: Props) {
       element: (handler as any).element,
       component: (handler as any).component,
       ...i,
+      showAll: {
+        link:
+          i.showAll?.link || Router.path(handler.route, undefined, { query: urlParams.toString() }),
+        text:
+          getLocalizedValue(i.showAll?.text || handler.showAll?.text) ||
+          t("dashboard.showAll", "Show all >"),
+      },
     };
   });
 
@@ -146,13 +168,10 @@ export function Dashboard({ list }: Props) {
         <React.Fragment key={i}>
           {!h.isLoading() && h.data.length > 0 ? (
             <div className="container mb-4">
-              <a
-                className="btn btn-sm btn-success float-end"
-                href={h.showAll || Router.path(h.route, undefined, { query: h.query })}
-              >
-                {t("dashboard.showAll", "Show all >")}
+              <a className="btn btn-sm btn-success float-end" href={h.showAll.link}>
+                {h.showAll.text}
               </a>
-              <h2>{h.title}</h2>
+              <h2>{getLocalizedValue(h.title)}</h2>
               {h.element ? (
                 <div className="d-flex flex-row flex-nowrap pb-3 overflow-x-scroll">
                   {h.data.map(h.element)}

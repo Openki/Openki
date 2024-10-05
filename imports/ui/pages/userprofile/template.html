@@ -58,7 +58,8 @@
                 {{#if privileges.admin}}
                   <li class="list-group-item list-group-item-success">
                     {{#if alterPrivileges}}
-                      <button type="button" class="js-remove-privilege-btn btn-close float-end"
+                      <button type="button"
+                              class="js-remove-privilege-btn btn-close btn-close-white float-end"
                               data-bs-toggle="tooltip"
                               data-bs-title="{{i18n 'privilege.remove' 'Remove privilege' attr=true}}"
                               data-priv="admin">
@@ -87,7 +88,8 @@
                 {{#each inviteGroups}}
                   {{#if groupMember this ../user}}
                     <li class="list-group-item list-group-item-success">
-                      <button type="button" class="js-group-expel-btn btn-close float-end"
+                      <button type="button"
+                              class="js-group-expel-btn btn-close btn-close-white float-end"
                               data-bs-toggle="tooltip"
                               data-bs-title="{{i18n 'profile.group.expel' 'Expel from group {GROUPNAME}' GROUPNAME=this.name attr=true}}">
                       </button>

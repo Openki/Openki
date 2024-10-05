@@ -1,6 +1,6 @@
 import React from "react";
 import { useUserId } from "/imports/utils/react-meteor-data";
-import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
+import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
@@ -9,6 +9,8 @@ import * as Users from "/imports/api/users/publications";
 import "./styles.scss";
 
 function Anom({ className }: { className?: string | undefined }) {
+  const { getLocalizedValue } = useLocalizedSetting();
+
   return (
     <img
       className={`avatar-image ${className} placeholder-rainbow`}
@@ -23,6 +25,7 @@ function UserAvatar(props: {
   userId: string;
   className?: string | undefined;
 }) {
+  const { getLocalizedValue } = useLocalizedSetting();
   const [isLoading, user] = Users.useDetails(props.userId);
 
   function color() {

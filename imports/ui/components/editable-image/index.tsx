@@ -142,12 +142,15 @@ export function EditableImage(data: Data) {
     };
   }
   function uploadButtonAttributes() {
-    const attributes: Record<string, unknown> = {
+    const attributes: {
+      onClick: () => void;
+      disabled?: boolean;
+    } = {
       onClick: onUpload,
     };
 
     if (!copyRights) {
-      attributes.disabled = "disabled";
+      attributes.disabled = true;
     }
 
     return attributes;
@@ -322,7 +325,7 @@ export function EditableImage(data: Data) {
                 <div className="modal-header">
                   <button
                     type="button"
-                    className="btn-close"
+                    className="btn-close btn-close-white"
                     data-bs-dismiss="modal"
                     aria-label="Close"
                   ></button>
