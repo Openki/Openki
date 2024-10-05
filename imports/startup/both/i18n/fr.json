@@ -958,7 +958,6 @@
 	"verifyEmail.email.verification": "Veuillez cliquer sur ce lien pour vérifier votre email. Cela permet de vérifier que vous êtes une véritable personne.",
 	"verifyEmail.email.verifyButton": "Vérifiez votre adresse e-mail",
 	"verifyEmail.subject": "[SITE] Bienvenue sur la communauté {SITE}, {NAME}",
-	"visitor.warning.emailExists": "Cette adresse existe déjà. Avez-vous essayer de modifier votre mot de passe?",
 	"visitor.warning.noEmailProvided": "Veuillez entrer une adresse email pour continuer.",
 	"warning.emailExists": "Cet e-mail est déjà pris.",
 	"warning.emailNotValid": "Votre e-mail semble contenir une erreur.",

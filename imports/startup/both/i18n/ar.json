@@ -1003,7 +1003,6 @@
 	"verifyEmail.email.verification": "الرجاء النقر فوق هذا الرابط لتأكيد عنوان بريدك الإلكتروني. يساعد هذا في التحقق من أنك شخص حقيقي.",
 	"verifyEmail.email.verifyButton": "تأكيد عنوان البريد الإلكتروني",
 	"verifyEmail.subject": "[{SITE}] مرحبًا بك في منتدى {SITE}، {NAME}",
-	"visitor.warning.emailExists": "هذا البريد الإلكتروني موجود بالفعل. هل حاولت إعادة تعيين كلمة المرور الخاصة بك؟",
 	"visitor.warning.noEmailProvided": "الرجاء إدخال عنوان بريد إلكتروني للمتابعة.",
 	"warning.emailExists": "هذا البريد الإلكتروني قيد الاستخدام بالفعل.",
 	"warning.emailNotValid": "عنوان بريدك الإلكتروني لا يبدو صحيحًا.",

@@ -1083,7 +1083,6 @@
 	"verifyEmail.email.verification": "Please click this link to verify your e-mail address. This helps verify you're a real person.",
 	"verifyEmail.email.verifyButton": "Verify email address",
 	"verifyEmail.subject": "[{SITE}] Welcome to the {SITE} community, {NAME}",
-	"visitor.warning.emailExists": "This email already exists. Have you tried resetting your password?",
 	"visitor.warning.noEmailProvided": "Please enter an email-address to continue.",
 	"warning.emailExists": "This e-mail address is already in use.",
 	"warning.emailNotValid": "Your e-mail address seems to have an error.",
