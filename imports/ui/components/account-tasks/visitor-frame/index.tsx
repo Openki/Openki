@@ -65,12 +65,9 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
     "Email already exists.": {
       text: () => (
         <>
-          {t(
-            "visitor.warning.emailExists",
-            "This Email is already in use. Please create a user to continue with it: ",
-          )}{" "}
+          {t("register.warning.emailExists")}{" "}
           <a href={Router.path("resetPasswortEmail", {}, { query: { email: registerData.email } })}>
-            {t("visitor.warning.sendEmail", "Send me an email to create my user")}
+            {t("register.warning.emailExists.sendEmail")}
           </a>
         </>
       ),
