@@ -1,18 +1,16 @@
-import { Mongo } from "meteor/mongo";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { Regions } from "/imports/api/regions/regions";
+import { Geodata, Regions } from "/imports/api/regions/regions";
 import { FacilityOption, VenueModel } from "/imports/api/venues/venues";
 import * as VenuesMethods from "/imports/api/venues/methods";
 import { useFindFilter } from "/imports/api/regions/publications";
 
-import { LocationTracker, MarkerEntity } from "/imports/ui/lib/location-tracker";
 import * as Analytics from "/imports/ui/lib/analytics";
-import { Location } from "../../location";
+import { Edit as LocationEdit } from "../../location/edit";
 
 import { AdditionalInfo, type Data as AdditionalInfoData } from "./additional-info";
 import { Richtext } from "/imports/ui/components/richtext";
@@ -35,9 +33,6 @@ export function Edit({
   const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
   const isNew = !data._id;
 
-  const locationTracker = new LocationTracker();
-  locationTracker.setLocation(data, true);
-
   const [isBusy, setIsBusy] = useState(false);
 
   const [changes, setChanges] = useState({
@@ -53,6 +48,7 @@ export function Edit({
       .map((f) => f[0] as FacilityOption),
     otherFacilities: data.otherFacilities,
     selectedRegion: isNew ? sessionRegion : data.region,
+    loc: data.loc as Geodata | undefined,
   });
 
   const [isLoading, regions] = useFindFilter();
@@ -100,51 +96,6 @@ export function Edit({
   function regionSelected() {
     return !!changes.selectedRegion;
   }
-  // function venueMarkers() {
-  //   return locationTracker.markers;
-  // }
-  // function allowPlacing() {
-  //   // We return a function so the reactive dependency on locationState is
-  //   // established from within the map template which will call it.
-  //   return () =>
-  //     // We only allow placing if we don't have a selected location yet
-  //     !locationTracker.getLocation();
-  // }
-  // function allowRemoving() {
-  //   return () => !!locationTracker.getLocation();
-  // }
-
-  useEffect(() => {
-    if (!changes.selectedRegion) {
-      return;
-    }
-    locationTracker.setRegion(changes.selectedRegion);
-  });
-
-  locationTracker.markers.find().observe({
-    added(orginalLocation) {
-      if ("proposed" in orginalLocation && orginalLocation.proposed) {
-        // The map widget does not reactively update markers when their
-        // flags change. So we remove the propsed marker it added and
-        // replace it by a main one. This is only a little weird.
-        locationTracker.markers.remove({ proposed: true });
-
-        const location = {
-          ...orginalLocation,
-          main: true,
-          draggable: true,
-          proposed: undefined,
-        } as Mongo.OptionalId<MarkerEntity>;
-        locationTracker.markers.insert(location);
-      }
-    },
-
-    changed(location) {
-      if ("remove" in location && location.remove) {
-        locationTracker.markers.remove(location._id);
-      }
-    },
-  });
 
   const handleSave = async () => {
     const changes1: VenuesMethods.SaveFields = {
@@ -184,7 +135,7 @@ export function Edit({
       changes1.region = region;
     }
 
-    const loc = locationTracker.getLocation();
+    const loc = changes.loc;
     if (loc) {
       changes1.loc = loc;
     } else {
@@ -228,6 +179,8 @@ export function Edit({
       onCanceled();
     }
   };
+
+  const regionCoordinates = Regions.findOne(changes.selectedRegion)?.loc?.coordinates;
 
   return (
     <div className="edit-page venue-edit">
@@ -291,7 +244,7 @@ export function Edit({
                 </div>
               </div>
             ) : null}
-            {regionSelected() ? (
+            {regionSelected() && regionCoordinates ? (
               <div className="col-md">
                 <label className="form-label">
                   {t(
@@ -299,8 +252,21 @@ export function Edit({
                     'Please add location by clicking "+" (on the right inside the map)',
                   )}
                 </label>
-                <Location loc={data.loc} />
-                {/* <Map markers={venueMarkers()} allowPlacing={allowPlacing()} allowRemoving={allowRemoving()}}} */}
+                <LocationEdit
+                  center={regionCoordinates}
+                  coordinates={changes.loc?.coordinates}
+                  onChange={(coordinates) => {
+                    setChanges((prevState) => ({
+                      ...prevState,
+                      loc: coordinates
+                        ? {
+                            coordinates,
+                            type: "Point",
+                          }
+                        : undefined,
+                    }));
+                  }}
+                />
               </div>
             ) : null}
           </div>
