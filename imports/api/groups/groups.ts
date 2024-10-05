@@ -112,6 +112,7 @@ export class Group {
 }
 
 export const FindFilterPattern = {
+  ids: Match.Maybe([String]),
   /** Limit to groups where logged-in user is a member */
   own: Match.Maybe(Boolean),
 };
@@ -184,6 +185,10 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
       }
 
       find["members.user"] = me;
+    }
+
+    if (filter.ids) {
+      find._id = { $in: filter.ids };
     }
 
     return this.find(find, options);

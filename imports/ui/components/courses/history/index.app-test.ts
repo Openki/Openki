@@ -4,7 +4,7 @@ import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 
 import { MeteorAsync } from "/imports/utils/promisify";
-import { waitForSubscriptions, waitFor } from "/imports/ClientUtils.app-test";
+import { waitForSubscriptions, waitFor, setInputValue, setSelectValue } from "/imports/ClientUtils.app-test";
 
 if (Meteor.isClient) {
   describe("Course history", function () {
@@ -23,9 +23,9 @@ if (Meteor.isClient) {
       await MeteorAsync.loginWithPassword("Seee", "greg");
 
       // Create the course
-      $(".js-title").val(randomTitle);
-      $(".js-select-region").val("9JyFCoKWkxnf8LWPh"); // Testistan
-      $(".js-course-edit-save").trigger("click");
+      setInputValue(".js-title", randomTitle);
+      setSelectValue("[name='region']", "9JyFCoKWkxnf8LWPh"); // Testistan
+      $(".course-edit-body .btn-save")[0].click();
 
       // We should be redirected to the created course
 
