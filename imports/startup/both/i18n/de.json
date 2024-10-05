@@ -1038,7 +1038,6 @@
 	"verifyEmail.email.verification": "Drücke unten auf den Button um deine E-Mail-Adresse zu bestätigen. Dies hilft zu überprüfen, dass du eine echte Person bist.",
 	"verifyEmail.email.verifyButton": "E-Mail Adresse bestätigen",
 	"verifyEmail.subject": "[{SITE}] Willkommen in der {SITE} Community, {NAME}",
-	"visitor.warning.emailExists": "Diese E-Mail-Adresse existiert bereits. Hast du versucht, dein Passwort zurückzusetzen?",
 	"visitor.warning.noEmailProvided": "Bitte gib eine E-Mail Adresse an um fortzufahren.",
 	"warning.emailExists": "Diese E-Mail Adresse wird bereits benutzt.",
 	"warning.emailNotValid": "Deine E-Mail Adresse scheint nicht korrekt.",
