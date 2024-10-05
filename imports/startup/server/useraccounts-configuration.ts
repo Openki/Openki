@@ -8,6 +8,7 @@ import { UserModel, UserProfile, Users } from "/imports/api/users/users";
 
 import { isEmail } from "/imports/utils/email-tools";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
+import { NotAllowedCharacter } from "../both/NotAllowedCharacter";
 
 Meteor.startup(() => {
   const serviceConf = PrivateSettings.service;
@@ -60,6 +61,10 @@ Meteor.startup(() => {
 });
 
 Accounts.validateNewUser((user) => {
+  if (NotAllowedCharacter.find((c) => user.username.includes(c))) {
+    throw new Meteor.Error(403, "Not allowed character");
+  }
+
   if (user.emails) {
     const email = user.emails[0].address;
 

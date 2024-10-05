@@ -13,6 +13,7 @@ import * as Analytics from "/imports/ui/lib/analytics";
 import { useValidation } from "/imports/ui/lib/useValidation";
 
 import { DataProtectionLaw } from "../data-protection-law";
+import { NotAllowedCharacter } from "../../../../startup/both/NotAllowedCharacter";
 
 export type Props = {
   username: string;
@@ -35,6 +36,13 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
       text: () => t("register.warning.noUserName", "Please enter a name for your new user."),
       field: "username",
       onCheckValidity: () => !!registerData.username,
+    },
+    "Not allowed character": {
+      text: () =>
+        t("register.warning.notAllowedCharacter", "{CHARACTERS} not allowed in username.", {
+          CHARACTERS: NotAllowedCharacter.join(", "),
+        }),
+      field: "username",
     },
     "Username already exists.": {
       text: () =>
