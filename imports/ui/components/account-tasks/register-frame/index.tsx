@@ -5,6 +5,7 @@ import { useSession } from "/imports/utils/react-meteor-data";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { AccountsAsync } from "/imports/utils/promisify";
 import { PublicSettings } from "/imports/utils/PublicSettings";
+import { Router } from "meteor/iron:router";
 
 import * as Alert from "/imports/api/alerts/alert";
 import * as UsersMethods from "/imports/api/users/methods";
@@ -68,11 +69,17 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
       field: "email",
     },
     "Email already exists.": {
-      text: () =>
-        t(
-          "register.warning.emailExists",
-          "This email already exists. Have you tried resetting your password?",
-        ),
+      text: () => (
+        <>
+          {t(
+            "register.warning.emailExists",
+            "This email is already in use. In case you forgot your password, you can reset it. In case you interacted as guest, please create a user.",
+          )}{" "}
+          <a href={Router.path("resetPasswortEmail", {}, { query: { email: registerData.email } })}>
+            {t("register.warning.emailExists.sendEmail", "Ok, send me an email to continue")}
+          </a>
+        </>
+      ),
       field: "email",
     },
   });
