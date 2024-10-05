@@ -40,7 +40,7 @@ function Alert({
 
   useEffect(() => {
     updateSpacerHeight();
-    $(".alert-message").toggleClass("is-faded-in");
+    $(".alert-message").addClass("is-faded-in");
 
     timedRemove = Meteor.setTimeout(() => remove(_id), timeout);
   });
