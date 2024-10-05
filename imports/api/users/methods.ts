@@ -19,6 +19,7 @@ import * as AsyncTools from "/imports/utils/async-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { Type } from "/imports/utils/CustomChecks";
+import { NotAllowedCharacter } from "/imports/startup/both/NotAllowedCharacter";
 
 /**
  * Set user region
@@ -98,6 +99,13 @@ export const updateUsername = ServerMethod(
       throw new ValidationError(
         [{ name: "username", type: "noUserName" }],
         "username cannot be empty",
+      );
+    }
+
+    if (NotAllowedCharacter.find((c) => saneUsername.includes(c))) {
+      throw new ValidationError(
+        [{ name: "username", type: "notAllowedCharacter" }],
+        "Not allowed character",
       );
     }
 

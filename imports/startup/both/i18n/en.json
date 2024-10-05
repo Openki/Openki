@@ -909,6 +909,7 @@
   "register.warning.emailNotValid": "Your e-mail address seems to have an error.",
   "register.warning.noEmailProvided": "Please enter an email-address to register.",
   "register.warning.noPasswordProvided": "Please enter a password to register.",
+  "register.warning.notAllowedCharacter": "{CHARACTERS} not allowed in username.",
   "register.warning.noUserName": "Please enter a name for your new user.",
   "register.warning.userExists": "This username is already in use. Please choose another one.",
   "report.confirm": "Your report was sent. A human will try to find an appropriate solution.",

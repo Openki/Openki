@@ -309,7 +309,7 @@ export function GroupDetailsPage(data: Data) {
                 {mayEdit ? <Editable {...editableDescriptionAttr} /> : data.group.description}
               </div>
 
-              {errors.all ? <span className="form-text">{errors.all}</span> : null}
+              {errors.all ? <span className="form-text d-block">{errors.all}</span> : null}
             </div>
           </div>
           {data.group.isNew() ? (
