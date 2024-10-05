@@ -4,15 +4,15 @@
          class="js-editable editable {{editableClasses}} {{#if characterLimitReached}}is-invalid{{/if}}">
     </div>
     {{#if characterLimitReached}}
-    	{{#if showControls}}
-      		<div class="invalid-feedback">
-        		{{i18n '_inputField.maxlength' NUMBER=removeNumberOfCharacters MAXNUMBER=maxlength}}
-      		</div>
-		{{else}}
-      		<div class="invalid-feedback">
-        		{{i18n '_inputField.maxlength.notEditing' 'There are too many characters here. You should edit it.'}}
-      		</div>
-    	{{/if}}
+      {{#if showControls}}
+        <div class="invalid-feedback">
+          {{i18n '_inputField.maxlength' NUMBER=removeNumberOfCharacters MAXNUMBER=maxlength}}
+        </div>
+      {{else}}
+        <div class="invalid-feedback">
+          {{i18n '_inputField.maxlength.notEditing' 'There are too many characters here. You should edit it.'}}
+        </div>
+      {{/if}}
     {{/if}}
     {{#unless showControls}}
       <span class="fa-solid fa-pencil editable-icon js-editable-edit"></span>

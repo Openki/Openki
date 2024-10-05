@@ -14,6 +14,8 @@ import * as StringTools from "/imports/utils/string-tools";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { Type } from "/imports/utils/CustomChecks";
 
+export type FacilityOption = (typeof Venues.facilityOptions)[number];
+
 /** DB-Model */
 export interface VenueEntity {
   /** ID */
@@ -36,9 +38,9 @@ export interface VenueEntity {
   /** Int */
   maxWorkplaces: number;
   /** For keys see: Venues.facilityOptions */
-  facilities: {
-    [key: string]: boolean;
-  };
+  facilities: Partial<{
+    [key in FacilityOption]: boolean;
+  }>;
   otherFacilities?: string;
   createdby: string;
   created: Date;
@@ -51,6 +53,20 @@ export type VenueModel = Venue & VenueEntity;
  * Venue objects represent locations where events take place.
  */
 export class Venue {
+  public name = "";
+
+  public description = "";
+
+  public address = "";
+
+  public route = "";
+
+  public short = "";
+
+  public maxPeople = 0;
+
+  public maxWorkplaces = 0;
+
   public facilities = {};
 
   /**
@@ -92,7 +108,7 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
     "wifi",
     "kitchen",
     "wheelchairs",
-  ];
+  ] as const;
 
   constructor() {
     super("Venues", {

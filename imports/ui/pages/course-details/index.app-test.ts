@@ -3,7 +3,12 @@ import { Router } from "meteor/iron:router";
 import $ from "jquery";
 import { Meteor } from "meteor/meteor";
 
-import { waitForSubscriptions, waitFor } from "/imports/ClientUtils.app-test";
+import {
+  waitForSubscriptions,
+  waitFor,
+  setInputValue,
+  setSelectValue,
+} from "/imports/ClientUtils.app-test";
 import { MeteorAsync } from "/imports/utils/promisify";
 
 if (Meteor.isClient) {
@@ -86,9 +91,9 @@ if (Meteor.isClient) {
         await waitFor(haveEditfield);
 
         // Create the course
-        $(".js-title").val(randomTitle);
-        $(".js-select-region").val("9JyFCoKWkxnf8LWPh"); // Testistan
-        $(".js-course-edit-save").trigger("click");
+        setInputValue(".js-title", randomTitle);
+        setSelectValue("[name='region']", "9JyFCoKWkxnf8LWPh"); // Testistan
+        $(".course-edit-body .btn-save")[0].click();
 
         // We should be redirected to the created course
 

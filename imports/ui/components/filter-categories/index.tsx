@@ -27,7 +27,7 @@ export function FilterCategories({ categories, onAdd, onRemove }: Props) {
     <ReactSelect2
       className="categories-select form-control"
       multiple={true}
-      defaultValue={categories}
+      value={categories}
       placeholder={t("find.searchCategories.placeholder", "Choose categories")}
       noResults={t("find.filter-no-categories-found", "No categories found")}
       onSelect={onAdd}

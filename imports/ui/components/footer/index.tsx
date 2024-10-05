@@ -9,11 +9,12 @@ import { useDetails } from "/imports/api/version/publications";
 
 import { useSiteName } from "/imports/utils/getSiteName";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
+import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
 import "./styles.scss";
 
 function Links() {
+  const { getLocalizedValue } = useLocalizedSetting();
   const { t } = useTranslation();
   const siteName = useSiteName();
 

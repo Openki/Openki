@@ -102,6 +102,26 @@ if (Meteor.isClient) {
 
 RouterAsync.route("home", {
   path: "/",
+  template: "dashboardPage",
+  yieldRegions: {
+    featuredGroup: { to: "aboveContent" },
+  },
+  async onRun() {
+    await import("/imports/ui/pages/dashboard");
+  },
+  data() {
+    const { query } = this.params;
+
+    // Add filter options for the homepage
+    return _.extend(query, {
+      internal: false,
+      region: Session.get("region"),
+    });
+  },
+});
+
+RouterAsync.route("search", {
+  path: "search",
   template: "findPage",
   yieldRegions: {
     featuredGroup: { to: "aboveContent" },
@@ -117,14 +137,6 @@ RouterAsync.route("home", {
       internal: false,
       region: Session.get("region"),
     });
-  },
-});
-
-RouterAsync.route("dashboard", {
-  path: "dashboard",
-  template: "dashboardPage",
-  async onRun() {
-    await import("/imports/ui/pages/dashboard");
   },
 });
 

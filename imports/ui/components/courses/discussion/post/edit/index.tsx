@@ -80,7 +80,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
       return true;
     }
 
-    if (!isLoading()) {
+    if (isLoading()) {
       return false;
     }
 

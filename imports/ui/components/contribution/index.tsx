@@ -6,7 +6,7 @@ import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 import { checkContribution } from "/imports/utils/checkContribution";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { getCachedUser } from "/imports/ui/lib/getUserName";
-import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
+import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 import { getSiteName } from "/imports/utils/getSiteName";
 
 export type Props = {
@@ -15,6 +15,7 @@ export type Props = {
 
 export function Contribution({ userId }: Props) {
   const { t } = useTranslation();
+  const { getLocalizedValue } = useLocalizedSetting();
   const currentRegion = useCurrentRegion();
   const cachedUser = useTracker(() => getCachedUser(userId));
 

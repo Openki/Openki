@@ -46,7 +46,8 @@ function SubHeader() {
       <th className="event-stat">{t("region.stats.events.canceled", "Canceled")}</th>
       <th className="event-stat">{t("region.stats.events.fullyBooked", "Fully booked")}</th>
       <th className="event-stat">{t("region.stats.events.totalRsvps", "RSVPs Total")}</th>
-      <th className="event-stat">{t("region.stats.events.futureRsvps", "RSVPs")}</th>
+      <th className="event-stat">{t("region.stats.events.canceledRsvps", "RSVPs in canceled")}</th>
+      <th className="event-stat">{t("region.stats.events.futureRsvps", "RSVPs in future")}</th>
       <th className="event-stat">{t("region.stats.events.users", "Users")}</th>
     </>
   );
@@ -93,6 +94,12 @@ function Descriptions() {
       </td>
       <td className="description">
         {t(
+          "region.stats.events.canceledRsvps.description",
+          "RSVPs in canceled events, incl. +1 and passed",
+        )}
+      </td>
+      <td className="description">
+        {t(
           "region.stats.events.futureRsvps.description",
           "in future events only, incl. +1, excl. canceled events",
         )}
@@ -120,6 +127,7 @@ function Results({ stat }: { stat: Stat }) {
       <td className="event-stat number">{stat.events.canceled}</td>
       <td className="event-stat number">{stat.events.fullyBooked}</td>
       <td className="event-stat number">{stat.events.totalRsvps}</td>
+      <td className="event-stat number">{stat.events.canceledRsvps}</td>
       <td className="event-stat number">{stat.events.futureRsvps}</td>
       <td className="event-stat number">{stat.events.users}</td>
     </>
