@@ -1,12 +1,12 @@
 <template name="profilePage">
   <div class="container mw-md">
     {{#unless isVisitor}}
-    <div class="page-component">
-      <h1>
-        <span class="fa-solid fa-gears fa-fw" aria-hidden="true"></span>
-        {{i18n 'login.frame.settings'}}
-      </h1>
-    </div>
+      <div class="page-component">
+        <h1>
+          <span class="fa-solid fa-gears fa-fw" aria-hidden="true"></span>
+          {{i18n 'login.frame.settings'}}
+        </h1>
+      </div>
     {{/unless}}
     {{#if notificationsUnsubscribeSuccess}}
       <div class="alert alert-success" role="alert">
@@ -171,7 +171,8 @@
           <p>{{i18n 'profile.createUser.description' 'You are currently here as a guest user. If you want to be able to log in again later or from an other device, you can create a normal user account here. For this, we will send you an email with the instructions and a link to set a password for your account.'}}
           </p>
 
-          <a class="button btn btn-primary" href="{{pathFor 'resetPasswortEmail' email=user.email}}">
+          <a class="button btn btn-primary"
+             href="{{pathFor 'resetPasswortEmail' email=user.email}}">
             {{i18n "profile.createUser.button" "Send me an account creation email" lng=locale}}
           </a>
         </div>
@@ -181,50 +182,50 @@
         <h3>{{i18n 'profile.danger_zone' 'Danger zone'}}</h3>
 
         {{#unless isVisitor}}
-        <div class="mb-3">
-          {{#unless changingPass}}
-            <button type="button" class="btn btn-secondary js-change-pwd-btn">
-              {{i18n 'profile.changePass' 'Change my password'}}
-            </button>
-          {{/unless}}
-          {{#if changingPass}}
-            <div class="border border-success text-primary p-3">
-              <form class="js-change-pwd">
-                <div class="row mb-2">
-                  <label for="oldpassword" class="col-sm-4 col-form-label text-end">
-                    {{i18n 'profile.input.oldPassword' 'Your current password'}}
-                  </label>
-                  <div class="col-sm-8">
-                    <input type="password" class="js-old-pwd form-control" id="oldpassword"
-                           value="" />
+          <div class="mb-3">
+            {{#unless changingPass}}
+              <button type="button" class="btn btn-secondary js-change-pwd-btn">
+                {{i18n 'profile.changePass' 'Change my password'}}
+              </button>
+            {{/unless}}
+            {{#if changingPass}}
+              <div class="border border-success text-primary p-3">
+                <form class="js-change-pwd">
+                  <div class="row mb-2">
+                    <label for="oldpassword" class="col-sm-4 col-form-label text-end">
+                      {{i18n 'profile.input.oldPassword' 'Your current password'}}
+                    </label>
+                    <div class="col-sm-8">
+                      <input type="password" class="js-old-pwd form-control" id="oldpassword"
+                             value="" />
+                    </div>
                   </div>
-                </div>
-                <div class="row mb-2">
-                  <label for="newpassword" class="col-sm-4 col-form-label text-end">
-                    {{i18n 'profile.input.newPassword' 'New password'}}
-                  </label>
-                  <div class="col-sm-8">
-                    <input type="password" class="js-new-pwd form-control" id="newpassword"
-                           value="" />
+                  <div class="row mb-2">
+                    <label for="newpassword" class="col-sm-4 col-form-label text-end">
+                      {{i18n 'profile.input.newPassword' 'New password'}}
+                    </label>
+                    <div class="col-sm-8">
+                      <input type="password" class="js-new-pwd form-control" id="newpassword"
+                             value="" />
+                    </div>
                   </div>
-                </div>
-                <div class="row mb-2">
-                  <label for="newpassword_confirm" class="col-sm-4 col-form-label text-end">
-                    {{i18n 'profile.input.repeatPassword' 'Repeat new password'}}
-                  </label>
-                  <div class="col-sm-8">
-                    <input type="password" class="js-new-pwd-confirm form-control"
-                           id="newpassword_confirm" value="" />
+                  <div class="row mb-2">
+                    <label for="newpassword_confirm" class="col-sm-4 col-form-label text-end">
+                      {{i18n 'profile.input.repeatPassword' 'Repeat new password'}}
+                    </label>
+                    <div class="col-sm-8">
+                      <input type="password" class="js-new-pwd-confirm form-control"
+                             id="newpassword_confirm" value="" />
+                    </div>
                   </div>
-                </div>
-                <div class="d-flex gap-2 justify-content-end">
-                  {{> buttonSave}}
-                  {{> buttonCancel event="js-change-pwd-cancel"}}
-                </div>
-              </form>
-            </div>
-          {{/if}}
-        </div>
+                  <div class="d-flex gap-2 justify-content-end">
+                    {{> buttonSave}}
+                    {{> buttonCancel event="js-change-pwd-cancel"}}
+                  </div>
+                </form>
+              </div>
+            {{/if}}
+          </div>
         {{/unless}}
         <div>
           {{> deleteConfirm deleteConfirmAttr}}

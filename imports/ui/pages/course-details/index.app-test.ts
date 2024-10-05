@@ -3,7 +3,12 @@ import { Router } from "meteor/iron:router";
 import $ from "jquery";
 import { Meteor } from "meteor/meteor";
 
-import { waitForSubscriptions, waitFor, setInputValue, setSelectValue } from "/imports/ClientUtils.app-test";
+import {
+  waitForSubscriptions,
+  waitFor,
+  setInputValue,
+  setSelectValue,
+} from "/imports/ClientUtils.app-test";
 import { MeteorAsync } from "/imports/utils/promisify";
 
 if (Meteor.isClient) {
