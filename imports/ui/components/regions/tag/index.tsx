@@ -13,6 +13,8 @@ export function RegionTag(props: { region: string }) {
   function regionName(region: string) {
     return regions.find((r) => r._id === region)?.name;
   }
+
+  // do not show region name if only one region exists
   if (!isLoading() && regions.length > 1) {
     return (
       <div className="region-tag p-2 text-light">

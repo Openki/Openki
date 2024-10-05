@@ -3,7 +3,7 @@ import { Router } from "meteor/iron:router";
 import $ from "jquery";
 import { Meteor } from "meteor/meteor";
 
-import { waitForSubscriptions, waitFor } from "/imports/ClientUtils.app-test";
+import { waitForSubscriptions, waitFor, setInputValue, setSelectValue } from "/imports/ClientUtils.app-test";
 import { MeteorAsync } from "/imports/utils/promisify";
 
 if (Meteor.isClient) {
@@ -29,7 +29,7 @@ if (Meteor.isClient) {
         await waitFor(haveEditfield);
 
         $(".group-details-name [contenteditable=true]").html(randomTitle);
-        $(".js-group-save").trigger("click");
+        $(".group-details .btn-save")[0].click();
 
         await waitFor(() => {
           assert($(".has-error").length > 0, "A message error message is shown");
@@ -50,7 +50,7 @@ if (Meteor.isClient) {
         $(".group-details-short [contenteditable=true]").html(`${randomTitle} short`);
         $(".group-details-claim [contenteditable=true]").html(`${randomTitle} claim`);
         $(".group-details-description [contenteditable=true]").html(`${randomTitle} description`);
-        $(".js-group-save").trigger("click");
+        $(".group-details .btn-save")[0].click();
 
         await waitFor(() => {
           assert(
@@ -84,9 +84,9 @@ if (Meteor.isClient) {
         await MeteorAsync.loginWithPassword("Seee", "greg");
 
         // Create the course
-        $(".js-title").val(randomTitle);
-        $(".js-select-region").val("9JyFCoKWkxnf8LWPh"); // Testistan
-        $(".js-course-edit-save").trigger("click");
+        setInputValue(".js-title", randomTitle);
+        setSelectValue("[name='region']", "9JyFCoKWkxnf8LWPh"); // Testistan
+        $(".course-edit-body .btn-save")[0].click();
 
         // We should be redirected to the created course
 
@@ -141,10 +141,10 @@ if (Meteor.isClient) {
         await waitFor(haveInternalCheckbox);
 
         // Create the course
-        $(".js-title").val(randomTitle);
-        $(".js-select-region").val("9JyFCoKWkxnf8LWPh"); // Testistan
+        setInputValue(".js-title", randomTitle);
+        setSelectValue("[name='region']", "9JyFCoKWkxnf8LWPh"); // Testistan
         $(".js-check-internal").prop("checked", true);
-        $(".js-course-edit-save").trigger("click");
+        $(".course-edit-body .btn-save")[0].click();
 
         // We should be redirected to the created course
 

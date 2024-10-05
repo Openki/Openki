@@ -60,7 +60,7 @@ function EmailValidationModal({ user }: Props) {
               &nbsp;
               {t("validate.email.title", "Validate e-mail address")}
             </h4>
-            <span className="btn-close" data-bs-dismiss="modal"></span>
+            <span className="btn-close btn-close-white" data-bs-dismiss="modal"></span>
           </div>
           <div className="modal-body">
             <span>

@@ -62,3 +62,23 @@ export function waitFor<T>(assertion: () => T, timeout = 10000): Promise<T> {
     interval = setInterval(tryIt, 100);
   });
 }
+
+export function setInputValue(selector: string, value: string) {
+  // https://stackoverflow.com/questions/23892547/what-is-the-best-way-to-trigger-change-or-input-event-in-react-js/46012210#46012210
+  const nativeValueSetter = (Object as any).getOwnPropertyDescriptor(
+    window.HTMLInputElement.prototype,
+    "value",
+  ).set;
+  nativeValueSetter.call($(selector)[0], value);
+  $(selector)[0].dispatchEvent(new Event("input", { bubbles: true }));
+}
+
+export function setSelectValue(selector: string, value: string) {
+  // https://stackoverflow.com/questions/23892547/what-is-the-best-way-to-trigger-change-or-input-event-in-react-js/46012210#46012210
+  const nativeValueSetter = (Object as any).getOwnPropertyDescriptor(
+    window.HTMLSelectElement.prototype,
+    "value",
+  ).set;
+  nativeValueSetter.call($(selector)[0], value);
+  $(selector)[0].dispatchEvent(new Event("input", { bubbles: true }));
+}
