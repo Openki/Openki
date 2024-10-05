@@ -53,6 +53,20 @@ export type VenueModel = Venue & VenueEntity;
  * Venue objects represent locations where events take place.
  */
 export class Venue {
+  public name = "";
+
+  public description = "";
+
+  public address = "";
+
+  public route = "";
+
+  public short = "";
+
+  public maxPeople = 0;
+
+  public maxWorkplaces = 0;
+
   public facilities = {};
 
   /**

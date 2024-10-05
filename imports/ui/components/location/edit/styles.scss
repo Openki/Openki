@@ -1,0 +1,35 @@
+@import "{}/imports/ui/stylesheets/variables/index";
+
+.location-map .leaflet-attribution-flag {
+  display: none !important;
+}
+
+.location-map .leaflet-marker-icon {
+  background: none;
+  border: 0;
+  color: $blue;
+  -webkit-text-stroke: 1px #0000003d;
+
+  .fa-regular,
+  .fa-brands,
+  .fa-solid {
+    font-size: 36px;
+  }
+}
+
+.location-map,
+.location-map > .leaflet-container {
+  height: 300px;
+  width: 100%;
+}
+
+.leaflet-right .comp-icon {
+  margin-right: 18px;
+  margin-bottom: 20px;
+
+  .fa-regular,
+  .fa-brands,
+  .fa-solid {
+    font-size: 35px;
+  }
+}
