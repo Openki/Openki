@@ -53,7 +53,9 @@ export function Richtext({ className, text, placeholder, maxlength, onChange }: 
     if (!elementRef.current) {
       return;
     }
-    elementRef.current.innerHTML = text || "";
+    if (elementRef.current.innerHTML !== text) {
+      elementRef.current.innerHTML = text || "";
+    }
 
     const align = !isRTL ? "left" : "right";
 
