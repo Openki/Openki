@@ -1045,7 +1045,6 @@
 	"verifyEmail.email.verification": "Per favore clicca su questo link per verificare il tuo indirizzo e-mail. Questo aiuta a verificare che tu sia una persona reale.",
 	"verifyEmail.email.verifyButton": "Verifica l'indirizzo e-mail",
 	"verifyEmail.subject": "[{SITE}] Benvenuto nella comunità di {SITE}, {NAME}",
-	"visitor.warning.emailExists": "Questo indirizzo e-mail esiste già. Hai provato a reimpostare la tua password?",
 	"visitor.warning.noEmailProvided": "Per favore inserisci un indirizzo e-mail per continuare.",
 	"warning.emailExists": "Questo indirizzo e-mail è già in uso.",
 	"warning.emailNotValid": "Il tuo indirizzo e-mail sembra avere un errore.",
