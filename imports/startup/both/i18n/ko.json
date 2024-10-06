@@ -1027,7 +1027,6 @@
 	"verifyEmail.email.verification": "이 링크를 클릭하면 이메일 인증을 할 수 있습니다. 로봇이 아님을 인증해주세요.",
 	"verifyEmail.email.verifyButton": "이메일 주소 인증",
 	"verifyEmail.subject": "[{SITE}] 안녕하세요. {SITE}에 오신 것을 환영합니다. {NAME}님",
-	"visitor.warning.emailExists": "이미 사용 중인 이메일입니다. 비밀번호 초기화를 해보셨나요?",
 	"visitor.warning.noEmailProvided": "계속하려면 이메일 주소를 입력해주세요.",
 	"warning.emailExists": "이미 사용 중인 이메일 주소입니다.",
 	"warning.emailNotValid": "사용 가능한 이메일 주소가 아닙니다.",
