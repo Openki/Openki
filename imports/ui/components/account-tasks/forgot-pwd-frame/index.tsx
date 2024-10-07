@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { AccountsAsync } from "/imports/utils/promisify";
 import { useValidation } from "/imports/ui/lib/useValidation";
 import { useTranslation } from "react-i18next";
+import { Router } from "meteor/iron:router";
 
 import * as Alert from "/imports/api/alerts/alert";
 
@@ -39,12 +40,8 @@ export function ForgotPwdFrame(props: Props) {
         try {
           await AccountsAsync.forgotPassword({ email });
 
-          Alert.success(
-            t(
-              "forgotPassword.emailSent",
-              "An e-mail with further instructions on how to reset your password has been sent to you.",
-            ),
-          );
+          Router.go("home", {}, { query: { action: "resetPasswortEmailSended" } });
+
           onForgotPwd();
         } catch (err) {
           Alert.serverError(
