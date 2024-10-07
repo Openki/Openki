@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Modal from "bootstrap/js/dist/modal";
+import { Router } from "meteor/iron:router";
 import { useSessionEquals } from "/imports/utils/react-meteor-data";
 
 import { isEmail } from "/imports/utils/email-tools";
@@ -62,10 +63,12 @@ function Task({
   activeTask,
   onSwitch,
   onLogin,
+  onResetPasswort,
 }: {
   activeTask: string;
   onSwitch: (task: string) => void;
   onLogin: () => void;
+  onResetPasswort: () => void;
 }) {
   const [transferData, setTransferData] = useState({
     username: "",
@@ -114,7 +117,8 @@ function Task({
     return {
       ...transferData,
       onForgotPwd() {
-        onSwitch("login");
+        Router.go("home", {}, { query: { action: "resetPasswortEmailSended" } });
+        onResetPasswort();
       },
       onClose() {
         onSwitch("login");
@@ -227,6 +231,11 @@ export function AccountTasks() {
                     $("#bs-navbar-collapse").collapse("hide");
                   }
 
+                  if (elementRef.current) {
+                    Modal.getOrCreateInstance(elementRef.current).hide();
+                  }
+                }}
+                onResetPasswort={() => {
                   if (elementRef.current) {
                     Modal.getOrCreateInstance(elementRef.current).hide();
                   }

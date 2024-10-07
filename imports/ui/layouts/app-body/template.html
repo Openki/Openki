@@ -1,8 +1,10 @@
 <template name="layout">
   {{> root}}
-  {{#if showRegionSplash}}
-    {{> regionSplash}}
-  {{/if}}
+  {{#unless resetPasswortEmailSended}}
+    {{#if showRegionSplash}}
+      {{> regionSplash}}
+    {{/if}}
+  {{/unless}}
   {{> accountTasks}}
   <div id="wrap">
     <div id="topBar">
