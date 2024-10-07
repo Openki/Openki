@@ -166,7 +166,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
         </div>
       </div>
       <div className="mb-3">
-        <div className="row g-2 align-items-center">
+        <div className="row g-2">
           <div className="col">
             <div className="input-group has-validation">
               <span className="input-group-text">
@@ -189,7 +189,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
           </div>
           <div className="col-auto">
             <a
-              className="text-body-secondary"
+              className="text-body-secondary mt-2 d-inline-block"
               data-bs-toggle="collapse"
               href="#email-info"
               role="button"
