@@ -6,23 +6,38 @@ import { Groups } from "../groups/groups";
 
 export interface Stat {
   courses: {
+    /** excl. archived */
     total: number;
+    /** no events */
     proposed: number;
+    /** with planned event(s) */
     upcoming: number;
+    /** only passed events */
     resting: number;
     archived: number;
+    /** interested or any role, incl. creater */
     enrollments: number;
+    /** unique accounts enrolled */
     users: number;
   };
   events: {
+    /** incl. canceled */
     total: number;
+    /** excl. canceled */
     future: number;
+    /** excl. canceled */
     passed: number;
+    /** in future and passed */
     canceled: number;
+    /** in future and passed */
     fullyBooked: number;
+    /** in future and passed, incl. +1, canceled events excluded */
     totalRsvps: number;
+    /** RSVPs in canceled events, incl. +1 and passed */
     canceledRsvps: number;
+    /** in future events only, incl. +1, excl. canceled events */
     futureRsvps: number;
+    /** unique accounts registered */
     users: number;
   };
 }
