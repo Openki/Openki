@@ -31,6 +31,7 @@ const Template = TemplateAny as TemplateStaticTyped<
   {
     locationTracker: LocationTracker;
     location: ReactiveVar<Partial<EventVenueEntity>>;
+    name: ReactiveVar<string | undefined>; // Only required to fix a problem. See: #1347
     search: ReactiveVar<string>;
     addressSearch: ReactiveVar<boolean>;
     venueEditor: ReactiveVar<UserModel | false | undefined>;
@@ -48,6 +49,7 @@ template.onCreated(function () {
 
   instance.locationTracker = new LocationTracker();
   instance.location = parent.selectedLocation;
+  instance.name = new ReactiveVar(instance.location.get().name);
   instance.search = new ReactiveVar("");
   instance.addressSearch = new ReactiveVar(Boolean(instance.location.get().name));
 
@@ -103,6 +105,8 @@ template.onCreated(function () {
           updLocation.address = mark.presetAddress;
         }
         instance.locationTracker.markers.remove({ main: true });
+
+        instance.name.set(updLocation.name);
         instance.location.set(updLocation);
         instance.addressSearch.set(true); // Ugly hack to banish location proposals
         instance.locationTracker.markers.remove({ proposed: true });
@@ -287,6 +291,7 @@ template.events({
 
   "click .js-location-change"(_event, instance) {
     instance.addressSearch.set(false);
+    instance.name.set("");
     instance.location.set({});
     instance.search.set("");
   },
@@ -297,11 +302,15 @@ template.events({
 
   "keyup .js-location-search-input"(event, instance) {
     const updLocation = instance.location.get();
-    updLocation.name = (event.target as HTMLInputElement).value;
+    const name = (event.target as HTMLInputElement).value;
+    updLocation.name = name;
+    instance.name.set(name);
     instance.location.set(updLocation);
 
-    instance.addressSearch.set(false);
-    instance.search.set((event.target as HTMLInputElement).value);
+    setTimeout(() => {
+      instance.addressSearch.set(false);
+      instance.search.set((event.target as HTMLInputElement).value);
+    });
   },
 
   "keyup .js-location-address-search"(event, instance) {
