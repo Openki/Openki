@@ -90,7 +90,10 @@ function Descriptions() {
         {t("region.stats.events.fullyBooked.description", "in future and passed")}
       </td>
       <td className="description">
-        {t("region.stats.events.totalRsvps.description", "in future and passed, incl. +1")}
+        {t(
+          "region.stats.events.totalRsvps.description",
+          "in future and passed, incl. +1, canceled events excluded",
+        )}
       </td>
       <td className="description">
         {t(
