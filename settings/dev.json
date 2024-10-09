@@ -60,6 +60,14 @@
       , "title": "dashboard.recentActivities.title"
       , "query": ""
       }
+    , { "entity": "course"
+      , "title": "Chaos Computer Club Zürich"
+      , "query": "group=573edec5d6&internal=0"
+      }
+    , { "entity": "event"
+      , "title": "Chaos Computer Club Zürich"
+      , "query": "group=573edec5d6&after=now&sort=start&internal=0&canceled=0"
+      }
     , { "entity": "event"
       , "title": "dashboard.upcomingEvents.title"
       , "query": "after=now&sort=start&internal=0&canceled=0"
