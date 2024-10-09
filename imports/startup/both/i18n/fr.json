@@ -430,7 +430,6 @@
 	"forgot.notValid": "S'il vous plaît, écrivez l'adresse avec laquelle vous vous êtes inscrit-e.",
 	"forgot.send": "Ré-initialiser mon mot de passe",
 	"forgot.send.busy": "Réinitialisation du mot de passe…",
-	"forgotPassword.emailSent": "Un courrier électronique contenant des instructions supplémentaires sur la manière de réinitialiser votre mot de passe vous a été envoyé.",
 	"forgotPassword.emailSent.error": "Échec de l'envoi d'un email à cette adresse",
 	"frame.calendar.moreAboutThisEvent": "Plus d'informations sur cet événement sur {SITENAME}",
 	"frame.calendar.noEvents": "Pas d'évènements prévus",

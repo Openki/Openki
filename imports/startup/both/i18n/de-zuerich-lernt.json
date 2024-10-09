@@ -482,7 +482,6 @@
 	"forgot.notValid": "Bitte gib die Adresse ein mit der du dich angemeldet hast.",
 	"forgot.send": "Passwort zurücksetzen",
 	"forgot.send.busy": "Passwort wird zurückgesetzt…",
-	"forgotPassword.emailSent": "Ein E-Mail mit Anleitung zur Passwortrücksetzung wurde an Dich gesendet.",
 	"forgotPassword.emailSent.error": "Senden der E-Mail an diese Adresse ist fehlgeschlagen",
 	"frame.calendar.moreAboutThisEvent": "Mehr zu dieser Lektion auf unserer Plattform",
 	"frame.calendar.noEvents": "Noch keine Lektion geplant",
