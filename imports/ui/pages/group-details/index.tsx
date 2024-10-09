@@ -96,7 +96,7 @@ export function GroupDetailsPage(data: Data) {
     return {
       region: region?._id || "",
       group: group._id,
-      list: group.dashboard || PublicSettings.groupDashboardDefault,
+      list: group.dashboard || PublicSettings.groupDashboardDefault || [],
     };
   }
   function newCourse() {
