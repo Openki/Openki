@@ -14,7 +14,7 @@ import * as HtmlTools from "/imports/utils/html-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { HtmlString, SaveString, Type, UnsaveString } from "/imports/utils/CustomChecks";
 
-const sanitizeComment = (comment: { title?: string; text: UnsaveString }) => {
+const sanitizeComment = (comment: { title?: string | undefined; text: UnsaveString }) => {
   const saneTitle = StringTools.saneTitle(comment.title || "")
     .substring(0, 200)
     .trim();
@@ -98,9 +98,9 @@ export const postComment = ServerMethod(
 );
 
 export const EditCommentFieldsPattern = {
-  _id: String,
-  title: String,
-  text: String,
+  _id: SaveString(),
+  title: SaveString(),
+  text: SaveString(),
 };
 export type EditCommentFields = Type<typeof EditCommentFieldsPattern>;
 
@@ -128,8 +128,8 @@ export const editComment = ServerMethod(
 
 export const deleteComment = ServerMethod(
   "courseDiscussion.deleteComment",
-  async (commentId: string) => {
-    check(commentId, String);
+  async (commentId: UnsaveString) => {
+    check(commentId, SaveString());
 
     const user = await Meteor.userAsync();
     if (!user) {
