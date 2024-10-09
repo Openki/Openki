@@ -12,6 +12,7 @@ import { Events } from "/imports/api/events/events";
 import * as courseInterestedDenormalizer from "/imports/api/courses/interestedDenormalizer";
 
 import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
+import * as HtmlTools from "/imports/utils/html-tools";
 import * as Profile from "/imports/utils/profile";
 import { isEmail } from "/imports/utils/email-tools";
 import * as StringTools from "/imports/utils/string-tools";
@@ -64,7 +65,7 @@ export const updateDescription = ServerMethod("user.updateDescription", (descrip
     throw new ValidationError([{ name: "description", type: "plzLogin" }], "Not logged-in");
   }
 
-  const sane = StringTools.saneTitle(description).trim().substring(0, 400);
+  const sane = HtmlTools.saneHtml(description).trim().substring(0, 400);
 
   const result = Profile.Description.change(userId, sane);
   if (!result) {

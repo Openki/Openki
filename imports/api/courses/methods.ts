@@ -185,8 +185,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
   }
 
   if (changes.description) {
-    // 640 k ought to be enough for everybody  -- Mao
-    set.description = changes.description.substring(0, 640 * 1024);
+    set.description = changes.description;
     if (Meteor.isServer) {
       set.description = HtmlTools.saneHtml(set.description);
     }
