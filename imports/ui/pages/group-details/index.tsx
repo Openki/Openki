@@ -254,11 +254,14 @@ export function GroupDetailsPage(data: Data) {
             {t("group.details.group", "Group")}
 
             {isFeatured() ? (
-              <i
-                title={t("group.details.isFeatured", "This group is featured")}
-                aria-hidden="true"
-                className="fa-solid fa-star fa-fw"
-              ></i>
+              <>
+                {" "}
+                <i
+                  title={t("group.details.isFeatured", "This group is featured")}
+                  aria-hidden="true"
+                  className="fa-solid fa-star fa-fw"
+                ></i>
+              </>
             ) : null}
 
             <button
