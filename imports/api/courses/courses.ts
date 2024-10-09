@@ -147,15 +147,15 @@ export class Course {
 export const FindFilterPattern = {
   tenants: Match.Maybe([String]),
   region: Match.Maybe(String),
+  group: Match.Maybe(String),
+  search: Match.Maybe(String),
   state: Match.Maybe([StringEnum("proposal", "resting", "upcomingEvent")]),
+  categories: Match.Maybe([String]),
+  needsRole: Match.Maybe([StringEnum("host", "mentor", "team")]),
+  internal: Match.Maybe(Boolean),
+  archived: Match.Maybe(Boolean),
   userInvolved: Match.Maybe(String),
   createdby: Match.Maybe(String),
-  categories: Match.Maybe([String]),
-  group: Match.Maybe(String),
-  internal: Match.Maybe(Boolean),
-  search: Match.Maybe(String),
-  needsRole: Match.Maybe([StringEnum("host", "mentor", "team")]),
-  archived: Match.Maybe(Boolean),
 };
 export type FindFilter = Type<typeof FindFilterPattern>;
 
@@ -206,13 +206,14 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
   Filtering() {
     return new Filtering({
       region: Predicates.id,
-      search: Predicates.string,
       group: Predicates.string,
-      categories: Predicates.ids,
+      search: Predicates.string,
       state: Predicates.createEnumsPredicate("proposal", "resting", "upcomingEvent"),
+      categories: Predicates.ids,
       needsRole: Predicates.createEnumsPredicate("host", "mentor", "team"),
       internal: Predicates.flag,
       archived: Predicates.flag,
+      userInvolved: Predicates.string,
     });
   }
 
