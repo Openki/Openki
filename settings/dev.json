@@ -88,6 +88,8 @@
       , "title": "dashboard.eventsMap.title"
       , "query": "after=now"
       }
+    , { "entity": "propose"
+      }
     ]
   , "groupDashboardDefault":
     [ { "entity": "course"
@@ -113,6 +115,8 @@
     , { "entity": "eventsMap"
       , "title": "dashboard.eventsMap.title"
       , "query": "after=now"
+      }
+    , { "entity": "propose"
       }
     ]
 	, "footerLinks":
