@@ -244,7 +244,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
                 className="btn btn-save discussion-save-btn"
                 disabled={!validComment || isBusy}
               >
-                <span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>
+                <span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>{" "}
                 {post.new
                   ? post.parentId
                     ? t("course.discussion.comment_btn.answer", "Answer")
