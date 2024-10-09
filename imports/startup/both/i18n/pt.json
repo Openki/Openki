@@ -239,7 +239,6 @@
 	"forgot.notValid": "Digite o endereço com o qual você se inscreveu.",
 	"forgot.send": "Resetar minha senha",
 	"forgot.send.busy": "Resetando senha…",
-	"forgotPassword.emailSent": "Um e-mail com mais instruções sobre como redefinir sua senha foi enviado para você.",
 	"frame.calendar.noEvents": "Nenhum evento planejado",
 	"frame.eventsList.description": "Descrição:",
 	"frame.eventsList.when": "Quando:",

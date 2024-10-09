@@ -478,7 +478,6 @@
 	"forgot.notValid": "Please enter the address you signed up with.",
 	"forgot.send": "Reset my password",
 	"forgot.send.busy": "Resetting password…",
-	"forgotPassword.emailSent": "An e-mail with further instructions on how to reset your password has been sent to you.",
 	"forgotPassword.emailSent.error": "We were unable to send a mail to this address",
 	"frame.calendar.moreAboutThisEvent": "More about this event on {SITENAME}",
 	"frame.calendar.noEvents": "No events planned",

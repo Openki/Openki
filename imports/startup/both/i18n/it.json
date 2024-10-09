@@ -469,7 +469,6 @@
 	"forgot.notValid": "Inserisci l'indirizzo con cui ti sei registrato.",
 	"forgot.send": "Reimposta la mia password",
 	"forgot.send.busy": "Reimpostazione password in corso…",
-	"forgotPassword.emailSent": "Una email con ulteriori istruzioni su come reimpostare la tua password è stata inviata.",
 	"forgotPassword.emailSent.error": "Impossibile inviare una email a questo indirizzo",
 	"frame.calendar.moreAboutThisEvent": "Maggiori informazioni su questo evento su {SITENAME}",
 	"frame.calendar.noEvents": "Nessun evento in programma",
