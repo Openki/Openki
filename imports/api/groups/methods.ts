@@ -74,7 +74,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
     updates.claim = changes.claim.substring(0, 1000);
   }
   if (changes.description !== undefined) {
-    const description = changes.description.substring(0, 640 * 1024);
+    const description = changes.description;
     if (Meteor.isServer) {
       updates.description = HtmlTools.saneHtml(description);
     } else {
