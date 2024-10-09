@@ -133,7 +133,7 @@ function FindHeader(data: {
       })}
     </h2>
   ) : (
-    <Header />
+    <Header {...data} />
   );
 }
 

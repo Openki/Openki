@@ -323,18 +323,9 @@ export function GroupDetailsPage(data: Data) {
           ) : null}
           {allowEditingSettings() ? <GroupSettings group={data.group} /> : null}
         </div>
-        {!dashboardAttr().list && data.showCourses ? (
-          <div className="container mw-md">
-            <Find {...data.courseQuery} />
-          </div>
-        ) : null}
+        {!dashboardAttr().list.length && data.showCourses ? <Find {...data.courseQuery} /> : null}
       </div>
-      {dashboardAttr().list && data.showCourses ? <Dashboard {...dashboardAttr()} /> : null}
-      {!dashboardAttr().list && data.showCourses ? (
-        <div className="container mw-md">
-          <Edit {...newCourse()} />
-        </div>
-      ) : null}
+      {dashboardAttr().list.length && data.showCourses ? <Dashboard {...dashboardAttr()} /> : null}
     </>
   );
 }
