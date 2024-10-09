@@ -446,7 +446,6 @@
 	"forgot.notValid": "الرجاء إدخال العنوان الذي سجلت به.",
 	"forgot.send": "إعادة تعيين كلمة المرور الخاصة بي",
 	"forgot.send.busy": "إعادة تعيين كلمة المرور …",
-	"forgotPassword.emailSent": "تم إرسال بريد إلكتروني إليك مع إرشادات حول كيفية إعادة تعيين كلمة المرور الخاصة بك.",
 	"forgotPassword.emailSent.error": "فشل في إرسال بريد إلكتروني إلى هذا العنوان",
 	"frame.calendar.moreAboutThisEvent": "المزيد حول هذا الحدث على {SITENAME}",
 	"frame.calendar.noEvents": "لا توجد أحداث مخطط لها",

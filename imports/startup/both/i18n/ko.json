@@ -455,7 +455,6 @@
 	"forgot.notValid": "가입한 이메일을 기입해 주세요.",
 	"forgot.send": "비밀번호 초기화",
 	"forgot.send.busy": "비밀번호 초기화 중…",
-	"forgotPassword.emailSent": "비밀번호 초기화를 하는 자세한 방법을 알려주는 이메일을 보냈습니다.",
 	"forgotPassword.emailSent.error": "해당 주소로는 이메일 전송이 불가합니다",
 	"frame.calendar.moreAboutThisEvent": "이 이벤트에 대한 많은 정보는 {SITENAME}에",
 	"frame.calendar.noEvents": "예정된 이벤트가 없습니다",
