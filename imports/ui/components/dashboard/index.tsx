@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
+import { useUserId } from "/imports/utils/react-meteor-data";
 
 import { Courses as CourseCollection, CourseModel } from "/imports/api/courses/courses";
 import { Events as EventCollection, EventModel } from "/imports/api/events/events";
@@ -141,23 +142,27 @@ export type Props = {
 export function Dashboard({ list, region, group }: Props) {
   const { t } = useTranslation();
   const { getLocalizedValue } = useLocalizedSetting();
+  const currentUserId = useUserId();
 
   const hooks = list.map((i) => {
     const handler = mapping[i.entity];
 
-    const urlParams = new URLSearchParams(i.query);
+    const queryString = (i.query || "").replaceAll("{currentUser}", currentUserId || "");
+
+    const urlParams = new URLSearchParams(queryString);
     if (region) {
       urlParams.append("region", region);
     }
     if (group) {
       urlParams.append("group", group);
     }
+    const params = Object.fromEntries(urlParams);
 
     if (!("filter" in handler)) {
       // A static component
       return {
         isLoading: () => false,
-        data: Object.fromEntries(urlParams),
+        data: params,
         route: handler.route,
         element: undefined,
         component: handler.component,
@@ -176,7 +181,6 @@ export function Dashboard({ list, region, group }: Props) {
     }
 
     const filter = handler.filter();
-    const params = Object.fromEntries(urlParams);
     filter.read(params);
     const query = filter.done().toQuery();
 

@@ -294,6 +294,8 @@
   "dashboard.recentActivities.title": "Recent activities",
   "dashboard.showAll": "Show all >",
   "dashboard.upcomingEvents.title": "Upcoming events",
+  "dashboard.userInvolvedIn.title": "You are involved in",
+  "dashboard.userRegistredFor.title": "You are registered for",
   "deleteEventsModal.clearSelection": "Clear selection",
   "deleteEventsModal.confirm": "Confirm deletion of events",
   "deleteEventsModal.confirmDeleteEvents": "Delete {NUM, plural, one{event} other{events} }",

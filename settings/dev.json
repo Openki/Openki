@@ -57,6 +57,14 @@
 		}
   , "regionDashboardDefault": 
     [ { "entity": "course"
+      , "title": "dashboard.userInvolvedIn.title"
+      , "query": "userInvolved={currentUser}"
+      }
+    , { "entity": "event"
+      , "title": "dashboard.userRegisterFor.title"
+      , "query": "participant={currentUser}&after=now&sort=start&internal=0&canceled=0"
+      }
+    , { "entity": "course"
       , "title": "dashboard.recentActivities.title"
       , "query": ""
       }
