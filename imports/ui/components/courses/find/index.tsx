@@ -346,7 +346,7 @@ export function Find(query: { [key: string]: string | undefined }) {
           <>
             <div className="no-results">
               <div className="no-results-body">
-                <span className="fa-solid fa-circle-exclamation fa-fw" aria-hidden="true"></span>
+                <span className="fa-solid fa-circle-exclamation fa-fw" aria-hidden="true"></span>{" "}
                 {t("find.no-courses-found", "No Courses found")}
               </div>
               {searchIsLimited() ? (
@@ -359,7 +359,7 @@ export function Find(query: { [key: string]: string | undefined }) {
                         RegionSelection.change("all");
                       }}
                     >
-                      <span className="fa-solid fa-location-dot" aria-hidden="true"></span>
+                      <span className="fa-solid fa-location-dot" aria-hidden="true"></span>{" "}
                       {t("find.searchAllRegions", "Search in all regions")}
                     </button>
                   ) : null}
