@@ -168,7 +168,7 @@ export const Api = {
               })),
           };
 
-          const image = course.publicImageUrl();
+          const image = course.publicUrlForDetailsImage();
           if (image) {
             evr.course.image = image;
           }
@@ -203,7 +203,7 @@ export const Api = {
         name: orginalCourse.name,
         description: orginalCourse.description,
         link: Router.url("showCourse", orginalCourse),
-        image: orginalCourse.publicImageUrl(),
+        image: orginalCourse.publicUrlForDetailsImage(),
         customFields: orginalCourse.customFields
           ?.filter((f) => f.visibleFor === "all")
           .map((f) => ({

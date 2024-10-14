@@ -61,6 +61,9 @@ export interface CourseEntity {
    */
   groupOrganizers: string[];
   description: string;
+  /** small image that is used for the compact view, scaled down to max size (width*height) 500px */
+  compactImage: string;
+  /** bigger image that is used for the detail view, scaled down to max size (width*height) 1500px */
   image: string;
   slug: string;
   /** ID_region */
@@ -149,7 +152,15 @@ export class Course {
     return hasRoleUser(this.members, role, userId);
   }
 
-  publicImageUrl(this: CourseModel) {
+  publicUrlForCompactImage(this: CourseModel) {
+    if (!this.compactImage) {
+      return undefined;
+    }
+
+    return FileStorage.generatePublicUrl(this.compactImage);
+  }
+
+  publicUrlForDetailsImage(this: CourseModel) {
     if (!this.image) {
       return undefined;
     }

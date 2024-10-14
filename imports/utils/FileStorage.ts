@@ -27,7 +27,7 @@ function createS3Client() {
 
 export const UploadFilePattern = Match.ObjectIncluding({
   mimeType: String,
-  /** As BinaryString */
+  /** As base64url */
   content: String,
 });
 export type UploadFile = Match.PatternMatch<typeof UploadFilePattern>;
@@ -49,7 +49,7 @@ export async function upload(directoryName: string, file: UploadFile) {
     Key: fullKey,
     ContentType: file.mimeType,
     ACL: "public-read",
-    Body: Buffer.from(file.content, "binary"),
+    Body: Buffer.from(file.content, "base64url"),
   };
 
   await new Upload({
