@@ -66,8 +66,6 @@ function Alert({
 
   useEffect(() => {
     updateSpacerHeight();
-    $(".alert-message").addClass("is-faded-in");
-
     timedRemove = Meteor.setTimeout(() => remove(id), timeout);
   });
 
