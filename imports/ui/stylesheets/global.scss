@@ -47,3 +47,50 @@ a:focus,
 .modal-header .btn-close {
   filter: var(--bs-btn-close-white-filter);
 }
+
+.action-focus {
+  position: relative;
+}
+
+.action-focus::after {
+  display: block;
+  content: "";
+  animation: highlight 5s ease-out;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  z-index: 10000;
+}
+
+@keyframes highlight {
+  0% {
+    outline: unquote("max(100vw, 100vh) solid transparent");
+    outline-offset: 3px;
+  }
+  10% {
+    outline: unquote("max(100vw, 100vh) solid rgba(0, 0, 0, 0.2)");
+    outline-offset: 3px;
+  }
+
+  20% {
+    outline: unquote("max(100vw, 100vh) solid rgba(0, 0, 0, 0.2)");
+    outline-offset: 3px;
+  }
+
+  30% {
+    outline: 3px solid rgba(0, 0, 0, 0.6);
+    outline-offset: 3px;
+  }
+
+  80% {
+    outline: 3px solid rgba(0, 0, 0, 0.6);
+    outline-offset: 3px;
+  }
+
+  100% {
+    outline: 3px solid transparent;
+    outline-offset: 3px;
+  }
+}
