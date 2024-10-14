@@ -29,6 +29,7 @@ export interface UploadImage {
 }
 
 export interface Data {
+  /** max allowed image size max*max */
   maxSize?: number | undefined;
   thumbnail?: { src?: string | undefined; maxSize?: number | undefined } | undefined;
   onUpload: (file: UploadImage) => void;
@@ -91,7 +92,7 @@ export function EditableImage(data: Data) {
         setCopyRights(false);
         setProgress("ready");
       };
-      reader.readAsBinaryString(rezisedFile);
+      reader.readAsDataURL(rezisedFile);
     }
 
     {

@@ -81,7 +81,7 @@ function getEvents(regionId: string) {
   }
   return Events.find(filter, {
     // Do not load any data into the memory that is not required
-    projection: { title: 0, slug: 0, description: 0, courseImage: 0 },
+    projection: { title: 0, slug: 0, description: 0, courseImage: 0, courseCompactImage: 0 },
   }).fetchAsync();
 }
 

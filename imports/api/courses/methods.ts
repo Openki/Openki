@@ -36,6 +36,7 @@ import { LocalizedValuePattern } from "/imports/utils/getLocalizedValue";
 import * as FileStorage from "/imports/utils/FileStorage";
 import { StringEnum, Type } from "/imports/utils/CustomChecks";
 import { GroupPromoters } from "/imports/utils/update-methods";
+import { resizeImage } from "../../utils/resize-image";
 
 export interface Method<T> {
   method: string;
@@ -236,6 +237,9 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     set.groupOrganizers = groups;
 
     /* region cannot be changed */
+    if (!changes.region) {
+      throw new Meteor.Error(404, "region missing");
+    }
     const region = Regions.findOne({ _id: changes.region });
     if (!region) {
       throw new Meteor.Error(404, "region missing");
@@ -320,19 +324,35 @@ export const updateImage = ServerMethod(
       throw new Meteor.Error(401, "Denied");
     }
 
+    if (!Meteor.isServer) {
+      return undefined;
+    }
+
     if (course.image && !course.image.startsWith("https://")) {
       FileStorage.remove(course.image);
     }
 
-    const result = await FileStorage.upload("courses/image/", file);
+    // Note: image scaling also happens on the client
+    const resizedCompactImage = await resizeImage(file.content, 500);
+    const compactResult = await FileStorage.upload("courses/image/compact", {
+      content: resizedCompactImage,
+      mimeType: file.mimeType,
+    });
+    const resizedDetailsImage = await resizeImage(file.content, 1500);
+    const detailsResult = await FileStorage.upload("courses/image/details", {
+      content: resizedDetailsImage,
+      mimeType: file.mimeType,
+    });
 
-    const image = result.fullFileName;
-    const update = { image };
+    const update = {
+      compactImage: compactResult.fullFileName,
+      image: detailsResult.fullFileName,
+    };
 
     const enrichedSet = timeLastEditDenormalizer.beforeUpdateImage(update);
     await Courses.updateAsync(course._id, { $set: enrichedSet });
     await historyDenormalizer.afterUpdateImage(courseId, user._id);
-    await eventsCourseImageDenormalizer.afterCourseUpdateImage(courseId, image);
+    await eventsCourseImageDenormalizer.afterCourseUpdateImage(courseId, enrichedSet);
 
     return courseId;
   },

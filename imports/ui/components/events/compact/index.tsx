@@ -32,7 +32,7 @@ function bodyStyle(event: EventModel, withImage?: boolean | undefined) {
     return {};
   }
 
-  const src = event?.publicImageUrl();
+  const src = event?.publicUrlForCompactImage();
   if (!src) {
     return {};
   }
