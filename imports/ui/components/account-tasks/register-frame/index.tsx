@@ -5,6 +5,7 @@ import { useSession } from "/imports/utils/react-meteor-data";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { AccountsAsync } from "/imports/utils/promisify";
 import { PublicSettings } from "/imports/utils/PublicSettings";
+import { Router } from "meteor/iron:router";
 
 import * as Alert from "/imports/api/alerts/alert";
 import * as UsersMethods from "/imports/api/users/methods";
@@ -13,6 +14,7 @@ import * as Analytics from "/imports/ui/lib/analytics";
 import { useValidation } from "/imports/ui/lib/useValidation";
 
 import { DataProtectionLaw } from "../data-protection-law";
+import { NotAllowedCharacter } from "../../../../startup/both/NotAllowedCharacter";
 
 export type Props = {
   username: string;
@@ -35,6 +37,13 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
       text: () => t("register.warning.noUserName", "Please enter a name for your new user."),
       field: "username",
       onCheckValidity: () => !!registerData.username,
+    },
+    "Not allowed character": {
+      text: () =>
+        t("register.warning.notAllowedCharacter", "{CHARACTERS} not allowed in username.", {
+          CHARACTERS: NotAllowedCharacter.join(", "),
+        }),
+      field: "username",
     },
     "Username already exists.": {
       text: () =>
@@ -60,11 +69,17 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
       field: "email",
     },
     "Email already exists.": {
-      text: () =>
-        t(
-          "register.warning.emailExists",
-          "This email already exists. Have you tried resetting your password?",
-        ),
+      text: () => (
+        <>
+          {t(
+            "register.warning.emailExists",
+            "This email is already in use. In case you forgot your password, you can reset it. In case you interacted as guest, please create a user.",
+          )}{" "}
+          <a href={Router.path("resetPasswortEmail", {}, { query: { email: registerData.email } })}>
+            {t("register.warning.emailExists.sendEmail", "Ok, send me an email to continue")}
+          </a>
+        </>
+      ),
       field: "email",
     },
   });
@@ -151,7 +166,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
         </div>
       </div>
       <div className="mb-3">
-        <div className="row g-2 align-items-center">
+        <div className="row g-2">
           <div className="col">
             <div className="input-group has-validation">
               <span className="input-group-text">
@@ -174,7 +189,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
           </div>
           <div className="col-auto">
             <a
-              className="text-body-secondary"
+              className="text-body-secondary mt-2 d-inline-block"
               data-bs-toggle="collapse"
               href="#email-info"
               role="button"

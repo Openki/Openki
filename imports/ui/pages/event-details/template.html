@@ -14,12 +14,12 @@
       {{/if}}
       {{#if course}}
         {{#unless course.singleEvent}}
-          {{> eventCourseHeader backlink=courseLink headerlink=courseLink regionId=region categories=categories title=course.name image=course.publicImageUrl}}
+          {{> eventCourseHeader backlink=courseLink headerlink=courseLink regionId=region categories=categories title=course.name image=course.publicUrlForDetailsImage}}
         {{else}}
           {{#if mayEdit}}
-            {{> eventCourseHeader course=course backlink=courseLink regionId=region categories=categories title=title image=course.publicImageUrl}}
+            {{> eventCourseHeader course=course backlink=courseLink regionId=region categories=categories title=title image=course.publicUrlForDetailsImage}}
           {{else}}
-            {{> eventCourseHeader course=course regionId=region categories=categories title=title image=course.publicImageUrl}}
+            {{> eventCourseHeader course=course regionId=region categories=categories title=title image=course.publicUrlForDetailsImage}}
           {{/if}}
         {{/unless}}
       {{/if}}

@@ -13,6 +13,7 @@ import { ServerMethod } from "/imports/utils/ServerMethod";
 import * as FileStorage from "/imports/utils/FileStorage";
 import { UploadFilePattern } from "/imports/utils/FileStorage";
 import { Type } from "/imports/utils/CustomChecks";
+import { resizeImage } from "../../utils/resize-image";
 
 async function loadGroup(groupId: string) {
   // new!
@@ -74,7 +75,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
     updates.claim = changes.claim.substring(0, 1000);
   }
   if (changes.description !== undefined) {
-    const description = changes.description.substring(0, 640 * 1024);
+    const description = changes.description;
     if (Meteor.isServer) {
       updates.description = HtmlTools.saneHtml(description);
     } else {
@@ -121,11 +122,20 @@ export const updateLogo = ServerMethod(
       throw new Meteor.Error(401, "Denied");
     }
 
+    if (!Meteor.isServer) {
+      return undefined;
+    }
+
     if (group.logoUrl && !group.logoUrl.startsWith("https://")) {
       FileStorage.remove(group.logoUrl);
     }
 
-    const result = await FileStorage.upload("groups/logos/", file);
+    // Note: image scaling also happens on the client
+    const resizedImage = await resizeImage(file.content, 100);
+    const result = await FileStorage.upload("groups/logos/", {
+      content: resizedImage,
+      mimeType: file.mimeType,
+    });
 
     const update = { logoUrl: result.fullFileName };
 

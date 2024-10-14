@@ -102,7 +102,7 @@ export function UsersCourselist(data: { user: UserModel; ownProfile: boolean }) 
               {roles()
                 .filter((role) => coursesByRoleCount(role.type, false))
                 .map((role) => (
-                  <>
+                  <React.Fragment key={role.type}>
                     <h3 id={role.type}>
                       <div className="badge">
                         <span className={`${role.icon} fa-fw`} aria-hidden="true"></span>
@@ -114,13 +114,13 @@ export function UsersCourselist(data: { user: UserModel; ownProfile: boolean }) 
                           })}
                     </h3>
                     <CourseList courses={coursesByRole(role.type, false)} small={true} />
-                  </>
+                  </React.Fragment>
                 ))}
 
               {roles()
                 .filter((role) => coursesByRoleCount(role.type, true) && showArchived(role))
                 .map((role) => (
-                  <>
+                  <React.Fragment key={role.type}>
                     <h3 id={`${role.type}_archived`}>
                       <div className="badge is-archived">
                         <span className={`${role.icon} fa-fw`} aria-hidden="true"></span>
@@ -132,7 +132,7 @@ export function UsersCourselist(data: { user: UserModel; ownProfile: boolean }) 
                           })}
                     </h3>
                     <CourseList courses={coursesByRole(role.type, true)} small={true} />
-                  </>
+                  </React.Fragment>
                 ))}
             </>
           ) : (

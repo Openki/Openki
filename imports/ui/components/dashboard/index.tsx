@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
+import { useUserId } from "/imports/utils/react-meteor-data";
 
 import { Courses as CourseCollection, CourseModel } from "/imports/api/courses/courses";
 import { Events as EventCollection, EventModel } from "/imports/api/events/events";
@@ -13,7 +14,9 @@ import { Filtering } from "/imports/utils/filtering";
 import { SortSpec } from "/imports/utils/sort-spec";
 import { Publication } from "/imports/utils/ServerPublishReact";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
+import { CourseTemplate } from "../../lib/course-template";
 
+import { Edit } from "../courses/edit";
 import { CourseCompact } from "../../components/courses/compact";
 import { EventCompact } from "../../components/events/compact";
 import { EventsMap } from "../../components/events/map";
@@ -35,19 +38,27 @@ function bodyStyle(imageUrl: string) {
 
 const mapping: {
   [name: string]:
-    | {
+    | /** A list of entites. */
+    {
         route: string;
         showAll?: { text?: string };
         filter: () => Filtering<any>;
         find: Publication<any, any>;
         element: (entity: any) => React.JSX.Element;
       }
+    /** A static component with entites eg. like eventMap */
     | {
         route: string;
         showAll?: { text?: string };
         filter: () => Filtering<any>;
         find: Publication<any, any>;
         component: (entitys: any) => React.JSX.Element;
+      }
+    /** A static component eg. like propose */
+    | {
+        route?: string;
+        showAll?: { text?: string };
+        component: (data: any) => React.JSX.Element;
       };
 } = {
   course: {
@@ -108,13 +119,20 @@ const mapping: {
       </div>
     ),
   },
+  propose: {
+    component: (data) => (
+      <div className="container mw-md">
+        <Edit {...CourseTemplate()} {...data} />
+      </div>
+    ),
+  },
 };
 
 export type Props = {
   list: {
     entity: string;
     title: string;
-    query: string;
+    query?: string;
     showAll?: { link?: string; text?: string };
   }[];
   region?: string;
@@ -124,13 +142,14 @@ export type Props = {
 export function Dashboard({ list, region, group }: Props) {
   const { t } = useTranslation();
   const { getLocalizedValue } = useLocalizedSetting();
+  const currentUserId = useUserId();
 
   const hooks = list.map((i) => {
     const handler = mapping[i.entity];
 
-    const filter = handler.filter();
-    const urlParams = new URLSearchParams(i.query);
+    const queryString = (i.query || "").replaceAll("{currentUser}", currentUserId || "");
 
+    const urlParams = new URLSearchParams(queryString);
     if (region) {
       urlParams.append("region", region);
     }
@@ -138,6 +157,30 @@ export function Dashboard({ list, region, group }: Props) {
       urlParams.append("group", group);
     }
     const params = Object.fromEntries(urlParams);
+
+    if (!("filter" in handler)) {
+      // A static component
+      return {
+        isLoading: () => false,
+        data: params,
+        route: handler.route,
+        element: undefined,
+        component: handler.component,
+        ...i,
+        showAll: {
+          link:
+            i.showAll?.link ||
+            ("route" in handler
+              ? Router.path(handler.route, undefined, { query: urlParams.toString() })
+              : undefined),
+          text:
+            getLocalizedValue(i.showAll?.text || handler.showAll?.text) ||
+            t("dashboard.showAll", "Show all >"),
+        },
+      };
+    }
+
+    const filter = handler.filter();
     filter.read(params);
     const query = filter.done().toQuery();
 
@@ -166,12 +209,14 @@ export function Dashboard({ list, region, group }: Props) {
     <>
       {hooks.map((h, i) => (
         <React.Fragment key={i}>
-          {!h.isLoading() && h.data.length > 0 ? (
+          {!h.isLoading() && (!Array.isArray(h.data) || h.data.length > 0) ? (
             <div className="container mb-4">
-              <a className="btn btn-sm btn-success float-end" href={h.showAll.link}>
-                {h.showAll.text}
-              </a>
-              <h2>{getLocalizedValue(h.title)}</h2>
+              {h.showAll.link ? (
+                <a className="btn btn-sm btn-success float-end" href={h.showAll.link}>
+                  {h.showAll.text}
+                </a>
+              ) : null}
+              {h.title ? <h2>{getLocalizedValue(h.title)}</h2> : null}
               {h.element ? (
                 <div className="d-flex flex-row flex-nowrap pb-3 overflow-x-scroll">
                   {h.data.map(h.element)}

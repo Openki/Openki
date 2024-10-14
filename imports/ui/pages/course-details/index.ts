@@ -76,7 +76,7 @@ import "./styles.scss";
       Metatags.setCommonTags(
         course.name,
         truncate(textPlain(course.description), 160),
-        course.publicImageUrl(),
+        course.publicUrlForDetailsImage(),
       );
     });
 
@@ -141,7 +141,7 @@ import "./styles.scss";
     // more helpers in course.roles.js
 
     detailsHeaderAttr(course: CourseModel) {
-      const src = course?.publicImageUrl();
+      const src = course?.publicUrlForDetailsImage();
       if (!src) {
         return {};
       }

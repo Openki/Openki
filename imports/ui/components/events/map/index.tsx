@@ -83,9 +83,8 @@ export function EventsMap({ events, fullscreenControl = true, openLinksInNewTab 
       <MapContainer bounds={markers.map((mark) => mark.loc) as any}>
         {(TileLayers[locale] || TileLayers.default)()}
         {markers.map((mark) => (
-          <>
+          <React.Fragment key={mark._id}>
             <Marker
-              key={mark._id}
               position={mark.loc as any}
               icon={mark.venue?._id ? venueMarkerIcon : eventMarkerIcon}
             >
@@ -108,11 +107,10 @@ export function EventsMap({ events, fullscreenControl = true, openLinksInNewTab 
               </Popup>
             </Marker>
             <Marker
-              key={mark._id + 2}
               position={mark.loc as any}
               icon={mark.venue?._id ? venueMarkerShadowIcon : eventMarkerShadowIcon}
             ></Marker>
-          </>
+          </React.Fragment>
         ))}
         {fullscreenControl ? <FullscreenControl /> : null}
       </MapContainer>

@@ -91,12 +91,12 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
   /** Standard for all regions, can be overwritten if the "dashboard" property is set in the region, if not set, the ‘find’ page is displayed, default: undefined */
   regionDashboardDefault: Match.Maybe([
     {
-      /** The entity to show: "course", "event", "group", "eventsMap" are supported */
+      /** The entity to show: "course", "event", "group", "eventsMap", "propose" are supported */
       entity: String,
       /** Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }` */
-      title: LocalizedValuePattern,
-      /** Query how the data should be filtered and sorted, all options and filters can be found in the wiki, can be an empty string "". The entities are filtered by region. */
-      query: String,
+      title: Match.Maybe(LocalizedValuePattern),
+      /** Query how the data should be filtered and sorted, all options and filters can be found in the wiki. The entities are filtered by region. */
+      query: Match.Maybe(String),
       /** Overwrite the standard showAll button */
       showAll: Match.Maybe({
         /** The target to which the button links. */
@@ -109,12 +109,12 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
   /** Standard for all groups, can be overwritten if the "dashboard" property is set in the group, if not set, the ‘find’ page is displayed, default: undefined */
   groupDashboardDefault: Match.Maybe([
     {
-      /** The entity to show: "course", "event", "group", "eventsMap" are supported */
+      /** The entity to show: "course", "event", "group", "eventsMap", "propose" are supported */
       entity: String,
       /** Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }` */
-      title: LocalizedValuePattern,
-      /** Query how the data should be filtered and sorted, all options and filters can be found in the wiki, can be an empty string "". The entities are filtered by region and group. */
-      query: String,
+      title: Match.Maybe(LocalizedValuePattern),
+      /** Query how the data should be filtered and sorted, all options and filters can be found in the wiki. The entities are filtered by region. */
+      query: Match.Maybe(String),
       /** Overwrite the standard showAll button */
       showAll: Match.Maybe({
         /** The target to which the button links. */

@@ -4,7 +4,7 @@ import { _ } from "meteor/underscore";
 import { Match, check } from "meteor/check";
 
 import { UserModel } from "/imports/api/users/users";
-import { EventModel, OEvent } from "/imports/api/events/events";
+import { EventEntity, OEvent } from "/imports/api/events/events";
 // eslint-disable-next-line import/no-cycle
 import * as tenantDenormalizer from "./tenantDenormalizer";
 import * as interestedDenormalizer from "./interestedDenormalizer";
@@ -34,6 +34,16 @@ export type CourseCustomField = Pick<
   value: string | boolean;
 };
 
+export type CourseNextEventEntity = Pick<
+  EventEntity,
+  "_id" | "start" | "startLocal" | "venue" | "noRsvp" | "participants"
+>;
+
+export type CourseLastEventEntity = Pick<
+  EventEntity,
+  "_id" | "start" | "startLocal" | "venue" | "participants"
+>;
+
 /** DB-Model */
 export interface CourseEntity {
   _id: string;
@@ -51,6 +61,9 @@ export interface CourseEntity {
    */
   groupOrganizers: string[];
   description: string;
+  /** small image that is used for the compact view, scaled down to max size (width*height) 500px */
+  compactImage: string;
+  /** bigger image that is used for the detail view, scaled down to max size (width*height) 1500px */
   image: string;
   slug: string;
   /** ID_region */
@@ -81,9 +94,9 @@ export interface CourseEntity {
   /** (calculated) count of events still in the future for this course */
   futureEvents: number;
   /** (calculated) next upcoming event object, only includes the _id and start field */
-  nextEvent: EventModel | null;
+  nextEvent: CourseNextEventEntity | null;
   /** (calculated) most recent event object, only includes the _id and start field */
-  lastEvent: EventModel | null;
+  lastEvent: CourseLastEventEntity | null;
   /** (calculated) based to members.length, to support sorting by number of interested user over url params */
   interested: number;
 }
@@ -96,6 +109,10 @@ export class Course {
   roles: string[] = [];
 
   groupOrganizers: string[] = [];
+
+  nextEvent: (CourseNextEventEntity & OEvent) | null = null;
+
+  lastEvent: (CourseLastEventEntity & OEvent) | null = null;
 
   /**
    * Check if the course is new (not yet saved).
@@ -135,7 +152,15 @@ export class Course {
     return hasRoleUser(this.members, role, userId);
   }
 
-  publicImageUrl(this: CourseModel) {
+  publicUrlForCompactImage(this: CourseModel) {
+    if (!this.compactImage) {
+      return undefined;
+    }
+
+    return FileStorage.generatePublicUrl(this.compactImage);
+  }
+
+  publicUrlForDetailsImage(this: CourseModel) {
     if (!this.image) {
       return undefined;
     }
@@ -147,15 +172,15 @@ export class Course {
 export const FindFilterPattern = {
   tenants: Match.Maybe([String]),
   region: Match.Maybe(String),
+  group: Match.Maybe(String),
+  search: Match.Maybe(String),
   state: Match.Maybe([StringEnum("proposal", "resting", "upcomingEvent")]),
+  categories: Match.Maybe([String]),
+  needsRole: Match.Maybe([StringEnum("host", "mentor", "team")]),
+  internal: Match.Maybe(Boolean),
+  archived: Match.Maybe(Boolean),
   userInvolved: Match.Maybe(String),
   createdby: Match.Maybe(String),
-  categories: Match.Maybe([String]),
-  group: Match.Maybe(String),
-  internal: Match.Maybe(Boolean),
-  search: Match.Maybe(String),
-  needsRole: Match.Maybe([StringEnum("host", "mentor", "team")]),
-  archived: Match.Maybe(Boolean),
 };
 export type FindFilter = Type<typeof FindFilterPattern>;
 
@@ -206,13 +231,14 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
   Filtering() {
     return new Filtering({
       region: Predicates.id,
-      search: Predicates.string,
       group: Predicates.string,
-      categories: Predicates.ids,
+      search: Predicates.string,
       state: Predicates.createEnumsPredicate("proposal", "resting", "upcomingEvent"),
+      categories: Predicates.ids,
       needsRole: Predicates.createEnumsPredicate("host", "mentor", "team"),
       internal: Predicates.flag,
       archived: Predicates.flag,
+      userInvolved: Predicates.string,
     });
   }
 
@@ -388,12 +414,6 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
     options.projection = {
       "members.comment": 0,
       history: 0,
-      "nextEvent.editors": 0,
-      "nextEvent.facilities": 0,
-      "nextEvent.loc": 0,
-      "lastEvent.editors": 0,
-      "lastEvent.facilities": 0,
-      "lastEvent.loc": 0,
     };
 
     return this.find(find, options) as Mongo.Cursor<CourseEntity, CourseModel>;

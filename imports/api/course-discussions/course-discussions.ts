@@ -12,7 +12,7 @@ export interface CourseDiscussionEnity {
   userId?: string;
   /** ID_Courses */
   courseId: string;
-  notifyAll?: boolean;
+  notifyAll?: boolean | undefined;
   // eslint-disable-next-line camelcase
   time_created: Date;
   // eslint-disable-next-line camelcase

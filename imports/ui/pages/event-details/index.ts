@@ -60,7 +60,7 @@ import { textPlain } from "/imports/utils/html-tools";
       } else {
         title = i18n("event.windowtitle.create", "Create event");
       }
-      Metatags.setCommonTags(title, description, event?.publicImageUrl());
+      Metatags.setCommonTags(title, description, event?.publicUrlForDetailsImage());
     });
   });
 }

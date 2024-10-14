@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { _ } from "meteor/underscore";
 import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
-import { Dropdown } from "bootstrap";
 import { useFindFilter } from "/imports/api/courses/publications";
+import { Dropdown } from "/imports/startup/client/bootstrap";
 
 import "./styles.scss";
 import { Router } from "meteor/iron:router";

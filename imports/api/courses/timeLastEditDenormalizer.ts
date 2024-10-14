@@ -20,7 +20,7 @@ export function beforeUpdate(course: Mongo.OptionalId<CourseEntity>) {
 /**
  * Enrich the course entity with the modification date
  */
-export function beforeUpdateImage(update: { image: string }) {
+export function beforeUpdateImage(update: { image: string; compactImage: string }) {
   return { ...update, time_lastedit: new Date() };
 }
 

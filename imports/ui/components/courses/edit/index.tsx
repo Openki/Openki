@@ -79,13 +79,13 @@ function Header(data: { _id?: string; isFrame?: boolean; group?: string }) {
             "course.propose.CourseInfo",
             "Start your own {SITENAME} course here. Whether as a mentor or participant, you decide what and how you want to learn. More info here:",
             { SITENAME: siteName },
-          )}
+          )}{" "}
           <a href={getLocalizedValue(PublicSettings.courseGuideLink)} target="_blank">
             {t("course.propose.guideLink", "How to organize my first {SITENAME} course?", {
               SITENAME: siteName,
             })}
           </a>
-          ,
+          {", "}
           <a href={getLocalizedValue(PublicSettings.faqLink)} target="_blank">
             {t("course.propose.faq", "FAQ")}
           </a>
@@ -133,7 +133,7 @@ function FindHeader(data: {
       })}
     </h2>
   ) : (
-    <Header />
+    <Header {...data} />
   );
 }
 
