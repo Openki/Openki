@@ -316,9 +316,9 @@ export const save = ServerMethod(
     if (isNew) {
       editFields.createdBy = user._id;
       editFields.groupOrganizers = [];
-      let enrichedEvent = await courseImageDenormalizer.beforeInsert(editFields as EventEntity);
-      if (editFields.courseId) {
-        enrichedEvent = await categoriesDenormalizer.beforeInsert(editFields as EventEntity);
+      let enrichedEvent = await courseImageDenormalizer.beforeInsert(editFields as any);
+      if (enrichedEvent.courseId) {
+        enrichedEvent = await categoriesDenormalizer.beforeInsert(enrichedEvent);
       }
       // eslint-disable-next-line no-param-reassign
       eventId = await Events.insertAsync(enrichedEvent);

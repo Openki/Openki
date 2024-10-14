@@ -12,6 +12,7 @@ import { Events } from "/imports/api/events/events";
 import * as courseInterestedDenormalizer from "/imports/api/courses/interestedDenormalizer";
 
 import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
+import * as HtmlTools from "/imports/utils/html-tools";
 import * as Profile from "/imports/utils/profile";
 import { isEmail } from "/imports/utils/email-tools";
 import * as StringTools from "/imports/utils/string-tools";
@@ -19,6 +20,7 @@ import * as AsyncTools from "/imports/utils/async-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { Type } from "/imports/utils/CustomChecks";
+import { NotAllowedCharacter } from "/imports/startup/both/NotAllowedCharacter";
 
 /**
  * Set user region
@@ -63,7 +65,7 @@ export const updateDescription = ServerMethod("user.updateDescription", (descrip
     throw new ValidationError([{ name: "description", type: "plzLogin" }], "Not logged-in");
   }
 
-  const sane = StringTools.saneTitle(description).trim().substring(0, 400);
+  const sane = HtmlTools.saneHtml(description).trim().substring(0, 400);
 
   const result = Profile.Description.change(userId, sane);
   if (!result) {
@@ -98,6 +100,13 @@ export const updateUsername = ServerMethod(
       throw new ValidationError(
         [{ name: "username", type: "noUserName" }],
         "username cannot be empty",
+      );
+    }
+
+    if (NotAllowedCharacter.find((c) => saneUsername.includes(c))) {
+      throw new ValidationError(
+        [{ name: "username", type: "notAllowedCharacter" }],
+        "Not allowed character",
       );
     }
 

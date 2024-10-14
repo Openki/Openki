@@ -57,8 +57,24 @@
 		}
   , "regionDashboardDefault": 
     [ { "entity": "course"
+      , "title": "dashboard.userInvolvedIn.title"
+      , "query": "userInvolved={currentUser}"
+      }
+    , { "entity": "event"
+      , "title": "dashboard.userRegisterFor.title"
+      , "query": "participant={currentUser}&after=now&sort=start&internal=0&canceled=0"
+      }
+    , { "entity": "course"
       , "title": "dashboard.recentActivities.title"
       , "query": ""
+      }
+    , { "entity": "course"
+      , "title": "Chaos Computer Club Zürich"
+      , "query": "group=573edec5d6&internal=0"
+      }
+    , { "entity": "event"
+      , "title": "Chaos Computer Club Zürich"
+      , "query": "group=573edec5d6&after=now&sort=start&internal=0&canceled=0"
       }
     , { "entity": "event"
       , "title": "dashboard.upcomingEvents.title"
@@ -79,6 +95,8 @@
     , { "entity": "eventsMap"
       , "title": "dashboard.eventsMap.title"
       , "query": "after=now"
+      }
+    , { "entity": "propose"
       }
     ]
   , "groupDashboardDefault":
@@ -105,6 +123,8 @@
     , { "entity": "eventsMap"
       , "title": "dashboard.eventsMap.title"
       , "query": "after=now"
+      }
+    , { "entity": "propose"
       }
     ]
 	, "footerLinks":

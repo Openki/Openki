@@ -4,6 +4,7 @@ import { Router } from "meteor/iron:router";
 import { useCurrentRouteName, useParams } from "/imports/utils/react-meteor-router";
 
 import { Courses } from "/imports/api/courses/courses";
+import { SortSpec } from "/imports/utils/sort-spec";
 
 import * as UrlTools from "/imports/utils/url-tools";
 import * as Tooltips from "/imports/utils/Tooltips";
@@ -37,9 +38,10 @@ export function Find(query: { [key: string]: string | undefined }) {
   const courseBlockSize = 36;
   const [courseLimit, setCourseLimit] = useState(courseBlockSize);
   const filter = Courses.Filtering().read(query).done();
+  const sort = query.sort ? SortSpec.fromString(query.sort) : SortSpec.unordered();
 
   // Add one to the limit so we know there is more to show
-  const [isLoading, courses] = useFindFilter(filter.toQuery(), courseLimit + 1);
+  const [isLoading, courses] = useFindFilter(filter.toQuery(), courseLimit + 1, 0, sort.spec());
   const searchParams = useParams();
   const currentRouterName = useCurrentRouteName();
 
@@ -344,7 +346,7 @@ export function Find(query: { [key: string]: string | undefined }) {
           <>
             <div className="no-results">
               <div className="no-results-body">
-                <span className="fa-solid fa-circle-exclamation fa-fw" aria-hidden="true"></span>
+                <span className="fa-solid fa-circle-exclamation fa-fw" aria-hidden="true"></span>{" "}
                 {t("find.no-courses-found", "No Courses found")}
               </div>
               {searchIsLimited() ? (
@@ -357,7 +359,7 @@ export function Find(query: { [key: string]: string | undefined }) {
                         RegionSelection.change("all");
                       }}
                     >
-                      <span className="fa-solid fa-location-dot" aria-hidden="true"></span>
+                      <span className="fa-solid fa-location-dot" aria-hidden="true"></span>{" "}
                       {t("find.searchAllRegions", "Search in all regions")}
                     </button>
                   ) : null}

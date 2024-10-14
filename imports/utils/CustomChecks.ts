@@ -1,4 +1,5 @@
 import { Match, check } from "meteor/check";
+import sanitizeHtml from "sanitize-html";
 
 /** Helper type utility to filter out not undefined properties: https://www.typescriptlang.org/docs/handbook/2/mapped-types.html */
 type PickNotUndefined<T> = {
@@ -47,6 +48,34 @@ export function Tuple<T extends readonly Match.Pattern[]>(...pattern: [...T]) {
     // @ts-ignore
     [K in keyof T]: Match.PatternMatch<T[K]>;
   }>;
+}
+
+/** String without HTML. */
+export function SaveString() {
+  return Match.Where(function (str) {
+    check(str, String);
+
+    return (
+      sanitizeHtml(str, {
+        allowedTags: [],
+        allowedAttributes: {},
+      }) === str
+    );
+  }) as Match.Matcher<string>;
+}
+
+/**
+ * Utility typ: An unsafe string that may contain html and needs to be sanitized with
+ * `HtmlTools.saneHtml(...)` *Note: HTMLElement is only symbolic and should remind the developer that
+ * this string could contain HTML.*
+ */
+export type UnsaveString = string | HTMLElement;
+
+export function HtmlString() {
+  return Match.Where(function (str) {
+    check(str, String);
+    return true;
+  }) as Match.Matcher<UnsaveString>;
 }
 
 export function StringEnum<T extends readonly string[]>(...values: T) {

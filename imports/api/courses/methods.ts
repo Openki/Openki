@@ -3,7 +3,14 @@ import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { i18n } from "/imports/startup/both/i18next";
 
-import { Courses, Course, CourseEntity, CourseModel } from "/imports/api/courses/courses";
+import {
+  Courses,
+  Course,
+  CourseEntity,
+  CourseModel,
+  CourseLastEventEntity,
+  CourseNextEventEntity,
+} from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
 import { Groups } from "/imports/api/groups/groups";
 import { Regions } from "/imports/api/regions/regions";
@@ -29,6 +36,7 @@ import { LocalizedValuePattern } from "/imports/utils/getLocalizedValue";
 import * as FileStorage from "/imports/utils/FileStorage";
 import { StringEnum, Type } from "/imports/utils/CustomChecks";
 import { GroupPromoters } from "/imports/utils/update-methods";
+import { resizeImage } from "../../utils/resize-image";
 
 export interface Method<T> {
   method: string;
@@ -185,8 +193,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
   }
 
   if (changes.description) {
-    // 640 k ought to be enough for everybody  -- Mao
-    set.description = changes.description.substring(0, 640 * 1024);
+    set.description = changes.description;
     if (Meteor.isServer) {
       set.description = HtmlTools.saneHtml(set.description);
     }
@@ -230,6 +237,9 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     set.groupOrganizers = groups;
 
     /* region cannot be changed */
+    if (!changes.region) {
+      throw new Meteor.Error(404, "region missing");
+    }
     const region = Regions.findOne({ _id: changes.region });
     if (!region) {
       throw new Meteor.Error(404, "region missing");
@@ -314,19 +324,35 @@ export const updateImage = ServerMethod(
       throw new Meteor.Error(401, "Denied");
     }
 
+    if (!Meteor.isServer) {
+      return undefined;
+    }
+
     if (course.image && !course.image.startsWith("https://")) {
       FileStorage.remove(course.image);
     }
 
-    const result = await FileStorage.upload("courses/image/", file);
+    // Note: image scaling also happens on the client
+    const resizedCompactImage = await resizeImage(file.content, 500);
+    const compactResult = await FileStorage.upload("courses/image/compact", {
+      content: resizedCompactImage,
+      mimeType: file.mimeType,
+    });
+    const resizedDetailsImage = await resizeImage(file.content, 1500);
+    const detailsResult = await FileStorage.upload("courses/image/details", {
+      content: resizedDetailsImage,
+      mimeType: file.mimeType,
+    });
 
-    const image = result.fullFileName;
-    const update = { image };
+    const update = {
+      compactImage: compactResult.fullFileName,
+      image: detailsResult.fullFileName,
+    };
 
     const enrichedSet = timeLastEditDenormalizer.beforeUpdateImage(update);
     await Courses.updateAsync(course._id, { $set: enrichedSet });
     await historyDenormalizer.afterUpdateImage(courseId, user._id);
-    await eventsCourseImageDenormalizer.afterCourseUpdateImage(courseId, image);
+    await eventsCourseImageDenormalizer.afterCourseUpdateImage(courseId, enrichedSet);
 
     return courseId;
   },
@@ -462,7 +488,7 @@ Meteor.methods({
         canceled: { $ne: true },
       }).count();
 
-      const nextEvent = Events.findOne(
+      const nextEvent: CourseNextEventEntity | undefined = Events.findOne(
         { courseId: course._id, start: { $gt: new Date() }, canceled: { $ne: true } },
         {
           sort: { start: 1 },
@@ -477,7 +503,7 @@ Meteor.methods({
         },
       );
 
-      const lastEvent = Events.findOne(
+      const lastEvent: CourseLastEventEntity | undefined = Events.findOne(
         { courseId: course._id, start: { $lt: new Date() }, canceled: { $ne: true } },
         {
           sort: { start: -1 },

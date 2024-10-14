@@ -5,24 +5,24 @@ import { Mongo } from "meteor/mongo";
 import { Regions } from "/imports/api/regions/regions";
 import { VenueEntity, Venues } from "/imports/api/venues/venues";
 
-import { StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";
+import { HtmlString, SaveString, StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import * as StringTools from "/imports/utils/string-tools";
 
 export const SaveFieldPattern = {
-  name: Match.Optional(String),
-  description: Match.Optional(String),
-  region: Match.Optional(String),
+  name: Match.Optional(SaveString()),
+  description: Match.Optional(HtmlString()),
+  region: Match.Optional(SaveString()),
   loc: Match.Optional(
     Match.OneOf(null, {
       type: StringEnum("Point"),
       coordinates: Tuple<[long: NumberConstructor, lat: NumberConstructor]>(Number, Number),
     }),
   ),
-  address: Match.Optional(String),
-  route: Match.Optional(String),
-  short: Match.Optional(String),
+  address: Match.Optional(SaveString()),
+  route: Match.Optional(SaveString()),
+  short: Match.Optional(SaveString()),
   maxPeople: Match.Optional(Match.Integer),
   maxWorkplaces: Match.Optional(Match.Integer),
   facilities: Match.Optional([StringEnum(...Venues.facilityOptions)]),
@@ -56,7 +56,7 @@ export const save = ServerMethod("venue.save", async (venueId: string, changes: 
   const set = { updated: new Date() } as Mongo.OptionalId<VenueEntity>;
 
   if (changes.description) {
-    set.description = HtmlTools.saneHtml(changes.description.trim().substring(0, 640 * 1024));
+    set.description = HtmlTools.saneHtml(changes.description);
   }
   if (changes.name) {
     set.name = changes.name.trim().substring(0, 1000);

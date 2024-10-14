@@ -40,7 +40,7 @@ export function CourseCompact({ course, groupTagEvents, categorieTagEvents }: Pr
       return {};
     }
 
-    const src = course?.publicImageUrl();
+    const src = course?.publicUrlForCompactImage();
     if (!src) {
       return {};
     }

@@ -14,12 +14,10 @@ import * as Alert from "/imports/api/alerts/alert";
 import { Store } from "/imports/ui/lib/editable";
 import * as Analytics from "/imports/ui/lib/analytics";
 import * as Metatags from "/imports/utils/metatags";
-import { CourseTemplate } from "../../lib/course-template";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
 import { Editable, Props as EditableProps } from "/imports/ui/components/editable/index.react";
 
-import { Edit } from "../../components/courses/edit";
 import { Dashboard, Props as DashboardProps } from "../../components/dashboard";
 import { ButtonCancel, ButtonSave } from "/imports/ui/components/buttons";
 import { GroupSettings } from "/imports/ui/components/groups/settings";
@@ -96,14 +94,8 @@ export function GroupDetailsPage(data: Data) {
     return {
       region: region?._id || "",
       group: group._id,
-      list: group.dashboard || PublicSettings.groupDashboardDefault,
+      list: group.dashboard || PublicSettings.groupDashboardDefault || [],
     };
-  }
-  function newCourse() {
-    const { group } = data;
-    const course = CourseTemplate();
-    course.group = group._id;
-    return course;
   }
 
   const handleSaving: Store = {
@@ -254,11 +246,14 @@ export function GroupDetailsPage(data: Data) {
             {t("group.details.group", "Group")}
 
             {isFeatured() ? (
-              <i
-                title={t("group.details.isFeatured", "This group is featured")}
-                aria-hidden="true"
-                className="fa-solid fa-star fa-fw"
-              ></i>
+              <>
+                {" "}
+                <i
+                  title={t("group.details.isFeatured", "This group is featured")}
+                  aria-hidden="true"
+                  className="fa-solid fa-star fa-fw"
+                ></i>
+              </>
             ) : null}
 
             <button
@@ -309,7 +304,7 @@ export function GroupDetailsPage(data: Data) {
                 {mayEdit ? <Editable {...editableDescriptionAttr} /> : data.group.description}
               </div>
 
-              {errors.all ? <span className="form-text">{errors.all}</span> : null}
+              {errors.all ? <span className="form-text d-block">{errors.all}</span> : null}
             </div>
           </div>
           {data.group.isNew() ? (
@@ -320,23 +315,9 @@ export function GroupDetailsPage(data: Data) {
           ) : null}
           {allowEditingSettings() ? <GroupSettings group={data.group} /> : null}
         </div>
-        {!dashboardAttr().list && data.showCourses ? (
-          <>
-            <Dashboard {...dashboardAttr()} />
-            <div className="container mw-md">
-              <Find {...data.courseQuery} />
-            </div>
-          </>
-        ) : null}
+        {!dashboardAttr().list.length && data.showCourses ? <Find {...data.courseQuery} /> : null}
       </div>
-      {dashboardAttr().list && data.showCourses ? (
-        <>
-          <Dashboard {...dashboardAttr()} />
-          <div className="container mw-md">
-            <Edit {...newCourse()} />
-          </div>
-        </>
-      ) : null}
+      {dashboardAttr().list.length && data.showCourses ? <Dashboard {...dashboardAttr()} /> : null}
     </>
   );
 }
