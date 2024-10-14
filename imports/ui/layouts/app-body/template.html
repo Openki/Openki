@@ -11,9 +11,9 @@
       {{> navbar}}
     </div>
     <div id="outer" class="{{#if PublicSettings.testWarning}}test-warning{{/if}}">
-      {{> yield region='aboveContent'}}
-
       {{> alerts}}
+      
+      {{> yield region='aboveContent'}}
 
       {{#if resetPasswortEmailSended}}
         <div class="container mt-3">
