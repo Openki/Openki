@@ -4,7 +4,7 @@ import { _ } from "meteor/underscore";
 import { Match, check } from "meteor/check";
 
 import { UserModel } from "/imports/api/users/users";
-import { EventModel, OEvent } from "/imports/api/events/events";
+import { EventEntity, OEvent } from "/imports/api/events/events";
 // eslint-disable-next-line import/no-cycle
 import * as tenantDenormalizer from "./tenantDenormalizer";
 import * as interestedDenormalizer from "./interestedDenormalizer";
@@ -33,6 +33,16 @@ export type CourseCustomField = Pick<
 > & {
   value: string | boolean;
 };
+
+export type CourseNextEventEntity = Pick<
+  EventEntity,
+  "_id" | "start" | "startLocal" | "venue" | "noRsvp" | "participants"
+>;
+
+export type CourseLastEventEntity = Pick<
+  EventEntity,
+  "_id" | "start" | "startLocal" | "venue" | "participants"
+>;
 
 /** DB-Model */
 export interface CourseEntity {
@@ -81,9 +91,9 @@ export interface CourseEntity {
   /** (calculated) count of events still in the future for this course */
   futureEvents: number;
   /** (calculated) next upcoming event object, only includes the _id and start field */
-  nextEvent: EventModel | null;
+  nextEvent: CourseNextEventEntity | null;
   /** (calculated) most recent event object, only includes the _id and start field */
-  lastEvent: EventModel | null;
+  lastEvent: CourseLastEventEntity | null;
   /** (calculated) based to members.length, to support sorting by number of interested user over url params */
   interested: number;
 }
@@ -96,6 +106,10 @@ export class Course {
   roles: string[] = [];
 
   groupOrganizers: string[] = [];
+
+  nextEvent: (CourseNextEventEntity & OEvent) | null = null;
+
+  lastEvent: (CourseLastEventEntity & OEvent) | null = null;
 
   /**
    * Check if the course is new (not yet saved).
@@ -389,12 +403,6 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
     options.projection = {
       "members.comment": 0,
       history: 0,
-      "nextEvent.editors": 0,
-      "nextEvent.facilities": 0,
-      "nextEvent.loc": 0,
-      "lastEvent.editors": 0,
-      "lastEvent.facilities": 0,
-      "lastEvent.loc": 0,
     };
 
     return this.find(find, options) as Mongo.Cursor<CourseEntity, CourseModel>;
