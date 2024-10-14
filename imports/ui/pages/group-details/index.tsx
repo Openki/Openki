@@ -14,12 +14,10 @@ import * as Alert from "/imports/api/alerts/alert";
 import { Store } from "/imports/ui/lib/editable";
 import * as Analytics from "/imports/ui/lib/analytics";
 import * as Metatags from "/imports/utils/metatags";
-import { CourseTemplate } from "../../lib/course-template";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
 import { Editable, Props as EditableProps } from "/imports/ui/components/editable/index.react";
 
-import { Edit } from "../../components/courses/edit";
 import { Dashboard, Props as DashboardProps } from "../../components/dashboard";
 import { ButtonCancel, ButtonSave } from "/imports/ui/components/buttons";
 import { GroupSettings } from "/imports/ui/components/groups/settings";
@@ -98,12 +96,6 @@ export function GroupDetailsPage(data: Data) {
       group: group._id,
       list: group.dashboard || PublicSettings.groupDashboardDefault || [],
     };
-  }
-  function newCourse() {
-    const { group } = data;
-    const course = CourseTemplate();
-    course.group = group._id;
-    return course;
   }
 
   const handleSaving: Store = {
