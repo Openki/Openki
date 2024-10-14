@@ -3,7 +3,14 @@ import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { i18n } from "/imports/startup/both/i18next";
 
-import { Courses, Course, CourseEntity, CourseModel } from "/imports/api/courses/courses";
+import {
+  Courses,
+  Course,
+  CourseEntity,
+  CourseModel,
+  CourseLastEventEntity,
+  CourseNextEventEntity,
+} from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
 import { Groups } from "/imports/api/groups/groups";
 import { Regions } from "/imports/api/regions/regions";
@@ -461,7 +468,7 @@ Meteor.methods({
         canceled: { $ne: true },
       }).count();
 
-      const nextEvent = Events.findOne(
+      const nextEvent: CourseNextEventEntity | undefined = Events.findOne(
         { courseId: course._id, start: { $gt: new Date() }, canceled: { $ne: true } },
         {
           sort: { start: 1 },
@@ -476,7 +483,7 @@ Meteor.methods({
         },
       );
 
-      const lastEvent = Events.findOne(
+      const lastEvent: CourseLastEventEntity | undefined = Events.findOne(
         { courseId: course._id, start: { $lt: new Date() }, canceled: { $ne: true } },
         {
           sort: { start: -1 },
