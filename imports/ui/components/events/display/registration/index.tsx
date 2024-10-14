@@ -60,14 +60,7 @@ export function EventRegistration({ event }: Props) {
     try {
       await EventsMethods.addParticipant(event._id, companions);
 
-      Alert.successNextActions(
-        t("event.details.registration.alert.title", "Your seat is reserved."),
-        t("event.details.registration.alert.description", "Invite your friends:"),
-        {
-          text: t("event.details.registration.alert.share", "Share it"),
-          href: "#share",
-        },
-      );
+      Alert.success(t("event.details.registration.alert.title", "Your seat is reserved."));
       Analytics.trackEvent("RSVPs", "RSVPs as participant", Regions.findOne(event.region)?.nameEn);
     } catch (err) {
       Alert.serverError(err);

@@ -630,17 +630,13 @@ export function Edit(data: Data) {
                   href: "#course-description",
                 }
               : undefined,
-            { text: t("message.courseCreated.addImage", "Add a image"), href: "#files-tab" },
-            { text: t("message.courseCreated.subscribe", "Subscribe"), href: "#subscribe" },
-            Regions.findOne(changes.region)?.isPrivate()
+            {
+              text: t("message.courseCreated.addImage", "Add a image"),
+              href: "#files-tab",
+            },
+            !Regions.findOne(changes.region)?.isPrivate()
               ? { text: t("message.courseCreated.share", "Share it"), href: "#share" }
               : undefined,
-
-            {
-              text: t("message.courseCreated.discussion", "Write a comment"),
-              href: "#discussion",
-            },
-            { text: t("message.courseCreated.addEvent", "Add an event"), href: "#add-event" },
           );
           Analytics.trackEvent(
             "Course creations",

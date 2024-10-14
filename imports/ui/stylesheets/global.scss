@@ -49,17 +49,48 @@ a:focus,
 }
 
 .action-focus {
-  box-shadow: var(--bs-focus-ring-x, 0) var(--bs-focus-ring-y, 0) var(--bs-focus-ring-blur, 0)
-    var(--bs-focus-ring-width) var(--bs-focus-ring-color);
-  animation: fadeOutFocusRing 1s forwards 3s;
+  position: relative;
 }
 
-@keyframes fadeOutFocusRing {
+.action-focus::after {
+  display: block;
+  content: "";
+  animation: highlight 5s ease-out;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  z-index: 10000;
+}
+
+@keyframes highlight {
   0% {
-    box-shadow: var(--bs-focus-ring-x, 0) var(--bs-focus-ring-y, 0) var(--bs-focus-ring-blur, 0)
-      var(--bs-focus-ring-width) var(--bs-focus-ring-color);
+    outline: unquote("max(100vw, 100vh) solid transparent");
+    outline-offset: 3px;
   }
+  10% {
+    outline: unquote("max(100vw, 100vh) solid rgba(0, 0, 0, 0.2)");
+    outline-offset: 3px;
+  }
+
+  20% {
+    outline: unquote("max(100vw, 100vh) solid rgba(0, 0, 0, 0.2)");
+    outline-offset: 3px;
+  }
+
+  30% {
+    outline: 3px solid rgba(0, 0, 0, 0.6);
+    outline-offset: 3px;
+  }
+
+  80% {
+    outline: 3px solid rgba(0, 0, 0, 0.6);
+    outline-offset: 3px;
+  }
+
   100% {
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    outline: 3px solid transparent;
+    outline-offset: 3px;
   }
 }
