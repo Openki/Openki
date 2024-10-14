@@ -70,6 +70,7 @@ function Alert({
     timedRemove = Meteor.setTimeout(() => remove(id), timeout);
   });
 
+  let timeoutActionFocus: any = 0;
   return (
     <div
       className={`alert alert-${contextualClass()} alert-dismissible alert-message fs-4`}
@@ -81,7 +82,7 @@ function Alert({
         <>
           <hr className="border border-black" />
           {actions.map((l) => (
-            <>
+            <React.Fragment key={l.href}>
               {" "}
               <a
                 className="btn btn-success"
@@ -97,16 +98,22 @@ function Alert({
                       ($(".alert-messages")?.height() || 0) + ($(".navbar")?.height() || 0),
                     );
 
-                    element.classList.add("action-focus");
+                    element.classList.remove("action-focus");
                     setTimeout(() => {
-                      element.classList.remove("action-focus");
-                    }, 5000);
+                      element.classList.add("action-focus");
+                      if (timeoutActionFocus) {
+                        clearTimeout(timeoutActionFocus);
+                      }
+                      timeoutActionFocus = setTimeout(() => {
+                        element.classList.remove("action-focus");
+                      }, 5000);
+                    }, 0);
                   }
                 }}
               >
                 {l.text}
               </a>
-            </>
+            </React.Fragment>
           ))}
         </>
       ) : null}
