@@ -101,20 +101,20 @@ export function Member({ member, course }: { member: CourseMemberEntity; course:
     <div className={`course-member ${ownUserMemberClass()}`}>
       <div className="clearfix">
         <ProfileLink userId={member.user} />
-        <Contribution userId={member.user} />
+        <Contribution userId={member.user} />{" "}
         <ParticipantContact participant={member.user} course={course} />
         <div className="course-member-roles">
           {memberRoles().length
             ? memberRoles().map((role) => (
-                <div
+                <div key={role}
                   className={`course-member-role float-end ${
                     rolelistIsProposal(role) ? "is-proposal" : ""
                   }`}
                 >
                   <span className="course-member-role-text">
-                    <span className={`${rolelistIcon(role)} fa-fw`} aria-hidden="true"></span>
-                    <span className="role-short">{roleShort(role)}</span>
-                  </span>
+                    <span className={`${rolelistIcon(role)} fa-fw`} aria-hidden="true"></span>{" "}
+                    <span className="role-short">{t(roleShort(role))}</span>
+                  </span>{" "}
                   {mayUnsubscribeFromTeam(role) ? (
                     <RemoveFromTeamDropdown {...removeFromTeamDropdownAttr()} />
                   ) : null}
@@ -136,7 +136,7 @@ export function Member({ member, course }: { member: CourseMemberEntity; course:
                 await processChange(change);
               }}
             >
-              <span className={`fa-solid fa-plus ${member.user}`}></span>
+              <span className={`fa-solid fa-plus ${member.user}`}></span>{" "}
               <span className="fa-solid fa-bullhorn fa-fw" aria-hidden="true"></span>
             </button>
           ) : null}
