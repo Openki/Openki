@@ -1,4 +1,4 @@
-import { Meteor } from "meteor/meteor";
+import React from "react";
 import { i18n } from "/imports/startup/both/i18next";
 import { ReactiveVar } from "meteor/reactive-var";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
@@ -17,8 +17,56 @@ import "/imports/ui/components/editable";
 import "/imports/ui/components/participant/contact";
 import "/imports/ui/components/profile-link";
 
-import "./template.html";
 import "./styles.scss";
+
+export function Member(){
+  return <div class="course-member {{ownUserMemberClass}}">
+  <div class="clearfix">
+    {{> profileLink userId=member.user}}
+    {{contribution member.user}}
+    {{> participantContact participant=member.user course=course}}
+    <div class="course-member-roles">
+      {{#if memberRoles.length}}
+        {{#each role in memberRoles}}
+          <div
+               class='course-member-role float-end {{#if rolelistIsProposal role}}is-proposal{{/if}}'>
+            <span class="course-member-role-text">
+              <span class="{{rolelistIcon role}} fa-fw" aria-hidden="true"></span>
+              <span class="role-short">{{roleShort role}}</span>
+            </span>
+            {{#if mayUnsubscribeFromTeam role}}
+              {{> removeFromTeamDropdown removeFromTeamDropdownAttr}}
+            {{/if}}
+          </div>
+        {{/each}}
+      {{/if}}
+      {{#if maySubscribeToTeam}}
+        <button type="button"
+                class="js-add-to-team-btn btn btn-sm btn-add float-end add-to-team-btn"
+                data-bs-toggle="tooltip"
+                data-bs-title="{{i18n 'course.roles.maketeam' 'Add to team' attr=true}}">
+          <span class="fa-solid fa-plus {{member.user}}"></span>
+          <span class="fa-solid fa-bullhorn fa-fw" aria-hidden="true"></span>
+        </button>
+      {{/if}}
+    </div>
+
+  </div>
+
+  {{#if showMemberComment}}
+    <div class="course-member-comment">
+      <div class="course-member-comment-arrow"></div>
+      <div class="course-member-comment-body">
+        {{#if editableMessage}}
+          {{> editable editableMessage}}
+        {{else}}
+          {{member.comment}}
+        {{/if}}
+      </div>
+    </div>
+  {{/if}}
+</div>
+}
 
 const Template = TemplateAny as TemplateStaticTyped<
   "courseMember",
