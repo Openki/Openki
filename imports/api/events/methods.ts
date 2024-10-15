@@ -506,7 +506,7 @@ export const addParticipant = ServerMethod(
       return;
     }
 
-    const change = new Subscribe(course, user, "participant", "rsvp");
+    const change = new Subscribe(course, user._id, "participant", "rsvp");
     if (change.validFor(user)) {
       await processChange(change, { isSimulation: this.isSimulation });
     }
