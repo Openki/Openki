@@ -1,7 +1,5 @@
 import React from "react";
-import { i18n } from "/imports/startup/both/i18next";
-import { ReactiveVar } from "meteor/reactive-var";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { Roles } from "/imports/api/roles/roles";
@@ -9,200 +7,177 @@ import { Subscribe, Unsubscribe, Message, processChange } from "/imports/api/cou
 import { CourseMemberEntity, CourseModel } from "/imports/api/courses/courses";
 import * as Users from "/imports/api/users/publications";
 
-import { Editable } from "/imports/ui/lib/editable";
-import { SubscriptionType } from "/imports/utils/ServerPublishBlaze";
 import * as Tooltips from "/imports/utils/Tooltips";
 
-import "/imports/ui/components/editable";
-import "/imports/ui/components/participant/contact";
-import "/imports/ui/components/profile-link";
+import { useUser } from "/imports/utils/react-meteor-data";
+import { ProfileLink } from "/imports/ui/components/profile-link";
+import { Contribution } from "../../../contribution";
+import { ParticipantContact } from "/imports/ui/components/participant/contact";
+import { RemoveFromTeamDropdown } from "../remove-from-team-dropdown";
 
 import "./styles.scss";
+import { Editable } from "../../../editable/index.react";
 
-export function Member(){
-  return <div class="course-member {{ownUserMemberClass}}">
-  <div class="clearfix">
-    {{> profileLink userId=member.user}}
-    {{contribution member.user}}
-    {{> participantContact participant=member.user course=course}}
-    <div class="course-member-roles">
-      {{#if memberRoles.length}}
-        {{#each role in memberRoles}}
-          <div
-               class='course-member-role float-end {{#if rolelistIsProposal role}}is-proposal{{/if}}'>
-            <span class="course-member-role-text">
-              <span class="{{rolelistIcon role}} fa-fw" aria-hidden="true"></span>
-              <span class="role-short">{{roleShort role}}</span>
-            </span>
-            {{#if mayUnsubscribeFromTeam role}}
-              {{> removeFromTeamDropdown removeFromTeamDropdownAttr}}
-            {{/if}}
-          </div>
-        {{/each}}
-      {{/if}}
-      {{#if maySubscribeToTeam}}
-        <button type="button"
-                class="js-add-to-team-btn btn btn-sm btn-add float-end add-to-team-btn"
-                data-bs-toggle="tooltip"
-                data-bs-title="{{i18n 'course.roles.maketeam' 'Add to team' attr=true}}">
-          <span class="fa-solid fa-plus {{member.user}}"></span>
-          <span class="fa-solid fa-bullhorn fa-fw" aria-hidden="true"></span>
-        </button>
-      {{/if}}
-    </div>
-
-  </div>
-
-  {{#if showMemberComment}}
-    <div class="course-member-comment">
-      <div class="course-member-comment-arrow"></div>
-      <div class="course-member-comment-body">
-        {{#if editableMessage}}
-          {{> editable editableMessage}}
-        {{else}}
-          {{member.comment}}
-        {{/if}}
-      </div>
-    </div>
-  {{/if}}
-</div>
+function roleShort(type: string) {
+  return `roles.${type}.short`;
 }
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "courseMember",
-  { member: CourseMemberEntity; course: CourseModel },
-  {
-    user: ReactiveVar<SubscriptionType<(typeof Users)["details"]> | undefined>;
-    editableMessage: Editable;
-    subscribeToTeam: () => Subscribe | undefined;
-    removeFromTeam: () => Unsubscribe | undefined;
-  }
->;
+export function Member({ member, course }: { member: CourseMemberEntity; course: CourseModel }) {
+  const { t } = useTranslation();
+  const currentUser = useUser();
 
-const template = Template.courseMember;
+  const [isLoading, user] = Users.useDetails(member.user);
 
-template.onCreated(function () {
-  const instance = this;
-  const { course } = instance.data;
-
-  instance.user = new ReactiveVar(undefined);
-
-  instance.autorun(() => {
-    const { member } = Template.currentData();
-    instance.user.set(Users.details.subscribe(instance, member.user));
-  });
-
-  instance.editableMessage = new Editable(
-    false,
-    i18n("roles.message.placeholder", "My interests…"),
-    undefined,
-    {
-      onSave: async (newMessage) => {
-        const change = new Message(course, Meteor.user(), newMessage);
-        await processChange(change);
-      },
-      onSuccess: () => {
-        Alert.success(i18n("courseMember.messageChanged", "Your enroll-message has been changed."));
-      },
-    },
-  );
-
-  instance.autorun(() => {
-    const { member } = Template.currentData();
-    instance.editableMessage.setText(member.comment || "");
-  });
-
-  instance.subscribeToTeam = () => {
-    const user = instance.user.get()?.();
+  function subscribeToTeam() {
     if (!user) return undefined; // Probably not loaded yet
 
-    return new Subscribe(Template.currentData().course, user, "team", "interested");
-  };
+    return new Subscribe(course, user, "team", "interested");
+  }
 
-  instance.removeFromTeam = () => {
-    const user = instance.user.get()?.();
+  function removeFromTeam() {
     if (!user) return undefined; // Probably not loaded yet
 
     return new Unsubscribe(course, user, "team");
-  };
-});
+  }
 
-template.helpers({
-  ownUserMemberClass() {
-    const { member } = Template.instance().data;
-    if (member.user === Meteor.userId()) {
+  function ownUserMemberClass() {
+    if (member.user === currentUser?._id) {
       return "is-own-user";
     }
     return "";
-  },
-
-  memberRoles() {
-    const { member } = Template.instance().data;
+  }
+  function memberRoles() {
     return member.roles.filter((role) => role !== "participant");
-  },
-
-  maySubscribeToTeam() {
-    const change = Template.instance().subscribeToTeam?.();
-    return change?.validFor(Meteor.user());
-  },
-
-  rolelistIcon(roletype: string) {
+  }
+  function maySubscribeToTeam() {
+    const change = subscribeToTeam();
+    return change?.validFor(currentUser);
+  }
+  function rolelistIcon(roletype: string) {
     if (roletype !== "participant") {
       return Roles.find((role) => role.type === roletype)?.icon || "";
     }
     return "";
-  },
-
-  rolelistIsProposal(roletype: string) {
+  }
+  function rolelistIsProposal(roletype: string) {
     if (roletype !== "participant") {
       return Roles.find((role) => role.type === roletype)?.proposal;
     }
     return "";
-  },
-
-  editableMessage() {
-    const { member } = Template.instance().data;
-    const mayChangeComment = member.user === Meteor.userId();
-    return mayChangeComment && Template.instance().editableMessage;
-  },
-
-  mayUnsubscribeFromTeam(label: string) {
+  }
+  function editableMessage() {
+    const mayChangeComment = member.user === currentUser?._id;
+    return mayChangeComment;
+  }
+  function mayUnsubscribeFromTeam(label: string) {
     if (label !== "team") {
       return false;
     }
-    const change = Template.instance().removeFromTeam();
-    return change && change.validFor(Meteor.user());
-  },
-
-  showMemberComment() {
-    const { member } = Template.instance().data;
-    const mayChangeComment = member.user === Meteor.userId();
+    const change = removeFromTeam();
+    return change && change.validFor(currentUser);
+  }
+  function showMemberComment() {
+    const mayChangeComment = member.user === currentUser?._id;
     return member.comment || mayChangeComment;
-  },
-
-  removeFromTeamDropdownAttr() {
-    const instance = Template.instance();
+  }
+  function removeFromTeamDropdownAttr() {
     return {
-      member: instance.data.member,
+      member,
       onClick: async () => {
-        const change = instance.removeFromTeam();
+        const change = removeFromTeam();
         if (!change) {
           throw new Error("Unexpected falsy: change");
         }
         await processChange(change);
       },
     };
-  },
-});
+  }
 
-template.events({
-  async "click .js-add-to-team-btn"(event, instance) {
-    event.preventDefault();
-    Tooltips.hide();
-    const change = instance.subscribeToTeam();
-    if (!change) {
-      throw new Error("Unexpected falsy: change");
-    }
-    await processChange(change);
-  },
-});
+  if (isLoading()) {
+    return null;
+  }
+
+  return (
+    <div className={`course-member ${ownUserMemberClass()}`}>
+      <div className="clearfix">
+        <ProfileLink userId={member.user} />
+        <Contribution userId={member.user} />
+        <ParticipantContact participant={member.user} course={course} />
+        <div className="course-member-roles">
+          {memberRoles().length
+            ? memberRoles().map((role) => (
+                <div
+                  className={`course-member-role float-end ${
+                    rolelistIsProposal(role) ? "is-proposal" : ""
+                  }`}
+                >
+                  <span className="course-member-role-text">
+                    <span className={`${rolelistIcon(role)} fa-fw`} aria-hidden="true"></span>
+                    <span className="role-short">{roleShort(role)}</span>
+                  </span>
+                  {mayUnsubscribeFromTeam(role) ? (
+                    <RemoveFromTeamDropdown {...removeFromTeamDropdownAttr()} />
+                  ) : null}
+                </div>
+              ))
+            : null}
+          {maySubscribeToTeam() ? (
+            <button
+              type="button"
+              className="btn btn-sm btn-add float-end add-to-team-btn"
+              data-bs-toggle="tooltip"
+              data-bs-title={t("course.roles.maketeam", "Add to team")}
+              onClick={async () => {
+                Tooltips.hide();
+                const change = subscribeToTeam();
+                if (!change) {
+                  throw new Error("Unexpected falsy: change");
+                }
+                await processChange(change);
+              }}
+            >
+              <span className={`fa-solid fa-plus ${member.user}`}></span>
+              <span className="fa-solid fa-bullhorn fa-fw" aria-hidden="true"></span>
+            </button>
+          ) : null}
+        </div>
+      </div>
+
+      {showMemberComment() ? (
+        <div className="course-member-comment">
+          <div className="course-member-comment-arrow"></div>
+          <div className="course-member-comment-body">
+            {editableMessage() ? (
+              <Editable
+                {...{
+                  multiline: false,
+                  placeholderText: t("roles.message.placeholder", "My interests…"),
+                  store: {
+                    onSave: async (newMessage) => {
+                      const change = new Message(course, currentUser, newMessage);
+                      await processChange(change);
+                    },
+                    onSuccess: () => {
+                      Alert.success(
+                        t("courseMember.messageChanged", "Your enroll-message has been changed."),
+                      );
+                    },
+                  },
+                  text: member.comment,
+                }}
+              />
+            ) : (
+              member.comment
+            )}
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("CourseMember", () => Member);
