@@ -51,7 +51,7 @@ template.onCreated(function () {
     const user = Users.currentUser();
     return new Subscribe(
       instance.data.course,
-      user,
+      user._id,
       instance.data.role.type,
       "interested",
       comment,
@@ -63,7 +63,7 @@ template.onCreated(function () {
   if (Router.current().params.query.unsubscribe === instance.data.role.type) {
     PleaseLogin(instance, async () => {
       const user = Meteor.user();
-      const change = new Unsubscribe(instance.data.course, user, instance.data.role.type);
+      const change = new Unsubscribe(instance.data.course, user?._id, instance.data.role.type);
       if (change.validFor(user)) {
         await processChange(change);
         Alert.success(
@@ -147,7 +147,7 @@ template.events({
 
     const { data } = instance;
 
-    const change = new Unsubscribe(data.course, Meteor.user(), data.role.type);
+    const change = new Unsubscribe(data.course, Meteor.userId(), data.role.type);
     await processChange(change);
     routerAutoscroll.cancelNext();
     Analytics.trackEvent(

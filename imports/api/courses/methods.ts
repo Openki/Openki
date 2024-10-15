@@ -287,7 +287,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
   if (changes.subs) {
     const changedCourse = await Courses.findOneAsync(courseId);
     changes.subs.forEach((role: string) => {
-      const change = new Subscribe(changedCourse, user, role, "interested");
+      const change = new Subscribe(changedCourse, user._id, role, "interested");
       if (change.validFor(user)) {
         change.apply();
       }
@@ -296,7 +296,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
   if (changes.unsubs) {
     const changedCourse = await Courses.findOneAsync(courseId);
     changes.unsubs.forEach((role: string) => {
-      const change = new Unsubscribe(changedCourse, user, role);
+      const change = new Unsubscribe(changedCourse, user._id, role);
       if (change.validFor(user)) {
         change.apply();
       }

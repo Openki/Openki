@@ -5,7 +5,6 @@ import * as Alert from "/imports/api/alerts/alert";
 import { Roles } from "/imports/api/roles/roles";
 import { Subscribe, Unsubscribe, Message, processChange } from "/imports/api/courses/subscription";
 import { CourseMemberEntity, CourseModel } from "/imports/api/courses/courses";
-import * as Users from "/imports/api/users/publications";
 
 import * as Tooltips from "/imports/utils/Tooltips";
 
@@ -26,18 +25,12 @@ export function Member({ member, course }: { member: CourseMemberEntity; course:
   const { t } = useTranslation();
   const currentUser = useUser();
 
-  const [isLoading, user] = Users.useDetails(member.user);
-
   function subscribeToTeam() {
-    if (!user) return undefined; // Probably not loaded yet
-
-    return new Subscribe(course, user, "team", "interested");
+    return new Subscribe(course, member.user, "team", "interested");
   }
 
   function removeFromTeam() {
-    if (!user) return undefined; // Probably not loaded yet
-
-    return new Unsubscribe(course, user, "team");
+    return new Unsubscribe(course, member.user, "team");
   }
 
   function ownUserMemberClass() {
@@ -93,10 +86,6 @@ export function Member({ member, course }: { member: CourseMemberEntity; course:
     };
   }
 
-  if (isLoading()) {
-    return null;
-  }
-
   return (
     <div className={`course-member ${ownUserMemberClass()}`}>
       <div className="clearfix">
@@ -106,7 +95,8 @@ export function Member({ member, course }: { member: CourseMemberEntity; course:
         <div className="course-member-roles">
           {memberRoles().length
             ? memberRoles().map((role) => (
-                <div key={role}
+                <div
+                  key={role}
                   className={`course-member-role float-end ${
                     rolelistIsProposal(role) ? "is-proposal" : ""
                   }`}
@@ -147,14 +137,14 @@ export function Member({ member, course }: { member: CourseMemberEntity; course:
         <div className="course-member-comment">
           <div className="course-member-comment-arrow"></div>
           <div className="course-member-comment-body">
-            {editableMessage() ? (
+            {editableMessage() && currentUser ? (
               <Editable
                 {...{
                   multiline: false,
                   placeholderText: t("roles.message.placeholder", "My interests…"),
                   store: {
                     onSave: async (newMessage) => {
-                      const change = new Message(course, currentUser, newMessage);
+                      const change = new Message(course, currentUser._id, newMessage);
                       await processChange(change);
                     },
                     onSuccess: () => {
