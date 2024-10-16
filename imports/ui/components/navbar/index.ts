@@ -12,7 +12,7 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { i18n } from "/imports/startup/both/i18next";
 import { getSiteName } from "/imports/utils/getSiteName";
 
-import "/imports/ui/components/regions/selection";
+import "/imports/ui/components/regions/selection/wrap";
 import "/imports/ui/components/language-selection";
 import "./test-warning-ticker";
 import "./user-frame";

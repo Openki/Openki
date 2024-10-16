@@ -1,7 +1,7 @@
 import { Accounts } from "meteor/accounts-base";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 
-import "/imports/ui/components/regions/selection";
+import "/imports/ui/components/regions/selection/wrap";
 import "/imports/ui/components/language-selection";
 
 import "./template.html";
