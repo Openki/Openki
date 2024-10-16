@@ -46,6 +46,10 @@ template.onRendered(function () {
   });
 });
 template.helpers({
+  controlAttr(direction: string) {
+    const data = Template.instance().data;
+    return { direction, date: data.date, onChangeDate: data.onChangeDate };
+  },
   searchFieldAttr() {
     const data = Template.instance().data;
     return { search: data.search, onChange: data.onChangeSearch };
