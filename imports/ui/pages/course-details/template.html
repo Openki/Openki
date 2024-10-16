@@ -78,7 +78,7 @@
           {{> courseEvents}}
         {{/unless}}
         <div class="page-component">
-          {{> courseMembers course}}
+          {{> courseMembers course=course}}
         </div>
         {{#if mobileViewport}}
           {{> discussion courseId=course._id select=select}}
