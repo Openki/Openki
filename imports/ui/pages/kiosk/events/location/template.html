@@ -1,0 +1,15 @@
+<template name="kioskEventLocation">
+  <div class="kiosk-event-location">
+    {{#if showLocation}}
+      <span class="fa-solid fa-house fa-fw" aria-hidden="true"></span>
+      {{location.name}}
+      {{#if room}} - {{/if}}
+    {{/if}}
+    {{#if room}}
+      {{#unless showLocation}}
+        <span class="fa-solid fa-signs-post fa-fw" aria-hidden="true"></span>
+      {{/unless}}
+      {{room}}
+    {{/if}}
+  </div>
+</template>
