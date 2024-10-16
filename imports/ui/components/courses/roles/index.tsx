@@ -17,7 +17,7 @@ export function Roles({
   return (
     <div id="subscribe">
       {roles.map((role) => (
-        <Role {...role} />
+        <Role key={role.role.type} {...role} />
       ))}
     </div>
   );
