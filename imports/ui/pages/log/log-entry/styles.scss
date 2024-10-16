@@ -1,0 +1,20 @@
+@import "{}/imports/ui/stylesheets/variables/index";
+
+.log-pane {
+  .nowrap {
+    white-space: nowrap;
+  }
+
+  .id {
+    font-family: monospace;
+  }
+
+  .clickable {
+    padding: 2px;
+  }
+
+  .clickable:hover {
+    border: 1px $black solid;
+    padding: 1px;
+  }
+}
