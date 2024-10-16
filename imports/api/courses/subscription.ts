@@ -120,7 +120,7 @@ export class Subscribe extends Change<{
 
   constructor(
     course: CourseModel | undefined,
-    userId: string,
+    userId: string | undefined,
     role: string,
     reason: Reason,
     comment?: string | undefined,

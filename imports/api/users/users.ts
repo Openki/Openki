@@ -169,26 +169,8 @@ export class User {
   }
 }
 
-export const Users = Meteor.users as unknown as Mongo.Collection<UserEntity, UserModel> & {
-  /**
-   * Get the current user
-   * @return User or if the user is not logged-in, a placeholder "anon" object is returned.
-   */
-  currentUser(): UserModel | (UserModel & { anon?: true });
-};
+export const Users = Meteor.users as unknown as Mongo.Collection<UserEntity, UserModel>;
 
 (Users as any)._transform = function (user: UserEntity) {
   return _.extend(new User(), user);
-};
-
-Users.currentUser = function () {
-  const logged = Meteor.user();
-  if (logged) {
-    return logged;
-  }
-
-  const anon = new User() as UserModel & { anon?: true };
-  anon._id = "anon";
-  anon.anon = true;
-  return anon;
 };
