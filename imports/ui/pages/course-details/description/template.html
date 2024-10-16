@@ -1,0 +1,9 @@
+<template name="courseDetailsDescription">
+  <div class="course-details-description" id="course-description">
+    {{#if mayEdit}}
+      {{> editable editableDescription}}
+    {{else}}
+      {{{course.description}}}
+    {{/if}}
+  </div>
+</template>
