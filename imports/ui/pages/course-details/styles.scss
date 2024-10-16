@@ -94,31 +94,6 @@
   }
 }
 
-// ** Navigation
-//========================================================================================
-.course-details-nav {
-  border-color: $course-border-color;
-  border-style: solid;
-  border-width: 0 $course-border-width;
-  padding: 0 $details-header-padding-horizontal;
-}
-
-.is-proposal .course-details-nav {
-  border-style: $proposal-border-style;
-}
-
-.has-past-events .course-details-nav {
-  border-style: $has-past-events-border-style;
-}
-
-.has-upcoming-events .course-details-nav {
-  background: $has-upcoming-events-bg;
-}
-
-.is-archived .course-details-nav {
-  border-color: $archived-color;
-}
-
 // ** Content
 //========================================================================================
 .course-details-content {
@@ -173,12 +148,6 @@ $course-details-content-padding-horizontal: (
   height: 60px;
   position: absolute;
   width: 100%;
-}
-
-// ** Description
-//========================================================================================
-.course-details-description {
-  font-size: medium;
 }
 
 // ** Price Policy

@@ -1,6 +1,5 @@
 import { ReactiveVar } from "meteor/reactive-var";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import { _ } from "meteor/underscore";
 import { Spacebars } from "meteor/spacebars";
 import { Session } from "meteor/session";
 

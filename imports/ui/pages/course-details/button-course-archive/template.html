@@ -1,0 +1,10 @@
+<template name="buttonCourseArchive">
+  <button type="submit" class="btn {{buttonClass}} js-course-archive" {{disabledIfBusy}}>
+    {{#if busy 'archive'}}
+      <span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
+      {{i18n 'course.archive.archiveButton.archiving' 'Archiving…'}}
+    {{else}}
+      {{textIdle}}
+    {{/if}}
+  </button>
+</template>

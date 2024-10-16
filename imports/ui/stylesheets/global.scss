@@ -53,14 +53,14 @@ a:focus,
 }
 
 .action-focus::after {
-  display: block;
-  content: "";
   animation: highlight 5s ease-out;
-  top: 0;
-  right: 0;
   bottom: 0;
+  content: "";
+  display: block;
   left: 0;
   position: absolute;
+  right: 0;
+  top: 0;
   z-index: 10000;
 }
 
@@ -69,6 +69,7 @@ a:focus,
     outline: unquote("max(100vw, 100vh) solid transparent");
     outline-offset: 3px;
   }
+
   10% {
     outline: unquote("max(100vw, 100vh) solid rgba(0, 0, 0, 0.2)");
     outline-offset: 3px;
