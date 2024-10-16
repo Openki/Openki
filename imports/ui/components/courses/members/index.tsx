@@ -1,92 +1,39 @@
-import { Meteor } from "meteor/meteor";
-import { ReactiveVar } from "meteor/reactive-var";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useUser } from "/imports/utils/react-meteor-data";
 
 import { CourseModel } from "/imports/api/courses/courses";
 
 import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 
-import "/imports/ui/components/editable";
-import "/imports/ui/components/participant/contact";
-import "/imports/ui/components/profile-link";
-
-import "./member";
-import "./remove-from-team-dropdown";
-
+import { Member } from "./member";
 
 import "./styles.scss";
 
-export function CourseMembers(){
-  return<>    <div className="page-component-header">
-  <h4>
-    <span className="fa-solid fa-users fa-fw" aria-hidden="true"></span>&nbsp;
-    {{i18n 'course.details.members.title' '{NUM, plural, =0{No interested yet} one{1 interested} other{# interested} }' NUM=howManyEnrolled}}
-    {{#if canNotifyAll}}
-      <i className="fa-solid fa-envelope contact-members js-contact-members"></i>
-    {{/if}}
-  </h4>
-</div>
-{{#if members}}
-  <div className="course-members">
-    {{#each member in sortedMembers}}
-      {{> courseMember member=member course=this}}
-    {{/each}}
-    {{#if limited}}
-      <button className="btn btn-add page-component-btn js-show-more-members" type="button">
-        {{i18n '_button.more'}}
-      </button>
-    {{/if}}
-  </div>
-{{/if}}</>
-}
+export function Members({ course }: { course: CourseModel | undefined }) {
+  const { t } = useTranslation();
+  const user = useUser();
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "courseMembers",
-  CourseModel | undefined,
-  { increaseBy: number; membersDisplayLimit: ReactiveVar<number> }
->;
+  const increaseBy = 10;
+  const [membersDisplayLimit, setMembersDisplayLimit] = useState(increaseBy);
 
-const template = Template.courseMembers;
-
-template.onCreated(function () {
-  this.increaseBy = 10;
-  this.membersDisplayLimit = new ReactiveVar(this.increaseBy);
-});
-
-template.helpers({
-  howManyEnrolled() {
-    const course = Template.instance().data;
+  function howManyEnrolled() {
     if (!course) {
       return undefined;
     }
     return course.members.length;
-  },
-
-  canNotifyAll() {
-    const user = Meteor.user();
-
+  }
+  function canNotifyAll() {
     if (UserPrivilegeUtils.privileged(user, "admin")) {
       return true;
     }
-
-    const course = Template.instance().data;
 
     return !!(
       course?.userHasRole(user?._id, "team") ||
       user?.groups.some((g) => course?.groupOrganizers.includes(g))
     );
-  },
-
-  ownUserMember() {
-    const course = Template.instance().data;
-    if (!course) {
-      return undefined;
-    }
-    return course.members.find((member) => member.user === Meteor.userId());
-  },
-
-  sortedMembers() {
-    const course = Template.instance().data;
+  }
+  function sortedMembers() {
     if (!course) {
       return undefined;
     }
@@ -97,7 +44,7 @@ template.helpers({
       return bRoles.length - aRoles.length;
     });
     // check if logged-in user is in members and if so put him on top
-    const userId = Meteor.userId();
+    const userId = user?._id;
     if (userId && members.some((member) => member.user === userId)) {
       const userArrayPosition = members.findIndex((member) => member.user === userId);
       const currentMember = members[userArrayPosition];
@@ -105,22 +52,60 @@ template.helpers({
       members.splice(userArrayPosition, 1); // remove
       members.splice(0, 0, currentMember); // readd
     }
-    return members.slice(0, Template.instance().membersDisplayLimit.get());
-  },
+    return members.slice(0, membersDisplayLimit);
+  }
+  function limited() {
+    return (course?.members.length || 0) > membersDisplayLimit;
+  }
 
-  limited() {
-    const membersDisplayLimit = Template.instance().membersDisplayLimit.get();
-    return membersDisplayLimit && this.members.length > membersDisplayLimit;
-  },
-});
-
-template.events({
-  "click .js-contact-members"() {
+  function handleContactMembersClick() {
     document.getElementById("discussion")?.dispatchEvent(new Event("notifyAll"));
-  },
+  }
 
-  "click .js-show-more-members"(_e, instance) {
-    const { membersDisplayLimit } = instance;
-    membersDisplayLimit.set(membersDisplayLimit.get() + instance.increaseBy);
-  },
-});
+  function handleShowMoreMembersClick() {
+    setMembersDisplayLimit(membersDisplayLimit + increaseBy);
+  }
+
+  return (
+    <>
+      <div className="page-component-header">
+        <h4>
+          <span className="fa-solid fa-users fa-fw" aria-hidden="true"></span>&nbsp;
+          {t(
+            "course.details.members.title",
+            "{NUM, plural, =0{No interested yet} one{1 interested} other{# interested} }",
+            { NUM: howManyEnrolled() },
+          )}{" "}
+          {canNotifyAll() ? (
+            <i
+              className="fa-solid fa-envelope contact-members"
+              onClick={handleContactMembersClick}
+            ></i>
+          ) : null}
+        </h4>
+      </div>
+      {course?.members ? (
+        <div className="course-members">
+          {sortedMembers()?.map((member) => (
+            <Member key={member.user} member={member} course={course} />
+          ))}
+          {limited() ? (
+            <button
+              className="btn btn-add page-component-btn"
+              type="button"
+              onClick={handleShowMoreMembersClick}
+            >
+              {t("_button.more")}
+            </button>
+          ) : null}
+        </div>
+      ) : null}
+    </>
+  );
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("CourseMembers", () => Members);
