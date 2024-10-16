@@ -28,6 +28,104 @@ export interface Data {
   course: CourseModel;
 }
 
+export function Role(){
+  return <>{{#if subscribed}}
+  <div class="course-role-enrolled">
+    <div class="course-role-title">
+      <span class="{{role.icon}} fa-fw coursepage-role-icon"></span>&nbsp;
+      <span>{{roleSubscribed role.type}}</span>
+      <button type="button" class="js-role-unsubscribe-btn role-unsubscribe-btn btn btn-cancel"
+              name="{{role.type}}">
+        {{i18n 'course.roles.retract' 'Retract'}}
+      </button>
+      <button type="button"
+              class="toggle-first-steps js-toggle-first-steps btn btn-link float-end">
+        <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+  {{#if state 'showFirstSteps'}}
+    <div class="course-role-first-steps">
+      <b>{{i18n 'course.roles.firstSteps.title' 'Thank you for your interest in {COURSE}.' COURSE=course.name ROLE=(roleShort role.type)}}</b>
+      <br>
+      {{#if roleIs 'participant'}}
+        {{i18n 'course.roles.firstSteps.youllGetNotified' 'You will get an e-mail notification as soon as a next date has been fixed.'}}
+      {{/if}}
+      {{#if roleIs 'host'}}
+        {{i18n 'course.roles.firstSteps.informAboutVenue' 'If not done already, please mention the venue(s) you have access to in your personal message info.'}}
+      {{/if}}
+      {{#if roleIs 'mentor'}}
+        {{i18n 'course.roles.firstSteps.mentionExperience' 'If not done already, please mention your experiences on the topic in your personal message info.'}}
+        {{> courseGuide}}
+      {{/if}}
+      {{#if roleIs 'team'}}
+        {{i18n 'course.roles.firstSteps.team' 'If not done already, you can start with chosing the venue and, if needed, looking for mentor(s) and then fix a date.'}}
+        {{> courseGuide}}
+      {{/if}}
+      <br><br>
+      {{i18n 'course.roles.firstSteps.ifQuestions' 'Please write questions concerning the course in the discussion below.'}}
+      <br>
+      {{i18n 'course.roles.firstSteps.allMembersInformed' 'All members of the organization-team will be informed.'}}
+      <br>
+      <button class="js-first-steps-comment btn btn-link p-0" type="button">
+        {{i18n 'course.discussion.write_comment'}}
+      </button>
+    </div>
+  {{/if}}
+{{else}}
+  <div class="course-role{{#if state 'enrolling'}}-enroll{{/if}}">
+    {{#if state 'enrolling'}}
+      <div class="course-role-title-enroll">
+        <span class="{{role.icon}} fa-fw coursepage-role-icon" aria-hidden="true"></span>&nbsp;
+        {{roleSubscribe role.type}}
+      </div>
+      <div class="course-role-enroll-options">
+        <div class="mb-3">
+          <label class="form-label">
+            {{i18n 'course.roles.leave_message' 'You can leave a message to appear next to your name:'}}
+          </label>
+          {{#if roleIs 'participant'}}
+            <textarea class='form-control js-comment'
+                      placeholder="{{i18n 'course.roles.messageInfoParticipant' 'an (optional) message like a greeting, wish, or interest' attr=true}}">{{comment}}</textarea>
+          {{/if}}
+          {{#if roleIs 'host'}}
+            <textarea class='form-control js-comment'
+                      placeholder="{{i18n 'course.roles.messageInfoHost' 'an (optional) message including info about the venue' attr=true}}">{{comment}}</textarea>
+          {{/if}}
+          {{#if roleIs 'mentor'}}
+            <textarea class='form-control js-comment'
+                      placeholder="{{i18n 'course.roles.messageInfoMentor' 'an (optional) message including info about your experience on the topic' attr=true}}">{{comment}}</textarea>
+          {{/if}}
+          {{#if roleIs 'team'}}
+            <textarea class='form-control js-comment'
+                      placeholder="{{i18n 'course.roles.messageInfoMentor' attr=true}}">{{comment}}</textarea>
+          {{/if}}
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-save js-role-subscribe-btn" {{disabledIfBusy}}>
+            {{#if busy 'enrolling'}}
+              <i class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i>
+              {{i18n 'course.roles.join.busy' 'Joining…'}}
+            {{else}}
+              {{i18n 'course.roles.join' 'Join {COURSE}' COURSE=course.name}}
+            {{/if}}
+          </button>
+          {{> buttonCancel event="js-role-enroll-cancel"}}
+        </div>
+      </div>
+    {{else}}
+      {{#if maySubscribe role.type}}
+        <button type="button" class="btn btn-add text-start page-component-btn js-role-enroll-btn"
+                name="participant">
+          <span class="{{role.icon}} fa-fw coursepage-role-icon" aria-hidden="true"></span>&nbsp;
+          {{roleSubscribe role.type}}
+        </button>
+      {{/if}}
+    {{/if}}
+  </div>
+{{/if}}</>
+}
+
 const Template = TemplateAny as TemplateStaticTyped<
   "courseRole",
   Data,
