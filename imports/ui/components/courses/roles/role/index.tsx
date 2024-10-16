@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
-import { Router } from "meteor/iron:router";
 import React, { useState } from "react";
+import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { PleaseLogin } from "../../../please-login";
@@ -30,7 +30,7 @@ function roleShort(type: string) {
 export interface Data {
   role: RoleEntity;
   subscribed: boolean;
-  comment: string;
+  comment: string | undefined;
   course: CourseModel;
 }
 
