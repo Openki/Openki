@@ -1,4 +1,3 @@
-import { Router } from "meteor/iron:router";
 import { Session } from "meteor/session";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import moment from "moment";
@@ -12,134 +11,105 @@ import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
 
 import "/imports/ui/components/language-selection";
+import "./event";
+import "./location";
+import "./list";
 
 import "./template.html";
 import "./styles.scss";
 
-{
-  const Template = TemplateAny as TemplateStaticTyped<"kioskEventsPage">;
+const Template = TemplateAny as TemplateStaticTyped<"kioskEventsPage">;
 
-  const template = Template.kioskEventsPage;
+const template = Template.kioskEventsPage;
 
-  template.onCreated(function () {
-    const instance = this;
+template.onCreated(function () {
+  const instance = this;
 
-    if (Meteor.userId()) {
-      Meteor.logout();
+  if (Meteor.userId()) {
+    Meteor.logout();
+  }
+
+  instance.autorun(() => {
+    Metatags.setCommonTags(i18n("event.list.windowtitle", "Events"));
+  });
+});
+
+template.helpers({
+  groupLogo(groupId: string) {
+    const instance = Template.instance();
+    instance.subscribe("group", groupId);
+
+    const group = Groups.findOne({ _id: groupId });
+    if (group) {
+      return group.publicLogoUrl();
+    }
+    return "";
+  },
+  groupName(groupId: string) {
+    const instance = Template.instance();
+    instance.subscribe("group", groupId);
+
+    const group = Groups.findOne({ _id: groupId });
+    if (group) {
+      return group.name;
+    }
+    return "";
+  },
+  venueName(venueId: string) {
+    const instance = Template.instance();
+    instance.subscribe("venueDetails", venueId);
+
+    const venue = Venues.findOne({ _id: venueId });
+    if (venue) {
+      return venue.name;
+    }
+    return "";
+  },
+  showTime() {
+    Session.get("seconds");
+    return moment().format("LTS");
+  },
+  showDate() {
+    Session.get("seconds");
+    return moment().format("LL");
+  },
+
+  headerLogo() {
+    let headerLogo;
+
+    const currentRegion = Regions.currentRegion();
+    if (currentRegion?.custom?.headerLogoKiosk?.src) {
+      // the region has a custom logo
+      headerLogo = currentRegion.custom.headerLogoKiosk.src;
+    } else {
+      // general logo
+      headerLogo = PublicSettings.headerLogoKiosk.src;
     }
 
-    instance.autorun(() => {
-      Metatags.setCommonTags(i18n("event.list.windowtitle", "Events"));
-    });
-  });
-
-  template.helpers({
-    groupLogo(groupId: string) {
-      const instance = Template.instance();
-      instance.subscribe("group", groupId);
-
-      const group = Groups.findOne({ _id: groupId });
-      if (group) {
-        return group.publicLogoUrl();
-      }
+    if (!headerLogo) {
       return "";
-    },
-    groupName(groupId: string) {
-      const instance = Template.instance();
-      instance.subscribe("group", groupId);
+    }
 
-      const group = Groups.findOne({ _id: groupId });
-      if (group) {
-        return group.name;
-      }
-      return "";
-    },
-    venueName(venueId: string) {
-      const instance = Template.instance();
-      instance.subscribe("venueDetails", venueId);
+    if (headerLogo.startsWith("data:image/")) {
+      // base64 image
+      return headerLogo;
+    }
 
-      const venue = Venues.findOne({ _id: venueId });
-      if (venue) {
-        return venue.name;
-      }
-      return "";
-    },
-    showTime() {
-      Session.get("seconds");
-      return moment().format("LTS");
-    },
-    showDate() {
-      Session.get("seconds");
-      return moment().format("LL");
-    },
+    if (headerLogo.startsWith(PublicSettings.s3.publicUrlBase)) {
+      // in our s3 file storage
+      return headerLogo;
+    }
 
-    headerLogo() {
-      let headerLogo;
+    // in the openki repository folder "public/logo/"
+    return `/logo/${headerLogo}`;
+  },
 
-      const currentRegion = Regions.currentRegion();
-      if (currentRegion?.custom?.headerLogoKiosk?.src) {
-        // the region has a custom logo
-        headerLogo = currentRegion.custom.headerLogoKiosk.src;
-      } else {
-        // general logo
-        headerLogo = PublicSettings.headerLogoKiosk.src;
-      }
+  headerAlt() {
+    const currentRegion = Regions.currentRegion();
+    if (currentRegion?.custom?.headerLogoKiosk?.alt) {
+      return currentRegion.custom.headerLogoKiosk.alt;
+    }
 
-      if (!headerLogo) {
-        return "";
-      }
-
-      if (headerLogo.startsWith("data:image/")) {
-        // base64 image
-        return headerLogo;
-      }
-
-      if (headerLogo.startsWith(PublicSettings.s3.publicUrlBase)) {
-        // in our s3 file storage
-        return headerLogo;
-      }
-
-      // in the openki repository folder "public/logo/"
-      return `/logo/${headerLogo}`;
-    },
-
-    headerAlt() {
-      const currentRegion = Regions.currentRegion();
-      if (currentRegion?.custom?.headerLogoKiosk?.alt) {
-        return currentRegion.custom.headerLogoKiosk.alt;
-      }
-
-      return PublicSettings.headerLogoKiosk.alt;
-    },
-  });
-}
-
-{
-  const Template = TemplateAny as TemplateStaticTyped<"kioskEvent">;
-
-  const template = Template.kioskEvent;
-  template.helpers({
-    timePeriod() {
-      return (Template.instance().parentInstance() as any).data.timePeriod;
-    },
-
-    isOngoing() {
-      return (Template.instance().parentInstance() as any).timePeriod === "ongoing";
-    },
-
-    isUpcoming() {
-      return (Template.instance().parentInstance() as any).timePeriod === "upcoming";
-    },
-  });
-}
-
-{
-  const Template = TemplateAny as TemplateStaticTyped<"kioskEventLocation">;
-  const template = Template.kioskEventLocation;
-  template.helpers({
-    showLocation() {
-      // The location is shown when we have a location name and the location is not used as a filter
-      return this.location?.name && !Router.current().params.query.location;
-    },
-  });
-}
+    return PublicSettings.headerLogoKiosk.alt;
+  },
+});
