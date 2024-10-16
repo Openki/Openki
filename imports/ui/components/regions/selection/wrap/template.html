@@ -1,0 +1,11 @@
+<template name="regionSelectionWrap">
+  {{#if hasMultipleRegions}}
+    {{#if Template.subscriptionsReady}}
+      {{#if state 'searchingRegions'}}
+        {{> regionSelection inNavbar=inNavbar}}
+      {{else}}
+        {{> regionSelectionDisplay regionSelectionDisplayAttr}}
+      {{/if}}
+    {{/if}}
+  {{/if}}
+</template>
