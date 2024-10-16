@@ -13,7 +13,7 @@ export function Guide() {
       <br />
       <br />
       <span>
-        {t("course.roles.firstSteps.guide", "Further info")}&colon;&nbsp;
+        {t("course.roles.firstSteps.guide", "Further info")}:&nbsp;
         <a href={getLocalizedValue(PublicSettings.courseGuideLink)} target="_blank">
           {t("course.roles.firstSteps.guideLink", "How to organize my first {SITENAME} course?", {
             SITENAME: siteName,
