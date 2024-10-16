@@ -13,8 +13,32 @@ import "/imports/ui/components/profile-link";
 import "./member";
 import "./remove-from-team-dropdown";
 
-import "./template.html";
+
 import "./styles.scss";
+
+export function CourseMembers(){
+  return<>    <div className="page-component-header">
+  <h4>
+    <span className="fa-solid fa-users fa-fw" aria-hidden="true"></span>&nbsp;
+    {{i18n 'course.details.members.title' '{NUM, plural, =0{No interested yet} one{1 interested} other{# interested} }' NUM=howManyEnrolled}}
+    {{#if canNotifyAll}}
+      <i className="fa-solid fa-envelope contact-members js-contact-members"></i>
+    {{/if}}
+  </h4>
+</div>
+{{#if members}}
+  <div className="course-members">
+    {{#each member in sortedMembers}}
+      {{> courseMember member=member course=this}}
+    {{/each}}
+    {{#if limited}}
+      <button className="btn btn-add page-component-btn js-show-more-members" type="button">
+        {{i18n '_button.more'}}
+      </button>
+    {{/if}}
+  </div>
+{{/if}}</>
+}
 
 const Template = TemplateAny as TemplateStaticTyped<
   "courseMembers",
