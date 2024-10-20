@@ -48,7 +48,7 @@
           {{#if state 'showAllRegions'}}
             {{! here follows the "long" version, all regions that the user has access to }}
             {{#each region in allRegions}}
-              {{> regionSelectionItem region}}
+              {{> regionSelectionItem region=region search=(state 'search')}}
             {{/each}}
             {{#if aboutLink}}
               <li>
@@ -64,7 +64,7 @@
           {{else}}
             {{! here follows the "short" version, only some regions are shown }}
             {{#each region in notAllRegions}}
-              {{> regionSelectionItem region}}
+              {{> regionSelectionItem region=region search=(state 'search')}}
             {{/each}}
             {{#if hasMoreRegions}}
               <li>

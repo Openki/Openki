@@ -1,39 +1,60 @@
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import { useTranslation } from "react-i18next";
+import React from "react";
 
 import { RegionModel } from "/imports/api/regions/regions";
 
 import * as StringTools from "/imports/utils/string-tools";
+import { useSessionEquals } from "/imports/utils/react-meteor-data";
 
-export function Item(){
+export function Item({ region, search }: { region: RegionModel; search: string }) {
+  const { t } = useTranslation();
 
- function regionNameMarked(this: RegionModel) {
-    const search = (Template.instance().parentInstance() as any).state.get("search");
-    return StringTools.markedName(search, this.name);
+  const isCurrentRegion = useSessionEquals("region", region._id);
+
+  function regionNameMarked() {
+    return StringTools.markedName(search, region.name);
   }
-  
- function private() {
-    return this.isPrivate() ? "region-link-private" : "";
-  }
 
-  return <li className="{{private}}">
-  <a href="#"
-     className="dropdown-item js-region-link js-nav-dropdown-close {{#if isCurrentRegion _id}}fw-bold{{/if}}"
-     title="{{nameEn}}">
-    <div className="dropdown-addon-right">
-      <span className="badge bg-primary rounded-pill"
-            title="{{i18n 'regions.courses.title' '{COUNT, plural, =0{no courses} one{one course} other{# courses in} } in {REGION}' COUNT=courseCount REGION=this.name attr=true}}">
-        {{courseCount}}
-      </span>
-      <span className="badge bg-success text-dark rounded-pill"
-            title="{{i18n 'regions.eventCount.title' '{COUNT, plural, =0{no upcoming events} one{one upcoming event} other{# upcoming events} } in {REGION}' COUNT=futureEventCount REGION=this.name attr=true}}">
-        {{futureEventCount}}
-      </span>
-    </div>
-    {{#if isCurrentRegion _id}}
-      <span className="checkmark fa-solid fa-check"></span>
-    {{/if}}
-    {{regionNameMarked}}
-  </a>
-</li>
+  return (
+    <li className={region.isPrivate() ? "region-link-private" : ""}>
+      <a
+        href="#"
+        className={`dropdown-item js-region-link js-nav-dropdown-close ${
+          isCurrentRegion ? "fw-bold" : ""
+        }`}
+        title={region.nameEn}
+      >
+        <div className="dropdown-addon-right">
+          <span
+            className="badge bg-primary rounded-pill"
+            title={t(
+              "regions.courses.title",
+              "{COUNT, plural, =0{no courses} one{one course} other{# courses in} } in {REGION}",
+              { COUNT: region.courseCount, REGION: region.name },
+            )}
+          >
+            {region.courseCount}
+          </span>
+          <span
+            className="badge bg-success text-dark rounded-pill"
+            title={t(
+              "regions.eventCount.title",
+              "{COUNT, plural, =0{no upcoming events} one{one upcoming event} other{# upcoming events} } in {REGION}",
+              { COUNT: region.futureEventCount, REGION: region.name },
+            )}
+          >
+            {region.futureEventCount}
+          </span>
+        </div>
+        {isCurrentRegion ? <span className="checkmark fa-solid fa-check"></span> : null}
+        {regionNameMarked()}
+      </a>
+    </li>
+  );
 }
 
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("RegionSelectionItem", () => Item);
