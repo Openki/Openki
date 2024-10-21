@@ -3,16 +3,35 @@ import React from "react";
 
 import { RegionModel } from "/imports/api/regions/regions";
 
-import * as StringTools from "/imports/utils/string-tools";
 import { useSessionEquals } from "/imports/utils/react-meteor-data";
 
-export function Item({ region, search }: { region: RegionModel; search: string }) {
+import { FilterPreview } from "/imports/ui/lib/filter-preview";
+import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
+
+import { MarkedName } from "/imports/utils/marked-name";
+
+export function Item({
+  region,
+  search,
+  onClick,
+}: {
+  region: RegionModel;
+  search: string;
+  onClick: () => void;
+}) {
   const { t } = useTranslation();
+  const currentRegion = useCurrentRegion();
 
   const isCurrentRegion = useSessionEquals("region", region._id);
 
-  function regionNameMarked() {
-    return StringTools.markedName(search, region.name);
+  function handelFocus(active: boolean) {
+    if (!currentRegion) {
+      FilterPreview({
+        property: "region",
+        id: region._id,
+        activate: active,
+      });
+    }
   }
 
   return (
@@ -23,6 +42,11 @@ export function Item({ region, search }: { region: RegionModel; search: string }
           isCurrentRegion ? "fw-bold" : ""
         }`}
         title={region.nameEn}
+        onClick={onClick}
+        onMouseOver={() => handelFocus(true)}
+        onMouseOut={() => handelFocus(false)}
+        onFocus={() => handelFocus(true)}
+        onBlur={() => handelFocus(false)}
       >
         <div className="dropdown-addon-right">
           <span
@@ -34,7 +58,7 @@ export function Item({ region, search }: { region: RegionModel; search: string }
             )}
           >
             {region.courseCount}
-          </span>
+          </span>{" "}
           <span
             className="badge bg-success text-dark rounded-pill"
             title={t(
@@ -46,8 +70,8 @@ export function Item({ region, search }: { region: RegionModel; search: string }
             {region.futureEventCount}
           </span>
         </div>
-        {isCurrentRegion ? <span className="checkmark fa-solid fa-check"></span> : null}
-        {regionNameMarked()}
+        {isCurrentRegion ? <span className="checkmark fa-solid fa-check"></span> : null}{" "}
+        <MarkedName search={search} name={region.name} />
       </a>
     </li>
   );

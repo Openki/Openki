@@ -4,6 +4,7 @@ import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating"
 import { Regions } from "/imports/api/regions/regions";
 
 import "..";
+import "../display";
 
 import "./template.html";
 
@@ -34,6 +35,19 @@ template.helpers({
       inNavbar: this.inNavbar,
       onClick: () => {
         instance.state.set("searchingRegions", true);
+      },
+    };
+  },
+
+  regionSelectionAttr() {
+    const instance = Template.instance();
+    return {
+      inNavbar: this.inNavbar,
+      isSplash: this.isSplash,
+      onClose: () => {
+        if (instance.state.get("searchingRegions")) {
+          instance.state.set("searchingRegions", false);
+        }
       },
     };
   },

@@ -1,149 +1,44 @@
-import { ReactiveDict } from "meteor/reactive-dict";
+import React, { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import { Session } from "meteor/session";
 import { Mongo } from "meteor/mongo";
 
 import { RegionEntity, RegionModel, Regions } from "/imports/api/regions/regions";
 
-import * as RegionSelection from "/imports/utils/region-selection";
+import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
+import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
+import * as RegionSelectionUtils from "/imports/utils/region-selection";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
-import { MeteorAsync } from "/imports/utils/promisify";
+import { useSiteName } from "/imports/utils/getSiteName";
 
-import { FilterPreview } from "/imports/ui/lib/filter-preview";
-import "./display";
-import "./item";
+import { Item } from "./item";
 
 import "./styles.scss";
 
-export function RegionSelection(){
-  return   <li class="region-selection {{inNavbarClasses}}">
-  <form class="d-flex js-region-search-form region-search-form" tabindex="0">
-    <div
-         class="input-group input-group-outline {{#if isSplash}}is-splash{{else}}input-group-sm p-2{{/if}}">
-      <span class="input-group-text"><span class="fa-solid fa-location-dot"
-              aria-hidden="true"></span></span>
-      <input class="form-control js-region-search {{#if currentRegionName}} fw-bold {{/if}}"
-             type="text"
-             value="{{#if currentRegionName}}{{currentRegionName}}{{else}}{{i18n 'menue.All regions' 'All regions'}}{{/if}}">
-      <input class="d-none" type="submit">
-      <button class="btn dropdown-toggle" data-bs-toggle="dropdown" role="button"
-              aria-expanded="false" tabindex="-1"></button>
-      <ul class="dropdown-menu dropdown-menu-end mx-2" role="menu">
-        <li class="dropdown-header dropdown-legend">
-          <div class="dropdown-addon-right">
-            <span class="badge bg-primary rounded-pill"
-                  title="{{i18n 'regionSelection.legend.numCoursesTitle' 'Number of courses' attr=true}}">
-              # <i class="fa-solid fa-circle"></i>
-            </span>
-            <span class="badge bg-success text-dark rounded-pill"
-                  title="{{i18n 'regionSelection.legend.numEventsTitle' 'Number of upcoming events' attr=true}}">
-              # <i class="fa-solid fa-calendar"></i>
-            </span>
-          </div>
-          {{i18n 'regionSelection.legend.region' 'Region'}}
-        </li>
-        <li>
-          <a href="#" class="dropdown-item js-region-link js-nav-dropdown-close"
-             title="{{i18n 'menue.All regions' attr=true}}">
-            <div class="dropdown-addon-right">
-              <span class="badge bg-primary rounded-pill"
-                    title="{{i18n 'regions.allCourses.title' '{COUNT, plural, =0{no courses} one{one course} other{# courses} } on {SITENAME}' COUNT=allCourses SITENAME=siteName attr=true}}">
-                {{allCourses}}
-              </span>
-              <span class="badge bg-success text-dark rounded-pill"
-                    title="{{i18n 'regions.allUpcomingEvents.title' '{COUNT, plural, =0{no upcoming events} one{one upcoming event} other{# upcoming events} } on {SITENAME}' COUNT=allUpcomingEvents SITENAME=siteName attr=true}}">
-                {{allUpcomingEvents}}
-              </span>
-            </div>
-            {{#if isCurrentRegion 'all'}}
-              <span class="checkmark fa-solid fa-check"></span>
-              <span class="fw-bold">{{i18n 'menue.All regions' 'All regions'}}</span>
-            {{else}} {{i18n 'menue.All regions' 'All regions'}}
-            {{/if}}
-          </a>
-        </li>
-        {{#if state 'showAllRegions'}}
-          {{! here follows the "long" version, all regions that the user has access to }}
-          {{#each region in allRegions}}
-            {{> regionSelectionItem region=region search=(state 'search')}}
-          {{/each}}
-          {{#if aboutLink}}
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li>
-              <a class="dropdown-item" href="{{aboutLink}}">
-                <span class="fa-solid fa-circle-info" aria-hidden="true"></span>
-                {{i18n 'regionSelection.aboutLink' 'About regions'}}
-              </a>
-            </li>
-          {{/if}}
-        {{else}}
-          {{! here follows the "short" version, only some regions are shown }}
-          {{#each region in notAllRegions}}
-            {{> regionSelectionItem region=region search=(state 'search')}}
-          {{/each}}
-          {{#if hasMoreRegions}}
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li>
-              <button class="btn btn-link js-show-all-regions" type="button">
-                {{i18n 'regionSelection.showAll' 'Show more regions'}}
-              </button>
-            </li>
-          {{/if}}
-        {{/if}}
-      </ul>
-    </div>
-  </form>
-</li>
-}
+export function RegionSelection(data: {
+  isSplash: boolean;
+  inNavbar: boolean;
+  onClose: () => void;
+}) {
+  const { t } = useTranslation();
+  const minNumberOfRegionInSelection = PublicSettings.regionSelection.minNumber;
+  const [search, setSearch] = useState("");
+  const [searchHasFocus, setSearchHasFocus] = useState(false);
+  const [showAllRegions, setShowAllRegions] = useState(false);
+  const searchElementRef = useRef<HTMLInputElement>(null);
+  const dropdownToggleElementRef = useRef<HTMLButtonElement>(null);
+  const currentRouteName = useCurrentRouteName();
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "regionSelection",
-  { isSplash: boolean },
-  {
-    minNumberOfRegionInSelection: number;
-    searchHasFocus: boolean;
-    state: ReactiveDict<{
-      showAllRegions: boolean;
-      search: string;
-    }>;
-    /**
-     * Query some regions
-     */
-    regions: (options?: { active?: boolean; limit?: number }) => RegionEntity[];
-    changeRegion: (regionId: string) => void;
-    close: () => void;
-  }
->;
+  const currentRegion = useCurrentRegion();
+  const siteName = useSiteName();
 
-const template = Template.regionSelection;
-
-template.onCreated(function () {
-  this.state = new ReactiveDict();
-  this.state.setDefault({
-    showAllRegions: false,
-    search: "",
-  });
-
-  this.autorun(() => {
-    const search = this.state.get("search");
-    this.state.set("showAllRegions", search !== "");
-  });
-
-  this.minNumberOfRegionInSelection = PublicSettings.regionSelection.minNumber;
-
-  this.regions = (options = {}) => {
+  function regions(options: { active?: boolean; limit?: number } = {}) {
     // read the current region
-    const currentId: string = Regions.currentRegion()?._id || "";
+    const currentId: string = currentRegion?._id || "";
 
     // prepare for query
     const query: Mongo.Selector<RegionEntity> = {};
-    const search = this.state.get("search");
     if (search && search !== "") {
       query.name = new RegExp(search, "i");
     }
@@ -189,160 +84,298 @@ template.onCreated(function () {
     }
 
     return regionsArray;
-  };
+  }
 
-  this.changeRegion = (regionId) => {
-    const changed = !Session.equals("region", regionId);
+  // create a function to toggle displaying the regionSelection
+  // only if it is placed inside a wrap
+  function close() {
+    data.onClose();
+  }
 
-    RegionSelection.change(regionId);
+  function changeRegion(regionId: string) {
+    const changed = currentRegion?._id !== regionId;
+
+    RegionSelectionUtils.change(regionId);
 
     // When the region changes, we want the content of the page to update
     // Many pages do not change when the region changed, so we go to
     // the homepage for those
     if (changed) {
-      const routeName = Router.current().route?.getName();
-      if (!RegionSelection.regionDependentRoutes.includes(routeName)) {
+      const routeName = currentRouteName;
+      if (!RegionSelectionUtils.regionDependentRoutes.includes(routeName)) {
         Router.go("/");
       }
     }
-    this.close();
-  };
-
-  // create a function to toggle displaying the regionSelection
-  // only if it is placed inside a wrap
-  this.close = () => {
-    const parentState = (this.parentInstance() as any).state;
-    if (parentState?.get("searchingRegions")) {
-      parentState.set("searchingRegions", false);
-    }
-  };
-});
-
-template.onRendered(async function () {
-  await MeteorAsync.defer();
-
-  if (!this.data || !this.data.isSplash) {
-    this.$(".js-region-search").trigger("select");
+    close();
   }
-});
 
-template.helpers({
-  inNavbarClasses() {
-    if (this.inNavbar) {
+  function inNavbarClasses() {
+    if (data.inNavbar) {
       return "nav-item text-center col col-lg-auto";
     }
     return "";
-  },
-  allCourses() {
+  }
+  function allCourses() {
     return Regions.find()
       .fetch()
       .reduce((acc, region) => acc + region.courseCount, 0);
-  },
-
-  allUpcomingEvents() {
+  }
+  function allUpcomingEvents() {
     return Regions.find()
       .fetch()
       .reduce((acc, region) => acc + region.futureEventCount, 0);
-  },
+  }
+  function hasMoreRegions() {
+    const minNumber = minNumberOfRegionInSelection;
 
-  hasMoreRegions() {
-    const minNumber = Template.instance().minNumberOfRegionInSelection;
-
-    const numberOfRegions = Template.instance().regions().length;
+    const numberOfRegions = regions().length;
 
     return numberOfRegions > minNumber;
-  },
-
-  allRegions() {
-    return Template.instance().regions();
-  },
-
-  notAllRegions() {
-    const instance = Template.instance();
-    const minNumber = instance.minNumberOfRegionInSelection;
-    return instance.regions({ limit: minNumber });
-  },
-
-  aboutLink() {
+  }
+  function allRegions() {
+    return regions();
+  }
+  function notAllRegions() {
+    const minNumber = minNumberOfRegionInSelection;
+    return regions({ limit: minNumber });
+  }
+  function aboutLink() {
     return getLocalizedValue(PublicSettings.regionSelection.aboutLink);
-  },
-});
+  }
 
-template.events({
-  "click .js-region-link"(event, instance) {
-    event.preventDefault();
-    const regionId = this._id || "all";
-    instance.changeRegion(regionId.toString());
+  useEffect(() => {
+    setShowAllRegions(search !== "");
+  }, [search]);
 
-    instance.$(".dropdown-toggle").dropdown("hide");
+  useEffect(() => {
+    if (!data.isSplash) {
+      searchElementRef.current?.select();
+    }
+  });
+
+  useEffect(() => {
+    if (!dropdownToggleElementRef.current)
+      throw new Error("Unexpected undefined: dropdownToggleElementRef.current");
+
+    dropdownToggleElementRef.current.addEventListener("show.bs.dropdown", () => {
+      if (!searchHasFocus) {
+        searchElementRef.current?.select();
+      }
+    });
+    dropdownToggleElementRef.current.addEventListener("hide.bs.dropdown", () => {
+      if (!searchHasFocus) {
+        close();
+        return true;
+      }
+      return false;
+    });
+  });
+
+  function handelRegionLinkClick(region?: RegionModel) {
+    const regionId = region?._id || "all";
+    changeRegion(regionId);
+
+    if (!dropdownToggleElementRef.current)
+      throw new Error("Unexpected undefined: dropdownToggleElementRef.current");
+
+    $(dropdownToggleElementRef.current).dropdown("hide");
     return false;
-  },
+  }
 
-  "mouseover/mouseout/focusin/focusout .js-region-link"(this: RegionModel, event) {
-    const id = this._id;
-    if (id && Session.equals("region", "all")) {
-      FilterPreview({
-        property: "region",
-        id,
-        activate: event.type === "mouseover" || event.type === "focusin",
-      });
+  function handelRegionSearchKeyUp(event: React.KeyboardEvent<HTMLInputElement>) {
+    const newSearch = event.currentTarget.value.trim();
+    if (newSearch !== search) {
+      setSearch(newSearch);
+      setSearchHasFocus(true);
+
+      if (!dropdownToggleElementRef.current)
+        throw new Error("Unexpected undefined: dropdownToggleElementRef.current");
+      $(dropdownToggleElementRef.current).dropdown("show");
     }
-  },
+  }
 
-  "keyup .js-region-search"(_event, instance) {
-    const search = String(instance.$(".js-region-search").val()).trim();
-    if (!instance.state.equals("search", search)) {
-      instance.state.set({ search });
-      // eslint-disable-next-line no-param-reassign
-      instance.searchHasFocus = true;
-      instance.$(".dropdown-toggle").dropdown("show");
-    }
-  },
+  function handelRegionSearchFocus() {
+    if (!dropdownToggleElementRef.current)
+      throw new Error("Unexpected undefined: dropdownToggleElementRef.current");
+    $(dropdownToggleElementRef.current).dropdown("show");
+    setSearchHasFocus(true);
+  }
 
-  "submit .js-region-search-form"(event, instance) {
-    event.preventDefault();
-    // eslint-disable-next-line no-param-reassign
-    instance.searchHasFocus = false;
-    instance.$(".js-region-search").trigger("focusout");
-    instance.$(".dropdown-toggle").dropdown("hide");
-    if (!instance.state.equals("search", "")) {
-      const selectedRegion = instance.regions()[0];
+  function handelRegionSearchBlur() {
+    setSearchHasFocus(false);
+  }
+
+  function handelShowAllRegionsClick() {
+    setShowAllRegions(true);
+    searchElementRef.current?.select();
+  }
+
+  function handelSubmit() {
+    setSearchHasFocus(false);
+    if (!dropdownToggleElementRef.current)
+      throw new Error("Unexpected undefined: dropdownToggleElementRef.current");
+    $(dropdownToggleElementRef.current).dropdown("hide");
+    if (search !== "") {
+      const selectedRegion = regions()[0];
       if (selectedRegion) {
-        instance.changeRegion(selectedRegion._id);
+        changeRegion(selectedRegion._id);
       } else {
-        instance.changeRegion("all");
+        changeRegion("all");
       }
     }
-  },
+  }
 
-  "focus .js-region-search"(_event, instance) {
-    instance.$(".dropdown-toggle").dropdown("show");
-  },
+  return (
+    <li className={`region-selection ${inNavbarClasses()}`}>
+      <form className="d-flex region-search-form" tabIndex={0} onSubmit={handelSubmit}>
+        <div
+          className={`input-group input-group-outline ${
+            data.isSplash ? "is-splash" : "input-group-sm p-2"
+          }`}
+        >
+          <span className="input-group-text">
+            <span className="fa-solid fa-location-dot" aria-hidden="true"></span>
+          </span>
+          <input
+            className={`form-control js-region-search ${currentRegion ? "fw-bold" : ""}`}
+            type="text"
+            defaultValue={
+              currentRegion ? currentRegion.name : t("menue.All regions", "All regions") || ""
+            }
+            ref={searchElementRef}
+            onKeyUp={handelRegionSearchKeyUp}
+            onFocus={handelRegionSearchFocus}
+            onBlur={handelRegionSearchBlur}
+          />
+          <input className="d-none" type="submit" />
+          <button
+            className="btn dropdown-toggle"
+            data-bs-toggle="dropdown"
+            role="button"
+            aria-expanded="false"
+            tabIndex={-1}
+            ref={dropdownToggleElementRef}
+          ></button>
+          <ul className="dropdown-menu dropdown-menu-end mx-2" role="menu">
+            <li className="dropdown-header dropdown-legend">
+              <div className="dropdown-addon-right">
+                <span
+                  className="badge bg-primary rounded-pill"
+                  title={t("regionSelection.legend.numCoursesTitle", "Number of courses")}
+                >
+                  # <i className="fa-solid fa-circle"></i>
+                </span>{" "}
+                <span
+                  className="badge bg-success text-dark rounded-pill"
+                  title={t("regionSelection.legend.numEventsTitle", "Number of upcoming events")}
+                >
+                  # <i className="fa-solid fa-calendar"></i>
+                </span>
+              </div>
+              {t("regionSelection.legend.region", "Region")}
+            </li>
+            <li>
+              <a
+                href="#"
+                className="dropdown-item js-region-link js-nav-dropdown-close"
+                title={t("menue.All regions")}
+                onClick={() => handelRegionLinkClick()}
+              >
+                <div className="dropdown-addon-right">
+                  <span
+                    className="badge bg-primary rounded-pill"
+                    title={t(
+                      "regions.allCourses.title",
+                      "{COUNT, plural, =0{no courses} one{one course} other{# courses} } on {SITENAME}",
+                      { COUNT: allCourses(), SITENAME: siteName },
+                    )}
+                  >
+                    {allCourses()}
+                  </span>{" "}
+                  <span
+                    className="badge bg-success text-dark rounded-pill"
+                    title={t(
+                      "regions.allUpcomingEvents.title",
+                      "{COUNT, plural, =0{no upcoming events} one{one upcoming event} other{# upcoming events} } on {SITENAME}",
+                      { COUNT: allUpcomingEvents(), SITENAME: siteName },
+                    )}
+                  >
+                    {allUpcomingEvents()}
+                  </span>
+                </div>
+                {!currentRegion ? (
+                  <>
+                    <span className="checkmark fa-solid fa-check"></span>{" "}
+                    <span className="fw-bold">{t("menue.All regions", "All regions")}</span>
+                  </>
+                ) : (
+                  t("menue.All regions", "All regions")
+                )}
+              </a>
+            </li>
+            {showAllRegions ? (
+              //  here follows the "long" version, all regions that the user has access to
+              <>
+                {allRegions().map((region) => (
+                  <Item
+                    key={region._id}
+                    region={region}
+                    search={search}
+                    onClick={() => handelRegionLinkClick(region)}
+                  />
+                ))}
+                {aboutLink() ? (
+                  <>
+                    <li>
+                      <hr className="dropdown-divider" />
+                    </li>
+                    <li>
+                      <a className="dropdown-item" href={aboutLink()}>
+                        <span className="fa-solid fa-circle-info" aria-hidden="true"></span>{" "}
+                        {t("regionSelection.aboutLink", "About regions")}
+                      </a>
+                    </li>
+                  </>
+                ) : null}
+              </>
+            ) : (
+              // here follows the "short" version, only some regions are shown
+              <>
+                {notAllRegions().map((region) => (
+                  <Item
+                    key={region._id}
+                    region={region}
+                    search={search}
+                    onClick={() => handelRegionLinkClick(region)}
+                  />
+                ))}
+                {hasMoreRegions() ? (
+                  <>
+                    <li>
+                      <hr className="dropdown-divider" />
+                    </li>
+                    <li>
+                      <button
+                        className="btn btn-link"
+                        type="button"
+                        onClick={handelShowAllRegionsClick}
+                      >
+                        {t("regionSelection.showAll", "Show more regions")}
+                      </button>
+                    </li>
+                  </>
+                ) : null}
+              </>
+            )}
+          </ul>
+        </div>
+      </form>
+    </li>
+  );
+}
 
-  "focusin/focusout .js-region-search"(event, instance) {
-    // eslint-disable-next-line no-param-reassign
-    instance.searchHasFocus = event.type === "focusin";
-  },
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
 
-  "click .js-show-all-regions"(_event, instance) {
-    instance.state.set("showAllRegions", true);
-    instance.$(".js-region-search").trigger("select");
-  },
-
-  async "show.bs.dropdown"(_event, instance) {
-    if (!instance.searchHasFocus) {
-      await MeteorAsync.defer();
-
-      instance.$(".js-region-search").trigger("select");
-    }
-  },
-
-  "hide.bs.dropdown"(_event, instance) {
-    if (!instance.searchHasFocus) {
-      instance.close();
-      return true;
-    }
-
-    return false;
-  },
-});
+Template.registerHelper("RegionSelection", () => RegionSelection);
