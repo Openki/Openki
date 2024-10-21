@@ -65,7 +65,7 @@ export const updateDescription = ServerMethod("user.updateDescription", (descrip
     throw new ValidationError([{ name: "description", type: "plzLogin" }], "Not logged-in");
   }
 
-  const sane = HtmlTools.saneHtml(description).trim().substring(0, 400);
+  const sane = HtmlTools.saneHtml(description, 400);
 
   const result = Profile.Description.change(userId, sane);
   if (!result) {
