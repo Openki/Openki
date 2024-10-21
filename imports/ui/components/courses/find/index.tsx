@@ -281,7 +281,7 @@ export function Find(query: { [key: string]: string | undefined }) {
     setShowingFilters(!showingFilters);
   }
 
-  // // Read URL state
+  // Read URL state
   useEffect(() => {
     filter.clear().read(query).done();
 
