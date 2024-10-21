@@ -5,24 +5,24 @@ import { Mongo } from "meteor/mongo";
 import { Regions } from "/imports/api/regions/regions";
 import { VenueEntity, Venues } from "/imports/api/venues/venues";
 
-import { HtmlString, SaveString, StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";
+import { HtmlString, SafeString, StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import * as StringTools from "/imports/utils/string-tools";
 
 export const SaveFieldPattern = {
-  name: Match.Optional(SaveString()),
+  name: Match.Optional(SafeString()),
   description: Match.Optional(HtmlString()),
-  region: Match.Optional(SaveString()),
+  region: Match.Optional(SafeString()),
   loc: Match.Optional(
     Match.OneOf(null, {
       type: StringEnum("Point"),
       coordinates: Tuple<[long: NumberConstructor, lat: NumberConstructor]>(Number, Number),
     }),
   ),
-  address: Match.Optional(SaveString()),
-  route: Match.Optional(SaveString()),
-  short: Match.Optional(SaveString()),
+  address: Match.Optional(SafeString()),
+  route: Match.Optional(SafeString()),
+  short: Match.Optional(SafeString()),
   maxPeople: Match.Optional(Match.Integer),
   maxWorkplaces: Match.Optional(Match.Integer),
   facilities: Match.Optional([StringEnum(...Venues.facilityOptions)]),
