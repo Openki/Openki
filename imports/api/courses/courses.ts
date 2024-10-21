@@ -144,7 +144,6 @@ export class Course {
    * @param role like 'team'
    */
   membersWithRole(this: CourseModel, role: string) {
-    check(role, String);
     return this.members.filter((member) => member.roles.includes(role));
   }
 

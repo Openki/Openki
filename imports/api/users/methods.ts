@@ -19,7 +19,7 @@ import * as StringTools from "/imports/utils/string-tools";
 import * as AsyncTools from "/imports/utils/async-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { Type } from "/imports/utils/CustomChecks";
+import { HtmlString, SafeString, Type } from "/imports/utils/CustomChecks";
 import { NotAllowedCharacter } from "/imports/startup/both/NotAllowedCharacter";
 
 /**
@@ -58,7 +58,7 @@ export const updateAvatarColor = ServerMethod("user.updateAvatarColor", (newColo
  * Update user description
  */
 export const updateDescription = ServerMethod("user.updateDescription", (description: string) => {
-  check(description, String);
+  check(description, HtmlString());
 
   const userId = Meteor.userId();
   if (!userId) {
@@ -82,7 +82,7 @@ export const updateDescription = ServerMethod("user.updateDescription", (descrip
 export const updateUsername = ServerMethod(
   "user.updateUsername",
   async (username: string) => {
-    check(username, String);
+    check(username, SafeString());
 
     const user = await Meteor.userAsync();
     if (!user) {
@@ -179,7 +179,7 @@ export const updatePrivateMessages = ServerMethod(
 export const updateEmail = ServerMethod(
   "user.updateEmail",
   async (email: string) => {
-    check(email, String);
+    check(email, SafeString());
 
     const user = await Meteor.userAsync();
     if (!user) {
@@ -234,8 +234,8 @@ export type AdminRemoveOptions = Type<typeof AdminRemoveOptionsPattern>;
 export const adminRemove = ServerMethod(
   "user.admin.remove",
   async (userId: string, reason: string, options: AdminRemoveOptions = {}) => {
-    check(userId, String);
-    check(reason, String);
+    check(userId, SafeString());
+    check(reason, SafeString());
     check(options, Match.Maybe(AdminRemoveOptionsPattern));
 
     const operatorId = Meteor.userId();
@@ -299,8 +299,8 @@ export const adminRemove = ServerMethod(
 export const addPrivilege = ServerMethod(
   "user.addPrivilege",
   async (userId: string, privilege: "admin") => {
-    check(userId, String);
-    check(privilege, String);
+    check(userId, SafeString());
+    check(privilege, SafeString());
 
     if (!UserPrivilegeUtils.privilegedTo("admin")) {
       // At the moment, only admins may hand out privileges, so this is easy
@@ -323,8 +323,8 @@ export const addPrivilege = ServerMethod(
 export const removePrivilege = ServerMethod(
   "user.removePrivilege",
   async (userId: string, privilege: "admin") => {
-    check(userId, String);
-    check(privilege, String);
+    check(userId, SafeString());
+    check(privilege, SafeString());
 
     const user = await Users.findOneAsync({ _id: userId });
     if (!user) {
@@ -350,7 +350,7 @@ export const removePrivilege = ServerMethod(
 );
 
 export const setHasContributed = ServerMethod("user.setHasContributed", async (userId: string) => {
-  check(userId, String);
+  check(userId, SafeString());
 
   const operator = await Meteor.userAsync();
 
@@ -374,7 +374,7 @@ export const setHasContributed = ServerMethod("user.setHasContributed", async (u
 export const unsetHasContributed = ServerMethod(
   "user.unsetHasContributed",
   async (userId: string) => {
-    check(userId, String);
+    check(userId, SafeString());
 
     const operator = await Meteor.userAsync();
 
@@ -408,7 +408,7 @@ export const hidePricePolicy = ServerMethod("user.hidePricePolicy", async () => 
 export const updateLocale = ServerMethod(
   "user.updateLocale",
   async (locale: string) => {
-    check(locale, String);
+    check(locale, SafeString());
 
     const userId = Meteor.userId();
     if (!userId) {

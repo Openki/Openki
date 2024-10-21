@@ -26,12 +26,12 @@ export const SaveFieldPattern = {
   maxPeople: Match.Optional(Match.Integer),
   maxWorkplaces: Match.Optional(Match.Integer),
   facilities: Match.Optional([StringEnum(...Venues.facilityOptions)]),
-  otherFacilities: Match.Optional(String),
+  otherFacilities: Match.Optional(SafeString()),
 };
 export type SaveFields = Type<typeof SaveFieldPattern>;
 
 export const save = ServerMethod("venue.save", async (venueId: string, changes: SaveFields) => {
-  check(venueId, String);
+  check(venueId, SafeString());
   check(changes, SaveFieldPattern);
 
   const user = await Meteor.userAsync();
@@ -121,7 +121,7 @@ export const save = ServerMethod("venue.save", async (venueId: string, changes: 
 });
 
 export const remove = ServerMethod("venue.remove", async (venueId: string) => {
-  check(venueId, String);
+  check(venueId, SafeString());
 
   const venue = await Venues.findOneAsync(venueId);
   if (!venue) {
