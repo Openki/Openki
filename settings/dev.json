@@ -61,7 +61,7 @@
       , "query": "userInvolved={currentUser}"
       }
     , { "entity": "event"
-      , "title": "dashboard.userRegisterFor.title"
+      , "title": "dashboard.userRegistredFor.title"
       , "query": "participant={currentUser}&after=now&sort=start&internal=0&canceled=0"
       }
     , { "entity": "course"
