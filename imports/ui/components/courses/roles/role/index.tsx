@@ -6,6 +6,7 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { PleaseLogin } from "../../../please-login";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 
+import { User, UserModel } from "/imports/api/users/users";
 import * as Alert from "/imports/api/alerts/alert";
 import { Subscribe, Unsubscribe, processChange } from "/imports/api/courses/subscription";
 import { Regions } from "/imports/api/regions/regions";
@@ -59,7 +60,7 @@ export function Role(data: Data) {
   }
   function maySubscribe() {
     const operator = user;
-    return courseSubscribe().validFor(operator);
+    return courseSubscribe().validFor(operator || (new User() as UserModel));
   }
 
   function handelCommentChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
