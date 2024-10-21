@@ -193,7 +193,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
   }
 
   if (changes.description) {
-    set.description = HtmlTools.saneHtml(set.description);
+    set.description = HtmlTools.saneHtml(changes.description);
   }
 
   if (changes.categories) {

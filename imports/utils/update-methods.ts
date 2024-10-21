@@ -4,6 +4,7 @@ import { check } from "meteor/check";
 
 import { Groups } from "/imports/api/groups/groups";
 import { UserModel } from "/imports/api/users/users";
+import { SafeString } from "./CustomChecks";
 
 // The code to update the groups and groupOrganizers field must do the same
 // thing for Courses and Events. So we parameterize the methods
@@ -29,8 +30,8 @@ export interface GroupPromoters extends Mongo.Collection<GroupPromoterEntity, Gr
  */
 export function promote(collection: GroupPromoters) {
   return function (docId: string, groupId: string, enable: boolean) {
-    check(docId, String);
-    check(groupId, String);
+    check(docId, SafeString());
+    check(groupId, SafeString());
     check(enable, Boolean);
 
     const doc = collection.findOne(docId);
@@ -81,8 +82,8 @@ export function promote(collection: GroupPromoters) {
  */
 export function editing(collection: GroupPromoters) {
   return function (docId: string, groupId: string, enable: boolean) {
-    check(docId, String);
-    check(groupId, String);
+    check(docId, SafeString());
+    check(groupId, SafeString());
     check(enable, Boolean);
 
     const doc = collection.findOne(docId);
