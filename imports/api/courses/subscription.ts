@@ -82,14 +82,14 @@ export type Reason = Type<typeof ReasonPattern>;
 export class Subscribe extends Change<{
   change: string;
   courseId: string;
-  userId: string;
+  userId: string | undefined;
   role: string;
   reason: Reason;
   comment: string | undefined;
 }> {
   course: CourseModel;
 
-  userId: string;
+  userId: string | undefined;
 
   role: string;
 
@@ -103,7 +103,7 @@ export class Subscribe extends Change<{
 
   static read(body: {
     courseId: string;
-    userId: string;
+    userId: string | undefined;
     role: string;
     reason: Reason;
     comment?: string | undefined;
@@ -129,7 +129,7 @@ export class Subscribe extends Change<{
 
     this.course = checkCourse(course);
 
-    check(userId, SafeString());
+    check(userId, Match.Optional(SafeString()));
     this.userId = userId;
 
     check(role, SafeString());
@@ -208,11 +208,17 @@ export class Subscribe extends Change<{
       operatorId: string | undefined;
     },
   ) {
+    if (!this.userId) {
+      throw new Error("Unexpected falsy: this.userId");
+    }
     rel.push(this.userId);
     Object.assign(body, this.dict());
   }
 
   apply() {
+    if (!this.userId) {
+      throw new Error("Unexpected falsy: this.userId");
+    }
     // Add the user as member if she's not listed yet
     // Note that the user will be created with the role already
     // filled to avoid seeing empty list of roles.
