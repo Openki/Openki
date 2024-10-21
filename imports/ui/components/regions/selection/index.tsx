@@ -24,7 +24,7 @@ export function RegionSelection(data: {
   const { t } = useTranslation();
   const minNumberOfRegionInSelection = PublicSettings.regionSelection.minNumber;
   const [search, setSearch] = useState("");
-  const [searchHasFocus, setSearchHasFocus] = useState(false);
+  const [searchHasFocus, setSearchHasFocus] = useState(true);
   const [showAllRegions, setShowAllRegions] = useState(false);
   const searchElementRef = useRef<HTMLInputElement>(null);
   const dropdownToggleElementRef = useRef<HTMLButtonElement>(null);
@@ -148,25 +148,27 @@ export function RegionSelection(data: {
   }, [search]);
 
   useEffect(() => {
-    if (!data.isSplash) {
+    if (!data.isSplash && searchHasFocus) {
+      console.info("a");
+      if (!dropdownToggleElementRef.current)
+        throw new Error("Unexpected falsy: dropdownToggleElementRef.current");
+      $(dropdownToggleElementRef.current).dropdown("show");
+      if (!searchElementRef.current) throw new Error("Unexpected falsy: searchElementRef.current");
       searchElementRef.current?.select();
     }
-  });
+  }, [data.isSplash, searchHasFocus]);
 
   useEffect(() => {
     if (!dropdownToggleElementRef.current)
-      throw new Error("Unexpected undefined: dropdownToggleElementRef.current");
-
-    dropdownToggleElementRef.current.addEventListener("show.bs.dropdown", () => {
-      if (!searchHasFocus) {
-        searchElementRef.current?.select();
-      }
-    });
-    dropdownToggleElementRef.current.addEventListener("hide.bs.dropdown", () => {
+      throw new Error("Unexpected falsy: dropdownToggleElementRef.current");
+    dropdownToggleElementRef.current.addEventListener("hide.bs.dropdown", (event) => {
       if (!searchHasFocus) {
         close();
         return true;
       }
+
+      // Stop closing
+      event.preventDefault();
       return false;
     });
   });
@@ -175,10 +177,6 @@ export function RegionSelection(data: {
     const regionId = region?._id || "all";
     changeRegion(regionId);
 
-    if (!dropdownToggleElementRef.current)
-      throw new Error("Unexpected undefined: dropdownToggleElementRef.current");
-
-    $(dropdownToggleElementRef.current).dropdown("hide");
     return false;
   }
 
@@ -186,18 +184,10 @@ export function RegionSelection(data: {
     const newSearch = event.currentTarget.value.trim();
     if (newSearch !== search) {
       setSearch(newSearch);
-      setSearchHasFocus(true);
-
-      if (!dropdownToggleElementRef.current)
-        throw new Error("Unexpected undefined: dropdownToggleElementRef.current");
-      $(dropdownToggleElementRef.current).dropdown("show");
     }
   }
 
   function handelRegionSearchFocus() {
-    if (!dropdownToggleElementRef.current)
-      throw new Error("Unexpected undefined: dropdownToggleElementRef.current");
-    $(dropdownToggleElementRef.current).dropdown("show");
     setSearchHasFocus(true);
   }
 
@@ -207,14 +197,11 @@ export function RegionSelection(data: {
 
   function handelShowAllRegionsClick() {
     setShowAllRegions(true);
-    searchElementRef.current?.select();
+    setSearchHasFocus(true);
   }
 
   function handelSubmit() {
     setSearchHasFocus(false);
-    if (!dropdownToggleElementRef.current)
-      throw new Error("Unexpected undefined: dropdownToggleElementRef.current");
-    $(dropdownToggleElementRef.current).dropdown("hide");
     if (search !== "") {
       const selectedRegion = regions()[0];
       if (selectedRegion) {
@@ -253,6 +240,7 @@ export function RegionSelection(data: {
             data-bs-toggle="dropdown"
             role="button"
             aria-expanded="false"
+            data-bs-auto-close="outside"
             tabIndex={-1}
             ref={dropdownToggleElementRef}
           ></button>
