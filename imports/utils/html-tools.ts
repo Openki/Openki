@@ -1,6 +1,6 @@
 import sanitizeHtml from "sanitize-html";
 import { check } from "meteor/check";
-import { UnsaveString } from "./CustomChecks";
+import { UnsafeString } from "./CustomChecks";
 
 /**
  * Turn plaintext into HTML by replacing HTML characters with their entities
@@ -24,7 +24,7 @@ export function plainToHtml(text: string) {
     );
 }
 
-export function saneHtml(unsaneHtml: string | UnsaveString): string {
+export function saneHtml(unsaneHtml: string | UnsafeString): string {
   // 640 k ought to be enough for everybody  -- Mao
   // String-truncating HTML may leave a broken tag at the end
   // The sanitizer will have to clean the mess.
