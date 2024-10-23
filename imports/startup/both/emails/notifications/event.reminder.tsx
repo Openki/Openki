@@ -26,7 +26,7 @@ interface Body {
  * @param eventId id of the event that are reminder
  * @param message custom message
  */
-export function record(eventId: string) {
+export async function record(eventId: string) {
   check(eventId, String);
 
   const recipients = [];
@@ -46,7 +46,7 @@ export function record(eventId: string) {
     model: "Event.Reminder",
   };
 
-  Log.record("Notification.Send", [eventId, ...recipients], body);
+  await Log.record("Notification.Send", [eventId, ...recipients], body);
 }
 
 export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {

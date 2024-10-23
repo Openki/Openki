@@ -7,37 +7,37 @@ import { Scrubber, ScrubRule } from "/imports/startup/server/lib/scrub";
 describe("The Log-Scrubber", () => {
   const scrubAfterOneDay = new Scrubber([new ScrubRule("test", 1, { tr: "test" }, true, [])]);
 
-  it("deletes record after grace period", () => {
+  it("deletes record after grace period", async () => {
     const log = logFactory.temporary();
-    log.record("test", [], {});
+    await log.record("test", [], {});
 
-    scrubAfterOneDay.scrub(log, moment().add(2, "days"));
+    await scrubAfterOneDay.scrub(log, moment().add(2, "days"));
 
     assert.equal(log.find({ tr: "test" }).count(), 0);
   });
 
-  it("deletes multiple records after grace period", () => {
+  it("deletes multiple records after grace period", async () => {
     const log = logFactory.temporary();
-    log.record("test", [], {});
-    log.record("test", [], {});
+    await log.record("test", [], {});
+    await log.record("test", [], {});
 
-    scrubAfterOneDay.scrub(log, moment().add(2, "days"));
+    await scrubAfterOneDay.scrub(log, moment().add(2, "days"));
 
     assert.equal(log.find({ tr: "test" }).count(), 0);
   });
 
-  it("keeps record during grace period", () => {
+  it("keeps record during grace period", async () => {
     const log = logFactory.temporary();
-    log.record("test", [], {});
+    await log.record("test", [], {});
 
-    scrubAfterOneDay.scrub(log, moment().add(1, "day"));
+    await scrubAfterOneDay.scrub(log, moment().add(1, "day"));
 
     assert.equal(log.find({ tr: "test" }).count(), 1);
   });
 
-  it("unsets only specified field", (done) => {
+  it("unsets only specified field", async (done) => {
     const log = logFactory.temporary();
-    log.record("test", [], { a: "a", b: "b" });
+    await log.record("test", [], { a: "a", b: "b" });
 
     const scrubber = new Scrubber([new ScrubRule("test", 1, { tr: "test" }, false, ["a"])]);
 
@@ -54,7 +54,7 @@ describe("The Log-Scrubber", () => {
         }
       },
     });
-    scrubber.scrub(log, moment().add(2, "days"));
+    await scrubber.scrub(log, moment().add(2, "days"));
     log.update({ tr: "test" }, { $unset: { a: "" } });
   });
 });

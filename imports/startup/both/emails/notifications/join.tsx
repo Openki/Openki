@@ -32,7 +32,12 @@ interface Body {
  * @param newRole new role of the participant
  * @param message Optional message of the new participant
  */
-export function record(courseId: string, participantId: string, newRole: string, message?: string) {
+export async function record(
+  courseId: string,
+  participantId: string,
+  newRole: string,
+  message?: string,
+) {
   check(courseId, String);
   check(participantId, String);
   check(newRole, String);
@@ -62,7 +67,7 @@ export function record(courseId: string, participantId: string, newRole: string,
     model: "Join",
   };
 
-  Log.record("Notification.Send", [course._id, participant._id], body);
+  await Log.record("Notification.Send", [course._id, participant._id], body);
 }
 
 export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {

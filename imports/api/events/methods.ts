@@ -333,7 +333,7 @@ export const save = ServerMethod(
         });
       }
     } else {
-      Events.update(eventId, { $set: editFields });
+      await Events.updateAsync(eventId, { $set: editFields });
 
       if (updateReplicasInfos || updateReplicasTime) {
         const updateOptions = {
@@ -379,7 +379,7 @@ export const save = ServerMethod(
         comment = comment.trim().substring(0, 2000).trim();
       }
 
-      Notification.Event.record(eventId, isNew, comment || undefined);
+      await Notification.Event.record(eventId, isNew, comment || undefined);
     }
 
     if (Meteor.isServer) {
@@ -496,9 +496,9 @@ export const addParticipant = ServerMethod(
     );
 
     // Send notifications to user
-    Notification.Rsvp.record(eventId, user._id, companions);
+    await Notification.Rsvp.record(eventId, user._id, companions);
     // Send notification to team
-    Notification["Rsvp.Team"].record(eventId, user._id, companions);
+    await Notification["Rsvp.Team"].record(eventId, user._id, companions);
 
     // if you cant load course its probably because the event doesnt have one
     const course = await Courses.findOneAsync(event.courseId);
@@ -570,7 +570,7 @@ export const contactParticipants = ServerMethod(
       throw new Meteor.Error(401, "not permitted");
     }
 
-    Notification["Event.ContactParticipants"].record(
+    await Notification["Event.ContactParticipants"].record(
       operator._id,
       message,
       eventId,
@@ -610,7 +610,7 @@ export const cancel = ServerMethod(
         comment = comment.trim().substring(0, 2000).trim();
       }
 
-      Notification["Event.Canceled"].record(operator._id, eventId, comment || "");
+      await Notification["Event.Canceled"].record(operator._id, eventId, comment || "");
     }
   },
 );

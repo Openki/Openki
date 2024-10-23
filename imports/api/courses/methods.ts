@@ -75,7 +75,7 @@ function registerMethod<T>(method: Method<T>): void {
     const rel = [operator?._id as string];
     const body = { operatorId: operator?._id };
     change.provide(rel, body);
-    const result = Log.record(method.method, rel, body);
+    const result = await Log.record(method.method, rel, body);
     try {
       change.apply();
     } catch (message) {
@@ -261,7 +261,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     courseId = await Courses.insertAsync(enrichedSet);
 
     if (set.groupOrganizers.length > 0) {
-      Notification["Group.Course"].record(courseId);
+      await Notification["Group.Course"].record(courseId);
     }
 
     // Init calculated fields

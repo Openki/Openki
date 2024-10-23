@@ -24,7 +24,7 @@ import { Root } from "../../../emails/Root";
  * @param message generated message (or null if we didn't get that far)
  * @param reason why this log entry was recorded
  */
-export function record(
+export async function record(
   note: { _id: string },
   unsubToken: string | null,
   sent: boolean,
@@ -49,7 +49,7 @@ export function record(
     rel.push(unsubToken);
   }
 
-  Log.record("Notification.SendResult", rel, entry);
+  await Log.record("Notification.SendResult", rel, entry);
 }
 
 function mapToObject<T>(map: [string, T][]) {
@@ -81,7 +81,8 @@ async function send(
     }
   )[entry.body.model].Model(entry);
 
-  entry.body.recipients.forEach((recipientId: string) => {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const recipientId of entry.body.recipients) {
     if (!concluded[recipientId]) {
       let mail: Email.EmailOptions | null = null;
       let unsubToken = null;
@@ -136,16 +137,18 @@ async function send(
 
         Email.send(mail);
 
-        record(entry, unsubToken, true, recipientId, mail, "success");
+        // eslint-disable-next-line no-await-in-loop
+        await record(entry, unsubToken, true, recipientId, mail, "success");
       } catch (e) {
         let reason = e;
         if (typeof e === "object" && "toJSON" in e) {
           reason = e.toJSON();
         }
-        record(entry, unsubToken, false, recipientId, mail, reason);
+        // eslint-disable-next-line no-await-in-loop
+        await record(entry, unsubToken, false, recipientId, mail, reason);
       }
     }
-  });
+  }
 }
 
 // Watch the Log for event notifications

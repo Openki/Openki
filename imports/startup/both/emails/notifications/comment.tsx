@@ -26,7 +26,7 @@ export interface Body {
  * Record the intent to send event notifications
  * @param commentId ID for the CourseDiscussions collection
  */
-export function record(commentId: string) {
+export async function record(commentId: string) {
   check(commentId, String);
   const comment = CourseDiscussions.findOne(commentId);
   if (!comment) {
@@ -75,20 +75,20 @@ export function record(commentId: string) {
     model: "Comment",
   };
 
-  Log.record("Notification.Send", [course._id, comment._id], body);
+  await Log.record("Notification.Send", [course._id, comment._id], body);
 }
 
 export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
-  const comment = CourseDiscussions.findOne(entry.body.commentId);
+  const comment = await CourseDiscussions.findOneAsync(entry.body.commentId);
 
   let course: CourseModel | undefined;
   let commenter: UserModel | undefined;
   let commenterName: string | undefined;
 
   if (comment) {
-    course = Courses.findOne(comment.courseId);
+    course = await Courses.findOneAsync(comment.courseId);
     if (comment.userId) {
-      commenter = Users.findOne(comment.userId);
+      commenter = await Users.findOneAsync(comment.userId);
     }
     if (commenter) {
       commenterName = commenter.getDisplayName();

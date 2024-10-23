@@ -25,7 +25,7 @@ interface Body {
  * Record the intent to send join notifications
  * @param courseId ID for the CourseDiscussions collection
  */
-export function record(courseId: string) {
+export async function record(courseId: string) {
   check(courseId, String);
 
   const course = Courses.findOne(courseId);
@@ -51,7 +51,7 @@ export function record(courseId: string) {
     model: "Group.Course",
   };
 
-  Log.record("Notification.Send", [course._id], body);
+  await Log.record("Notification.Send", [course._id], body);
 }
 
 export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {

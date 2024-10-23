@@ -28,7 +28,7 @@ if (runBackgroundTasks)
           return;
         }
 
-        Notification["Event.Reminder"].record(event._id);
+        await Notification["Event.Reminder"].record(event._id);
       });
     });
 

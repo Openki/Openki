@@ -65,7 +65,7 @@ export const sendPrivateMessage = ServerMethod(
       context.event = options.eventId;
     }
 
-    Notification.PrivateMessage.record(
+    await Notification.PrivateMessage.record(
       operator._id,
       recipient._id,
       message,

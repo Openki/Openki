@@ -36,7 +36,7 @@ interface Body {
  * @param revealSenderAddress include email-address of sender in message
  * @param sendCopyToSender send a copy of the message to the author
  */
-export function record(
+export async function record(
   senderId: string,
   message: string,
   eventId: string,
@@ -86,7 +86,7 @@ export function record(
     model: "Event.ContactParticipants",
   };
 
-  Log.record("Notification.Send", [senderId, eventId, ...recipients], body);
+  await Log.record("Notification.Send", [senderId, eventId, ...recipients], body);
 }
 
 export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
