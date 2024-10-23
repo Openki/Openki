@@ -6,9 +6,7 @@ export function resizeImage(base64: string, maxSize: number) {
   const imageBuffer = Buffer.from(content, "base64");
 
   return new Promise<string>((resolve, reject) => {
-    const result = sharp(imageBuffer).resize({
-      width: maxSize,
-      heigth: maxSize,
+    const result = sharp(imageBuffer).resize(maxSize, maxSize, {
       fit: "inside",
       withoutEnlargement: true,
     });
