@@ -52,31 +52,31 @@ export function record(
   Log.record("Notification.SendResult", rel, entry);
 }
 
+function mapToObject<T>(map: [string, T][]) {
+  return Object.fromEntries(new Map(map).entries());
+}
+
 /**
  * Handle event notification
  * @param entry Notification.Event log entry to process
  */
-function send(
+async function send(
   entry: LogEntity & {
     body: { model: string; recipients: string[] };
   },
 ) {
   // Find out for which recipients sending has already been attempted.
-  const concluded: { [recipient: string]: boolean } = {};
+  const concluded = mapToObject(
+    await Log.find({
+      tr: "Notification.SendResult",
+      rel: entry._id,
+    }).mapAsync((result) => [(result.body as { recipient: string }).recipient, true]),
+  );
 
-  Log.find({
-    tr: "Notification.SendResult",
-    rel: entry._id,
-  })
-    .map((r) => r as { body: { recipient: string } })
-    .forEach((result) => {
-      concluded[result.body.recipient] = true;
-    });
-
-  const model = (
+  const model = await (
     Notification as {
       [name: string]: {
-        Model<T>(_entry: unknown): Model<T>;
+        Model<T>(_entry: unknown): Promise<Model<T>>;
       };
     }
   )[entry.body.model].Model(entry);

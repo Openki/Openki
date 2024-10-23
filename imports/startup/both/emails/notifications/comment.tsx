@@ -78,7 +78,7 @@ export function record(commentId: string) {
   Log.record("Notification.Send", [course._id, comment._id], body);
 }
 
-export function Model(entry: { body: Body }): NotificationModel<Props> {
+export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const comment = CourseDiscussions.findOne(entry.body.commentId);
 
   let course: CourseModel | undefined;

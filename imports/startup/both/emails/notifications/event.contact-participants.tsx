@@ -89,7 +89,7 @@ export function record(
   Log.record("Notification.Send", [senderId, eventId, ...recipients], body);
 }
 
-export function Model(entry: { body: Body }): NotificationModel<Props> {
+export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
   const sender = Users.findOne(body.sender);
   const event = Events.findOne(body.event);

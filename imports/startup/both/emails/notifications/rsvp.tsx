@@ -48,7 +48,7 @@ export function record(eventId: string, participantId: string, companions: numbe
   Log.record("Notification.Send", [event._id, participant._id], body);
 }
 
-export function Model(entry: { body: Body }): NotificationModel<Props> {
+export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
   const event = Events.findOne(body.eventId);
   const newParticipant = Users.findOne(body.participantId);

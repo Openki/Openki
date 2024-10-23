@@ -62,7 +62,7 @@ export function record(eventId: string, isNew: boolean, additionalMessage?: stri
   Log.record("Notification.Send", course ? [course._id] : [], body);
 }
 
-export function Model(entry: { body: Body }): NotificationModel<Props> {
+export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const event = Events.findOne(entry.body.eventId);
 
   let course: CourseModel | undefined;

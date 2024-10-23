@@ -45,7 +45,7 @@ if (Meteor.isClient) {
         const coursesAsGast = Courses.findFilter().fetch();
 
         await MeteorAsync.loginWithPassword("Schufien", "greg");
-        const schufien = Meteor.user() as UserModel;
+        const schufien = (await Meteor.userAsync()) as UserModel;
 
         assert.ok(schufien);
 

@@ -25,7 +25,7 @@ if (runBackgroundTasks && Meteor.isServer && PrivateSettings.testdata) {
     console.log(result);
   };
 
-  const ifCollectionEmpty = <
+  const ifCollectionEmpty = async <
     T extends {
       [key: string]: any;
     },
@@ -34,7 +34,7 @@ if (runBackgroundTasks && Meteor.isServer && PrivateSettings.testdata) {
     collection: Mongo.Collection<T, U>,
     methods: string[],
   ) => {
-    if (collection.find().count() === 0) {
+    if ((await collection.find().countAsync()) === 0) {
       methods.forEach((method) => {
         Meteor.call(method, logResult);
       });
