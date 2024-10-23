@@ -12,21 +12,21 @@ import * as AsyncTools from "/imports/utils/async-tools";
 import { MeteorAsync } from "/imports/utils/promisify";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
-function updateDbCacheFields() {
+async function updateDbCacheFields() {
   // Resync location cache in events
   Meteor.call("event.updateVenue", {}, AsyncTools.logErrors);
 
   // Update list of organizers per course
   Meteor.call("course.updateGroups", {}, AsyncTools.logErrors);
 
-  eventsCategoriesDenormalizer.onStartUp();
+  await eventsCategoriesDenormalizer.onStartUp();
 
   // Update List of badges per user
   Meteor.call("user.updateBadges", {}, AsyncTools.logErrors);
 
-  coursesTenantDenormalizer.onStartUp();
-  eventsTenantDenormalizer.onStartUp();
-  usersTenantsDenormalizer.onStartUp();
+  await coursesTenantDenormalizer.onStartUp();
+  await eventsTenantDenormalizer.onStartUp();
+  await usersTenantsDenormalizer.onStartUp();
 
   // The `acceptsPrivateMessage` field is denormalized via `observe` to keep up to date after a
   // change is made.
@@ -59,8 +59,8 @@ if (runBackgroundTasks)
     if (PrivateSettings.startup.buildDbCacheAsync) {
       await MeteorAsync.defer();
 
-      updateDbCacheFields();
+      await updateDbCacheFields();
     } else {
-      updateDbCacheFields();
+      await updateDbCacheFields();
     }
   });

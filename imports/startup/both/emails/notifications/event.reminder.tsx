@@ -49,13 +49,13 @@ export function record(eventId: string) {
   Log.record("Notification.Send", [eventId, ...recipients], body);
 }
 
-export function Model(entry: { body: Body }): NotificationModel<Props> {
+export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
-  const event = Events.findOne(body.event);
+  const event = await Events.findOneAsync(body.event);
 
   let region: RegionModel | undefined;
   if (event?.region) {
-    region = Regions.findOne(event.region);
+    region = await Regions.findOneAsync(event.region);
   }
 
   return {

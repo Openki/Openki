@@ -5,8 +5,8 @@ import { _ } from "meteor/underscore";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
 if (runBackgroundTasks)
-  Meteor.startup(() => {
-    const runningVersion = Version.findOne();
+  Meteor.startup(async () => {
+    const runningVersion = await Version.findOneAsync();
     if (
       typeof VERSION !== "undefined" &&
       (!runningVersion ||
@@ -16,7 +16,7 @@ if (runBackgroundTasks)
       const newVersion = _.extend(VERSION, {
         activation: new Date(),
       });
-      Version.upsert({}, newVersion);
+      await Version.upsertAsync({}, newVersion);
     }
-    Version.update({}, { $set: { lastStart: new Date() } });
+    await Version.updateAsync({}, { $set: { lastStart: new Date() } });
   });
