@@ -11,7 +11,7 @@ import { Notification } from "../../startup/both/emails/notification";
 import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
-import { Type } from "/imports/utils/CustomChecks";
+import { SafeString, Type } from "/imports/utils/CustomChecks";
 import { renderToEmail } from "/imports/utils/renderToEmail";
 import { Root } from "../../emails/Root";
 import { Report } from "../../emails/Report";
@@ -32,16 +32,16 @@ export const sendVerificationEmail = ServerMethod(
 export const SendPrivateMessageOptionsPattern = {
   revealAddress: Boolean,
   sendCopy: Boolean,
-  courseId: Match.Optional(String),
-  eventId: Match.Optional(String),
+  courseId: Match.Optional(SafeString()),
+  eventId: Match.Optional(SafeString()),
 };
 export type SendPrivateMessageOptions = Type<typeof SendPrivateMessageOptionsPattern>;
 
 export const sendPrivateMessage = ServerMethod(
   "sendEmail",
   async (userId: string, message: string, options: SendPrivateMessageOptions) => {
-    check(userId, String);
-    check(message, String);
+    check(userId, SafeString());
+    check(message, SafeString());
     check(options, SendPrivateMessageOptionsPattern);
 
     const operator = await Meteor.userAsync();

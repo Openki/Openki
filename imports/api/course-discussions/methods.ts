@@ -12,26 +12,23 @@ import { Notification } from "../../startup/both/emails/notification";
 import * as StringTools from "/imports/utils/string-tools";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
-import { Type } from "/imports/utils/CustomChecks";
+import { HtmlString, SafeString, Type, UnsafeString } from "/imports/utils/CustomChecks";
 
-const sanitizeComment = (comment: { title?: string; text: string }) => {
-  const saneTitle = StringTools.saneTitle(comment?.title || "")
+const sanitizeComment = (comment: { title?: string | undefined; text: UnsafeString }) => {
+  const saneTitle = StringTools.saneTitle(comment.title || "")
     .substring(0, 200)
     .trim();
 
-  // String-truncating HTML may leave a broken tag at the end
-  // The sanitizer will have to clean the mess.
-  const unsaneHtml = comment.text.substring(0, 640 * 1024).trim();
-  const saneHtml = HtmlTools.saneHtml(unsaneHtml);
+  const saneHtml = HtmlTools.saneHtml(comment.text);
 
   return { title: saneTitle, text: saneHtml };
 };
 
 export const PostCommentFieldsPattern = {
-  courseId: String,
-  parentId: Match.Optional(String),
-  title: Match.Optional(String),
-  text: String,
+  courseId: SafeString(),
+  parentId: Match.Optional(SafeString()),
+  title: Match.Optional(SafeString()),
+  text: HtmlString(),
   anon: Boolean,
   notifyAll: Match.Optional(Boolean),
 };
@@ -101,9 +98,9 @@ export const postComment = ServerMethod(
 );
 
 export const EditCommentFieldsPattern = {
-  _id: String,
-  title: String,
-  text: String,
+  _id: SafeString(),
+  title: SafeString(),
+  text: SafeString(),
 };
 export type EditCommentFields = Type<typeof EditCommentFieldsPattern>;
 
@@ -131,8 +128,8 @@ export const editComment = ServerMethod(
 
 export const deleteComment = ServerMethod(
   "courseDiscussion.deleteComment",
-  async (commentId: string) => {
-    check(commentId, String);
+  async (commentId: UnsafeString) => {
+    check(commentId, SafeString());
 
     const user = await Meteor.userAsync();
     if (!user) {

@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Modal from "bootstrap/js/dist/modal";
 import { useUserId } from "/imports/utils/react-meteor-data";
-import { Template } from "meteor/templating";
 
 import * as emailMethods from "/imports/api/emails/methods";
 import { EventModel } from "/imports/api/events/events";
@@ -114,7 +113,7 @@ export function ParticipantContact(props: Props) {
                     </h4>
                     <button
                       type="button"
-                      className="btn-close"
+                      className="btn-close btn-close-white"
                       data-bs-dismiss="modal"
                       aria-label="Close"
                     ></button>
@@ -131,9 +130,3 @@ export function ParticipantContact(props: Props) {
     </>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("ParticipantContact", () => ParticipantContact);

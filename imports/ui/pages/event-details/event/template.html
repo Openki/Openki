@@ -1,0 +1,50 @@
+<template name="event">
+  <div class="row">
+    <div class="col-lg-8 mb-3">
+      {{#if this.canceled}}
+        <div class="alert alert-canceled text-center" role="alert">
+          <strong>{{i18n 'event.canceled.alert' '{EVENT} got canceled.' EVENT=this.title}}</strong>
+        </div>
+      {{/if}}
+      {{#if course}}
+        {{#unless course.singleEvent}}
+          {{> eventCourseHeader backlink=courseLink headerlink=courseLink regionId=region categories=categories title=course.name image=course.publicUrlForDetailsImage}}
+        {{else}}
+          {{#if mayEdit}}
+            {{> eventCourseHeader course=course backlink=courseLink regionId=region categories=categories title=title image=course.publicUrlForDetailsImage}}
+          {{else}}
+            {{> eventCourseHeader course=course regionId=region categories=categories title=title image=course.publicUrlForDetailsImage}}
+          {{/if}}
+        {{/unless}}
+      {{/if}}
+      <div class="event{{#if course}} course-event{{/if}}">
+        {{#if editing}}
+          {{> eventEdit}}
+        {{else}}
+          {{> eventDisplay}}
+        {{/if}}
+      </div>
+      {{#unless mobileViewport}}
+        {{#unless editing}}
+          {{#if course.singleEvent}}
+            {{> discussion courseId=course._id select=select}}
+          {{/if}}
+        {{/unless}}
+      {{/unless}}
+    </div>
+    {{#unless editing}}
+      <div class="col-lg-4">
+        {{> eventRegistration event=this}}
+        {{#if mobileViewport}}
+          {{#if course.singleEvent}}
+            {{> discussion courseId=course._id select=select}}
+          {{/if}}
+        {{/if}}
+        {{! style fixes a problem that occurs during the transition to react. This can be removed when everything is changed to react. }}
+        <div class="page-component mt-3">
+          {{> report}}
+        </div>
+      </div>
+    {{/unless}}
+  </div>
+</template>

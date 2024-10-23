@@ -5,6 +5,7 @@ import { ReactiveVar } from "meteor/reactive-var";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import { Router } from "meteor/iron:router";
 import { ValidationError } from "meteor/mdg:validation-error";
+import { NotAllowedCharacter } from "/imports/startup/both/NotAllowedCharacter";
 
 import * as Alert from "/imports/api/alerts/alert";
 import * as usersMethods from "/imports/api/users/methods";
@@ -125,6 +126,13 @@ template.onCreated(function () {
         {
           type: "noUserName",
           message: () => i18n("warning.noUserName", "Please enter a name for your user."),
+        },
+        {
+          type: "notAllowedCharacter",
+          message: () =>
+            i18n("register.warning.notAllowedCharacter", undefined, {
+              CHARACTERS: NotAllowedCharacter.join(", "),
+            }),
         },
         {
           type: "userExists",

@@ -64,13 +64,15 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
     rsvpWithCompanions: Boolean,
     /** allow to edit whether to remind or not, Default: true */
     sendReminderIsEditable: Boolean,
-    /** replace find with dashboard in group details, Default: false */
-    groupDashboard: Boolean,
   },
   nav: {
+    /** target link when clicking on the logo Default: "/" */
     brandLink: String,
-    home: Boolean,
+    /** show/hide find/search item in navbar Default: true */
+    search: Boolean,
+    /** show/hide propose item in navbar Default: true */
     proposeCourse: Boolean,
+    /** show/hide calendar item in navbar Default: true */
     calendar: Boolean,
     customEntries: [
       {
@@ -86,6 +88,42 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
       },
     ],
   },
+  /** Standard for all regions, can be overwritten if the "dashboard" property is set in the region, if not set, the ‘find’ page is displayed, default: undefined */
+  regionDashboardDefault: Match.Maybe([
+    {
+      /** The entity to show: "course", "event", "group", "eventsMap", "propose" are supported */
+      entity: String,
+      /** Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }` */
+      title: Match.Maybe(LocalizedValuePattern),
+      /** Query how the data should be filtered and sorted, all options and filters can be found in the wiki. The entities are filtered by region. */
+      query: Match.Maybe(String),
+      /** Overwrite the standard showAll button */
+      showAll: Match.Maybe({
+        /** The target to which the button links. */
+        link: Match.Maybe(String),
+        /** The text to display. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }` */
+        text: Match.Maybe(LocalizedValuePattern),
+      }),
+    },
+  ]),
+  /** Standard for all groups, can be overwritten if the "dashboard" property is set in the group, if not set, the ‘find’ page is displayed, default: undefined */
+  groupDashboardDefault: Match.Maybe([
+    {
+      /** The entity to show: "course", "event", "group", "eventsMap", "propose" are supported */
+      entity: String,
+      /** Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }` */
+      title: Match.Maybe(LocalizedValuePattern),
+      /** Query how the data should be filtered and sorted, all options and filters can be found in the wiki. The entities are filtered by region. */
+      query: Match.Maybe(String),
+      /** Overwrite the standard showAll button */
+      showAll: Match.Maybe({
+        /** The target to which the button links. */
+        link: Match.Maybe(String),
+        /** The text to display. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }` */
+        text: Match.Maybe(LocalizedValuePattern),
+      }),
+    },
+  ]),
   footerLinks: [
     {
       link: String,
@@ -157,11 +195,10 @@ const defaults = {
     visitorUser: false,
     rsvpWithCompanions: false,
     sendReminderIsEditable: true,
-    groupDashboard: false,
   },
   nav: {
     brandLink: "/",
-    home: true,
+    search: true,
     proposeCourse: true,
     calendar: true,
     customEntries: [] as { link: string; icon: string; key?: string; text?: string }[],

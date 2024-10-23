@@ -5,6 +5,7 @@ import mime from "mime-types";
 import urljoin from "url-join";
 import { Mongo } from "meteor/mongo";
 import { Match } from "meteor/check";
+import { SafeString } from "./CustomChecks";
 
 import { PrivateSettings } from "./PrivateSettings";
 import { PublicSettings } from "./PublicSettings";
@@ -26,9 +27,9 @@ function createS3Client() {
 }
 
 export const UploadFilePattern = Match.ObjectIncluding({
-  mimeType: String,
-  /** As BinaryString */
-  content: String,
+  mimeType: SafeString(),
+  /** As base64url */
+  content: SafeString(),
 });
 export type UploadFile = Match.PatternMatch<typeof UploadFilePattern>;
 
@@ -49,7 +50,7 @@ export async function upload(directoryName: string, file: UploadFile) {
     Key: fullKey,
     ContentType: file.mimeType,
     ACL: "public-read",
-    Body: Buffer.from(file.content, "binary"),
+    Body: Buffer.from(file.content, "base64url"),
   };
 
   await new Upload({

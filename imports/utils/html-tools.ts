@@ -1,5 +1,6 @@
 import sanitizeHtml from "sanitize-html";
 import { check } from "meteor/check";
+import { UnsafeString } from "./CustomChecks";
 
 /**
  * Turn plaintext into HTML by replacing HTML characters with their entities
@@ -23,7 +24,14 @@ export function plainToHtml(text: string) {
     );
 }
 
-export function saneHtml(unsaneHtml: string): string {
+export function saneHtml(
+  unsaneHtml: string | UnsafeString,
+  maxLength = 640 * 1024 /* 640 k ought to be enough for everybody  -- Mao */,
+): string {
+  // String-truncating HTML may leave a broken tag at the end
+  // The sanitizer will have to clean the mess.
+  const shortenUnsaneHtml = (unsaneHtml as string).substring(0, maxLength).trim();
+
   // The rel=nofollow is added so that our service is less attractive to forum spam
   const options = {
     allowedTags: ["br", "p", "b", "i", "u", "a", "h4", "ul", "ol", "li"],
@@ -33,7 +41,7 @@ export function saneHtml(unsaneHtml: string): string {
     transformTags: { a: sanitizeHtml.simpleTransform("a", { rel: "nofollow" }, true) },
   };
 
-  return sanitizeHtml(unsaneHtml, options);
+  return sanitizeHtml(shortenUnsaneHtml, options);
 }
 
 export function textPlain(html: string): string {

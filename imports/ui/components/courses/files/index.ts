@@ -18,8 +18,8 @@ template.helpers({
   imageUploadArgs(): EditableImageData {
     const instance = Template.instance();
     return {
-      thumbnail: { src: instance.data.course?.publicImageUrl(), maxSize: 150 },
-      maxSize: 1000,
+      thumbnail: { src: instance.data.course?.publicUrlForCompactImage(), maxSize: 150 },
+      maxSize: 1500, // scale the image to max width/height. Note: image scaling also happens on the server
       async onUpload(file: UploadImage) {
         const courseId = instance.data.course._id;
         try {

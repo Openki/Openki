@@ -12,7 +12,8 @@ import * as HtmlTools from "/imports/utils/html-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import * as FileStorage from "/imports/utils/FileStorage";
 import { UploadFilePattern } from "/imports/utils/FileStorage";
-import { Type } from "/imports/utils/CustomChecks";
+import { HtmlString, SafeString, Type } from "/imports/utils/CustomChecks";
+import { resizeImage } from "../../utils/resize-image";
 
 async function loadGroup(groupId: string) {
   // new!
@@ -28,15 +29,15 @@ async function loadGroup(groupId: string) {
 }
 
 export const SaveFieldPattern = {
-  short: Match.Optional(String),
-  name: Match.Optional(String),
-  claim: Match.Optional(String),
-  description: Match.Optional(String),
+  short: Match.Optional(SafeString()),
+  name: Match.Optional(SafeString()),
+  claim: Match.Optional(SafeString()),
+  description: Match.Optional(HtmlString()),
 };
 export type SaveFields = Type<typeof SaveFieldPattern>;
 
 export const save = ServerMethod("group.save", async (groupId: string, changes: SaveFields) => {
-  check(groupId, String);
+  check(groupId, SafeString());
   check(changes, SaveFieldPattern);
 
   const user = await Meteor.userAsync();
@@ -74,12 +75,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
     updates.claim = changes.claim.substring(0, 1000);
   }
   if (changes.description !== undefined) {
-    const description = changes.description.substring(0, 640 * 1024);
-    if (Meteor.isServer) {
-      updates.description = HtmlTools.saneHtml(description);
-    } else {
-      updates.description = description;
-    }
+    updates.description = HtmlTools.saneHtml(changes.description);
   }
 
   // Don't update nothing
@@ -106,7 +102,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
 export const updateLogo = ServerMethod(
   "group.update.logo",
   async (groupId: string, file: FileStorage.UploadFile) => {
-    check(groupId, String);
+    check(groupId, SafeString());
     check(file, UploadFilePattern);
 
     const user = await Meteor.userAsync();
@@ -121,11 +117,20 @@ export const updateLogo = ServerMethod(
       throw new Meteor.Error(401, "Denied");
     }
 
+    if (!Meteor.isServer) {
+      return undefined;
+    }
+
     if (group.logoUrl && !group.logoUrl.startsWith("https://")) {
       FileStorage.remove(group.logoUrl);
     }
 
-    const result = await FileStorage.upload("groups/logos/", file);
+    // Note: image scaling also happens on the client
+    const resizedImage = await resizeImage(file.content, 600);
+    const result = await FileStorage.upload("groups/logos/", {
+      content: resizedImage,
+      mimeType: file.mimeType,
+    });
 
     const update = { logoUrl: result.fullFileName };
 
@@ -140,7 +145,7 @@ export const updateLogo = ServerMethod(
 export const deleteLogo = ServerMethod(
   "group.delete.logo",
   async (groupId: string) => {
-    check(groupId, String);
+    check(groupId, SafeString());
 
     const user = await Meteor.userAsync();
     if (!user) {
@@ -169,7 +174,7 @@ export const deleteLogo = ServerMethod(
 );
 
 export const remove = ServerMethod("group.remove", async (groupId: string) => {
-  check(groupId, String);
+  check(groupId, SafeString());
 
   const user = await Meteor.userAsync();
   if (!user) {
@@ -199,8 +204,8 @@ export const remove = ServerMethod("group.remove", async (groupId: string) => {
 export const updateMembership = ServerMethod(
   "group.updateMembership",
   async (userId: string, groupId: string, join: boolean) => {
-    check(userId, String);
-    check(groupId, String);
+    check(userId, SafeString());
+    check(groupId, SafeString());
 
     const sender = await Meteor.userAsync();
     if (!sender) {
@@ -239,7 +244,7 @@ export const updateMembership = ServerMethod(
 export const toggleMemberNotify = ServerMethod(
   "group.toggleMemberNotify",
   async (groupId: string) => {
-    check(groupId, String);
+    check(groupId, SafeString());
 
     const sender = await Meteor.userAsync();
     if (!sender) {

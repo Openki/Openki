@@ -109,7 +109,9 @@ export interface EventEntity {
   start: Date;
   /** (calculated) date object calculated from endLocal field. */
   end: Date;
-  /** (calculated) image from the course */
+  /** (calculated) compact image from the course, scaled down to max size (width*height) 500px */
+  courseCompactImage: string;
+  /** (calculated) details image from the course, scaled down to max size (width*height) 1500px */
   courseImage: string;
 }
 
@@ -145,7 +147,15 @@ export class OEvent {
     });
   }
 
-  publicImageUrl(this: EventModel) {
+  publicUrlForCompactImage(this: EventModel) {
+    if (!this.courseCompactImage) {
+      return undefined;
+    }
+
+    return FileStorage.generatePublicUrl(this.courseCompactImage);
+  }
+
+  publicUrlForDetailsImage(this: EventModel) {
     if (!this.courseImage) {
       return undefined;
     }
@@ -160,7 +170,7 @@ export class OEvent {
     return this.participants?.some((p) => p.user === userId) || false;
   }
 
-  numberOfParticipants(this: EventModel) {
+  numberOfParticipants(this: Pick<EventModel, "participants">) {
     return this.participants?.map((p) => (p.companions || 0) + 1).reduce((a, b) => a + b, 0) || 0;
   }
 

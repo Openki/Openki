@@ -32,10 +32,10 @@
       </button>
       <div class="collapse navbar-collapse" id="bs-navbar-collapse">
         <ul class="navbar-nav flex-row me-auto mb-lg-0">
-          {{#if PublicSettings.nav.home}}
+          {{#if PublicSettings.nav.search}}
             <li class="nav-item text-center col col-lg-auto">
-              <a href="{{pathFor 'home'}}"
-                 class="{{activeClass 'home'}} {{activeClass 'showCourse'}} nav-link js-nav-dropdown-close"
+              <a href="{{pathFor 'search'}}"
+                 class="{{activeClass 'search'}} {{activeClass 'showCourse'}} nav-link js-nav-dropdown-close"
                  id="nav_courses">
                 <span class="fa-regular fa-lightbulb fa-fw" aria-hidden="true"></span>
                 {{i18n 'menue.Courses' 'Find'}}
@@ -90,22 +90,4 @@
   </nav>
   <div class="navbar-custom-modal {{#if navbarIsCollapsed}}d-none{{/if}} js-nav-dropdown-close">
   </div>
-</template>
-
-<template name='loginButton'>
-  {{#if loginServicesConfigured}}
-    {{#if currentUser}}
-      <a class="loginButton nav-link text-white" aria-expanded="false" data-bs-toggle="dropdown"
-         role="button">
-        <span class="fa-solid fa-user fa-fw" aria-hidden="true"></span>
-        {{currentUser.getDisplayName}}
-      </a>
-    {{else}}
-      <a class="loginButton nav-link text-white" role="button" data-bs-toggle="modal"
-         data-bs-target="#accountTaskModal">
-        <span class="fa-solid fa-right-to-bracket fa-fw" aria-hidden="true"></span>
-        {{i18n 'login.navig.unlogged' 'Log in/register'}}
-      </a>
-    {{/if}}
-  {{/if}}
 </template>

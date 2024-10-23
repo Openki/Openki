@@ -3,7 +3,14 @@ import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { i18n } from "/imports/startup/both/i18next";
 
-import { Courses, Course, CourseEntity, CourseModel } from "/imports/api/courses/courses";
+import {
+  Courses,
+  Course,
+  CourseEntity,
+  CourseModel,
+  CourseLastEventEntity,
+  CourseNextEventEntity,
+} from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
 import { Groups } from "/imports/api/groups/groups";
 import { Regions } from "/imports/api/regions/regions";
@@ -27,8 +34,9 @@ import * as StringTools from "/imports/utils/string-tools";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { LocalizedValuePattern } from "/imports/utils/getLocalizedValue";
 import * as FileStorage from "/imports/utils/FileStorage";
-import { StringEnum, Type } from "/imports/utils/CustomChecks";
+import { HtmlString, SafeString, StringEnum, Type } from "/imports/utils/CustomChecks";
 import { GroupPromoters } from "/imports/utils/update-methods";
+import { resizeImage } from "../../utils/resize-image";
 
 export interface Method<T> {
   method: string;
@@ -102,30 +110,30 @@ registerMethod(Unsubscribe);
 registerMethod(Message);
 
 export const CustomFieldPattern = {
-  name: String,
+  name: SafeString(),
   displayText: LocalizedValuePattern,
-  value: Match.OneOf(String, Boolean),
+  value: Match.OneOf(SafeString(), Boolean),
   visibleFor: StringEnum("all", "editors"),
 };
 export type CustomField = Type<typeof CustomFieldPattern>;
 
 export const SaveFieldPattern = {
-  description: Match.Optional(String),
-  categories: Match.Optional([String]),
-  name: Match.Optional(String),
-  region: Match.Optional(String),
+  description: Match.Optional(HtmlString()),
+  categories: Match.Optional([SafeString()]),
+  name: Match.Optional(SafeString()),
+  region: Match.Optional(SafeString()),
   customFields: Match.Optional([CustomFieldPattern]),
   roles: Match.Optional(Match.ObjectIncluding<Record<string, boolean>>({})),
-  subs: Match.Optional([String]),
-  unsubs: Match.Optional([String]),
-  groups: Match.Optional([String]),
+  subs: Match.Optional([SafeString()]),
+  unsubs: Match.Optional([SafeString()]),
+  groups: Match.Optional([SafeString()]),
   internal: Match.Optional(Boolean),
   singleEvent: Match.Optional(Boolean),
 };
 export type SaveFields = Type<typeof SaveFieldPattern>;
 
 export const save = ServerMethod("course.save", async (courseId: string, changes: SaveFields) => {
-  check(courseId, String);
+  check(courseId, SafeString());
   check(changes, SaveFieldPattern);
 
   const user = await Meteor.userAsync();
@@ -185,11 +193,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
   }
 
   if (changes.description) {
-    // 640 k ought to be enough for everybody  -- Mao
-    set.description = changes.description.substring(0, 640 * 1024);
-    if (Meteor.isServer) {
-      set.description = HtmlTools.saneHtml(set.description);
-    }
+    set.description = HtmlTools.saneHtml(changes.description);
   }
 
   if (changes.categories) {
@@ -230,6 +234,9 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     set.groupOrganizers = groups;
 
     /* region cannot be changed */
+    if (!changes.region) {
+      throw new Meteor.Error(404, "region missing");
+    }
     const region = Regions.findOne({ _id: changes.region });
     if (!region) {
       throw new Meteor.Error(404, "region missing");
@@ -277,7 +284,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
   if (changes.subs) {
     const changedCourse = await Courses.findOneAsync(courseId);
     changes.subs.forEach((role: string) => {
-      const change = new Subscribe(changedCourse, user, role, "interested");
+      const change = new Subscribe(changedCourse, user._id, role, "interested");
       if (change.validFor(user)) {
         change.apply();
       }
@@ -286,7 +293,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
   if (changes.unsubs) {
     const changedCourse = await Courses.findOneAsync(courseId);
     changes.unsubs.forEach((role: string) => {
-      const change = new Unsubscribe(changedCourse, user, role);
+      const change = new Unsubscribe(changedCourse, user._id, role);
       if (change.validFor(user)) {
         change.apply();
       }
@@ -299,7 +306,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
 export const updateImage = ServerMethod(
   "course.update.image",
   async (courseId: string, file: FileStorage.UploadFile) => {
-    check(courseId, String);
+    check(courseId, SafeString());
     check(file, FileStorage.UploadFilePattern);
 
     const user = await Meteor.userAsync();
@@ -314,19 +321,35 @@ export const updateImage = ServerMethod(
       throw new Meteor.Error(401, "Denied");
     }
 
+    if (!Meteor.isServer) {
+      return undefined;
+    }
+
     if (course.image && !course.image.startsWith("https://")) {
       FileStorage.remove(course.image);
     }
 
-    const result = await FileStorage.upload("courses/image/", file);
+    // Note: image scaling also happens on the client
+    const resizedCompactImage = await resizeImage(file.content, 500);
+    const compactResult = await FileStorage.upload("courses/image/compact", {
+      content: resizedCompactImage,
+      mimeType: file.mimeType,
+    });
+    const resizedDetailsImage = await resizeImage(file.content, 1500);
+    const detailsResult = await FileStorage.upload("courses/image/details", {
+      content: resizedDetailsImage,
+      mimeType: file.mimeType,
+    });
 
-    const image = result.fullFileName;
-    const update = { image };
+    const update = {
+      compactImage: compactResult.fullFileName,
+      image: detailsResult.fullFileName,
+    };
 
     const enrichedSet = timeLastEditDenormalizer.beforeUpdateImage(update);
     await Courses.updateAsync(course._id, { $set: enrichedSet });
     await historyDenormalizer.afterUpdateImage(courseId, user._id);
-    await eventsCourseImageDenormalizer.afterCourseUpdateImage(courseId, image);
+    await eventsCourseImageDenormalizer.afterCourseUpdateImage(courseId, enrichedSet);
 
     return courseId;
   },
@@ -336,7 +359,7 @@ export const updateImage = ServerMethod(
 export const deleteImage = ServerMethod(
   "course.delete.image",
   async (courseId: string) => {
-    check(courseId, String);
+    check(courseId, SafeString());
 
     const user = Meteor.user();
     if (!user) {
@@ -410,7 +433,7 @@ export const editing = ServerMethod(
 );
 
 export const archive = ServerMethod("course.archive", async (courseId: string) => {
-  check(courseId, String);
+  check(courseId, SafeString());
 
   const course = await Courses.findOneAsync({ _id: courseId });
   if (!course) {
@@ -423,7 +446,7 @@ export const archive = ServerMethod("course.archive", async (courseId: string) =
 });
 
 export const unarchive = ServerMethod("course.unarchive", async (courseId: string) => {
-  check(courseId, String);
+  check(courseId, SafeString());
 
   const course = await Courses.findOneAsync({ _id: courseId });
   if (!course) {
@@ -436,7 +459,7 @@ export const unarchive = ServerMethod("course.unarchive", async (courseId: strin
 });
 
 export const remove = ServerMethod("course.remove", async (courseId: string) => {
-  check(courseId, String);
+  check(courseId, SafeString());
 
   const course = await Courses.findOneAsync({ _id: courseId });
   if (!course) {
@@ -462,7 +485,7 @@ Meteor.methods({
         canceled: { $ne: true },
       }).count();
 
-      const nextEvent = Events.findOne(
+      const nextEvent: CourseNextEventEntity | undefined = Events.findOne(
         { courseId: course._id, start: { $gt: new Date() }, canceled: { $ne: true } },
         {
           sort: { start: 1 },
@@ -477,7 +500,7 @@ Meteor.methods({
         },
       );
 
-      const lastEvent = Events.findOne(
+      const lastEvent: CourseLastEventEntity | undefined = Events.findOne(
         { courseId: course._id, start: { $lt: new Date() }, canceled: { $ne: true } },
         {
           sort: { start: -1 },

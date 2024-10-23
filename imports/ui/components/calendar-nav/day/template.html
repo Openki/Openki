@@ -7,7 +7,7 @@
       <div class="col-md-6 col-lg-4 p-1">
         <div class="row justify-content-center align-items-center">
           {{#unless hideSwitches}}
-            {{> calendarNavDayControl direction='previous'}}
+            {{> calendarNavDayControl controlAttr 'previous'}}
           {{/unless}}
           <div class="col-auto">
             <div class="lead">
@@ -19,7 +19,7 @@
             </div>
           </div>
           {{#unless hideSwitches}}
-            {{> calendarNavDayControl direction='next'}}
+            {{> calendarNavDayControl controlAttr 'next' }}
           {{/unless}}
         </div>
       </div>
@@ -46,14 +46,6 @@
         {{/if}}
       </div>
     </div>
-  </div>
-</template>
-
-<template name="calendarNavDayControl">
-  <div class="col-auto px-4">
-    <button type="button" class="btn btn-secondary js-change-date">
-      {{arrow}} <span class="d-none d-md-inline-block">{{text direction 'short'}}</span>
-    </button>
   </div>
 </template>
 

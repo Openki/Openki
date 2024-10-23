@@ -2,11 +2,12 @@ import React from "react";
 
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
-import { EventModel } from "/imports/api/events/events";
+import { CourseNextEventEntity } from "/imports/api/courses/courses";
+import { OEvent } from "/imports/api/events/events";
 
 import "./styles.scss";
 
-export function CourseCompactEvent(props: { event: EventModel }) {
+export function CourseCompactEvent(props: { event: CourseNextEventEntity & OEvent }) {
   const { event } = props;
   const { dateShort, timeFormat, dateToRelativeString } = useDateTimeFormat();
 
