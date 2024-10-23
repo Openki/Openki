@@ -3,7 +3,7 @@ import { Log } from "/imports/api/log/log";
 
 // Record a login attempt in the log
 const registerAttempt =
-  (track: string) => (attempt: { user: { _id: string; username: string } }) => {
+  (track: string) => async (attempt: { user: { _id: string; username: string } }) => {
     const body = { ...attempt } as unknown as {
       userId: string;
       username?: string;
@@ -27,7 +27,7 @@ const registerAttempt =
       rel.push(body.userId);
     }
 
-    Log.record(track, rel, body);
+    await Log.record(track, rel, body);
   };
 
 Accounts.onLogin(registerAttempt("Login.Success"));

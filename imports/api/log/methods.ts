@@ -17,7 +17,7 @@ export const ReportPattern = {
 
 export type Report = Match.PatternMatch<typeof ReportPattern>;
 
-export const clientError = ServerMethod("log.clientError", function (originalReport: Report) {
+export const clientError = ServerMethod("log.clientError", async function (originalReport: Report) {
   check(originalReport, ReportPattern);
   const report: Report & {
     userId?: string;
@@ -32,5 +32,5 @@ export const clientError = ServerMethod("log.clientError", function (originalRep
     report.userId = userId;
     rel.push(userId);
   }
-  Log.record("clientError", rel, report);
+  await Log.record("clientError", rel, report);
 });

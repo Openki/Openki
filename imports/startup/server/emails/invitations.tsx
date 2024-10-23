@@ -69,8 +69,8 @@ function sendInvitation(invitation: InvitationEntity) {
   Email.send(email);
 }
 
-function handleInvitation(invitation: InvitationEntity) {
-  const result = Log.record(
+async function handleInvitation(invitation: InvitationEntity) {
+  const result = await Log.record(
     "Invitation.Send",
     [invitation.createdBy, invitation.tenant],
     invitation,

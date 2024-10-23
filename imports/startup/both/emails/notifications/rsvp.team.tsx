@@ -25,7 +25,7 @@ interface Body {
   model: string;
 }
 
-export function record(eventId: string, participantId: string, companions: number) {
+export async function record(eventId: string, participantId: string, companions: number) {
   check(eventId, String);
   check(participantId, String);
   check(companions, Number);
@@ -63,7 +63,7 @@ export function record(eventId: string, participantId: string, companions: numbe
     model: "Rsvp.Team",
   };
 
-  Log.record("Notification.Send", [course._id, event._id, participant._id], body);
+  await Log.record("Notification.Send", [course._id, event._id, participant._id], body);
 }
 
 export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {

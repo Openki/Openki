@@ -14,12 +14,16 @@ export function checkUpdateOne(error: unknown, affectedDocuments: number) {
 /**
  * Simple async callback receiver that logs errors
  */
-export function logErrors(error: Error, result: unknown) {
+export async function logErrors(error: Error, result: unknown) {
   if (error) {
     /* eslint-disable-next-line no-console */
     console.log(error.stack);
     try {
-      Log.record("error", [], { name: error.name, message: error.message, stack: error.stack });
+      await Log.record("error", [], {
+        name: error.name,
+        message: error.message,
+        stack: error.stack,
+      });
     } catch {
       // ignore
     }
@@ -66,11 +70,13 @@ if (Meteor.isServer) {
         }
         return undefined;
       },
-      (reason) => {
+      async (reason) => {
         /* eslint-disable-next-line no-console */
         console.log(`Cleaning function failed: ${reason}`);
         try {
-          Log.record(".cleaning.error", [], { message: `Cleaning function failed: ${reason}` });
+          await Log.record(".cleaning.error", [], {
+            message: `Cleaning function failed: ${reason}`,
+          });
         } catch {
           // ignore
         }

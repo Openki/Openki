@@ -40,7 +40,7 @@ interface Body {
  * @param sendCopyToSender send a copy of the message to the author
  * @param context dictionary with context ID (course, venue, &c.)
  */
-export function record(
+export async function record(
   senderId: string,
   recipientId: string,
   message: string,
@@ -87,7 +87,7 @@ export function record(
     context,
   };
 
-  Log.record("Notification.Send", rel, body);
+  await Log.record("Notification.Send", rel, body);
 }
 
 export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
