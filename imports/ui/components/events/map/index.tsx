@@ -1,6 +1,6 @@
 import React from "react";
 import { useSession } from "/imports/utils/react-meteor-data";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { MapContainer, Marker, Popup } from "react-leaflet";
 import { DivIcon } from "leaflet";
 
 import { EventModel, EventVenueEntity } from "/imports/api/events/events";
@@ -8,6 +8,7 @@ import { EventModel, EventVenueEntity } from "/imports/api/events/events";
 import { FullscreenControl } from "react-leaflet-fullscreen";
 import "react-leaflet-fullscreen/styles.css";
 import "leaflet/dist/leaflet.css";
+import { TileLayers } from "../../TileLayer";
 
 import { EventList } from "/imports/ui/components/events/list";
 import { VenueTag } from "../../venues/link";
@@ -19,33 +20,6 @@ export interface Data {
   fullscreenControl?: boolean;
   openLinksInNewTab?: boolean;
 }
-
-const tileLayers: { [lang: string]: () => React.JSX.Element } = {
-  de: () => (
-    <TileLayer
-      url={"//{s}.tile.openstreetmap.de/{z}/{x}/{y}.png"}
-      attribution={'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
-    />
-  ),
-  "de-ZH": () => (
-    <TileLayer
-      url={"//{s}.tile.osm.ch/name-gsw/{z}/{x}/{y}.png"}
-      attribution={'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
-    />
-  ),
-  fr: () => (
-    <TileLayer
-      url={"//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"}
-      attribution={'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
-    />
-  ),
-  default: () => (
-    <TileLayer
-      url={"//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
-      attribution={'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
-    />
-  ),
-};
 
 function groupBy<T>(array: T[], predicate: (value: T, index: number, array: T[]) => string) {
   return array.reduce(
@@ -107,11 +81,10 @@ export function EventsMap({ events, fullscreenControl = true, openLinksInNewTab 
   return (
     <div className="events-map-location-map">
       <MapContainer bounds={markers.map((mark) => mark.loc) as any}>
-        {(tileLayers[locale] || tileLayers.default)()}
+        {(TileLayers[locale] || TileLayers.default)()}
         {markers.map((mark) => (
-          <>
+          <React.Fragment key={mark._id}>
             <Marker
-              key={mark._id}
               position={mark.loc as any}
               icon={mark.venue?._id ? venueMarkerIcon : eventMarkerIcon}
             >
@@ -134,11 +107,10 @@ export function EventsMap({ events, fullscreenControl = true, openLinksInNewTab 
               </Popup>
             </Marker>
             <Marker
-              key={mark._id + 2}
               position={mark.loc as any}
               icon={mark.venue?._id ? venueMarkerShadowIcon : eventMarkerShadowIcon}
             ></Marker>
-          </>
+          </React.Fragment>
         ))}
         {fullscreenControl ? <FullscreenControl /> : null}
       </MapContainer>

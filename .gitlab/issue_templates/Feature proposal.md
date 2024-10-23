@@ -1,5 +1,6 @@
 <!---
-Before opening a new issue, make sure to search for keywords in the issues to make sure the issue you're about to submit isn't a duplicate.
+Hi! Thank you for contributing.
+Before opening a new issue, please search for keywords in the issues to make sure the issue you're about to submit isn't a duplicate.
 --->
 
 ### Problem to solve

@@ -49,6 +49,7 @@ export function SearchField({ search, onChange, onFocusOut }: Props) {
           value={value}
           placeholder={t("find.search_placeholder", "Everything")}
           onChange={handleChange}
+          autoFocus
         />
         <button
           type="button"

@@ -1,5 +1,6 @@
 <!---
-Before opening a new issue, make sure to search for keywords in the issues filtered by the "defect not urgent" or "defect" label to make sure the issue you're about to submit isn't a duplicate.
+Hi! Thank you for contributing.
+Before opening a new issue, please search for keywords in the issues filtered by the "defect not urgent" or "defect" label to make sure the issue you're about to submit isn't a duplicate.
 --->
 
 ### Summary

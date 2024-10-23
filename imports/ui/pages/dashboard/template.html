@@ -1,5 +1,20 @@
 <template name="dashboardPage">
-  <div>
-    {{> React (component DashboardPage)}}
+  <div class="container">
+    {{#if region.dashboard}}
+      {{> dashboard region=region._id list=region.dashboard group=group}}
+    {{else}}
+      {{#if PublicSettings.regionDashboardDefault}}
+        {{> dashboard region=region._id list=PublicSettings.regionDashboardDefault group=group}}
+      {{else}}
+        {{> find}}
+      {{/if}}
+    {{/if}}
   </div>
+  {{#unless region.dashboard}}
+    {{#unless PublicSettings.regionDashboardDefault}}
+      <div class="container mw-md">
+        {{> courseEdit newCourse}}
+      </div>
+    {{/unless}}
+  {{/unless}}
 </template>

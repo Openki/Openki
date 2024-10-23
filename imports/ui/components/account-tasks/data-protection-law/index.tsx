@@ -1,11 +1,13 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
+import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
 import "./styles.scss";
 
 export function DataProtectionLaw() {
+  const { getLocalizedValue } = useLocalizedSetting();
+
   const dataProtectionLaw = getLocalizedValue(PublicSettings.dataProtectionLaw);
 
   if (!dataProtectionLaw) {

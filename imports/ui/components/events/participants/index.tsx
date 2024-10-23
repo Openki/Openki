@@ -146,7 +146,7 @@ export function EventParticipants({ event }: Props) {
                   </h4>
                   <button
                     type="button"
-                    className="btn-close"
+                    className="btn-close btn-close-white"
                     data-bs-dismiss="modal"
                     aria-label="Close"
                   ></button>

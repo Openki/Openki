@@ -36,7 +36,7 @@ function CategoryLabelLinked({
         onMouseOver={onMouseOver}
         onMouseOut={onMouseOut}
         onClick={onClick}
-        href={Router.url("home", {}, { query: { categories: category } })}
+        href={Router.url("search", {}, { query: { categories: category } })}
       >
         {t(`category.${category}`)}
       </a>
@@ -46,9 +46,9 @@ function CategoryLabelLinked({
 
 export type CourseCategoriesProps = {
   categories: string[];
-  onClick?: () => Promise<void>;
-  onMouseOver?: () => Promise<void>;
-  onMouseOut?: () => Promise<void>;
+  onClick?: (categorie: string) => Promise<void>;
+  onMouseOver?: (categorie: string) => Promise<void>;
+  onMouseOut?: (categorie: string) => Promise<void>;
 };
 
 export function CourseCategories({
@@ -66,9 +66,15 @@ export function CourseCategories({
         <CategoryLabelLinked
           key={c}
           category={c}
-          onMouseOver={onMouseOver}
-          onMouseOut={onMouseOut}
-          onClick={onClick}
+          onMouseOver={async () => {
+            await onMouseOver?.(c);
+          }}
+          onMouseOut={async () => {
+            await onMouseOut?.(c);
+          }}
+          onClick={async () => {
+            await onClick?.(c);
+          }}
         />
       ))}
     </div>

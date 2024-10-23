@@ -6,22 +6,38 @@ import { Groups } from "../groups/groups";
 
 export interface Stat {
   courses: {
+    /** excl. archived */
     total: number;
+    /** no events */
     proposed: number;
+    /** with planned event(s) */
     upcoming: number;
+    /** only passed events */
     resting: number;
     archived: number;
+    /** interested or any role, incl. creater */
     enrollments: number;
+    /** unique accounts enrolled */
     users: number;
   };
   events: {
+    /** incl. canceled */
     total: number;
+    /** excl. canceled */
     future: number;
+    /** excl. canceled */
     passed: number;
+    /** in future and passed */
     canceled: number;
+    /** in future and passed */
     fullyBooked: number;
+    /** in future and passed, incl. +1, canceled events excluded */
     totalRsvps: number;
+    /** RSVPs in canceled events, incl. +1 and passed */
+    canceledRsvps: number;
+    /** in future events only, incl. +1, excl. canceled events */
     futureRsvps: number;
+    /** unique accounts registered */
     users: number;
   };
 }
@@ -65,7 +81,7 @@ function getEvents(regionId: string) {
   }
   return Events.find(filter, {
     // Do not load any data into the memory that is not required
-    projection: { title: 0, slug: 0, description: 0, courseImage: 0 },
+    projection: { title: 0, slug: 0, description: 0, courseImage: 0, courseCompactImage: 0 },
   }).fetchAsync();
 }
 
@@ -100,6 +116,7 @@ function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
   const members = courses.flatMap((c) => c.members);
 
   const notCanceled = events.filter((e) => !e.canceled);
+  const canceled = events.filter((e) => e.canceled);
   const futureAndNotCanceled = notCanceled.filter((e) => e.start > now);
   return {
     // inspired from courses.findFilter in /imports/api/courses/courses
@@ -117,10 +134,11 @@ function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
       total: events.length,
       future: futureAndNotCanceled.length,
       passed: notCanceled.filter((e) => e.start <= now).length,
-      canceled: events.filter((e) => e.canceled).length,
+      canceled: canceled.length,
       fullyBooked: events.filter((e) => e.isFullyBooked()).length,
-      totalRsvps: sum(events.map((e) => e.numberOfParticipants())),
-      futureRsvps: sum(notCanceled.map((e) => e.numberOfParticipants())),
+      totalRsvps: sum(notCanceled.map((e) => e.numberOfParticipants())),
+      canceledRsvps: sum(canceled.map((e) => e.numberOfParticipants())),
+      futureRsvps: sum(futureAndNotCanceled.map((e) => e.numberOfParticipants())),
       users: unique(events.flatMap((e) => e.participants?.map((p) => p.user) || [])).length,
     },
   };

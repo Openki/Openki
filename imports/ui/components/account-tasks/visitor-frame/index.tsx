@@ -14,6 +14,7 @@ import * as Analytics from "/imports/ui/lib/analytics";
 import { useValidation } from "/imports/ui/lib/useValidation";
 
 import { DataProtectionLaw } from "../data-protection-law";
+import { NotAllowedCharacter } from "../../../../startup/both/NotAllowedCharacter";
 
 export type Props = {
   username: string;
@@ -36,6 +37,13 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
       field: "username",
       onCheckValidity: () => !!registerData.username,
     },
+    "Not allowed character": {
+      text: () =>
+        t("register.warning.notAllowedCharacter", "{CHARACTERS} not allowed in username.", {
+          CHARACTERS: NotAllowedCharacter.join(", "),
+        }),
+      field: "username",
+    },
     "Username already exists.": {
       text: () =>
         t(
@@ -57,12 +65,9 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
     "Email already exists.": {
       text: () => (
         <>
-          {t(
-            "visitor.warning.emailExists",
-            "This Email is already in use. Please create a user to continue with it: ",
-          )}{" "}
+          {t("register.warning.emailExists")}{" "}
           <a href={Router.path("resetPasswortEmail", {}, { query: { email: registerData.email } })}>
-            {t("visitor.warning.sendEmail", "Send me an email to create my user")}
+            {t("register.warning.emailExists.sendEmail")}
           </a>
         </>
       ),

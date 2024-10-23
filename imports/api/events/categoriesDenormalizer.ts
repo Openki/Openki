@@ -19,11 +19,13 @@ export function onStartUp() {
   console.log(`events.categoriesDenormalizer.onStartUp: ${updated} affected events`);
 }
 
-export async function beforeInsert(event: EventEntity): Promise<EventEntity> {
+export async function beforeInsert(
+  event: Omit<EventEntity, "_id">,
+): Promise<Omit<EventEntity, "_id">> {
   // categories comes from the parent course
   const course = await Courses.findOneAsync(event.courseId);
   if (!course) {
-    throw new Error(`Missing course ${event.courseId} for event ${event._id}`);
+    throw new Error(`Missing course ${event.courseId} for new event`);
   }
 
   return { ...event, categories: course.categories };

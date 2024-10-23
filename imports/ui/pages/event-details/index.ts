@@ -1,17 +1,14 @@
-import { ReactiveVar } from "meteor/reactive-var";
 import { Router } from "meteor/iron:router";
 import { i18n } from "/imports/startup/both/i18next";
-import { Meteor } from "meteor/meteor";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import moment from "moment";
 
-import { Courses } from "/imports/api/courses/courses";
-import { EventModel, Events } from "/imports/api/events/events";
+import { Events } from "/imports/api/events/events";
 
-import { ScssVars } from "/imports/ui/lib/scss-vars";
-import * as Viewport from "/imports/ui/lib/viewport";
 import * as Metatags from "/imports/utils/metatags";
 import { appendAsJsonLdToBody } from "/imports/utils/event-to-json-ld";
+import { truncate } from "/imports/utils/string-tools";
+import { textPlain } from "/imports/utils/html-tools";
 
 import "/imports/ui/components/buttons";
 import "/imports/ui/components/courses/categories";
@@ -32,120 +29,32 @@ import "/imports/ui/components/venues/link";
 import "/imports/ui/components/internal-indicator";
 import "/imports/ui/components/delete-confirm-dialog";
 
+import "./event";
+
 import "./template.html";
-import "./styles.scss";
-import { truncate } from "/imports/utils/string-tools";
-import { textPlain } from "/imports/utils/html-tools";
 
-{
-  const Template = TemplateAny as TemplateStaticTyped<"eventPage">;
+const Template = TemplateAny as TemplateStaticTyped<"eventPage">;
 
-  const template = Template.eventPage;
+const template = Template.eventPage;
 
-  template.onCreated(function () {
-    const instance = this;
-    instance.autorun(() => {
-      const event = Events.findOne(Router.current().params._id);
-      let title;
-      let description = "";
-      if (event) {
-        title = i18n("event.windowtitle", "{DATE} – {EVENT}", {
-          EVENT: event.title,
-          DATE: moment(event.startLocal)
-            .locale(Session.get("timeLocale") || "en")
-            .format("ddd, MMM d"),
-        });
-        description = truncate(textPlain(event.description), 160);
-        appendAsJsonLdToBody(event);
-      } else {
-        title = i18n("event.windowtitle.create", "Create event");
-      }
-      Metatags.setCommonTags(title, description, event?.publicImageUrl());
-    });
-  });
-}
-
-{
-  const Template = TemplateAny as TemplateStaticTyped<
-    "event",
-    EventModel,
-    {
-      editing: ReactiveVar<boolean>;
-      getCourseTitleIfAny: () => string | undefined;
+template.onCreated(function () {
+  const instance = this;
+  instance.autorun(() => {
+    const event = Events.findOne(Router.current().params._id);
+    let title;
+    let description = "";
+    if (event) {
+      title = i18n("event.windowtitle", "{DATE} – {EVENT}", {
+        EVENT: event.title,
+        DATE: moment(event.startLocal)
+          .locale(Session.get("timeLocale") || "en")
+          .format("ddd, MMM D"),
+      });
+      description = truncate(textPlain(event.description), 160);
+      appendAsJsonLdToBody(event);
+    } else {
+      title = i18n("event.windowtitle.create", "Create event");
     }
-  >;
-
-  const template = Template.event;
-
-  template.onCreated(function () {
-    const instance = this;
-    const event = instance.data;
-    instance.busy(false);
-    instance.editing = new ReactiveVar(!event._id);
-    if (event.courseId) {
-      instance.subscribe("courseDetails", event.courseId);
-    }
-
-    instance.getCourseTitleIfAny = () => {
-      if (this.data.courseId) {
-        return Courses.findOne({ _id: this.data.courseId })?.name;
-      }
-      return undefined;
-    };
+    Metatags.setCommonTags(title, description, event?.publicUrlForDetailsImage());
   });
-
-  template.helpers({
-    userName() {
-      return (
-        Meteor.user()?.getDisplayName() || i18n("eventDetails.notLoggedIn", "(not logged in?)")
-      );
-    },
-
-    mobileViewport() {
-      return Viewport.get().width <= ScssVars.screenMD;
-    },
-
-    select() {
-      return Router.current().params.select;
-    },
-
-    courseLink() {
-      const event = Template.instance().data;
-      if (!event.courseId) {
-        return "";
-      }
-      const course = Courses.findOne({ _id: event.courseId });
-      return Router.path(
-        "showCourse",
-        { _id: event.courseId },
-        course?.singleEvent ? { query: { force: "1" } } : {},
-      );
-    },
-
-    course() {
-      if (this.courseId) {
-        return Courses.findOne(this.courseId);
-      }
-      return false;
-    },
-
-    mayEdit() {
-      const event = Template.instance().data;
-      const user = Meteor.user();
-      if (!user) {
-        return false;
-      }
-      return event.editableBy(user);
-    },
-
-    editing() {
-      return this.new || Template.instance().editing.get();
-    },
-  });
-
-  template.events({
-    "click .js-event-edit"(_event, instance) {
-      instance.editing.set(true);
-    },
-  });
-}
+});

@@ -1,0 +1,17 @@
+<template name='loginButton'>
+  {{#if loginServicesConfigured}}
+    {{#if currentUser}}
+      <a class="loginButton nav-link text-white" aria-expanded="false" data-bs-toggle="dropdown"
+         role="button">
+        <span class="fa-solid fa-user fa-fw" aria-hidden="true"></span>
+        {{currentUser.getDisplayName}}
+      </a>
+    {{else}}
+      <a class="loginButton nav-link text-white" role="button" data-bs-toggle="modal"
+         data-bs-target="#accountTaskModal">
+        <span class="fa-solid fa-right-to-bracket fa-fw" aria-hidden="true"></span>
+        {{i18n 'login.navig.unlogged' 'Log in/register'}}
+      </a>
+    {{/if}}
+  {{/if}}
+</template>

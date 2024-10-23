@@ -47,15 +47,86 @@
 		, "visitorUser": true
 		, "rsvpWithCompanions": true
 		, "sendReminderIsEditable": true
-		, "groupDashboard": true 
 		}
 	, "nav":
 		{ "brandLink": "/"
-		, "home": true
+		, "search": true
 		, "proposeCourse": true
 		, "calendar": true
 		, "customEntries": [ ]
 		}
+  , "regionDashboardDefault": 
+    [ { "entity": "course"
+      , "title": "dashboard.userInvolvedIn.title"
+      , "query": "userInvolved={currentUser}"
+      }
+    , { "entity": "event"
+      , "title": "dashboard.userRegistredFor.title"
+      , "query": "participant={currentUser}&after=now&sort=start&internal=0&canceled=0"
+      }
+    , { "entity": "course"
+      , "title": "dashboard.recentActivities.title"
+      , "query": ""
+      }
+    , { "entity": "course"
+      , "title": "Chaos Computer Club Zürich"
+      , "query": "group=573edec5d6&internal=0"
+      }
+    , { "entity": "event"
+      , "title": "Chaos Computer Club Zürich"
+      , "query": "group=573edec5d6&after=now&sort=start&internal=0&canceled=0"
+      }
+    , { "entity": "event"
+      , "title": "dashboard.upcomingEvents.title"
+      , "query": "after=now&sort=start&internal=0&canceled=0"
+      }
+    , { "entity": "course"
+      , "title": "dashboard.newProposals.title"
+      , "query": "state=proposal&internal=0&sort=-time_created"
+      }
+    , { "entity": "course"
+      , "title": "dashboard.lookingForMentors.title"
+      ,  "query": "needsRole=mentor&state=proposal,resting&internal=0"
+      }
+    , { "entity": "course"
+      , "title": "dashboard.lookingForVenues.title"
+      , "query": "needsRole=host&state=proposal,resting&internal=0"
+      }
+    , { "entity": "eventsMap"
+      , "title": "dashboard.eventsMap.title"
+      , "query": "after=now"
+      }
+    , { "entity": "propose"
+      }
+    ]
+  , "groupDashboardDefault":
+    [ { "entity": "course"
+      , "title": "dashboard.recentActivities.title"
+      , "query": ""
+      }
+    , { "entity": "event"
+      , "title": "dashboard.upcomingEvents.title"
+      , "query": "after=now&sort=start&internal=0&canceled=0"
+      }
+    , { "entity": "course"
+      , "title": "dashboard.newProposals.title"
+      , "query": "state=proposal&internal=0&sort=-time_created"
+      }
+    , { "entity": "course"
+      , "title": "dashboard.lookingForMentors.title"
+      ,  "query": "needsRole=mentor&state=proposal,resting&internal=0"
+      }
+    , { "entity": "course"
+      , "title": "dashboard.lookingForVenues.title"
+      , "query": "needsRole=host&state=proposal,resting&internal=0"
+      }
+    , { "entity": "eventsMap"
+      , "title": "dashboard.eventsMap.title"
+      , "query": "after=now"
+      }
+    , { "entity": "propose"
+      }
+    ]
 	, "footerLinks":
 		[	{ "link": "https://about.openki.net/"
 			, "key": "footer.aboutOpenki"
