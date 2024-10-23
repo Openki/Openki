@@ -623,7 +623,7 @@ export function Edit(data: Data) {
             t("message.courseCreated", "{NAME} has been created!", {
               NAME: changes.name,
             }),
-            t("message.courseCreated.description", "What do you wanna do next?"),
+            t("message.courseCreated.description", "What do you wannt to do next?"),
             numberOfCharacters === 0
               ? {
                   text: t("message.courseCreated.addDescription", "Add a desciption"),
@@ -631,7 +631,7 @@ export function Edit(data: Data) {
                 }
               : undefined,
             {
-              text: t("message.courseCreated.addImage", "Add a image"),
+              text: t("message.courseCreated.addImage", "Add an image"),
               href: "#files-tab",
             },
             !Regions.findOne(changes.region)?.isPrivate()
