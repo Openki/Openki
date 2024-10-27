@@ -480,6 +480,7 @@
   "find.windowtitle": "Find \"{SEARCH}\"",
   "footer.aboutOpenki": "About {SITENAME}",
   "footer.deployedAt": "deployed:",
+  "footer.errorInSettings": "Error(s) in settings:",
   "forgot": "I forgot my password",
   "forgot.explanation": "We will send you an e-mail with a link allowing you to reset your password.",
   "forgot.notValid": "Please enter the address you signed up with.",

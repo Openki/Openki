@@ -11,6 +11,8 @@ import { useSiteName } from "/imports/utils/getSiteName";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
+import { Status } from "./status";
+
 import "./styles.scss";
 
 function Links() {
@@ -39,7 +41,7 @@ function Links() {
   );
 }
 
-function Footer() {
+export function Footer() {
   const { t } = useTranslation();
   const [isLoading, version] = useDetails();
   const locale = useTracker(() => Session.get("timeLocale")) || "en";
@@ -71,7 +73,7 @@ function Footer() {
       <footer className="footer bg-brand">
         <Links />
         <span title={fullInfo()} className="footer-deployed-version">
-          {versionName()} {commit()}
+          {versionName()} {commit()} <Status />
           <br />
           {t("footer.deployedAt", "deployed:")} {moment(deployed()).locale(locale).format("L")}
         </span>
