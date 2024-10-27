@@ -1,4 +1,5 @@
 import { Meteor } from "meteor/meteor";
+import schedule from "node-schedule";
 
 import { Users } from "/imports/api/users/users";
 import * as coursesTenantDenormalizer from "/imports/api/courses/tenantDenormalizer";
@@ -9,10 +10,12 @@ import * as usersTenantsDenormalizer from "/imports/api/users/tenantsDenormalize
 import * as Profile from "/imports/utils/profile";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import * as AsyncTools from "/imports/utils/async-tools";
-import { MeteorAsync } from "/imports/utils/promisify";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
+import { Log } from "/imports/api/log/log";
 
 async function updateDbCacheFields() {
+  Log.record("DbCacheFields.Update", [], {});
+
   // Resync location cache in events
   Meteor.call("event.updateVenue", {}, AsyncTools.logErrors);
 
@@ -56,10 +59,15 @@ async function updateDbCacheFields() {
 if (runBackgroundTasks)
   Meteor.startup(async () => {
     /* Initialize cache-fields on startup (Also called calculated fields or denomalized data) */
-    if (PrivateSettings.startup.buildDbCacheAsync) {
-      await MeteorAsync.defer();
 
-      await updateDbCacheFields();
+    if (PrivateSettings.startup.buildDbCacheAsync) {
+      // Run every week at sunnday at 22:30
+      schedule.scheduleJob(
+        { hour: 22, minute: 30, dayOfWeek: 0 /* Sunnday */ },
+        Meteor.bindEnvironment(async () => {
+          await updateDbCacheFields();
+        }),
+      );
     } else {
       await updateDbCacheFields();
     }
