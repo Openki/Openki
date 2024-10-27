@@ -3,10 +3,12 @@ import { Mongo } from "meteor/mongo";
 import { check } from "meteor/check";
 
 import { Users } from "/imports/api/users/users";
+import * as Profile from "/imports/utils/profile";
 
 import { userSearchPrefix } from "/imports/utils/user-search-prefix";
 import { ServerPublishMany, ServerPublishOne } from "/imports/utils/ServerPublish";
 import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
+import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
 if (Meteor.isServer) {
   // Always publish their own data for logged-in users
@@ -14,6 +16,16 @@ if (Meteor.isServer) {
   Meteor.publish(null, function () {
     return Users.find(this.userId as any);
   });
+
+  if (runBackgroundTasks)
+    Meteor.startup(() => {
+      // The `acceptsPrivateMessage` field is denormalized via `observe` to keep up to date after a
+      // change is made.
+      Users.find({}, { projection: { allowPrivateMessages: 1, emails: 1 } }).observe({
+        added: Profile.updateAcceptsPrivateMessages,
+        changed: Profile.updateAcceptsPrivateMessages,
+      });
+    });
 }
 
 export const [simple, useSimple] = ServerPublishOne(
