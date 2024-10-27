@@ -61,7 +61,7 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
     secretAccessKey: String,
   },
   startup: {
-    /** Build the cache in the db async or sync */
+    /** Build the cache in the db async or sync. For larger databases it takes a long time until all fields are updated, during this time the startup is blocked. The users cannot use the website. Because in a normal startup the database already has these fields, this task can also be done async every sunnday at 22:30. */
     buildDbCacheAsync: Boolean,
   },
   /** Maximum number of entities that the api returns. */
