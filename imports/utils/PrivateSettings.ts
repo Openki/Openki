@@ -1,4 +1,4 @@
-import { Match, check } from "meteor/check";
+import { Match } from "meteor/check";
 import { Meteor } from "meteor/meteor";
 import { StringEnum, Type } from "./CustomChecks";
 
@@ -93,9 +93,6 @@ if (Meteor.isServer) {
 
   // none deep merge
   privateSettings = { ...defaults, ...Meteor.settings, ...{ public: undefined } };
-
-  // Check that everything is set as expected in the settings.
-  check(privateSettings, PrivateSettingsPattern);
 }
 
 /**
@@ -103,4 +100,4 @@ if (Meteor.isServer) {
  *
  * Only available on the server.
  */
-export const PrivateSettings = privateSettings as PrivateSettings;
+export const PrivateSettings = privateSettings as unknown as PrivateSettings;
