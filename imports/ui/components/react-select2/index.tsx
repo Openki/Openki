@@ -4,8 +4,9 @@ import $ from "jquery";
 import { useWindowSize } from "/imports/ui/lib/useWindowSize";
 
 import select2 from "select2";
-import "select2/dist/css/select2.min";
-import "select2-theme-bootstrap5/dist/select2-bootstrap.min";
+// Fixed: https://github.com/lovell/sharp/issues/537
+import "./build/Release/select2/dist/css/select2.min.node";
+import "./build/Release/select2-theme-bootstrap5/dist/select2-bootstrap.min.node";
 
 import "./styles.scss";
 
