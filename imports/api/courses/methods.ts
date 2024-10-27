@@ -283,21 +283,25 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
 
   if (changes.subs) {
     const changedCourse = await Courses.findOneAsync(courseId);
-    changes.subs.forEach((role: string) => {
-      const change = new Subscribe(changedCourse, user._id, role, "interested");
-      if (change.validFor(user)) {
-        change.apply();
-      }
-    });
+    await Promise.all(
+      changes.subs.map(async (role) => {
+        const change = new Subscribe(changedCourse, user._id, role, "interested");
+        if (change.validFor(user)) {
+          await change.apply();
+        }
+      }),
+    );
   }
   if (changes.unsubs) {
     const changedCourse = await Courses.findOneAsync(courseId);
-    changes.unsubs.forEach((role: string) => {
-      const change = new Unsubscribe(changedCourse, user._id, role);
-      if (change.validFor(user)) {
-        change.apply();
-      }
-    });
+    await Promise.all(
+      changes.unsubs.map(async (role) => {
+        const change = new Unsubscribe(changedCourse, user._id, role);
+        if (change.validFor(user)) {
+          await change.apply();
+        }
+      }),
+    );
   }
 
   return courseId;

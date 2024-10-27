@@ -2,15 +2,6 @@ import { Mongo } from "meteor/mongo";
 
 import { CourseEntity, Courses } from "./courses";
 
-function update(courseId: string) {
-  const course = Courses.findOne(courseId);
-
-  if (!course) {
-    return;
-  }
-
-  Courses.update({ _id: course._id }, { $set: { interested: course.members?.length || 0 } });
-}
 async function updateAsync(courseId: string) {
   const course = await Courses.findOneAsync(courseId);
 
@@ -28,12 +19,12 @@ export function beforeInsert(course: Mongo.OptionalId<CourseEntity>) {
   return { ...course, interested: course.members.length };
 }
 
-export function afterSubscribe(courseId: string) {
-  update(courseId);
+export async function afterSubscribe(courseId: string) {
+  await updateAsync(courseId);
 }
 
-export function afterUnsubscribe(courseId: string) {
-  update(courseId);
+export async function afterUnsubscribe(courseId: string) {
+  await updateAsync(courseId);
 }
 
 export async function afterUserAdminRemove(courseId: string) {
