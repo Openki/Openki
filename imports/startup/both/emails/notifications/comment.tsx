@@ -100,10 +100,6 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       if (actualRecipient.notifications === false) {
         throw new Error("User wishes to not receive automated notifications");
       }
-
-      if (!actualRecipient.hasEmail()) {
-        throw new Error("Recipient has no email address registered");
-      }
     },
 
     vars(locale, _actualRecipient, unsubToken) {

@@ -70,11 +70,7 @@ export async function record(
       throw new Meteor.Error(404, "Sender not found");
     }
 
-    if (sender.hasEmail()) {
-      recipients.push(senderId);
-    } else {
-      throw new Meteor.Error(404, "Sender has no email address");
-    }
+    recipients.push(senderId);
   }
 
   const body: Body = {
@@ -98,10 +94,6 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
     accepted(actualRecipient: UserModel) {
       if (!actualRecipient.allowPrivateMessages) {
         throw new Error("User wishes to not receive private messages from users");
-      }
-
-      if (!actualRecipient.hasEmail()) {
-        throw new Error("Recipient has no email address registered");
       }
     },
 

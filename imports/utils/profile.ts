@@ -4,17 +4,7 @@ import { Match, check } from "meteor/check";
 
 import { Log } from "/imports/api/log/log";
 import { Regions } from "/imports/api/regions/regions";
-import { UserModel, Users } from "/imports/api/users/users";
-
-export async function updateAcceptsPrivateMessages(user: UserModel) {
-  const acceptsPrivateMessages = Boolean(user.hasEmail() && user.allowPrivateMessages);
-
-  if (user.acceptsPrivateMessages !== acceptsPrivateMessages) {
-    await Users.updateAsync(user._id, {
-      $set: { acceptsPrivateMessages },
-    });
-  }
-}
+import { Users } from "/imports/api/users/users";
 
 export namespace Username {
   export async function change(userId: string, newName: string) {

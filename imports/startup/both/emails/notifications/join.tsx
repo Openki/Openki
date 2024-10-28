@@ -78,15 +78,12 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
     _id: { $in: body.recipients.filter((r) => r !== body.participantId) },
   })
     .fetch()
-    .filter((r) => r.notifications && r.hasEmail());
+    .filter((r) => r.notifications);
 
   return {
     accepted(actualRecipient: UserModel) {
       if (actualRecipient.notifications === false) {
         throw new Error("User wishes to not receive automated notifications");
-      }
-      if (!actualRecipient.hasEmail()) {
-        throw new Error("Recipient has no email address registered");
       }
     },
 
