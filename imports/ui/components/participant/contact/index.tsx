@@ -76,7 +76,7 @@ export function ParticipantContact(props: Props) {
         <>
           <div className="d-inline-block">
             {!isLoading() ? (
-              participant?.acceptsPrivateMessages ? (
+              participant?.allowPrivateMessages ? (
                 <button
                   className="btn btn-link p-0"
                   type="button"
