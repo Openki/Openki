@@ -17,6 +17,7 @@ import "/imports/api/log/methods";
 import "/imports/api/log/publications";
 import "/imports/api/regions/methods";
 import "/imports/api/regions/publications";
+import "/imports/api/settings/methods";
 import "/imports/api/stats/methods";
 import "/imports/api/tenants/methods";
 import "/imports/api/tenants/publications";

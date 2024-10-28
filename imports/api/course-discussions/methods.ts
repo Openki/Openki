@@ -91,7 +91,7 @@ export const postComment = ServerMethod(
 
     const commentId = await CourseDiscussions.insertAsync(saneComment);
 
-    Notification.Comment.record(commentId);
+    await Notification.Comment.record(commentId);
 
     return commentId;
   },

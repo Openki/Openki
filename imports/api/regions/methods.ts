@@ -179,24 +179,27 @@ export const unsetFeaturedGroup = ServerMethod("region.unsetFeaturedGroup", (reg
 });
 
 Meteor.methods({
-  "region.updateCounters"(selector) {
+  async "region.updateCounters"(selector) {
     // this denormalization is called every minutes for all regions in the server/main.js file, this ensures consistency.
-    Regions.find(selector).forEach((region) => {
-      // We don't use AsyncTools.untilClean() here because consistency doesn't matter
-      const regionId = region._id;
 
-      const courseCount = Courses.find({
-        region: regionId,
-        internal: { $ne: true },
-        archived: { $ne: true },
-      }).count();
-      const futureEventCount = Events.find({
-        region: regionId,
-        internal: { $ne: true },
-        start: { $gte: new Date() },
-      }).count();
+    await Promise.all(
+      await Regions.find(selector).mapAsync(async (region) => {
+        // We don't use AsyncTools.untilClean() here because consistency doesn't matter
+        const regionId = region._id;
 
-      Regions.update(regionId, { $set: { courseCount, futureEventCount } });
-    });
+        const courseCount = await Courses.find({
+          region: regionId,
+          internal: { $ne: true },
+          archived: { $ne: true },
+        }).countAsync();
+        const futureEventCount = await Events.find({
+          region: regionId,
+          internal: { $ne: true },
+          start: { $gte: new Date() },
+        }).countAsync();
+
+        await Regions.updateAsync(regionId, { $set: { courseCount, futureEventCount } });
+      }),
+    );
   },
 });

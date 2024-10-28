@@ -50,11 +50,13 @@ interface UpdatesAppliedEntity {
 const UpdatesApplied = new Mongo.Collection<UpdatesAppliedEntity>("UpdatesApplied");
 
 if (runBackgroundTasks)
-  Meteor.startup(() => {
-    const skipInitial = UpdatesApplied.find().count() === 0;
+  Meteor.startup(async () => {
+    const skipInitial = (await UpdatesApplied.find().countAsync()) === 0;
 
-    Object.entries(UpdatesAvailable).forEach(([name, updateAvailable]) => {
-      if (UpdatesApplied.find({ name }).count() === 0) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const [name, updateAvailable] of Object.entries(UpdatesAvailable)) {
+      // eslint-disable-next-line no-await-in-loop
+      if ((await UpdatesApplied.find({ name }).countAsync()) === 0) {
         const entry: UpdatesAppliedEntity = {
           name,
           affected: 0,
@@ -74,5 +76,5 @@ if (runBackgroundTasks)
         }
         UpdatesApplied.insert(entry);
       }
-    });
+    }
   });

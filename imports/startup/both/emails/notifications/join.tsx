@@ -32,7 +32,12 @@ interface Body {
  * @param newRole new role of the participant
  * @param message Optional message of the new participant
  */
-export function record(courseId: string, participantId: string, newRole: string, message?: string) {
+export async function record(
+  courseId: string,
+  participantId: string,
+  newRole: string,
+  message?: string,
+) {
   check(courseId, String);
   check(participantId, String);
   check(newRole, String);
@@ -62,10 +67,10 @@ export function record(courseId: string, participantId: string, newRole: string,
     model: "Join",
   };
 
-  Log.record("Notification.Send", [course._id, participant._id], body);
+  await Log.record("Notification.Send", [course._id, participant._id], body);
 }
 
-export function Model(entry: { body: Body }): NotificationModel<Props> {
+export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
   const course = Courses.findOne(body.courseId);
   const newParticipant = Users.findOne(body.participantId);
@@ -73,15 +78,12 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
     _id: { $in: body.recipients.filter((r) => r !== body.participantId) },
   })
     .fetch()
-    .filter((r) => r.notifications && r.hasEmail());
+    .filter((r) => r.notifications);
 
   return {
     accepted(actualRecipient: UserModel) {
       if (actualRecipient.notifications === false) {
         throw new Error("User wishes to not receive automated notifications");
-      }
-      if (!actualRecipient.hasEmail()) {
-        throw new Error("Recipient has no email address registered");
       }
     },
 

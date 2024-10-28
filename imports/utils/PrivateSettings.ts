@@ -1,4 +1,4 @@
-import { Match, check } from "meteor/check";
+import { Match } from "meteor/check";
 import { Meteor } from "meteor/meteor";
 import { StringEnum, Type } from "./CustomChecks";
 
@@ -61,7 +61,7 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
     secretAccessKey: String,
   },
   startup: {
-    /** Build the cache in the db async or sync */
+    /** Build the cache in the db async or sync. For larger databases it takes a long time until all fields are updated, during this time the startup is blocked. The users cannot use the website. Because in a normal startup the database already has these fields, this task can also be done async every sunnday at 22:30. */
     buildDbCacheAsync: Boolean,
   },
   /** Maximum number of entities that the api returns. */
@@ -93,9 +93,6 @@ if (Meteor.isServer) {
 
   // none deep merge
   privateSettings = { ...defaults, ...Meteor.settings, ...{ public: undefined } };
-
-  // Check that everything is set as expected in the settings.
-  check(privateSettings, PrivateSettingsPattern);
 }
 
 /**
@@ -103,4 +100,4 @@ if (Meteor.isServer) {
  *
  * Only available on the server.
  */
-export const PrivateSettings = privateSettings as PrivateSettings;
+export const PrivateSettings = privateSettings as unknown as PrivateSettings;

@@ -36,7 +36,7 @@ interface Body {
  * @param revealSenderAddress include email-address of sender in message
  * @param sendCopyToSender send a copy of the message to the author
  */
-export function record(
+export async function record(
   senderId: string,
   message: string,
   eventId: string,
@@ -70,11 +70,7 @@ export function record(
       throw new Meteor.Error(404, "Sender not found");
     }
 
-    if (sender.hasEmail()) {
-      recipients.push(senderId);
-    } else {
-      throw new Meteor.Error(404, "Sender has no email address");
-    }
+    recipients.push(senderId);
   }
 
   const body: Body = {
@@ -86,10 +82,10 @@ export function record(
     model: "Event.ContactParticipants",
   };
 
-  Log.record("Notification.Send", [senderId, eventId, ...recipients], body);
+  await Log.record("Notification.Send", [senderId, eventId, ...recipients], body);
 }
 
-export function Model(entry: { body: Body }): NotificationModel<Props> {
+export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
   const sender = Users.findOne(body.sender);
   const event = Events.findOne(body.event);
@@ -98,10 +94,6 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
     accepted(actualRecipient: UserModel) {
       if (!actualRecipient.allowPrivateMessages) {
         throw new Error("User wishes to not receive private messages from users");
-      }
-
-      if (!actualRecipient.hasEmail()) {
-        throw new Error("Recipient has no email address registered");
       }
     },
 

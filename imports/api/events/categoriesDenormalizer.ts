@@ -1,19 +1,22 @@
 // eslint-disable-next-line import/no-cycle
 import { EventEntity, Events } from "/imports/api/events/events";
 import { Courses } from "/imports/api/courses/courses";
+import { sum } from "../../utils/sum";
 
 // Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers
 
-export function onStartUp() {
-  let updated = 0;
-
-  Courses.find({}, { projection: { _id: 1, categories: 1 } }).forEach((course) => {
-    updated += Events.update(
-      { courseId: course._id },
-      { $set: { categories: course.categories || [] } },
-      { multi: true },
-    );
-  });
+export async function onStartUp() {
+  const updated = sum(
+    await Promise.all(
+      await Courses.find({}, { projection: { _id: 1, categories: 1 } }).mapAsync((course) =>
+        Events.updateAsync(
+          { courseId: course._id },
+          { $set: { categories: course.categories || [] } },
+          { multi: true },
+        ),
+      ),
+    ),
+  );
 
   /* eslint-disable-next-line no-console */
   console.log(`events.categoriesDenormalizer.onStartUp: ${updated} affected events`);
@@ -31,8 +34,8 @@ export async function beforeInsert(
   return { ...event, categories: course.categories };
 }
 
-export function afterCourseUpdateCategories(course: { _id: string; categories: string[] }) {
-  Events.update(
+export async function afterCourseUpdateCategories(course: { _id: string; categories: string[] }) {
+  await Events.updateAsync(
     { courseId: course._id },
     { $set: { categories: course.categories } },
     { multi: true },

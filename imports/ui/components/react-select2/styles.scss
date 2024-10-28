@@ -1,3 +1,6 @@
+@import "/node_modules/select2/dist/css/select2.min.css";
+@import "/node_modules/select2-theme-bootstrap5/dist/select2-bootstrap.min.css";
+
 /* stylelint-disable-next-line selector-class-pattern */
 .select2-selection--multiple::before {
   border-left: 4px solid transparent;

@@ -104,7 +104,6 @@ export function EmailValidation() {
     return (
       !useSessionEquals("emailValidationModalClosed", true) &&
       !!user &&
-      user.hasEmail() &&
       !user.hasVerifiedEmail() &&
       moment().subtract(7, "days").isAfter(user.createdAt)
     );
