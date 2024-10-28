@@ -228,8 +228,6 @@
 	"email.base.greeting": "Hei {USERNAME}",
 	"email.base.profileLink": "Besøk profilen din",
 	"email.verified": "E-posten din har blitt bekreftet.",
-	"emailrequest.text.greeting": "Hei «{NAME}»",
-	"emailrequest.title": "Legg til e-postadresse",
 	"event.delete.confirm.button": "Slett denne begivenheten",
 	"event.delete.confirm.button.busy": "Sletter begivenhet …",
 	"event.detail.download_cal": "Last ned begivenhet til min kalender",
