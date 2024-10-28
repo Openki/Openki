@@ -25,7 +25,7 @@ interface Body {
  * Record the intent to send join notifications
  * @param courseId ID for the CourseDiscussions collection
  */
-export function record(courseId: string) {
+export async function record(courseId: string) {
   check(courseId, String);
 
   const course = Courses.findOne(courseId);
@@ -51,10 +51,10 @@ export function record(courseId: string) {
     model: "Group.Course",
   };
 
-  Log.record("Notification.Send", [course._id], body);
+  await Log.record("Notification.Send", [course._id], body);
 }
 
-export function Model(entry: { body: Body }): NotificationModel<Props> {
+export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
   const course = Courses.findOne(body.courseId);
   if (!course) {
@@ -74,9 +74,6 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
     accepted(actualRecipient: UserModel) {
       if (actualRecipient.notifications === false) {
         throw new Error("User wishes to not receive automated notifications");
-      }
-      if (!actualRecipient.hasEmail()) {
-        throw new Error("Recipient has no email address registered");
       }
     },
 

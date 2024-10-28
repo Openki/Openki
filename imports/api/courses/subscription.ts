@@ -215,7 +215,7 @@ export class Subscribe extends Change<{
     Object.assign(body, this.dict());
   }
 
-  apply() {
+  async apply() {
     if (!this.userId) {
       throw new Error("Unexpected falsy: this.userId");
     }
@@ -242,7 +242,7 @@ export class Subscribe extends Change<{
     }
 
     // Update member related calculated fields
-    interestedDenormalizer.afterSubscribe(this.course._id);
+    await interestedDenormalizer.afterSubscribe(this.course._id);
     Courses.updateGroups(this.course._id);
 
     timeLastEditDenormalizer.afterSubscribe(this.course._id);
@@ -340,7 +340,7 @@ export class Unsubscribe extends Change<{
     Object.assign(body, this.dict());
   }
 
-  apply() {
+  async apply() {
     const update = { $pull: { "members.$.roles": this.role } } as any;
     // Unsubscribe from the team also means remove editor rights.
     if (this.role === "team") {
@@ -362,7 +362,7 @@ export class Unsubscribe extends Change<{
     );
 
     // Update member related calculated fields
-    interestedDenormalizer.afterUnsubscribe(this.course._id);
+    await interestedDenormalizer.afterUnsubscribe(this.course._id);
     Courses.updateGroups(this.course._id);
 
     timeLastEditDenormalizer.afterUnsubscribe(this.course._id);

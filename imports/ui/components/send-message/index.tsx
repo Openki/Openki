@@ -70,58 +70,56 @@ export function SendMessage(props: Data) {
           }}
         ></textarea>
       </div>
-      {currentUser?.hasEmail() ? (
-        currentUser?.hasVerifiedEmail() ? (
-          <>
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                name="sendCopy"
-                type="checkbox"
-                value=""
-                id="sendMessageSendCopyCheck"
-                onChange={(event) => {
-                  setSendCopy(event.target.checked);
-                }}
-              />
-              <label className="form-check-label" htmlFor="sendMessageSendCopyCheck">
-                {t("profile.mail.copy", "Send me a copy of this message")}
-              </label>
-            </div>
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                name="revealAddress"
-                type="checkbox"
-                value=""
-                id="sendMessageRevealAddressCheck"
-                onChange={(event) => {
-                  setRevealAddress(event.target.checked);
-                }}
-              />
-              <label className="form-check-label" htmlFor="sendMessageRevealAddressCheck">
-                {t("profile.mail.attachmail", "Attach my e-mail address")}
-              </label>
-            </div>
-          </>
-        ) : (
-          <div className="card mb-3">
-            <div className="card-header bg-warning">
-              <span className="fa-regular fa-circle-check" aria-hidden="true"></span>{" "}
-              {t("sendMessage.plsVerifyEmail", "Please verify your e-mail address")}
-            </div>
-            <div className="card-body p-3">
-              <p>
-                {t(
-                  "userprofile.infoForUnverifiedMail",
-                  "Verify your e-mail address to receive a copy or to attach it to the message.",
-                )}
-              </p>
-              <VerifyEmail />
-            </div>
+      {currentUser?.hasVerifiedEmail() ? (
+        <>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              name="sendCopy"
+              type="checkbox"
+              value=""
+              id="sendMessageSendCopyCheck"
+              onChange={(event) => {
+                setSendCopy(event.target.checked);
+              }}
+            />
+            <label className="form-check-label" htmlFor="sendMessageSendCopyCheck">
+              {t("profile.mail.copy", "Send me a copy of this message")}
+            </label>
           </div>
-        )
-      ) : null}
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              name="revealAddress"
+              type="checkbox"
+              value=""
+              id="sendMessageRevealAddressCheck"
+              onChange={(event) => {
+                setRevealAddress(event.target.checked);
+              }}
+            />
+            <label className="form-check-label" htmlFor="sendMessageRevealAddressCheck">
+              {t("profile.mail.attachmail", "Attach my e-mail address")}
+            </label>
+          </div>
+        </>
+      ) : (
+        <div className="card mb-3">
+          <div className="card-header bg-warning">
+            <span className="fa-regular fa-circle-check" aria-hidden="true"></span>{" "}
+            {t("sendMessage.plsVerifyEmail", "Please verify your e-mail address")}
+          </div>
+          <div className="card-body p-3">
+            <p>
+              {t(
+                "userprofile.infoForUnverifiedMail",
+                "Verify your e-mail address to receive a copy or to attach it to the message.",
+              )}
+            </p>
+            <VerifyEmail />
+          </div>
+        </div>
+      )}
 
       <div className="form-actions">
         <button type="submit" className="btn btn-save" disabled={isBusy}>

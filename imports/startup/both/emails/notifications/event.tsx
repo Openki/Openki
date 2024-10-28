@@ -29,7 +29,7 @@ interface Body {
  * @param isNew whether the event is a new one
  * @param additionalMessage custom message
  */
-export function record(eventId: string, isNew: boolean, additionalMessage?: string) {
+export async function record(eventId: string, isNew: boolean, additionalMessage?: string) {
   check(eventId, String);
   check(isNew, Boolean);
   check(additionalMessage, Match.Optional(String));
@@ -59,30 +59,26 @@ export function record(eventId: string, isNew: boolean, additionalMessage?: stri
     model: "Event",
   };
 
-  Log.record("Notification.Send", course ? [course._id] : [], body);
+  await Log.record("Notification.Send", course ? [course._id] : [], body);
 }
 
-export function Model(entry: { body: Body }): NotificationModel<Props> {
-  const event = Events.findOne(entry.body.eventId);
+export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
+  const event = await Events.findOneAsync(entry.body.eventId);
 
   let course: CourseModel | undefined;
   if (event?.courseId) {
-    course = Courses.findOne(event.courseId);
+    course = await Courses.findOneAsync(event.courseId);
   }
 
   let region: RegionModel | undefined;
   if (event?.region) {
-    region = Regions.findOne(event.region);
+    region = await Regions.findOneAsync(event.region);
   }
 
   return {
     accepted(actualRecipient: UserModel) {
       if (actualRecipient.notifications === false) {
         throw new Error("User wishes to not receive automated notifications");
-      }
-
-      if (!actualRecipient.hasEmail()) {
-        throw new Error("Recipient has no email address registered");
       }
     },
 

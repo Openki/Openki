@@ -40,7 +40,7 @@ interface Body {
  * @param sendCopyToSender send a copy of the message to the author
  * @param context dictionary with context ID (course, venue, &c.)
  */
-export function record(
+export async function record(
   senderId: string,
   recipientId: string,
   message: string,
@@ -65,11 +65,7 @@ export function record(
       throw new Meteor.Error(404, "Sender not found");
     }
 
-    if (sender.hasEmail()) {
-      recipients.push(senderId);
-    } else {
-      throw new Meteor.Error(404, "Sender has no email address");
-    }
+    recipients.push(senderId);
   }
 
   const contextRel = Object.values(context);
@@ -87,10 +83,10 @@ export function record(
     context,
   };
 
-  Log.record("Notification.Send", rel, body);
+  await Log.record("Notification.Send", rel, body);
 }
 
-export function Model(entry: { body: Body }): NotificationModel<Props> {
+export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
   const sender = Users.findOne(body.sender);
   const targetRecipient = Users.findOne(body.targetRecipient);
@@ -102,10 +98,6 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         !UserPrivilegeUtils.privileged(sender, "admin")
       ) {
         throw new Error("User wishes to not receive private messages from users");
-      }
-
-      if (!actualRecipient.hasEmail()) {
-        throw new Error("Recipient has no email address registered");
       }
     },
 

@@ -91,7 +91,7 @@ export class LogCollection extends Mongo.Collection<LogEntity> {
     super(name);
 
     if (name && Meteor.isServer) {
-      this.createIndex({ tr: 1 });
+      this.createIndex({ tr: 1, ts: 1 });
       this.createIndex({ ts: 1 });
       this.createIndex({ rel: 1 });
     }
@@ -112,7 +112,7 @@ export class LogCollection extends Mongo.Collection<LogEntity> {
    * @param rel related ID
    * @param body log body depending on track
    */
-  record(track: string, rel: string[], body: unknown) {
+  async record(track: string, rel: string[], body: unknown) {
     check(track, String);
     check(rel, [String]);
     check(body, Object);
@@ -124,7 +124,7 @@ export class LogCollection extends Mongo.Collection<LogEntity> {
       res: [],
     };
 
-    const id = this.insert(entry);
+    const id = await this.insertAsync(entry);
 
     if (Meteor.isServer && PrivateSettings.printLog) {
       /* eslint-disable-next-line no-console */

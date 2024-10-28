@@ -7,8 +7,8 @@
     "test": "tests"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.667.0",
-    "@aws-sdk/lib-storage": "3.540.0",
+    "@aws-sdk/client-s3": "3.679.0",
+    "@aws-sdk/lib-storage": "3.679.0",
     "@babel/runtime": "7.24.4",
     "@fortawesome/fontawesome-free": "6.5.2",
     "@popperjs/core": "2.11.8",
@@ -16,6 +16,7 @@
     "bootstrap-datepicker": "1.9.0",
     "deepmerge": "4.3.1",
     "es6-promisify": "7.0.0",
+    "http2": "3.3.7",
     "i18next": "22.0.4",
     "i18next-chained-backend": "4.4.0",
     "i18next-icu": "2.3.0",
@@ -28,7 +29,7 @@
     "juice": "10.0.0",
     "leaflet": "1.9.4",
     "medium-editor": "5.23.3",
-    "meteor-node-stubs": "1.2.5",
+    "meteor-node-stubs": "^1.2.11",
     "mime-types": "2.1.35",
     "moment": "2.30.1",
     "moment-timezone": "0.5.45",

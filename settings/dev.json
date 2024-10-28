@@ -236,5 +236,5 @@
 	, "secretAccessKey": "srnyHWbj9ZhDFlTQyY40vxBIBs8MVYgp"
 }
 , "PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" }
-, "startup": { "buildDbCacheAsync": true }
+, "startup": { "buildDbCacheAsync": false }
 }

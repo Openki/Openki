@@ -1,6 +1,7 @@
 export function resizeImage(base64: string, maxSize: number) {
+  // Fixed: https://github.com/lovell/sharp/issues/537
   // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
-  const sharp = require("sharp");
+  const sharp = require("./build/Release/sharp.node");
 
   const content = base64.substring(base64.indexOf("base64") + 7);
   const imageBuffer = Buffer.from(content, "base64");

@@ -22,7 +22,7 @@ interface Body {
   model: string;
 }
 
-export function record(eventId: string, participantId: string, companions: number) {
+export async function record(eventId: string, participantId: string, companions: number) {
   check(eventId, String);
   check(participantId, String);
   check(companions, Number);
@@ -45,10 +45,10 @@ export function record(eventId: string, participantId: string, companions: numbe
     model: "Rsvp",
   };
 
-  Log.record("Notification.Send", [event._id, participant._id], body);
+  await Log.record("Notification.Send", [event._id, participant._id], body);
 }
 
-export function Model(entry: { body: Body }): NotificationModel<Props> {
+export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
   const event = Events.findOne(body.eventId);
   const newParticipant = Users.findOne(body.participantId);
@@ -62,10 +62,6 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
     accepted(actualRecipient: UserModel) {
       if (actualRecipient.notifications === false) {
         throw new Error("User wishes to not receive automated notifications");
-      }
-
-      if (!actualRecipient.hasEmail()) {
-        throw new Error("Recipient has no email address registered");
       }
     },
 

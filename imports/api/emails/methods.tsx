@@ -53,7 +53,7 @@ export const sendPrivateMessage = ServerMethod(
     if (!recipient) {
       throw new Meteor.Error(404, "no such user");
     }
-    if (!recipient.acceptsPrivateMessages && !UserPrivilegeUtils.privileged(operator, "admin")) {
+    if (!recipient.allowPrivateMessages && !UserPrivilegeUtils.privileged(operator, "admin")) {
       throw new Meteor.Error(401, "this user does not accept private messages from users");
     }
 
@@ -65,7 +65,7 @@ export const sendPrivateMessage = ServerMethod(
       context.event = options.eventId;
     }
 
-    Notification.PrivateMessage.record(
+    await Notification.PrivateMessage.record(
       operator._id,
       recipient._id,
       message,

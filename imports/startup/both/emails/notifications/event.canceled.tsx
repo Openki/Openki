@@ -29,7 +29,7 @@ interface Body {
  * @param eventId id of the event that are canceld
  * @param message custom message
  */
-export function record(senderId: string, eventId: string, message: string) {
+export async function record(senderId: string, eventId: string, message: string) {
   check(senderId, String);
   check(eventId, String);
   check(message, String);
@@ -57,10 +57,10 @@ export function record(senderId: string, eventId: string, message: string) {
     model: "Event.Canceled",
   };
 
-  Log.record("Notification.Send", [senderId, eventId, ...recipients], body);
+  await Log.record("Notification.Send", [senderId, eventId, ...recipients], body);
 }
 
-export function Model(entry: { body: Body }): NotificationModel<Props> {
+export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
   const event = Events.findOne(body.event);
 
@@ -73,10 +73,6 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
     accepted(actualRecipient: UserModel) {
       if (actualRecipient.notifications === false) {
         throw new Error("User wishes to not receive automated notifications");
-      }
-
-      if (!actualRecipient.hasEmail()) {
-        throw new Error("Recipient has no email address registered");
       }
     },
 

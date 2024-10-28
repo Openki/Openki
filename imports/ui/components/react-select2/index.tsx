@@ -4,8 +4,6 @@ import $ from "jquery";
 import { useWindowSize } from "/imports/ui/lib/useWindowSize";
 
 import select2 from "select2";
-import "select2/dist/css/select2.min";
-import "select2-theme-bootstrap5/dist/select2-bootstrap.min";
 
 import "./styles.scss";
 

@@ -1,24 +1,13 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
 import { Match, check } from "meteor/check";
-import { LogEntity } from "../api/log/factory";
 
 import { Log } from "/imports/api/log/log";
 import { Regions } from "/imports/api/regions/regions";
-import { UserModel, Users } from "/imports/api/users/users";
-
-export function updateAcceptsPrivateMessages(user: UserModel) {
-  const acceptsPrivateMessages = Boolean(user.hasEmail() && user.allowPrivateMessages);
-
-  if (user.acceptsPrivateMessages !== acceptsPrivateMessages) {
-    Users.update(user._id, {
-      $set: { acceptsPrivateMessages },
-    });
-  }
-}
+import { Users } from "/imports/api/users/users";
 
 export namespace Username {
-  export function change(userId: string, newName: string) {
+  export async function change(userId: string, newName: string) {
     check(userId, String);
     check(newName, String);
 
@@ -33,7 +22,7 @@ export namespace Username {
       result = e;
       success = false;
     }
-    Log.record("Profile.Username", [userId], {
+    await Log.record("Profile.Username", [userId], {
       userId,
       name: newName,
       success,
@@ -46,12 +35,12 @@ export namespace Username {
 }
 
 export namespace Email {
-  export function change(userId: string, email: string | undefined, reason: string) {
+  export async function change(userId: string, email: string | undefined, reason: string) {
     check(userId, String);
     check(email, Match.Optional(String));
     check(reason, String);
 
-    Log.record("Profile.Email", [userId], {
+    await Log.record("Profile.Email", [userId], {
       userId,
       email,
       reason,
@@ -76,7 +65,7 @@ export namespace Notifications {
    * @param relatedId related ID for the Log (optional)
    *
    */
-  export function change(
+  export async function change(
     userId: string,
     enable: boolean,
     relatedId: string | undefined,
@@ -91,7 +80,7 @@ export namespace Notifications {
     if (relatedId) {
       relatedIds.push(relatedId);
     }
-    Log.record("Profile.Notifications", relatedIds, {
+    await Log.record("Profile.Notifications", relatedIds, {
       userId,
       enable,
       reason,
@@ -107,25 +96,27 @@ export namespace Notifications {
    * @param token the unsubscribe token passed by the user
    * @return whether the token was accepted
    */
-  export function unsubscribe(token: string) {
+  export async function unsubscribe(token: string) {
     check(token, String);
 
-    let accepted = false;
-
     // Find the relevant notification result
-    Log.find({
-      rel: token,
-    })
-      .map((r) => r as LogEntity & { body: { unsubToken: string; recipient: string } })
-      .forEach((entry) => {
-        // See whether it was indeed a secret token.
-        // This check is not redundant because public ID like courseID
-        // are also written into the rel-index and would be found if provided.
-        if (entry.body.unsubToken === token) {
-          Notifications.change(entry.body.recipient, false, entry._id, "unsubscribe token");
-          accepted = true;
-        }
-      });
+    const accepted = (
+      await Promise.all(
+        await Log.find({
+          rel: token,
+        }).mapAsync(async (entry) => {
+          const body = entry.body as { unsubToken: string; recipient: string };
+          // See whether it was indeed a secret token.
+          // This check is not redundant because public ID like courseID
+          // are also written into the rel-index and would be found if provided.
+          if (body.unsubToken === token) {
+            await Notifications.change(body.recipient, false, entry._id, "unsubscribe token");
+            return true;
+          }
+          return false;
+        }),
+      )
+    ).some((r) => r);
     return accepted;
   }
 }
@@ -137,7 +128,7 @@ export namespace PrivateMessages {
    * @param enable new state of the flag
    * @param relatedId related ID for the Log (optional)
    */
-  export function change(
+  export async function change(
     userId: string,
     enable: boolean,
     relatedId: string | undefined,
@@ -152,7 +143,7 @@ export namespace PrivateMessages {
     if (relatedId) {
       relatedIds.push(relatedId);
     }
-    Log.record("Profile.PrivateMessages", relatedIds, {
+    await Log.record("Profile.PrivateMessages", relatedIds, {
       userId,
       enable,
       reason,
@@ -168,25 +159,27 @@ export namespace PrivateMessages {
    * @param token the unsubscribe token passed by the user
    * @return whether the token was accepted
    */
-  export function unsubscribe(token: string): boolean {
+  export async function unsubscribe(token: string): Promise<boolean> {
     check(token, String);
 
-    let accepted = false;
-
     // Find the relevant private message result
-    Log.find({
-      rel: token,
-    })
-      .map((r) => r as LogEntity & { body: { unsubToken: string; recipient: string } })
-      .forEach((entry) => {
-        // See whether it was indeed a secret token.
-        // This check is not redundant because public ID like courseID
-        // are also written into the rel-index and would be found if provided.
-        if (entry.body.unsubToken === token) {
-          PrivateMessages.change(entry.body.recipient, false, entry._id, "unsubscribe token");
-          accepted = true;
-        }
-      });
+    const accepted = (
+      await Promise.all(
+        await Log.find({
+          rel: token,
+        }).mapAsync(async (entry) => {
+          const body = entry.body as { unsubToken: string; recipient: string };
+          // See whether it was indeed a secret token.
+          // This check is not redundant because public ID like courseID
+          // are also written into the rel-index and would be found if provided.
+          if (body.unsubToken === token) {
+            await PrivateMessages.change(body.recipient, false, entry._id, "unsubscribe token");
+            return true;
+          }
+          return false;
+        }),
+      )
+    ).some((r) => r);
     return accepted;
   }
 }
@@ -199,7 +192,7 @@ export namespace Region {
    *
    * @return whether the change was accepted
    */
-  export function change(userId: string, regionId: string, reason: string) {
+  export async function change(userId: string, regionId: string, reason: string) {
     check(userId, String);
     check(regionId, String);
     check(reason, String);
@@ -207,7 +200,7 @@ export namespace Region {
     const region = Regions.findOne(regionId);
     const accepted = !!region;
 
-    Log.record("Profile.Region", [userId, regionId], {
+    await Log.record("Profile.Region", [userId, regionId], {
       userId,
       regionId,
       accepted,
@@ -228,14 +221,14 @@ export namespace AvatarColor {
    * @param userId update color for this user
    * @param color hsl color hue (0 - 360)
    */
-  export function change(userId: string, color: number) {
+  export async function change(userId: string, color: number) {
     check(userId, String);
     check(color, Number);
 
     // check if color is a valid hsl hue
     const accepted = color >= 0 && color <= 360;
 
-    Log.record("Avatar.Color", [userId], {
+    await Log.record("Avatar.Color", [userId], {
       userId,
       color,
       accepted,
@@ -255,7 +248,7 @@ export namespace Description {
    * @param userId update color for this user
    * @param description user description
    */
-  export function change(userId: string, description: string) {
+  export async function change(userId: string, description: string) {
     check(userId, String);
     check(description, String);
 
@@ -271,7 +264,7 @@ export namespace Description {
       result = e;
       success = false;
     }
-    Log.record("Profile.Description", [userId], {
+    await Log.record("Profile.Description", [userId], {
       userId,
       description,
       success,
