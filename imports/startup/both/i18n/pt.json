@@ -178,7 +178,6 @@
 	"editable.add_text": "Adicionar texto aqui",
 	"email.base.greeting": "Oi {USERNAME}",
 	"email.base.profileLink": "Visite seu perfil",
-	"emailrequest.text.para2": "O fornecimento de um endereço de e-mail garante que você se mantenha informado ao participar de um curso e permite que o mentor / outros usuários lhe enviem uma mensagem direta. É fácil cancelar a inscrição dessas notificações e os dados do usuário permanecerão protegidos e nunca serão negociados",
 	"event.delete.confirm.button": "Deletar esse evento.",
 	"event.delete.confirm.button.busy": "Deletando evento…",
 	"event.description.placeholder": "Descreva seu evento o mais precisamente possível. Isso ajuda as pessoas a saberem como se preparar e o que esperar desse evento (por exemplo: nível, pré requisitos, atividades, métodos de ensino, o que levar, etc)",
