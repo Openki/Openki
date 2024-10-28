@@ -35,8 +35,8 @@ if (Meteor.isClient) {
             () =>
               new Promise<void>((resolve) => {
                 updateUsername(newDummy)
-                  .then(() => {
-                    Users.find({ username: newDummy }).observe({
+                  .then(async () => {
+                    await Users.find({ username: newDummy }).observeAsync({
                       added: () => {
                         resolve();
                       },
@@ -78,7 +78,7 @@ if (Meteor.isClient) {
 
       // This will track addition of users
       const cursor = Users.find();
-      cursor.observe({
+      await cursor.observeAsync({
         added: () => {
           added = true;
         },

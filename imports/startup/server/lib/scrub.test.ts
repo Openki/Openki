@@ -42,7 +42,7 @@ describe("The Log-Scrubber", () => {
     const scrubber = new Scrubber([new ScrubRule("test", 1, { tr: "test" }, false, ["a"])]);
 
     const cursor = log.find({ tr: "test" });
-    const handle = cursor.observeChanges({
+    const handle = await cursor.observeChangesAsync({
       changed: (_id, doc: any) => {
         handle.stop(); // cleanup
         try {

@@ -69,6 +69,7 @@ async function send(
   const concluded = mapToObject(
     await Log.find({
       tr: "Notification.SendResult",
+      ts: { $gte: entry.ts },
       rel: entry._id,
     }).mapAsync((result) => [(result.body as { recipient: string }).recipient, true]),
   );
@@ -153,7 +154,7 @@ async function send(
 
 // Watch the Log for event notifications
 if (runBackgroundTasks)
-  Meteor.startup(() => {
+  Meteor.startup(async () => {
     // To avoid sending stale notifications, only consider records added in the
     // last hours. This way, if the server should have failed for a longer time,
     // no notifications will go out.
@@ -161,7 +162,7 @@ if (runBackgroundTasks)
     gracePeriod.setHours(gracePeriod.getHours() - 72);
 
     // The Log is append-only so we only watch for additions
-    Log.find({ tr: "Notification.Send", ts: { $gte: gracePeriod } }).observe({
+    await Log.find({ tr: "Notification.Send", ts: { $gte: gracePeriod } }).observeAsync({
       added: send,
     });
   });

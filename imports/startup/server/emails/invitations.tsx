@@ -91,8 +91,8 @@ async function handleInvitation(invitation: InvitationEntity) {
 
 // Watch for new invitations
 if (runBackgroundTasks)
-  Meteor.startup(() => {
-    Invitations.find({ status: "created" }).observe({
+  Meteor.startup(async () => {
+    await Invitations.find({ status: "created" }).observeAsync({
       added: handleInvitation,
       changed: handleInvitation,
     });
