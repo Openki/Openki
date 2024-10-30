@@ -28,7 +28,7 @@ interface Body {
 export async function record(courseId: string) {
   check(courseId, String);
 
-  const course = Courses.findOne(courseId);
+  const course = await Courses.findOneAsync(courseId);
   if (!course) {
     throw new Meteor.Error(`No course entry for ${courseId}`);
   }
@@ -56,7 +56,7 @@ export async function record(courseId: string) {
 
 export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
-  const course = Courses.findOne(body.courseId);
+  const course = await Courses.findOneAsync(body.courseId);
   if (!course) {
     throw new Error("Course does not exist (0.o)");
   }
@@ -65,7 +65,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
     throw new Error("Groups does not exist (0.o)");
   }
 
-  const creater = Users.findOne(course.createdby);
+  const creater = await Users.findOneAsync(course.createdby);
   if (!creater) {
     throw new Error("Creater does not exist (0.o)");
   }
@@ -77,7 +77,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
     },
 
-    vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
+    async vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
       const campaign = "groupCourseNotify";
 
@@ -98,7 +98,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
       let region: RegionModel | undefined;
       if (course.region) {
-        region = Regions.findOne(course.region);
+        region = await Regions.findOneAsync(course.region);
       }
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);

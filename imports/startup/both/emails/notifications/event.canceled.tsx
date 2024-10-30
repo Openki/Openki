@@ -36,7 +36,7 @@ export async function record(senderId: string, eventId: string, message: string)
 
   const recipients = [];
 
-  const event = Events.findOne(eventId);
+  const event = await Events.findOneAsync(eventId);
   if (!event) {
     throw new Meteor.Error(`No event for ${eventId}`);
   }
@@ -62,11 +62,11 @@ export async function record(senderId: string, eventId: string, message: string)
 
 export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
-  const event = Events.findOne(body.event);
+  const event = await Events.findOneAsync(body.event);
 
   let region: RegionModel | undefined;
   if (event?.region) {
-    region = Regions.findOne(event.region);
+    region = await Regions.findOneAsync(event.region);
   }
 
   return {
@@ -76,7 +76,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
     },
 
-    vars(locale, _actualRecipient, unsubToken) {
+    async vars(locale, _actualRecipient, unsubToken) {
       const t = i18next.getFixedT(locale);
       const campaign = "eventCanceled";
 

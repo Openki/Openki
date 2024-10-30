@@ -28,12 +28,12 @@ export interface Body {
  */
 export async function record(commentId: string) {
   check(commentId, String);
-  const comment = CourseDiscussions.findOne(commentId);
+  const comment = await CourseDiscussions.findOneAsync(commentId);
   if (!comment) {
     throw new Meteor.Error(`No CourseDiscussion entry for ${commentId}`);
   }
 
-  const course = Courses.findOne(comment.courseId);
+  const course = await Courses.findOneAsync(comment.courseId);
   if (!course) {
     throw new Meteor.Error(`No course entry for ${commentId}`);
   }
@@ -102,7 +102,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
     },
 
-    vars(locale, _actualRecipient, unsubToken) {
+    async vars(locale, _actualRecipient, unsubToken) {
       const t = i18next.getFixedT(locale);
       const campaign = "commentNotify";
 
@@ -137,7 +137,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
       let region: RegionModel | undefined;
       if (course.region) {
-        region = Regions.findOne(course.region);
+        region = await Regions.findOneAsync(course.region);
       }
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);
