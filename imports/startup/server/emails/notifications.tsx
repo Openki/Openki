@@ -89,7 +89,8 @@ async function send(
       let unsubToken = null;
 
       try {
-        const user = Users.findOne(recipientId);
+        // eslint-disable-next-line no-await-in-loop
+        const user = await Users.findOneAsync(recipientId);
 
         if (!user) {
           throw new Error(`User not found for ID '${recipientId}'`);
@@ -107,7 +108,8 @@ async function send(
         const subjectPrefix = `[${siteName}] `;
 
         unsubToken = Random.secret();
-        const vars = model.vars(locale, user, unsubToken);
+        // eslint-disable-next-line no-await-in-loop
+        const vars = await model.vars(locale, user, unsubToken);
 
         const message = renderToEmail(
           <Root

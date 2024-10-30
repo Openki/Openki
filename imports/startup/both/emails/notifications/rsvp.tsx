@@ -27,12 +27,12 @@ export async function record(eventId: string, participantId: string, companions:
   check(participantId, String);
   check(companions, Number);
 
-  const event = Events.findOne(eventId);
+  const event = await Events.findOneAsync(eventId);
   if (!event) {
     throw new Meteor.Error(`No event for ${eventId}`);
   }
 
-  const participant = Users.findOne(participantId);
+  const participant = await Users.findOneAsync(participantId);
   if (!participant) {
     throw new Meteor.Error(`No user entry for ${participantId}`);
   }
@@ -50,12 +50,12 @@ export async function record(eventId: string, participantId: string, companions:
 
 export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
-  const event = Events.findOne(body.eventId);
-  const newParticipant = Users.findOne(body.participantId);
+  const event = await Events.findOneAsync(body.eventId);
+  const newParticipant = await Users.findOneAsync(body.participantId);
 
   let region: RegionModel | undefined;
   if (event?.region) {
-    region = Regions.findOne(event.region);
+    region = await Regions.findOneAsync(event.region);
   }
 
   return {
@@ -65,7 +65,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
     },
 
-    vars(locale: string, _actualRecipient: UserModel, unsubToken: string) {
+    async vars(locale: string, _actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
       const campaign = "rsvpNotify";
 

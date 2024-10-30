@@ -60,7 +60,7 @@ export async function record(
 
   const recipients = [recipientId];
   if (sendCopyToSender) {
-    const sender = Users.findOne(senderId);
+    const sender = await Users.findOneAsync(senderId);
     if (!sender) {
       throw new Meteor.Error(404, "Sender not found");
     }
@@ -88,8 +88,8 @@ export async function record(
 
 export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
-  const sender = Users.findOne(body.sender);
-  const targetRecipient = Users.findOne(body.targetRecipient);
+  const sender = await Users.findOneAsync(body.sender);
+  const targetRecipient = await Users.findOneAsync(body.targetRecipient);
 
   return {
     accepted(actualRecipient: UserModel) {
@@ -101,7 +101,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
     },
 
-    vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
+    async vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
       const campaign = "privateMessage";
 
@@ -155,7 +155,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
       const courseContextId = body.context.course;
       if (courseContextId) {
-        const course = Courses.findOne(courseContextId);
+        const course = await Courses.findOneAsync(courseContextId);
         if (!course) {
           throw new Meteor.Error(404, "course not found");
         }
@@ -169,7 +169,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
       const eventContextId = body.context.event;
       if (eventContextId) {
-        const event = Events.findOne(eventContextId);
+        const event = await Events.findOneAsync(eventContextId);
         if (!event) {
           throw new Meteor.Error(404, "event not found");
         }
@@ -192,7 +192,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
 
       if (regionId) {
-        region = Regions.findOne(regionId);
+        region = await Regions.findOneAsync(regionId);
       }
 
       vars.customEmailLogo = region?.custom?.emailLogo;

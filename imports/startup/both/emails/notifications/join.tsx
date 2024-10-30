@@ -43,12 +43,12 @@ export async function record(
   check(newRole, String);
   check(message, Match.Optional(String));
 
-  const course = Courses.findOne(courseId);
+  const course = await Courses.findOneAsync(courseId);
   if (!course) {
     throw new Meteor.Error(`No course entry for ${courseId}`);
   }
 
-  const participant = Users.findOne(participantId);
+  const participant = await Users.findOneAsync(participantId);
   if (!participant) {
     throw new Meteor.Error(`No user entry for ${participantId}`);
   }
@@ -72,13 +72,12 @@ export async function record(
 
 export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
-  const course = Courses.findOne(body.courseId);
-  const newParticipant = Users.findOne(body.participantId);
-  const recipients = Users.find({
+  const course = await Courses.findOneAsync(body.courseId);
+  const newParticipant = await Users.findOneAsync(body.participantId);
+  const recipients = await Users.find({
     _id: { $in: body.recipients.filter((r) => r !== body.participantId) },
-  })
-    .fetch()
-    .filter((r) => r.notifications);
+    notifications: true,
+  }).fetchAsync();
 
   return {
     accepted(actualRecipient: UserModel) {
@@ -87,7 +86,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
     },
 
-    vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
+    async vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
       const campaign = "joinNotify";
 
@@ -121,7 +120,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
       let region: RegionModel | undefined;
       if (course.region) {
-        region = Regions.findOne(course.region);
+        region = await Regions.findOneAsync(course.region);
       }
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);
