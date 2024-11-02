@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AccountsAsync } from "/imports/utils/promisify";
 import { useValidation } from "/imports/ui/lib/useValidation";
 import { useTranslation } from "react-i18next";
@@ -31,6 +31,10 @@ export function ForgotPwdFrame(props: Props) {
     },
     true,
   );
+
+  useEffect(() => {
+    checkValidity();
+  }, [email]);
 
   return (
     <form
@@ -73,8 +77,7 @@ export function ForgotPwdFrame(props: Props) {
               autoFocus={true}
               value={email}
               onChange={(event) => {
-                setEmail(event.target.value);
-                checkValidity();
+                setEmail(event.currentTarget.value);
               }}
             />
           </div>
