@@ -144,7 +144,6 @@ export class Course {
    * @param role like 'team'
    */
   membersWithRole(this: CourseModel, role: string) {
-    check(role, String);
     return this.members.filter((member) => member.roles.includes(role));
   }
 
@@ -207,21 +206,11 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
     }
   }
 
-  insert(
-    course: Mongo.OptionalId<CourseEntity>,
-    callback?: (err: unknown | undefined, id?: string) => void,
-  ) {
-    let enrichedCourse = tenantDenormalizer.beforeInsert(course);
-    enrichedCourse = interestedDenormalizer.beforeInsert(enrichedCourse);
-
-    return super.insert(enrichedCourse, callback);
-  }
-
   async insertAsync(
     course: Mongo.OptionalId<CourseEntity>,
     callback?: (err: unknown | undefined, id?: string) => void,
   ) {
-    let enrichedCourse = tenantDenormalizer.beforeInsert(course);
+    let enrichedCourse = await tenantDenormalizer.beforeInsert(course);
     enrichedCourse = interestedDenormalizer.beforeInsert(enrichedCourse);
 
     return super.insertAsync(enrichedCourse, callback);

@@ -3,6 +3,7 @@ import { Mongo } from "meteor/mongo";
 import { CourseEntity, CourseModel, Courses } from "/imports/api/courses/courses";
 import { EventEntity, EventModel, Events } from "/imports/api/events/events";
 import { Groups } from "../groups/groups";
+import { sum } from "../../utils/sum";
 
 export interface Stat {
   courses: {
@@ -56,11 +57,6 @@ export interface Stats {
 /** Remove duplicates in array. */
 function unique<T>(values: T[]) {
   return [...new Set(values)];
-}
-
-/** Sum all values in a array. */
-function sum(values: number[]) {
-  return values.reduce((a, b) => a + b, 0);
 }
 
 function getCourses(regionId: string) {

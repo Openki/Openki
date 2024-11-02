@@ -26,12 +26,12 @@ interface Body {
  * @param eventId id of the event that are reminder
  * @param message custom message
  */
-export function record(eventId: string) {
+export async function record(eventId: string) {
   check(eventId, String);
 
   const recipients = [];
 
-  const event = Events.findOne(eventId);
+  const event = await Events.findOneAsync(eventId);
   if (!event) {
     throw new Meteor.Error(`No event for ${eventId}`);
   }
@@ -46,16 +46,16 @@ export function record(eventId: string) {
     model: "Event.Reminder",
   };
 
-  Log.record("Notification.Send", [eventId, ...recipients], body);
+  await Log.record("Notification.Send", [eventId, ...recipients], body);
 }
 
-export function Model(entry: { body: Body }): NotificationModel<Props> {
+export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
-  const event = Events.findOne(body.event);
+  const event = await Events.findOneAsync(body.event);
 
   let region: RegionModel | undefined;
   if (event?.region) {
-    region = Regions.findOne(event.region);
+    region = await Regions.findOneAsync(event.region);
   }
 
   return {
@@ -63,13 +63,9 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       if (actualRecipient.notifications === false) {
         throw new Error("User wishes to not receive automated notifications");
       }
-
-      if (!actualRecipient.hasEmail()) {
-        throw new Error("Recipient has no email address registered");
-      }
     },
 
-    vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
+    async vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
       const campaign = "eventReminder";
 

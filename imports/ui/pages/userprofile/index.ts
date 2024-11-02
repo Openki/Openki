@@ -75,10 +75,9 @@ template.helpers({
     return checkContribution(Template.instance().data.user.contribution);
   },
 
-  acceptsPrivateMessages() {
+  allowPrivateMessages() {
     return (
-      Template.instance().data.user.acceptsPrivateMessages ||
-      UserPrivilegeUtils.privilegedTo("admin")
+      Template.instance().data.user.allowPrivateMessages || UserPrivilegeUtils.privilegedTo("admin")
     );
   },
 

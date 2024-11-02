@@ -51,7 +51,7 @@ export function Tuple<T extends readonly Match.Pattern[]>(...pattern: [...T]) {
 }
 
 /** String without HTML. */
-export function SaveString() {
+export function SafeString() {
   return Match.Where(function (str) {
     check(str, String);
 
@@ -69,13 +69,13 @@ export function SaveString() {
  * `HtmlTools.saneHtml(...)` *Note: HTMLElement is only symbolic and should remind the developer that
  * this string could contain HTML.*
  */
-export type UnsaveString = string | HTMLElement;
+export type UnsafeString = string | HTMLElement;
 
 export function HtmlString() {
   return Match.Where(function (str) {
     check(str, String);
     return true;
-  }) as Match.Matcher<UnsaveString>;
+  }) as Match.Matcher<UnsafeString>;
 }
 
 export function StringEnum<T extends readonly string[]>(...values: T) {

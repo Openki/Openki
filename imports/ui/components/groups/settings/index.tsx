@@ -114,7 +114,7 @@ export function GroupSettings({ group }: Props) {
   function logoFileUploadArgs(): EditableImageProps {
     return {
       thumbnail: { src: group?.publicLogoUrl?.(), maxSize: 150 },
-      maxSize: 100, // scale the image to max width/height. Note: image scaling also happens on the server
+      maxSize: 600, // scale the image to max width/height. Note: image scaling also happens on the server
       async onUpload(file: UploadImage) {
         const groupId = group._id;
         try {
@@ -420,9 +420,3 @@ export function GroupSettings({ group }: Props) {
     </form>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("GroupSettings", () => GroupSettings);

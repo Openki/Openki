@@ -8,12 +8,12 @@ import * as historyDenormalizer from "/imports/api/courses/historyDenormalizer";
 import * as timeLastEditDenormalizer from "/imports/api/courses/timeLastEditDenormalizer";
 import * as Alert from "/imports/api/alerts/alert";
 import { Events } from "/imports/api/events/events";
-import { Users, User, UserModel } from "/imports/api/users/users";
+import { UserModel } from "/imports/api/users/users";
 import { Method } from "/imports/api/courses/methods";
 
 import { hasRole } from "/imports/utils/course-role-utils";
 import { Notification } from "../../startup/both/emails/notification";
-import { StringEnum, Type } from "/imports/utils/CustomChecks";
+import { SafeString, StringEnum, Type } from "/imports/utils/CustomChecks";
 
 export async function processChange<T>(change: Change<T>, options?: { isSimulation: boolean }) {
   try {
@@ -28,13 +28,6 @@ export async function processChange<T>(change: Change<T>, options?: { isSimulati
     Alert.serverError(err);
   }
 }
-
-const checkUser = function (obj: unknown) {
-  if (!(obj instanceof User)) {
-    throw new Meteor.Error("Match failed", "Expected User object");
-  }
-  return obj as UserModel;
-};
 
 const checkCourse = function (obj: unknown) {
   if (!(obj instanceof Course)) {
@@ -89,14 +82,14 @@ export type Reason = Type<typeof ReasonPattern>;
 export class Subscribe extends Change<{
   change: string;
   courseId: string;
-  userId: string;
+  userId: string | undefined;
   role: string;
   reason: Reason;
   comment: string | undefined;
 }> {
   course: CourseModel;
 
-  user: UserModel;
+  userId: string | undefined;
 
   role: string;
 
@@ -110,7 +103,7 @@ export class Subscribe extends Change<{
 
   static read(body: {
     courseId: string;
-    userId: string;
+    userId: string | undefined;
     role: string;
     reason: Reason;
     comment?: string | undefined;
@@ -118,7 +111,7 @@ export class Subscribe extends Change<{
     check(body, Object);
     return new this(
       Courses.findOne(body.courseId),
-      Users.findOne(body.userId),
+      body.userId,
       body.role,
       body.reason,
       body.comment,
@@ -127,7 +120,7 @@ export class Subscribe extends Change<{
 
   constructor(
     course: CourseModel | undefined,
-    user: UserModel | undefined,
+    userId: string | undefined,
     role: string,
     reason: Reason,
     comment?: string | undefined,
@@ -136,15 +129,16 @@ export class Subscribe extends Change<{
 
     this.course = checkCourse(course);
 
-    this.user = checkUser(user);
+    check(userId, Match.Optional(SafeString()));
+    this.userId = userId;
 
-    check(role, String);
+    check(role, SafeString());
     this.role = role;
 
     check(reason, ReasonPattern);
     this.reason = reason;
 
-    check(comment, Match.Optional(String));
+    check(comment, Match.Optional(SafeString()));
     this.comment = comment;
   }
 
@@ -158,7 +152,7 @@ export class Subscribe extends Change<{
     }
 
     // Do not allow subscribing when already subscribed
-    if (this.course.userHasRole(this.user._id, this.role)) {
+    if (this.course.userHasRole(this.userId, this.role)) {
       throw new ValidationError([], `Already subscribed as ${this.role}`);
     }
   }
@@ -177,7 +171,7 @@ export class Subscribe extends Change<{
     if (this.role === "team") {
       // If there are no team-members, anybody can join
       if (!hasRole(this.course.members, "team")) {
-        return operator._id === this.user._id;
+        return operator._id === this.userId;
       }
 
       // Only members of the team can take-on other people
@@ -186,7 +180,7 @@ export class Subscribe extends Change<{
         const candidateRoles = ["participant", "mentor", "host"];
 
         // In for a penny, in for a pound
-        if (candidateRoles.some((role) => this.course.userHasRole(this.user._id, role))) {
+        if (candidateRoles.some((role) => this.course.userHasRole(this.userId, role))) {
           return true;
         }
       }
@@ -194,14 +188,14 @@ export class Subscribe extends Change<{
     }
 
     // The other roles can only be chosen by the users themselves
-    return operator._id === this.user._id;
+    return operator._id === this.userId;
   }
 
   dict() {
     return {
       change: "subscribe",
       courseId: this.course._id,
-      userId: this.user._id,
+      userId: this.userId,
       role: this.role,
       reason: this.reason,
       comment: this.comment,
@@ -214,43 +208,49 @@ export class Subscribe extends Change<{
       operatorId: string | undefined;
     },
   ) {
-    rel.push(this.user._id);
+    if (!this.userId) {
+      throw new Error("Unexpected falsy: this.userId");
+    }
+    rel.push(this.userId);
     Object.assign(body, this.dict());
   }
 
-  apply() {
+  async apply() {
+    if (!this.userId) {
+      throw new Error("Unexpected falsy: this.userId");
+    }
     // Add the user as member if she's not listed yet
     // Note that the user will be created with the role already
     // filled to avoid seeing empty list of roles.
     Courses.update(
-      { _id: this.course._id, "members.user": { $ne: this.user._id } },
-      { $addToSet: { members: { user: this.user._id, roles: [this.role] } } },
+      { _id: this.course._id, "members.user": { $ne: this.userId } },
+      { $addToSet: { members: { user: this.userId, roles: [this.role] } } },
     );
 
     // Now that we're sure she's listed, add the role too.
     // If we just added her, this is a no-op.
     Courses.update(
-      { _id: this.course._id, "members.user": this.user._id },
+      { _id: this.course._id, "members.user": this.userId },
       { $addToSet: { "members.$.roles": this.role } },
     );
 
     if (this.comment) {
       Courses.update(
-        { _id: this.course._id, "members.user": this.user._id },
+        { _id: this.course._id, "members.user": this.userId },
         { $set: { "members.$.comment": this.comment } },
       );
     }
 
     // Update member related calculated fields
-    interestedDenormalizer.afterSubscribe(this.course._id);
+    await interestedDenormalizer.afterSubscribe(this.course._id);
     Courses.updateGroups(this.course._id);
 
     timeLastEditDenormalizer.afterSubscribe(this.course._id);
-    historyDenormalizer.afterSubscribe(this.course._id, this.user._id, this.role);
+    historyDenormalizer.afterSubscribe(this.course._id, this.userId, this.role);
 
     if (this.reason === "interested") {
       // Send notification to team
-      Notification.Join.record(this.course._id, this.user._id, this.role, this.comment);
+      Notification.Join.record(this.course._id, this.userId, this.role, this.comment);
     }
   }
 }
@@ -263,7 +263,7 @@ export class Unsubscribe extends Change<{
 }> {
   course: CourseModel;
 
-  user: UserModel;
+  userId: string;
 
   role: string;
 
@@ -272,17 +272,18 @@ export class Unsubscribe extends Change<{
   }
 
   static read(body: { courseId: string; userId: string; role: string }) {
-    return new this(Courses.findOne(body.courseId), Users.findOne(body.userId), body.role);
+    return new this(Courses.findOne(body.courseId), body.userId, body.role);
   }
 
-  constructor(course: CourseModel | undefined, user: UserModel | null | undefined, role: string) {
+  constructor(course: CourseModel | undefined, userId: string | undefined | null, role: string) {
     super();
 
     this.course = checkCourse(course);
 
-    this.user = checkUser(user);
+    check(userId, SafeString());
+    this.userId = userId;
 
-    check(role, String);
+    check(role, SafeString());
     this.role = role;
   }
 
@@ -292,7 +293,7 @@ export class Unsubscribe extends Change<{
 
   validate() {
     // Do not allow unsubscribing when not subscribed
-    const userHasRole = this.course.userHasRole(this.user._id, this.role);
+    const userHasRole = this.course.userHasRole(this.userId, this.role);
     if (!userHasRole) {
       throw new ValidationError([], `not subscribed with role ${this.role}`);
     }
@@ -316,14 +317,14 @@ export class Unsubscribe extends Change<{
     }
 
     // The other roles can only be unsubscribed from by the users themselves
-    return operator._id === this.user._id;
+    return operator._id === this.userId;
   }
 
   dict() {
     return {
       change: "unsubscribe",
       courseId: this.course._id,
-      userId: this.user._id,
+      userId: this.userId,
       role: this.role,
     };
   }
@@ -334,23 +335,23 @@ export class Unsubscribe extends Change<{
       operatorId: string | undefined;
     },
   ) {
-    rel.push(this.user._id);
+    rel.push(this.userId);
     rel.push(this.course._id);
     Object.assign(body, this.dict());
   }
 
-  apply() {
+  async apply() {
     const update = { $pull: { "members.$.roles": this.role } } as any;
     // Unsubscribe from the team also means remove editor rights.
     if (this.role === "team") {
-      update.$pull.editors = this.user._id;
+      update.$pull.editors = this.userId;
       Events.update(
         { courseId: this.course._id },
-        { $pull: { editors: this.user._id } },
+        { $pull: { editors: this.userId } },
         { multi: true },
       );
     }
-    Courses.update({ _id: this.course._id, "members.user": this.user._id }, update);
+    Courses.update({ _id: this.course._id, "members.user": this.userId }, update);
 
     // Housekeeping: Remove members that have no role left
     Courses.update(
@@ -361,11 +362,11 @@ export class Unsubscribe extends Change<{
     );
 
     // Update member related calculated fields
-    interestedDenormalizer.afterUnsubscribe(this.course._id);
+    await interestedDenormalizer.afterUnsubscribe(this.course._id);
     Courses.updateGroups(this.course._id);
 
     timeLastEditDenormalizer.afterUnsubscribe(this.course._id);
-    historyDenormalizer.afterUnsubscribe(this.course._id, this.user._id, this.role);
+    historyDenormalizer.afterUnsubscribe(this.course._id, this.userId, this.role);
   }
 }
 
@@ -377,7 +378,7 @@ export class Message extends Change<{
 }> {
   course: CourseModel;
 
-  user: UserModel;
+  userId: string;
 
   message: string | undefined;
 
@@ -386,21 +387,18 @@ export class Message extends Change<{
   }
 
   static read(body: { courseId: string; userId: string; message: string | undefined }) {
-    return new this(Courses.findOne(body.courseId), Users.findOne(body.userId), body.message);
+    return new this(Courses.findOne(body.courseId), body.userId, body.message);
   }
 
-  constructor(
-    course: CourseModel | undefined,
-    user: UserModel | null | undefined,
-    message: string | undefined,
-  ) {
+  constructor(course: CourseModel | undefined, userId: string, message: string | undefined) {
     super();
 
     this.course = checkCourse(course);
 
-    this.user = checkUser(user);
+    check(userId, SafeString());
+    this.userId = userId;
 
-    check(message, Match.Optional(String));
+    check(message, Match.Optional(SafeString()));
     this.message = message;
   }
 
@@ -419,14 +417,14 @@ export class Message extends Change<{
     }
 
     // The other roles can only be unsubscribed from by the users themselves
-    return operator._id === this.user._id;
+    return operator._id === this.userId;
   }
 
   dict() {
     return {
       change: "message",
       courseId: this.course._id,
-      userId: this.user._id,
+      userId: this.userId,
       message: this.message,
     };
   }
@@ -437,14 +435,14 @@ export class Message extends Change<{
       operatorId: string | undefined;
     },
   ) {
-    rel.push(this.user._id);
+    rel.push(this.userId);
     rel.push(this.course._id);
     Object.assign(body, this.dict());
   }
 
   apply() {
     Courses.update(
-      { _id: this.course._id, "members.user": this.user._id },
+      { _id: this.course._id, "members.user": this.userId },
       { $set: { "members.$.comment": this.message } },
     );
   }

@@ -179,9 +179,3 @@ export function Title(data: { value?: string | undefined; onChange: (newValue: s
     </div>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("CourseTitle", () => Title);

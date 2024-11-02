@@ -38,7 +38,7 @@
               {{i18n 'profile.preferenceslink' "Account settings"}}
             </a>
           {{else}}
-            {{#if acceptsPrivateMessages}}
+            {{#if allowPrivateMessages}}
               {{> sendMessage sendMessageAttr}}
             {{/if}}
           {{/if}}

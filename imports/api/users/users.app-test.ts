@@ -1,7 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { assert } from "chai";
 import { Promise } from "meteor/promise";
-import { Accounts } from "meteor/accounts-base";
 import { MeteorAsync, AccountsAsync } from "/imports/utils/promisify";
 import { userSearchPrefix } from "/imports/utils/user-search-prefix";
 import { Users } from "/imports/api/users/users";
@@ -20,30 +19,6 @@ if (Meteor.isClient) {
       await MeteorAsync.loginWithPassword("Seee", "greg");
     });
 
-    describe("User creation", () => {
-      it("updates the acceptsMessage flag", () =>
-        new Promise((resolve) => {
-          const dummy = createDummy();
-          Accounts.createUser(
-            {
-              username: dummy,
-              email: `${dummy}@openki.example`,
-              profile: { name: dummy },
-              password: "hunter2",
-            },
-            (error) => {
-              assert.isNotOk(error, "not expecting creation errors");
-
-              // Rely on the test runner to declare the test failed when it
-              // never resolves. There is no assert(). Improvements welcome.
-              Users.find({ username: dummy, acceptsPrivateMessages: true }).observe({
-                added: resolve,
-              });
-            },
-          );
-        }));
-    });
-
     describe("User modification", function () {
       this.timeout(30000);
       const oldDummy = createDummy();
@@ -60,8 +35,8 @@ if (Meteor.isClient) {
             () =>
               new Promise<void>((resolve) => {
                 updateUsername(newDummy)
-                  .then(() => {
-                    Users.find({ username: newDummy }).observe({
+                  .then(async () => {
+                    await Users.find({ username: newDummy }).observeAsync({
                       added: () => {
                         resolve();
                       },
@@ -103,7 +78,7 @@ if (Meteor.isClient) {
 
       // This will track addition of users
       const cursor = Users.find();
-      cursor.observe({
+      await cursor.observeAsync({
         added: () => {
           added = true;
         },

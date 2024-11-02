@@ -139,6 +139,30 @@ export type Props = {
   group?: string;
 };
 
+type Hook =
+  | {
+      showAll: { link: string | undefined; text: string | undefined };
+      entity: string;
+      title: string;
+      query?: string;
+      isLoading: () => boolean;
+      data: { [k: string]: string };
+      route: string | undefined;
+      element: undefined;
+      component: (data: any) => React.JSX.Element;
+    }
+  | {
+      showAll: { link: string; text: string | undefined };
+      entity: string;
+      title: string;
+      query?: string;
+      isLoading: () => boolean;
+      data: any;
+      route: string;
+      element: any;
+      component: any;
+    };
+
 export function Dashboard({ list, region, group }: Props) {
   const { t } = useTranslation();
   const { getLocalizedValue } = useLocalizedSetting();
@@ -146,6 +170,11 @@ export function Dashboard({ list, region, group }: Props) {
 
   const hooks = list.map((i) => {
     const handler = mapping[i.entity];
+
+    if (!currentUserId && i.query && i.query.indexOf("{currentUser}") !== -1) {
+      // do not show components that need a logged in user.
+      return undefined;
+    }
 
     const queryString = (i.query || "").replaceAll("{currentUser}", currentUserId || "");
 
@@ -207,7 +236,7 @@ export function Dashboard({ list, region, group }: Props) {
 
   return (
     <>
-      {hooks.map((h, i) => (
+      {(hooks.filter((h) => h) as Hook[]).map((h, i) => (
         <React.Fragment key={i}>
           {!h.isLoading() && (!Array.isArray(h.data) || h.data.length > 0) ? (
             <div className="container mb-4">

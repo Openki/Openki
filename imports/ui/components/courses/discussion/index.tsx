@@ -24,10 +24,14 @@ export function Discussion({ select, courseId }: Props) {
 
   const [isLoading, posts] = CourseDiscussions.useForCourse(courseId);
 
-  function dicussions() {
-    let filteredPosts = posts
+  function allDiscussions() {
+    return posts
       .filter((p) => !p.parentId)
       .sort((a, b) => b.time_created.valueOf() - a.time_created.valueOf());
+  }
+
+  function dicussions() {
+    let filteredPosts = allDiscussions();
 
     if (limit) {
       filteredPosts = filteredPosts.slice(0, limit);
@@ -35,6 +39,7 @@ export function Discussion({ select, courseId }: Props) {
 
     return filteredPosts;
   }
+
   function responses(discussionId: string) {
     return posts
       .filter((p) => p.parentId === discussionId)
@@ -59,7 +64,7 @@ export function Discussion({ select, courseId }: Props) {
   }
   function limited() {
     if (limit) {
-      return posts.length > limit;
+      return allDiscussions().length > limit;
     }
     return false;
   }
@@ -132,7 +137,7 @@ export function Discussion({ select, courseId }: Props) {
             >
               <i className="fa-solid fa-chevron-down fa-fw" aria-hidden="true"></i>
               {t("course.discussions.showAllComment", "Show all {NUM} comments", {
-                NUM: posts.length,
+                NUM: allDiscussions().length,
               })}
             </button>
           ) : null}

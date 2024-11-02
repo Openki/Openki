@@ -19,7 +19,7 @@ import * as StringTools from "/imports/utils/string-tools";
 import * as AsyncTools from "/imports/utils/async-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { Type } from "/imports/utils/CustomChecks";
+import { HtmlString, SafeString, Type, UnsafeString } from "/imports/utils/CustomChecks";
 import { NotAllowedCharacter } from "/imports/startup/both/NotAllowedCharacter";
 
 /**
@@ -27,13 +27,13 @@ import { NotAllowedCharacter } from "/imports/startup/both/NotAllowedCharacter";
  */
 export const regionChange = ServerMethod(
   "user.regionChange",
-  (newRegion: string) => {
+  async (newRegion: string) => {
     const userId = Meteor.userId();
     if (!userId) {
       throw new Meteor.Error(401, "please log in");
     }
 
-    Profile.Region.change(userId, newRegion, "client call");
+    await Profile.Region.change(userId, newRegion, "client call");
   },
   { simulation: false },
 );
@@ -42,47 +42,53 @@ export const regionChange = ServerMethod(
  * Update user avatar color
  * @param newColor hsl hue number, otherwise a random color is generated
  */
-export const updateAvatarColor = ServerMethod("user.updateAvatarColor", (newColor?: number) => {
-  check(newColor, Match.Optional(Number));
+export const updateAvatarColor = ServerMethod(
+  "user.updateAvatarColor",
+  async (newColor?: number) => {
+    check(newColor, Match.Optional(Number));
 
-  const userId = Meteor.userId();
-  if (!userId) {
-    throw new Meteor.Error(401, "please log in");
-  }
+    const userId = Meteor.userId();
+    if (!userId) {
+      throw new Meteor.Error(401, "please log in");
+    }
 
-  const color = newColor ?? _.random(360);
-  Profile.AvatarColor.change(userId, color);
-});
+    const color = newColor ?? _.random(360);
+    await Profile.AvatarColor.change(userId, color);
+  },
+);
 
 /**
  * Update user description
  */
-export const updateDescription = ServerMethod("user.updateDescription", (description: string) => {
-  check(description, String);
+export const updateDescription = ServerMethod(
+  "user.updateDescription",
+  async (description: UnsafeString) => {
+    check(description, HtmlString());
 
-  const userId = Meteor.userId();
-  if (!userId) {
-    throw new ValidationError([{ name: "description", type: "plzLogin" }], "Not logged-in");
-  }
+    const userId = Meteor.userId();
+    if (!userId) {
+      throw new ValidationError([{ name: "description", type: "plzLogin" }], "Not logged-in");
+    }
 
-  const sane = HtmlTools.saneHtml(description).trim().substring(0, 400);
+    const sane = HtmlTools.saneHtml(description, 400);
 
-  const result = Profile.Description.change(userId, sane);
-  if (!result) {
-    throw new ValidationError(
-      [{ name: "description", type: "descriptionError" }],
-      "Failed to update description",
-    );
-  }
-});
+    const result = await Profile.Description.change(userId, sane);
+    if (!result) {
+      throw new ValidationError(
+        [{ name: "description", type: "descriptionError" }],
+        "Failed to update description",
+      );
+    }
+  },
+);
 
 /**
  * Update username
  */
 export const updateUsername = ServerMethod(
   "user.updateUsername",
-  async (username: string) => {
-    check(username, String);
+  async (username: UnsafeString) => {
+    check(username, SafeString());
 
     const user = await Meteor.userAsync();
     if (!user) {
@@ -121,7 +127,7 @@ export const updateUsername = ServerMethod(
       );
     }
 
-    const result = Profile.Username.change(user._id, saneUsername);
+    const result = await Profile.Username.change(user._id, saneUsername);
     if (!result) {
       throw new ValidationError(
         [{ name: "username", type: "nameError" }],
@@ -146,7 +152,7 @@ export const updateAutomatedNotification = ServerMethod(
     }
 
     if (user.notifications !== allow) {
-      Profile.Notifications.change(user._id, allow, undefined, "profile change");
+      await Profile.Notifications.change(user._id, allow, undefined, "profile change");
     }
   },
 );
@@ -168,7 +174,7 @@ export const updatePrivateMessages = ServerMethod(
     }
 
     if (user.allowPrivateMessages !== allow) {
-      Profile.PrivateMessages.change(user._id, allow, undefined, "profile change");
+      await Profile.PrivateMessages.change(user._id, allow, undefined, "profile change");
     }
   },
 );
@@ -179,7 +185,7 @@ export const updatePrivateMessages = ServerMethod(
 export const updateEmail = ServerMethod(
   "user.updateEmail",
   async (email: string) => {
-    check(email, String);
+    check(email, SafeString());
 
     const user = await Meteor.userAsync();
     if (!user) {
@@ -212,7 +218,7 @@ export const updateEmail = ServerMethod(
       throw new ValidationError([{ name: "email", type: "emailExists" }], "Email already exists.");
     }
 
-    Profile.Email.change(user._id, newEmail, "profile change");
+    await Profile.Email.change(user._id, newEmail, "profile change");
   },
   { simulation: false },
 );
@@ -234,8 +240,8 @@ export type AdminRemoveOptions = Type<typeof AdminRemoveOptionsPattern>;
 export const adminRemove = ServerMethod(
   "user.admin.remove",
   async (userId: string, reason: string, options: AdminRemoveOptions = {}) => {
-    check(userId, String);
-    check(reason, String);
+    check(userId, SafeString());
+    check(reason, SafeString());
     check(options, Match.Maybe(AdminRemoveOptionsPattern));
 
     const operatorId = Meteor.userId();
@@ -286,7 +292,7 @@ export const adminRemove = ServerMethod(
 
     await Users.removeAsync({ _id: userId });
 
-    Log.record("user.admin.remove", [operatorId, userId], {
+    await Log.record("user.admin.remove", [operatorId, userId], {
       operatorId,
       reason,
       user,
@@ -299,8 +305,8 @@ export const adminRemove = ServerMethod(
 export const addPrivilege = ServerMethod(
   "user.addPrivilege",
   async (userId: string, privilege: "admin") => {
-    check(userId, String);
-    check(privilege, String);
+    check(userId, SafeString());
+    check(privilege, SafeString());
 
     if (!UserPrivilegeUtils.privilegedTo("admin")) {
       // At the moment, only admins may hand out privileges, so this is easy
@@ -323,8 +329,8 @@ export const addPrivilege = ServerMethod(
 export const removePrivilege = ServerMethod(
   "user.removePrivilege",
   async (userId: string, privilege: "admin") => {
-    check(userId, String);
-    check(privilege, String);
+    check(userId, SafeString());
+    check(privilege, SafeString());
 
     const user = await Users.findOneAsync({ _id: userId });
     if (!user) {
@@ -350,7 +356,7 @@ export const removePrivilege = ServerMethod(
 );
 
 export const setHasContributed = ServerMethod("user.setHasContributed", async (userId: string) => {
-  check(userId, String);
+  check(userId, SafeString());
 
   const operator = await Meteor.userAsync();
 
@@ -365,7 +371,7 @@ export const setHasContributed = ServerMethod("user.setHasContributed", async (u
 
   await Users.updateAsync({ _id: user._id }, { $set: { contribution: new Date() } });
 
-  Log.record("user.hasContributed.set", [operator?._id, userId], {
+  await Log.record("user.hasContributed.set", [operator?._id, userId], {
     operatorId: operator?._id,
     userId,
   });
@@ -374,7 +380,7 @@ export const setHasContributed = ServerMethod("user.setHasContributed", async (u
 export const unsetHasContributed = ServerMethod(
   "user.unsetHasContributed",
   async (userId: string) => {
-    check(userId, String);
+    check(userId, SafeString());
 
     const operator = await Meteor.userAsync();
 
@@ -389,7 +395,7 @@ export const unsetHasContributed = ServerMethod(
 
     await Users.updateAsync({ _id: user._id }, { $unset: { contribution: "" } });
 
-    Log.record("user.hasContributed.unset", [operator?._id, userId], {
+    await Log.record("user.hasContributed.unset", [operator?._id, userId], {
       operatorId: operator?._id,
       userId,
     });
@@ -408,7 +414,7 @@ export const hidePricePolicy = ServerMethod("user.hidePricePolicy", async () => 
 export const updateLocale = ServerMethod(
   "user.updateLocale",
   async (locale: string) => {
-    check(locale, String);
+    check(locale, SafeString());
 
     const userId = Meteor.userId();
     if (!userId) {

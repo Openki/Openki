@@ -34,7 +34,7 @@ import * as StringTools from "/imports/utils/string-tools";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { LocalizedValuePattern } from "/imports/utils/getLocalizedValue";
 import * as FileStorage from "/imports/utils/FileStorage";
-import { StringEnum, Type } from "/imports/utils/CustomChecks";
+import { HtmlString, SafeString, StringEnum, Type } from "/imports/utils/CustomChecks";
 import { GroupPromoters } from "/imports/utils/update-methods";
 import { resizeImage } from "../../utils/resize-image";
 
@@ -54,7 +54,7 @@ export interface Method<T> {
 }
 
 function registerMethod<T>(method: Method<T>): void {
-  const apply = function (params: T) {
+  const apply = async function (params: T) {
     const change = method.read(params);
     try {
       change.validate();
@@ -62,7 +62,7 @@ function registerMethod<T>(method: Method<T>): void {
       throw new Meteor.Error("invalid", `Invalid change ${change}:${message}`, message);
     }
 
-    const operator = Meteor.user();
+    const operator = await Meteor.userAsync();
 
     if (!change.permitted(operator)) {
       throw new Meteor.Error(
@@ -75,7 +75,7 @@ function registerMethod<T>(method: Method<T>): void {
     const rel = [operator?._id as string];
     const body = { operatorId: operator?._id };
     change.provide(rel, body);
-    const result = Log.record(method.method, rel, body);
+    const result = await Log.record(method.method, rel, body);
     try {
       change.apply();
     } catch (message) {
@@ -110,30 +110,30 @@ registerMethod(Unsubscribe);
 registerMethod(Message);
 
 export const CustomFieldPattern = {
-  name: String,
+  name: SafeString(),
   displayText: LocalizedValuePattern,
-  value: Match.OneOf(String, Boolean),
+  value: Match.OneOf(SafeString(), Boolean),
   visibleFor: StringEnum("all", "editors"),
 };
 export type CustomField = Type<typeof CustomFieldPattern>;
 
 export const SaveFieldPattern = {
-  description: Match.Optional(String),
-  categories: Match.Optional([String]),
-  name: Match.Optional(String),
-  region: Match.Optional(String),
+  description: Match.Optional(HtmlString()),
+  categories: Match.Optional([SafeString()]),
+  name: Match.Optional(SafeString()),
+  region: Match.Optional(SafeString()),
   customFields: Match.Optional([CustomFieldPattern]),
   roles: Match.Optional(Match.ObjectIncluding<Record<string, boolean>>({})),
-  subs: Match.Optional([String]),
-  unsubs: Match.Optional([String]),
-  groups: Match.Optional([String]),
+  subs: Match.Optional([SafeString()]),
+  unsubs: Match.Optional([SafeString()]),
+  groups: Match.Optional([SafeString()]),
   internal: Match.Optional(Boolean),
   singleEvent: Match.Optional(Boolean),
 };
 export type SaveFields = Type<typeof SaveFieldPattern>;
 
 export const save = ServerMethod("course.save", async (courseId: string, changes: SaveFields) => {
-  check(courseId, String);
+  check(courseId, SafeString());
   check(changes, SaveFieldPattern);
 
   const user = await Meteor.userAsync();
@@ -193,10 +193,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
   }
 
   if (changes.description) {
-    set.description = changes.description;
-    if (Meteor.isServer) {
-      set.description = HtmlTools.saneHtml(set.description);
-    }
+    set.description = HtmlTools.saneHtml(changes.description);
   }
 
   if (changes.categories) {
@@ -264,7 +261,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     courseId = await Courses.insertAsync(enrichedSet);
 
     if (set.groupOrganizers.length > 0) {
-      Notification["Group.Course"].record(courseId);
+      await Notification["Group.Course"].record(courseId);
     }
 
     // Init calculated fields
@@ -277,7 +274,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     await historyDenormalizer.afterUpdate(courseId, user._id);
     if (changes.categories) {
       // if categories are update, update those from the event
-      eventsCategoriesDenormalizer.afterCourseUpdateCategories({
+      await eventsCategoriesDenormalizer.afterCourseUpdateCategories({
         _id: courseId,
         categories: changes.categories,
       });
@@ -286,21 +283,25 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
 
   if (changes.subs) {
     const changedCourse = await Courses.findOneAsync(courseId);
-    changes.subs.forEach((role: string) => {
-      const change = new Subscribe(changedCourse, user, role, "interested");
-      if (change.validFor(user)) {
-        change.apply();
-      }
-    });
+    await Promise.all(
+      changes.subs.map(async (role) => {
+        const change = new Subscribe(changedCourse, user._id, role, "interested");
+        if (change.validFor(user)) {
+          await change.apply();
+        }
+      }),
+    );
   }
   if (changes.unsubs) {
     const changedCourse = await Courses.findOneAsync(courseId);
-    changes.unsubs.forEach((role: string) => {
-      const change = new Unsubscribe(changedCourse, user, role);
-      if (change.validFor(user)) {
-        change.apply();
-      }
-    });
+    await Promise.all(
+      changes.unsubs.map(async (role) => {
+        const change = new Unsubscribe(changedCourse, user._id, role);
+        if (change.validFor(user)) {
+          await change.apply();
+        }
+      }),
+    );
   }
 
   return courseId;
@@ -309,7 +310,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
 export const updateImage = ServerMethod(
   "course.update.image",
   async (courseId: string, file: FileStorage.UploadFile) => {
-    check(courseId, String);
+    check(courseId, SafeString());
     check(file, FileStorage.UploadFilePattern);
 
     const user = await Meteor.userAsync();
@@ -338,7 +339,7 @@ export const updateImage = ServerMethod(
       content: resizedCompactImage,
       mimeType: file.mimeType,
     });
-    const resizedDetailsImage = await resizeImage(file.content, 1500);
+    const resizedDetailsImage = await resizeImage(file.content, 3000);
     const detailsResult = await FileStorage.upload("courses/image/details", {
       content: resizedDetailsImage,
       mimeType: file.mimeType,
@@ -362,7 +363,7 @@ export const updateImage = ServerMethod(
 export const deleteImage = ServerMethod(
   "course.delete.image",
   async (courseId: string) => {
-    check(courseId, String);
+    check(courseId, SafeString());
 
     const user = Meteor.user();
     if (!user) {
@@ -436,7 +437,7 @@ export const editing = ServerMethod(
 );
 
 export const archive = ServerMethod("course.archive", async (courseId: string) => {
-  check(courseId, String);
+  check(courseId, SafeString());
 
   const course = await Courses.findOneAsync({ _id: courseId });
   if (!course) {
@@ -449,7 +450,7 @@ export const archive = ServerMethod("course.archive", async (courseId: string) =
 });
 
 export const unarchive = ServerMethod("course.unarchive", async (courseId: string) => {
-  check(courseId, String);
+  check(courseId, SafeString());
 
   const course = await Courses.findOneAsync({ _id: courseId });
   if (!course) {
@@ -462,7 +463,7 @@ export const unarchive = ServerMethod("course.unarchive", async (courseId: strin
 });
 
 export const remove = ServerMethod("course.remove", async (courseId: string) => {
-  check(courseId, String);
+  check(courseId, SafeString());
 
   const course = await Courses.findOneAsync({ _id: courseId });
   if (!course) {
@@ -480,51 +481,53 @@ Meteor.methods({
   /**
    * Update the nextEvent field for the courses matching the selector
    */
-  "course.updateNextEvent"(selector) {
-    Courses.find(selector).forEach((course) => {
-      const futureEvents = Events.find({
-        courseId: course._id,
-        start: { $gt: new Date() },
-        canceled: { $ne: true },
-      }).count();
+  async "course.updateNextEvent"(selector) {
+    await Promise.all(
+      await Courses.find(selector).mapAsync(async (course) => {
+        const futureEvents = await Events.find({
+          courseId: course._id,
+          start: { $gt: new Date() },
+          canceled: { $ne: true },
+        }).countAsync();
 
-      const nextEvent: CourseNextEventEntity | undefined = Events.findOne(
-        { courseId: course._id, start: { $gt: new Date() }, canceled: { $ne: true } },
-        {
-          sort: { start: 1 },
-          projection: {
-            startLocal: 1,
-            start: 1,
-            _id: 1,
-            venue: 1,
-            noRsvp: 1,
-            participants: 1,
+        const nextEvent: CourseNextEventEntity | undefined = await Events.findOneAsync(
+          { courseId: course._id, start: { $gt: new Date() }, canceled: { $ne: true } },
+          {
+            sort: { start: 1 },
+            projection: {
+              startLocal: 1,
+              start: 1,
+              _id: 1,
+              venue: 1,
+              noRsvp: 1,
+              participants: 1,
+            },
           },
-        },
-      );
+        );
 
-      const lastEvent: CourseLastEventEntity | undefined = Events.findOne(
-        { courseId: course._id, start: { $lt: new Date() }, canceled: { $ne: true } },
-        {
-          sort: { start: -1 },
-          projection: {
-            startLocal: 1,
-            start: 1,
-            _id: 1,
-            venue: 1,
-            participants: 1,
+        const lastEvent: CourseLastEventEntity | undefined = await Events.findOneAsync(
+          { courseId: course._id, start: { $lt: new Date() }, canceled: { $ne: true } },
+          {
+            sort: { start: -1 },
+            projection: {
+              startLocal: 1,
+              start: 1,
+              _id: 1,
+              venue: 1,
+              participants: 1,
+            },
           },
-        },
-      );
+        );
 
-      Courses.update(course._id, {
-        $set: {
-          futureEvents,
-          nextEvent: nextEvent || null,
-          lastEvent: lastEvent || null,
-        },
-      });
-    });
+        await Courses.updateAsync(course._id, {
+          $set: {
+            futureEvents,
+            nextEvent: nextEvent || null,
+            lastEvent: lastEvent || null,
+          },
+        });
+      }),
+    );
   },
 
   /**

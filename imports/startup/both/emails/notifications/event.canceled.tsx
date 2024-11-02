@@ -29,14 +29,14 @@ interface Body {
  * @param eventId id of the event that are canceld
  * @param message custom message
  */
-export function record(senderId: string, eventId: string, message: string) {
+export async function record(senderId: string, eventId: string, message: string) {
   check(senderId, String);
   check(eventId, String);
   check(message, String);
 
   const recipients = [];
 
-  const event = Events.findOne(eventId);
+  const event = await Events.findOneAsync(eventId);
   if (!event) {
     throw new Meteor.Error(`No event for ${eventId}`);
   }
@@ -57,16 +57,16 @@ export function record(senderId: string, eventId: string, message: string) {
     model: "Event.Canceled",
   };
 
-  Log.record("Notification.Send", [senderId, eventId, ...recipients], body);
+  await Log.record("Notification.Send", [senderId, eventId, ...recipients], body);
 }
 
-export function Model(entry: { body: Body }): NotificationModel<Props> {
+export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
-  const event = Events.findOne(body.event);
+  const event = await Events.findOneAsync(body.event);
 
   let region: RegionModel | undefined;
   if (event?.region) {
-    region = Regions.findOne(event.region);
+    region = await Regions.findOneAsync(event.region);
   }
 
   return {
@@ -74,13 +74,9 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       if (actualRecipient.notifications === false) {
         throw new Error("User wishes to not receive automated notifications");
       }
-
-      if (!actualRecipient.hasEmail()) {
-        throw new Error("Recipient has no email address registered");
-      }
     },
 
-    vars(locale, _actualRecipient, unsubToken) {
+    async vars(locale, _actualRecipient, unsubToken) {
       const t = i18next.getFixedT(locale);
       const campaign = "eventCanceled";
 

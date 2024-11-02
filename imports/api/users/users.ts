@@ -104,11 +104,6 @@ export interface UserEntity extends Meteor.User {
   badges: string[];
   /** (calculated) List of groups the user is a member of, calculated by updateBadges() */
   groups: string[];
-  /**
-   * (calculated) true if user has email address and the allowPrivateMessages flag is
-   * true. This is visible to other users.
-   */
-  acceptsPrivateMessages: boolean;
 
   /** The user agrees to receive occasional e-mails. */
   allowNews: boolean;
@@ -132,10 +127,6 @@ export class User {
       return false;
     }
     return this.groups.includes(groupId);
-  }
-
-  hasEmail(this: UserModel) {
-    return !!this.emails?.[0]?.address;
   }
 
   hasVerifiedEmail(this: UserModel) {
@@ -170,26 +161,8 @@ export class User {
   }
 }
 
-export const Users = Meteor.users as unknown as Mongo.Collection<UserEntity, UserModel> & {
-  /**
-   * Get the current user
-   * @return User or if the user is not logged-in, a placeholder "anon" object is returned.
-   */
-  currentUser(): UserModel | (UserModel & { anon?: true });
-};
+export const Users = Meteor.users as unknown as Mongo.Collection<UserEntity, UserModel>;
 
 (Users as any)._transform = function (user: UserEntity) {
   return _.extend(new User(), user);
-};
-
-Users.currentUser = function () {
-  const logged = Meteor.user();
-  if (logged) {
-    return logged;
-  }
-
-  const anon = new User() as UserModel & { anon?: true };
-  anon._id = "anon";
-  anon.anon = true;
-  return anon;
 };

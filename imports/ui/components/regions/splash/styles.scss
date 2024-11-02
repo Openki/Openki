@@ -42,8 +42,16 @@
   display: table-cell;
   vertical-align: top;
 }
+/* 
+  backwards compatibility: a Blaze component to a React component for. 
+  Todo: Can be removed after complet migration.
+*/
+.regions-splash-selection > div > * {
+  display: table-cell;
+  vertical-align: top;
+}
 
-.regions-splash-selection .js-region-search-form {
+.regions-splash-selection .region-search-form {
   @include td-padding(right, 5px);
   position: relative;
   width: 100%;
