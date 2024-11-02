@@ -11,6 +11,8 @@ import { useAccount } from "/imports/api/users/publications";
 
 import { useValidation } from "/imports/ui/lib/useValidation";
 
+import { TokenExpired } from "../../components/token-expired";
+
 export type Props = {
   email: string;
   token: string;
@@ -40,32 +42,7 @@ export function VisitorToUserPage({ token, email }: Props) {
   }
 
   if (!user) {
-    return (
-      <div className="container mt-3">
-        <div className="alert alert-danger" role="alert">
-          <div className="display-1">
-            <i className="fa-solid fa-triangle-exclamation fa-lg fa-fw"></i>
-            {t("resetPassword.tokenExpired.message", "This link has expired.")}
-          </div>
-          <hr className="border border-black" />
-          <p className="mb-0 fs-2">
-            <a
-              className="btn btn-lg btn-success fs-2"
-              href={Router.path("resetPasswortEmail", {}, { query: { email } })}
-            >
-              {t("resetPassword.tokenExpired.button", "Send me new one")}
-            </a>{" "}
-            <small>
-              <i className="fa-solid fa-circle-info"></i>{" "}
-              {t(
-                "resetPassword.tokenExpired.info",
-                "It can take some minutes for the email to arrive in your inbox.",
-              )}
-            </small>
-          </p>
-        </div>
-      </div>
-    );
+    return <TokenExpired email={email} />;
   }
 
   return (
