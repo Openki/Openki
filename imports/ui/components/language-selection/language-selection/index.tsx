@@ -1,117 +1,46 @@
-import { ReactiveVar } from "meteor/reactive-var";
-import { Session } from "meteor/session";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React, { useEffect, useRef, useState } from "react";
 import { _ } from "meteor/underscore";
-import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
+import { useTranslation } from "react-i18next";
+import { useSession } from "/imports/utils/react-meteor-data";
 
 import { LanguageEntity, Languages } from "/imports/api/languages/languages";
 
+import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
+
 import { PublicSettings } from "/imports/utils/PublicSettings";
+import { MarkedName } from "/imports/utils/marked-name";
 import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
-import * as StringTools from "/imports/utils/string-tools";
-import { MeteorAsync } from "/imports/utils/promisify";
 
 import "./styles.scss";
 
-function Selection(){
-  return <li class="language-selection {{inNavbarClasses}}">
-  <form class="d-flex js-language-selection-form language-selection-form">
-    <div class="input-group input-group-sm input-group-outline p-2">
-      <span class="input-group-text"><span class="fa-solid fa-globe fa-fw"
-              aria-hidden="true"></span></span>
-      <input type="text" class="form-control js-language-search" value="{{setLanguage.name}}">
-      <input class="d-none" type="submit">
-      <button class="btn dropdown-toggle" data-bs-toggle="dropdown" role="button"
-              aria-expanded="false" tabindex="-1"></button>
-      <ul class="dropdown-menu dropdown-menu-end mx-2" role="menu">
-        {{#if languages}}
-          <li class="dropdown-header dropdown-legend">
-            <div class="dropdown-addon-right">
-              {{i18n 'languageSelection.translatedPercent' '% translated'}}
-            </div>
-            {{i18n 'languageSelection.legend.language' 'Language'}}
-          </li>
-          {{#each languages}}
-            <li>
-              <a href="#"
-                 class="dropdown-item js-language-link js-nav-dropdown-close {{#if currentLanguage}}fw-bold{{/if}}"
-                 title="{{english}}">
-                {{#if currentLanguage}}
-                  <span class="checkmark fa-solid fa-check"></span>
-                {{/if}}
-                {{#if translatedPercent}}
-                  <div class="dropdown-addon-right">
-                    {{translatedPercent}} %
-                  </div>
-                {{/if}}
-                <div class="language-name">
-                  {{languageNameMarked}}
-                </div>
-              </a>
-            </li>
-          {{/each}}
-        {{else}}
-          <li>
-            <a
-               class="dropdown-item">{{i18n 'languageSelection.noLanguagesFound' 'No languages found.'}}</a>
-          </li>
-        {{/if}}
-        {{#if helpLink}}
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-          <li>
-            <a class="dropdown-item" href="{{helpLink}}" target="_blank">
-              {{i18n 'Profile.translate_this_page' 'Help us to translate this Page'}}
-            </a>
-          </li>
-        {{/if}}
-      </ul>
-    </div>
-  </form>
-</li>
-}
+export function Selection(data: { inNavbar: boolean; onClose: () => void }) {
+  const { t } = useTranslation();
+  const [search, setSearch] = useState("");
+  const locale = useSession("locale");
+  const [searchHasFocus, setSearchHasFocus] = useState(true);
+  const searchElementRef = useRef<HTMLInputElement>(null);
+  const dropdownToggleElementRef = useRef<HTMLButtonElement>(null);
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "languageSelection",
-  { onClose: () => void },
-  {
-    searchHasFocus: boolean;
-    languageSearch: ReactiveVar<string>;
-  }
->;
+  const updateLanguageSearch = _.debounce(() => {
+    if (!searchElementRef.current) throw new Error("Unexpected falsy: searchElementRef.current");
+    const newSearch = searchElementRef.current?.value.trim();
+    if (search !== newSearch) {
+      setSearch(newSearch);
+    }
+  }, 100);
 
-const template = Template.languageSelection;
-
-template.onCreated(function () {
-  this.languageSearch = new ReactiveVar("");
-});
-
-template.onRendered(function () {
-  const instance = this;
-
-  instance.$(".js-language-search").trigger("select");
-
-  instance.$(".dropdown").on("hide.bs.dropdown", () => {
-    instance.data.onClose();
-  });
-});
-
-template.helpers({
-  inNavbarClasses() {
-    if (this.inNavbar) {
+  function inNavbarClasses() {
+    if (data.inNavbar) {
       return "nav-item text-center col col-lg-auto";
     }
     return "";
-  },
-
-  setLanguage() {
-    return Languages.find(Session.get("locale")).fetch()[0];
-  },
-
-  languages() {
+  }
+  function setLanguage() {
+    return Languages.find(locale).fetch()[0];
+  }
+  function languages() {
     const visibleLanguages = Languages.find({ visible: true });
-    const search = Template.instance().languageSearch.get().toLowerCase();
+    const languageSearch = search.toLowerCase();
     const results: LanguageEntity[] = [];
 
     visibleLanguages.forEach((visibleLanguage) => {
@@ -120,7 +49,7 @@ template.helpers({
         if (pushed) {
           return false;
         }
-        if (property.toLowerCase().includes(search)) {
+        if (property.toLowerCase().includes(languageSearch)) {
           results.push(visibleLanguage);
           pushed = true;
         }
@@ -128,44 +57,37 @@ template.helpers({
       });
     });
     return results;
-  },
-
-  languageNameMarked(this: LanguageEntity) {
-    const search = Template.instance().languageSearch.get();
-    const { name } = this;
-    return StringTools.markedName(search, name);
-  },
-
-  currentLanguage(this: LanguageEntity) {
-    return this.lg === Session.get("locale");
-  },
-
-  helpLink() {
-    return getLocalizedValue(PublicSettings.i18nHelpLink);
-  },
-});
-
-const updateLanguageSearch = _.debounce((instance: ReturnType<(typeof Template)["instance"]>) => {
-  let search = instance.$(".js-language-search").val();
-  search = String(search).trim();
-  if (!(instance.languageSearch.get() === search)) {
-    instance.languageSearch.set(search);
-    instance.$(".dropdown-toggle").dropdown("show");
   }
-}, 100);
+  function languageNameMarked(language: LanguageEntity) {
+    const { name } = language;
+    return <MarkedName search={search} name={name} />;
+  }
+  function currentLanguage(language: LanguageEntity) {
+    return language.lg === locale;
+  }
+  function helpLink() {
+    return getLocalizedValue(PublicSettings.i18nHelpLink);
+  }
 
-template.events({
-  "click .js-language-link"(this: LanguageEntity, event, instance) {
-    event.preventDefault();
+  const handleKeyUp = () => {
+    setSearchHasFocus(true);
+    updateLanguageSearch();
+  };
 
+  function handelSearchFocus() {
+    setSearchHasFocus(true);
+  }
+
+  function handelSearchBlur() {
+    setSearchHasFocus(false);
+  }
+
+  function handelChange(language: LanguageEntity) {
     routerAutoscroll.cancelNext();
 
-    // eslint-disable-next-line no-param-reassign
-    instance.searchHasFocus = false;
-    instance.$(".js-region-search").trigger("focusout");
-    instance.$(".dropdown-toggle").dropdown("hide");
+    setSearchHasFocus(false);
 
-    const { lg } = this;
+    const { lg } = language;
 
     try {
       localStorage.setItem("locale", lg);
@@ -175,42 +97,127 @@ template.events({
     // The db user update happens in the /imports/startup/client/locale.ts in Tracker.autorun(() => { ...
     Session.set("locale", lg);
 
-    instance.data.onClose();
-  },
-  "keyup .js-language-search"(_event, instance) {
-    // eslint-disable-next-line no-param-reassign
-    instance.searchHasFocus = true;
-    updateLanguageSearch(instance);
-  },
+    data.onClose();
+  }
 
-  "submit .js-language-selection-form"(event, instance) {
-    event.preventDefault();
-    instance.$(".js-language-link").first().trigger("click");
-  },
+  useEffect(() => {
+    if (searchHasFocus) {
+      if (!dropdownToggleElementRef.current)
+        throw new Error("Unexpected falsy: dropdownToggleElementRef.current");
+      $(dropdownToggleElementRef.current).dropdown("show");
 
-  "focus .js-language-search"(_event, instance) {
-    instance.$(".dropdown-toggle").dropdown("show");
-  },
-
-  "focusin/focusout .js-language-search"(event, instance) {
-    // eslint-disable-next-line no-param-reassign
-    instance.searchHasFocus = event.type === "focusin";
-  },
-
-  async "show.bs.dropdown"(_event, instance) {
-    if (!instance.searchHasFocus) {
-      await MeteorAsync.defer();
-
-      instance.$(".js-language-search").trigger("select");
+      if (!searchElementRef.current) throw new Error("Unexpected falsy: searchElementRef.current");
+      searchElementRef.current?.select();
     }
-  },
+  }, [searchHasFocus]);
 
-  "hide.bs.dropdown"(_event, instance) {
-    if (!instance.searchHasFocus) {
-      instance.data.onClose();
-      return true;
-    }
+  useEffect(() => {
+    if (!dropdownToggleElementRef.current)
+      throw new Error("Unexpected falsy: dropdownToggleElementRef.current");
+    dropdownToggleElementRef.current.addEventListener("hide.bs.dropdown", () => {
+      if (!searchHasFocus) {
+        data.onClose();
+        return true;
+      }
+      return false;
+    });
+  });
 
-    return false;
-  },
-});
+  return (
+    <li className={`language-selection ${inNavbarClasses()}`}>
+      <form
+        className="d-flex js-language-selection-form language-selection-form"
+        onSubmit={(event) => {
+          event.preventDefault();
+          if (languages()[0]) {
+            handelChange(languages()[0]);
+          }
+        }}
+      >
+        <div className="input-group input-group-sm input-group-outline p-2">
+          <span className="input-group-text">
+            <span className="fa-solid fa-globe fa-fw" aria-hidden="true"></span>
+          </span>
+          <input
+            type="text"
+            className="form-control"
+            ref={searchElementRef}
+            defaultValue={setLanguage().name}
+            onKeyUp={handleKeyUp}
+            onFocus={handelSearchFocus}
+            onBlur={handelSearchBlur}
+          />
+          <input className="d-none" type="submit" />
+          <button
+            className="btn dropdown-toggle"
+            data-bs-toggle="dropdown"
+            role="button"
+            aria-expanded="false"
+            tabIndex={-1}
+            ref={dropdownToggleElementRef}
+          ></button>
+          <ul className="dropdown-menu dropdown-menu-end mx-2" role="menu">
+            {languages() ? (
+              <>
+                <li className="dropdown-header dropdown-legend">
+                  <div className="dropdown-addon-right">
+                    {t("languageSelection.translatedPercent", "% translated")}
+                  </div>
+                  {t("languageSelection.legend.language", "Language")}
+                </li>
+                {languages().map((language) => (
+                  <li key={language.lg}>
+                    <a
+                      href="#"
+                      className={`dropdown-item js-nav-dropdown-close ${
+                        currentLanguage(language) ? "fw-bold" : ""
+                      }`}
+                      title={language.english}
+                      onClick={() => {
+                        handelChange(language);
+                      }}
+                    >
+                      {currentLanguage(language) ? (
+                        <>
+                          <span className="checkmark fa-solid fa-check"></span>{" "}
+                        </>
+                      ) : null}
+                      {language.translatedPercent ? (
+                        <div className="dropdown-addon-right">{language.translatedPercent} %</div>
+                      ) : null}
+                      <div className="language-name">{languageNameMarked(language)}</div>
+                    </a>
+                  </li>
+                ))}
+              </>
+            ) : (
+              <li>
+                <a className="dropdown-item">
+                  {t("languageSelection.noLanguagesFound", "No languages found.")}
+                </a>
+              </li>
+            )}
+            {helpLink() ? (
+              <>
+                <li>
+                  <hr className="dropdown-divider" />
+                </li>
+                <li>
+                  <a className="dropdown-item" href={helpLink()} target="_blank">
+                    {t("Profile.translate_this_page", "Help us to translate this Page")}
+                  </a>
+                </li>
+              </>
+            ) : null}
+          </ul>
+        </div>
+      </form>
+    </li>
+  );
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("LanguageSelection", () => Selection);

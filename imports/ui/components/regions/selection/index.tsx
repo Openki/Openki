@@ -149,7 +149,6 @@ export function RegionSelection(data: {
 
   useEffect(() => {
     if (!data.isSplash && searchHasFocus) {
-      console.info("a");
       if (!dropdownToggleElementRef.current)
         throw new Error("Unexpected falsy: dropdownToggleElementRef.current");
       $(dropdownToggleElementRef.current).dropdown("show");
