@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDebouncedCallback } from "use-debounce";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
@@ -13,6 +14,11 @@ export function AvatarForm() {
   const { t } = useTranslation();
   const user = useUser();
   const [color, setColor] = useState(user?.avatar.color || 0);
+
+  const handelChange = useDebouncedCallback(async function (newValue: number) {
+    await usersMethods.updateAvatarColor(newValue);
+    Alert.success(t("profile.updated", "Updated profile"));
+  }, 500);
 
   return (
     <div className="avatar-form">
@@ -29,22 +35,10 @@ export function AvatarForm() {
           className="avatar-form-input"
           id="avatarColorRange"
           value={color}
-          onInput={(event) => {
-            const newColor = Number.parseInt(event.currentTarget.value, 10);
-            if (newColor === color) {
-              return;
-            }
+          onInput={async (event) => {
+            const newColor = event.currentTarget.valueAsNumber;
             setColor(newColor);
-          }}
-          onChange={async () => {
-            // only update the color if it has changed
-            if (user?.avatar?.color === color) {
-              return;
-            }
-
-            await usersMethods.updateAvatarColor(color);
-
-            Alert.success(t("profile.updated", "Updated profile"));
+            await handelChange(newColor);
           }}
         />
       </div>
