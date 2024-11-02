@@ -99,10 +99,10 @@ template.onCreated(function () {
   instance.changingPass = new ReactiveVar(false);
 
   instance.notificationsUnsubscribeSuccess = () =>
-    Router.current().params.query.unsubscribed === "notifications";
+    Router.current().params.query?.unsubscribed === "notifications";
   instance.privateMessagesUnsubscribeSuccess = () =>
-    Router.current().params.query.unsubscribed === "privatemessages";
-  instance.unsubscribeError = () => Router.current().params.query["unsubscribe-error"] === "";
+    Router.current().params.query?.unsubscribed === "privatemessages";
+  instance.unsubscribeError = () => Router.current().params.query?.["unsubscribe-error"] === "";
 
   if (instance.notificationsUnsubscribeSuccess()) {
     Analytics.trackEvent(

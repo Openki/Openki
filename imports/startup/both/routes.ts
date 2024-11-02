@@ -33,6 +33,7 @@ import * as Courses from "/imports/api/courses/publications";
 import * as Invitations from "/imports/api/invitations/publications";
 import * as JoinLinks from "/imports/api/joinLinks/publications";
 import * as Users from "/imports/api/users/publications";
+import { Users as UsersCollection } from "/imports/api/users/users";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { Filtering } from "/imports/utils/filtering";
@@ -1116,8 +1117,19 @@ RouterAsync.route("resetPasswortEmail", {
     const email = this.params.query.email as string;
 
     if (email) {
-      // call the server method for sending reset email. https://github.com/meteor/meteor/blob/master/packages/accounts-password/password_server.js
-      Meteor.call("forgotPassword", { email });
+      const user = UsersCollection.findOne({ "emails.address": email });
+      if (user) {
+        Meteor.call("forgotPassword", { email });
+      }
+    } else {
+      const currentUserId = Meteor.userId();
+      if (currentUserId) {
+        const currentUser = UsersCollection.findOne(currentUserId);
+        if (currentUser) {
+          // if a visitor user want to create an account from his profile.
+          Meteor.call("forgotPassword", { email: currentUser?.emailAddress() });
+        }
+      }
     }
 
     this.response.writeHead(302, {

@@ -50,12 +50,11 @@ export const [account, useAccount] = ServerPublishOne(
 
     const tokenLifetimeMs = PasswordResetTokenExpirationInDays * 86400000;
     const currentTimeMs = Date.now();
-
     return Users.find(
       {
         "services.password.reset.token": token,
         // From https://github.com/meteor/meteor/blob/5e5d437c6ac79b61f3f750bc022f95fe5b83a961/packages/accounts-password/password_server.js#L636
-        "services.password.reset.when": { $lt: currentTimeMs - tokenLifetimeMs },
+        "services.password.reset.when": { $gt: new Date(currentTimeMs - tokenLifetimeMs) },
       },
       { projection },
     );
