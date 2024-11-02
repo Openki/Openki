@@ -86,13 +86,9 @@ export function RegionSelection(data: {
     return regionsArray;
   }
 
-  // create a function to toggle displaying the regionSelection
-  // only if it is placed inside a wrap
-  function close() {
-    data.onClose();
-  }
-
   function changeRegion(regionId: string) {
+    setSearchHasFocus(false);
+
     const changed = currentRegion?._id !== regionId;
 
     RegionSelectionUtils.change(regionId);
@@ -106,7 +102,7 @@ export function RegionSelection(data: {
         Router.go("/");
       }
     }
-    close();
+    data.onClose();
   }
 
   function inNavbarClasses() {
@@ -125,7 +121,7 @@ export function RegionSelection(data: {
       .fetch()
       .reduce((acc, region) => acc + region.futureEventCount, 0);
   }
-  function hasMoreRegions() {
+  function hasMore() {
     const minNumber = minNumberOfRegionInSelection;
 
     const numberOfRegions = regions().length;
@@ -152,6 +148,7 @@ export function RegionSelection(data: {
       if (!dropdownToggleElementRef.current)
         throw new Error("Unexpected falsy: dropdownToggleElementRef.current");
       $(dropdownToggleElementRef.current).dropdown("show");
+
       if (!searchElementRef.current) throw new Error("Unexpected falsy: searchElementRef.current");
       searchElementRef.current?.select();
     }
@@ -162,7 +159,7 @@ export function RegionSelection(data: {
       throw new Error("Unexpected falsy: dropdownToggleElementRef.current");
     dropdownToggleElementRef.current.addEventListener("hide.bs.dropdown", (event) => {
       if (!searchHasFocus) {
-        close();
+        data.onClose();
         return true;
       }
 
@@ -172,35 +169,36 @@ export function RegionSelection(data: {
     });
   });
 
-  function handelRegionLinkClick(region?: RegionModel) {
+  function handelItemClick(region?: RegionModel) {
     const regionId = region?._id || "all";
     changeRegion(regionId);
 
     return false;
   }
 
-  function handelRegionSearchKeyUp(event: React.KeyboardEvent<HTMLInputElement>) {
+  function handelSearchKeyUp(event: React.KeyboardEvent<HTMLInputElement>) {
     const newSearch = event.currentTarget.value.trim();
     if (newSearch !== search) {
       setSearch(newSearch);
     }
   }
 
-  function handelRegionSearchFocus() {
+  function handelSearchFocus() {
     setSearchHasFocus(true);
   }
 
-  function handelRegionSearchBlur() {
+  function handelSearchBlur() {
     setSearchHasFocus(false);
   }
 
-  function handelShowAllRegionsClick() {
+  function handelShowAllClick() {
     setShowAllRegions(true);
     setSearchHasFocus(true);
   }
 
-  function handelSubmit() {
-    setSearchHasFocus(false);
+  function handelSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
     if (search !== "") {
       const selectedRegion = regions()[0];
       if (selectedRegion) {
@@ -220,18 +218,18 @@ export function RegionSelection(data: {
           }`}
         >
           <span className="input-group-text">
-            <span className="fa-solid fa-location-dot" aria-hidden="true"></span>
+            <span className="fa-solid fa-location-dot fa-fw" aria-hidden="true"></span>
           </span>
           <input
-            className={`form-control js-region-search ${currentRegion ? "fw-bold" : ""}`}
+            ref={searchElementRef}
+            className="form-control js-region-search"
             type="text"
             defaultValue={
               currentRegion ? currentRegion.name : t("menue.All regions", "All regions") || ""
             }
-            ref={searchElementRef}
-            onKeyUp={handelRegionSearchKeyUp}
-            onFocus={handelRegionSearchFocus}
-            onBlur={handelRegionSearchBlur}
+            onKeyUp={handelSearchKeyUp}
+            onFocus={handelSearchFocus}
+            onBlur={handelSearchBlur}
           />
           <input className="d-none" type="submit" />
           <button
@@ -266,7 +264,7 @@ export function RegionSelection(data: {
                 href="#"
                 className="dropdown-item js-region-link js-nav-dropdown-close"
                 title={t("menue.All regions")}
-                onClick={() => handelRegionLinkClick()}
+                onClick={() => handelItemClick()}
               >
                 <div className="dropdown-addon-right">
                   <span
@@ -308,7 +306,7 @@ export function RegionSelection(data: {
                     key={region._id}
                     region={region}
                     search={search}
-                    onClick={() => handelRegionLinkClick(region)}
+                    onClick={() => handelItemClick(region)}
                   />
                 ))}
                 {aboutLink() ? (
@@ -333,20 +331,16 @@ export function RegionSelection(data: {
                     key={region._id}
                     region={region}
                     search={search}
-                    onClick={() => handelRegionLinkClick(region)}
+                    onClick={() => handelItemClick(region)}
                   />
                 ))}
-                {hasMoreRegions() ? (
+                {hasMore() ? (
                   <>
                     <li>
                       <hr className="dropdown-divider" />
                     </li>
                     <li>
-                      <button
-                        className="btn btn-link"
-                        type="button"
-                        onClick={handelShowAllRegionsClick}
-                      >
+                      <button className="btn btn-link" type="button" onClick={handelShowAllClick}>
                         {t("regionSelection.showAll", "Show more regions")}
                       </button>
                     </li>

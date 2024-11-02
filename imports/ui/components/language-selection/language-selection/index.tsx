@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { _ } from "meteor/underscore";
 import { useTranslation } from "react-i18next";
 import { useSession } from "/imports/utils/react-meteor-data";
 
@@ -15,29 +14,12 @@ import "./styles.scss";
 
 export function Selection(data: { inNavbar: boolean; onClose: () => void }) {
   const { t } = useTranslation();
-  const [search, setSearch] = useState("");
   const locale = useSession("locale");
+  const [search, setSearch] = useState("");
   const [searchHasFocus, setSearchHasFocus] = useState(true);
   const searchElementRef = useRef<HTMLInputElement>(null);
   const dropdownToggleElementRef = useRef<HTMLButtonElement>(null);
 
-  const updateLanguageSearch = _.debounce(() => {
-    if (!searchElementRef.current) throw new Error("Unexpected falsy: searchElementRef.current");
-    const newSearch = searchElementRef.current?.value.trim();
-    if (search !== newSearch) {
-      setSearch(newSearch);
-    }
-  }, 100);
-
-  function inNavbarClasses() {
-    if (data.inNavbar) {
-      return "nav-item text-center col col-lg-auto";
-    }
-    return "";
-  }
-  function setLanguage() {
-    return Languages.find(locale).fetch()[0];
-  }
   function languages() {
     const visibleLanguages = Languages.find({ visible: true });
     const languageSearch = search.toLowerCase();
@@ -58,34 +40,11 @@ export function Selection(data: { inNavbar: boolean; onClose: () => void }) {
     });
     return results;
   }
-  function languageNameMarked(language: LanguageEntity) {
-    const { name } = language;
-    return <MarkedName search={search} name={name} />;
-  }
-  function currentLanguage(language: LanguageEntity) {
-    return language.lg === locale;
-  }
-  function helpLink() {
-    return getLocalizedValue(PublicSettings.i18nHelpLink);
-  }
 
-  const handleKeyUp = () => {
-    setSearchHasFocus(true);
-    updateLanguageSearch();
-  };
-
-  function handelSearchFocus() {
-    setSearchHasFocus(true);
-  }
-
-  function handelSearchBlur() {
+  function changeLanguage(language: LanguageEntity) {
     setSearchHasFocus(false);
-  }
 
-  function handelChange(language: LanguageEntity) {
     routerAutoscroll.cancelNext();
-
-    setSearchHasFocus(false);
 
     const { lg } = language;
 
@@ -98,6 +57,22 @@ export function Selection(data: { inNavbar: boolean; onClose: () => void }) {
     Session.set("locale", lg);
 
     data.onClose();
+  }
+
+  function inNavbarClasses() {
+    if (data.inNavbar) {
+      return "nav-item text-center col col-lg-auto";
+    }
+    return "";
+  }
+  function currentLanguage() {
+    return Languages.find(locale).fetch()[0];
+  }
+  function isCurrentLanguage(language: LanguageEntity) {
+    return language.lg === locale;
+  }
+  function helpLink() {
+    return getLocalizedValue(PublicSettings.i18nHelpLink);
   }
 
   useEffect(() => {
@@ -114,36 +89,54 @@ export function Selection(data: { inNavbar: boolean; onClose: () => void }) {
   useEffect(() => {
     if (!dropdownToggleElementRef.current)
       throw new Error("Unexpected falsy: dropdownToggleElementRef.current");
-    dropdownToggleElementRef.current.addEventListener("hide.bs.dropdown", () => {
+    dropdownToggleElementRef.current.addEventListener("hide.bs.dropdown", (event) => {
       if (!searchHasFocus) {
         data.onClose();
         return true;
       }
+
+      // Stop closing
+      event.preventDefault();
       return false;
     });
   });
 
+  function handelSearchKeyUp(event: React.KeyboardEvent<HTMLInputElement>) {
+    const newSearch = event.currentTarget.value.trim();
+    if (newSearch !== search) {
+      setSearch(newSearch);
+    }
+  }
+
+  function handelSearchFocus() {
+    setSearchHasFocus(true);
+  }
+
+  function handelSearchBlur() {
+    setSearchHasFocus(false);
+  }
+
+  function handelSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (languages()[0]) {
+      changeLanguage(languages()[0]);
+    }
+  }
+
   return (
     <li className={`language-selection ${inNavbarClasses()}`}>
-      <form
-        className="d-flex js-language-selection-form language-selection-form"
-        onSubmit={(event) => {
-          event.preventDefault();
-          if (languages()[0]) {
-            handelChange(languages()[0]);
-          }
-        }}
-      >
-        <div className="input-group input-group-sm input-group-outline p-2">
+      <form className="d-flex language-selection-form" tabIndex={0} onSubmit={handelSubmit}>
+        <div className="input-group input-group-outline input-group-sm p-2">
           <span className="input-group-text">
             <span className="fa-solid fa-globe fa-fw" aria-hidden="true"></span>
           </span>
           <input
-            type="text"
-            className="form-control"
             ref={searchElementRef}
-            defaultValue={setLanguage().name}
-            onKeyUp={handleKeyUp}
+            className="form-control"
+            type="text"
+            defaultValue={currentLanguage().name}
+            onKeyUp={handelSearchKeyUp}
             onFocus={handelSearchFocus}
             onBlur={handelSearchBlur}
           />
@@ -153,6 +146,7 @@ export function Selection(data: { inNavbar: boolean; onClose: () => void }) {
             data-bs-toggle="dropdown"
             role="button"
             aria-expanded="false"
+            data-bs-auto-close="outside"
             tabIndex={-1}
             ref={dropdownToggleElementRef}
           ></button>
@@ -170,14 +164,12 @@ export function Selection(data: { inNavbar: boolean; onClose: () => void }) {
                     <a
                       href="#"
                       className={`dropdown-item js-nav-dropdown-close ${
-                        currentLanguage(language) ? "fw-bold" : ""
+                        isCurrentLanguage(language) ? "fw-bold" : ""
                       }`}
                       title={language.english}
-                      onClick={() => {
-                        handelChange(language);
-                      }}
+                      onClick={() => changeLanguage(language)}
                     >
-                      {currentLanguage(language) ? (
+                      {isCurrentLanguage(language) ? (
                         <>
                           <span className="checkmark fa-solid fa-check"></span>{" "}
                         </>
@@ -185,7 +177,9 @@ export function Selection(data: { inNavbar: boolean; onClose: () => void }) {
                       {language.translatedPercent ? (
                         <div className="dropdown-addon-right">{language.translatedPercent} %</div>
                       ) : null}
-                      <div className="language-name">{languageNameMarked(language)}</div>
+                      <div className="language-name">
+                        <MarkedName search={search} name={language.name} />
+                      </div>
                     </a>
                   </li>
                 ))}
