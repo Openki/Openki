@@ -26,14 +26,14 @@ export interface Body {
  * Record the intent to send event notifications
  * @param commentId ID for the CourseDiscussions collection
  */
-export function record(commentId: string) {
+export async function record(commentId: string) {
   check(commentId, String);
-  const comment = CourseDiscussions.findOne(commentId);
+  const comment = await CourseDiscussions.findOneAsync(commentId);
   if (!comment) {
     throw new Meteor.Error(`No CourseDiscussion entry for ${commentId}`);
   }
 
-  const course = Courses.findOne(comment.courseId);
+  const course = await Courses.findOneAsync(comment.courseId);
   if (!course) {
     throw new Meteor.Error(`No course entry for ${commentId}`);
   }
@@ -75,20 +75,20 @@ export function record(commentId: string) {
     model: "Comment",
   };
 
-  Log.record("Notification.Send", [course._id, comment._id], body);
+  await Log.record("Notification.Send", [course._id, comment._id], body);
 }
 
-export function Model(entry: { body: Body }): NotificationModel<Props> {
-  const comment = CourseDiscussions.findOne(entry.body.commentId);
+export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
+  const comment = await CourseDiscussions.findOneAsync(entry.body.commentId);
 
   let course: CourseModel | undefined;
   let commenter: UserModel | undefined;
   let commenterName: string | undefined;
 
   if (comment) {
-    course = Courses.findOne(comment.courseId);
+    course = await Courses.findOneAsync(comment.courseId);
     if (comment.userId) {
-      commenter = Users.findOne(comment.userId);
+      commenter = await Users.findOneAsync(comment.userId);
     }
     if (commenter) {
       commenterName = commenter.getDisplayName();
@@ -100,13 +100,9 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       if (actualRecipient.notifications === false) {
         throw new Error("User wishes to not receive automated notifications");
       }
-
-      if (!actualRecipient.hasEmail()) {
-        throw new Error("Recipient has no email address registered");
-      }
     },
 
-    vars(locale, _actualRecipient, unsubToken) {
+    async vars(locale, _actualRecipient, unsubToken) {
       const t = i18next.getFixedT(locale);
       const campaign = "commentNotify";
 
@@ -141,7 +137,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
 
       let region: RegionModel | undefined;
       if (course.region) {
-        region = Regions.findOne(course.region);
+        region = await Regions.findOneAsync(course.region);
       }
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);

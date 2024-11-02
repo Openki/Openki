@@ -1,20 +1,26 @@
 import { Tenants } from "/imports/api/tenants/tenants";
 import { Users } from "./users";
+import { sum } from "../../utils/sum";
 
 // Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers
 
-export function onStartUp() {
-  let updated = 0;
+export async function onStartUp() {
+  const tenants = await Tenants.find(
+    {},
+    { projection: { _id: 1, members: 1, admins: 1 } },
+  ).fetchAsync();
 
-  const tenants = Tenants.find({}, { projection: { _id: 1, members: 1, admins: 1 } }).fetch();
+  const updated = sum(
+    await Promise.all(
+      await Users.find({}, { projection: { _id: 1 } }).mapAsync((u) => {
+        const userTenants = tenants
+          .filter((t) => t.members.includes(u._id) || t.admins.includes(u._id))
+          .map((t) => ({ _id: t._id, privileges: t.admins.includes(u._id) ? ["admin"] : [] }));
 
-  Users.find({}, { projection: { _id: 1 } }).forEach((u) => {
-    const userTenants = tenants
-      .filter((t) => t.members.includes(u._id) || t.admins.includes(u._id))
-      .map((t) => ({ _id: t._id, privileges: t.admins.includes(u._id) ? ["admin"] : [] }));
-
-    updated += Users.update(u._id, { $set: { tenants: userTenants } });
-  });
+        return Users.updateAsync(u._id, { $set: { tenants: userTenants } });
+      }),
+    ),
+  );
 
   /* eslint-disable-next-line no-console */
   console.log(`users.tenantsDenormalizer.onStartUp: ${updated} affected users`);

@@ -68,9 +68,3 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
     </span>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("RemoveFromTeamDropdown", () => RemoveFromTeamDropdown);

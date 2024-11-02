@@ -410,7 +410,7 @@ export function Edit(data: Data) {
     return false;
   }
   function editBodyClasses() {
-    const classes = [];
+    const classes: string[] = [];
 
     if (data.isFrame) {
       classes.push("is-frame");
@@ -619,10 +619,24 @@ export function Edit(data: Data) {
         );
       } else {
         if (isNew) {
-          Alert.success(
+          Alert.successNextActions(
             t("message.courseCreated", "{NAME} has been created!", {
               NAME: changes.name,
             }),
+            t("message.courseCreated.description", "What do you wannt to do next?"),
+            numberOfCharacters === 0
+              ? {
+                  text: t("message.courseCreated.addDescription", "Add a desciption"),
+                  href: "#course-description",
+                }
+              : undefined,
+            {
+              text: t("message.courseCreated.addImage", "Add an image"),
+              href: "#files-tab",
+            },
+            !Regions.findOne(changes.region)?.isPrivate()
+              ? { text: t("message.courseCreated.share", "Share it"), href: "#share" }
+              : undefined,
           );
           Analytics.trackEvent(
             "Course creations",

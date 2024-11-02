@@ -82,7 +82,7 @@ export const [details, useDetails] = ServerPublishOne(
     const projection: Mongo.FieldSpecifier = {
       username: 1,
       description: 1,
-      acceptsPrivateMessages: 1,
+      allowPrivateMessages: 1,
       contribution: 1,
       "avatar.color": 1,
     };
@@ -99,7 +99,7 @@ export const [details, useDetails] = ServerPublishOne(
     const projection: Mongo.FieldSpecifier = {
       username: 1,
       description: 1,
-      acceptsPrivateMessages: 1,
+      allowPrivateMessages: 1,
       contribution: 1,
       "avatar.color": 1,
     };

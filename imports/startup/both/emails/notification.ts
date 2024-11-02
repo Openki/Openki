@@ -18,11 +18,13 @@ export type Model<T> = {
     locale: string,
     user: UserModel,
     unsubToken: string,
-  ): {
-    fromAddress?: string | undefined;
-  } & RootProps &
-    // Remove some props
-    Omit<T, "siteName" | "customSiteName" | "username" | "lng">;
+  ): Promise<
+    {
+      fromAddress?: string | undefined;
+    } & RootProps &
+      // Remove some props
+      Omit<T, "siteName" | "customSiteName" | "username" | "lng">
+  >;
   template: (
     props: {
       fromAddress?: string | undefined;

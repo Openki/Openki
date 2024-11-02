@@ -6,10 +6,10 @@ import * as Profile from "/imports/utils/profile";
 
 Router.route("profileNotificationsUnsubscribe", {
   path: "/profile/notifications/unsubscribe/:token",
-  action() {
+  async action() {
     const unsubToken = this.params.token as string;
 
-    const accepted = Profile.Notifications.unsubscribe(unsubToken);
+    const accepted = await Profile.Notifications.unsubscribe(unsubToken);
 
     const query: { unsubscribed?: string; "unsubscribe-error"?: string } = {};
     if (accepted) {
@@ -29,10 +29,10 @@ Router.route("profileNotificationsUnsubscribe", {
 
 Router.route("profilePrivateMessagesUnsubscribe", {
   path: "/profile/privatemessages/unsubscribe/:token",
-  action() {
+  async action() {
     const unsubToken = this.params.token as string;
 
-    const accepted = Profile.PrivateMessages.unsubscribe(unsubToken);
+    const accepted = await Profile.PrivateMessages.unsubscribe(unsubToken);
 
     const query: { unsubscribed?: string; "unsubscribe-error"?: string } = {};
     if (accepted) {

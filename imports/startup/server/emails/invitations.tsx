@@ -69,8 +69,8 @@ function sendInvitation(invitation: InvitationEntity) {
   Email.send(email);
 }
 
-function handleInvitation(invitation: InvitationEntity) {
-  const result = Log.record(
+async function handleInvitation(invitation: InvitationEntity) {
+  const result = await Log.record(
     "Invitation.Send",
     [invitation.createdBy, invitation.tenant],
     invitation,
@@ -91,8 +91,8 @@ function handleInvitation(invitation: InvitationEntity) {
 
 // Watch for new invitations
 if (runBackgroundTasks)
-  Meteor.startup(() => {
-    Invitations.find({ status: "created" }).observe({
+  Meteor.startup(async () => {
+    await Invitations.find({ status: "created" }).observeAsync({
       added: handleInvitation,
       changed: handleInvitation,
     });

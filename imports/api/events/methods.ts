@@ -25,7 +25,7 @@ import { LocalTime } from "/imports/utils/local-time";
 import * as StringTools from "/imports/utils/string-tools";
 import * as UpdateMethods from "/imports/utils/update-methods";
 import { ServerMethod } from "/imports/utils/ServerMethod";
-import { StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";
+import { HtmlString, SafeString, StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";
 import { GroupPromoters } from "/imports/utils/update-methods";
 import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import { PublicSettings } from "/imports/utils/PublicSettings";
@@ -103,20 +103,20 @@ export const GeodataPattern = {
 export type Geodata = Type<typeof GeodataPattern>;
 
 export const EventVenuePattern = {
-  _id: Match.Optional(String),
-  name: Match.Optional(String),
+  _id: Match.Optional(SafeString()),
+  name: Match.Optional(SafeString()),
   loc: Match.Optional(GeodataPattern),
-  address: Match.Optional(String),
-  editor: Match.Optional(String),
+  address: Match.Optional(SafeString()),
+  editor: Match.Optional(SafeString()),
 };
 
 export const UpdateFieldsPattern = {
-  title: String,
-  description: String,
+  title: SafeString(),
+  description: HtmlString(),
   venue: Match.Optional(EventVenuePattern),
-  room: Match.Optional(String),
-  startLocal: Match.Optional(String),
-  endLocal: Match.Optional(String),
+  room: Match.Optional(SafeString()),
+  startLocal: Match.Optional(SafeString()),
+  endLocal: Match.Optional(SafeString()),
   internal: Match.Optional(Boolean),
   sendReminder: Match.Optional(Boolean),
   noRsvp: Match.Optional(Boolean),
@@ -126,10 +126,10 @@ export type UpdateFields = Type<typeof UpdateFieldsPattern>;
 
 export const CreateFieldsPattern = {
   ...UpdateFieldsPattern,
-  courseId: Match.Optional(String),
-  region: String,
-  replicaOf: Match.Optional(String),
-  groups: Match.Optional([String]),
+  courseId: Match.Optional(SafeString()),
+  region: SafeString(),
+  replicaOf: Match.Optional(SafeString()),
+  groups: Match.Optional([SafeString()]),
 };
 export type CreateFields = Type<typeof CreateFieldsPattern>;
 
@@ -149,7 +149,7 @@ export const save = ServerMethod(
     sendNotifications?: boolean | null,
     comment?: string | null,
   ) => {
-    check(eventId, String);
+    check(eventId, SafeString());
 
     const isNew = eventId === "";
 
@@ -333,7 +333,7 @@ export const save = ServerMethod(
         });
       }
     } else {
-      Events.update(eventId, { $set: editFields });
+      await Events.updateAsync(eventId, { $set: editFields });
 
       if (updateReplicasInfos || updateReplicasTime) {
         const updateOptions = {
@@ -379,7 +379,7 @@ export const save = ServerMethod(
         comment = comment.trim().substring(0, 2000).trim();
       }
 
-      Notification.Event.record(eventId, isNew, comment || undefined);
+      await Notification.Event.record(eventId, isNew, comment || undefined);
     }
 
     if (Meteor.isServer) {
@@ -398,7 +398,7 @@ export const save = ServerMethod(
 );
 
 export const remove = ServerMethod("event.remove", async (eventId: string) => {
-  check(eventId, String);
+  check(eventId, SafeString());
 
   const user = await Meteor.userAsync();
   if (!user) {
@@ -471,7 +471,7 @@ export const addParticipant = ServerMethod(
    * @param eventId The event to register for
    */
   async function (eventId: string, companions: number) {
-    check(eventId, String);
+    check(eventId, SafeString());
     check(companions, Number);
 
     const user = await Meteor.userAsync();
@@ -496,9 +496,9 @@ export const addParticipant = ServerMethod(
     );
 
     // Send notifications to user
-    Notification.Rsvp.record(eventId, user._id, companions);
+    await Notification.Rsvp.record(eventId, user._id, companions);
     // Send notification to team
-    Notification["Rsvp.Team"].record(eventId, user._id, companions);
+    await Notification["Rsvp.Team"].record(eventId, user._id, companions);
 
     // if you cant load course its probably because the event doesnt have one
     const course = await Courses.findOneAsync(event.courseId);
@@ -506,7 +506,7 @@ export const addParticipant = ServerMethod(
       return;
     }
 
-    const change = new Subscribe(course, user, "participant", "rsvp");
+    const change = new Subscribe(course, user._id, "participant", "rsvp");
     if (change.validFor(user)) {
       await processChange(change, { isSimulation: this.isSimulation });
     }
@@ -518,7 +518,7 @@ export const addParticipant = ServerMethod(
 export const removeParticipant = ServerMethod(
   "event.removeParticipant",
   async (eventId: string) => {
-    check(eventId, String);
+    check(eventId, SafeString());
 
     const userId = Meteor.userId();
     if (!userId) {
@@ -550,8 +550,8 @@ export type ContactParticipantsOptions = Type<typeof ContactParticipantsOptionsP
 export const contactParticipants = ServerMethod(
   "event.contactParticipants",
   async (eventId: string, message: string, options: ContactParticipantsOptions) => {
-    check(eventId, String);
-    check(message, String);
+    check(eventId, SafeString());
+    check(message, SafeString());
     check(options, ContactParticipantsOptionsPattern);
 
     const operator = await Meteor.userAsync();
@@ -570,7 +570,7 @@ export const contactParticipants = ServerMethod(
       throw new Meteor.Error(401, "not permitted");
     }
 
-    Notification["Event.ContactParticipants"].record(
+    await Notification["Event.ContactParticipants"].record(
       operator._id,
       message,
       eventId,
@@ -583,8 +583,8 @@ export const contactParticipants = ServerMethod(
 export const cancel = ServerMethod(
   "event.cancel",
   async (eventId: string, comment?: string | null) => {
-    check(eventId, String);
-    check(comment, Match.Maybe(String));
+    check(eventId, SafeString());
+    check(comment, Match.Maybe(SafeString()));
 
     const operator = await Meteor.userAsync();
     if (!operator) {
@@ -610,13 +610,13 @@ export const cancel = ServerMethod(
         comment = comment.trim().substring(0, 2000).trim();
       }
 
-      Notification["Event.Canceled"].record(operator._id, eventId, comment || "");
+      await Notification["Event.Canceled"].record(operator._id, eventId, comment || "");
     }
   },
 );
 
 export const uncancel = ServerMethod("event.uncancel", async (eventId: string) => {
-  check(eventId, String);
+  check(eventId, SafeString());
 
   const event = await Events.findOneAsync({ _id: eventId });
   if (!event) {

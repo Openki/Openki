@@ -273,17 +273,11 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
     }
   }
 
-  insert(event: Mongo.OptionalId<EventEntity>, callback?: (err?: unknown, _id?: string) => void) {
-    const enrichedEvent = tenantDenormalizer.beforeInsert(event);
-
-    return super.insert(enrichedEvent, callback);
-  }
-
-  insertAsync(
+  async insertAsync(
     event: Mongo.OptionalId<EventEntity>,
     callback?: (err?: unknown, _id?: string) => void,
   ) {
-    const enrichedEvent = tenantDenormalizer.beforeInsert(event);
+    const enrichedEvent = await tenantDenormalizer.beforeInsert(event);
 
     return super.insertAsync(enrichedEvent, callback);
   }

@@ -40,7 +40,7 @@ interface Body {
  * @param sendCopyToSender send a copy of the message to the author
  * @param context dictionary with context ID (course, venue, &c.)
  */
-export function record(
+export async function record(
   senderId: string,
   recipientId: string,
   message: string,
@@ -60,16 +60,12 @@ export function record(
 
   const recipients = [recipientId];
   if (sendCopyToSender) {
-    const sender = Users.findOne(senderId);
+    const sender = await Users.findOneAsync(senderId);
     if (!sender) {
       throw new Meteor.Error(404, "Sender not found");
     }
 
-    if (sender.hasEmail()) {
-      recipients.push(senderId);
-    } else {
-      throw new Meteor.Error(404, "Sender has no email address");
-    }
+    recipients.push(senderId);
   }
 
   const contextRel = Object.values(context);
@@ -87,13 +83,13 @@ export function record(
     context,
   };
 
-  Log.record("Notification.Send", rel, body);
+  await Log.record("Notification.Send", rel, body);
 }
 
-export function Model(entry: { body: Body }): NotificationModel<Props> {
+export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
-  const sender = Users.findOne(body.sender);
-  const targetRecipient = Users.findOne(body.targetRecipient);
+  const sender = await Users.findOneAsync(body.sender);
+  const targetRecipient = await Users.findOneAsync(body.targetRecipient);
 
   return {
     accepted(actualRecipient: UserModel) {
@@ -103,13 +99,9 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       ) {
         throw new Error("User wishes to not receive private messages from users");
       }
-
-      if (!actualRecipient.hasEmail()) {
-        throw new Error("Recipient has no email address registered");
-      }
     },
 
-    vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
+    async vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
       const campaign = "privateMessage";
 
@@ -163,7 +155,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
 
       const courseContextId = body.context.course;
       if (courseContextId) {
-        const course = Courses.findOne(courseContextId);
+        const course = await Courses.findOneAsync(courseContextId);
         if (!course) {
           throw new Meteor.Error(404, "course not found");
         }
@@ -177,7 +169,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
 
       const eventContextId = body.context.event;
       if (eventContextId) {
-        const event = Events.findOne(eventContextId);
+        const event = await Events.findOneAsync(eventContextId);
         if (!event) {
           throw new Meteor.Error(404, "event not found");
         }
@@ -200,7 +192,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       }
 
       if (regionId) {
-        region = Regions.findOne(regionId);
+        region = await Regions.findOneAsync(regionId);
       }
 
       vars.customEmailLogo = region?.custom?.emailLogo;

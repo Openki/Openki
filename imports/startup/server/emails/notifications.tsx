@@ -24,7 +24,7 @@ import { Root } from "../../../emails/Root";
  * @param message generated message (or null if we didn't get that far)
  * @param reason why this log entry was recorded
  */
-export function record(
+export async function record(
   note: { _id: string },
   unsubToken: string | null,
   sent: boolean,
@@ -49,45 +49,48 @@ export function record(
     rel.push(unsubToken);
   }
 
-  Log.record("Notification.SendResult", rel, entry);
+  await Log.record("Notification.SendResult", rel, entry);
+}
+
+function mapToObject<T>(map: [string, T][]) {
+  return Object.fromEntries(new Map(map).entries());
 }
 
 /**
  * Handle event notification
  * @param entry Notification.Event log entry to process
  */
-function send(
+async function send(
   entry: LogEntity & {
     body: { model: string; recipients: string[] };
   },
 ) {
   // Find out for which recipients sending has already been attempted.
-  const concluded: { [recipient: string]: boolean } = {};
+  const concluded = mapToObject(
+    await Log.find({
+      tr: "Notification.SendResult",
+      ts: { $gte: entry.ts },
+      rel: entry._id,
+    }).mapAsync((result) => [(result.body as { recipient: string }).recipient, true]),
+  );
 
-  Log.find({
-    tr: "Notification.SendResult",
-    rel: entry._id,
-  })
-    .map((r) => r as { body: { recipient: string } })
-    .forEach((result) => {
-      concluded[result.body.recipient] = true;
-    });
-
-  const model = (
+  const model = await (
     Notification as {
       [name: string]: {
-        Model<T>(_entry: unknown): Model<T>;
+        Model<T>(_entry: unknown): Promise<Model<T>>;
       };
     }
   )[entry.body.model].Model(entry);
 
-  entry.body.recipients.forEach((recipientId: string) => {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const recipientId of entry.body.recipients) {
     if (!concluded[recipientId]) {
       let mail: Email.EmailOptions | null = null;
       let unsubToken = null;
 
       try {
-        const user = Users.findOne(recipientId);
+        // eslint-disable-next-line no-await-in-loop
+        const user = await Users.findOneAsync(recipientId);
 
         if (!user) {
           throw new Error(`User not found for ID '${recipientId}'`);
@@ -105,7 +108,8 @@ function send(
         const subjectPrefix = `[${siteName}] `;
 
         unsubToken = Random.secret();
-        const vars = model.vars(locale, user, unsubToken);
+        // eslint-disable-next-line no-await-in-loop
+        const vars = await model.vars(locale, user, unsubToken);
 
         const message = renderToEmail(
           <Root
@@ -136,21 +140,23 @@ function send(
 
         Email.send(mail);
 
-        record(entry, unsubToken, true, recipientId, mail, "success");
+        // eslint-disable-next-line no-await-in-loop
+        await record(entry, unsubToken, true, recipientId, mail, "success");
       } catch (e) {
         let reason = e;
         if (typeof e === "object" && "toJSON" in e) {
           reason = e.toJSON();
         }
-        record(entry, unsubToken, false, recipientId, mail, reason);
+        // eslint-disable-next-line no-await-in-loop
+        await record(entry, unsubToken, false, recipientId, mail, reason);
       }
     }
-  });
+  }
 }
 
 // Watch the Log for event notifications
 if (runBackgroundTasks)
-  Meteor.startup(() => {
+  Meteor.startup(async () => {
     // To avoid sending stale notifications, only consider records added in the
     // last hours. This way, if the server should have failed for a longer time,
     // no notifications will go out.
@@ -158,7 +164,7 @@ if (runBackgroundTasks)
     gracePeriod.setHours(gracePeriod.getHours() - 72);
 
     // The Log is append-only so we only watch for additions
-    Log.find({ tr: "Notification.Send", ts: { $gte: gracePeriod } }).observe({
+    await Log.find({ tr: "Notification.Send", ts: { $gte: gracePeriod } }).observeAsync({
       added: send,
     });
   });

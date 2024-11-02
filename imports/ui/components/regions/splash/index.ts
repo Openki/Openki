@@ -1,7 +1,7 @@
 import { Session } from "meteor/session";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 
-import "/imports/ui/components/regions/selection";
+import "/imports/ui/components/regions/selection/wrap";
 
 import "./template.html";
 import "./styles.scss";

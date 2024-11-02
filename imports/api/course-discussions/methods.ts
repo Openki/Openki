@@ -12,9 +12,9 @@ import { Notification } from "../../startup/both/emails/notification";
 import * as StringTools from "/imports/utils/string-tools";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
-import { HtmlString, SaveString, Type, UnsaveString } from "/imports/utils/CustomChecks";
+import { HtmlString, SafeString, Type, UnsafeString } from "/imports/utils/CustomChecks";
 
-const sanitizeComment = (comment: { title?: string | undefined; text: UnsaveString }) => {
+const sanitizeComment = (comment: { title?: string | undefined; text: UnsafeString }) => {
   const saneTitle = StringTools.saneTitle(comment.title || "")
     .substring(0, 200)
     .trim();
@@ -25,9 +25,9 @@ const sanitizeComment = (comment: { title?: string | undefined; text: UnsaveStri
 };
 
 export const PostCommentFieldsPattern = {
-  courseId: SaveString(),
-  parentId: Match.Optional(SaveString()),
-  title: Match.Optional(SaveString()),
+  courseId: SafeString(),
+  parentId: Match.Optional(SafeString()),
+  title: Match.Optional(SafeString()),
   text: HtmlString(),
   anon: Boolean,
   notifyAll: Match.Optional(Boolean),
@@ -91,16 +91,16 @@ export const postComment = ServerMethod(
 
     const commentId = await CourseDiscussions.insertAsync(saneComment);
 
-    Notification.Comment.record(commentId);
+    await Notification.Comment.record(commentId);
 
     return commentId;
   },
 );
 
 export const EditCommentFieldsPattern = {
-  _id: SaveString(),
-  title: SaveString(),
-  text: SaveString(),
+  _id: SafeString(),
+  title: SafeString(),
+  text: SafeString(),
 };
 export type EditCommentFields = Type<typeof EditCommentFieldsPattern>;
 
@@ -128,8 +128,8 @@ export const editComment = ServerMethod(
 
 export const deleteComment = ServerMethod(
   "courseDiscussion.deleteComment",
-  async (commentId: UnsaveString) => {
-    check(commentId, SaveString());
+  async (commentId: UnsafeString) => {
+    check(commentId, SafeString());
 
     const user = await Meteor.userAsync();
     if (!user) {

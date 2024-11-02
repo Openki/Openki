@@ -2,10 +2,11 @@ import { Match } from "meteor/check";
 import { Session } from "meteor/session";
 import { useTranslation } from "react-i18next";
 import { useSession } from "./react-meteor-data";
+import { SafeString } from "./CustomChecks";
 
 /** allows localised value eg. with `getLocalizedValue(...)` to have a string per language. */
 export const LocalizedValuePattern = Match.OneOf(
-  String,
+  SafeString(),
   Match.ObjectIncluding<Record<string, string | undefined>>({}),
 );
 

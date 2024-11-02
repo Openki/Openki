@@ -48,13 +48,13 @@ export class ScrubRule {
     this.unset = unset;
   }
 
-  scrub(log: LogCollection, now: moment.Moment) {
+  async scrub(log: LogCollection, now: moment.Moment) {
     const today = moment(now).startOf("day");
     const cutoff = today.subtract(this.grace, "days").toDate();
     const select: Mongo.Selector<LogEntity> = { ...this.select, ts: { $lt: cutoff } };
 
     // Register intent to scrub in the log
-    const pending = log.record("scrub", [this.name], {
+    const pending = await log.record("scrub", [this.name], {
       rule: this.name,
       cutoff,
     });
@@ -121,9 +121,11 @@ export class Scrubber {
     this.rules = rules;
   }
 
-  scrub(log: LogCollection, now: moment.Moment) {
-    this.rules.forEach((rule) => {
-      rule.scrub(log, now);
-    });
+  async scrub(log: LogCollection, now: moment.Moment) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const rule of this.rules) {
+      // eslint-disable-next-line no-await-in-loop
+      await rule.scrub(log, now);
+    }
   }
 }

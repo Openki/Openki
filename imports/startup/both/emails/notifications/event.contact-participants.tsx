@@ -36,7 +36,7 @@ interface Body {
  * @param revealSenderAddress include email-address of sender in message
  * @param sendCopyToSender send a copy of the message to the author
  */
-export function record(
+export async function record(
   senderId: string,
   message: string,
   eventId: string,
@@ -51,7 +51,7 @@ export function record(
 
   const recipients = [];
 
-  const event = Events.findOne(eventId);
+  const event = await Events.findOneAsync(eventId);
   if (!event) {
     throw new Meteor.Error(`No event for ${eventId}`);
   }
@@ -65,16 +65,12 @@ export function record(
   recipients.push(...participants.filter((p) => p !== senderId));
 
   if (sendCopyToSender) {
-    const sender = Users.findOne(senderId);
+    const sender = await Users.findOneAsync(senderId);
     if (!sender) {
       throw new Meteor.Error(404, "Sender not found");
     }
 
-    if (sender.hasEmail()) {
-      recipients.push(senderId);
-    } else {
-      throw new Meteor.Error(404, "Sender has no email address");
-    }
+    recipients.push(senderId);
   }
 
   const body: Body = {
@@ -86,26 +82,22 @@ export function record(
     model: "Event.ContactParticipants",
   };
 
-  Log.record("Notification.Send", [senderId, eventId, ...recipients], body);
+  await Log.record("Notification.Send", [senderId, eventId, ...recipients], body);
 }
 
-export function Model(entry: { body: Body }): NotificationModel<Props> {
+export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
-  const sender = Users.findOne(body.sender);
-  const event = Events.findOne(body.event);
+  const sender = await Users.findOneAsync(body.sender);
+  const event = await Events.findOneAsync(body.event);
 
   return {
     accepted(actualRecipient: UserModel) {
       if (!actualRecipient.allowPrivateMessages) {
         throw new Error("User wishes to not receive private messages from users");
       }
-
-      if (!actualRecipient.hasEmail()) {
-        throw new Error("Recipient has no email address registered");
-      }
     },
 
-    vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
+    async vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
       const campaign = "eventContactParticipants";
 
@@ -130,7 +122,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       // Find out whether this is the copy sent to the sender.
       const senderCopy = sender._id === actualRecipient._id;
 
-      const region = Regions.findOne(event.region);
+      const region = await Regions.findOneAsync(event.region);
 
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);

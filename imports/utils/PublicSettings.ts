@@ -1,4 +1,4 @@
-import { Match, check } from "meteor/check";
+import { Match } from "meteor/check";
 import { Meteor } from "meteor/meteor";
 import merge from "deepmerge";
 
@@ -224,9 +224,6 @@ const publicSettings = merge(defaults, Meteor.settings.public);
 
 // seperate merge of matomo to make jsPath and phpPath optional
 publicSettings.matomo = { ...defaults.matomo, ...Meteor.settings.public.matomo };
-
-// Check that everything is set as expected in the settings.
-check(publicSettings, PublicSettingsPattern);
 
 /**
  * Get access to some settings from the `Meteor.settings.public` enriched with default values.
