@@ -9,6 +9,10 @@ import { UserModel, UserProfile, Users } from "/imports/api/users/users";
 import { isEmail } from "/imports/utils/email-tools";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { NotAllowedCharacter } from "../both/NotAllowedCharacter";
+import {
+  LoginExpirationInDays,
+  PasswordResetTokenExpirationInDays,
+} from "../both/UseraccountsConfiguration";
 
 Meteor.startup(() => {
   const serviceConf = PrivateSettings.service;
@@ -169,4 +173,6 @@ Accounts.onLogin(async (options: any) => {
 
 Accounts.config({
   sendVerificationEmail: true,
+  loginExpirationInDays: LoginExpirationInDays,
+  passwordResetTokenExpirationInDays: PasswordResetTokenExpirationInDays,
 });
