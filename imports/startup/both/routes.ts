@@ -113,10 +113,9 @@ RouterAsync.route("home", {
     const { query } = this.params;
 
     // Add filter options for the homepage
-    return _.extend(query, {
-      internal: false,
-      region: Session.get("region"),
-    });
+    return {
+      query: { ...query, internal: false, region: Session.get("region") },
+    };
   },
 });
 
@@ -133,10 +132,9 @@ RouterAsync.route("search", {
     const { query } = this.params;
 
     // Add filter options for the homepage
-    return _.extend(query, {
-      internal: false,
-      region: Session.get("region"),
-    });
+    return {
+      query: { ...query, internal: false, region: Session.get("region") },
+    };
   },
 });
 
@@ -181,10 +179,11 @@ RouterAsync.route("groupDetails", {
       return undefined;
     }
 
-    const courseQuery = Object.assign(this.params.query, {
+    const courseQuery = {
+      ...this.params.query,
       group: group._id,
       region: Session.get("region"),
-    });
+    };
 
     return {
       courseQuery,
