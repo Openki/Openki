@@ -3,9 +3,9 @@ import { useTranslation } from "react-i18next";
 
 import * as Metatags from "/imports/utils/metatags";
 
-import { Edit } from "/imports/ui/components/courses/edit";
+import { Data, Edit } from "/imports/ui/components/courses/edit";
 
-export function CourseProposePage() {
+export function CourseProposePage(data: Data) {
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export function CourseProposePage() {
 
   return (
     <div className="container mw-md">
-      <Edit />
+      <Edit {...data} />
     </div>
   );
 }
