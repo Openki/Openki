@@ -66,7 +66,7 @@
       }
     , { "entity": "course"
       , "title": "dashboard.recentActivities.title"
-      , "query": ""
+      , "query": "internal=0"
       }
     , { "entity": "course"
       , "title": "Chaos Computer Club Zürich"
@@ -94,7 +94,7 @@
       }
     , { "entity": "eventsMap"
       , "title": "dashboard.eventsMap.title"
-      , "query": "after=now"
+      , "query": "after=now&internal=0&canceled=0"
       }
     , { "entity": "propose"
       }
@@ -102,7 +102,7 @@
   , "groupDashboardDefault":
     [ { "entity": "course"
       , "title": "dashboard.recentActivities.title"
-      , "query": ""
+      , "query": "internal=0"
       }
     , { "entity": "event"
       , "title": "dashboard.upcomingEvents.title"
@@ -122,7 +122,7 @@
       }
     , { "entity": "eventsMap"
       , "title": "dashboard.eventsMap.title"
-      , "query": "after=now"
+      , "query": "after=now&internal=0&canceled=0"
       }
     , { "entity": "propose"
       }
