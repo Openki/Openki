@@ -172,7 +172,7 @@ export type Props = {
 
 type Hook =
   | {
-      showAll: { link: string; text: string | undefined };
+      showAll: { link: string | undefined; text: string | undefined };
       entity: string;
       title: string;
       isLoading: () => boolean;
