@@ -22,6 +22,8 @@ export type Props = {
     | undefined;
   small?: boolean;
   containsPropose?: boolean;
+  /** that should be added on propose a new course */
+  group?: string | undefined;
 };
 
 export function CourseList({
@@ -30,6 +32,7 @@ export function CourseList({
   categorieTagEvents,
   small,
   containsPropose,
+  group,
 }: Props) {
   return (
     <div
@@ -40,7 +43,7 @@ export function CourseList({
           {/* The sevent box should allways be the propose one */}
           {containsPropose && (index + 1) % 7 === 0 ? (
             <div className="col">
-              <CompactPropose />
+              <CompactPropose group={group} groupTagEvents={groupTagEvents} />
             </div>
           ) : null}
           <div className="col">

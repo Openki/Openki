@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
@@ -45,7 +46,13 @@ const mapping: {
         showAll?: { text?: string };
         filter: () => Filtering<any>;
         find: Publication<any, any>;
-        element: (entity: any, index: number) => React.JSX.Element;
+        element: (
+          entity: any,
+          index: number,
+          params: {
+            [k: string]: string;
+          },
+        ) => React.JSX.Element;
       }
     /** A static component with entites eg. like eventMap */
     | {
@@ -53,25 +60,30 @@ const mapping: {
         showAll?: { text?: string };
         filter: () => Filtering<any>;
         find: Publication<any, any>;
-        component: (entitys: any) => React.JSX.Element;
+        component: (
+          entitys: any,
+          params: {
+            [k: string]: string;
+          },
+        ) => React.JSX.Element;
       }
     /** A static component eg. like propose */
     | {
         route?: string;
         showAll?: { text?: string };
-        component: (data: any) => React.JSX.Element;
+        component: (params: { [k: string]: string }) => React.JSX.Element;
       };
 } = {
   course: {
     route: "search",
     filter: CourseCollection.Filtering,
     find: Courses.useFindFilter,
-    element: (course: CourseModel, index: number) => (
+    element: (course: CourseModel, index, params) => (
       <React.Fragment key={course._id}>
         {/* The sevent box should allways be the propose one */}
         {(index + 1) % 7 === 0 ? (
           <div className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
-            <CompactPropose />{" "}
+            <CompactPropose group={params.group} />
           </div>
         ) : null}
         <div className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
@@ -139,9 +151,9 @@ const mapping: {
     ),
   },
   propose: {
-    component: (data) => (
+    component: (params: any) => (
       <div className="container mw-md">
-        <Edit {...CourseTemplate()} {...data} />
+        <Edit {...CourseTemplate()} {...params} />
       </div>
     ),
   },
@@ -160,26 +172,44 @@ export type Props = {
 
 type Hook =
   | {
-      showAll: { link: string | undefined; text: string | undefined };
+      showAll: { link: string; text: string | undefined };
       entity: string;
       title: string;
-      query?: string;
       isLoading: () => boolean;
-      data: { [k: string]: string };
-      route: string | undefined;
-      element: undefined;
-      component: (data: any) => React.JSX.Element;
+      params: { [k: string]: string };
+      data: any;
+      route: string;
+      element: (
+        entity: any,
+        index: number,
+        params: {
+          [k: string]: string;
+        },
+      ) => React.JSX.Element;
     }
   | {
       showAll: { link: string; text: string | undefined };
       entity: string;
       title: string;
-      query?: string;
       isLoading: () => boolean;
+      params: { [k: string]: string };
       data: any;
       route: string;
-      element: any;
-      component: any;
+      component: (
+        entitys: any,
+        params: {
+          [k: string]: string;
+        },
+      ) => React.JSX.Element;
+    }
+  | {
+      showAll: { link: string | undefined; text: string | undefined };
+      entity: string;
+      title: string;
+      params: { [k: string]: string };
+      route: string | undefined;
+      element: undefined;
+      component: (params: { [k: string]: string }) => React.JSX.Element;
     };
 
 export function Dashboard({ list, region, group }: Props) {
@@ -209,10 +239,8 @@ export function Dashboard({ list, region, group }: Props) {
     if (!("filter" in handler)) {
       // A static component
       return {
-        isLoading: () => false,
-        data: params,
+        params,
         route: handler.route,
-        element: undefined,
         component: handler.component,
         ...i,
         showAll: {
@@ -238,6 +266,7 @@ export function Dashboard({ list, region, group }: Props) {
     const [isLoading, data] = handler.find(query, 10, 0, sort.spec());
     return {
       isLoading,
+      params,
       data,
       route: handler.route,
       element: (handler as any).element,
@@ -257,23 +286,27 @@ export function Dashboard({ list, region, group }: Props) {
     <>
       {(hooks.filter((h) => h) as Hook[]).map((h, i) => (
         <React.Fragment key={i}>
-          {!h.isLoading() && (!Array.isArray(h.data) || h.data.length > 0) ? (
-            <div className="container mb-4">
-              {h.showAll.link ? (
-                <a className="btn btn-sm btn-success float-end" href={h.showAll.link}>
-                  {h.showAll.text}
-                </a>
-              ) : null}
-              {h.title ? <h2>{getLocalizedValue(h.title)}</h2> : null}
-              {h.element ? (
-                <div className="d-flex flex-row flex-nowrap pb-3 overflow-x-scroll">
-                  {h.data.map(h.element)}
-                </div>
-              ) : (
-                h.component?.(h.data)
-              )}
-            </div>
-          ) : null}
+          {"isLoading" in h ? (
+            !h.isLoading() && (!Array.isArray(h.data) || h.data.length > 0) ? (
+              <div className="container mb-4">
+                {h.showAll.link ? (
+                  <a className="btn btn-sm btn-success float-end" href={h.showAll.link}>
+                    {h.showAll.text}
+                  </a>
+                ) : null}
+                {h.title ? <h2>{getLocalizedValue(h.title)}</h2> : null}
+                {"element" in h && h.element ? (
+                  <div className="d-flex flex-row flex-nowrap pb-3 overflow-x-scroll">
+                    {h.data.map((d: any, ii: number) => h.element(d, ii, h.params))}
+                  </div>
+                ) : (
+                  h.component(h.data, h.params)
+                )}
+              </div>
+            ) : null
+          ) : (
+            h.component(h.params)
+          )}
         </React.Fragment>
       ))}
     </>

@@ -332,6 +332,8 @@ export function Find({ query }: Props) {
               courses={results()}
               groupTagEvents={groupTagEvents()}
               categorieTagEvents={categorieTagEvents()}
+              containsPropose={true}
+              group={filter.get("group")}
             />
             {hasMore() ? (
               <div className="text-center mt-3">
