@@ -39,7 +39,9 @@ export function CompactPropose({ group, groupTagEvents }: Props) {
 
   return (
     <div
-      className={`row mx-0 align-items-start course-compact is-proposal group-${group}`}
+      className={`row mx-0 align-items-start course-compact is-proposal${
+        group ? ` group-${group}` : ""
+      }`}
       ref={elementRef}
     >
       <div className="course-compact-content ps-2 pe-2">
@@ -47,7 +49,9 @@ export function CompactPropose({ group, groupTagEvents }: Props) {
           <form
             onSubmit={(event) => {
               event.preventDefault();
-              Router.go("proposeCourse", undefined, { query: { title, group } });
+              Router.go("proposeCourse", undefined, {
+                query: group ? { title, group } : { title },
+              });
             }}
           >
             <div className="input-group input-group-lg p-2">
