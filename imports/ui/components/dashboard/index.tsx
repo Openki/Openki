@@ -80,8 +80,8 @@ const mapping: {
     find: Courses.useFindFilter,
     element: (course: CourseModel, index, params) => (
       <React.Fragment key={course._id}>
-        {/* The sevent box should allways be the propose one */}
-        {(index + 1) % 7 === 0 ? (
+        {/* The sevent box should allways be the propose one, after then every 11 */}
+        {(index - 6) % 11 === 0 ? (
           <div className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
             <CompactPropose group={params.group} />
           </div>
