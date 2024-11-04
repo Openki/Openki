@@ -65,10 +65,10 @@ export function EventParticipants({ event }: Props) {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    if (!showModal) {
+    const element = modalRef.current as unknown as Element;
+    if (!showModal || !element) {
       return;
     }
-    const element = modalRef.current as unknown as Element;
     Modal.getOrCreateInstance(element).show();
     element.addEventListener("hidden.bs.modal", () => {
       setShowModal(false);

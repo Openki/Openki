@@ -26,10 +26,10 @@ export function ParticipantContact(props: Props) {
   const [isLoading, participant] = Users.useDetails(props.participant);
 
   useEffect(() => {
-    if (!showModal) {
+    const element = modalRef.current as unknown as Element;
+    if (!showModal || !element) {
       return;
     }
-    const element = modalRef.current as unknown as Element;
     Modal.getOrCreateInstance(element).show();
     element.addEventListener("hidden.bs.modal", () => {
       setShowModal(false);
