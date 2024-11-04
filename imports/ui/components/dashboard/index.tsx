@@ -18,6 +18,7 @@ import { CourseTemplate } from "../../lib/course-template";
 
 import { Edit } from "../courses/edit";
 import { CourseCompact } from "../../components/courses/compact";
+import { CompactPropose } from "/imports/ui/components/courses/compact-propose";
 import { EventCompact } from "../../components/events/compact";
 import { EventsMap } from "../../components/events/map";
 
@@ -44,7 +45,7 @@ const mapping: {
         showAll?: { text?: string };
         filter: () => Filtering<any>;
         find: Publication<any, any>;
-        element: (entity: any) => React.JSX.Element;
+        element: (entity: any, index: number) => React.JSX.Element;
       }
     /** A static component with entites eg. like eventMap */
     | {
@@ -62,6 +63,24 @@ const mapping: {
       };
 } = {
   course: {
+    route: "search",
+    filter: CourseCollection.Filtering,
+    find: Courses.useFindFilter,
+    element: (course: CourseModel, index: number) => (
+      <React.Fragment key={course._id}>
+        {/* The sevent box should allways be the propose one */}
+        {(index + 1) % 7 === 0 ? (
+          <div className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
+            <CompactPropose />{" "}
+          </div>
+        ) : null}
+        <div className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
+          <CourseCompact course={course} />
+        </div>
+      </React.Fragment>
+    ),
+  },
+  courseWithoutPropose: {
     route: "search",
     filter: CourseCollection.Filtering,
     find: Courses.useFindFilter,
