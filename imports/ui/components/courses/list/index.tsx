@@ -22,7 +22,7 @@ export type Props = {
     | undefined;
   small?: boolean;
   containsPropose?: boolean;
-  /** that should be added on propose a new course, after then every 11 */
+  /** that should be added on propose a new course */
   group?: string | undefined;
 };
 
@@ -40,7 +40,7 @@ export function CourseList({
     >
       {courses.map((course, index) => (
         <React.Fragment key={course._id}>
-          {/* The sevent box should allways be the propose one */}
+          {/* The sevent box should allways be the propose one, after then every 11 */}
           {containsPropose && (index - 6) % 10 === 0 ? (
             <div className="col">
               <CompactPropose group={group} groupTagEvents={groupTagEvents} />
