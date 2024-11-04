@@ -3,14 +3,22 @@ import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 
 import * as Alert from "/imports/api/alerts/alert";
+import { useAccount } from "/imports/api/users/publications";
 
 import { AccountsAsync } from "/imports/utils/promisify";
 import * as Metatags from "/imports/utils/metatags";
 
 import { ButtonCancel } from "/imports/ui/components/buttons";
+import { TokenExpired } from "../../components/token-expired";
 
-export function ResetPasswordPage(data: { token: string }) {
+export type Props = {
+  email: string;
+  token: string;
+};
+
+export function ResetPasswordPage({ token, email }: Props) {
   const { t } = useTranslation();
+  const [isLoading, user] = useAccount(token);
 
   const [isBusy, setIsBusy] = useState<false | "saving">(false);
 
@@ -40,8 +48,6 @@ export function ResetPasswordPage(data: { token: string }) {
     event.preventDefault();
     setIsBusy("saving");
 
-    const { token } = data;
-
     try {
       await AccountsAsync.resetPassword(token, password);
 
@@ -61,6 +67,14 @@ export function ResetPasswordPage(data: { token: string }) {
   useEffect(() => {
     Metatags.setCommonTags(t("resetPassword.siteTitle", "Reset password"));
   });
+
+  if (isLoading()) {
+    return null;
+  }
+
+  if (!user) {
+    return <TokenExpired email={email} />;
+  }
 
   return (
     <div className="container mw-md">

@@ -44,7 +44,7 @@ template.helpers({
   },
 
   resetPasswortEmailSended() {
-    return Router.current().params.query.action === "resetPasswortEmailSended";
+    return Router.current().params.query?.action === "resetPasswortEmailSended";
   },
 
   hasPricePolicy() {
