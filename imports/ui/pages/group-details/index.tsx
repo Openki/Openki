@@ -315,7 +315,9 @@ export function GroupDetailsPage(data: Data) {
           ) : null}
           {allowEditingSettings() ? <GroupSettings group={data.group} /> : null}
         </div>
-        {!dashboardAttr().list.length && data.showCourses ? <Find {...data.courseQuery} /> : null}
+        {!dashboardAttr().list.length && data.showCourses ? (
+          <Find query={data.courseQuery} />
+        ) : null}
       </div>
       {dashboardAttr().list.length && data.showCourses ? <Dashboard {...dashboardAttr()} /> : null}
     </>
