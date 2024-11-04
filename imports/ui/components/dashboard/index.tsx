@@ -135,8 +135,8 @@ export type Props = {
     query?: string;
     showAll?: { link?: string; text?: string };
   }[];
-  region?: string;
-  group?: string;
+  region?: string | undefined;
+  group?: string | undefined;
 };
 
 type Hook =

@@ -1,49 +1,47 @@
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+/* eslint-disable no-nested-ternary */
+import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
-import { Regions } from "/imports/api/regions/regions";
-
-import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
+import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
-import { CourseTemplate } from "../../lib/course-template";
+import { Find } from "../../components/courses/find";
+import { Dashboard } from "../../components/dashboard";
 
-import "/imports/ui/components/courses/find";
-import "/imports/ui/components/dashboard";
+export type Props = { group?: string; search?: string };
 
-import "./template.html";
+export function DashboardPage({ group, search }: Props) {
+  const { t } = useTranslation();
+  const region = useCurrentRegion();
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "dashboardPage",
-  Record<string, string> & {
-    internal: boolean;
-    region: string;
-  }
->;
-
-const template = Template.dashboardPage;
-
-template.onCreated(function () {
-  const instance = this;
-
-  instance.autorun(() => {
-    const { search } = Template.currentData();
+  useEffect(() => {
     if (search) {
-      Metatags.setCommonTags(i18n("find.windowtitle", 'Find "{SEARCH}"', { SEARCH: search }));
+      Metatags.setCommonTags(t("find.windowtitle", 'Find "{SEARCH}"', { SEARCH: search }));
     } else {
-      Metatags.setCommonTags(i18n("find.WhatLearn?"));
+      Metatags.setCommonTags(t("find.WhatLearn?"));
     }
   });
-});
 
-template.helpers({
-  region() {
-    return Regions.currentRegion();
-  },
-  newCourse() {
-    const instance = Template.instance();
-    const { group } = instance.data;
-    const course = CourseTemplate();
-    course.group = group;
-    return course;
-  },
-});
+  return (
+    <div className="container">
+      {region?.dashboard ? (
+        <Dashboard region={region._id} list={region.dashboard} group={group} />
+      ) : PublicSettings.regionDashboardDefault ? (
+        <Dashboard
+          region={region?._id}
+          list={PublicSettings.regionDashboardDefault}
+          group={group}
+        />
+      ) : (
+        <Find />
+      )}
+    </div>
+  );
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("DashboardPage", () => DashboardPage);
