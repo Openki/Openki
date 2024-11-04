@@ -1,20 +1,26 @@
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
-import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
 
-import "/imports/ui/components/courses/edit";
+import { Edit } from "/imports/ui/components/courses/edit";
 
+export function CourseProposePage() {
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    Metatags.setCommonTags(t("course.propose.windowtitle", "Propose new course"));
+  });
+
+  return (
+    <div className="container mw-md">
+      <Edit />
+    </div>
+  );
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
 import "./template.html";
 
-const Template = TemplateAny as TemplateStaticTyped<"courseProposePage">;
-
-const template = Template.courseProposePage;
-
-template.onCreated(function () {
-  const instance = this;
-
-  instance.autorun(() => {
-    Metatags.setCommonTags(i18n("course.propose.windowtitle", "Propose new course"));
-  });
-});
+Template.registerHelper("CourseProposePage", () => CourseProposePage);
