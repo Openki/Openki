@@ -18,7 +18,7 @@ export function TokenExpired({ email }: { email: string }) {
             className="btn btn-lg btn-success fs-2"
             href={Router.path("resetPasswortEmail", {}, { query: { email } })}
           >
-            {t("resetPassword.tokenExpired.button", "Send me new one")}
+            {t("resetPassword.tokenExpired.button", "Send me a new one")}
           </a>{" "}
           <small>
             <i className="fa-solid fa-circle-info"></i>{" "}
