@@ -273,7 +273,15 @@ RouterAsync.route("proposeCourse", {
   async onRun() {
     await import("/imports/ui/pages/course-create");
   },
-  data: CourseTemplate,
+  data() {
+    const { query } = this.params;
+
+    const course = CourseTemplate();
+
+    course.name = query.title || "";
+
+    return { ...course, group: query.group };
+  },
 });
 
 RouterAsync.route("resetPassword", {
