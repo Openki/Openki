@@ -1,31 +1,36 @@
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React, { useEffect } from "react";
 
-import { i18n } from "/imports/startup/both/i18next";
+import { useTranslation } from "react-i18next";
 import * as Metatags from "/imports/utils/metatags";
 
-import "/imports/ui/components/courses/find";
+import { Find } from "/imports/ui/components/courses/find";
 
-import "./template.html";
+export type Props = {
+  query: {
+    [key: string]: string | undefined;
+  };
+};
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "findPage",
-  Record<string, string> & {
-    internal: boolean;
-    region: string;
-  }
->;
+export function FindPage({ query }: Props) {
+  const { t } = useTranslation();
 
-const template = Template.findPage;
-
-template.onCreated(function () {
-  const instance = this;
-
-  instance.autorun(() => {
-    const { search } = Template.currentData();
-    if (search) {
-      Metatags.setCommonTags(i18n("find.windowtitle", 'Find "{SEARCH}"', { SEARCH: search }));
+  useEffect(() => {
+    if (query.search) {
+      Metatags.setCommonTags(t("find.windowtitle", 'Find "{SEARCH}"', { SEARCH: query.search }));
     } else {
-      Metatags.setCommonTags(i18n("find.WhatLearn?"));
+      Metatags.setCommonTags(t("find.WhatLearn?"));
     }
   });
-});
+
+  return (
+    <div className="container">
+      <Find query={query} />
+    </div>
+  );
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("FindPage", () => FindPage);

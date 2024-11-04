@@ -9,9 +9,14 @@ import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 import { Find } from "../../components/courses/find";
 import { Dashboard } from "../../components/dashboard";
 
-export type Props = { group?: string; search?: string };
+export type Props = {
+  query: {
+    [key: string]: string | undefined;
+  };
+};
 
-export function DashboardPage({ group, search }: Props) {
+export function DashboardPage({ query }: Props) {
+  const { group, search } = query;
   const { t } = useTranslation();
   const region = useCurrentRegion();
 
@@ -34,7 +39,7 @@ export function DashboardPage({ group, search }: Props) {
           group={group}
         />
       ) : (
-        <Find />
+        <Find query={query} />
       )}
     </div>
   );
