@@ -32,13 +32,13 @@ import { venues } from "./data/venue.fixtures";
 /**
  * Make a number that looks like a human chose it, favouring 2 and 5
  */
-const humandistrib = function (prng: { (): number }): number {
+function humandistrib(prng: { (): number; }): number {
   const factors = [0, 0, 1, 2, 2, 3, 5, 5];
   return (
     factors[Math.floor(Math.random() * factors.length)] * (prng() > 0.7 ? humandistrib(prng) : 1) +
     (prng() > 0.5 ? humandistrib(prng) : 0)
   );
-};
+}
 
 /**
  * Select a date that is after the given date
@@ -47,7 +47,7 @@ const humandistrib = function (prng: { (): number }): number {
  * For future dates, a date between the original date and double the time between now and then
  * is chosen.
  */
-const sometimesAfter = function (date: Date) {
+function sometimesAfter(date: Date) {
   const prng = Prng("sometimesAfter");
 
   // Seconds between then and now
@@ -58,13 +58,13 @@ const sometimesAfter = function (date: Date) {
   const squaredPlacement = placement * placement;
 
   return new Date(date.getTime() + spread * squaredPlacement);
-};
+}
 
 // Unfortunately we can't make this a debugOnly package because the integration
 // tests use the data too, and they run with the --production flag.
 // This guard is here until we find a better solution.
 if (Meteor.isServer && PrivateSettings.testdata) {
-  const regionsCreate = function () {
+  function regionsCreate() {
     const userKopf = ensure.user("Kopf", undefined, true)._id;
 
     const prng = Prng("createRegions");
@@ -81,24 +81,24 @@ if (Meteor.isServer && PrivateSettings.testdata) {
     });
 
     return `Inserted ${regions.length} region fixtures.`;
-  };
+  }
 
-  const usersCreate = function () {
+  function usersCreate() {
     ensure.user("greg", undefined, true);
     ensure.user("Seee", undefined, true);
     ensure.user("1u", undefined, true);
     ensure.user("validated_mail", undefined, true);
     return "Inserted user fixtures.";
-  };
+  }
 
-  const infoPagesCreate = function () {
+  function infoPagesCreate() {
     infoPages.forEach((p) => {
       InfoPages.insert(p);
     });
     return "Inserted info pages fixtures.";
-  };
+  }
 
-  const groupsCreate = function () {
+  function groupsCreate() {
     groups.forEach((g) => {
       const group = { ...g } as unknown as Mongo.OptionalId<GroupEntity>;
       group.createdby = "ServerScript_loadingTestgroups";
@@ -111,9 +111,9 @@ if (Meteor.isServer && PrivateSettings.testdata) {
     });
 
     return `Inserted ${groups.length} group fixtures.`;
-  };
+  }
 
-  const eventsCreate = function () {
+  function eventsCreate() {
     // These events are most useful if they show up in the calendar for the
     // current week, so we move them from their original day into this
     // week but keep the weekday.
@@ -160,9 +160,9 @@ if (Meteor.isServer && PrivateSettings.testdata) {
       });
 
     return `Inserted ${events.length} event fixtures.`;
-  };
+  }
 
-  const venuesCreate = function () {
+  function venuesCreate() {
     const prng = Prng("loadLocations");
 
     const testRegions = [
@@ -189,9 +189,9 @@ if (Meteor.isServer && PrivateSettings.testdata) {
     });
 
     return `Inserted ${venues.length} venue fixtures.`;
-  };
+  }
 
-  const coursesCreate = function () {
+  function coursesCreate() {
     const prng = Prng("createCourses");
 
     courses.forEach((c) => {
@@ -230,7 +230,7 @@ if (Meteor.isServer && PrivateSettings.testdata) {
     });
 
     return `Inserted ${courses.length} course fixtures.`;
-  };
+  }
 
   /**
    * Generate events for each course
@@ -238,7 +238,7 @@ if (Meteor.isServer && PrivateSettings.testdata) {
    * For each course, zero or more events are generated. Some will be in
    * the past, some in the future.
    */
-  const eventsGenerate = function () {
+  function eventsGenerate() {
     const prng = Prng("eventsGenerate");
     let count = 0;
 
@@ -293,11 +293,12 @@ if (Meteor.isServer && PrivateSettings.testdata) {
         event._id = ensure.fixedId([course._id, `${n}`]);
         event.title = `${course.name} ${_.sample(words)}`;
         event.description = HtmlTools.saneHtml(
-          words.slice(0, 10 + Math.floor(prng() * 30)).join(" "),
+          words.slice(0, 10 + Math.floor(prng() * 30)).join(" ")
         );
         event.groups = course.groups;
 
         let relativeDate = prng() - 0.7; // put 70% in the past, linear distribution
+
         // exponential decrease for events in the future
         if (relativeDate > 0) {
           relativeDate = (relativeDate * 5) ** 2;
@@ -323,7 +324,7 @@ if (Meteor.isServer && PrivateSettings.testdata) {
         event.startLocal = LocalTime.toString(date);
         event.start = regionZone.fromString(event.startLocal).toDate();
         event.endLocal = LocalTime.toString(
-          new Date(date.getTime() + humandistrib(prng) * 1000 * 60 * 4),
+          new Date(date.getTime() + humandistrib(prng) * 1000 * 60 * 4)
         );
         event.end = regionZone.fromString(event.endLocal).toDate();
 
@@ -340,9 +341,9 @@ if (Meteor.isServer && PrivateSettings.testdata) {
     });
 
     return `Generated ${count} course events.`;
-  };
+  }
 
-  const commentsGenerate = function () {
+  function commentsGenerate() {
     const prng = Prng("createComments");
     let count = 0;
 
@@ -359,7 +360,7 @@ if (Meteor.isServer && PrivateSettings.testdata) {
         comment.courseId = course._id;
         comment.title = _.sample(words, 1 + Math.floor(prng() * 3)).join(" ");
         comment.text = HtmlTools.saneHtml(
-          _.sample(words, 5).join(" ") + _.sample(words, Math.floor(prng() * 30)).join(" "),
+          _.sample(words, 5).join(" ") + _.sample(words, Math.floor(prng() * 30)).join(" ")
         );
 
         comment.time_created = sometimesAfter(course.time_created);
@@ -387,7 +388,7 @@ if (Meteor.isServer && PrivateSettings.testdata) {
     });
 
     return `Generated ${count} course comments.`;
-  };
+  }
 
   Meteor.methods({
     "fixtures.clean"() {
