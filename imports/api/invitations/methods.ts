@@ -33,7 +33,6 @@ export const createMany = ServerMethod(
     const createdAt = new Date();
     const createdBy = Meteor.userId();
 
-    // eslint-disable-next-line no-restricted-syntax
     for await (const i of emails.map(
       (e) =>
         ({

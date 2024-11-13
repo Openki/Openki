@@ -209,10 +209,10 @@ export function Find({ query }: Props) {
     return courses.length > courseLimit;
   }
   function results() {
-    return courses;
+    return courses.slice(0, courseLimit);
   }
   function filteredRegion() {
-    return Boolean(filter.get("region"));
+    return !!filter.get("region");
   }
   function activeFilters() {
     return hiddenFilters.some((f) => !!filter.get(f as any));

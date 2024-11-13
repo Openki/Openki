@@ -53,7 +53,6 @@ if (runBackgroundTasks)
   Meteor.startup(async () => {
     const skipInitial = (await UpdatesApplied.find().countAsync()) === 0;
 
-    // eslint-disable-next-line no-restricted-syntax
     for (const [name, updateAvailable] of Object.entries(UpdatesAvailable)) {
       // eslint-disable-next-line no-await-in-loop
       if ((await UpdatesApplied.find({ name }).countAsync()) === 0) {

@@ -265,7 +265,6 @@ export const adminRemove = ServerMethod(
     // Updated courses and events he is involted
     const courses = Courses.find({ "members.user": userId }).fetch();
 
-    // eslint-disable-next-line no-restricted-syntax
     for await (const course of courses) {
       await Events.updateAsync(
         { courseId: course._id },

@@ -85,7 +85,6 @@ async function apiResponse<T, U, F extends { [name: string]: Predicate<any> }, R
       .fetchAsync();
 
     const formattedModels: R[] = [];
-    // eslint-disable-next-line no-restricted-syntax
     for (const model of models) {
       // eslint-disable-next-line no-await-in-loop
       const formattedModel = await formatter(model);
@@ -177,7 +176,6 @@ export const Api = {
 
       evr.groups = [];
       const groups = ev.allGroups || [];
-      // eslint-disable-next-line no-restricted-syntax
       for (const groupId of groups) {
         // eslint-disable-next-line no-await-in-loop
         const group = await Groups.findOneAsync(groupId);

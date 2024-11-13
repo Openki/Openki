@@ -61,7 +61,7 @@ export interface GroupEntity {
   /** Customize the inputs that the user can enter when creating and editing a course. */
   customCourseFields?: GroupEntityCustomCourseFields[];
   dashboard?: {
-    entity: string;
+    entity: "group" | "course" | "courseWithoutPropose" | "event" | "eventsMap" | "propose";
     title: string;
     query: string;
     showAll?: { link?: string; text?: string };
