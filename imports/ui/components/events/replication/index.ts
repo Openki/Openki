@@ -204,7 +204,6 @@ template.events({
       const replicaDays = instance.activeDays();
       let removed = 0;
       let responses = 0;
-      // eslint-disable-next-line no-restricted-syntax
       for (const days of replicaDays) {
         /* create a new event for each time interval */
         const replicaEvent: EventsMethods.SaveFields = {

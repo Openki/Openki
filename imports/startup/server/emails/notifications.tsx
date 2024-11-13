@@ -82,7 +82,6 @@ async function send(
     }
   )[entry.body.model].Model(entry);
 
-  // eslint-disable-next-line no-restricted-syntax
   for (const recipientId of entry.body.recipients) {
     if (!concluded[recipientId]) {
       let mail: Email.EmailOptions | null = null;

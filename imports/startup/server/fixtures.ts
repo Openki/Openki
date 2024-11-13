@@ -35,23 +35,23 @@ if (runBackgroundTasks && Meteor.isServer && PrivateSettings.testdata) {
     methods: string[],
   ) => {
     if ((await collection.find().countAsync()) === 0) {
-      methods.forEach((method) => {
-        Meteor.call(method, logResult);
-      });
+      for (const method of methods) {
+        await Meteor.callAsync(method, logResult);
+      }
     }
   };
 
-  Meteor.startup(() => {
+  Meteor.startup(async () => {
     // Remove the rate-limiting to allow the tests repeated logins
     Accounts.removeDefaultRateLimit();
 
-    ifCollectionEmpty(InfoPages, ["fixtures.infoPages.create"]);
-    ifCollectionEmpty(Users, ["fixtures.users.create"]);
-    ifCollectionEmpty(Regions, ["fixtures.regions.create"]);
-    ifCollectionEmpty(Groups, ["fixtures.groups.create"]);
-    ifCollectionEmpty(Venues, ["fixtures.venues.create"]);
-    ifCollectionEmpty(Courses, ["fixtures.courses.create"]);
-    ifCollectionEmpty(Events, ["fixtures.events.create", "fixtures.events.generate"]);
-    ifCollectionEmpty(CourseDiscussions, ["fixtures.comments.generate"]);
+    await ifCollectionEmpty(InfoPages, ["fixtures.infoPages.create"]);
+    await ifCollectionEmpty(Users, ["fixtures.users.create"]);
+    await ifCollectionEmpty(Regions, ["fixtures.regions.create"]);
+    await ifCollectionEmpty(Groups, ["fixtures.groups.create"]);
+    await ifCollectionEmpty(Venues, ["fixtures.venues.create"]);
+    await ifCollectionEmpty(Courses, ["fixtures.courses.create"]);
+    await ifCollectionEmpty(Events, ["fixtures.events.create", "fixtures.events.generate"]);
+    await ifCollectionEmpty(CourseDiscussions, ["fixtures.comments.generate"]);
   });
 }

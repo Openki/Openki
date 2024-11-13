@@ -122,7 +122,6 @@ export class Scrubber {
   }
 
   async scrub(log: LogCollection, now: moment.Moment) {
-    // eslint-disable-next-line no-restricted-syntax
     for (const rule of this.rules) {
       // eslint-disable-next-line no-await-in-loop
       await rule.scrub(log, now);

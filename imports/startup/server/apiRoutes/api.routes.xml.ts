@@ -120,7 +120,6 @@ Router.route("api.0.xml", {
         .up();
 
       let dayIdx = 1;
-      // eslint-disable-next-line no-restricted-syntax
       for (const [date, dateEvents] of Object.entries(resultsByTimeAndRoom)) {
         const dayNode = scheduleNode.ele("day", {
           date,
@@ -130,7 +129,6 @@ Router.route("api.0.xml", {
         });
 
         dayIdx += 1;
-        // eslint-disable-next-line no-restricted-syntax
         for (const [room, roomEvents] of Object.entries(dateEvents)) {
           const roomNode = dayNode.ele("room", {
             name: room,

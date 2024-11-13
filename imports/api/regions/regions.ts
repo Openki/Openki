@@ -76,7 +76,7 @@ export interface RegionEntity {
     emailLogo?: string;
   };
   dashboard?: {
-    entity: string;
+    entity: "group" | "course" | "courseWithoutPropose" | "event" | "eventsMap" | "propose";
     title: string;
     query: string;
     showAll?: { link?: string; text?: string };
