@@ -808,7 +808,7 @@ export const events = [
     start: { $date: 1425505012741 },
     end: { $date: 1425507012741 },
     time_lastedit: { $date: 1425505012741 },
-    courseId: "eb5d462d",
+    courseId: "cbda598713",
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Stephan",
     time_created: { $date: 1425505012741 },
@@ -817,7 +817,7 @@ export const events = [
   },
   {
     _id: "o7xmFjNCqomatWMAz",
-    courseId: "821948d1",
+    courseId: "3210a268c2",
     createdBy: "Milva",
     description:
       "Verbringst du gerne Zeit am Wasser und wolltes immer schon einen Fisch selber fangen und zubereiten?<br /><p>Dann offenbart dir das Fliegenfischen eine neue Welt mit einem umfassenden Einblick in aquatische Ökosysteme. Fliegenfischen setzt Grundkenntnisse in Entomologie, Fischökologie, Studium des Wetters und eine gutes Auge für die Geschehnisse in am Wasser voraus. Insbesondere die technischen Grundlagen dieser anspruchsvollen Angeltechnik bilden Thema dieses Kurses. </p><p>Komm vorbei, wenn du Lust hast, die faszinierende Technik des Fliegenfischens einmal selbst auszuprobieren, oder mehr über die Angelfischerei im allgemeinen wissen möchtest.  \n\nWas lernst du dabei? Werfen mit der Fliegenrute als Einstieg ins Gebiet.</p>",
@@ -833,7 +833,7 @@ export const events = [
   {
     groups: ["NHW", "DIY-ZH"],
     _id: "gcT94v49CE9F2jz2C",
-    courseId: "32b2e56b",
+    courseId: "9602699f30",
     createdBy: "Serengeti",
     description:
       "<p>Wir haben hier genügend Platz für ca. 10 - 15 Menschen, jemand der Innendekorateurin gelernt hat (=nähen/ reparieren kann), einen kleinen Nähkasten und eine Nähmaschine (die nur Zick-Zack und gerade nähen kann).\n\nAm besten bringst du aber selbst etwas Nähzeug mit, wenn du hast. Wir beginnen um 16:00 Uhr und du kannst bis ca. 23:00 eintreffen/ hier sein.</p>",
@@ -849,7 +849,7 @@ export const events = [
   {
     groups: ["NHW"],
     _id: "RbnfsBXd6CsNxYYfK",
-    courseId: "71b0ebc9",
+    courseId: "40ccd81ccf",
     createdBy: "Die Speerspitze des Gedankenguts",
     description: "",
     end: { $date: 1425650400000 },
