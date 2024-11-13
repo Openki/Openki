@@ -16,24 +16,18 @@ import { PrivateSettings } from "/imports/utils/PrivateSettings";
 
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
-function logResult(error: unknown, result: unknown) {
-  if (error) {
-    throw error;
-  }
-  /* eslint-disable-next-line no-console */
-  console.log(result);
-}
-
 async function ifCollectionEmpty<
   T extends {
     [key: string]: any;
   },
   U,
 >(collection: Mongo.Collection<T, U>, methods: string[]) {
-  if ((await collection.find().countAsync()) === 0) {
+  if ((await collection.countDocuments()) === 0) {
     for (const method of methods) {
       // eslint-disable-next-line no-await-in-loop
-      await Meteor.callAsync(method, logResult);
+      const result = await Meteor.callAsync(method);
+      /* eslint-disable-next-line no-console */
+      console.log(result);
     }
   }
 }

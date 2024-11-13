@@ -11,8 +11,6 @@ import { UserEntity, Users } from "/imports/api/users/users";
 
 import * as StringTools from "/imports/utils/string-tools";
 
-/** @typedef {import('../users/users').UserEntity} UserEntity */
-
 export const ensure = {
   fixedId(strings: string[]) {
     const md5 = crypto.createHash("md5");
