@@ -1,6 +1,24 @@
 /* eslint max-len: 0 */
 
-export const courses = [
+export const courses: {
+  name: string;
+  categories?: string[];
+  tags: string[];
+  groups?: string[];
+  createdby: string;
+  description: string;
+  roles: string[];
+  members: {
+    user: string;
+    roles: string[];
+    comment?: string;
+  }[];
+  region?: string;
+  singleEvent?: boolean;
+  archived?: boolean;
+  comment?: string;
+  internal?: boolean;
+}[] = [
   {
     name: "Meditation & Yoga/Qi-Gong",
     categories: ["sports", "spiritual"],
@@ -110,20 +128,7 @@ export const courses = [
       { user: "Barbie92", roles: ["participant"] },
     ],
   },
-  /* {
-	'name':        'Super 8',
-	'categories': ['culture', 'film'],
-	'tags':       ['Kunst'],
-	'createdby':   'greg',
-	'flaged':     ['suspicious'],
-	'description': 'hab einiges an super-8-ghizzle das ich gar nicht brauch: kamera, projektor und so n fancy screen (siehe foto). falls jemand was deichseln will': ich, 25, gross, schlank, blond, schön, thurgauer dialekt, freu mich auf dein interesse!',
-	'roles':      ['team', 'participant', 'host'],
-	'members': [
-		{'user':'greg', 'roles': ['team','host']},
-		{'user':'LeOnI', 'roles': ['participant']},
-		{'user':'IvanZ', 'roles': ['participant']}
-	]
-}, */ {
+  {
     name: "Ubuntu auf Mac (dual-Boot)",
     categories: ["computer", "operating"],
     tags: [],
@@ -379,44 +384,7 @@ export const courses = [
       { user: "Flumsi", roles: ["host"] },
     ],
   },
-  /* {
-	'name':        'Sprayen Gehen',
-	'categories': ['culture', 'subculture'],
-	'tags':       ['Graffiti', 'Writing your name'],
-	'createdby':   'Fuck The Police',
-	'description': 'Lass uns mal so richtig die Sau rauslassen. Ich zeig allen wies geht, nehmt Dosen mit.',
-	'roles':      ['participant'],
-	'members': [
-		{'user':'Fuck The Police', 'roles': ['participant']},
-		{'user':'01', 'roles': ['participant']},
-		{'user':'Eimi', 'roles': ['participant']},
-		{'user':'~UnDeRdOuG~', 'roles': ['participant']},
-		{'user':'FiggDi', 'roles': ['participant']},
-		{'user':'Barbie92', 'roles': ['participant']},
-		{'user':'Mao', 'roles': ['participant']},
-		{'user':'Sandra', 'roles': ['participant']},
-		{'user':'FUFZIGRAPPER', 'roles': ['participant']},
-		{'user':'031', 'roles': ['participant']},
-		{'user':'Vollpfoschte98', 'roles': ['participant']},
-		{'user':'SchwarzMiFarb', 'roles': ['participant']}
-	]
-},{
-	'name':        'Feminischer Twerking Workshop'
-	'categories': ['culture', 'dance', 'humanities', 'politics'],
-	'tags':       ['say no to sexism' 'fightforyourrighttotwerk'],
-	'createdby':   'sexyanarchogirl',
-	'description': 'Ich liäbs mit mim Füdli z`twerkä, z`wiigglä, z`jigglä und z`gwaggle. Aber ich gsehn mich trotzdem als radikali Feministin. Isch das überhaupt möglich? Ich würd drum gern mal en Twerking-Workshop organisiere mit ahschlüssende Diskussion über “Queer-Anarchistischem Twerkä”. Iglade sind alli Fraue*, die sich für Queer und/oder Feminismus interessiered, unabhängig devo wie starch sie sich bis jetzt demit usenand gsetzt hend. Mit Fraue* mein ich alli Persone, wo sich als Fraue identifiziered.',
-	'roles':      ['team', 'participant', 'mentor', 'host'],
-	'members': [
-		{'user':'milena', 'roles': ['participant']},
-		{'user':'elvis', 'roles': ['participant']},
-		{'user':'european dancehallqueen', 'roles': ['participant']},
-		{'user':'babaroots sound system', 'roles': ['participant']},
-		{'user':'kos crew', 'roles': ['participant']},
-		{'user':' dj alibaba', 'roles': ['participant']}
-	]
-},
-*/ {
+  {
     name: "Mobiles Soundsystem bauen",
     categories: ["handicraft", "electronics", "culture", "music"],
     tags: ["1", "2"],
@@ -552,7 +520,7 @@ export const courses = [
     categories: [],
     tags: ["", ""],
     groups: ["CCC-ZH"],
-    internal: "true",
+    internal: true,
     createdby: "birdy1976",
     description:
       "<p>Wir planen die Umsetzung von Ideen und kreieren neue Projekte. Die Sitzung ist für alle die sich interessieren beim CCC mitzuwirken und schon ein ein paar veranstaltungen des CCC besucht haben.</p>",
@@ -570,7 +538,7 @@ export const courses = [
     categories: [],
     tags: ["", ""],
     groups: ["ASZ"],
-    internal: "true",
+    internal: true,
     createdby: "greg",
     description: "<p>Essen für alle für 5.- oder mehr oder weniger. Immer auch Vegan</p>",
     roles: ["team", "host"],
@@ -586,7 +554,7 @@ export const courses = [
     name: "Sonntags-Kino",
     tags: ["", ""],
     groups: ["ASZ"],
-    internal: "true",
+    internal: true,
     createdby: "greg",
     description: "<p>immer gute filme.</p>",
     roles: ["team"],
@@ -971,46 +939,7 @@ export const courses = [
       { user: "Flumsien", roles: ["host"] },
     ],
     region: "Englistan",
-  } /* {
-	'name':        'graffiti',
-	'categories': ['culture', 'subculture'],
-	'tags':       ['Graffiti', 'Writing your name'],
-	'createdby':   'Fuck The Policeen',
-	'description': 'Lets get mad. I show you how it works. Make sure you bring some cans.',
-	'roles':      ['participant'],
-	'members': [
-		{'user':'Fuck The Policeen', 'roles': ['participant']},
-		{'user':'01en', 'roles': ['participant']},
-		{'user':'Eimien', 'roles': ['participant']},
-		{'user':'~UnDeRdOuG~en', 'roles': ['participant']},
-		{'user':'FiggDien', 'roles': ['participant']},
-		{'user':'Barbie92en', 'roles': ['participant']},
-		{'user':'Maoen', 'roles': ['participant']},
-		{'user':'Sandraen', 'roles': ['participant']},
-		{'user':'FUFZIGRAPPERen', 'roles': ['participant']},
-		{'user':'031en', 'roles': ['participant']},
-		{'user':'Vollpfoschte98en', 'roles': ['participant']},
-		{'user':'SchwarzMiFarben', 'roles': ['participant']},
-		{'user':'PUBeRen', 'roles': ['participant']}
-	],
-	'region':      'Englistan'
-},{
-	'name':        'Feministic Twerking workshop'
-	'categories': ['culture', 'dance', humanities', 'politics'],
-	'tags':       ['say no to sexism' 'fightforyourrighttotwerk'],
-	'createdby':   'sexyanarchogirlen',
-	'description': 'I love to twerk, wiggle, jiggle and wine up my bumper. But Im still a radical feminist. Is that even possible or not? I would love to organize a Twerking Workshop with a discussion about "queeranarchistic twerking" afterwards. This workshop is for all women*interested in feminism and/or queer, no matter how much they are engaged in queer_feminism and anti-sexism already. With women* we understand  all persons that identify as women*.',
-	'roles':      ['team', 'participant', 'mentor', 'host'],
-	'members': [
-		{'user':'milenaen', 'roles': ['participant']},
-		{'user':'elvisen', 'roles': ['participant']},
-		{'user':'european dancehallqueenen', 'roles': ['participant']},
-		{'user':'babaroots sound systemen', 'roles': ['participant']},
-		{'user':'kos crewen', 'roles': ['participant']},
-		{'user':' dj alibabaen', 'roles': ['participant']}
-	],
-	'region':      'Englistan'
-}, */,
+  },
   {
     name: "Build your mobile Soundsystem",
     categories: ["handicraft", "electronics", "culture", "music"],
@@ -1049,7 +978,7 @@ export const courses = [
     categories: [],
     tags: ["", ""],
     groups: ["CCC-ZH"],
-    internal: "true",
+    internal: true,
     createdby: "birdy1976",
     description:
       "<p>Everybody welcome that allready knows our group and what we do. We realize all kinds of projects and events from these meetings</p>",
@@ -1068,7 +997,7 @@ export const courses = [
     categories: [],
     tags: ["", ""],
     groups: ["ASZ"],
-    internal: "true",
+    internal: true,
     createdby: "greg",
     description:
       "<p>Food not bombs Volks Kitchen, coocking togheter. write us if you want to help cooking</p>",
@@ -1087,7 +1016,7 @@ export const courses = [
     categories: [],
     tags: ["", ""],
     groups: ["ASZ"],
-    internal: "true",
+    internal: true,
     createdby: "greg",
     description: "<p>One movie better than the other!</p>",
     roles: ["team"],
