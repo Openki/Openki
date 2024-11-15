@@ -3,7 +3,7 @@ import { ensure } from "../ensureFixture";
 import { Prng } from "../Prng";
 import { regions } from "./data";
 
-export function regionsCreate() {
+export function create() {
   const userKopf = ensure.user("Kopf", undefined, true)._id;
 
   const prng = Prng("createRegions");
