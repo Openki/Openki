@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import { CourseEntity, Courses } from "/imports/api/courses/courses";
 import { ensure } from "/imports/api/fixtures/ensureFixture";
 import { Prng } from "/imports/api/fixtures/Prng";
@@ -11,7 +12,7 @@ export async function create() {
   for (const template of courses) {
     let region: string;
     if (template.region) {
-      region = ensure.region(template.region);
+      region = await ensure.region(template.region);
     } else {
       /* place in random test region, Spilistan or Testistan */
       region = prng() > 0.85 ? "9JyFCoKWkxnf8LWPh" : "EZqQLGL4PtFCxCNrp";
@@ -24,7 +25,7 @@ export async function create() {
       name: template.name,
       categories: template.categories || [],
       tags: template.tags || [],
-      groups: template.groups?.map(ensure.group) || [],
+      groups: await Promise.all(template.groups?.map((g) => ensure.group(g)) || []),
       groupOrganizers: [],
       description: template.description,
       compactImage: "",
@@ -32,14 +33,16 @@ export async function create() {
       slug: StringTools.slug(template.name),
       region,
       customFields: [],
-      createdby: ensure.user(template.createdby, region)._id,
+      createdby: (await ensure.user(template.createdby, region))._id,
       time_created: new Date(new Date().getTime() - age),
       time_lastedit: new Date(new Date().getTime() - age * 0.25),
       roles: template.roles,
-      members: template.members.map((member) => ({
-        ...member,
-        user: ensure.user(member.user, region)._id,
-      })),
+      members: await Promise.all(
+        template.members.map(async (member) => ({
+          ...member,
+          user: (await ensure.user(member.user, region))._id,
+        })),
+      ),
       internal: template.internal || false,
       singleEvent: template.singleEvent || false,
       archived: template.archived,

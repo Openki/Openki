@@ -19,11 +19,11 @@ import { create as regionsCreate } from "./regions/create";
 import { create as venueCreate } from "./venues/create";
 import { generate as commentsGenerate } from "./comments/generate";
 
-function usersCreate() {
-  ensure.user("greg", undefined, true);
-  ensure.user("Seee", undefined, true);
-  ensure.user("1u", undefined, true);
-  ensure.user("validated_mail", undefined, true);
+async function usersCreate() {
+  await ensure.user("greg", undefined, true);
+  await ensure.user("Seee", undefined, true);
+  await ensure.user("1u", undefined, true);
+  await ensure.user("validated_mail", undefined, true);
   return "Inserted user fixtures.";
 }
 
@@ -33,22 +33,22 @@ function usersCreate() {
 if (Meteor.isServer && PrivateSettings.testdata) {
   Meteor.methods({
     "fixtures.clean"() {
-      Groups.remove({});
-      Events.remove({});
-      Venues.remove({});
-      Courses.remove({});
+      Groups.removeAsync({});
+      Events.removeAsync({});
+      Venues.removeAsync({});
+      Courses.removeAsync({});
     },
 
     async "fixtures.create"() {
-      infoPagesCreate();
-      if (Regions.find().count() === 0) {
-        regionsCreate();
+      await infoPagesCreate();
+      if ((await Regions.countDocuments()) === 0) {
+        await regionsCreate();
       }
-      usersCreate();
-      groupsCreate();
-      venueCreate();
+      await usersCreate();
+      await groupsCreate();
+      await venueCreate();
       await coursesCreate();
-      eventsGenerate();
+      await eventsGenerate();
     },
     "fixtures.infoPages.create": infoPagesCreate,
     "fixtures.users.create": usersCreate,
