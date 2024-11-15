@@ -7,38 +7,26 @@ import {
   CourseDiscussionEnity,
   CourseDiscussions,
 } from "/imports/api/course-discussions/course-discussions";
-import { EventEntity, Events } from "/imports/api/events/events";
+import { Events } from "/imports/api/events/events";
 import { ensure } from "/imports/api/fixtures/ensureFixture";
 import { Prng } from "/imports/api/fixtures/Prng";
-import { GroupEntity, Groups } from "/imports/api/groups/groups";
+import { Groups } from "/imports/api/groups/groups";
 import { RegionEntity, Regions } from "/imports/api/regions/regions";
 import { Venues } from "/imports/api/venues/venues";
 import { Users } from "/imports/api/users/users";
 import { InfoPages } from "/imports/api/infoPages/infoPages";
 import { infoPages } from "./data/infoPages/infoPages";
 
-import { PublicSettings } from "/imports/utils/PublicSettings";
 import * as HtmlTools from "/imports/utils/html-tools";
-import { LocalTime } from "/imports/utils/local-time";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 
-import { groups } from "./data/group.fixtures";
 import { regions } from "./data/region.fixtures";
 import { venues } from "./data/venue.fixtures";
 
 import { create as coursesCreate } from "./courses/create";
 import { create as eventsCreate } from "./events/create";
-
-/**
- * Make a number that looks like a human chose it, favouring 2 and 5
- */
-function humandistrib(prng: { (): number }): number {
-  const factors = [0, 0, 1, 2, 2, 3, 5, 5];
-  return (
-    factors[Math.floor(Math.random() * factors.length)] * (prng() > 0.7 ? humandistrib(prng) : 1) +
-    (prng() > 0.5 ? humandistrib(prng) : 0)
-  );
-}
+import { groupsCreate } from "./groups/create";
+import { generate as eventsGenerate } from "./events/generate";
 
 /**
  * Select a date that is after the given date
@@ -94,21 +82,6 @@ function infoPagesCreate() {
   return "Inserted info pages fixtures.";
 }
 
-function groupsCreate() {
-  groups.forEach((g) => {
-    const group = { ...g } as unknown as Mongo.OptionalId<GroupEntity>;
-    group.createdby = "ServerScript_loadingTestgroups";
-
-    // Always use same id for same group to avoid broken urls while testing
-    group._id = ensure.fixedId([group.name, group.description]);
-    group.members =
-      g.members?.map((name) => ({ user: ensure.user(name, undefined)._id, notify: true })) || [];
-    Groups.insert(group);
-  });
-
-  return `Inserted ${groups.length} group fixtures.`;
-}
-
 function venuesCreate() {
   const prng = Prng("loadLocations");
 
@@ -136,117 +109,6 @@ function venuesCreate() {
   });
 
   return `Inserted ${venues.length} venue fixtures.`;
-}
-
-/**
- * Generate events for each course
- *
- * For each course, zero or more events are generated. Some will be in
- * the past, some in the future.
- */
-function eventsGenerate() {
-  const prng = Prng("eventsGenerate");
-  let count = 0;
-
-  const testVenues = [
-    "Haus am See",
-    "Kongresszentrum",
-    "Volkshaus",
-    "SQ131",
-    "Caffee Zähringer",
-    "Restaurant Krone",
-    "Hischengraben 3",
-    "SQ125",
-    "Hub",
-    "ASZ",
-    "ASZ",
-  ];
-
-  const rooms = [
-    "Grosser Saal",
-    "Vortragsraum",
-    "Erkerzimmer",
-    "Mirror-room",
-    "Garden",
-    "5",
-    "Moscow",
-    "Moscow",
-  ];
-
-  Courses.find().forEach((course) => {
-    const eventCount = Math.floor((prng() * 1.6) ** 10);
-    for (let n = 0; n < eventCount; n += 1) {
-      const event = {} as Mongo.OptionalId<EventEntity>;
-      let { description } = course;
-      if (!description) description = "No description"; // :-(
-      const words = _.shuffle(description.split(" "));
-      event.tenant = course.tenant;
-      event.region = course.region;
-      event.groups = course.groups;
-      event.groupOrganizers = [];
-
-      const venue = testVenues[Math.floor(prng() * testVenues.length)];
-      event.venue = ensure.venue(venue, event.region);
-
-      if (prng() > 0.6) {
-        event.room = rooms[Math.floor(prng() * rooms.length)];
-      }
-
-      event.internal = prng() < 0.07;
-      event.sendReminder = PublicSettings.sendReminderPreset;
-
-      event.courseId = course._id;
-      event._id = ensure.fixedId([course._id, `${n}`]);
-      event.title = `${course.name} ${_.sample(words)}`;
-      event.description = HtmlTools.saneHtml(
-        words.slice(0, 10 + Math.floor(prng() * 30)).join(" "),
-      );
-      event.groups = course.groups;
-
-      let relativeDate = prng() - 0.7; // put 70% in the past, linear distribution
-
-      // exponential decrease for events in the future
-      if (relativeDate > 0) {
-        relativeDate = (relativeDate * 5) ** 2;
-      }
-
-      const spread = 1000 * 60 * 60 * 24 * 365 * 1.24; // 1.2 years in ms
-      const timeOffset = Math.floor(relativeDate * spread);
-      const date = new Date(new Date().getTime() + timeOffset);
-      const hour = date.getHours();
-
-      // Events outside daylight 8-21 should be unlikely
-      if (prng() > 0.2 && (hour < 8 || hour > 21)) {
-        date.setHours(hour + 12);
-      }
-
-      // Quarter hours should be most common
-      if (prng() > 0.05) {
-        date.setMinutes(Math.floor(date.getMinutes() / 15) * 15);
-      }
-
-      const regionZone = LocalTime.zone(event.region);
-
-      event.startLocal = LocalTime.toString(date);
-      event.start = regionZone.fromString(event.startLocal).toDate();
-      event.endLocal = LocalTime.toString(
-        new Date(date.getTime() + humandistrib(prng) * 1000 * 60 * 4),
-      );
-      event.end = regionZone.fromString(event.endLocal).toDate();
-
-      const { members } = course;
-      const randomMember = members[Math.floor(Math.random() * members.length)];
-      event.createdBy = ensure.user(randomMember?.user || "Serverscript", event.region)._id;
-      const age = Math.floor(prng() * 10000000000);
-      event.time_created = new Date(new Date().getTime() - age);
-      event.time_lastedit = new Date(new Date().getTime() - age * 0.25);
-      Events.insert(event);
-    }
-
-    count += eventCount;
-  });
-
-  return `Generated ${count} course events.`;
 }
 
 function commentsGenerate() {
