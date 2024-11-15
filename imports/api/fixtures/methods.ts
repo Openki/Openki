@@ -22,12 +22,12 @@ import * as HtmlTools from "/imports/utils/html-tools";
 import { LocalTime } from "/imports/utils/local-time";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 
-import { events } from "./data/event.fixtures";
 import { groups } from "./data/group.fixtures";
 import { regions } from "./data/region.fixtures";
 import { venues } from "./data/venue.fixtures";
 
 import { create as coursesCreate } from "./courses/create";
+import { create as eventsCreate } from "./events/create";
 
 /**
  * Make a number that looks like a human chose it, favouring 2 and 5
@@ -107,55 +107,6 @@ function groupsCreate() {
   });
 
   return `Inserted ${groups.length} group fixtures.`;
-}
-
-function eventsCreate() {
-  // These events are most useful if they show up in the calendar for the
-  // current week, so we move them from their original day into this
-  // week but keep the weekday.
-  let dateOffset = 0;
-
-  events
-    // Don't create events that exist already
-    .filter((e) => !Events.findOne({ _id: e._id }))
-    .forEach((e) => {
-      const event = { ...e } as unknown as Mongo.OptionalId<EventEntity>;
-      event.createdBy = ensure.user(e.createdBy, e.region)._id;
-      event.groups = e.groups?.map(ensure.group) || [];
-      event.groupOrganizers = [];
-
-      // We place the first event in the series on the monday of this week
-      // and all later events relative to it.
-      if (dateOffset === 0) {
-        const weekstart = new Date();
-        weekstart.setHours(0);
-        weekstart.setMinutes(0);
-        weekstart.setSeconds(0);
-        weekstart.setDate(weekstart.getDate() - weekstart.getDay() + 1);
-
-        const dayOfFirstEvent = new Date(e.start.$date);
-        dayOfFirstEvent.setHours(0);
-        dayOfFirstEvent.setMinutes(0);
-        dayOfFirstEvent.setSeconds(0);
-        dateOffset = weekstart.getTime() - dayOfFirstEvent.getTime();
-      }
-
-      event.venue = ensure.venue(e.venue, e.region);
-      event.internal = Boolean(e.internal);
-      event.sendReminder = PublicSettings.sendReminderPreset;
-
-      const regionZone = LocalTime.zone(e.region);
-
-      event.startLocal = LocalTime.toString(new Date(e.start.$date + dateOffset));
-      event.start = regionZone.fromString(event.startLocal).toDate();
-      event.endLocal = LocalTime.toString(new Date(e.end.$date + dateOffset));
-      event.end = regionZone.fromString(event.endLocal).toDate();
-      event.time_created = new Date(e.time_created.$date);
-      event.time_lastedit = new Date(e.time_lastedit.$date);
-      Events.insert(event);
-    });
-
-  return `Inserted ${events.length} event fixtures.`;
 }
 
 function venuesCreate() {
