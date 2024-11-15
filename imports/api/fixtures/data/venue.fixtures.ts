@@ -1,4 +1,36 @@
-export const venues = [
+export const venues: {
+  name: string;
+  region: string;
+  categories: string[];
+  maxPeople?: string;
+  maxWorkplaces?: string;
+  address: string;
+  route?: string;
+  description?: string;
+  contact?: {
+    meetings: string;
+    email: string;
+    web: string;
+    fon: string;
+  };
+  picture?: string;
+  infra2?: string[];
+  infra?: {
+    projectionScreen: boolean | string;
+    projector: boolean | string;
+    audio: string;
+    blackboard: string;
+    whiteboard: string;
+    flipchart: string;
+    internet: string;
+    drink: string;
+    kitchen: string;
+    stage: string;
+    specials: string;
+  };
+  createdby?: string;
+  hosts?: string[];
+}[] = [
   {
     name: "Kasama",
     region: "J6GDhEEvdmdSMzPPF",
@@ -213,42 +245,4 @@ export const venues = [
     region: "J6GDhEEvdmdSMzPPF",
     categories: [""],
   },
-
-  /*
-{
-	'name':             '',
-	'region':           'J6GDhEEvdmdSMzPPF',
-	'categories':       [''],
-	'maxPeople':        '',
-	'maxWorkplaces':    '',
-	'address':          '',
-	'route':            '',
-	'description':      '',
-	'contact': {
-		'meetings':     '',
-		'email':        '',
-		'web':          '',
-		'fon':          ''
-	},
-	'picture':          '',
-	'infra': {
-		'projectionScreen': '',
-		'projector':    '',
-		'audio':        '',
-		'blackboard':   '',
-		'whiteboard':   '',
-		'flipchart':    '',
-		'internet':     '',
-		'drink':        '',
-		'kitchen':      '',
-		'stage':        '',
-		'specials':     ''
-	},
-	'createdby':        '',
-	'hosts': {
-		'noContact':    [''],
-		'contact':      ['']
-	}
-}
-*/
 ];

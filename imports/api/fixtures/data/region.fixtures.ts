@@ -1,4 +1,18 @@
-export const regions = [
+export const regions: {
+  _id: string;
+  name: string;
+  nameEn: string;
+  loc?: number[];
+  tz: string;
+  country?: string;
+  region?: string;
+  custom?: {
+    siteName: string;
+    siteStage: string;
+    headerLogo: { src: string; alt: string };
+    emailLogo: string;
+  };
+}[] = [
   {
     _id: "9JyFCoKWkxnf8LWPh",
     name: "Testistan",

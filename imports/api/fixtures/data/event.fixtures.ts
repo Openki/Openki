@@ -1,4 +1,28 @@
-export const events = [
+export const events: {
+  _id?: string;
+  title: string;
+  description: string;
+  venue: string;
+  room?: string;
+  start: {
+    $date: number;
+  };
+  end: {
+    $date: number;
+  };
+  time_lastedit: {
+    $date: number;
+  };
+  region: string;
+  createdBy: string;
+  time_created: {
+    $date: number;
+  };
+  groups?: string[];
+  courseId?: string;
+  internal?: boolean;
+  categories?: string[];
+}[] = [
   {
     title: "DER MÜLL EINER HOCHSCHULE",
     description:
