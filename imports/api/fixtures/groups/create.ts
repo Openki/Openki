@@ -3,7 +3,7 @@ import { GroupEntity, Groups } from "../../groups/groups";
 import { ensure } from "../ensureFixture";
 import { groups } from "./data";
 
-export function groupsCreate() {
+export function create() {
   groups.forEach((g) => {
     const group = { ...g } as unknown as Mongo.OptionalId<GroupEntity>;
     group.createdby = "ServerScript_loadingTestgroups";

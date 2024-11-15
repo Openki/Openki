@@ -11,22 +11,21 @@ import { Events } from "/imports/api/events/events";
 import { ensure } from "/imports/api/fixtures/ensureFixture";
 import { Prng } from "/imports/api/fixtures/Prng";
 import { Groups } from "/imports/api/groups/groups";
-import { RegionEntity, Regions } from "/imports/api/regions/regions";
+import { Regions } from "/imports/api/regions/regions";
 import { Venues } from "/imports/api/venues/venues";
 import { Users } from "/imports/api/users/users";
-import { InfoPages } from "/imports/api/infoPages/infoPages";
-import { infoPages } from "./data/infoPages/infoPages";
 
 import * as HtmlTools from "/imports/utils/html-tools";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 
-import { regions } from "./data/region.fixtures";
 import { venues } from "./data/venue.fixtures";
 
 import { create as coursesCreate } from "./courses/create";
 import { create as eventsCreate } from "./events/create";
-import { groupsCreate } from "./groups/create";
+import { create as groupsCreate } from "./groups/create";
 import { generate as eventsGenerate } from "./events/generate";
+import { create as infoPagesCreate } from "./infoPages/create";
+import { regionsCreate } from "./regions/create";
 
 /**
  * Select a date that is after the given date
@@ -48,38 +47,12 @@ function sometimesAfter(date: Date) {
   return new Date(date.getTime() + spread * squaredPlacement);
 }
 
-function regionsCreate() {
-  const userKopf = ensure.user("Kopf", undefined, true)._id;
-
-  const prng = Prng("createRegions");
-  regions.forEach((r) => {
-    const region = {
-      ...r,
-      tenant: prng() > 0.3 ? ensure.tenant("Hmmm") : ensure.tenant("Kopf", userKopf),
-    } as unknown as RegionEntity; // clone
-    if (r.loc) {
-      const coordinates = r.loc.reverse(); // GeoJSON takes latitude first
-      region.loc = { type: "Point", coordinates: coordinates as [long: number, lat: number] };
-    }
-    Regions.insert(region);
-  });
-
-  return `Inserted ${regions.length} region fixtures.`;
-}
-
 function usersCreate() {
   ensure.user("greg", undefined, true);
   ensure.user("Seee", undefined, true);
   ensure.user("1u", undefined, true);
   ensure.user("validated_mail", undefined, true);
   return "Inserted user fixtures.";
-}
-
-function infoPagesCreate() {
-  infoPages.forEach((p) => {
-    InfoPages.insert(p);
-  });
-  return "Inserted info pages fixtures.";
 }
 
 function venuesCreate() {
