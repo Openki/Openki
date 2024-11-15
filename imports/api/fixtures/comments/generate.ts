@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import { Mongo } from "meteor/mongo";
 import { _ } from "meteor/underscore";
 
@@ -31,12 +32,12 @@ function sometimesAfter(date: Date) {
   return new Date(date.getTime() + spread * squaredPlacement);
 }
 
-export function generate() {
+export async function generate() {
   const prng = Prng("createComments");
   let count = 0;
 
-  const userCount = Users.find().count();
-  Courses.find().forEach((course) => {
+  const userCount = await Users.countDocuments();
+  for (const course of await Courses.find().fetchAsync()) {
     const createCount = Math.floor((prng() * 2) ** 4);
     const courseMembers = course.members.length;
     let { description } = course;
@@ -58,7 +59,7 @@ export function generate() {
       if (!courseMembers || prng() < 0.2) {
         // Leave some anonymous comments
         if (prng() < 0.7) {
-          const user = Users.findOne({}, { skip: Math.floor(prng() * userCount) });
+          const user = await Users.findOneAsync({}, { skip: Math.floor(prng() * userCount) });
           if (!user) {
             throw new Error("Unexpected undefined");
           }
@@ -69,11 +70,11 @@ export function generate() {
         comment.userId = commenter.user;
       }
 
-      CourseDiscussions.insert(comment);
+      await CourseDiscussions.insertAsync(comment);
     }
 
     count += createCount;
-  });
+  }
 
   return `Generated ${count} course comments.`;
 }

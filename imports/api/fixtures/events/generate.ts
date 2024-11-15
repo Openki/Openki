@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import { Mongo } from "meteor/mongo";
 import { _ } from "meteor/underscore";
 
@@ -26,7 +27,7 @@ function humandistrib(prng: { (): number }): number {
  * For each course, zero or more events are generated. Some will be in
  * the past, some in the future.
  */
-export function generate() {
+export async function generate() {
   const prng = Prng("eventsGenerate");
   let count = 0;
 
@@ -55,7 +56,7 @@ export function generate() {
     "Moscow",
   ];
 
-  Courses.find().forEach((course) => {
+  for (const course of await Courses.find().fetchAsync()) {
     const eventCount = Math.floor((prng() * 1.6) ** 10);
     for (let n = 0; n < eventCount; n += 1) {
       const event = {} as Mongo.OptionalId<EventEntity>;
@@ -68,7 +69,7 @@ export function generate() {
       event.groupOrganizers = [];
 
       const venue = testVenues[Math.floor(prng() * testVenues.length)];
-      event.venue = ensure.venue(venue, event.region);
+      event.venue = await ensure.venue(venue, event.region);
 
       if (prng() > 0.6) {
         event.room = rooms[Math.floor(prng() * rooms.length)];
@@ -118,7 +119,7 @@ export function generate() {
 
       const { members } = course;
       const randomMember = members[Math.floor(Math.random() * members.length)];
-      event.createdBy = ensure.user(randomMember?.user || "Serverscript", event.region)._id;
+      event.createdBy = (await ensure.user(randomMember?.user || "Serverscript", event.region))._id;
       const age = Math.floor(prng() * 10000000000);
       event.time_created = new Date(new Date().getTime() - age);
       event.time_lastedit = new Date(new Date().getTime() - age * 0.25);
@@ -126,7 +127,7 @@ export function generate() {
     }
 
     count += eventCount;
-  });
+  }
 
   return `Generated ${count} course events.`;
 }

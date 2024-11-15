@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import { Events, EventEntity } from "../../events/events";
 import { ensure } from "../ensureFixture";
 import { events } from "./data";
@@ -43,9 +44,9 @@ export async function create() {
       categories: template.categories,
       startLocal,
       endLocal,
-      venue: ensure.venue(template.venue, template.region),
+      venue: await ensure.venue(template.venue, template.region),
       room: template.room || "",
-      createdBy: ensure.user(template.createdBy, template.region)._id,
+      createdBy: (await ensure.user(template.createdBy, template.region))._id,
       time_created: new Date(template.time_created.$date),
       time_lastedit: new Date(template.time_lastedit.$date),
       courseId: template.courseId,

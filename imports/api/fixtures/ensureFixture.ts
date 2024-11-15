@@ -18,15 +18,15 @@ export const ensure = {
     return md5.digest("hex").substring(0, 10);
   },
 
-  tenant(name: string, adminId?: string | undefined) {
-    const tenant = Tenants.findOne({ name });
+  async tenant(name: string, adminId?: string | undefined) {
+    const tenant = await Tenants.findOneAsync({ name });
     if (tenant) {
       if (adminId) {
         if (tenant?.admins?.includes(adminId)) {
           return tenant._id;
         }
 
-        Tenants.update(tenant._id, {
+        await Tenants.updateAsync(tenant._id, {
           $addToSet: { admins: adminId },
         });
 
@@ -34,7 +34,7 @@ export const ensure = {
           return tenant._id;
         }
 
-        Tenants.update(tenant._id, {
+        await Tenants.updateAsync(tenant._id, {
           $addToSet: { members: adminId },
         });
       }
@@ -44,7 +44,7 @@ export const ensure = {
 
     const id = ensure.fixedId([name]);
 
-    Tenants.insert({
+    await Tenants.insertAsync({
       _id: id,
       name,
       members: adminId ? [adminId] : [],
@@ -56,8 +56,8 @@ export const ensure = {
     return id;
   },
 
-  userInTenant(user: UserEntity, regionId: string) {
-    const region = Regions.findOne(regionId);
+  async userInTenant(user: UserEntity, regionId: string) {
+    const region = await Regions.findOneAsync(regionId);
 
     if (!region || !region.tenant) {
       return;
@@ -67,22 +67,22 @@ export const ensure = {
       return;
     }
 
-    Users.update(user._id, {
+    await Users.updateAsync(user._id, {
       $addToSet: { tenants: { _id: region.tenant, privileges: ["admin"] } },
     });
 
-    const tenant = Tenants.findOne(region.tenant);
+    const tenant = await Tenants.findOneAsync(region.tenant);
 
     if (!tenant || tenant?.members?.includes(user._id)) {
       return;
     }
 
-    Tenants.update(tenant._id, {
+    await Tenants.updateAsync(tenant._id, {
       $addToSet: { members: user._id },
     });
   },
 
-  user(name: string, region?: string | undefined, verified = false) {
+  async user(name: string, region?: string | undefined, verified = false) {
     const prng = Prng("ensureUser");
 
     if (!name) {
@@ -91,23 +91,23 @@ export const ensure = {
     }
     const email = `${name.split(" ").join("")}@openki.example`.toLowerCase();
 
-    let user = Users.findOne({ "emails.address": email });
+    let user = await Users.findOneAsync({ "emails.address": email });
     if (user) {
       if (region) {
-        ensure.userInTenant(user, region);
+        await ensure.userInTenant(user, region);
       }
       return user;
     }
 
-    user = Users.findOne({ username: name });
+    user = await Users.findOneAsync({ username: name });
     if (user) {
       if (region) {
-        ensure.userInTenant(user, region);
+        await ensure.userInTenant(user, region);
       }
       return user;
     }
 
-    const id = Accounts.createUser({
+    const id = await Accounts.createUserAsync({
       username: name,
       email,
       profile: { name },
@@ -117,7 +117,7 @@ export const ensure = {
 
     const age = Math.floor(prng() * 100000000000);
     const time = new Date().getTime();
-    Users.update(
+    await Users.updateAsync(
       { _id: id },
       {
         $set: {
@@ -134,7 +134,7 @@ export const ensure = {
     );
 
     if (verified) {
-      Users.update(
+      await Users.updateAsync(
         { _id: id },
         {
           $set: { "emails.0.verified": true },
@@ -142,25 +142,25 @@ export const ensure = {
       );
     }
 
-    user = Users.findOne(id);
+    user = await Users.findOneAsync(id);
 
     if (!user) {
       throw new Error("Unexpected undefined");
     }
 
     if (region) {
-      ensure.userInTenant(user, region);
+      await ensure.userInTenant(user, region);
     }
     return user;
   },
 
-  region(name: string) {
-    const region = Regions.findOne({ name });
+  async region(name: string) {
+    const region = await Regions.findOneAsync({ name });
     if (region) {
       return region._id;
     }
 
-    const id = Regions.insert({
+    const id = await Regions.insertAsync({
       name,
       loc: { type: "Point", coordinates: [8.3, 47.05] },
     } as Mongo.OptionalId<RegionEntity>);
@@ -170,21 +170,21 @@ export const ensure = {
     return id;
   },
 
-  group(short: string) {
-    const group = Groups.findOne({ short });
+  async group(short: string) {
+    const group = await Groups.findOneAsync({ short });
     if (group) {
       return group._id;
     }
 
     const id = ensure.fixedId([short]);
-    Groups.insert({
+    await Groups.insertAsync({
       _id: id,
       name: short,
       short,
       claim: "",
-      members: [{ user: ensure.user("EdDillinger")._id, notify: true }],
+      members: [{ user: (await ensure.user("EdDillinger"))._id, notify: true }],
       description: "Fixture group",
-      createdby: ensure.user("EdDillinger")._id,
+      createdby: (await ensure.user("EdDillinger"))._id,
       time_created: new Date(),
       time_lastedit: new Date(),
     });
@@ -194,10 +194,10 @@ export const ensure = {
     return id;
   },
 
-  venue(name: string, regionId: string) {
+  async venue(name: string, regionId: string) {
     const prng = Prng("ensureVenue");
 
-    let venue = Venues.findOne({ name, region: regionId });
+    let venue = await Venues.findOneAsync({ name, region: regionId });
     if (venue) {
       return venue;
     }
@@ -209,7 +209,7 @@ export const ensure = {
 
     venueEntity.slug = StringTools.slug(venueEntity.name);
 
-    const region = Regions.findOne(regionId);
+    const region = await Regions.findOneAsync(regionId);
     if (!region || !region.loc) {
       throw new Error("Unexpected undefined");
     }
@@ -223,9 +223,9 @@ export const ensure = {
     venueEntity.created = new Date(new Date().getTime() - age);
     venueEntity.updated = new Date(new Date().getTime() - age * 0.25);
 
-    Venues.insert(venueEntity);
+    await Venues.insertAsync(venueEntity);
 
-    venue = Venues.findOne({ name, region: regionId });
+    venue = await Venues.findOneAsync({ name, region: regionId });
     if (!venue) {
       throw new Error("Unexpected undefined");
     }
