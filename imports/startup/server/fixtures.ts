@@ -38,9 +38,9 @@ if (runBackgroundTasks && Meteor.isServer && PrivateSettings.testdata) {
     Accounts.removeDefaultRateLimit();
 
     await ifCollectionEmpty(InfoPages, ["fixtures.infoPages.create"]);
+    await ifCollectionEmpty(Groups, ["fixtures.groups.create"]);
     await ifCollectionEmpty(Regions, ["fixtures.regions.create"]);
     await ifCollectionEmpty(Users, ["fixtures.users.create"]);
-    await ifCollectionEmpty(Groups, ["fixtures.groups.create"]);
     await ifCollectionEmpty(Venues, ["fixtures.venues.create"]);
     await ifCollectionEmpty(Courses, ["fixtures.courses.create"]);
     await ifCollectionEmpty(Events, ["fixtures.events.create", "fixtures.events.generate"]);

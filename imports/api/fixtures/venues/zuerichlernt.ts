@@ -844,7 +844,7 @@ export const venues: VenueTemplate[] = [
       projector: true,
       screen: true,
       audio: true,
-      flieditorpchart: true,
+      flipchart: true,
       wifi: true,
       kitchen: true,
       wheelchairs: true,
