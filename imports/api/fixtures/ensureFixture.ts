@@ -194,7 +194,7 @@ export const ensure = {
     return id;
   },
 
-  async venue(name: string, regionId: string) {
+  async venue(name: string, regionId: string, id?: string) {
     const prng = Prng("ensureVenue");
 
     let venue = await Venues.findOneAsync({ name, region: regionId });
@@ -217,7 +217,7 @@ export const ensure = {
     const lon = region.loc.coordinates[0] + prng() ** 2 * 0.02 * (prng() > 0.5 ? 1 : -1);
     venueEntity.loc = { type: "Point", coordinates: [lon, lat] };
 
-    venueEntity._id = ensure.fixedId([venueEntity.name, venueEntity.region as string]);
+    venueEntity._id = id || ensure.fixedId([venueEntity.name, venueEntity.region as string]);
 
     const age = Math.floor(prng() * 80000000000);
     venueEntity.created = new Date(new Date().getTime() - age);

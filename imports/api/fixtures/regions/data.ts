@@ -2,16 +2,26 @@ export const regions: {
   _id: string;
   name: string;
   nameEn: string;
-  loc?: number[];
+  loc?: [number, number];
   tz: string;
+  calendarStartDate?: true;
+  defaultTeamGroup?: string;
+  singleEvents?: boolean;
   country?: string;
   region?: string;
+  tenant?: string;
   custom?: {
-    siteName: string;
-    siteStage: string;
-    headerLogo: { src: string; alt: string };
-    emailLogo: string;
+    siteName?: string;
+    siteStage?: string;
+    headerLogo?: { src: string; alt: string };
+    emailLogo?: string;
   };
+  dashboard?: {
+    entity: "group" | "course" | "courseWithoutPropose" | "event" | "eventsMap" | "propose";
+    title: string;
+    query: string;
+    showAll?: { link?: string; text?: string };
+  }[];
 }[] = [
   {
     _id: "9JyFCoKWkxnf8LWPh",
@@ -83,5 +93,35 @@ export const regions: {
       },
       emailLogo: "emails/sveb.png",
     },
+  },
+  {
+    _id: "h4MnI3psRr8hSljk2",
+    name: "Zürich (Lernt)",
+    nameEn: "Zurich (Lernt)",
+    country: "CH",
+    region: "ZH",
+    loc: [47.3784, 8.5257],
+    tz: "Europe/Zurich",
+    calendarStartDate: true,
+    defaultTeamGroup: "Zürich lernt",
+    singleEvents: true,
+    tenant: "Zuerich Lernt",
+    custom: {
+      siteName: "Zürich Lernt",
+      siteStage: "Platform",
+    },
+    dashboard: [
+      {
+        entity: "course",
+        title: "dashboard.newProposals.title",
+        query: "state=proposal&internal=0&sort=-time_created",
+      },
+      { entity: "course", title: "dashboard.recentActivities.title", query: "" },
+      {
+        entity: "event",
+        title: "dashboard.upcomingEvents.title",
+        query: "after=now&sort=start&internal=0&canceled=0",
+      },
+    ],
   },
 ];
