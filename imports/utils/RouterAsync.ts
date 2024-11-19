@@ -51,25 +51,64 @@ export function route<D, S extends Record<string, SubscriptionHandle<any>> | und
   }
 
   if (subscriptions) {
-    // eslint-disable-next-line no-param-reassign
-    options.waitOn = function () {
-      return Object.values(subscriptions.call(this)).map(
-        (s) => () => (s as SubscriptionHandle<any>).isLoading(),
-      );
-    };
-
     const data = options.data;
+    let handlers: NonNullable<S>;
+
+    // load data, remove async call, keep reactive
+    let result: D;
+    let currentRequestId = "";
+    const dataLoaded = new ReactiveVar(false);
+    let dataLoading = false;
+
     if (data) {
       // eslint-disable-next-line no-param-reassign
       options.data = function () {
-        this.subscriptions = () => subscriptions.call(this);
+        this.subscriptions = () => handlers;
         try {
-          return data?.call(this);
+          if (
+            !dataLoading &&
+            !dataLoaded.get() &&
+            Object.values(handlers).every((s) => !s.isLoading())
+          ) {
+            dataLoading = true;
+            (async () => data?.call(this))()
+              .then((r) => {
+                result = r;
+              })
+              .finally(() => {
+                dataLoading = false;
+                dataLoaded.set(true);
+              });
+          }
+          return result;
         } finally {
           delete (this as any).subscriptions;
         }
       };
+    } else {
+      dataLoaded.set(true);
     }
+
+    // eslint-disable-next-line no-param-reassign
+    options.waitOn = function () {
+      // prevent loading multiple times the same data;
+      handlers = subscriptions.call(this);
+      if (currentRequestId !== JSON.stringify(Object.entries(this.params))) {
+        currentRequestId = JSON.stringify(Object.entries(this.params));
+
+        // reset state of loading
+        dataLoading = false;
+        if (data) {
+          dataLoaded.set(false);
+        } else {
+          dataLoaded.set(true);
+        }
+      }
+
+      return Object.values(handlers).map((s) => () => {
+        return !s.isLoading() && dataLoaded.get();
+      });
+    };
   }
 
   if (!options.onRun) {
