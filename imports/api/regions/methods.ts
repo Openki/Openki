@@ -8,7 +8,6 @@ import { Events } from "/imports/api/events/events";
 import { RegionEntity, Regions } from "./regions";
 import { Venues } from "/imports/api/venues/venues";
 
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import * as AsyncTools from "/imports/utils/async-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import * as StringTools from "/imports/utils/string-tools";
@@ -36,7 +35,7 @@ export const create = ServerMethod("region.create", async (changes: CreateFields
   }
 
   if (
-    !UserPrivilegeUtils.privileged(user, "admin") /* Admins can add regions */ &&
+    !user.privileged("admin") /* Admins can add regions */ &&
     !user.isTenantAdmin(changes.tenant) /* or admins of a tenant */
   ) {
     throw new Meteor.Error(401, "not permitted");

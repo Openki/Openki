@@ -1,3 +1,4 @@
+import { Meteor } from "meteor/meteor";
 import { ReactiveVar } from "meteor/reactive-var";
 import { Router } from "meteor/iron:router";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
@@ -9,7 +10,6 @@ import { Log } from "/imports/api/log/log";
 import * as Logs from "/imports/api/log/publications";
 
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import * as UrlTools from "/imports/utils/url-tools";
 import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
@@ -84,8 +84,8 @@ template.onCreated(function () {
 });
 
 template.helpers({
-  privileged() {
-    return UserPrivilegeUtils.privilegedTo("admin");
+  async privileged() {
+    return (await Meteor.userAsync())?.privileged("admin");
   },
 
   date() {

@@ -8,7 +8,6 @@ import { Version } from "/imports/api/version/version";
 import { Users } from "/imports/api/users/users";
 
 import { Notification } from "../../startup/both/emails/notification";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { SafeString, Type } from "/imports/utils/CustomChecks";
@@ -53,7 +52,7 @@ export const sendPrivateMessage = ServerMethod(
     if (!recipient) {
       throw new Meteor.Error(404, "no such user");
     }
-    if (!recipient.allowPrivateMessages && !UserPrivilegeUtils.privileged(operator, "admin")) {
+    if (!recipient.allowPrivateMessages && !operator.privileged("admin")) {
       throw new Meteor.Error(401, "this user does not accept private messages from users");
     }
 

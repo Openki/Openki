@@ -4,8 +4,6 @@ import { useUser } from "/imports/utils/react-meteor-data";
 
 import { CourseModel } from "/imports/api/courses/courses";
 
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
-
 import { Member } from "./member";
 
 import "./styles.scss";
@@ -24,7 +22,7 @@ export function Members({ course }: { course: CourseModel | undefined }) {
     return course.members.length;
   }
   function canNotifyAll() {
-    if (UserPrivilegeUtils.privileged(user, "admin")) {
+    if (user?.privileged("admin")) {
       return true;
     }
 

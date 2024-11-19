@@ -6,7 +6,6 @@ import { Session } from "meteor/session";
 
 import { UserModel } from "/imports/api/users/users";
 
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import * as Predicates from "/imports/utils/predicates";
 import { Filtering } from "/imports/utils/filtering";
 import { PublicSettings } from "/imports/utils/PublicSettings";
@@ -102,7 +101,7 @@ export class Region {
     }
 
     return (
-      UserPrivilegeUtils.privileged(user, "admin") /* Admins can edit all regions */ ||
+      user.privileged("admin") /* Admins can edit all regions */ ||
       user.isTenantAdmin(this.tenant) /* or admins of a tenant */
     );
   }

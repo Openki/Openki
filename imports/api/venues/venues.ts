@@ -7,7 +7,6 @@ import { EventEntity, Events } from "/imports/api/events/events";
 import { UserModel } from "/imports/api/users/users";
 import { Geodata } from "/imports/api/regions/regions";
 
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import * as StringTools from "/imports/utils/string-tools";
@@ -80,7 +79,7 @@ export class Venue {
     return (
       isNew /* Anybody may create a new location */ ||
       user._id === this.editor ||
-      UserPrivilegeUtils.privileged(user, "admin") // Admins can edit all venues
+      user.privileged("admin") // Admins can edit all venues
     );
   }
 }

@@ -1,16 +1,17 @@
 import { check } from "meteor/check";
+import { Meteor } from "meteor/meteor";
 
 import { getRegionStats, Stats } from "/imports/api/stats/stats";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
-
-export const region = ServerMethod("stats.region", (regionId: string) => {
+export const region = ServerMethod("stats.region", async (regionId: string) => {
   check(regionId, String);
 
-  if (UserPrivilegeUtils.privilegedTo("admin")) {
-    const regionFilter = regionId === "all" ? "" : regionId;
-    return getRegionStats(regionFilter);
+  const user = await Meteor.userAsync();
+  if (!user?.privileged("admin")) {
+    return {} as Stats;
   }
-  return {} as Stats;
+
+  const regionFilter = regionId === "all" ? "" : regionId;
+  return getRegionStats(regionFilter);
 });

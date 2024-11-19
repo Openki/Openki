@@ -5,7 +5,6 @@ import { Tenants } from "/imports/api/tenants/tenants";
 
 import { ServerPublish } from "/imports/utils/ServerPublishBlaze";
 import { FieldSort } from "/imports/utils/sort-spec";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 
 export const details = ServerPublish(
   "joinLink",
@@ -36,10 +35,7 @@ export const findFilter = ServerPublish(
 
     const user = Meteor.user();
 
-    if (
-      !user ||
-      !(UserPrivilegeUtils.privileged(user, "admin") || (tenantId && user.isTenantAdmin(tenantId)))
-    ) {
+    if (!user || !(user.privileged("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
       return undefined;
     }
 

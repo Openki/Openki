@@ -12,7 +12,6 @@ import { Events } from "/imports/api/events/events";
 
 import * as HtmlTools from "/imports/utils/html-tools";
 import * as StringTools from "/imports/utils/string-tools";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { Model as NotificationModel } from "../notification";
 import { PrivateMessage, Props } from "../../../../emails/notifications/PrivateMessage";
@@ -77,7 +76,6 @@ export async function record(
     sender: senderId,
     targetRecipient: recipientId,
     revealSenderAddress,
-
     recipients,
     model: "PrivateMessage",
     context,
@@ -93,10 +91,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
   return {
     accepted(actualRecipient: UserModel) {
-      if (
-        !actualRecipient.allowPrivateMessages &&
-        !UserPrivilegeUtils.privileged(sender, "admin")
-      ) {
+      if (!actualRecipient.allowPrivateMessages && !sender?.privileged("admin")) {
         throw new Error("User wishes to not receive private messages from users");
       }
     },

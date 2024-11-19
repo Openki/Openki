@@ -11,7 +11,6 @@ import * as interestedDenormalizer from "./interestedDenormalizer";
 
 import { hasRoleUser } from "/imports/utils/course-role-utils";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import * as AsyncTools from "/imports/utils/async-tools";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
@@ -134,7 +133,7 @@ export class Course {
     }
     return (
       this.isNew() /* Anybody may create a new course */ ||
-      UserPrivilegeUtils.privileged(user, "admin") /* Admins can edit all courses */ ||
+      user.privileged("admin") /* Admins can edit all courses */ ||
       _.intersection(user.badges, this.editors).length > 0
     );
   }

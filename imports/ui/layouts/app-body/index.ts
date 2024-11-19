@@ -1,4 +1,5 @@
 import { Session } from "meteor/session";
+import { Meteor } from "meteor/meteor";
 import { Router } from "meteor/iron:router";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 
@@ -9,7 +10,6 @@ import { Introduction } from "/imports/ui/lib/introduction";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import * as Viewport from "/imports/ui/lib/viewport";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import * as Tooltips from "/imports/utils/Tooltips";
 import * as FormsValidation from "/imports/utils/FormsValidation";
 
@@ -55,8 +55,8 @@ template.helpers({
     return Router.current().url.includes("admin");
   },
 
-  isAdmin() {
-    return UserPrivilegeUtils.privilegedTo("admin");
+  async isAdmin() {
+    return (await Meteor.userAsync())?.privileged("admin");
   },
 
   isNotAdminPanel() {

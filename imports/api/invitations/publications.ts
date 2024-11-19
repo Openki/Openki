@@ -6,7 +6,6 @@ import { Tenants } from "/imports/api/tenants/tenants";
 import { ServerPublish as ServerPublishBlaze } from "/imports/utils/ServerPublishBlaze";
 import { ServerPublishMany } from "/imports/utils/ServerPublish";
 import { FieldSort } from "/imports/utils/sort-spec";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 
 export const details = ServerPublishBlaze(
   "invitation",
@@ -37,10 +36,7 @@ export const [findFilter, useFindFilter] = ServerPublishMany(
 
     const user = Meteor.user();
 
-    if (
-      !user ||
-      !(UserPrivilegeUtils.privileged(user, "admin") || (tenantId && user.isTenantAdmin(tenantId)))
-    ) {
+    if (!user || !(user.privileged("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
       throw new Meteor.Error(401, "not permitted");
     }
 
