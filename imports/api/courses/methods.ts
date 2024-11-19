@@ -223,13 +223,15 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     // You can add newly created courses to any group
     let groups = changes.groups || [];
     groups = [...new Set(groups)]; // make unique
-    groups = groups.map((groupId) => {
-      const group = Groups.findOne(groupId);
-      if (!group) {
-        throw new Meteor.Error(404, `no group with id ${groupId}`);
-      }
-      return group._id;
-    });
+    groups = await Promise.all(
+      groups.map(async (groupId) => {
+        const group = await Groups.findOneAsync(groupId);
+        if (!group) {
+          throw new Meteor.Error(404, `no group with id ${groupId}`);
+        }
+        return group._id;
+      }),
+    );
     set.groups = groups;
     set.groupOrganizers = groups;
 
@@ -237,7 +239,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     if (!changes.region) {
       throw new Meteor.Error(404, "region missing");
     }
-    const region = Regions.findOne({ _id: changes.region });
+    const region = await Regions.findOneAsync({ _id: changes.region });
     if (!region) {
       throw new Meteor.Error(404, "region missing");
     }
@@ -365,7 +367,7 @@ export const deleteImage = ServerMethod(
   async (courseId: string) => {
     check(courseId, SafeString());
 
-    const user = Meteor.user();
+    const user = await Meteor.userAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log-in");
     }
