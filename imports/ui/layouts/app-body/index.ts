@@ -55,8 +55,8 @@ template.helpers({
     return Router.current().url.includes("admin");
   },
 
-  async isAdmin() {
-    return (await Meteor.userAsync())?.privileged("admin");
+  isAdmin() {
+    return Meteor.user()?.privileged("admin");
   },
 
   isNotAdminPanel() {
