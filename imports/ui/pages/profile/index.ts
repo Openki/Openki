@@ -229,11 +229,12 @@ template.helpers({
   editableDescription() {
     return Template.instance().editableDescription;
   },
-  async isAdmin() {
-    return (await Meteor.userAsync())?.privileged("admin");
+  isAdmin() {
+    return Meteor.user()?.privileged("admin");
   },
-  async isVisitor() {
-    return (await Meteor.userAsync())?.privileged("visitor");
+  isVisitor() {
+    const user = Meteor.user();
+    return user?.privileged("visitor");
   },
   deleteConfirmAttr() {
     return {

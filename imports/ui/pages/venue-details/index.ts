@@ -10,11 +10,11 @@ import { Geodata, RegionModel, Regions } from "/imports/api/regions/regions";
 import * as Alert from "/imports/api/alerts/alert";
 import { VenueModel } from "/imports/api/venues/venues";
 import * as VenuesMethods from "/imports/api/venues/methods";
+import { EventEntity, EventModel } from "/imports/api/events/events";
 
 import { reactiveNow } from "/imports/utils/reactive-now";
 import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
-import { SubscriptionType } from "/imports/utils/ServerPublishBlaze";
 import { textPlain } from "/imports/utils/html-tools";
 import { truncate } from "/imports/utils/string-tools";
 
@@ -39,8 +39,8 @@ const Template = TemplateAny as TemplateStaticTyped<
   "venueDetailsPage",
   { venue: VenueModel },
   {
-    upcomingEvents: ReactiveVar<SubscriptionType<(typeof Events)["findFilter"]> | undefined>;
-    pastEvents: ReactiveVar<SubscriptionType<(typeof Events)["findFilter"]> | undefined>;
+    upcomingEvents: ReactiveVar<Mongo.Cursor<EventEntity, EventModel> | undefined>;
+    pastEvents: ReactiveVar<Mongo.Cursor<EventEntity, EventModel> | undefined>;
     state: ReactiveDict<{
       editing: boolean;
       verifyDelete: boolean;
@@ -114,7 +114,11 @@ template.onCreated(function () {
     const filter = { venue: venue._id, after: now };
 
     // Add one to the limit so we know there is more to show
-    instance.upcomingEvents.set(Events.findFilter.subscribe(instance, filter, limit + 1));
+    Events.findFilter
+      .subscribe(instance, filter, limit + 1)()
+      .then((r) => {
+        instance.upcomingEvents.set(r);
+      });
   });
 
   instance.autorun(() => {
@@ -129,7 +133,11 @@ template.onCreated(function () {
     const filter = { venue: venue._id, before: now };
 
     // Add one to the limit so we know there is more to show
-    instance.pastEvents.set(Events.findFilter.subscribe(instance, filter, limit + 1));
+    Events.findFilter
+      .subscribe(instance, filter, limit + 1)()
+      .then((r) => {
+        instance.pastEvents.set(r);
+      });
   });
 });
 
@@ -163,7 +171,7 @@ template.helpers({
 
   upcomingEvents() {
     const instance = Template.instance();
-    const events = instance.upcomingEvents.get()?.().fetch() || [];
+    const events = instance.upcomingEvents.get()?.fetch() || [];
 
     if (events.length > (instance.state.get("upcomingEventLimit") || 0)) {
       // The last event is to check if there are any more.
@@ -174,13 +182,13 @@ template.helpers({
 
   hasMoreUpcomingEvents() {
     const instance = Template.instance();
-    const count = instance.upcomingEvents.get()?.().count() || 0;
+    const count = instance.upcomingEvents.get()?.count() || 0;
     return count > (instance.state.get("upcomingEventLimit") || 0);
   },
 
   pastEvents() {
     const instance = Template.instance();
-    const events = instance.pastEvents.get()?.().fetch() || [];
+    const events = instance.pastEvents.get()?.fetch() || [];
 
     if (events.length > (instance.state.get("pastEventLimit") || 0)) {
       // The last event is to check if there are any more.
@@ -191,7 +199,7 @@ template.helpers({
 
   hasMorePastEvents() {
     const instance = Template.instance();
-    const count = instance.pastEvents.get()?.().count() || 0;
+    const count = instance.pastEvents.get()?.count() || 0;
     return count > (instance.state.get("pastEventLimit") || 0);
   },
 

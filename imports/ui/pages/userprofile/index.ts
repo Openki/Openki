@@ -74,11 +74,8 @@ template.helpers({
     return checkContribution(Template.instance().data.user.contribution);
   },
 
-  async allowPrivateMessages() {
-    return (
-      Template.instance().data.user.allowPrivateMessages ||
-      (await Meteor.userAsync())?.privileged("admin")
-    );
+  allowPrivateMessages() {
+    return Template.instance().data.user.allowPrivateMessages || Meteor.user()?.privileged("admin");
   },
 
   groupMember(group: GroupEntity, user: UserModel) {
