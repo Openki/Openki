@@ -26,7 +26,6 @@ import * as CoursesMethods from "/imports/api/courses/methods";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { AffectedReplicaSelectors } from "/imports/utils/affected-replica-selectors";
 import { LocalTime } from "/imports/utils/local-time";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import * as Tooltips from "/imports/utils/Tooltips";
 
 import { PleaseLogin } from "/imports/ui/lib/please-login";
@@ -593,7 +592,7 @@ template.events({
           let role;
           if (_.intersection(user.badges, course.editors).length > 0) {
             role = "team";
-          } else if (UserPrivilegeUtils.privilegedTo("admin")) {
+          } else if (user.privileged("admin")) {
             role = "admin";
           } else {
             role = "unknown";

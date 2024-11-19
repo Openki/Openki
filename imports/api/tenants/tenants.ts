@@ -5,7 +5,6 @@ import { Match, check } from "meteor/check";
 
 import { UserModel } from "/imports/api/users/users";
 
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import { Filtering } from "/imports/utils/filtering";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { Type } from "/imports/utils/CustomChecks";
@@ -33,7 +32,7 @@ export class Tenant {
     }
 
     return (
-      UserPrivilegeUtils.privileged(user, "admin") /* Admins can edit all regions */ ||
+      user.privileged("admin") /* Admins can edit all regions */ ||
       user.isTenantAdmin(this._id) /* or admins of a tenant */
     );
   }
@@ -91,7 +90,7 @@ export class TenantsCollection extends Mongo.Collection<TenantEntity, TenantMode
     const options: Mongo.Options<TenantEntity> = { sort };
 
     // Only members of a tenant or admins can see a tenant
-    if (!UserPrivilegeUtils.privileged(me, "admin")) {
+    if (!me.privileged("admin")) {
       find.members = me._id;
     }
 

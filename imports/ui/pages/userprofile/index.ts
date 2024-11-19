@@ -15,7 +15,6 @@ import * as emailMethods from "/imports/api/emails/methods";
 import { PleaseLogin } from "/imports/ui/lib/please-login";
 import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import { checkContribution } from "/imports/utils/checkContribution";
 import * as Tooltips from "/imports/utils/Tooltips";
 
@@ -75,9 +74,10 @@ template.helpers({
     return checkContribution(Template.instance().data.user.contribution);
   },
 
-  allowPrivateMessages() {
+  async allowPrivateMessages() {
     return (
-      Template.instance().data.user.allowPrivateMessages || UserPrivilegeUtils.privilegedTo("admin")
+      Template.instance().data.user.allowPrivateMessages ||
+      (await Meteor.userAsync())?.privileged("admin")
     );
   },
 

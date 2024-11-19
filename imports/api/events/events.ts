@@ -15,7 +15,6 @@ import { LocalTime } from "/imports/utils/local-time";
 import * as Predicates from "/imports/utils/predicates";
 import * as StringTools from "/imports/utils/string-tools";
 import * as FileStorage from "/imports/utils/FileStorage";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { FieldSort, FieldSortPattern, Sort } from "/imports/utils/sort-spec";
 import { Tuple, Type } from "/imports/utils/CustomChecks";
@@ -129,7 +128,7 @@ export class OEvent {
     if (!user) {
       return false;
     }
-    if (UserPrivilegeUtils.privileged(user, "admin")) {
+    if (user.privileged("admin")) {
       return true;
     }
     return _.intersection(user.badges, this.editors).length > 0;

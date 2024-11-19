@@ -27,7 +27,6 @@ import * as UpdateMethods from "/imports/utils/update-methods";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { HtmlString, SafeString, StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";
 import { GroupPromoters } from "/imports/utils/update-methods";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
 /**
@@ -565,7 +564,7 @@ export const contactParticipants = ServerMethod(
     if (
       !event.editableBy(operator) &&
       !operator.groups.some((g) => event.groupOrganizers.includes(g)) &&
-      !UserPrivilegeUtils.privileged(operator, "admin")
+      !operator.privileged("admin")
     ) {
       throw new Meteor.Error(401, "not permitted");
     }
@@ -597,7 +596,7 @@ export const cancel = ServerMethod(
     if (
       !event.editableBy(operator) &&
       !operator.groups.some((g) => event.groupOrganizers.includes(g)) &&
-      !UserPrivilegeUtils.privileged(operator, "admin")
+      !operator.privileged("admin")
     ) {
       throw new Meteor.Error(401, "edit not permitted");
     }

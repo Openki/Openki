@@ -11,7 +11,6 @@ import { Course, Courses } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
 import * as courseInterestedDenormalizer from "/imports/api/courses/interestedDenormalizer";
 
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import * as HtmlTools from "/imports/utils/html-tools";
 import * as Profile from "/imports/utils/profile";
 import { isEmail } from "/imports/utils/email-tools";
@@ -244,9 +243,8 @@ export const adminRemove = ServerMethod(
     check(reason, SafeString());
     check(options, Match.Maybe(AdminRemoveOptionsPattern));
 
-    const operatorId = Meteor.userId();
-
-    if (!operatorId || !UserPrivilegeUtils.privilegedTo("admin")) {
+    const operator = await Meteor.userAsync();
+    if (!operator?.privileged("admin")) {
       return;
     }
 
@@ -291,8 +289,8 @@ export const adminRemove = ServerMethod(
 
     await Users.removeAsync({ _id: userId });
 
-    await Log.record("user.admin.remove", [operatorId, userId], {
-      operatorId,
+    await Log.record("user.admin.remove", [operator._id, userId], {
+      operatorId: operator._id,
       reason,
       user,
       deletedCourses,
@@ -307,7 +305,8 @@ export const addPrivilege = ServerMethod(
     check(userId, SafeString());
     check(privilege, SafeString());
 
-    if (!UserPrivilegeUtils.privilegedTo("admin")) {
+    const operator = await Meteor.userAsync();
+    if (!operator?.privileged("admin")) {
       // At the moment, only admins may hand out privileges, so this is easy
       return;
     }
@@ -337,11 +336,7 @@ export const removePrivilege = ServerMethod(
     }
 
     const operator = await Meteor.userAsync();
-
-    if (
-      !operator ||
-      (!UserPrivilegeUtils.privileged(operator, "admin") && operator?._id !== user._id)
-    ) {
+    if (!operator || (!operator.privileged("admin") && operator._id !== user._id)) {
       return;
     }
 
@@ -359,7 +354,7 @@ export const setHasContributed = ServerMethod("user.setHasContributed", async (u
 
   const operator = await Meteor.userAsync();
 
-  if (!operator || !UserPrivilegeUtils.privileged(operator, "admin")) {
+  if (!operator || !operator.privileged("admin")) {
     return;
   }
 
@@ -383,7 +378,7 @@ export const unsetHasContributed = ServerMethod(
 
     const operator = await Meteor.userAsync();
 
-    if (!operator || !UserPrivilegeUtils.privileged(operator, "admin")) {
+    if (!operator || !operator.privileged("admin")) {
       return;
     }
 

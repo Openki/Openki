@@ -6,7 +6,6 @@ import { Users } from "/imports/api/users/users";
 
 import { userSearchPrefix } from "/imports/utils/user-search-prefix";
 import { ServerPublishMany, ServerPublishOne } from "/imports/utils/ServerPublish";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import { PasswordResetTokenExpirationInDays } from "/imports/startup/both/UseraccountsConfiguration";
 
 if (Meteor.isServer) {
@@ -87,7 +86,7 @@ export const [details, useDetails] = ServerPublishOne(
     };
 
     // Admins may see other's privileges
-    if (UserPrivilegeUtils.privileged(Meteor.userId(), "admin")) {
+    if (Meteor.user()?.privileged("admin")) {
       projection.privileges = 1;
     }
 
@@ -104,7 +103,7 @@ export const [details, useDetails] = ServerPublishOne(
     };
 
     // Admins may see other's privileges
-    if (UserPrivilegeUtils.privileged(Meteor.userId(), "admin")) {
+    if (Meteor.user()?.privileged("admin")) {
       projection.privileges = 1;
     }
 

@@ -5,7 +5,6 @@ import { _ } from "meteor/underscore";
 
 import { UserModel } from "/imports/api/users/users";
 
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import { Filtering } from "/imports/utils/filtering";
 import * as FileStorage from "/imports/utils/FileStorage";
 import { LocalizedValue } from "/imports/utils/getLocalizedValue";
@@ -97,7 +96,7 @@ export class Group {
     }
     return (
       this.isNew() /* Anybody may create a new group */ ||
-      UserPrivilegeUtils.privileged(user, "admin") /* Admins can edit all groups */ ||
+      user.privileged("admin") /* Admins can edit all groups */ ||
       this.members?.some((m) => m.user === user._id) /* User must be member of group to edit it */
     );
   }
