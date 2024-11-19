@@ -10,7 +10,7 @@ import { ServerPublish } from "/imports/utils/ServerPublishBlaze";
 
 export const [details, useDetails] = ServerPublishOne(
   "tenant",
-   (tenantId: string) => {
+  (tenantId: string) => {
     check(tenantId, String);
 
     const user = Meteor.user();

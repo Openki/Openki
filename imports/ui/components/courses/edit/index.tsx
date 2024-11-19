@@ -216,6 +216,38 @@ export function Edit(data: Data) {
   const [isBusy, setIsBusy] = useState(false);
   const [title, setTitle] = useState(data.name);
 
+  const showInternalCheckbox = () => {
+    let internalOption;
+
+    if (!data.isFrame && data.group && user?.groups) {
+      // Visible in group detail page (for creation) if user is in group
+      internalOption = user.groups.includes(data.group);
+    } else {
+      // and visible on edit if course is in a group
+      // For devs: This behaviour is not consistent. But we want the creation to be as simple
+      // as possible.
+      internalOption = (data.groups?.length || 0) > 0;
+    }
+    return internalOption;
+  };
+
+  const hasTeamGroups = !!(data.teamGroups && data.teamGroups?.length > 0);
+
+  let internalInitalState;
+  if (showInternalCheckbox()) {
+    // Usually an "internal" checkbox is displayed so that the users of a group can choose
+    // whether the course is internal or not.
+    internalInitalState = data.internal;
+  } else if (data.isFrame && hasTeamGroups) {
+    // When in a frame for a group, the `internal` query-param can be set to control whether
+    // the group wants the entered courses to be internal.
+    internalInitalState = data.internal;
+  }
+  // Default is not internal
+  internalInitalState = internalInitalState || false;
+
+  const [internal, setInternal] = useState(internalInitalState);
+
   useEffect(() => {
     setTitle(data.name);
   }, [data.name]);
@@ -336,21 +368,6 @@ export function Edit(data: Data) {
       // will be set automatically.
       !(allRegions.length === 1)
     );
-  };
-
-  const showInternalCheckbox = () => {
-    let internalOption;
-
-    if (!data.isFrame && data.group && user?.groups) {
-      // Visible in group detail page (for creation) if user is in group
-      internalOption = user.groups.includes(data.group);
-    } else {
-      // and visible on edit if course is in a group
-      // For devs: This behaviour is not consistent. But we want the creation to be as simple
-      // as possible.
-      internalOption = (data.groups?.length || 0) > 0;
-    }
-    return internalOption;
   };
 
   const customFields = (type?: "singleLine" | "multiLine" | "boolean") => {
@@ -476,21 +493,6 @@ export function Edit(data: Data) {
   };
 
   const handleSave = async () => {
-    const hasTeamGroups = !!(data.teamGroups && data.teamGroups?.length > 0);
-
-    let internal;
-    if (showInternalCheckbox()) {
-      // Usually an "internal" checkbox is displayed so that the users of a group can choose
-      // whether the course is internal or not.
-      internal = $(".js-check-internal").is(":checked");
-    } else if (data.isFrame && hasTeamGroups) {
-      // When in a frame for a group, the `internal` query-param can be set to control whether
-      // the group wants the entered courses to be internal.
-      internal = data.internal;
-    }
-    // Default is not internal
-    internal = internal || false;
-
     const changes = {
       internal,
       name: StringTools.saneTitle(title || ""),
@@ -830,11 +832,12 @@ export function Edit(data: Data) {
               <label className="form-label">{t("course.edit.intern", "Hide on front page")}</label>
               <div className="form-check">
                 <input
-                  className="form-check-input js-check-internal"
+                  className="form-check-input"
                   type="checkbox"
                   value=""
                   id="internalCheckbox"
-                  checked={data.internal}
+                  defaultChecked={internal}
+                  onChange={(event) => setInternal(event.currentTarget.checked)}
                 />
                 <label className="form-check-label" htmlFor="internalCheckbox">
                   {t(

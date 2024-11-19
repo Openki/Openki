@@ -16,6 +16,9 @@
                 {{#if course.internal}}
                   {{> internalIndicator}}
                 {{/if}}
+                {{#if course.singleEvent}}
+                  {{> singleEventIndicator}}
+                {{/if}}
                 <div class="details-header-tags">
                   {{#if (isProposal course)}}
                     <div class="proposal-tag">

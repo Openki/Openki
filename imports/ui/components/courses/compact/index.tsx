@@ -7,6 +7,7 @@ import { CourseModel } from "/imports/api/courses/courses";
 import { hasRole } from "/imports/utils/course-role-utils";
 
 import { InternalIndicator } from "/imports/ui/components/internal-indicator";
+import { SingleEventIndicator } from "/imports/ui/components/single-event-indicator";
 import { CourseCategories } from "/imports/ui/components/courses/categories";
 import { GroupTag } from "/imports/ui/components/groups/tag";
 import { CourseCompactEvent } from "./course-compact-event";
@@ -122,6 +123,7 @@ export function CourseCompact({ course, groupTagEvents, categorieTagEvents }: Pr
     >
       <div className="course-compact-content col-8">
         {course.internal ? <InternalIndicator /> : null}
+        {course.singleEvent ? <SingleEventIndicator /> : null}
         <div className="course-compact-title" title={course.name}>
           <a className="stretched-link" href={Router.path("showCourse", course)}>
             {course.name}
