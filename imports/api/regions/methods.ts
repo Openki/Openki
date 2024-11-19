@@ -89,7 +89,7 @@ export const update = ServerMethod(
       throw new Meteor.Error(401, "please log in");
     }
 
-    const region = Regions.findOne(regionId);
+    const region = await Regions.findOneAsync(regionId);
     if (!region) {
       throw new Meteor.Error(404, "region not found");
     }
@@ -122,7 +122,12 @@ export const update = ServerMethod(
       set.description = changes.description.trim().substring(0, 1000);
     }
 
-    Regions.update({ _id: regionId }, { $set: set }, { multi: true }, AsyncTools.checkUpdateOne);
+    await Regions.updateAsync(
+      { _id: regionId },
+      { $set: set },
+      { multi: true },
+      AsyncTools.checkUpdateOne,
+    );
 
     return regionId;
   },
@@ -136,7 +141,7 @@ export const remove = ServerMethod("region.remove", async (regionId: string) => 
     throw new Meteor.Error(401, "please log in");
   }
 
-  const region = Regions.findOne(regionId);
+  const region = await Regions.findOneAsync(regionId);
   if (!region) {
     throw new Meteor.Error(404, "region not found");
   }
@@ -145,38 +150,42 @@ export const remove = ServerMethod("region.remove", async (regionId: string) => 
     throw new Meteor.Error(401, "not permitted");
   }
 
-  if (Courses.find({ region: regionId }).count() > 20) {
+  if ((await Courses.find({ region: regionId }).countAsync()) > 20) {
     throw new Meteor.Error(
       401,
       "Deleting regions with more than 20 courses is not allowed. Delete courses or contact an administrator. For safety reasons. So that an active region is not deleted by mistake.",
     );
   }
 
-  Events.remove({ region: regionId });
+  await Events.removeAsync({ region: regionId });
   // CourseDiscussionEntity do not currently have a region.
-  Courses.find({ region: regionId }).forEach((c) => {
-    CourseDiscussions.remove({ courseId: c._id });
-  });
-  Courses.remove({ region: regionId });
-  Venues.remove({ region: regionId });
-  Regions.remove(regionId);
+  for (const c of await Courses.find({ region: regionId }).fetchAsync()) {
+    // eslint-disable-next-line no-await-in-loop
+    await CourseDiscussions.removeAsync({ courseId: c._id });
+  }
+  await Courses.removeAsync({ region: regionId });
+  await Venues.removeAsync({ region: regionId });
+  await Regions.removeAsync(regionId);
 });
 
 export const featureGroup = ServerMethod(
   "region.featureGroup",
-  (regionId: string, groupId: string) => {
+  async (regionId: string, groupId: string) => {
     check(regionId, String);
     check(groupId, String);
 
-    Regions.update(regionId, { $set: { featuredGroup: groupId } });
+    await Regions.updateAsync(regionId, { $set: { featuredGroup: groupId } });
   },
 );
 
-export const unsetFeaturedGroup = ServerMethod("region.unsetFeaturedGroup", (regionId: string) => {
-  check(regionId, String);
+export const unsetFeaturedGroup = ServerMethod(
+  "region.unsetFeaturedGroup",
+  async (regionId: string) => {
+    check(regionId, String);
 
-  Regions.update(regionId, { $set: { featuredGroup: "" } });
-});
+    await Regions.updateAsync(regionId, { $set: { featuredGroup: "" } });
+  },
+);
 
 Meteor.methods({
   async "region.updateCounters"(selector) {

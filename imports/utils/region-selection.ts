@@ -88,7 +88,7 @@ export async function subscribe(
       localStorage?.getItem("region"),
     ].filter(Boolean) as string[];
 
-    const regions = findFilter().fetch();
+    const regions = await (await findFilter()).fetchAsync();
     if (preferredTenant) {
       // check if we can find a region for a preferred tenant
 

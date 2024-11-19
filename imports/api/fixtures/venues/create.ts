@@ -38,10 +38,12 @@ export async function create() {
   const prng = Prng("loadLocations");
 
   const venues = [...venuesBase, ...zuerichlerntVenues];
-  const testRegions = [
-    Regions.findOne("9JyFCoKWkxnf8LWPh"),
-    Regions.findOne("EZqQLGL4PtFCxCNrp"),
-  ].map((r) => {
+  const testRegions = (
+    await Promise.all([
+      Regions.findOneAsync("9JyFCoKWkxnf8LWPh"),
+      Regions.findOneAsync("EZqQLGL4PtFCxCNrp"),
+    ])
+  ).map((r) => {
     if (!r) {
       throw new Error("Unexpected undefined");
     }
