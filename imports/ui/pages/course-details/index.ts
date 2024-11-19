@@ -39,6 +39,7 @@ import "/imports/ui/components/regions/tag";
 import "/imports/ui/components/sharing";
 import "/imports/ui/components/report";
 import "/imports/ui/components/internal-indicator";
+import "/imports/ui/components/single-event-indicator";
 
 import "./button-course-archive";
 import "./confirm-dialog";

@@ -62,7 +62,7 @@
       }
     , { "entity": "event"
       , "title": "dashboard.userRegistredFor.title"
-      , "query": "participant={currentUser}&after=now&sort=start&internal=0&canceled=0"
+      , "query": "participant={currentUser}&after=now&sort=start"
       }
     , { "entity": "course"
       , "title": "dashboard.recentActivities.title"
@@ -102,27 +102,27 @@
   , "groupDashboardDefault":
     [ { "entity": "course"
       , "title": "dashboard.recentActivities.title"
-      , "query": "internal=0"
+      , "query": ""
       }
     , { "entity": "event"
       , "title": "dashboard.upcomingEvents.title"
-      , "query": "after=now&sort=start&internal=0&canceled=0"
+      , "query": "after=now&sort=start&canceled=0"
       }
     , { "entity": "course"
       , "title": "dashboard.newProposals.title"
-      , "query": "state=proposal&internal=0&sort=-time_created"
+      , "query": "state=proposal&sort=-time_created"
       }
     , { "entity": "course"
       , "title": "dashboard.lookingForMentors.title"
-      ,  "query": "needsRole=mentor&state=proposal,resting&internal=0"
+      ,  "query": "needsRole=mentor&state=proposal,resting"
       }
     , { "entity": "course"
       , "title": "dashboard.lookingForVenues.title"
-      , "query": "needsRole=host&state=proposal,resting&internal=0"
+      , "query": "needsRole=host&state=proposal,resting"
       }
     , { "entity": "eventsMap"
       , "title": "dashboard.eventsMap.title"
-      , "query": "after=now&internal=0&canceled=0"
+      , "query": "after=now"
       }
     , { "entity": "propose"
       }

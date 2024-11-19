@@ -280,7 +280,7 @@ RouterAsync.route("proposeCourse", {
 
     course.name = query.title || "";
 
-    return { ...course, group: query.group };
+    return { ...course, group: query.group, singleEvent: query.singleEvent === "1" };
   },
 });
 
@@ -397,7 +397,7 @@ RouterAsync.route("showEvent", {
   async data() {
     const subs = this.subscriptions();
 
-    return await subs?.event();
+    return subs?.event();
   },
 });
 
