@@ -123,7 +123,7 @@ export async function generate() {
       const age = Math.floor(prng() * 10000000000);
       event.time_created = new Date(new Date().getTime() - age);
       event.time_lastedit = new Date(new Date().getTime() - age * 0.25);
-      Events.insert(event);
+      await Events.insertAsync(event);
     }
 
     count += eventCount;

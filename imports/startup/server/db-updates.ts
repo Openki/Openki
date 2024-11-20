@@ -22,7 +22,7 @@ import { update as update20241014enrichCourseCompactImage } from "./updates/2024
 
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
-const UpdatesAvailable: { [name: string]: () => number } = {
+const UpdatesAvailable: { [name: string]: () => Promise<number> } = {
   "2020.12.16 mergeUserLocale": update20201216MergeUserLocale,
   "2021.01.06 ensureVenueSlugField": update20210106EnsureVenueSlugField,
   "2021.01.12 ensureCourseInterestedField": update20210112EnsureCourseInterestedField,
@@ -68,12 +68,14 @@ if (runBackgroundTasks)
         } else {
           /* eslint-disable-next-line no-console */
           console.log(`Applying update ${name}`);
-          entry.affected = updateAvailable();
+          // eslint-disable-next-line no-await-in-loop
+          entry.affected = await updateAvailable();
           entry.applied = new Date();
           /* eslint-disable-next-line no-console */
           console.log(`${name}: ${entry.affected} affected documents`);
         }
-        UpdatesApplied.insert(entry);
+        // eslint-disable-next-line no-await-in-loop
+        await UpdatesApplied.insertAsync(entry);
       }
     }
   });

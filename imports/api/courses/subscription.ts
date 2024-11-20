@@ -222,20 +222,20 @@ export class Subscribe extends Change<{
     // Add the user as member if she's not listed yet
     // Note that the user will be created with the role already
     // filled to avoid seeing empty list of roles.
-    Courses.update(
+    await Courses.updateAsync(
       { _id: this.course._id, "members.user": { $ne: this.userId } },
       { $addToSet: { members: { user: this.userId, roles: [this.role] } } },
     );
 
     // Now that we're sure she's listed, add the role too.
     // If we just added her, this is a no-op.
-    Courses.update(
+    await Courses.updateAsync(
       { _id: this.course._id, "members.user": this.userId },
       { $addToSet: { "members.$.roles": this.role } },
     );
 
     if (this.comment) {
-      Courses.update(
+      await Courses.updateAsync(
         { _id: this.course._id, "members.user": this.userId },
         { $set: { "members.$.comment": this.comment } },
       );
@@ -246,11 +246,11 @@ export class Subscribe extends Change<{
     Courses.updateGroups(this.course._id);
 
     timeLastEditDenormalizer.afterSubscribe(this.course._id);
-    historyDenormalizer.afterSubscribe(this.course._id, this.userId, this.role);
+    await historyDenormalizer.afterSubscribe(this.course._id, this.userId, this.role);
 
     if (this.reason === "interested") {
       // Send notification to team
-      Notification.Join.record(this.course._id, this.userId, this.role, this.comment);
+      await Notification.Join.record(this.course._id, this.userId, this.role, this.comment);
     }
   }
 }
@@ -345,16 +345,16 @@ export class Unsubscribe extends Change<{
     // Unsubscribe from the team also means remove editor rights.
     if (this.role === "team") {
       update.$pull.editors = this.userId;
-      Events.update(
+      await Events.updateAsync(
         { courseId: this.course._id },
         { $pull: { editors: this.userId } },
         { multi: true },
       );
     }
-    Courses.update({ _id: this.course._id, "members.user": this.userId }, update);
+    await Courses.updateAsync({ _id: this.course._id, "members.user": this.userId }, update);
 
     // Housekeeping: Remove members that have no role left
-    Courses.update(
+    await Courses.updateAsync(
       { _id: this.course._id },
       {
         $pull: { members: { roles: { $size: 0 } } },
@@ -366,7 +366,7 @@ export class Unsubscribe extends Change<{
     Courses.updateGroups(this.course._id);
 
     timeLastEditDenormalizer.afterUnsubscribe(this.course._id);
-    historyDenormalizer.afterUnsubscribe(this.course._id, this.userId, this.role);
+    await historyDenormalizer.afterUnsubscribe(this.course._id, this.userId, this.role);
   }
 }
 

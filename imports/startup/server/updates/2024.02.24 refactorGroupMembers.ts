@@ -1,19 +1,18 @@
 import { Groups } from "/imports/api/groups/groups";
 
-export function update() {
+export async function update() {
   let updated = 0;
 
-  Groups.find({})
-    .fetch()
-    .forEach((orginalGroup) => {
-      const group = { ...orginalGroup };
-      group.members = (group.members as unknown as string[]).map((m) => ({
-        user: m,
-        notify: true,
-      }));
+  for (const orginalGroup of await Groups.find({}).fetchAsync()) {
+    const group = { ...orginalGroup };
+    group.members = (group.members as unknown as string[]).map((m) => ({
+      user: m,
+      notify: true,
+    }));
 
-      updated += Groups.update(group._id, group);
-    });
+    // eslint-disable-next-line no-await-in-loop
+    updated += await Groups.updateAsync(group._id, group);
+  }
 
   return updated;
 }

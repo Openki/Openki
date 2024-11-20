@@ -1,16 +1,15 @@
 import { Events } from "/imports/api/events/events";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
-export function update() {
+export async function update() {
   let updated = 0;
 
-  Events.find({ sendReminder: { $exists: false } })
-    .fetch()
-    .forEach((orginalEvent) => {
-      const event = { ...orginalEvent };
-      event.sendReminder = PublicSettings.sendReminderPreset;
-      updated += Events.update(event._id, event);
-    });
+  for (const orginalEvent of await Events.find({ sendReminder: { $exists: false } }).fetchAsync()) {
+    const event = { ...orginalEvent };
+    event.sendReminder = PublicSettings.sendReminderPreset;
+    // eslint-disable-next-line no-await-in-loop
+    updated += await Events.updateAsync(event._id, event);
+  }
 
   return updated;
 }

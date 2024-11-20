@@ -89,11 +89,11 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
 
   if (group.isNew()) {
     /* eslint-disable-next-line no-param-reassign */
-    groupId = Groups.insert(_.extend(group, updates));
+    groupId = await Groups.insertAsync(_.extend(group, updates));
     Meteor.call("user.updateBadges", user._id);
   } else {
     updates = timeLastEditDenormalizer.beforeUpdate(updates);
-    Groups.update(group._id, { $set: updates });
+    await Groups.updateAsync(group._id, { $set: updates });
   }
 
   return groupId;
