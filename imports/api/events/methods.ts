@@ -42,14 +42,14 @@ const ReplicaSync = function (
 ) {
   let affected = 0;
 
-  const apply = function (changes: Partial<EventEntity>) {
+  const apply = async function (changes: Partial<EventEntity>) {
     const startMoment = moment(changes.start);
     const endMoment = moment(changes.end);
     const timeIsValid = startMoment.isValid() && endMoment.isValid();
     const startTime = { hour: startMoment.hour(), minute: startMoment.minute() };
     const timeDelta = endMoment.diff(startMoment);
 
-    Events.find(AffectedReplicaSelectors(event)).forEach((replica) => {
+    for (const replica of await Events.find(AffectedReplicaSelectors(event)).fetchAsync()) {
       const replicaChanges = updateOptions.infos ? { ...changes } : {};
 
       const updateTime =
@@ -78,11 +78,12 @@ const ReplicaSync = function (
 
       if (updateOptions.infos || updateTime) {
         // only update if something has changed
-        Events.update({ _id: replica._id }, { $set: replicaChanges });
+        // eslint-disable-next-line no-await-in-loop
+        await Events.updateAsync({ _id: replica._id }, { $set: replicaChanges });
       }
 
       affected += 1;
-    });
+    }
   };
 
   return {
@@ -341,7 +342,7 @@ export const save = ServerMethod(
           changedReplicas: { time: updateChangedReplicasTime ?? false },
         };
         const replicaSync = ReplicaSync(event, updateOptions);
-        replicaSync.apply(editFields);
+        await replicaSync.apply(editFields);
         affectedReplicaCount = replicaSync.affected();
       }
 
@@ -394,44 +395,49 @@ export const save = ServerMethod(
 
     return eventId;
   },
+  { simulation: false },
 );
 
-export const remove = ServerMethod("event.remove", async (eventId: string) => {
-  check(eventId, SafeString());
+export const remove = ServerMethod(
+  "event.remove",
+  async (eventId: string) => {
+    check(eventId, SafeString());
 
-  const user = await Meteor.userAsync();
-  if (!user) {
-    throw new Meteor.Error(401, "please log in");
-  }
+    const user = await Meteor.userAsync();
+    if (!user) {
+      throw new Meteor.Error(401, "please log in");
+    }
 
-  const event = await Events.findOneAsync(eventId);
-  if (!event) {
-    throw new Meteor.Error(404, "No such event");
-  }
+    const event = await Events.findOneAsync(eventId);
+    if (!event) {
+      throw new Meteor.Error(404, "No such event");
+    }
 
-  if (!event.editableBy(user)) {
-    throw new Meteor.Error(401, "not permitted");
-  }
+    if (!event.editableBy(user)) {
+      throw new Meteor.Error(401, "not permitted");
+    }
 
-  await Events.removeAsync(eventId);
+    await Events.removeAsync(eventId);
 
-  // unlink child replicas
-  await Events.updateAsync(
-    { replicaOf: event._id },
-    { $unset: { replicaOf: true } },
-    { multi: true },
-  );
+    // unlink child replicas
+    await Events.updateAsync(
+      { replicaOf: event._id },
+      { $unset: { replicaOf: true } },
+      { multi: true },
+    );
 
-  if (event.courseId) {
-    await courseHistoryDenormalizer.afterEventRemove(event.courseId, user._id, {
-      title: event.title,
-      startLocal: event.startLocal,
-    });
+    if (event.courseId) {
+      await courseHistoryDenormalizer.afterEventRemove(event.courseId, user._id, {
+        title: event.title,
+        startLocal: event.startLocal,
+      });
 
-    Meteor.call("course.updateNextEvent", event.courseId);
-  }
-  Meteor.call("region.updateCounters", event.region, AsyncTools.logErrors);
-});
+      await Meteor.callAsync("course.updateNextEvent", event.courseId);
+    }
+    await Meteor.callAsync("region.updateCounters", event.region);
+  },
+  { simulation: false },
+);
 
 /**
  * Add or remove a group from the groups list
@@ -510,8 +516,9 @@ export const addParticipant = ServerMethod(
       await processChange(change, { isSimulation: this.isSimulation });
     }
 
-    Meteor.call("course.updateNextEvent", event.courseId);
+    await Meteor.callAsync("course.updateNextEvent", event.courseId);
   },
+  { simulation: false },
 );
 
 export const removeParticipant = ServerMethod(
@@ -536,8 +543,9 @@ export const removeParticipant = ServerMethod(
 
     await Events.updateAsync({ _id: eventId }, { $pull: { participants: { user: userId } } });
 
-    Meteor.call("course.updateNextEvent", event.courseId);
+    await Meteor.callAsync("course.updateNextEvent", event.courseId);
   },
+  { simulation: false },
 );
 
 export const ContactParticipantsOptionsPattern = {

@@ -24,7 +24,7 @@ export async function processChange<T>(change: Change<T>, options?: { isSimulati
     }
   } catch (err) {
     /* eslint-disable-next-line no-console */
-    console.log(err);
+    console.error(err);
     Alert.serverError(err);
   }
 }
@@ -245,7 +245,7 @@ export class Subscribe extends Change<{
     await interestedDenormalizer.afterSubscribe(this.course._id);
     Courses.updateGroups(this.course._id);
 
-    timeLastEditDenormalizer.afterSubscribe(this.course._id);
+    await timeLastEditDenormalizer.afterSubscribe(this.course._id);
     await historyDenormalizer.afterSubscribe(this.course._id, this.userId, this.role);
 
     if (this.reason === "interested") {
@@ -365,7 +365,7 @@ export class Unsubscribe extends Change<{
     await interestedDenormalizer.afterUnsubscribe(this.course._id);
     Courses.updateGroups(this.course._id);
 
-    timeLastEditDenormalizer.afterUnsubscribe(this.course._id);
+    await timeLastEditDenormalizer.afterUnsubscribe(this.course._id);
     await historyDenormalizer.afterUnsubscribe(this.course._id, this.userId, this.role);
   }
 }

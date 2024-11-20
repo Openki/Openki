@@ -34,15 +34,15 @@ export function beforeDeleteImage() {
 /**
  * Update the modification date
  */
-export function afterSubscribe(courseId: string) {
-  Courses.update(courseId, { $set: { time_lastedit: new Date() } });
+export async function afterSubscribe(courseId: string) {
+  await Courses.updateAsync(courseId, { $set: { time_lastedit: new Date() } });
 }
 
 /**
  * Update the modification date
  */
-export function afterUnsubscribe(courseId: string) {
-  Courses.update(courseId, { $set: { time_lastedit: new Date() } });
+export async function afterUnsubscribe(courseId: string) {
+  await Courses.updateAsync(courseId, { $set: { time_lastedit: new Date() } });
 }
 
 /**

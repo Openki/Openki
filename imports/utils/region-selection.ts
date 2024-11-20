@@ -102,7 +102,7 @@ export async function subscribe(
         preferredTenantRegion = await UserLocation.detect(preferredTenant);
       } catch (err) {
         // eslint-disable-next-line no-console
-        console.log(`Region autodetection error: ${err}`);
+        console.error(`Region autodetection error: ${err}`);
       }
 
       preferredTenantRegion =
@@ -137,7 +137,7 @@ export async function subscribe(
       region = await UserLocation.detect();
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.log(`Region autodetection error: ${err}`);
+      console.error(`Region autodetection error: ${err}`);
     }
 
     if (region) {
