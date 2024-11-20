@@ -18,7 +18,6 @@ import * as Analytics from "/imports/ui/lib/analytics";
 // import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import * as Metatags from "/imports/utils/metatags";
 
-import "./styles.scss";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 import { AvatarForm } from "../../components/avatarForm";
 import { DeleteConfirm } from "../../components/delete-confirm";
@@ -26,6 +25,114 @@ import { VerifyEmail } from "../../components/profiles/verify-email";
 import { GroupTag } from "../../components/groups/tag";
 import { VenueLink } from "../../components/venues/link";
 import { PublicSettings } from "/imports/utils/PublicSettings";
+
+import "./styles.scss";
+
+function AdminSection() {
+  const { t } = useTranslation();
+  return (
+    <div className="page-component page-component-seperated">
+      <h3>{t("profile.administration.title", "Administration")}</h3>
+      <h5>
+        {t("profile.administration.link", "You are an administrator of {SITENAME}", {
+          SITENAME: PublicSettings.siteName,
+        })}
+      </h5>
+      <a className="button btn btn-primary" href={Router.path("adminPanel")}>
+        {t("profile.administration.button", "Visit admin panel")}
+      </a>
+    </div>
+  );
+}
+
+function TenantSection({ tenants }: { tenants: Mongo.Cursor<TenantEntity, TenantModel> }) {
+  const { t } = useTranslation();
+
+  return (
+    <div className="page-component page-component-seperated">
+      <h3>{t("profile.tenants", "My organizations")}</h3>
+      <h5>
+        {t(
+          "profile.tenantMembership",
+          "You are {NUM_TENANTS, plural, =0{not admin of any organization} one{admin of the organization:} other{admin of # organizations:} }",
+          { NUM_TENANTS: tenants.count() },
+        )}
+      </h5>
+      <ul className="list-unstyled">
+        {tenants.map((tenant) => (
+          <li className="mb-3">
+            <div className="tag tag-link tenant-tag">
+              <a href={Router.path("tenantDetails", { _id: tenant._id })}>{tenant.name}</a>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function GroupSection({ groups }: { groups: Mongo.Cursor<GroupEntity, GroupEntity> }) {
+  const { t } = useTranslation();
+  return (
+    <div className="page-component page-component-seperated">
+      <h3>{t("profile.groups", "My groups")}</h3>
+      <h5>
+        {t(
+          "profile.groupMembership",
+          "You are {NUM_GROUPS, plural, =0{not member of any group} one{member of the group:} other{member of # groups:} }",
+          {
+            NUM_GROUPS: groups.count(),
+          },
+        )}
+      </h5>
+      <ul className="list-unstyled">
+        {groups.map((group) => (
+          <li className="mb-3">
+            <GroupTag groupId={group._id} full={true} />
+          </li>
+        ))}
+      </ul>
+      <a
+        className="btn btn-add"
+        href={Router.path("groupDetails", {
+          _id: "create",
+        })}
+      >
+        {t("profile.createNewGroup.button", "Create a new group")}
+      </a>
+    </div>
+  );
+}
+function VenuesSection({ venues }: { venues: Mongo.Cursor<VenueEntity, VenueModel> }) {
+  const { t } = useTranslation();
+  function isVenueEditor() {
+    return venues.count() > 0;
+  }
+  return (
+    <div className="page-component page-component-seperated profile-venues-list">
+      <h3>{t("profile.venues", "My venues")}</h3>
+      {isVenueEditor() ? (
+        <ul className="list-unstyled">
+          {venues.map((venue) => (
+            <li className="mb-3">
+              <VenueLink venue={venue} />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>{t("userprofile.noOwnVenues", "You're not an editor of any venue.")}</p>
+      )}
+      <a
+        className="btn btn-add"
+        href={Router.path("venueDetails", {
+          _id: "create",
+        })}
+      >
+        {t("profile.createNewVenue.button", "Create a new venue")}
+      </a>
+    </div>
+  );
+}
 
 export interface ProfilePageData {
   user: {
@@ -41,12 +148,9 @@ export interface ProfilePageData {
   };
 }
 
-export function ProfilePage(data: ProfilePageData) {
+function UnsubscribeResultAlerts() {
   const { t } = useTranslation();
-  const user = useUser();
   const query = useSearchParams();
-  const [changingPass] = useState(false);
-
   function notificationsUnsubscribeSuccess() {
     return query?.unsubscribed === "notifications";
   }
@@ -69,10 +173,47 @@ export function ProfilePage(data: ProfilePageData) {
       "Unsubscribes from private messages via e-mail",
     );
   }
+  return (
+    <>
+      {notificationsUnsubscribeSuccess() ? (
+        <div className="alert alert-success" role="alert">
+          <span className="fa-stack fa-lg">
+            <i className="fa-regular fa-envelope fa-stack-1x"></i>
+            <i className="fa-solid fa-ban fa-stack-2x"></i>
+          </span>{" "}
+          {t(
+            "notifications.unsubscribeSuccess",
+            "You have unsubscribed from automated notifications.",
+          )}
+        </div>
+      ) : null}
+      {privateMessagesUnsubscribeSuccess() ? (
+        <div className="alert alert-success" role="alert">
+          <span className="fa-stack fa-lg">
+            <i className="fa-regular fa-envelope fa-stack-1x"></i>
+            <i className="fa-solid fa-ban fa-stack-2x"></i>
+          </span>{" "}
+          {t("privateMessages.unsubscribeSuccess", "You will not get private messages from users.")}
+        </div>
+      ) : null}
+      {unsubscribeError() ? (
+        <div className="alert alert-danger" role="alert">
+          <span className="fa-stack fa-lg">
+            <i className="fa-regular fa-envelope fa-stack-1x"></i>
+            <i className="fa-solid fa-ban fa-stack-2x"></i>
+          </span>{" "}
+          {t("notifications.unsubscribeError", "Could not unsubscribe. Please Try again.")}
+        </div>
+      ) : null}
+    </>
+  );
+}
 
-  function groupCount() {
-    return data.user.groups.count();
-  }
+export function ProfilePage(data: ProfilePageData) {
+  const { t } = useTranslation();
+  const user = useUser();
+  const [changingPass] = useState(false);
+
   function tenantCount() {
     return data.user.tenants.count();
   }
@@ -82,9 +223,7 @@ export function ProfilePage(data: ProfilePageData) {
   function allowPrivateMessagesChecked() {
     return data.user.allowPrivateMessages;
   }
-  function isVenueEditor() {
-    return data.user.venues.count() > 0;
-  }
+
   // function editableName() {
   //   return Template.instance().editableName;
   // }
@@ -128,41 +267,12 @@ export function ProfilePage(data: ProfilePageData) {
       {!isVisitor() ? (
         <div className="page-component">
           <h1>
-            <span className="fa-solid fa-gears fa-fw" aria-hidden="true"></span>
+            <span className="fa-solid fa-gears fa-fw" aria-hidden="true"></span>{" "}
             {t("login.frame.settings")}
           </h1>
         </div>
       ) : null}
-      {notificationsUnsubscribeSuccess() ? (
-        <div className="alert alert-success" role="alert">
-          <span className="fa-stack fa-lg">
-            <i className="fa-regular fa-envelope fa-stack-1x"></i>
-            <i className="fa-solid fa-ban fa-stack-2x"></i>
-          </span>
-          {t(
-            "notifications.unsubscribeSuccess",
-            "You have unsubscribed from automated notifications.",
-          )}
-        </div>
-      ) : null}
-      {privateMessagesUnsubscribeSuccess() ? (
-        <div className="alert alert-success" role="alert">
-          <span className="fa-stack fa-lg">
-            <i className="fa-regular fa-envelope fa-stack-1x"></i>
-            <i className="fa-solid fa-ban fa-stack-2x"></i>
-          </span>
-          {t("privateMessages.unsubscribeSuccess", "You will not get private messages from users.")}
-        </div>
-      ) : null}
-      {unsubscribeError() ? (
-        <div className="alert alert-danger" role="alert">
-          <span className="fa-stack fa-lg">
-            <i className="fa-regular fa-envelope fa-stack-1x"></i>
-            <i className="fa-solid fa-ban fa-stack-2x"></i>
-          </span>
-          {t("notifications.unsubscribeError", "Could not unsubscribe. Please Try again.")}
-        </div>
-      ) : null}
+      <UnsubscribeResultAlerts />
       {!user ? (
         t("profile.not_logged_in", "You are not logged in")
       ) : (
@@ -177,7 +287,7 @@ export function ProfilePage(data: ProfilePageData) {
                 <h2 className="mt-4">{/* {{> editable editableName}} */}</h2>
                 <p>{/* {{> editable editableDescription}} */}</p>
                 <a className="btn btn-primary" href={Router.path("userprofile", { _id: user._id })}>
-                  <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
+                  <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>{" "}
                   {t("login.frame.profile", "Public profile")}
                 </a>
               </div>
@@ -244,79 +354,10 @@ export function ProfilePage(data: ProfilePageData) {
                   </div>
                 </div>
               ) : null}
-              {isAdmin() ? (
-                <div className="page-component page-component-seperated">
-                  <h3>{t("profile.administration.title", "Administration")}</h3>
-                  <h5>
-                    {t("profile.administration.link", "You are an administrator of {SITENAME}", {
-                      SITENAME: PublicSettings.siteName,
-                    })}
-                  </h5>
-                  <a className="button btn btn-primary" href={Router.path("adminPanel")}>
-                    {t("profile.administration.button", "Visit admin panel")}
-                  </a>
-                </div>
-              ) : null}
-              {tenantCount() ? (
-                <div className="page-component page-component-seperated">
-                  <h3>{t("profile.tenants", "My organizations")}</h3>
-                  <h5>
-                    {t(
-                      "profile.tenantMembership",
-                      "You are {NUM_TENANTS, plural, =0{not admin of any organization} one{admin of the organization:} other{admin of # organizations:} }",
-                      { NUM_TENANTS: tenantCount },
-                    )}
-                  </h5>
-                  <ul className="list-unstyled">
-                    {data.user.tenants.map((tenant) => (
-                      <li className="mb-3">
-                        <div className="tag tag-link tenant-tag">
-                          <a href={Router.path("tenantDetails", { _id: tenant._id })}>
-                            {tenant.name}
-                          </a>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
-              <div className="page-component page-component-seperated">
-                <h3>{t("profile.groups", "My groups")}</h3>
-                <h5>
-                  {t(
-                    "profile.groupMembership",
-                    "You are {NUM_GROUPS, plural, =0{not member of any group} one{member of the group:} other{member of # groups:} }",
-                    { NUM_GROUPS: groupCount() },
-                  )}
-                </h5>
-                <ul className="list-unstyled">
-                  {data.user.groups.map((group) => (
-                    <li className="mb-3">
-                      <GroupTag groupId={group._id} full={true} />
-                    </li>
-                  ))}
-                </ul>
-                <a className="btn btn-add" href={Router.path("groupDetails", { _id: "create" })}>
-                  {t("profile.createNewGroup.button", "Create a new group")}
-                </a>
-              </div>
-              <div className="page-component page-component-seperated profile-venues-list">
-                <h3>{t("profile.venues", "My venues:")}</h3>
-                {isVenueEditor() ? (
-                  <ul className="list-unstyled">
-                    {data.user.venues.map((venue) => (
-                      <li className="mb-3">
-                        <VenueLink venue={venue} />
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p>{t("userprofile.noOwnVenues", "You're not an editor of any venue.")}</p>
-                )}
-                <a className="btn btn-add" href={Router.path("venueDetails", { _id: "create" })}>
-                  {t("profile.createNewVenue.button", "Create a new venue")}
-                </a>
-              </div>
+              {isAdmin() ? <AdminSection /> : null}
+              {tenantCount() ? <TenantSection tenants={data.user.tenants} /> : null}
+              <GroupSection groups={data.user.groups} />
+              <VenuesSection venues={data.user.venues} />
             </>
           ) : (
             <div className="page-component page-component-seperated">
