@@ -4,8 +4,9 @@ import { Mongo } from "meteor/mongo";
 import { Router } from "meteor/iron:router";
 // import { ValidationError } from "meteor/mdg:validation-error";
 import { useTranslation } from "react-i18next";
-// import { NotAllowedCharacter } from "/imports/startup/both/NotAllowedCharacter";
+import { NotAllowedCharacter } from "/imports/startup/both/NotAllowedCharacter";
 import { useUser } from "/imports/utils/react-meteor-data";
+import { useSearchParams } from "/imports/utils/react-meteor-router";
 
 import * as Alert from "/imports/api/alerts/alert";
 import * as usersMethods from "/imports/api/users/methods";
@@ -14,11 +15,10 @@ import { TenantEntity, TenantModel } from "/imports/api/tenants/tenants";
 import { GroupEntity } from "/imports/api/groups/groups";
 
 import * as Analytics from "/imports/ui/lib/analytics";
-// import { Editable } from "/imports/ui/lib/editable";
-// import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
+import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import * as Metatags from "/imports/utils/metatags";
 
-import { useSearchParams } from "/imports/utils/react-meteor-router";
+import { Editable, Props as EditableProps } from "/imports/ui/components/editable/index.react";
 import { AvatarForm } from "../../components/avatarForm";
 import { DeleteConfirm } from "../../components/delete-confirm";
 import { VerifyEmail } from "../../components/profiles/verify-email";
@@ -134,20 +134,6 @@ function VenuesSection({ venues }: { venues: Mongo.Cursor<VenueEntity, VenueMode
   );
 }
 
-export interface ProfilePageData {
-  user: {
-    _id: string;
-    name: string;
-    notifications: boolean;
-    allowPrivateMessages: boolean;
-    tenants: Mongo.Cursor<TenantEntity, TenantModel>;
-    groups: Mongo.Cursor<GroupEntity>;
-    venues: Mongo.Cursor<VenueEntity, VenueModel>;
-    email: string | undefined;
-    verified: boolean;
-  };
-}
-
 function UnsubscribeResultAlerts() {
   const { t } = useTranslation();
   const query = useSearchParams();
@@ -209,33 +195,244 @@ function UnsubscribeResultAlerts() {
   );
 }
 
-export function ProfilePage(data: ProfilePageData) {
+type User = {
+  _id: string;
+  name: string;
+  notifications: boolean;
+  allowPrivateMessages: boolean;
+  tenants: Mongo.Cursor<TenantEntity, TenantModel>;
+  groups: Mongo.Cursor<GroupEntity>;
+  venues: Mongo.Cursor<VenueEntity, VenueModel>;
+  email: string | undefined;
+  verified: boolean;
+};
+
+function EmailSection() {
   const { t } = useTranslation();
   const user = useUser();
+
+  if (!user) {
+    return null;
+  }
+
+  async function handelNofitifcationsChange(event: React.ChangeEvent<HTMLInputElement>) {
+    routerAutoscroll.cancelNext();
+
+    const allow = event.currentTarget.checked;
+
+    try {
+      await usersMethods.updateAutomatedNotification(allow);
+
+      Alert.success(t("profile.updated", "Updated profile"));
+      if (!allow)
+        Analytics.trackEvent(
+          "Unsubscribes from notifications",
+          "Unsubscribes from automated notifications via profile",
+        );
+    } catch (err) {
+      Alert.serverError(
+        err,
+        t("profile.toggle.notifications.error", "Failed to change notifications"),
+      );
+    }
+  }
+  async function handelAllowPrivateMessagesChange(event: React.ChangeEvent<HTMLInputElement>) {
+    routerAutoscroll.cancelNext();
+
+    const allow = event.currentTarget.checked;
+
+    try {
+      await usersMethods.updatePrivateMessages(allow);
+
+      Alert.success(t("profile.updated", "Updated profile"));
+      if (!allow)
+        Analytics.trackEvent(
+          "Unsubscribes from notifications",
+          "Unsubscribes from private messages via profile",
+        );
+    } catch (err) {
+      Alert.serverError(
+        err,
+        t("profile.toggle.allowPrivateMessages.error", "Failed to change allow private messages"),
+      );
+    }
+  }
+
+  return (
+    <div className="page-component page-component-seperated">
+      <h3>{t("profile.email_settings", "E-mail settings")}</h3>
+      <div className="row g-4 mb-2">
+        <div className="col-sm-6">
+          <form className="row g-2 mb-2 js-email-form">
+            <div className="col {{errorClass 'email'}}">
+              <label htmlFor="editform_email" className="sr-only">
+                {t("profile.email", "E-mail")}
+              </label>
+
+              <input
+                className="form-control js-email"
+                id="editform_email"
+                type="text"
+                value={user.emailAddress()}
+              />
+              {/* {{errorMessage 'email'}} */}
+            </div>
+            <div className="col-auto">{/* {{> buttonSave}} */}</div>
+          </form>
+          {!user.verifiedEmailAddress() ? <VerifyEmail /> : null}
+        </div>
+        <div className="col-sm-6">
+          <div className="form-check form-switch mb-2">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              value=""
+              id="notificationsCheck"
+              checked={user.notifications}
+              onChange={handelNofitifcationsChange}
+            />
+            <label className="form-check-label" htmlFor="notificationsCheck">
+              {t("profile.toggle.notifications", "Receive automated notifications via e-mail")}
+            </label>
+          </div>
+          <div className="form-check form-switch">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              value=""
+              id="allowPrivateMessagesCheck"
+              checked={user.allowPrivateMessages}
+              onChange={handelAllowPrivateMessagesChange}
+            />
+            <label className="form-check-label" htmlFor="allowPrivateMessagesCheck">
+              {t(
+                "profile.toggle.allowPrivateMessages",
+                "Receive private messages from users via e-mail",
+              )}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProfileSection() {
+  const { t } = useTranslation();
+  const user = useUser();
+
+  if (!user) {
+    return null;
+  }
+
+  const editableNameAttr: EditableProps = {
+    text: user.username,
+    multiline: false,
+    placeholder: t("profile.name.placeholder", "Username"),
+
+    store: {
+      serverValidationErrors: [
+        {
+          type: "noUserName",
+          message: () => t("warning.noUserName", "Please enter a name for your user."),
+        },
+        {
+          type: "notAllowedCharacter",
+          message: () =>
+            t("register.warning.notAllowedCharacter", undefined, {
+              CHARACTERS: NotAllowedCharacter.join(", "),
+            }),
+        },
+        {
+          type: "userExists",
+          message: () =>
+            t("warning.userExists", "This username is already in use. Please choose another one."),
+        },
+        {
+          type: "nameError",
+          message: () => t("update.username.failed", "Could not update username."),
+        },
+      ],
+      onSave: async (newName) => {
+        await usersMethods.updateUsername(newName || "");
+      },
+      onSuccess: () => {
+        Alert.success(t("profile.updated", "Updated profile"));
+      },
+    },
+  };
+  const editableDescriptionAttr: EditableProps = {
+    text: user.description,
+    multiline: true,
+    placeholder: t(
+      "profile.description.placeholder",
+      "About you. Let the community know what your interests are.",
+    ),
+    store: {
+      onSave: async (newDescription) => {
+        await usersMethods.updateDescription(newDescription || "");
+      },
+      onSuccess: () => {
+        Alert.success(t("profile.updated", "Updated profile"));
+      },
+    },
+  };
+
+  return (
+    <div className="page-component">
+      <div className="row g-3">
+        <div className="col-6 col-sm-3">
+          <AvatarForm />
+        </div>
+
+        <div className="col-sm-9">
+          <h2 className="mt-4">
+            <Editable {...editableNameAttr} />
+          </h2>
+          <p>
+            <Editable {...editableDescriptionAttr} />
+          </p>
+          <a className="btn btn-primary" href={Router.path("userprofile", { _id: user._id })}>
+            <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>{" "}
+            {t("login.frame.profile", "Public profile")}
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CreateUserSection({ user }: { user: User }) {
+  const { t } = useTranslation();
+  return (
+    <div className="page-component page-component-seperated">
+      <h3>{t("profile.createUser.title", "Create user")}</h3>
+      <p>
+        {t(
+          "profile.createUser.description",
+          "You are currently here as a guest user. If you want to be able to log in again later or from an other device, you can create a normal user account here. For this, we will send you an email with the instructions and a link to set a password for your account.",
+        )}
+      </p>
+
+      <a
+        className="button btn btn-primary"
+        href={Router.path("resetPasswortEmail", { email: user.email })}
+      >
+        {t("profile.createUser.button", "Send me an account creation email")}
+      </a>
+    </div>
+  );
+}
+
+function DangerZoneSection() {
+  const { t } = useTranslation();
   const [changingPass] = useState(false);
+  const user = useUser();
 
-  function tenantCount() {
-    return data.user.tenants.count();
-  }
-  function notificationsChecked() {
-    return data.user.notifications;
-  }
-  function allowPrivateMessagesChecked() {
-    return data.user.allowPrivateMessages;
-  }
-
-  // function editableName() {
-  //   return Template.instance().editableName;
-  // }
-  // function editableDescription() {
-  //   return Template.instance().editableDescription;
-  // }
-  function isAdmin() {
-    return user?.privileged("admin");
-  }
   function isVisitor() {
     return user?.privileged("visitor");
   }
+
   function deleteConfirmAttr() {
     return {
       confirmText: t(
@@ -250,6 +447,93 @@ export function ProfilePage(data: ProfilePageData) {
       },
       busyButton: t("profile.delete.confirm.button.busy", "Deleting profile…"),
     };
+  }
+
+  return (
+    <div className="page-component page-component-seperated">
+      <h3>{t("profile.danger_zone", "Danger zone")}</h3>
+
+      {!isVisitor() ? (
+        <div className="mb-3">
+          {!changingPass ? (
+            <button type="button" className="btn btn-secondary js-change-pwd-btn">
+              {t("profile.changePass", "Change my password")}
+            </button>
+          ) : (
+            <div className="border border-success text-primary p-3">
+              <form className="js-change-pwd">
+                <div className="row mb-2">
+                  <label htmlFor="oldpassword" className="col-sm-4 col-form-label text-end">
+                    {t("profile.input.oldPassword", "Your current password")}
+                  </label>
+                  <div className="col-sm-8">
+                    <input
+                      type="password"
+                      className="js-old-pwd form-control"
+                      id="oldpassword"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div className="row mb-2">
+                  <label htmlFor="newpassword" className="col-sm-4 col-form-label text-end">
+                    {t("profile.input.newPassword", "New password")}
+                  </label>
+                  <div className="col-sm-8">
+                    <input
+                      type="password"
+                      className="js-new-pwd form-control"
+                      id="newpassword"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div className="row mb-2">
+                  <label htmlFor="newpassword_confirm" className="col-sm-4 col-form-label text-end">
+                    {t("profile.input.repeatPassword", "Repeat new password")}
+                  </label>
+                  <div className="col-sm-8">
+                    <input
+                      type="password"
+                      className="js-new-pwd-confirm form-control"
+                      id="newpassword_confirm"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div className="d-flex gap-2 justify-content-end">
+                  {/* {{> buttonSave}}
+            {{> buttonCancel event="js-change-pwd-cancel"}} */}
+                </div>
+              </form>
+            </div>
+          )}
+        </div>
+      ) : null}
+
+      <div>
+        <DeleteConfirm {...deleteConfirmAttr()} />
+      </div>
+    </div>
+  );
+}
+
+export interface ProfilePageData {
+  user: User;
+}
+
+export function ProfilePage(data: ProfilePageData) {
+  const { t } = useTranslation();
+  const user = useUser();
+
+  function tenantCount() {
+    return data.user.tenants.count();
+  }
+  function isAdmin() {
+    return user?.privileged("admin");
+  }
+  function isVisitor() {
+    return user?.privileged("visitor");
   }
 
   useEffect(() => {
@@ -277,175 +561,20 @@ export function ProfilePage(data: ProfilePageData) {
         t("profile.not_logged_in", "You are not logged in")
       ) : (
         <>
-          <div className="page-component">
-            <div className="row g-3">
-              <div className="col-6 col-sm-3">
-                <AvatarForm />
-              </div>
-
-              <div className="col-sm-9">
-                <h2 className="mt-4">{/* {{> editable editableName}} */}</h2>
-                <p>{/* {{> editable editableDescription}} */}</p>
-                <a className="btn btn-primary" href={Router.path("userprofile", { _id: user._id })}>
-                  <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>{" "}
-                  {t("login.frame.profile", "Public profile")}
-                </a>
-              </div>
-            </div>
-          </div>
-
+          <ProfileSection />
           {!isVisitor() ? (
             <>
-              {data.user.email ? (
-                <div className="page-component page-component-seperated">
-                  <h3>{t("profile.email_settings", "E-mail settings")}</h3>
-                  <div className="row g-4 mb-2">
-                    <div className="col-sm-6">
-                      <form className="row g-2 mb-2 js-email-form">
-                        <div className="col {{errorClass 'email'}}">
-                          <label htmlFor="editform_email" className="sr-only">
-                            {t("profile.email", "E-mail")}
-                          </label>
-
-                          <input
-                            className="form-control js-email"
-                            id="editform_email"
-                            type="text"
-                            value={data.user.email}
-                          />
-                          {/* {{errorMessage 'email'}} */}
-                        </div>
-                        <div className="col-auto">{/* {{> buttonSave}} */}</div>
-                      </form>
-                      {!data.user.verified ? <VerifyEmail /> : null}
-                    </div>
-                    <div className="col-sm-6">
-                      <div className="form-check form-switch mb-2">
-                        <input
-                          className="form-check-input js-notifications"
-                          type="checkbox"
-                          value=""
-                          id="notificationsCheck"
-                          checked={notificationsChecked()}
-                        />
-                        <label className="form-check-label" htmlFor="notificationsCheck">
-                          {t(
-                            "profile.toggle.notifications",
-                            "Receive automated notifications via e-mail",
-                          )}
-                        </label>
-                      </div>
-                      <div className="form-check form-switch">
-                        <input
-                          className="form-check-input js-allowPrivateMessages"
-                          type="checkbox"
-                          value=""
-                          id="allowPrivateMessagesCheck"
-                          checked={allowPrivateMessagesChecked()}
-                        />
-                        <label className="form-check-label" htmlFor="allowPrivateMessagesCheck">
-                          {t(
-                            "profile.toggle.allowPrivateMessages",
-                            "Receive private messages from users via e-mail",
-                          )}
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ) : null}
+              {data.user.email ? <EmailSection /> : null}
               {isAdmin() ? <AdminSection /> : null}
               {tenantCount() ? <TenantSection tenants={data.user.tenants} /> : null}
               <GroupSection groups={data.user.groups} />
               <VenuesSection venues={data.user.venues} />
             </>
           ) : (
-            <div className="page-component page-component-seperated">
-              <h3>{t("profile.createUser.title", "Create user")}</h3>
-              <p>
-                {t(
-                  "profile.createUser.description",
-                  "You are currently here as a guest user. If you want to be able to log in again later or from an other device, you can create a normal user account here. For this, we will send you an email with the instructions and a link to set a password for your account.",
-                )}
-              </p>
-
-              <a
-                className="button btn btn-primary"
-                href={Router.path("resetPasswortEmail", { email: data.user.email })}
-              >
-                {t("profile.createUser.button", "Send me an account creation email")}
-              </a>
-            </div>
+            <CreateUserSection user={data.user} />
           )}
 
-          <div className="page-component page-component-seperated">
-            <h3>{t("profile.danger_zone", "Danger zone")}</h3>
-
-            {!isVisitor() ? (
-              <div className="mb-3">
-                {!changingPass ? (
-                  <button type="button" className="btn btn-secondary js-change-pwd-btn">
-                    {t("profile.changePass", "Change my password")}
-                  </button>
-                ) : (
-                  <div className="border border-success text-primary p-3">
-                    <form className="js-change-pwd">
-                      <div className="row mb-2">
-                        <label htmlFor="oldpassword" className="col-sm-4 col-form-label text-end">
-                          {t("profile.input.oldPassword", "Your current password")}
-                        </label>
-                        <div className="col-sm-8">
-                          <input
-                            type="password"
-                            className="js-old-pwd form-control"
-                            id="oldpassword"
-                            value=""
-                          />
-                        </div>
-                      </div>
-                      <div className="row mb-2">
-                        <label htmlFor="newpassword" className="col-sm-4 col-form-label text-end">
-                          {t("profile.input.newPassword", "New password")}
-                        </label>
-                        <div className="col-sm-8">
-                          <input
-                            type="password"
-                            className="js-new-pwd form-control"
-                            id="newpassword"
-                            value=""
-                          />
-                        </div>
-                      </div>
-                      <div className="row mb-2">
-                        <label
-                          htmlFor="newpassword_confirm"
-                          className="col-sm-4 col-form-label text-end"
-                        >
-                          {t("profile.input.repeatPassword", "Repeat new password")}
-                        </label>
-                        <div className="col-sm-8">
-                          <input
-                            type="password"
-                            className="js-new-pwd-confirm form-control"
-                            id="newpassword_confirm"
-                            value=""
-                          />
-                        </div>
-                      </div>
-                      <div className="d-flex gap-2 justify-content-end">
-                        {/* {{> buttonSave}}
-    {{> buttonCancel event="js-change-pwd-cancel"}} */}
-                      </div>
-                    </form>
-                  </div>
-                )}
-              </div>
-            ) : null}
-
-            <div>
-              <DeleteConfirm {...deleteConfirmAttr()} />
-            </div>
-          </div>
+          <DangerZoneSection />
         </>
       )}
     </div>
@@ -489,64 +618,6 @@ export function ProfilePage(data: ProfilePageData) {
 
 //   instance.busy(false);
 
-//   instance.editableName = new Editable(
-//     false,
-//     t("profile.name.placeholder", "Username"),
-//     undefined,
-//     {
-//       serverValidationErrors: [
-//         {
-//           type: "noUserName",
-//           message: () => t("warning.noUserName", "Please enter a name for your user."),
-//         },
-//         {
-//           type: "notAllowedCharacter",
-//           message: () =>
-//             t("register.warning.notAllowedCharacter", undefined, {
-//               CHARACTERS: NotAllowedCharacter.join(", "),
-//             }),
-//         },
-//         {
-//           type: "userExists",
-//           message: () =>
-//             t("warning.userExists", "This username is already in use. Please choose another one."),
-//         },
-//         {
-//           type: "nameError",
-//           message: () => t("update.username.failed", "Could not update username."),
-//         },
-//       ],
-//       onSave: async (newName) => {
-//         await usersMethods.updateUsername(newName || "");
-//       },
-//       onSuccess: () => {
-//         Alert.success(t("profile.updated", "Updated profile"));
-//       },
-//     },
-//   );
-//   instance.editableDescription = new Editable(
-//     true,
-//     t(
-//       "profile.description.placeholder",
-//       "About you. Let the community know what your interests are.",
-//     ),
-//     undefined,
-//     {
-//       onSave: async (newDescription) => {
-//         await usersMethods.updateDescription(newDescription || "");
-//       },
-//       onSuccess: () => {
-//         Alert.success(t("profile.updated", "Updated profile"));
-//       },
-//     },
-//   );
-
-//   instance.autorun(() => {
-//     const user = Meteor.user();
-
-//     instance.editableName.setText(user?.username || "");
-//     instance.editableDescription.setText(user?.description || "");
-//   });
 // });
 
 // template.events({
@@ -572,44 +643,6 @@ export function ProfilePage(data: ProfilePageData) {
 //           instance.errors.add(fieldError.type);
 //         });
 //       }
-//     }
-//   },
-
-//   async "change .js-notifications"(_event, instance) {
-//     routerAutoscroll.cancelNext();
-
-//     const allow = instance.$(".js-notifications").prop("checked");
-
-//     try {
-//       await usersMethods.updateAutomatedNotification(allow);
-
-//       Alert.success(t("profile.updated", "Updated profile"));
-//       if (!allow)
-//         Analytics.trackEvent(
-//           "Unsubscribes from notifications",
-//           "Unsubscribes from automated notifications via profile",
-//         );
-//     } catch (err) {
-//       instance.errors.add(err.error);
-//     }
-//   },
-
-//   async "change .js-allowPrivateMessages"(_event, instance) {
-//     routerAutoscroll.cancelNext();
-
-//     const allow = instance.$(".js-allowPrivateMessages").prop("checked");
-
-//     try {
-//       await usersMethods.updatePrivateMessages(allow);
-
-//       Alert.success(t("profile.updated", "Updated profile"));
-//       if (!allow)
-//         Analytics.trackEvent(
-//           "Unsubscribes from notifications",
-//           "Unsubscribes from private messages via profile",
-//         );
-//     } catch (err) {
-//       instance.errors.add(err.error);
 //     }
 //   },
 
