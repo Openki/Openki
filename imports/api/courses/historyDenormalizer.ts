@@ -37,7 +37,7 @@ export async function afterDeleteImage(courseId: string, userId: string) {
 }
 
 export async function afterSubscribe(courseId: string, userId: string, roleType: string) {
-  Courses.update(courseId, {
+  await Courses.updateAsync(courseId, {
     $addToSet: {
       history: {
         dateTime: new Date(),
@@ -48,8 +48,8 @@ export async function afterSubscribe(courseId: string, userId: string, roleType:
   });
 }
 
-export function afterUnsubscribe(courseId: string, userId: string, roleType: string) {
-  Courses.update(courseId, {
+export async function afterUnsubscribe(courseId: string, userId: string, roleType: string) {
+  await Courses.updateAsync(courseId, {
     $addToSet: {
       history: {
         dateTime: new Date(),

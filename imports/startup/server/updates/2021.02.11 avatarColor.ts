@@ -3,18 +3,17 @@ import { _ } from "meteor/underscore";
 import { Users } from "/imports/api/users/users";
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
-export function update() {
+export async function update() {
   let updated = 0;
 
-  Users.find({})
-    .fetch()
-    .forEach((orginalUser) => {
-      const user = { ...orginalUser } as any;
-      user.avatar = {};
-      user.avatar.color = _.random(360);
+  for (const orginalUser of await Users.find({}).fetchAsync()) {
+    const user = { ...orginalUser } as any;
+    user.avatar = {};
+    user.avatar.color = _.random(360);
 
-      updated += Users.update(user._id, user);
-    });
+    // eslint-disable-next-line no-await-in-loop
+    updated += await Users.updateAsync(user._id, user);
+  }
 
   return updated;
 }

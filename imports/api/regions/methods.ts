@@ -62,7 +62,7 @@ export const create = ServerMethod("region.create", async (changes: CreateFields
   set.description = changes.description.trim().substring(0, 1000);
   // Todo: check this already when the user writes into the textarea? is there a limit for course descriptions?
 
-  return Regions.insert(set);
+  return Regions.insertAsync(set);
 });
 
 export const UpdateFieldsPattern = {
