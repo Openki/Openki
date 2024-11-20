@@ -1,4 +1,5 @@
 import { Meteor } from "meteor/meteor";
+import { serverError } from "../api/log/methods";
 
 /**
  * Registers a function as a meteor method and makes it callable.
@@ -34,13 +35,24 @@ export function ServerMethod<T extends any[], R>(
     [name](...args) {
       // this runs on the server (and is simulated on the client)
 
+      if (Meteor.isDevelopment && Meteor.isClient) {
+        /* eslint-disable-next-line no-console */
+        console.debug(`Meteor.callAsync("${name}",${JSON.stringify(args)})`);
+      }
+
       if (Meteor.isClient && !options.simulation) {
         // do nothing on the client if simulation is deactivated
         return undefined;
       }
 
-      // everyting is okay, do the work
-      return run.call(this, ...args);
+      try {
+        // everyting is okay, do the work
+        return run.call(this, ...args);
+      } catch (error) {
+        // an error happens on the server
+        serverError(error);
+        throw error;
+      }
     },
   });
 
