@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Mongo } from "meteor/mongo";
-// import { Accounts } from "meteor/accounts-base";
+import { Accounts } from "meteor/accounts-base";
 import { Router } from "meteor/iron:router";
-// import { ValidationError } from "meteor/mdg:validation-error";
+import { ValidationError } from "meteor/mdg:validation-error";
 import { useTranslation } from "react-i18next";
 import { NotAllowedCharacter } from "/imports/startup/both/NotAllowedCharacter";
 import { useUser } from "/imports/utils/react-meteor-data";
@@ -15,7 +15,7 @@ import { VenueEntity, VenueModel } from "/imports/api/venues/venues";
 import { TenantEntity, TenantModel } from "/imports/api/tenants/tenants";
 import { GroupEntity } from "/imports/api/groups/groups";
 
-// import { useValidation } from "../../lib/useValidation";
+import { useValidation } from "../../lib/useValidation";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import * as Metatags from "/imports/utils/metatags";
@@ -212,9 +212,42 @@ type User = {
 function EmailSection() {
   const { t } = useTranslation();
   const user = useUser();
+  const [isBusy, setIsBusy] = useState(false);
+  const [newEmail, setNewEmail] = useState(user?.emailAddress() || "");
+  const [errors, , addError, resetErrors] = useValidation({
+    noEmail: {
+      text: () => t("warning.noEmailProvided", "Please enter an e-mail address."),
+      field: "email",
+    },
+    emailNotValid: {
+      text: () => t("warning.emailNotValid", "Your e-mail address seems to have an error."),
+      field: "email",
+    },
+    emailExists: {
+      text: () => t("warning.emailExists", "This e-mail address is already in use."),
+      field: "email",
+    },
+  });
 
   if (!user) {
     return null;
+  }
+
+  async function handelEmailChange(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    resetErrors();
+    setIsBusy(true);
+    try {
+      await usersMethods.updateEmail(newEmail);
+      Alert.success(t("profile.updated", "Updated profile"));
+    } catch (err) {
+      if (ValidationError.is(err)) {
+        (err.details as any).forEach((fieldError: any) => {
+          addError(fieldError.type);
+        });
+      }
+    }
+    setIsBusy(false);
   }
 
   async function handelNofitifcationsChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -265,23 +298,27 @@ function EmailSection() {
       <h3>{t("profile.email_settings", "E-mail settings")}</h3>
       <div className="row g-4 mb-2">
         <div className="col-sm-6">
-          <form className="row g-2 mb-2 js-email-form">
-            <div className="col {{errorClass 'email'}}">
+          <form className="row g-2 mb-2" onSubmit={handelEmailChange}>
+            <div className={`col ${errors.email ? "has-error" : ""}`}>
               <label htmlFor="editform_email" className="sr-only">
                 {t("profile.email", "E-mail")}
               </label>
-
               <input
-                className="form-control js-email"
+                className="form-control"
                 id="editform_email"
                 type="text"
-                value={user.emailAddress()}
+                value={newEmail}
+                onChange={(event) => {
+                  setNewEmail(event.currentTarget.value);
+                }}
               />
-              {/* {{errorMessage 'email'}} */}
+              {errors.email ? <span className="form-text d-block">{errors.email}</span> : null}
             </div>
-            <div className="col-auto">{/* {{> buttonSave}} */}</div>
+            <div className="col-auto">
+              <ButtonSubmit isBusy={isBusy} />
+            </div>
           </form>
-          {!user.verifiedEmailAddress() ? <VerifyEmail /> : null}
+          {!user.verifiedEmailAddress() && !isBusy ? <VerifyEmail /> : null}
         </div>
         <div className="col-sm-6">
           <div className="form-check form-switch mb-2">
@@ -435,20 +472,6 @@ function DangerZoneSection() {
   const user = useUser();
 
   const [isBusy, setIsBusy] = useState(false);
-  // const [errors, , addError, resetErrors] = useValidation({
-  //   noEmail: {
-  //     text: () => t("warning.noEmailProvided", "Please enter an e-mail address."),
-  //     field: "email",
-  //   },
-  //   emailNotValid: {
-  //     text: () => t("warning.emailNotValid", "Your e-mail address seems to have an error."),
-  //     field: "email",
-  //   },
-  //   emailExists: {
-  //     text: () => t("warning.emailExists", "This e-mail address is already in use."),
-  //     field: "email",
-  //   },
-  // });
 
   function isVisitor() {
     return user?.privileged("visitor");
@@ -568,7 +591,12 @@ function DangerZoneSection() {
                 </div>
                 <div className="d-flex gap-2 justify-content-end">
                   <ButtonSubmit isBusy={isBusy} />
-                  <ButtonCancel onClick={() => setChangingPassword(false)} disabled={isBusy} />
+                  <ButtonCancel
+                    onClick={() => {
+                      setChangingPassword(false);
+                    }}
+                    disabled={isBusy}
+                  />
                 </div>
               </form>
             </div>
@@ -645,46 +673,6 @@ export function ProfilePage(data: ProfilePageData) {
     </div>
   );
 }
-
-// const TemplateBase = TemplateAny as TemplateStaticTyped<
-//   "profilePage",
-//   ProfilePageData,
-//   {
-//     changingPass: ReactiveVar<boolean>;
-//     notificationsUnsubscribeSuccess: () => boolean;
-//     privateMessagesUnsubscribeSuccess: () => boolean;
-//     unsubscribeError: () => boolean;
-//     editableName: Editable;
-//     editableDescription: Editable;
-//   }
-// >;
-
-// const template = Template.profilePage;
-
-// template.onCreated(function () {
-//   const instance = this;
-
-//   instance.busy(false);
-
-// });
-
-//   async "submit .js-email-form"(event, instance) {
-//     event.preventDefault();
-//     instance.errors.reset();
-
-//     try {
-//       await usersMethods.updateEmail(instance.$(".js-email").val() as string);
-//       Alert.success(t("profile.updated", "Updated profile"));
-//     } catch (err) {
-//       if (ValidationError.is(err)) {
-//         (err.details as any).forEach((fieldError: any) => {
-//           instance.errors.add(fieldError.type);
-//         });
-//       }
-//     }
-//   },
-
-// });
 
 // for Blaze
 // eslint-disable-next-line import/first
