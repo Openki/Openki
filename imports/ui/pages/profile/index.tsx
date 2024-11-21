@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { NotAllowedCharacter } from "/imports/startup/both/NotAllowedCharacter";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import * as Alert from "/imports/api/alerts/alert";
 import * as usersMethods from "/imports/api/users/methods";
@@ -14,6 +15,7 @@ import { VenueEntity, VenueModel } from "/imports/api/venues/venues";
 import { TenantEntity, TenantModel } from "/imports/api/tenants/tenants";
 import { GroupEntity } from "/imports/api/groups/groups";
 
+// import { useValidation } from "../../lib/useValidation";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import * as Metatags from "/imports/utils/metatags";
@@ -23,8 +25,8 @@ import { AvatarForm } from "../../components/avatarForm";
 import { DeleteConfirm } from "../../components/delete-confirm";
 import { VerifyEmail } from "../../components/profiles/verify-email";
 import { GroupTag } from "../../components/groups/tag";
+import { ButtonCancel, ButtonSubmit } from "../../components/buttons";
 import { VenueLink } from "../../components/venues/link";
-import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import "./styles.scss";
 
@@ -426,8 +428,27 @@ function CreateUserSection({ user }: { user: User }) {
 
 function DangerZoneSection() {
   const { t } = useTranslation();
-  const [changingPass] = useState(false);
+  const [changingPassword, setChangingPassword] = useState(false);
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
   const user = useUser();
+
+  const [isBusy, setIsBusy] = useState(false);
+  // const [errors, , addError, resetErrors] = useValidation({
+  //   noEmail: {
+  //     text: () => t("warning.noEmailProvided", "Please enter an e-mail address."),
+  //     field: "email",
+  //   },
+  //   emailNotValid: {
+  //     text: () => t("warning.emailNotValid", "Your e-mail address seems to have an error."),
+  //     field: "email",
+  //   },
+  //   emailExists: {
+  //     text: () => t("warning.emailExists", "This e-mail address is already in use."),
+  //     field: "email",
+  //   },
+  // });
 
   function isVisitor() {
     return user?.privileged("visitor");
@@ -449,19 +470,54 @@ function DangerZoneSection() {
     };
   }
 
+  function handelChangePassword(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const old = oldPassword;
+    const pass = newPassword;
+    if (pass !== "") {
+      if (pass !== newPasswordConfirm) {
+        Alert.warning(t("profile.passwordMismatch", "Sorry, your new passwords don't match"));
+        return;
+      }
+      const minLength = 5; // We've got _some_ standards
+      if (pass.length < minLength) {
+        Alert.warning(t("profile.passwordShort", "Your desired password is too short. Sorry."));
+        return;
+      }
+      setIsBusy(true);
+      Accounts.changePassword(old, pass, (err) => {
+        setIsBusy(false);
+
+        if (err) {
+          Alert.serverError(
+            err,
+            t("profile.passwordChangeError", "Could not change your password"),
+          );
+        } else {
+          Alert.success(t("profile.passwordChangedSuccess", "You have changed your password."));
+          setChangingPassword(false);
+        }
+      });
+    }
+  }
+
   return (
     <div className="page-component page-component-seperated">
       <h3>{t("profile.danger_zone", "Danger zone")}</h3>
 
       {!isVisitor() ? (
         <div className="mb-3">
-          {!changingPass ? (
-            <button type="button" className="btn btn-secondary js-change-pwd-btn">
+          {!changingPassword ? (
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={() => setChangingPassword(true)}
+            >
               {t("profile.changePass", "Change my password")}
             </button>
           ) : (
             <div className="border border-success text-primary p-3">
-              <form className="js-change-pwd">
+              <form onSubmit={handelChangePassword}>
                 <div className="row mb-2">
                   <label htmlFor="oldpassword" className="col-sm-4 col-form-label text-end">
                     {t("profile.input.oldPassword", "Your current password")}
@@ -469,9 +525,12 @@ function DangerZoneSection() {
                   <div className="col-sm-8">
                     <input
                       type="password"
-                      className="js-old-pwd form-control"
+                      className="form-control"
                       id="oldpassword"
-                      value=""
+                      value={oldPassword}
+                      onChange={(event) => {
+                        setOldPassword(event.currentTarget.value);
+                      }}
                     />
                   </div>
                 </div>
@@ -482,9 +541,12 @@ function DangerZoneSection() {
                   <div className="col-sm-8">
                     <input
                       type="password"
-                      className="js-new-pwd form-control"
+                      className="form-control"
                       id="newpassword"
-                      value=""
+                      value={newPassword}
+                      onChange={(event) => {
+                        setNewPassword(event.currentTarget.value);
+                      }}
                     />
                   </div>
                 </div>
@@ -495,15 +557,18 @@ function DangerZoneSection() {
                   <div className="col-sm-8">
                     <input
                       type="password"
-                      className="js-new-pwd-confirm form-control"
+                      className="form-control"
                       id="newpassword_confirm"
-                      value=""
+                      value={newPasswordConfirm}
+                      onChange={(event) => {
+                        setNewPasswordConfirm(event.currentTarget.value);
+                      }}
                     />
                   </div>
                 </div>
                 <div className="d-flex gap-2 justify-content-end">
-                  {/* {{> buttonSave}}
-            {{> buttonCancel event="js-change-pwd-cancel"}} */}
+                  <ButtonSubmit isBusy={isBusy} />
+                  <ButtonCancel onClick={() => setChangingPassword(false)} disabled={isBusy} />
                 </div>
               </form>
             </div>
@@ -594,23 +659,6 @@ export function ProfilePage(data: ProfilePageData) {
 //   }
 // >;
 
-// // Add FormfieldError Handling to the profilePage Template
-
-// const Template = TemplateMixins.FormfieldErrors(TemplateBase, "profilePage", {
-//   noEmail: {
-//     text: () => t("warning.noEmailProvided", "Please enter an e-mail address."),
-//     field: "email",
-//   },
-//   emailNotValid: {
-//     text: () => t("warning.emailNotValid", "Your e-mail address seems to have an error."),
-//     field: "email",
-//   },
-//   emailExists: {
-//     text: () => t("warning.emailExists", "This e-mail address is already in use."),
-//     field: "email",
-//   },
-// });
-
 // const template = Template.profilePage;
 
 // template.onCreated(function () {
@@ -619,16 +667,6 @@ export function ProfilePage(data: ProfilePageData) {
 //   instance.busy(false);
 
 // });
-
-// template.events({
-//   "click .js-change-pwd-btn"(_event, instance) {
-//     setChangingPass(true);
-//     instance.collapse();
-//   },
-
-//   "click .js-change-pwd-cancel"(_event, instance) {
-//     setChangingPass(false);
-//   },
 
 //   async "submit .js-email-form"(event, instance) {
 //     event.preventDefault();
@@ -646,33 +684,6 @@ export function ProfilePage(data: ProfilePageData) {
 //     }
 //   },
 
-//   "submit .js-change-pwd"(event, instance) {
-//     event.preventDefault();
-//     const old = (instance.find(".js-old-pwd") as HTMLInputElement).value;
-//     const pass = (instance.find(".js-new-pwd") as HTMLInputElement).value;
-//     if (pass !== "") {
-//       if (pass !== (instance.find(".js-new-pwd-confirm") as HTMLInputElement).value) {
-//         Alert.warning(t("profile.passwordMismatch", "Sorry, your new passwords don't match"));
-//         return;
-//       }
-//       const minLength = 5; // We've got _some_ standards
-//       if (pass.length < minLength) {
-//         Alert.warning(t("profile.passwordShort", "Your desired password is too short. Sorry."));
-//         return;
-//       }
-//       Accounts.changePassword(old, pass, (err) => {
-//         if (err) {
-//           Alert.serverError(
-//             err,
-//             t("profile.passwordChangeError", "Could not change your password"),
-//           );
-//         } else {
-//           Alert.success(t("profile.passwordChangedSuccess", "You have changed your password."));
-//           setChangingPass(false);
-//         }
-//       });
-//     }
-//   },
 // });
 
 // for Blaze
