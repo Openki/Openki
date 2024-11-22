@@ -97,6 +97,7 @@ export interface UserEntity extends Meteor.User {
   avatar: {
     color: number;
   };
+  theme?: "light" | "system" | "dark";
   /**
    * (calculated) union of user's id and group ids for permission checking, calculated by
    * updateBadges()

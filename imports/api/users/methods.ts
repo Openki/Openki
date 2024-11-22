@@ -18,7 +18,13 @@ import * as StringTools from "/imports/utils/string-tools";
 import * as AsyncTools from "/imports/utils/async-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { HtmlString, SafeString, Type, UnsafeString } from "/imports/utils/CustomChecks";
+import {
+  HtmlString,
+  SafeString,
+  StringEnum,
+  Type,
+  UnsafeString,
+} from "/imports/utils/CustomChecks";
 import { NotAllowedCharacter } from "/imports/startup/both/NotAllowedCharacter";
 
 /**
@@ -175,6 +181,20 @@ export const updatePrivateMessages = ServerMethod(
     if (user.allowPrivateMessages !== allow) {
       await Profile.PrivateMessages.change(user._id, allow, undefined, "profile change");
     }
+  },
+);
+
+export const updateTheme = ServerMethod(
+  "user.updateTheme",
+  async (theme: "light" | "system" | "dark") => {
+    check(theme, StringEnum("light", "system", "dark"));
+
+    const userId = Meteor.userId();
+    if (!userId) {
+      throw new ValidationError([{ name: "theme", type: "plzLogin" }], "Not logged-in");
+    }
+
+    Users.update(userId, { $set: { theme } });
   },
 );
 
