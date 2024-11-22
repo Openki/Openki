@@ -1,0 +1,32 @@
+@media (prefers-color-scheme: dark) {
+  html.theme-mode-system {
+    &,
+    body,
+    #wrap {
+      background-color: #fff;
+    }
+  
+    filter: invert(100%) hue-rotate(180deg);
+  
+    img,
+    input[type="image"] {
+      filter: invert(100%) hue-rotate(-180deg);
+    }
+  }
+  
+}
+
+html.theme-mode-dark {
+  &,
+  body,
+  #wrap {
+    background-color: #fff;
+  }
+
+  filter: invert(100%) hue-rotate(180deg);
+
+  img,
+  input[type="image"] {
+    filter: invert(100%) hue-rotate(-180deg);
+  }
+}
