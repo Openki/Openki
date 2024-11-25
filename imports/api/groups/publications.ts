@@ -18,5 +18,5 @@ export const [details, useDetails] = ServerPublishOne(
 
     return Groups.find(groupId);
   },
-  (groupId: string) => Groups.findOne(groupId),
+  (groupId) => Groups.findOne(groupId),
 );

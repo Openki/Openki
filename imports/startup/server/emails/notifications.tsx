@@ -74,81 +74,94 @@ async function send(
     }).mapAsync((result) => [(result.body as { recipient: string }).recipient, true]),
   );
 
-  const model = await (
-    Notification as {
-      [name: string]: {
-        Model<T>(_entry: unknown): Promise<Model<T>>;
-      };
-    }
-  )[entry.body.model].Model(entry);
-
-  for (const recipientId of entry.body.recipients) {
-    if (!concluded[recipientId]) {
-      let mail: Email.EmailOptions | null = null;
-      let unsubToken = null;
-
-      try {
-        // eslint-disable-next-line no-await-in-loop
-        const user = await Users.findOneAsync(recipientId);
-
-        if (!user) {
-          throw new Error(`User not found for ID '${recipientId}'`);
-        }
-
-        model.accepted(user);
-
-        const address = user.emailAddress();
-
-        const username = user.getDisplayName();
-        // use user locale for translation
-        const locale = user.locale || "en";
-
-        const { siteName } = Accounts.emailTemplates;
-        const subjectPrefix = `[${siteName}] `;
-
-        unsubToken = Random.secret();
-        // eslint-disable-next-line no-await-in-loop
-        const vars = await model.vars(locale, user, unsubToken);
-
-        const message = renderToEmail(
-          <Root
-            subject={vars.subject}
-            customSiteUrl={vars.customSiteUrl}
-            customEmailLogo={vars.customEmailLogo}
-            customSiteName={vars.customSiteName || siteName}
-          >
-            {model.template({
-              ...vars,
-              // For everything that is global use siteName from global settings, eg. unsubscribe
-              siteName,
-              // For everything context specifig us customSiteName from the region, eg. courses
-              customSiteName: vars.customSiteName || siteName,
-              username,
-              lng: locale,
-            })}
-          </Root>,
-        );
-
-        mail = {
-          from: Accounts.emailTemplates.from,
-          replyTo: vars.fromAddress || PrivateSettings.replyToEmail,
-          to: address || undefined,
-          subject: subjectPrefix + vars.subject,
-          html: message,
+  try {
+    const model = await (
+      Notification as {
+        [name: string]: {
+          Model<T>(_entry: unknown): Promise<Model<T>>;
         };
-
-        Email.send(mail);
-
-        // eslint-disable-next-line no-await-in-loop
-        await record(entry, unsubToken, true, recipientId, mail, "success");
-      } catch (e) {
-        let reason = e;
-        if (typeof e === "object" && "toJSON" in e) {
-          reason = e.toJSON();
-        }
-        // eslint-disable-next-line no-await-in-loop
-        await record(entry, unsubToken, false, recipientId, mail, reason);
       }
+    )[entry.body.model].Model(entry);
+
+    for (const recipientId of entry.body.recipients) {
+      if (!concluded[recipientId]) {
+        let mail: Email.EmailOptions | null = null;
+        let unsubToken = null;
+
+        try {
+          // eslint-disable-next-line no-await-in-loop
+          const user = await Users.findOneAsync(recipientId);
+
+          if (!user) {
+            throw new Error(`User not found for ID '${recipientId}'`);
+          }
+
+          model.accepted(user);
+
+          const address = user.emailAddress();
+
+          const username = user.getDisplayName();
+          // use user locale for translation
+          const locale = user.locale || "en";
+
+          const { siteName } = Accounts.emailTemplates;
+          const subjectPrefix = `[${siteName}] `;
+
+          unsubToken = Random.secret();
+          // eslint-disable-next-line no-await-in-loop
+          const vars = await model.vars(locale, user, unsubToken);
+
+          const message = renderToEmail(
+            <Root
+              subject={vars.subject}
+              customSiteUrl={vars.customSiteUrl}
+              customEmailLogo={vars.customEmailLogo}
+              customSiteName={vars.customSiteName || siteName}
+            >
+              {model.template({
+                ...vars,
+                // For everything that is global use siteName from global settings, eg. unsubscribe
+                siteName,
+                // For everything context specifig us customSiteName from the region, eg. courses
+                customSiteName: vars.customSiteName || siteName,
+                username,
+                lng: locale,
+              })}
+            </Root>,
+          );
+
+          mail = {
+            from: Accounts.emailTemplates.from,
+            replyTo: vars.fromAddress || PrivateSettings.replyToEmail,
+            to: address || undefined,
+            subject: subjectPrefix + vars.subject,
+            html: message,
+          };
+
+          Email.send(mail);
+
+          // eslint-disable-next-line no-await-in-loop
+          await record(entry, unsubToken, true, recipientId, mail, "success");
+        } catch (e) {
+          let reason = e;
+          if (typeof e === "object" && "toJSON" in e) {
+            reason = e.toJSON();
+          }
+          // eslint-disable-next-line no-await-in-loop
+          await record(entry, unsubToken, false, recipientId, mail, reason);
+        }
+      }
+    }
+  } catch (e) {
+    let reason = e;
+    if (typeof e === "object" && "toJSON" in e) {
+      reason = e.toJSON();
+    }
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const recipientId of Object.keys(concluded)) {
+      // eslint-disable-next-line no-await-in-loop
+      await record(entry, null, false, recipientId, null, reason);
     }
   }
 }

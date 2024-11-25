@@ -149,7 +149,7 @@ export namespace PrivateMessages {
       reason,
     });
 
-    Users.update(userId, {
+    await Users.updateAsync(userId, {
       $set: { allowPrivateMessages: enable },
     });
   }
@@ -197,7 +197,7 @@ export namespace Region {
     check(regionId, String);
     check(reason, String);
 
-    const region = Regions.findOne(regionId);
+    const region = await Regions.findOneAsync(regionId);
     const accepted = !!region;
 
     await Log.record("Profile.Region", [userId, regionId], {

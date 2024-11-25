@@ -60,7 +60,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
   if (!course) {
     throw new Error("Course does not exist (0.o)");
   }
-  const groups = Groups.find({ _id: { $in: course.groupOrganizers } }).fetch();
+  const groups = await Groups.find({ _id: { $in: course.groupOrganizers } }).fetchAsync();
   if (!(groups.length > 0)) {
     throw new Error("Groups does not exist (0.o)");
   }
