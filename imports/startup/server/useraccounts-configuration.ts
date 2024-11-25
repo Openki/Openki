@@ -158,7 +158,7 @@ Accounts.onCreateUser((options: any, originalUser) => {
 Accounts.onLogin(async (options: any) => {
   await usersMethods.updateLastLogin();
 
-  const user = Meteor.user();
+  const user = await Meteor.userAsync();
 
   // generate a avatar color for every new user
   if (user && user.avatar?.color === undefined) {
@@ -167,7 +167,7 @@ Accounts.onLogin(async (options: any) => {
 
   // Remove visitor flag after passwort reset. https://github.com/meteor/meteor/blob/devel/packages/accounts-password/password_server.js
   if (options.methodName === "resetPassword" && user?.privileged("visitor")) {
-    Users.update(user._id, { $pull: { privileges: "visitor" } });
+    await Users.updateAsync(user._id, { $pull: { privileges: "visitor" } });
   }
 });
 
