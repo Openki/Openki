@@ -642,7 +642,7 @@ function Appearance() {
         <h3>{t("profile.appearance.title", "Appearance")}</h3>
 
         <div className="mb-3">
-          <select className="form-select" value={user.theme} onChange={handelThemeChange}>
+          <select className="form-select w-auto" value={user.theme} onChange={handelThemeChange}>
             <option value="light">{t("profile.apperance.theme.light", "Light theme")}</option>
             <option value="system">
               {t("profile.apperance.theme.system", "Sync theme with system")}
