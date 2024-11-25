@@ -605,9 +605,9 @@ function DangerZoneSection() {
         </div>
       ) : null}
 
-      <div>
+      <span>
         <DeleteConfirm {...deleteConfirmAttr()} />
-      </div>
+      </span>
     </div>
   );
 }
