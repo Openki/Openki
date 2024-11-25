@@ -17,7 +17,7 @@ Before opening a new issue, please search for keywords in the issues filtered by
 
 ### Relevant logs and/or screenshots
 <!-- Paste any relevant logs - please use code blocks (```) to format console output,
-logs, and code as it's very hard to read otherwise. -->
+logs, and code, as it's very hard to read otherwise. -->
 
 ### Possible fixes
 <!-- If you can, link to the line of code that might be responsible for the problem -->
