@@ -1,29 +1,32 @@
+/* stylelint-disable selector-max-id, selector-no-qualifying-type */
+
 @media (prefers-color-scheme: dark) {
   html.theme-mode-system {
+
+    filter: invert(100%) hue-rotate(180deg);
+
     &,
     body,
     #wrap {
       background-color: #fff;
     }
-  
-    filter: invert(100%) hue-rotate(180deg);
-  
+
     img,
     input[type="image"] {
       filter: invert(100%) hue-rotate(-180deg);
     }
   }
-  
 }
 
 html.theme-mode-dark {
+
+  filter: invert(100%) hue-rotate(180deg);
+
   &,
   body,
   #wrap {
     background-color: #fff;
   }
-
-  filter: invert(100%) hue-rotate(180deg);
 
   img,
   input[type="image"] {
