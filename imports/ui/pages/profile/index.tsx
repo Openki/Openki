@@ -63,7 +63,7 @@ function TenantSection({ tenants }: { tenants: Mongo.Cursor<TenantEntity, Tenant
       </h5>
       <ul className="list-unstyled">
         {tenants.map((tenant) => (
-          <li className="mb-3">
+          <li key={tenant._id} className="mb-3">
             <div className="tag tag-link tenant-tag">
               <a href={Router.path("tenantDetails", { _id: tenant._id })}>{tenant.name}</a>
             </div>
@@ -90,7 +90,7 @@ function GroupSection({ groups }: { groups: Mongo.Cursor<GroupEntity, GroupEntit
       </h5>
       <ul className="list-unstyled">
         {groups.map((group) => (
-          <li className="mb-3">
+          <li key={group._id} className="mb-3">
             <GroupTag groupId={group._id} full={true} />
           </li>
         ))}
@@ -117,7 +117,7 @@ function VenuesSection({ venues }: { venues: Mongo.Cursor<VenueEntity, VenueMode
       {isVenueEditor() ? (
         <ul className="list-unstyled">
           {venues.map((venue) => (
-            <li className="mb-3">
+            <li key={venue._id} className="mb-3">
               <VenueLink venue={venue} />
             </li>
           ))}
