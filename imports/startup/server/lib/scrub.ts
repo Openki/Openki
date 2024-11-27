@@ -69,7 +69,7 @@ export class ScrubRule {
     };
 
     if (this.remove) {
-      log.remove(select, recordResult);
+      await log.removeAsync(select, recordResult);
 
       // Exit early because we can't unset records that have
       // been removed.
