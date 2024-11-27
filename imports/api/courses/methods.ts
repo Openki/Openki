@@ -409,7 +409,7 @@ export const deleteImage = ServerMethod(
 export const promote = ServerMethod(
   "course.promote",
   async (courseId: string, groupId: string, enable: boolean) => {
-    UpdateMethods.promote(Courses as unknown as GroupPromoters)(courseId, groupId, enable);
+    await UpdateMethods.promote(Courses as unknown as GroupPromoters)(courseId, groupId, enable);
     await historyDenormalizer.afterGroupPromoteUpdate(
       courseId,
       groupId,
@@ -429,7 +429,7 @@ export const promote = ServerMethod(
 export const editing = ServerMethod(
   "course.editing",
   async (courseId: string, groupId: string, enable: boolean) => {
-    UpdateMethods.editing(Courses as unknown as GroupPromoters)(courseId, groupId, enable);
+    await UpdateMethods.editing(Courses as unknown as GroupPromoters)(courseId, groupId, enable);
     await historyDenormalizer.afterGroupOrgaUpdate(
       courseId,
       groupId,
