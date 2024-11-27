@@ -245,7 +245,7 @@ export const updateEmail = ServerMethod(
 export const selfRemove = ServerMethod("user.self.remove", async () => {
   const user = await Meteor.userAsync();
   if (user) {
-    Users.remove({ _id: user._id });
+    await Users.removeAsync({ _id: user._id });
   }
 });
 
@@ -272,16 +272,17 @@ export const adminRemove = ServerMethod(
     let numberOfDeletedEvents = 0;
     if (options.courses) {
       // Remove courses created by this user
-      (await Courses.find({ createdby: userId }).fetchAsync()).forEach((course) => {
+      for (const course of await Courses.find({ createdby: userId }).fetchAsync()) {
         deletedCourses.push(course);
-        numberOfDeletedEvents += Events.remove({ courseId: course._id });
-      });
+        // eslint-disable-next-line no-await-in-loop
+        numberOfDeletedEvents += await Events.removeAsync({ courseId: course._id });
+      }
 
       await Courses.removeAsync({ createdby: userId });
     }
 
     // Updated courses and events he is involted
-    const courses = Courses.find({ "members.user": userId }).fetch();
+    const courses = await Courses.find({ "members.user": userId }).fetchAsync();
 
     for await (const course of courses) {
       await Events.updateAsync(
