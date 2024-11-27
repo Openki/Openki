@@ -162,8 +162,8 @@ export async function subscribe(
 export function init() {
   // We assume the initial onLogin() callback comes before the regions' ready.
   // We have no guarantee for this however!
-  Accounts.onLogin(() => {
-    const user = Meteor.user();
+  Accounts.onLogin(async () => {
+    const user = await Meteor.userAsync();
     if (user) {
       const { regionId } = user.profile;
       if (regionId) {

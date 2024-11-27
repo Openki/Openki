@@ -17,8 +17,8 @@ export function setTheme(theme: "light" | "system" | "dark" | undefined) {
 }
 
 export function init() {
-  Accounts.onLogin(() => {
-    const user = Meteor.user();
+  Accounts.onLogin(async () => {
+    const user = await Meteor.userAsync();
     if (!user) {
       return;
     }
