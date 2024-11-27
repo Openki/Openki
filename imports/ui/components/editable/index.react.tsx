@@ -261,10 +261,12 @@ export function Editable({ text = "", multiline, placeholder, maxlength, onChang
   };
   return (
     <>
-      <div className={`editable-wrap ${wrapClasses()} ${errors.input ? "is-invalid" : ""}`}>
+      <div className={`editable-wrap ${wrapClasses()}`}>
         <div
           ref={elementRef}
-          className={`editable ${editableClasses()} ${characterLimitReached() ? "is-invalid" : ""}`}
+          className={`editable ${editableClasses()} ${
+            characterLimitReached() || errors.input ? "is-invalid" : ""
+          }`}
           onKeyUp={(event) => {
             // Register when the field is being edited
 
@@ -300,28 +302,24 @@ export function Editable({ text = "", multiline, placeholder, maxlength, onChang
         ></div>
 
         {characterLimitReached() ? (
-          showControls() ? (
-            <div className="invalid-feedback">
-              {t("_inputField.maxlength", {
-                NUMBER: removeNumberOfCharacters,
-                MAXNUMBER: maxlength,
-              })}
-            </div>
-          ) : (
-            <div className="invalid-feedback">
-              {t(
-                "_inputField.maxlength.notEditing",
-                "There are too many characters here. You should edit it.",
-              )}
-            </div>
-          )
+          <div className="invalid-feedback">
+            {showControls()
+              ? t("_inputField.maxlength", {
+                  NUMBER: removeNumberOfCharacters,
+                  MAXNUMBER: maxlength,
+                })
+              : t(
+                  "_inputField.maxlength.notEditing",
+                  "There are too many characters here. You should edit it.",
+                )}
+          </div>
+        ) : errors.input ? (
+          <div className="invalid-feedback">{errors.input}</div>
         ) : null}
 
         {!showControls() ? (
           <span className="fa-solid fa-pencil editable-icon" onClick={handleEdit}></span>
         ) : null}
-
-        {errors.input}
       </div>
       {showControls() ? (
         <div className="editable-controls">
