@@ -19,6 +19,7 @@ export async function updateGroups(courseIdOrSelector: string | Mongo.Selector<C
     await Courses.updateAsync({ _id: course._id }, update);
 
     // At some point we'll have to figure out a proper caching hierarchy
-    eventGroupsDenormalizer.updateGroups({ courseId: course._id });
+    // eslint-disable-next-line no-await-in-loop
+    await eventGroupsDenormalizer.updateGroups({ courseId: course._id });
   }
 }

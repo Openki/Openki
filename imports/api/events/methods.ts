@@ -1,7 +1,5 @@
 import { Match, check } from "meteor/check";
 import { Meteor } from "meteor/meteor";
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { UpdateFilter } from "mongodb";
 import { i18n } from "/imports/startup/both/i18next";
 import { _ } from "meteor/underscore";
 import moment from "moment";
@@ -13,10 +11,10 @@ import * as courseTimeLastEditDenormalizer from "/imports/api/courses/timeLastEd
 import * as courseImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
 import * as categoriesDenormalizer from "/imports/api/events/categoriesDenormalizer";
 import * as groupsDenormalizer from "/imports/api/events/groupsDenormalizer";
+import * as venueDenormalizer from "/imports/api/events/venueDenormalizer";
 import { EventEntity, EventModel, Events, OEvent } from "/imports/api/events/events";
 import { Groups } from "/imports/api/groups/groups";
 import { Regions } from "/imports/api/regions/regions";
-import { VenueModel, Venues } from "/imports/api/venues/venues";
 
 import { Notification } from "../../startup/both/emails/notification";
 import { AffectedReplicaSelectors } from "/imports/utils/affected-replica-selectors";
@@ -384,8 +382,8 @@ export const save = ServerMethod(
     }
 
     if (Meteor.isServer) {
-      Meteor.call("event.updateVenue", eventId, AsyncTools.logErrors);
-      groupsDenormalizer.updateGroups(eventId);
+      await venueDenormalizer.updateVenue(eventId);
+      await groupsDenormalizer.updateGroups(eventId);
       Meteor.call("region.updateCounters", event.region, AsyncTools.logErrors);
 
       // the assumption is that all replicas have the same course if any
