@@ -385,7 +385,7 @@ export const save = ServerMethod(
 
     if (Meteor.isServer) {
       Meteor.call("event.updateVenue", eventId, AsyncTools.logErrors);
-      Meteor.call("event.updateGroups", eventId, AsyncTools.logErrors);
+      groupsDenormalizer.updateGroups(eventId);
       Meteor.call("region.updateCounters", event.region, AsyncTools.logErrors);
 
       // the assumption is that all replicas have the same course if any
@@ -702,16 +702,5 @@ Meteor.methods({
         console.log("Failed event.updateVenue: ", reason);
       });
     });
-  },
-
-  /**
-   * Update the group-related fields of events matching the selector
-   */
-  async "event.updateGroups"(selector) {
-    const idOnly = { projection: { _id: 1 } };
-    for (const event of await Events.find(selector, idOnly).fetchAsync()) {
-      // eslint-disable-next-line no-await-in-loop
-      await groupsDenormalizer.updateGroups(event._id);
-    }
   },
 });
