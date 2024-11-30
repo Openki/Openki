@@ -3,14 +3,7 @@ import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { i18n } from "/imports/startup/both/i18next";
 
-import {
-  Courses,
-  Course,
-  CourseEntity,
-  CourseModel,
-  CourseLastEventEntity,
-  CourseNextEventEntity,
-} from "/imports/api/courses/courses";
+import { Courses, Course, CourseEntity, CourseModel } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
 import { Groups } from "/imports/api/groups/groups";
 import { Regions } from "/imports/api/regions/regions";
@@ -481,58 +474,4 @@ export const remove = ServerMethod("course.remove", async (courseId: string) => 
   await Events.removeAsync({ courseId });
   await CourseDiscussions.removeAsync({ courseId });
   await Courses.removeAsync(courseId);
-});
-
-Meteor.methods({
-  /**
-   * Update the nextEvent field for the courses matching the selector
-   */
-  async "course.updateNextEvent"(selector) {
-    await Promise.all(
-      await Courses.find(selector).mapAsync(async (course) => {
-        const futureEvents = await Events.find({
-          courseId: course._id,
-          start: { $gt: new Date() },
-          canceled: { $ne: true },
-        }).countAsync();
-
-        const nextEvent: CourseNextEventEntity | undefined = await Events.findOneAsync(
-          { courseId: course._id, start: { $gt: new Date() }, canceled: { $ne: true } },
-          {
-            sort: { start: 1 },
-            projection: {
-              startLocal: 1,
-              start: 1,
-              _id: 1,
-              venue: 1,
-              noRsvp: 1,
-              participants: 1,
-            },
-          },
-        );
-
-        const lastEvent: CourseLastEventEntity | undefined = await Events.findOneAsync(
-          { courseId: course._id, start: { $lt: new Date() }, canceled: { $ne: true } },
-          {
-            sort: { start: -1 },
-            projection: {
-              startLocal: 1,
-              start: 1,
-              _id: 1,
-              venue: 1,
-              participants: 1,
-            },
-          },
-        );
-
-        await Courses.updateAsync(course._id, {
-          $set: {
-            futureEvents,
-            nextEvent: nextEvent || null,
-            lastEvent: lastEvent || null,
-          },
-        });
-      }),
-    );
-  },
 });
