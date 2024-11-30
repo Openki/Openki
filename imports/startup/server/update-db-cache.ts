@@ -5,6 +5,7 @@ import * as coursesTenantDenormalizer from "/imports/api/courses/tenantDenormali
 import * as eventsCategoriesDenormalizer from "/imports/api/events/categoriesDenormalizer";
 import * as eventsTenantDenormalizer from "/imports/api/events/tenantDenormalizer";
 import * as usersTenantsDenormalizer from "/imports/api/users/tenantsDenormalizer";
+import * as courseGroupsDenormalizer from "/imports/api/courses/groupsDenormalizer";
 
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import * as AsyncTools from "/imports/utils/async-tools";
@@ -17,8 +18,8 @@ async function updateDbCacheFields() {
   // Resync location cache in events
   Meteor.call("event.updateVenue", {}, AsyncTools.logErrors);
 
-  // Update list of organizers per course
-  Meteor.call("course.updateGroups", {}, AsyncTools.logErrors);
+  // Update list of organizers per course, triggers updateGroups from events
+  await courseGroupsDenormalizer.updateGroups({});
 
   await eventsCategoriesDenormalizer.onStartUp();
 
