@@ -535,13 +535,4 @@ Meteor.methods({
       }),
     );
   },
-
-  /**
-   * Recalculate the editors field
-   */
-  "course.updateGroups"(selector) {
-    Courses.find(selector).forEach((course) => {
-      await groupsDenormalizer.updateGroups(course._id);
-    });
-  },
 });

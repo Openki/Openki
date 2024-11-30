@@ -5,6 +5,7 @@ import { _ } from "meteor/underscore";
 
 import { Users } from "/imports/api/users/users";
 import * as timeLastEditDenormalizer from "/imports/api/groups/timeLastEditDenormalizer";
+import * as courseGroupsDenormalizer from "/imports/api/course/groupsDenormalizer";
 import { Group, GroupEntity, GroupModel, Groups } from "./groups";
 
 import * as AsyncTools from "/imports/utils/async-tools";
@@ -192,10 +193,9 @@ export const remove = ServerMethod("group.remove", async (groupId: string) => {
 
   await Groups.removeAsync(groupId);
 
+  // Update list of organizers per course
+  courseGroupsDenormalizer.updateGroups({ groups: groupId });
   if (Meteor.isServer) {
-    // Update list of organizers per course
-    Meteor.call("course.updateGroups", { groups: groupId }, AsyncTools.logErrors);
-
     // Update List of badges per user
     Meteor.call("user.updateBadges", { groups: groupId }, AsyncTools.logErrors);
   }

@@ -8,7 +8,6 @@ import { EventEntity, OEvent } from "/imports/api/events/events";
 // eslint-disable-next-line import/no-cycle
 import * as tenantDenormalizer from "./tenantDenormalizer";
 import * as interestedDenormalizer from "./interestedDenormalizer";
-import * as groupsDenormalizer from "./groupsDenormalizer";
 
 import { hasRoleUser } from "/imports/utils/course-role-utils";
 import { PublicSettings } from "/imports/utils/PublicSettings";
@@ -228,14 +227,6 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
       archived: Predicates.flag,
       userInvolved: Predicates.string,
     });
-  }
-
-  /**
-   * Update list of editors
-   */
-  // eslint-disable-next-line class-methods-use-this
-  async updateGroups(courseId: string) {
-    await groupsDenormalizer.updateGroups(courseId);
   }
 
   /**

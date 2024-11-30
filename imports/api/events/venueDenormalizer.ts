@@ -1,7 +1,6 @@
 import { Mongo } from "meteor/mongo";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { UpdateFilter } from "mongodb";
-import { _ } from "meteor/underscore";
 
 import { EventEntity, Events } from "/imports/api/events/events";
 import { VenueModel, Venues } from "/imports/api/venues/venues";
