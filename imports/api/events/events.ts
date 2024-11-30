@@ -7,7 +7,6 @@ import * as tenantDenormalizer from "./tenantDenormalizer";
 
 import { Geodata } from "/imports/api/regions/regions";
 import { UserModel } from "/imports/api/users/users";
-import * as groupsDenormalizer from "/imports/api/events/groupsDenormalizer";
 
 import { Filtering } from "/imports/utils/filtering";
 import { LocalTime } from "/imports/utils/local-time";
@@ -283,15 +282,6 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
   // eslint-disable-next-line class-methods-use-this
   Filtering() {
     return new Filtering(FindParams);
-  }
-
-  /**
-   * Recalculate the group-related fields of an event
-   * @param eventId the event to update
-   */
-  // eslint-disable-next-line class-methods-use-this
-  async updateGroups(eventId: string) {
-    await groupsDenormalizer.updateGroups(eventId);
   }
 
   /**

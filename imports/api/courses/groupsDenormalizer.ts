@@ -3,6 +3,9 @@ import { Mongo } from "meteor/mongo";
 import { CourseEntity, Courses } from "../courses/courses";
 import * as eventGroupsDenormalizer from "/imports/api/events/groupsDenormalizer";
 
+/**
+ * Recalculate the editors field
+ */
 export async function updateGroups(courseIdOrSelector: string | Mongo.Selector<CourseEntity>) {
   for (const course of await Courses.find(courseIdOrSelector).fetchAsync()) {
     const editors = course.groupOrganizers.slice();
