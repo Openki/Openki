@@ -12,6 +12,7 @@ import * as courseHistoryDenormalizer from "/imports/api/courses/historyDenormal
 import * as courseTimeLastEditDenormalizer from "/imports/api/courses/timeLastEditDenormalizer";
 import * as courseImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
 import * as categoriesDenormalizer from "/imports/api/events/categoriesDenormalizer";
+import * as groupsDenormalizer from "/imports/api/events/groupsDenormalizer";
 import { EventEntity, EventModel, Events, OEvent } from "/imports/api/events/events";
 import { Groups } from "/imports/api/groups/groups";
 import { Regions } from "/imports/api/regions/regions";
@@ -706,10 +707,11 @@ Meteor.methods({
   /**
    * Update the group-related fields of events matching the selector
    */
-  "event.updateGroups"(selector) {
+  async "event.updateGroups"(selector) {
     const idOnly = { projection: { _id: 1 } };
-    Events.find(selector, idOnly).forEach((event) => {
-      Events.updateGroups(event._id);
-    });
+    for (const event of await Events.find(selector, idOnly).fetchAsync()) {
+      // eslint-disable-next-line no-await-in-loop
+      await groupsDenormalizer.updateGroups(event._id);
+    }
   },
 });

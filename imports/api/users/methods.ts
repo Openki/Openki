@@ -10,6 +10,7 @@ import { Users } from "/imports/api/users/users";
 import { Course, Courses } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
 import * as courseInterestedDenormalizer from "/imports/api/courses/interestedDenormalizer";
+import * as groupsDenormalizer from "/imports/api/courses/groupsDenormalizer";
 
 import * as HtmlTools from "/imports/utils/html-tools";
 import * as Profile from "/imports/utils/profile";
@@ -301,7 +302,7 @@ export const adminRemove = ServerMethod(
 
       // Update member related calculated fields
       await courseInterestedDenormalizer.afterUserAdminRemove(course._id);
-      Courses.updateGroups(course._id);
+      await groupsDenormalizer.updateGroups(course._id);
     }
 
     const user = (await Users.findOneAsync(userId)) as any;

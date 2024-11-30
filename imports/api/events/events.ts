@@ -6,10 +6,9 @@ import { Match, check } from "meteor/check";
 import * as tenantDenormalizer from "./tenantDenormalizer";
 
 import { Geodata } from "/imports/api/regions/regions";
-import { Courses } from "/imports/api/courses/courses";
 import { UserModel } from "/imports/api/users/users";
+import * as groupsDenormalizer from "/imports/api/events/groupsDenormalizer";
 
-import * as AsyncTools from "/imports/utils/async-tools";
 import { Filtering } from "/imports/utils/filtering";
 import { LocalTime } from "/imports/utils/local-time";
 import * as Predicates from "/imports/utils/predicates";
@@ -290,55 +289,9 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
    * Recalculate the group-related fields of an event
    * @param eventId the event to update
    */
-  updateGroups(eventId: string) {
-    AsyncTools.untilClean((resolve, reject) => {
-      const event = this.findOne(eventId);
-
-      if (!event) {
-        // Nothing was successfully updated, we're done.
-        resolve(true);
-        return;
-      }
-
-      // Any groups listed as organizers are allowed to edit.
-      let editors = event.groupOrganizers.slice(); // Clone
-
-      // If an event has a parent course, it inherits all groups and all editors from it.
-      let courseGroups: string[] = [];
-      if (event.courseId) {
-        const course = Courses.findOne(event.courseId);
-        if (!course) {
-          throw new Error(`Missing course ${event.courseId} for event ${event._id}`);
-        }
-
-        courseGroups = course.groups;
-        editors = _.union(editors, course.editors);
-      } else {
-        editors.push(event.createdBy);
-      }
-
-      const update: Partial<EventEntity> = {
-        editors,
-      };
-
-      // The course groups are only inherited if the event lies in the future
-      // Past events keep their list of groups even if it changes for the course
-      const historical = event.start < new Date();
-      if (historical) {
-        update.allGroups = _.union(event.groups, event.courseGroups);
-      } else {
-        update.courseGroups = courseGroups;
-        update.allGroups = _.union(event.groups, courseGroups);
-      }
-
-      this.rawCollection().updateMany({ _id: event._id }, { $set: update }, {}, (err, result) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(result?.modifiedCount === 0);
-        }
-      });
-    });
+  // eslint-disable-next-line class-methods-use-this
+  async updateGroups(eventId: string) {
+    await groupsDenormalizer.updateGroups(eventId);
   }
 
   /**

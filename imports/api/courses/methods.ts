@@ -23,6 +23,7 @@ import * as eventsCategoriesDenormalizer from "/imports/api/events/categoriesDen
 import * as eventsCourseImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
 import { Log } from "/imports/api/log/log";
 import { UserModel } from "/imports/api/users/users";
+import * as groupsDenormalizer from "./groupsDenormalizer";
 
 import { Subscribe, Unsubscribe, Message } from "./subscription";
 
@@ -269,7 +270,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
 
     // Init calculated fields
     Meteor.call("course.updateNextEvent", courseId);
-    Courses.updateGroups(courseId);
+    await groupsDenormalizer.updateGroups(courseId);
   } else {
     const enrichedSet = timeLastEditDenormalizer.beforeUpdate(set);
     await Courses.updateAsync({ _id: courseId }, { $set: enrichedSet });
@@ -538,7 +539,7 @@ Meteor.methods({
    */
   "course.updateGroups"(selector) {
     Courses.find(selector).forEach((course) => {
-      Courses.updateGroups(course._id);
+      await groupsDenormalizer.updateGroups(course._id);
     });
   },
 });

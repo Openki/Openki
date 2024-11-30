@@ -8,10 +8,10 @@ import { EventEntity, OEvent } from "/imports/api/events/events";
 // eslint-disable-next-line import/no-cycle
 import * as tenantDenormalizer from "./tenantDenormalizer";
 import * as interestedDenormalizer from "./interestedDenormalizer";
+import * as groupsDenormalizer from "./groupsDenormalizer";
 
 import { hasRoleUser } from "/imports/utils/course-role-utils";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import * as AsyncTools from "/imports/utils/async-tools";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import * as FileStorage from "/imports/utils/FileStorage";
@@ -233,43 +233,9 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
   /**
    * Update list of editors
    */
-  updateGroups(courseId: string) {
-    AsyncTools.untilClean((resolve, reject) => {
-      const course = this.findOne(courseId);
-
-      if (!course) {
-        // If the course doesn't exist it doesn't need updating
-        resolve(true);
-        return;
-      }
-
-      const editors = course.groupOrganizers.slice();
-
-      course.members.forEach((member) => {
-        if (member.roles.includes("team")) {
-          editors.push(member.user);
-        }
-      });
-
-      const update = { $set: { editors } };
-
-      this.rawCollection().updateMany({ _id: course._id }, update, {}, (err, result) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(result?.modifiedCount === 0);
-        }
-      });
-    }).then(
-      () => {
-        // At some point we'll have to figure out a proper caching hierarchy
-        Meteor.call("event.updateGroups", { courseId });
-      },
-      (reason) => {
-        /* eslint-disable-next-line no-console */
-        console.log(`Failed updateGroups: ${reason}`);
-      },
-    );
+  // eslint-disable-next-line class-methods-use-this
+  async updateGroups(courseId: string) {
+    await groupsDenormalizer.updateGroups(courseId);
   }
 
   /**
