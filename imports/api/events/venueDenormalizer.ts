@@ -19,7 +19,8 @@ export async function updateVenue(eventIdOrSelector: string | Mongo.Selector<Eve
     if (venue) {
       if (event.start < new Date()) {
         // Do not update venue for historical events
-        break;
+        // eslint-disable-next-line no-continue
+        continue;
       }
 
       // Sync values to the values set in the venue document

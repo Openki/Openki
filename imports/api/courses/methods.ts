@@ -12,6 +12,7 @@ import { Roles } from "/imports/api/roles/roles";
 import * as UpdateMethods from "/imports/utils/update-methods";
 import * as historyDenormalizer from "/imports/api/courses/historyDenormalizer";
 import * as timeLastEditDenormalizer from "/imports/api/courses/timeLastEditDenormalizer";
+import * as nextEventDenormalizer from "/imports/api/courses/nextEventDenormalizer";
 import * as eventsCategoriesDenormalizer from "/imports/api/events/categoriesDenormalizer";
 import * as eventsCourseImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
 import { Log } from "/imports/api/log/log";
@@ -262,7 +263,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     }
 
     // Init calculated fields
-    Meteor.call("course.updateNextEvent", courseId);
+    await nextEventDenormalizer.updateNextEvent(courseId);
     await groupsDenormalizer.updateGroups(courseId);
   } else {
     const enrichedSet = timeLastEditDenormalizer.beforeUpdate(set);

@@ -12,6 +12,7 @@ import * as courseImageDenormalizer from "/imports/api/events/courseImageDenorma
 import * as categoriesDenormalizer from "/imports/api/events/categoriesDenormalizer";
 import * as groupsDenormalizer from "/imports/api/events/groupsDenormalizer";
 import * as venueDenormalizer from "/imports/api/events/venueDenormalizer";
+import * as courseNextEventDenormalizer from "/imports/api/courses/nextEventDenormalizer";
 import { EventEntity, EventModel, Events, OEvent } from "/imports/api/events/events";
 import { Groups } from "/imports/api/groups/groups";
 import { Regions } from "/imports/api/regions/regions";
@@ -381,15 +382,14 @@ export const save = ServerMethod(
       await Notification.Event.record(eventId, isNew, comment || undefined);
     }
 
+    await venueDenormalizer.updateVenue(eventId);
+    await groupsDenormalizer.updateGroups(eventId);
     if (Meteor.isServer) {
-      await venueDenormalizer.updateVenue(eventId);
-      await groupsDenormalizer.updateGroups(eventId);
       Meteor.call("region.updateCounters", event.region, AsyncTools.logErrors);
-
-      // the assumption is that all replicas have the same course if any
-      if (event.courseId) {
-        Meteor.call("course.updateNextEvent", event.courseId, AsyncTools.logErrors);
-      }
+    }
+    // the assumption is that all replicas have the same course if any
+    if (event.courseId) {
+      await courseNextEventDenormalizer.updateNextEvent(event.courseId);
     }
 
     return eventId;
@@ -430,8 +430,7 @@ export const remove = ServerMethod(
         title: event.title,
         startLocal: event.startLocal,
       });
-
-      await Meteor.callAsync("course.updateNextEvent", event.courseId);
+      await courseNextEventDenormalizer.updateNextEvent(event.courseId);
     }
     await Meteor.callAsync("region.updateCounters", event.region);
   },
@@ -510,6 +509,9 @@ export const addParticipant = ServerMethod(
     // Send notification to team
     await Notification["Rsvp.Team"].record(eventId, user._id, companions);
 
+    if (!event.courseId) {
+      return;
+    }
     // if you cant load course its probably because the event doesnt have one
     const course = await Courses.findOneAsync(event.courseId);
     if (!course) {
@@ -521,7 +523,7 @@ export const addParticipant = ServerMethod(
       await processChange(change, { isSimulation: this.isSimulation });
     }
 
-    await Meteor.callAsync("course.updateNextEvent", event.courseId);
+    await courseNextEventDenormalizer.updateNextEvent(event.courseId);
   },
   { simulation: false },
 );
@@ -548,7 +550,10 @@ export const removeParticipant = ServerMethod(
 
     await Events.updateAsync({ _id: eventId }, { $pull: { participants: { user: userId } } });
 
-    await Meteor.callAsync("course.updateNextEvent", event.courseId);
+    if (!event.courseId) {
+      return;
+    }
+    await courseNextEventDenormalizer.updateNextEvent(event.courseId);
   },
   { simulation: false },
 );
