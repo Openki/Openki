@@ -411,6 +411,7 @@ export const promote = ServerMethod(
   "course.promote",
   async (courseId: string, groupId: string, enable: boolean) => {
     await UpdateMethods.promote(Courses as unknown as GroupPromoters)(courseId, groupId, enable);
+    await groupsDenormalizer.updateGroups(courseId);
     await historyDenormalizer.afterGroupPromoteUpdate(
       courseId,
       groupId,
@@ -431,6 +432,7 @@ export const editing = ServerMethod(
   "course.editing",
   async (courseId: string, groupId: string, enable: boolean) => {
     await UpdateMethods.editing(Courses as unknown as GroupPromoters)(courseId, groupId, enable);
+    await groupsDenormalizer.updateGroups(courseId);
     await historyDenormalizer.afterGroupOrgaUpdate(
       courseId,
       groupId,

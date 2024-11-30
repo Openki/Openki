@@ -20,9 +20,7 @@ export interface GroupPromoterModel {
   editableBy(user: UserModel): boolean;
 }
 
-export interface GroupPromoters extends Mongo.Collection<GroupPromoterEntity, GroupPromoterModel> {
-  updateGroups(docId: string): void;
-}
+export type GroupPromoters = Mongo.Collection<GroupPromoterEntity, GroupPromoterModel>;
 
 /**
  * Create an update method for the groups field
@@ -69,9 +67,6 @@ export function promote(collection: GroupPromoters) {
     }
 
     await collection.updateAsync(doc._id, update);
-    if (Meteor.isServer) {
-      collection.updateGroups(doc._id);
-    }
   };
 }
 
@@ -106,8 +101,5 @@ export function editing(collection: GroupPromoters) {
     update[op] = { groupOrganizers: group._id };
 
     await collection.updateAsync(doc._id, update);
-    if (Meteor.isServer) {
-      collection.updateGroups(doc._id);
-    }
   };
 }
