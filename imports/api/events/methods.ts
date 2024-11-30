@@ -448,7 +448,10 @@ export const remove = ServerMethod(
  */
 export const promote = ServerMethod(
   "event.promote",
-  UpdateMethods.promote(Events as unknown as GroupPromoters),
+  async (eventId: string, groupId: string, enable: boolean) => {
+    await UpdateMethods.promote(Events as unknown as GroupPromoters)(eventId, groupId, enable);
+    await groupsDenormalizer.updateGroups(eventId);
+  },
 );
 
 /**
@@ -461,7 +464,10 @@ export const promote = ServerMethod(
  */
 export const editing = ServerMethod(
   "event.editing",
-  UpdateMethods.editing(Events as unknown as GroupPromoters),
+  async (eventId: string, groupId: string, enable: boolean) => {
+    await UpdateMethods.editing(Events as unknown as GroupPromoters)(eventId, groupId, enable);
+    await groupsDenormalizer.updateGroups(eventId);
+  },
 );
 
 /**
