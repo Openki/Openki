@@ -8,7 +8,6 @@ import { Events } from "/imports/api/events/events";
 import { RegionEntity, Regions } from "./regions";
 import { Venues } from "/imports/api/venues/venues";
 
-import * as AsyncTools from "/imports/utils/async-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import * as StringTools from "/imports/utils/string-tools";
 import { StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";
@@ -121,12 +120,7 @@ export const update = ServerMethod(
       set.description = changes.description.trim().substring(0, 1000);
     }
 
-    await Regions.updateAsync(
-      { _id: regionId },
-      { $set: set },
-      { multi: true },
-      AsyncTools.checkUpdateOne,
-    );
+    await Regions.updateAsync({ _id: regionId }, { $set: set });
 
     return regionId;
   },
@@ -185,4 +179,3 @@ export const unsetFeaturedGroup = ServerMethod(
     await Regions.updateAsync(regionId, { $set: { featuredGroup: "" } });
   },
 );
-

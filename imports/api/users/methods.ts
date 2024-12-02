@@ -15,7 +15,6 @@ import * as HtmlTools from "/imports/utils/html-tools";
 import * as Profile from "/imports/utils/profile";
 import { isEmail } from "/imports/utils/email-tools";
 import * as StringTools from "/imports/utils/string-tools";
-import * as AsyncTools from "/imports/utils/async-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import {
@@ -336,12 +335,7 @@ export const addPrivilege = ServerMethod(
     if (!user) {
       throw new Meteor.Error(404, "User not found");
     }
-    await Users.updateAsync(
-      { _id: user._id },
-      { $addToSet: { privileges: privilege } },
-      { multi: true },
-      AsyncTools.checkUpdateOne,
-    );
+    await Users.updateAsync({ _id: user._id }, { $addToSet: { privileges: privilege } });
   },
 );
 
@@ -361,12 +355,7 @@ export const removePrivilege = ServerMethod(
       return;
     }
 
-    await Users.updateAsync(
-      { _id: user._id },
-      { $pull: { privileges: privilege } },
-      { multi: true },
-      AsyncTools.checkUpdateOne,
-    );
+    await Users.updateAsync({ _id: user._id }, { $pull: { privileges: privilege } });
   },
 );
 
@@ -453,4 +442,3 @@ export const updateLastLogin = ServerMethod("user.updateLastLogin", async () => 
     $set: { lastLogin: new Date() },
   });
 });
-
