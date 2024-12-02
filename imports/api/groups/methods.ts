@@ -5,10 +5,10 @@ import { _ } from "meteor/underscore";
 
 import { Users } from "/imports/api/users/users";
 import * as timeLastEditDenormalizer from "/imports/api/groups/timeLastEditDenormalizer";
-import * as courseGroupsDenormalizer from "/imports/api/course/groupsDenormalizer";
+import * as courseGroupsDenormalizer from "/imports/api/courses/groupsDenormalizer";
+import * as userBadgesDenormalizer from "/imports/api/users/badgesDenormalizer";
 import { Group, GroupEntity, GroupModel, Groups } from "./groups";
 
-import * as AsyncTools from "/imports/utils/async-tools";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import * as FileStorage from "/imports/utils/FileStorage";
@@ -91,7 +91,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
   if (group.isNew()) {
     /* eslint-disable-next-line no-param-reassign */
     groupId = await Groups.insertAsync(_.extend(group, updates));
-    Meteor.call("user.updateBadges", user._id);
+    await userBadgesDenormalizer.updateBadges(user._id);
   } else {
     updates = timeLastEditDenormalizer.beforeUpdate(updates);
     await Groups.updateAsync(group._id, { $set: updates });
@@ -194,11 +194,9 @@ export const remove = ServerMethod("group.remove", async (groupId: string) => {
   await Groups.removeAsync(groupId);
 
   // Update list of organizers per course
-  courseGroupsDenormalizer.updateGroups({ groups: groupId });
-  if (Meteor.isServer) {
-    // Update List of badges per user
-    Meteor.call("user.updateBadges", { groups: groupId }, AsyncTools.logErrors);
-  }
+  await courseGroupsDenormalizer.updateGroups({ groups: groupId });
+  // Update List of badges per user
+  await userBadgesDenormalizer.updateBadges(user._id);
 });
 
 export const updateMembership = ServerMethod(
@@ -236,9 +234,7 @@ export const updateMembership = ServerMethod(
     // but can still add somebody else to the group.
     Groups.update(group._id, update);
 
-    if (Meteor.isServer) {
-      Meteor.call("user.updateBadges", user._id);
-    }
+    await userBadgesDenormalizer.updateBadges(user._id);
   },
 );
 export const toggleMemberNotify = ServerMethod(

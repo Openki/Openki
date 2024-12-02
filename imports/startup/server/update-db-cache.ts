@@ -8,10 +8,10 @@ import * as eventsCategoriesDenormalizer from "/imports/api/events/categoriesDen
 import * as eventsTenantDenormalizer from "/imports/api/events/tenantDenormalizer";
 import * as eventsVenueDenormalizer from "/imports/api/events/venueDenormalizer";
 import * as usersTenantsDenormalizer from "/imports/api/users/tenantsDenormalizer";
+import * as userBadgesDenormalizer from "/imports/api/users/badgesDenormalizer";
 import * as regionsCountDenormalizer from "/imports/api/regions/countDenormalizer";
 
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
-import * as AsyncTools from "/imports/utils/async-tools";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 import { Log } from "/imports/api/log/log";
 import { serverError } from "/imports/api/log/methods";
@@ -29,7 +29,7 @@ async function updateDbCacheFields() {
     await eventsCategoriesDenormalizer.onStartUp();
 
     // Update List of badges per user
-    Meteor.call("user.updateBadges", {}, AsyncTools.logErrors);
+    await userBadgesDenormalizer.updateBadges({});
 
     await coursesTenantDenormalizer.onStartUp();
     await eventsTenantDenormalizer.onStartUp();
