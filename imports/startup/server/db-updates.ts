@@ -51,11 +51,11 @@ const UpdatesApplied = new Mongo.Collection<UpdatesAppliedEntity>("UpdatesApplie
 
 if (runBackgroundTasks)
   Meteor.startup(async () => {
-    const skipInitial = (await UpdatesApplied.find().countAsync()) === 0;
+    const skipInitial = (await UpdatesApplied.countDocuments()) === 0;
 
     for (const [name, updateAvailable] of Object.entries(UpdatesAvailable)) {
       // eslint-disable-next-line no-await-in-loop
-      if ((await UpdatesApplied.find({ name }).countAsync()) === 0) {
+      if ((await UpdatesApplied.countDocuments({ name })) === 0) {
         const entry: UpdatesAppliedEntity = {
           name,
           affected: 0,

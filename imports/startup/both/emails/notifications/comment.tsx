@@ -53,7 +53,7 @@ export async function record(commentId: string) {
         $or: [{ _id: threadId }, { parentId: threadId }],
       };
 
-      CourseDiscussions.find(threadSelector).forEach((threadComment) => {
+      await CourseDiscussions.find(threadSelector).forEachAsync((threadComment) => {
         const partId = threadComment.userId;
         if (partId) {
           recipients.push(partId);

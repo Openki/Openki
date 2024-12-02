@@ -8,30 +8,38 @@ import { Notification } from "../both/emails/notification";
 
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
-if (runBackgroundTasks)
-  Meteor.startup(() => {
-    const reminderCall = Meteor.bindEnvironment(async () => {
-      await Events.find({
-        // get all events in the next 24 h, do not send reminder if the event starts in 30 minutes (if an error case happened)
-        start: { $gt: moment().add(30, "minutes").toDate(), $lt: moment().add(1, "days").toDate() },
-        // ignore canceled events
-        canceled: { $ne: true },
-        sendReminder: { $eq: true },
-      }).forEachAsync(async (event) => {
-        const alreadySent = await Log.find({
+async function sendReminder() {
+  await Promise.all(
+    await Events.find({
+      // get all events in the next 24 h, do not send reminder if the event starts in 30 minutes (if an error case happened)
+      start: { $gt: moment().add(30, "minutes").toDate(), $lt: moment().add(1, "days").toDate() },
+      // ignore canceled events
+      canceled: { $ne: true },
+      sendReminder: { $eq: true },
+    }).mapAsync(async (event) => {
+      const alreadySent =
+        (await Log.countDocuments({
           tr: "Notification.Send",
           rel: event._id,
           "body.model": "Event.Reminder",
-        }).countAsync();
+        })) > 0;
 
-        if (alreadySent) {
-          return;
-        }
+      if (alreadySent) {
+        return;
+      }
 
-        await Notification["Event.Reminder"].record(event._id);
-      });
-    });
+      await Notification["Event.Reminder"].record(event._id);
+    }),
+  );
+}
 
+if (runBackgroundTasks)
+  Meteor.startup(() => {
     // Run every 5 Minutes
-    schedule.scheduleJob("*/5 * * * *", reminderCall);
+    schedule.scheduleJob(
+      "*/5 * * * *",
+      Meteor.bindEnvironment(async () => {
+        sendReminder();
+      }),
+    );
   });

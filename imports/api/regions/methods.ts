@@ -143,7 +143,7 @@ export const remove = ServerMethod("region.remove", async (regionId: string) => 
     throw new Meteor.Error(401, "not permitted");
   }
 
-  if ((await Courses.find({ region: regionId }).countAsync()) > 20) {
+  if ((await Courses.countDocuments({ region: regionId })) > 20) {
     throw new Meteor.Error(
       401,
       "Deleting regions with more than 20 courses is not allowed. Delete courses or contact an administrator. For safety reasons. So that an active region is not deleted by mistake.",
