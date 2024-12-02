@@ -14,11 +14,11 @@ import { Events } from "/imports/api/events/events";
 export async function updateNextEvent(courseIdOrSelector: string | Mongo.Selector<CourseEntity>) {
   await Promise.all(
     await Courses.find(courseIdOrSelector).mapAsync(async (course) => {
-      const futureEvents = await Events.find({
+      const futureEvents = await Events.countDocuments({
         courseId: course._id,
         start: { $gt: new Date() },
         canceled: { $ne: true },
-      }).countAsync();
+      });
 
       const nextEvent: CourseNextEventEntity | undefined = await Events.findOneAsync(
         { courseId: course._id, start: { $gt: new Date() }, canceled: { $ne: true } },

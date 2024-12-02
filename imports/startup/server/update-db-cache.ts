@@ -65,7 +65,9 @@ if (runBackgroundTasks)
       async () => {
         try {
           // Update nextEvent for courses where it expired
-          await courseNextEventDenormalizer.updateNextEvent({ $lt: new Date() });
+          await courseNextEventDenormalizer.updateNextEvent({
+            "nextEvent.start": { $lt: new Date() },
+          });
           await regionsCountDenormalizer.updateCounters({});
         } catch (error) {
           serverError(error);

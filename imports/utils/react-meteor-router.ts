@@ -10,5 +10,5 @@ export function useParams(): Record<string, string | undefined> {
 }
 
 export function useSearchParams() {
-  return useTracker(() => Router.current().params.query);
+  return useTracker(() => Router.current().params.query || {});
 }
