@@ -23,7 +23,6 @@ import { Subscribe, Unsubscribe, Message } from "./subscription";
 
 import { Notification } from "../../startup/both/emails/notification";
 
-import * as AsyncTools from "/imports/utils/async-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import * as StringTools from "/imports/utils/string-tools";
 import * as HtmlTools from "/imports/utils/html-tools";
@@ -153,12 +152,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
         const have = course.roles.includes(type);
 
         if (have && !shouldHave) {
-          await Courses.updateAsync(
-            { _id: courseId },
-            { $pull: { roles: type } },
-            { multi: true },
-            AsyncTools.checkUpdateOne,
-          );
+          await Courses.updateAsync({ _id: courseId }, { $pull: { roles: type } });
 
           // HACK
           // due to a mongo limitation we can't { $pull { 'members.roles': type } }
@@ -176,12 +170,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
             set.roles = set.roles || [];
             set.roles.push(type);
           } else {
-            await Courses.updateAsync(
-              { _id: courseId },
-              { $addToSet: { roles: type } },
-              { multi: true },
-              AsyncTools.checkUpdateOne,
-            );
+            await Courses.updateAsync({ _id: courseId }, { $addToSet: { roles: type } });
           }
         }
       }),
