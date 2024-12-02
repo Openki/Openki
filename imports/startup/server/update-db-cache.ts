@@ -8,6 +8,7 @@ import * as eventsCategoriesDenormalizer from "/imports/api/events/categoriesDen
 import * as eventsTenantDenormalizer from "/imports/api/events/tenantDenormalizer";
 import * as eventsVenueDenormalizer from "/imports/api/events/venueDenormalizer";
 import * as usersTenantsDenormalizer from "/imports/api/users/tenantsDenormalizer";
+import * as regionsCountDenormalizer from "/imports/api/regions/countDenormalizer";
 
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import * as AsyncTools from "/imports/utils/async-tools";
@@ -37,7 +38,7 @@ async function updateDbCacheFields() {
     // Keep the nextEvent entry updated
     // On startup do a full scan to catch stragglers
     await courseNextEventDenormalizer.updateNextEvent({});
-    Meteor.call("region.updateCounters", {}, AsyncTools.logErrors);
+    await regionsCountDenormalizer.updateCounters({});
   } catch (error) {
     serverError(error);
   }
@@ -65,8 +66,7 @@ if (runBackgroundTasks)
         try {
           // Update nextEvent for courses where it expired
           await courseNextEventDenormalizer.updateNextEvent({ $lt: new Date() });
-
-          Meteor.call("region.updateCounters", {}, AsyncTools.logErrors);
+          await regionsCountDenormalizer.updateCounters({});
         } catch (error) {
           serverError(error);
         }

@@ -13,13 +13,13 @@ import * as categoriesDenormalizer from "/imports/api/events/categoriesDenormali
 import * as groupsDenormalizer from "/imports/api/events/groupsDenormalizer";
 import * as venueDenormalizer from "/imports/api/events/venueDenormalizer";
 import * as courseNextEventDenormalizer from "/imports/api/courses/nextEventDenormalizer";
+import * as regionsCountDenormalizer from "/imports/api/regions/countDenormalizer";
 import { EventEntity, EventModel, Events, OEvent } from "/imports/api/events/events";
 import { Groups } from "/imports/api/groups/groups";
 import { Regions } from "/imports/api/regions/regions";
 
 import { Notification } from "../../startup/both/emails/notification";
 import { AffectedReplicaSelectors } from "/imports/utils/affected-replica-selectors";
-import * as AsyncTools from "/imports/utils/async-tools";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { LocalTime } from "/imports/utils/local-time";
 import * as StringTools from "/imports/utils/string-tools";
@@ -384,9 +384,7 @@ export const save = ServerMethod(
 
     await venueDenormalizer.updateVenue(eventId);
     await groupsDenormalizer.updateGroups(eventId);
-    if (Meteor.isServer) {
-      Meteor.call("region.updateCounters", event.region, AsyncTools.logErrors);
-    }
+    await regionsCountDenormalizer.updateCounters(event.region);
     // the assumption is that all replicas have the same course if any
     if (event.courseId) {
       await courseNextEventDenormalizer.updateNextEvent(event.courseId);
@@ -432,7 +430,7 @@ export const remove = ServerMethod(
       });
       await courseNextEventDenormalizer.updateNextEvent(event.courseId);
     }
-    await Meteor.callAsync("region.updateCounters", event.region);
+    await regionsCountDenormalizer.updateCounters(event.region);
   },
   { simulation: false },
 );
