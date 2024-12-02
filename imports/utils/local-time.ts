@@ -27,26 +27,33 @@ import moment from "moment-timezone";
  * users). This is infeasible. Thus future dates must be stored as local time.
  */
 
+export class Zone {
+  // eslint-disable-next-line no-useless-constructor
+  constructor(public readonly tz: string) {}
+
+  fromString(date: string) {
+    return moment.tz(date, this.tz);
+  }
+
+  toString(date: Date | moment.Moment) {
+    return moment.tz(date, this.tz).format("YYYY-MM-DD[T]HH:mm");
+  }
+
+  at(date: Date) {
+    return moment.tz(date, this.tz);
+  }
+}
+
 export const LocalTime = {
-  zone(regionId: string) {
-    const region = Regions.findOne(regionId);
+  async zone(regionId: string) {
+    const region = await Regions.findOneAsync(regionId);
     if (!region) {
       throw new Error(`Unable to load region ${regionId}`);
     }
 
     const { tz } = region;
 
-    return {
-      fromString(date: string) {
-        return moment.tz(date, tz);
-      },
-      toString(date: Date | moment.Moment) {
-        return moment.tz(date, tz).format("YYYY-MM-DD[T]HH:mm");
-      },
-      at(date: Date) {
-        return moment.tz(date, tz);
-      },
-    };
+    return new Zone(tz);
   },
 
   /**

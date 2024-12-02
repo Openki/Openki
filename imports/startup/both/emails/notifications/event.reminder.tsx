@@ -85,7 +85,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         subjectvars,
       );
 
-      const { startMoment } = getStartEndDate(event, locale);
+      const { startMoment, tz } = await getStartEndDate(event, locale);
 
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);
@@ -94,6 +94,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         companions:
           event.participants?.filter((p) => p.user === actualRecipient._id)[0].companions || 0,
         event,
+        tz,
         unregisterToEventLink: Router.url("showEvent", event, {
           query: { action: "unregister", campaign },
         }),

@@ -79,7 +79,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         throw new Error("Region does not exist (0.o)");
       }
 
-      const { startMoment } = getStartEndDate(event, locale);
+      const { startMoment, tz } = await getStartEndDate(event, locale);
 
       const subjectvars = {
         TITLE: event.title.substring(0, 30),
@@ -98,6 +98,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       return {
         companions: body.companions,
         event,
+        tz,
         eventDate: startMoment.format("dddd, LL"),
         subject,
         customSiteUrl: Router.url("home", {}, { query: { campaign } }),

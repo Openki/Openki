@@ -8,6 +8,7 @@ import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 export type Props = {
   username: string;
   event: EventModel;
+  tz: string;
   eventTitle: React.JSX.Element | undefined;
   message: string;
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
@@ -18,6 +19,7 @@ export type Props = {
 export function EventCanceled({
   username,
   event,
+  tz,
   eventTitle,
   message,
   unsubscribe,
@@ -48,7 +50,7 @@ export function EventCanceled({
               <td dangerouslySetInnerHTML={{ __html: message }}></td>
             </tr>
           </table>
-          <EventBox event={event} campaign={campaign} lng={lng} />
+          <EventBox event={event} tz={tz} campaign={campaign} lng={lng} />
         </td>
       </tr>
       <Footer

@@ -8,6 +8,7 @@ import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 export type Props = {
   companions: number;
   event: EventModel;
+  tz: string;
   eventDate: string;
   username: string;
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
@@ -17,6 +18,7 @@ export type Props = {
 export function Rsvp({
   companions,
   event,
+  tz,
   eventDate,
   username,
   unsubscribe,
@@ -37,7 +39,7 @@ export function Rsvp({
             )}
           </p>
           <p>{t("notification.rsvp.mail.attending", "You are attending the following event:")}</p>
-          <EventBox event={event} campaign={campaign} lng={lng} />
+          <EventBox event={event} tz={tz} campaign={campaign} lng={lng} />
         </td>
       </tr>
       <Footer unsubscribe={unsubscribe} campaign={campaign} lng={lng} />
