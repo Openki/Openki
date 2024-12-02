@@ -14,7 +14,7 @@ import { ResetPassword } from "../../../emails/users/ResetPassword.html";
 import { resetPassword } from "../../../emails/users/resetPassword.text";
 import { Visitor } from "/imports/emails/users/Visitor.html";
 import { visitor } from "/imports/emails/users/visitor.text";
-import { renderToEmail } from "/imports/utils/renderToEmail";
+import { renderToEmail } from "../lib/renderToEmail";
 import { createAccount } from "/imports/emails/users/createAccount.text";
 import { CreateAccount } from "/imports/emails/users/CreateAccount.html";
 

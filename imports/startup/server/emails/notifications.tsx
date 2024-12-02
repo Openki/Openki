@@ -12,7 +12,7 @@ import { Log } from "/imports/api/log/log";
 import { LogEntity } from "/imports/api/log/factory";
 import { Users } from "/imports/api/users/users";
 
-import { renderToEmail } from "../../../utils/renderToEmail";
+import { renderToEmail } from "../lib/renderToEmail";
 import { Root } from "../../../emails/Root";
 
 /**

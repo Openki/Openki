@@ -1,3 +1,7 @@
+import { Meteor } from "meteor/meteor";
+import { Router } from "meteor/iron:router";
+import { Session } from "meteor/session";
+
 import "./client-error";
 import "./extend-instance";
 import "./locale";
@@ -5,10 +9,6 @@ import "./templates";
 import "./template-helpers";
 import "./translations.html";
 import "./useraccounts-configuration";
-
-import { Meteor } from "meteor/meteor";
-import { Router } from "meteor/iron:router";
-import { Session } from "meteor/session";
 
 import * as RegionSelection from "/imports/utils/region-selection";
 import * as Theme from "/imports/utils/theme";
