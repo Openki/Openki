@@ -6,15 +6,32 @@ import { LocalTime } from "/imports/utils/local-time";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import * as StringTools from "/imports/utils/string-tools";
 
+function mapAsync<T, U>(
+  array: T[],
+  callbackfn: (value: T, index: number, array: T[]) => Promise<U>,
+): Promise<U[]> {
+  return Promise.all(array.map(callbackfn));
+}
+
+async function filterAsync<T>(
+  array: T[],
+  callbackfn: (value: T, index: number, array: T[]) => Promise<boolean>,
+): Promise<T[]> {
+  const filterMap = await mapAsync(array, callbackfn);
+  return array.filter((_value, index) => filterMap[index]);
+}
+
 export async function create() {
   // These events are most useful if they show up in the calendar for the
   // current week, so we move them from their original day into this
   // week but keep the weekday.
   let dateOffset = 0;
 
-  for (const template of events
+  for (const template of await filterAsync(
+    events,
     // Don't create events that exist already
-    .filter((e) => !(e._id && Events.findOne({ _id: e._id })))) {
+    async (e) => !(e._id && (await Events.findOneAsync({ _id: e._id }))),
+  )) {
     // We place the first event in the series on the monday of this week
     // and all later events relative to it.
     if (dateOffset === 0) {
@@ -33,7 +50,7 @@ export async function create() {
 
     const startLocal = LocalTime.toString(new Date(template.start.$date + dateOffset));
     const endLocal = LocalTime.toString(new Date(template.end.$date + dateOffset));
-    const regionZone = LocalTime.zone(template.region);
+    const regionZone = await LocalTime.zone(template.region);
 
     const event = {
       _id: template._id,

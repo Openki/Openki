@@ -108,7 +108,7 @@ export async function generate() {
         date.setMinutes(Math.floor(date.getMinutes() / 15) * 15);
       }
 
-      const regionZone = LocalTime.zone(event.region);
+      const regionZone = await LocalTime.zone(event.region);
 
       event.startLocal = LocalTime.toString(date);
       event.start = regionZone.fromString(event.startLocal).toDate();

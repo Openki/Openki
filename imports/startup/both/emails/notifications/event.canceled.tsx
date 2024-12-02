@@ -96,13 +96,14 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         subjectvars,
       );
 
-      const { startMoment } = getStartEndDate(event, locale);
+      const { startMoment, tz } = await getStartEndDate(event, locale);
 
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);
 
       const vars = {
         event,
+        tz,
         subject,
         customSiteUrl: Router.url("home", {}, { query: { campaign } }),
         customSiteName: siteName,

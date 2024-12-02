@@ -12,7 +12,8 @@ export async function updateVenue(eventIdOrSelector: string | Mongo.Selector<Eve
   for (const event of await Events.find(eventIdOrSelector).fetchAsync()) {
     let venue: VenueModel | undefined;
     if (event.venue?._id) {
-      venue = Venues.findOne(event.venue._id);
+      // eslint-disable-next-line no-await-in-loop
+      venue = await Venues.findOneAsync(event.venue._id);
     }
 
     let update: UpdateFilter<EventEntity>;
@@ -38,6 +39,7 @@ export async function updateVenue(eventIdOrSelector: string | Mongo.Selector<Eve
       update = { $unset: { "venue._id": 1 } };
     }
 
-    Events.update({ _id: event._id }, update);
+    // eslint-disable-next-line no-await-in-loop
+    await Events.updateAsync({ _id: event._id }, update);
   }
 }

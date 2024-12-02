@@ -8,6 +8,7 @@ import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 
 export type Props = {
   event: EventModel;
+  tz: string;
   recipientTakePart: boolean | undefined;
   registerToEventLink: string;
   course: React.JSX.Element;
@@ -24,6 +25,7 @@ export type Props = {
 
 export function Event({
   event,
+  tz,
   recipientTakePart,
   registerToEventLink,
   course,
@@ -69,7 +71,7 @@ export function Event({
             </>
           ) : null}
 
-          <EventBox event={event} campaign={campaign} lng={lng} />
+          <EventBox event={event} tz={tz} campaign={campaign} lng={lng} />
 
           {!event.noRsvp ? (
             !recipientTakePart ? (

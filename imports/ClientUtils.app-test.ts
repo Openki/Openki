@@ -34,7 +34,7 @@ export function waitFor<T>(assertion: () => T, timeout = 10000): Promise<T> {
 
     const clearWatchers = () => {
       if (interval) {
-        clearInterval(interval);
+        clearInterval(interval as any);
       }
     };
 
