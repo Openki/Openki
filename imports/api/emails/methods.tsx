@@ -11,7 +11,7 @@ import { Notification } from "../../startup/both/emails/notification";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { SafeString, Type } from "/imports/utils/CustomChecks";
-import { renderToEmail } from "../../startup/server/lib/renderToEmail";
+import { renderToEmail } from "../../utils/renderToEmail";
 import { Root } from "../../emails/Root";
 import { Report } from "../../emails/Report";
 

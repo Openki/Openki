@@ -14,7 +14,7 @@ import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
 import { Invitation } from "/imports/emails/Invitation";
 import { Root } from "/imports/emails/Root";
-import { renderToEmail } from "../lib/renderToEmail";
+import { renderToEmail } from "../../../utils/renderToEmail";
 
 function sendInvitation(invitation: InvitationEntity) {
   const tenant = Tenants.findOne(invitation.tenant);

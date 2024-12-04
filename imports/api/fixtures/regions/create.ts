@@ -23,12 +23,13 @@ export async function create() {
       region.loc = { type: "Point", coordinates: coordinates as [long: number, lat: number] };
     }
     if (r.calendarStartDate) {
-      const weekstart = new Date();
-      weekstart.setHours(0);
-      weekstart.setMinutes(0);
-      weekstart.setSeconds(0);
-      weekstart.setDate(weekstart.getDate() - weekstart.getDay() + 1);
-      region.calendarStartDate = weekstart;
+      const startDate = new Date();
+      startDate.setHours(0);
+      startDate.setMinutes(0);
+      startDate.setSeconds(0);
+      // simulate that we start two days after begining
+      startDate.setDate(startDate.getDate() - 2);
+      region.calendarStartDate = startDate;
     }
     if (r.defaultTeamGroup) {
       region.defaultTeamGroup = await ensure.group(r.defaultTeamGroup);
