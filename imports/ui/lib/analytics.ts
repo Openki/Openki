@@ -145,7 +145,13 @@ export function installRouterActions() {
     if (Tracker.currentComputation?.firstRun) {
       trytrack((t) => {
         if (started) {
-          t.setGenerationTimeMs(new Date().getTime() - started.getTime());
+          t.setPagePerformanceTiming(
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            new Date().getTime() - started.getTime() /** domCompletionTimeInMS */,
+          );
           started = null;
         }
         t.enableLinkTracking();
