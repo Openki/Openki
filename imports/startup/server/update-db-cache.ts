@@ -4,6 +4,7 @@ import schedule from "node-schedule";
 import * as coursesTenantDenormalizer from "/imports/api/courses/tenantDenormalizer";
 import * as courseGroupsDenormalizer from "/imports/api/courses/groupsDenormalizer";
 import * as courseNextEventDenormalizer from "/imports/api/courses/nextEventDenormalizer";
+import * as eventsCourseImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
 import * as eventsCategoriesDenormalizer from "/imports/api/events/categoriesDenormalizer";
 import * as eventsTenantDenormalizer from "/imports/api/events/tenantDenormalizer";
 import * as eventsVenueDenormalizer from "/imports/api/events/venueDenormalizer";
@@ -20,6 +21,7 @@ async function updateDbCacheFields() {
   Log.record("DbCacheFields.Update.Start", [], {});
 
   try {
+    await eventsCourseImageDenormalizer.onStartUp();
     // Resync location cache in events
     await eventsVenueDenormalizer.updateVenue({});
 

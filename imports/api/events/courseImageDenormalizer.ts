@@ -1,6 +1,37 @@
 import { Courses } from "/imports/api/courses/courses";
 import { Events, EventEntity } from "/imports/api/events/events";
 
+export async function onStartUp() {
+  let updated = 0;
+
+  for (const event of await Events.find({}).fetchAsync()) {
+    if (!event.courseId) {
+      // eslint-disable-next-line no-continue
+      continue;
+    }
+
+    // eslint-disable-next-line no-await-in-loop
+    const course = await Courses.findOneAsync(event.courseId);
+    if (!course) {
+      throw new Error(`Missing course ${event.courseId} for event`);
+    }
+
+    const update = {
+      $set: {
+        courseImage: course.image,
+        courseCompactImage: course.compactImage,
+      },
+    };
+
+    // eslint-disable-next-line no-await-in-loop
+    await Events.updateAsync({ _id: event._id }, update);
+    updated += 1;
+  }
+
+  /* eslint-disable-next-line no-console */
+  console.log(`events.courseImageDenormalizer.onStartUp: ${updated} affected events`);
+}
+
 export async function beforeInsert(
   event: Omit<EventEntity, "_id">,
 ): Promise<Omit<EventEntity, "_id">> {
