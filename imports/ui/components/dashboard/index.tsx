@@ -13,7 +13,7 @@ import "./styles.scss";
 
 type ComponentSettings = {
   entity: keyof typeof mapping;
-  title: string;
+  title?: string;
   query?: string;
   showAll?: { link?: string; text?: string };
 };
@@ -27,7 +27,7 @@ export type Props = {
 type ListOfEntitesHook<T> = {
   showAll: { link: string | undefined; text: string | undefined };
   entity: string;
-  title: string;
+  title?: string;
   isLoading: () => boolean;
   params: { [k: string]: string };
   data: T[];
@@ -44,7 +44,7 @@ type ListOfEntitesHook<T> = {
 type ComponentWithEntitesHook<T> = {
   showAll: { link: string | undefined; text: string | undefined };
   entity: string;
-  title: string;
+  title?: string;
   isLoading: () => boolean;
   params: { [k: string]: string };
   data: T[];
@@ -60,7 +60,7 @@ type ComponentWithEntitesHook<T> = {
 type StaticComponentHook = {
   showAll: { link: string | undefined; text: string | undefined };
   entity: string;
-  title: string;
+  title?: string;
   params: { [k: string]: string };
   route?: string | undefined;
   component: (params: { [k: string]: string }) => React.JSX.Element;

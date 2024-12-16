@@ -76,8 +76,8 @@ export interface RegionEntity {
   };
   dashboard?: {
     entity: "group" | "course" | "courseWithoutPropose" | "event" | "eventsMap" | "propose";
-    title: string;
-    query: string;
+    title?: string;
+    query?: string;
     showAll?: { link?: string; text?: string };
   }[];
   createdby?: string;
