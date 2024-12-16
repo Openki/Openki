@@ -63,8 +63,8 @@ export const regions: {
   },
   {
     _id: "J6GDhEEvdmdSMzPPF",
-    name: "Zürich",
-    nameEn: "Zurich",
+    name: "Zürich (NHW)",
+    nameEn: "Zurich (NHW)",
     country: "CH",
     region: "ZH",
     loc: [47.3784, 8.5257],
