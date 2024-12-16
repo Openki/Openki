@@ -8,6 +8,12 @@ export const groups: {
   description: string;
   members?: string[];
   logoUrl?: string;
+  dashboard?: {
+    entity: "group" | "course" | "courseWithoutPropose" | "event" | "eventsMap" | "propose";
+    title?: string;
+    query?: string;
+    showAll?: { link?: string; text?: string };
+  }[];
 }[] = [
   {
     name: "Dynamo",
@@ -61,6 +67,20 @@ export const groups: {
     claim: "",
     description:
       "Der Chaos Computer Club Zürich (CCCZH) ist ein Verein, bei dem der Spass am Gerät grossgeschrieben wird, ohne aber den gesellschaftlichen Blick zu verlieren. <br> Es geht uns darum Intransparenz und limitierende Faktoren von Computergeräten aufzuheben; auch möchten wir die Kontrolle über diese Geräte haben, weil sie in einer computerisierten Gesellschaft Fehlentwicklungen hervorrufen mögen und weil wir selbst bestimmen möchten, welche unserer Daten verfügbar sind und auch auf welche wir frei zugreifen möchten.<p>Wir arbeiten technisch und politisch, um unsere Forderungen durchzusetzen.</p><p>Hacker, Technikbegeisterte, Menschen mit gesellschaftlichem Blick - alle heissen wir willkommen. Wir verstehen uns nicht als eine elitäre Gruppierung und arbeiten deshalb offen mit allen Interessierten zusammmen. </p>",
+    dashboard: [
+      { entity: "course", title: "dashboard.recentActivities.title", query: "" },
+      {
+        entity: "event",
+        title: "dashboard.upcomingEvents.title",
+        query: "after=now&sort=start&canceled=0",
+      },
+      {
+        entity: "course",
+        title: "dashboard.lookingForMentors.title",
+        query: "needsRole=mentor&state=proposal,resting",
+      },
+      { entity: "propose" },
+    ],
   },
   {
     name: "MAXIM Theater",
