@@ -1,7 +1,7 @@
 /* eslint-disable no-await-in-loop */
 import { Events, EventEntity } from "../../events/events";
 import { ensure } from "../ensureFixture";
-import { events as eventsBase } from "./data";
+import { events as eventsNhw } from "./nachhaltigkeitswoche";
 import { events as eventsZuerichlernt } from "./zuerichlernt";
 import { LocalTime } from "/imports/utils/local-time";
 import { PublicSettings } from "/imports/utils/PublicSettings";
@@ -43,7 +43,7 @@ export async function create() {
   let dateOffset = 0;
 
   for (const template of await filterAsync(
-    eventsBase,
+    eventsNhw,
     // Don't create events that exist already
     async (e) => !(e._id && (await Events.findOneAsync({ _id: e._id }))),
   )) {
@@ -160,5 +160,5 @@ export async function create() {
     await Events.insertAsync(event);
   }
 
-  return `Inserted ${eventsBase.length + eventsZuerichlernt.length} event fixtures.`;
+  return `Inserted ${eventsNhw.length + eventsZuerichlernt.length} event fixtures.`;
 }
