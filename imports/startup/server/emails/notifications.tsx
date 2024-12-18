@@ -138,7 +138,8 @@ async function send(
             html: message,
           };
 
-          Email.send(mail);
+          // eslint-disable-next-line no-await-in-loop
+          await Email.sendAsync(mail);
 
           // eslint-disable-next-line no-await-in-loop
           await record(entry, unsubToken, true, recipientId, mail, "success");
