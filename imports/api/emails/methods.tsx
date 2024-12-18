@@ -113,7 +113,7 @@ export const sendReport = ServerMethod(
       html: message,
     };
 
-    Email.send(email);
+    Email.sendAsync(email);
   },
   { simulation: false },
 );

@@ -16,18 +16,18 @@ import { Invitation } from "/imports/emails/Invitation";
 import { Root } from "/imports/emails/Root";
 import { renderToEmail } from "../../../utils/renderToEmail";
 
-function sendInvitation(invitation: InvitationEntity) {
-  const tenant = Tenants.findOne(invitation.tenant);
+async function sendInvitation(invitation: InvitationEntity) {
+  const tenant = await Tenants.findOneAsync(invitation.tenant);
   if (!tenant) {
     throw new Error("Tenant does not exist (0.o)");
   }
 
-  const inviter = Users.findOne(invitation.createdBy);
+  const inviter = await Users.findOneAsync(invitation.createdBy);
   if (!inviter) {
     throw new Error("Inviter does not exist (0.o)");
   }
 
-  const recipient = Users.findOne({ "emails.0.address": invitation.to });
+  const recipient = await Users.findOneAsync({ "emails.0.address": invitation.to });
 
   const locale = recipient?.locale || inviter.locale || "en";
 
@@ -66,7 +66,7 @@ function sendInvitation(invitation: InvitationEntity) {
     html: message,
   };
 
-  Email.send(email);
+  await Email.sendAsync(email);
 }
 
 async function handleInvitation(invitation: InvitationEntity) {
@@ -76,13 +76,13 @@ async function handleInvitation(invitation: InvitationEntity) {
     invitation,
   ); // For traceability
   try {
-    sendInvitation(invitation);
+    await sendInvitation(invitation);
 
-    Invitations.update(invitation._id, { $set: { status: "send" } });
+    await Invitations.updateAsync(invitation._id, { $set: { status: "send" } });
     result.success();
   } catch (e) {
     try {
-      Invitations.update(invitation._id, { $set: { status: "failed" } });
+      await Invitations.updateAsync(invitation._id, { $set: { status: "failed" } });
     } finally {
       result.error(e);
     }
