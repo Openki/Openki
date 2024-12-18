@@ -8,7 +8,7 @@ import { Groups } from "/imports/api/groups/groups";
 import { Venues } from "/imports/api/venues/venues";
 import { Geodata, Regions } from "/imports/api/regions/regions";
 
-import { visibleTenants } from "/imports/utils/visible-tenants";
+import { visibleTenantsAsync } from "/imports/utils/visible-tenants";
 import { Filtering } from "/imports/utils/filtering";
 import { ParamWrapper, Predicate } from "/imports/utils/predicates";
 import { FieldSort } from "/imports/utils/sort-spec";
@@ -191,7 +191,7 @@ export const Api = {
 
       return evr;
     },
-    { tenants: visibleTenants() },
+    { tenants: await visibleTenantsAsync() },
   ),
   courses: await apiResponse(
     Courses,
@@ -267,6 +267,6 @@ export const Api = {
 
       return course;
     },
-    { tenants: visibleTenants() },
+    { tenants: await visibleTenantsAsync() },
   ),
 };
