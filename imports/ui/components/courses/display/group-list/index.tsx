@@ -21,7 +21,8 @@ export function CourseGroupList({ course: course2 }: Props) {
   // subscribe in react to keep reactivity
   const [isLoading, course] = useDetails(course2._id);
 
-  function tools(groupId: string) {
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  function tools(groupId: string, course: CourseModel) {
     return (
       <>
         {user?.mayPromoteWith(groupId) || course.editableBy(user) ? (
@@ -80,7 +81,7 @@ export function CourseGroupList({ course: course2 }: Props) {
                   <li>
                     <hr className="dropdown-divider" />
                   </li>
-                  {tools(groupId)}
+                  {tools(groupId, course)}
                 </ul>
               </div>
             ) : null}
