@@ -14,14 +14,14 @@ import {
   PasswordResetTokenExpirationInDays,
 } from "../both/UseraccountsConfiguration";
 
-Meteor.startup(() => {
+Meteor.startup(async () => {
   const serviceConf = PrivateSettings.service;
   if (!serviceConf) {
     return;
   }
 
   if (serviceConf.google) {
-    ServiceConfiguration.configurations.upsert(
+    await ServiceConfiguration.configurations.upsertAsync(
       {
         service: "google",
       },
@@ -35,7 +35,7 @@ Meteor.startup(() => {
     );
   }
   if (serviceConf.facebook) {
-    ServiceConfiguration.configurations.upsert(
+    await ServiceConfiguration.configurations.upsertAsync(
       {
         service: "facebook",
       },
@@ -49,7 +49,7 @@ Meteor.startup(() => {
     );
   }
   if (serviceConf.github) {
-    ServiceConfiguration.configurations.upsert(
+    await ServiceConfiguration.configurations.upsertAsync(
       {
         service: "github",
       },
