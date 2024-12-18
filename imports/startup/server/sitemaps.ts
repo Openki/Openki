@@ -7,7 +7,7 @@ import { CourseModel, Courses } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
 import { Venues } from "/imports/api/venues/venues";
 import { Groups } from "/imports/api/groups/groups";
-import { visibleTenants } from "/imports/utils/visible-tenants";
+import { visibleTenantsAsync } from "/imports/utils/visible-tenants";
 import { serverError } from "/imports/api/log/methods";
 import { LanguagesRaw } from "/imports/api/languages/languages";
 
@@ -25,8 +25,8 @@ function calcCoursePriority(course: CourseModel) {
 
 async function requestPages() {
   const pages: { url: string; lastmod?: Date | undefined; priority: number }[] = [];
-  const courses = Courses.findFilter({ tenants: visibleTenants(), internal: false });
-  const events = Events.findFilter({ tenants: visibleTenants(), internal: false });
+  const courses = Courses.findFilter({ tenants: await visibleTenantsAsync(), internal: false });
+  const events = Events.findFilter({ tenants: await visibleTenantsAsync(), internal: false });
   const venues = Venues.find();
   const groups = Groups.find();
 

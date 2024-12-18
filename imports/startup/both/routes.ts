@@ -247,7 +247,7 @@ RouterAsync.route("profile", {
         verified: boolean;
       };
     } = {};
-    const user = Meteor.user();
+    const user = await Meteor.userAsync();
     const subs = this.subscriptions();
     if (user && subs && subs.tenants) {
       const userdata = {
