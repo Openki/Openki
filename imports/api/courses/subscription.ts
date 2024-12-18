@@ -102,7 +102,7 @@ export class Subscribe extends Change<{
     return "Courses.Subscribe";
   }
 
-  static read(body: {
+  static async read(body: {
     courseId: string;
     userId: string | undefined;
     role: string;
@@ -111,7 +111,7 @@ export class Subscribe extends Change<{
   }) {
     check(body, Object);
     return new this(
-      Courses.findOne(body.courseId),
+      await Courses.findOneAsync(body.courseId),
       body.userId,
       body.role,
       body.reason,
@@ -272,8 +272,8 @@ export class Unsubscribe extends Change<{
     return "Courses.Unsubscribe";
   }
 
-  static read(body: { courseId: string; userId: string; role: string }) {
-    return new this(Courses.findOne(body.courseId), body.userId, body.role);
+  static async read(body: { courseId: string; userId: string; role: string }) {
+    return new this(await Courses.findOneAsync(body.courseId), body.userId, body.role);
   }
 
   constructor(course: CourseModel | undefined, userId: string | undefined | null, role: string) {
@@ -387,8 +387,8 @@ export class Message extends Change<{
     return "Courses.Message";
   }
 
-  static read(body: { courseId: string; userId: string; message: string | undefined }) {
-    return new this(Courses.findOne(body.courseId), body.userId, body.message);
+  static async read(body: { courseId: string; userId: string; message: string | undefined }) {
+    return new this(await Courses.findOneAsync(body.courseId), body.userId, body.message);
   }
 
   constructor(course: CourseModel | undefined, userId: string, message: string | undefined) {

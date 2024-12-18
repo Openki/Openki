@@ -34,7 +34,7 @@ import { resizeImage } from "../../utils/resize-image";
 
 export interface Method<T> {
   method: string;
-  read: (params: T) => {
+  read: (params: T) => Promise<{
     validate(): void;
     permitted: (user: UserModel | undefined | null) => boolean;
     provide(
@@ -44,12 +44,12 @@ export interface Method<T> {
       },
     ): void;
     apply(): void;
-  };
+  }>;
 }
 
 function registerMethod<T>(method: Method<T>): void {
   const apply = async function (params: T) {
-    const change = method.read(params);
+    const change = await method.read(params);
     try {
       change.validate();
     } catch (message) {

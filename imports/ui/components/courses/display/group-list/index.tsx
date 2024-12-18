@@ -17,7 +17,7 @@ export function CourseGroupList({ course: course2 }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 
-  // for blaze
+  // for blaze, can be removed after migration
   // subscribe in react to keep reactivity
   const [isLoading, course] = useDetails(course2._id);
 
