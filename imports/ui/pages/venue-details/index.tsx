@@ -20,20 +20,159 @@ import { truncate } from "/imports/utils/string-tools";
 
 import { CenteredMarkerEntity, MainMarkerEntity } from "/imports/ui/lib/location-tracker";
 
-import "/imports/ui/components/buttons";
-import "/imports/ui/components/events/list";
-import "/imports/ui/components/profile-link";
-import "/imports/ui/components/venues/edit";
-import "/imports/ui/components/delete-confirm-dialog";
-import "/imports/ui/components/location/display";
 import type { Props as DeleteConfirmDialogProps } from "/imports/ui/components/delete-confirm-dialog";
 
-import "./template.html";
 import "./styles.scss";
 
 const UpcomingEventLimitDefault = 12;
 const PastEventLimitDefault = 3;
 const EventLoadingBlockSize = 9;
+
+export function VenueDetailsPage(){
+  return  <div class="container mw-md">
+  {{#if state 'editing'}}
+    {{> venueEdit venueEditAttr}}
+  {{else}}
+    <div class="page-component">
+      <div class="details-header location-details-header">
+        {{#if this.venue.picture}}
+          <img src="{{this.venue.picture}}">
+        {{/if}}
+        <h3>
+          {{this.venue.name}}
+          {{#if this.venue.short}}
+            <small>{{this.venue.short}}</small>
+          {{/if}}
+        </h3>
+        <p>{{{this.venue.description}}}</p>
+      </div>
+
+      <div class="details-body location-details-body">
+        <div class="details-content">
+          <div class="row">
+            <div class="{{#if this.venue.loc}}col-md-7{{else}}col{{/if}}">
+              {{#if this.venue.editor}}
+                <p>
+                  <span
+                        class="venue-property-title">{{i18n 'location.details.hosts' 'Hosts:'}}</span>
+                <ul class='hosts'>
+                  <li>
+                    {{> profileLink userId=this.venue.editor}}
+                    {{contribution this.venue.editor}}
+                  </li>
+                </ul>
+                </p>
+              {{/if}}
+              {{#if this.venue.address}}
+                <p>
+                  <span class="venue-property-title">
+                    {{i18n 'venue.details.address' 'Address:'}}
+                  </span>
+                  {{this.venue.address}}
+                </p>
+              {{/if}}
+              {{#if this.venue.route}}
+                <p>
+                  <span class="venue-property-title">
+                    {{i18n 'venue.details.route' 'How to go there:'}}
+                  </span>
+                  <br>
+                  <span style="white-space: pre-line;">{{this.venue.route}}</span>
+                </p>
+              {{/if}}
+              {{#if this.venue.maxPeople}}
+                <p>
+                  <span class="venue-property-title">
+                    {{i18n 'venue.details.max_ppl' 'Maximum People:'}}
+                  </span>
+                  {{this.venue.maxPeople}}
+                </p>
+              {{/if}}
+              {{#if this.venue.maxWorkplaces}}
+                <p>
+                  <span class="venue-property-title">
+                    {{i18n 'venue.details.max_workplaces' 'Maximum Workplaces:'}}
+                  </span>
+                  {{this.venue.maxWorkplaces}}
+                </p>
+              {{/if}}
+              {{#if facilityNames this.venue}}
+                <p>
+                  <span class="venue-property-title">
+                    {{i18n 'venue.details.availableInfrastructure' 'Available infrastructure:'}}
+                  </span>
+                <ul>
+                  {{#each facilityName in (facilityNames this.venue)}}
+                    <li>{{facilitiesDisplay facilityName}}</li>
+                  {{/each}}
+                </ul>
+                </p>
+              {{/if}}
+              {{#if this.venue.otherFacilities}}
+                <p>
+                  <span class="venue-property-title">
+                    {{i18n 'venue.details.additionalEquipment' 'Additional equipment:'}}
+                  </span>
+                  <br>
+                  {{this.venue.otherFacilities}}
+                </p>
+              {{/if}}
+            </div>
+            {{#if this.venue.loc}}
+              <div class="col-md-5">
+                <div class="details-map">
+                  {{> locationDisplay coordinates=this.venue.loc.coordinates}}
+                  <div class="coordinates">
+                    <a href="{{geoLocationLink this.venue.loc}}">
+                      {{i18n 'venueDetails.coordinates' 'Coordinates:'}}
+                      {{locationFormat this.venue.loc}}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+      {{#if mayEdit this.venue}}
+        <div class="actions">
+          {{> buttonEdit event="js-venue-edit"}}
+          {{#unless state 'verifyDelete'}}
+            {{> buttonDelete event="js-venue-delete"}}
+          {{/unless}}
+        </div>
+        {{#if state 'verifyDelete'}}
+          {{> deleteConfirmDialog deleteConfirmDialogAttr}}
+        {{/if}}
+      {{/if}}
+    </div>
+  {{/if}}
+  {{#if upcomingEvents}}
+    <div class="page-component">
+      <h2>{{i18n 'venue.details.upcomingEvents' "Upcoming events at this venue:"}}</h2>
+      {{> eventList dataEvents=upcomingEvents withDate=true withVenue=false}}
+      {{#if hasMoreUpcomingEvents}}
+        <div class="clearfix"></div>
+        <button type="button" class="btn btn-add js-show-more-upcoming-events">
+          {{i18n '_button.more'}}
+        </button>
+      {{/if}}
+    </div>
+  {{/if}}
+  {{#if pastEvents}}
+    <div class="page-component">
+      <h2>{{i18n 'venue.details.pastEvents' "Past events:"}}</h2>
+      {{> eventList dataEvents=pastEvents withDate=true withVenue=false}}
+      {{#if hasMorePastEvents}}
+        <div class="clearfix"></div>
+        <button type="button" class="btn btn-add js-show-more-past-events">
+          {{i18n '_button.more'}}
+        </button>
+      {{/if}}
+    </div>
+  {{/if}}
+</div>
+} 
 
 const Template = TemplateAny as TemplateStaticTyped<
   "venueDetailsPage",
