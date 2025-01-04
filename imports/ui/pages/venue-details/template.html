@@ -143,32 +143,3 @@
     {{/if}}
   </div>
 </template>
-
-<template name="venueDeleteConfirmDialog">
-  <div class="venue-delete-confirm">
-    <p>{{i18n 'venue.reallydelete' 'Please confirm that you would like to delete this venue. This cannot be undone.'}}
-    </p>
-    <div class="form-actions">
-      {{> buttonDeleteConfirm
-				event="js-venue-delete-confirm"
-				textIdle=(i18n 'venue.detail.remove' 'Remove this venue')
-				textBusy=(i18n 'venue.detail.remove.busy' 'Deleting venue…')
-			}}
-      {{> buttonCancel event="js-venue-delete-cancel"}}
-    </div>
-  </div>
-</template>
-
-<template name="venueDynamicTranslations">
-  This template holds translation strings that are constructed dynamically in this component
-
-  {{i18n 'venue.facility.projector' 'Projector'}}
-  {{i18n 'venue.facility.screen' 'Screen'}}
-  {{i18n 'venue.facility.audio' 'Audio System'}}
-  {{i18n 'venue.facility.blackboard' 'Blackboard'}}
-  {{i18n 'venue.facility.whiteboard' 'Whiteboard'}}
-  {{i18n 'venue.facility.flipchart' 'Flipchart'}}
-  {{i18n 'venue.facility.wifi' 'Wi-Fi'}}
-  {{i18n 'venue.facility.kitchen' 'Kitchen'}}
-  {{i18n 'venue.facility.wheelchairs' 'Accessible by wheelchair'}}
-</template>
