@@ -18,12 +18,6 @@
   color: $venue-color;
 }
 
-.location-details-header > img {
-  @include td-float(right);
-  @include td-padding(left, ($grid-gutter-width / 2));
-  height: 90px;
-}
-
 .location-details-body {
   background-color: $blue-lighter;
 }

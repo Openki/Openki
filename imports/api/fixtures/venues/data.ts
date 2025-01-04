@@ -10,7 +10,6 @@ export const venues: VenueTemplate[] = [
       "Bus 31 oder 32 bis Militär/Langstrasse, dann zu Fuss Militärstrasse Richtung HB folgen, rechte Strassenseite bis 87a, im Hinterhof",
     description: "Lokaler Infoladen seit 1990",
     website: "http://kasama.ch",
-    picture: "/zurich/locations/kasama.jpg",
     facilities: {
       projector: true,
       wifi: true,
@@ -28,7 +27,6 @@ export const venues: VenueTemplate[] = [
     description:
       "Das MechArtLab beinhaltet Werkstatt, Schulungsraum, Techn. Bibliothek und Lager und bietet Platz für selbstorganisierte Gruppentreffen, Workshops, Jugendelektronikwerkstatt, uvm.",
     website: "http://www.sgmk-ssam.ch/mechartlab/",
-    picture: "http://www.sgmk-ssam.ch/files/images/mechartlab/180820101294.jpg",
     facilities: {
       projector: false,
       audio: false,

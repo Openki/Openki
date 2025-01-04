@@ -1,4 +1,5 @@
 import { i18n } from "/imports/startup/both/i18next";
+import { TFunction } from "i18next";
 
 function coordinateToString(coordinate: number) {
   if (coordinate < 0) {
@@ -13,6 +14,20 @@ export function locationFormat(location: { coordinates: [number, number] }) {
   }
 
   return i18n("location.format", "{LAT} {LON}", {
+    LAT: coordinateToString(location.coordinates[1]),
+    LON: coordinateToString(location.coordinates[0]),
+  });
+}
+
+export function format(
+  t: TFunction<"translation", undefined>,
+  location: { coordinates: [number, number] },
+) {
+  if (!location?.coordinates) {
+    return undefined;
+  }
+
+  return t("location.format", "{LAT} {LON}", {
     LAT: coordinateToString(location.coordinates[1]),
     LON: coordinateToString(location.coordinates[0]),
   });
