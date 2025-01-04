@@ -49,6 +49,20 @@ export function ButtonSubmit(props: {
   );
 }
 
+export function ButtonEdit(props: { onClick: () => void; disabled?: boolean | undefined }) {
+  const { t } = useTranslation();
+  return (
+    <button
+      type="button"
+      className="btn btn-edit text-nowrap"
+      onClick={props.onClick}
+      disabled={props.disabled}
+    >
+      {t("_button.edit")}
+    </button>
+  );
+}
+
 export function ButtonCancel(props: { onClick: () => void; disabled?: boolean | undefined }) {
   const { t } = useTranslation();
   return (

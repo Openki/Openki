@@ -26,7 +26,6 @@ export type VenueTemplate = {
   otherFacilities?: "";
   description?: string;
   website?: string;
-  picture?: string;
   facilities?: Partial<{
     [key in FacilityOption]: boolean;
   }>;
