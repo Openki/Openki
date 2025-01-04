@@ -51,7 +51,6 @@ export const groups: {
     description:
       "Die Autonome Schule Zürich ist ein selbstverwaltetes Bildungsprojekt in Zürich. Es werden zahlreiche Kurse kostenlos angeboten, wobei stets die Möglichkeit besteht sich an Kursen bzw. am Schulprojekt zu beteiligen. Essentiell sind dabei die Deutschkurse, welche besonders für MigrantInnen und Sans-Papiers einen hürdenfreien und emanzipatorischen Zugang zur Sprache ermöglichen.",
     members: ["greg"],
-    logoUrl: "/zurich/groups/ASZ.png",
   },
   {
     name: "Schweizerische Gesellschaft für Mechatronische Kunst",
