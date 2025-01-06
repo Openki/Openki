@@ -1,5 +1,5 @@
 import { Mongo } from "meteor/mongo";
-import { _ } from "meteor/underscore";
+import { union } from "lodash";
 
 import { Courses } from "../courses/courses";
 import { Events, EventEntity } from "/imports/api/events/events";
@@ -22,7 +22,7 @@ export async function updateGroups(eventIdOrSelector: string | Mongo.Selector<Ev
       }
 
       courseGroups = course.groups;
-      editors = _.union(editors, course.editors);
+      editors = union(editors, course.editors);
     } else {
       editors.push(event.createdBy);
     }
@@ -35,10 +35,10 @@ export async function updateGroups(eventIdOrSelector: string | Mongo.Selector<Ev
     // Past events keep their list of groups even if it changes for the course
     const historical = event.start < new Date();
     if (historical) {
-      update.allGroups = _.union(event.groups, event.courseGroups);
+      update.allGroups = union(event.groups, event.courseGroups);
     } else {
       update.courseGroups = courseGroups;
-      update.allGroups = _.union(event.groups, courseGroups);
+      update.allGroups = union(event.groups, courseGroups);
     }
 
     Events.updateAsync({ _id: event._id }, { $set: update });

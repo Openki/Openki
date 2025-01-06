@@ -7,13 +7,13 @@ import { Meteor } from "meteor/meteor";
 import { Version } from "/imports/api/version/version";
 import { Users } from "/imports/api/users/users";
 
-import { Notification } from "../../startup/both/emails/notification";
+import { Notification } from "/imports/startup/both/emails/notification";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { SafeString, Type } from "/imports/utils/CustomChecks";
-import { renderToEmail } from "../../utils/renderToEmail";
-import { Root } from "../../emails/Root";
-import { Report } from "../../emails/Report";
+import { renderToEmail } from "/imports/utils/renderToEmail";
+import { Root } from "/imports/emails/Root";
+import { Report } from "/imports/emails/Report";
 
 export const sendVerificationEmail = ServerMethod(
   "sendVerificationEmail",
@@ -113,7 +113,7 @@ export const sendReport = ServerMethod(
       html: message,
     };
 
-    Email.sendAsync(email);
+    await Email.sendAsync(email);
   },
   { simulation: false },
 );

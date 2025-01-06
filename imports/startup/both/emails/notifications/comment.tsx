@@ -2,7 +2,7 @@ import React from "react";
 import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
-import { _ } from "meteor/underscore";
+import { uniq } from "lodash";
 import i18next from "i18next";
 
 import { CourseDiscussions } from "/imports/api/course-discussions/course-discussions";
@@ -66,7 +66,7 @@ export async function record(commentId: string) {
       recipients = recipients.filter((r) => r !== comment.userId);
     }
 
-    recipients = _.uniq(recipients);
+    recipients = uniq(recipients);
   }
 
   const body: Body = {

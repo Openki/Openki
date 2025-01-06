@@ -3,6 +3,7 @@ import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
+import { chain } from "lodash";
 
 import { Courses } from "/imports/api/courses/courses";
 import { Groups } from "/imports/api/groups/groups";
@@ -33,15 +34,14 @@ export async function record(courseId: string) {
     throw new Meteor.Error(`No course entry for ${courseId}`);
   }
 
-  const recipients = [
-    ...new Set(
-      Groups.find({ _id: { $in: course.groupOrganizers } })
-        .map((g) => g.members)
-        .flat()
-        .filter((m) => m.notify)
-        .map((m) => m.user),
-    ),
-  ];
+  const recipients = chain(
+    Groups.find({ _id: { $in: course.groupOrganizers } }).map((g) => g.members),
+  )
+    .flatten()
+    .filter((m) => m.notify)
+    .map((m) => m.user)
+    .uniq()
+    .value();
 
   const body: Body = {
     courseId: course._id,

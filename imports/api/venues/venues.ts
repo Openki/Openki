@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import { _ } from "meteor/underscore";
+import { chain } from "lodash";
 import { Match, check } from "meteor/check";
 
 import { EventEntity, Events } from "/imports/api/events/events";
@@ -182,14 +182,12 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
 
       const recentEvents = Events.find(findRecent, findRecentOptions).fetch();
 
-      const recentLocations = [
-        ...new Set(
-          recentEvents
-            .map((event) => event.venue?._id) // get ids
-            .filter((venueId) => venueId), // filter empty ids
-        ),
-      ] // make unique with Set
-        .slice(0, limit || 10); // and limit it
+      const recentLocations = chain(recentEvents)
+        .map((event) => event.venue?._id) // get ids
+        .filter((venueId) => venueId) // filter empty ids
+        .uniq() // make unique
+        .slice(0, limit || 10) // and limit it
+        .value();
 
       find._id = { $in: recentLocations as string[] };
     }

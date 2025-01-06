@@ -7,14 +7,14 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { UserModel } from "/imports/api/users/users";
 
-import { Root } from "../../../emails/Root";
-import { Verify } from "../../../emails/users/Verify.html";
-import { verify } from "../../../emails/users/verify.text";
-import { ResetPassword } from "../../../emails/users/ResetPassword.html";
-import { resetPassword } from "../../../emails/users/resetPassword.text";
+import { Root } from "/imports/emails/Root";
+import { Verify } from "/imports/emails/users/Verify.html";
+import { verify } from "/imports/emails/users/verify.text";
+import { ResetPassword } from "/imports/emails/users/ResetPassword.html";
+import { resetPassword } from "/imports/emails/users/resetPassword.text";
 import { Visitor } from "/imports/emails/users/Visitor.html";
 import { visitor } from "/imports/emails/users/visitor.text";
-import { renderToEmail } from "../../../utils/renderToEmail";
+import { renderToEmail } from "/imports/utils/renderToEmail";
 import { createAccount } from "/imports/emails/users/createAccount.text";
 import { CreateAccount } from "/imports/emails/users/CreateAccount.html";
 

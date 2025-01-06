@@ -4,12 +4,7 @@ import { Events, EventEntity } from "/imports/api/events/events";
 export async function onStartUp() {
   let updated = 0;
 
-  for (const event of await Events.find({}).fetchAsync()) {
-    if (!event.courseId) {
-      // eslint-disable-next-line no-continue
-      continue;
-    }
-
+  for (const event of (await Events.find({}).fetchAsync()).filter((e) => e.courseId)) {
     // eslint-disable-next-line no-await-in-loop
     const course = await Courses.findOneAsync(event.courseId);
     if (!course) {

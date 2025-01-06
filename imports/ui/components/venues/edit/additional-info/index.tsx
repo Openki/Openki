@@ -1,4 +1,5 @@
 import React from "react";
+import { uniq } from "lodash";
 import { useTranslation } from "react-i18next";
 
 import { FacilityOption, Venues } from "/imports/api/venues/venues";
@@ -44,7 +45,7 @@ export function AdditionalInfo({
       onChange: (event) => {
         let facilities = [...(data.facilities || [])];
         if (event.currentTarget.checked) {
-          facilities = [...new Set([...facilities, name])];
+          facilities = uniq([...facilities, name]);
         } else {
           facilities = facilities.filter((f) => f !== name);
         }

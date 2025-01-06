@@ -2,6 +2,7 @@ import { Match, check } from "meteor/check";
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { i18n } from "/imports/startup/both/i18next";
+import { uniq } from "lodash";
 
 import { Courses, Course, CourseEntity, CourseModel } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
@@ -207,7 +208,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
   if (course.isNew()) {
     // You can add newly created courses to any group
     let groups = changes.groups || [];
-    groups = [...new Set(groups)]; // make unique
+    groups = uniq(groups);
     groups = await Promise.all(
       groups.map(async (groupId) => {
         const group = await Groups.findOneAsync(groupId);
