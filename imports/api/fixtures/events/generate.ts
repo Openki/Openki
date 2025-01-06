@@ -57,8 +57,10 @@ export async function generate() {
   ];
 
   for (const course of await Courses.find().fetchAsync()) {
-    // eslint-disable-next-line no-continue
-    if ((await Events.countDocuments({ courseId: course._id })) > 0) continue;
+    if ((await Events.countDocuments({ courseId: course._id })) > 0) {
+      // eslint-disable-next-line no-continue
+      continue;
+    }
 
     const eventCount = Math.floor((prng() * 1.6) ** 10);
     for (let n = 0; n < eventCount; n += 1) {

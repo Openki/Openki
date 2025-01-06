@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from "react";
-import { _ } from "meteor/underscore";
+import { difference, uniq } from "lodash";
 import { useTranslation } from "react-i18next";
 
 import { Categories } from "/imports/api/categories/categories";
@@ -40,13 +40,13 @@ export function SelectCategories(props: Props) {
     const checked = a.target.checked;
     if (checked) {
       selectedCategories.push(catKey);
-      selectedCategories = [...new Set(selectedCategories)]; // make unique
+      selectedCategories = uniq(selectedCategories);
     } else {
       selectedCategories = selectedCategories.filter((c) => c !== catKey);
 
       if (Categories[catKey]) {
         // Remove all the subcategories as well
-        selectedCategories = _.difference(selectedCategories, Categories[catKey]);
+        selectedCategories = difference(selectedCategories, Categories[catKey]);
       }
     }
 

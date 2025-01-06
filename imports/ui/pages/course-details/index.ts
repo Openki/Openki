@@ -1,7 +1,7 @@
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import { _ } from "meteor/underscore";
+import { intersection } from "lodash";
 import { textPlain } from "/imports/utils/html-tools";
 import { truncate } from "/imports/utils/string-tools";
 
@@ -202,7 +202,7 @@ template.events({
 
         const user = await Meteor.userAsync();
         let role;
-        if (_.intersection(user?.badges || [], course.editors).length > 0) {
+        if (intersection(user?.badges || [], course.editors).length > 0) {
           role = "team";
         } else if (user?.privileged("admin")) {
           role = "admin";

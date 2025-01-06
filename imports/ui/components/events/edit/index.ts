@@ -6,7 +6,7 @@
 
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
-import { _ } from "meteor/underscore";
+import { intersection, uniq } from "lodash";
 import { i18n } from "/imports/startup/both/i18next";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import { Session } from "meteor/session";
@@ -176,7 +176,7 @@ template.onCreated(function () {
     }
 
     // remove double groups
-    return [...new Set(groups)];
+    return uniq(groups);
   }
 
   instance.autorun(() => {
@@ -590,7 +590,7 @@ template.events({
             throw new Error("Unexpected undefined: user");
           }
           let role;
-          if (_.intersection(user.badges, course.editors).length > 0) {
+          if (intersection(user.badges, course.editors).length > 0) {
             role = "team";
           } else if (user.privileged("admin")) {
             role = "admin";

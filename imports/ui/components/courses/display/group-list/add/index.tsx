@@ -1,5 +1,5 @@
 import React from "react";
-import { _ } from "meteor/underscore";
+import { difference } from "lodash";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 
@@ -52,7 +52,7 @@ export function CourseGroupAdd({ course }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 
-  const groupsToAdd = user && _.difference(user.groups, course.groups);
+  const groupsToAdd = user && difference(user.groups, course.groups);
 
   if (!groupsToAdd) {
     return null;

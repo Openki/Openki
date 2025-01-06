@@ -2,6 +2,7 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
+import { chain, union, uniq } from "lodash";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { Course, CourseMemberEntity, CourseModel, Courses } from "/imports/api/courses/courses";
@@ -287,7 +288,7 @@ export function Edit(data: Data) {
       groups.push(...data.teamGroups);
     }
     // remove double groups
-    return [...new Set(groups)];
+    return uniq(groups);
   };
   const [savedCourseId, setSavedCourseId] = useState<string | undefined>(undefined);
 
@@ -324,7 +325,10 @@ export function Edit(data: Data) {
   const [savedMessage, setSavedMessage] = useState(false);
 
   function availableRoles() {
-    const disableCreateRoles = [...new Set(groups.flatMap((g) => g.disableCreateRoles))];
+    const disableCreateRoles = chain(groups)
+      .flatMap((g) => g.disableCreateRoles)
+      .uniq()
+      .value();
 
     return Roles.filter((role) => {
       // Roles that are always on are not selectable here
@@ -564,8 +568,7 @@ export function Edit(data: Data) {
         changes.subs.push("mentor");
       }
 
-      // Create unique, merged array
-      changes.subs = [...new Set([...changes.subs, ...(data.creatorsRoles || [])])];
+      changes.subs = union(changes.subs, data.creatorsRoles || []);
     }
 
     if (fullRoleSelection) {

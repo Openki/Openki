@@ -5,15 +5,15 @@ import { Email } from "meteor/email";
 import { Random } from "meteor/random";
 import { Match, check } from "meteor/check";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
-import { Model, Notification } from "../../both/emails/notification";
+import { Model, Notification } from "/imports/startup/both/emails/notification";
 
-import { PrivateSettings } from "../../../utils/PrivateSettings";
+import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { Log } from "/imports/api/log/log";
 import { LogEntity } from "/imports/api/log/factory";
 import { Users } from "/imports/api/users/users";
 
-import { renderToEmail } from "../../../utils/renderToEmail";
-import { Root } from "../../../emails/Root";
+import { renderToEmail } from "/imports/utils/renderToEmail";
+import { Root } from "/imports/emails/Root";
 
 /**
  * Record the result of a notification delivery attempt
