@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import React from "react";
 import { Router } from "meteor/iron:router";
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import { Courses as CourseCollection, CourseModel } from "/imports/api/courses/courses";
 import { Events as EventCollection, EventModel } from "/imports/api/events/events";
@@ -62,7 +63,7 @@ const course: ListOfEntites<CourseModel> = {
   element: (entity, index, params) => (
     <React.Fragment key={entity._id}>
       {/* The sevent box should allways be the propose one, after then every 11 */}
-      {(index - 6) % 11 === 0 ? (
+      {PublicSettings.feature.proposeCourseBox && (index - 6) % 11 === 0 ? (
         <div className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
           <CompactPropose group={params.group} />
         </div>
