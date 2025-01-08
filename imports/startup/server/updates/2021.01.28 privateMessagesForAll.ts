@@ -1,7 +1,5 @@
 import { Users } from "/imports/api/users/users";
 
-/** @typedef {import('/imports/api/users/users').UserModel} UserModel */
-
 export async function update() {
   let updated = 0;
 

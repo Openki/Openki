@@ -39,7 +39,7 @@ if (runBackgroundTasks)
     schedule.scheduleJob(
       "*/5 * * * *",
       Meteor.bindEnvironment(async () => {
-        sendReminder();
+        await sendReminder();
       }),
     );
   });
