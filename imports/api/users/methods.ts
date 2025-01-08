@@ -193,7 +193,7 @@ export const updateTheme = ServerMethod(
       throw new ValidationError([{ name: "theme", type: "plzLogin" }], "Not logged-in");
     }
 
-    Users.update(userId, { $set: { theme } });
+    await Users.updateAsync(userId, { $set: { theme } });
   },
 );
 

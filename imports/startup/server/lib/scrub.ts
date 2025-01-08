@@ -59,17 +59,15 @@ export class ScrubRule {
       cutoff,
     });
 
-    // Record completion of scrubbing
-    const recordResult = (err: unknown, count: number) => {
-      if (err) {
-        pending.error(err);
-      } else {
-        pending.success({ count } as any);
-      }
-    };
-
     if (this.remove) {
-      await log.removeAsync(select, recordResult);
+      try {
+        const count = await log.removeAsync(select);
+
+        // Record completion of scrubbing
+        await pending.success({ count } as any);
+      } catch (err) {
+        await pending.error(err);
+      }
 
       // Exit early because we can't unset records that have
       // been removed.
@@ -90,12 +88,17 @@ export class ScrubRule {
         expr[selector] = "";
         fieldSelects.push({ [selector]: { $exists: true } });
       });
-      log.update(
-        { $and: [select, { $or: fieldSelects }] },
-        { $unset: expr } as Mongo.Modifier<LogEntity>,
-        { multi: true },
-        recordResult,
-      );
+      try {
+        const count = await log.updateAsync(
+          { $and: [select, { $or: fieldSelects }] },
+          { $unset: expr } as Mongo.Modifier<LogEntity>,
+          { multi: true },
+        );
+        // Record completion of scrubbing
+        await pending.success({ count } as any);
+      } catch (err) {
+        await pending.error(err);
+      }
     }
   }
 }

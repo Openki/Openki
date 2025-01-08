@@ -167,7 +167,7 @@ export const deleteLogo = ServerMethod(
     const update: Mongo.Modifier<GroupEntity> = { $unset: { logoUrl: "" } };
 
     const set = timeLastEditDenormalizer.beforeDeleteLogo();
-    Groups.update(group._id, { ...update, $set: set });
+    await Groups.updateAsync(group._id, { ...update, $set: set });
 
     return groupId;
   },
@@ -232,7 +232,7 @@ export const updateMembership = ServerMethod(
     // By using the restrictive selector that checks group membership we can
     // avoid the unlikely race condition where a user is not member anymore
     // but can still add somebody else to the group.
-    Groups.update(group._id, update);
+    await Groups.updateAsync(group._id, update);
 
     await userBadgesDenormalizer.updateBadges(user._id);
   },
