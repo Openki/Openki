@@ -1,10 +1,10 @@
 import { Match, check } from "meteor/check";
+import { Meteor } from "meteor/meteor";
 
 import { FindFilter } from "/imports/api/log/factory";
 import { Log } from "/imports/api/log/log";
 
 import { ServerPublishMany } from "/imports/utils/ServerPublish";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 
 export const [findFilter, useFindFilter] = ServerPublishMany(
   "log",
@@ -12,7 +12,7 @@ export const [findFilter, useFindFilter] = ServerPublishMany(
     check(limit, Match.Integer);
 
     // Non-admins get an empty list
-    if (!UserPrivilegeUtils.privileged(Meteor.userId(), "admin")) {
+    if (!Meteor.user()?.privileged("admin")) {
       return Log.findFilter({}, 0);
     }
 

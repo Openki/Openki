@@ -6,7 +6,7 @@
 
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
-import { _ } from "meteor/underscore";
+import { intersection, uniq } from "lodash";
 import { i18n } from "/imports/startup/both/i18next";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import { Session } from "meteor/session";
@@ -26,7 +26,6 @@ import * as CoursesMethods from "/imports/api/courses/methods";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { AffectedReplicaSelectors } from "/imports/utils/affected-replica-selectors";
 import { LocalTime } from "/imports/utils/local-time";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import * as Tooltips from "/imports/utils/Tooltips";
 
 import { PleaseLogin } from "/imports/ui/lib/please-login";
@@ -177,7 +176,7 @@ template.onCreated(function () {
     }
 
     // remove double groups
-    return [...new Set(groups)];
+    return uniq(groups);
   }
 
   instance.autorun(() => {
@@ -591,9 +590,9 @@ template.events({
             throw new Error("Unexpected undefined: user");
           }
           let role;
-          if (_.intersection(user.badges, course.editors).length > 0) {
+          if (intersection(user.badges, course.editors).length > 0) {
             role = "team";
-          } else if (UserPrivilegeUtils.privilegedTo("admin")) {
+          } else if (user.privileged("admin")) {
             role = "admin";
           } else {
             role = "unknown";

@@ -1,4 +1,5 @@
 import { Meteor, Subscription } from "meteor/meteor";
+import { Mongo } from "meteor/mongo";
 import { Record, publish, removeCallback, QueryBuilder } from "./ServerPublishUtils";
 
 export interface Subscriber {
@@ -7,7 +8,7 @@ export interface Subscriber {
 
 export interface SubscriptionHandle<T> {
   /** Query the loaded data. */
-  (): T;
+  (): Promise<T>;
   /** True if the server has marked the subscription as ready. A reactive data source. */
   isLoading(): boolean;
 }
@@ -40,11 +41,11 @@ export function createPublication<A extends any[], T>(
 
       const queryArgs = removeCallback(args);
 
-      const query = function () {
+      const query = async function () {
         return queryBuilder.call({ userId: Meteor.userId() }, ...queryArgs);
       };
       query.isLoading = function () {
-        return handle.ready();
+        return !handle.ready();
       };
       return query;
     },

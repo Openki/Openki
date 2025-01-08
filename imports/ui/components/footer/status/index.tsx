@@ -4,15 +4,17 @@ import { useTranslation } from "react-i18next";
 
 export function Status() {
   const { t } = useTranslation();
-  const [errors, setErrors] = useState<Error[]>([]);
+  const [errors, setErrors] = useState<Error[] | undefined>(undefined);
 
   useEffect(() => {
-    (async function () {
-      setErrors(await checkSettings());
-    })();
+    if (!errors) {
+      (async function () {
+        setErrors(await checkSettings());
+      })();
+    }
   });
 
-  if (errors.length === 0) {
+  if (!errors || errors.length === 0) {
     return null;
   }
 

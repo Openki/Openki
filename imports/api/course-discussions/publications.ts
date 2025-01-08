@@ -1,12 +1,15 @@
 import { check } from "meteor/check";
-import { SafeString } from "/imports/utils/CustomChecks";
+import { SafeString, UnsafeString } from "/imports/utils/CustomChecks";
 
 import { CourseDiscussions } from "/imports/api/course-discussions/course-discussions";
 
 import { ServerPublishMany } from "/imports/utils/ServerPublish";
 
-export const [forCourse, useForCourse] = ServerPublishMany("discussion", (courseId: string) => {
-  check(courseId, SafeString());
+export const [forCourse, useForCourse] = ServerPublishMany(
+  "discussion",
+  (courseId: UnsafeString) => {
+    check(courseId, SafeString());
 
-  return CourseDiscussions.find({ courseId });
-});
+    return CourseDiscussions.find({ courseId });
+  },
+);

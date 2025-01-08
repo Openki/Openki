@@ -1,4 +1,5 @@
 import { Mongo } from "meteor/mongo";
+import { uniq } from "lodash";
 
 import { CourseEntity, CourseModel, Courses } from "/imports/api/courses/courses";
 import { EventEntity, EventModel, Events } from "/imports/api/events/events";
@@ -54,11 +55,6 @@ export interface Stats {
   groups: GroupStat[];
 }
 
-/** Remove duplicates in array. */
-function unique<T>(values: T[]) {
-  return [...new Set(values)];
-}
-
 function getCourses(regionId: string) {
   const filter: Mongo.Selector<CourseEntity> = {};
   if (regionId && regionId !== "all") {
@@ -86,7 +82,7 @@ async function getGroups(courses: CourseModel[], events: EventModel[]) {
   let groupIds = [];
   groupIds.push(...courses.flatMap((c) => c.groups));
   groupIds.push(...events.flatMap((e) => e.groups));
-  groupIds = unique(groupIds).filter((g) => g);
+  groupIds = uniq(groupIds).filter((g) => g);
 
   const groupEntities = await Groups.find(
     {},
@@ -123,7 +119,7 @@ function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
       upcoming: notArchived.filter((c) => c.futureEvents > 0).length,
       archived: courses.filter((c) => c.archived).length,
       enrollments: members.length,
-      users: unique(members.map((m) => m.user)).length,
+      users: uniq(members.map((m) => m.user)).length,
     },
     // inspired from events.findFilter in /imports/api/events/events
     events: {
@@ -135,7 +131,7 @@ function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
       totalRsvps: sum(notCanceled.map((e) => e.numberOfParticipants())),
       canceledRsvps: sum(canceled.map((e) => e.numberOfParticipants())),
       futureRsvps: sum(futureAndNotCanceled.map((e) => e.numberOfParticipants())),
-      users: unique(events.flatMap((e) => e.participants?.map((p) => p.user) || [])).length,
+      users: uniq(events.flatMap((e) => e.participants?.map((p) => p.user) || [])).length,
     },
   };
 }

@@ -1,17 +1,27 @@
-import { robots } from "meteor/gadicohen:robots-txt";
-import { Meteor } from "meteor/meteor";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
+import { WebApp } from "meteor/webapp";
 
-Meteor.startup(() => {
-  if (PrivateSettings.robots === false) {
-    robots.addLine("User-agent: *");
-    robots.addLine("Disallow: /");
-  } else {
-    robots.addLine("User-agent: *");
-    if (PrivateSettings.hideProfiles === true) {
-      robots.addLine("Disallow: /user/");
+import { serverError } from "/imports/api/log/methods";
+
+WebApp.connectHandlers.use("/robots.txt", (_req, res) => {
+  try {
+    res.writeHead(200, { "Content-Type": "text/plain" });
+
+    res.write(`Sitemap: ${Meteor.absoluteUrl("sitemap.xml")}\n`);
+    if (PrivateSettings.robots === false) {
+      res.write("User-agent: *\n");
+      res.write("Disallow: /\n");
     } else {
-      robots.addLine("Disallow: ");
+      res.write("User-agent: *\n");
+      if (PrivateSettings.hideProfiles === true) {
+        res.write("Disallow: /user/\n");
+      } else {
+        res.write("Disallow: \n");
+      }
     }
+    res.end();
+  } catch (e) {
+    res.writeHead(500).end();
+    serverError(e);
   }
 });

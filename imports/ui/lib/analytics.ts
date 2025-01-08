@@ -117,7 +117,7 @@ export function trackEvent(category: string, action: string, name?: string, valu
   } else {
     // For debugging
     // eslint-disable-next-line no-console
-    console.info(
+    console.debug(
       `Analytics.Event: {category: ${category}, action: ${action}${name ? `, name: ${name}` : ""}${
         value ? `, value: ${value}` : ""
       }}`,
@@ -145,7 +145,13 @@ export function installRouterActions() {
     if (Tracker.currentComputation?.firstRun) {
       trytrack((t) => {
         if (started) {
-          t.setGenerationTimeMs(new Date().getTime() - started.getTime());
+          t.setPagePerformanceTiming(
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            new Date().getTime() - started.getTime() /** domCompletionTimeInMS */,
+          );
           started = null;
         }
         t.enableLinkTracking();

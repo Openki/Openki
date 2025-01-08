@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 import { CourseModel } from "/imports/api/courses/courses";
+import { useDetails } from "/imports/api/courses/publications";
 
 import { GroupTag } from "/imports/ui/components/groups/tag";
 import { CourseGroupAdd } from "/imports/ui/components/courses/display/group-list/add";
@@ -12,11 +13,16 @@ import { CourseGroupMakeOrganizer } from "/imports/ui/components/courses/display
 
 export type Props = { course: CourseModel };
 
-export function CourseGroupList({ course }: Props) {
+export function CourseGroupList({ course: course2 }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 
-  function tools(groupId: string) {
+  // for blaze, can be removed after migration
+  // subscribe in react to keep reactivity
+  const [isLoading, course] = useDetails(course2._id);
+
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  function tools(groupId: string, course: CourseModel) {
     return (
       <>
         {user?.mayPromoteWith(groupId) || course.editableBy(user) ? (
@@ -36,6 +42,8 @@ export function CourseGroupList({ course }: Props) {
       </>
     );
   }
+
+  if (isLoading() || !course) return null;
 
   return (
     <div className="tag-group multiline">
@@ -73,7 +81,7 @@ export function CourseGroupList({ course }: Props) {
                   <li>
                     <hr className="dropdown-divider" />
                   </li>
-                  {tools(groupId)}
+                  {tools(groupId, course)}
                 </ul>
               </div>
             ) : null}

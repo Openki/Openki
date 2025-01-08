@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
+import { useTracker } from "meteor/react-meteor-data";
 import { useTranslation } from "react-i18next";
 
 import { Action, Alerts as AlertsCollection } from "/imports/api/alerts/alerts";
@@ -35,21 +36,25 @@ function Alert({
   timeout: number;
 }) {
   const { t } = useTranslation();
+  const elementRef = useRef<HTMLDivElement>(null);
 
   const updateSpacerHeight = () => {
     const height = $(".alert-messages").height() || 0;
 
     if (height) {
-      $(".alert-message").addClass("is-faded-in");
+      elementRef.current?.classList.add("is-faded-in");
     } else {
-      $(".alert-message").removeClass("is-faded-in");
+      elementRef.current?.classList.remove("is-faded-in");
     }
 
     $(".alert-messages-spacer").height(height);
   };
 
   const remove = (alertId: string) => {
-    const $alert = $(".alert-message");
+    if (!elementRef.current) {
+      throw new Error("Unexpected falsy: elementRef.current");
+    }
+    const $alert = $(elementRef.current);
     // get 'transition-duration' and convert to miliseconds for fadeOut
     const duration = Number.parseFloat($alert.css("transition-duration")) * 1000;
     $alert.fadeOut(duration, () => {
@@ -72,6 +77,7 @@ function Alert({
   let timeoutActionFocus: any = 0;
   return (
     <div
+      ref={elementRef}
       className={`alert alert-${contextualClass()} alert-dismissible alert-message fs-4`}
       role="alert"
     >
@@ -132,22 +138,21 @@ function Alert({
 }
 
 export function Alerts() {
+  const alerts = useTracker(() => AlertsCollection.find().fetch());
   return (
     <>
       <div className="alert-messages container mt-2">
-        {AlertsCollection.find()
-          .fetch()
-          .map((a) => (
-            <Alert
-              key={a._id}
-              id={a._id}
-              title={a.title}
-              message={a.message}
-              actions={a.actions}
-              type={a.type}
-              timeout={a.timeout}
-            />
-          ))}
+        {alerts.map((a) => (
+          <Alert
+            key={a._id}
+            id={a._id}
+            title={a.title}
+            message={a.message}
+            actions={a.actions}
+            type={a.type}
+            timeout={a.timeout}
+          />
+        ))}
       </div>
       <div className="alert-messages-spacer"></div>
     </>

@@ -9,15 +9,19 @@ import { UserModel, UserProfile, Users } from "/imports/api/users/users";
 import { isEmail } from "/imports/utils/email-tools";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { NotAllowedCharacter } from "../both/NotAllowedCharacter";
+import {
+  LoginExpirationInDays,
+  PasswordResetTokenExpirationInDays,
+} from "../both/UseraccountsConfiguration";
 
-Meteor.startup(() => {
+Meteor.startup(async () => {
   const serviceConf = PrivateSettings.service;
   if (!serviceConf) {
     return;
   }
 
   if (serviceConf.google) {
-    ServiceConfiguration.configurations.upsert(
+    await ServiceConfiguration.configurations.upsertAsync(
       {
         service: "google",
       },
@@ -31,7 +35,7 @@ Meteor.startup(() => {
     );
   }
   if (serviceConf.facebook) {
-    ServiceConfiguration.configurations.upsert(
+    await ServiceConfiguration.configurations.upsertAsync(
       {
         service: "facebook",
       },
@@ -45,7 +49,7 @@ Meteor.startup(() => {
     );
   }
   if (serviceConf.github) {
-    ServiceConfiguration.configurations.upsert(
+    await ServiceConfiguration.configurations.upsertAsync(
       {
         service: "github",
       },
@@ -154,7 +158,7 @@ Accounts.onCreateUser((options: any, originalUser) => {
 Accounts.onLogin(async (options: any) => {
   await usersMethods.updateLastLogin();
 
-  const user = Meteor.user();
+  const user = await Meteor.userAsync();
 
   // generate a avatar color for every new user
   if (user && user.avatar?.color === undefined) {
@@ -163,10 +167,12 @@ Accounts.onLogin(async (options: any) => {
 
   // Remove visitor flag after passwort reset. https://github.com/meteor/meteor/blob/devel/packages/accounts-password/password_server.js
   if (options.methodName === "resetPassword" && user?.privileged("visitor")) {
-    Users.update(user._id, { $pull: { privileges: "visitor" } });
+    await Users.updateAsync(user._id, { $pull: { privileges: "visitor" } });
   }
 });
 
 Accounts.config({
   sendVerificationEmail: true,
+  loginExpirationInDays: LoginExpirationInDays,
+  passwordResetTokenExpirationInDays: PasswordResetTokenExpirationInDays,
 });

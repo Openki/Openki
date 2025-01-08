@@ -47,9 +47,9 @@ if (Meteor.isClient) {
                   });
               }),
           )
-          .then(() => {
+          .then(async () => {
             // check if username has changed to the correct string
-            const user = Meteor.user();
+            const user = await Meteor.userAsync();
             assert.strictEqual(newDummy, user?.username, "username was changed successfully");
           });
       });

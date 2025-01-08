@@ -5,21 +5,25 @@ import { _ } from "meteor/underscore";
 import { ValidationError } from "meteor/mdg:validation-error";
 
 import { Log } from "/imports/api/log/log";
-import { Groups } from "/imports/api/groups/groups";
 import { Users } from "/imports/api/users/users";
 import { Course, Courses } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
 import * as courseInterestedDenormalizer from "/imports/api/courses/interestedDenormalizer";
+import * as groupsDenormalizer from "/imports/api/courses/groupsDenormalizer";
 
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import * as HtmlTools from "/imports/utils/html-tools";
 import * as Profile from "/imports/utils/profile";
 import { isEmail } from "/imports/utils/email-tools";
 import * as StringTools from "/imports/utils/string-tools";
-import * as AsyncTools from "/imports/utils/async-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { HtmlString, SafeString, Type, UnsafeString } from "/imports/utils/CustomChecks";
+import {
+  HtmlString,
+  SafeString,
+  StringEnum,
+  Type,
+  UnsafeString,
+} from "/imports/utils/CustomChecks";
 import { NotAllowedCharacter } from "/imports/startup/both/NotAllowedCharacter";
 
 /**
@@ -179,6 +183,20 @@ export const updatePrivateMessages = ServerMethod(
   },
 );
 
+export const updateTheme = ServerMethod(
+  "user.updateTheme",
+  async (theme: "light" | "system" | "dark") => {
+    check(theme, StringEnum("light", "system", "dark"));
+
+    const userId = Meteor.userId();
+    if (!userId) {
+      throw new ValidationError([{ name: "theme", type: "plzLogin" }], "Not logged-in");
+    }
+
+    Users.update(userId, { $set: { theme } });
+  },
+);
+
 /**
  * Update email
  */
@@ -226,7 +244,7 @@ export const updateEmail = ServerMethod(
 export const selfRemove = ServerMethod("user.self.remove", async () => {
   const user = await Meteor.userAsync();
   if (user) {
-    Users.remove({ _id: user._id });
+    await Users.removeAsync({ _id: user._id });
   }
 });
 
@@ -244,9 +262,8 @@ export const adminRemove = ServerMethod(
     check(reason, SafeString());
     check(options, Match.Maybe(AdminRemoveOptionsPattern));
 
-    const operatorId = Meteor.userId();
-
-    if (!operatorId || !UserPrivilegeUtils.privilegedTo("admin")) {
+    const operator = await Meteor.userAsync();
+    if (!operator?.privileged("admin")) {
       return;
     }
 
@@ -254,18 +271,18 @@ export const adminRemove = ServerMethod(
     let numberOfDeletedEvents = 0;
     if (options.courses) {
       // Remove courses created by this user
-      (await Courses.find({ createdby: userId }).fetchAsync()).forEach((course) => {
+      for (const course of await Courses.find({ createdby: userId }).fetchAsync()) {
         deletedCourses.push(course);
-        numberOfDeletedEvents += Events.remove({ courseId: course._id });
-      });
+        // eslint-disable-next-line no-await-in-loop
+        numberOfDeletedEvents += await Events.removeAsync({ courseId: course._id });
+      }
 
       await Courses.removeAsync({ createdby: userId });
     }
 
     // Updated courses and events he is involted
-    const courses = Courses.find({ "members.user": userId }).fetch();
+    const courses = await Courses.find({ "members.user": userId }).fetchAsync();
 
-    // eslint-disable-next-line no-restricted-syntax
     for await (const course of courses) {
       await Events.updateAsync(
         { courseId: course._id },
@@ -283,7 +300,7 @@ export const adminRemove = ServerMethod(
 
       // Update member related calculated fields
       await courseInterestedDenormalizer.afterUserAdminRemove(course._id);
-      Courses.updateGroups(course._id);
+      await groupsDenormalizer.updateGroups(course._id);
     }
 
     const user = (await Users.findOneAsync(userId)) as any;
@@ -292,8 +309,8 @@ export const adminRemove = ServerMethod(
 
     await Users.removeAsync({ _id: userId });
 
-    await Log.record("user.admin.remove", [operatorId, userId], {
-      operatorId,
+    await Log.record("user.admin.remove", [operator._id, userId], {
+      operatorId: operator._id,
       reason,
       user,
       deletedCourses,
@@ -308,7 +325,8 @@ export const addPrivilege = ServerMethod(
     check(userId, SafeString());
     check(privilege, SafeString());
 
-    if (!UserPrivilegeUtils.privilegedTo("admin")) {
+    const operator = await Meteor.userAsync();
+    if (!operator?.privileged("admin")) {
       // At the moment, only admins may hand out privileges, so this is easy
       return;
     }
@@ -317,12 +335,7 @@ export const addPrivilege = ServerMethod(
     if (!user) {
       throw new Meteor.Error(404, "User not found");
     }
-    await Users.updateAsync(
-      { _id: user._id },
-      { $addToSet: { privileges: privilege } },
-      { multi: true },
-      AsyncTools.checkUpdateOne,
-    );
+    await Users.updateAsync({ _id: user._id }, { $addToSet: { privileges: privilege } });
   },
 );
 
@@ -338,20 +351,11 @@ export const removePrivilege = ServerMethod(
     }
 
     const operator = await Meteor.userAsync();
-
-    if (
-      !operator ||
-      (!UserPrivilegeUtils.privileged(operator, "admin") && operator?._id !== user._id)
-    ) {
+    if (!operator || (!operator.privileged("admin") && operator._id !== user._id)) {
       return;
     }
 
-    await Users.updateAsync(
-      { _id: user._id },
-      { $pull: { privileges: privilege } },
-      { multi: true },
-      AsyncTools.checkUpdateOne,
-    );
+    await Users.updateAsync({ _id: user._id }, { $pull: { privileges: privilege } });
   },
 );
 
@@ -360,7 +364,7 @@ export const setHasContributed = ServerMethod("user.setHasContributed", async (u
 
   const operator = await Meteor.userAsync();
 
-  if (!operator || !UserPrivilegeUtils.privileged(operator, "admin")) {
+  if (!operator || !operator.privileged("admin")) {
     return;
   }
 
@@ -384,7 +388,7 @@ export const unsetHasContributed = ServerMethod(
 
     const operator = await Meteor.userAsync();
 
-    if (!operator || !UserPrivilegeUtils.privileged(operator, "admin")) {
+    if (!operator || !operator.privileged("admin")) {
       return;
     }
 
@@ -437,47 +441,4 @@ export const updateLastLogin = ServerMethod("user.updateLastLogin", async () => 
   await Users.updateAsync(userId, {
     $set: { lastLogin: new Date() },
   });
-});
-
-Meteor.methods({
-  /**
-   * Recalculate the groups and badges field
-   */
-  "user.updateBadges"(selector) {
-    Users.find(selector).forEach((originalUser) => {
-      const userId = originalUser._id;
-
-      AsyncTools.untilClean((resolve, reject) => {
-        const user = Users.findOne(userId);
-
-        if (!user) {
-          resolve(true);
-          return;
-        }
-
-        const groups: string[] = [];
-        Groups.find({ "members.user": user._id }).forEach((group) => {
-          groups.push(group._id);
-        });
-
-        const badges = groups.slice();
-        badges.push(user._id);
-
-        const update = {
-          $set: {
-            groups,
-            badges,
-          },
-        };
-
-        Users.rawCollection().updateMany({ _id: user._id }, update, {}, (err, result) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(result?.modifiedCount === 0);
-          }
-        });
-      });
-    });
-  },
 });

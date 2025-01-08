@@ -3,17 +3,19 @@ import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 import { CourseModel } from "/imports/api/courses/courses";
-
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
+import { useDetails } from "/imports/api/courses/publications";
 
 import { Member } from "./member";
 
 import "./styles.scss";
 
-export function Members({ course }: { course: CourseModel | undefined }) {
+export function Members({ course: course2 }: { course: CourseModel }) {
   const { t } = useTranslation();
   const user = useUser();
 
+  // for blaze, can be removed after migration
+  // subscribe in react to keep reactivity
+  const [isLoading, course] = useDetails(course2._id);
   const increaseBy = 10;
   const [membersDisplayLimit, setMembersDisplayLimit] = useState(increaseBy);
 
@@ -24,7 +26,7 @@ export function Members({ course }: { course: CourseModel | undefined }) {
     return course.members.length;
   }
   function canNotifyAll() {
-    if (UserPrivilegeUtils.privileged(user, "admin")) {
+    if (user?.privileged("admin")) {
       return true;
     }
 
@@ -65,6 +67,8 @@ export function Members({ course }: { course: CourseModel | undefined }) {
   function handleShowMoreMembersClick() {
     setMembersDisplayLimit(membersDisplayLimit + increaseBy);
   }
+
+  if (isLoading()) return null;
 
   return (
     <>

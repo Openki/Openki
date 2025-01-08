@@ -28,7 +28,6 @@ export function enable() {
 
   // Callback function to execute when mutations are observed
   const callback: MutationCallback = (mutationList) => {
-    // eslint-disable-next-line no-restricted-syntax
     for (const mutation of mutationList) {
       if (mutation.type === "childList") {
         create(mutation.target.parentNode || document);

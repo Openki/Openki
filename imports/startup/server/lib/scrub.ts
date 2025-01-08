@@ -69,7 +69,7 @@ export class ScrubRule {
     };
 
     if (this.remove) {
-      log.remove(select, recordResult);
+      await log.removeAsync(select, recordResult);
 
       // Exit early because we can't unset records that have
       // been removed.
@@ -122,7 +122,6 @@ export class Scrubber {
   }
 
   async scrub(log: LogCollection, now: moment.Moment) {
-    // eslint-disable-next-line no-restricted-syntax
     for (const rule of this.rules) {
       // eslint-disable-next-line no-await-in-loop
       await rule.scrub(log, now);

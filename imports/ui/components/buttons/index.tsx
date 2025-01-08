@@ -18,8 +18,48 @@ export function ButtonSave(props: {
       onClick={props.onClick}
       disabled={props.disabled}
     >
-      {!props.isBusy ? t("_button.save") : t("_button.saving", "Saving…")}
+      {!props.isBusy ? (
+        t("_button.save")
+      ) : (
+        <>
+          <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
+          {t("_button.saving", "Saving…")}
+        </>
+      )}
     </PleaseLogin>
+  );
+}
+
+export function ButtonSubmit(props: {
+  disabled?: boolean | undefined;
+  isBusy?: boolean | undefined;
+}) {
+  const { t } = useTranslation();
+  return (
+    <button type="submit" className="btn btn-cancel text-nowrap" disabled={props.disabled}>
+      {!props.isBusy ? (
+        t("_button.save")
+      ) : (
+        <>
+          <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
+          {t("_button.saving", "Saving…")}
+        </>
+      )}
+    </button>
+  );
+}
+
+export function ButtonEdit(props: { onClick: () => void; disabled?: boolean | undefined }) {
+  const { t } = useTranslation();
+  return (
+    <button
+      type="button"
+      className="btn btn-edit text-nowrap"
+      onClick={props.onClick}
+      disabled={props.disabled}
+    >
+      {t("_button.edit")}
+    </button>
   );
 }
 

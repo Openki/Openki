@@ -32,7 +32,13 @@ import "./styles.scss";
 const hiddenFilters = ["needsRole", "categories"];
 const filters = hiddenFilters.concat(["state"]);
 
-export function Find(query: { [key: string]: string | undefined }) {
+export type Props = {
+  query: {
+    [key: string]: string | undefined;
+  };
+};
+
+export function Find({ query }: Props) {
   const { t } = useTranslation();
   const [showingFilters, setShowingFilters] = useState(false);
   const courseBlockSize = 36;
@@ -203,10 +209,10 @@ export function Find(query: { [key: string]: string | undefined }) {
     return courses.length > courseLimit;
   }
   function results() {
-    return courses;
+    return courses.slice(0, courseLimit);
   }
   function filteredRegion() {
-    return Boolean(filter.get("region"));
+    return !!filter.get("region");
   }
   function activeFilters() {
     return hiddenFilters.some((f) => !!filter.get(f as any));
@@ -326,6 +332,8 @@ export function Find(query: { [key: string]: string | undefined }) {
               courses={results()}
               groupTagEvents={groupTagEvents()}
               categorieTagEvents={categorieTagEvents()}
+              containsPropose={true}
+              group={filter.get("group")}
             />
             {hasMore() ? (
               <div className="text-center mt-3">

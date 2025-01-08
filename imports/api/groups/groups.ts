@@ -5,7 +5,6 @@ import { _ } from "meteor/underscore";
 
 import { UserModel } from "/imports/api/users/users";
 
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import { Filtering } from "/imports/utils/filtering";
 import * as FileStorage from "/imports/utils/FileStorage";
 import { LocalizedValue } from "/imports/utils/getLocalizedValue";
@@ -61,9 +60,9 @@ export interface GroupEntity {
   /** Customize the inputs that the user can enter when creating and editing a course. */
   customCourseFields?: GroupEntityCustomCourseFields[];
   dashboard?: {
-    entity: string;
-    title: string;
-    query: string;
+    entity: "group" | "course" | "courseWithoutPropose" | "event" | "eventsMap" | "propose";
+    title?: string;
+    query?: string;
     showAll?: { link?: string; text?: string };
   }[];
   /** Hide some role options in the propose new course. */
@@ -97,7 +96,7 @@ export class Group {
     }
     return (
       this.isNew() /* Anybody may create a new group */ ||
-      UserPrivilegeUtils.privileged(user, "admin") /* Admins can edit all groups */ ||
+      user.privileged("admin") /* Admins can edit all groups */ ||
       this.members?.some((m) => m.user === user._id) /* User must be member of group to edit it */
     );
   }

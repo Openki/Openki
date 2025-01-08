@@ -55,7 +55,7 @@ export class CssFromQuery {
         }
 
         if (cssValue) {
-          cssRules.push(`${property.selector} { ${property.name}: ${cssValue}; }`);
+          cssRules.push(`${property.selector} { ${property.name}: ${cssValue} !important; }`);
         }
       }
     });

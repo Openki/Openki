@@ -7,11 +7,11 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { UserModel } from "/imports/api/users/users";
 
-import { Root } from "../../../emails/Root";
-import { Verify } from "../../../emails/users/Verify.html";
-import { verify } from "../../../emails/users/verify.text";
-import { ResetPassword } from "../../../emails/users/ResetPassword.html";
-import { resetPassword } from "../../../emails/users/resetPassword.text";
+import { Root } from "/imports/emails/Root";
+import { Verify } from "/imports/emails/users/Verify.html";
+import { verify } from "/imports/emails/users/verify.text";
+import { ResetPassword } from "/imports/emails/users/ResetPassword.html";
+import { resetPassword } from "/imports/emails/users/resetPassword.text";
 import { Visitor } from "/imports/emails/users/Visitor.html";
 import { visitor } from "/imports/emails/users/visitor.text";
 import { renderToEmail } from "/imports/utils/renderToEmail";
@@ -100,11 +100,19 @@ Accounts.emailTemplates.resetPassword = {
   text(user, url) {
     const userModel = user as UserModel;
     if (userModel.privileged("visitor")) {
-      return createAccount(userModel.getDisplayName(), url, userModel.locale);
+      return createAccount(
+        userModel.getDisplayName(),
+        `${url.replace("reset-password", "visitor-to-user")}?email=${userModel.emailAddress()}`,
+        userModel.locale,
+      );
     }
 
     // normal user account creation
-    return resetPassword(userModel.getDisplayName(), url, userModel.locale);
+    return resetPassword(
+      userModel.getDisplayName(),
+      `${url}?email=${userModel.emailAddress()}`,
+      userModel.locale,
+    );
   },
 
   html(user, url) {
@@ -112,7 +120,14 @@ Accounts.emailTemplates.resetPassword = {
     if (userModel.privileged("visitor")) {
       return renderToEmail(
         <Root subject={Accounts.emailTemplates.resetPassword.subject?.(userModel)}>
-          <CreateAccount username={userModel.getDisplayName()} url={url} lng={userModel.locale} />
+          <CreateAccount
+            username={userModel.getDisplayName()}
+            url={`${url.replace(
+              "reset-password",
+              "visitor-to-user",
+            )}?email=${userModel.emailAddress()}`}
+            lng={userModel.locale}
+          />
         </Root>,
       );
     }
@@ -120,7 +135,11 @@ Accounts.emailTemplates.resetPassword = {
     // normal user account creation
     return renderToEmail(
       <Root subject={Accounts.emailTemplates.resetPassword.subject?.(userModel)}>
-        <ResetPassword username={userModel.getDisplayName()} url={url} lng={userModel.locale} />
+        <ResetPassword
+          username={userModel.getDisplayName()}
+          url={`${url}?email=${userModel.emailAddress()}`}
+          lng={userModel.locale}
+        />
       </Root>,
     );
   },

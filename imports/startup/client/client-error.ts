@@ -6,16 +6,29 @@ import * as LogMethods from "/imports/api/log/methods";
 const clientId = Random.id();
 
 const reportToServer = function (error: Error) {
-  const report = {
-    name: error.name,
-    message: error.message,
-    location: window.location.href,
-    stack: error.stack || "",
-    tsClient: new Date(),
-    clientId,
-    userAgent: window.navigator.userAgent,
-  };
-  LogMethods.clientError(report);
+  if (error) {
+    const report = {
+      name: error?.name,
+      message: error?.message,
+      location: window.location.href,
+      stack: error?.stack || "",
+      tsClient: new Date(),
+      clientId,
+      userAgent: window.navigator.userAgent,
+    };
+    LogMethods.clientError(report);
+  } else {
+    const report = {
+      name: "error is falsy",
+      message: "",
+      location: window.location.href,
+      stack: "",
+      tsClient: new Date(),
+      clientId,
+      userAgent: window.navigator.userAgent,
+    };
+    LogMethods.clientError(report);
+  }
 };
 
 window.addEventListener("error", (event) => {

@@ -51,7 +51,7 @@ export async function record(
 
   const recipients = [];
 
-  const event = Events.findOne(eventId);
+  const event = await Events.findOneAsync(eventId);
   if (!event) {
     throw new Meteor.Error(`No event for ${eventId}`);
   }
@@ -65,7 +65,7 @@ export async function record(
   recipients.push(...participants.filter((p) => p !== senderId));
 
   if (sendCopyToSender) {
-    const sender = Users.findOne(senderId);
+    const sender = await Users.findOneAsync(senderId);
     if (!sender) {
       throw new Meteor.Error(404, "Sender not found");
     }
@@ -87,8 +87,8 @@ export async function record(
 
 export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
-  const sender = Users.findOne(body.sender);
-  const event = Events.findOne(body.event);
+  const sender = await Users.findOneAsync(body.sender);
+  const event = await Events.findOneAsync(body.event);
 
   return {
     accepted(actualRecipient: UserModel) {
@@ -97,7 +97,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
     },
 
-    vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
+    async vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
       const campaign = "eventContactParticipants";
 
@@ -122,7 +122,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       // Find out whether this is the copy sent to the sender.
       const senderCopy = sender._id === actualRecipient._id;
 
-      const region = Regions.findOne(event.region);
+      const region = await Regions.findOneAsync(event.region);
 
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);
@@ -156,7 +156,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
 
       // Show dates in local time and in users locale
-      const regionZone = LocalTime.zone(event.region);
+      const regionZone = await LocalTime.zone(event.region);
       const startMoment = regionZone.at(event.start);
       startMoment.locale(locale);
 

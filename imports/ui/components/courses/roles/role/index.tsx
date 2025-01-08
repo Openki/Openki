@@ -304,7 +304,7 @@ export function Role(data: Data) {
                         {t("course.roles.join.busy", "Joining…")}
                       </>
                     ) : (
-                      t("course.roles.join", "Join {COURSE}", { COURSE: data.course.name })
+                      t("course.roles.join", "Join", { COURSE: data.course.name })
                     )}
                   </PleaseLogin>
                   <ButtonCancel onClick={handelRoleEnrollCancelClick} />

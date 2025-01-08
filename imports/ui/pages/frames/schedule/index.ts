@@ -1,4 +1,4 @@
-import { _ } from "meteor/underscore";
+import { chain } from "lodash";
 import { ReactiveVar } from "meteor/reactive-var";
 import { Router } from "meteor/iron:router";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
@@ -59,25 +59,23 @@ template.onCreated(function () {
     }
     instance.scheduleStart.set(scheduleStart);
 
-    const rawSeps = (query.sep || "").split(",") as string[];
-    const seps = [
-      ...new Set(
-        rawSeps
-          .filter((rawSep) => rawSep.length) // get rid of 0-length
-          .map((rawSep) => {
-            if (rawSep.length < 3) {
-              return Number.parseInt(`${rawSep}00`, 10);
-            }
-            return Number.parseInt(rawSep, 10);
-          }) // standardize format
-          .filter((hm) => !Number.isNaN(hm)) // filter NaN's
-          .map((hm) => {
-            const h = Math.floor(hm / 100);
-            const m = hm % 100;
-            return h * 60 + m;
-          }) /* convert to minutes */,
-      ),
-    ];
+    const seps = chain(query.sep || "")
+      .split(",")
+      .filter((sep) => sep.length === 0) // get rid of 0-length
+      .map((sep) => {
+        if (sep.length < 3) {
+          return Number.parseInt(`${sep}00`, 10);
+        }
+        return Number.parseInt(sep, 10);
+      }) // standardize format
+      .filter((hm) => !Number.isNaN(hm)) // filter NaN's
+      .map((hm) => {
+        const h = Math.floor(hm / 100);
+        const m = hm % 100;
+        return h * 60 + m;
+      }) /* convert to minutes */
+      .uniq()
+      .value();
     instance.separators.set(seps);
 
     const readInterval = Number.parseInt(query.interval, 10);

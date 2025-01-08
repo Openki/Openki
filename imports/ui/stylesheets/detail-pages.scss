@@ -97,6 +97,10 @@
   text-align: end;
 }
 
+.details-map .leaflet-attribution-flag {
+  display: none !important;
+}
+
 .details-form {
   @include clearfix;
   background-color: lighten($success, 10%);

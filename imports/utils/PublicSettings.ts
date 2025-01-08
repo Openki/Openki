@@ -64,6 +64,8 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
     rsvpWithCompanions: Boolean,
     /** allow to edit whether to remind or not, Default: true */
     sendReminderIsEditable: Boolean,
+    /** show a "empty" course box to propose a new course */
+    proposeCourseBox: Boolean,
   },
   nav: {
     /** target link when clicking on the logo Default: "/" */
@@ -195,6 +197,7 @@ const defaults = {
     visitorUser: false,
     rsvpWithCompanions: false,
     sendReminderIsEditable: true,
+    proposeCourseBox: true,
   },
   nav: {
     brandLink: "/",

@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
+
 import { AccountsAsync } from "/imports/utils/promisify";
 import { useSiteName } from "/imports/utils/getSiteName";
 import * as Metatags from "/imports/utils/metatags";
 
 import * as Alert from "/imports/api/alerts/alert";
+import { useAccount } from "/imports/api/users/publications";
 
 import { useValidation } from "/imports/ui/lib/useValidation";
-import { useUser } from "/imports/utils/react-meteor-data";
+
+import { TokenExpired } from "../../components/token-expired";
 
 export type Props = {
-  username: string;
   email: string;
   token: string;
 };
 
-export function VisitorToUserPage({ username, email, token }: Props) {
+export function VisitorToUserPage({ token, email }: Props) {
   const { t } = useTranslation();
-  const user = useUser();
+  const [isLoading, user] = useAccount(token);
   const siteName = useSiteName();
 
   const [isBusy, setIsBusy] = useState(false);
@@ -34,6 +36,14 @@ export function VisitorToUserPage({ username, email, token }: Props) {
   useEffect(() => {
     Metatags.setCommonTags(t("visitorToUser.siteTitle", "Create Account"));
   });
+
+  if (isLoading()) {
+    return null;
+  }
+
+  if (!user) {
+    return <TokenExpired email={email} />;
+  }
 
   return (
     <div className="container mw-md">
@@ -78,7 +88,7 @@ export function VisitorToUserPage({ username, email, token }: Props) {
               className={`form-control`}
               type="text"
               placeholder={t("frame.login.username", "Username")}
-              value={username}
+              value={user?.getDisplayName()}
               readOnly
               disabled
             />
@@ -95,7 +105,7 @@ export function VisitorToUserPage({ username, email, token }: Props) {
                   className={`form-control`}
                   placeholder={t("frame.login.email", "E-Mail")}
                   type="email"
-                  value={email}
+                  value={user?.emailAddress()}
                   readOnly
                   disabled
                 />

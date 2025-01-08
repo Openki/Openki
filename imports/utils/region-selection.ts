@@ -88,7 +88,7 @@ export async function subscribe(
       localStorage?.getItem("region"),
     ].filter(Boolean) as string[];
 
-    const regions = findFilter().fetch();
+    const regions = await (await findFilter()).fetchAsync();
     if (preferredTenant) {
       // check if we can find a region for a preferred tenant
 
@@ -102,7 +102,7 @@ export async function subscribe(
         preferredTenantRegion = await UserLocation.detect(preferredTenant);
       } catch (err) {
         // eslint-disable-next-line no-console
-        console.log(`Region autodetection error: ${err}`);
+        console.error(`Region autodetection error: ${err}`);
       }
 
       preferredTenantRegion =
@@ -137,7 +137,7 @@ export async function subscribe(
       region = await UserLocation.detect();
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.log(`Region autodetection error: ${err}`);
+      console.error(`Region autodetection error: ${err}`);
     }
 
     if (region) {
@@ -162,8 +162,8 @@ export async function subscribe(
 export function init() {
   // We assume the initial onLogin() callback comes before the regions' ready.
   // We have no guarantee for this however!
-  Accounts.onLogin(() => {
-    const user = Meteor.user();
+  Accounts.onLogin(async () => {
+    const user = await Meteor.userAsync();
     if (user) {
       const { regionId } = user.profile;
       if (regionId) {

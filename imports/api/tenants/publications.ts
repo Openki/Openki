@@ -4,7 +4,6 @@ import { check } from "meteor/check";
 
 import { FindFilter, TenantEntity, Tenants } from "/imports/api/tenants/tenants";
 
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import { ServerPublishOne } from "/imports/utils/ServerPublish";
 import { FieldSort } from "/imports/utils/sort-spec";
 import { ServerPublish } from "/imports/utils/ServerPublishBlaze";
@@ -23,14 +22,14 @@ export const [details, useDetails] = ServerPublishOne(
     const filter: Mongo.Selector<TenantEntity> = { _id: tenantId };
 
     // Only members of a tenant or admins can see a tenant
-    if (!UserPrivilegeUtils.privileged(user, "admin")) {
+    if (!user.privileged("admin")) {
       filter.members = user._id;
     }
 
     const projection: Mongo.FieldSpecifier = { ...Tenants.publicFields };
     // Only admins can see all tenant admins. Note: Admin privileg is not something that is
     // likely to happen and reactive changes are not needed.
-    if (UserPrivilegeUtils.privileged(user, "admin") || user.isTenantAdmin(tenantId)) {
+    if (user.privileged("admin") || user.isTenantAdmin(tenantId)) {
       projection.admins = 1;
     }
     return Tenants.find(filter, { projection });
@@ -45,14 +44,14 @@ export const [details, useDetails] = ServerPublishOne(
     const filter: Mongo.Selector<TenantEntity> = { _id: tenantId };
 
     // Only members of a tenant or admins can see a tenant
-    if (!UserPrivilegeUtils.privileged(user, "admin")) {
+    if (!user.privileged("admin")) {
       filter.members = user._id;
     }
 
     const projection: Mongo.FieldSpecifier = { ...Tenants.publicFields };
     // Only admins can see all tenant admins. Note: Admin privileg is not something that is
     // likely to happen and reactive changes are not needed.
-    if (UserPrivilegeUtils.privileged(user, "admin") || user.isTenantAdmin(tenantId)) {
+    if (user.privileged("admin") || user.isTenantAdmin(tenantId)) {
       projection.admins = 1;
     }
     return Tenants.findOne(filter, { projection });

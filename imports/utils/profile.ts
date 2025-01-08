@@ -14,7 +14,7 @@ export namespace Username {
     let result;
     let success;
     try {
-      result = Users.update(userId, {
+      result = await Users.updateAsync(userId, {
         $set: { username: newName },
       });
       success = result > 0;
@@ -51,7 +51,7 @@ export namespace Email {
       newValue = [{ address: email, verified: false }];
     }
 
-    Users.update(userId, {
+    await Users.updateAsync(userId, {
       $set: { emails: newValue },
     });
   }
@@ -86,7 +86,7 @@ export namespace Notifications {
       reason,
     });
 
-    Users.update(userId, {
+    await Users.updateAsync(userId, {
       $set: { notifications: enable },
     });
   }
@@ -149,7 +149,7 @@ export namespace PrivateMessages {
       reason,
     });
 
-    Users.update(userId, {
+    await Users.updateAsync(userId, {
       $set: { allowPrivateMessages: enable },
     });
   }
@@ -197,7 +197,7 @@ export namespace Region {
     check(regionId, String);
     check(reason, String);
 
-    const region = Regions.findOne(regionId);
+    const region = await Regions.findOneAsync(regionId);
     const accepted = !!region;
 
     await Log.record("Profile.Region", [userId, regionId], {
@@ -208,7 +208,7 @@ export namespace Region {
     });
 
     if (accepted) {
-      Users.update(userId, { $set: { "profile.regionId": region._id } });
+      await Users.updateAsync(userId, { $set: { "profile.regionId": region._id } });
     }
 
     return accepted;
@@ -235,7 +235,7 @@ export namespace AvatarColor {
     });
 
     if (accepted) {
-      Users.update(userId, { $set: { "avatar.color": color } });
+      await Users.updateAsync(userId, { $set: { "avatar.color": color } });
     }
 
     return accepted;
@@ -256,7 +256,7 @@ export namespace Description {
     let success;
 
     try {
-      result = Users.update(userId, {
+      result = await Users.updateAsync(userId, {
         $set: { description },
       });
       success = result > 0;

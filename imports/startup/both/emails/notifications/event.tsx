@@ -34,7 +34,7 @@ export async function record(eventId: string, isNew: boolean, additionalMessage?
   check(isNew, Boolean);
   check(additionalMessage, Match.Optional(String));
 
-  const event = Events.findOne(eventId);
+  const event = await Events.findOneAsync(eventId);
   if (!event) {
     throw new Meteor.Error(`No event for ${eventId}`);
   }
@@ -44,7 +44,7 @@ export async function record(eventId: string, isNew: boolean, additionalMessage?
   // the recipient list will be empty.
   let course: CourseModel | undefined;
   if (event.courseId) {
-    course = Courses.findOne(event.courseId);
+    course = await Courses.findOneAsync(event.courseId);
   }
 
   const body: Body = {
@@ -82,7 +82,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
     },
 
-    vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
+    async vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
       const campaign = "eventNotify";
 
@@ -96,7 +96,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         throw new Error("Region does not exist (0.o)");
       }
 
-      const { startMoment } = getStartEndDate(event, locale);
+      const { startMoment, tz } = await getStartEndDate(event, locale);
 
       const subjectvars = {
         TITLE: event.title.substring(0, 30),
@@ -120,6 +120,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       const courseLink = Router.url("showCourse", course, { query: { campaign } });
       return {
         event,
+        tz,
         recipientTakePart: event.participants?.some((p) => p.user === actualRecipient._id),
         registerToEventLink: Router.url("showEvent", event, {
           query: { action: "register", campaign },

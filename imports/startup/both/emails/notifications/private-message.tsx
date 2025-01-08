@@ -12,7 +12,6 @@ import { Events } from "/imports/api/events/events";
 
 import * as HtmlTools from "/imports/utils/html-tools";
 import * as StringTools from "/imports/utils/string-tools";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { Model as NotificationModel } from "../notification";
 import { PrivateMessage, Props } from "../../../../emails/notifications/PrivateMessage";
@@ -26,8 +25,8 @@ interface Body {
   revealSenderAddress: boolean;
   model: string;
   context: {
-    course?: string;
-    event?: string;
+    course?: string | undefined;
+    event?: string | undefined;
   };
 }
 
@@ -60,7 +59,7 @@ export async function record(
 
   const recipients = [recipientId];
   if (sendCopyToSender) {
-    const sender = Users.findOne(senderId);
+    const sender = await Users.findOneAsync(senderId);
     if (!sender) {
       throw new Meteor.Error(404, "Sender not found");
     }
@@ -77,7 +76,6 @@ export async function record(
     sender: senderId,
     targetRecipient: recipientId,
     revealSenderAddress,
-
     recipients,
     model: "PrivateMessage",
     context,
@@ -88,20 +86,17 @@ export async function record(
 
 export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
-  const sender = Users.findOne(body.sender);
-  const targetRecipient = Users.findOne(body.targetRecipient);
+  const sender = await Users.findOneAsync(body.sender);
+  const targetRecipient = await Users.findOneAsync(body.targetRecipient);
 
   return {
     accepted(actualRecipient: UserModel) {
-      if (
-        !actualRecipient.allowPrivateMessages &&
-        !UserPrivilegeUtils.privileged(sender, "admin")
-      ) {
+      if (!actualRecipient.allowPrivateMessages && !sender?.privileged("admin")) {
         throw new Error("User wishes to not receive private messages from users");
       }
     },
 
-    vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
+    async vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
       const campaign = "privateMessage";
 
@@ -155,7 +150,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
       const courseContextId = body.context.course;
       if (courseContextId) {
-        const course = Courses.findOne(courseContextId);
+        const course = await Courses.findOneAsync(courseContextId);
         if (!course) {
           throw new Meteor.Error(404, "course not found");
         }
@@ -169,13 +164,13 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
       const eventContextId = body.context.event;
       if (eventContextId) {
-        const event = Events.findOne(eventContextId);
+        const event = await Events.findOneAsync(eventContextId);
         if (!event) {
           throw new Meteor.Error(404, "event not found");
         }
 
         // Show dates in local time and in users locale
-        const regionZone = LocalTime.zone(event.region);
+        const regionZone = await LocalTime.zone(event.region);
         const startMoment = regionZone.at(event.start);
         startMoment.locale(locale);
 
@@ -192,7 +187,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
 
       if (regionId) {
-        region = Regions.findOne(regionId);
+        region = await Regions.findOneAsync(regionId);
       }
 
       vars.customEmailLogo = region?.custom?.emailLogo;

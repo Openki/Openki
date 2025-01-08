@@ -21,7 +21,7 @@
 	, "theme":
 		{ "brand": "#9c3838"
 		}
-	, "publicTenants": ["8410c099a7"]
+	, "publicTenants": ["8410c099a7", "6815333b85"]
 	, "regionSelection":
 		{ "minNumber": 5
 		, "aboutLink":
@@ -47,6 +47,7 @@
 		, "visitorUser": true
 		, "rsvpWithCompanions": true
 		, "sendReminderIsEditable": true
+    , "proposeCourseBox": true 
 		}
 	, "nav":
 		{ "brandLink": "/"
@@ -62,11 +63,11 @@
       }
     , { "entity": "event"
       , "title": "dashboard.userRegistredFor.title"
-      , "query": "participant={currentUser}&after=now&sort=start&internal=0&canceled=0"
+      , "query": "participant={currentUser}&after=now&sort=start"
       }
     , { "entity": "course"
       , "title": "dashboard.recentActivities.title"
-      , "query": ""
+      , "query": "internal=0"
       }
     , { "entity": "course"
       , "title": "Chaos Computer Club Zürich"
@@ -94,7 +95,7 @@
       }
     , { "entity": "eventsMap"
       , "title": "dashboard.eventsMap.title"
-      , "query": "after=now"
+      , "query": "after=now&internal=0&canceled=0"
       }
     , { "entity": "propose"
       }
@@ -106,19 +107,19 @@
       }
     , { "entity": "event"
       , "title": "dashboard.upcomingEvents.title"
-      , "query": "after=now&sort=start&internal=0&canceled=0"
+      , "query": "after=now&sort=start&canceled=0"
       }
     , { "entity": "course"
       , "title": "dashboard.newProposals.title"
-      , "query": "state=proposal&internal=0&sort=-time_created"
+      , "query": "state=proposal&sort=-time_created"
       }
     , { "entity": "course"
       , "title": "dashboard.lookingForMentors.title"
-      ,  "query": "needsRole=mentor&state=proposal,resting&internal=0"
+      ,  "query": "needsRole=mentor&state=proposal,resting"
       }
     , { "entity": "course"
       , "title": "dashboard.lookingForVenues.title"
-      , "query": "needsRole=host&state=proposal,resting&internal=0"
+      , "query": "needsRole=host&state=proposal,resting"
       }
     , { "entity": "eventsMap"
       , "title": "dashboard.eventsMap.title"
