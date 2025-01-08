@@ -27,15 +27,7 @@ import "./styles.scss";
 const Template = TemplateAny as TemplateStaticTyped<
   "courseDetailsDescription",
   {
-    edit: boolean;
-    rolesDetails: {
-      role: RoleEntity;
-      subscribed: boolean;
-      course: CourseModel;
-    }[];
     course: CourseModel;
-    member: boolean;
-    select: string;
   }
 >;
 

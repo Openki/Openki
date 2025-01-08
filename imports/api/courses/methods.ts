@@ -44,7 +44,7 @@ export interface Method<T> {
         operatorId: string | undefined;
       },
     ): void;
-    apply(): void;
+    apply(): Promise<void>;
   }>;
 }
 
@@ -72,16 +72,16 @@ function registerMethod<T>(method: Method<T>): void {
     change.provide(rel, body);
     const result = await Log.record(method.method, rel, body);
     try {
-      change.apply();
+      await change.apply();
     } catch (message) {
-      result.error(message);
+      await result.error(message);
       throw new Meteor.Error(
         "error-applying",
         `Error applying change ${change}: ${message}`,
         message,
       );
     }
-    result.success();
+    await result.success();
   };
 
   Meteor.methods({ [method.method]: apply });

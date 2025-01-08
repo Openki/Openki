@@ -44,16 +44,16 @@ class ResultLogger {
     public log: LogCollection,
   ) {}
 
-  success(message?: string) {
-    this.record(true, message);
+  async success(message?: string) {
+    await this.record(true, message);
   }
 
-  error(error: unknown) {
+  async error(error: unknown) {
     const message = JSON.parse(JSON.stringify(error));
-    this.record(false, message);
+    await this.record(false, message);
   }
 
-  record(success: boolean, message?: string) {
+  async record(success: boolean, message?: string) {
     const resolution: Resolution = { ts: new Date(), success };
     if (message) resolution.message = message;
 
@@ -62,7 +62,7 @@ class ResultLogger {
       console.log({ id: this.id, resolution });
     }
 
-    this.log.update(this.id, { $push: { res: resolution } });
+    await this.log.updateAsync(this.id, { $push: { res: resolution } });
   }
 }
 
