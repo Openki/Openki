@@ -16,7 +16,7 @@ import { generate as eventsGenerate } from "./events/generate";
 import { create as groupsCreate } from "./groups/create";
 import { create as infoPagesCreate } from "./infoPages/create";
 import { create as regionsCreate } from "./regions/create";
-import { create as venueCreate } from "./venues/create";
+import { create as venuesCreate } from "./venues/create";
 import { generate as commentsGenerate } from "./comments/generate";
 
 async function usersCreate() {
@@ -47,7 +47,7 @@ if (Meteor.isServer && PrivateSettings.testdata) {
       }
       await usersCreate();
       await groupsCreate();
-      await venueCreate();
+      await venuesCreate();
       await coursesCreate();
       await eventsGenerate();
     },
@@ -56,7 +56,7 @@ if (Meteor.isServer && PrivateSettings.testdata) {
     "fixtures.regions.create": regionsCreate,
     "fixtures.groups.create": groupsCreate,
     "fixtures.events.create": eventsCreate,
-    "fixtures.venues.create": venueCreate,
+    "fixtures.venues.create": venuesCreate,
     "fixtures.courses.create": coursesCreate,
     "fixtures.events.generate": eventsGenerate,
     "fixtures.comments.generate": commentsGenerate,
