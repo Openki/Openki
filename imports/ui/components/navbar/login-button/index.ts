@@ -15,3 +15,9 @@ template.helpers({
     return Accounts.loginServicesConfigured();
   },
 });
+
+template.events({
+  "click .js-loginButton"() {
+    Session.set("pleaseLogin", true);
+  },
+});

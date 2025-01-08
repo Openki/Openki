@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTracker } from "meteor/react-meteor-data";
 import { useTranslation } from "react-i18next";
 
@@ -37,6 +37,7 @@ function Alert({
 }) {
   const { t } = useTranslation();
   const elementRef = useRef<HTMLDivElement>(null);
+  const [timer, setTimer] = useState<number>();
 
   const updateSpacerHeight = () => {
     const height = $(".alert-messages").height() || 0;
@@ -67,12 +68,13 @@ function Alert({
     return type === "error" ? "danger" : type;
   }
 
-  let timedRemove: number;
-
   useEffect(() => {
     updateSpacerHeight();
-    timedRemove = Meteor.setTimeout(() => remove(id), timeout);
-  });
+    if (timer) {
+      Meteor.clearTimeout(timer);
+    }
+    setTimer(Meteor.setTimeout(() => remove(id), timeout));
+  }, [id, timeout]);
 
   let timeoutActionFocus: any = 0;
   return (
@@ -104,12 +106,12 @@ function Alert({
                     );
 
                     element.classList.remove("action-focus");
-                    setTimeout(() => {
+                    Meteor.setTimeout(() => {
                       element.classList.add("action-focus");
                       if (timeoutActionFocus) {
                         clearTimeout(timeoutActionFocus);
                       }
-                      timeoutActionFocus = setTimeout(() => {
+                      timeoutActionFocus = Meteor.setTimeout(() => {
                         element.classList.remove("action-focus");
                       }, 5000);
                     }, 0);
@@ -127,8 +129,8 @@ function Alert({
         className="btn-close"
         aria-label={t("message.close", "Close message")}
         onClick={() => {
-          if (timedRemove) {
-            Meteor.clearTimeout(timedRemove);
+          if (timer) {
+            Meteor.clearTimeout(timer);
           }
           remove(id);
         }}

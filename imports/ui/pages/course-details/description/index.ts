@@ -1,6 +1,5 @@
 import { Meteor } from "meteor/meteor";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import { RoleEntity } from "/imports/api/roles/roles";
 import { CourseModel } from "/imports/api/courses/courses";
 
 import "/imports/ui/components/buttons";
