@@ -397,7 +397,7 @@
 	"eventDetails.eventRemoved": "Die Veranstaltung \"{TITLE}\" wurde gelöscht.",
 	"eventDetails.eventRemoved.error": "Die Veranstaltung konnte nicht gelöscht werden",
 	"eventDetails.notLoggedIn": "(nicht angemeldet?)",
-	"eventEdit.replicatesUpdated": "Die Wiederholungen von \"{TITEL}\" wurden ebenfalls aktualisiert.",
+	"eventEdit.replicatesUpdated": "Die Wiederholungen von \"{TITLE}\" wurden ebenfalls aktualisiert.",
 	"eventEdit.replicatesUpdated.error": "Beim Speichern der Veranstaltung ist ein Fehler aufgetreten",
 	"eventGroupAdd.groupAdded": "Die Gruppe \"{GROUP}\" wurde hinzugefügt, um das \"{EVENT}\" Veranstaltung zu bewerben.",
 	"eventGroupAdd.groupAdded.error": "Das Hinzufügen der Gruppe ist fehlgeschlagen",

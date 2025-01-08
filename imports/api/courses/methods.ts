@@ -2,15 +2,9 @@ import { Match, check } from "meteor/check";
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { i18n } from "/imports/startup/both/i18next";
+import { uniq } from "lodash";
 
-import {
-  Courses,
-  Course,
-  CourseEntity,
-  CourseModel,
-  CourseLastEventEntity,
-  CourseNextEventEntity,
-} from "/imports/api/courses/courses";
+import { Courses, Course, CourseEntity, CourseModel } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
 import { Groups } from "/imports/api/groups/groups";
 import { Regions } from "/imports/api/regions/regions";
@@ -19,16 +13,17 @@ import { Roles } from "/imports/api/roles/roles";
 import * as UpdateMethods from "/imports/utils/update-methods";
 import * as historyDenormalizer from "/imports/api/courses/historyDenormalizer";
 import * as timeLastEditDenormalizer from "/imports/api/courses/timeLastEditDenormalizer";
+import * as nextEventDenormalizer from "/imports/api/courses/nextEventDenormalizer";
 import * as eventsCategoriesDenormalizer from "/imports/api/events/categoriesDenormalizer";
 import * as eventsCourseImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
 import { Log } from "/imports/api/log/log";
 import { UserModel } from "/imports/api/users/users";
+import * as groupsDenormalizer from "./groupsDenormalizer";
 
 import { Subscribe, Unsubscribe, Message } from "./subscription";
 
 import { Notification } from "../../startup/both/emails/notification";
 
-import * as AsyncTools from "/imports/utils/async-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import * as StringTools from "/imports/utils/string-tools";
 import * as HtmlTools from "/imports/utils/html-tools";
@@ -40,7 +35,7 @@ import { resizeImage } from "../../utils/resize-image";
 
 export interface Method<T> {
   method: string;
-  read: (params: T) => {
+  read: (params: T) => Promise<{
     validate(): void;
     permitted: (user: UserModel | undefined | null) => boolean;
     provide(
@@ -50,12 +45,12 @@ export interface Method<T> {
       },
     ): void;
     apply(): void;
-  };
+  }>;
 }
 
 function registerMethod<T>(method: Method<T>): void {
   const apply = async function (params: T) {
-    const change = method.read(params);
+    const change = await method.read(params);
     try {
       change.validate();
     } catch (message) {
@@ -158,18 +153,14 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
         const have = course.roles.includes(type);
 
         if (have && !shouldHave) {
-          await Courses.updateAsync(
-            { _id: courseId },
-            { $pull: { roles: type } },
-            { multi: true },
-            AsyncTools.checkUpdateOne,
-          );
+          await Courses.updateAsync({ _id: courseId }, { $pull: { roles: type } });
 
           // HACK
           // due to a mongo limitation we can't { $pull { 'members.roles': type } }
           // so we keep removing one by one until there are none left
           while (
-            Courses.update(
+            // eslint-disable-next-line no-await-in-loop
+            await Courses.updateAsync(
               { _id: courseId, "members.roles": type },
               { $pull: { "members.$.roles": type } },
             )
@@ -180,12 +171,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
             set.roles = set.roles || [];
             set.roles.push(type);
           } else {
-            await Courses.updateAsync(
-              { _id: courseId },
-              { $addToSet: { roles: type } },
-              { multi: true },
-              AsyncTools.checkUpdateOne,
-            );
+            await Courses.updateAsync({ _id: courseId }, { $addToSet: { roles: type } });
           }
         }
       }),
@@ -222,14 +208,16 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
   if (course.isNew()) {
     // You can add newly created courses to any group
     let groups = changes.groups || [];
-    groups = [...new Set(groups)]; // make unique
-    groups = groups.map((groupId) => {
-      const group = Groups.findOne(groupId);
-      if (!group) {
-        throw new Meteor.Error(404, `no group with id ${groupId}`);
-      }
-      return group._id;
-    });
+    groups = uniq(groups);
+    groups = await Promise.all(
+      groups.map(async (groupId) => {
+        const group = await Groups.findOneAsync(groupId);
+        if (!group) {
+          throw new Meteor.Error(404, `no group with id ${groupId}`);
+        }
+        return group._id;
+      }),
+    );
     set.groups = groups;
     set.groupOrganizers = groups;
 
@@ -237,7 +225,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     if (!changes.region) {
       throw new Meteor.Error(404, "region missing");
     }
-    const region = Regions.findOne({ _id: changes.region });
+    const region = await Regions.findOneAsync({ _id: changes.region });
     if (!region) {
       throw new Meteor.Error(404, "region missing");
     }
@@ -265,8 +253,8 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     }
 
     // Init calculated fields
-    Meteor.call("course.updateNextEvent", courseId);
-    Courses.updateGroups(courseId);
+    await nextEventDenormalizer.updateNextEvent(courseId);
+    await groupsDenormalizer.updateGroups(courseId);
   } else {
     const enrichedSet = timeLastEditDenormalizer.beforeUpdate(set);
     await Courses.updateAsync({ _id: courseId }, { $set: enrichedSet });
@@ -365,7 +353,7 @@ export const deleteImage = ServerMethod(
   async (courseId: string) => {
     check(courseId, SafeString());
 
-    const user = Meteor.user();
+    const user = await Meteor.userAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log-in");
     }
@@ -406,7 +394,8 @@ export const deleteImage = ServerMethod(
 export const promote = ServerMethod(
   "course.promote",
   async (courseId: string, groupId: string, enable: boolean) => {
-    UpdateMethods.promote(Courses as unknown as GroupPromoters)(courseId, groupId, enable);
+    await UpdateMethods.promote(Courses as unknown as GroupPromoters)(courseId, groupId, enable);
+    await groupsDenormalizer.updateGroups(courseId);
     await historyDenormalizer.afterGroupPromoteUpdate(
       courseId,
       groupId,
@@ -426,7 +415,8 @@ export const promote = ServerMethod(
 export const editing = ServerMethod(
   "course.editing",
   async (courseId: string, groupId: string, enable: boolean) => {
-    UpdateMethods.editing(Courses as unknown as GroupPromoters)(courseId, groupId, enable);
+    await UpdateMethods.editing(Courses as unknown as GroupPromoters)(courseId, groupId, enable);
+    await groupsDenormalizer.updateGroups(courseId);
     await historyDenormalizer.afterGroupOrgaUpdate(
       courseId,
       groupId,
@@ -475,67 +465,4 @@ export const remove = ServerMethod("course.remove", async (courseId: string) => 
   await Events.removeAsync({ courseId });
   await CourseDiscussions.removeAsync({ courseId });
   await Courses.removeAsync(courseId);
-});
-
-Meteor.methods({
-  /**
-   * Update the nextEvent field for the courses matching the selector
-   */
-  async "course.updateNextEvent"(selector) {
-    await Promise.all(
-      await Courses.find(selector).mapAsync(async (course) => {
-        const futureEvents = await Events.find({
-          courseId: course._id,
-          start: { $gt: new Date() },
-          canceled: { $ne: true },
-        }).countAsync();
-
-        const nextEvent: CourseNextEventEntity | undefined = await Events.findOneAsync(
-          { courseId: course._id, start: { $gt: new Date() }, canceled: { $ne: true } },
-          {
-            sort: { start: 1 },
-            projection: {
-              startLocal: 1,
-              start: 1,
-              _id: 1,
-              venue: 1,
-              noRsvp: 1,
-              participants: 1,
-            },
-          },
-        );
-
-        const lastEvent: CourseLastEventEntity | undefined = await Events.findOneAsync(
-          { courseId: course._id, start: { $lt: new Date() }, canceled: { $ne: true } },
-          {
-            sort: { start: -1 },
-            projection: {
-              startLocal: 1,
-              start: 1,
-              _id: 1,
-              venue: 1,
-              participants: 1,
-            },
-          },
-        );
-
-        await Courses.updateAsync(course._id, {
-          $set: {
-            futureEvents,
-            nextEvent: nextEvent || null,
-            lastEvent: lastEvent || null,
-          },
-        });
-      }),
-    );
-  },
-
-  /**
-   * Recalculate the editors field
-   */
-  "course.updateGroups"(selector) {
-    Courses.find(selector).forEach((course) => {
-      Courses.updateGroups(course._id);
-    });
-  },
 });

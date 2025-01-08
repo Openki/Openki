@@ -31,7 +31,7 @@ export async function record(eventId: string) {
 
   const recipients = [];
 
-  const event = Events.findOne(eventId);
+  const event = await Events.findOneAsync(eventId);
   if (!event) {
     throw new Meteor.Error(`No event for ${eventId}`);
   }
@@ -65,7 +65,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
     },
 
-    vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
+    async vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
       const campaign = "eventReminder";
 
@@ -85,7 +85,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         subjectvars,
       );
 
-      const { startMoment } = getStartEndDate(event, locale);
+      const { startMoment, tz } = await getStartEndDate(event, locale);
 
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);
@@ -94,6 +94,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         companions:
           event.participants?.filter((p) => p.user === actualRecipient._id)[0].companions || 0,
         event,
+        tz,
         unregisterToEventLink: Router.url("showEvent", event, {
           query: { action: "unregister", campaign },
         }),

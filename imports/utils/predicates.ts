@@ -1,4 +1,4 @@
-import { _ } from "meteor/underscore";
+import { union, difference, intersection, uniq } from "lodash";
 import moment from "moment";
 import { FilteringReadError } from "./filtering";
 
@@ -50,10 +50,10 @@ export const ids: Predicate<string[]> = function (param) {
   const make = function (values: string[]): ParamWrapper<string[]> {
     return {
       merge(other) {
-        return make(_.union(values, other.get()));
+        return make(union(values, other.get()));
       },
       without(predicate) {
-        const diff = _.difference(values, predicate.get());
+        const diff = difference(values, predicate.get());
         if (diff.length === 0) {
           return undefined;
         }
@@ -72,12 +72,12 @@ export const ids: Predicate<string[]> = function (param) {
         const otherIds = other.get();
         return (
           values.length === otherIds.length &&
-          _.intersection(values, otherIds).length === values.length
+          intersection(values, otherIds).length === values.length
         );
       },
     };
   };
-  return make([...new Set(param.split(","))]);
+  return make(uniq(param.split(",")));
 };
 
 export const flag: Predicate<boolean> = function (param) {
@@ -231,10 +231,10 @@ export function createEnumsPredicate<T extends readonly string[]>(...states: rea
 
       return {
         merge(other) {
-          return make(_.union(values, other.get()));
+          return make(union(values, other.get()));
         },
         without(predicate) {
-          const diff = _.difference(values, predicate.get());
+          const diff = difference(values, predicate.get());
           if (diff.length === 0) {
             return undefined;
           }
@@ -253,12 +253,12 @@ export function createEnumsPredicate<T extends readonly string[]>(...states: rea
           const otherStates = other.get();
           return (
             values.length === otherStates.length &&
-            _.intersection(values, otherStates).length === values.length
+            intersection(values, otherStates).length === values.length
           );
         },
       };
     };
-    return make([...new Set(param.split(","))]);
+    return make(uniq(param.split(",")));
   };
   return enumsPredicate;
 }

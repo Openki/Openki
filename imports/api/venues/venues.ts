@@ -1,13 +1,12 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import { _ } from "meteor/underscore";
+import { chain } from "lodash";
 import { Match, check } from "meteor/check";
 
 import { EventEntity, Events } from "/imports/api/events/events";
 import { UserModel } from "/imports/api/users/users";
 import { Geodata } from "/imports/api/regions/regions";
 
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import * as StringTools from "/imports/utils/string-tools";
@@ -80,7 +79,7 @@ export class Venue {
     return (
       isNew /* Anybody may create a new location */ ||
       user._id === this.editor ||
-      UserPrivilegeUtils.privileged(user, "admin") // Admins can edit all venues
+      user.privileged("admin") // Admins can edit all venues
     );
   }
 }
@@ -183,14 +182,12 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
 
       const recentEvents = Events.find(findRecent, findRecentOptions).fetch();
 
-      const recentLocations = [
-        ...new Set(
-          recentEvents
-            .map((event) => event.venue?._id) // get ids
-            .filter((venueId) => venueId), // filter empty ids
-        ),
-      ] // make unique with Set
-        .slice(0, limit || 10); // and limit it
+      const recentLocations = chain(recentEvents)
+        .map((event) => event.venue?._id) // get ids
+        .filter((venueId) => venueId) // filter empty ids
+        .uniq() // make unique
+        .slice(0, limit || 10) // and limit it
+        .value();
 
       find._id = { $in: recentLocations as string[] };
     }

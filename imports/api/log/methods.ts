@@ -34,3 +34,17 @@ export const clientError = ServerMethod("log.clientError", async function (origi
   }
   await Log.record("clientError", rel, report);
 });
+
+export async function serverError(error: Error) {
+  /* eslint-disable-next-line no-console */
+  console.log(error.stack);
+  try {
+    await Log.record("serverError", [], {
+      name: error.name,
+      message: error.message,
+      stack: error.stack,
+    });
+  } catch {
+    // ignore
+  }
+}

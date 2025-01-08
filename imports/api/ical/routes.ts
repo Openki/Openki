@@ -9,11 +9,11 @@ import * as HtmlTools from "/imports/utils/html-tools";
 import ical from "ical-generator";
 import { Mongo } from "meteor/mongo";
 
-function sendIcal(events: Mongo.Cursor<EventEntity, EventModel>, response: any) {
+async function sendIcal(events: Mongo.Cursor<EventEntity, EventModel>, response: any) {
   const calendar = ical({ name: "Openki Calendar" });
   let name = "";
 
-  events.forEach((dbevent) => {
+  await events.forEachAsync((dbevent) => {
     const end = dbevent.end || dbevent.start;
 
     const location = [];
@@ -81,15 +81,15 @@ Router.route("cal", {
 Router.route("calEvent", {
   path: "cal/event/:_id.ics",
   where: "server",
-  action() {
-    sendIcal(Events.find({ _id: this.params._id as string }), this.response);
+  async action() {
+    await sendIcal(Events.find({ _id: this.params._id as string }), this.response);
   },
 });
 
 Router.route("calCourse", {
-  path: "cal/course/:slug,:_id.ics",
+  path: "cal/course/:_id.ics",
   where: "server",
-  action() {
-    sendIcal(Events.find({ courseId: this.params._id as string }), this.response);
+  async action() {
+    await sendIcal(Events.find({ courseId: this.params._id as string }), this.response);
   },
 });

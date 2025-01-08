@@ -99,7 +99,7 @@ Meteor.startup(() => {
     Session.set("timeLocale", setLocale);
     if (desiredLocale !== setLocale) {
       /* eslint-disable-next-line no-console */
-      console.log(`Date formatting set to ${setLocale} because ${desiredLocale} not available`);
+      console.info(`Date formatting set to ${setLocale} because ${desiredLocale} not available`);
     }
 
     // HACK replace the datepicker locale settings
@@ -126,8 +126,8 @@ Meteor.startup(() => {
   });
 });
 
-Accounts.onLogin(() => {
-  const user = Meteor.user();
+Accounts.onLogin(async () => {
+  const user = await Meteor.userAsync();
 
   if (user) {
     const locale = user.locale;

@@ -16,42 +16,34 @@ import { PrivateSettings } from "/imports/utils/PrivateSettings";
 
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
+async function ifCollectionEmpty<
+  T extends {
+    [key: string]: any;
+  },
+  U,
+>(collection: Mongo.Collection<T, U>, methods: string[]) {
+  if ((await collection.countDocuments()) === 0) {
+    for (const method of methods) {
+      // eslint-disable-next-line no-await-in-loop
+      const result = await Meteor.callAsync(method);
+      /* eslint-disable-next-line no-console */
+      console.log(result);
+    }
+  }
+}
+
 if (runBackgroundTasks && Meteor.isServer && PrivateSettings.testdata) {
-  const logResult = (error: unknown, result: unknown) => {
-    if (error) {
-      throw error;
-    }
-    /* eslint-disable-next-line no-console */
-    console.log(result);
-  };
-
-  const ifCollectionEmpty = async <
-    T extends {
-      [key: string]: any;
-    },
-    U,
-  >(
-    collection: Mongo.Collection<T, U>,
-    methods: string[],
-  ) => {
-    if ((await collection.find().countAsync()) === 0) {
-      methods.forEach((method) => {
-        Meteor.call(method, logResult);
-      });
-    }
-  };
-
-  Meteor.startup(() => {
+  Meteor.startup(async () => {
     // Remove the rate-limiting to allow the tests repeated logins
     Accounts.removeDefaultRateLimit();
 
-    ifCollectionEmpty(InfoPages, ["fixtures.infoPages.create"]);
-    ifCollectionEmpty(Users, ["fixtures.users.create"]);
-    ifCollectionEmpty(Regions, ["fixtures.regions.create"]);
-    ifCollectionEmpty(Groups, ["fixtures.groups.create"]);
-    ifCollectionEmpty(Venues, ["fixtures.venues.create"]);
-    ifCollectionEmpty(Courses, ["fixtures.courses.create"]);
-    ifCollectionEmpty(Events, ["fixtures.events.create", "fixtures.events.generate"]);
-    ifCollectionEmpty(CourseDiscussions, ["fixtures.comments.generate"]);
+    await ifCollectionEmpty(InfoPages, ["fixtures.infoPages.create"]);
+    await ifCollectionEmpty(Groups, ["fixtures.groups.create"]);
+    await ifCollectionEmpty(Regions, ["fixtures.regions.create"]);
+    await ifCollectionEmpty(Users, ["fixtures.users.create"]);
+    await ifCollectionEmpty(Venues, ["fixtures.venues.create"]);
+    await ifCollectionEmpty(Courses, ["fixtures.courses.create"]);
+    await ifCollectionEmpty(Events, ["fixtures.events.create", "fixtures.events.generate"]);
+    await ifCollectionEmpty(CourseDiscussions, ["fixtures.comments.generate"]);
   });
 }

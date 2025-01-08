@@ -1,5 +1,5 @@
 import { i18n } from "/imports/startup/both/i18next";
-import { _ } from "meteor/underscore";
+import { difference } from "lodash";
 import { Meteor } from "meteor/meteor";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 
@@ -41,7 +41,7 @@ template.helpers({
   ...GroupNameHelpers,
   groupsToAdd(this: EventModel) {
     const user = Meteor.user();
-    return user && _.difference(user.groups, this.allGroups);
+    return user && difference(user.groups, this.allGroups);
   },
 });
 

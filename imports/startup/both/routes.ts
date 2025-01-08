@@ -33,13 +33,13 @@ import * as Courses from "/imports/api/courses/publications";
 import * as Invitations from "/imports/api/invitations/publications";
 import * as JoinLinks from "/imports/api/joinLinks/publications";
 import * as Users from "/imports/api/users/publications";
+import { Users as UsersCollection } from "/imports/api/users/users";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { Filtering } from "/imports/utils/filtering";
 import { LocalTime } from "/imports/utils/local-time";
 import { reactiveNow } from "/imports/utils/reactive-now";
 import * as Predicates from "/imports/utils/predicates";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import * as RouterAsync from "/imports/utils/RouterAsync";
 import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
 
@@ -113,10 +113,9 @@ RouterAsync.route("home", {
     const { query } = this.params;
 
     // Add filter options for the homepage
-    return _.extend(query, {
-      internal: false,
-      region: Session.get("region"),
-    });
+    return {
+      query: { ...query, internal: false, region: Session.get("region") },
+    };
   },
 });
 
@@ -133,10 +132,9 @@ RouterAsync.route("search", {
     const { query } = this.params;
 
     // Add filter options for the homepage
-    return _.extend(query, {
-      internal: false,
-      region: Session.get("region"),
-    });
+    return {
+      query: { ...query, internal: false, region: Session.get("region") },
+    };
   },
 });
 
@@ -168,23 +166,24 @@ RouterAsync.route("groupDetails", {
   subscriptions() {
     return { details: Groups.details.subscribe(this.params._id as string) };
   },
-  data(): GroupDetailsData | undefined {
+  async data(): Promise<GroupDetailsData | undefined> {
     let group: GroupModel | undefined;
     const isNew = this.params._id === "create";
     if (isNew) {
       group = new Group() as GroupModel;
     } else {
-      group = this.subscriptions()?.details();
+      group = await this.subscriptions()?.details();
     }
 
     if (!group) {
       return undefined;
     }
 
-    const courseQuery = Object.assign(this.params.query, {
+    const courseQuery = {
+      ...this.params.query,
       group: group._id,
       region: Session.get("region"),
-    });
+    };
 
     return {
       courseQuery,
@@ -205,8 +204,8 @@ RouterAsync.route("info", {
       infoPage: InfoPages.details.subscribe(this.params.page_slug as string, Session.get("locale")),
     };
   },
-  data() {
-    const page = this.subscriptions()?.infoPage();
+  async data() {
+    const page = await this.subscriptions()?.infoPage();
     if (!page) {
       return undefined;
     }
@@ -234,7 +233,7 @@ RouterAsync.route("profile", {
       groups: Groups.findFilter.subscribe({ own: true }),
     };
   },
-  data() {
+  async data() {
     const data: {
       user?: {
         _id: string;
@@ -248,17 +247,17 @@ RouterAsync.route("profile", {
         verified: boolean;
       };
     } = {};
-    const user = Meteor.user();
     const subs = this.subscriptions();
+    const user = await Meteor.userAsync();
     if (user && subs && subs.tenants) {
       const userdata = {
         _id: user._id,
         name: user.getDisplayName(),
         notifications: user.notifications,
         allowPrivateMessages: user.allowPrivateMessages,
-        tenants: subs.tenants(),
-        groups: subs.groups(),
-        venues: subs.venues(),
+        tenants: await subs.tenants(),
+        groups: await subs.groups(),
+        venues: await subs.venues(),
         email: user.emails?.[0]?.address,
         verified: user.emails?.[0]?.verified || false,
       };
@@ -274,27 +273,44 @@ RouterAsync.route("proposeCourse", {
   async onRun() {
     await import("/imports/ui/pages/course-create");
   },
-  data: CourseTemplate,
+  data() {
+    const { query } = this.params;
+
+    const course = CourseTemplate();
+
+    course.name = query.title || "";
+
+    return { ...course, group: query.group, singleEvent: query.singleEvent === "1" };
+  },
 });
 
 RouterAsync.route("resetPassword", {
   path: "reset-password/:token",
-  template: "HandleResetPasswordPage",
+  template: "ResetPasswordPage",
   async onRun() {
-    await import("/imports/ui/pages/handle-reset-password");
     await import("/imports/ui/pages/reset-password");
+  },
+  data() {
+    return { token: this.params.token, email: this.params.query.email };
+  },
+});
+
+RouterAsync.route("visitorToUser", {
+  path: "visitor-to-user/:token",
+  template: "VisitorToUserPage",
+  async onRun() {
     await import("/imports/ui/pages/visitor-to-user");
   },
   data() {
-    return { token: this.params.token };
+    return { token: this.params.token, email: this.params.query.email };
   },
 });
 
 RouterAsync.route("showCourse", {
   path: "course/:_id/:slug?",
   template: "courseDetailsPage",
-  action() {
-    const course = Courses.details.subscribe(this.params._id as string)();
+  async action() {
+    const course = this.data();
     if (course?.singleEvent && course.nextEvent && this.params.query.force !== "1") {
       this.redirect("showEvent", course.nextEvent, { replaceState: true });
     } else {
@@ -308,8 +324,8 @@ RouterAsync.route("showCourse", {
   subscriptions() {
     return { courses: Courses.details.subscribe(this.params._id as string) };
   },
-  data() {
-    const course = this.subscriptions()?.courses();
+  async data() {
+    const course = await this.subscriptions()?.courses();
 
     if (!course) {
       return undefined;
@@ -343,7 +359,7 @@ RouterAsync.route("createEvent", {
     }
     return {};
   },
-  data() {
+  async data() {
     const subs = this.subscriptions();
 
     const propose = LocalTime.now().startOf("hour");
@@ -353,7 +369,7 @@ RouterAsync.route("createEvent", {
       endLocal: LocalTime.toString(moment(propose).add(2, "hour")),
       sendReminder: PublicSettings.sendReminderPreset,
     }) as EventModel & { new?: boolean; startLocal?: string; endLocal?: string };
-    const course = subs?.course?.();
+    const course = await subs?.course?.();
     if (course) {
       event.title = course.name;
       event.courseId = course._id;
@@ -378,7 +394,7 @@ RouterAsync.route("showEvent", {
       event: Events.details.subscribe(this.params._id as string),
     };
   },
-  data() {
+  async data() {
     const subs = this.subscriptions();
 
     return subs?.event();
@@ -397,10 +413,10 @@ RouterAsync.route("userprofile", {
       user: Users.details.subscribe(this.params._id as string),
     };
   },
-  data() {
+  async data() {
     const sub = this.subscriptions();
 
-    const user = sub?.user();
+    const user = await sub?.user();
     if (!user) {
       return undefined; // not loaded?
     }
@@ -408,11 +424,11 @@ RouterAsync.route("userprofile", {
     // What privileges the user has
     const privileges = (["admin"] as const).reduce<{ [role: string]: boolean }>((originalPs, p) => {
       const ps = { ...originalPs };
-      ps[p] = UserPrivilegeUtils.privileged(user, p);
+      ps[p] = user.privileged(p);
       return ps;
     }, {});
 
-    const alterPrivileges = UserPrivilegeUtils.privilegedTo("admin");
+    const alterPrivileges = (await Meteor.userAsync())?.privileged("admin");
     const showPrivileges = alterPrivileges || user.privileges?.length;
 
     return {
@@ -434,14 +450,14 @@ RouterAsync.route("venueDetails", {
   subscriptions() {
     return { details: Venues.details.subscribe(this.params._id as string) };
   },
-  data() {
+  async data() {
     const id = this.params._id;
 
     let venue: VenueModel | undefined;
     if (id === "create") {
       venue = new Venue() as VenueModel;
     } else {
-      venue = this.subscriptions()?.details();
+      venue = await this.subscriptions()?.details();
       if (!venue) {
         return undefined; // Not found
       }
@@ -477,8 +493,8 @@ RouterAsync.route("tenantDetails", {
   subscriptions() {
     return { tenant: Tenants.details.subscribe(this.params._id as string) };
   },
-  data() {
-    const tenant = this.subscriptions()?.tenant();
+  async data() {
+    const tenant = await this.subscriptions()?.tenant();
 
     if (!tenant) {
       return undefined;
@@ -505,14 +521,14 @@ RouterAsync.route("invitation", {
       invitation: Invitations.details.subscribe(tenantId, invitationToken),
     };
   },
-  data() {
+  async data() {
     const sub = this.subscriptions();
 
     if (!sub) {
       return undefined;
     }
 
-    const invitation = sub.invitation?.();
+    const invitation = await sub.invitation?.();
     if (!invitation) {
       return undefined;
     }
@@ -538,14 +554,14 @@ RouterAsync.route("join", {
       joinLink: JoinLinks.details.subscribe(tenantId, joinToken),
     };
   },
-  data() {
+  async data() {
     const sub = this.subscriptions();
 
     if (!sub) {
       return undefined;
     }
 
-    const joinLink = sub.joinLink?.();
+    const joinLink = await sub.joinLink?.();
     if (!joinLink) {
       return undefined;
     }
@@ -570,10 +586,10 @@ RouterAsync.route("venuesMap", {
     const query = filter.toQuery();
     return { venues: Venues.findFilter.subscribe(query) };
   },
-  data(): VenuesMapData {
+  async data(): Promise<VenuesMapData> {
     return {
       region: CleanedRegion(Session.get("region")),
-      venues: this.subscriptions()?.venues(),
+      venues: await this.subscriptions()?.venues(),
     };
   },
 });
@@ -598,10 +614,10 @@ RouterAsync.route("eventsMap", {
       events: Events.findFilter.subscribe({ ...{ canceled: false }, ...query }),
     };
   },
-  data(): EventsMapData {
+  async data(): Promise<EventsMapData> {
     return {
       region: CleanedRegion(Session.get("region")),
-      events: this.subscriptions()?.events(),
+      events: await this.subscriptions()?.events(),
     };
   },
 });
@@ -622,9 +638,9 @@ RouterAsync.route("frame/eventsMap", {
       events: Events.findFilter.subscribe({ ...{ canceled: false }, ...query }),
     };
   },
-  data(): FrameEventsMapProps {
+  async data(): Promise<FrameEventsMapProps> {
     return {
-      events: this.subscriptions()?.events(),
+      events: await this.subscriptions()?.events(),
     };
   },
 });
@@ -778,16 +794,16 @@ RouterAsync.route("kioskEvents", {
       ongoing: Events.findFilter.subscribe({ ...{ canceled: false }, ...queryNow }),
     };
   },
-  data() {
+  async data() {
     const sub = this.subscriptions();
 
     const filter = new Filtering(EventParamPredicates).read(this.params.query).done();
 
     const filterParams = filter.toQuery();
     return {
-      today: sub?.today(),
-      future: sub?.future(),
-      ongoing: sub?.ongoing(),
+      today: await sub?.today(),
+      future: await sub?.future(),
+      ongoing: await sub?.ongoing(),
       filter: filterParams,
     };
   },
@@ -821,7 +837,7 @@ RouterAsync.route("timetable", {
       events: Events.findFilter.subscribe({ ...{ canceled: false }, ...query }, 200),
     };
   },
-  data() {
+  async data() {
     const control = this.params.query.control !== "0";
     const day = Number.parseInt(this.params.query.day || "0", 10);
     const filter = new Filtering(EventParamPredicates).read(this.params.query).done();
@@ -833,7 +849,7 @@ RouterAsync.route("timetable", {
     let start: moment.MomentInput;
     let end: moment.MomentInput;
 
-    const events = this.subscriptions?.()?.events().fetch();
+    const events = await (await this.subscriptions?.()?.events())?.fetchAsync();
 
     // collect time when first event starts and last event ends
     events.forEach((event: EventModel) => {
@@ -1025,8 +1041,8 @@ RouterAsync.route("tenants", {
   subscriptions() {
     return { findFilter: Tenants.findFilter.subscribe() };
   },
-  data(): AdminTenantsData {
-    return { tenants: this.subscriptions()?.findFilter() };
+  async data(): Promise<AdminTenantsData> {
+    return { tenants: await this.subscriptions()?.findFilter() };
   },
 });
 
@@ -1063,8 +1079,8 @@ RouterAsync.route("regionDetails", {
   subscriptions() {
     return { details: Regions.details.subscribe(this.params._id as string) };
   },
-  data() {
-    const region = this.subscriptions()?.details();
+  async data() {
+    const region = await this.subscriptions()?.details();
 
     if (!region) {
       return undefined; // Not found
@@ -1107,8 +1123,19 @@ RouterAsync.route("resetPasswortEmail", {
     const email = this.params.query.email as string;
 
     if (email) {
-      // call the server method for sending reset email. https://github.com/meteor/meteor/blob/master/packages/accounts-password/password_server.js
-      Meteor.call("forgotPassword", { email });
+      const user = UsersCollection.findOne({ "emails.address": email });
+      if (user) {
+        Meteor.call("forgotPassword", { email });
+      }
+    } else {
+      const currentUserId = Meteor.userId();
+      if (currentUserId) {
+        const currentUser = UsersCollection.findOne(currentUserId);
+        if (currentUser) {
+          // if a visitor user want to create an account from his profile.
+          Meteor.call("forgotPassword", { email: currentUser?.emailAddress() });
+        }
+      }
     }
 
     this.response.writeHead(302, {

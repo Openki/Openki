@@ -8,8 +8,6 @@ import { Events } from "/imports/api/events/events";
 import { RegionEntity, Regions } from "./regions";
 import { Venues } from "/imports/api/venues/venues";
 
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
-import * as AsyncTools from "/imports/utils/async-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import * as StringTools from "/imports/utils/string-tools";
 import { StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";
@@ -36,7 +34,7 @@ export const create = ServerMethod("region.create", async (changes: CreateFields
   }
 
   if (
-    !UserPrivilegeUtils.privileged(user, "admin") /* Admins can add regions */ &&
+    !user.privileged("admin") /* Admins can add regions */ &&
     !user.isTenantAdmin(changes.tenant) /* or admins of a tenant */
   ) {
     throw new Meteor.Error(401, "not permitted");
@@ -63,7 +61,7 @@ export const create = ServerMethod("region.create", async (changes: CreateFields
   set.description = changes.description.trim().substring(0, 1000);
   // Todo: check this already when the user writes into the textarea? is there a limit for course descriptions?
 
-  return Regions.insert(set);
+  return Regions.insertAsync(set);
 });
 
 export const UpdateFieldsPattern = {
@@ -89,7 +87,7 @@ export const update = ServerMethod(
       throw new Meteor.Error(401, "please log in");
     }
 
-    const region = Regions.findOne(regionId);
+    const region = await Regions.findOneAsync(regionId);
     if (!region) {
       throw new Meteor.Error(404, "region not found");
     }
@@ -122,7 +120,7 @@ export const update = ServerMethod(
       set.description = changes.description.trim().substring(0, 1000);
     }
 
-    Regions.update({ _id: regionId }, { $set: set }, { multi: true }, AsyncTools.checkUpdateOne);
+    await Regions.updateAsync({ _id: regionId }, { $set: set });
 
     return regionId;
   },
@@ -136,7 +134,7 @@ export const remove = ServerMethod("region.remove", async (regionId: string) => 
     throw new Meteor.Error(401, "please log in");
   }
 
-  const region = Regions.findOne(regionId);
+  const region = await Regions.findOneAsync(regionId);
   if (!region) {
     throw new Meteor.Error(404, "region not found");
   }
@@ -145,61 +143,39 @@ export const remove = ServerMethod("region.remove", async (regionId: string) => 
     throw new Meteor.Error(401, "not permitted");
   }
 
-  if (Courses.find({ region: regionId }).count() > 20) {
+  if ((await Courses.countDocuments({ region: regionId })) > 20) {
     throw new Meteor.Error(
       401,
       "Deleting regions with more than 20 courses is not allowed. Delete courses or contact an administrator. For safety reasons. So that an active region is not deleted by mistake.",
     );
   }
 
-  Events.remove({ region: regionId });
+  await Events.removeAsync({ region: regionId });
   // CourseDiscussionEntity do not currently have a region.
-  Courses.find({ region: regionId }).forEach((c) => {
-    CourseDiscussions.remove({ courseId: c._id });
-  });
-  Courses.remove({ region: regionId });
-  Venues.remove({ region: regionId });
-  Regions.remove(regionId);
+  for (const c of await Courses.find({ region: regionId }).fetchAsync()) {
+    // eslint-disable-next-line no-await-in-loop
+    await CourseDiscussions.removeAsync({ courseId: c._id });
+  }
+  await Courses.removeAsync({ region: regionId });
+  await Venues.removeAsync({ region: regionId });
+  await Regions.removeAsync(regionId);
 });
 
 export const featureGroup = ServerMethod(
   "region.featureGroup",
-  (regionId: string, groupId: string) => {
+  async (regionId: string, groupId: string) => {
     check(regionId, String);
     check(groupId, String);
 
-    Regions.update(regionId, { $set: { featuredGroup: groupId } });
+    await Regions.updateAsync(regionId, { $set: { featuredGroup: groupId } });
   },
 );
 
-export const unsetFeaturedGroup = ServerMethod("region.unsetFeaturedGroup", (regionId: string) => {
-  check(regionId, String);
+export const unsetFeaturedGroup = ServerMethod(
+  "region.unsetFeaturedGroup",
+  async (regionId: string) => {
+    check(regionId, String);
 
-  Regions.update(regionId, { $set: { featuredGroup: "" } });
-});
-
-Meteor.methods({
-  async "region.updateCounters"(selector) {
-    // this denormalization is called every minutes for all regions in the server/main.js file, this ensures consistency.
-
-    await Promise.all(
-      await Regions.find(selector).mapAsync(async (region) => {
-        // We don't use AsyncTools.untilClean() here because consistency doesn't matter
-        const regionId = region._id;
-
-        const courseCount = await Courses.find({
-          region: regionId,
-          internal: { $ne: true },
-          archived: { $ne: true },
-        }).countAsync();
-        const futureEventCount = await Events.find({
-          region: regionId,
-          internal: { $ne: true },
-          start: { $gte: new Date() },
-        }).countAsync();
-
-        await Regions.updateAsync(regionId, { $set: { courseCount, futureEventCount } });
-      }),
-    );
+    await Regions.updateAsync(regionId, { $set: { featuredGroup: "" } });
   },
-});
+);

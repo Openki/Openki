@@ -6,7 +6,7 @@ import { Users } from "/imports/api/users/users";
 
 import { userSearchPrefix } from "/imports/utils/user-search-prefix";
 import { ServerPublishMany, ServerPublishOne } from "/imports/utils/ServerPublish";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
+import { PasswordResetTokenExpirationInDays } from "/imports/startup/both/UseraccountsConfiguration";
 
 if (Meteor.isServer) {
   // Always publish their own data for logged-in users
@@ -47,7 +47,16 @@ export const [account, useAccount] = ServerPublishOne(
       "services.password.reset.token": 1,
     };
 
-    return Users.find({ "services.password.reset.token": token }, { projection });
+    const tokenLifetimeMs = PasswordResetTokenExpirationInDays * 86400000;
+    const currentTimeMs = Date.now();
+    return Users.find(
+      {
+        "services.password.reset.token": token,
+        // From https://github.com/meteor/meteor/blob/5e5d437c6ac79b61f3f750bc022f95fe5b83a961/packages/accounts-password/password_server.js#L636
+        "services.password.reset.when": { $gt: new Date(currentTimeMs - tokenLifetimeMs) },
+      },
+      { projection },
+    );
   },
   (token: string) => {
     // Public fields from users
@@ -77,7 +86,7 @@ export const [details, useDetails] = ServerPublishOne(
     };
 
     // Admins may see other's privileges
-    if (UserPrivilegeUtils.privileged(Meteor.userId(), "admin")) {
+    if (Meteor.user()?.privileged("admin")) {
       projection.privileges = 1;
     }
 
@@ -94,7 +103,7 @@ export const [details, useDetails] = ServerPublishOne(
     };
 
     // Admins may see other's privileges
-    if (UserPrivilegeUtils.privileged(Meteor.userId(), "admin")) {
+    if (Meteor.user()?.privileged("admin")) {
       projection.privileges = 1;
     }
 

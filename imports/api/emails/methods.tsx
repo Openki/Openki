@@ -7,14 +7,13 @@ import { Meteor } from "meteor/meteor";
 import { Version } from "/imports/api/version/version";
 import { Users } from "/imports/api/users/users";
 
-import { Notification } from "../../startup/both/emails/notification";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
+import { Notification } from "/imports/startup/both/emails/notification";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { SafeString, Type } from "/imports/utils/CustomChecks";
 import { renderToEmail } from "/imports/utils/renderToEmail";
-import { Root } from "../../emails/Root";
-import { Report } from "../../emails/Report";
+import { Root } from "/imports/emails/Root";
+import { Report } from "/imports/emails/Report";
 
 export const sendVerificationEmail = ServerMethod(
   "sendVerificationEmail",
@@ -53,7 +52,7 @@ export const sendPrivateMessage = ServerMethod(
     if (!recipient) {
       throw new Meteor.Error(404, "no such user");
     }
-    if (!recipient.allowPrivateMessages && !UserPrivilegeUtils.privileged(operator, "admin")) {
+    if (!recipient.allowPrivateMessages && !operator.privileged("admin")) {
       throw new Meteor.Error(401, "this user does not accept private messages from users");
     }
 
@@ -114,7 +113,7 @@ export const sendReport = ServerMethod(
       html: message,
     };
 
-    Email.send(email);
+    await Email.sendAsync(email);
   },
   { simulation: false },
 );

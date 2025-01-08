@@ -1,3 +1,4 @@
+import { Meteor } from "meteor/meteor";
 import { ReactiveVar } from "meteor/reactive-var";
 import { Router } from "meteor/iron:router";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
@@ -9,11 +10,9 @@ import { Log } from "/imports/api/log/log";
 import * as Logs from "/imports/api/log/publications";
 
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import * as UrlTools from "/imports/utils/url-tools";
 import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
-import { SubscriptionType } from "/imports/utils/ServerPublishBlaze";
 
 import "./log-entry";
 
@@ -25,7 +24,7 @@ const Template = TemplateAny as TemplateStaticTyped<
   // LogCollection.Filtering Params are allowed as data input
   Parameters<ReturnType<LogCollection["Filtering"]>["read"]>[0],
   {
-    logs: ReactiveVar<SubscriptionType<(typeof Logs)["findFilter"]> | undefined>;
+    logs: ReactiveVar<Mongo.Cursor<LogEntity, LogEntity> | undefined>;
     limit: ReactiveVar<number>;
     filter: ReturnType<LogCollection["Filtering"]>;
     updateUrl: () => boolean;
@@ -79,13 +78,18 @@ template.onCreated(function () {
     // Have some extra log entries ready so that they are shown immediately
     // when more are demanded
     const overLimit = instance.limit.get() + batchLoad + 1;
-    instance.logs.set(Logs.findFilter.subscribe(instance, filterQuery, overLimit));
+
+    Logs.findFilter
+      .subscribe(instance, filterQuery, overLimit)()
+      .then((r) => {
+        instance.logs.set(r);
+      });
   });
 });
 
 template.helpers({
   privileged() {
-    return UserPrivilegeUtils.privilegedTo("admin");
+    return Meteor.user()?.privileged("admin");
   },
 
   date() {
@@ -107,14 +111,14 @@ template.helpers({
     const instance = Template.instance();
 
     const limit = instance.limit.get();
-    const results = instance.logs.get()?.().count() || 0;
+    const results = instance.logs.get()?.count() || 0;
 
     return results > limit;
   },
 
   results() {
     const instance = Template.instance();
-    const entries = instance.logs.get()?.().fetch().slice(0, instance.limit.get()) || [];
+    const entries = instance.logs.get()?.fetch().slice(0, instance.limit.get()) || [];
     let last: moment.Moment | false = false;
     const inter: (LogEntity | { interval: string })[] = [];
     entries.forEach((entry) => {

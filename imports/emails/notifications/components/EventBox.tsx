@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 import { EventModel } from "/imports/api/events/events";
-import { getStartEndDate } from "../../../startup/both/emails/notifications/utils";
+import { getStartEndDateInTz } from "/imports/startup/both/emails/notifications/utils";
 
 function getVenueLine(event: EventModel) {
   const { venue } = event;
@@ -15,14 +15,16 @@ function getVenueLine(event: EventModel) {
 
 export function EventBox({
   event,
+  tz,
   campaign,
   lng,
 }: {
   event: EventModel;
+  tz: string;
   campaign: string;
   lng: string;
 }) {
-  const { startMoment, endMoment } = getStartEndDate(event, lng);
+  const { startMoment, endMoment } = getStartEndDateInTz(event, tz, lng);
   const eventDate = startMoment.format("dddd, LL");
   const eventStart = startMoment.format("LT");
   const eventEnd = endMoment.format("LT");

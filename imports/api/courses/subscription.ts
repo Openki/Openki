@@ -10,6 +10,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import { Events } from "/imports/api/events/events";
 import { UserModel } from "/imports/api/users/users";
 import { Method } from "/imports/api/courses/methods";
+import * as groupsDenormalizer from "./groupsDenormalizer";
 
 import { hasRole } from "/imports/utils/course-role-utils";
 import { Notification } from "../../startup/both/emails/notification";
@@ -24,7 +25,7 @@ export async function processChange<T>(change: Change<T>, options?: { isSimulati
     }
   } catch (err) {
     /* eslint-disable-next-line no-console */
-    console.log(err);
+    console.error(err);
     Alert.serverError(err);
   }
 }
@@ -101,7 +102,7 @@ export class Subscribe extends Change<{
     return "Courses.Subscribe";
   }
 
-  static read(body: {
+  static async read(body: {
     courseId: string;
     userId: string | undefined;
     role: string;
@@ -110,7 +111,7 @@ export class Subscribe extends Change<{
   }) {
     check(body, Object);
     return new this(
-      Courses.findOne(body.courseId),
+      await Courses.findOneAsync(body.courseId),
       body.userId,
       body.role,
       body.reason,
@@ -222,20 +223,20 @@ export class Subscribe extends Change<{
     // Add the user as member if she's not listed yet
     // Note that the user will be created with the role already
     // filled to avoid seeing empty list of roles.
-    Courses.update(
+    await Courses.updateAsync(
       { _id: this.course._id, "members.user": { $ne: this.userId } },
       { $addToSet: { members: { user: this.userId, roles: [this.role] } } },
     );
 
     // Now that we're sure she's listed, add the role too.
     // If we just added her, this is a no-op.
-    Courses.update(
+    await Courses.updateAsync(
       { _id: this.course._id, "members.user": this.userId },
       { $addToSet: { "members.$.roles": this.role } },
     );
 
     if (this.comment) {
-      Courses.update(
+      await Courses.updateAsync(
         { _id: this.course._id, "members.user": this.userId },
         { $set: { "members.$.comment": this.comment } },
       );
@@ -243,14 +244,14 @@ export class Subscribe extends Change<{
 
     // Update member related calculated fields
     await interestedDenormalizer.afterSubscribe(this.course._id);
-    Courses.updateGroups(this.course._id);
+    await groupsDenormalizer.updateGroups(this.course._id);
 
-    timeLastEditDenormalizer.afterSubscribe(this.course._id);
-    historyDenormalizer.afterSubscribe(this.course._id, this.userId, this.role);
+    await timeLastEditDenormalizer.afterSubscribe(this.course._id);
+    await historyDenormalizer.afterSubscribe(this.course._id, this.userId, this.role);
 
     if (this.reason === "interested") {
       // Send notification to team
-      Notification.Join.record(this.course._id, this.userId, this.role, this.comment);
+      await Notification.Join.record(this.course._id, this.userId, this.role, this.comment);
     }
   }
 }
@@ -271,8 +272,8 @@ export class Unsubscribe extends Change<{
     return "Courses.Unsubscribe";
   }
 
-  static read(body: { courseId: string; userId: string; role: string }) {
-    return new this(Courses.findOne(body.courseId), body.userId, body.role);
+  static async read(body: { courseId: string; userId: string; role: string }) {
+    return new this(await Courses.findOneAsync(body.courseId), body.userId, body.role);
   }
 
   constructor(course: CourseModel | undefined, userId: string | undefined | null, role: string) {
@@ -345,16 +346,16 @@ export class Unsubscribe extends Change<{
     // Unsubscribe from the team also means remove editor rights.
     if (this.role === "team") {
       update.$pull.editors = this.userId;
-      Events.update(
+      await Events.updateAsync(
         { courseId: this.course._id },
         { $pull: { editors: this.userId } },
         { multi: true },
       );
     }
-    Courses.update({ _id: this.course._id, "members.user": this.userId }, update);
+    await Courses.updateAsync({ _id: this.course._id, "members.user": this.userId }, update);
 
     // Housekeeping: Remove members that have no role left
-    Courses.update(
+    await Courses.updateAsync(
       { _id: this.course._id },
       {
         $pull: { members: { roles: { $size: 0 } } },
@@ -363,10 +364,10 @@ export class Unsubscribe extends Change<{
 
     // Update member related calculated fields
     await interestedDenormalizer.afterUnsubscribe(this.course._id);
-    Courses.updateGroups(this.course._id);
+    await groupsDenormalizer.updateGroups(this.course._id);
 
-    timeLastEditDenormalizer.afterUnsubscribe(this.course._id);
-    historyDenormalizer.afterUnsubscribe(this.course._id, this.userId, this.role);
+    await timeLastEditDenormalizer.afterUnsubscribe(this.course._id);
+    await historyDenormalizer.afterUnsubscribe(this.course._id, this.userId, this.role);
   }
 }
 
@@ -386,8 +387,8 @@ export class Message extends Change<{
     return "Courses.Message";
   }
 
-  static read(body: { courseId: string; userId: string; message: string | undefined }) {
-    return new this(Courses.findOne(body.courseId), body.userId, body.message);
+  static async read(body: { courseId: string; userId: string; message: string | undefined }) {
+    return new this(await Courses.findOneAsync(body.courseId), body.userId, body.message);
   }
 
   constructor(course: CourseModel | undefined, userId: string, message: string | undefined) {

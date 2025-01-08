@@ -1,7 +1,5 @@
 import { Match, check } from "meteor/check";
 import { Meteor } from "meteor/meteor";
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { UpdateFilter } from "mongodb";
 import { i18n } from "/imports/startup/both/i18next";
 import { _ } from "meteor/underscore";
 import moment from "moment";
@@ -12,14 +10,16 @@ import * as courseHistoryDenormalizer from "/imports/api/courses/historyDenormal
 import * as courseTimeLastEditDenormalizer from "/imports/api/courses/timeLastEditDenormalizer";
 import * as courseImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
 import * as categoriesDenormalizer from "/imports/api/events/categoriesDenormalizer";
+import * as groupsDenormalizer from "/imports/api/events/groupsDenormalizer";
+import * as venueDenormalizer from "/imports/api/events/venueDenormalizer";
+import * as courseNextEventDenormalizer from "/imports/api/courses/nextEventDenormalizer";
+import * as regionsCountDenormalizer from "/imports/api/regions/countDenormalizer";
 import { EventEntity, EventModel, Events, OEvent } from "/imports/api/events/events";
 import { Groups } from "/imports/api/groups/groups";
 import { Regions } from "/imports/api/regions/regions";
-import { VenueModel, Venues } from "/imports/api/venues/venues";
 
 import { Notification } from "../../startup/both/emails/notification";
 import { AffectedReplicaSelectors } from "/imports/utils/affected-replica-selectors";
-import * as AsyncTools from "/imports/utils/async-tools";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { LocalTime } from "/imports/utils/local-time";
 import * as StringTools from "/imports/utils/string-tools";
@@ -27,7 +27,6 @@ import * as UpdateMethods from "/imports/utils/update-methods";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { HtmlString, SafeString, StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";
 import { GroupPromoters } from "/imports/utils/update-methods";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
 /**
@@ -43,14 +42,14 @@ const ReplicaSync = function (
 ) {
   let affected = 0;
 
-  const apply = function (changes: Partial<EventEntity>) {
+  const apply = async function (changes: Partial<EventEntity>) {
     const startMoment = moment(changes.start);
     const endMoment = moment(changes.end);
     const timeIsValid = startMoment.isValid() && endMoment.isValid();
     const startTime = { hour: startMoment.hour(), minute: startMoment.minute() };
     const timeDelta = endMoment.diff(startMoment);
 
-    Events.find(AffectedReplicaSelectors(event)).forEach((replica) => {
+    for (const replica of await Events.find(AffectedReplicaSelectors(event)).fetchAsync()) {
       const replicaChanges = updateOptions.infos ? { ...changes } : {};
 
       const updateTime =
@@ -65,7 +64,8 @@ const ReplicaSync = function (
           end: newStartMoment.add(timeDelta).toDate(),
         });
 
-        const regionZone = LocalTime.zone(replica.region);
+        // eslint-disable-next-line no-await-in-loop
+        const regionZone = await LocalTime.zone(replica.region);
         Object.assign(replicaChanges, {
           startLocal: regionZone.toString(replicaChanges.start as Date),
           endLocal: regionZone.toString(replicaChanges.end as Date),
@@ -79,11 +79,12 @@ const ReplicaSync = function (
 
       if (updateOptions.infos || updateTime) {
         // only update if something has changed
-        Events.update({ _id: replica._id }, { $set: replicaChanges });
+        // eslint-disable-next-line no-await-in-loop
+        await Events.updateAsync({ _id: replica._id }, { $set: replicaChanges });
       }
 
       affected += 1;
-    });
+    }
   };
 
   return {
@@ -246,7 +247,7 @@ export const save = ServerMethod(
       throw new Meteor.Error(400, "Region not found");
     }
 
-    const regionZone = LocalTime.zone(region._id);
+    const regionZone = await LocalTime.zone(region._id);
 
     // Don't allow moving past events or moving events into the past
     // This section needs a rewrite even more than the rest of this method
@@ -342,7 +343,7 @@ export const save = ServerMethod(
           changedReplicas: { time: updateChangedReplicasTime ?? false },
         };
         const replicaSync = ReplicaSync(event, updateOptions);
-        replicaSync.apply(editFields);
+        await replicaSync.apply(editFields);
         affectedReplicaCount = replicaSync.affected();
       }
 
@@ -382,57 +383,58 @@ export const save = ServerMethod(
       await Notification.Event.record(eventId, isNew, comment || undefined);
     }
 
-    if (Meteor.isServer) {
-      Meteor.call("event.updateVenue", eventId, AsyncTools.logErrors);
-      Meteor.call("event.updateGroups", eventId, AsyncTools.logErrors);
-      Meteor.call("region.updateCounters", event.region, AsyncTools.logErrors);
-
-      // the assumption is that all replicas have the same course if any
-      if (event.courseId) {
-        Meteor.call("course.updateNextEvent", event.courseId, AsyncTools.logErrors);
-      }
+    await venueDenormalizer.updateVenue(eventId);
+    await groupsDenormalizer.updateGroups(eventId);
+    await regionsCountDenormalizer.updateCounters(event.region);
+    // the assumption is that all replicas have the same course if any
+    if (event.courseId) {
+      await courseNextEventDenormalizer.updateNextEvent(event.courseId);
     }
 
     return eventId;
   },
+  { simulation: false },
 );
 
-export const remove = ServerMethod("event.remove", async (eventId: string) => {
-  check(eventId, SafeString());
+export const remove = ServerMethod(
+  "event.remove",
+  async (eventId: string) => {
+    check(eventId, SafeString());
 
-  const user = await Meteor.userAsync();
-  if (!user) {
-    throw new Meteor.Error(401, "please log in");
-  }
+    const user = await Meteor.userAsync();
+    if (!user) {
+      throw new Meteor.Error(401, "please log in");
+    }
 
-  const event = await Events.findOneAsync(eventId);
-  if (!event) {
-    throw new Meteor.Error(404, "No such event");
-  }
+    const event = await Events.findOneAsync(eventId);
+    if (!event) {
+      throw new Meteor.Error(404, "No such event");
+    }
 
-  if (!event.editableBy(user)) {
-    throw new Meteor.Error(401, "not permitted");
-  }
+    if (!event.editableBy(user)) {
+      throw new Meteor.Error(401, "not permitted");
+    }
 
-  await Events.removeAsync(eventId);
+    await Events.removeAsync(eventId);
 
-  // unlink child replicas
-  await Events.updateAsync(
-    { replicaOf: event._id },
-    { $unset: { replicaOf: true } },
-    { multi: true },
-  );
+    // unlink child replicas
+    await Events.updateAsync(
+      { replicaOf: event._id },
+      { $unset: { replicaOf: true } },
+      { multi: true },
+    );
 
-  if (event.courseId) {
-    await courseHistoryDenormalizer.afterEventRemove(event.courseId, user._id, {
-      title: event.title,
-      startLocal: event.startLocal,
-    });
-
-    Meteor.call("course.updateNextEvent", event.courseId);
-  }
-  Meteor.call("region.updateCounters", event.region, AsyncTools.logErrors);
-});
+    if (event.courseId) {
+      await courseHistoryDenormalizer.afterEventRemove(event.courseId, user._id, {
+        title: event.title,
+        startLocal: event.startLocal,
+      });
+      await courseNextEventDenormalizer.updateNextEvent(event.courseId);
+    }
+    await regionsCountDenormalizer.updateCounters(event.region);
+  },
+  { simulation: false },
+);
 
 /**
  * Add or remove a group from the groups list
@@ -444,7 +446,10 @@ export const remove = ServerMethod("event.remove", async (eventId: string) => {
  */
 export const promote = ServerMethod(
   "event.promote",
-  UpdateMethods.promote(Events as unknown as GroupPromoters),
+  async (eventId: string, groupId: string, enable: boolean) => {
+    await UpdateMethods.promote(Events as unknown as GroupPromoters)(eventId, groupId, enable);
+    await groupsDenormalizer.updateGroups(eventId);
+  },
 );
 
 /**
@@ -457,7 +462,10 @@ export const promote = ServerMethod(
  */
 export const editing = ServerMethod(
   "event.editing",
-  UpdateMethods.editing(Events as unknown as GroupPromoters),
+  async (eventId: string, groupId: string, enable: boolean) => {
+    await UpdateMethods.editing(Events as unknown as GroupPromoters)(eventId, groupId, enable);
+    await groupsDenormalizer.updateGroups(eventId);
+  },
 );
 
 /**
@@ -500,6 +508,9 @@ export const addParticipant = ServerMethod(
     // Send notification to team
     await Notification["Rsvp.Team"].record(eventId, user._id, companions);
 
+    if (!event.courseId) {
+      return;
+    }
     // if you cant load course its probably because the event doesnt have one
     const course = await Courses.findOneAsync(event.courseId);
     if (!course) {
@@ -511,8 +522,9 @@ export const addParticipant = ServerMethod(
       await processChange(change, { isSimulation: this.isSimulation });
     }
 
-    Meteor.call("course.updateNextEvent", event.courseId);
+    await courseNextEventDenormalizer.updateNextEvent(event.courseId);
   },
+  { simulation: false },
 );
 
 export const removeParticipant = ServerMethod(
@@ -537,8 +549,12 @@ export const removeParticipant = ServerMethod(
 
     await Events.updateAsync({ _id: eventId }, { $pull: { participants: { user: userId } } });
 
-    Meteor.call("course.updateNextEvent", event.courseId);
+    if (!event.courseId) {
+      return;
+    }
+    await courseNextEventDenormalizer.updateNextEvent(event.courseId);
   },
+  { simulation: false },
 );
 
 export const ContactParticipantsOptionsPattern = {
@@ -565,7 +581,7 @@ export const contactParticipants = ServerMethod(
     if (
       !event.editableBy(operator) &&
       !operator.groups.some((g) => event.groupOrganizers.includes(g)) &&
-      !UserPrivilegeUtils.privileged(operator, "admin")
+      !operator.privileged("admin")
     ) {
       throw new Meteor.Error(401, "not permitted");
     }
@@ -597,7 +613,7 @@ export const cancel = ServerMethod(
     if (
       !event.editableBy(operator) &&
       !operator.groups.some((g) => event.groupOrganizers.includes(g)) &&
-      !UserPrivilegeUtils.privileged(operator, "admin")
+      !operator.privileged("admin")
     ) {
       throw new Meteor.Error(401, "edit not permitted");
     }
@@ -627,82 +643,4 @@ export const uncancel = ServerMethod("event.uncancel", async (eventId: string) =
     throw new Meteor.Error(401, "edit not permitted");
   }
   await Events.updateAsync(event._id, { $set: { canceled: false } });
-});
-
-Meteor.methods({
-  /**
-   * Update the venue field for all events matching the selector
-   */
-  "event.updateVenue"(selector) {
-    const idOnly = { projection: { _id: 1 } };
-    Events.find(selector, idOnly).forEach((originalEvent) => {
-      const eventId = originalEvent._id;
-
-      AsyncTools.untilClean((resolve, reject) => {
-        const event = Events.findOne(eventId);
-
-        if (!event) {
-          // Nothing was successfully updated, we're done.
-          resolve(true);
-          return;
-        }
-
-        if (!_.isObject(event.venue)) {
-          // This happens only at creation when the field was not initialized correctly
-          Events.update(event._id, { $set: { venue: { name: "" } } });
-          resolve(false);
-          return;
-        }
-
-        let venue: VenueModel | undefined | false = false;
-        if (event.venue._id) {
-          venue = Venues.findOne(event.venue._id);
-        }
-
-        let update: UpdateFilter<EventEntity>;
-        if (venue) {
-          if (event.start < new Date()) {
-            // Do not update venue for historical events
-            resolve(true);
-            return;
-          }
-
-          // Sync values to the values set in the venue document
-          update = {
-            $set: {
-              "venue.name": venue.name,
-              "venue.address": venue.address,
-              "venue.loc": venue.loc,
-              "venue.editor": venue.editor,
-            },
-          } as UpdateFilter<EventEntity>;
-        } else {
-          // If the venue vanished from the DB we delete the reference but let the cached fields
-          // live on
-          update = { $unset: { "venue._id": 1 } };
-        }
-
-        Events.rawCollection().updateMany({ _id: event._id }, update, {}, (err, result) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(result?.modifiedCount === 0);
-          }
-        });
-      }).catch((reason) => {
-        /* eslint-disable-next-line no-console */
-        console.log("Failed event.updateVenue: ", reason);
-      });
-    });
-  },
-
-  /**
-   * Update the group-related fields of events matching the selector
-   */
-  "event.updateGroups"(selector) {
-    const idOnly = { projection: { _id: 1 } };
-    Events.find(selector, idOnly).forEach((event) => {
-      Events.updateGroups(event._id);
-    });
-  },
 });

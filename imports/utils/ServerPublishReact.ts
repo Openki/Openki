@@ -1,4 +1,4 @@
-import { Meteor, Subscription } from "meteor/meteor";
+import { Subscription } from "meteor/meteor";
 import { useSubscribe, useTracker } from "meteor/react-meteor-data";
 import { publish, QueryBuilder, removeCallback } from "./ServerPublishUtils";
 import { useUserId } from "./react-meteor-data";
@@ -32,10 +32,17 @@ export function createPublicationOne<A extends any[], T>(
   name: string,
   queryBuilder: QueryBuilder<A, T>,
 ): Publication<A, T> {
-  return function (...args: A): [() => boolean, T] {
+  return function (...args: A) {
     const isLoading = useSubscribe(name, ...args);
+    const userId = useUserId();
     const queryArgs = removeCallback(args);
-    return [isLoading, queryBuilder.call({ userId: Meteor.userId() }, ...queryArgs)];
+    return [
+      isLoading,
+      useTracker(
+        () => queryBuilder.call({ userId }, ...queryArgs),
+        [JSON.stringify(queryArgs), userId],
+      ),
+    ];
   };
 }
 

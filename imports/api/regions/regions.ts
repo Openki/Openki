@@ -6,7 +6,6 @@ import { Session } from "meteor/session";
 
 import { UserModel } from "/imports/api/users/users";
 
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import * as Predicates from "/imports/utils/predicates";
 import { Filtering } from "/imports/utils/filtering";
 import { PublicSettings } from "/imports/utils/PublicSettings";
@@ -76,9 +75,9 @@ export interface RegionEntity {
     emailLogo?: string;
   };
   dashboard?: {
-    entity: string;
-    title: string;
-    query: string;
+    entity: "group" | "course" | "courseWithoutPropose" | "event" | "eventsMap" | "propose";
+    title?: string;
+    query?: string;
     showAll?: { link?: string; text?: string };
   }[];
   createdby?: string;
@@ -102,7 +101,7 @@ export class Region {
     }
 
     return (
-      UserPrivilegeUtils.privileged(user, "admin") /* Admins can edit all regions */ ||
+      user.privileged("admin") /* Admins can edit all regions */ ||
       user.isTenantAdmin(this.tenant) /* or admins of a tenant */
     );
   }

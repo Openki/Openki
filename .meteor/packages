@@ -40,8 +40,6 @@ react-meteor-accounts
 
 # SEO
 mdg:seo
-gadicohen:robots-txt
-gadicohen:sitemaps
 
 # Build
 es5-shim@4.8.0                  # ECMAScript 5 compatibility for older browsers

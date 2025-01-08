@@ -103,7 +103,7 @@ export function SendMessage(props: Data) {
             </label>
           </div>
         </>
-      ) : (
+      ) : currentUser ? (
         <div className="card mb-3">
           <div className="card-header bg-warning">
             <span className="fa-regular fa-circle-check" aria-hidden="true"></span>{" "}
@@ -119,7 +119,7 @@ export function SendMessage(props: Data) {
             <VerifyEmail />
           </div>
         </div>
-      )}
+      ) : null}
 
       <div className="form-actions">
         <button type="submit" className="btn btn-save" disabled={isBusy}>

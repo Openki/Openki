@@ -8,7 +8,7 @@ import { Groups } from "/imports/api/groups/groups";
 import { Venues } from "/imports/api/venues/venues";
 import { Geodata, Regions } from "/imports/api/regions/regions";
 
-import { visibleTenants } from "/imports/utils/visible-tenants";
+import { visibleTenantsAsync } from "/imports/utils/visible-tenants";
 import { Filtering } from "/imports/utils/filtering";
 import { ParamWrapper, Predicate } from "/imports/utils/predicates";
 import { FieldSort } from "/imports/utils/sort-spec";
@@ -85,7 +85,6 @@ async function apiResponse<T, U, F extends { [name: string]: Predicate<any> }, R
       .fetchAsync();
 
     const formattedModels: R[] = [];
-    // eslint-disable-next-line no-restricted-syntax
     for (const model of models) {
       // eslint-disable-next-line no-await-in-loop
       const formattedModel = await formatter(model);
@@ -177,7 +176,6 @@ export const Api = {
 
       evr.groups = [];
       const groups = ev.allGroups || [];
-      // eslint-disable-next-line no-restricted-syntax
       for (const groupId of groups) {
         // eslint-disable-next-line no-await-in-loop
         const group = await Groups.findOneAsync(groupId);
@@ -193,7 +191,7 @@ export const Api = {
 
       return evr;
     },
-    { tenants: visibleTenants() },
+    { tenants: await visibleTenantsAsync() },
   ),
   courses: await apiResponse(
     Courses,
@@ -269,6 +267,6 @@ export const Api = {
 
       return course;
     },
-    { tenants: visibleTenants() },
+    { tenants: await visibleTenantsAsync() },
   ),
 };

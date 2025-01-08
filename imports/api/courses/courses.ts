@@ -11,8 +11,6 @@ import * as interestedDenormalizer from "./interestedDenormalizer";
 
 import { hasRoleUser } from "/imports/utils/course-role-utils";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
-import * as AsyncTools from "/imports/utils/async-tools";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import * as FileStorage from "/imports/utils/FileStorage";
@@ -134,7 +132,7 @@ export class Course {
     }
     return (
       this.isNew() /* Anybody may create a new course */ ||
-      UserPrivilegeUtils.privileged(user, "admin") /* Admins can edit all courses */ ||
+      user.privileged("admin") /* Admins can edit all courses */ ||
       _.intersection(user.badges, this.editors).length > 0
     );
   }
@@ -229,48 +227,6 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
       archived: Predicates.flag,
       userInvolved: Predicates.string,
     });
-  }
-
-  /**
-   * Update list of editors
-   */
-  updateGroups(courseId: string) {
-    AsyncTools.untilClean((resolve, reject) => {
-      const course = this.findOne(courseId);
-
-      if (!course) {
-        // If the course doesn't exist it doesn't need updating
-        resolve(true);
-        return;
-      }
-
-      const editors = course.groupOrganizers.slice();
-
-      course.members.forEach((member) => {
-        if (member.roles.includes("team")) {
-          editors.push(member.user);
-        }
-      });
-
-      const update = { $set: { editors } };
-
-      this.rawCollection().updateMany({ _id: course._id }, update, {}, (err, result) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(result?.modifiedCount === 0);
-        }
-      });
-    }).then(
-      () => {
-        // At some point we'll have to figure out a proper caching hierarchy
-        Meteor.call("event.updateGroups", { courseId });
-      },
-      (reason) => {
-        /* eslint-disable-next-line no-console */
-        console.log(`Failed updateGroups: ${reason}`);
-      },
-    );
   }
 
   /**

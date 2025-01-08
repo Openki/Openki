@@ -1,7 +1,7 @@
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import { _ } from "meteor/underscore";
+import { intersection } from "lodash";
 import { textPlain } from "/imports/utils/html-tools";
 import { truncate } from "/imports/utils/string-tools";
 
@@ -18,7 +18,6 @@ import * as TemplateMixins from "/imports/ui/lib/template-mixins";
 import * as Viewport from "/imports/ui/lib/viewport";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
@@ -40,6 +39,7 @@ import "/imports/ui/components/regions/tag";
 import "/imports/ui/components/sharing";
 import "/imports/ui/components/report";
 import "/imports/ui/components/internal-indicator";
+import "/imports/ui/components/single-event-indicator";
 
 import "./button-course-archive";
 import "./confirm-dialog";
@@ -200,10 +200,11 @@ template.events({
           }),
         );
 
+        const user = await Meteor.userAsync();
         let role;
-        if (_.intersection(Meteor.user()?.badges || [], course.editors).length > 0) {
+        if (intersection(user?.badges || [], course.editors).length > 0) {
           role = "team";
-        } else if (UserPrivilegeUtils.privilegedTo("admin")) {
+        } else if (user?.privileged("admin")) {
           role = "admin";
         } else {
           role = "unknown";

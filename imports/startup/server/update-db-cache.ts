@@ -2,38 +2,48 @@ import { Meteor } from "meteor/meteor";
 import schedule from "node-schedule";
 
 import * as coursesTenantDenormalizer from "/imports/api/courses/tenantDenormalizer";
+import * as courseGroupsDenormalizer from "/imports/api/courses/groupsDenormalizer";
+import * as courseNextEventDenormalizer from "/imports/api/courses/nextEventDenormalizer";
+import * as eventsCourseImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
 import * as eventsCategoriesDenormalizer from "/imports/api/events/categoriesDenormalizer";
 import * as eventsTenantDenormalizer from "/imports/api/events/tenantDenormalizer";
+import * as eventsVenueDenormalizer from "/imports/api/events/venueDenormalizer";
 import * as usersTenantsDenormalizer from "/imports/api/users/tenantsDenormalizer";
+import * as userBadgesDenormalizer from "/imports/api/users/badgesDenormalizer";
+import * as regionsCountDenormalizer from "/imports/api/regions/countDenormalizer";
 
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
-import * as AsyncTools from "/imports/utils/async-tools";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 import { Log } from "/imports/api/log/log";
+import { serverError } from "/imports/api/log/methods";
 
 async function updateDbCacheFields() {
   Log.record("DbCacheFields.Update.Start", [], {});
 
-  // Resync location cache in events
-  Meteor.call("event.updateVenue", {}, AsyncTools.logErrors);
+  try {
+    await eventsCourseImageDenormalizer.onStartUp();
+    // Resync location cache in events
+    await eventsVenueDenormalizer.updateVenue({});
 
-  // Update list of organizers per course
-  Meteor.call("course.updateGroups", {}, AsyncTools.logErrors);
+    // Update list of organizers per course, triggers updateGroups from events
+    await courseGroupsDenormalizer.updateGroups({});
 
-  await eventsCategoriesDenormalizer.onStartUp();
+    await eventsCategoriesDenormalizer.onStartUp();
 
-  // Update List of badges per user
-  Meteor.call("user.updateBadges", {}, AsyncTools.logErrors);
+    // Update List of badges per user
+    await userBadgesDenormalizer.updateBadges({});
 
-  await coursesTenantDenormalizer.onStartUp();
-  await eventsTenantDenormalizer.onStartUp();
-  await usersTenantsDenormalizer.onStartUp();
+    await coursesTenantDenormalizer.onStartUp();
+    await eventsTenantDenormalizer.onStartUp();
+    await usersTenantsDenormalizer.onStartUp();
 
-  // Keep the nextEvent entry updated
-  // On startup do a full scan to catch stragglers
-  Meteor.call("course.updateNextEvent", {}, AsyncTools.logErrors);
-  Meteor.call("region.updateCounters", {}, AsyncTools.logErrors);
-
+    // Keep the nextEvent entry updated
+    // On startup do a full scan to catch stragglers
+    await courseNextEventDenormalizer.updateNextEvent({});
+    await regionsCountDenormalizer.updateCounters({});
+  } catch (error) {
+    serverError(error);
+  }
   Log.record("DbCacheFields.Update.End", [], {});
 }
 
@@ -54,14 +64,16 @@ if (runBackgroundTasks)
     }
 
     Meteor.setInterval(
-      () => {
-        // Update nextEvent for courses where it expired
-        Meteor.call(
-          "course.updateNextEvent",
-          { "nextEvent.start": { $lt: new Date() } },
-          AsyncTools.logErrors,
-        );
-        Meteor.call("region.updateCounters", {}, AsyncTools.logErrors);
+      async () => {
+        try {
+          // Update nextEvent for courses where it expired
+          await courseNextEventDenormalizer.updateNextEvent({
+            "nextEvent.start": { $lt: new Date() },
+          });
+          await regionsCountDenormalizer.updateCounters({});
+        } catch (error) {
+          serverError(error);
+        }
       },
       60 * 1000, // Check every minute
     );

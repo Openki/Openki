@@ -11,6 +11,7 @@ export type Props = {
   unregisterToEventLink: string;
   eventTitle: React.JSX.Element | undefined;
   eventCalendar: string;
+  tz: string;
   username: string;
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   campaign: string;
@@ -23,6 +24,7 @@ export function EventReminder({
   unregisterToEventLink,
   eventTitle,
   eventCalendar,
+  tz,
   username,
   unsubscribe,
   campaign,
@@ -52,7 +54,7 @@ export function EventReminder({
               {t("notification.event.reminder.unregisterEvent", "Un-enroll")}
             </a>
           </p>
-          <EventBox event={event} campaign={campaign} lng={lng} />
+          <EventBox event={event} tz={tz} campaign={campaign} lng={lng} />
         </td>
       </tr>
       <Footer

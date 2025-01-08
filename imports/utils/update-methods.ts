@@ -20,31 +20,29 @@ export interface GroupPromoterModel {
   editableBy(user: UserModel): boolean;
 }
 
-export interface GroupPromoters extends Mongo.Collection<GroupPromoterEntity, GroupPromoterModel> {
-  updateGroups(docId: string): void;
-}
+export type GroupPromoters = Mongo.Collection<GroupPromoterEntity, GroupPromoterModel>;
 
 /**
  * Create an update method for the groups field
  * @param collection The collection the changes will be applied to when the method is called
  */
 export function promote(collection: GroupPromoters) {
-  return function (docId: string, groupId: string, enable: boolean) {
+  return async function (docId: string, groupId: string, enable: boolean) {
     check(docId, SafeString());
     check(groupId, SafeString());
     check(enable, Boolean);
 
-    const doc = collection.findOne(docId);
+    const doc = await collection.findOneAsync(docId);
     if (!doc) {
       throw new Meteor.Error(404, "Doc not found");
     }
 
-    const group = Groups.findOne(groupId);
+    const group = await Groups.findOneAsync(groupId);
     if (!group) {
       throw new Meteor.Error(404, "Group not found");
     }
 
-    const user = Meteor.user();
+    const user = await Meteor.userAsync();
     if (!user) {
       throw new Meteor.Error(401, "not permitted");
     }
@@ -68,10 +66,7 @@ export function promote(collection: GroupPromoters) {
       update.$pull = { groups: group._id, groupOrganizers: group._id };
     }
 
-    collection.update(doc._id, update);
-    if (Meteor.isServer) {
-      collection.updateGroups(doc._id);
-    }
+    await collection.updateAsync(doc._id, update);
   };
 }
 
@@ -81,22 +76,22 @@ export function promote(collection: GroupPromoters) {
  * @return A function that can be used as meteor method
  */
 export function editing(collection: GroupPromoters) {
-  return function (docId: string, groupId: string, enable: boolean) {
+  return async function (docId: string, groupId: string, enable: boolean) {
     check(docId, SafeString());
     check(groupId, SafeString());
     check(enable, Boolean);
 
-    const doc = collection.findOne(docId);
+    const doc = await collection.findOneAsync(docId);
     if (!doc) {
       throw new Meteor.Error(404, "Doc not found");
     }
 
-    const group = Groups.findOne(groupId);
+    const group = await Groups.findOneAsync(groupId);
     if (!group) {
       throw new Meteor.Error(404, "Group not found");
     }
 
-    const user = Meteor.user();
+    const user = await Meteor.userAsync();
     if (!user || !doc.editableBy(user)) {
       throw new Meteor.Error(401, "Not permitted");
     }
@@ -105,9 +100,6 @@ export function editing(collection: GroupPromoters) {
     const op = enable ? "$addToSet" : "$pull";
     update[op] = { groupOrganizers: group._id };
 
-    collection.update(doc._id, update);
-    if (Meteor.isServer) {
-      collection.updateGroups(doc._id);
-    }
+    await collection.updateAsync(doc._id, update);
   };
 }

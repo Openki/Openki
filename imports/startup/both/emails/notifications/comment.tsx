@@ -2,7 +2,7 @@ import React from "react";
 import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
-import { _ } from "meteor/underscore";
+import { uniq } from "lodash";
 import i18next from "i18next";
 
 import { CourseDiscussions } from "/imports/api/course-discussions/course-discussions";
@@ -28,12 +28,12 @@ export interface Body {
  */
 export async function record(commentId: string) {
   check(commentId, String);
-  const comment = CourseDiscussions.findOne(commentId);
+  const comment = await CourseDiscussions.findOneAsync(commentId);
   if (!comment) {
     throw new Meteor.Error(`No CourseDiscussion entry for ${commentId}`);
   }
 
-  const course = Courses.findOne(comment.courseId);
+  const course = await Courses.findOneAsync(comment.courseId);
   if (!course) {
     throw new Meteor.Error(`No course entry for ${commentId}`);
   }
@@ -53,7 +53,7 @@ export async function record(commentId: string) {
         $or: [{ _id: threadId }, { parentId: threadId }],
       };
 
-      CourseDiscussions.find(threadSelector).forEach((threadComment) => {
+      await CourseDiscussions.find(threadSelector).forEachAsync((threadComment) => {
         const partId = threadComment.userId;
         if (partId) {
           recipients.push(partId);
@@ -66,7 +66,7 @@ export async function record(commentId: string) {
       recipients = recipients.filter((r) => r !== comment.userId);
     }
 
-    recipients = _.uniq(recipients);
+    recipients = uniq(recipients);
   }
 
   const body: Body = {
@@ -102,7 +102,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
     },
 
-    vars(locale, _actualRecipient, unsubToken) {
+    async vars(locale, _actualRecipient, unsubToken) {
       const t = i18next.getFixedT(locale);
       const campaign = "commentNotify";
 
@@ -137,7 +137,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
       let region: RegionModel | undefined;
       if (course.region) {
-        region = Regions.findOne(course.region);
+        region = await Regions.findOneAsync(course.region);
       }
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);

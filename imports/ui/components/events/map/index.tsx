@@ -80,7 +80,9 @@ export function EventsMap({ events, fullscreenControl = true, openLinksInNewTab 
 
   return (
     <div className="events-map-location-map">
-      <MapContainer bounds={markers.map((mark) => mark.loc) as any}>
+      <MapContainer
+        bounds={markers.length > 0 ? (markers.map((mark) => mark.loc) as any) : undefined}
+      >
         {(TileLayers[locale] || TileLayers.default)()}
         {markers.map((mark) => (
           <React.Fragment key={mark._id}>
@@ -117,9 +119,3 @@ export function EventsMap({ events, fullscreenControl = true, openLinksInNewTab 
     </div>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("EventsMap", () => EventsMap);

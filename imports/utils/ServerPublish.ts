@@ -1,4 +1,5 @@
 import { Subscription } from "meteor/meteor";
+import { Mongo } from "meteor/mongo";
 import * as Blaze from "./ServerPublishBlaze";
 import * as React from "./ServerPublishReact";
 import { publish, QueryBuilder } from "./ServerPublishUtils";

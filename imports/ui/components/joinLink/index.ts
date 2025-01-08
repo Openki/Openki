@@ -4,9 +4,9 @@ import { i18n } from "/imports/startup/both/i18next";
 import { TenantModel } from "/imports/api/tenants/tenants";
 import * as JoinLinks from "/imports/api/joinLinks/publications";
 import * as JoinLinksMethodes from "/imports/api/joinLinks/methods";
+import { JoinLinkEntity } from "/imports/api/joinLinks/joinLinks";
 
 import { ReactiveVar } from "meteor/reactive-var";
-import { SubscriptionType } from "/imports/utils/ServerPublishBlaze";
 
 import "/imports/ui/components/delete-confirm";
 import "./create";
@@ -22,7 +22,7 @@ const Template = TemplateAny as TemplateStaticTyped<
   "joinLink",
   Data,
   {
-    joinLink: ReactiveVar<SubscriptionType<(typeof JoinLinks)["findFilter"]> | undefined>;
+    joinLink: ReactiveVar<Mongo.Cursor<JoinLinkEntity, any> | undefined>;
   }
 >;
 
@@ -35,14 +35,18 @@ template.onCreated(function () {
   instance.joinLink = new ReactiveVar(undefined);
 
   instance.autorun(() => {
-    instance.joinLink.set(JoinLinks.findFilter.subscribe({ tenant: tenant._id }));
+    JoinLinks.findFilter
+      .subscribe({ tenant: tenant._id })()
+      .then((r) => {
+        instance.joinLink.set(r);
+      });
   });
 });
 
 template.helpers({
   joinLink() {
     const instance = Template.instance();
-    return instance.joinLink.get()?.()?.fetch()[0];
+    return instance.joinLink.get()?.fetch()[0];
   },
 
   deleteConfirmAttr() {
