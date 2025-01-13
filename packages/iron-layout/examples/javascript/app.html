@@ -1,0 +1,45 @@
+<head>
+  <title>app</title>
+</head>
+
+<body>
+</body>
+
+<template name="MyLayout">
+  <h1>My Layout: {{title}}</h1>
+
+  <aside>
+    {{> yield "aside"}}
+  </aside>
+
+  {{> yield}}
+
+  <footer>
+    {{> yield "footer"}}
+  </footer>
+</template>
+
+<template name="PageOne">
+  <article>
+    <h3>
+      Page One: {{title}}
+    </h3>
+  </article>
+
+  {{#contentFor "footer"}}
+    Footer stuff
+  {{/contentFor}}
+</template>
+
+<template name="PageTwo">
+  <article>
+    <h3>
+      Page Two: {{title}}
+    </h3>
+  </article>
+</template>
+
+<template name="CustomAside">
+  Custom Aside
+</template>
+
