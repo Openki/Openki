@@ -9,10 +9,10 @@ import { FieldSort } from "/imports/utils/sort-spec";
 
 export const details = ServerPublishBlaze(
   "invitation",
-  (tenantId: string, token: string) => {
+  async (tenantId: string, token: string) => {
     const invitation = Invitations.find({ tenant: tenantId, token });
 
-    if (invitation.count() === 0) {
+    if ((await invitation.countAsync()) === 0) {
       return undefined;
     }
 
@@ -31,6 +31,17 @@ export const details = ServerPublishBlaze(
 
 export const [findFilter, useFindFilter] = ServerPublishMany(
   "invitations.findFilter",
+  async (filter?: FindFilter, limit?, skip?, sort?: FieldSort[]) => {
+    const tenantId = filter?.tenant;
+
+    const user = await Meteor.userAsync();
+
+    if (!user || !(user.privileged("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
+      throw new Meteor.Error(401, "not permitted");
+    }
+
+    return Invitations.findFilter(filter, limit, skip, sort);
+  },
   (filter?: FindFilter, limit?, skip?, sort?: FieldSort[]) => {
     const tenantId = filter?.tenant;
 

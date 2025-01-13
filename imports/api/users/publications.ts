@@ -26,7 +26,7 @@ export const [simple, useSimple] = ServerPublishOne(
 
     return Users.find(userId, { projection });
   },
-  (userId: string) => {
+  (userId) => {
     // Public fields from users
     const projection: Mongo.FieldSpecifier = { username: 1, contribution: 1 };
 
@@ -58,7 +58,7 @@ export const [account, useAccount] = ServerPublishOne(
       { projection },
     );
   },
-  (token: string) => {
+  (token) => {
     // Public fields from users
     const projection: Mongo.FieldSpecifier = {
       username: 1,
@@ -73,7 +73,7 @@ export const [account, useAccount] = ServerPublishOne(
 
 export const [details, useDetails] = ServerPublishOne(
   "user",
-  (userId: string) => {
+  async (userId: string) => {
     check(userId, String);
 
     // Public fields from users
@@ -86,13 +86,13 @@ export const [details, useDetails] = ServerPublishOne(
     };
 
     // Admins may see other's privileges
-    if (Meteor.user()?.privileged("admin")) {
+    if ((await Meteor.userAsync())?.privileged("admin")) {
       projection.privileges = 1;
     }
 
     return Users.find(userId, { projection });
   },
-  (userId: string) => {
+  (userId) => {
     // Public fields from users
     const projection: Mongo.FieldSpecifier = {
       username: 1,
