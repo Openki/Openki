@@ -33,7 +33,7 @@ export const findFilter = ServerPublish(
   async (filter: FindFilter, limit?, skip?, sort?: FieldSort[]) => {
     const tenantId = filter.tenant;
 
-    const user =await Meteor.userAsync();
+    const user = await Meteor.userAsync();
 
     if (!user || !(user.privileged("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
       return undefined;

@@ -95,10 +95,9 @@
     "postcss-load-config": "4.0.1",
     "prettier": "3.0.3",
     "selenium-webdriver": "4.19.0",
-    "stylelint": "15.10.3",
-    "stylelint-config-prettier": "9.0.5",
-    "stylelint-config-sass-guidelines": "9.0.1",
-    "stylelint-prettier": "4.0.2",
+    "stylelint": "16.10.0",
+    "stylelint-config-sass-guidelines": "12.1.0",
+    "stylelint-prettier": "5.0.2",
     "typescript": "4.9.5"
   },
   "scripts": {

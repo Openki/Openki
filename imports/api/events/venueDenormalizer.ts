@@ -1,6 +1,4 @@
 import { Mongo } from "meteor/mongo";
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { UpdateFilter } from "mongodb";
 
 import { EventEntity, Events } from "/imports/api/events/events";
 import { VenueModel, Venues } from "/imports/api/venues/venues";
@@ -16,7 +14,7 @@ export async function updateVenue(eventIdOrSelector: string | Mongo.Selector<Eve
       venue = await Venues.findOneAsync(event.venue._id);
     }
 
-    let update: UpdateFilter<EventEntity>;
+    let update: Mongo.Modifier<EventEntity>;
     if (venue) {
       if (event.start < new Date()) {
         // Do not update venue for historical events
@@ -32,7 +30,7 @@ export async function updateVenue(eventIdOrSelector: string | Mongo.Selector<Eve
           "venue.loc": venue.loc,
           "venue.editor": venue.editor,
         },
-      } as UpdateFilter<EventEntity>;
+      };
     } else {
       // If the venue vanished from the DB we delete the reference but let the cached fields
       // live on
