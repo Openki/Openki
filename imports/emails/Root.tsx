@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { toEmailLogo } from "/imports/utils/toEmailLogo";
 
@@ -16,10 +16,17 @@ export function Root({
   customSiteName,
   children,
 }: Props & { children: any }) {
+  const [logo, setLogo] = useState("");
+
   const brand = PublicSettings.theme.brand;
   const url = customSiteUrl || Meteor.absoluteUrl();
-  const logo = toEmailLogo(customEmailLogo || PublicSettings.emailLogo);
   const name = customSiteName || Accounts.emailTemplates.siteName;
+
+  useEffect(() => {
+    (async function () {
+      setLogo(await toEmailLogo(customEmailLogo || PublicSettings.emailLogo));
+    })();
+  });
 
   return (
     <>

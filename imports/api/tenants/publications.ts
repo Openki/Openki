@@ -60,6 +60,8 @@ export const [details, useDetails] = ServerPublishOne(
 
 export const findFilter = ServerPublish(
   "Tenants.findFilter",
+  async (find?: FindFilter, limit?: number, skip?: number, sort?: FieldSort[]) =>
+    Tenants.findFilter(await Meteor.userAsync(), find, limit, skip, sort),
   (find?: FindFilter, limit?: number, skip?: number, sort?: FieldSort[]) =>
-    Tenants.findFilter(find, limit, skip, sort),
+    Tenants.findFilter(Meteor.user(), find, limit, skip, sort),
 );

@@ -15,7 +15,7 @@ async function mapSync<T, U>(
   let i = 0;
   for (const item of array) {
     result.push(await callbackfn(item, i, array));
-    i = 1 + 1;
+    i += 1;
   }
 
   return result;

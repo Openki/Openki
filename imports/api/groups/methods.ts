@@ -217,7 +217,7 @@ export const updateMembership = ServerMethod(
       throw new Meteor.Error(401, "Denied");
     }
 
-    const user = Users.findOne({ _id: userId });
+    const user = await Users.findOneAsync({ _id: userId });
     if (!user) {
       throw new Meteor.Error(404, "User not found");
     }
