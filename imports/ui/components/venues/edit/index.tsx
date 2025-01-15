@@ -19,11 +19,11 @@ import { ButtonCancel, ButtonSave } from "/imports/ui/components/buttons";
 import "./styles.scss";
 
 export function Edit({
-  data,
+  venue,
   onSaved,
   onCanceled,
 }: {
-  data: VenueModel;
+  venue: VenueModel;
   onSaved: () => void;
   onCanceled: () => void;
 }) {
@@ -31,24 +31,24 @@ export function Edit({
 
   const sessionRegion = useCurrentRegionId();
   const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
-  const isNew = !data._id;
+  const isNew = !venue._id;
 
   const [isBusy, setIsBusy] = useState(false);
 
   const [changes, setChanges] = useState({
-    name: data.name,
-    description: data.description,
-    address: data.address,
-    route: data.route,
-    short: data.short,
-    maxPeople: data.maxPeople,
-    maxWorkplaces: data.maxWorkplaces,
-    facilities: Object.entries(data.facilities)
+    name: venue.name,
+    description: venue.description,
+    address: venue.address,
+    route: venue.route,
+    short: venue.short,
+    maxPeople: venue.maxPeople,
+    maxWorkplaces: venue.maxWorkplaces,
+    facilities: Object.entries(venue.facilities)
       .filter((f) => f[1])
       .map((f) => f[0] as FacilityOption),
-    otherFacilities: data.otherFacilities,
-    selectedRegion: isNew ? sessionRegion : data.region,
-    loc: data.loc as Geodata | undefined,
+    otherFacilities: venue.otherFacilities,
+    selectedRegion: isNew ? sessionRegion : venue.region,
+    loc: venue.loc as Geodata | undefined,
   });
 
   const [isLoading, regions] = useFindFilter();
@@ -143,7 +143,7 @@ export function Edit({
       return;
     }
 
-    const venueId = data._id || "";
+    const venueId = venue._id || "";
     setIsBusy(true);
     try {
       const res = await VenuesMethods.save(venueId, changes1);
@@ -184,7 +184,7 @@ export function Edit({
 
   return (
     <div className="edit-page venue-edit">
-      {data._id ? (
+      {venue._id ? (
         <h2>{t("venue.edit.title", "Edit venue")}</h2>
       ) : (
         <h2>{t("venue.edit.titleCreate", "Create new venue")}</h2>
@@ -355,9 +355,3 @@ export function Edit({
     </div>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("VenueEdit", () => Edit);
