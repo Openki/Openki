@@ -464,7 +464,7 @@ DynamicTemplate.getParentDataContext = function (view) {
 DynamicTemplate.getDataContext = function (view) {
   while (view) {
     if (view.name === 'with' && !view.__isTemplateWith)
-      return view.dataVar.get();
+      return view.dataVar.get()?.value;
     else
       view = view.parentView;
   }
@@ -490,7 +490,7 @@ DynamicTemplate.getInclusionArguments = function (view) {
     return null;
 
   if (parent.__isTemplateWith)
-    return parent.dataVar.get();
+    return parent.dataVar.get()?.value;
 
   return null;
 };
