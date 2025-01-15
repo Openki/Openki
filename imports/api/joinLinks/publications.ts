@@ -8,16 +8,16 @@ import { FieldSort } from "/imports/utils/sort-spec";
 
 export const details = ServerPublish(
   "joinLink",
-  (tenantId: string, token: string) => {
+  async (tenantId: string, token: string) => {
     const joinLink = JoinLinks.find({ tenant: tenantId, token });
 
-    if (joinLink.count() === 0) {
+    if ((await joinLink.countAsync()) === 0) {
       return undefined;
     }
 
     return [joinLink, Tenants.find(tenantId)];
   },
-  (tenantId: string, token: string) => {
+  (tenantId, token) => {
     const joinLink = JoinLinks.findOne({ tenant: tenantId, token });
 
     if (!joinLink) {
@@ -30,7 +30,18 @@ export const details = ServerPublish(
 
 export const findFilter = ServerPublish(
   "joinLinks.findFilter",
-  (filter: FindFilter, limit?, skip?, sort?: FieldSort[]) => {
+  async (filter: FindFilter, limit?, skip?, sort?: FieldSort[]) => {
+    const tenantId = filter.tenant;
+
+    const user = await Meteor.userAsync();
+
+    if (!user || !(user.privileged("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
+      return undefined;
+    }
+
+    return JoinLinks.findFilter(filter, limit, skip, sort);
+  },
+  (filter, limit?, skip?, sort?) => {
     const tenantId = filter.tenant;
 
     const user = Meteor.user();

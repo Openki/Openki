@@ -8,7 +8,17 @@ import { ServerPublishMany } from "/imports/utils/ServerPublish";
 
 export const [findFilter, useFindFilter] = ServerPublishMany(
   "log",
-  (filter: FindFilter, limit: number) => {
+  async (filter: FindFilter, limit: number) => {
+    check(limit, Match.Integer);
+
+    // Non-admins get an empty list
+    if (!(await Meteor.userAsync())?.privileged("admin")) {
+      return Log.findFilter({}, 0);
+    }
+
+    return Log.findFilter(filter, limit);
+  },
+  (filter, limit) => {
     check(limit, Match.Integer);
 
     // Non-admins get an empty list

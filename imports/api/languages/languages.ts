@@ -2,7 +2,7 @@ import { Mongo } from "meteor/mongo";
 
 /** DB-Model */
 export interface LanguageEntity {
-  [name: string]: unknown;
+  _id: string;
   /** ISO 639-1 code */
   lg: string;
   /** Full name */
@@ -16,7 +16,7 @@ export interface LanguageEntity {
   translatedPercent?: number;
 }
 
-export const LanguagesRaw: { [abbreviation: string]: LanguageEntity } = {
+export const LanguagesRaw: { [abbreviation: string]: Omit<LanguageEntity, "_id"> } = {
   ar: {
     lg: "ar",
     name: "العربية",
