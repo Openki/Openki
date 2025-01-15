@@ -5,7 +5,6 @@ import { _ } from "meteor/underscore";
 import moment from "moment";
 import momentTz from "moment-timezone";
 
-import { CourseMemberEntity, CourseModel } from "/imports/api/courses/courses";
 import {
   EventEntity,
   EventModel,
@@ -19,7 +18,6 @@ import { Region, RegionModel } from "/imports/api/regions/regions";
 import * as Regions from "/imports/api/regions/publications";
 import * as InfoPages from "/imports/api/infoPages/publications";
 import { Tenant, TenantEntity, TenantModel } from "/imports/api/tenants/tenants";
-import { Roles } from "/imports/api/roles/roles";
 import {
   Venue,
   VenueEntity,
@@ -86,15 +84,6 @@ const makeFilterQuery = function (
 
   return query;
 };
-
-function loadRoles(course: CourseModel, member?: CourseMemberEntity) {
-  return Roles.filter((r) => course.roles?.includes(r.type)).map((r) => ({
-    role: r,
-    subscribed: course.userHasRole(Meteor.userId(), r.type),
-    comment: member?.comment,
-    course,
-  }));
-}
 
 if (Meteor.isClient) {
   Analytics.installRouterActions();
@@ -331,15 +320,9 @@ RouterAsync.route("showCourse", {
       return undefined;
     }
 
-    const userId = Meteor.userId();
-    const member = course.members?.find(
-      (memberCandidate: CourseMemberEntity) => memberCandidate.user === userId,
-    );
     const data = {
       edit: !!this.params.query.edit,
-      rolesDetails: loadRoles(course, member),
       course,
-      member,
       select: this.params.query.select,
     };
     return data;

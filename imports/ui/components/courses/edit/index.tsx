@@ -31,13 +31,13 @@ import {
 } from "/imports/api/courses/publications";
 import { useDetails, useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
 
-import "./styles.scss";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 import { SelectCategories } from "../select-categories";
 import { CourseCategories } from "../categories";
 import { EditCustomFields } from "../../edit-custom-fields";
 import { PleaseLogin } from "../../please-login";
+import "./styles.scss";
 
 function GroupHeader({ groupId }: { groupId: string }) {
   const { t } = useTranslation();
