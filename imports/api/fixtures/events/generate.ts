@@ -73,8 +73,18 @@ export async function generate() {
       event.groups = course.groups;
       event.groupOrganizers = [];
 
-      const venue = testVenues[Math.floor(prng() * testVenues.length)];
-      event.venue = await ensure.venue(venue, event.region);
+      const venue = await ensure.venue(
+        testVenues[Math.floor(prng() * testVenues.length)],
+        event.region,
+      );
+
+      event.venue = {
+        _id: venue._id,
+        name: venue.name,
+        loc: venue.loc,
+        address: venue.address,
+        editor: venue.editor,
+      };
 
       if (prng() > 0.6) {
         event.room = rooms[Math.floor(prng() * rooms.length)];

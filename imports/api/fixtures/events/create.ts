@@ -90,6 +90,14 @@ export async function create() {
       end: regionZone.fromString(endLocal).toDate(),
     } as unknown as EventEntity;
 
+    event.venue = {
+      _id: event.venue?._id,
+      name: event.venue?.name,
+      loc: event.venue?.loc,
+      address: event.venue?.address,
+      editor: event.venue?.editor,
+    } as any;
+
     // eslint-disable-next-line no-await-in-loop
     await Events.insertAsync(event);
   }

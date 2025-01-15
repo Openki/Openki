@@ -17,23 +17,29 @@ export const ReportPattern = {
 
 export type Report = Match.PatternMatch<typeof ReportPattern>;
 
-export const clientError = ServerMethod("log.clientError", async function (originalReport: Report) {
-  check(originalReport, ReportPattern);
-  const report: Report & {
-    userId?: string;
-    connectionId?: string | undefined;
-  } = { ...originalReport };
-  report.connectionId = this.connection?.id;
+export const clientError = ServerMethod(
+  "log.clientError",
+  async function (originalReport: Report) {
+    check(originalReport, ReportPattern);
+    const report: Report & {
+      userId?: string;
+      connectionId?: string | undefined;
+    } = { ...originalReport };
+    report.connectionId = this.connection?.id;
 
-  const rel = [report.name, report.connectionId, report.clientId].filter((id) => !!id) as string[];
+    const rel = [report.name, report.connectionId, report.clientId].filter(
+      (id) => !!id,
+    ) as string[];
 
-  const userId = Meteor.userId();
-  if (userId) {
-    report.userId = userId;
-    rel.push(userId);
-  }
-  await Log.record("clientError", rel, report);
-});
+    const userId = Meteor.userId();
+    if (userId) {
+      report.userId = userId;
+      rel.push(userId);
+    }
+    await Log.record("clientError", rel, report);
+  },
+  { simulation: false },
+);
 
 export async function serverError(error: Error) {
   /* eslint-disable-next-line no-console */
