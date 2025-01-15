@@ -67,7 +67,7 @@
                 {{> confirmDialog hasArchiveButton=course.archived course=course}}
               {{/if}}
             {{/if}}
-            {{> courseRoles roles=rolesDetails}}
+            {{> courseRoles course=course}}
           {{/if}}
         </div>
         {{#if mobileViewport}}

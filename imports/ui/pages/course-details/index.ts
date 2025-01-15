@@ -8,7 +8,6 @@ import { truncate } from "/imports/utils/string-tools";
 import * as Alert from "/imports/api/alerts/alert";
 import { Regions } from "/imports/api/regions/regions";
 import * as CoursesMethods from "/imports/api/courses/methods";
-import { RoleEntity } from "/imports/api/roles/roles";
 import { CourseModel } from "/imports/api/courses/courses";
 
 import { Editable } from "/imports/ui/lib/editable";
@@ -55,11 +54,6 @@ const Template = TemplateMixins.Expandible(
     "courseDetailsPage",
     {
       edit: boolean;
-      rolesDetails: {
-        role: RoleEntity;
-        subscribed: boolean;
-        course: CourseModel;
-      }[];
       course: CourseModel;
       member: boolean;
       select: string;
