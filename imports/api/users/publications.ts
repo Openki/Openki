@@ -1,7 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { check } from "meteor/check";
-
 import { Users } from "/imports/api/users/users";
 
 import { userSearchPrefix } from "/imports/utils/user-search-prefix";
@@ -33,7 +32,6 @@ export const [simple, useSimple] = ServerPublishOne(
     return Users.findOne(userId, { projection });
   },
 );
-
 export const [account, useAccount] = ServerPublishOne(
   "user.account",
   (token: string) => {

@@ -1,6 +1,5 @@
 import { Meteor } from "meteor/meteor";
 import { Match, check } from "meteor/check";
-
 import { Events, FindFilter } from "/imports/api/events/events";
 
 import { AffectedReplicaSelectors } from "/imports/utils/affected-replica-selectors";
@@ -36,6 +35,8 @@ export const [details, useDetails] = ServerPublishOne(
     return Events.find({ _id: eventId, tenant: { $in: await visibleTenantsAsync() } });
   },
   (eventId) => {
+    check(eventId, String);
+
     return Events.findOne({ _id: eventId, tenant: { $in: visibleTenants() } });
   },
 );

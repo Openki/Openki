@@ -98,7 +98,7 @@ export function ServerPublish<
 export function ServerPublish<
   A extends any[],
   C extends readonly Mongo.Cursor<any>[],
-  T extends Record<C> | Promise<Record<C>>,
+  T extends Promise<Record<C>> | Record<C>,
   Q,
 >(
   name: string,
