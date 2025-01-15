@@ -209,7 +209,7 @@ export function VenueDetailsPage({ venue }: { venue: VenueModel }) {
                       </span>
                       <ul>
                         {facilityNames().map((facilityName) => (
-                          <li>{facilitiesDisplay(facilityName)}</li>
+                          <li key={facilityName}>{facilitiesDisplay(facilityName)}</li>
                         ))}
                       </ul>
                     </p>
@@ -263,7 +263,7 @@ export function VenueDetailsPage({ venue }: { venue: VenueModel }) {
         </div>
       )}
 
-      {getUpcomingEvents() ? (
+      {getUpcomingEvents().length ? (
         <div className="page-component">
           <h2>{t("venue.details.upcomingEvents", "Upcoming events at this venue:")}</h2>
           <EventList dataEvents={getUpcomingEvents()} withDate={true} withVenue={false} />
@@ -283,7 +283,7 @@ export function VenueDetailsPage({ venue }: { venue: VenueModel }) {
           ) : null}
         </div>
       ) : null}
-      {getPastEvents() ? (
+      {getPastEvents().length ? (
         <div className="page-component">
           <h2>{t("venue.details.pastEvents", "Past events:")}</h2>
           <EventList dataEvents={getPastEvents()} withDate={true} withVenue={false} />
