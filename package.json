@@ -110,7 +110,7 @@
     "sass-lint": "stylelint '**/*.scss'",
     "html-format": "html-beautify '{client,imports,private,public,server}/**/*.html' -r",
     "extract-translations": "rm -f imports/startup/both/i18n/en.json && npx i18next",
-    "reset": "meteor reset && meteor reset --db && rm -rf node_modules package-lock.json && meteor npm install"
+    "reset": "meteor reset && meteor reset --db && rm -rf node_modules package-lock.json && meteor npm install --verbose"
   },
   "repository": {
     "type": "git",
