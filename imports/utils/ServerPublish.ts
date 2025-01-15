@@ -52,7 +52,10 @@ export function ServerPublishMany<A extends any[], T, U>(
     this: Subscription,
     ...args: A
   ) => Promise<Mongo.Cursor<T, U>> | Mongo.Cursor<T, U> | void,
-  queryBuilder: QueryBuilder<A, U> = publisher as any as QueryBuilder<A, U>,
+  queryBuilder: QueryBuilder<A, Mongo.Cursor<T, U>> = publisher as unknown as QueryBuilder<
+    A,
+    Mongo.Cursor<T, U>
+  >,
 ) {
   publish(name, publisher);
   return [
@@ -69,7 +72,7 @@ export function ServerPublishOne<A extends any[], T, U>(
   publish(name, publisher);
 
   return [
-    Blaze.createPublication<A, U>(name, queryBuilder as any),
-    React.createPublicationOne<A, U>(name, queryBuilder as any),
+    Blaze.createPublication<A, U>(name, queryBuilder),
+    React.createPublicationOne<A, U>(name, queryBuilder),
   ];
 }
