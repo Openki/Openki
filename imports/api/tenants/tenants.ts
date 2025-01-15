@@ -1,4 +1,3 @@
-import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { _ } from "meteor/underscore";
 import { Match, check } from "meteor/check";
@@ -74,13 +73,18 @@ export class TenantsCollection extends Mongo.Collection<TenantEntity, TenantMode
    * @param skip skip this many before returning results
    * @param sort list of fields to sort by
    */
-  findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort?: FieldSort[]) {
+  findFilter(
+    me?: UserModel | null,
+    filter: FindFilter = {},
+    limit = 0,
+    skip = 0,
+    sort?: FieldSort[],
+  ) {
     check(filter, Match.Maybe(FindFilterPattern));
     check(limit, Match.Maybe(Match.Integer));
     check(skip, Match.Maybe(Match.Integer));
     check(sort, Match.Maybe([FieldSortPattern]));
 
-    const me = Meteor.user();
     if (!me) {
       // User is not logged in...
       return [];

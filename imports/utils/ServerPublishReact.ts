@@ -1,6 +1,7 @@
 import { Subscription } from "meteor/meteor";
+import { EJSON } from "meteor/ejson";
 import { useSubscribe, useTracker } from "meteor/react-meteor-data";
-import { publish, QueryBuilder, removeCallback } from "./ServerPublishUtils";
+import { publish, QueryBuilder } from "./ServerPublishUtils";
 import { useUserId } from "./react-meteor-data";
 
 export interface Publication<A extends any[], T> {
@@ -17,12 +18,11 @@ export function createPublicationMany<A extends any[], T>(
   return function (...args: A) {
     const isLoading = useSubscribe(name, ...args);
     const userId = useUserId();
-    const queryArgs = removeCallback(args);
     return [
       isLoading,
       useTracker(
-        () => queryBuilder.call({ userId }, ...queryArgs).fetch(),
-        [JSON.stringify(queryArgs), userId],
+        () => queryBuilder.call({ userId }, ...args).fetch(),
+        [EJSON.stringify(args as any), userId],
       ),
     ];
   };
@@ -35,12 +35,11 @@ export function createPublicationOne<A extends any[], T>(
   return function (...args: A) {
     const isLoading = useSubscribe(name, ...args);
     const userId = useUserId();
-    const queryArgs = removeCallback(args);
     return [
       isLoading,
       useTracker(
-        () => queryBuilder.call({ userId }, ...queryArgs),
-        [JSON.stringify(queryArgs), userId],
+        () => queryBuilder.call({ userId }, ...args),
+        [EJSON.stringify(args as any), userId],
       ),
     ];
   };
@@ -81,13 +80,19 @@ export function ServerPublishMany<A extends any[], T>(
  */
 export function ServerPublishMany<A extends any[], T>(
   name: string,
-  publisher: (this: Subscription, ...args: A) => undefined,
+  publisher: (
+    this: Subscription,
+    ...args: A
+  ) => Promise<Mongo.Cursor<T>> | Mongo.Cursor<T> | undefined,
   queryBuilder: QueryBuilder<A, Mongo.Cursor<T>>,
 ): Publication<A, T[]>;
 
 export function ServerPublishMany<A extends any[], T>(
   name: string,
-  publisher: (this: Subscription, ...args: A) => Mongo.Cursor<T> | undefined,
+  publisher: (
+    this: Subscription,
+    ...args: A
+  ) => Promise<Mongo.Cursor<T>> | Mongo.Cursor<T> | undefined,
   queryBuilder: QueryBuilder<A, Mongo.Cursor<T>> = publisher as QueryBuilder<A, Mongo.Cursor<T>>,
 ) {
   publish(name, publisher);

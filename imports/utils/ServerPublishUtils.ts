@@ -11,13 +11,13 @@ export function publish<
   A extends any[],
   C extends readonly Mongo.Cursor<any>[],
   T extends Record<C>,
->(name: string, publisher: (this: Subscription, ...args: A) => void | T) {
+>(name: string, publisher: (this: Subscription, ...args: A) => Promise<T> | T | void) {
   if (Meteor.isServer) {
     // on the server register the publisher / publish the record set
     // wrap the call to handle options
-    Meteor.publish(name, function (...args) {
+    Meteor.publish(name, async function (...args) {
       // everyting is okay, do the work
-      const result = publisher.call(this, ...args);
+      const result = await publisher.call(this, ...args);
       if (result === undefined) {
         this.ready();
       }
