@@ -4,8 +4,6 @@ import { ReactiveDict } from "meteor/reactive-dict";
 
 import { CourseModel } from "/imports/api/courses/courses";
 
-import { Editable } from "/imports/ui/lib/editable";
-
 import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 
 import "/imports/ui/components/buttons";
@@ -35,7 +33,6 @@ const Template = TemplateAny as TemplateStaticTyped<
     edit: boolean;
     course: CourseModel;
     select: string;
-    editableDescription: Editable;
   },
   {
     state: ReactiveDict<{

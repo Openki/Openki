@@ -16,7 +16,6 @@ import { ScssVars } from "/imports/ui/lib/scss-vars";
 import * as TemplateMixins from "/imports/ui/lib/template-mixins";
 import * as Viewport from "/imports/ui/lib/viewport";
 
-import { PublicSettings } from "/imports/utils/PublicSettings";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
@@ -58,7 +57,7 @@ const Template = TemplateMixins.Expandible(
       member: boolean;
       select: string;
     },
-    { editableName: Editable; editableDescription: Editable }
+    { editableName: Editable }
   >,
   "courseDetailsPage",
 );
@@ -97,29 +96,6 @@ template.onCreated(function () {
     },
   });
 
-  instance.editableDescription = new Editable(
-    true,
-    i18n("course.description.placeholder"),
-    PublicSettings.courseDescriptionMax,
-    {
-      onSave: async (newDescription) => {
-        await CoursesMethods.save(course._id, { description: newDescription });
-      },
-      onSuccess: () => {
-        Alert.success(
-          i18n(
-            "courseDetails.message.descriptionChanged",
-            "The description of {NAME} has been changed.",
-            { NAME: course.name },
-          ),
-        );
-      },
-      onError: (err) => {
-        Alert.serverError(err as string | Error, i18n("course.save.error"));
-      },
-    },
-  );
-
   instance.autorun(() => {
     const data = Template.currentData();
 
@@ -127,10 +103,9 @@ template.onCreated(function () {
       return;
     }
 
-    const { name: courseName, description: courseDescription } = data.course;
+    const { name: courseName } = data.course;
 
     instance.editableName.setText(courseName);
-    instance.editableDescription.setText(courseDescription);
   });
 });
 
