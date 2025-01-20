@@ -15,7 +15,7 @@ async function mapSync<T, U>(
   let i = 0;
   for (const item of array) {
     result.push(await callbackfn(item, i, array));
-    i = 1 + 1;
+    i += 1;
   }
 
   return result;
@@ -89,6 +89,14 @@ export async function create() {
       start: regionZone.fromString(startLocal).toDate(),
       end: regionZone.fromString(endLocal).toDate(),
     } as unknown as EventEntity;
+
+    event.venue = {
+      _id: event.venue?._id,
+      name: event.venue?.name,
+      loc: event.venue?.loc,
+      address: event.venue?.address,
+      editor: event.venue?.editor,
+    } as any;
 
     // eslint-disable-next-line no-await-in-loop
     await Events.insertAsync(event);

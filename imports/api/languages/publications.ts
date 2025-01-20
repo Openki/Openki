@@ -60,9 +60,11 @@ export const [findFilter, useFindFilter] = ServerPublishMany(
   (filter: FindFilter) => {
     check(filter, Match.Maybe(FindFilterPattern));
 
-    const selector: Mongo.Selector<LanguageEntity> = {
-      _id: filter.code,
-    };
+    const selector: Mongo.Selector<LanguageEntity> = filter.code
+      ? {
+          _id: filter.code,
+        }
+      : {};
 
     if (typeof filter.visible === "boolean") {
       selector.visible = filter.visible;

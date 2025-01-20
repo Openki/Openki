@@ -441,8 +441,8 @@ export class Message extends Change<{
     Object.assign(body, this.dict());
   }
 
-  apply() {
-    Courses.update(
+  async apply() {
+    await Courses.updateAsync(
       { _id: this.course._id, "members.user": this.userId },
       { $set: { "members.$.comment": this.message } },
     );

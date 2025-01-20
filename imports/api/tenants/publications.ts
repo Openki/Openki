@@ -10,10 +10,10 @@ import { ServerPublish } from "/imports/utils/ServerPublishBlaze";
 
 export const [details, useDetails] = ServerPublishOne(
   "tenant",
-  (tenantId: string) => {
+  async (tenantId: string) => {
     check(tenantId, String);
 
-    const user = Meteor.user();
+    const user = await Meteor.userAsync();
 
     if (!user) {
       throw new Meteor.Error(401, "please log in");
@@ -34,7 +34,7 @@ export const [details, useDetails] = ServerPublishOne(
     }
     return Tenants.find(filter, { projection });
   },
-  (tenantId: string) => {
+  (tenantId) => {
     const user = Meteor.user();
 
     if (!user) {
@@ -60,6 +60,8 @@ export const [details, useDetails] = ServerPublishOne(
 
 export const findFilter = ServerPublish(
   "Tenants.findFilter",
+  async (find?: FindFilter, limit?: number, skip?: number, sort?: FieldSort[]) =>
+    Tenants.findFilter(await Meteor.userAsync(), find, limit, skip, sort),
   (find?: FindFilter, limit?: number, skip?: number, sort?: FieldSort[]) =>
-    Tenants.findFilter(find, limit, skip, sort),
+    Tenants.findFilter(Meteor.user(), find, limit, skip, sort),
 );

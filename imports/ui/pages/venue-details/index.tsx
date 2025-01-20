@@ -6,6 +6,7 @@ import * as Events from "/imports/api/events/publications";
 import * as Alert from "/imports/api/alerts/alert";
 import { VenueModel } from "/imports/api/venues/venues";
 import * as VenuesMethods from "/imports/api/venues/methods";
+import { useDetails } from "/imports/api/venues/publications";
 
 import { useReactiveNow } from "/imports/utils/reactive-now";
 import * as Metatags from "/imports/utils/metatags";
@@ -16,7 +17,7 @@ import { useTranslation } from "react-i18next";
 import { Edit } from "../../components/venues/edit";
 import { ProfileLink } from "../../components/profile-link";
 import { Contribution } from "../../components/contribution";
-import { Display } from "../../components/location/display";
+import { Display as LocationDisplay } from "../../components/location/display";
 import { format } from "/imports/utils/location-format";
 import { ButtonDelete, ButtonEdit } from "../../components/buttons";
 import { EventList } from "../../components/events/list";
@@ -32,10 +33,9 @@ const UpcomingEventLimitDefault = 12;
 const PastEventLimitDefault = 3;
 const EventLoadingBlockSize = 9;
 
-export function VenueDetailsPage({ venue }: { venue: VenueModel }) {
+function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
   const { t } = useTranslation();
 
-  const [editing, setEditing] = useState(!venue._id);
   const [verifyDelete, setVerifyDelete] = useState(false);
   const [upcomingEventLimit, setUpcomingEventLimit] = useState(UpcomingEventLimitDefault);
   const [pastEventLimit, setPastEventLimit] = useState(PastEventLimitDefault);
@@ -112,158 +112,132 @@ export function VenueDetailsPage({ venue }: { venue: VenueModel }) {
       },
     };
   }
-  function editAttr() {
-    return {
-      data: venue,
-      onSaved: () => {
-        setEditing(false);
-      },
-      onCanceled: () => {
-        setEditing(false);
-      },
-    };
-  }
-
-  useEffect(() => {
-    let title;
-    if (venue._id) {
-      title = venue.name;
-    } else {
-      title = t("venue.edit.siteTitle.create", "Create Venue");
-    }
-    Metatags.setCommonTags(title, truncate(textPlain(venue.description || ""), 160));
-  });
 
   if (upcomingEventsIsLoading() || pastEventsIsLoading()) {
     return null;
   }
 
   return (
-    <div className="container mw-md">
-      {editing ? (
-        <Edit {...editAttr()} />
-      ) : (
-        <div className="page-component">
-          <div className="details-header location-details-header">
-            <h3>
-              {venue.name} {venue.short ? <small>{venue.short}</small> : null}
-            </h3>
-            <p dangerouslySetInnerHTML={{ __html: venue.description }}></p>
-          </div>
+    <>
+      <div className="page-component">
+        <div className="details-header location-details-header">
+          <h3>
+            {venue.name} {venue.short ? <small>{venue.short}</small> : null}
+          </h3>
+          <p dangerouslySetInnerHTML={{ __html: venue.description }}></p>
+        </div>
 
-          <div className="details-body location-details-body">
-            <div className="details-content">
-              <div className="row">
-                <div className={venue.loc ? "col-md-7" : "col"}>
-                  {venue.editor ? (
-                    <p>
-                      <span className="venue-property-title">
-                        {t("location.details.hosts", "Hosts:")}
-                      </span>
-                      <ul className="hosts">
-                        <li>
-                          <ProfileLink userId={venue.editor} />
-                          <Contribution userId={venue.editor} />
-                        </li>
-                      </ul>
-                    </p>
-                  ) : null}
+        <div className="details-body location-details-body">
+          <div className="details-content">
+            <div className="row">
+              <div className={venue.loc ? "col-md-7" : "col"}>
+                {venue.editor ? (
+                  <>
+                    <span className="venue-property-title">
+                      {t("location.details.hosts", "Hosts:")}
+                    </span>
+                    <ul className="hosts">
+                      <li>
+                        <ProfileLink userId={venue.editor} />
+                        <Contribution userId={venue.editor} />
+                      </li>
+                    </ul>
+                  </>
+                ) : null}
 
-                  {venue.address ? (
-                    <p>
-                      <span className="venue-property-title">
-                        {t("venue.details.address", "Address:")}
-                      </span>{" "}
-                      {venue.address}
-                    </p>
-                  ) : null}
-                  {venue.route ? (
-                    <p>
-                      <span className="venue-property-title">
-                        {t("venue.details.route", "How to go there:")}
-                      </span>
-                      <br />
-                      <span style={{ whiteSpace: "pre-line;" }}>{venue.route}</span>
-                    </p>
-                  ) : null}
-                  {venue.maxPeople ? (
-                    <p>
-                      <span className="venue-property-title">
-                        {t("venue.details.max_ppl", "Maximum People:")}
-                      </span>{" "}
-                      {venue.maxPeople}
-                    </p>
-                  ) : null}
-                  {venue.maxWorkplaces ? (
-                    <p>
-                      <span className="venue-property-title">
-                        {t("venue.details.max_workplaces", "Maximum Workplaces:")}
-                      </span>{" "}
-                      {venue.maxWorkplaces}
-                    </p>
-                  ) : null}
-                  {facilityNames() ? (
-                    <p>
-                      <span className="venue-property-title">
-                        {t("venue.details.availableInfrastructure", "Available infrastructure:")}
-                      </span>
-                      <ul>
-                        {facilityNames().map((facilityName) => (
-                          <li>{facilitiesDisplay(facilityName)}</li>
-                        ))}
-                      </ul>
-                    </p>
-                  ) : null}
-                  {venue.otherFacilities ? (
-                    <p>
-                      <span className="venue-property-title">
-                        {t("venue.details.additionalEquipment", "Additional equipment:")}
-                      </span>
-                      <br />
-                      {venue.otherFacilities}
-                    </p>
-                  ) : null}
-                </div>
-                {venue.loc ? (
-                  <div className="col-md-5">
-                    <div className="details-map">
-                      <Display coordinates={venue.loc.coordinates} />
-                      <div className="coordinates">
-                        <a href={geoLocationLink(venue.loc)}>
-                          {t("venueDetails.coordinates", "Coordinates:")} {format(t, venue.loc)}
-                        </a>
-                      </div>
-                    </div>
-                  </div>
+                {venue.address ? (
+                  <p>
+                    <span className="venue-property-title">
+                      {t("venue.details.address", "Address:")}
+                    </span>{" "}
+                    {venue.address}
+                  </p>
+                ) : null}
+                {venue.route ? (
+                  <p>
+                    <span className="venue-property-title">
+                      {t("venue.details.route", "How to go there:")}
+                    </span>
+                    <br />
+                    <span style={{ whiteSpace: "pre-line;" }}>{venue.route}</span>
+                  </p>
+                ) : null}
+                {venue.maxPeople ? (
+                  <p>
+                    <span className="venue-property-title">
+                      {t("venue.details.max_ppl", "Maximum People:")}
+                    </span>{" "}
+                    {venue.maxPeople}
+                  </p>
+                ) : null}
+                {venue.maxWorkplaces ? (
+                  <p>
+                    <span className="venue-property-title">
+                      {t("venue.details.max_workplaces", "Maximum Workplaces:")}
+                    </span>{" "}
+                    {venue.maxWorkplaces}
+                  </p>
+                ) : null}
+                {facilityNames().length > 0 ? (
+                  <>
+                    <span className="venue-property-title">
+                      {t("venue.details.availableInfrastructure", "Available infrastructure:")}
+                    </span>
+                    <ul>
+                      {facilityNames().map((facilityName) => (
+                        <li key={facilityName}>{facilitiesDisplay(facilityName)}</li>
+                      ))}
+                    </ul>
+                  </>
+                ) : null}
+                {venue.otherFacilities ? (
+                  <p>
+                    <span className="venue-property-title">
+                      {t("venue.details.additionalEquipment", "Additional equipment:")}
+                    </span>
+                    <br />
+                    {venue.otherFacilities}
+                  </p>
                 ) : null}
               </div>
+              {venue.loc ? (
+                <div className="col-md-5">
+                  <div className="details-map">
+                    <LocationDisplay coordinates={venue.loc.coordinates} />
+                    <div className="coordinates">
+                      <a href={geoLocationLink(venue.loc)}>
+                        {t("venueDetails.coordinates", "Coordinates:")} {format(t, venue.loc)}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
             </div>
           </div>
-          {mayEdit() ? (
-            <>
-              <div className="actions">
-                <ButtonEdit
+        </div>
+        {mayEdit() ? (
+          <>
+            <div className="actions">
+              <ButtonEdit
+                onClick={() => {
+                  onEdit();
+                  setVerifyDelete(false);
+                }}
+              />
+              {!verifyDelete ? (
+                <ButtonDelete
                   onClick={() => {
-                    setEditing(true);
-                    setVerifyDelete(false);
+                    setVerifyDelete(true);
                   }}
                 />
-                {!verifyDelete ? (
-                  <ButtonDelete
-                    onClick={() => {
-                      setVerifyDelete(true);
-                    }}
-                  />
-                ) : (
-                  <DeleteConfirmDialog {...deleteConfirmDialogAttr()} />
-                )}
-              </div>
-            </>
-          ) : null}
-        </div>
-      )}
-
-      {getUpcomingEvents() ? (
+              ) : (
+                <DeleteConfirmDialog {...deleteConfirmDialogAttr()} />
+              )}
+            </div>
+          </>
+        ) : null}
+      </div>
+      {getUpcomingEvents().length ? (
         <div className="page-component">
           <h2>{t("venue.details.upcomingEvents", "Upcoming events at this venue:")}</h2>
           <EventList dataEvents={getUpcomingEvents()} withDate={true} withVenue={false} />
@@ -283,7 +257,7 @@ export function VenueDetailsPage({ venue }: { venue: VenueModel }) {
           ) : null}
         </div>
       ) : null}
-      {getPastEvents() ? (
+      {getPastEvents().length ? (
         <div className="page-component">
           <h2>{t("venue.details.pastEvents", "Past events:")}</h2>
           <EventList dataEvents={getPastEvents()} withDate={true} withVenue={false} />
@@ -303,6 +277,61 @@ export function VenueDetailsPage({ venue }: { venue: VenueModel }) {
           ) : null}
         </div>
       ) : null}
+    </>
+  );
+}
+
+export function VenueDetailsPage({ venue: venue2 }: { venue: VenueModel }) {
+  const { t } = useTranslation();
+
+  // for blaze, can be removed after migration
+  // subscribe in react to keep reactivity
+  // eslint-disable-next-line prefer-const
+  let [isLoading, venue] = useDetails(venue2._id || "-1");
+  if (!venue) {
+    venue = venue2;
+  }
+
+  const [editing, setEditing] = useState(!venue?._id);
+
+  function editAttr() {
+    return {
+      venue: venue as VenueModel,
+      onSaved: () => {
+        setEditing(false);
+      },
+      onCanceled: () => {
+        setEditing(false);
+      },
+    };
+  }
+
+  useEffect(() => {
+    let title;
+    if (venue?._id) {
+      title = venue?.name;
+    } else {
+      title = t("venue.edit.siteTitle.create", "Create Venue");
+    }
+    Metatags.setCommonTags(title, truncate(textPlain(venue?.description || ""), 160));
+  });
+
+  if (isLoading()) {
+    return null;
+  }
+
+  return (
+    <div className="container mw-md">
+      {editing ? (
+        <Edit {...editAttr()} />
+      ) : (
+        <Display
+          venue={venue}
+          onEdit={() => {
+            setEditing(true);
+          }}
+        />
+      )}
     </div>
   );
 }

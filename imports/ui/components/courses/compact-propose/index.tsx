@@ -58,13 +58,13 @@ export function CompactPropose({ group, groupTagEvents }: Props) {
               <input
                 type="text"
                 className="form-control"
-                placeholder={t("course.compact.propose.titlePlaceholder", "Your course")}
+                placeholder={t("course.compact.propose.titlePlaceholder", "My proposal")}
                 onChange={(event) => {
                   setTitle(event.currentTarget.value);
                 }}
               />
               <button className="btn btn-success" type="submit">
-                {t("course.compact.propose.button", "Propose")}
+                {t("course.compact.propose.button", "Go!")}
               </button>
             </div>
           </form>

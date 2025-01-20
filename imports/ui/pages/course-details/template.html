@@ -42,7 +42,7 @@
                 {{/if}}
                 {{> courseGroupList course=course}}
               </div>
-              {{> courseDetailsSubmenu editableDescription=instance.editableDescription course=course}}
+              {{> courseDetailsSubmenu course=course}}
             </div>
             {{#unless course.isPrivate}}
               {{> sharing}}
@@ -67,7 +67,7 @@
                 {{> confirmDialog hasArchiveButton=course.archived course=course}}
               {{/if}}
             {{/if}}
-            {{> courseRoles roles=rolesDetails}}
+            {{> courseRoles course=course}}
           {{/if}}
         </div>
         {{#if mobileViewport}}

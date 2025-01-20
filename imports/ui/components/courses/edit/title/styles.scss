@@ -4,6 +4,13 @@
   position: relative;
 }
 
+.proposed-courses {
+  border: 1px solid $primary;
+  max-height: 200px;
+  overflow: auto;
+  width: 100%;
+}
+
 .proposed-courses > .dropdown-header {
   margin-top: 8.5px;
   text-align: start;

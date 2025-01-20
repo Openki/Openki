@@ -2,10 +2,7 @@ import { Meteor } from "meteor/meteor";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import { ReactiveDict } from "meteor/reactive-dict";
 
-import { RoleEntity } from "/imports/api/roles/roles";
 import { CourseModel } from "/imports/api/courses/courses";
-
-import { Editable } from "/imports/ui/lib/editable";
 
 import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 
@@ -34,15 +31,8 @@ const Template = TemplateAny as TemplateStaticTyped<
   "courseDetailsSubmenu",
   {
     edit: boolean;
-    rolesDetails: {
-      role: RoleEntity;
-      subscribed: boolean;
-      course: CourseModel;
-    }[];
     course: CourseModel;
-    member: boolean;
     select: string;
-    editableDescription: Editable;
   },
   {
     state: ReactiveDict<{
