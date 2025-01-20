@@ -34,8 +34,9 @@ export function NotFound() {
             <h4 className="mt-5">{t("notFound.login", "If it's private content, try:")}</h4>
             <button
               className="btn btn-success"
-              data-bs-toggle="modal"
-              data-bs-target="#accountTaskModal"
+              onClick={() => {
+                Session.set("pleaseLogin", true);
+              }}
             >
               {t("login.unlogged", "Log in")}
             </button>

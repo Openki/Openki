@@ -79,12 +79,12 @@ async function handleInvitation(invitation: InvitationEntity) {
     await sendInvitation(invitation);
 
     await Invitations.updateAsync(invitation._id, { $set: { status: "send" } });
-    result.success();
+    await result.success();
   } catch (e) {
     try {
       await Invitations.updateAsync(invitation._id, { $set: { status: "failed" } });
     } finally {
-      result.error(e);
+      await result.error(e);
     }
   }
 }

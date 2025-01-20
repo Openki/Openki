@@ -33,5 +33,6 @@ template.events({
 
   "click .js-login-for-region"(_event, instance) {
     instance.$(".js-region-splash").modal("hide");
+    Session.set("pleaseLogin", true);
   },
 });

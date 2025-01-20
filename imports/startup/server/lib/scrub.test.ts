@@ -55,6 +55,6 @@ describe("The Log-Scrubber", () => {
       },
     });
     await scrubber.scrub(log, moment().add(2, "days"));
-    log.update({ tr: "test" }, { $unset: { a: "" } });
+    await log.updateAsync({ tr: "test" }, { $unset: { a: "" } });
   });
 });

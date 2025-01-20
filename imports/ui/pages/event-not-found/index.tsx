@@ -22,7 +22,12 @@ export function EventNotFound() {
   return (
     <div className="event-notfound-text px-3">
       <h3>{t("user.not.logged_in", "Could not find this event. Maybe you must log in?")}</h3>
-      <button className="btn btn-save" data-bs-toggle="modal" data-bs-target="#accountTaskModal">
+      <button
+        className="btn btn-save"
+        onClick={() => {
+          Session.set("pleaseLogin", true);
+        }}
+      >
         <span className="fa-solid fa-right-to-bracket fa-fw"></span>{" "}
         <span>{t("event.not_exists.unlogged", "Log in/register")}</span>
       </button>

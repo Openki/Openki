@@ -4,21 +4,23 @@ import { Courses, FindFilter } from "/imports/api/courses/courses";
 
 import { ServerPublishMany, ServerPublishOne } from "/imports/utils/ServerPublish";
 import { FieldSort } from "/imports/utils/sort-spec";
-import { visibleTenants } from "/imports/utils/visible-tenants";
+import { visibleTenants, visibleTenantsAsync } from "/imports/utils/visible-tenants";
 import { SafeString } from "/imports/utils/CustomChecks";
 
 export const [details, useDetails] = ServerPublishOne(
   "courseDetails",
-  (courseId: string) => {
+  async (courseId: string) => {
     check(courseId, SafeString());
 
-    return Courses.find({ _id: courseId, tenant: { $in: visibleTenants() } });
+    return Courses.find({ _id: courseId, tenant: { $in: await visibleTenantsAsync() } });
   },
-  (courseId: string) => Courses.findOne({ _id: courseId, tenant: { $in: visibleTenants() } }),
+  (courseId) => Courses.findOne({ _id: courseId, tenant: { $in: visibleTenants() } }),
 );
 
 export const [findFilter, useFindFilter] = ServerPublishMany(
   "Courses.findFilter",
-  (filter?: FindFilter, limit?: number, skip?: number, sort?: FieldSort[]) =>
+  async (filter?: FindFilter, limit?: number, skip?: number, sort?: FieldSort[]) =>
+    Courses.findFilter({ ...filter, tenants: await visibleTenantsAsync() }, limit, skip, sort),
+  (filter?, limit?, skip?, sort?) =>
     Courses.findFilter({ ...filter, tenants: visibleTenants() }, limit, skip, sort),
 );

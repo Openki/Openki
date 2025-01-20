@@ -66,6 +66,7 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
     sendReminderIsEditable: Boolean,
     /** show a "empty" course box to propose a new course */
     proposeCourseBox: Boolean,
+    resizeImagesOnServer: Boolean,
   },
   nav: {
     /** target link when clicking on the logo Default: "/" */
@@ -198,6 +199,7 @@ const defaults = {
     rsvpWithCompanions: false,
     sendReminderIsEditable: true,
     proposeCourseBox: true,
+    resizeImagesOnServer: false,
   },
   nav: {
     brandLink: "/",
