@@ -135,9 +135,3 @@ export function AdditionalInfo({
     </div>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("VenueEditAdditionalInfo", () => AdditionalInfo);
