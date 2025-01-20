@@ -48,6 +48,10 @@ a:focus,
   filter: var(--bs-btn-close-white-filter);
 }
 
+.pre-line {
+  white-space: pre-line;
+}
+
 .action-focus {
   position: relative;
 }
