@@ -159,7 +159,7 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
                       {t("venue.details.route", "How to go there:")}
                     </span>
                     <br />
-                    <span style={{ whiteSpace: "pre-line;" }}>{venue.route}</span>
+                    <span className="pre-line">{venue.route}</span>
                   </p>
                 ) : null}
                 {venue.maxPeople ? (
