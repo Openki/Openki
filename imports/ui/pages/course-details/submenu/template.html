@@ -33,12 +33,12 @@
       <div class="course-description-fade-wrap">
         <div
              class="course-description {{#unless state 'descriptionTruncated'}}mh-none overflow-visible{{else}}overflow-hidden{{/unless}}">
-          {{> courseDetailsDescription editableDescription=editableDescription course=course}}
+          {{> courseDetailsDescription course=course}}
           {{#each info in customFields}}
             <p>
               <strong>{{info.displayText}}</strong>:
               {{#unless info.isboolean}}
-                <span style="white-space: pre-line;">{{info.value}}</span>
+                <span class="pre-line">{{info.value}}</span>
               {{else}}
                 {{#if info.value}}
                   {{i18n 'customField.boolean.yes' 'Yes'}}
@@ -65,7 +65,7 @@
     </div>
     {{#if mayEdit}}
       <div class="tab-pane" id="files" role="tabpanel" aria-labelledby="files-tab" tabindex="0">
-        {{> courseFiles}}
+        {{> courseFiles course=course}}
       </div>
     {{/if}}
     {{#unless course.isPrivate}}

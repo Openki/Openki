@@ -342,7 +342,6 @@ export function Find({ query }: Props) {
                   className="btn btn-success"
                   onClick={() => {
                     setCourseLimit(courseLimit + courseBlockSize);
-                    updateUrl();
                   }}
                 >
                   {t("_button.more")}
