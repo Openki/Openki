@@ -1,54 +1,74 @@
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import { i18n } from "/imports/startup/both/i18next";
+import React from "react";
 
 import { CourseModel } from "/imports/api/courses/courses";
 import * as CourseMethods from "/imports/api/courses/methods";
 import * as Alert from "/imports/api/alerts/alert";
+import { useDetails } from "/imports/api/courses/publications";
 
-import "/imports/ui/components/editable-image";
-import type { UploadImage, Data as EditableImageData } from "/imports/ui/components/editable-image";
+import {
+  UploadImage,
+  Data as EditableImageData,
+  EditableImage,
+} from "/imports/ui/components/editable-image";
+import { useTranslation } from "react-i18next";
 
+export function Files({ course: course2 }: { course: CourseModel }) {
+  const { t } = useTranslation();
 
+  // for blaze, can be removed after migration
+  // subscribe in react to keep reactivity
+  const [isLoading, course] = useDetails(course2._id);
 
-const Template = TemplateAny as TemplateStaticTyped<"courseFiles", { course: CourseModel }>;
-
-const template = Template.courseFiles;
-
-template.helpers({
-  imageUploadArgs(): EditableImageData {
-    const instance = Template.instance();
+  if (isLoading() || !course) {
+    return null;
+  }
+  function imageUploadArgs(): EditableImageData {
     return {
-      thumbnail: { src: instance.data.course?.publicUrlForCompactImage(), maxSize: 150 },
+      thumbnail: { src: course?.publicUrlForCompactImage(), maxSize: 150 },
       maxSize: 1500, // scale the image to max width/height. Note: image scaling also happens on the server
       async onUpload(file: UploadImage) {
-        const courseId = instance.data.course._id;
+        const courseId = course._id;
         try {
           await CourseMethods.updateImage(courseId, file);
-          Alert.success(i18n("course.edit.image.updated", "Image have been saved."));
+          Alert.success(t("course.edit.image.updated", "Image have been saved."));
         } catch (err) {
-          Alert.serverError(err, i18n("course.edit.image.updated.error", "Could not save image."));
+          Alert.serverError(err, t("course.edit.image.updated.error", "Could not save image."));
         }
       },
-      onDelete: instance.data.course?.image
+      onDelete: course?.image
         ? async function () {
-            const courseId = instance.data.course._id;
+            const courseId = course._id;
             try {
               await CourseMethods.deleteImage(courseId);
-              Alert.success(i18n("course.edit.image.removed", "Image have been removed."));
+              Alert.success(t("course.edit.image.removed", "Image have been removed."));
             } catch (err) {
               Alert.serverError(
                 err,
-                i18n("course.edit.image.removed.error", "Could not remove image."),
+                t("course.edit.image.removed.error", "Could not remove image."),
               );
             }
           }
         : undefined,
     };
-  },
-});
+  }
 
-export function Files(){
-  return  <label
-  class="form-label">{{i18n 'course.edit.files.label' 'Files'}} ({{i18n 'course.edit.files.desc' 'Tip: Take your own photo of an object that is used in or symbolises your topic.'}})</label>
-{{> editableImage imageUploadArgs}}
+  return (
+    <>
+      <label className="form-label">
+        {t("course.edit.files.label", "Files")} (
+        {t(
+          "course.edit.files.desc",
+          "Tip: Take your own photo of an object that is used in or symbolises your topic.",
+        )}
+        )
+      </label>
+      <EditableImage {...imageUploadArgs()} />
+    </>
+  );
 }
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("CourseFiles", () => Files);
