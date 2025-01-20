@@ -8,7 +8,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import "/imports/ui/components/editable-image";
 import type { UploadImage, Data as EditableImageData } from "/imports/ui/components/editable-image";
 
-import "./template.html";
+
 
 const Template = TemplateAny as TemplateStaticTyped<"courseFiles", { course: CourseModel }>;
 
@@ -46,3 +46,9 @@ template.helpers({
     };
   },
 });
+
+export function Files(){
+  return  <label
+  class="form-label">{{i18n 'course.edit.files.label' 'Files'}} ({{i18n 'course.edit.files.desc' 'Tip: Take your own photo of an object that is used in or symbolises your topic.'}})</label>
+{{> editableImage imageUploadArgs}}
+}
