@@ -13,7 +13,7 @@ import * as HtmlTools from "/imports/utils/html-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import * as FileStorage from "/imports/utils/FileStorage";
 import { UploadFilePattern } from "/imports/utils/FileStorage";
-import { HtmlString, SafeString, Type } from "/imports/utils/CustomChecks";
+import { HtmlString, Type } from "/imports/utils/CustomChecks";
 import { resizeImage } from "../../utils/resize-image";
 
 async function loadGroup(groupId: string) {
@@ -30,15 +30,15 @@ async function loadGroup(groupId: string) {
 }
 
 export const SaveFieldPattern = {
-  short: Match.Optional(SafeString()),
-  name: Match.Optional(SafeString()),
-  claim: Match.Optional(SafeString()),
+  short: Match.Optional(String),
+  name: Match.Optional(String),
+  claim: Match.Optional(String),
   description: Match.Optional(HtmlString()),
 };
 export type SaveFields = Type<typeof SaveFieldPattern>;
 
 export const save = ServerMethod("group.save", async (groupId: string, changes: SaveFields) => {
-  check(groupId, SafeString());
+  check(groupId, String);
   check(changes, SaveFieldPattern);
 
   const user = await Meteor.userAsync();
@@ -103,7 +103,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
 export const updateLogo = ServerMethod(
   "group.update.logo",
   async (groupId: string, file: FileStorage.UploadFile) => {
-    check(groupId, SafeString());
+    check(groupId, String);
     check(file, UploadFilePattern);
 
     const user = await Meteor.userAsync();
@@ -146,7 +146,7 @@ export const updateLogo = ServerMethod(
 export const deleteLogo = ServerMethod(
   "group.delete.logo",
   async (groupId: string) => {
-    check(groupId, SafeString());
+    check(groupId, String);
 
     const user = await Meteor.userAsync();
     if (!user) {
@@ -175,7 +175,7 @@ export const deleteLogo = ServerMethod(
 );
 
 export const remove = ServerMethod("group.remove", async (groupId: string) => {
-  check(groupId, SafeString());
+  check(groupId, String);
 
   const user = await Meteor.userAsync();
   if (!user) {
@@ -202,8 +202,8 @@ export const remove = ServerMethod("group.remove", async (groupId: string) => {
 export const updateMembership = ServerMethod(
   "group.updateMembership",
   async (userId: string, groupId: string, join: boolean) => {
-    check(userId, SafeString());
-    check(groupId, SafeString());
+    check(userId, String);
+    check(groupId, String);
 
     const sender = await Meteor.userAsync();
     if (!sender) {
@@ -240,7 +240,7 @@ export const updateMembership = ServerMethod(
 export const toggleMemberNotify = ServerMethod(
   "group.toggleMemberNotify",
   async (groupId: string) => {
-    check(groupId, SafeString());
+    check(groupId, String);
 
     const sender = await Meteor.userAsync();
     if (!sender) {

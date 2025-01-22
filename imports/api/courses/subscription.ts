@@ -14,7 +14,7 @@ import * as groupsDenormalizer from "./groupsDenormalizer";
 
 import { hasRole } from "/imports/utils/course-role-utils";
 import { Notification } from "../../startup/both/emails/notification";
-import { SafeString, StringEnum, Type } from "/imports/utils/CustomChecks";
+import { StringEnum, Type } from "/imports/utils/CustomChecks";
 
 export async function processChange<T>(change: Change<T>, options?: { isSimulation: boolean }) {
   try {
@@ -130,16 +130,16 @@ export class Subscribe extends Change<{
 
     this.course = checkCourse(course);
 
-    check(userId, Match.Optional(SafeString()));
+    check(userId, Match.Optional(String));
     this.userId = userId;
 
-    check(role, SafeString());
+    check(role, String);
     this.role = role;
 
     check(reason, ReasonPattern);
     this.reason = reason;
 
-    check(comment, Match.Optional(SafeString()));
+    check(comment, Match.Optional(String));
     this.comment = comment;
   }
 
@@ -281,10 +281,10 @@ export class Unsubscribe extends Change<{
 
     this.course = checkCourse(course);
 
-    check(userId, SafeString());
+    check(userId, String);
     this.userId = userId;
 
-    check(role, SafeString());
+    check(role, String);
     this.role = role;
   }
 
@@ -396,10 +396,10 @@ export class Message extends Change<{
 
     this.course = checkCourse(course);
 
-    check(userId, SafeString());
+    check(userId, String);
     this.userId = userId;
 
-    check(message, Match.Optional(SafeString()));
+    check(message, Match.Optional(String));
     this.message = message;
   }
 

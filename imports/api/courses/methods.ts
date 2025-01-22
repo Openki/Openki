@@ -29,7 +29,7 @@ import * as StringTools from "/imports/utils/string-tools";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { LocalizedValuePattern } from "/imports/utils/getLocalizedValue";
 import * as FileStorage from "/imports/utils/FileStorage";
-import { HtmlString, SafeString, StringEnum, Type } from "/imports/utils/CustomChecks";
+import { HtmlString, StringEnum, Type } from "/imports/utils/CustomChecks";
 import { GroupPromoters } from "/imports/utils/update-methods";
 import { resizeImage } from "../../utils/resize-image";
 
@@ -105,30 +105,30 @@ registerMethod(Unsubscribe);
 registerMethod(Message);
 
 export const CustomFieldPattern = {
-  name: SafeString(),
+  name: String,
   displayText: LocalizedValuePattern,
-  value: Match.OneOf(SafeString(), Boolean),
+  value: Match.OneOf(String, Boolean),
   visibleFor: StringEnum("all", "editors"),
 };
 export type CustomField = Type<typeof CustomFieldPattern>;
 
 export const SaveFieldPattern = {
   description: Match.Optional(HtmlString()),
-  categories: Match.Optional([SafeString()]),
-  name: Match.Optional(SafeString()),
-  region: Match.Optional(SafeString()),
+  categories: Match.Optional([String]),
+  name: Match.Optional(String),
+  region: Match.Optional(String),
   customFields: Match.Optional([CustomFieldPattern]),
   roles: Match.Optional(Match.ObjectIncluding<Record<string, boolean>>({})),
-  subs: Match.Optional([SafeString()]),
-  unsubs: Match.Optional([SafeString()]),
-  groups: Match.Optional([SafeString()]),
+  subs: Match.Optional([String]),
+  unsubs: Match.Optional([String]),
+  groups: Match.Optional([String]),
   internal: Match.Optional(Boolean),
   singleEvent: Match.Optional(Boolean),
 };
 export type SaveFields = Type<typeof SaveFieldPattern>;
 
 export const save = ServerMethod("course.save", async (courseId: string, changes: SaveFields) => {
-  check(courseId, SafeString());
+  check(courseId, String);
   check(changes, SaveFieldPattern);
 
   const user = await Meteor.userAsync();
@@ -298,7 +298,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
 export const updateImage = ServerMethod(
   "course.update.image",
   async (courseId: string, file: FileStorage.UploadFile) => {
-    check(courseId, SafeString());
+    check(courseId, String);
     check(file, FileStorage.UploadFilePattern);
 
     const user = await Meteor.userAsync();
@@ -351,7 +351,7 @@ export const updateImage = ServerMethod(
 export const deleteImage = ServerMethod(
   "course.delete.image",
   async (courseId: string) => {
-    check(courseId, SafeString());
+    check(courseId, String);
 
     const user = await Meteor.userAsync();
     if (!user) {
@@ -427,7 +427,7 @@ export const editing = ServerMethod(
 );
 
 export const archive = ServerMethod("course.archive", async (courseId: string) => {
-  check(courseId, SafeString());
+  check(courseId, String);
 
   const course = await Courses.findOneAsync({ _id: courseId });
   if (!course) {
@@ -440,7 +440,7 @@ export const archive = ServerMethod("course.archive", async (courseId: string) =
 });
 
 export const unarchive = ServerMethod("course.unarchive", async (courseId: string) => {
-  check(courseId, SafeString());
+  check(courseId, String);
 
   const course = await Courses.findOneAsync({ _id: courseId });
   if (!course) {
@@ -453,7 +453,7 @@ export const unarchive = ServerMethod("course.unarchive", async (courseId: strin
 });
 
 export const remove = ServerMethod("course.remove", async (courseId: string) => {
-  check(courseId, SafeString());
+  check(courseId, String);
 
   const course = await Courses.findOneAsync({ _id: courseId });
   if (!course) {

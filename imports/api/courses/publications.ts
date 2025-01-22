@@ -5,12 +5,11 @@ import { Courses, FindFilter } from "/imports/api/courses/courses";
 import { ServerPublishMany, ServerPublishOne } from "/imports/utils/ServerPublish";
 import { FieldSort } from "/imports/utils/sort-spec";
 import { visibleTenants, visibleTenantsAsync } from "/imports/utils/visible-tenants";
-import { SafeString } from "/imports/utils/CustomChecks";
 
 export const [details, useDetails] = ServerPublishOne(
   "courseDetails",
   async (courseId: string) => {
-    check(courseId, SafeString());
+    check(courseId, String);
 
     return Courses.find({ _id: courseId, tenant: { $in: await visibleTenantsAsync() } });
   },
