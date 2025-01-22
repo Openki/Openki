@@ -25,7 +25,7 @@ import { LocalTime } from "/imports/utils/local-time";
 import * as StringTools from "/imports/utils/string-tools";
 import * as UpdateMethods from "/imports/utils/update-methods";
 import { ServerMethod } from "/imports/utils/ServerMethod";
-import { HtmlString, SafeString, StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";
+import { HtmlString, StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";
 import { GroupPromoters } from "/imports/utils/update-methods";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
@@ -104,20 +104,20 @@ export const GeodataPattern = {
 export type Geodata = Type<typeof GeodataPattern>;
 
 export const EventVenuePattern = {
-  _id: Match.Optional(SafeString()),
-  name: Match.Optional(SafeString()),
+  _id: Match.Optional(String),
+  name: Match.Optional(String),
   loc: Match.Optional(GeodataPattern),
-  address: Match.Optional(SafeString()),
-  editor: Match.Optional(SafeString()),
+  address: Match.Optional(String),
+  editor: Match.Optional(String),
 };
 
 export const UpdateFieldsPattern = {
-  title: SafeString(),
+  title: String,
   description: HtmlString(),
   venue: Match.Optional(EventVenuePattern),
-  room: Match.Optional(SafeString()),
-  startLocal: Match.Optional(SafeString()),
-  endLocal: Match.Optional(SafeString()),
+  room: Match.Optional(String),
+  startLocal: Match.Optional(String),
+  endLocal: Match.Optional(String),
   internal: Match.Optional(Boolean),
   sendReminder: Match.Optional(Boolean),
   noRsvp: Match.Optional(Boolean),
@@ -127,10 +127,10 @@ export type UpdateFields = Type<typeof UpdateFieldsPattern>;
 
 export const CreateFieldsPattern = {
   ...UpdateFieldsPattern,
-  courseId: Match.Optional(SafeString()),
-  region: SafeString(),
-  replicaOf: Match.Optional(SafeString()),
-  groups: Match.Optional([SafeString()]),
+  courseId: Match.Optional(String),
+  region: String,
+  replicaOf: Match.Optional(String),
+  groups: Match.Optional([String]),
 };
 export type CreateFields = Type<typeof CreateFieldsPattern>;
 
@@ -150,7 +150,7 @@ export const save = ServerMethod(
     sendNotifications?: boolean | null,
     comment?: string | null,
   ) => {
-    check(eventId, SafeString());
+    check(eventId, String);
 
     const isNew = eventId === "";
 
@@ -399,7 +399,7 @@ export const save = ServerMethod(
 export const remove = ServerMethod(
   "event.remove",
   async (eventId: string) => {
-    check(eventId, SafeString());
+    check(eventId, String);
 
     const user = await Meteor.userAsync();
     if (!user) {
@@ -479,7 +479,7 @@ export const addParticipant = ServerMethod(
    * @param eventId The event to register for
    */
   async function (eventId: string, companions: number) {
-    check(eventId, SafeString());
+    check(eventId, String);
     check(companions, Number);
 
     const user = await Meteor.userAsync();
@@ -530,7 +530,7 @@ export const addParticipant = ServerMethod(
 export const removeParticipant = ServerMethod(
   "event.removeParticipant",
   async (eventId: string) => {
-    check(eventId, SafeString());
+    check(eventId, String);
 
     const userId = Meteor.userId();
     if (!userId) {
@@ -566,8 +566,8 @@ export type ContactParticipantsOptions = Type<typeof ContactParticipantsOptionsP
 export const contactParticipants = ServerMethod(
   "event.contactParticipants",
   async (eventId: string, message: string, options: ContactParticipantsOptions) => {
-    check(eventId, SafeString());
-    check(message, SafeString());
+    check(eventId, String);
+    check(message, String);
     check(options, ContactParticipantsOptionsPattern);
 
     const operator = await Meteor.userAsync();
@@ -599,8 +599,8 @@ export const contactParticipants = ServerMethod(
 export const cancel = ServerMethod(
   "event.cancel",
   async (eventId: string, comment?: string | null) => {
-    check(eventId, SafeString());
-    check(comment, Match.Maybe(SafeString()));
+    check(eventId, String);
+    check(comment, Match.Maybe(String));
 
     const operator = await Meteor.userAsync();
     if (!operator) {
@@ -632,7 +632,7 @@ export const cancel = ServerMethod(
 );
 
 export const uncancel = ServerMethod("event.uncancel", async (eventId: string) => {
-  check(eventId, SafeString());
+  check(eventId, String);
 
   const event = await Events.findOneAsync({ _id: eventId });
   if (!event) {

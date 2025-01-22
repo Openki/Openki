@@ -11,7 +11,7 @@ import { Notification } from "../../startup/both/emails/notification";
 import * as StringTools from "/imports/utils/string-tools";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
-import { HtmlString, SafeString, Type, UnsafeString } from "/imports/utils/CustomChecks";
+import { HtmlString, Type, UnsafeString } from "/imports/utils/CustomChecks";
 
 const sanitizeComment = (comment: { title?: string | undefined; text: UnsafeString }) => {
   const saneTitle = StringTools.sanitizeSingleline(comment.title || "")
@@ -24,9 +24,9 @@ const sanitizeComment = (comment: { title?: string | undefined; text: UnsafeStri
 };
 
 export const PostCommentFieldsPattern = {
-  courseId: SafeString(),
-  parentId: Match.Optional(SafeString()),
-  title: Match.Optional(SafeString()),
+  courseId: String,
+  parentId: Match.Optional(String),
+  title: Match.Optional(String),
   text: HtmlString(),
   anon: Boolean,
   notifyAll: Match.Optional(Boolean),
@@ -97,9 +97,9 @@ export const postComment = ServerMethod(
 );
 
 export const EditCommentFieldsPattern = {
-  _id: SafeString(),
-  title: SafeString(),
-  text: SafeString(),
+  _id: String,
+  title: String,
+  text: HtmlString(),
 };
 export type EditCommentFields = Type<typeof EditCommentFieldsPattern>;
 
@@ -127,8 +127,8 @@ export const editComment = ServerMethod(
 
 export const deleteComment = ServerMethod(
   "courseDiscussion.deleteComment",
-  async (commentId: UnsafeString) => {
-    check(commentId, SafeString());
+  async (commentId: string) => {
+    check(commentId, String);
 
     const user = await Meteor.userAsync();
     if (!user) {
