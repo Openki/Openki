@@ -4,7 +4,6 @@ import { check } from "meteor/check";
 
 import { Groups } from "/imports/api/groups/groups";
 import { UserModel } from "/imports/api/users/users";
-import { SafeString } from "./CustomChecks";
 
 // The code to update the groups and groupOrganizers field must do the same
 // thing for Courses and Events. So we parameterize the methods
@@ -28,8 +27,8 @@ export type GroupPromoters = Mongo.Collection<GroupPromoterEntity, GroupPromoter
  */
 export function promote(collection: GroupPromoters) {
   return async function (docId: string, groupId: string, enable: boolean) {
-    check(docId, SafeString());
-    check(groupId, SafeString());
+    check(docId, String);
+    check(groupId, String);
     check(enable, Boolean);
 
     const doc = await collection.findOneAsync(docId);
@@ -77,8 +76,8 @@ export function promote(collection: GroupPromoters) {
  */
 export function editing(collection: GroupPromoters) {
   return async function (docId: string, groupId: string, enable: boolean) {
-    check(docId, SafeString());
-    check(groupId, SafeString());
+    check(docId, String);
+    check(groupId, String);
     check(enable, Boolean);
 
     const doc = await collection.findOneAsync(docId);
