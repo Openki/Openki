@@ -49,23 +49,23 @@ describe("String tools", () => {
   describe("The text sanitizer", () => {
     it("leaves a simple name intact", () => {
       const simpleName = "John Foe";
-      assert.equal(StringTools.saneText(simpleName), simpleName);
+      assert.equal(StringTools.sanitizeMultiline(simpleName), simpleName);
     });
 
     it("leaves a name with Ümlauts intact", () => {
       const umlautyName = "Ötzi Jowäger";
-      assert.equal(StringTools.saneText(umlautyName), umlautyName);
+      assert.equal(StringTools.sanitizeMultiline(umlautyName), umlautyName);
     });
 
     it("removes choice nonprinting chars", () => {
       const withNonPrinting = "NUL\0BEL\x07NUL\0";
       const onlyPrinting = "NULBELNUL";
-      assert.equal(StringTools.saneText(withNonPrinting), onlyPrinting);
+      assert.equal(StringTools.sanitizeMultiline(withNonPrinting), onlyPrinting);
     });
 
     it("leaves line feeds intact", () => {
       const withLineFeed = "LF\nEOF";
-      assert.equal(StringTools.saneText(withLineFeed), withLineFeed);
+      assert.equal(StringTools.sanitizeMultiline(withLineFeed), withLineFeed);
     });
   });
 });

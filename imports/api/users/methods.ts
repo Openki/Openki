@@ -91,7 +91,8 @@ export const updateDescription = ServerMethod(
  */
 export const updateUsername = ServerMethod(
   "user.updateUsername",
-  async (username: UnsafeString) => {
+  async (unsafeUsername: UnsafeString) => {
+    let username = StringTools.sanitizeSingleline(unsafeUsername);
     check(username, SafeString());
 
     const user = await Meteor.userAsync();
@@ -99,39 +100,37 @@ export const updateUsername = ServerMethod(
       throw new ValidationError([{ name: "username", type: "plzLogin" }], "Not logged-in");
     }
 
-    let saneUsername = StringTools.saneTitle(username);
-
     ((PublicSettings.contribution?.forbiddenChars || []) as string[]).forEach((c) => {
-      saneUsername = saneUsername.replace(RegExp(c, "g"), "");
+      username = username.replace(RegExp(c, "g"), "");
     });
-    saneUsername = saneUsername.trim().substring(0, 200);
+    username = username.trim().substring(0, 200);
 
-    if (saneUsername.length === 0) {
+    if (username.length === 0) {
       throw new ValidationError(
         [{ name: "username", type: "noUserName" }],
         "username cannot be empty",
       );
     }
 
-    if (NotAllowedCharacter.find((c) => saneUsername.includes(c))) {
+    if (NotAllowedCharacter.find((c) => username.includes(c))) {
       throw new ValidationError(
         [{ name: "username", type: "notAllowedCharacter" }],
         "Not allowed character",
       );
     }
 
-    if (saneUsername === user.username) {
+    if (username === user.username) {
       return;
     }
 
-    if (Accounts.findUserByUsername(saneUsername)) {
+    if (Accounts.findUserByUsername(username)) {
       throw new ValidationError(
         [{ name: "username", type: "userExists" }],
         "username is already taken",
       );
     }
 
-    const result = await Profile.Username.change(user._id, saneUsername);
+    const result = await Profile.Username.change(user._id, username);
     if (!result) {
       throw new ValidationError(
         [{ name: "username", type: "nameError" }],

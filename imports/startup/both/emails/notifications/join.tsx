@@ -3,6 +3,7 @@ import { Match, check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
+import { capitalize } from "lodash";
 
 import { Courses } from "/imports/api/courses/courses";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
@@ -114,7 +115,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       const figures = ["host", "mentor", "participant", "team"]
         .filter((role) => course.roles.includes(role))
         .map((role) => ({
-          role: StringTools.capitalize(t(`roles.${role}.short`)),
+          role: capitalize(t(`roles.${role}.short`)),
           count: course.membersWithRole(role).length,
         }));
 
