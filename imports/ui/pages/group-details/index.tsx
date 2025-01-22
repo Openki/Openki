@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
-import { truncate } from "/imports/utils/string-tools";
+import { truncate } from "lodash";
 import { textPlain } from "/imports/utils/html-tools";
 import { useTranslation } from "react-i18next";
 import { useUser } from "meteor/react-meteor-accounts";
@@ -233,7 +233,7 @@ export function GroupDetailsPage(data: Data) {
   const title = data.group.name || t("group.windowtitle.create", "Create group");
   let claim = "";
   if (data.group.claim) {
-    claim = truncate(textPlain(data.group.claim), 160);
+    claim = truncate(textPlain(data.group.claim), { length: 160 });
   }
   Metatags.setCommonTags(title, claim, data.group.publicLogoUrl());
 

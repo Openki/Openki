@@ -14,7 +14,7 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import * as FileStorage from "/imports/utils/FileStorage";
-import * as StringTools from "/imports/utils/string-tools";
+import { escapeRegExp } from "lodash";
 import { GroupEntityCustomCourseFields } from "/imports/api/groups/groups";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { StringEnum, Type } from "/imports/utils/CustomChecks";
@@ -345,8 +345,8 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
       const searchTerms = filter.search.split(/\s+/);
       const searchQueries = searchTerms.map((searchTerm) => ({
         $or: [
-          { name: { $regex: StringTools.escapeRegex(searchTerm), $options: "i" } },
-          { description: { $regex: StringTools.escapeRegex(searchTerm), $options: "i" } },
+          { name: { $regex: escapeRegExp(searchTerm), $options: "i" } },
+          { description: { $regex: escapeRegExp(searchTerm), $options: "i" } },
         ],
       }));
 

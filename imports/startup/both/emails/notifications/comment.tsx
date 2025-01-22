@@ -2,7 +2,7 @@ import React from "react";
 import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
-import { uniq } from "lodash";
+import { truncate, uniq } from "lodash";
 import i18next from "i18next";
 
 import { CourseDiscussions } from "/imports/api/course-discussions/course-discussions";
@@ -11,7 +11,6 @@ import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { UserModel, Users } from "/imports/api/users/users";
 import { Log } from "/imports/api/log/log";
 
-import * as StringTools from "/imports/utils/string-tools";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { Model as NotificationModel } from "../notification";
 import { Comment, Props } from "/imports/emails/notifications/Comment";
@@ -114,14 +113,14 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
 
       const subjectvars = {
-        COURSE: StringTools.truncate(course.name, 10),
-        TITLE: StringTools.truncate(comment.title, 50),
+        COURSE: truncate(course.name, { length: 10 }),
+        TITLE: truncate(comment.title, { length: 50 }),
         COMMENTER: "",
       };
 
       let subject;
       if (commenter) {
-        subjectvars.COMMENTER = StringTools.truncate(commenterName || "", 20);
+        subjectvars.COMMENTER = truncate(commenterName, { length: 20 });
         subject = t(
           "notification.comment.mail.subject",
           "Comment on {COURSE} by {COMMENTER}: {TITLE}",

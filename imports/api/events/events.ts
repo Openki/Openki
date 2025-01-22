@@ -11,7 +11,7 @@ import { UserModel } from "/imports/api/users/users";
 import { Filtering } from "/imports/utils/filtering";
 import { LocalTime } from "/imports/utils/local-time";
 import * as Predicates from "/imports/utils/predicates";
-import * as StringTools from "/imports/utils/string-tools";
+import { escapeRegExp } from "lodash";
 import * as FileStorage from "/imports/utils/FileStorage";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { FieldSort, FieldSortPattern, Sort } from "/imports/utils/sort-spec";
@@ -427,8 +427,8 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
       searchTerms.forEach((searchTerm) => {
         and.push({
           $or: [
-            { title: { $regex: StringTools.escapeRegex(searchTerm), $options: "i" } },
-            { description: { $regex: StringTools.escapeRegex(searchTerm), $options: "i" } },
+            { title: { $regex: escapeRegExp(searchTerm), $options: "i" } },
+            { description: { $regex: escapeRegExp(searchTerm), $options: "i" } },
           ],
         });
       });

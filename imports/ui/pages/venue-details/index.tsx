@@ -313,7 +313,7 @@ export function VenueDetailsPage({ venue: venue2 }: { venue: VenueModel }) {
     } else {
       title = t("venue.edit.siteTitle.create", "Create Venue");
     }
-    Metatags.setCommonTags(title, truncate(textPlain(venue?.description || ""), 160));
+    Metatags.setCommonTags(title, truncate(textPlain(venue?.description || ""), { length: 160 }));
   });
 
   if (isLoading()) {
