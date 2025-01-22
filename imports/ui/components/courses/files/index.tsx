@@ -27,7 +27,7 @@ export function Files({ course: course2 }: { course: CourseModel }) {
       thumbnail: { src: course?.publicUrlForCompactImage(), maxSize: 150 },
       maxSize: 1500, // scale the image to max width/height. Note: image scaling also happens on the server
       async onUpload(file: UploadImage) {
-        const courseId = course._id;
+        const courseId = course!._id;
         try {
           await CourseMethods.updateImage(courseId, file);
           Alert.success(t("course.edit.image.updated", "Image have been saved."));
