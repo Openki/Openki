@@ -5,33 +5,33 @@ import { Mongo } from "meteor/mongo";
 import { Regions } from "/imports/api/regions/regions";
 import { VenueEntity, Venues } from "/imports/api/venues/venues";
 
-import { HtmlString, SafeString, StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";
+import { HtmlString, StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import * as StringTools from "/imports/utils/string-tools";
 
 export const SaveFieldPattern = {
-  name: Match.Optional(SafeString()),
+  name: Match.Optional(String),
   description: Match.Optional(HtmlString()),
-  region: Match.Optional(SafeString()),
+  region: Match.Optional(String),
   loc: Match.Optional(
     Match.OneOf(null, {
       type: StringEnum("Point"),
       coordinates: Tuple<[long: NumberConstructor, lat: NumberConstructor]>(Number, Number),
     }),
   ),
-  address: Match.Optional(SafeString()),
-  route: Match.Optional(SafeString()),
-  short: Match.Optional(SafeString()),
+  address: Match.Optional(String),
+  route: Match.Optional(String),
+  short: Match.Optional(String),
   maxPeople: Match.Optional(Match.Integer),
   maxWorkplaces: Match.Optional(Match.Integer),
   facilities: Match.Optional([StringEnum(...Venues.facilityOptions)]),
-  otherFacilities: Match.Optional(SafeString()),
+  otherFacilities: Match.Optional(String),
 };
 export type SaveFields = Type<typeof SaveFieldPattern>;
 
 export const save = ServerMethod("venue.save", async (venueId: string, changes: SaveFields) => {
-  check(venueId, SafeString());
+  check(venueId, String);
   check(changes, SaveFieldPattern);
 
   const user = await Meteor.userAsync();
@@ -121,7 +121,7 @@ export const save = ServerMethod("venue.save", async (venueId: string, changes: 
 });
 
 export const remove = ServerMethod("venue.remove", async (venueId: string) => {
-  check(venueId, SafeString());
+  check(venueId, String);
 
   const venue = await Venues.findOneAsync(venueId);
   if (!venue) {

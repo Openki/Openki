@@ -1,6 +1,5 @@
 import { Blaze } from "meteor/blaze";
 import { Spacebars } from "meteor/spacebars";
-import { check } from "meteor/check";
 
 /**
  * Truncate long strings, adding ellipsis char when the string was long
@@ -11,23 +10,10 @@ import { check } from "meteor/check";
  * preset "…", does not count towards max.
  */
 export function truncate(src: string, max: number, ellipsis = "…") {
-  check(src, String);
-  check(max, Number);
   if (src.length > max) {
     return src.substring(0, max) + ellipsis;
   }
   return src;
-}
-
-/**
- * Capitalize first letter of String
- *
- * @param input the string to be capitalized
- * @return the capitalized string
- */
-export function capitalize(input: string) {
-  check(input, String);
-  return input.charAt(0).toUpperCase() + input.slice(1);
 }
 
 export function markedName(search: string, name: string) {
@@ -107,12 +93,11 @@ export function escapeRegex(string: string) {
 /**
  * Remove non-printable chars from string
  */
-export function saneText(unsaneText: string) {
+export function sanitizeMultiline(unsafeString: string) {
   // Remove all ASCII control chars except the line feed.
   /* eslint-disable-next-line no-control-regex */
   const re = /[\0-\x09\x0B-\x1F\x7F]/g;
-
-  const text = unsaneText.replace(re, "");
+  const text = unsafeString.replace(re, "");
 
   return text.trim();
 }
@@ -121,8 +106,8 @@ export function saneText(unsaneText: string) {
  * Remove non-printable chars and linebreaks from string
  * All runs of whitespace are replaced with one space.
  */
-export function saneTitle(unsaneText: string) {
-  let text = unsaneText.replace(/[\n\r]/g, "");
+export function sanitizeSingleline(unsafeString: string) {
+  let text = unsafeString.replace(/[\n\r]/g, "");
   text = text.replace(/\s+/g, " ");
-  return saneText(text);
+  return sanitizeMultiline(text);
 }
