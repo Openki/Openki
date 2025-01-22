@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import { chain } from "lodash";
+import { chain, escapeRegExp } from "lodash";
 import { Match, check } from "meteor/check";
 
 import { EventEntity, Events } from "/imports/api/events/events";
@@ -9,7 +9,6 @@ import { Geodata } from "/imports/api/regions/regions";
 
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
-import * as StringTools from "/imports/utils/string-tools";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { Type } from "/imports/utils/CustomChecks";
 
@@ -163,7 +162,7 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
     if (filter.search) {
       const searchTerms = filter.search.split(/\s+/);
       find.$and = searchTerms.map((searchTerm) => ({
-        name: { $regex: StringTools.escapeRegex(searchTerm), $options: "i" },
+        name: { $regex: escapeRegExp(searchTerm), $options: "i" },
       }));
     }
 

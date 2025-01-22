@@ -1,21 +1,6 @@
 import { Blaze } from "meteor/blaze";
 import { Spacebars } from "meteor/spacebars";
 
-/**
- * Truncate long strings, adding ellipsis char when the string was long
- *
- * @param src the string to be truncated
- * @param max the maximum length of the string
- * @param ellipsis the string to add that signifies that src was truncated,
- * preset "…", does not count towards max.
- */
-export function truncate(src: string, max: number, ellipsis = "…") {
-  if (src.length > max) {
-    return src.substring(0, max) + ellipsis;
-  }
-  return src;
-}
-
 export function markedName(search: string, name: string) {
   if (search === "") {
     return name;
@@ -86,9 +71,6 @@ export function slug(text: string) {
   );
 }
 
-export function escapeRegex(string: string) {
-  return string.replace(/([.*+?^=!:${}()|[\]/\\])/g, "\\$1");
-}
 
 /**
  * Remove non-printable chars from string

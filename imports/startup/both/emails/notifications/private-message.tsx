@@ -11,10 +11,10 @@ import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { Events } from "/imports/api/events/events";
 
 import * as HtmlTools from "/imports/utils/html-tools";
-import * as StringTools from "/imports/utils/string-tools";
+import { truncate } from "lodash";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { Model as NotificationModel } from "../notification";
-import { PrivateMessage, Props } from "../../../../emails/notifications/PrivateMessage";
+import { PrivateMessage, Props } from "/imports/emails/notifications/PrivateMessage";
 import { LocalTime } from "/imports/utils/local-time";
 
 interface Body {
@@ -108,7 +108,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
 
       const subjectvars = {
-        SENDER: StringTools.truncate(sender.getDisplayName(), 10),
+        SENDER: truncate(sender.getDisplayName(), { length: 10 }),
       };
       const subject = t(
         "notification.privateMessage.mail.subject",
