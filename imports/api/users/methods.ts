@@ -17,13 +17,7 @@ import { isEmail } from "/imports/utils/email-tools";
 import * as StringTools from "/imports/utils/string-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import {
-  HtmlString,
-  SafeString,
-  StringEnum,
-  Type,
-  UnsafeString,
-} from "/imports/utils/CustomChecks";
+import { HtmlString, StringEnum, Type, UnsafeString } from "/imports/utils/CustomChecks";
 import { NotAllowedCharacter } from "/imports/startup/both/NotAllowedCharacter";
 
 /**
@@ -91,47 +85,46 @@ export const updateDescription = ServerMethod(
  */
 export const updateUsername = ServerMethod(
   "user.updateUsername",
-  async (username: UnsafeString) => {
-    check(username, SafeString());
+  async (unsafeUsername: string) => {
+    check(unsafeUsername, String);
 
     const user = await Meteor.userAsync();
     if (!user) {
       throw new ValidationError([{ name: "username", type: "plzLogin" }], "Not logged-in");
     }
 
-    let saneUsername = StringTools.saneTitle(username);
-
+    let username = StringTools.sanitizeSingleline(unsafeUsername);
     ((PublicSettings.contribution?.forbiddenChars || []) as string[]).forEach((c) => {
-      saneUsername = saneUsername.replace(RegExp(c, "g"), "");
+      username = username.replace(RegExp(c, "g"), "");
     });
-    saneUsername = saneUsername.trim().substring(0, 200);
+    username = username.trim().substring(0, 200);
 
-    if (saneUsername.length === 0) {
+    if (username.length === 0) {
       throw new ValidationError(
         [{ name: "username", type: "noUserName" }],
         "username cannot be empty",
       );
     }
 
-    if (NotAllowedCharacter.find((c) => saneUsername.includes(c))) {
+    if (NotAllowedCharacter.find((c) => username.includes(c))) {
       throw new ValidationError(
         [{ name: "username", type: "notAllowedCharacter" }],
         "Not allowed character",
       );
     }
 
-    if (saneUsername === user.username) {
+    if (username === user.username) {
       return;
     }
 
-    if (Accounts.findUserByUsername(saneUsername)) {
+    if (Accounts.findUserByUsername(username)) {
       throw new ValidationError(
         [{ name: "username", type: "userExists" }],
         "username is already taken",
       );
     }
 
-    const result = await Profile.Username.change(user._id, saneUsername);
+    const result = await Profile.Username.change(user._id, username);
     if (!result) {
       throw new ValidationError(
         [{ name: "username", type: "nameError" }],
@@ -203,7 +196,7 @@ export const updateTheme = ServerMethod(
 export const updateEmail = ServerMethod(
   "user.updateEmail",
   async (email: string) => {
-    check(email, SafeString());
+    check(email, String);
 
     const user = await Meteor.userAsync();
     if (!user) {
@@ -258,8 +251,8 @@ export type AdminRemoveOptions = Type<typeof AdminRemoveOptionsPattern>;
 export const adminRemove = ServerMethod(
   "user.admin.remove",
   async (userId: string, reason: string, options: AdminRemoveOptions = {}) => {
-    check(userId, SafeString());
-    check(reason, SafeString());
+    check(userId, String);
+    check(reason, String);
     check(options, Match.Maybe(AdminRemoveOptionsPattern));
 
     const operator = await Meteor.userAsync();
@@ -322,8 +315,8 @@ export const adminRemove = ServerMethod(
 export const addPrivilege = ServerMethod(
   "user.addPrivilege",
   async (userId: string, privilege: "admin") => {
-    check(userId, SafeString());
-    check(privilege, SafeString());
+    check(userId, String);
+    check(privilege, String);
 
     const operator = await Meteor.userAsync();
     if (!operator?.privileged("admin")) {
@@ -342,8 +335,8 @@ export const addPrivilege = ServerMethod(
 export const removePrivilege = ServerMethod(
   "user.removePrivilege",
   async (userId: string, privilege: "admin") => {
-    check(userId, SafeString());
-    check(privilege, SafeString());
+    check(userId, String);
+    check(privilege, String);
 
     const user = await Users.findOneAsync({ _id: userId });
     if (!user) {
@@ -360,7 +353,7 @@ export const removePrivilege = ServerMethod(
 );
 
 export const setHasContributed = ServerMethod("user.setHasContributed", async (userId: string) => {
-  check(userId, SafeString());
+  check(userId, String);
 
   const operator = await Meteor.userAsync();
 
@@ -384,7 +377,7 @@ export const setHasContributed = ServerMethod("user.setHasContributed", async (u
 export const unsetHasContributed = ServerMethod(
   "user.unsetHasContributed",
   async (userId: string) => {
-    check(userId, SafeString());
+    check(userId, String);
 
     const operator = await Meteor.userAsync();
 
@@ -418,7 +411,7 @@ export const hidePricePolicy = ServerMethod("user.hidePricePolicy", async () => 
 export const updateLocale = ServerMethod(
   "user.updateLocale",
   async (locale: string) => {
-    check(locale, SafeString());
+    check(locale, String);
 
     const userId = Meteor.userId();
     if (!userId) {
