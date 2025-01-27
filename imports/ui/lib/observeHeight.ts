@@ -1,5 +1,3 @@
-import { debounce } from "lodash";
-
 const observeDOM = (function () {
   const MutationObserver = window.MutationObserver || (window as any).WebKitMutationObserver;
 
@@ -24,12 +22,11 @@ const observeDOM = (function () {
 
 /** Observe the height of a element */
 export function observeSize(element: Element, onChange: (element: Element) => void) {
-  const handleChange = debounce(onChange, 100);
   const resizeObserver = new ResizeObserver(() => {
-    handleChange(element);
+    onChange(element);
   });
   resizeObserver.observe(element);
   observeDOM(element, () => {
-    handleChange(element);
+    onChange(element);
   });
 }

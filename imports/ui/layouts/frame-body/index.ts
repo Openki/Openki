@@ -24,6 +24,10 @@ template.onRendered(() => {
   const frame = document.querySelector(".frame");
   if (frame) {
     observeSize(frame, (element: Element) => {
+      if (!element.scrollHeight) {
+        return;
+      }
+
       const message = {
         type: "onFrameHeightChange",
         height: element.scrollHeight,
