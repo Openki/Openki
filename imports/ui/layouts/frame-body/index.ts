@@ -15,27 +15,26 @@ const Template = TemplateAny as TemplateStaticTyped<"frameLayout">;
 
 const template = Template.frameLayout;
 
+/** The href/url Openki was loaded. */
+const initialHref = document.location.href;
+
 template.onRendered(() => {
   // observe height changes of the frame and send it to the parent. See: https://gitlab.com/Openki/Openki/-/issues/2052
-
-  // You can add the /plugins/iframeHeightAdjust.js into your website to adjust the size of the iframe to the size of the inner content:
-
+  // You can add the /plugins/iframeHeightAdjust.js into your website to adjust the size of the iframe to the size of the inner content.
   const frame = document.querySelector(".frame");
-  function handleSizeChange(element: Element) {
-    const message = {
-      type: "onFrameHeightChange",
-      height: element.scrollHeight,
-      href: document.location.href,
-    };
-    window.parent.postMessage(message, "*");
-    if (Meteor.isDevelopment) {
-      /* eslint-disable-next-line no-console */
-      console.debug(`window.parent.postMessage(${JSON.stringify(message)})`);
-    }
-  }
-
   if (frame) {
-    observeSize(frame, handleSizeChange);
+    observeSize(frame, (element: Element) => {
+      const message = {
+        type: "onFrameHeightChange",
+        height: element.scrollHeight,
+        src: initialHref,
+      };
+      window.parent.postMessage(message, "*");
+      if (Meteor.isDevelopment) {
+        /* eslint-disable-next-line no-console */
+        console.debug(`window.parent.postMessage(${JSON.stringify(message)})`);
+      }
+    });
   }
 
   Viewport.update();
