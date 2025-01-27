@@ -18,33 +18,14 @@ const template = Template.frameLayout;
 template.onRendered(() => {
   // observe height changes of the frame and send it to the parent. See: https://gitlab.com/Openki/Openki/-/issues/2052
 
-  /* You can add the following script in the parent frame to adjust the size of the iframe to the size of the inner content:
-  <script>
-    // Please configure:
-    const iframeId = "openkiIFrameId";
-
-    window.addEventListener("message", function (event) {
-      if (!(event.data && event.data.type === "onFrameHeightChange")) {
-        return;
-      }
-
-      const iframe = document.getElementById(iframeId);
-      if (!iframe) {
-        throw new Error(
-          "iFrame with the Id " + iframeId + " not found. Have you configured it correctly?",
-        );
-      }
-
-      iframe.style.height = event.data.height + "px";
-    });
-  </script>
-  */
+  // You can add the /plugins/iframeHeightAdjust.js into your website to adjust the size of the iframe to the size of the inner content:
 
   const frame = document.querySelector(".frame");
   function handleSizeChange(element: Element) {
     const message = {
       type: "onFrameHeightChange",
       height: element.scrollHeight,
+      href: document.location.href,
     };
     window.parent.postMessage(message, "*");
     if (Meteor.isDevelopment) {
