@@ -48,7 +48,7 @@ export async function generate() {
       const comment = {} as Mongo.OptionalId<CourseDiscussionEnity>;
       comment.courseId = course._id;
       comment.title = _.sample(words, 1 + Math.floor(prng() * 3)).join(" ");
-      comment.text = HtmlTools.saneHtml(
+      comment.text = HtmlTools.sanitizeHtml(
         _.sample(words, 5).join(" ") + _.sample(words, Math.floor(prng() * 30)).join(" "),
       );
 

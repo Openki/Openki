@@ -56,7 +56,7 @@ export const save = ServerMethod("venue.save", async (venueId: string, changes: 
   const set = { updated: new Date() } as Mongo.OptionalId<VenueEntity>;
 
   if (changes.description) {
-    set.description = HtmlTools.saneHtml(changes.description);
+    set.description = HtmlTools.sanitizeHtml(changes.description);
   }
   if (changes.name) {
     set.name = changes.name.trim().substring(0, 1000);

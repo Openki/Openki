@@ -76,7 +76,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
     updates.claim = changes.claim.substring(0, 1000);
   }
   if (changes.description !== undefined) {
-    updates.description = HtmlTools.saneHtml(changes.description);
+    updates.description = HtmlTools.sanitizeHtml(changes.description);
   }
 
   // Don't update nothing

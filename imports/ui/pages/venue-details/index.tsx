@@ -11,7 +11,7 @@ import { useDetails } from "/imports/api/venues/publications";
 import { useReactiveNow } from "/imports/utils/reactive-now";
 import * as Metatags from "/imports/utils/metatags";
 import { textPlain } from "/imports/utils/html-tools";
-import { truncate } from "/imports/utils/string-tools";
+import { truncate } from "lodash";
 
 import { useTranslation } from "react-i18next";
 import { Edit } from "../../components/venues/edit";
