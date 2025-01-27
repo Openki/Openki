@@ -96,7 +96,7 @@ export async function generate() {
       event.courseId = course._id;
       event._id = ensure.fixedId([course._id, `${n}`]);
       event.title = `${course.name} ${_.sample(words)}`;
-      event.description = HtmlTools.saneHtml(
+      event.description = HtmlTools.sanitizeHtml(
         words.slice(0, 10 + Math.floor(prng() * 30)).join(" "),
       );
       event.groups = course.groups;

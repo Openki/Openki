@@ -1,24 +1,3 @@
-import { Blaze } from "meteor/blaze";
-import { Spacebars } from "meteor/spacebars";
-
-export function markedName(search: string, name: string) {
-  if (search === "") {
-    return name;
-  }
-  const match = name.match(new RegExp(search, "i"));
-
-  // To add markup we have to escape all the parts separately
-  let marked;
-  if (match) {
-    const term = match[0];
-    const parts = name.split(term);
-    marked = parts.map(Blaze._escape).join(`<strong>${Blaze._escape(term)}</strong>`);
-  } else {
-    marked = Blaze._escape(name);
-  }
-  return Spacebars.SafeString(marked);
-}
-
 /**
  * Create a URL friendly version from the string. Source: https://stackoverflow.com/questions/37809/how-do-i-generate-a-friendly-url-in-c
  */
@@ -71,25 +50,28 @@ export function slug(text: string) {
   );
 }
 
-
 /**
  * Remove non-printable chars from string
  */
-export function sanitizeMultiline(unsafeString: string) {
+export function sanitizeMultiline(
+  text = "",
+  maxLength = 640 * 1024 /* 640 k ought to be enough for everybody  -- Mao */,
+) {
   // Remove all ASCII control chars except the line feed.
   /* eslint-disable-next-line no-control-regex */
   const re = /[\0-\x09\x0B-\x1F\x7F]/g;
-  const text = unsafeString.replace(re, "");
 
-  return text.trim();
+  return text.replace(re, "").substring(0, maxLength).trim();
 }
 
 /**
  * Remove non-printable chars and linebreaks from string
  * All runs of whitespace are replaced with one space.
  */
-export function sanitizeSingleline(unsafeString: string) {
-  let text = unsafeString.replace(/[\n\r]/g, "");
-  text = text.replace(/\s+/g, " ");
-  return sanitizeMultiline(text);
+export function sanitizeSingleline(
+  text = "",
+  maxLength = 640 * 1024 /* 640 k ought to be enough for everybody  -- Mao */,
+) {
+  const result = text.replace(/[\n\r]/g, "").replace(/\s+/g, " ");
+  return sanitizeMultiline(result, maxLength);
 }

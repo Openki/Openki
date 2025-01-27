@@ -305,11 +305,11 @@ export const save = ServerMethod(
 
     if (Meteor.isServer) {
       const sanitizedDescription = StringTools.sanitizeMultiline(editFields.description as string);
-      editFields.description = HtmlTools.saneHtml(sanitizedDescription);
+      editFields.description = HtmlTools.sanitizeHtml(sanitizedDescription);
     }
 
     if (editFields.title) {
-      editFields.title = StringTools.sanitizeSingleline(editFields.title).substring(0, 1000);
+      editFields.title = StringTools.sanitizeSingleline(editFields.title, 1000);
       editFields.slug = StringTools.slug(editFields.title);
     }
 

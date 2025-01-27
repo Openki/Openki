@@ -499,7 +499,7 @@ export function Edit(data: Data) {
   const handleSave = async () => {
     const changes = {
       internal,
-      name: StringTools.sanitizeSingleline(title || ""),
+      name: StringTools.sanitizeSingleline(title),
       categories: selectedCategories || [],
     } as unknown as Required<CoursesMethods.SaveFields>;
 
