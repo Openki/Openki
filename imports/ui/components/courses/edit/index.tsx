@@ -715,10 +715,10 @@ export function Edit(data: Data) {
                       type="radio"
                       name="role"
                       value="participant"
-                      checked
+                      checked={simpleSelectedRole === "participant"}
                       onChange={handleRoleChange}
                     />
-                    <i className="fa-solid fa-user fa-lg fa-fw"></i>
+                    <i className="fa-solid fa-user fa-lg fa-fw"></i>{" "}
                     {t("course.edit.iWantToLearn", "I want to learn")}
                   </label>
                 </div>
@@ -729,9 +729,10 @@ export function Edit(data: Data) {
                       type="radio"
                       name="role"
                       value="mentor"
+                      checked={simpleSelectedRole === "mentor"}
                       onChange={handleRoleChange}
                     />
-                    <i className="fa-solid fa-graduation-cap fa-lg fa-fw"></i>
+                    <i className="fa-solid fa-graduation-cap fa-lg fa-fw"></i>{" "}
                     {t("course.edit.iCanTeach", "I can teach")}
                   </label>
                 </div>
