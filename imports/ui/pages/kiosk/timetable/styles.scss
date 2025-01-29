@@ -25,7 +25,7 @@
 }
 
 .timetable-header {
-  background: white;
+  background: $white;
   left: calc(var(--bs-gutter-x) * 0.5);
   padding-top: 5px;
   pointer-events: none;
