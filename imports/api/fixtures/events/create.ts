@@ -1,5 +1,6 @@
 /* eslint-disable no-await-in-loop */
 import { Events, EventEntity } from "../../events/events";
+import { Log } from "../../log/log";
 import { ensure } from "../ensureFixture";
 import { events as eventsNhw } from "./nachhaltigkeitswoche";
 import { events as eventsZuerichlernt } from "./zuerichlernt";
@@ -168,5 +169,9 @@ export async function create() {
     await Events.insertAsync(event);
   }
 
-  return `Inserted ${eventsNhw.length + eventsZuerichlernt.length} event fixtures.`;
+  Log.record(
+    "testdata",
+    ["Events"],
+    `Inserted ${eventsNhw.length + eventsZuerichlernt.length} event fixtures.`,
+  );
 }

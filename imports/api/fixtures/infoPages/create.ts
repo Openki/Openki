@@ -1,4 +1,5 @@
 import { InfoPages } from "../../infoPages/infoPages";
+import { Log } from "../../log/log";
 import { infoPages } from "./data/data";
 
 export async function create() {
@@ -6,5 +7,5 @@ export async function create() {
     // eslint-disable-next-line no-await-in-loop
     await InfoPages.insertAsync(p);
   }
-  return "Inserted info pages fixtures.";
+  Log.record("testdata", ["InfoPages"], "Inserted info pages fixtures.");
 }

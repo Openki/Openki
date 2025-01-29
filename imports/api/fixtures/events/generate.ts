@@ -10,6 +10,7 @@ import { Prng } from "/imports/api/fixtures/Prng";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { LocalTime } from "/imports/utils/local-time";
+import { Log } from "../../log/log";
 /**
  * Make a number that looks like a human chose it, favouring 2 and 5
  */
@@ -144,5 +145,5 @@ export async function generate() {
     count += eventCount;
   }
 
-  return `Generated ${count} course events.`;
+  Log.record("testdata", ["Events"], `Generated ${count} course events.`);
 }
