@@ -10,9 +10,9 @@
 .timetable-day-control {
   color: #38829c77;
   font-size: 100px;
-  margin: 15px 15px -75px;
-  position: absolute;
-  top: 50%;
+  margin: 15px 15px 0;
+  position: fixed;
+  top: calc(50vh - 75px);
   z-index: 1;
 }
 
@@ -106,7 +106,7 @@
 
 // event canceled
 //============================================================================================
-.timetable-event:hover .timetable-event-canceled {
+.timetable-event.active .timetable-event-canceled {
   background-color: $canceled-color;
   border-radius: 5px;
   color: $white;
@@ -131,7 +131,7 @@
 
 // event fully booked
 //============================================================================================
-.timetable-event:hover .timetable-event-fully-booked {
+.timetable-event.active .timetable-event-fully-booked {
   background-color: #f99248;
   border-radius: 5px;
   color: $white;
@@ -155,11 +155,11 @@
 }
 
 .timetable-event-right {
-  &:hover {
+  &.active {
     @include td-direction(rtl);
   }
 
-  &:hover * {
+  &.active * {
     direction: initial;
   }
 }
@@ -173,7 +173,7 @@
   padding: 4px 12px;
 }
 
-.timetable-event:hover .timetable-event-title {
+.timetable-event.active .timetable-event-title {
   box-shadow: 0 5px 8px $default-shadow;
   height: auto;
   max-height: 110px;
@@ -188,7 +188,7 @@
   background-size: contain;
 }
 
-.timetable-event:hover .timetable-event-title-canceled {
+.timetable-event.active .timetable-event-title-canceled {
   background-image: none;
 }
 
@@ -215,18 +215,18 @@
   @include ellipsis-multiline(5);
 }
 
-.timetable-event:hover .timetable-event-time,
-.timetable-event:hover .timetable-event-description {
+.timetable-event.active .timetable-event-time,
+.timetable-event.active .timetable-event-description {
   box-shadow: 0 5px 8px $default-shadow;
   display: block;
   z-index: 1;
 }
 
-.timetable-event:hover .timetable-event-time {
+.timetable-event.active .timetable-event-time {
   min-width: 130px;
 }
 
-.timetable-event:hover .timetable-event-description {
+.timetable-event.active .timetable-event-description {
   min-width: 400px;
 }
 
