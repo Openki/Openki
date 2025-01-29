@@ -3,7 +3,7 @@
 .timetable {
   min-height: 100vh;
   overflow: hidden;
-  padding-top: 5px;
+  padding-top: 65px;
   position: relative;
 }
 
@@ -25,8 +25,19 @@
 }
 
 .timetable-header {
-  @include td-margin(left, 12em);
-  position: relative;
+  background: white;
+  left: calc(var(--bs-gutter-x) * 0.5);
+  padding-top: 5px;
+  pointer-events: none;
+  position: fixed;
+  right: calc(var(--bs-gutter-x) * 0.5);
+  top: 0;
+  z-index: 1;
+}
+
+.timetable-hours {
+  left: 12em;
+  width: calc(100% - 12em);
 }
 
 .timetable-days,
@@ -37,11 +48,9 @@
 }
 
 .timetable-day {
-  border: solid;
-  border-color: #ddd;
-  border-width: 3px 0 0 0.5px;
   height: 2em;
   margin-bottom: 2px;
+  padding-left: 12em;
   position: absolute;
   text-align: center;
 }
@@ -94,7 +103,7 @@
   margin: 0.1em;
   position: absolute;
 
-  &:hover {
+  &.active {
     z-index: 1;
   }
 }
@@ -232,9 +241,10 @@
 
 .vertical-wrapper {
   height: 100vh;
+  left: 12em;
   pointer-events: none;
   position: absolute;
-  width: 100%;
+  width: calc(100% - 12em);
 }
 
 .vertical {
