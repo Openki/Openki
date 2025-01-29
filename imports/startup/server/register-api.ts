@@ -27,3 +27,4 @@ import "/imports/api/users/publications";
 import "/imports/api/venues/methods";
 import "/imports/api/venues/publications";
 import "/imports/api/version/publications";
+import "/imports/api/db-utilities/updateDbCacheFields";

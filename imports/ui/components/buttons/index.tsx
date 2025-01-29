@@ -20,6 +20,7 @@ export function Button({
     <button
       type="button"
       className={`${className} text-nowrap`}
+      disabled={isBusy}
       onClick={async () => {
         setIsBusy(true);
         try {
