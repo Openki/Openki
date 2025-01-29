@@ -4,10 +4,10 @@ window.addEventListener("message", function (event) {
   }
 
   const src = event.data.src;
-  const iframe = document.querySelector("iframe[src='" + src + "']");
+  const iframe = document.querySelector(`iframe[src='${src}']`);
   if (!iframe) {
     throw new Error("iFrame not found.");
   }
 
-  iframe.style.height = event.data.height + "px";
+  iframe.style.height = `${event.data.height}px`;
 });

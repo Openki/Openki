@@ -67,5 +67,5 @@ export async function create() {
     await Venues.updateAsync(venue._id, venue);
   }
 
-  Log.record("testdata", ["Venues"], `Inserted ${venues.length} venue fixtures.`);
+  Log.record("testdata", ["Venues"], { message: `Inserted ${venues.length} venue fixtures.` });
 }

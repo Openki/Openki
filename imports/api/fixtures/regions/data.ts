@@ -5,7 +5,7 @@ export const regions: {
   loc?: [number, number];
   tz: string;
   calendarStartDate?: true;
-  defaultTeamGroup?: string;
+  defaultTeamGroups?: string[];
   singleEvents?: boolean;
   country?: string;
   region?: string;
@@ -103,7 +103,7 @@ export const regions: {
     loc: [47.3784, 8.5257],
     tz: "Europe/Zurich",
     calendarStartDate: true,
-    defaultTeamGroup: "Zürich lernt",
+    defaultTeamGroups: ["Zürich lernt"],
     singleEvents: true,
     tenant: "Zuerich Lernt",
     custom: {

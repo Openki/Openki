@@ -7,5 +7,5 @@ export async function create() {
     // eslint-disable-next-line no-await-in-loop
     await InfoPages.insertAsync(p);
   }
-  Log.record("testdata", ["InfoPages"], "Inserted info pages fixtures.");
+  Log.record("testdata", ["InfoPages"], { message: "Inserted info pages fixtures." });
 }

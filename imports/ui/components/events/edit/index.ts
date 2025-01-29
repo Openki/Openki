@@ -162,9 +162,9 @@ template.onCreated(function () {
       groups.push(Router.current().params.query.group as string);
     }
 
-    const defaultTeamGroup = getRegion()?.defaultTeamGroup;
-    if (defaultTeamGroup) {
-      groups.push(defaultTeamGroup);
+    const defaultTeamGroups = getRegion()?.defaultTeamGroups;
+    if (defaultTeamGroups) {
+      groups.push(...defaultTeamGroups);
     }
 
     if (courseId) {

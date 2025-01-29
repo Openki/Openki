@@ -77,5 +77,5 @@ export async function generate() {
     count += createCount;
   }
 
-  Log.record("testdata", ["CourseDiscussions"], `Generated ${count} course comments.`);
+  Log.record("testdata", ["CourseDiscussions"], { message: `Generated ${count} course comments.` });
 }

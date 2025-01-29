@@ -28,5 +28,5 @@ export async function create() {
     await Groups.insertAsync(group);
   }
 
-  Log.record("testdata", ["Groups"], `Inserted ${groups.length} group fixtures.`);
+  Log.record("testdata", ["Groups"], { message: `Inserted ${groups.length} group fixtures.` });
 }
