@@ -22,18 +22,20 @@ import { usersCreate as usersDataCreate } from "./usersCreate";
 
 export const clean = ServerMethod(
   "fixtures.clean",
-  () => {
+  async () => {
     if (!PrivateSettings.testdata) {
       return;
     }
-    Venues.removeAsync({});
-    Events.removeAsync({});
-    CourseDiscussions.removeAsync({});
-    Courses.removeAsync({});
-    Regions.removeAsync({});
-    Tenants.removeAsync({});
-    Groups.removeAsync({});
-    InfoPages.removeAsync({});
+    await Promise.all([
+      Venues.removeAsync({}),
+      Events.removeAsync({}),
+      CourseDiscussions.removeAsync({}),
+      Courses.removeAsync({}),
+      Regions.removeAsync({}),
+      Tenants.removeAsync({}),
+      Groups.removeAsync({}),
+      InfoPages.removeAsync({}),
+    ]);
   },
   { simulation: false },
 );
