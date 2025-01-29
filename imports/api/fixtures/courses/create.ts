@@ -117,9 +117,7 @@ export async function create() {
     await Courses.insertAsync(course);
   }
 
-  Log.record(
-    "testdata",
-    ["Courses"],
-    `Inserted ${coursesBase.length + coursesZuerichLernt.length} course fixtures.`,
-  );
+  Log.record("testdata", ["Courses"], {
+    message: `Inserted ${coursesBase.length + coursesZuerichLernt.length} course fixtures.`,
+  });
 }

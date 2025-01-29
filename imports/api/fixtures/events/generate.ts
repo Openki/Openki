@@ -145,5 +145,5 @@ export async function generate() {
     count += eventCount;
   }
 
-  Log.record("testdata", ["Events"], `Generated ${count} course events.`);
+  Log.record("testdata", ["Events"], { message: `Generated ${count} course events.` });
 }

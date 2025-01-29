@@ -169,9 +169,7 @@ export async function create() {
     await Events.insertAsync(event);
   }
 
-  Log.record(
-    "testdata",
-    ["Events"],
-    `Inserted ${eventsNhw.length + eventsZuerichlernt.length} event fixtures.`,
-  );
+  Log.record("testdata", ["Events"], {
+    message: `Inserted ${eventsNhw.length + eventsZuerichlernt.length} event fixtures.`,
+  });
 }

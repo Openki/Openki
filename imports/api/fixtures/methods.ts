@@ -6,7 +6,6 @@ import { Events } from "/imports/api/events/events";
 import { Groups } from "/imports/api/groups/groups";
 import { Regions } from "/imports/api/regions/regions";
 import { Venues } from "/imports/api/venues/venues";
-import { Users } from "/imports/api/users/users";
 import { InfoPages } from "../infoPages/infoPages";
 import { Tenants } from "../tenants/tenants";
 import { CourseDiscussions } from "../course-discussions/course-discussions";
@@ -34,7 +33,6 @@ export const clean = ServerMethod(
     Regions.removeAsync({});
     Tenants.removeAsync({});
     Groups.removeAsync({});
-    Users.removeAsync({});
     InfoPages.removeAsync({});
   },
   { simulation: false },
@@ -51,9 +49,7 @@ export const create = ServerMethod(
       await infoPagesDataCreate();
     }
 
-    if ((await Users.countDocuments()) === 0) {
-      await usersDataCreate();
-    }
+    await usersDataCreate();
 
     if ((await Groups.countDocuments()) === 0) {
       await groupsDataCreate();

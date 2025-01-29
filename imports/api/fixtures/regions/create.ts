@@ -32,11 +32,11 @@ export async function create() {
       startDate.setDate(startDate.getDate() - 2);
       region.calendarStartDate = startDate;
     }
-    if (r.defaultTeamGroup) {
-      region.defaultTeamGroup = await ensure.group(r.defaultTeamGroup);
+    if (r.defaultTeamGroups) {
+      region.defaultTeamGroups = await Promise.all(r.defaultTeamGroups.map((g) => ensure.group(g)));
     }
     await Regions.insertAsync(region);
   }
 
-  Log.record("testdata", ["Regions"], `Inserted ${regions.length} region fixtures.`);
+  Log.record("testdata", ["Regions"], { message: `Inserted ${regions.length} region fixtures.` });
 }

@@ -273,9 +273,9 @@ export function Edit(data: Data) {
     // eslint-disable-next-line @typescript-eslint/no-shadow
     const groups = [];
 
-    const defaultTeamGroup = getRegion()?.defaultTeamGroup;
-    if (defaultTeamGroup) {
-      groups.push(defaultTeamGroup);
+    const defaultTeamGroups = getRegion()?.defaultTeamGroups;
+    if (defaultTeamGroups) {
+      groups.push(...defaultTeamGroups);
     }
 
     if (data && data instanceof Course && !(data as CourseModel).isNew()) {
