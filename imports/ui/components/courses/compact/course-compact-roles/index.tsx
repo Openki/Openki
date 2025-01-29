@@ -5,7 +5,7 @@ import { CourseModel } from "/imports/api/courses/courses";
 
 import { hasRole, hasRoleUser } from "/imports/utils/course-role-utils";
 import { useUserId } from "/imports/utils/react-meteor-data";
-import { roleIcon } from "/imports/utils/role";
+import { useRoleDisplay } from "../../../../lib/useRoleDisplay";
 
 import "./styles.scss";
 
@@ -14,6 +14,7 @@ export type Props = { course: CourseModel };
 export function CourseCompactRoles({ course }: Props) {
   const userId = useUserId();
   const { t } = useTranslation();
+  const { roleIcon } = useRoleDisplay();
 
   function requiresRole(role: string) {
     return course.roles.includes(role);

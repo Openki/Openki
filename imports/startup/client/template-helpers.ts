@@ -15,7 +15,7 @@ import { buildCssVariableColor } from "/imports/utils/getColor";
 import { checkContribution } from "/imports/utils/checkContribution";
 import { locationFormat } from "/imports/utils/location-format";
 import { getCachedUser, getUserName } from "/imports/ui/lib/getUserName";
-import { roleIcon } from "/imports/utils/role";
+import { Roles } from "/imports/api/roles/roles";
 
 /**
  * Converts the input to a moment that the locale is set to timeLocale.
@@ -46,7 +46,11 @@ const helpers: { [name: string]: Function } = {
   },
 
   roleIcon(type: string) {
-    return roleIcon(type);
+    if (!type) {
+      return "";
+    }
+
+    return Roles.find((r) => r.type === type)?.icon || "";
   },
 
   regions() {

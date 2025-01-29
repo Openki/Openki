@@ -9,11 +9,13 @@ import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useFindFilter } from "/imports/api/courses/publications";
 import { LoadingPage } from "/imports/ui/pages/loading";
 import { CourseList } from "/imports/ui/components/courses/list";
+import { useRoleDisplay } from "../../../lib/useRoleDisplay";
 
 import "./styles.scss";
 
 export function UsersCourselist(data: { user: UserModel; ownProfile: boolean }) {
   const { t } = useTranslation();
+  const { roleShort } = useRoleDisplay();
   const id = data.user._id;
 
   const [isLoadingCourses, courses] = useFindFilter({
@@ -36,9 +38,6 @@ export function UsersCourselist(data: { user: UserModel; ownProfile: boolean }) 
   }
   function coursesByRoleCount(role: string, archived: boolean) {
     return coursesByRole(role, archived).length;
-  }
-  function roleShort(type: string) {
-    return `roles.${type}.short`;
   }
   function roleUserList(role: string) {
     return `roles.${role}.userList`;
@@ -92,7 +91,7 @@ export function UsersCourselist(data: { user: UserModel; ownProfile: boolean }) 
                         }}
                       >
                         <span className={`${role.icon} fa-fw`} aria-hidden="true"></span>{" "}
-                        {t(roleShort(role.type))}
+                        {roleShort(role.type)}
                         <span className="fa-solid fa-arrow-down fa-fw" aria-hidden="true"></span>
                         {coursesByRoleCount(role.type, false)}
                       </a>{" "}

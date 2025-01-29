@@ -1,120 +1,286 @@
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import { Meteor } from "meteor/meteor";
+import React from "react";
 
-import { Events } from "/imports/api/events/events";
+import { Router } from "meteor/iron:router";
+import { EventModel, Events } from "/imports/api/events/events";
 import { CourseModel } from "/imports/api/courses/courses";
+import { useTranslation } from "react-i18next";
 
-import "/imports/ui/components/profile-link";
+import { useRoleDisplay } from "../../../lib/useRoleDisplay";
+import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
-import "./template.html";
+import { ProfileLink } from "../../profile-link";
+import { Contribution } from "../../contribution";
+import { GroupTag } from "../../groups/tag";
+
 import "./styles.scss";
+import { useUser } from "/imports/utils/react-meteor-data";
 
+export function EventHeldHistoryEntry({ _id, title, slug }: EventModel) {
+  return (
+    <>
+      <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>{" "}
+      <a href={Router.path("showEvent", { _id, slug })}>{title}</a>
+    </>
+  );
+}
 
-<template name="eventHeldHistoryEntry">
-  <span class="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
-  <a href="{{pathFor 'showEvent'}}">
-    {{this.title}}
-  </a>
-</template>
+export function UserSubscribedHistoryEntry({ user, role }: { user: string; role: string }) {
+  const { t } = useTranslation();
+  const { roleShort, roleIcon } = useRoleDisplay();
+  return (
+    <>
+      <i className={`${roleIcon(role)} fa-fw`} aria-hidden="true"></i>{" "}
+      {t("course.history.userSubscribed", "{USER} joined as {ROLE}", {
+        USER: (
+          <>
+            <ProfileLink userId={user} />
+            <Contribution userId={user} />
+          </>
+        ),
+        ROLE: roleShort(role),
+      })}
+    </>
+  );
+}
+export function UserUnsubscribedHistoryEntry({ user, role }: { user: string; role: string }) {
+  const { t } = useTranslation();
+  const { roleShort, roleIcon } = useRoleDisplay();
+  return (
+    <>
+      <i className={`${roleIcon(role)} fa-fw`} aria-hidden="true"></i>{" "}
+      {t("course.history.userUnsubscribed", "{USER} retract {ROLE}", {
+        USER: (
+          <>
+            <ProfileLink userId={user} />
+            <Contribution userId={user} />
+          </>
+        ),
+        ROLE: roleShort(role),
+      })}
+    </>
+  );
+}
 
-<template name="userSubscribedHistoryEntry">
-  <i class="{{roleIcon role}} fa-fw" aria-hidden="true"></i>
-  {{> profileLink userId=user}}
-  {{contribution user}}
-  {{i18n 'course.history.userSubscribed' 'joined as {ROLE}' ROLE=(roleShort role)}}
-</template>
+export function GroupPromoteHistoryEntry({
+  user,
+  group,
+  enable,
+}: {
+  user: string;
+  group: string;
+  enable: boolean;
+}) {
+  const { t } = useTranslation();
+  const tOptions = {
+    GROUP: <GroupTag groupId={group} full={true} />,
+    USER: (
+      <>
+        <ProfileLink userId={user} />
+        <Contribution userId={user} />
+      </>
+    ),
+  };
+  return (
+    <>
+      {enable
+        ? t("course.history.groupPromote.added", "{GROUP} got added by {USER}", tOptions)
+        : t("course.history.groupPromote.removed", "{GROUP} got removed by {USER}", tOptions)}
+    </>
+  );
+}
 
-<template name="userUnsubscribedHistoryEntry">
-  <i class="{{roleIcon role}} fa-fw" aria-hidden="true"></i>
-  {{> profileLink userId=user}}
-  {{contribution user}}
-  {{i18n 'course.history.userUnsubscribed' 'retract {ROLE}' ROLE=(roleShort role)}}
-</template>
+export function GroupOrgaHistoryEntry({
+  user,
+  group,
+  enable,
+}: {
+  user: string;
+  group: string;
+  enable: boolean;
+}) {
+  const { t } = useTranslation();
+  const tOptions = {
+    GROUP: <GroupTag groupId={group} full={true} />,
+    USER: (
+      <>
+        <ProfileLink userId={user} />
+        <Contribution userId={user} />
+      </>
+    ),
+  };
+  return (
+    <>
+      {enable
+        ? t("course.history.groupOrga.added", "{GROUP} got added as orga-group by {USER}", tOptions)
+        : t(
+            "course.history.groupOrga.removed",
+            "{GROUP} got removed as orga-group by {USER}",
+            tOptions,
+          )}
+    </>
+  );
+}
 
-<template name="groupPromoteHistoryEntry">
-  {{> groupTag groupId=group full=true}}
-  {{#if enable}}
-    {{i18n 'course.history.groupPromote.added' 'got added by'}}
-  {{else}}
-    {{i18n 'course.history.groupPromote.removed' 'got removed by'}}
-  {{/if}}
-  {{> profileLink userId=user}}
-  {{contribution user}}
-</template>
+export function EventInsertedHistoryEntry({
+  _id,
+  slug,
+  title,
+  startLocal,
+  createdBy,
+}: {
+  _id: string;
+  slug: string;
+  title: string;
+  startLocal: string;
+  createdBy: string;
+}) {
+  const { t } = useTranslation();
+  const { weekdayFormat, calendarDayShort } = useDateTimeFormat();
 
-<template name="groupOrgaHistoryEntry">
-  {{> groupTag groupId=group full=true}}
-  {{#if enable}}
-    {{i18n 'course.history.groupOrga.added' 'got added as orga-group by'}}
-  {{else}}
-    {{i18n 'course.history.groupOrga.removed' 'got removed as orga-group by'}}
-  {{/if}}
-  {{> profileLink userId=user}}
-  {{contribution user}}
-</template>
+  return (
+    <>
+      <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>{" "}
+      {t("course.history.eventInserted", "{EVENT} created by {USER}", {
+        EVENT: (
+          <a href={Router.path("showEvent", { _id, slug })}>
+            {weekdayFormat(startLocal)} {calendarDayShort(startLocal)} {title}
+          </a>
+        ),
+        USER: (
+          <>
+            <ProfileLink userId={createdBy} />
+            <Contribution userId={createdBy} />
+          </>
+        ),
+      })}
+    </>
+  );
+}
 
-<template name="eventInsertedHistoryEntry">
-  <span class="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
-  <a href="{{pathFor 'showEvent'}}">
-    {{weekdayFormat startLocal}}
-    {{calendarDayShort startLocal}}
-    {{this.title}}
-  </a>
-  {{i18n 'course.history.eventInserted' 'created by'}}
-  {{> profileLink userId=createdBy}}
-  {{contribution createdBy}}
-</template>
+export function EventUpdatedHistoryEntry({
+  _id,
+  slug,
+  title,
+  startLocal,
+  updatedBy,
+  replicasUpdated,
+}: {
+  _id: string;
+  slug: string;
+  title: string;
+  startLocal: string;
+  updatedBy: string;
+  replicasUpdated: boolean;
+}) {
+  const { t } = useTranslation();
+  const { weekdayFormat, calendarDayShort } = useDateTimeFormat();
+  const tOptions = {
+    EVENT: (
+      <a href={Router.path("showEvent", { _id, slug })}>
+        {weekdayFormat(startLocal)} {calendarDayShort(startLocal)} {title}
+      </a>
+    ),
+    USER: (
+      <>
+        <ProfileLink userId={updatedBy} />
+        <Contribution userId={updatedBy} />
+      </>
+    ),
+  };
+  return (
+    <>
+      <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>{" "}
+      {replicasUpdated
+        ? t(
+            "course.history.eventAndRepeatsUpdated",
+            "{EVENT} and repeats updated by {USER}",
+            tOptions,
+          )
+        : t("course.history.eventUpdated", "{EVENT} updated by {USER}", tOptions)}
+    </>
+  );
+}
 
-<template name="eventUpdatedHistoryEntry">
-  <span class="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
-  <a href="{{pathFor 'showEvent'}}">
-    {{weekdayFormat startLocal}}
-    {{calendarDayShort startLocal}}
-    {{this.title}}
-  </a>
-  {{#if replicasUpdated}}
-    {{i18n 'course.history.eventAndRepeatsUpdated' 'and repeats updated by'}}
-  {{else}}
-    {{i18n 'course.history.eventUpdated' 'updated by'}}
-  {{/if}}
-  {{> profileLink userId=updatedBy}}
-  {{contribution updatedBy}}
-</template>
+export function EventRemovedHistoryEntry({
+  startLocal,
+  title,
+  removedBy,
+}: {
+  removedBy: string;
+  title: string;
+  startLocal: string;
+}) {
+  const { t } = useTranslation();
+  const { weekdayFormat, calendarDayShort } = useDateTimeFormat();
+  return (
+    <>
+      <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>{" "}
+      {t("course.history.eventRemoved", "{EVENT} removed by {USER}", {
+        EVENT: (
+          <>
+            {weekdayFormat(startLocal)} {calendarDayShort(startLocal)} {title}
+          </>
+        ),
+        USER: (
+          <>
+            <ProfileLink userId={removedBy} />
+            <Contribution userId={removedBy} />
+          </>
+        ),
+      })}
+    </>
+  );
+}
 
-<template name="eventRemovedHistoryEntry">
-  <span class="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
-  {{weekdayFormat startLocal}}
-  {{calendarDayShort startLocal}}
-  {{this.title}}
-  {{i18n 'course.history.eventRemoved' 'removed by'}}
-  {{> profileLink userId=removedBy}}
-  {{contribution removedBy}}
-</template>
+export function UpdatedHistoryEntry({ updatedBy }: { updatedBy: string }) {
+  const { t } = useTranslation();
+  return (
+    <>
+      {t("course.history.updated", "Updated by {USER}", {
+        USER: (
+          <>
+            <ProfileLink userId={updatedBy} />
+            <Contribution userId={updatedBy} />
+          </>
+        ),
+      })}
+    </>
+  );
+}
 
-<template name="updatedHistoryEntry">
-  {{i18n 'course.history.updated' 'Updated by'}}
-  {{> profileLink userId=updatedBy}}
-  {{contribution updatedBy}}
-</template>
+export function CreatedHistoryEntry({ createdby }: CourseModel) {
+  const { t } = useTranslation();
+  return (
+    <>
+      {t("course.history.created_by", "Created by {USER}", {
+        USER: (
+          <>
+            <ProfileLink userId={createdby} />
+            <Contribution userId={createdby} />
+          </>
+        ),
+      })}
+    </>
+  );
+}
 
-<template name="createdHistoryEntry">
-  {{i18n 'course.history.created_by' 'Created by'}}
-  {{> profileLink userId=createdby}}
-  {{contribution createdby}}
-</template>
+const map = {
+  updated: UpdatedHistoryEntry,
+  userSubscribed: UserSubscribedHistoryEntry,
+  userUnsubscribed: UserUnsubscribedHistoryEntry,
+  groupPromote: GroupPromoteHistoryEntry,
+  groupOrga: GroupOrgaHistoryEntry,
+  eventInserted: EventInsertedHistoryEntry,
+  eventUpdated: EventUpdatedHistoryEntry,
+  eventRemoved: EventRemovedHistoryEntry,
+} as const;
 
-const Template = TemplateAny as TemplateStaticTyped<"coursehistory", { course: CourseModel }>;
+export function History({ course }: { course: CourseModel }) {
+  const user = useUser();
 
-const template = Template.coursehistory;
-
-template.helpers({
-  pastEventsList() {
-    const instance = Template.instance();
-    const { course } = instance.data;
-
-    const historyEntries: { dateTime: Date | undefined; template: string; data: object }[] = [];
-
-    const user = Meteor.user();
+  function pastEventsList() {
+    const historyEntries: { dateTime: Date | undefined; template: React.FC<any>; data: object }[] =
+      [];
 
     const history =
       user && course.editableBy(user)
@@ -128,7 +294,7 @@ template.helpers({
         { limit: 100 }, // Hack: https://gitlab.com/Openki/Openki/-/issues/1768
       ).map((e) => ({
         dateTime: e.start,
-        template: "eventHeldHistoryEntry",
+        template: EventHeldHistoryEntry,
         data: e,
       })),
     );
@@ -137,7 +303,7 @@ template.helpers({
     historyEntries.push(
       ...(history?.map((e) => ({
         dateTime: e.dateTime,
-        template: `${e.type}HistoryEntry`,
+        template: (map as any)[e.type],
         data: e.data,
       })) || []),
     );
@@ -145,7 +311,7 @@ template.helpers({
     // and with the course creation
     historyEntries.push({
       dateTime: course.time_created,
-      template: "createdHistoryEntry",
+      template: CreatedHistoryEntry,
       data: course,
     });
 
@@ -153,35 +319,43 @@ template.helpers({
     return historyEntries
       .sort((a, b) => (b.dateTime?.getTime() || 0) - (a.dateTime?.getTime() || 0))
       .slice(0, 200); // Hack: https://gitlab.com/Openki/Openki/-/issues/1768
-  },
-});
-
-<template name="coursehistory">
-  <div class="container">
-    <div class="timeline-pre row">
-      <div class="col-1 offset-3">
-        <div class="timeline-start"></div>
-      </div>
-    </div>
-    {{#each event in pastEventsList}}
-      <div class="row">
-        <div class="timeline-eventdate col-3" title="{{dateLong event.dateTime}}">
-          {{fromNow event.dateTime}}
+  }
+  const { dateLong, fromNow } = useDateTimeFormat();
+  return (
+    <div className="container">
+      <div className="timeline-pre row">
+        <div className="col-1 offset-3">
+          <div className="timeline-start"></div>
         </div>
-        <div class="timeline-eventline-container col-1">
-          <div class="timeline-eventline">
-            <div class="timeline-eventpoint"></div>
+      </div>
+      {pastEventsList().map((event, index) => {
+        return (
+          <div className="row" key={index}>
+            <div className="timeline-eventdate col-3" title={dateLong(event.dateTime)}>
+              {fromNow(event.dateTime)}
+            </div>
+            <div className="timeline-eventline-container col-1">
+              <div className="timeline-eventline">
+                <div className="timeline-eventpoint"></div>
+              </div>
+            </div>
+            <div className="coursehistory-event col-8">
+              <event.template {...event.data} />
+            </div>
           </div>
+        );
+      })}
+      <div className="timeline-post row">
+        <div className="col-1 offset-3">
+          <div className="timeline-end"></div>
         </div>
-        <div class="coursehistory-event col-8">
-          {{> Template.dynamic template=event.template data=event.data}}
-        </div>
-      </div>
-    {{/each}}
-    <div class="timeline-post row">
-      <div class="col-1 offset-3">
-        <div class="timeline-end"></div>
       </div>
     </div>
-  </div>
-</template>
+  );
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("Coursehistory", () => History);
