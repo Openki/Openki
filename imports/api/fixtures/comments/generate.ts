@@ -11,6 +11,7 @@ import { Prng } from "/imports/api/fixtures/Prng";
 import { Users } from "/imports/api/users/users";
 
 import * as HtmlTools from "/imports/utils/html-tools";
+import { Log } from "../../log/log";
 
 /**
  * Select a date that is after the given date
@@ -76,5 +77,5 @@ export async function generate() {
     count += createCount;
   }
 
-  return `Generated ${count} course comments.`;
+  Log.record("testdata", ["CourseDiscussions"], `Generated ${count} course comments.`);
 }

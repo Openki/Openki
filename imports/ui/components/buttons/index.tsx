@@ -1,9 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import { useTranslation } from "react-i18next";
 import { PleaseLogin } from "../please-login";
 
 import "/imports/ui/components/buttons";
+
+export function Button({
+  className,
+  onClick,
+  children,
+}: {
+  className: string;
+  onClick: () => Promise<void>;
+  children: any;
+}) {
+  const [isBusy, setIsBusy] = useState(false);
+
+  return (
+    <button
+      type="button"
+      className={`${className} text-nowrap`}
+      onClick={async () => {
+        setIsBusy(true);
+        try {
+          await onClick();
+        } finally {
+          setIsBusy(false);
+        }
+      }}
+    >
+      {!isBusy ? (
+        children
+      ) : (
+        <>
+          <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
+        </>
+      )}
+    </button>
+  );
+}
 
 export function ButtonSave(props: {
   onClick: () => void;

@@ -8,6 +8,7 @@ import { FacilityOption, Venues } from "/imports/api/venues/venues";
 
 import { venues as venuesBase } from "./data";
 import { venues as zuerichlerntVenues } from "./zuerichlernt";
+import { Log } from "../../log/log";
 
 export type VenueTemplate = {
   _id?: string;
@@ -66,5 +67,5 @@ export async function create() {
     await Venues.updateAsync(venue._id, venue);
   }
 
-  return `Inserted ${venues.length} venue fixtures.`;
+  Log.record("testdata", ["Venues"], `Inserted ${venues.length} venue fixtures.`);
 }

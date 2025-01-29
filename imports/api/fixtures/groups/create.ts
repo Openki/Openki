@@ -4,6 +4,7 @@ import { GroupEntity, GroupMemberEntity, Groups } from "../../groups/groups";
 import { ensure } from "../ensureFixture";
 import { groups as baseGroups } from "./data";
 import { data as zuerichlerntGroups } from "./zuerichlernt";
+import { Log } from "../../log/log";
 
 export async function create() {
   const groups = [...baseGroups, ...zuerichlerntGroups];
@@ -27,5 +28,5 @@ export async function create() {
     await Groups.insertAsync(group);
   }
 
-  return `Inserted ${groups.length} group fixtures.`;
+  Log.record("testdata", ["Groups"], `Inserted ${groups.length} group fixtures.`);
 }

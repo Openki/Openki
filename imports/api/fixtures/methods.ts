@@ -6,6 +6,10 @@ import { Events } from "/imports/api/events/events";
 import { Groups } from "/imports/api/groups/groups";
 import { Regions } from "/imports/api/regions/regions";
 import { Venues } from "/imports/api/venues/venues";
+import { Users } from "/imports/api/users/users";
+import { InfoPages } from "../infoPages/infoPages";
+import { Tenants } from "../tenants/tenants";
+import { CourseDiscussions } from "../course-discussions/course-discussions";
 
 import { create as coursesDataCreate } from "./courses/create";
 import { create as eventsDataCreate } from "./events/create";
@@ -23,6 +27,68 @@ export const clean = ServerMethod(
     if (!PrivateSettings.testdata) {
       return;
     }
+    Venues.removeAsync({});
+    Events.removeAsync({});
+    CourseDiscussions.removeAsync({});
+    Courses.removeAsync({});
+    Regions.removeAsync({});
+    Tenants.removeAsync({});
+    Groups.removeAsync({});
+    Users.removeAsync({});
+    InfoPages.removeAsync({});
+  },
+  { simulation: false },
+);
+
+export const create = ServerMethod(
+  "fixtures.create",
+  async () => {
+    if (!PrivateSettings.testdata) {
+      return;
+    }
+
+    if ((await InfoPages.countDocuments()) === 0) {
+      await infoPagesDataCreate();
+    }
+
+    if ((await Users.countDocuments()) === 0) {
+      await usersDataCreate();
+    }
+
+    if ((await Groups.countDocuments()) === 0) {
+      await groupsDataCreate();
+    }
+
+    if ((await Regions.countDocuments()) === 0) {
+      await regionsDataCreate();
+    }
+
+    if ((await Venues.countDocuments()) === 0) {
+      await venuesDataCreate();
+    }
+
+    if ((await Courses.countDocuments()) === 0) {
+      await coursesDataCreate();
+    }
+
+    if ((await Events.countDocuments()) === 0) {
+      await eventsDataCreate();
+      await eventsDataGenerate();
+    }
+
+    if ((await CourseDiscussions.countDocuments()) === 0) {
+      await commentsDataGenerate();
+    }
+  },
+  { simulation: false },
+);
+
+export const cleanForAppTest = ServerMethod(
+  "fixtures.clean.forAppTest",
+  () => {
+    if (!PrivateSettings.testdata) {
+      return;
+    }
     Groups.removeAsync({});
     Events.removeAsync({});
     Venues.removeAsync({});
@@ -31,8 +97,8 @@ export const clean = ServerMethod(
   { simulation: false },
 );
 
-export const create = ServerMethod(
-  "fixtures.create",
+export const createForAppTest = ServerMethod(
+  "fixtures.create.forAppTest",
   async () => {
     if (!PrivateSettings.testdata) {
       return;
@@ -47,113 +113,6 @@ export const create = ServerMethod(
     await venuesDataCreate();
     await coursesDataCreate();
     await eventsDataGenerate();
-  },
-  { simulation: false },
-);
-
-export const infoPagesCreate = ServerMethod(
-  "fixtures.infoPages.create",
-  async () => {
-    if (!PrivateSettings.testdata) {
-      return null;
-    }
-
-    return infoPagesDataCreate();
-  },
-  { simulation: false },
-);
-export const usersCreate = ServerMethod(
-  "fixtures.users.create",
-  async () => {
-    if (!PrivateSettings.testdata) {
-      return null;
-    }
-
-    return usersDataCreate();
-  },
-  { simulation: false },
-);
-
-export const regionsCreate = ServerMethod(
-  "fixtures.regions.create",
-  async () => {
-    if (!PrivateSettings.testdata) {
-      return null;
-    }
-
-    return regionsDataCreate();
-  },
-  { simulation: false },
-);
-
-export const groupsCreate = ServerMethod(
-  "fixtures.groups.create",
-  async () => {
-    if (!PrivateSettings.testdata) {
-      return null;
-    }
-
-    return groupsDataCreate();
-  },
-  { simulation: false },
-);
-
-export const eventsCreate = ServerMethod(
-  "fixtures.events.create",
-  async () => {
-    if (!PrivateSettings.testdata) {
-      return null;
-    }
-
-    return eventsDataCreate();
-  },
-  { simulation: false },
-);
-
-export const venuesCreate = ServerMethod(
-  "fixtures.venues.create",
-  async () => {
-    if (!PrivateSettings.testdata) {
-      return null;
-    }
-
-    return venuesDataCreate();
-  },
-  { simulation: false },
-);
-
-export const coursesCreate = ServerMethod(
-  "fixtures.courses.create",
-  async () => {
-    if (!PrivateSettings.testdata) {
-      return null;
-    }
-
-    return coursesDataCreate();
-  },
-  { simulation: false },
-);
-
-export const eventsGenerate = ServerMethod(
-  "fixtures.events.generate",
-  async () => {
-    if (!PrivateSettings.testdata) {
-      return null;
-    }
-
-    return eventsDataGenerate();
-  },
-  { simulation: false },
-);
-
-export const commentsGenerate = ServerMethod(
-  "fixtures.comments.generate",
-  async () => {
-    if (!PrivateSettings.testdata) {
-      return null;
-    }
-
-    return commentsDataGenerate();
   },
   { simulation: false },
 );

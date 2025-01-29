@@ -1,4 +1,5 @@
 /* eslint-disable no-await-in-loop */
+import { Log } from "../../log/log";
 import { RegionEntity, Regions } from "../../regions/regions";
 import { ensure } from "../ensureFixture";
 import { Prng } from "../Prng";
@@ -37,5 +38,5 @@ export async function create() {
     await Regions.insertAsync(region);
   }
 
-  return `Inserted ${regions.length} region fixtures.`;
+  Log.record("testdata", ["Regions"], `Inserted ${regions.length} region fixtures.`);
 }

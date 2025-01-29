@@ -16,10 +16,10 @@ if (Meteor.isClient) {
       }
     });
     beforeEach(async () => {
-      await Meteor.callAsync("fixtures.clean");
+      await Meteor.callAsync("fixtures.clean.forAppTest");
     });
     beforeEach(async () => {
-      await Meteor.callAsync("fixtures.create");
+      await Meteor.callAsync("fixtures.create.forAppTest");
     });
     it("should list 9 courses for unauthenticated user (Testistan)", async () => {
       Router.go("/");
