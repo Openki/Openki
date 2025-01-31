@@ -56,16 +56,19 @@ app-test:
   allow_failure: true
   timeout: 20m
 
+
 # Code Quality by "Code Climate" and Browser Perfomance
 include:
   template:
    Code-Quality.gitlab-ci.yml
 #   Verify/Browser-Performance.gitlab-ci.yml
 
+
 #browser_performance:
 #  stage: test
 #  variables:
 #    URL: https://dev.openki.net
+
 
 # auto deploy triggers
 deploy_dev:
