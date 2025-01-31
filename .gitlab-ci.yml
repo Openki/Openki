@@ -2,6 +2,7 @@ image: registry.gitlab.com/openki/sysadmin/docker-ci-container:latest
 
 
 stages:
+  - lint
   - cleanup
   - test
   - deploy
@@ -33,7 +34,7 @@ cleanup:
 
 
 lint:
-  stage: test
+  stage: lint
   tags:
   - gitlab-org
   script: ./ci/lint.sh
