@@ -3,7 +3,6 @@ image: registry.gitlab.com/openki/sysadmin/docker-ci-container:latest
 
 stages:
   - cleanup
-  - lint
   - test
   - deploy
 
@@ -34,10 +33,11 @@ cleanup:
 
 
 lint:
-  stage: lint
+  stage: test
   tags:
   - gitlab-org
   script: ./ci/lint.sh
+
 
 # Unit tests
 test:
@@ -54,6 +54,7 @@ app-test:
   - gitlab-org-docker
   script: ./ci/app-test.sh
   allow_failure: true
+  timeout: 20m
 
 # Code Quality by "Code Climate" and Browser Perfomance
 include:
@@ -69,6 +70,7 @@ include:
 # auto deploy triggers
 deploy_dev:
   stage: deploy
+  needs: []  #don't wait for another stage to finish, could be change to [lint]
   variables:
     SOURCE_BRANCH: dev
     TARGET_HOST: dev
