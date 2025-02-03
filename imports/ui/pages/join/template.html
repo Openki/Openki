@@ -12,7 +12,7 @@
           {{#unless currentUser}}
             {{i18n "joinPage.newUser" "Join {TENANT}" TENANT=tenant.name}}
           {{else}}
-            {{i18n "joinPage.existingUser" "Join {TENANT} with user {USER}" TENANT=tenant.name USER=currentUser.getDisplayName}}
+            {{i18n "joinPage.existingUser" "Join {TENANT} with my user {USER}" TENANT=tenant.name USER=currentUser.getDisplayName}}
           {{/unless}}
         </button>
         <a class="btn btn-lg btn-secondary" href="{{pathFor 'home'}}">
