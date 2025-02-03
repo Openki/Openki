@@ -301,7 +301,11 @@ export function GroupDetailsPage(data: Data) {
               </div>
 
               <div className="group-details-description">
-                {mayEdit ? <Editable {...editableDescriptionAttr} /> : data.group.description}
+                {mayEdit ? (
+                  <Editable {...editableDescriptionAttr} />
+                ) : (
+                  <span dangerouslySetInnerHTML={{ __html: data.group.description }}></span>
+                )}
               </div>
 
               {errors.all ? <span className="form-text d-block">{errors.all}</span> : null}

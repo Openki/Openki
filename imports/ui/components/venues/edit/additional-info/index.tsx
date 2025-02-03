@@ -86,7 +86,8 @@ export function AdditionalInfo({
             type="number"
             className="form-control"
             size={4}
-            value={data.maxPeople}
+            min={0}
+            value={data.maxPeople || ""}
             onChange={(event) => {
               const newValue = Number.parseInt(event.currentTarget.value, 10) || 0; // give back 0 in case of NaN
               onMaxPeopleChange(newValue);
@@ -99,7 +100,8 @@ export function AdditionalInfo({
             type="number"
             className="form-control"
             size={4}
-            value={data.maxWorkplaces}
+            min={0}
+            value={data.maxWorkplaces || ""}
             onChange={(event) => {
               const newValue = Number.parseInt(event.currentTarget.value, 10) || 0; // give back 0 in case of NaN
               onMaxWorkplacesChange(newValue);
