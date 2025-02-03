@@ -20,6 +20,8 @@ import { create as venuesDataCreate } from "./venues/create";
 import { generate as commentsDataGenerate } from "./comments/generate";
 import { usersCreate as usersDataCreate } from "./usersCreate";
 import { serverError } from "../log/methods";
+import { Invitations } from "../invitations/invitations";
+import { JoinLinks } from "../joinLinks/joinLinks";
 
 export const clean = ServerMethod(
   "fixtures.clean",
@@ -34,6 +36,8 @@ export const clean = ServerMethod(
         CourseDiscussions.removeAsync({}),
         Courses.removeAsync({}),
         Regions.removeAsync({}),
+        Invitations.removeAsync({}),
+        JoinLinks.removeAsync({}),
         Tenants.removeAsync({}),
         Groups.removeAsync({}),
         InfoPages.removeAsync({}),
