@@ -19,6 +19,7 @@ import { create as regionsDataCreate } from "./regions/create";
 import { create as venuesDataCreate } from "./venues/create";
 import { generate as commentsDataGenerate } from "./comments/generate";
 import { usersCreate as usersDataCreate } from "./usersCreate";
+import { serverError } from "../log/methods";
 
 export const clean = ServerMethod(
   "fixtures.clean",
@@ -26,16 +27,21 @@ export const clean = ServerMethod(
     if (!PrivateSettings.testdata) {
       return;
     }
-    await Promise.all([
-      Venues.removeAsync({}),
-      Events.removeAsync({}),
-      CourseDiscussions.removeAsync({}),
-      Courses.removeAsync({}),
-      Regions.removeAsync({}),
-      Tenants.removeAsync({}),
-      Groups.removeAsync({}),
-      InfoPages.removeAsync({}),
-    ]);
+    try {
+      await Promise.all([
+        Venues.removeAsync({}),
+        Events.removeAsync({}),
+        CourseDiscussions.removeAsync({}),
+        Courses.removeAsync({}),
+        Regions.removeAsync({}),
+        Tenants.removeAsync({}),
+        Groups.removeAsync({}),
+        InfoPages.removeAsync({}),
+      ]);
+    } catch (e) {
+      serverError(e);
+      throw e;
+    }
   },
   { simulation: false },
 );
@@ -47,35 +53,40 @@ export const create = ServerMethod(
       return;
     }
 
-    if ((await InfoPages.countDocuments()) === 0) {
-      await infoPagesDataCreate();
-    }
+    try {
+      if ((await InfoPages.countDocuments()) === 0) {
+        await infoPagesDataCreate();
+      }
 
-    await usersDataCreate();
+      await usersDataCreate();
 
-    if ((await Groups.countDocuments()) === 0) {
-      await groupsDataCreate();
-    }
+      if ((await Groups.countDocuments()) === 0) {
+        await groupsDataCreate();
+      }
 
-    if ((await Regions.countDocuments()) === 0) {
-      await regionsDataCreate();
-    }
+      if ((await Regions.countDocuments()) === 0) {
+        await regionsDataCreate();
+      }
 
-    if ((await Venues.countDocuments()) === 0) {
-      await venuesDataCreate();
-    }
+      if ((await Venues.countDocuments()) === 0) {
+        await venuesDataCreate();
+      }
 
-    if ((await Courses.countDocuments()) === 0) {
-      await coursesDataCreate();
-    }
+      if ((await Courses.countDocuments()) === 0) {
+        await coursesDataCreate();
+      }
 
-    if ((await Events.countDocuments()) === 0) {
-      await eventsDataCreate();
-      await eventsDataGenerate();
-    }
+      if ((await Events.countDocuments()) === 0) {
+        await eventsDataCreate();
+        await eventsDataGenerate();
+      }
 
-    if ((await CourseDiscussions.countDocuments()) === 0) {
-      await commentsDataGenerate();
+      if ((await CourseDiscussions.countDocuments()) === 0) {
+        await commentsDataGenerate();
+      }
+    } catch (e) {
+      serverError(e);
+      throw e;
     }
   },
   { simulation: false },

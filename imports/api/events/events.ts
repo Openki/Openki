@@ -271,7 +271,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
   }
 
   async insertAsync(
-    event: Mongo.OptionalId<EventEntity>,
+    event: Omit<Mongo.OptionalId<EventEntity>, "tenant">,
     callback?: (err?: unknown, _id?: string) => void,
   ) {
     const enrichedEvent = await tenantDenormalizer.beforeInsert(event);

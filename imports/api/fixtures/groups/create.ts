@@ -8,23 +8,30 @@ import { Log } from "../../log/log";
 
 export async function create() {
   const groups = [...baseGroups, ...zuerichlerntGroups];
-  for (const g of groups) {
-    const group = { ...g } as unknown as Mongo.OptionalId<GroupEntity>;
-    group.createdby = group.createdby
-      ? (await ensure.user(group.createdby))._id
-      : "ServerScript_loadingTestgroups";
+  for (const template of groups) {
+    const group = {
+      _id: template._id || ensure.fixedId([template.name, template.description]),
+      name: template.name,
+      short: template.short,
+      claim: template.claim,
+      description: template.description,
+      logoUrl: template.logoUrl,
+      customCourseFields: template.customCourseFields,
+      dashboard: template.dashboard,
+      members: await Promise.all(
+        template.members?.map(
+          async (name) =>
+            ({
+              user: (await ensure.user(name, undefined))._id,
+              notify: true,
+            }) as GroupMemberEntity,
+        ) || [],
+      ),
+      createdby: template.createdby
+        ? (await ensure.user(template.createdby))._id
+        : "ServerScript_loadingTestgroups",
+    } as Mongo.OptionalId<GroupEntity>;
 
-    // Always use same id for same group to avoid broken urls while testing
-    group._id = group._id || ensure.fixedId([group.name, group.description]);
-    group.members = await Promise.all(
-      g.members?.map(
-        async (name) =>
-          ({
-            user: (await ensure.user(name, undefined))._id,
-            notify: true,
-          }) as GroupMemberEntity,
-      ) || [],
-    );
     await Groups.insertAsync(group);
   }
 

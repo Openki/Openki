@@ -1,20 +1,9 @@
+import { Template } from "./Template";
+
 // Groups are groups, organizations, institutions, virtual or real instituts, departments or
 // bodies...
 
-export const groups: {
-  name: string;
-  short: string;
-  claim: string;
-  description: string;
-  members?: string[];
-  logoUrl?: string;
-  dashboard?: {
-    entity: "group" | "course" | "courseWithoutPropose" | "event" | "eventsMap" | "propose";
-    title?: string;
-    query?: string;
-    showAll?: { link?: string; text?: string };
-  }[];
-}[] = [
+export const groups: Template[] = [
   {
     name: "Dynamo",
     short: "Dyn",
