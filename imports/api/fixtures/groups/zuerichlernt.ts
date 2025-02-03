@@ -1,4 +1,6 @@
-export const data = [
+import { Template } from "./Template";
+
+export const data: Template[] = [
   {
     _id: "L6uD6rsni2fhXvpvT",
     members: ["Support"],

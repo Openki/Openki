@@ -163,7 +163,7 @@ export async function create() {
       maxParticipants: template.maxParticipants,
       start: regionZone.fromString(startLocal).toDate(),
       end: regionZone.fromString(endLocal).toDate(),
-    } as unknown as EventEntity;
+    } as unknown as Omit<Mongo.OptionalId<EventEntity>, "tenant">;
 
     // eslint-disable-next-line no-await-in-loop
     await Events.insertAsync(event);

@@ -50,10 +50,14 @@ export async function create() {
     return r._id;
   });
 
-  for (const v of venues) {
-    const venueData = { ...v };
+  for (const template of venues) {
+    const venueData = { ...template };
     // eslint-disable-next-line no-nested-ternary
-    venueData.region = v.region ? v.region : prng() > 0.85 ? testRegions[0] : testRegions[1];
+    venueData.region = template.region
+      ? template.region
+      : prng() > 0.85
+      ? testRegions[0]
+      : testRegions[1];
 
     const venue = await ensure.venue(venueData.name, venueData.region, venueData._id);
 

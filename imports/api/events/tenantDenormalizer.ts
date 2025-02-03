@@ -24,7 +24,7 @@ export async function onStartUp() {
   console.log(`events.tenantDenormalizer.onStartUp: ${updated} affected events`);
 }
 
-export async function beforeInsert(event: Mongo.OptionalId<EventEntity>) {
+export async function beforeInsert(event: Omit<Mongo.OptionalId<EventEntity>, "tenant">) {
   if (!event.region) {
     throw new Error("Unexpected falsy: event.region");
   }
