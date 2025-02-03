@@ -7,10 +7,24 @@ export function resizeImage(base64: string, maxSize: number) {
     return base64.substring(base64.indexOf("base64") + 7);
   }
 
-  // Fixed: https://github.com/lovell/sharp/issues/537
-  // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
-  const sharp = require("./build/Release/sharp.node");
-
+  let sharp:any;
+  try {
+    // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
+    sharp = require("sharp");
+  } catch {
+    try {
+      // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
+      sharp = require("sharp.node");
+    } catch {
+      try {
+        // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
+        sharp = require("./build/Release/sharp");
+      } catch {
+        // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
+        sharp = require("./build/Release/sharp.node");
+      }
+    }
+  }
   const content = base64.substring(base64.indexOf("base64") + 7);
   const imageBuffer = Buffer.from(content, "base64");
 
