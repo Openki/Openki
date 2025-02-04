@@ -7,7 +7,7 @@ import { useUserId } from "/imports/utils/react-meteor-data";
 import { SortSpec } from "/imports/utils/sort-spec";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
-import { mapping, StaticComponent, ListOfEntites, ComponentWithEntites } from "./mapping";
+import { mapping, ListOfEntites, ComponentWithEntites } from "./mapping";
 
 import "./styles.scss";
 
@@ -24,156 +24,45 @@ export type Props = {
   group?: string | undefined;
 };
 
-type ListOfEntitesHook<T> = {
-  showAll: { link: string | undefined; text: string | undefined };
-  entity: string;
-  title?: string;
-  isLoading: () => boolean;
-  params: { [k: string]: string };
-  data: T[];
-  route: string;
-  element: React.FC<{
-    entity: T;
-    index: number;
-    params: {
-      [k: string]: string;
-    };
-  }>;
-};
-
-type ComponentWithEntitesHook<T> = {
-  showAll: { link: string | undefined; text: string | undefined };
-  entity: string;
-  title?: string;
-  isLoading: () => boolean;
-  params: { [k: string]: string };
-  data: T[];
-  route: string;
-  component: React.FC<{
-    entities: T[];
-    params: {
-      [k: string]: string;
-    };
-  }>;
-};
-
-type StaticComponentHook = {
-  showAll: { link: string | undefined; text: string | undefined };
-  entity: string;
-  title?: string;
-  params: { [k: string]: string };
-  route?: string | undefined;
-  component: React.FC<{
-    params: {
-      [k: string]: string;
-    };
-  }>;
-};
-
-function ListOfEntites1<T>({
-  isLoading,
+function ListOfEntitesComponent<T>({
   params,
   data,
   handler,
-  urlParams,
-  i,
 }: {
-  isLoading: () => boolean;
   params: { [k: string]: string };
   data: T[];
   handler: ListOfEntites<T>;
-  urlParams: URLSearchParams;
-  i: any;
 }) {
-  const { t } = useTranslation();
-  const { getLocalizedValue } = useLocalizedSetting();
-  function generateShowAll(): { link: string | undefined; text: string | undefined } {
-    return {
-      link:
-        i.showAll?.link ||
-        ("route" in handler && handler.route
-          ? Router.path(handler.route, undefined, { query: urlParams.toString() })
-          : undefined),
-      text:
-        getLocalizedValue(i.showAll?.text || handler.showAll?.text) ||
-        t("dashboard.showAll", "Show all >"),
-    };
-  }
-  function generateListOfEntitesHook(): ListOfEntitesHook<T> {
-    return {
-      isLoading,
-      params,
-      data,
-      route: handler.route,
-      element: handler.element,
-      ...i,
-      showAll: generateShowAll(),
-    };
-  }
-  const h = generateListOfEntitesHook();
   return (
     <div className="d-flex flex-row flex-nowrap pb-3 overflow-x-scroll">
-      {h.data.map((d: any, ii: number) => (
-        <h.element entity={d} index={ii} params={h.params} />
+      {data.map((d, ii: number) => (
+        <handler.element key={ii} entity={d} index={ii} params={params} />
       ))}
     </div>
   );
 }
 
-function ComponentWithEntites1<T>({
-  isLoading,
+function WithEntitesComponent<T>({
   params,
   data,
   handler,
-  urlParams,
-  i,
 }: {
-  isLoading: () => boolean;
   params: { [k: string]: string };
   data: T[];
   handler: ComponentWithEntites<T>;
-  urlParams: URLSearchParams;
-  i: any;
 }) {
-  const { t } = useTranslation();
-  const { getLocalizedValue } = useLocalizedSetting();
-  function generateShowAll(): { link: string | undefined; text: string | undefined } {
-    return {
-      link:
-        i.showAll?.link ||
-        ("route" in handler && handler.route
-          ? Router.path(handler.route, undefined, { query: urlParams.toString() })
-          : undefined),
-      text:
-        getLocalizedValue(i.showAll?.text || handler.showAll?.text) ||
-        t("dashboard.showAll", "Show all >"),
-    };
-  }
-
-  function generateComponentWithEntitesHook(): ComponentWithEntitesHook<T> {
-    return {
-      isLoading,
-      params,
-      data,
-      route: handler.route,
-      component: handler.component,
-      ...i,
-      showAll: generateShowAll(),
-    };
-  }
-  const h = generateComponentWithEntitesHook();
-  return <h.component entities={h.data} params={h.params} />;
+  return <handler.component entities={data} params={params} />;
 }
 
 function FilterComponent({
   params,
   handler,
-  urlParams,
+  showAll,
   i,
 }: {
   params: { [k: string]: string };
-  handler: any
-  urlParams: URLSearchParams;
+  handler: any;
+  showAll: { link: string | undefined; text: string | undefined };
   i: any;
 }) {
   const { getLocalizedValue } = useLocalizedSetting();
@@ -192,30 +81,16 @@ function FilterComponent({
 
   return (
     <div className="container mb-4">
-      {i.showAll?.link && (
-        <a className="btn btn-sm btn-success float-end" href={i.showAll.link}>
-          {i.showAll.text}
+      {showAll?.link && (
+        <a className="btn btn-sm btn-success float-end" href={showAll.link}>
+          {showAll.text}
         </a>
       )}
       {i.title && <h2>{getLocalizedValue(i.title)}</h2>}
       {"element" in handler ? (
-        <ListOfEntites1
-          isLoading={isLoading}
-          data={data as any}
-          handler={handler as any}
-          i={i}
-          params={params}
-          urlParams={urlParams}
-        />
+        <ListOfEntitesComponent data={data} handler={handler} params={params} />
       ) : (
-        <ComponentWithEntites1
-          isLoading={isLoading}
-          data={data as any}
-          handler={handler as any}
-          i={i}
-          params={params}
-          urlParams={urlParams}
-        />
+        <WithEntitesComponent data={data} handler={handler} params={params} />
       )}
     </div>
   );
@@ -234,33 +109,27 @@ function DashboardComponent({
   const { getLocalizedValue } = useLocalizedSetting();
   const currentUserId = useUserId();
 
-  function generateShowAll<T>(
-    handler: StaticComponent | ListOfEntites<T> | ComponentWithEntites<T>,
+  function generateShowAll(
+    config: {
+      route?: string;
+      showAll?:
+        | {
+            link?: string;
+            text?: string;
+          }
+        | undefined;
+    },
     urlParams: URLSearchParams,
   ): { link: string | undefined; text: string | undefined } {
     return {
       link:
         i.showAll?.link ||
-        ("route" in handler && handler.route
-          ? Router.path(handler.route, undefined, { query: urlParams.toString() })
+        ("route" in config && config.route
+          ? Router.path(config.route, undefined, { query: urlParams.toString() })
           : undefined),
       text:
-        getLocalizedValue(i.showAll?.text || handler.showAll?.text) ||
+        getLocalizedValue(i.showAll?.text || config.showAll?.text) ||
         t("dashboard.showAll", "Show all >"),
-    };
-  }
-
-  function generateStaticComponentHook(
-    params: { [k: string]: string },
-    handler: StaticComponent,
-    urlParams: URLSearchParams,
-  ): StaticComponentHook {
-    return {
-      params,
-      route: handler.route,
-      component: handler.component,
-      ...i,
-      showAll: generateShowAll(handler, urlParams),
     };
   }
 
@@ -284,11 +153,17 @@ function DashboardComponent({
 
   if (!("filter" in handler)) {
     // A static component
-    const h = generateStaticComponentHook(params, handler, urlParams);
-    return <h.component params={h.params} />;
+    return <handler.component params={params} />;
   }
 
-  return <FilterComponent handler={handler} i={i} params={params} urlParams={urlParams} />;
+  return (
+    <FilterComponent
+      handler={handler}
+      i={i}
+      params={params}
+      showAll={generateShowAll(handler, urlParams)}
+    />
+  );
 }
 
 export function Dashboard({ list, region, group }: Props) {
