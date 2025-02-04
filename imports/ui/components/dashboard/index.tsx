@@ -7,7 +7,7 @@ import { useUserId } from "/imports/utils/react-meteor-data";
 import { SortSpec } from "/imports/utils/sort-spec";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
-import { mapping, ListOfEntites, ComponentWithEntites } from "./mapping";
+import { mapping, ListOfEntities, ComponentWithEntities } from "./mapping";
 
 import "./styles.scss";
 
@@ -24,46 +24,16 @@ export type Props = {
   group?: string | undefined;
 };
 
-function ListOfEntitesComponent<T>({
-  params,
-  data,
-  handler,
-}: {
-  params: { [k: string]: string };
-  data: T[];
-  handler: ListOfEntites<T>;
-}) {
-  return (
-    <div className="d-flex flex-row flex-nowrap pb-3 overflow-x-scroll">
-      {data.map((d, ii: number) => (
-        <handler.element key={ii} entity={d} index={ii} params={params} />
-      ))}
-    </div>
-  );
-}
-
-function WithEntitesComponent<T>({
-  params,
-  data,
-  handler,
-}: {
-  params: { [k: string]: string };
-  data: T[];
-  handler: ComponentWithEntites<T>;
-}) {
-  return <handler.component entities={data} params={params} />;
-}
-
-function FilterComponent({
+function EntitiesComponent<T>({
   params,
   handler,
   showAll,
-  i,
+  title,
 }: {
   params: { [k: string]: string };
-  handler: any;
+  handler: ListOfEntities<T> | ComponentWithEntities<T>;
   showAll: { link: string | undefined; text: string | undefined };
-  i: any;
+  title?: string | undefined;
 }) {
   const { getLocalizedValue } = useLocalizedSetting();
   const filter = handler.filter();
@@ -86,18 +56,24 @@ function FilterComponent({
           {showAll.text}
         </a>
       )}
-      {i.title && <h2>{getLocalizedValue(i.title)}</h2>}
+      {title && <h2>{getLocalizedValue(title)}</h2>}
       {"element" in handler ? (
-        <ListOfEntitesComponent data={data} handler={handler} params={params} />
+        // ListOfEntities
+        <div className="d-flex flex-row flex-nowrap pb-3 overflow-x-scroll">
+          {data.map((d, i) => (
+            <handler.element key={i} entity={d} index={i} params={params} />
+          ))}
+        </div>
       ) : (
-        <WithEntitesComponent data={data} handler={handler} params={params} />
+        // ComponentWithEntities
+        <handler.component entities={data} params={params} />
       )}
     </div>
   );
 }
 
 function DashboardComponent({
-  settings: i,
+  settings,
   region,
   group,
 }: {
@@ -123,24 +99,24 @@ function DashboardComponent({
   ): { link: string | undefined; text: string | undefined } {
     return {
       link:
-        i.showAll?.link ||
+        settings.showAll?.link ||
         ("route" in config && config.route
           ? Router.path(config.route, undefined, { query: urlParams.toString() })
           : undefined),
       text:
-        getLocalizedValue(i.showAll?.text || config.showAll?.text) ||
+        getLocalizedValue(config.showAll?.text || config.showAll?.text) ||
         t("dashboard.showAll", "Show all >"),
     };
   }
 
-  const handler = mapping[i.entity];
+  const handler = mapping[settings.entity];
 
-  if (!currentUserId && i.query && i.query.indexOf("{currentUser}") !== -1) {
+  if (!currentUserId && settings.query && settings.query.indexOf("{currentUser}") !== -1) {
     // do not show components that need a logged in user.
     return null;
   }
 
-  const queryString = (i.query || "").replaceAll("{currentUser}", currentUserId || "");
+  const queryString = (settings.query || "").replaceAll("{currentUser}", currentUserId || "");
 
   const urlParams = new URLSearchParams(queryString);
   if (region) {
@@ -152,16 +128,16 @@ function DashboardComponent({
   const params = Object.fromEntries(urlParams);
 
   if (!("filter" in handler)) {
-    // A static component
+    // StaticComponent
     return <handler.component params={params} />;
   }
 
   return (
-    <FilterComponent
-      handler={handler}
-      i={i}
+    <EntitiesComponent
+      handler={handler as any}
       params={params}
       showAll={generateShowAll(handler, urlParams)}
+      title={settings.title}
     />
   );
 }
