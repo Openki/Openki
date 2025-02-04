@@ -26,13 +26,13 @@ export type ListOfEntites<T> = {
   showAll?: { text?: string };
   filter: () => Filtering<any>;
   find: Publication<any, T[]>;
-  element: (
-    entity: T,
-    index: number,
+  element: (props: {
+    entity: T;
+    index: number;
     params: {
       [k: string]: string;
-    },
-  ) => React.JSX.Element;
+    };
+  }) => React.JSX.Element;
 };
 
 /** A static component with entites eg. like eventMap */
@@ -41,26 +41,26 @@ export type ComponentWithEntites<T> = {
   showAll?: { text?: string };
   filter: () => Filtering<any>;
   find: Publication<any, T[]>;
-  component: (
-    entitys: T[],
+  component: (props: {
+    entities: T[];
     params: {
       [k: string]: string;
-    },
-  ) => React.JSX.Element;
+    };
+  }) => React.JSX.Element;
 };
 
 /** A static component eg. like propose */
 export type StaticComponent = {
   route?: string;
   showAll?: { text?: string };
-  component: (params: { [k: string]: string }) => React.JSX.Element;
+  component: (props: { params: { [k: string]: string } }) => React.JSX.Element;
 };
 
 const course: ListOfEntites<CourseModel> = {
   route: "search",
   filter: CourseCollection.Filtering,
   find: Courses.useFindFilter,
-  element: (entity, index, params) => (
+  element: ({ entity, index, params }) => (
     <React.Fragment key={entity._id}>
       {/* The sevent box should allways be the propose one, after then every 11 */}
       {PublicSettings.feature.proposeCourseBox && (index - 6) % 11 === 0 ? (
@@ -79,7 +79,7 @@ const courseWithoutPropose: ListOfEntites<CourseModel> = {
   route: "search",
   filter: CourseCollection.Filtering,
   find: Courses.useFindFilter,
-  element: (entity) => (
+  element: ({ entity }) => (
     <div key={entity._id} className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
       <CourseCompact course={entity} />
     </div>
@@ -91,7 +91,7 @@ const event: ListOfEntites<EventModel> = {
   showAll: { text: "dashboard.calendar.showAll" },
   filter: EventCollection.Filtering,
   find: Events.useFindFilter,
-  element: (entity) => (
+  element: ({ entity }) => (
     <div key={entity._id} className="me-2" style={{ inlineSize: "250px", minInlineSize: "250px" }}>
       <EventCompact event={entity} withDate={true} withImage={true} />
     </div>
@@ -114,7 +114,7 @@ const group: ListOfEntites<GroupModel> = {
   route: "exploreGroups",
   filter: GroupCollection.Filtering,
   find: Groups.useFindFilter,
-  element: (entity) => (
+  element: ({ entity }) => (
     <div key={entity._id} className="me-2">
       <div className="card card-group border-0 rounded-0" style={bodyStyle(entity.publicLogoUrl())}>
         <div className="card-body">
@@ -135,15 +135,15 @@ const eventsMap: ComponentWithEntites<EventModel> = {
   showAll: { text: "dashboard.eventsMap.showAll" },
   filter: EventCollection.Filtering,
   find: Events.useFindFilter,
-  component: (enities) => (
+  component: ({ entities }) => (
     <div style={{ height: "440px" }}>
-      <EventsMap events={enities} openLinksInNewTab={false} />
+      <EventsMap events={entities} openLinksInNewTab={false} />
     </div>
   ),
 };
 
 const propose: StaticComponent = {
-  component: (params) => (
+  component: ({ params }) => (
     <div className="container mw-md">
       <Edit {...CourseTemplate()} {...params} />
     </div>

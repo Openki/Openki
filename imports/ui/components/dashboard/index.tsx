@@ -32,13 +32,13 @@ type ListOfEntitesHook<T> = {
   params: { [k: string]: string };
   data: T[];
   route: string;
-  element: (
-    entity: T,
-    index: number,
+  element: React.FC<{
+    entity: T;
+    index: number;
     params: {
       [k: string]: string;
-    },
-  ) => React.JSX.Element;
+    };
+  }>;
 };
 
 type ComponentWithEntitesHook<T> = {
@@ -49,12 +49,12 @@ type ComponentWithEntitesHook<T> = {
   params: { [k: string]: string };
   data: T[];
   route: string;
-  component: (
-    entitys: T[],
+  component: React.FC<{
+    entities: T[];
     params: {
       [k: string]: string;
-    },
-  ) => React.JSX.Element;
+    };
+  }>;
 };
 
 type StaticComponentHook = {
@@ -63,18 +63,178 @@ type StaticComponentHook = {
   title?: string;
   params: { [k: string]: string };
   route?: string | undefined;
-  component: (params: { [k: string]: string }) => React.JSX.Element;
+  component: React.FC<{
+    params: {
+      [k: string]: string;
+    };
+  }>;
 };
 
-type Hook = ListOfEntitesHook<any> | ComponentWithEntitesHook<any> | StaticComponentHook;
+function ListOfEntites1<T>({
+  isLoading,
+  params,
+  data,
+  handler,
+  urlParams,
+  i,
+}: {
+  isLoading: () => boolean;
+  params: { [k: string]: string };
+  data: T[];
+  handler: ListOfEntites<T>;
+  urlParams: URLSearchParams;
+  i: any;
+}) {
+  const { t } = useTranslation();
+  const { getLocalizedValue } = useLocalizedSetting();
+  function generateShowAll(): { link: string | undefined; text: string | undefined } {
+    return {
+      link:
+        i.showAll?.link ||
+        ("route" in handler && handler.route
+          ? Router.path(handler.route, undefined, { query: urlParams.toString() })
+          : undefined),
+      text:
+        getLocalizedValue(i.showAll?.text || handler.showAll?.text) ||
+        t("dashboard.showAll", "Show all >"),
+    };
+  }
+  function generateListOfEntitesHook(): ListOfEntitesHook<T> {
+    return {
+      isLoading,
+      params,
+      data,
+      route: handler.route,
+      element: handler.element,
+      ...i,
+      showAll: generateShowAll(),
+    };
+  }
+  const h = generateListOfEntitesHook();
+  return (
+    <div className="d-flex flex-row flex-nowrap pb-3 overflow-x-scroll">
+      {h.data.map((d: any, ii: number) => (
+        <h.element entity={d} index={ii} params={h.params} />
+      ))}
+    </div>
+  );
+}
 
-export function Dashboard({ list, region, group }: Props) {
+function ComponentWithEntites1<T>({
+  isLoading,
+  params,
+  data,
+  handler,
+  urlParams,
+  i,
+}: {
+  isLoading: () => boolean;
+  params: { [k: string]: string };
+  data: T[];
+  handler: ComponentWithEntites<T>;
+  urlParams: URLSearchParams;
+  i: any;
+}) {
+  const { t } = useTranslation();
+  const { getLocalizedValue } = useLocalizedSetting();
+  function generateShowAll(): { link: string | undefined; text: string | undefined } {
+    return {
+      link:
+        i.showAll?.link ||
+        ("route" in handler && handler.route
+          ? Router.path(handler.route, undefined, { query: urlParams.toString() })
+          : undefined),
+      text:
+        getLocalizedValue(i.showAll?.text || handler.showAll?.text) ||
+        t("dashboard.showAll", "Show all >"),
+    };
+  }
+
+  function generateComponentWithEntitesHook(): ComponentWithEntitesHook<T> {
+    return {
+      isLoading,
+      params,
+      data,
+      route: handler.route,
+      component: handler.component,
+      ...i,
+      showAll: generateShowAll(),
+    };
+  }
+  const h = generateComponentWithEntitesHook();
+  return <h.component entities={h.data} params={h.params} />;
+}
+
+function FilterComponent({
+  params,
+  handler,
+  urlParams,
+  i,
+}: {
+  params: { [k: string]: string };
+  handler: any
+  urlParams: URLSearchParams;
+  i: any;
+}) {
+  const { getLocalizedValue } = useLocalizedSetting();
+  const filter = handler.filter();
+  filter.read(params);
+  const query = filter.done().toQuery();
+
+  const sortParam = params.sort;
+  const sort = sortParam ? SortSpec.fromString(sortParam) : SortSpec.unordered();
+
+  const [isLoading, data] = handler.find(query, 10, 0, sort.spec());
+
+  if (!(!isLoading() && (!Array.isArray(data) || data.length > 0))) {
+    return null;
+  }
+
+  return (
+    <div className="container mb-4">
+      {i.showAll?.link && (
+        <a className="btn btn-sm btn-success float-end" href={i.showAll.link}>
+          {i.showAll.text}
+        </a>
+      )}
+      {i.title && <h2>{getLocalizedValue(i.title)}</h2>}
+      {"element" in handler ? (
+        <ListOfEntites1
+          isLoading={isLoading}
+          data={data as any}
+          handler={handler as any}
+          i={i}
+          params={params}
+          urlParams={urlParams}
+        />
+      ) : (
+        <ComponentWithEntites1
+          isLoading={isLoading}
+          data={data as any}
+          handler={handler as any}
+          i={i}
+          params={params}
+          urlParams={urlParams}
+        />
+      )}
+    </div>
+  );
+}
+
+function DashboardComponent({
+  settings: i,
+  region,
+  group,
+}: {
+  settings: ComponentSettings;
+  region?: string | undefined;
+  group?: string | undefined;
+}) {
   const { t } = useTranslation();
   const { getLocalizedValue } = useLocalizedSetting();
   const currentUserId = useUserId();
 
   function generateShowAll<T>(
-    i: ComponentSettings,
     handler: StaticComponent | ListOfEntites<T> | ComponentWithEntites<T>,
     urlParams: URLSearchParams,
   ): { link: string | undefined; text: string | undefined } {
@@ -90,46 +250,9 @@ export function Dashboard({ list, region, group }: Props) {
     };
   }
 
-  function generateListOfEntitesHook<T>(
-    isLoading: () => boolean,
-    params: { [k: string]: string },
-    data: T[],
-    handler: ListOfEntites<T>,
-    i: ComponentSettings,
-    urlParams: URLSearchParams,
-  ): ListOfEntitesHook<T> {
-    return {
-      isLoading,
-      params,
-      data,
-      route: handler.route,
-      element: handler.element,
-      ...i,
-      showAll: generateShowAll(i, handler, urlParams),
-    };
-  }
-  function generateComponentWithEntitesHook<T>(
-    isLoading: () => boolean,
-    params: { [k: string]: string },
-    data: T[],
-    handler: ComponentWithEntites<T>,
-    i: ComponentSettings,
-    urlParams: URLSearchParams,
-  ): ComponentWithEntitesHook<T> {
-    return {
-      isLoading,
-      params,
-      data,
-      route: handler.route,
-      component: handler.component,
-      ...i,
-      showAll: generateShowAll(i, handler, urlParams),
-    };
-  }
   function generateStaticComponentHook(
     params: { [k: string]: string },
     handler: StaticComponent,
-    i: ComponentSettings,
     urlParams: URLSearchParams,
   ): StaticComponentHook {
     return {
@@ -137,76 +260,42 @@ export function Dashboard({ list, region, group }: Props) {
       route: handler.route,
       component: handler.component,
       ...i,
-      showAll: generateShowAll(i, handler, urlParams),
+      showAll: generateShowAll(handler, urlParams),
     };
   }
 
-  const hooks = list.map((i) => {
-    const handler = mapping[i.entity];
+  const handler = mapping[i.entity];
 
-    if (!currentUserId && i.query && i.query.indexOf("{currentUser}") !== -1) {
-      // do not show components that need a logged in user.
-      return undefined;
-    }
+  if (!currentUserId && i.query && i.query.indexOf("{currentUser}") !== -1) {
+    // do not show components that need a logged in user.
+    return null;
+  }
 
-    const queryString = (i.query || "").replaceAll("{currentUser}", currentUserId || "");
+  const queryString = (i.query || "").replaceAll("{currentUser}", currentUserId || "");
 
-    const urlParams = new URLSearchParams(queryString);
-    if (region) {
-      urlParams.append("region", region);
-    }
-    if (group) {
-      urlParams.append("group", group);
-    }
-    const params = Object.fromEntries(urlParams);
+  const urlParams = new URLSearchParams(queryString);
+  if (region) {
+    urlParams.append("region", region);
+  }
+  if (group) {
+    urlParams.append("group", group);
+  }
+  const params = Object.fromEntries(urlParams);
 
-    if (!("filter" in handler)) {
-      // A static component
-      return generateStaticComponentHook(params, handler, i, urlParams);
-    }
+  if (!("filter" in handler)) {
+    // A static component
+    const h = generateStaticComponentHook(params, handler, urlParams);
+    return <h.component params={h.params} />;
+  }
 
-    const filter = handler.filter();
-    filter.read(params);
-    const query = filter.done().toQuery();
+  return <FilterComponent handler={handler} i={i} params={params} urlParams={urlParams} />;
+}
 
-    const sortParam = params.sort;
-    const sort = sortParam ? SortSpec.fromString(sortParam) : SortSpec.unordered();
-
-    const [isLoading, data] = handler.find(query, 10, 0, sort.spec());
-
-    if ("element" in handler) {
-      return generateListOfEntitesHook<any>(isLoading, params, data, handler, i, urlParams);
-    }
-
-    return generateComponentWithEntitesHook<any>(isLoading, params, data, handler, i, urlParams);
-  });
-
+export function Dashboard({ list, region, group }: Props) {
   return (
     <>
-      {(hooks.filter((h) => h) as Hook[]).map((h, i) => (
-        <React.Fragment key={i}>
-          {"isLoading" in h ? (
-            !h.isLoading() && (!Array.isArray(h.data) || h.data.length > 0) ? (
-              <div className="container mb-4">
-                {h.showAll.link ? (
-                  <a className="btn btn-sm btn-success float-end" href={h.showAll.link}>
-                    {h.showAll.text}
-                  </a>
-                ) : null}
-                {h.title ? <h2>{getLocalizedValue(h.title)}</h2> : null}
-                {"element" in h ? (
-                  <div className="d-flex flex-row flex-nowrap pb-3 overflow-x-scroll">
-                    {h.data.map((d: any, ii: number) => h.element(d, ii, h.params))}
-                  </div>
-                ) : (
-                  h.component(h.data, h.params)
-                )}
-              </div>
-            ) : null
-          ) : (
-            h.component(h.params)
-          )}
-        </React.Fragment>
+      {list.map((h, i) => (
+        <DashboardComponent key={i} settings={h} region={region} group={group} />
       ))}
     </>
   );
