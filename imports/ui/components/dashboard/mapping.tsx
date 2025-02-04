@@ -21,42 +21,48 @@ import { EventCompact } from "../../components/events/compact";
 import { EventsMap } from "../../components/events/map";
 
 /** A list of entites. */
-export type ListOfEntites<T> = {
+
+export type ListOfEntitesElementComponent<T> = React.FC<{
+  entity: T;
+  index: number;
+  params: {
+    [k: string]: string;
+  };
+}>;
+export type ListOfEntities<T> = {
   route: string;
   showAll?: { text?: string };
   filter: () => Filtering<any>;
   find: Publication<any, T[]>;
-  element: (props: {
-    entity: T;
-    index: number;
-    params: {
-      [k: string]: string;
-    };
-  }) => React.JSX.Element;
+  element: ListOfEntitesElementComponent<T>;
 };
 
 /** A static component with entites eg. like eventMap */
-export type ComponentWithEntites<T> = {
+export type ComponentWithEntitesComponent<T> = React.FC<{
+  entities: T[];
+  params: {
+    [k: string]: string;
+  };
+}>;
+export type ComponentWithEntities<T> = {
   route: string;
   showAll?: { text?: string };
   filter: () => Filtering<any>;
   find: Publication<any, T[]>;
-  component: (props: {
-    entities: T[];
-    params: {
-      [k: string]: string;
-    };
-  }) => React.JSX.Element;
+  component: ComponentWithEntitesComponent<T>;
 };
 
 /** A static component eg. like propose */
+export type StaticComponentComponent = React.FC<{
+  params: { [k: string]: string };
+}>;
 export type StaticComponent = {
   route?: string;
   showAll?: { text?: string };
-  component: (props: { params: { [k: string]: string } }) => React.JSX.Element;
+  component: StaticComponentComponent;
 };
 
-const course: ListOfEntites<CourseModel> = {
+const course: ListOfEntities<CourseModel> = {
   route: "search",
   filter: CourseCollection.Filtering,
   find: Courses.useFindFilter,
@@ -75,7 +81,7 @@ const course: ListOfEntites<CourseModel> = {
   ),
 };
 
-const courseWithoutPropose: ListOfEntites<CourseModel> = {
+const courseWithoutPropose: ListOfEntities<CourseModel> = {
   route: "search",
   filter: CourseCollection.Filtering,
   find: Courses.useFindFilter,
@@ -86,7 +92,7 @@ const courseWithoutPropose: ListOfEntites<CourseModel> = {
   ),
 };
 
-const event: ListOfEntites<EventModel> = {
+const event: ListOfEntities<EventModel> = {
   route: "calendar",
   showAll: { text: "dashboard.calendar.showAll" },
   filter: EventCollection.Filtering,
@@ -110,7 +116,7 @@ function bodyStyle(imageUrl: string) {
     backgroundSize: "cover",
   };
 }
-const group: ListOfEntites<GroupModel> = {
+const group: ListOfEntities<GroupModel> = {
   route: "exploreGroups",
   filter: GroupCollection.Filtering,
   find: Groups.useFindFilter,
@@ -130,7 +136,7 @@ const group: ListOfEntites<GroupModel> = {
   ),
 };
 
-const eventsMap: ComponentWithEntites<EventModel> = {
+const eventsMap: ComponentWithEntities<EventModel> = {
   route: "eventsMap",
   showAll: { text: "dashboard.eventsMap.showAll" },
   filter: EventCollection.Filtering,
