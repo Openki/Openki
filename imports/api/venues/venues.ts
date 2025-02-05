@@ -20,6 +20,8 @@ export interface VenueEntity {
   _id: string;
   /** user ID */
   editor: string;
+  /** a group that can edit the venue */
+  editGroup?: string;
   name: string;
   slug: string;
   /** HTML */
