@@ -19,29 +19,27 @@ function GroupToAdd({ venue, groupId }: { venue: VenueModel; groupId: string }) 
   }
 
   return (
-    <li>
-      <button
-        className="btn btn-link"
-        type="button"
-        value={groupId}
-        onClick={async () => {
-          try {
-            await VenuesMethods.addEditGroup(venue._id, groupId);
+    <button
+      className="dropdown-item btn btn-link"
+      type="button"
+      value={groupId}
+      onClick={async () => {
+        try {
+          await VenuesMethods.addEditGroup(venue._id, groupId);
 
-            Alert.success(
-              t("editGroup.add.groupAdded", "{GROUP} was added as host for {VENUE}.", {
-                GROUP: name(group),
-                VENUE: venue.name,
-              }),
-            );
-          } catch (err) {
-            Alert.serverError(err, t("editGroup.add.groupAdded.error", "Adding failed"));
-          }
-        }}
-      >
-        {name(group)}
-      </button>
-    </li>
+          Alert.success(
+            t("editGroup.add.groupAdded", "{GROUP} was added as host for {VENUE}.", {
+              GROUP: name(group),
+              VENUE: venue.name,
+            }),
+          );
+        } catch (err) {
+          Alert.serverError(err, t("editGroup.add.groupAdded.error", "Adding failed"));
+        }
+      }}
+    >
+      {name(group)}
+    </button>
   );
 }
 
@@ -60,7 +58,11 @@ export function Add({ venue }: Props) {
 
   const searchUpperCase = search.toUpperCase();
 
-  let filteredGroups = groups.filter((group) => group.name.toUpperCase().includes(searchUpperCase));
+  let filteredGroups = groups.filter(
+    (group) =>
+      group.name.toUpperCase().includes(searchUpperCase) ||
+      group.short.toUpperCase().includes(searchUpperCase),
+  );
 
   const usersGroup = filteredGroups.filter((group) => user?.groups.includes(group._id));
   filteredGroups = filteredGroups.filter((group) => !user?.groups.includes(group._id)); // exclude from result
@@ -77,11 +79,14 @@ export function Add({ venue }: Props) {
         <span className="fa-solid fa-plus fa-fw" aria-hidden="true"></span>
         <span>{t("editGroup.add.btn", "Add a group as hosts")}</span>
       </button>
-      <ul className="dropdown-menu dialog-dropdown dropdown-menu-scrollable-content">
-        <li className="dropdown-header">
-          {t("editGroup.add.header", "Add group")}
+      <div className="dropdown-menu dialog-dropdown dropdown-menu-scrollable-content">
+        <div className="dropdown-header">
+          {t("editGroup.add.header", "Choose group")}
           <button type="button" className="btn-close btn-close-white"></button>
-        </li>
+        </div>
+        <div className="p-2">
+          {t("editGroup.add.desc", "All members of that group will be able to mange this venue.")}
+        </div>
         <form className="p-2">
           <input
             type="search"
@@ -93,9 +98,6 @@ export function Add({ venue }: Props) {
             }}
           />
         </form>
-        <li>
-          <hr className="dropdown-divider" />
-        </li>
         {/* Show users groups first */}
         {usersGroup.map((group) => (
           <GroupToAdd key={group._id} venue={venue} groupId={group._id} />
@@ -104,12 +106,13 @@ export function Add({ venue }: Props) {
         {filteredGroups.map((group) => (
           <GroupToAdd key={group._id} venue={venue} groupId={group._id} />
         ))}
-        <li className="dialog-dropdown-btn">
+        <div className="dropdown-divider"></div>
+        <div className="dialog-dropdown-btn">
           <a href={Router.path("groupDetails", { _id: "create" })} className="btn btn-success">
             {t("profile.createNewGroup.button")}
           </a>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
   );
 }

@@ -11,7 +11,6 @@ import { Remove } from "./remove";
 export type Props = { venue: VenueModel };
 
 export function EditGroup({ venue }: Props) {
-  const { t } = useTranslation();
   const user = useUser();
 
   const groupId = venue.editGroup;
@@ -20,29 +19,7 @@ export function EditGroup({ venue }: Props) {
       {groupId ? (
         <>
           <GroupTag groupId={groupId} />
-          {venue.editableBy(user) && (
-            <span className="btn-group tag-btn group-tag-btn addon align-top">
-              <button
-                type="button"
-                className="dropdown-toggle"
-                aria-expanded="false"
-                aria-haspopup="true"
-                data-bs-toggle="dropdown"
-              ></button>
-              <ul className="dropdown-menu dialog-dropdown">
-                <li className="dropdown-header">
-                  {t("editGroup.edit.header", "Edit group")}
-                  <button type="button" className="btn-close btn-close-white"></button>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li className="dialog-dropdown-btn">
-                  <Remove venue={venue} groupId={groupId} />
-                </li>
-              </ul>
-            </span>
-          )}
+          {venue.editableBy(user) && <Remove venue={venue} groupId={groupId} />}
         </>
       ) : (
         <Add venue={venue} />
