@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { VenueModel } from "/imports/api/venues/venues";
-import { useDetails } from "/imports/api/groups/publications";
- import * as VenuesMethods from "/imports/api/venues/methods";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useDetails, useFindFilter } from "/imports/api/groups/publications";
+import * as VenuesMethods from "/imports/api/venues/methods";
 
 import { name } from "/imports/ui/lib/group-name-helpers";
 
@@ -49,11 +48,11 @@ export type Props = { venue: VenueModel };
 
 export function Add({ venue }: Props) {
   const { t } = useTranslation();
-  const user = useUser();
+  const [search, setSearch] = useState("");
 
-  const groupsToAdd = user?.groups;
+  const [isLoading, groupsToAdd] = useFindFilter({}, undefined, undefined, [["name", "asc"]]);
 
-  if (!groupsToAdd) {
+  if (isLoading() || groupsToAdd.length === 0) {
     return null;
   }
 
@@ -69,17 +68,30 @@ export function Add({ venue }: Props) {
         <span className="fa-solid fa-plus fa-fw" aria-hidden="true"></span>
         <span>{t("editGroup.add.btn", "Add a group as hosts")}</span>
       </button>
-      <ul className="dropdown-menu dialog-dropdown">
+      <ul className="dropdown-menu dialog-dropdown dropdown-menu-scrollable-content">
         <li className="dropdown-header">
           {t("editGroup.add.header", "Add group")}
           <button type="button" className="btn-close btn-close-white"></button>
         </li>
+        <form className="p-2">
+          <input
+            type="search"
+            className="form-control"
+            placeholder={t("editGroup.add.search", "Search for a group")}
+            value={search}
+            onChange={(e) => {
+              setSearch(e.currentTarget.value);
+            }}
+          />
+        </form>
         <li>
           <hr className="dropdown-divider" />
         </li>
-        {groupsToAdd.map((groupId) => (
-          <GroupToAdd key={groupId} venue={venue} groupId={groupId} />
-        ))}
+        {groupsToAdd
+          .filter((group) => group.name.toUpperCase().includes(search.toUpperCase()))
+          .map((group) => (
+            <GroupToAdd key={group._id} venue={venue} groupId={group._id} />
+          ))}
 
         <li className="dialog-dropdown-btn">
           <a href={Router.path("groupDetails", { _id: "create" })} className="btn btn-success">
