@@ -1,6 +1,7 @@
 import { Match, check } from "meteor/check";
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
+import * as groupVenuesDenormalizer from "/imports/api/groups/venuesDenormalizer";
 
 import { Regions } from "/imports/api/regions/regions";
 import { VenueEntity, Venues } from "/imports/api/venues/venues";
@@ -139,16 +140,23 @@ export const addEditGroup = ServerMethod(
     check(venueId, String);
     check(groupId, String);
 
-    await checkEditAllowed(venueId);
+    const venue = await checkEditAllowed(venueId);
 
-    return Venues.updateAsync(venueId, { $set: { editGroup: groupId } });
+    await Venues.updateAsync(venueId, { $set: { editGroup: groupId } });
+
+    await groupVenuesDenormalizer.afterVenueAddEditGroup(venue, groupId);
   },
 );
 
 export const removeEditGroup = ServerMethod("venue.editGroup.remove", async (venueId: string) => {
   check(venueId, String);
 
-  await checkEditAllowed(venueId);
+  const venue = await checkEditAllowed(venueId);
+  const groupId = venue.editGroup;
 
-  return Venues.updateAsync(venueId, { $unset: { editGroup: true } });
+  await Venues.updateAsync(venueId, { $unset: { editGroup: true } });
+
+  if (groupId) {
+    await groupVenuesDenormalizer.afterVenueRemoveEditGroup(venueId, groupId);
+  }
 });

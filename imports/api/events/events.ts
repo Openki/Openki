@@ -11,7 +11,7 @@ import { UserModel } from "/imports/api/users/users";
 import { Filtering } from "/imports/utils/filtering";
 import { LocalTime } from "/imports/utils/local-time";
 import * as Predicates from "/imports/utils/predicates";
-import { escapeRegExp } from "lodash";
+import { escapeRegExp, intersection } from "lodash";
 import * as FileStorage from "/imports/utils/FileStorage";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { FieldSort, FieldSortPattern, Sort } from "/imports/utils/sort-spec";
@@ -129,7 +129,7 @@ export class OEvent {
     if (user.privileged("admin")) {
       return true;
     }
-    return _.intersection(user.badges, this.editors).length > 0;
+    return intersection(user.badges, this.editors).length > 0;
   }
 
   sameTime(
