@@ -138,27 +138,26 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
                     {venue.otherFacilities}
                   </p>
                 )}
-                {!!venue.editor ||
-                  (venue.editableBy(user) && (
-                    <>
-                      <span className="venue-property-title">
-                        {t("location.details.hosts", "Hosts:")}
-                      </span>
-                      <ul className="hosts">
-                        {!!venue.editor && (
-                          <li>
-                            <ProfileLink userId={venue.editor} />
-                            <Contribution userId={venue.editor} />
-                          </li>
-                        )}
-                        {venue.editableBy(user) && (
-                          <li>
-                            <EditGroup venue={venue} />
-                          </li>
-                        )}
-                      </ul>
-                    </>
-                  ))}
+                {(!!venue.editor || !!venue.editGroup || venue.editableBy(user)) && (
+                  <>
+                    <span className="venue-property-title">
+                      {t("location.details.hosts", "Hosts:")}
+                    </span>
+                    <ul className="hosts">
+                      {!!venue.editor && (
+                        <li>
+                          <ProfileLink userId={venue.editor} />
+                          <Contribution userId={venue.editor} />
+                        </li>
+                      )}
+                      {(!!venue.editGroup || venue.editableBy(user)) && (
+                        <li>
+                          <EditGroup venue={venue} />
+                        </li>
+                      )}
+                    </ul>
+                  </>
+                )}
               </div>
               {!!venue.loc && (
                 <div className="col-md-5">
