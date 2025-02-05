@@ -22,6 +22,7 @@ import { Dashboard, Props as DashboardProps } from "../../components/dashboard";
 import { ButtonCancel, ButtonSave } from "/imports/ui/components/buttons";
 import { GroupSettings } from "/imports/ui/components/groups/settings";
 import { Find } from "../../components/courses/find";
+import { VenueTag } from "../../components/venues/link";
 
 import "./styles.scss";
 
@@ -309,6 +310,17 @@ export function GroupDetailsPage(data: Data) {
               </div>
 
               {errors.all ? <span className="form-text d-block">{errors.all}</span> : null}
+
+              {!!(data.group.venues && data.group.venues.length > 0) && (
+                <>
+                  {t("group.details.venues", "Venue(s):")}{" "}
+                  <span className="tag-group">
+                    {data.group.venues.map((v) => (
+                      <VenueTag key={v._id} venue={v} />
+                    ))}
+                  </span>
+                </>
+              )}
             </div>
           </div>
           {data.group.isNew() ? (
