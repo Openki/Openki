@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
+import { useUser } from "/imports/utils/react-meteor-data";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { VenueModel } from "/imports/api/venues/venues";
@@ -49,12 +50,20 @@ export type Props = { venue: VenueModel };
 export function Add({ venue }: Props) {
   const { t } = useTranslation();
   const [search, setSearch] = useState("");
+  const user = useUser();
 
-  const [isLoading, groupsToAdd] = useFindFilter({}, undefined, undefined, [["name", "asc"]]);
+  const [isLoading, groups] = useFindFilter({}, undefined, undefined, [["name", "asc"]]);
 
-  if (isLoading() || groupsToAdd.length === 0) {
+  if (isLoading() || groups.length === 0) {
     return null;
   }
+
+  const searchUpperCase = search.toUpperCase();
+
+  let filteredGroups = groups.filter((group) => group.name.toUpperCase().includes(searchUpperCase));
+
+  const usersGroup = filteredGroups.filter((group) => user?.groups.includes(group._id));
+  filteredGroups = filteredGroups.filter((group) => !user?.groups.includes(group._id)); // exclude from result
 
   return (
     <div className="btn-group tag-btn group-tag-btn align-top">
@@ -87,12 +96,14 @@ export function Add({ venue }: Props) {
         <li>
           <hr className="dropdown-divider" />
         </li>
-        {groupsToAdd
-          .filter((group) => group.name.toUpperCase().includes(search.toUpperCase()))
-          .map((group) => (
-            <GroupToAdd key={group._id} venue={venue} groupId={group._id} />
-          ))}
-
+        {/* Show users groups first */}
+        {usersGroup.map((group) => (
+          <GroupToAdd key={group._id} venue={venue} groupId={group._id} />
+        ))}
+        {/* then the rest */}
+        {filteredGroups.map((group) => (
+          <GroupToAdd key={group._id} venue={venue} groupId={group._id} />
+        ))}
         <li className="dialog-dropdown-btn">
           <a href={Router.path("groupDetails", { _id: "create" })} className="btn btn-success">
             {t("profile.createNewGroup.button")}
