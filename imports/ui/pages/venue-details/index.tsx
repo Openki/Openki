@@ -162,23 +162,23 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
                     <span className="pre-line">{venue.route}</span>
                   </p>
                 ) : null}
-                {venue.maxPeople ? (
+                {!!venue.maxPeople && (
                   <p>
                     <span className="venue-property-title">
                       {t("venue.details.max_ppl", "Maximum People:")}
                     </span>{" "}
                     {venue.maxPeople}
                   </p>
-                ) : null}
-                {venue.maxWorkplaces ? (
+                )}
+                {!!venue.maxWorkplaces && (
                   <p>
                     <span className="venue-property-title">
                       {t("venue.details.max_workplaces", "Maximum Workplaces:")}
                     </span>{" "}
                     {venue.maxWorkplaces}
                   </p>
-                ) : null}
-                {facilityNames().length > 0 ? (
+                )}
+                {facilityNames().length > 0 && (
                   <>
                     <span className="venue-property-title">
                       {t("venue.details.availableInfrastructure", "Available infrastructure:")}
@@ -189,8 +189,8 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
                       ))}
                     </ul>
                   </>
-                ) : null}
-                {venue.otherFacilities ? (
+                )}
+                {!!venue.otherFacilities && (
                   <p>
                     <span className="venue-property-title">
                       {t("venue.details.additionalEquipment", "Additional equipment:")}
@@ -198,9 +198,9 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
                     <br />
                     {venue.otherFacilities}
                   </p>
-                ) : null}
+                )}
               </div>
-              {venue.loc ? (
+              {!!venue.loc && (
                 <div className="col-md-5">
                   <div className="details-map">
                     <LocationDisplay coordinates={venue.loc.coordinates} />
@@ -211,11 +211,11 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
                     </div>
                   </div>
                 </div>
-              ) : null}
+              )}
             </div>
           </div>
         </div>
-        {mayEdit() ? (
+        {mayEdit() && (
           <>
             <div className="actions">
               <ButtonEdit
@@ -235,13 +235,13 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
               )}
             </div>
           </>
-        ) : null}
+        )}
       </div>
-      {getUpcomingEvents().length ? (
+      {getUpcomingEvents().length > 0 && (
         <div className="page-component">
           <h2>{t("venue.details.upcomingEvents", "Upcoming events at this venue:")}</h2>
           <EventList dataEvents={getUpcomingEvents()} withDate={true} withVenue={false} />
-          {hasMoreUpcomingEvents() ? (
+          {hasMoreUpcomingEvents() && (
             <>
               <div className="clearfix"></div>
               <button
@@ -254,14 +254,14 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
                 {t("_button.more")}
               </button>
             </>
-          ) : null}
+          )}
         </div>
-      ) : null}
-      {getPastEvents().length ? (
+      )}
+      {getPastEvents().length > 0 && (
         <div className="page-component">
           <h2>{t("venue.details.pastEvents", "Past events:")}</h2>
           <EventList dataEvents={getPastEvents()} withDate={true} withVenue={false} />
-          {hasMorePastEvents() ? (
+          {hasMorePastEvents() && (
             <>
               <div className="clearfix"></div>
               <button
@@ -274,9 +274,9 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
                 {t("_button.more")}
               </button>
             </>
-          ) : null}
+          )}
         </div>
-      ) : null}
+      )}
     </>
   );
 }

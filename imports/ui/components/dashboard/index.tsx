@@ -51,12 +51,12 @@ function EntitiesComponent<T>({
 
   return (
     <div className="container mb-4">
-      {showAll?.link && (
+      {!!showAll?.link && (
         <a className="btn btn-sm btn-success float-end" href={showAll.link}>
           {showAll.text}
         </a>
       )}
-      {title && <h2>{getLocalizedValue(title)}</h2>}
+      {!!title && <h2>{getLocalizedValue(title)}</h2>}
       {"element" in handler ? (
         // ListOfEntities
         <div className="d-flex flex-row flex-nowrap pb-3 overflow-x-scroll">
