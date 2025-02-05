@@ -5,13 +5,11 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { useTranslation } from "react-i18next";
 import { truncate } from "lodash";
 
-import * as Events from "/imports/api/events/publications";
 import * as Alert from "/imports/api/alerts/alert";
 import { VenueModel } from "/imports/api/venues/venues";
 import * as VenuesMethods from "/imports/api/venues/methods";
 import { useDetails } from "/imports/api/venues/publications";
 
-import { useReactiveNow } from "/imports/utils/reactive-now";
 import * as Metatags from "/imports/utils/metatags";
 import { textPlain } from "/imports/utils/html-tools";
 
@@ -21,41 +19,22 @@ import { Contribution } from "../../components/contribution";
 import { Display as LocationDisplay } from "../../components/location/display";
 import { format } from "/imports/utils/location-format";
 import { ButtonDelete, ButtonEdit } from "../../components/buttons";
-import { EventList } from "../../components/events/list";
 import { geoLocationLink } from "/imports/utils/geoLocationLink";
 import {
   DeleteConfirmDialog,
   type Props as DeleteConfirmDialogProps,
 } from "/imports/ui/components/delete-confirm-dialog";
 import { EditGroup } from "./edit-group";
+import { UpcomingEvents } from "./UpcomingEvents";
+import { PastEvents } from "./PastEvents";
 
 import "./styles.scss";
-
-const UpcomingEventLimitDefault = 12;
-const PastEventLimitDefault = 3;
-const EventLoadingBlockSize = 9;
 
 function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
   const { t } = useTranslation();
   const user = useUser();
 
   const [verifyDelete, setVerifyDelete] = useState(false);
-  const [upcomingEventLimit, setUpcomingEventLimit] = useState(UpcomingEventLimitDefault);
-  const [pastEventLimit, setPastEventLimit] = useState(PastEventLimitDefault);
-
-  const now = useReactiveNow();
-
-  const [upcomingEventsIsLoading, upcomingEvents] = Events.useFindFilter(
-    { venue: venue._id, after: now },
-    // Add one to the limit so we know there is more to show
-    upcomingEventLimit + 1,
-  );
-
-  const [pastEventsIsLoading, pastEvents] = Events.useFindFilter(
-    { venue: venue._id, before: now },
-    // Add one to the limit so we know there is more to show
-    pastEventLimit + 1,
-  );
 
   function mayEdit() {
     return venue.editableBy(Meteor.user());
@@ -66,32 +45,7 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
   function facilitiesDisplay(name: string) {
     return t(`venue.facility.${name}`);
   }
-  function getUpcomingEvents() {
-    const events = upcomingEvents;
 
-    if (events.length > upcomingEventLimit) {
-      // The last event is to check if there are any more.
-      return events.slice(0, -1);
-    }
-    return events;
-  }
-  function hasMoreUpcomingEvents() {
-    const count = upcomingEvents.length;
-    return count > upcomingEventLimit;
-  }
-  function getPastEvents() {
-    const events = pastEvents;
-
-    if (events.length > pastEventLimit) {
-      // The last event is to check if there are any more.
-      return events.slice(0, -1);
-    }
-    return events;
-  }
-  function hasMorePastEvents() {
-    const count = pastEvents.length;
-    return count > pastEventLimit;
-  }
   function deleteConfirmDialogAttr(): DeleteConfirmDialogProps {
     return {
       confirmText: t(
@@ -114,10 +68,6 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
         }
       },
     };
-  }
-
-  if (upcomingEventsIsLoading() || pastEventsIsLoading()) {
-    return null;
   }
 
   return (
@@ -247,46 +197,8 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
           </>
         )}
       </div>
-      {getUpcomingEvents().length > 0 && (
-        <div className="page-component">
-          <h2>{t("venue.details.upcomingEvents", "Upcoming events at this venue:")}</h2>
-          <EventList dataEvents={getUpcomingEvents()} withDate={true} withVenue={false} />
-          {hasMoreUpcomingEvents() && (
-            <>
-              <div className="clearfix"></div>
-              <button
-                type="button"
-                className="btn btn-add"
-                onClick={() => {
-                  setUpcomingEventLimit(upcomingEventLimit + EventLoadingBlockSize);
-                }}
-              >
-                {t("_button.more")}
-              </button>
-            </>
-          )}
-        </div>
-      )}
-      {getPastEvents().length > 0 && (
-        <div className="page-component">
-          <h2>{t("venue.details.pastEvents", "Past events:")}</h2>
-          <EventList dataEvents={getPastEvents()} withDate={true} withVenue={false} />
-          {hasMorePastEvents() && (
-            <>
-              <div className="clearfix"></div>
-              <button
-                type="button"
-                className="btn btn-add"
-                onClick={() => {
-                  setPastEventLimit(pastEventLimit + EventLoadingBlockSize);
-                }}
-              >
-                {t("_button.more")}
-              </button>
-            </>
-          )}
-        </div>
-      )}
+      <UpcomingEvents venue={venue._id} />
+      <PastEvents venue={venue._id} />
     </>
   );
 }
