@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
+import { useUser } from "/imports/utils/react-meteor-data";
+import { useTranslation } from "react-i18next";
+import { truncate } from "lodash";
 
 import * as Events from "/imports/api/events/publications";
 import * as Alert from "/imports/api/alerts/alert";
@@ -11,9 +14,7 @@ import { useDetails } from "/imports/api/venues/publications";
 import { useReactiveNow } from "/imports/utils/reactive-now";
 import * as Metatags from "/imports/utils/metatags";
 import { textPlain } from "/imports/utils/html-tools";
-import { truncate } from "lodash";
 
-import { useTranslation } from "react-i18next";
 import { Edit } from "../../components/venues/edit";
 import { ProfileLink } from "../../components/profile-link";
 import { Contribution } from "../../components/contribution";
@@ -26,6 +27,7 @@ import {
   DeleteConfirmDialog,
   type Props as DeleteConfirmDialogProps,
 } from "/imports/ui/components/delete-confirm-dialog";
+import { EditGroup } from "./edit-group";
 
 import "./styles.scss";
 
@@ -35,6 +37,7 @@ const EventLoadingBlockSize = 9;
 
 function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
   const { t } = useTranslation();
+  const user = useUser();
 
   const [verifyDelete, setVerifyDelete] = useState(false);
   const [upcomingEventLimit, setUpcomingEventLimit] = useState(UpcomingEventLimitDefault);
@@ -131,29 +134,15 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
           <div className="details-content">
             <div className="row">
               <div className={venue.loc ? "col-md-7" : "col"}>
-                {venue.editor ? (
-                  <>
-                    <span className="venue-property-title">
-                      {t("location.details.hosts", "Hosts:")}
-                    </span>
-                    <ul className="hosts">
-                      <li>
-                        <ProfileLink userId={venue.editor} />
-                        <Contribution userId={venue.editor} />
-                      </li>
-                    </ul>
-                  </>
-                ) : null}
-
-                {venue.address ? (
+                {!!venue.address && (
                   <p>
                     <span className="venue-property-title">
                       {t("venue.details.address", "Address:")}
                     </span>{" "}
                     {venue.address}
                   </p>
-                ) : null}
-                {venue.route ? (
+                )}
+                {!!venue.route && (
                   <p>
                     <span className="venue-property-title">
                       {t("venue.details.route", "How to go there:")}
@@ -161,7 +150,7 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
                     <br />
                     <span className="pre-line">{venue.route}</span>
                   </p>
-                ) : null}
+                )}
                 {!!venue.maxPeople && (
                   <p>
                     <span className="venue-property-title">
@@ -199,6 +188,27 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
                     {venue.otherFacilities}
                   </p>
                 )}
+                {!!venue.editor ||
+                  (venue.editableBy(user) && (
+                    <>
+                      <span className="venue-property-title">
+                        {t("location.details.hosts", "Hosts:")}
+                      </span>
+                      <ul className="hosts">
+                        {!!venue.editor && (
+                          <li>
+                            <ProfileLink userId={venue.editor} />
+                            <Contribution userId={venue.editor} />
+                          </li>
+                        )}
+                        {venue.editableBy(user) && (
+                          <li>
+                            <EditGroup venue={venue} />
+                          </li>
+                        )}
+                      </ul>
+                    </>
+                  ))}
               </div>
               {!!venue.loc && (
                 <div className="col-md-5">
