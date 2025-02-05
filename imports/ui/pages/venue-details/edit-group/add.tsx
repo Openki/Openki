@@ -1,17 +1,16 @@
 import React from "react";
-import { difference } from "lodash";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { CourseModel } from "/imports/api/courses/courses";
+import { VenueModel } from "/imports/api/venues/venues";
 import { useDetails } from "/imports/api/groups/publications";
-import * as CoursesMethods from "/imports/api/courses/methods";
+ import * as VenuesMethods from "/imports/api/venues/methods";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 import { name } from "/imports/ui/lib/group-name-helpers";
 
-function GroupToAdd({ course, groupId }: { course: CourseModel; groupId: string }) {
+function GroupToAdd({ venue, groupId }: { venue: VenueModel; groupId: string }) {
   const { t } = useTranslation();
   const [isLoading, group] = useDetails(groupId);
 
@@ -27,16 +26,16 @@ function GroupToAdd({ course, groupId }: { course: CourseModel; groupId: string 
         value={groupId}
         onClick={async () => {
           try {
-            await CoursesMethods.promote(course._id, groupId, true);
+            await VenuesMethods.addEditGroup(venue._id, groupId);
 
             Alert.success(
-              t("courseGroupAdd.groupAdded", "{GROUP} was added to promote {COURSE}.", {
+              t("editGroup.add.groupAdded", "{GROUP} was added as host for {VENUE}.", {
                 GROUP: name(group),
-                COURSE: course.name,
+                VENUE: venue.name,
               }),
             );
           } catch (err) {
-            Alert.serverError(err, t("courseGroupAdd.groupAdded.error", "Adding failed"));
+            Alert.serverError(err, t("editGroup.add.groupAdded.error", "Adding failed"));
           }
         }}
       >
@@ -46,13 +45,13 @@ function GroupToAdd({ course, groupId }: { course: CourseModel; groupId: string 
   );
 }
 
-export type Props = { course: CourseModel };
+export type Props = { venue: VenueModel };
 
-export function Add({ course }: Props) {
+export function Add({ venue }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 
-  const groupsToAdd = user && difference(user.groups, course.groups);
+  const groupsToAdd = user?.groups;
 
   if (!groupsToAdd) {
     return null;
@@ -68,18 +67,18 @@ export function Add({ course }: Props) {
         data-bs-toggle="dropdown"
       >
         <span className="fa-solid fa-plus fa-fw" aria-hidden="true"></span>
-        <span>{t("course.group.addText", "link a group")}</span>
+        <span>{t("editGroup.add.btn", "Add a group as hosts")}</span>
       </button>
       <ul className="dropdown-menu dialog-dropdown">
         <li className="dropdown-header">
-          {t("grouplist.addgroups.header", "Add group")}
+          {t("editGroup.add.header", "Add group")}
           <button type="button" className="btn-close btn-close-white"></button>
         </li>
         <li>
           <hr className="dropdown-divider" />
         </li>
         {groupsToAdd.map((groupId) => (
-          <GroupToAdd key={groupId} course={course} groupId={groupId} />
+          <GroupToAdd key={groupId} venue={venue} groupId={groupId} />
         ))}
 
         <li className="dialog-dropdown-btn">

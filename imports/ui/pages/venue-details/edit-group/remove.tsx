@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { VenueModel } from "/imports/api/venues/venues";
 import * as Alert from "/imports/api/alerts/alert";
-import { CourseModel } from "/imports/api/courses/courses";
 import { useDetails } from "/imports/api/groups/publications";
-import * as CoursesMethods from "/imports/api/courses/methods";
+import * as VenuesMethods from "/imports/api/venues/methods";
 
 import { name } from "/imports/ui/lib/group-name-helpers";
 
 export type Props = {
-  course: CourseModel;
+  venue: VenueModel;
   groupId: string;
 };
 
-export function Remove({ course, groupId }: Props) {
+export function Remove({ venue, groupId }: Props) {
   const { t } = useTranslation();
   const [isLoading, group] = useDetails(groupId);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -32,14 +32,14 @@ export function Remove({ course, groupId }: Props) {
           setIsExpanded(true);
         }}
       >
-        {t("course.group.remove", "Remove")}
+        {t("editGroup.remove.btn", "Remove")}
       </button>
     );
   }
 
   return (
     <div className="group-tool-dialog danger">
-      {t("course.group.confirmRemoveText", 'Stop listing the "{NAME}" group as promoters?', {
+      {t("editGroup.remove.confirmRemoveText", "Remove {NAME} as a host?", {
         NAME: name(group),
       })}
       <button
@@ -47,20 +47,20 @@ export function Remove({ course, groupId }: Props) {
         className="btn btn-danger"
         onClick={async () => {
           try {
-            await CoursesMethods.promote(course._id, groupId, false);
+            await VenuesMethods.removeEditGroup(venue._id);
 
             Alert.success(
-              t("courseGroupAdd.groupRemoved", "{GROUP} was removed from {COURSE}.", {
+              t("editGroup.remove.groupRemoved", "{GROUP} was removed from {VENUE}.", {
                 GROUP: name(group),
-                COURSE: course.name,
+                VENUE: venue.name,
               }),
             );
           } catch (err) {
-            Alert.serverError(err, t("courseGroupAdd.groupRemoved.error", "Removing failed"));
+            Alert.serverError(err, t("editGroup.remove.groupRemoved.error", "Removing failed"));
           }
         }}
       >
-        {t("course.group.confirmRemoveButton", "Delist")}
+        {t("editGroup.remove.confirmRemoveBtn", "Remove")}
       </button>
     </div>
   );
