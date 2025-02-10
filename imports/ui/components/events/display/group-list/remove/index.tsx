@@ -1,77 +1,68 @@
-import { i18n } from "/imports/startup/both/i18next";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { EventModel } from "/imports/api/events/events";
+import { useDetails } from "/imports/api/groups/publications";
 import * as EventsMethods from "/imports/api/events/methods";
-import { Groups } from "/imports/api/groups/groups";
 
-import { GroupNameHelpers } from "/imports/ui/lib/group-name-helpers";
-import * as TemplateMixins from "/imports/ui/lib/template-mixins";
+import { name } from "/imports/ui/lib/group-name-helpers";
 
-import "/imports/ui/components/buttons";
-import "/imports/ui/components/courses/categories";
-import "/imports/ui/components/events/display/course-header";
-import "/imports/ui/components/events/display/header";
-import "/imports/ui/components/events/display/group-list/remove-organizer";
-import "/imports/ui/components/events/edit";
-import "/imports/ui/components/events/participants";
-import "/imports/ui/components/events/replication";
-import "/imports/ui/components/groups/tag";
-import "/imports/ui/components/price-policy";
-import "/imports/ui/components/regions/tag";
-import "/imports/ui/components/sharing";
-import "/imports/ui/components/report";
-import "/imports/ui/components/venues/link";
-import "/imports/ui/components/internal-indicator";
-import "/imports/ui/components/delete-confirm-dialog";
+export type Props = {
+  event: EventModel;
+  groupId: string;
+};
 
-import "./template.html";
+export function EventGroupRemove({ event, groupId }: Props) {
+  const { t } = useTranslation();
+  const [isLoading, group] = useDetails(groupId);
+  const [isExpanded, setIsExpanded] = useState(false);
 
-const Template = TemplateMixins.Expandible(
-  TemplateAny as TemplateStaticTyped<"eventGroupRemove", { event: EventModel; groupId: string }>,
-  "eventGroupRemove",
-);
+  if (isLoading()) {
+    return null;
+  }
 
-const template = Template.eventGroupRemove;
+  if (!isExpanded) {
+    return (
+      <button
+        type="button"
+        className="btn btn-danger"
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsExpanded(true);
+        }}
+      >
+        {t("course.group.remove", "Remove")}
+      </button>
+    );
+  }
 
-template.helpers(GroupNameHelpers);
-template.events({
-  async "click .js-remove"(_e, instance) {
-    const { event } = instance.data;
-    const { groupId } = instance.data;
+  return (
+    <div className="group-tool-dialog danger">
+      {t("event.group.confirmRemoveText", 'Remove the "{NAME}" group from this event?', {
+        NAME: name(group),
+      })}
+      <button
+        type="button"
+        className="btn btn-danger"
+        onClick={async () => {
+          try {
+            await EventsMethods.promote(event._id, groupId, false);
 
-    try {
-      await EventsMethods.promote(event._id, groupId, false);
-
-      const groupName = Groups.findOne(groupId)?.name;
-      Alert.success(
-        i18n(
-          "eventGroupAdd.groupRemoved",
-          'The group "{GROUP}" has been removed from the "{EVENT}" event.',
-          { GROUP: groupName, EVENT: event.title },
-        ),
-      );
-      instance.collapse();
-    } catch (err) {
-      Alert.serverError(err, i18n("eventGroupAdd.groupRemoved.error", "Failed to remove group"));
-    }
-  },
-});
-
-
-export function EventGroupRemove(){
-  return   {{#if expanded}}
-  <div class="group-tool-dialog danger">
-    {{i18n 'event.group.confirmRemoveText' 'Remove the "{NAME}" group from this event?' NAME=(name groupId)}}
-    <button type="button" class="btn btn-danger js-remove">
-      {{i18n 'course.group.confirmRemoveButton'}}
-    </button>
-  </div>
-{{else}}
-  <a href="#" class="js-expand btn btn-danger">
-    <span class="fa-solid fa-xmark fa-fw" aria-hidden="true"></span>
-    {{i18n 'course.group.remove'}}
-  </a>
-{{/if}}
+            Alert.success(
+              t(
+                "eventGroupAdd.groupRemoved",
+                'The group "{GROUP}" has been removed from the "{EVENT}" event.',
+                { GROUP: name(group), EVENT: event.title },
+              ),
+            );
+          } catch (err) {
+            Alert.serverError(err, t("eventGroupAdd.groupRemoved.error", "Failed to remove group"));
+          }
+        }}
+      >
+        {t("course.group.confirmRemoveButton")}
+      </button>
+    </div>
+  );
 }
