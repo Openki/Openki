@@ -86,13 +86,6 @@ Router.route("api.0.xml", {
     await xmlSendResponder(this.response, async () => {
       const region = await Regions.findOneAsync({ _id: this.params.query.region });
 
-      if (!region) {
-        throw new Error("region must be set.");
-      }
-      if (!region.scheduleXmlData) {
-        throw new Error("scheduleXmlData must be set on region.");
-      }
-
       // Hide canceled events in schedule
       this.params.query.canceled = this.params.query.canceled ?? "0";
       const results = await orderedResults(this.params, "events");
@@ -108,25 +101,25 @@ Router.route("api.0.xml", {
       scheduleNode
         .ele("conference")
         .ele("acronym")
-        .txt(region.scheduleXmlData.acronym)
+        .txt(region?.scheduleXmlData?.acronym || "")
         .up()
         .ele("title")
-        .txt(region.scheduleXmlData.title)
+        .txt(region?.scheduleXmlData?.title || "")
         .up()
         .ele("start")
-        .txt(region.scheduleXmlData.start)
+        .txt(region?.scheduleXmlData?.start || "")
         .up()
         .ele("end")
-        .txt(region.scheduleXmlData.end)
+        .txt(region?.scheduleXmlData?.end || "")
         .up()
         .ele("days")
-        .txt(region.scheduleXmlData.days)
+        .txt(region?.scheduleXmlData?.days || "")
         .up()
         .ele("time_zone_name")
-        .txt(region.scheduleXmlData.time_zone_name)
+        .txt(region?.scheduleXmlData?.time_zone_name || "")
         .up()
         .ele("base_url")
-        .txt(region.scheduleXmlData.base_url)
+        .txt(region?.scheduleXmlData?.base_url || "")
         .up();
 
       let dayIdx = 1;
