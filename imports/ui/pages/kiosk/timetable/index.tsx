@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
-import { useUserId } from "/imports/utils/react-meteor-data";
 import { debounce } from "lodash";
 
 import { EventEntity, EventModel, Events, OEvent } from "/imports/api/events/events";
@@ -99,12 +98,7 @@ function Event({ entry }: { entry: OEvent & EventEntity & RelStartEnd }) {
 
 export function KioskTimetablePage(props: Props) {
   const { t } = useTranslation();
-  const userId = useUserId();
   const routeName = useCurrentRouteName();
-
-  if (userId) {
-    Meteor.logout();
-  }
 
   function isRoomRow(room: string, index: number) {
     return room && index !== 0;
