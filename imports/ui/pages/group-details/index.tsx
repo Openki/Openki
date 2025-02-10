@@ -312,14 +312,16 @@ export function GroupDetailsPage(data: Data) {
               {errors.all ? <span className="form-text d-block">{errors.all}</span> : null}
 
               {!!(data.group.venues && data.group.venues.length > 0) && (
-                <>
-                  {t("group.details.venues", "Venue(s):")}{" "}
+                <div className="group-details-venues">
+                  {t("group.details.venues", "{NUM, plural, one{Venue:} other{Venues:} }", {
+                    NUM: data.group.venues.length,
+                  })}{" "}
                   <span className="tag-group">
                     {data.group.venues.map((v) => (
                       <VenueTag key={v._id} venue={v} />
                     ))}
                   </span>
-                </>
+                </div>
               )}
             </div>
           </div>
