@@ -1,10 +1,9 @@
 /* eslint-disable no-nested-ternary */
 import { Template } from "meteor/templating";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
-import { debounce } from "lodash";
 
 import { EventEntity, EventModel, Events, OEvent } from "/imports/api/events/events";
 import { VenueModel } from "/imports/api/venues/venues";
@@ -53,27 +52,42 @@ function Event({ entry }: { entry: OEvent & EventEntity & RelStartEnd }) {
   const { timeFormat } = useDateTimeFormat();
   const [active, setActive] = useState(false);
 
-  const setDActive = debounce(setActive, 100);
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  function onClick(ev: MouseEvent) {
+    let targetEl = ev.target; // clicked element
+    do {
+      if (targetEl === elementRef.current) {
+        // This is a click inside
+        setActive(!active);
+        return;
+      }
+      // Go up the DOM
+      targetEl = (targetEl as any)?.parentNode;
+    } while (targetEl);
+    // This is a click outside.
+    setActive(false);
+  }
+
+  useEffect(() => {
+    document.addEventListener("click", onClick);
+    return () => {
+      document.removeEventListener("click", onClick);
+    };
+  });
+
   return (
     <div
       className={`timetable-event${entry.relStart > 0.5 ? " timetable-event-right" : ""}${
         active ? " active" : ""
       }`}
       style={position(entry)}
-      onMouseOver={() => {
-        setDActive(true);
-      }}
-      onMouseOut={() => {
-        setDActive(false);
-      }}
     >
       <div
+        ref={elementRef}
         className={`timetable-event-title${
           entry.canceled ? " timetable-event-title-canceled" : ""
         }`}
-        onClick={() => {
-          setDActive(!active);
-        }}
       >
         {entry.title}
       </div>
