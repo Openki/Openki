@@ -179,14 +179,14 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
   }
 
   if (changes.description) {
-    set.description = HtmlTools.saneHtml(changes.description);
+    set.description = HtmlTools.sanitizeHtml(changes.description);
   }
 
   if (changes.categories) {
     set.categories = changes.categories.slice(0, 20);
   }
   if (changes.name) {
-    set.name = StringTools.sanitizeSingleline(changes.name).substring(0, 1000);
+    set.name = StringTools.sanitizeSingleline(changes.name, 1000);
     set.slug = StringTools.slug(set.name);
   }
   if (changes.customFields) {
@@ -327,7 +327,7 @@ export const updateImage = ServerMethod(
       content: resizedCompactImage,
       mimeType: file.mimeType,
     });
-    const resizedDetailsImage = await resizeImage(file.content, 3000);
+    const resizedDetailsImage = await resizeImage(file.content, 2000, 5000);
     const detailsResult = await FileStorage.upload("courses/image/details", {
       content: resizedDetailsImage,
       mimeType: file.mimeType,

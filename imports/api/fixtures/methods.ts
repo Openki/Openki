@@ -1,64 +1,131 @@
-import { Meteor } from "meteor/meteor";
+import { PrivateSettings } from "/imports/utils/PrivateSettings";
+import { ServerMethod } from "/imports/utils/ServerMethod";
 
 import { Courses } from "/imports/api/courses/courses";
-
 import { Events } from "/imports/api/events/events";
-import { ensure } from "/imports/api/fixtures/ensureFixture";
 import { Groups } from "/imports/api/groups/groups";
 import { Regions } from "/imports/api/regions/regions";
 import { Venues } from "/imports/api/venues/venues";
+import { InfoPages } from "../infoPages/infoPages";
+import { Tenants } from "../tenants/tenants";
+import { CourseDiscussions } from "../course-discussions/course-discussions";
 
-import { PrivateSettings } from "/imports/utils/PrivateSettings";
+import { create as coursesDataCreate } from "./courses/create";
+import { create as eventsDataCreate } from "./events/create";
+import { generate as eventsDataGenerate } from "./events/generate";
+import { create as groupsDataCreate } from "./groups/create";
+import { create as infoPagesDataCreate } from "./infoPages/create";
+import { create as regionsDataCreate } from "./regions/create";
+import { create as venuesDataCreate } from "./venues/create";
+import { generate as commentsDataGenerate } from "./comments/generate";
+import { usersCreate as usersDataCreate } from "./usersCreate";
+import { serverError } from "../log/methods";
+import { Invitations } from "../invitations/invitations";
+import { JoinLinks } from "../joinLinks/joinLinks";
 
-import { create as coursesCreate } from "./courses/create";
-import { create as eventsCreate } from "./events/create";
-import { generate as eventsGenerate } from "./events/generate";
-import { create as groupsCreate } from "./groups/create";
-import { create as infoPagesCreate } from "./infoPages/create";
-import { create as regionsCreate } from "./regions/create";
-import { create as venuesCreate } from "./venues/create";
-import { generate as commentsGenerate } from "./comments/generate";
+export const clean = ServerMethod(
+  "fixtures.clean",
+  async () => {
+    if (!PrivateSettings.testdata) {
+      return;
+    }
+    try {
+      await Promise.all([
+        Venues.removeAsync({}),
+        Events.removeAsync({}),
+        CourseDiscussions.removeAsync({}),
+        Courses.removeAsync({}),
+        Regions.removeAsync({}),
+        Invitations.removeAsync({}),
+        JoinLinks.removeAsync({}),
+        Tenants.removeAsync({}),
+        Groups.removeAsync({}),
+        InfoPages.removeAsync({}),
+      ]);
+    } catch (e) {
+      serverError(e);
+      throw e;
+    }
+  },
+  { simulation: false },
+);
 
-async function usersCreate() {
-  await ensure.user("greg", undefined, true);
-  await ensure.user("Seee", undefined, true);
-  await ensure.user("1u", undefined, true);
-  await ensure.user("Support", undefined, true); // used for Zürich Lernt data
-  await ensure.user("validated_mail", undefined, true);
-  return "Inserted user fixtures.";
-}
+export const create = ServerMethod(
+  "fixtures.create",
+  async () => {
+    if (!PrivateSettings.testdata) {
+      return;
+    }
 
-// Unfortunately we can't make this a debugOnly package because the integration
-// tests use the data too, and they run with the --production flag.
-// This guard is here until we find a better solution.
-if (Meteor.isServer && PrivateSettings.testdata) {
-  Meteor.methods({
-    "fixtures.clean"() {
-      Groups.removeAsync({});
-      Events.removeAsync({});
-      Venues.removeAsync({});
-      Courses.removeAsync({});
-    },
-
-    async "fixtures.create"() {
-      await infoPagesCreate();
-      if ((await Regions.countDocuments()) === 0) {
-        await regionsCreate();
+    try {
+      if ((await InfoPages.countDocuments()) === 0) {
+        await infoPagesDataCreate();
       }
-      await usersCreate();
-      await groupsCreate();
-      await venuesCreate();
-      await coursesCreate();
-      await eventsGenerate();
-    },
-    "fixtures.infoPages.create": infoPagesCreate,
-    "fixtures.users.create": usersCreate,
-    "fixtures.regions.create": regionsCreate,
-    "fixtures.groups.create": groupsCreate,
-    "fixtures.events.create": eventsCreate,
-    "fixtures.venues.create": venuesCreate,
-    "fixtures.courses.create": coursesCreate,
-    "fixtures.events.generate": eventsGenerate,
-    "fixtures.comments.generate": commentsGenerate,
-  });
-}
+
+      await usersDataCreate();
+
+      if ((await Groups.countDocuments()) === 0) {
+        await groupsDataCreate();
+      }
+
+      if ((await Regions.countDocuments()) === 0) {
+        await regionsDataCreate();
+      }
+
+      if ((await Venues.countDocuments()) === 0) {
+        await venuesDataCreate();
+      }
+
+      if ((await Courses.countDocuments()) === 0) {
+        await coursesDataCreate();
+      }
+
+      if ((await Events.countDocuments()) === 0) {
+        await eventsDataCreate();
+        await eventsDataGenerate();
+      }
+
+      if ((await CourseDiscussions.countDocuments()) === 0) {
+        await commentsDataGenerate();
+      }
+    } catch (e) {
+      serverError(e);
+      throw e;
+    }
+  },
+  { simulation: false },
+);
+
+export const cleanForAppTest = ServerMethod(
+  "fixtures.clean.forAppTest",
+  () => {
+    if (!PrivateSettings.testdata) {
+      return;
+    }
+    Groups.removeAsync({});
+    Events.removeAsync({});
+    Venues.removeAsync({});
+    Courses.removeAsync({});
+  },
+  { simulation: false },
+);
+
+export const createForAppTest = ServerMethod(
+  "fixtures.create.forAppTest",
+  async () => {
+    if (!PrivateSettings.testdata) {
+      return;
+    }
+
+    await infoPagesDataCreate();
+    if ((await Regions.countDocuments()) === 0) {
+      await regionsDataCreate();
+    }
+    await usersDataCreate();
+    await groupsDataCreate();
+    await venuesDataCreate();
+    await coursesDataCreate();
+    await eventsDataGenerate();
+  },
+  { simulation: false },
+);

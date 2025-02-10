@@ -81,7 +81,6 @@ export function CourseGroupAdd({ course }: Props) {
         {groupsToAdd.map((groupId) => (
           <GroupToAdd key={groupId} course={course} groupId={groupId} />
         ))}
-
         <li className="dialog-dropdown-btn">
           <a href={Router.path("groupDetails", { _id: "create" })} className="btn btn-success">
             {t("profile.createNewGroup.button")}

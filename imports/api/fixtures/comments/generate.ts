@@ -11,6 +11,7 @@ import { Prng } from "/imports/api/fixtures/Prng";
 import { Users } from "/imports/api/users/users";
 
 import * as HtmlTools from "/imports/utils/html-tools";
+import { Log } from "../../log/log";
 
 /**
  * Select a date that is after the given date
@@ -48,7 +49,7 @@ export async function generate() {
       const comment = {} as Mongo.OptionalId<CourseDiscussionEnity>;
       comment.courseId = course._id;
       comment.title = _.sample(words, 1 + Math.floor(prng() * 3)).join(" ");
-      comment.text = HtmlTools.saneHtml(
+      comment.text = HtmlTools.sanitizeHtml(
         _.sample(words, 5).join(" ") + _.sample(words, Math.floor(prng() * 30)).join(" "),
       );
 
@@ -76,5 +77,5 @@ export async function generate() {
     count += createCount;
   }
 
-  return `Generated ${count} course comments.`;
+  Log.record("testdata", ["CourseDiscussions"], { message: `Generated ${count} course comments.` });
 }

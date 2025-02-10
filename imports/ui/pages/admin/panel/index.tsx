@@ -25,6 +25,11 @@ export function AdminPanelPage() {
       route: "users",
     },
     {
+      name: t("adminPanel.tasks.tenants", "Organizations"),
+      icon: "fa-solid fa-sitemap",
+      route: "tenants",
+    },
+    {
       name: t("adminPanel.tasks.venues", "Venues"),
       icon: "fa-solid fa-house",
       route: "venuesMap",
@@ -35,9 +40,9 @@ export function AdminPanelPage() {
       route: "stats",
     },
     {
-      name: t("adminPanel.tasks.tenants", "Organizations"),
-      icon: "fa-solid fa-sitemap",
-      route: "tenants",
+      name: t("adminPanel.tasks.testdata", "Testdata"),
+      icon: "fa-solid fa-database",
+      route: "testdata",
     },
   ];
 

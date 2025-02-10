@@ -10,6 +10,7 @@ import { Prng } from "/imports/api/fixtures/Prng";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { LocalTime } from "/imports/utils/local-time";
+import { Log } from "../../log/log";
 /**
  * Make a number that looks like a human chose it, favouring 2 and 5
  */
@@ -96,7 +97,7 @@ export async function generate() {
       event.courseId = course._id;
       event._id = ensure.fixedId([course._id, `${n}`]);
       event.title = `${course.name} ${_.sample(words)}`;
-      event.description = HtmlTools.saneHtml(
+      event.description = HtmlTools.sanitizeHtml(
         words.slice(0, 10 + Math.floor(prng() * 30)).join(" "),
       );
       event.groups = course.groups;
@@ -144,5 +145,5 @@ export async function generate() {
     count += eventCount;
   }
 
-  return `Generated ${count} course events.`;
+  Log.record("testdata", ["Events"], { message: `Generated ${count} course events.` });
 }

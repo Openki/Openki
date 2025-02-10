@@ -273,9 +273,9 @@ export function Edit(data: Data) {
     // eslint-disable-next-line @typescript-eslint/no-shadow
     const groups = [];
 
-    const defaultTeamGroup = getRegion()?.defaultTeamGroup;
-    if (defaultTeamGroup) {
-      groups.push(defaultTeamGroup);
+    const defaultTeamGroups = getRegion()?.defaultTeamGroups;
+    if (defaultTeamGroups) {
+      groups.push(...defaultTeamGroups);
     }
 
     if (data && data instanceof Course && !(data as CourseModel).isNew()) {
@@ -499,7 +499,7 @@ export function Edit(data: Data) {
   const handleSave = async () => {
     const changes = {
       internal,
-      name: StringTools.sanitizeSingleline(title || ""),
+      name: StringTools.sanitizeSingleline(title),
       categories: selectedCategories || [],
     } as unknown as Required<CoursesMethods.SaveFields>;
 
@@ -715,10 +715,10 @@ export function Edit(data: Data) {
                       type="radio"
                       name="role"
                       value="participant"
-                      checked
+                      checked={simpleSelectedRole === "participant"}
                       onChange={handleRoleChange}
                     />
-                    <i className="fa-solid fa-user fa-lg fa-fw"></i>
+                    <i className="fa-solid fa-user fa-lg fa-fw"></i>{" "}
                     {t("course.edit.iWantToLearn", "I want to learn")}
                   </label>
                 </div>
@@ -729,9 +729,10 @@ export function Edit(data: Data) {
                       type="radio"
                       name="role"
                       value="mentor"
+                      checked={simpleSelectedRole === "mentor"}
                       onChange={handleRoleChange}
                     />
-                    <i className="fa-solid fa-graduation-cap fa-lg fa-fw"></i>
+                    <i className="fa-solid fa-graduation-cap fa-lg fa-fw"></i>{" "}
                     {t("course.edit.iCanTeach", "I can teach")}
                   </label>
                 </div>

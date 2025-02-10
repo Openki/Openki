@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
-import { truncate } from "/imports/utils/string-tools";
+import { truncate } from "lodash";
 import { textPlain } from "/imports/utils/html-tools";
 import { useTranslation } from "react-i18next";
 import { useUser } from "meteor/react-meteor-accounts";
@@ -22,6 +22,7 @@ import { Dashboard, Props as DashboardProps } from "../../components/dashboard";
 import { ButtonCancel, ButtonSave } from "/imports/ui/components/buttons";
 import { GroupSettings } from "/imports/ui/components/groups/settings";
 import { Find } from "../../components/courses/find";
+import { VenueTag } from "../../components/venues/link";
 
 import "./styles.scss";
 
@@ -233,7 +234,7 @@ export function GroupDetailsPage(data: Data) {
   const title = data.group.name || t("group.windowtitle.create", "Create group");
   let claim = "";
   if (data.group.claim) {
-    claim = truncate(textPlain(data.group.claim), 160);
+    claim = truncate(textPlain(data.group.claim), { length: 160 });
   }
   Metatags.setCommonTags(title, claim, data.group.publicLogoUrl());
 
@@ -287,7 +288,7 @@ export function GroupDetailsPage(data: Data) {
             ) : null}
             <div className="group-details-name">
               {mayEdit ? <Editable {...editableNameAttr} /> : data.group.name}
-            </div>
+            </div>{" "}
             <div className="group-details-short">
               {mayEdit ? <Editable {...editableShortAttr} /> : data.group.short}
             </div>
@@ -301,10 +302,27 @@ export function GroupDetailsPage(data: Data) {
               </div>
 
               <div className="group-details-description">
-                {mayEdit ? <Editable {...editableDescriptionAttr} /> : data.group.description}
+                {mayEdit ? (
+                  <Editable {...editableDescriptionAttr} />
+                ) : (
+                  <span dangerouslySetInnerHTML={{ __html: data.group.description }}></span>
+                )}
               </div>
 
               {errors.all ? <span className="form-text d-block">{errors.all}</span> : null}
+
+              {!!(data.group.venues && data.group.venues.length > 0) && (
+                <div className="group-details-venues">
+                  {t("group.details.venues", "{NUM, plural, one{Venue:} other{Venues:} }", {
+                    NUM: data.group.venues.length,
+                  })}{" "}
+                  <span className="tag-group">
+                    {data.group.venues.map((v) => (
+                      <VenueTag key={v._id} venue={v} />
+                    ))}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
           {data.group.isNew() ? (

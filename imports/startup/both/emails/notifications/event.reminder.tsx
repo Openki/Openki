@@ -9,10 +9,10 @@ import { UserModel } from "/imports/api/users/users";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { Events } from "/imports/api/events/events";
 
-import * as StringTools from "/imports/utils/string-tools";
+import { truncate } from "lodash";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { Model as NotificationModel } from "../notification";
-import { EventReminder, Props } from "../../../../emails/notifications/EventReminder";
+import { EventReminder, Props } from "/imports/emails/notifications/EventReminder";
 import { getStartEndDate } from "./utils";
 
 interface Body {
@@ -77,7 +77,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
 
       const subjectvars = {
-        EVENT: StringTools.truncate(event.title, 50),
+        EVENT: truncate(event.title, { length: 50 }),
       };
       const subject = t(
         "notification.event.reminder.mail.subject",

@@ -50,12 +50,12 @@ template.events({
         Router.go("/");
 
         Alert.success(
-          i18n("joinPage.join.success", 'You joined to tenant "{NAME}".', {
+          i18n("joinPage.join.success", 'You joined the organization "{NAME}".', {
             NAME: instance.data.tenant.name,
           }),
         );
       } catch (err) {
-        Alert.serverError(err, i18n("joinPage.join.error", "Join not worked."));
+        Alert.serverError(err, i18n("joinPage.join.error", "Joining didn't work."));
       } finally {
         instance.busy(false);
       }

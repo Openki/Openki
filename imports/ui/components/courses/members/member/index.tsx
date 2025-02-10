@@ -13,17 +13,15 @@ import { ProfileLink } from "/imports/ui/components/profile-link";
 import { Contribution } from "../../../contribution";
 import { ParticipantContact } from "/imports/ui/components/participant/contact";
 import { RemoveFromTeamDropdown } from "../remove-from-team-dropdown";
+import { Editable } from "../../../editable/index.react";
+import { useRoleDisplay } from "../../../../lib/useRoleDisplay";
 
 import "./styles.scss";
-import { Editable } from "../../../editable/index.react";
-
-function roleShort(type: string) {
-  return `roles.${type}.short`;
-}
 
 export function Member({ member, course }: { member: CourseMemberEntity; course: CourseModel }) {
   const { t } = useTranslation();
   const currentUser = useUser();
+  const { roleShort } = useRoleDisplay();
 
   function subscribeToTeam() {
     return new Subscribe(course, member.user, "team", "interested");
@@ -103,7 +101,7 @@ export function Member({ member, course }: { member: CourseMemberEntity; course:
                 >
                   <span className="course-member-role-text">
                     <span className={`${rolelistIcon(role)} fa-fw`} aria-hidden="true"></span>{" "}
-                    <span className="role-short">{t(roleShort(role))}</span>
+                    <span className="role-short">{roleShort(role)}</span>
                   </span>{" "}
                   {mayUnsubscribeFromTeam(role) ? (
                     <RemoveFromTeamDropdown {...removeFromTeamDropdownAttr()} />
