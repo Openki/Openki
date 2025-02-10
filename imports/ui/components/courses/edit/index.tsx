@@ -631,7 +631,7 @@ export function Edit(data: Data) {
             t("message.courseCreated.description", "What do you wannt to do next?"),
             numberOfCharacters === 0
               ? {
-                  text: t("message.courseCreated.addDescription", "Add a desciption"),
+                  text: t("message.courseCreated.addDescription", "Add a description"),
                   href: "#course-description",
                 }
               : undefined,
