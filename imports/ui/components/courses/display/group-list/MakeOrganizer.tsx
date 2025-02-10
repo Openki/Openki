@@ -13,7 +13,7 @@ export type Props = {
   groupId: string;
 };
 
-export function CourseGroupMakeOrganizer({ course, groupId }: Props) {
+export function MakeOrganizer({ course, groupId }: Props) {
   const { t } = useTranslation();
   const [isLoading, group] = useDetails(groupId);
   const [isExpanded, setIsExpanded] = useState(false);
