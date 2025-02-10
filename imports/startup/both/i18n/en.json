@@ -674,7 +674,7 @@
   "message.courseChangesSaved": "Your changes to {NAME} have been saved.",
   "message.courseChangesSaved.error": "Saving went wrong",
   "message.courseCreated": "{NAME} has been created!",
-  "message.courseCreated.addDescription": "Add a desciption",
+  "message.courseCreated.addDescription": "Add a description",
   "message.courseCreated.addImage": "Add an image",
   "message.courseCreated.description": "What do you wannt to do next?",
   "message.courseCreated.share": "Share it",

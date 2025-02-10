@@ -90,7 +90,7 @@ template.helpers({
 });
 
 template.events({
-  "click .js-course-desciption-show-more"() {
+  "click .js-course-description-show-more"() {
     // toggles the showMore
     const { state } = Template.instance();
     state.set({ descriptionTruncated: false });
