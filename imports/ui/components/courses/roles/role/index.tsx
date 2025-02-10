@@ -15,18 +15,12 @@ import { CourseModel } from "/imports/api/courses/courses";
 
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import * as Analytics from "/imports/ui/lib/analytics";
+import { useRoleDisplay } from "../../../../lib/useRoleDisplay";
 
 import { ButtonCancel } from "/imports/ui/components/buttons";
 import { Guide } from "./guide";
 
 import "./styles.scss";
-
-function roleShort(type: string) {
-  if (!type) {
-    return "";
-  }
-  return `roles.${type}.short`;
-}
 
 export interface Data {
   role: RoleEntity;
@@ -38,6 +32,7 @@ export interface Data {
 export function Role(data: Data) {
   const { t } = useTranslation();
   const user = useUser();
+  const { roleShort } = useRoleDisplay();
   const searchParams = useSearchParams();
   const [enrolling, setEnrolling] = useState(false);
   const [showFirstSteps, setShowFirstSteps] = useState(false);
@@ -165,7 +160,7 @@ export function Role(data: Data) {
               <b>
                 {t("course.roles.firstSteps.title", "Thank you for your interest in {COURSE}.", {
                   COURSE: data.course.name,
-                  ROLE: t(roleShort(data.role.type)),
+                  ROLE: roleShort(data.role.type),
                 })}
               </b>
               <br />

@@ -3,7 +3,7 @@ import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
-import { chain } from "lodash";
+import { chain, truncate } from "lodash";
 
 import { Courses } from "/imports/api/courses/courses";
 import { Groups } from "/imports/api/groups/groups";
@@ -13,7 +13,6 @@ import { Users, UserModel } from "/imports/api/users/users";
 import { Model as NotificationModel } from "../notification";
 import { GroupCourse, Props } from "../../../../emails/notifications/GroupCourse";
 
-import * as StringTools from "/imports/utils/string-tools";
 import { getSiteName } from "/imports/utils/getSiteName";
 
 interface Body {
@@ -86,8 +85,8 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       );
 
       const subjectvars = {
-        COURSE: StringTools.truncate(course.name, 10),
-        GROUPS: StringTools.truncate(recipientsGroups.map((g) => g.short).join(", "), 30),
+        COURSE: truncate(course.name, { length: 10 }),
+        GROUPS: truncate(recipientsGroups.map((g) => g.short).join(", "), { length: 30 }),
       };
 
       const subject = t(

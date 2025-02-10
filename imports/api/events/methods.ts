@@ -305,11 +305,11 @@ export const save = ServerMethod(
 
     if (Meteor.isServer) {
       const sanitizedDescription = StringTools.sanitizeMultiline(editFields.description as string);
-      editFields.description = HtmlTools.saneHtml(sanitizedDescription);
+      editFields.description = HtmlTools.sanitizeHtml(sanitizedDescription);
     }
 
     if (editFields.title) {
-      editFields.title = StringTools.sanitizeSingleline(editFields.title).substring(0, 1000);
+      editFields.title = StringTools.sanitizeSingleline(editFields.title, 1000);
       editFields.slug = StringTools.slug(editFields.title);
     }
 
@@ -396,24 +396,29 @@ export const save = ServerMethod(
   { simulation: false },
 );
 
+async function checkEditAllowed(eventId: string) {
+  const operator = await Meteor.userAsync();
+  if (!operator) {
+    throw new Meteor.Error(401, "please log in");
+  }
+
+  const event = await Events.findOneAsync(eventId);
+  if (!event) {
+    throw new Meteor.Error(404, "event not found");
+  }
+
+  if (!event.editableBy(operator)) {
+    throw new Meteor.Error(401, "not permitted");
+  }
+  return { event, operator };
+}
+
 export const remove = ServerMethod(
   "event.remove",
   async (eventId: string) => {
     check(eventId, String);
 
-    const user = await Meteor.userAsync();
-    if (!user) {
-      throw new Meteor.Error(401, "please log in");
-    }
-
-    const event = await Events.findOneAsync(eventId);
-    if (!event) {
-      throw new Meteor.Error(404, "No such event");
-    }
-
-    if (!event.editableBy(user)) {
-      throw new Meteor.Error(401, "not permitted");
-    }
+    const { event, operator } = await checkEditAllowed(eventId);
 
     await Events.removeAsync(eventId);
 
@@ -425,7 +430,7 @@ export const remove = ServerMethod(
     );
 
     if (event.courseId) {
-      await courseHistoryDenormalizer.afterEventRemove(event.courseId, user._id, {
+      await courseHistoryDenormalizer.afterEventRemove(event.courseId, operator._id, {
         title: event.title,
         startLocal: event.startLocal,
       });
@@ -570,21 +575,7 @@ export const contactParticipants = ServerMethod(
     check(message, String);
     check(options, ContactParticipantsOptionsPattern);
 
-    const operator = await Meteor.userAsync();
-    if (!operator) {
-      throw new Meteor.Error(401, "please log in");
-    }
-    const event = Events.findOne(eventId);
-    if (!event) {
-      throw new Meteor.Error(404, "event not found");
-    }
-    if (
-      !event.editableBy(operator) &&
-      !operator.groups.some((g) => event.groupOrganizers.includes(g)) &&
-      !operator.privileged("admin")
-    ) {
-      throw new Meteor.Error(401, "not permitted");
-    }
+    const { operator } = await checkEditAllowed(eventId);
 
     await Notification["Event.ContactParticipants"].record(
       operator._id,
@@ -602,21 +593,7 @@ export const cancel = ServerMethod(
     check(eventId, String);
     check(comment, Match.Maybe(String));
 
-    const operator = await Meteor.userAsync();
-    if (!operator) {
-      throw new Meteor.Error(401, "please log in");
-    }
-    const event = await Events.findOneAsync({ _id: eventId });
-    if (!event) {
-      throw new Meteor.Error(404, "no such event");
-    }
-    if (
-      !event.editableBy(operator) &&
-      !operator.groups.some((g) => event.groupOrganizers.includes(g)) &&
-      !operator.privileged("admin")
-    ) {
-      throw new Meteor.Error(401, "edit not permitted");
-    }
+    const { event, operator } = await checkEditAllowed(eventId);
 
     await Events.updateAsync(event._id, { $set: { canceled: true } });
 
@@ -626,7 +603,7 @@ export const cancel = ServerMethod(
         comment = comment.trim().substring(0, 2000).trim();
       }
 
-      await Notification["Event.Canceled"].record(operator._id, eventId, comment || "");
+      await Notification["Event.Canceled"].record(operator._id, event._id, comment || "");
     }
   },
 );
@@ -634,13 +611,7 @@ export const cancel = ServerMethod(
 export const uncancel = ServerMethod("event.uncancel", async (eventId: string) => {
   check(eventId, String);
 
-  const event = await Events.findOneAsync({ _id: eventId });
-  if (!event) {
-    throw new Meteor.Error(404, "no such event");
-  }
-  const user = await Meteor.userAsync();
-  if (!user || !event.editableBy(user)) {
-    throw new Meteor.Error(401, "edit not permitted");
-  }
-  await Events.updateAsync(event._id, { $set: { canceled: false } });
+  await checkEditAllowed(eventId);
+
+  await Events.updateAsync(eventId, { $set: { canceled: false } });
 });

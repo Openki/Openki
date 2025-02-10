@@ -68,7 +68,7 @@ export const updateDescription = ServerMethod(
       throw new ValidationError([{ name: "description", type: "plzLogin" }], "Not logged-in");
     }
 
-    const sane = HtmlTools.saneHtml(description, 400);
+    const sane = HtmlTools.sanitizeHtml(description, 400);
 
     const result = await Profile.Description.change(userId, sane);
     if (!result) {
@@ -93,11 +93,11 @@ export const updateUsername = ServerMethod(
       throw new ValidationError([{ name: "username", type: "plzLogin" }], "Not logged-in");
     }
 
-    let username = StringTools.sanitizeSingleline(unsafeUsername);
+    let username = StringTools.sanitizeSingleline(unsafeUsername, 200);
     ((PublicSettings.contribution?.forbiddenChars || []) as string[]).forEach((c) => {
       username = username.replace(RegExp(c, "g"), "");
     });
-    username = username.trim().substring(0, 200);
+    username = username.trim();
 
     if (username.length === 0) {
       throw new ValidationError(

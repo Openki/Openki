@@ -30,7 +30,7 @@ export function CourseGroupList({ course: course2 }: Props) {
             <CourseGroupRemove course={course} groupId={groupId} />
           </li>
         ) : null}
-        {user && course.editableBy(user) ? (
+        {course.editableBy(user) && (
           <li className="dialog-dropdown-btn">
             {course.groupOrganizers.includes(groupId) ? (
               <CourseGroupRemoveOrganizer course={course} groupId={groupId} />
@@ -38,7 +38,7 @@ export function CourseGroupList({ course: course2 }: Props) {
               <CourseGroupMakeOrganizer course={course} groupId={groupId} />
             )}
           </li>
-        ) : null}
+        )}
       </>
     );
   }

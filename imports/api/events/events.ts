@@ -11,7 +11,7 @@ import { UserModel } from "/imports/api/users/users";
 import { Filtering } from "/imports/utils/filtering";
 import { LocalTime } from "/imports/utils/local-time";
 import * as Predicates from "/imports/utils/predicates";
-import * as StringTools from "/imports/utils/string-tools";
+import { escapeRegExp, intersection } from "lodash";
 import * as FileStorage from "/imports/utils/FileStorage";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { FieldSort, FieldSortPattern, Sort } from "/imports/utils/sort-spec";
@@ -93,7 +93,7 @@ export interface EventEntity {
    * (calculated) all groups that promote this course, both inherited from course and set on the
    * event itself ("promote groups" from event and course)
    */
-  allGroups: string[];
+  allGroups?: string[];
   /**
    * (calculated) list of user and group _id that are allowed to edit the event, calculated from
    * the groupOranizers from the event and the editors from the course
@@ -122,14 +122,14 @@ export class OEvent {
     return !PublicSettings.publicTenants.includes(this.tenant);
   }
 
-  editableBy(this: EventModel, user: UserModel) {
+  editableBy(this: EventModel, user: UserModel | null | undefined) {
     if (!user) {
       return false;
     }
     if (user.privileged("admin")) {
       return true;
     }
-    return _.intersection(user.badges, this.editors).length > 0;
+    return intersection(user.badges, this.editors).length > 0;
   }
 
   sameTime(
@@ -271,7 +271,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
   }
 
   async insertAsync(
-    event: Mongo.OptionalId<EventEntity>,
+    event: Omit<Mongo.OptionalId<EventEntity>, "tenant">,
     callback?: (err?: unknown, _id?: string) => void,
   ) {
     const enrichedEvent = await tenantDenormalizer.beforeInsert(event);
@@ -427,8 +427,8 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
       searchTerms.forEach((searchTerm) => {
         and.push({
           $or: [
-            { title: { $regex: StringTools.escapeRegex(searchTerm), $options: "i" } },
-            { description: { $regex: StringTools.escapeRegex(searchTerm), $options: "i" } },
+            { title: { $regex: escapeRegExp(searchTerm), $options: "i" } },
+            { description: { $regex: escapeRegExp(searchTerm), $options: "i" } },
           ],
         });
       });
