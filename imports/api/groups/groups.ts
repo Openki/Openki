@@ -58,6 +58,12 @@ export type GroupEntityDashboard = {
   };
 }[];
 
+export interface GroupVenueEntity {
+  _id: string;
+  name: string;
+  slug: string;
+}
+
 /** DB-Model */
 export interface GroupEntity {
   /** ID */
@@ -79,6 +85,8 @@ export interface GroupEntity {
   time_created?: Date;
   // eslint-disable-next-line camelcase
   time_lastedit?: Date;
+  /** (calculated) venues where the group is manger */
+  venues?: GroupVenueEntity[];
 }
 export type GroupModel = Group & GroupEntity;
 

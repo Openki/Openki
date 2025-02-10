@@ -20,6 +20,8 @@ export interface VenueEntity {
   _id: string;
   /** user ID */
   editor: string;
+  /** a group that can edit the venue */
+  editGroup?: string;
   name: string;
   slug: string;
   /** HTML */
@@ -78,6 +80,7 @@ export class Venue {
     return (
       isNew /* Anybody may create a new location */ ||
       user._id === this.editor ||
+      (this.editGroup && user.groups.includes(this.editGroup)) ||
       user.privileged("admin") // Admins can edit all venues
     );
   }
