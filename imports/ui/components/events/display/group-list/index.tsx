@@ -68,3 +68,38 @@ template.helpers({
     return tools;
   },
 });
+
+
+export function (){
+  return <div class="tag-group multiline">
+  {{#each allGroups}}
+    {{> groupTag groupId=this isOrganizer=isOrganizer}}
+    {{#if isOrganizer}}
+      <div class="tag group-tag addon">
+        <span class="fa-solid fa-bullhorn fa-fw" aria-hidden="true"
+              title="{{i18n 'grouplist.organizer.title' attr=true}}"></span>
+      </div>
+    {{/if}}
+    {{#if tools}}
+      <div class="btn-group tag-btn group-tag-btn addon align-top">
+        <button type="button" class="dropdown-toggle" aria-expanded="false" aria-haspopup="true"
+                data-bs-toggle="dropdown">
+        </button>
+        <ul class="dropdown-menu dialog-dropdown">
+          <li class="dropdown-header">
+            {{i18n 'grouplist.editgroup.header'}}
+            <button type="button" class="btn-close btn-close-white"></button>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          {{#each tools}}
+            <li class="dialog-dropdown-btn">{{> toolTemplate}}</li>
+          {{/each}}
+        </ul>
+      </div>
+    {{/if}}
+  {{/each}}
+  {{> eventGroupAdd}}
+</div>
+}
