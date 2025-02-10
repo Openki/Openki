@@ -122,7 +122,7 @@ export class OEvent {
     return !PublicSettings.publicTenants.includes(this.tenant);
   }
 
-  editableBy(this: EventModel, user: UserModel) {
+  editableBy(this: EventModel, user: UserModel | null | undefined) {
     if (!user) {
       return false;
     }
