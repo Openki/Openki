@@ -67,3 +67,37 @@ template.events({
     }
   },
 });
+
+
+export function EventGroupAdd(){
+  return {{#if groupsToAdd}}
+  <div class="btn-group tag-btn group-tag-btn align-top">
+    <button type="button" class="dropdown-toggle" aria-expanded="false" aria-haspopup="true"
+            data-bs-toggle="dropdown">
+      <span class="fa-solid fa-plus fa-fw" aria-hidden="true"></span>
+      <span>{{i18n 'event.group.addText' 'link a group'}}</span>
+    </button>
+    <ul class="dropdown-menu dialog-dropdown">
+      <li class="dropdown-header">
+        {{i18n 'grouplist.addgroups.header'}}
+        <button type="button" class="btn-close btn-close-white"></button>
+      </li>
+      <li>
+        <hr class="dropdown-divider">
+      </li>
+      {{#each groupsToAdd}}
+        <li>
+          <button class="btn btn-link js-add-group" type="button" value="{{this}}">
+            {{name this}}
+          </button>
+        </li>
+      {{/each}}
+      <li class="dialog-dropdown-btn">
+        <a href="{{pathFor 'groupDetails' _id='create'}}" class="btn btn-success">
+          {{i18n 'profile.createNewGroup.button'}}
+        </a>
+      </li>
+    </ul>
+  </div>
+{{/if}}
+}
