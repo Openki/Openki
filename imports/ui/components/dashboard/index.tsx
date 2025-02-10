@@ -15,7 +15,7 @@ type ComponentSettings = {
   entity: keyof typeof mapping;
   title?: string;
   query?: string;
-  showAll?: { link?: string; text?: string };
+  showAll?: { link?: string; text?: string } | false;
 };
 
 export type Props = {
@@ -32,7 +32,7 @@ function EntitiesComponent<T>({
 }: {
   params: { [k: string]: string };
   handler: ListOfEntities<T> | ComponentWithEntities<T>;
-  showAll: { link: string | undefined; text: string | undefined };
+  showAll: { link: string | undefined; text: string | undefined } | false;
   title?: string | undefined;
 }) {
   const { getLocalizedValue } = useLocalizedSetting();
@@ -51,7 +51,7 @@ function EntitiesComponent<T>({
 
   return (
     <div className="container mb-4">
-      {!!showAll?.link && (
+      {showAll !== false && !!showAll?.link && (
         <a className="btn btn-sm btn-success float-end" href={showAll.link}>
           {showAll.text}
         </a>
@@ -93,10 +93,15 @@ function DashboardComponent({
             link?: string;
             text?: string;
           }
+        | false
         | undefined;
     },
     urlParams: URLSearchParams,
-  ): { link: string | undefined; text: string | undefined } {
+  ): { link: string | undefined; text: string | undefined } | false {
+    if (config.showAll === false || settings.showAll === false) {
+      return false;
+    }
+
     return {
       link:
         settings.showAll?.link ||

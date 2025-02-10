@@ -13,7 +13,7 @@ export type Props = {
   groupId: string;
 };
 
-export function CourseGroupRemove({ course, groupId }: Props) {
+export function RemoveOrganizer({ course, groupId }: Props) {
   const { t } = useTranslation();
   const [isLoading, group] = useDetails(groupId);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -24,43 +24,53 @@ export function CourseGroupRemove({ course, groupId }: Props) {
 
   if (!isExpanded) {
     return (
-      <button
-        type="button"
+      <a
+        href="#"
         className="btn btn-danger"
         onClick={(e) => {
           e.stopPropagation();
           setIsExpanded(true);
         }}
       >
-        {t("course.group.remove", "Remove")}
-      </button>
+        <span className="fa-solid fa-xmark fa-fw" aria-hidden="true"></span>
+        {t("course.group.removeOrgText", "Remove editing rights")}
+      </a>
     );
   }
 
   return (
     <div className="group-tool-dialog danger">
-      {t("course.group.confirmRemoveText", 'Stop listing the "{NAME}" group as promoters?', {
-        NAME: name(group),
-      })}
+      {t(
+        "course.group.confirmRemoveOrgText",
+        'Revoke all editing rights from the "{NAME}" group?',
+        { NAME: name(group) },
+      )}
       <button
         type="button"
         className="btn btn-danger"
         onClick={async () => {
           try {
-            await CoursesMethods.promote(course._id, groupId, false);
+            await CoursesMethods.editing(course._id, groupId, false);
 
             Alert.success(
-              t("courseGroupAdd.groupRemoved", "{GROUP} was removed from {COURSE}.", {
-                GROUP: name(group),
-                COURSE: course.name,
-              }),
+              t(
+                "courseGroupAdd.membersCanNoLongerEditCourse",
+                "Members of {GROUP} can no longer edit {COURSE}.",
+                { GROUP: name(group), COURSE: course.name },
+              ),
             );
           } catch (err) {
-            Alert.serverError(err, t("courseGroupAdd.groupRemoved.error", "Removing failed"));
+            Alert.serverError(
+              err,
+              t(
+                "courseGroupAdd.membersCanNoLongerEditCourse.error",
+                "Failed to remove organizer status",
+              ),
+            );
           }
         }}
       >
-        {t("course.group.confirmRemoveButton", "Delist")}
+        {t("course.group.confimRemoveOrgButton", "Take away editing rights")}
       </button>
     </div>
   );
