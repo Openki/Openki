@@ -64,3 +64,21 @@ template.events({
     }
   },
 });
+
+
+export function(){
+  return   {{#if expanded}}
+  <div class="group-tool-dialog add">
+    {{i18n 'course.group.confirmOrgText' NAME=(name groupId)}}
+    {{i18n 'event.group.confirmOrgNotes' "All members of this group will be able to edit this event."}}
+    <button type="button" class="btn btn-success js-makeOrganizer">
+      {{i18n 'course.group.confimOrgButton'}}
+    </button>
+  </div>
+{{else}}
+  <a href="#" class="js-expand btn btn-success">
+    <span class="fa-solid fa-bullhorn fa-fw" aria-hidden="true"></span>
+    {{i18n 'course.group.addOrgText'}}
+  </a>
+{{/if}}
+}
