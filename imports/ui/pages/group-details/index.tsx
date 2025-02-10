@@ -290,7 +290,7 @@ export function GroupDetailsPage(data: Data) {
               {mayEdit ? <Editable {...editableNameAttr} /> : data.group.name}
             </div>{" "}
             <div className="group-details-short">
-              {mayEdit ? <Editable {...editableShortAttr} /> : <>({data.group.short})</>}
+              {mayEdit ? <Editable {...editableShortAttr} /> : data.group.short}
             </div>
           </div>
           <div className="details-body group-details-body">
