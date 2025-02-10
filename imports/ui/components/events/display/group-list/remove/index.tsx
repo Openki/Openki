@@ -58,3 +58,20 @@ template.events({
     }
   },
 });
+
+
+export function EventGroupRemove(){
+  return   {{#if expanded}}
+  <div class="group-tool-dialog danger">
+    {{i18n 'event.group.confirmRemoveText' 'Remove the "{NAME}" group from this event?' NAME=(name groupId)}}
+    <button type="button" class="btn btn-danger js-remove">
+      {{i18n 'course.group.confirmRemoveButton'}}
+    </button>
+  </div>
+{{else}}
+  <a href="#" class="js-expand btn btn-danger">
+    <span class="fa-solid fa-xmark fa-fw" aria-hidden="true"></span>
+    {{i18n 'course.group.remove'}}
+  </a>
+{{/if}}
+}
