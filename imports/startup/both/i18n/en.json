@@ -524,6 +524,7 @@
   "group.details.group": "Group",
   "group.details.isFeatured": "This group is featured",
   "group.details.titleNew": "Create new group",
+  "group.details.venues": "{NUM, plural, one{Venue:} other{Venues:} }",
   "group.linksCollection.title": "{NAME}-views",
   "group.missing": "Group does not exist",
   "group.name.placeholder": "Name of your group, institution, community or program",
