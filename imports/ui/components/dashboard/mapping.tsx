@@ -31,7 +31,7 @@ export type ListOfEntitesElementComponent<T> = React.FC<{
 }>;
 export type ListOfEntities<T> = {
   route: string;
-  showAll?: { text?: string };
+  showAll?: { text?: string } | false;
   filter: () => Filtering<any>;
   find: Publication<any, T[]>;
   element: ListOfEntitesElementComponent<T>;
@@ -46,7 +46,7 @@ export type ComponentWithEntitesComponent<T> = React.FC<{
 }>;
 export type ComponentWithEntities<T> = {
   route: string;
-  showAll?: { text?: string };
+  showAll?: { text?: string } | false;
   filter: () => Filtering<any>;
   find: Publication<any, T[]>;
   component: ComponentWithEntitesComponent<T>;
@@ -57,8 +57,6 @@ export type StaticComponentComponent = React.FC<{
   params: { [k: string]: string };
 }>;
 export type StaticComponent = {
-  route?: string;
-  showAll?: { text?: string };
   component: StaticComponentComponent;
 };
 
@@ -138,7 +136,7 @@ const group: ListOfEntities<GroupModel> = {
 
 const eventsMap: ComponentWithEntities<EventModel> = {
   route: "eventsMap",
-  showAll: { text: "dashboard.eventsMap.showAll" },
+  showAll: false,
   filter: EventCollection.Filtering,
   find: Events.useFindFilter,
   component: ({ entities }) => (
