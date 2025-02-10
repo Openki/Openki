@@ -327,7 +327,7 @@ export const updateImage = ServerMethod(
       content: resizedCompactImage,
       mimeType: file.mimeType,
     });
-    const resizedDetailsImage = await resizeImage(file.content, 3000);
+    const resizedDetailsImage = await resizeImage(file.content, 2000, 5000);
     const detailsResult = await FileStorage.upload("courses/image/details", {
       content: resizedDetailsImage,
       mimeType: file.mimeType,

@@ -13,9 +13,10 @@ export function TestdataPage() {
   return (
     <>
       <h3>{t("testdata.title", "Testdata")}</h3>
-      <p>{t("testdata.description", "This process may take a few minutes to complete.")}</p>
       <div className="alert alert-info" role="alert">
-        {t("testdata.hint", "This is only works if testdata flag is set in the settings.")}
+        {t("testdata.description", "This process may take a few minutes to complete.")}
+        <br />
+        {t("testdata.hint", "This only works if testdata flag is set in the settings.")}
       </div>
       <Button
         className="btn btn-lg btn-danger"
