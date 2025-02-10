@@ -1,6 +1,12 @@
 import { PublicSettings } from "./PublicSettings";
 
-export async function resizeImage(base64: string, maxSize: number) {
+export async function resizeImage(base64: string, maxSize: number): Promise<string>;
+export async function resizeImage(
+  base64: string,
+  maxWidth: number,
+  maxHeigth: number,
+): Promise<string>;
+export async function resizeImage(base64: string, maxWidth: number, maxHeigth = maxWidth) {
   if (!PublicSettings.feature.resizeImagesOnServer) {
     // eslint-disable-next-line no-console
     console.info("Resizing images with sharp on the server is disabled.");
@@ -13,7 +19,7 @@ export async function resizeImage(base64: string, maxSize: number) {
   const imageBuffer = Buffer.from(content, "base64");
 
   return new Promise<string>((resolve, reject) => {
-    const result = sharp(imageBuffer).resize(maxSize, maxSize, {
+    const result = sharp(imageBuffer).resize(maxWidth, maxHeigth, {
       fit: "inside",
       withoutEnlargement: true,
     });

@@ -50,12 +50,14 @@ export function EventGroupList({ event: event2 }: Props) {
 
   return (
     <div className="tag-group multiline">
-      {event.allGroups.map((groupId) => {
+      {event.allGroups?.map((groupId) => {
         const isOrganizer = event.editors.includes(groupId);
+        // Groups may be adopted from the course, these cannot be removed
+        const ownGroup = event.groups.includes(groupId);
         return (
           <React.Fragment key={groupId}>
             <GroupTag groupId={groupId} isOrganizer={isOrganizer} />
-            {isOrganizer ? (
+            {isOrganizer && (
               <div className="tag group-tag addon">
                 <span
                   className="fa-solid fa-bullhorn fa-fw"
@@ -65,9 +67,9 @@ export function EventGroupList({ event: event2 }: Props) {
                   })}
                 ></span>
               </div>
-            ) : null}
+            )}
 
-            {user?.mayPromoteWith(groupId) || event.editableBy(user) ? (
+            {ownGroup && (user?.mayPromoteWith(groupId) || event.editableBy(user)) ? (
               <div className="btn-group tag-btn group-tag-btn addon align-top">
                 <button
                   type="button"

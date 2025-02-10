@@ -93,7 +93,7 @@ export interface EventEntity {
    * (calculated) all groups that promote this course, both inherited from course and set on the
    * event itself ("promote groups" from event and course)
    */
-  allGroups: string[];
+  allGroups?: string[];
   /**
    * (calculated) list of user and group _id that are allowed to edit the event, calculated from
    * the groupOranizers from the event and the editors from the course

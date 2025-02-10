@@ -1,10 +1,10 @@
+import React from "react";
 import { difference } from "lodash";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { EventModel } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 
-import "./template.html";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { Router } from "meteor/iron:router";
@@ -57,7 +57,7 @@ export function EventGroupAdd({ event }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 
-  const groupsToAdd = user && difference(user.groups, event.allGroups);
+  const groupsToAdd = user && difference(user.groups, event.allGroups || []);
 
   if (!groupsToAdd) {
     return null;
@@ -73,7 +73,7 @@ export function EventGroupAdd({ event }: Props) {
         data-bs-toggle="dropdown"
       >
         <span className="fa-solid fa-plus fa-fw" aria-hidden="true"></span>
-        <span>{t("course.group.addText", "link a group")}</span>
+        <span>{t("event.group.addText", "link a group")}</span>
       </button>
       <ul className="dropdown-menu dialog-dropdown">
         <li className="dropdown-header">
