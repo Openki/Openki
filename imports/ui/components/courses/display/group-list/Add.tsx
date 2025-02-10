@@ -48,7 +48,7 @@ function GroupToAdd({ course, groupId }: { course: CourseModel; groupId: string 
 
 export type Props = { course: CourseModel };
 
-export function CourseGroupAdd({ course }: Props) {
+export function Add({ course }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 

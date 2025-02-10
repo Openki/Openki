@@ -6,14 +6,14 @@ import { CourseModel } from "/imports/api/courses/courses";
 import { useDetails } from "/imports/api/courses/publications";
 
 import { GroupTag } from "/imports/ui/components/groups/tag";
-import { CourseGroupAdd } from "/imports/ui/components/courses/display/group-list/add";
-import { CourseGroupRemove } from "/imports/ui/components/courses/display/group-list/remove";
-import { CourseGroupRemoveOrganizer } from "/imports/ui/components/courses/display/group-list/remove-organizer";
-import { CourseGroupMakeOrganizer } from "/imports/ui/components/courses/display/group-list/make-organizer";
+import { Add } from "./Add";
+import { Remove } from "./Remove";
+import { RemoveOrganizer } from "./RemoveOrganizer";
+import { MakeOrganizer } from "./MakeOrganizer";
 
 export type Props = { course: CourseModel };
 
-export function CourseGroupList({ course: course2 }: Props) {
+export function GroupList({ course: course2 }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 
@@ -27,15 +27,15 @@ export function CourseGroupList({ course: course2 }: Props) {
       <>
         {user?.mayPromoteWith(groupId) || course.editableBy(user) ? (
           <li className="dialog-dropdown-btn">
-            <CourseGroupRemove course={course} groupId={groupId} />
+            <Remove course={course} groupId={groupId} />
           </li>
         ) : null}
         {course.editableBy(user) && (
           <li className="dialog-dropdown-btn">
             {course.groupOrganizers.includes(groupId) ? (
-              <CourseGroupRemoveOrganizer course={course} groupId={groupId} />
+              <RemoveOrganizer course={course} groupId={groupId} />
             ) : (
-              <CourseGroupMakeOrganizer course={course} groupId={groupId} />
+              <MakeOrganizer course={course} groupId={groupId} />
             )}
           </li>
         )}
@@ -89,7 +89,7 @@ export function CourseGroupList({ course: course2 }: Props) {
         );
       })}
 
-      <CourseGroupAdd course={course} />
+      <Add course={course} />
     </div>
   );
 }
@@ -98,4 +98,4 @@ export function CourseGroupList({ course: course2 }: Props) {
 // eslint-disable-next-line import/first
 import "./template.html";
 
-Template.registerHelper("CourseGroupList", () => CourseGroupList);
+Template.registerHelper("CourseGroupList", () => GroupList);
