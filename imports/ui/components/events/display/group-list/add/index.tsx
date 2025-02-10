@@ -1,103 +1,97 @@
-import { i18n } from "/imports/startup/both/i18next";
 import { difference } from "lodash";
-import { Meteor } from "meteor/meteor";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { EventModel } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
-import { Groups } from "/imports/api/groups/groups";
-
-import { GroupNameHelpers } from "/imports/ui/lib/group-name-helpers";
-import * as TemplateMixins from "/imports/ui/lib/template-mixins";
-
-import "/imports/ui/components/buttons";
-import "/imports/ui/components/courses/categories";
-import "/imports/ui/components/events/display/course-header";
-import "/imports/ui/components/events/display/header";
-import "/imports/ui/components/events/display/group-list/remove-organizer";
-import "/imports/ui/components/events/edit";
-import "/imports/ui/components/events/participants";
-import "/imports/ui/components/events/replication";
-import "/imports/ui/components/groups/tag";
-import "/imports/ui/components/price-policy";
-import "/imports/ui/components/regions/tag";
-import "/imports/ui/components/sharing";
-import "/imports/ui/components/report";
-import "/imports/ui/components/venues/link";
-import "/imports/ui/components/internal-indicator";
-import "/imports/ui/components/delete-confirm-dialog";
 
 import "./template.html";
+import { useTranslation } from "react-i18next";
+import { useUser } from "/imports/utils/react-meteor-data";
+import { Router } from "meteor/iron:router";
 
-const Template = TemplateMixins.Expandible(
-  TemplateAny as TemplateStaticTyped<"eventGroupAdd", EventModel>,
-  "eventGroupAdd",
-);
+import { name } from "/imports/ui/lib/group-name-helpers";
+import { useDetails } from "/imports/api/groups/publications";
 
-const template = Template.eventGroupAdd;
+function GroupToAdd({ event, groupId }: { event: EventModel; groupId: string }) {
+  const { t } = useTranslation();
+  const [isLoading, group] = useDetails(groupId);
 
-template.helpers({
-  ...GroupNameHelpers,
-  groupsToAdd(this: EventModel) {
-    const user = Meteor.user();
-    return user && difference(user.groups, this.allGroups);
-  },
-});
+  if (isLoading()) {
+    return null;
+  }
 
-template.events({
-  async "click .js-add-group"(e, instance) {
-    const event = instance.data;
-    const groupId = (e.currentTarget as HTMLButtonElement).value;
+  return (
+    <li>
+      <button
+        className="btn btn-link"
+        type="button"
+        value={groupId}
+        onClick={async () => {
+          try {
+            await EventsMethods.promote(event._id, groupId, true);
 
-    try {
-      await EventsMethods.promote(event._id, groupId, true);
+            Alert.success(
+              t(
+                "eventGroupAdd.groupAdded",
+                'The group "{GROUP}" has been added to promote the "{EVENT}" event.',
+                {
+                  GROUP: name(group),
+                  COURSE: event.title,
+                },
+              ),
+            );
+          } catch (err) {
+            Alert.serverError(err, t("eventGroupAdd.groupAdded.error", "Failed to add group"));
+          }
+        }}
+      >
+        {name(group)}
+      </button>
+    </li>
+  );
+}
 
-      const groupName = Groups.findOne(groupId)?.name;
-      Alert.success(
-        i18n(
-          "eventGroupAdd.groupAdded",
-          'The group "{GROUP}" has been added to promote the "{EVENT}" event.',
-          { GROUP: groupName, EVENT: event.title },
-        ),
-      );
-      instance.collapse();
-    } catch (err) {
-      Alert.serverError(err, i18n("eventGroupAdd.groupAdded.error", "Failed to add group"));
-    }
-  },
-});
+export type Props = { event: EventModel };
 
+export function EventGroupAdd({ event }: Props) {
+  const { t } = useTranslation();
+  const user = useUser();
 
-export function EventGroupAdd(){
-  return {{#if groupsToAdd}}
-  <div class="btn-group tag-btn group-tag-btn align-top">
-    <button type="button" class="dropdown-toggle" aria-expanded="false" aria-haspopup="true"
-            data-bs-toggle="dropdown">
-      <span class="fa-solid fa-plus fa-fw" aria-hidden="true"></span>
-      <span>{{i18n 'event.group.addText' 'link a group'}}</span>
-    </button>
-    <ul class="dropdown-menu dialog-dropdown">
-      <li class="dropdown-header">
-        {{i18n 'grouplist.addgroups.header'}}
-        <button type="button" class="btn-close btn-close-white"></button>
-      </li>
-      <li>
-        <hr class="dropdown-divider">
-      </li>
-      {{#each groupsToAdd}}
-        <li>
-          <button class="btn btn-link js-add-group" type="button" value="{{this}}">
-            {{name this}}
-          </button>
+  const groupsToAdd = user && difference(user.groups, event.allGroups);
+
+  if (!groupsToAdd) {
+    return null;
+  }
+
+  return (
+    <div className="btn-group tag-btn group-tag-btn align-top">
+      <button
+        type="button"
+        className="dropdown-toggle"
+        aria-expanded="false"
+        aria-haspopup="true"
+        data-bs-toggle="dropdown"
+      >
+        <span className="fa-solid fa-plus fa-fw" aria-hidden="true"></span>
+        <span>{t("course.group.addText", "link a group")}</span>
+      </button>
+      <ul className="dropdown-menu dialog-dropdown">
+        <li className="dropdown-header">
+          {t("grouplist.addgroups.header", "Add group")}
+          <button type="button" className="btn-close btn-close-white"></button>
         </li>
-      {{/each}}
-      <li class="dialog-dropdown-btn">
-        <a href="{{pathFor 'groupDetails' _id='create'}}" class="btn btn-success">
-          {{i18n 'profile.createNewGroup.button'}}
-        </a>
-      </li>
-    </ul>
-  </div>
-{{/if}}
+        <li>
+          <hr className="dropdown-divider" />
+        </li>
+        {groupsToAdd.map((groupId) => (
+          <GroupToAdd key={groupId} event={event} groupId={groupId} />
+        ))}
+        <li className="dialog-dropdown-btn">
+          <a href={Router.path("groupDetails", { _id: "create" })} className="btn btn-success">
+            {t("profile.createNewGroup.button")}
+          </a>
+        </li>
+      </ul>
+    </div>
+  );
 }
