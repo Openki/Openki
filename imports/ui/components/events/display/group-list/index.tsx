@@ -6,10 +6,10 @@ import { EventModel } from "/imports/api/events/events";
 import { useDetails } from "/imports/api/events/publications";
 
 import { GroupTag } from "/imports/ui/components/groups/tag";
-import { EventGroupAdd } from "/imports/ui/components/events/display/group-list/add";
-import { EventGroupRemove } from "/imports/ui/components/events/display/group-list/remove";
-import { EventGroupRemoveOrganizer } from "/imports/ui/components/events/display/group-list/remove-organizer";
-import { EventGroupMakeOrganizer } from "/imports/ui/components/events/display/group-list/make-organizer";
+import { EventGroupAdd } from "./Add";
+import { EventGroupRemove } from "./Remove";
+import { EventGroupRemoveOrganizer } from "./RemoveOrganizer";
+import { EventGroupMakeOrganizer } from "./MakeOrganizer";
 
 export type Props = { event: EventModel };
 
