@@ -161,7 +161,6 @@
 	"event.edit.plzProvideTitle": "Τίτλος",
 	"event.edit.plzSelectRegion": "Επέλεξε περιοχή για αυτή τη συνάντηση",
 	"event.group.confirmOrgNotes": "Όλα τα μέλη αυτής της ομάδας θα μπορούν να επεξεργάζονται αυτή τη συνάντηση.",
-	"event.group.confirmRemoveText": "Αφαίρεση της ομάδας {NAME} από αυτή τη συνάντηση;",
 	"event.list.windowtitle": "Συναντήσεις",
 	"event.replication.changeToPattern": "Επέλεξε συχνότητα",
 	"event.replication.changeToPicker": "Επέλεξε ημερομηνίες",
