@@ -53,7 +53,7 @@ function GroupToAdd({ event, groupId }: { event: EventModel; groupId: string }) 
 
 export type Props = { event: EventModel };
 
-export function EventGroupAdd({ event }: Props) {
+export function Add({ event }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 
