@@ -4,6 +4,7 @@ import { useUser } from "/imports/utils/react-meteor-data";
 
 import { CourseModel } from "/imports/api/courses/courses";
 import { useDetails } from "/imports/api/courses/publications";
+import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 
 import { GroupTag } from "/imports/ui/components/groups/tag";
 import { Add } from "./Add";
@@ -20,6 +21,8 @@ export function GroupList({ course: course2 }: Props) {
   // for blaze, can be removed after migration
   // subscribe in react to keep reactivity
   const [isLoading, course] = useDetails(course2._id);
+
+  const [isRegionLoading, region] = useRegionDetails(course2?.region);
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
   function tools(groupId: string, course: CourseModel) {
@@ -43,11 +46,24 @@ export function GroupList({ course: course2 }: Props) {
     );
   }
 
-  if (isLoading() || !course) return null;
+  if (isLoading() || !course || isRegionLoading()) return null;
+
+  const groups = course.groups.filter(
+    (groupId) =>
+      !(
+        // hide group where are from the region set
+        (
+          region?.defaultTeamGroups?.includes(groupId) &&
+          // when user ist not member of the group or a admin
+          !user?.mayPromoteWith(groupId) &&
+          !course.editableBy(user)
+        )
+      ),
+  );
 
   return (
     <div className="tag-group multiline">
-      {course.groups.map((groupId) => {
+      {groups.map((groupId) => {
         const isOrganizer = course.groupOrganizers.includes(groupId);
         return (
           <React.Fragment key={groupId}>

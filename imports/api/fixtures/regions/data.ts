@@ -103,7 +103,7 @@ export const regions: {
     loc: [47.3784, 8.5257],
     tz: "Europe/Zurich",
     calendarStartDate: true,
-    defaultTeamGroups: ["Zürich lernt"],
+    defaultTeamGroups: ["Hx7iiRX5Fg3Pf2xne"],
     singleEvents: true,
     tenant: "Zuerich Lernt",
     custom: {

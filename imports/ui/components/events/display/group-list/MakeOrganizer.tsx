@@ -43,7 +43,7 @@ export function MakeOrganizer({ event, groupId }: Props) {
       {t("course.group.confirmOrgText", {
         NAME: name(group),
       })}{" "}
-      {t("event.group.confirmOrgNotes")}
+      {t("event.group.confirmOrgNotes", "All members of the group will be able to edit the event.")}
       <button
         type="button"
         className="btn btn-success"
