@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useSession } from "/imports/utils/react-meteor-data";
 import moment from "moment";
 
 import { EventModel } from "/imports/api/events/events";
@@ -11,15 +10,11 @@ import { LocalTime } from "/imports/utils/local-time";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
 import { ButtonCancel, ButtonSave } from "/imports/ui/components/buttons";
+import { DateSelect } from "../../date-select";
+
+import { todayOrAfter } from "../../../lib/todayOrAfter";
 
 import "./styles.scss";
-
-const calcReplicaStartDate = (originalDate: moment.MomentInput) => {
-  const originalMoment = moment(originalDate);
-  const startMoment = moment.max(originalMoment, moment());
-  startMoment.day(originalMoment.day());
-  return startMoment;
-};
 
 const getEventFrequency = (
   originStart: moment.Moment,
@@ -66,96 +61,6 @@ const getEventFrequency = (
   return days;
 };
 
-function DateSelect({
-  id,
-  value,
-  multiple,
-  onChange,
-}:
-  | {
-      id?: string | undefined;
-      value: moment.Moment;
-      multiple?: false | undefined;
-      onChange?: (newValue: moment.Moment) => void;
-    }
-  | {
-      id?: string | undefined;
-      value: number[];
-      multiple: true;
-      onChange?: (newValues: number[]) => void;
-    }) {
-  const locale = useSession("locale");
-  const elementRef = useRef(null);
-
-  useEffect(() => {
-    const element = elementRef.current;
-    if (!element) {
-      return undefined;
-    }
-
-    if (!multiple) {
-      $(element)
-        .datepicker({
-          weekStart: moment.localeData().firstDayOfWeek(),
-          language: moment.locale(),
-          autoclose: true,
-          startDate: new Date(),
-          format: {
-            toDisplay(date) {
-              return moment.utc(date).format("L");
-            },
-            toValue(date) {
-              return moment.utc(date, "L").toDate();
-            },
-          },
-        })
-        .on("change keyup", function () {
-          const newValue = moment($(element).val(), "L");
-          onChange?.(newValue);
-        });
-    } else {
-      $(element)
-        .datepicker({
-          weekStart: moment.localeData().firstDayOfWeek(),
-          language: moment.locale(),
-          multidate: true,
-          multidateSeparator: ", ",
-          todayHighlight: true,
-          startDate: new Date(),
-        })
-        .datepicker("setDates", value)
-        .on("changeDate", function (e: { dates: number[] }) {
-          onChange?.(e.dates);
-        });
-    }
-
-    return () => {
-      $(element).datepicker("destroy");
-    };
-  }, [locale]);
-
-  if (!multiple) {
-    return (
-      <div className="input-group">
-        <span className="input-group-text">
-          <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
-        </span>
-        <input
-          ref={elementRef}
-          id={id}
-          type="text"
-          className="form-control"
-          size={8}
-          value={calcReplicaStartDate(value).format("L")}
-        />
-        <span className="replica-date-weekday">{moment(value).format("ddd")}</span>
-      </div>
-    );
-  }
-
-  return <div ref={elementRef}></div>;
-}
-
 export type Props = { event: EventModel; afterSave: () => void; onCancel: () => void };
 
 export function EventReplication({ event, afterSave, onCancel }: Props) {
@@ -165,9 +70,9 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
 
   const [usingPicker, setUsingPicker] = useState(false);
   const [replicateFrequency, setReplicateFrequency] = useState("weekly");
-  const [replicateStartDate, setReplicateStartDate] = useState(calcReplicaStartDate(event.start));
+  const [replicateStartDate, setReplicateStartDate] = useState(todayOrAfter(event.start));
   const [replicateEndDate, setReplicateEndDate] = useState(
-    calcReplicaStartDate(moment(event.start).add(1, "week")),
+    todayOrAfter(moment(event.start).add(1, "week")),
   );
   // Store the current date selection for replication
   // Days are stored as difference from the original day
@@ -295,7 +200,7 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
                   }
                   if (startDate.isBefore(moment())) {
                     // Jump forward in time so we don't have to look at all these old dates
-                    startDate = calcReplicaStartDate(startDate);
+                    startDate = todayOrAfter(startDate);
                   }
 
                   setReplicateStartDate(startDate);
