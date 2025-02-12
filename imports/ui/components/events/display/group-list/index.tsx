@@ -6,14 +6,14 @@ import { EventModel } from "/imports/api/events/events";
 import { useDetails } from "/imports/api/events/publications";
 
 import { GroupTag } from "/imports/ui/components/groups/tag";
-import { EventGroupAdd } from "./Add";
-import { EventGroupRemove } from "./Remove";
-import { EventGroupRemoveOrganizer } from "./RemoveOrganizer";
-import { EventGroupMakeOrganizer } from "./MakeOrganizer";
+import { Add } from "./Add";
+import { Remove } from "./Remove";
+import { RemoveOrganizer } from "./RemoveOrganizer";
+import { MakeOrganizer } from "./MakeOrganizer";
 
 export type Props = { event: EventModel };
 
-export function EventGroupList({ event: event2 }: Props) {
+export function GroupList({ event: event2 }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 
@@ -28,20 +28,20 @@ export function EventGroupList({ event: event2 }: Props) {
 
     return (
       <>
-        {ownGroup && (user?.mayPromoteWith(groupId) || event.editableBy(user)) ? (
+        {ownGroup && (!!user?.mayPromoteWith(groupId) || event.editableBy(user)) && (
           <li className="dialog-dropdown-btn">
-            <EventGroupRemove event={event} groupId={groupId} />
+            <Remove event={event} groupId={groupId} />
           </li>
-        ) : null}
-        {ownGroup && event.editableBy(user) ? (
+        )}
+        {ownGroup && event.editableBy(user) && (
           <li className="dialog-dropdown-btn">
             {event.groupOrganizers.includes(groupId) ? (
-              <EventGroupRemoveOrganizer event={event} groupId={groupId} />
+              <RemoveOrganizer event={event} groupId={groupId} />
             ) : (
-              <EventGroupMakeOrganizer event={event} groupId={groupId} />
+              <MakeOrganizer event={event} groupId={groupId} />
             )}
           </li>
-        ) : null}
+        )}
       </>
     );
   }
@@ -69,7 +69,7 @@ export function EventGroupList({ event: event2 }: Props) {
               </div>
             )}
 
-            {ownGroup && (user?.mayPromoteWith(groupId) || event.editableBy(user)) ? (
+            {ownGroup && (!!user?.mayPromoteWith(groupId) || event.editableBy(user)) && (
               <div className="btn-group tag-btn group-tag-btn addon align-top">
                 <button
                   type="button"
@@ -89,12 +89,12 @@ export function EventGroupList({ event: event2 }: Props) {
                   {tools(groupId, event)}
                 </ul>
               </div>
-            ) : null}
+            )}
           </React.Fragment>
         );
       })}
 
-      <EventGroupAdd event={event} />
+      <Add event={event} />
     </div>
   );
 }
@@ -103,4 +103,4 @@ export function EventGroupList({ event: event2 }: Props) {
 // eslint-disable-next-line import/first
 import "./template.html";
 
-Template.registerHelper("EventGroupList", () => EventGroupList);
+Template.registerHelper("EventGroupList", () => GroupList);

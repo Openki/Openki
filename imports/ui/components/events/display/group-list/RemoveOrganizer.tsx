@@ -14,7 +14,7 @@ export type Props = {
   groupId: string;
 };
 
-export function EventGroupRemoveOrganizer({ event, groupId }: Props) {
+export function RemoveOrganizer({ event, groupId }: Props) {
   const { t } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -80,4 +80,4 @@ export function EventGroupRemoveOrganizer({ event, groupId }: Props) {
 // eslint-disable-next-line import/first
 import "./template.html";
 
-Template.registerHelper("EventGroupRemoveOrganizer", () => EventGroupRemoveOrganizer);
+Template.registerHelper("EventGroupRemoveOrganizer", () => RemoveOrganizer);

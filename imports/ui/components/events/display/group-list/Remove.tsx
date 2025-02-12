@@ -13,7 +13,7 @@ export type Props = {
   groupId: string;
 };
 
-export function EventGroupRemove({ event, groupId }: Props) {
+export function Remove({ event, groupId }: Props) {
   const { t } = useTranslation();
   const [isLoading, group] = useDetails(groupId);
   const [isExpanded, setIsExpanded] = useState(false);
