@@ -25,11 +25,11 @@ export function GroupList({ course: course2 }: Props) {
   function tools(groupId: string, course: CourseModel) {
     return (
       <>
-        {user?.mayPromoteWith(groupId) || course.editableBy(user) ? (
+        {!!(user?.mayPromoteWith(groupId) || course.editableBy(user)) && (
           <li className="dialog-dropdown-btn">
             <Remove course={course} groupId={groupId} />
           </li>
-        ) : null}
+        )}
         {course.editableBy(user) && (
           <li className="dialog-dropdown-btn">
             {course.groupOrganizers.includes(groupId) ? (
@@ -52,7 +52,7 @@ export function GroupList({ course: course2 }: Props) {
         return (
           <React.Fragment key={groupId}>
             <GroupTag groupId={groupId} isOrganizer={isOrganizer} />
-            {isOrganizer ? (
+            {isOrganizer && (
               <div className="tag group-tag addon">
                 <span
                   className="fa-solid fa-bullhorn fa-fw"
@@ -62,9 +62,9 @@ export function GroupList({ course: course2 }: Props) {
                   })}
                 ></span>
               </div>
-            ) : null}
+            )}
 
-            {user?.mayPromoteWith(groupId) || course.editableBy(user) ? (
+            {!!(user?.mayPromoteWith(groupId) || course.editableBy(user)) && (
               <div className="btn-group tag-btn group-tag-btn addon align-top">
                 <button
                   type="button"
@@ -84,7 +84,7 @@ export function GroupList({ course: course2 }: Props) {
                   {tools(groupId, course)}
                 </ul>
               </div>
-            ) : null}
+            )}
           </React.Fragment>
         );
       })}
