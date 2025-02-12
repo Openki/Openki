@@ -1,13 +1,12 @@
-import { Template } from "meteor/templating";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { EventModel } from "/imports/api/events/events";
+import { useDetails } from "/imports/api/groups/publications";
 import * as EventsMethods from "/imports/api/events/methods";
 
 import { name } from "/imports/ui/lib/group-name-helpers";
-import { useDetails } from "/imports/api/groups/publications";
 
 export type Props = {
   event: EventModel;
@@ -16,9 +15,8 @@ export type Props = {
 
 export function RemoveOrganizer({ event, groupId }: Props) {
   const { t } = useTranslation();
-  const [isExpanded, setIsExpanded] = useState(false);
-
   const [isLoading, group] = useDetails(groupId);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   if (isLoading()) {
     return null;
@@ -52,21 +50,15 @@ export function RemoveOrganizer({ event, groupId }: Props) {
 
             Alert.success(
               t(
-                "eventGroupAdd.membersCanNoLongerEditEvent",
-                'Members of the group "{GROUP}" can no longer edit the "{EVENT}" event.',
-                { GROUP: name(group), EVENT: event.title },
+                "courseGroupAdd.membersCanNoLongerEditCourse",
+                "Members of {GROUP} can no longer edit {COURSE}.",
+                { GROUP: name(group), COURSE: event.title },
               ),
             );
 
             setIsExpanded(false);
           } catch (err) {
-            Alert.serverError(
-              err,
-              t(
-                "eventGroupAdd.membersCanNoLongerEditEvent.error",
-                "Failed to remove organizer status",
-              ),
-            );
+            Alert.serverError(err, t("courseGroupAdd.membersCanNoLongerEditCourse.error"));
           }
         }}
       >
@@ -75,9 +67,3 @@ export function RemoveOrganizer({ event, groupId }: Props) {
     </div>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("EventGroupRemoveOrganizer", () => RemoveOrganizer);

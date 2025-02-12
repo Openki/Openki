@@ -33,7 +33,7 @@ export function MakeOrganizer({ event, groupId }: Props) {
         }}
       >
         <span className="fa-solid fa-bullhorn fa-fw" aria-hidden="true"></span>{" "}
-        {t("course.group.addOrgText", "Give editing rights")}
+        {t("course.group.addOrgText")}
       </a>
     );
   }
@@ -42,11 +42,8 @@ export function MakeOrganizer({ event, groupId }: Props) {
     <div className="group-tool-dialog add">
       {t("course.group.confirmOrgText", {
         NAME: name(group),
-      })}
-      {t(
-        "event.group.confirmOrgNotes",
-        "All members of this group will be able to edit this event.",
-      )}
+      })}{" "}
+      {t("event.group.confirmOrgNotes")}
       <button
         type="button"
         className="btn btn-success"
@@ -55,20 +52,13 @@ export function MakeOrganizer({ event, groupId }: Props) {
             await EventsMethods.editing(event._id, groupId, true);
 
             Alert.success(
-              t(
-                "eventGroupAdd.membersCanEditEvent",
-                'Members of the group "{GROUP}" can now edit the "{EVENT}" event.',
-                {
-                  GROUP: name(group),
-                  Event: event.title,
-                },
-              ),
+              t("courseGroupAdd.membersCanEditCourse", {
+                GROUP: name(group),
+                COURSE: event.title,
+              }),
             );
           } catch (err) {
-            Alert.serverError(
-              err,
-              t("eventGroupAdd.membersCanEditEvent.error", "Failed to give group editing rights"),
-            );
+            Alert.serverError(err, t("courseGroupAdd.membersCanEditCourse.error"));
           }
         }}
       >

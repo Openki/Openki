@@ -25,7 +25,7 @@ export function GroupList({ course: course2 }: Props) {
   function tools(groupId: string, course: CourseModel) {
     return (
       <>
-        {!!(user?.mayPromoteWith(groupId) || course.editableBy(user)) && (
+        {(!!user?.mayPromoteWith(groupId) || course.editableBy(user)) && (
           <li className="dialog-dropdown-btn">
             <Remove course={course} groupId={groupId} />
           </li>
@@ -64,7 +64,7 @@ export function GroupList({ course: course2 }: Props) {
               </div>
             )}
 
-            {!!(user?.mayPromoteWith(groupId) || course.editableBy(user)) && (
+            {(!!user?.mayPromoteWith(groupId) || course.editableBy(user)) && (
               <div className="btn-group tag-btn group-tag-btn addon align-top">
                 <button
                   type="button"
