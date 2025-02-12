@@ -4,6 +4,7 @@ import { useUser } from "/imports/utils/react-meteor-data";
 
 import { EventModel } from "/imports/api/events/events";
 import { useDetails } from "/imports/api/events/publications";
+import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 
 import { GroupTag } from "/imports/ui/components/groups/tag";
 import { Add } from "./Add";
@@ -20,6 +21,8 @@ export function GroupList({ event: event2 }: Props) {
   // for blaze, can be removed after migration
   // subscribe in react to keep reactivity
   const [isLoading, event] = useDetails(event2._id);
+
+  const [isRegionLoading, region] = useRegionDetails(event2?.region);
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
   function tools(groupId: string, event: EventModel) {
@@ -46,11 +49,24 @@ export function GroupList({ event: event2 }: Props) {
     );
   }
 
-  if (isLoading() || !event) return null;
+  if (isLoading() || !event || isRegionLoading()) return null;
+
+  const groups = event.allGroups?.filter(
+    (groupId) =>
+      !(
+        // hide group where are from the region set
+        (
+          region?.defaultTeamGroups?.includes(groupId) &&
+          // when user ist not member of the group or a admin
+          !user?.mayPromoteWith(groupId) &&
+          !event.editableBy(user)
+        )
+      ),
+  );
 
   return (
     <div className="tag-group multiline">
-      {event.allGroups?.map((groupId) => {
+      {groups?.map((groupId) => {
         const isOrganizer = event.editors.includes(groupId);
         // Groups may be adopted from the course, these cannot be removed
         const ownGroup = event.groups.includes(groupId);
