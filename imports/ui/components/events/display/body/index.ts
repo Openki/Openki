@@ -33,6 +33,7 @@ import "/imports/ui/components/venues/link";
 import "/imports/ui/components/internal-indicator";
 import "./delete-confirm-dialog";
 import type { Props as DeleteConfirmDialogProps } from "./delete-confirm-dialog";
+import type { Props as EventReplicationProps } from "../../replication";
 
 import "./template.html";
 import "./styles.scss";
@@ -123,6 +124,20 @@ import "./styles.scss";
         },
         onCancel: async () => {
           Session.set("verify", false);
+        },
+      };
+    },
+    eventReplicationAttr(): EventReplicationProps {
+      const instance = Template.instance();
+      return {
+        event: instance.data,
+        afterSave: async () => {
+          instance.replicating.set(false);
+          instance.collapse();
+        },
+        onCancel: async () => {
+          instance.replicating.set(false);
+          instance.collapse();
         },
       };
     },

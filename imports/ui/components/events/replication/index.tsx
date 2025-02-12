@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Session } from "meteor/session";
+import { useSession } from "/imports/utils/react-meteor-data";
 import moment from "moment";
 
 import { EventModel } from "/imports/api/events/events";
@@ -9,8 +9,6 @@ import * as Alert from "/imports/api/alerts/alert";
 
 import { LocalTime } from "/imports/utils/local-time";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
-
-import { PleaseLogin } from "/imports/ui/lib/please-login";
 
 import { ButtonCancel, ButtonSave } from "/imports/ui/components/buttons";
 
@@ -68,216 +66,124 @@ const getEventFrequency = (
   return days;
 };
 
-
-template.onRendered(function () {
-  const instance = this;
-
-  const pickDays: Date[] = [];
-
-  instance.autorun(() => {
-    Session.get("locale");
-
-    instance.$(".js-replicate-date").datepicker("destroy");
-    instance.$(".js-replicate-date").datepicker({
-      weekStart: moment.localeData().firstDayOfWeek(),
-      language: moment.locale(),
-      autoclose: true,
-      startDate: new Date(),
-      format: {
-        toDisplay(date) {
-          return moment.utc(date).format("L");
-        },
-        toValue(date) {
-          return moment.utc(date, "L").toDate();
-        },
-      },
-    });
-
-    instance.$(".js-replicate-datepick").datepicker("destroy");
-    instance.$(".js-replicate-datepick").datepicker({
-      weekStart: moment.localeData().firstDayOfWeek(),
-      language: moment.locale(),
-      multidate: true,
-      multidateSeparator: ", ",
-      todayHighlight: true,
-      startDate: new Date(),
-    });
-
-    instance.$(".js-replicate-datepick").datepicker("setDates", pickDays);
-  });
-});
-
-template.events({
-  "changeDate .js-replicate-datepick"(e, instance) {
-    const pickDays = (e as unknown as { dates: number[] }).dates;
-
-    const origin = moment(event.start).startOf("day");
-    const days = pickDays.map((date) => moment(date).diff(origin, "days"));
-    instance.pickDays.set(days);
-  },
-
-  'show.bs.tab button[data-bs-toggle="tab"]'(event, instance) {
-    const targetHref = $(event.target).attr("data-bs-target");
-    instance.usingPicker.set(targetHref === "#datepicker");
-  },
-
-  "click .js-replicate-btn"(_event, instance) {
-    instance.busy("saving");
-    PleaseLogin(instance, async () => {
-      const startLocal = LocalTime.fromString(event.startLocal);
-      const endLocal = LocalTime.fromString(event.endLocal);
-
-      const replicaDays = instance.activeDays();
-      let removed = 0;
-      let responses = 0;
-      for (const days of replicaDays) {
-        /* create a new event for each time interval */
-        const replicaEvent: EventsMethods.SaveFields = {
-          startLocal: LocalTime.toString(moment(startLocal).add(days, "days")),
-          endLocal: LocalTime.toString(moment(endLocal).add(days, "days")),
-          title: event.title,
-          description: event.description,
-          room: event.room || "",
-          region: event.region,
-          groups: event.groups,
-          // delegate the same replicaOf ID for this replica if the replicated event is also a replica
-          replicaOf: event.replicaOf || event._id,
-          internal: event.internal,
-          sendReminder: event.sendReminder,
-          noRsvp: event.noRsvp,
-          maxParticipants: event.maxParticipants,
-        };
-
-        const { courseId, venue } = event;
-        if (venue) {
-          replicaEvent.venue = venue;
-        }
-        if (courseId) {
-          replicaEvent.courseId = courseId;
-        }
-
-        try {
-          // eslint-disable-next-line no-await-in-loop
-          await EventsMethods.save("", replicaEvent);
-          removed += 1;
-        } catch (error) {
-          const start = moment(replicaEvent.startLocal).format("llll");
-          Alert.serverError(
-            error,
-            t("eventReplication.errWithReason", 'Could not create the copy on "{START}".', {
-              START: start,
-            }),
-          );
-        } finally {
-          responses += 1;
-          if (responses === replicaDays.length) {
-            instance.busy(false);
-            if (removed) {
-              const start = moment(replicaEvent.startLocal).format("llll");
-              Alert.success(
-                t(
-                  "event.replicate.successCondensed",
-                  'Cloned event "{TITLE}" {NUM, plural, one{for} other{# times until} } {DATE}',
-                  {
-                    TITLE: event.title,
-                    NUM: removed,
-                    DATE: start,
-                  },
-                ),
-              );
-            }
-            if (removed === responses) {
-              const parentInstance = instance.parentInstance() as any;
-              parentInstance.replicating.set(false);
-              parentInstance.collapse();
-            }
-          }
-        }
-      }
-    });
-  },
-
-  "change .js-update-replicas, keyup .js-update-replicas"(_event, instance) {
-    let startDate = moment(instance.$("#replicateStart").val(), "L");
-    if (!startDate.isValid()) {
-      instance.calcDays.set([]);
-      return;
+function DateSelect({
+  id,
+  value,
+  multiple,
+  onChange,
+}:
+  | {
+      id?: string | undefined;
+      value: moment.Moment;
+      multiple?: false | undefined;
+      onChange?: (newValue: moment.Moment) => void;
     }
-    if (startDate.isBefore(moment())) {
-      // Jump forward in time so we don't have to look at all these old dates
-      startDate = calcReplicaStartDate(startDate);
+  | {
+      id?: string | undefined;
+      value: number[];
+      multiple: true;
+      onChange?: (newValues: number[]) => void;
+    }) {
+  const locale = useSession("locale");
+  const elementRef = useRef(null);
+
+  useEffect(() => {
+    const element = elementRef.current;
+    if (!element) {
+      return undefined;
     }
 
-    instance.replicateStartDate.set(startDate);
-
-    const endDate = moment(instance.$("#replicateEnd").val(), "L");
-    if (!endDate.isValid()) {
-      instance.calcDays.set([]);
-      return;
+    if (!multiple) {
+      $(element)
+        .datepicker({
+          weekStart: moment.localeData().firstDayOfWeek(),
+          language: moment.locale(),
+          autoclose: true,
+          startDate: new Date(),
+          format: {
+            toDisplay(date) {
+              return moment.utc(date).format("L");
+            },
+            toValue(date) {
+              return moment.utc(date, "L").toDate();
+            },
+          },
+        })
+        .on("change keyup", function () {
+          const newValue = moment($(element).val(), "L");
+          onChange?.(newValue);
+        });
+    } else {
+      $(element)
+        .datepicker({
+          weekStart: moment.localeData().firstDayOfWeek(),
+          language: moment.locale(),
+          multidate: true,
+          multidateSeparator: ", ",
+          todayHighlight: true,
+          startDate: new Date(),
+        })
+        .datepicker("setDates", value)
+        .on("changeDate", function (e: { dates: number[] }) {
+          onChange?.(e.dates);
+        });
     }
 
-    instance.replicateEndDate.set(endDate);
+    return () => {
+      $(element).datepicker("destroy");
+    };
+  }, [locale]);
 
-    const frequency = instance.$(".js-replicate-frequency:checked").val() as string;
+  if (!multiple) {
+    return (
+      <div className="input-group">
+        <span className="input-group-text">
+          <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
+        </span>
+        <input
+          ref={elementRef}
+          id={id}
+          type="text"
+          className="form-control"
+          size={8}
+          value={calcReplicaStartDate(value).format("L")}
+        />
+        <span className="replica-date-weekday">{moment(value).format("ddd")}</span>
+      </div>
+    );
+  }
 
-    instance.calcDays.set(getEventFrequency(moment(event.start), startDate, endDate, frequency));
-  },
+  return <div ref={elementRef}></div>;
+}
 
-  "mouseover .js-replicate-btn"(_event, instance) {
-    instance.$(".replica-event-captions").addClass("highlighted");
-  },
+export type Props = { event: EventModel; afterSave: () => void; onCancel: () => void };
 
-  "mouseout .js-replicate-btn"(_event, instance) {
-    instance.$(".replica-event-captions").removeClass("highlighted");
-  },
-
-  "click .js-cancel-replication"(_event, instance) {
-    const parentInstance = instance.parentInstance() as any;
-    parentInstance.replicating.set(false);
-    parentInstance.collapse();
-  },
-});
-
-export function Replication({ event }: { event: EventModel }) {
+export function EventReplication({ event, afterSave, onCancel }: Props) {
   const { t } = useTranslation();
   const { weekdayFormat, dateTimeLong, dateShort } = useDateTimeFormat();
+  const elementRef = useRef<HTMLDivElement>(null);
 
-  // Store the current date selection for replication
-  // Days are stored as difference from the original day
-  const [calcDays, setCalcDays] = useState<number[]>([]); // calculated from the dialog
-  const [pickDays, setPickDays] = useState<number[]>([]); // picked in the calendar
-  const [usingPicker, setUsingPicker] = new ReactiveVar(false);
-
-  const activeDays = () => (usingPicker ? pickDays : calcDays);
-
+  const [usingPicker, setUsingPicker] = useState(false);
+  const [replicateFrequency, setReplicateFrequency] = useState("weekly");
   const [replicateStartDate, setReplicateStartDate] = useState(calcReplicaStartDate(event.start));
   const [replicateEndDate, setReplicateEndDate] = useState(
     calcReplicaStartDate(moment(event.start).add(1, "week")),
   );
-
-  setCalcDays(
-    getEventFrequency(moment(event.start), replicateStartDate, replicateEndDate, "weekly"),
+  // Store the current date selection for replication
+  // Days are stored as difference from the original day
+  // calculated from the dialog
+  const [calcDays, setCalcDays] = useState<number[]>(
+    getEventFrequency(
+      moment(event.start),
+      replicateStartDate,
+      replicateEndDate,
+      replicateFrequency,
+    ),
   );
+  // picked in the calendar
+  const [pickDays, setPickDays] = useState<number[]>([]);
+  const activeDays = () => (usingPicker ? pickDays : calcDays);
 
-  function replicaStart() {
-    const startDate = replicateStartDate;
-    return calcReplicaStartDate(startDate).format("L");
-  }
-
-  function replicaEnd() {
-    const endDate = replicateEndDate;
-    return calcReplicaStartDate(endDate).format("L");
-  }
-
-  function replicateStartDay() {
-    const startDate = replicateStartDate;
-    return moment(startDate).format("ddd");
-  }
-
-  function replicateEndDay() {
-    const endDate = replicateEndDate;
-    return moment(endDate).format("ddd");
-  }
   function replicaDateCount() {
     return activeDays().length;
   }
@@ -287,8 +193,33 @@ export function Replication({ event }: { event: EventModel }) {
     return activeDays().map((days) => moment(start).add(days, "days"));
   }
 
+  const handleReplicateFrequency = (e: ChangeEvent<HTMLInputElement>) => {
+    setReplicateFrequency(e.target.value);
+  };
+
+  useEffect(() => {
+    setCalcDays(
+      getEventFrequency(
+        moment(event.start),
+        replicateStartDate,
+        replicateEndDate,
+        replicateFrequency,
+      ),
+    );
+  }, [event.start, replicateStartDate, replicateEndDate, replicateFrequency]);
+
+  useEffect(() => {
+    if (!elementRef.current) {
+      return;
+    }
+    $('button[data-bs-toggle="tab"]', elementRef.current).on("show.bs.tab", (e) => {
+      const targetHref = $(e.target).attr("data-bs-target");
+      setUsingPicker(targetHref === "#datepicker");
+    });
+  }, []);
+
   return (
-    <div className="details-form event-replicate">
+    <div className="details-form event-replicate" ref={elementRef}>
       <div className="row gap-3">
         <div className="col-md">
           <nav>
@@ -333,7 +264,15 @@ export function Replication({ event }: { event: EventModel }) {
               aria-labelledby="datepicker-tab"
               tabIndex={0}
             >
-              <div className="js-replicate-datepick"></div>
+              <DateSelect
+                multiple
+                value={[]}
+                onChange={(newValues) => {
+                  const origin = moment(event.start).startOf("day");
+                  const days = newValues.map((date) => moment(date).diff(origin, "days"));
+                  setPickDays(days);
+                }}
+              />
             </div>
             <div
               className="tab-pane mb-3 active"
@@ -345,35 +284,39 @@ export function Replication({ event }: { event: EventModel }) {
               <label className="form-label" htmlFor="replicateStart">
                 {t("event.replication.interval.start", "Interval Start")}
               </label>
-              <div className="input-group">
-                <span className="input-group-text">
-                  <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
-                </span>
-                <input
-                  type="text"
-                  className="form-control js-replicate-date js-update-replicas"
-                  id="replicateStart"
-                  size={8}
-                  value={replicaStart()}
-                />
-                <span className="replica-date-weekday">{replicateStartDay()}</span>
-              </div>
+              <DateSelect
+                id="replicateStart"
+                value={replicateStartDate}
+                onChange={(newValue) => {
+                  let startDate = newValue;
+                  if (!startDate.isValid()) {
+                    setCalcDays([]);
+                    return;
+                  }
+                  if (startDate.isBefore(moment())) {
+                    // Jump forward in time so we don't have to look at all these old dates
+                    startDate = calcReplicaStartDate(startDate);
+                  }
+
+                  setReplicateStartDate(startDate);
+                }}
+              />
               <label className="form-label" htmlFor="replicateEnd">
                 {t("event.replication.interval.end", "Interval End")}
               </label>
-              <div className="input-group">
-                <span className="input-group-text">
-                  <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
-                </span>
-                <input
-                  type="text"
-                  className="form-control js-replicate-date js-update-replicas"
-                  id="replicateEnd"
-                  size={8}
-                  value={replicaEnd()}
-                />
-                <span className="replica-date-weekday">{replicateEndDay()}</span>
-              </div>
+              <DateSelect
+                id="replicateEnd"
+                value={replicateEndDate}
+                onChange={(newValue) => {
+                  const endDate = newValue;
+                  if (!endDate.isValid()) {
+                    setCalcDays([]);
+                    return;
+                  }
+
+                  setReplicateEndDate(endDate);
+                }}
+              />
               <label className="form-label" htmlFor="replicateFrequency">
                 {t("event.replication.repeat", "Repeat")}
               </label>
@@ -384,6 +327,8 @@ export function Replication({ event }: { event: EventModel }) {
                   name="replicateFrequency"
                   id="replicateFrequencyOnce"
                   value="once"
+                  onChange={handleReplicateFrequency}
+                  checked={replicateFrequency === "once"}
                 />
                 <label className="form-check-label" htmlFor="replicateFrequencyOnce">
                   {t("event.replication.freq.once", "once")}
@@ -396,6 +341,8 @@ export function Replication({ event }: { event: EventModel }) {
                   name="replicateFrequency"
                   id="replicateFrequencyDaily"
                   value="daily"
+                  onChange={handleReplicateFrequency}
+                  checked={replicateFrequency === "daily"}
                 />
                 <label className="form-check-label" htmlFor="replicateFrequencyDaily">
                   {t("event.replication.freq.daily", "every day")}
@@ -408,7 +355,8 @@ export function Replication({ event }: { event: EventModel }) {
                   name="replicateFrequency"
                   id="replicateFrequencyWeekly"
                   value="weekly"
-                  checked
+                  onChange={handleReplicateFrequency}
+                  checked={replicateFrequency === "weekly"}
                 />
                 <label className="form-check-label" htmlFor="replicateFrequencyWeekly">
                   {t("event.replication.freq.weekly", "once a week")}
@@ -421,6 +369,8 @@ export function Replication({ event }: { event: EventModel }) {
                   name="replicateFrequency"
                   id="replicateFrequencyBiWeekly"
                   value="biWeekly"
+                  onChange={handleReplicateFrequency}
+                  checked={replicateFrequency === "biWeekly"}
                 />
                 <label className="form-check-label" htmlFor="replicateFrequencyBiWeekly">
                   {t("event.replication.freq.biWeekly", "every 2 weeks")}
@@ -436,7 +386,7 @@ export function Replication({ event }: { event: EventModel }) {
                 {t(
                   "event.replication.createText",
                   "Create {COUNT, plural, one{a copy on this date} other{# copies on this dates} }",
-                  { COUNT: replicaDateCount },
+                  { COUNT: replicaDateCount() },
                 )}
               </label>
               <div className="replica-event-captions row">
@@ -479,9 +429,87 @@ export function Replication({ event }: { event: EventModel }) {
         </div>
       </div>
       <div className="replicate-actions">
-        {!!replicaDateCount() && <ButtonSave event="js-replicate-btn" />}
-        <ButtonCancel event="js-cancel-replication" />
+        {!!replicaDateCount() && (
+          <ButtonSave
+            onClick={async () => {
+              const startLocal = LocalTime.fromString(event.startLocal);
+              const endLocal = LocalTime.fromString(event.endLocal);
+
+              const replicaDays = activeDays();
+              let removed = 0;
+              let responses = 0;
+              for (const days of replicaDays) {
+                /* create a new event for each time interval */
+                const replicaEvent: EventsMethods.SaveFields = {
+                  startLocal: LocalTime.toString(moment(startLocal).add(days, "days")),
+                  endLocal: LocalTime.toString(moment(endLocal).add(days, "days")),
+                  title: event.title,
+                  description: event.description,
+                  room: event.room || "",
+                  region: event.region,
+                  groups: event.groups,
+                  // delegate the same replicaOf ID for this replica if the replicated event is also a replica
+                  replicaOf: event.replicaOf || event._id,
+                  internal: event.internal,
+                  sendReminder: event.sendReminder,
+                  noRsvp: event.noRsvp,
+                  maxParticipants: event.maxParticipants,
+                };
+
+                const { courseId, venue } = event;
+                if (venue) {
+                  replicaEvent.venue = venue;
+                }
+                if (courseId) {
+                  replicaEvent.courseId = courseId;
+                }
+
+                try {
+                  // eslint-disable-next-line no-await-in-loop
+                  await EventsMethods.save("", replicaEvent);
+                  removed += 1;
+                } catch (error) {
+                  const start = moment(replicaEvent.startLocal).format("llll");
+                  Alert.serverError(
+                    error,
+                    t("eventReplication.errWithReason", 'Could not create the copy on "{START}".', {
+                      START: start,
+                    }),
+                  );
+                } finally {
+                  responses += 1;
+                  if (responses === replicaDays.length) {
+                    if (removed) {
+                      const start = moment(replicaEvent.startLocal).format("llll");
+                      Alert.success(
+                        t(
+                          "event.replicate.successCondensed",
+                          'Cloned event "{TITLE}" {NUM, plural, one{for} other{# times until} } {DATE}',
+                          {
+                            TITLE: event.title,
+                            NUM: removed,
+                            DATE: start,
+                          },
+                        ),
+                      );
+                    }
+                    if (removed === responses) {
+                      afterSave();
+                    }
+                  }
+                }
+              }
+            }}
+          />
+        )}
+        <ButtonCancel onClick={onCancel} />
       </div>
     </div>
   );
 }
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("EventReplication", () => EventReplication);
