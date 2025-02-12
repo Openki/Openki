@@ -210,7 +210,6 @@
 	"event.editVenue.contactHost": "Kontakta värd",
 	"event.editVenue.pleaseContactHost": "Kontakta värden för att höra om lokalens tillgänglighet eller andra detaljer:",
 	"event.group.confirmOrgNotes": "Alla medlemmar i denna grupp kommer kunna redigera detta eventet. ",
-	"event.group.confirmRemoveText": "Ta bort grupp {NAME} ifrån detta event? ",
 	"event.list.windowtitle": "Event ",
 	"event.replication.changeToPattern": "Välj regelbundhet",
 	"event.replication.changeToPicker": "Välj datum",
