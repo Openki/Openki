@@ -313,3 +313,144 @@ template.events({
     parentInstance.collapse();
   },
 });
+
+
+export function Replication(){
+  return   <div className="details-form event-replicate">
+  <div className="row gap-3">
+    <div className="col-md">
+      <nav>
+        <ul className="nav nav-tabs replica-nav-tabs">
+          <li className="nav-item" role="presentation">
+            <button className="nav-link active" id="frequency-tab" data-bs-toggle="tab"
+                    data-bs-target="#frequency" type="button" role="tab" aria-controls="frequency"
+                    aria-selected="true">
+              <span className="fa-solid fa-list-ul fa-fw" aria-hidden="true"></span>
+              {{i18n 'event.replication.changeToPattern' 'Select frequency'}}
+            </button>
+          </li>
+          <li className="nav-item" role="presentation">
+            <button className="nav-link" id="datepicker-tab" data-bs-toggle="tab"
+                    data-bs-target="#datepicker" type="button" role="tab"
+                    aria-controls="datepicker" aria-selected="false">
+              <span className="fa-regular fa-calendar-check fa-fw" aria-hidden="true"></span>
+              {{i18n 'event.replication.changeToPicker' 'Pick dates'}}
+            </button>
+          </li>
+        </ul>
+      </nav>
+      <div className="tab-content replica-tab-content">
+        <div className="tab-pane" id="datepicker" role="tabpanel" aria-labelledby="datepicker-tab"
+             tabIndex={0}>
+          <div className="js-replicate-datepick"></div>
+        </div>
+        <div className="tab-pane mb-3 active" id="frequency" role="tabpanel"
+             aria-labelledby="frequency-tab" tabindex="0">
+          <label className="form-label" for="replicateStart">
+            {{i18n 'event.replication.interval.start' 'Interval Start'}}
+          </label>
+          <div className="input-group">
+            <span className="input-group-text">
+              <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
+            </span>
+            <input type="text" className="form-control js-replicate-date js-update-replicas"
+                   id="replicateStart" size="8" value="{{replicaStart}}"/>
+            <span className="replica-date-weekday">{{replicateStartDay}}</span>
+          </div>
+          <label className="form-label" for="replicateEnd">
+            {{i18n 'event.replication.interval.end' 'Interval End'}}
+          </label>
+          <div className="input-group">
+            <span className="input-group-text">
+              <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
+            </span>
+            <input type="text" className="form-control js-replicate-date js-update-replicas"
+                   id="replicateEnd" size={8 }value="{{replicaEnd}}" />
+            <span className="replica-date-weekday">{{replicateEndDay}}</span>
+          </div>
+          <label className="form-label" for="replicateFrequency">
+            {{i18n 'event.replication.repeat' 'Repeat'}}
+          </label>
+          <div className="form-check">
+            <input className="form-check-input js-replicate-frequency js-update-replicas" type="radio"
+                   name="replicateFrequency" id="replicateFrequencyOnce" value="once" />
+            <label className="form-check-label" for="replicateFrequencyOnce">
+              {{i18n 'event.replication.freq.once' 'once'}}
+            </label>
+          </div>
+          <div className="form-check">
+            <input className="form-check-input js-replicate-frequency js-update-replicas" type="radio"
+                   name="replicateFrequency" id="replicateFrequencyDaily" value="daily" />
+            <label className="form-check-label" for="replicateFrequencyDaily">
+              {{i18n 'event.replication.freq.daily' 'every day'}}
+            </label>
+          </div>
+          <div className="form-check">
+            <input className="form-check-input js-replicate-frequency js-update-replicas" type="radio"
+                   name="replicateFrequency" id="replicateFrequencyWeekly" value="weekly" checked/>
+            <label className="form-check-label" for="replicateFrequencyWeekly">
+              {{i18n 'event.replication.freq.weekly' 'once a week'}}
+            </label>
+          </div>
+          <div className="form-check">
+            <input className="form-check-input js-replicate-frequency js-update-replicas" type="radio"
+                   name="replicateFrequency" id="replicateFrequencyBiWeekly" value="biWeekly"/>
+            <label className="form-check-label" for="replicateFrequencyBiWeekly">
+              {{i18n 'event.replication.freq.biWeekly' 'every 2 weeks'}}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div className="col-md">
+      {{#if replicaDateCount}}
+        <label className="form-label">
+          {{i18n 'event.replication.createText' 'Create {COUNT, plural, one{a copy on this date} other{# copies on this dates} }' COUNT=replicaDateCount}}
+        </label>
+        <div className="replica-event-captions row">
+          {{#each date in replicaDates}}
+            <div className="event-caption col-3" title="{{dateTimeLong date}}">
+              <div className="event-caption-header-wrap">
+                <div className="event-caption-header">
+                  <span className="fa-solid fa-map-pin"></span>
+                  {{weekdayFormat date}}
+                  <div className="event-caption-pseudoborder"></div>
+                </div>
+              </div>
+              <div className="event-caption-body-wrap">
+                <div className="event-caption-body">
+                  {{dateShort date}}
+                </div>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      {{else}}
+        <label
+               className="form-label">{{i18n 'event.replication.noDates' 'No date(s) selected'}}</label>
+        <div className="replica-event-captions">
+          <div className="event-caption event-caption-placeholder">
+            <div className="event-caption-header-wrap">
+              <div className="event-caption-header">
+                <span className="fa-solid fa-map-pin"></span>
+                <div className="event-caption-pseudoborder"></div>
+              </div>
+            </div>
+            <div className="event-caption-body-wrap">
+              <div className="event-caption-body">
+                {{dateShort this.start}}
+              </div>
+            </div>
+          </div>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+  <div className="replicate-actions">
+    {{#if replicaDateCount}}
+      {{> buttonSave event='js-replicate-btn'}}
+    {{/if}}
+    {{> buttonCancel event='js-cancel-replication'}}
+  </div>
+</div>
+}
