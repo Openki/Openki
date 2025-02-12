@@ -1,16 +1,15 @@
 import React from "react";
 import { difference } from "lodash";
+import { Router } from "meteor/iron:router";
+import { useTranslation } from "react-i18next";
+import { useUser } from "/imports/utils/react-meteor-data";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { EventModel } from "/imports/api/events/events";
+import { useDetails } from "/imports/api/groups/publications";
 import * as EventsMethods from "/imports/api/events/methods";
 
-import { useTranslation } from "react-i18next";
-import { useUser } from "/imports/utils/react-meteor-data";
-import { Router } from "meteor/iron:router";
-
 import { name } from "/imports/ui/lib/group-name-helpers";
-import { useDetails } from "/imports/api/groups/publications";
 
 function GroupToAdd({ event, groupId }: { event: EventModel; groupId: string }) {
   const { t } = useTranslation();
@@ -31,17 +30,13 @@ function GroupToAdd({ event, groupId }: { event: EventModel; groupId: string }) 
             await EventsMethods.promote(event._id, groupId, true);
 
             Alert.success(
-              t(
-                "eventGroupAdd.groupAdded",
-                'The group "{GROUP}" has been added to promote the "{EVENT}" event.',
-                {
-                  GROUP: name(group),
-                  COURSE: event.title,
-                },
-              ),
+              t("courseGroupAdd.groupAdded", {
+                GROUP: name(group),
+                COURSE: event.title,
+              }),
             );
           } catch (err) {
-            Alert.serverError(err, t("eventGroupAdd.groupAdded.error", "Failed to add group"));
+            Alert.serverError(err, t("courseGroupAdd.groupAdded.error"));
           }
         }}
       >
@@ -73,11 +68,11 @@ export function Add({ event }: Props) {
         data-bs-toggle="dropdown"
       >
         <span className="fa-solid fa-plus fa-fw" aria-hidden="true"></span>
-        <span>{t("event.group.addText", "link a group")}</span>
+        <span>{t("course.group.addText")}</span>
       </button>
       <ul className="dropdown-menu dialog-dropdown">
         <li className="dropdown-header">
-          {t("grouplist.addgroups.header", "Add group")}
+          {t("grouplist.addgroups.header")}
           <button type="button" className="btn-close btn-close-white"></button>
         </li>
         <li>

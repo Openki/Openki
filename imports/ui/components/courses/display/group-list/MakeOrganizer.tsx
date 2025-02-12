@@ -42,7 +42,7 @@ export function MakeOrganizer({ course, groupId }: Props) {
     <div className="group-tool-dialog add">
       {t("course.group.confirmOrgText", 'Add members of the "{NAME}" group as editors?', {
         NAME: name(group),
-      })}
+      })}{" "}
       {t(
         "course.group.confirmOrgNotes",
         "All members of the group will be able to edit the course and create new events for it.",
