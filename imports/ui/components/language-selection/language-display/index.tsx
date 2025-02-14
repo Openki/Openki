@@ -28,7 +28,7 @@ export function Display({ inNavbar, onClick }: Props) {
   }
 
   return (
-    <li className={inNavbarClasses()}>
+    <div className={inNavbarClasses()}>
       <a
         className={`nav-link ${inNavbarClassesLink()}`}
         onClick={() => {
@@ -37,12 +37,6 @@ export function Display({ inNavbar, onClick }: Props) {
       >
         <span className="fa-solid fa-globe fa-fw" aria-hidden="true"></span> {setLanguage().short}
       </a>
-    </li>
+    </div>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("LanguageDisplay", () => Display);

@@ -209,9 +209,3 @@ export function Selection(data: { inNavbar: boolean; onClose: () => void }) {
     </li>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("LanguageSelection", () => Selection);
