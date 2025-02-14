@@ -1,10 +1,5 @@
-import { ReactiveVar } from "meteor/reactive-var";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 
-import "./language-display";
-import "./language-selection";
 
-import "./template.html";
 
 const Template = TemplateAny as TemplateStaticTyped<
   "languageSelectionWrap",
@@ -49,3 +44,11 @@ template.helpers({
     return Template.instance().searchingLanguages.get();
   },
 });
+
+export function LanguageSelectionWrap(props: { inNavbar?: boolean }){
+  {{#if searchingLanguages}}
+ return <LanguageSelection languageSelectionAttr/>
+{{else}}
+ return <LanguageDisplay languageDisplayAttr/>
+{{/if}}
+}
