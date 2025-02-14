@@ -1,54 +1,40 @@
+import React, { useState } from "react";
+import { useFindFilter } from "/imports/api/languages/publications";
+import { Display } from "./language-display";
+import { Selection } from "./language-selection";
 
+export function LanguageSelectionWrap(props: { inNavbar?: boolean }) {
+  const [searchingLanguages, setSearchingLanguages] = useState(false);
 
+  useFindFilter({});
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "languageSelectionWrap",
-  { inNavbar?: boolean },
-  {
-    searchingLanguages: ReactiveVar<boolean>;
-  }
->;
-
-const template = Template.languageSelectionWrap;
-
-template.onCreated(function () {
-  const instance = this;
-  instance.searchingLanguages = new ReactiveVar(false);
-  instance.subscribe("Languages");
-});
-
-template.helpers({
-  languageSelectionAttr() {
-    const instance = Template.instance();
+  function languageSelectionAttr() {
     return {
-      inNavbar: instance.data.inNavbar,
+      inNavbar: props.inNavbar || false,
       onClose: () => {
-        const searchingLanguages = instance.searchingLanguages;
-        if (searchingLanguages.get()) {
-          searchingLanguages.set(false);
+        if (searchingLanguages) {
+          setSearchingLanguages(false);
         }
       },
     };
-  },
-  languageDisplayAttr() {
-    const instance = Template.instance();
+  }
+  function languageDisplayAttr() {
     return {
-      inNavbar: instance.data.inNavbar,
+      inNavbar: props.inNavbar || false,
       onClick: () => {
-        instance.searchingLanguages.set(true);
+        setSearchingLanguages(true);
       },
     };
-  },
+  }
 
-  searchingLanguages() {
-    return Template.instance().searchingLanguages.get();
-  },
-});
-
-export function LanguageSelectionWrap(props: { inNavbar?: boolean }){
-  {{#if searchingLanguages}}
- return <LanguageSelection languageSelectionAttr/>
-{{else}}
- return <LanguageDisplay languageDisplayAttr/>
-{{/if}}
+  if (searchingLanguages) {
+    return <Selection {...languageSelectionAttr()} />;
+  }
+  return <Display {...languageDisplayAttr()} />;
 }
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("LanguageSelectionWrap", () => LanguageSelectionWrap);
