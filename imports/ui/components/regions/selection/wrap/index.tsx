@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 import { useFindFilter } from "/imports/api/regions/publications";
 
-import { RegionSelection } from "..";
-import { Display } from "../display";
+import { RegionSelection } from "../Selection";
+import { Display } from "../Display";
 
 export function RegionSelectionWrap({
   inNavbar = false,

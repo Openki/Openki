@@ -12,7 +12,7 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 import { useSiteName } from "/imports/utils/getSiteName";
 
-import { Item } from "./item";
+import { SelectionItem } from "./SelectionItem";
 
 import "./styles.scss";
 
@@ -302,7 +302,7 @@ export function RegionSelection(data: {
               //  here follows the "long" version, all regions that the user has access to
               <>
                 {allRegions().map((region) => (
-                  <Item
+                  <SelectionItem
                     key={region._id}
                     region={region}
                     search={search}
@@ -327,7 +327,7 @@ export function RegionSelection(data: {
               // here follows the "short" version, only some regions are shown
               <>
                 {notAllRegions().map((region) => (
-                  <Item
+                  <SelectionItem
                     key={region._id}
                     region={region}
                     search={search}

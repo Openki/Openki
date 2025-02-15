@@ -10,7 +10,7 @@ import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
 import { MarkedName } from "/imports/utils/marked-name";
 
-export function Item({
+export function SelectionItem({
   region,
   search,
   onClick,
@@ -76,9 +76,3 @@ export function Item({
     </li>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("RegionSelectionItem", () => Item);
