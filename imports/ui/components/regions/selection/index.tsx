@@ -19,7 +19,7 @@ import "./styles.scss";
 export function RegionSelection(data: {
   isSplash: boolean;
   inNavbar: boolean;
-  onClose: () => void;
+  onClose?: () => void;
 }) {
   const { t } = useTranslation();
   const minNumberOfRegionInSelection = PublicSettings.regionSelection.minNumber;
@@ -102,7 +102,7 @@ export function RegionSelection(data: {
         Router.go("/");
       }
     }
-    data.onClose();
+    data.onClose?.();
   }
 
   function inNavbarClasses() {
@@ -159,7 +159,7 @@ export function RegionSelection(data: {
       throw new Error("Unexpected falsy: dropdownToggleElementRef.current");
     dropdownToggleElementRef.current.addEventListener("hide.bs.dropdown", (event) => {
       if (!searchHasFocus) {
-        data.onClose();
+        data.onClose?.();
         return true;
       }
 
