@@ -29,9 +29,3 @@ export function Location({ event }: { event: EventModel }) {
     </div>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("KioskEventLocation", () => Location);
