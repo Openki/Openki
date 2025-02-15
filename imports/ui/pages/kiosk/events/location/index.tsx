@@ -1,35 +1,37 @@
-import React, { useState } from "react";
+import React from "react";
 import { Router } from "meteor/iron:router";
+import { EventModel } from "/imports/api/events/events";
 
-import "./template.html";
-
-const Template = TemplateAny as TemplateStaticTyped<"kioskEventLocation">;
-const template = Template.kioskEventLocation;
-template.helpers({
-  ,
-});
-
-
-export function Location(){
-
+export function Location({ event }: { event: EventModel }) {
   function showLocation() {
     // The location is shown when we have a location name and the location is not used as a filter
-    return this.location?.name && !Router.current().params.query.location;
+    return !!(event.venue?.name && !Router.current().params.query.venue);
   }
 
-
-return <div class="kiosk-event-location">
-
-  {{#if showLocation}}
-    <span class="fa-solid fa-house fa-fw" aria-hidden="true"></span>
-    {{location.name}}
-    {{#if room}} - {{/if}}
-  {{/if}}
-  {{#if room}}
-    {{#unless showLocation}}
-      <span class="fa-solid fa-signs-post fa-fw" aria-hidden="true"></span>
-    {{/unless}}
-    {{room}}
-  {{/if}}
-</div>
+  return (
+    <div className="kiosk-event-location">
+      {showLocation() && (
+        <>
+          <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span> {event.venue?.name}
+          {!!event.room && <> - </>}
+        </>
+      )}
+      {!!event.room && (
+        <>
+          {!showLocation() && (
+            <>
+              <span className="fa-solid fa-signs-post fa-fw" aria-hidden="true"></span>{" "}
+            </>
+          )}
+          {event.room}
+        </>
+      )}
+    </div>
+  );
 }
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("KioskEventLocation", () => Location);
