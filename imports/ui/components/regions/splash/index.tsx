@@ -36,3 +36,35 @@ template.events({
     Session.set("pleaseLogin", true);
   },
 });
+
+export function RegionSplash( ){
+  return   <div class="js-region-splash modal regions-splash" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">
+          {{i18n 'regionsSplash.welcome' 'Welcome to {SITE}!' SITE=siteName}}
+        </h4>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h5 class="regions-splash-header">
+          {{i18n 'regionsSplash.plsChooseRegion' 'Please choose a region'}}
+        </h5>
+        <div class="regions-splash-selection">
+          {{> regionSelection isSplash=true}}
+          <button class="js-confirm-region btn btn-primary" type="button">
+            {{i18n 'regionSplash.ok' 'Go!'}}
+          </button>
+        </div>
+        <div class="regions-splash-login">
+          <button class="js-login-for-region btn btn-link" type="button">
+            {{i18n 'regionsSplash.login' 'Log in to use your last selected region'}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+}
