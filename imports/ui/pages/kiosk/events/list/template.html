@@ -1,7 +1,5 @@
 <template name="kioskEventList">
-  <div class="kiosk-event-list row g-3">
-    {{#each event in dataEvents}}
-      {{> kioskEvent event=event timePeriod=timePeriod}}
-    {{/each}}
+  <div>
+    {{> React (component KioskEventList)}}
   </div>
 </template>
