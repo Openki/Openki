@@ -1,67 +1,59 @@
-import { ReactiveDict } from "meteor/reactive-dict";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React, { useState } from "react";
 
-import { Regions } from "/imports/api/regions/regions";
+import { useFindFilter } from "/imports/api/regions/publications";
 
-import "..";
-import "../display";
+import { RegionSelection } from "..";
+import { Display } from "../display";
 
-import "./template.html";
+export function RegionSelectionWrap({
+  inNavbar = false,
+  isSplash = false,
+}: {
+  inNavbar?: boolean;
+  isSplash?: boolean;
+}) {
+  const [isLoading, regions] = useFindFilter({}, 2);
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "regionSelectionWrap",
-  Record<string, unknown>,
-  { state: ReactiveDict<{ searchingRegions: boolean }> }
->;
+  const [searchingRegions, setSearchingRegions] = useState(false);
 
-const template = Template.regionSelectionWrap;
+  function hasMultipleRegions() {
+    return regions.length > 1;
+  }
 
-template.onCreated(function () {
-  const instance = this;
-
-  instance.subscribe("Regions");
-  instance.state = new ReactiveDict();
-  instance.state.setDefault("searchingRegions", false);
-});
-
-template.helpers({
-  hasMultipleRegions() {
-    return Regions.findFilter({}, 2).count() > 1;
-  },
-
-  regionSelectionDisplayAttr() {
-    const instance = Template.instance();
+  function regionSelectionDisplayAttr() {
     return {
-      inNavbar: this.inNavbar,
+      inNavbar,
       onClick: () => {
-        instance.state.set("searchingRegions", true);
+        setSearchingRegions(true);
       },
     };
-  },
+  }
 
-  regionSelectionAttr() {
-    const instance = Template.instance();
+  function regionSelectionAttr() {
     return {
-      inNavbar: this.inNavbar,
-      isSplash: this.isSplash,
+      inNavbar,
+      isSplash,
       onClose: () => {
-        if (instance.state.get("searchingRegions")) {
-          instance.state.set("searchingRegions", false);
+        if (searchingRegions) {
+          setSearchingRegions(false);
         }
       },
     };
-  },
-});
+  }
 
+  if (isLoading() || !hasMultipleRegions()) {
+    return null;
+  }
 
-export function RegionSelectionWrap(){
-  return  {{#if hasMultipleRegions}}
-  {{#if Template.subscriptionsReady}}
-    {{#if state 'searchingRegions'}}
-      {{> regionSelection regionSelectionAttr}}
-    {{else}}
-      {{> regionSelectionDisplay regionSelectionDisplayAttr}}
-    {{/if}}
-  {{/if}}
-{{/if}}
+  if (searchingRegions) {
+    return <RegionSelection {...regionSelectionAttr()} />;
+  }
+
+  return <Display {...regionSelectionDisplayAttr()} />;
 }
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("RegionSelectionWrap", () => RegionSelectionWrap);
