@@ -52,3 +52,16 @@ template.helpers({
     };
   },
 });
+
+
+export function RegionSelectionWrap(){
+  return  {{#if hasMultipleRegions}}
+  {{#if Template.subscriptionsReady}}
+    {{#if state 'searchingRegions'}}
+      {{> regionSelection regionSelectionAttr}}
+    {{else}}
+      {{> regionSelectionDisplay regionSelectionDisplayAttr}}
+    {{/if}}
+  {{/if}}
+{{/if}}
+}
