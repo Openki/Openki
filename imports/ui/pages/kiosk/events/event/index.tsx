@@ -34,9 +34,8 @@ export function Event({
         <div className={`kiosk-event kiosk-event-${timePeriod}`}>
           {timePeriod !== "upcoming" && (
             <div className="kiosk-event-timecount">
-              <span className="fa-solid fa-circle-play fa-fw" aria-hidden="true"></span>
-              {timePeriod === "ongoing" && t("kiosk.started", "Started")}
-              {fromNow(event.start)}
+              <span className="fa-solid fa-circle-play fa-fw" aria-hidden="true"></span>{" "}
+              {timePeriod === "ongoing" && t("kiosk.started", "Started")} {fromNow(event.start)}
             </div>
           )}
 
