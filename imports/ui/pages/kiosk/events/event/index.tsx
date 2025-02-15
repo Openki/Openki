@@ -1,13 +1,14 @@
 import React from "react";
+import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
+import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { textPlain } from "/imports/utils/html-tools";
 
 import { EventModel } from "/imports/api/events/events";
 
-import "./styles.scss";
-import { Router } from "meteor/iron:router";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { Location } from "../Location";
-import { textPlain } from "/imports/utils/html-tools";
+
+import "./styles.scss";
 
 export function Event({
   event,
