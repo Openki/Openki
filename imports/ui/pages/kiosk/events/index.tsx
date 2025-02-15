@@ -1,5 +1,5 @@
+import React from "react";
 import { Session } from "meteor/session";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import moment from "moment";
 
 import { Regions } from "/imports/api/regions/regions";
@@ -10,12 +10,6 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
 
-import "/imports/ui/components/language-selection";
-import "./event";
-import "./Location";
-import "./list";
-
-import "./template.html";
 import "./styles.scss";
 
 const Template = TemplateAny as TemplateStaticTyped<"kioskEventsPage">;
