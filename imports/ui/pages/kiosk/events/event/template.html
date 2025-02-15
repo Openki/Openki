@@ -22,7 +22,7 @@
         {{/unless}}
         <div class="kiosk-event-header clearfix">
           {{#unless isOngoing}}
-            {{> kioskEventLocation}}
+            {{> kioskEventLocation event=this}}
           {{/unless}}
           <div class="kiosk-event-moment">
             {{#if isUpcoming}}
@@ -36,7 +36,7 @@
             {{/unless}}
           </div>
           {{#if isOngoing}}
-            {{> kioskEventLocation}}
+            {{> kioskEventLocation event=this}}
           {{/if}}
         </div>
         <div class="kiosk-event-body">
