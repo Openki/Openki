@@ -12,7 +12,7 @@ import * as Metatags from "/imports/utils/metatags";
 
 import "/imports/ui/components/language-selection";
 import "./event";
-import "./location";
+import "./Location";
 import "./list";
 
 import "./template.html";

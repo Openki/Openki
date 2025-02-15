@@ -45,8 +45,20 @@ export function sanitizeHtml(
 }
 
 export function textPlain(html: string): string {
-  return SanitizeHtml(html, {
-    allowedTags: [],
-    allowedAttributes: {},
-  });
+  return SanitizeHtml(
+    // Prevent words from sticking together
+    // eg. <p>Kloradf dadeq gsd.</p><p>Loradf dadeq gsd.</p> => Kloradf dadeq gsd. Loradf dadeq gsd.
+    html
+      .replace(/<br \/>/g, "<br /> ")
+      .replace(/<p>/g, "<p> ")
+      .replace(/<\/p>/g, "</p> ")
+      .replace(/<h2>/g, "<h2> ")
+      .replace(/<\/h2>/g, "</h2> ")
+      .replace(/<h3>/g, "<h3> ")
+      .replace(/<\/h3>/g, "</h3> "),
+    {
+      allowedTags: [],
+      allowedAttributes: {},
+    },
+  );
 }
