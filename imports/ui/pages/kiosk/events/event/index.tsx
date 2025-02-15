@@ -1,8 +1,6 @@
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 
 import "/imports/ui/components/language-selection";
 
-import "./template.html";
 import "./styles.scss";
 
 const Template = TemplateAny as TemplateStaticTyped<"kioskEvent">;
@@ -21,3 +19,61 @@ template.helpers({
     return (Template.instance().parentInstance() as any).timePeriod === "upcoming";
   },
 });
+
+export function Event(){
+return <div class="kiosk-event-wrap kiosk-event-wrap-{{timePeriod}} col-6 col-lg-3 col-xl-2">
+{{#if this.canceled}}
+  <span class="kiosk-event-canceled">{{i18n '_event.state.canceled'}}</span>
+{{else}}
+  {{#if this.isFullyBooked}}
+    <span class="kiosk-event-fully-booked">
+      {{i18n '_event.state.fullyBooked'}}
+    </span>
+  {{/if}}
+{{/if}}
+<a href="{{pathFor 'showEvent'}}">
+  <div class="kiosk-event kiosk-event-{{timePeriod}}">
+    {{#unless isUpcoming}}
+      <div class="kiosk-event-timecount">
+        <span class="fa-solid fa-circle-play fa-fw" aria-hidden="true"></span>
+        {{#if isOngoing}}
+          {{i18n 'kiosk.started' 'Started'}}
+        {{/if}}
+        {{fromNow start}}
+      </div>
+    {{/unless}}
+    <div class="kiosk-event-header clearfix">
+      {{#unless isOngoing}}
+        {{> kioskEventLocation event=this}}
+      {{/unless}}
+      <div class="kiosk-event-moment">
+        {{#if isUpcoming}}
+          <span class="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
+          {{dateFormat start}} <br>
+        {{/if}}
+        <span class="fa-regular fa-clock fa-fw" aria-hidden="true"></span>
+        {{timeFormat start}}
+        {{#unless isUpcoming}}
+          - {{timeFormat end}}
+        {{/unless}}
+      </div>
+      {{#if isOngoing}}
+        {{> kioskEventLocation event=this}}
+      {{/if}}
+    </div>
+    <div class="kiosk-event-body">
+      <h3 class="kiosk-event-title">
+        {{plain title}}
+      </h3>
+      {{#unless isOngoing}}
+        <br />
+        <p class="d-inline">
+          {{plain description}}
+        </p>
+      {{/unless}}
+    </div>
+  </div>
+</a>
+</div>
+
+}
