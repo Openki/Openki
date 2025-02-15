@@ -38,9 +38,7 @@ export function SelectionItem({
     <li className={region.isPrivate() ? "region-link-private" : ""}>
       <a
         href="#"
-        className={`dropdown-item js-region-link js-nav-dropdown-close ${
-          isCurrentRegion ? "fw-bold" : ""
-        }`}
+        className={`dropdown-item js-nav-dropdown-close ${isCurrentRegion ? "fw-bold" : ""}`}
         title={region.nameEn}
         onClick={onClick}
         onMouseOver={() => handelFocus(true)}
