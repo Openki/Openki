@@ -1,51 +1,53 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Session } from "meteor/session";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 
 import { Regions } from "/imports/api/regions/regions";
-import { Groups } from "/imports/api/groups/groups";
+import { FindFilter } from "/imports/api/events/events";
+import {  Groups } from "/imports/api/groups/groups";
 import { Venues } from "/imports/api/venues/venues";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
 
 import "./styles.scss";
+import { useFindFilter } from "/imports/api/groups/publications";
+import { EventEntity, EventModel } from "/imports/api/events/events";
+import { useSession } from "/imports/utils/react-meteor-data";
+import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
+import { List } from "./list";
+import { Router } from "meteor/iron:router";
+import { useSiteName } from "/imports/utils/getSiteName";
 
-const Template = TemplateAny as TemplateStaticTyped<"kioskEventsPage">;
 
-const template = Template.kioskEventsPage;
+export function KioskEventsPage({today, future, ongoing, filter}:{  today: Mongo.Cursor<EventEntity, EventModel>,
+  future: Mongo.Cursor<EventEntity, EventModel>,
+  ongoing: Mongo.Cursor<EventEntity, EventModel>,
+  filter: FindFilter}){
+  const { t } = useTranslation();
 
-template.onCreated(function () {
-  const instance = this;
+const [isLoading, group] = useFindFilter({ _id: filter.group });
 
-  instance.autorun(() => {
-    Metatags.setCommonTags(i18n("event.list.windowtitle", "Events"));
-  });
-});
+const currentRegion = useCurrentRegion();
 
-template.helpers({
-  groupLogo(groupId: string) {
-    const instance = Template.instance();
-    instance.subscribe("group", groupId);
+const siteName = useSiteName()
 
-    const group = Groups.findOne({ _id: groupId });
+  function groupLogo() {
+
     if (group) {
       return group.publicLogoUrl();
     }
     return "";
-  },
-  groupName(groupId: string) {
-    const instance = Template.instance();
-    instance.subscribe("group", groupId);
-
-    const group = Groups.findOne({ _id: groupId });
+  }
+  function groupName() {
+ 
     if (group) {
       return group.name;
     }
     return "";
-  },
-  venueName(venueId: string) {
+  }
+  function venueName(venueId: string) {
     const instance = Template.instance();
     instance.subscribe("venueDetails", venueId);
 
@@ -54,20 +56,19 @@ template.helpers({
       return venue.name;
     }
     return "";
-  },
-  showTime() {
-    Session.get("seconds");
+  }
+  function showTime() {
+    useSession("seconds");
     return moment().format("LTS");
-  },
-  showDate() {
-    Session.get("seconds");
+  }
+  function showDate() {
+    useSession("seconds");
     return moment().format("LL");
-  },
+  }
 
-  headerLogo() {
+  function headerLogo() {
     let headerLogo;
 
-    const currentRegion = Regions.currentRegion();
     if (currentRegion?.custom?.headerLogoKiosk?.src) {
       // the region has a custom logo
       headerLogo = currentRegion.custom.headerLogoKiosk.src;
@@ -92,74 +93,75 @@ template.helpers({
 
     // in the openki repository folder "public/logo/"
     return `/logo/${headerLogo}`;
-  },
+  }
 
-  headerAlt() {
-    const currentRegion = Regions.currentRegion();
+ function headerAlt() {
     if (currentRegion?.custom?.headerLogoKiosk?.alt) {
       return currentRegion.custom.headerLogoKiosk.alt;
     }
 
     return PublicSettings.headerLogoKiosk.alt;
-  },
-});
+  }
 
+useEffect(()=>{
+  Metatags.setCommonTags(t("event.list.windowtitle", "Events"));
 
-export function KioskEventsPage(){
-  return  <div class="kiosk container-fluid">
-  <div class="page-component">
-    <div class="kiosk-heading">
+})
+
+  return  <div className="kiosk container-fluid">
+  <div className="page-component">
+    <div className="kiosk-heading">
       {{#if filter.group}}
-        <a href="{{pathFor 'groupDetails' _id=filter.group}}">
-          {{#if groupLogo filter.group}}
-            <img class="kiosk-logo kiosk-logo-group" src="{{groupLogo filter.group}}" />
+        <a href={Router.path('groupDetails', {_id=filter.group}}>
+          {{#if groupLogo (filter.group)}}
+            <img className="kiosk-logo kiosk-logo-group" src={groupLogo (filter.group)} />
           {{/if}}
-          {{groupName filter.group}}
+          {groupName (filter.group)}
         </a>
       {{else}}
         {{#if filter.venue}}
-          <a href="{{pathFor 'venueDetails' _id=filter.venue}}">{{venueName filter.venue}}</a>
+          <a href={Router.path('venueDetails', {_id=filter.venue})}>{venueName (filter.venue)}</a>
         {{else}}
-          <a href="{{pathFor 'home'}}">
-            {{#if headerLogo}}
-              <img src="{{headerLogo}}" alt="{{headerAlt}}" class="kiosk-logo kiosk-logo-brand">
+          <a href={Router.path('home')}>
+            {{#if headerLogo()}}
+              <img src={headerLogo()} alt={headerAlt()} className="kiosk-logo kiosk-logo-brand"/>
             {{/if}}
-            {{siteName}}
+            {siteName}
           </a>
         {{/if}}
       {{/if}}
     </div>
-    <div class="kiosk-language-selection">
-      {{> languageSelectionWrap}}
+    <div className="kiosk-language-selection">
+      <LanguageSelectionWrap />
     </div>
-    <div class="kiosk-moment">
-      <span class="kiosk-moment-time">{{showTime}}</span>
-      <span class="kiosk-moment-date">{{showDate}}</span>
+    <div className="kiosk-moment">
+      <span className="kiosk-moment-time">{showTime()}</span>
+      <span className="kiosk-moment-date">{showDate()}</span>
     </div>
   </div>
-  {{#if ongoing.count}}
-    <div class="page-component">
-      <h3>{{i18n 'kiosk.ongoing' '{NUM, plural, one{One ongoing event:} other{# ongoing events:} }' NUM=ongoing.count}}
+  {{#if ongoing.count()}}
+    <div className="page-component">
+      <h3>{t('kiosk.ongoing' ,'{NUM, plural, one{One ongoing event:} other{# ongoing events:} }',{ NUM:ongoing.count()})}
       </h3>
-      {{> kioskEventList events=ongoing timePeriod="ongoing"}}
+      <List events={ongoing.fetch()} timePeriod="ongoing"/>
     </div>
   {{/if}}
 
-  {{#if today.count}}
-    <div class="page-component page-component-seperated">
-      <h3>{{i18n 'kiosk.today' '{NUM, plural, one{One event} other{# events} } later today:' NUM=today.count}}
+  {{#if today.count()}}
+    <div className="page-component page-component-seperated">
+      <h3>{t('kiosk.today' ,'{NUM, plural, one{One event} other{# events} } later today:', {NUM:today.count()})}
       </h3>
-      {{> kioskEventList events=today timePeriod="today"}}
+      <List events={today.fetch()} timePeriod="today"/>
     </div>
   {{/if}}
 
-  {{#if future.count}}
-    <div class="page-component page-component-seperated">
-      <h3>{{i18n 'kiosk.future' 'Future events:' NUM=future.count}}</h3>
-      {{> kioskEventList events=future timePeriod="upcoming"}}
+  {{#if future.count()}}
+    <div className="page-component page-component-seperated">
+      <h3>{t('kiosk.future' ,'Future events:', {NUM:future.count()})}</h3>
+      <List events={future.fetch()} timePeriod="upcoming"/>
     </div>
   {{else}}
-    <h3>{{i18n 'kiosk.noFutureEvents' 'There are no future events'}}</h3>
+    <h3>{t('kiosk.noFutureEvents', 'There are no future events')}</h3>
   {{/if}}
 </div>
 }
