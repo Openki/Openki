@@ -1,70 +1,104 @@
-import { Session } from "meteor/session";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React, { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
-import "/imports/ui/components/regions/selection/wrap";
+import { RegionSelection } from "../selection";
 
-import "./template.html";
+import Modal from "bootstrap/js/dist/modal";
+
+import { useSiteName } from "/imports/utils/getSiteName";
+
 import "./styles.scss";
 
-const Template = TemplateAny as TemplateStaticTyped<"regionSplash">;
+export function RegionSplash() {
+  const { t } = useTranslation();
+  const elementRef = useRef<HTMLDivElement>(null);
+  const siteName = useSiteName();
 
-const template = Template.regionSplash;
-
-template.onRendered(function () {
-  this.$(".js-region-splash").modal("show");
-});
-
-template.events({
-  "hidden.bs.modal .js-region-splash"() {
+  function handelHidden() {
     Session.set("showRegionSplash", false);
-  },
+  }
 
-  "click .js-region-link"(_event, instance) {
-    instance.$(".js-region-splash").modal("hide");
-  },
+  useEffect(() => {
+    if (!elementRef.current) {
+      return undefined;
+    }
 
-  "click .js-region-search"(event, instance) {
-    instance.$(event.currentTarget as any).trigger("select");
-  },
+    Modal.getOrCreateInstance(elementRef.current).show();
 
-  "click .js-confirm-region"(_event, instance) {
-    instance.$(".js-region-splash").modal("hide");
-  },
+    const element = elementRef.current;
+    element.addEventListener("hidden.bs.modal", handelHidden);
 
-  "click .js-login-for-region"(_event, instance) {
-    instance.$(".js-region-splash").modal("hide");
-    Session.set("pleaseLogin", true);
-  },
-});
+    return () => {
+      element.removeEventListener("hidden.bs.modal", handelHidden);
+    };
+  });
 
-export function RegionSplash( ){
-  return   <div class="js-region-splash modal regions-splash" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">
-          {{i18n 'regionsSplash.welcome' 'Welcome to {SITE}!' SITE=siteName}}
-        </h4>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <h5 class="regions-splash-header">
-          {{i18n 'regionsSplash.plsChooseRegion' 'Please choose a region'}}
-        </h5>
-        <div class="regions-splash-selection">
-          {{> regionSelection isSplash=true}}
-          <button class="js-confirm-region btn btn-primary" type="button">
-            {{i18n 'regionSplash.ok' 'Go!'}}
-          </button>
-        </div>
-        <div class="regions-splash-login">
-          <button class="js-login-for-region btn btn-link" type="button">
-            {{i18n 'regionsSplash.login' 'Log in to use your last selected region'}}
-          </button>
+  return (
+    <div className="modal regions-splash" ref={elementRef} tabIndex={-1} role="dialog">
+      <div className="modal-dialog modal-sm" role="document">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h4 className="modal-title">
+              {t("regionsSplash.welcome", "Welcome to {SITE}!", { SITE: siteName })}
+            </h4>
+            <button
+              type="button"
+              className="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div className="modal-body">
+            <h5 className="regions-splash-header">
+              {t("regionsSplash.plsChooseRegion", "Please choose a region")}
+            </h5>
+            <div className="regions-splash-selection">
+              <RegionSelection
+                isSplash={true}
+                onSelect={() => {
+                  if (!elementRef.current) {
+                    return;
+                  }
+                  Modal.getOrCreateInstance(elementRef.current).hide();
+                }}
+              />
+              <button
+                className="btn btn-primary"
+                type="button"
+                onClick={() => {
+                  if (!elementRef.current) {
+                    return;
+                  }
+                  Modal.getOrCreateInstance(elementRef.current).hide();
+                }}
+              >
+                {t("regionSplash.ok", "Go!")}
+              </button>
+            </div>
+            <div className="regions-splash-login">
+              <button
+                className="btn btn-link"
+                type="button"
+                onClick={() => {
+                  if (!elementRef.current) {
+                    return;
+                  }
+                  Modal.getOrCreateInstance(elementRef.current).hide();
+                  Session.set("pleaseLogin", true);
+                }}
+              >
+                {t("regionsSplash.login", "Log in to use your last selected region")}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  );
 }
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("RegionSplash", () => RegionSplash);

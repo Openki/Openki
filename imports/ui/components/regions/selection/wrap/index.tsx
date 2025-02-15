@@ -2,15 +2,15 @@ import React, { useState } from "react";
 
 import { useFindFilter } from "/imports/api/regions/publications";
 
-import { RegionSelection } from "../Selection";
+import { RegionSelection } from "..";
 import { Display } from "../Display";
 
 export function RegionSelectionWrap({
-  inNavbar = false,
-  isSplash = false,
+  inNavbar,
+  isSplash,
 }: {
-  inNavbar?: boolean;
-  isSplash?: boolean;
+  inNavbar?: boolean | undefined;
+  isSplash?: boolean | undefined;
 }) {
   const [isLoading, regions] = useFindFilter({}, 2);
 

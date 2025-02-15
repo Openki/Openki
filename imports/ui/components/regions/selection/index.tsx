@@ -17,14 +17,16 @@ import { SelectionItem } from "./SelectionItem";
 import "./styles.scss";
 
 export function RegionSelection(data: {
-  isSplash: boolean;
-  inNavbar: boolean;
+  isSplash?: boolean | undefined;
+  inNavbar?: boolean | undefined;
+  onSelect?: () => void;
   onClose?: () => void;
 }) {
+  debugger;
   const { t } = useTranslation();
   const minNumberOfRegionInSelection = PublicSettings.regionSelection.minNumber;
   const [search, setSearch] = useState("");
-  const [searchHasFocus, setSearchHasFocus] = useState(true);
+  const [searchHasFocus, setSearchHasFocus] = useState(!data.isSplash);
   const [showAllRegions, setShowAllRegions] = useState(false);
   const searchElementRef = useRef<HTMLInputElement>(null);
   const dropdownToggleElementRef = useRef<HTMLButtonElement>(null);
@@ -144,20 +146,19 @@ export function RegionSelection(data: {
   }, [search]);
 
   useEffect(() => {
-    if (!data.isSplash && searchHasFocus) {
-      if (!dropdownToggleElementRef.current)
-        throw new Error("Unexpected falsy: dropdownToggleElementRef.current");
-      $(dropdownToggleElementRef.current).dropdown("show");
+    const element = dropdownToggleElementRef.current;
+    if (!element) {
+      return undefined;
+    }
+
+    if (searchHasFocus) {
+      $(element).dropdown("show");
 
       if (!searchElementRef.current) throw new Error("Unexpected falsy: searchElementRef.current");
       searchElementRef.current?.select();
     }
-  }, [data.isSplash, searchHasFocus]);
 
-  useEffect(() => {
-    if (!dropdownToggleElementRef.current)
-      throw new Error("Unexpected falsy: dropdownToggleElementRef.current");
-    dropdownToggleElementRef.current.addEventListener("hide.bs.dropdown", (event) => {
+    function handleHide(event: Event) {
       if (!searchHasFocus) {
         data.onClose?.();
         return true;
@@ -166,13 +167,17 @@ export function RegionSelection(data: {
       // Stop closing
       event.preventDefault();
       return false;
-    });
-  });
+    }
+    element.addEventListener("hide.bs.dropdown", handleHide);
+    return () => {
+      element.removeEventListener("hide.bs.dropdown", handleHide);
+    };
+  }, [searchHasFocus]);
 
   function handelItemClick(region?: RegionModel) {
     const regionId = region?._id || "all";
     changeRegion(regionId);
-
+    data.onSelect?.();
     return false;
   }
 
@@ -222,7 +227,7 @@ export function RegionSelection(data: {
           </span>
           <input
             ref={searchElementRef}
-            className="form-control js-region-search"
+            className="form-control"
             type="text"
             defaultValue={
               currentRegion ? currentRegion.name : t("menue.All regions", "All regions") || ""
