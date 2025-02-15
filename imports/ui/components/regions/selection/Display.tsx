@@ -22,9 +22,3 @@ export function Display(props: { inNavbar: boolean; onClick: () => void }) {
     </li>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("Display", () => Display);
