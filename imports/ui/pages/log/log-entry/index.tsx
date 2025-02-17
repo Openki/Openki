@@ -11,9 +11,9 @@ export function Entry({
   onDateClick,
 }: {
   entry: LogEntity | { interval: string };
-  onIdClick: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, newId: string) => void;
-  onTrackClick: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, newTrack: string) => void;
-  onDateClick: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, newDate: Date) => void;
+  onIdClick: (newId: string) => void;
+  onTrackClick: (newTrack: string) => void;
+  onDateClick: (newDate: Date) => void;
 }) {
   const [expanded, setExpanded] = useState(false);
 
@@ -36,8 +36,8 @@ export function Entry({
           <td>
             <a
               className="js-rel-id id clickable"
-              onClick={(event) => {
-                onIdClick(event, entry._id);
+              onClick={() => {
+                onIdClick(entry._id);
               }}
               title={entry._id}
             >
@@ -47,8 +47,8 @@ export function Entry({
           <td>
             <a
               className="js-tr id clickable"
-              onClick={(event) => {
-                onTrackClick(event, entry.tr);
+              onClick={() => {
+                onTrackClick(entry.tr);
               }}
             >
               {entry.tr}
@@ -57,8 +57,8 @@ export function Entry({
           <td>
             <a
               className="js-date clickable nowrap"
-              onClick={(event) => {
-                onDateClick(event, entry.ts);
+              onClick={() => {
+                onDateClick(entry.ts);
               }}
             >
               {moment(entry.ts).toISOString()}
@@ -70,8 +70,8 @@ export function Entry({
                 key={id}
                 className="js-rel-id id clickable nowrap"
                 title={id}
-                onClick={(event) => {
-                  onIdClick(event, id);
+                onClick={() => {
+                  onIdClick(id);
                 }}
               >
                 {shortId(id)}
