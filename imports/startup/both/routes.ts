@@ -1104,7 +1104,7 @@ RouterAsync.route("log", {
     await import("/imports/ui/pages/log");
   },
   data() {
-    return this.params.query;
+    return { query: this.params.query };
   },
 });
 

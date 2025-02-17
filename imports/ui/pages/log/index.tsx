@@ -1,45 +1,47 @@
-import React, {  useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
-import { _ } from "meteor/underscore";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
+import { useUser } from "/imports/utils/react-meteor-data";
+import { debounce } from "lodash";
 
 import { LogCollection, LogEntity } from "/imports/api/log/factory";
+import { useFindFilter } from "/imports/api/log/publications";
 import { Log } from "/imports/api/log/log";
-import * as Logs from "/imports/api/log/publications";
 
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import * as UrlTools from "/imports/utils/url-tools";
-import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
 
-import "./log-entry";
+import { Entry } from "./log-entry";
 
-import "./template.html";
 import "./styles.scss";
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "logPage",
-
-  {
-    logs: ReactiveVar<Mongo.Cursor<LogEntity, LogEntity> | undefined>;
-    limit: ReactiveVar<number>;
-    filter: ReturnType<LogCollection["Filtering"]>;
-    updateUrl: () => boolean;
-  }
->;
-
-const template = Template.logPage;
-
-template.onCreated(function () {
-  const instance = this;
-
-  instance.autorun(() => {
-    Metatags.setCommonTags(i18n("log.list.windowtitle", "Log"));
-  });
-
+export function LogPage({
+  query,
+}: {
+  // LogCollection.Filtering Params are allowed as data input
+  query: Parameters<ReturnType<LogCollection["Filtering"]>["read"]>[0];
+}) {
   const batchLoad = 100;
-  instance.updateUrl = () => {
-    const filterParams = instance.filter.toParams();
+
+  const { t } = useTranslation();
+  const user = useUser();
+
+  const [limit, setLimit] = useState(batchLoad);
+
+  const filter = Log.Filtering();
+
+  // Update whenever filter changes
+
+  // Have some extra log entries ready so that they are shown immediately
+  // when more are demanded
+  const overLimit = limit + batchLoad + 1;
+  // Read URL state
+  const [isLoading, logs] = useFindFilter(filter.clear().read(query).done().toQuery(), overLimit);
+
+  function updateUrl() {
+    const filterParams = filter.toParams();
     const queryString = UrlTools.paramsToQueryString(filterParams);
 
     const options: { query?: string } = {};
@@ -54,68 +56,28 @@ template.onCreated(function () {
     Router.go(router.route.getName(), {}, options);
 
     return true;
-  };
+  }
 
-  instance.logs = new ReactiveVar(undefined);
-  instance.limit = new ReactiveVar(batchLoad);
-
-  const filter = Log.Filtering();
-  instance.filter = filter;
-
-  // Read URL state
-  instance.autorun(() => {
-    const query = Template.currentData();
-    filter.clear().read(query).done();
-  });
-
-  // Update whenever filter changes
-  instance.autorun(() => {
-    const filterQuery = filter.toQuery();
-
-    // Have some extra log entries ready so that they are shown immediately
-    // when more are demanded
-    const overLimit = instance.limit.get() + batchLoad + 1;
-
-    Logs.findFilter
-      .subscribe(instance, filterQuery, overLimit)()
-      .then((r) => {
-        instance.logs.set(r);
-      });
-  });
-});
-
-template.helpers({
-  privileged() {
-    return Meteor.user()?.privileged("admin");
-  },
-
-  date() {
-    const start = Template.instance().filter.get("start");
+  function privileged() {
+    return user?.privileged("admin");
+  }
+  function date() {
+    const start = filter.get("start");
     return start?.toISOString() || "";
-  },
-
-  relFilter() {
-    const { rel } = Template.instance().filter.toParams();
+  }
+  function relFilter() {
+    const { rel } = filter.toParams();
     return rel || "";
-  },
-
-  trFilter() {
-    const { tr } = Template.instance().filter.toParams();
+  }
+  function trFilter() {
+    const { tr } = filter.toParams();
     return tr || "";
-  },
-
-  hasMore() {
-    const instance = Template.instance();
-
-    const limit = instance.limit.get();
-    const results = instance.logs.get()?.count() || 0;
-
-    return results > limit;
-  },
-
-  results() {
-    const instance = Template.instance();
-    const entries = instance.logs.get()?.fetch().slice(0, instance.limit.get()) || [];
+  }
+  function hasMore() {
+    return (logs.length || 0) > limit;
+  }
+  function results() {
+    const entries = logs.slice(0, limit) || [];
     let last: moment.Moment | false = false;
     const inter: (LogEntity | { interval: string })[] = [];
     entries.forEach((entry) => {
@@ -130,148 +92,176 @@ template.helpers({
       last = ts;
     });
     return inter;
-  },
-});
+  }
 
-template.events({
   // Update the URI when the search-field was changed an loses focus
-  "change .js-update-url"(_event, instance) {
-    instance.updateUrl();
-  },
+  function onChange() {}
 
-  "keyup .js-tr-input": _.debounce((_event, instance) => {
-    const { filter } = instance;
+  const onTrackChange = debounce((event: React.KeyboardEvent<HTMLInputElement>) => {
     filter.disable("tr");
 
-    const trStr = ($(".js-tr-input").val() as string).trim();
+    const trStr = (event.target as any).value.trim();
     if (trStr) {
       filter.add("tr", trStr);
     }
 
     filter.done();
-  }, 200),
+    updateUrl();
+  }, 200);
 
-  "keyup .js-date-input": _.debounce((_event, instance) => {
-    const { filter } = instance;
-    const dateStr = ($(".js-date-input").val() as string).trim();
+  const onDateChange = debounce((event: React.KeyboardEvent<HTMLInputElement>) => {
+    const dateStr = (event.target as any).value.trim();
     if (dateStr === "") {
       filter.disable("start").done();
     } else {
       filter.add("start", dateStr).done();
     }
-  }, 200),
+    updateUrl();
+  }, 200);
 
-  "keyup .js-rel-input": _.debounce((_event, instance) => {
-    const { filter } = instance;
+  const onIdChange = debounce((event: React.KeyboardEvent<HTMLInputElement>) => {
     filter.disable("rel");
 
-    const relStr = ($(".js-rel-input").val() as string).trim();
+    const relStr = (event.target as any).value.trim();
     if (relStr) {
       filter.add("rel", relStr);
     }
 
     filter.done();
-  }, 200),
+    updateUrl();
+  }, 200);
 
-  "click .js-tr"(event, instance) {
-    instance.filter.add("tr", `${this}`);
-    if (!(event as any).shiftKey) {
-      instance.filter.done();
-      instance.updateUrl();
+  const onTrackClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, track: string) => {
+    filter.add("tr", track);
+    if (!event.shiftKey) {
+      filter.done();
+      updateUrl();
       window.scrollTo(0, 0);
     }
-  },
+  };
 
-  "click .js-date"(event, instance) {
-    const start = moment(this).toISOString();
-    instance.filter.add("start", start);
-    if (!(event as any).shiftKey) {
-      instance.filter.done();
-      instance.updateUrl();
+  const onDateClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, newDate: Date) => {
+    const start = moment(newDate).toISOString();
+    filter.add("start", start);
+    if (!event.shiftKey) {
+      filter.done();
+      updateUrl();
       window.scrollTo(0, 0);
     }
-  },
+  };
 
-  "click .js-rel-id"(event, instance) {
-    instance.filter.add("rel", `${this}`);
-    if (!(event as any).shiftKey) {
-      instance.filter.done();
-      instance.updateUrl();
+  const onIdClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, id: string) => {
+    filter.add("rel", id);
+    if (!event.shiftKey) {
+      filter.done();
+      updateUrl();
       window.scrollTo(0, 0);
     }
-  },
+  };
 
-  "click .js-more"(_event, instance) {
-    const { limit } = instance;
-    limit.set(limit.get() + 100);
-  },
-});
+  useEffect(() => {
+    Metatags.setCommonTags(t("log.list.windowtitle", "Log"));
+  });
 
-export function LogPage({query}:{
-  // LogCollection.Filtering Params are allowed as data input
-  query:  Parameters<ReturnType<LogCollection["Filtering"]>["read"]>[0],
+  if (!privileged()) {
+    return <h1>PLZ login as admin!</h1>;
+  }
 
-}){
-
-
-
-
-  return {{#unless privileged}}
-  <h1>PLZ login as admin!</h1>
-{{else}}
-  <div className="page-component">
-    <div className="js-search-field">
-      <div className="input-group">
-        <span className="input-group-text">ID</span>
-        <input className="js-rel-input js-update-url form-control" type="text" value="{{relFilter}}"
-               placeholder="Pw8HSnHtjErhPfCaa, f59a1e7855" />
+  return (
+    <>
+      <div className="page-component">
+        <div>
+          <div className="input-group">
+            <span className="input-group-text">ID</span>
+            <input
+              className="form-control"
+              type="text"
+              value={relFilter()}
+              placeholder="Pw8HSnHtjErhPfCaa, f59a1e7855"
+              onChange={onChange}
+              onKeyUp={onIdChange}
+            />
+          </div>
+          <div className="input-group">
+            <span className="input-group-text">Track</span>
+            <input
+              className="form-control"
+              type="text"
+              value={trFilter()}
+              placeholder="Profile.Region"
+              onChange={onChange}
+              onKeyUp={onTrackChange}
+            />
+          </div>
+          <div className="input-group">
+            <span className="input-group-text">Date</span>
+            <input
+              className="form-control"
+              type="text"
+              value={date()}
+              placeholder="YYYY-MM-DD hh:mm:ss"
+              onChange={onChange}
+              onKeyUp={onDateChange}
+            />
+          </div>
+        </div>
       </div>
-      <div className="input-group">
-        <span className="input-group-text">Track</span>
-        <input className="js-tr-input js-update-url form-control" type="text" value="{{trFilter}}"
-               placeholder="Profile.Region" />
-      </div>
-      <div className="input-group">
-        <span className="input-group-text">Date</span>
-        <input className="js-date-input js-update-url form-control" type="text" value="{{date}}"
-               placeholder="YYYY-MM-DD hh:mm:ss" />
-      </div>
-    </div>
-  </div>
-  <div className="page-component log-pane">
-    {{#unless Template.subscriptionsReady}}
-      <div className="loading">
-        <h1>
-          <marquee>&nbsp;&nbsp;&nbsp;LOADING! BE PATIENT! ENJOY THE SUN!</marquee>
-        </h1>
-      </div>
-    {{/unless}}
-    <table className="table">
-      <tr>
-        <th>ID</th>
-        <th>Track</th>
-        <th>Timestamp</th>
-        <th>Rel</th>
-        <th>Body</th>
-      </tr>
-      {{#each results}}
-        {{> logEntry}}
-      {{else}}
-        {{#if Template.subscriptionsReady}}
+      <div className="page-component log-pane">
+        {isLoading() && (
+          <div className="loading">
+            <h1>
+              {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+              {/* @ts-ignore */}
+              <marquee>&nbsp;&nbsp;&nbsp;LOADING! BE PATIENT! ENJOY THE SUN!</marquee>
+            </h1>
+          </div>
+        )}
+        <table className="table">
           <tr>
-            <td>Nothing found.</td>
+            <th>ID</th>
+            <th>Track</th>
+            <th>Timestamp</th>
+            <th>Rel</th>
+            <th>Body</th>
           </tr>
-        {{/if}}
-      {{/each}}
-    </table>
 
-    {{#if hasMore}}
-      <div className="text-center">
-        <button type="button" className="btn btn-success js-more">
-          Show more
-        </button>
+          {results().map((entry) => (
+            <Entry
+              key={"interval" in entry ? entry.interval : entry._id}
+              entry={entry}
+              onTrackClick={onTrackClick}
+              onDateClick={onDateClick}
+              onIdClick={onIdClick}
+            />
+          ))}
+
+          {!!results() && !isLoading() && (
+            <tr>
+              <td>Nothing found.</td>
+            </tr>
+          )}
+        </table>
+
+        {hasMore() && (
+          <div className="text-center">
+            <button
+              type="button"
+              className="btn btn-success"
+              onClick={() => {
+                setLimit(limit + 100);
+              }}
+            >
+              Show more
+            </button>
+          </div>
+        )}
       </div>
-    {{/if}}
-  </div>
-{{/unless}}
+    </>
+  );
 }
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("LogPage", () => LogPage);

@@ -1,19 +1,19 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import { LogEntity } from "/imports/api/log/factory";
 
 import "./styles.scss";
 
 export function Entry({
-  entryOrInterval,
+  entry,
   onIdClick,
   onTrackClick,
   onDateClick,
 }: {
-  entryOrInterval: LogEntity | { interval: string };
-  onIdClick: (id: string) => void;
-  onTrackClick: (track: string) => void;
-  onDateClick: (date: Date) => void;
+  entry: LogEntity | { interval: string };
+  onIdClick: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, newId: string) => void;
+  onTrackClick: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, newTrack: string) => void;
+  onDateClick: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, newDate: Date) => void;
 }) {
   const [expanded, setExpanded] = useState(false);
 
@@ -23,55 +23,54 @@ export function Entry({
 
   return (
     <tr>
-      {"interval" in entryOrInterval ? (
+      {"interval" in entry ? (
         <>
           <td></td>
           <td></td>
           <td colSpan={3} style={{ color: "gray" }}>
-            {entryOrInterval.interval}
+            {entry.interval}
           </td>
         </>
       ) : (
         <>
-          {" "}
           <td>
             <a
               className="js-rel-id id clickable"
-              onClick={() => {
-                onIdClick(entryOrInterval._id);
+              onClick={(event) => {
+                onIdClick(event, entry._id);
               }}
-              title={entryOrInterval._id}
+              title={entry._id}
             >
-              {shortId(entryOrInterval._id)}
+              {shortId(entry._id)}
             </a>
           </td>
           <td>
             <a
               className="js-tr id clickable"
-              onClick={() => {
-                onTrackClick(entryOrInterval.tr);
+              onClick={(event) => {
+                onTrackClick(event, entry.tr);
               }}
             >
-              {entryOrInterval.tr}
+              {entry.tr}
             </a>
           </td>
           <td>
             <a
               className="js-date clickable nowrap"
-              onClick={() => {
-                onDateClick(entryOrInterval.ts);
+              onClick={(event) => {
+                onDateClick(event, entry.ts);
               }}
             >
-              {moment(entryOrInterval.ts).toISOString()}
+              {moment(entry.ts).toISOString()}
             </a>
           </td>
           <td className="nowrap">
-            {entryOrInterval.rel.map((id) => (
+            {entry.rel.map((id) => (
               <a
                 className="js-rel-id id clickable nowrap"
                 title={id}
-                onClick={() => {
-                  onIdClick(id);
+                onClick={(event) => {
+                  onIdClick(event, id);
                 }}
               >
                 {shortId(id)}
@@ -85,7 +84,7 @@ export function Entry({
                   setExpanded(false);
                 }}
               >
-                {JSON.stringify(entryOrInterval, null, "   ")}
+                {JSON.stringify(entry, null, "   ")}
               </pre>
             ) : (
               <div
@@ -94,7 +93,7 @@ export function Entry({
                   setExpanded(true);
                 }}
               >
-                {JSON.stringify(entryOrInterval.body, null, "   ")}
+                {JSON.stringify(entry.body, null, "   ")}
               </div>
             )}
           </td>
