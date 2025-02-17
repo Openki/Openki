@@ -79,7 +79,7 @@ async function apiResponse<T, U, F extends { [name: string]: Predicate<any> }, R
   additionalFilters = {},
 ) {
   return async (filter = {}, limit = 0, skip = 0, sort?: FieldSort[]) => {
-    const query = collection.Filtering().readAndValidate(filter).done().toQuery();
+    const query = collection.Filtering().readAndValidate(filter).toQuery();
     const models = await collection
       .findFilter({ ...query, ...additionalFilters }, limit, skip, sort)
       .fetchAsync();

@@ -30,7 +30,7 @@ export function LogPage({
 
   const [limit, setLimit] = useState(batchLoad);
 
-  const filter = Log.Filtering().read(query).done();
+  const filter = Log.Filtering().read(query);
 
   // Update whenever filter changes
 
@@ -104,8 +104,6 @@ export function LogPage({
       if (trStr) {
         filter.add("tr", trStr);
       }
-
-      filter.done();
       updateUrl();
     }, 200),
     [],
@@ -121,12 +119,11 @@ export function LogPage({
       setDate(newValue);
       const dateStr = newValue.trim();
       if (dateStr === "") {
-        filter.disable("start").done();
+        filter.disable("start");
       } else {
-        filter.add("start", dateStr).done();
+        filter.add("start", dateStr);
       }
 
-      filter.done();
       updateUrl();
     }, 200),
     [],
@@ -147,7 +144,6 @@ export function LogPage({
         filter.add("rel", relStr);
       }
 
-      filter.done();
       updateUrl();
     }, 200),
     [],
@@ -159,7 +155,6 @@ export function LogPage({
 
   const onTrackClick = useCallback((newTrack: string) => {
     filter.add("tr", newTrack);
-    filter.done();
     setTrack(trFilter());
     updateUrl();
     window.scrollTo(0, 0);
@@ -168,7 +163,6 @@ export function LogPage({
   const onDateClick = useCallback((newDate: Date) => {
     const start = moment(newDate).toISOString();
     filter.add("start", start);
-    filter.done();
     setDate(dateFilter());
     updateUrl();
     window.scrollTo(0, 0);
@@ -176,7 +170,6 @@ export function LogPage({
 
   const onIdClick = useCallback((newId: string) => {
     filter.add("rel", newId);
-    filter.done();
     setId(relFilter());
     updateUrl();
     window.scrollTo(0, 0);

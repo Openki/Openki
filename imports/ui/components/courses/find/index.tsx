@@ -43,7 +43,7 @@ export function Find({ query }: Props) {
   const [showingFilters, setShowingFilters] = useState(false);
   const courseBlockSize = 36;
   const [courseLimit, setCourseLimit] = useState(courseBlockSize);
-  const filter = Courses.Filtering().read(query).done();
+  const filter = Courses.Filtering().read(query);
   const sort = query.sort ? SortSpec.fromString(query.sort) : SortSpec.unordered();
 
   // Add one to the limit so we know there is more to show
@@ -85,7 +85,7 @@ export function Find({ query }: Props) {
     return {
       search: filter.get("search"),
       onChange: (newValue: string) => {
-        filter.add("search", newValue).done();
+        filter.add("search", newValue);
         updateUrl();
       },
       onFocusOut: () => {
@@ -104,7 +104,6 @@ export function Find({ query }: Props) {
             filter.disable(f);
           });
 
-          filter.done();
           updateUrl();
           setShowingFilters(false);
         } else {
@@ -113,7 +112,7 @@ export function Find({ query }: Props) {
       },
       state: filter.get("state") || [],
       onStateClick: (state) => {
-        filter.disable("state").toggle("state", state.name).done();
+        filter.disable("state").toggle("state", state.name);
 
         updateUrl();
       },
@@ -137,7 +136,7 @@ export function Find({ query }: Props) {
       },
       archived: filter.get("archived") || false,
       onArchivedClick: () => {
-        filter.toggle("archived").done();
+        filter.toggle("archived");
         updateUrl();
       },
       onArchivedMouseOver: () => {
@@ -160,16 +159,16 @@ export function Find({ query }: Props) {
       },
       categories: filter.get("categories") || [],
       onCategoryAdd: (category: string) => {
-        filter.add("categories", category).done();
+        filter.add("categories", category);
         updateUrl();
       },
       onCategoryRemove: (category: string) => {
-        filter.remove("categories", category).done();
+        filter.remove("categories", category);
         updateUrl();
       },
       needsRole: filter.get("needsRole") || [],
       onNeedsRoleClick: (role) => {
-        filter.toggle("needsRole", role).done();
+        filter.toggle("needsRole", role);
         updateUrl();
       },
       onNeedsRoleMouseOut: (role) => {
@@ -270,7 +269,7 @@ export function Find({ query }: Props) {
         },
         onClick: async () => {
           Tooltips.hide();
-          filter.add("categories", category).done();
+          filter.add("categories", category);
           updateUrl();
           window.scrollTo(0, 0);
         },
@@ -281,7 +280,6 @@ export function Find({ query }: Props) {
   function handleToggleFilter() {
     if (showingFilters) {
       filters.forEach((f) => filter.disable(f as any));
-      filter.done();
       updateUrl();
     }
     setShowingFilters(!showingFilters);
@@ -289,7 +287,7 @@ export function Find({ query }: Props) {
 
   // Read URL state
   useEffect(() => {
-    filter.clear().read(query).done();
+    filter.clear().read(query);
 
     if (query.coursesAmount) {
       const coursesAmount = Number.parseInt(query.coursesAmount, 10);
