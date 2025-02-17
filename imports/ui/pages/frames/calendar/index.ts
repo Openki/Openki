@@ -57,8 +57,6 @@ template.onCreated(function () {
       filter.add("end", endDate.toISOString());
     }
 
-    filter.done();
-
     const filterQuery = filter.toQuery();
     const limit = instance.limit.get();
 

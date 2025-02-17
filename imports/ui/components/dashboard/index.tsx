@@ -38,7 +38,7 @@ function EntitiesComponent<T>({
   const { getLocalizedValue } = useLocalizedSetting();
   const filter = handler.filter();
   filter.read(params);
-  const query = filter.done().toQuery();
+  const query = filter.toQuery();
 
   const sortParam = params.sort;
   const sort = sortParam ? SortSpec.fromString(sortParam) : SortSpec.unordered();

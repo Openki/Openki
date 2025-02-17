@@ -90,7 +90,6 @@ template.onCreated(function () {
     filter.clear().read(query);
     filter.add("after", scheduleStart.toISOString());
     filter.add("end", moment(scheduleStart).add(4, "week").toISOString());
-    filter.done();
   });
 
   instance.autorun(() => {

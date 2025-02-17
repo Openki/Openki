@@ -57,7 +57,7 @@ const makeFilterQuery = function (
   day: number,
   oneDayOnly: boolean,
 ) {
-  const filter = new Filtering(EventParamPredicates).read(params).done();
+  const filter = new Filtering(EventParamPredicates).read(params);
 
   const query: EventsFindFilter = filter.toQuery();
 
@@ -565,7 +565,7 @@ RouterAsync.route("venuesMap", {
     if (region) {
       filter.add("region", region);
     }
-    filter.read(this.params.query).done();
+    filter.read(this.params.query);
     const query = filter.toQuery();
     return { venues: Venues.findFilter.subscribe(query) };
   },
@@ -590,7 +590,7 @@ RouterAsync.route("eventsMap", {
     if (region) {
       filter.add("region", region);
     }
-    filter.read(this.params.query).done();
+    filter.read(this.params.query);
     const query = filter.toQuery();
     query.after = moment().startOf("day").toDate();
     return {
@@ -614,7 +614,7 @@ RouterAsync.route("frame/eventsMap", {
   },
   subscriptions() {
     const filter = new Filtering(EventParamPredicates);
-    filter.read(this.params.query).done();
+    filter.read(this.params.query);
     const query = filter.toQuery();
     query.after = moment().startOf("day").toDate();
     return {
@@ -689,7 +689,7 @@ RouterAsync.route("framePropose", {
       hideCategories: Predicates.flag,
       singleEvent: Predicates.flag,
     };
-    const query = new Filtering(predicates).read(this.params.query).done().toQuery() as any;
+    const query = new Filtering(predicates).read(this.params.query).toQuery() as any;
 
     if (query.addTeamGroups) {
       // For security reasons only 5 groups are allowed
@@ -755,7 +755,7 @@ RouterAsync.route("kioskEvents", {
     tomorrow.setHours(tomorrow.getHours() + 24);
     tomorrow.setHours(0);
 
-    const filter = new Filtering(EventParamPredicates).read(this.params.query).done();
+    const filter = new Filtering(EventParamPredicates).read(this.params.query);
     Session.set("kioskRoute", "kioskEvents");
     Session.set("kioskFilter", filter.toParams());
 
@@ -780,7 +780,7 @@ RouterAsync.route("kioskEvents", {
   async data() {
     const sub = this.subscriptions();
 
-    const filter = new Filtering(EventParamPredicates).read(this.params.query).done();
+    const filter = new Filtering(EventParamPredicates).read(this.params.query);
 
     const filterParams = filter.toQuery();
     return {
@@ -812,7 +812,7 @@ RouterAsync.route("timetable", {
     const day = Number.parseInt(this.params.query.day || "0", 10);
     const query = makeFilterQuery(this.params.query, day, control);
 
-    const filter = new Filtering(EventParamPredicates).read(this.params.query).done();
+    const filter = new Filtering(EventParamPredicates).read(this.params.query);
     Session.set("kioskRoute", "timetable");
     Session.set("kioskFilter", filter.toParams());
 
@@ -823,7 +823,7 @@ RouterAsync.route("timetable", {
   async data() {
     const control = this.params.query.control !== "0";
     const day = Number.parseInt(this.params.query.day || "0", 10);
-    const filter = new Filtering(EventParamPredicates).read(this.params.query).done();
+    const filter = new Filtering(EventParamPredicates).read(this.params.query);
     let dayLimit: number | undefined;
     if (filter.get("start") && filter.get("end")) {
       dayLimit = moment(filter.get("end")).diff(filter.get("start"), "days");
