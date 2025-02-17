@@ -1,7 +1,5 @@
-import { Meteor } from "meteor/meteor";
-import { ReactiveVar } from "meteor/reactive-var";
+import React, {  useState } from "react";
 import { Router } from "meteor/iron:router";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import { _ } from "meteor/underscore";
 import moment from "moment";
 
@@ -21,8 +19,7 @@ import "./styles.scss";
 
 const Template = TemplateAny as TemplateStaticTyped<
   "logPage",
-  // LogCollection.Filtering Params are allowed as data input
-  Parameters<ReturnType<LogCollection["Filtering"]>["read"]>[0],
+
   {
     logs: ReactiveVar<Mongo.Cursor<LogEntity, LogEntity> | undefined>;
     limit: ReactiveVar<number>;
@@ -209,3 +206,72 @@ template.events({
     limit.set(limit.get() + 100);
   },
 });
+
+export function LogPage({query}:{
+  // LogCollection.Filtering Params are allowed as data input
+  query:  Parameters<ReturnType<LogCollection["Filtering"]>["read"]>[0],
+
+}){
+
+
+
+
+  return {{#unless privileged}}
+  <h1>PLZ login as admin!</h1>
+{{else}}
+  <div className="page-component">
+    <div className="js-search-field">
+      <div className="input-group">
+        <span className="input-group-text">ID</span>
+        <input className="js-rel-input js-update-url form-control" type="text" value="{{relFilter}}"
+               placeholder="Pw8HSnHtjErhPfCaa, f59a1e7855" />
+      </div>
+      <div className="input-group">
+        <span className="input-group-text">Track</span>
+        <input className="js-tr-input js-update-url form-control" type="text" value="{{trFilter}}"
+               placeholder="Profile.Region" />
+      </div>
+      <div className="input-group">
+        <span className="input-group-text">Date</span>
+        <input className="js-date-input js-update-url form-control" type="text" value="{{date}}"
+               placeholder="YYYY-MM-DD hh:mm:ss" />
+      </div>
+    </div>
+  </div>
+  <div className="page-component log-pane">
+    {{#unless Template.subscriptionsReady}}
+      <div className="loading">
+        <h1>
+          <marquee>&nbsp;&nbsp;&nbsp;LOADING! BE PATIENT! ENJOY THE SUN!</marquee>
+        </h1>
+      </div>
+    {{/unless}}
+    <table className="table">
+      <tr>
+        <th>ID</th>
+        <th>Track</th>
+        <th>Timestamp</th>
+        <th>Rel</th>
+        <th>Body</th>
+      </tr>
+      {{#each results}}
+        {{> logEntry}}
+      {{else}}
+        {{#if Template.subscriptionsReady}}
+          <tr>
+            <td>Nothing found.</td>
+          </tr>
+        {{/if}}
+      {{/each}}
+    </table>
+
+    {{#if hasMore}}
+      <div className="text-center">
+        <button type="button" className="btn btn-success js-more">
+          Show more
+        </button>
+      </div>
+    {{/if}}
+  </div>
+{{/unless}}
+}
