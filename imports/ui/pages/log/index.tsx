@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
@@ -30,7 +30,7 @@ export function LogPage({
 
   const [limit, setLimit] = useState(batchLoad);
 
-  const filter = Log.Filtering();
+  const filter = Log.Filtering().read(query).done();
 
   // Update whenever filter changes
 
@@ -38,7 +38,7 @@ export function LogPage({
   // when more are demanded
   const overLimit = limit + batchLoad + 1;
   // Read URL state
-  const [isLoading, logs] = useFindFilter(filter.clear().read(query).done().toQuery(), overLimit);
+  const [isLoading, logs] = useFindFilter(filter.toQuery(), overLimit);
 
   function updateUrl() {
     const filterParams = filter.toParams();
@@ -61,7 +61,7 @@ export function LogPage({
   function privileged() {
     return user?.privileged("admin");
   }
-  function date() {
+  function dateFilter() {
     const start = filter.get("start");
     return start?.toISOString() || "";
   }
@@ -94,70 +94,108 @@ export function LogPage({
     return inter;
   }
 
-  // Update the URI when the search-field was changed an loses focus
-  function onChange() {}
+  const [track, setTrack] = useState(trFilter() || "");
+  const handleTrackSearch = useCallback(
+    debounce((newValue: string) => {
+      setTrack(newValue);
+      filter.disable("tr");
 
-  const onTrackChange = debounce((event: React.KeyboardEvent<HTMLInputElement>) => {
-    filter.disable("tr");
+      const trStr = newValue.trim();
+      if (trStr) {
+        filter.add("tr", trStr);
+      }
 
-    const trStr = (event.target as any).value.trim();
-    if (trStr) {
-      filter.add("tr", trStr);
-    }
-
-    filter.done();
-    updateUrl();
-  }, 200);
-
-  const onDateChange = debounce((event: React.KeyboardEvent<HTMLInputElement>) => {
-    const dateStr = (event.target as any).value.trim();
-    if (dateStr === "") {
-      filter.disable("start").done();
-    } else {
-      filter.add("start", dateStr).done();
-    }
-    updateUrl();
-  }, 200);
-
-  const onIdChange = debounce((event: React.KeyboardEvent<HTMLInputElement>) => {
-    filter.disable("rel");
-
-    const relStr = (event.target as any).value.trim();
-    if (relStr) {
-      filter.add("rel", relStr);
-    }
-
-    filter.done();
-    updateUrl();
-  }, 200);
-
-  const onTrackClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, track: string) => {
-    filter.add("tr", track);
-    if (!event.shiftKey) {
       filter.done();
       updateUrl();
-      window.scrollTo(0, 0);
-    }
+    }, 200),
+    [],
+  );
+  const handleTrackChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTrack(event.currentTarget.value);
+    handleTrackSearch(event.currentTarget.value);
   };
 
-  const onDateClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, newDate: Date) => {
-    const start = moment(newDate).toISOString();
-    filter.add("start", start);
-    if (!event.shiftKey) {
+  const [date, setDate] = useState(dateFilter() || "");
+  const handleDateSearch = useCallback(
+    debounce((newValue: string) => {
+      setDate(newValue);
+      const dateStr = newValue.trim();
+      if (dateStr === "") {
+        filter.disable("start").done();
+      } else {
+        filter.add("start", dateStr).done();
+      }
+
       filter.done();
       updateUrl();
-      window.scrollTo(0, 0);
-    }
+    }, 200),
+    [],
+  );
+  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDate(event.currentTarget.value);
+    handleDateSearch(event.currentTarget.value);
   };
 
-  const onIdClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, id: string) => {
-    filter.add("rel", id);
-    if (!event.shiftKey) {
+  const [id, setId] = useState(relFilter() || "");
+  const handleIdSearch = useCallback(
+    debounce((newValue: string) => {
+      setId(newValue);
+      filter.disable("rel");
+
+      const relStr = newValue.trim();
+      if (relStr) {
+        filter.add("rel", relStr);
+      }
+
       filter.done();
       updateUrl();
-      window.scrollTo(0, 0);
-    }
+    }, 200),
+    [],
+  );
+  const handleIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setId(event.currentTarget.value);
+    handleIdSearch(event.currentTarget.value);
   };
+
+  const onTrackClick = useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, newTrack: string) => {
+      filter.add("tr", newTrack);
+      if (!event.shiftKey) {
+        filter.done();
+        setTrack(trFilter());
+        updateUrl();
+        window.scrollTo(0, 0);
+      }
+    },
+    [],
+  );
+
+  const onDateClick = useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, newDate: Date) => {
+      const start = moment(newDate).toISOString();
+      filter.add("start", start);
+      if (!event.shiftKey) {
+        filter.done();
+        setDate(dateFilter());
+        updateUrl();
+        window.scrollTo(0, 0);
+      }
+    },
+    [],
+  );
+
+  const onIdClick = useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, newId: string) => {
+      filter.add("rel", newId);
+      if (!event.shiftKey) {
+        filter.done();
+        setId(relFilter());
+        updateUrl();
+        window.scrollTo(0, 0);
+      }
+    },
+    [],
+  );
 
   useEffect(() => {
     Metatags.setCommonTags(t("log.list.windowtitle", "Log"));
@@ -176,10 +214,9 @@ export function LogPage({
             <input
               className="form-control"
               type="text"
-              value={relFilter()}
+              value={id}
               placeholder="Pw8HSnHtjErhPfCaa, f59a1e7855"
-              onChange={onChange}
-              onKeyUp={onIdChange}
+              onChange={handleIdChange}
             />
           </div>
           <div className="input-group">
@@ -187,10 +224,9 @@ export function LogPage({
             <input
               className="form-control"
               type="text"
-              value={trFilter()}
+              value={track}
               placeholder="Profile.Region"
-              onChange={onChange}
-              onKeyUp={onTrackChange}
+              onChange={handleTrackChange}
             />
           </div>
           <div className="input-group">
@@ -198,10 +234,9 @@ export function LogPage({
             <input
               className="form-control"
               type="text"
-              value={date()}
+              value={date}
               placeholder="YYYY-MM-DD hh:mm:ss"
-              onChange={onChange}
-              onKeyUp={onDateChange}
+              onChange={handleDateChange}
             />
           </div>
         </div>
@@ -225,9 +260,9 @@ export function LogPage({
             <th>Body</th>
           </tr>
 
-          {results().map((entry) => (
+          {results().map((entry, i) => (
             <Entry
-              key={"interval" in entry ? entry.interval : entry._id}
+              key={"interval" in entry ? i : entry._id}
               entry={entry}
               onTrackClick={onTrackClick}
               onDateClick={onDateClick}
@@ -235,7 +270,7 @@ export function LogPage({
             />
           ))}
 
-          {!!results() && !isLoading() && (
+          {!results().length && !isLoading() && (
             <tr>
               <td>Nothing found.</td>
             </tr>

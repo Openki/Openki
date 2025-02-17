@@ -67,6 +67,7 @@ export function Entry({
           <td className="nowrap">
             {entry.rel.map((id) => (
               <a
+                key={id}
                 className="js-rel-id id clickable nowrap"
                 title={id}
                 onClick={(event) => {
