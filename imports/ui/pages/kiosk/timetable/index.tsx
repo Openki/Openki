@@ -1,5 +1,4 @@
 /* eslint-disable no-nested-ternary */
-import { Template } from "meteor/templating";
 import React, { useEffect, useRef, useState } from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
