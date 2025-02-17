@@ -62,8 +62,8 @@ export function LogPage({
     return user?.privileged("admin");
   }
   function dateFilter() {
-    const start = filter.get("start");
-    return start?.toISOString() || "";
+    const { start } = filter.toParams();
+    return start || "";
   }
   function relFilter() {
     const { rel } = filter.toParams();
@@ -157,45 +157,30 @@ export function LogPage({
     handleIdSearch(event.currentTarget.value);
   };
 
-  const onTrackClick = useCallback(
-    (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, newTrack: string) => {
-      filter.add("tr", newTrack);
-      if (!event.shiftKey) {
-        filter.done();
-        setTrack(trFilter());
-        updateUrl();
-        window.scrollTo(0, 0);
-      }
-    },
-    [],
-  );
+  const onTrackClick = useCallback((newTrack: string) => {
+    filter.add("tr", newTrack);
+    filter.done();
+    setTrack(trFilter());
+    updateUrl();
+    window.scrollTo(0, 0);
+  }, []);
 
-  const onDateClick = useCallback(
-    (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, newDate: Date) => {
-      const start = moment(newDate).toISOString();
-      filter.add("start", start);
-      if (!event.shiftKey) {
-        filter.done();
-        setDate(dateFilter());
-        updateUrl();
-        window.scrollTo(0, 0);
-      }
-    },
-    [],
-  );
+  const onDateClick = useCallback((newDate: Date) => {
+    const start = moment(newDate).toISOString();
+    filter.add("start", start);
+    filter.done();
+    setDate(dateFilter());
+    updateUrl();
+    window.scrollTo(0, 0);
+  }, []);
 
-  const onIdClick = useCallback(
-    (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, newId: string) => {
-      filter.add("rel", newId);
-      if (!event.shiftKey) {
-        filter.done();
-        setId(relFilter());
-        updateUrl();
-        window.scrollTo(0, 0);
-      }
-    },
-    [],
-  );
+  const onIdClick = useCallback((newId: string) => {
+    filter.add("rel", newId);
+    filter.done();
+    setId(relFilter());
+    updateUrl();
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     Metatags.setCommonTags(t("log.list.windowtitle", "Log"));
