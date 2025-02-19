@@ -12,6 +12,7 @@ import { useDetails } from "/imports/api/regions/publications";
 // import { UserModel, Users } from "/imports/api/users/users";
 
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
+import { EditLocationMap } from "./edit-location-map";
 
 import "./styles.scss";
 
@@ -424,19 +425,31 @@ export function EditVenue({
         />
       </div>
       {!!value && (
-        <div className="mb-3">
-          <label className="form-label">
-            {t("course.event.edit.locationName", "Anzeigen als")}
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            value={value.name}
-            onChange={(e) => {
-              onChange({ ...value, name: e.currentTarget.value });
-            }}
-          />
-        </div>
+        <>
+          <div className="mb-3">
+            <label className="form-label">
+              {t("course.event.edit.locationName", "Anzeigen als")}
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              value={value.name}
+              onChange={(e) => {
+                onChange({ ...value, name: e.currentTarget.value });
+              }}
+            />
+          </div>
+          {!!value.loc && (
+            <div className="mb-3">
+              <EditLocationMap
+                value={value.loc}
+                onChange={(newLoc) => {
+                  onChange({ ...value, loc: newLoc });
+                }}
+              />
+            </div>
+          )}
+        </>
       )}
       {/* {{#if locationIsPreset}}
                   <div className="event-edit-location-selected">

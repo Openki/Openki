@@ -423,6 +423,7 @@ template.helpers({
   venueEditAttr() {
     const instance = Template.instance();
     return {
+      region: instance.data.region,
       value: instance.selectedLocation.get(),
       onChange: (newValue: EventVenueEntity) => {
         instance.selectedLocation.set(newValue);
