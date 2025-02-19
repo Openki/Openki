@@ -426,7 +426,7 @@ template.helpers({
     const instance = Template.instance();
     return {
       value: instance.selectedLocation.get(),
-      onChange: (newValue:EventVenueEntity) => {
+      onChange: (newValue: EventVenueEntity) => {
         instance.selectedLocation.set(newValue);
       },
     };
