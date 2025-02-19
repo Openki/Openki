@@ -428,7 +428,14 @@ export function EditVenue({
           <label className="form-label">
             {t("course.event.edit.locationName", "Anzeigen als")}
           </label>
-          <input type="text" className="form-control" value={value.name} />
+          <input
+            type="text"
+            className="form-control"
+            value={value.name}
+            onChange={(e) => {
+              onChange({ ...value, name: e.currentTarget.value });
+            }}
+          />
         </div>
       )}
       {/* {{#if locationIsPreset}}
