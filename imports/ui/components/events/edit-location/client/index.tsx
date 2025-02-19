@@ -426,6 +426,16 @@ export function EditVenue({
       </div>
       {!!value && (
         <>
+          {!!value.loc && (
+            <div className="mb-3">
+              <EditLocationMap
+                value={value.loc}
+                onChange={(newLoc) => {
+                  onChange({ ...value, loc: newLoc });
+                }}
+              />
+            </div>
+          )}
           <div className="mb-3">
             <label className="form-label">
               {t("course.event.edit.locationName", "Anzeigen als")}
@@ -439,16 +449,19 @@ export function EditVenue({
               }}
             />
           </div>
-          {!!value.loc && (
-            <div className="mb-3">
-              <EditLocationMap
-                value={value.loc}
-                onChange={(newLoc) => {
-                  onChange({ ...value, loc: newLoc });
-                }}
-              />
-            </div>
-          )}
+          <div className="mb-3">
+            <label className="form-label">
+              {t("course.event.edit.locationName", "Addresse")}
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              value={value.address}
+              onChange={(e) => {
+                onChange({ ...value, address: e.currentTarget.value });
+              }}
+            />
+          </div>
         </>
       )}
       {/* {{#if locationIsPreset}}
