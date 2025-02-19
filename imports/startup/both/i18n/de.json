@@ -608,7 +608,7 @@
 	"kiosk.started": "Angefangen",
 	"kiosk.timetable.nextDay": "Nächster Tag",
 	"kiosk.timetable.previousDay": "Vorheriger Tag",
-	"kiosk.timetable.showDetails": "Nähere Angaben",
+	"kiosk.timetable.showDetails": "Details anzeigen",
 	"kiosk.today": "{NUM, plural, one {Eine Veranstaltung} other {# Veranstaltungen} } später Heute:",
 	"languageSelection.legend.language": "Sprache",
 	"languageSelection.noLanguagesFound": "Keine Sprache gefunden.",
