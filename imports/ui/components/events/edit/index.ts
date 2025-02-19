@@ -70,7 +70,7 @@ const Template = TemplateAny as TemplateStaticTyped<
     }>;
     parent: Blaze.TemplateInstance;
     selectedRegion: ReactiveVar<string>;
-    selectedLocation: ReactiveVar<Partial<EventVenueEntity>>;
+    selectedLocation: ReactiveVar<EventVenueEntity | undefined>;
     noRsvpChecked: ReactiveVar<boolean>;
     notifyChecked: ReactiveVar<boolean>;
     customFields: () => GroupEntityCustomCourseFields[];
@@ -113,9 +113,7 @@ template.onCreated(function () {
     }
     instance.selectedRegion = new ReactiveVar(region || Session.get("region"));
   }
-  instance.selectedLocation = new ReactiveVar(
-    instance.data.venue || ({} as Partial<EventVenueEntity>),
-  );
+  instance.selectedLocation = new ReactiveVar(instance.data.venue);
 
   instance.noRsvpChecked = new ReactiveVar(!!event.noRsvp);
 
@@ -496,7 +494,7 @@ template.events({
     const editevent = {
       title,
       description: $description.html(),
-      venue: instance.selectedLocation.get(),
+      venue: instance.selectedLocation.get() || {},
       room: instance.$(".js-event-room").val() as string,
       startLocal: LocalTime.toString(start),
       endLocal: LocalTime.toString(end),
