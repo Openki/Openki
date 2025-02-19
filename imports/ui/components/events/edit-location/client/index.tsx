@@ -321,11 +321,12 @@ import "./styles.scss";
 
 export function EditVenue({
   region: regionId,
-  value, // onChange,
+  value,
+  onChange,
 }: {
   region: string;
   value: EventVenueEntity | undefined;
-  onChange: (newVenue: EventVenueEntity) => void;
+  onChange: (newValue: EventVenueEntity) => void;
 }) {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
@@ -358,13 +359,6 @@ export function EditVenue({
         `https://nominatim.openstreetmap.org?${new URLSearchParams(nominatimQuery)}`,
       );
       const found = await response.json();
-      if (found.length === 0) {
-        Alert.warning(
-          t("event.edit.noResultsforAddress", 'Found no results for the address "{ADDRESS}"', {
-            ADDRESS: query,
-          }),
-        );
-      }
       setOptions(
         map(found, (foundLocation) => {
           const a = foundLocation.address;
@@ -397,33 +391,46 @@ export function EditVenue({
   }
 
   return (
-    <div className="mb-3">
-      <label className="form-label">
-        {t("course.event.edit.location", "Venue")} <small>{t("_inputField.optional")}</small>
-      </label>
-      <AsyncTypeahead
-        defaultSelected={[value as any]}
-        filterBy={() => true}
-        isLoading={isLoading}
-        labelKey={(option) => {
-          const venue = option as EventVenueEntity;
-          return [venue.name, venue.address].filter((v) => v).join(", ");
-        }}
-        minLength={3}
-        onSearch={handleSearch}
-        options={options}
-        placeholder={t("event.edit.locationNamePlaceholder", "Address or name of venue") as string}
-        renderMenuItemChildren={(option) => {
-          const venue = option as EventVenueEntity;
-          return (
-            <>
-              {[!!venue.name && <strong>{venue.name}</strong>, venue.address]
-                .filter((v) => v)
-                .reduce((prev, curr) => [prev, <>, </>, curr] as any)}
-            </>
-          );
-        }}
-      />
+    <>
+      <div className="mb-3">
+        <label className="form-label">
+          {t("course.event.edit.location", "Venue")} <small>{t("_inputField.optional")}</small>
+        </label>
+        <AsyncTypeahead
+          defaultSelected={value ? [value as any] : ([{}] as any)}
+          filterBy={() => true}
+          isLoading={isLoading}
+          labelKey={(option) => {
+            const venue = option as EventVenueEntity;
+            return [venue.name, venue.address].filter((v) => v).join(", ");
+          }}
+          minLength={3}
+          onSearch={handleSearch}
+          options={options}
+          placeholder={t("event.edit.locationNamePlaceholder", "Address or name of venue") || ""}
+          renderMenuItemChildren={(option) => {
+            const venue = option as EventVenueEntity;
+            return (
+              <>
+                {[!!venue.name && <strong>{venue.name}</strong>, venue.address]
+                  .filter((v) => v)
+                  .reduce((prev, curr) => [prev, <>, </>, curr] as any)}
+              </>
+            );
+          }}
+          onChange={(newValue) => {
+            onChange(newValue[0] as EventVenueEntity);
+          }}
+        />
+      </div>
+      {!!value && (
+        <div className="mb-3">
+          <label className="form-label">
+            {t("course.event.edit.locationName", "Anzeigen als")}
+          </label>
+          <input type="text" className="form-control" value={value.name} />
+        </div>
+      )}
       {/* {{#if locationIsPreset}}
                   <div className="event-edit-location-selected">
                     <span className="fa-solid fa-location-dot fa-fw" aria-hidden="true"></span>
@@ -488,7 +495,7 @@ export function EditVenue({
       {/* <div className="col-md-5 event-edit-location-map">
                 {{> map markers=eventMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
               </div> */}
-    </div>
+    </>
   );
 }
 
