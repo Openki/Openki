@@ -33,7 +33,7 @@ import * as Analytics from "/imports/ui/lib/analytics";
 
 import "/imports/ui/components/buttons";
 import "/imports/ui/components/richtext";
-import "/imports/ui/components/events/edit-location";
+import "../edit-location/client";
 import "/imports/ui/components/price-policy";
 import "/imports/ui/components/regions/tag";
 import "/imports/ui/components/edit-custom-fields";
@@ -421,6 +421,15 @@ template.helpers({
       return Courses.findOne({ _id: courseId })?.customFields;
     }
     return undefined;
+  },
+  venueEditAttr() {
+    const instance = Template.instance();
+    return {
+      value: instance.selectedLocation.get(),
+      onChange: (newValue:EventVenueEntity) => {
+        instance.selectedLocation.set(newValue);
+      },
+    };
   },
 });
 
