@@ -7,6 +7,7 @@ import { Users } from "/imports/api/users/users";
 import * as timeLastEditDenormalizer from "/imports/api/groups/timeLastEditDenormalizer";
 import * as courseGroupsDenormalizer from "/imports/api/courses/groupsDenormalizer";
 import * as userBadgesDenormalizer from "/imports/api/users/badgesDenormalizer";
+import * as userVenuesDenormalizer from "/imports/api/users/venuesDenormalizer";
 import { Group, GroupEntity, GroupModel, Groups } from "./groups";
 
 import * as HtmlTools from "/imports/utils/html-tools";
@@ -191,6 +192,8 @@ export const remove = ServerMethod("group.remove", async (groupId: string) => {
     throw new Meteor.Error(401, "not permitted");
   }
 
+  await userVenuesDenormalizer.beforeGroupRemove(group);
+
   await Groups.removeAsync(groupId);
 
   // Update list of organizers per course
@@ -233,6 +236,12 @@ export const updateMembership = ServerMethod(
     // avoid the unlikely race condition where a user is not member anymore
     // but can still add somebody else to the group.
     await Groups.updateAsync(group._id, update);
+
+    if (join) {
+      await userVenuesDenormalizer.afterGroupAddMember(userId, group);
+    } else {
+      await userVenuesDenormalizer.afterGroupRemoveMember(userId, group);
+    }
 
     await userBadgesDenormalizer.updateBadges(user._id);
   },
