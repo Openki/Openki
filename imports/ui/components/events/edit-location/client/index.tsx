@@ -407,6 +407,9 @@ export function EditVenue({
           }}
           minLength={3}
           onSearch={handleSearch}
+          // Max one request per second, source: https://operations.osmfoundation.org/policies/nominatim/
+          delay={1010}
+          useCache={false}
           options={options}
           placeholder={t("event.edit.locationNamePlaceholder", "Address or name of venue") || ""}
           renderMenuItemChildren={(option) => {
@@ -438,7 +441,7 @@ export function EditVenue({
           )}
           <div className="mb-3">
             <label className="form-label">
-              {t("course.event.edit.locationName", "Anzeigen als")}
+              {t("course.event.edit.locationName", "Display as")}
             </label>
             <input
               type="text"
@@ -451,7 +454,7 @@ export function EditVenue({
           </div>
           <div className="mb-3">
             <label className="form-label">
-              {t("course.event.edit.locationName", "Addresse")}
+              {t("course.event.edit.locationAddress", "Address")}
             </label>
             <input
               type="text"
