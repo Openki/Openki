@@ -405,7 +405,7 @@ export function EditVenue({
             const venue = option as EventVenueEntity;
             return [venue.name, venue.address].filter((v) => v).join(", ");
           }}
-          minLength={3}
+          minLength={0}
           onSearch={handleSearch}
           // Max one request per second, source: https://operations.osmfoundation.org/policies/nominatim/
           delay={1010}

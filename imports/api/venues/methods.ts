@@ -1,10 +1,11 @@
 import { Match, check } from "meteor/check";
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import * as groupVenuesDenormalizer from "/imports/api/groups/venuesDenormalizer";
 
 import { Regions } from "/imports/api/regions/regions";
 import { VenueEntity, Venues } from "/imports/api/venues/venues";
+import * as userVenuesDenormalizer from "../users/venuesDenormalizer";
+import * as groupVenuesDenormalizer from "/imports/api/groups/venuesDenormalizer";
 
 import { HtmlString, StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";
 import * as HtmlTools from "/imports/utils/html-tools";
@@ -119,6 +120,8 @@ export const save = ServerMethod("venue.save", async (venueId: string, changes: 
       createdby: user._id,
       created: new Date(),
     });
+
+    userVenuesDenormalizer.afterVenueCreate(venueId, user._id);
   } else {
     await Venues.updateAsync({ _id: venueId }, { $set: set });
   }
@@ -129,7 +132,10 @@ export const save = ServerMethod("venue.save", async (venueId: string, changes: 
 export const remove = ServerMethod("venue.remove", async (venueId: string) => {
   check(venueId, String);
 
-  await checkEditAllowed(venueId);
+  const venue = await checkEditAllowed(venueId);
+
+  await userVenuesDenormalizer.beforeVenueRemove(venue);
+  await groupVenuesDenormalizer.beforeVenueRemove(venue);
 
   return Venues.removeAsync(venueId);
 });
@@ -144,6 +150,7 @@ export const addEditGroup = ServerMethod(
 
     await Venues.updateAsync(venueId, { $set: { editGroup: groupId } });
 
+    await userVenuesDenormalizer.afterVenueAddEditGroup(venue._id, groupId);
     await groupVenuesDenormalizer.afterVenueAddEditGroup(venue, groupId);
   },
 );
@@ -157,6 +164,7 @@ export const removeEditGroup = ServerMethod("venue.editGroup.remove", async (ven
   await Venues.updateAsync(venueId, { $unset: { editGroup: true } });
 
   if (groupId) {
+    await userVenuesDenormalizer.afterVenueRemoveEditGroup(venueId, groupId);
     await groupVenuesDenormalizer.afterVenueRemoveEditGroup(venueId, groupId);
   }
 });
