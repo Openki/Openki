@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import { Router } from "meteor/iron:router";
+import { Router } from "meteor/iron:router";
 // import { _ } from "meteor/underscore";
 import { map } from "lodash";
 import { useTranslation } from "react-i18next";
@@ -11,7 +11,7 @@ import { useDetails } from "/imports/api/regions/publications";
 // import { FindFilter, Venues } from "/imports/api/venues/venues";
 // import { UserModel, Users } from "/imports/api/users/users";
 
-import { AsyncTypeahead } from "react-bootstrap-typeahead";
+import { AsyncTypeahead, BaseMenuItem, Menu, MenuItem } from "react-bootstrap-typeahead";
 import { EditLocationMap } from "./edit-location-map";
 
 import "./styles.scss";
@@ -411,17 +411,42 @@ export function EditVenue({
           delay={1010}
           useCache={false}
           options={options}
+          promptText={t("_typeahead.promptText", "Type to search...")}
+          searchText={t("_typeahead.searchText", "Searching...")}
+          emptyLabel={t("_typeahead.emptyLabel", "No matches found.")}
           placeholder={t("event.edit.locationNamePlaceholder", "Address or name of venue") || ""}
-          renderMenuItemChildren={(option) => {
-            const venue = option as EventVenueEntity;
-            return (
-              <>
-                {[!!venue.name && <strong>{venue.name}</strong>, venue.address]
-                  .filter((v) => v)
-                  .reduce((prev, curr) => [prev, <>, </>, curr] as any)}
-              </>
-            );
-          }}
+          renderMenu={(results, menuProps) => (
+            <Menu {...menuProps}>
+              {results.length === 0 && (
+                <BaseMenuItem disabled role="option">
+                  {menuProps.emptyLabel}
+                </BaseMenuItem>
+              )}
+              {results.map((option, index) => {
+                const venue = option as EventVenueEntity;
+                return (
+                  <React.Fragment key={index}>
+                    <MenuItem option={option} position={index}>
+                      {[!!venue.name && <strong>{venue.name}</strong>, venue.address]
+                        .filter((v) => v)
+                        .reduce((prev, curr) => [prev, <>, </>, curr] as any)}
+                    </MenuItem>
+                  </React.Fragment>
+                );
+              })}
+              <Menu.Divider />
+              <a
+                className="px-3"
+                href={Router.path("venueDetails", { _id: "create" })}
+                target="_blank"
+              >
+                {t(
+                  "profile.createNewVenue.linkText",
+                  "Set up a venue that is visible to others and can be reused.",
+                )}
+              </a>
+            </Menu>
+          )}
           onChange={(newValue) => {
             onChange(newValue[0] as EventVenueEntity);
           }}
