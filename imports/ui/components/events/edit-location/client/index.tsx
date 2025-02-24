@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import { EJSON } from "meteor/ejson";
+import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
 // import { _ } from "meteor/underscore";
-import { map } from "lodash";
+import { differenceBy, intersectionBy, map } from "lodash";
 import { useTranslation } from "react-i18next";
+import { UserModel } from "/imports/api/users/users";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { EventVenueEntity } from "/imports/api/events/events";
@@ -10,11 +12,30 @@ import { useDetails } from "/imports/api/regions/publications";
 // import * as Alert from "/imports/api/alerts/alert";
 // import { FindFilter, Venues } from "/imports/api/venues/venues";
 // import { UserModel, Users } from "/imports/api/users/users";
+import { useFindFilter } from "/imports/api/venues/publications";
+import { useUser } from "/imports/utils/react-meteor-data";
 
-import { AsyncTypeahead, BaseMenuItem, Menu, MenuItem } from "react-bootstrap-typeahead";
+import {
+  AsyncTypeahead,
+  BaseMenuItem,
+  Menu,
+  MenuItem,
+  RenderMenuProps,
+} from "react-bootstrap-typeahead";
 import { EditLocationMap } from "./edit-location-map";
 
 import "./styles.scss";
+
+function ReactJoin(
+  elements: (string | false | JSX.Element | undefined)[],
+  seperator: JSX.Element = <>, </>,
+) {
+  const notEmptyElements = elements.filter((v) => v);
+  if (notEmptyElements.length === 0) {
+    return null;
+  }
+  return notEmptyElements.reduce((prev, curr) => [prev, seperator, curr] as any);
+}
 
 // const Template = TemplateAny as TemplateStaticTyped<
 //   "eventEditVenue",
@@ -320,6 +341,66 @@ import "./styles.scss";
 //   },
 // });
 
+function filterUserVenues(user: UserModel | null, venues: EventVenueEntity[]) {
+  let userVenues: EventVenueEntity[] = [];
+  if (user?.venues?.length) {
+    userVenues = venues.filter((v) => v._id && user.venues.includes(v._id));
+  }
+  return userVenues;
+}
+
+function CustomMenu({ results, menuProps }: { results: any[]; menuProps: RenderMenuProps }) {
+  const { t } = useTranslation();
+  const user = useUser();
+
+  let vs = results as EventVenueEntity[];
+  const userVenues = filterUserVenues(user, vs);
+  const uvs = intersectionBy(vs, userVenues, (v) => v._id);
+  vs = differenceBy(vs, uvs, (v) => v._id);
+  return (
+    <Menu {...menuProps} id="event-venue">
+      {uvs.length > 0 && (
+        <>
+          {uvs.map((venue, index) => (
+            <MenuItem key={index} option={venue} position={index} className="bg-venue">
+              <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>{" "}
+              {ReactJoin([!!venue.name && <strong>{venue.name}</strong>, venue.address])}
+            </MenuItem>
+          ))}
+          <Menu.Divider />
+        </>
+      )}
+      {vs.length === 0 && (
+        <BaseMenuItem disabled role="option">
+          {menuProps.emptyLabel}
+        </BaseMenuItem>
+      )}
+      {vs.map((venue, index) => (
+        <MenuItem
+          key={index + uvs.length}
+          option={venue}
+          position={index + uvs.length}
+          className={venue._id ? "bg-venue" : ""}
+        >
+          {!!venue._id && (
+            <>
+              <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>{" "}
+            </>
+          )}
+          {ReactJoin([!!venue.name && <strong>{venue.name}</strong>, venue.address])}
+        </MenuItem>
+      ))}
+      <Menu.Divider />
+      <a className="px-3" href={Router.path("venueDetails", { _id: "create" })} target="_blank">
+        {t(
+          "profile.createNewVenue.linkText",
+          "Set up a venue that is visible to others and can be reused.",
+        )}
+      </a>
+    </Menu>
+  );
+}
+
 export function EditVenue({
   region: regionId,
   value,
@@ -330,10 +411,16 @@ export function EditVenue({
   onChange: (newValue: EventVenueEntity) => void;
 }) {
   const { t } = useTranslation();
+  const user = useUser();
   const [isLoading, setIsLoading] = useState(false);
-  const [options, setOptions] = useState<EventVenueEntity[]>([]);
 
-  const [isRegionLoading, region] = useDetails(regionId);
+  const [isLoadingVenues, venues] = useFindFilter({ region: regionId });
+  const [isLoadingRegion, region] = useDetails(regionId);
+  const [options, setOptions] = useState<EventVenueEntity[]>(filterUserVenues(user, venues));
+
+  useEffect(() => {
+    setOptions(filterUserVenues(user, venues));
+  }, [EJSON.stringify([user, venues] as any)]);
 
   const handleSearch = async (query: string) => {
     setIsLoading(true);
@@ -356,12 +443,22 @@ export function EditVenue({
     nominatimQuery.bounded = 1;
 
     try {
-      const response = await fetch(
+      const request = fetch(
         `https://nominatim.openstreetmap.org?${new URLSearchParams(nominatimQuery)}`,
       );
+
+      // eslint-disable-next-line no-param-reassign
+      query = query.toUpperCase();
+      const filteredVenues = venues.filter((venue) =>
+        `${venue.short}, ${venue.name}, ${venue.address}`.toUpperCase().includes(query),
+      );
+
+      const response = await request;
       const found = await response.json();
-      setOptions(
-        map(found, (foundLocation) => {
+
+      setOptions([
+        ...filteredVenues,
+        ...map(found, (foundLocation) => {
           const a = foundLocation.address;
           return {
             loc: {
@@ -380,14 +477,14 @@ export function EditVenue({
             name: foundLocation.name,
           };
         }),
-      );
+      ]);
     } catch (reason) {
       Alert.serverError(reason);
     }
     setIsLoading(false);
   };
 
-  if (isRegionLoading()) {
+  if (isLoadingRegion() || isLoadingVenues()) {
     return null;
   }
 
@@ -416,36 +513,7 @@ export function EditVenue({
           emptyLabel={t("_typeahead.emptyLabel", "No matches found.")}
           placeholder={t("event.edit.locationNamePlaceholder", "Address or name of venue") || ""}
           renderMenu={(results, menuProps) => (
-            <Menu {...menuProps}>
-              {results.length === 0 && (
-                <BaseMenuItem disabled role="option">
-                  {menuProps.emptyLabel}
-                </BaseMenuItem>
-              )}
-              {results.map((option, index) => {
-                const venue = option as EventVenueEntity;
-                return (
-                  <React.Fragment key={index}>
-                    <MenuItem option={option} position={index}>
-                      {[!!venue.name && <strong>{venue.name}</strong>, venue.address]
-                        .filter((v) => v)
-                        .reduce((prev, curr) => [prev, <>, </>, curr] as any)}
-                    </MenuItem>
-                  </React.Fragment>
-                );
-              })}
-              <Menu.Divider />
-              <a
-                className="px-3"
-                href={Router.path("venueDetails", { _id: "create" })}
-                target="_blank"
-              >
-                {t(
-                  "profile.createNewVenue.linkText",
-                  "Set up a venue that is visible to others and can be reused.",
-                )}
-              </a>
-            </Menu>
+            <CustomMenu results={results} menuProps={menuProps} />
           )}
           onChange={(newValue) => {
             onChange(newValue[0] as EventVenueEntity);
