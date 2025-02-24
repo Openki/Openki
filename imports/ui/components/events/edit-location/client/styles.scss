@@ -43,7 +43,6 @@
   width: 100%;
 }
 
-
 .event-edit-location-candidates {
   margin: 0;
   padding: 5px 0 0;
@@ -79,4 +78,10 @@
 .event-edit-location-map > .map-box {
   height: 300px;
   width: 100%;
+}
+
+.bg-venue,
+.bg-venue:hover {
+  background-color: $venue-bg;
+  color: $venue-color;
 }
