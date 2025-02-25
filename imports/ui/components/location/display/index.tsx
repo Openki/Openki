@@ -10,7 +10,10 @@ import { TileLayers } from "../../TileLayer";
 
 import "./styles.scss";
 
-export function Display(props: { coordinates: [long: number, lat: number] }) {
+export function Display(props: {
+  coordinates: [long: number, lat: number];
+  fullscreen?: boolean | undefined;
+}) {
   const locale = useSession("locale");
 
   const markerIcon = new DivIcon({
@@ -22,7 +25,7 @@ export function Display(props: { coordinates: [long: number, lat: number] }) {
       <MapContainer bounds={[[props.coordinates[1], props.coordinates[0]]]}>
         {TileLayers[locale] || TileLayers.default}
         <Marker position={[props.coordinates[1], props.coordinates[0]]} icon={markerIcon}></Marker>
-        <FullscreenControl />
+        {props.fullscreen && <FullscreenControl />}
       </MapContainer>
     </div>
   );
