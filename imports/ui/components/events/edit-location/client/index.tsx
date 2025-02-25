@@ -1,7 +1,7 @@
 import { EJSON } from "meteor/ejson";
 import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
-import { differenceBy, intersectionBy, map } from "lodash";
+import { differenceBy, intersectionBy, map, pick } from "lodash";
 import { useTranslation } from "react-i18next";
 import { UserModel } from "/imports/api/users/users";
 
@@ -19,6 +19,7 @@ import {
   RenderMenuProps,
 } from "react-bootstrap-typeahead";
 import { EditLocationMap } from "./edit-location-map";
+import { Display } from "../../../location/display";
 
 function ReactJoin(
   elements: (string | false | JSX.Element | undefined)[],
@@ -31,10 +32,20 @@ function ReactJoin(
   return notEmptyElements.reduce((prev, curr) => [prev, seperator, curr] as any);
 }
 
+function toEventVenue(v: EventVenueEntity) {
+  return {
+    _id: v._id,
+    name: v.name,
+    loc: v.loc,
+    address: v.address,
+    editor: v.editor,
+  } as EventVenueEntity;
+}
+
 function filterUserVenues(user: UserModel | null, venues: EventVenueEntity[]) {
   let userVenues: EventVenueEntity[] = [];
   if (user?.venues?.length) {
-    userVenues = venues.filter((v) => v._id && user.venues.includes(v._id));
+    userVenues = venues.filter((v) => v._id && user.venues.includes(v._id)).map(toEventVenue);
   }
   return userVenues;
 }
@@ -139,9 +150,11 @@ export function EditVenue({
 
       // eslint-disable-next-line no-param-reassign
       query = query.toUpperCase();
-      const filteredVenues = venues.filter((venue) =>
-        `${venue.short}, ${venue.name}, ${venue.address}`.toUpperCase().includes(query),
-      );
+      const filteredVenues = venues
+        .filter((venue) =>
+          `${venue.short}, ${venue.name}, ${venue.address}`.toUpperCase().includes(query),
+        )
+        .map(toEventVenue);
 
       const response = await request;
       const found = await response.json();
@@ -225,6 +238,7 @@ export function EditVenue({
                 onChange={(e) => {
                   onChange({ ...value, name: e.currentTarget.value });
                 }}
+                disabled={!!value._id}
               />
             </div>
             <div className="col-md-5 mb-3">
@@ -238,6 +252,7 @@ export function EditVenue({
                 onChange={(e) => {
                   onChange({ ...value, address: e.currentTarget.value });
                 }}
+                disabled={!!value._id}
               />
             </div>
             <div className="col-md-3 mb-3">
@@ -255,18 +270,24 @@ export function EditVenue({
           </div>
           {!!value.loc && (
             <div className="mb-3">
-              <EditLocationMap
-                value={value.loc}
-                onChange={(newLoc) => {
-                  onChange({ ...value, loc: newLoc });
-                }}
-              />
-              <div className="form-text">
-                {t(
-                  "course.event.edit.locationMovePosition",
-                  "Sollte die Markierung der Adresse nicht korrekt positioniert sein, kannst du den Marker mittels Drag-and-Drop verschieben.",
-                )}
-              </div>
+              {!value._id ? (
+                <>
+                  <EditLocationMap
+                    value={value.loc}
+                    onChange={(newLoc) => {
+                      onChange({ ...value, loc: newLoc });
+                    }}
+                  />
+                  <div className="form-text">
+                    {t(
+                      "course.event.edit.locationMovePosition",
+                      "If the marker for the address is not positioned correctly, you can move the marker using drag and drop.",
+                    )}
+                  </div>
+                </>
+              ) : (
+                <Display coordinates={value.loc.coordinates} fullscreen={false} />
+              )}
             </div>
           )}
         </>
