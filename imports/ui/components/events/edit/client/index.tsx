@@ -40,6 +40,7 @@ import "/imports/ui/components/edit-custom-fields";
 
 import "./template.html";
 import "./styles.scss";
+import { useTranslation } from "react-i18next";
 
 type NewEventModel = {
   new: boolean;
@@ -725,90 +726,93 @@ template.events({
   },
 });
 
-export function Edit (){
+
+export function Edit ({event}: {event:EventEditData }){
+    const { t } = useTranslation();
+  
     return  <form>
-    <div class="edit-page">
+    <div className="edit-page">
       <h3>
         {{#if _id}}
-          {{i18n 'course.event.edit.edit' 'Edit event'}}
+          {t('course.event.edit.edit' ,'Edit event')}
         {{else}}
-          {{i18n 'course.event.edit.add' 'Create an event'}}
+          {t('course.event.edit.add' ,'Create an event')}
         {{/if}}
       </h3>
       {{#unless hasParentCourse}}
         {{#unless _id}}
-          {{i18n 'course.createEventInfo' 'Use this form to publish a singular, one-off, already organized event. Otherwise create or propose a course here:'}}
+          {t('course.createEventInfo', 'Use this form to publish a singular, one-off, already organized event. Otherwise create or propose a course here:')}
           <a
-            href="{{pathFor 'proposeCourse'}}">{{i18n 'menue.ProposeCourse' 'Propose a course'}}</a>
+            href="{{pathFor 'proposeCourse'}}">{t('menue.ProposeCourse', 'Propose a course')}</a>
         {{/unless}}
       {{/unless}}
 
-      <div class="edit-page-header event-edit">
+      <div className="edit-page-header event-edit">
         {{#if showRegionTag}}
           {{> regionTag this}}
         {{/if}}
-        <div class="mb-3">
-          <label class="form-label">{{i18n 'course.event.edit.title' 'Event title'}}</label>
-          <input type="text" class="js-event-title form-control form-control-lg" name="_"
-                placeholder="{{i18n 'event.title.placeholder' 'Write a catchy title here' attr=true}}"
-                size="30" value="{{this.title}}">
+        <div className="mb-3">
+          <label className="form-label">{t('course.event.edit.title' ,'Event title')}</label>
+          <input type="text" className="js-event-title form-control form-control-lg" name="_"
+                placeholder={t('event.title.placeholder', 'Write a catchy title here')}
+                size={30} value="{{this.title}}" />
         </div>
-        <div class="row">
-          <div class="col-md mb-3 mb-md-0">
-            <label class="form-label">{{i18n 'course.event.edit.date_start' 'Date'}}</label>
-            <div class="input-group">
-              <label class="input-group-text" for="eventStartDate">
-                <span class="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
+        <div className="row">
+          <div className="col-md mb-3 mb-md-0">
+            <label className="form-label">{t('course.event.edit.date_start', 'Date')}</label>
+            <div className="input-group">
+              <label className="input-group-text" htmlFor="eventStartDate">
+                <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
               </label>
-              <input id="eventStartDate" type="text" class="form-control js-event-start-date"
+              <input id="eventStartDate" type="text" className="form-control js-event-start-date"
                     value="{{localDate startLocal}}" {{disableForPast}}>
             </div>
           </div>
-          <div class="col-md mb-3 mb-md-0">
-            <label class="form-label">{{i18n 'course.event.edit.time_start' 'Time start'}}</label>
-            <div class="input-group">
-              <span class="input-group-text">
-                <span class="fa-solid fa-hourglass-start fa-fw" aria-hidden="true"></span>
+          <div className="col-md mb-3 mb-md-0">
+            <label className="form-label">{t('course.event.edit.time_start' ,'Time start')}</label>
+            <div className="input-group">
+              <span className="input-group-text">
+                <span className="fa-solid fa-hourglass-start fa-fw" aria-hidden="true"></span>
               </span>
-              <input type="text" class="js-event-start-time form-control" size="5"
+              <input type="text" className="js-event-start-time form-control" size={5}
                     value="{{timeFormat startLocal}}" {{disableForPast}}>
             </div>
           </div>
-          <div class="col-md js-time-end">
-            <label class="form-label" style="display:none">
-              {{i18n 'course.event.edit.duration' 'Duration (in minutes)'}}
-              <button type="button" class="js-toggle-duration btn-icon" data-bs-toggle="tooltip"
-                      data-bs-title="{{i18n 'course.event.edit.switch_time_end' 'Switch to end time' attr=true}}">
-                <span class="fa-solid fa-right-left"></span>
+          <div className="col-md js-time-end">
+            <label className="form-label" style={{display:"none"}}>
+              {t('course.event.edit.duration', 'Duration (in minutes)')}
+              <button type="button" className="js-toggle-duration btn-icon" data-bs-toggle="tooltip"
+                      data-bs-title={t('course.event.edit.switch_time_end', 'Switch to end time' )}>
+                <span className="fa-solid fa-right-left"></span>
               </button>
             </label>
-            <div class="input-group" style="display:none">
-              <span class="input-group-text">
-                <span class="fa-solid fa-hourglass-end fa-fw" aria-hidden="true"></span>
+            <div className="input-group" style={{display:"none"}}>
+              <span className="input-group-text">
+                <span className="fa-solid fa-hourglass-end fa-fw" aria-hidden="true"></span>
               </span>
-              <input type="number" class="js-event-duration form-control" id="editEventDuration"
-                    value="" size="5" {{disableForPast}}>
+              <input type="number" className="js-event-duration form-control" id="editEventDuration"
+                    value="" size={5} {{disableForPast}}/>
             </div>
-            <label class="form-label">
-              {{i18n 'course.event.edit.time_end' 'Time end'}}
-              <button type="button" class="js-toggle-duration btn-icon" data-bs-toggle="tooltip"
-                      data-bs-title="{{i18n 'course.event.edit.swich_duration' 'Switch to duration' attr=true}}">
-                <span class="fa-solid fa-right-left"></span>
+            <label className="form-label">
+              {t('course.event.edit.time_end', 'Time end')}
+              <button type="button" className="js-toggle-duration btn-icon" data-bs-toggle="tooltip"
+                      data-bs-title={t('course.event.edit.swich_duration', 'Switch to duration')}>
+                <span className="fa-solid fa-right-left"></span>
               </button>
             </label>
-            <div class="input-group">
-              <span class="input-group-text">
-                <span class="fa-solid fa-hourglass-end fa-fw" aria-hidden="true"></span>
+            <div className="input-group">
+              <span className="input-group-text">
+                <span className="fa-solid fa-hourglass-end fa-fw" aria-hidden="true"></span>
               </span>
-              <input type="text" class="js-event-end-time form-control" size="5"
+              <input type="text" className="js-event-end-time form-control" size={5}
                     value="{{timeFormat endLocal}}" {{disableForPast}}>
             </div>
           </div>
         </div>
       </div>
-      <div class="edit-page-body event-edit">
-        <div class="mb-3">
-          <label class="form-label">{{i18n 'course.event.edit.desc' 'Description'}}</label>
+      <div className="edit-page-body event-edit">
+        <div className="mb-3">
+          <label className="form-label">{t('course.event.edit.desc' ,'Description')}</label>
           {{> richtext className="js-event-description" text=description placeholder=(i18n 'event.description.placeholder' 'Describe your event as accurately as possible. This helps people know how to prepare and what to expect from this meeting (e.g. level, prerequisites, activities, teaching methods, what to bring, etc.)') maxlength=PublicSettings.eventDescriptionMax}}
         </div>
         {{#unless isPrivate}}
@@ -816,16 +820,16 @@ export function Edit (){
         {{/unless}}
 
         {{#if showRegionSelection}}
-          <div class="mb-3">
-            <label class="form-label">{{i18n 'course.edit.region' 'Region'}}</label>
-            <div class="input-group">
-              <div class="input-group-text">
-                <span class="fa-solid fa-location-dot" aria-hidden="true"></span>
+          <div className="mb-3">
+            <label className="form-label">{t('course.edit.region' ,'Region')}</label>
+            <div className="input-group">
+              <div className="input-group-text">
+                <span className="fa-solid fa-location-dot" aria-hidden="true"></span>
               </div>
-              <select class="js-select-region form-select" name='region'>
-                <option class="select-placeholder" disabled
+              <select className="js-select-region form-select" name='region'>
+                <option className="select-placeholder" disabled
                         selected="{{#if isCurrentRegion 'all'}}selected{{/if}}" value=''>
-                  {{i18n '_selection.pleaseSelect'}}
+                  {t('_selection.pleaseSelect'}}
                 </option>
                 {{#each region in regions}}
                   <option selected="{{#if isCurrentRegion region._id}}selected{{/if}}"
@@ -840,108 +844,108 @@ export function Edit (){
 
         {{#if showVenueSelection}}
           {{> eventEditVenue venueEditAttr}}
-          <div class="mb-3">
-            <label class="form-label">
-              {{i18n 'course.event.edit.room' 'Room'}}
-              <small> {{i18n '_inputField.optional'}}</small>
+          <div className="mb-3">
+            <label className="form-label">
+              {t('course.event.edit.room', 'Room')}
+              <small> {t('_inputField.optional')}</small>
             </label>
-            <div class="input-group" id="editform_room" name="editform_room">
-              <span class="input-group-text">
-                <span class="fa-solid fa-signs-post fa-fw" aria-hidden="true"></span>
+            <div className="input-group" id="editform_room" name="editform_room">
+              <span className="input-group-text">
+                <span className="fa-solid fa-signs-post fa-fw" aria-hidden="true"></span>
               </span>
-              <input type="text" class="js-event-room form-control" size="40" value="{{room}}">
+              <input type="text" className="js-event-room form-control" size={40} value="{{room}}"/>
             </div>
           </div>
         {{/if}}
 
         {{#if instance.customFields.length}}
-          <div class="mb-3">
+          <div className="mb-3">
             {{> editCustomFields fields=(instance.customFields) values=customFields}}
           </div>
         {{/if}}
 
-        <div class="mb-3">
-          <div class="form-check">
-            <input class="form-check-input js-check-no-rsvp" type="checkbox" value=""
-                  id="eventEditNoRsvpCheck" {{noRsvp}}>
-            <label class="form-check-label" for="eventEditNoRsvpCheck">
-              {{i18n 'event.edit.noRsvp' 'No reservation required'}}
+        <div className="mb-3">
+          <div className="form-check">
+            <input className="form-check-input js-check-no-rsvp" type="checkbox" value=""
+                  id="eventEditNoRsvpCheck" {{noRsvp}}/>
+            <label className="form-check-label" htmlFor="eventEditNoRsvpCheck">
+              {t('event.edit.noRsvp' ,'No reservation required')}
               {{#if noRsvpChecked}}
-                <span class="form-text d-block">
-                  {{i18n 'event.edit.noRsvp.description' 'Registration for this event is disabled. You might want to explain why in the description.'}}
+                <span className="form-text d-block">
+                  {t('event.edit.noRsvp.description', 'Registration for this event is disabled. You might want to explain why in the description.')}
                 </span>
               {{/if}}
             </label>
           </div>
           {{#unless noRsvpChecked}}
-            <label class="form-label">
-              {{i18n 'course.event.edit.maxParticipants' 'maximal number of participants'}}
-              <small> {{i18n '_inputField.optional'}}</small>
+            <label className="form-label">
+              {t('course.event.edit.maxParticipants' ,'maximal number of participants')}
+              <small> {t('_inputField.optional')}</small>
             </label>
-            <div class="input-group">
-              <span class="input-group-text">
-                <span class="fa-solid fa-users fa-fw" aria-hidden="true"></span>
+            <div className="input-group">
+              <span className="input-group-text">
+                <span className="fa-solid fa-users fa-fw" aria-hidden="true"></span>
               </span>
-              <input type="text" class="js-event-max-participants form-control" size="1"
-                    value="{{maxParticipants}}">
+              <input type="text" className="js-event-max-participants form-control" size={1}
+                    value="{{maxParticipants}}"/>
             </div>
           {{/unless}}
         </div>
 
-        <div class="mb-3">
-          <div class="form-check">
-            <input class="form-check-input js-check-event-internal" type="checkbox" value=""
-                  id="eventEditInternalCheck" {{isInternal}}>
-            <label class="form-check-label" for="eventEditInternalCheck">
-              {{i18n 'event.edit.internal' 'Hide on front page'}}
-              <span class="form-text d-block">
-                {{i18n 'event.edit.internal.description' 'Show it only on group and venue pages'}}
+        <div className="mb-3">
+          <div className="form-check">
+            <input className="form-check-input js-check-event-internal" type="checkbox" value=""
+                  id="eventEditInternalCheck" {{isInternal}} />
+            <label className="form-check-label" htmlFor="eventEditInternalCheck">
+              {t('event.edit.internal' ,'Hide on front page')}
+              <span className="form-text d-block">
+                {t('event.edit.internal.description', 'Show it only on group and venue pages')}
               </span>
             </label>
           </div>
           {{#if affectedReplicaCount}}
-            <div class="form-check mt-2">
-              <input class="form-check-input js-update-replicas-infos" type="checkbox"
-                    name="updateReplicasInfo" value="" id="eventEditUpdateReplicasInfoCheck">
-              <label class="form-check-label" for="eventEditUpdateReplicasInfoCheck">
-                {{i18n 'event.edit.updateReplicasInfo' 'Update {COUNT, plural, one{info from later copy} other{info from # later copies} } as well.' COUNT=affectedReplicaCount}}
+            <div className="form-check mt-2">
+              <input className="form-check-input js-update-replicas-infos" type="checkbox"
+                    name="updateReplicasInfo" value="" id="eventEditUpdateReplicasInfoCheck"/>
+              <label className="form-check-label" htmlFor="eventEditUpdateReplicasInfoCheck">
+                {t('event.edit.updateReplicasInfo', 'Update {COUNT, plural, one{info from later copy} other{info from # later copies} } as well.' ,{COUNT:affectedReplicaCount})}
               </label>
             </div>
             {{#if timeChanged}}
-              <div class="form-check {{disabledIfDayChanged}}">
-                <input class="form-check-input js-update-replicas-time" type="checkbox"
+              <div className="form-check {{disabledIfDayChanged}}">
+                <input className="form-check-input js-update-replicas-time" type="checkbox"
                       name="updateReplicasTime" value="" id="eventEditUpdateReplicasTimeCheck"
                       {{disabledIfDayChanged}}>
-                <label class="form-check-label" for="eventEditUpdateReplicasTimeCheck">
-                  {{i18n 'event.edit.updateReplicasTime' 'Update time from {COUNT, plural, one{copy} other{copies} }'
-                  COUNT=affectedReplicaCount}}
+                <label className="form-check-label" htmlFor="eventEditUpdateReplicasTimeCheck">
+                  {t('event.edit.updateReplicasTime' ,'Update time from {COUNT, plural, one{copy} other{copies} }',
+                  {COUNT:affectedReplicaCount})}
                 </label>
               </div>
               {{#if startDayChanged}}
-                <div class="card text-white bg-danger mb-4">
-                  <div class="card-body p-2">
-                    <span class="fa-solid fa-triangle-exclamation fa-fw" aria-hidden="true"></span>
-                    {{i18n 'event.edit.startDayChanged' 'Updating the copies when the start day has been changed is not (yet) supported.'}}
+                <div className="card text-white bg-danger mb-4">
+                  <div className="card-body p-2">
+                    <span className="fa-solid fa-triangle-exclamation fa-fw" aria-hidden="true"></span>
+                    {t('event.edit.startDayChanged' ,'Updating the copies when the start day has been changed is not (yet) supported.')}
                   </div>
                 </div>
               {{else}}
                 {{#if changedReplicas.length}}
-                  <div class="card mb-4 changed-replicas {{emphasizeClass}}">
-                    <div class="card-header bg-warning">
-                      <span class="fa-solid fa-triangle-exclamation fa-fw"
+                  <div className="card mb-4 changed-replicas {{emphasizeClass}}">
+                    <div className="card-header bg-warning">
+                      <span className="fa-solid fa-triangle-exclamation fa-fw"
                             aria-hidden="true"></span>
-                      {{i18n 'event.edit.changedReplicas.heading' 'Found {NUM, plural, one{one copy which varies} other{# copies which vary} } in time' NUM=changedReplicas.length}}
+                      {t('event.edit.changedReplicas.heading' ,'Found {NUM, plural, one{one copy which varies} other{# copies which vary} } in time', {NUM:changedReplicas.length})}
                     </div>
-                    <div class="card-body">
+                    <div className="card-body">
                       {{#unless updateChangedReplicas}}
-                        <span class="update-changed-replicas-help">
-                          {{i18n 'event.edit.changedReplicas.body' "By default {NUM, plural, one{this copy} other{these copies} } won't be updated as {NUM, plural, one{it has} other{they have} } another time set than the original event:" NUM=changedReplicas.length}}
+                        <span className="update-changed-replicas-help">
+                          {t('event.edit.changedReplicas.body', "By default {NUM, plural, one{this copy} other{these copies} } won't be updated as {NUM, plural, one{it has} other{they have} } another time set than the original event:",{ NUM:changedReplicas.length})}
                         </span>
                       {{/unless}}
                       <ul>
                         {{#each replica in changedReplicas}}
                           <li>
-                            <a href="{{pathFor 'showEvent' replica}}" target="_blank">
+                            <a href={Router.path('showEvent', replica)} target="_blank">
                               {{dateFormat replica.startLocal}}
                               -
                               {{replica.title}}
@@ -953,13 +957,13 @@ export function Edit (){
                           </li>
                         {{/each}}
                       </ul>
-                      <div class="form-check">
-                        <input class="form-check-input js-update-changed-replicas-time"
+                      <div className="form-check">
+                        <input className="form-check-input js-update-changed-replicas-time"
                               type="checkbox" name="updateChangedReplicasTime" value=""
-                              id="eventEditUpdateChangedReplicasTimeCheck">
-                        <label class="form-check-label"
-                              for="eventEditUpdateChangedReplicasTimeCheck">
-                          {{i18n 'event.edit.updateChangedReplicasTime' 'Overwrite {NUM, plural, one{this events} other{these events} } time too' NUM=changedReplicas.length}}
+                              id="eventEditUpdateChangedReplicasTimeCheck"/>
+                        <label className="form-check-label"
+                              htmlFor="eventEditUpdateChangedReplicasTimeCheck">
+                          {t('event.edit.updateChangedReplicasTime', 'Overwrite {NUM, plural, one{this events} other{these events} } time too',{ NUM:changedReplicas.length})}
                         </label>
                       </div>
                     </div>
@@ -969,49 +973,49 @@ export function Edit (){
             {{/if}}
           {{/if}}
           {{#if courseId}}
-            <div class="form-check">
+            <div className="form-check">
               {{#if new}}
-                <input class="form-check-input js-check-notify" type="checkbox" value=""
-                      id="eventEditCheckNotifyCheck" checked>
-                <label class="form-check-label" for="eventEditCheckNotifyCheck">
-                  {{i18n 'event.edit.notifyNewEvent' 'Notify all members of the "{COURSE}" course about this event.' COURSE=course.name}}
+                <input className="form-check-input js-check-notify" type="checkbox" value=""
+                      id="eventEditCheckNotifyCheck" checked />
+                <label className="form-check-label" htmlFor="eventEditCheckNotifyCheck">
+                  {t('event.edit.notifyNewEvent', 'Notify all members of the "{COURSE}" course about this event.', {COURSE:course.name})}
                 </label>
               {{else}}
-                <input class="form-check-input js-check-notify" type="checkbox" value=""
-                      id="eventEditCheckNotifyCheck">
-                <label class="form-check-label" for="eventEditCheckNotifyCheck">
-                  {{i18n 'event.edit.notifyEditEvent' 'Notify all members of the "{COURSE}" course about the changes you made.' COURSE=course.name}}
+                <input className="form-check-input js-check-notify" type="checkbox" value=""
+                      id="eventEditCheckNotifyCheck" />
+                <label className="form-check-label" htmlFor="eventEditCheckNotifyCheck">
+                  {t('event.edit.notifyEditEvent' ,'Notify all members of the "{COURSE}" course about the changes you made.' ,{COURSE:course.name})}
                 </label>
               {{/if}}
             </div>
           {{/if}}
           {{#if notifyChecked}}
-            <label class="form-label">
-              {{i18n 'course.event.edit.AddMessage' 'Add message'}}
-              <small> {{i18n '_inputField.optional'}}</small>
+            <label className="form-label">
+              {t('course.event.edit.AddMessage' ,'Add message')}
+              <small> {t('_inputField.optional')}</small>
             </label>
-            <div class="input-group" id="editform_message" name="editform_message">
-              <span class="input-group-text">
-                <span class="fa-solid fa-pencil fa-fw" aria-hidden="true"></span>
+            <div className="input-group" id="editform_message" name="editform_message">
+              <span className="input-group-text">
+                <span className="fa-solid fa-pencil fa-fw" aria-hidden="true"></span>
               </span>
-              <textarea rows="3" class="form-control js-event-add-message" maxlength="2000"
-                        placeholder="{{i18n 'event.edit.additionalMessage' 'If you feel good about doing so, describe what members of the course should know. (This message is only sent to the interested users and will not be visible in the event description afterwards.)' attr=true}}"></textarea>
+              <textarea rows={3} className="form-control js-event-add-message" maxlength={2000}
+                        placeholder={t('event.edit.additionalMessage', 'If you feel good about doing so, describe what members of the course should know. (This message is only sent to the interested users and will not be visible in the event description afterwards.)')}></textarea>
             </div>
           {{/if}}
           {{#unless noRsvpChecked}}
             {{#if PublicSettings.feature.sendReminderIsEditable}}
-              <div class="form-check">
-                <input class="form-check-input js-check-event-send-reminder" type="checkbox"
-                      value="" id="eventEditSendReminderCheck" {{sendReminder}}>
-                <label class="form-check-label" for="eventEditSendReminderCheck">
-                  {{i18n 'event.edit.sendReminder' 'Send a reminder e-mail to all participants 24 hours before the event starts.'}}
+              <div className="form-check">
+                <input className="form-check-input js-check-event-send-reminder" type="checkbox"
+                      value="" id="eventEditSendReminderCheck" {{sendReminder}} />
+                <label className="form-check-label" htmlFor="eventEditSendReminderCheck">
+                  {t('event.edit.sendReminder' ,'Send a reminder e-mail to all participants 24 hours before the event starts.')}
                 </label>
               </div>
             {{/if}}
           {{/unless}}
         </div>
 
-        <div class="form-actions">
+        <div className="form-actions">
           {{> buttonSave saving=saving}}
           {{> buttonCancel event="js-event-cancel"}}
         </div>
