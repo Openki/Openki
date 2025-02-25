@@ -194,7 +194,7 @@
   "course.event.edit.edit": "Edit event",
   "course.event.edit.location": "Venue",
   "course.event.edit.locationAddress": "Address",
-  "course.event.edit.locationName": "Display as",
+  "course.event.edit.locationName": "Display venue as",
   "course.event.edit.maxParticipants": "maximal number of participants",
   "course.event.edit.room": "Room",
   "course.event.edit.swich_duration": "Switch to duration",
