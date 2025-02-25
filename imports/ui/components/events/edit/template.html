@@ -26,8 +26,8 @@
                  placeholder="{{i18n 'event.title.placeholder' 'Write a catchy title here' attr=true}}"
                  size="30" value="{{this.title}}">
         </div>
-        <div class="row gap-3">
-          <div class="col-md">
+        <div class="row">
+          <div class="col-md mb-3 mb-md-0">
             <label class="form-label">{{i18n 'course.event.edit.date_start' 'Date'}}</label>
             <div class="input-group">
               <label class="input-group-text" for="eventStartDate">
@@ -37,7 +37,7 @@
                      value="{{localDate startLocal}}" {{disableForPast}}>
             </div>
           </div>
-          <div class="col-md">
+          <div class="col-md mb-3 mb-md-0">
             <label class="form-label">{{i18n 'course.event.edit.time_start' 'Time start'}}</label>
             <div class="input-group">
               <span class="input-group-text">

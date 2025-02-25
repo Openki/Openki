@@ -408,7 +408,7 @@ export function EditVenue({
 }: {
   region: string;
   value: EventVenueEntity | undefined;
-  onChange: (newValue: EventVenueEntity) => void;
+  onChange: (newValue: EventVenueEntity | undefined) => void;
 }) {
   const { t } = useTranslation();
   const user = useUser();
@@ -490,38 +490,79 @@ export function EditVenue({
 
   return (
     <>
-      <div className="mb-3">
-        <label className="form-label">
-          {t("course.event.edit.location", "Venue")} <small>{t("_inputField.optional")}</small>
-        </label>
-        <AsyncTypeahead
-          defaultSelected={value ? [value as any] : ([{}] as any)}
-          filterBy={() => true}
-          isLoading={isLoading}
-          labelKey={(option) => {
-            const venue = option as EventVenueEntity;
-            return [venue.name, venue.address].filter((v) => v).join(", ");
-          }}
-          minLength={0}
-          onSearch={handleSearch}
-          // Max one request per second, source: https://operations.osmfoundation.org/policies/nominatim/
-          delay={1010}
-          useCache={false}
-          options={options}
-          promptText={t("_typeahead.promptText", "Type to search...")}
-          searchText={t("_typeahead.searchText", "Searching...")}
-          emptyLabel={t("_typeahead.emptyLabel", "No matches found.")}
-          placeholder={t("event.edit.locationNamePlaceholder", "Address or name of venue") || ""}
-          renderMenu={(results, menuProps) => (
-            <CustomMenu results={results} menuProps={menuProps} />
-          )}
-          onChange={(newValue) => {
-            onChange(newValue[0] as EventVenueEntity);
-          }}
-        />
-      </div>
-      {!!value && (
+      {!value ? (
+        <div className="mb-3">
+          <label className="form-label">
+            {t("course.event.edit.location", "Venue")} <small>{t("_inputField.optional")}</small>
+          </label>
+          <AsyncTypeahead
+            defaultSelected={value ? [value as any] : ([{}] as any)}
+            filterBy={() => true}
+            isLoading={isLoading}
+            labelKey={(option) => {
+              const venue = option as EventVenueEntity;
+              return [venue.name, venue.address].filter((v) => v).join(", ");
+            }}
+            minLength={0}
+            onSearch={handleSearch}
+            // Max one request per second, source: https://operations.osmfoundation.org/policies/nominatim/
+            delay={1010}
+            useCache={false}
+            options={options}
+            promptText={t("_typeahead.promptText", "Type to search...")}
+            searchText={t("_typeahead.searchText", "Searching...")}
+            emptyLabel={t("_typeahead.emptyLabel", "No matches found.")}
+            placeholder={t("event.edit.locationNamePlaceholder", "Address or name of venue") || ""}
+            renderMenu={(results, menuProps) => (
+              <CustomMenu results={results} menuProps={menuProps} />
+            )}
+            onChange={(newValue) => {
+              onChange(newValue[0] as EventVenueEntity);
+            }}
+          />
+        </div>
+      ) : (
         <>
+          <div className="row">
+            <div className="col-md-4 mb-3">
+              <label className="form-label">
+                {t("course.event.edit.locationName", "Display venue as")}
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                value={value.name}
+                onChange={(e) => {
+                  onChange({ ...value, name: e.currentTarget.value });
+                }}
+              />
+            </div>
+            <div className="col-md-5 mb-3">
+              <label className="form-label">
+                {t("course.event.edit.locationAddress", "Address")}
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                value={value.address}
+                onChange={(e) => {
+                  onChange({ ...value, address: e.currentTarget.value });
+                }}
+              />
+            </div>
+            <div className="col-md-3 mb-3">
+              <label className="form-label d-none d-md-block">&nbsp;</label>
+              <div className="d-grid">
+                <button
+                  className="btn btn-secondary"
+                  type="button"
+                  onClick={() => onChange(undefined)}
+                >
+                  {t("course.event.edit.locationResetButton", "Search other place")}
+                </button>
+              </div>
+            </div>
+          </div>
           {!!value.loc && (
             <div className="mb-3">
               <EditLocationMap
@@ -530,34 +571,14 @@ export function EditVenue({
                   onChange({ ...value, loc: newLoc });
                 }}
               />
+              <div className="form-text">
+                {t(
+                  "course.event.edit.locationMovePosition",
+                  "Sollte die Markierung der Adresse nicht korrekt positioniert sein, kannst du den Marker mittels Drag-and-Drop verschieben.",
+                )}
+              </div>
             </div>
           )}
-          <div className="mb-3">
-            <label className="form-label">
-              {t("course.event.edit.locationName", "Display as")}
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              value={value.name}
-              onChange={(e) => {
-                onChange({ ...value, name: e.currentTarget.value });
-              }}
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">
-              {t("course.event.edit.locationAddress", "Address")}
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              value={value.address}
-              onChange={(e) => {
-                onChange({ ...value, address: e.currentTarget.value });
-              }}
-            />
-          </div>
         </>
       )}
       {/* {{#if locationIsPreset}}
