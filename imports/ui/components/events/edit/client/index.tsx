@@ -33,7 +33,7 @@ import * as Analytics from "/imports/ui/lib/analytics";
 
 import "/imports/ui/components/buttons";
 import "/imports/ui/components/richtext";
-import "../edit-location/client";
+import "../../edit-location/client";
 import "/imports/ui/components/price-policy";
 import "/imports/ui/components/regions/tag";
 import "/imports/ui/components/edit-custom-fields";
