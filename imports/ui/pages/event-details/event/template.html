@@ -19,7 +19,7 @@
       {{/if}}
       <div class="event{{#if course}} course-event{{/if}}">
         {{#if editing}}
-          {{> eventEdit}}
+          {{> eventEdit event=this}}
         {{else}}
           {{> eventDisplay}}
         {{/if}}

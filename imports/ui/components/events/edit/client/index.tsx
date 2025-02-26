@@ -6,32 +6,30 @@
 
 import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
-import { Meteor } from "meteor/meteor";
-import { intersection, uniq } from "lodash";
-import { i18n } from "/imports/startup/both/i18next";
-import { Template } from "meteor/templating";
-import { Session } from "meteor/session";
+// import { Meteor } from "meteor/meteor";
+// import { intersection, uniq } from "lodash";
+// import { i18n } from "/imports/startup/both/i18next";
+// import { Template } from "meteor/templating";
+// import { Session } from "meteor/session";
 import moment from "moment";
 
-import * as Alert from "/imports/api/alerts/alert";
+// import * as Alert from "/imports/api/alerts/alert";
 import { Courses } from "/imports/api/courses/courses";
-import { EventModel, Events, EventVenueEntity, OEvent } from "/imports/api/events/events";
-import * as EventsMethods from "/imports/api/events/methods";
-import { Regions } from "/imports/api/regions/regions";
-import { SaveFields } from "/imports/api/events/methods";
-import { GroupEntityCustomCourseFields, Groups } from "/imports/api/groups/groups";
-import * as CoursesMethods from "/imports/api/courses/methods";
+import { EventModel, Events,  OEvent } from "/imports/api/events/events";
+// import * as EventsMethods from "/imports/api/events/methods";
+// import { Regions } from "/imports/api/regions/regions";
+// import { SaveFields } from "/imports/api/events/methods";
+// import { GroupEntityCustomCourseFields, Groups } from "/imports/api/groups/groups";
+// import * as CoursesMethods from "/imports/api/courses/methods";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { AffectedReplicaSelectors } from "/imports/utils/affected-replica-selectors";
-import { LocalTime } from "/imports/utils/local-time";
-import * as Tooltips from "/imports/utils/Tooltips";
+// import { LocalTime } from "/imports/utils/local-time";
+// import * as Tooltips from "/imports/utils/Tooltips";
 
-import { PleaseLogin } from "/imports/ui/lib/please-login";
-import * as Analytics from "/imports/ui/lib/analytics";
+// import { PleaseLogin } from "/imports/ui/lib/please-login";
+// import * as Analytics from "/imports/ui/lib/analytics";
 
-import "./template.html";
-import "./styles.scss";
 import { useTranslation } from "react-i18next";
 import { RegionTag } from "../../../regions/tag";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
@@ -39,8 +37,9 @@ import { Richtext } from "../../../richtext";
 import { PricePolicy } from "../../../price-policy";
 import { useSession } from "/imports/utils/react-meteor-data";
 import { useAll } from "/imports/api/regions/publications";
-import { EditVenue } from "../../edit-location/client";
-import { EditCustomFields } from "../../../edit-custom-fields";
+// import { EditVenue } from "../../edit-location/client";
+// import { EditCustomFields } from "../../../edit-custom-fields";
+import "./styles.scss";
 
 type NewEventModel = {
   new: boolean;
@@ -51,507 +50,501 @@ type NewEventModel = {
 
 export type EventEditData = EventModel | (NewEventModel & OEvent & Partial<EventModel>);
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "eventEdit",
-  EventEditData,
-  {
-    parent: Blaze.TemplateInstance;
-    customFields: () => GroupEntityCustomCourseFields[];
-  }
->;
-
-const template = Template.eventEdit;
-
-template.onCreated(function () {
-  const instance = this;
-  instance.busy(false);
-
-  const event = instance.data;
-  if (event.courseId) {
-    instance.subscribe("courseDetails", event.courseId);
-  }
-
-  if (event._id) {
-    instance.subscribe("affectedReplica", instance.data._id);
-  }
-
-  const parent = instance.parentInstance();
-
-  if (!parent) throw new Error("Unexpected undefined: parent");
-
-  instance.parent = parent;
-
-  function getRegion() {
-    let region;
-    if (instance.data.courseId) {
-      const course = Courses.findOne(instance.data.courseId);
-      if (!course) {
-        throw new Error("Unexpected undefined: course");
-      }
-
-      region = course.region;
-    } else {
-      if (!selectedRegion || selectedRegion === "all") {
-        return undefined;
-      }
-      region = selectedRegion;
-    }
-
-    if (region) {
-      // The region was preset for the frame
-      return Regions.findOne({ _id: region });
-    }
-    if (Regions.findFilter({}, 2).count() === 1) {
-      // There is only one region
-      return Regions.findOne();
-    }
-    return Regions.currentRegion();
-  }
-
-  function getGroups() {
-    const { courseId } = Template.currentData();
-    const groups = [];
-
-    // We have this 'secret' feature where you can set a group ID
-    // in the URL to assign a group to the event on creation
-    if (Router.current().params.query.group) {
-      groups.push(Router.current().params.query.group as string);
-    }
-
-    const defaultTeamGroups = getRegion()?.defaultTeamGroups;
-    if (defaultTeamGroups) {
-      groups.push(...defaultTeamGroups);
-    }
-
-    if (courseId) {
-      const course = Courses.findOne(courseId);
-      if (!course) {
-        throw new Error("Unexpected undefined: course");
-      }
-      groups.push(...course.groupOrganizers);
-    }
-
-    // remove double groups
-    return uniq(groups);
-  }
-
-  instance.autorun(() => {
-    getGroups().forEach((g) => {
-      instance.subscribe("group", g);
-    });
-  });
-
-  instance.customFields = (type?: "singleLine" | "multiLine") => {
-    const groups = getGroups();
-
-    return (
-      Groups.find({ _id: { $in: groups } })
-        .fetch()
-        .flatMap((g) => g.customCourseFields || [])
-        // when type is undefined all will get back
-        .filter((g) => !type || (g.type || "singleLine") === type)
-    );
-  };
-});
-
-function getEventStartMoment(instance: ReturnType<(typeof Template)["instance"]>) {
-  return LocalTime.fromString(
-    instance.$(".js-event-start-date").val() as string,
-    instance.$(".js-event-start-time").val() as string,
-  );
-}
-
-function getEventEndMoment(instance: ReturnType<(typeof Template)["instance"]>) {
-  const startMoment = getEventStartMoment(instance);
-  let endMoment = LocalTime.fromString(
-    startMoment.format("L"),
-    instance.$(".js-event-end-time").val() as string,
-  );
-
-  // If the end time is earlier than the start time, assume the event
-  // spans into the next day. This might result in some weird behavior
-  // around hour-lapses due to DST (where 1:30 may be 'later' than 2:00).
-  // Well maybe you shouldn't schedule your events to start or end
-  // in these politically fucked hours.
-  if (endMoment.diff(startMoment) < 0) {
-    endMoment = LocalTime.fromString(
-      startMoment.add(1, "day").format("L"),
-      instance.$(".js-event-end-time").val() as string,
-    );
-  }
-
-  return endMoment;
-}
-
-function getEventDuration(instance: ReturnType<(typeof Template)["instance"]>) {
-  const duration = Number.parseInt(instance.$(".js-event-duration").val() as string, 10) || 0;
-  return Math.max(0, duration);
-}
-
-/* Patch the end time and the duration when start, end or duration changes */
-function updateTimes(instance: ReturnType<(typeof Template)["instance"]>, updateEnd: boolean) {
-  const start = getEventStartMoment(instance);
-  let end = getEventEndMoment(instance);
-  let duration = getEventDuration(instance);
-  if (!start.isValid() || !end.isValid()) {
-    // If you put into the machine wrong figures, will the right answers come out?
-    return;
-  }
-
-  if (updateEnd) {
-    end = moment(start).add(duration, "minutes");
-  }
-
-  if (end.isBefore(start)) {
-    // Let sanity prevail
-    end = start;
-    duration = 0;
-  }
-
-  duration = end.diff(start, "minutes");
-  instance.$(".js-event-start-date").val(start.format("L"));
-  instance.$(".js-event-start-time").val(start.format("LT"));
-  instance.$(".js-event-end-time").val(end.format("LT"));
-  instance.$(".js-event-duration").val(duration.toString());
-}
-
-/**
- * validates input for maxParticipants
- * @param maxParticipants the user-input
- * @return an integer if the input passed validation.
- */
-const validateMaxParticipants = (maxParticipants: string) => {
-  const intVal = Number.parseInt(maxParticipants, 10);
-  if (Number.isNaN(intVal)) {
-    Alert.error(i18n("event.edit.mustBeInteger", "Must be a whole number"));
-    return false;
-  }
-  if (intVal < 0) {
-    Alert.error(i18n("event.edit.mustBePositive", "The number must be positive"));
-    return false;
-  }
-  return intVal;
-};
-
-template.onRendered(function () {
-  const instance = this;
-  updateTimes(instance, false);
-
-  instance.autorun(() => {
-    const desiredLocale = Session.get("locale");
-
-    if (!desiredLocale) {
-      // if nothing set we wait for a change
-      return;
-    }
-
-    const language = desiredLocale.substring(0, 2);
-
-    const $dateInput = instance.$(".js-event-start-date");
-
-    // remove, re-add the datepicker when the locale changed
-    $dateInput.datepicker("destroy");
-
-    // I don't know why, but language: moment.locale() does not work here.
-    // So instead we clobber the 'en' settings with settings for the
-    // selected language.
-    $dateInput.datepicker({
-      language,
-      weekStart: moment.localeData().firstDayOfWeek(),
-      autoclose: true,
-      startDate: new Date(),
-      format: {
-        toDisplay(date) {
-          return moment.utc(date).format("L");
-        },
-        toValue(date) {
-          return moment.utc(date, "L").toDate();
-        },
-      },
-    });
-  });
-});
-
-template.events({
-  submit(event, instance) {
-    event.preventDefault();
-
-    const start = getEventStartMoment(instance);
-    if (!start.isValid()) {
-      const exampleDate = moment().format("L");
-      Alert.error(
-        i18n(
-          "event.edit.dateFormatWarning",
-          "The date format must be of the {EXAMPLEDATE} format.",
-          {
-            EXAMPLEDATE: exampleDate,
-          },
-        ),
-      );
-      return;
-    }
-    const end = getEventEndMoment(instance);
-
-    const title = instance.$(".js-event-title").val() as string;
-    if (title.length === 0) {
-      Alert.error(i18n("event.edit.plzProvideTitle", "Please provide a title"));
-      return;
-    }
-
-    const $description = instance.$(".js-event-description");
-    if (!$description.text()) {
-      Alert.error(i18n("event.edit.plzProvideDescr", "Please provide a description"));
-      return;
-    }
-
-    if (PublicSettings.eventDescriptionMax) {
-      if ($description.text().length > PublicSettings.eventDescriptionMax) {
-        Alert.error(
-          i18n("_inputField.maxlength", {
-            MAXNUMBER: PublicSettings.eventDescriptionMax,
-            NUMBER: $description.text().length - PublicSettings.eventDescriptionMax,
-          }),
-        );
-        return;
-      }
-    }
-
-    const noRsvp = instance.$(".js-check-no-rsvp").is(":checked");
-
-    let maxParticipants;
-    if (!noRsvp) {
-      maxParticipants = validateMaxParticipants(
-        (instance.$(".js-event-max-participants").val() as string) || "0",
-      );
-      // validation was unsuccessful
-      if (maxParticipants === false) {
-        return;
-      }
-    } else {
-      // if no rsvp is set there is none limit for maxParticipants;
-      maxParticipants = 0;
-    }
-
-    const editevent = {
-      title,
-      description: $description.html(),
-      venue: selectedLocation || {},
-      room: instance.$(".js-event-room").val() as string,
-      startLocal: LocalTime.toString(start),
-      endLocal: LocalTime.toString(end),
-      internal: instance.$(".js-check-event-internal").is(":checked"),
-      sendReminder: instance.$(".js-check-event-send-reminder").is(":checked"),
-      noRsvp,
-      maxParticipants,
-    } as SaveFields;
-
-    let eventId = instance.data._id || "";
-    const isNew = eventId === "";
-    if (isNew) {
-      if (start.isBefore(LocalTime.now())) {
-        Alert.error(
-          i18n(
-            "event.edit.startInPast",
-            "The event starts in the past. Have you selected a start date and time?",
-          ),
-        );
-        return;
-      }
-
-      if (instance.data.courseId) {
-        const course = Courses.findOne(instance.data.courseId);
-        if (!course) {
-          throw new Error("Unexpected undefined: course");
-        }
-
-        editevent.region = course.region;
-        editevent.courseId = instance.data.courseId;
-      } else {
-        editevent.region = selectedRegion;
-        if (!editevent.region || editevent.region === "all") {
-          Alert.error(
-            i18n("event.edit.plzSelectRegion", "Please select the region for this event"),
-          );
-          return;
-        }
-
-        // We have this 'secret' feature where you can set a group ID
-        // in the URL to assign a group to the event on creation
-        const groups = [];
-        if (Router.current().params.query.group) {
-          groups.push(Router.current().params.query.group as string);
-        }
-        editevent.groups = groups;
-      }
-    }
-
-    const customFields = instance.customFields().map((i) => {
-      return {
-        name: i.name,
-        displayText: i.displayText,
-        value: instance.$(`.js-custom-field-${i.name}`).val() as string,
-        visibleFor: i.visibleFor,
-      };
-    });
-
-    const updateReplicasTime = !startDayChanged && timeChanged && updateReplicasTime;
-
-    const sendNotifications = instance.$(".js-check-notify").is(":checked");
-    const addNotificationMessage = instance.$(".js-event-add-message").val() as string;
-
-    instance.busy("saving");
-    PleaseLogin(instance, async () => {
-      try {
-        const result = await EventsMethods.save(
-          eventId,
-          editevent,
-          updateReplicasInfos,
-          updateReplicasTime,
-          updateReplicasTime && updateChangedReplicasTime,
-          sendNotifications,
-          addNotificationMessage,
-        );
-        if (!result) {
-          throw new Error("Unexpected undefined: eventId");
-        }
-        eventId = result;
-
-        if (isNew) {
-          Router.go("showEvent", { _id: eventId });
-          Alert.success(
-            i18n("message.eventCreated", 'The event "{TITLE}" has been created!', {
-              TITLE: editevent.title,
-            }),
-          );
-
-          const course = Courses.findOne(editevent.courseId);
-          if (!course) {
-            throw new Error("Unexpected undefined: course");
-          }
-          const user = Meteor.user();
-          if (!user) {
-            throw new Error("Unexpected undefined: user");
-          }
-          let role;
-          if (intersection(user.badges, course.editors).length > 0) {
-            role = "team";
-          } else if (user.privileged("admin")) {
-            role = "admin";
-          } else {
-            role = "unknown";
-          }
-          Analytics.trackEvent(
-            "Event creations",
-            `Event creations as ${role}`,
-            Regions.findOne(course.region)?.nameEn,
-            Math.round(
-              (new Date().getTime() - course.time_created.getTime()) /
-                1000 /
-                60 /
-                60 /
-                24 /* Umrechnung in Tage */,
-            ),
-          );
-        } else {
-          Alert.success(
-            i18n(
-              "message.eventChangesSaved",
-              'Your changes to the event "{TITLE}" have been saved.',
-              { TITLE: editevent.title },
-            ),
-          );
-        }
-
-        if (updateReplicasInfos || updateReplicasTime) {
-          Alert.success(
-            i18n("eventEdit.replicatesUpdated", 'Replicas of "{TITLE}" have also been updated.', {
-              TITLE: editevent.title,
-            }),
-          );
-        }
-
-        if (instance.data.courseId) {
-          await CoursesMethods.save(instance.data.courseId, { customFields });
-        }
-
-        (instance.parent as any).editing.set(false);
-      } catch (err) {
-        Alert.serverError(
-          err,
-          i18n("eventEdit.replicatesUpdated.error", "Saving the event went wrong"),
-        );
-      } finally {
-        instance.busy(false);
-      }
-    });
-  },
-
-  "click .js-event-cancel"(_event, instance) {
-    if ("new" in event) {
-      window.history.back();
-    } else {
-      (instance.parent as any).editing.set(false);
-    }
-  },
-
-  "click .js-toggle-duration"() {
-    Tooltips.hide();
-
-    $(".js-time-end > *").toggle();
-  },
-
-  "click .js-check-notify"(_event, instance) {
-    setNotifyChecked(instance.$(".js-check-notify").is(":checked"));
-  },
-
-  "click .js-check-no-rsvp"(_event, instance) {
-    setNoRsvpChecked(instance.$(".js-check-no-rsvp").is(":checked"));
-  },
-
-  "change .js-event-start-date"(this: EventEditData, event, instance) {
-    const newDate = instance.$(event.target as any).val();
-    setStartDayChanged(!moment(newDate, "L").isSame(this.startLocal, "day"));
-  },
-
-  "change .js-event-duration, change .js-event-start-date, change .js-event-start-time"(
-    this: EventEditData,
-    _event,
-    instance,
-  ) {
-    updateTimes(instance, true);
-    const newStart = getEventStartMoment(instance);
-    const newEnd = getEventEndMoment(instance);
-    setTimeChanged(
-      !(
-        newStart.isSame(moment.utc(this.startLocal), "minute") &&
-        newEnd.isSame(moment.utc(this.endLocal), "minute")
-      ),
-    );
-  },
-
-  "change .js-event-end-time"(this: EventEditData, _event, instance) {
-    updateTimes(instance, false);
-    const newStart = getEventStartMoment(instance);
-    const newEnd = getEventEndMoment(instance);
-    setTimeChanged(
-      !(
-        newStart.isSame(moment.utc(this.startLocal), "minute") &&
-        newEnd.isSame(moment.utc(this.endLocal), "minute")
-      ),
-    );
-  },
-});
-
-export function Edit({ event, onClose }: { event: EventEditData; onClose: () => void }) {
+// const Template = TemplateAny as TemplateStaticTyped<
+//   "eventEdit",
+//   EventEditData,
+//   {
+//     parent: Blaze.TemplateInstance;
+//     customFields: () => GroupEntityCustomCourseFields[];
+//   }
+// >;
+
+// const template = Template.eventEdit;
+
+// template.onCreated(function () {
+//   const instance = this;
+//   instance.busy(false);
+
+//   const event = instance.data;
+//   if (event.courseId) {
+//     instance.subscribe("courseDetails", event.courseId);
+//   }
+
+//   if (event._id) {
+//     instance.subscribe("affectedReplica", instance.data._id);
+//   }
+
+//   function getRegion() {
+//     let region;
+//     if (instance.data.courseId) {
+//       const course = Courses.findOne(instance.data.courseId);
+//       if (!course) {
+//         throw new Error("Unexpected undefined: course");
+//       }
+
+//       region = course.region;
+//     } else {
+//       if (!selectedRegion || selectedRegion === "all") {
+//         return undefined;
+//       }
+//       region = selectedRegion;
+//     }
+
+//     if (region) {
+//       // The region was preset for the frame
+//       return Regions.findOne({ _id: region });
+//     }
+//     if (Regions.findFilter({}, 2).count() === 1) {
+//       // There is only one region
+//       return Regions.findOne();
+//     }
+//     return Regions.currentRegion();
+//   }
+
+//   function getGroups() {
+//     const { courseId } = Template.currentData();
+//     const groups = [];
+
+//     // We have this 'secret' feature where you can set a group ID
+//     // in the URL to assign a group to the event on creation
+//     if (Router.current().params.query.group) {
+//       groups.push(Router.current().params.query.group as string);
+//     }
+
+//     const defaultTeamGroups = getRegion()?.defaultTeamGroups;
+//     if (defaultTeamGroups) {
+//       groups.push(...defaultTeamGroups);
+//     }
+
+//     if (courseId) {
+//       const course = Courses.findOne(courseId);
+//       if (!course) {
+//         throw new Error("Unexpected undefined: course");
+//       }
+//       groups.push(...course.groupOrganizers);
+//     }
+
+//     // remove double groups
+//     return uniq(groups);
+//   }
+
+//   instance.autorun(() => {
+//     getGroups().forEach((g) => {
+//       instance.subscribe("group", g);
+//     });
+//   });
+
+//   instance.customFields = (type?: "singleLine" | "multiLine") => {
+//     const groups = getGroups();
+
+//     return (
+//       Groups.find({ _id: { $in: groups } })
+//         .fetch()
+//         .flatMap((g) => g.customCourseFields || [])
+//         // when type is undefined all will get back
+//         .filter((g) => !type || (g.type || "singleLine") === type)
+//     );
+//   };
+// });
+
+// function getEventStartMoment(instance: ReturnType<(typeof Template)["instance"]>) {
+//   return LocalTime.fromString(
+//     instance.$(".js-event-start-date").val() as string,
+//     instance.$(".js-event-start-time").val() as string,
+//   );
+// }
+
+// function getEventEndMoment(instance: ReturnType<(typeof Template)["instance"]>) {
+//   const startMoment = getEventStartMoment(instance);
+//   let endMoment = LocalTime.fromString(
+//     startMoment.format("L"),
+//     instance.$(".js-event-end-time").val() as string,
+//   );
+
+//   // If the end time is earlier than the start time, assume the event
+//   // spans into the next day. This might result in some weird behavior
+//   // around hour-lapses due to DST (where 1:30 may be 'later' than 2:00).
+//   // Well maybe you shouldn't schedule your events to start or end
+//   // in these politically fucked hours.
+//   if (endMoment.diff(startMoment) < 0) {
+//     endMoment = LocalTime.fromString(
+//       startMoment.add(1, "day").format("L"),
+//       instance.$(".js-event-end-time").val() as string,
+//     );
+//   }
+
+//   return endMoment;
+// }
+
+// function getEventDuration(instance: ReturnType<(typeof Template)["instance"]>) {
+//   const duration = Number.parseInt(instance.$(".js-event-duration").val() as string, 10) || 0;
+//   return Math.max(0, duration);
+// }
+
+// /* Patch the end time and the duration when start, end or duration changes */
+// function updateTimes(instance: ReturnType<(typeof Template)["instance"]>, updateEnd: boolean) {
+//   const start = getEventStartMoment(instance);
+//   let end = getEventEndMoment(instance);
+//   let duration = getEventDuration(instance);
+//   if (!start.isValid() || !end.isValid()) {
+//     // If you put into the machine wrong figures, will the right answers come out?
+//     return;
+//   }
+
+//   if (updateEnd) {
+//     end = moment(start).add(duration, "minutes");
+//   }
+
+//   if (end.isBefore(start)) {
+//     // Let sanity prevail
+//     end = start;
+//     duration = 0;
+//   }
+
+//   duration = end.diff(start, "minutes");
+//   instance.$(".js-event-start-date").val(start.format("L"));
+//   instance.$(".js-event-start-time").val(start.format("LT"));
+//   instance.$(".js-event-end-time").val(end.format("LT"));
+//   instance.$(".js-event-duration").val(duration.toString());
+// }
+
+// /**
+//  * validates input for maxParticipants
+//  * @param maxParticipants the user-input
+//  * @return an integer if the input passed validation.
+//  */
+// const validateMaxParticipants = (maxParticipants: string) => {
+//   const intVal = Number.parseInt(maxParticipants, 10);
+//   if (Number.isNaN(intVal)) {
+//     Alert.error(i18n("event.edit.mustBeInteger", "Must be a whole number"));
+//     return false;
+//   }
+//   if (intVal < 0) {
+//     Alert.error(i18n("event.edit.mustBePositive", "The number must be positive"));
+//     return false;
+//   }
+//   return intVal;
+// };
+
+// template.onRendered(function () {
+//   const instance = this;
+//   updateTimes(instance, false);
+
+//   instance.autorun(() => {
+//     const desiredLocale = Session.get("locale");
+
+//     if (!desiredLocale) {
+//       // if nothing set we wait for a change
+//       return;
+//     }
+
+//     const language = desiredLocale.substring(0, 2);
+
+//     const $dateInput = instance.$(".js-event-start-date");
+
+//     // remove, re-add the datepicker when the locale changed
+//     $dateInput.datepicker("destroy");
+
+//     // I don't know why, but language: moment.locale() does not work here.
+//     // So instead we clobber the 'en' settings with settings for the
+//     // selected language.
+//     $dateInput.datepicker({
+//       language,
+//       weekStart: moment.localeData().firstDayOfWeek(),
+//       autoclose: true,
+//       startDate: new Date(),
+//       format: {
+//         toDisplay(date) {
+//           return moment.utc(date).format("L");
+//         },
+//         toValue(date) {
+//           return moment.utc(date, "L").toDate();
+//         },
+//       },
+//     });
+//   });
+// });
+
+// template.events({
+//   submit(event, instance) {
+//     event.preventDefault();
+
+//     const start = getEventStartMoment(instance);
+//     if (!start.isValid()) {
+//       const exampleDate = moment().format("L");
+//       Alert.error(
+//         i18n(
+//           "event.edit.dateFormatWarning",
+//           "The date format must be of the {EXAMPLEDATE} format.",
+//           {
+//             EXAMPLEDATE: exampleDate,
+//           },
+//         ),
+//       );
+//       return;
+//     }
+//     const end = getEventEndMoment(instance);
+
+//     const title = instance.$(".js-event-title").val() as string;
+//     if (title.length === 0) {
+//       Alert.error(i18n("event.edit.plzProvideTitle", "Please provide a title"));
+//       return;
+//     }
+
+//     const $description = instance.$(".js-event-description");
+//     if (!$description.text()) {
+//       Alert.error(i18n("event.edit.plzProvideDescr", "Please provide a description"));
+//       return;
+//     }
+
+//     if (PublicSettings.eventDescriptionMax) {
+//       if ($description.text().length > PublicSettings.eventDescriptionMax) {
+//         Alert.error(
+//           i18n("_inputField.maxlength", {
+//             MAXNUMBER: PublicSettings.eventDescriptionMax,
+//             NUMBER: $description.text().length - PublicSettings.eventDescriptionMax,
+//           }),
+//         );
+//         return;
+//       }
+//     }
+
+//     const noRsvp = instance.$(".js-check-no-rsvp").is(":checked");
+
+//     let maxParticipants;
+//     if (!noRsvp) {
+//       maxParticipants = validateMaxParticipants(
+//         (instance.$(".js-event-max-participants").val() as string) || "0",
+//       );
+//       // validation was unsuccessful
+//       if (maxParticipants === false) {
+//         return;
+//       }
+//     } else {
+//       // if no rsvp is set there is none limit for maxParticipants;
+//       maxParticipants = 0;
+//     }
+
+//     const editevent = {
+//       title,
+//       description: $description.html(),
+//       venue: selectedLocation || {},
+//       room: instance.$(".js-event-room").val() as string,
+//       startLocal: LocalTime.toString(start),
+//       endLocal: LocalTime.toString(end),
+//       internal: instance.$(".js-check-event-internal").is(":checked"),
+//       sendReminder: instance.$(".js-check-event-send-reminder").is(":checked"),
+//       noRsvp,
+//       maxParticipants,
+//     } as SaveFields;
+
+//     let eventId = instance.data._id || "";
+//     const isNew = eventId === "";
+//     if (isNew) {
+//       if (start.isBefore(LocalTime.now())) {
+//         Alert.error(
+//           i18n(
+//             "event.edit.startInPast",
+//             "The event starts in the past. Have you selected a start date and time?",
+//           ),
+//         );
+//         return;
+//       }
+
+//       if (instance.data.courseId) {
+//         const course = Courses.findOne(instance.data.courseId);
+//         if (!course) {
+//           throw new Error("Unexpected undefined: course");
+//         }
+
+//         editevent.region = course.region;
+//         editevent.courseId = instance.data.courseId;
+//       } else {
+//         editevent.region = selectedRegion;
+//         if (!editevent.region || editevent.region === "all") {
+//           Alert.error(
+//             i18n("event.edit.plzSelectRegion", "Please select the region for this event"),
+//           );
+//           return;
+//         }
+
+//         // We have this 'secret' feature where you can set a group ID
+//         // in the URL to assign a group to the event on creation
+//         const groups = [];
+//         if (Router.current().params.query.group) {
+//           groups.push(Router.current().params.query.group as string);
+//         }
+//         editevent.groups = groups;
+//       }
+//     }
+
+//     const customFields = instance.customFields().map((i) => {
+//       return {
+//         name: i.name,
+//         displayText: i.displayText,
+//         value: instance.$(`.js-custom-field-${i.name}`).val() as string,
+//         visibleFor: i.visibleFor,
+//       };
+//     });
+
+//     const updateReplicasTime = !startDayChanged && timeChanged && updateReplicasTime;
+
+//     const sendNotifications = instance.$(".js-check-notify").is(":checked");
+//     const addNotificationMessage = instance.$(".js-event-add-message").val() as string;
+
+//     instance.busy("saving");
+//     PleaseLogin(instance, async () => {
+//       try {
+//         const result = await EventsMethods.save(
+//           eventId,
+//           editevent,
+//           updateReplicasInfos,
+//           updateReplicasTime,
+//           updateReplicasTime && updateChangedReplicasTime,
+//           sendNotifications,
+//           addNotificationMessage,
+//         );
+//         if (!result) {
+//           throw new Error("Unexpected undefined: eventId");
+//         }
+//         eventId = result;
+
+//         if (isNew) {
+//           Router.go("showEvent", { _id: eventId });
+//           Alert.success(
+//             i18n("message.eventCreated", 'The event "{TITLE}" has been created!', {
+//               TITLE: editevent.title,
+//             }),
+//           );
+
+//           const course = Courses.findOne(editevent.courseId);
+//           if (!course) {
+//             throw new Error("Unexpected undefined: course");
+//           }
+//           const user = Meteor.user();
+//           if (!user) {
+//             throw new Error("Unexpected undefined: user");
+//           }
+//           let role;
+//           if (intersection(user.badges, course.editors).length > 0) {
+//             role = "team";
+//           } else if (user.privileged("admin")) {
+//             role = "admin";
+//           } else {
+//             role = "unknown";
+//           }
+//           Analytics.trackEvent(
+//             "Event creations",
+//             `Event creations as ${role}`,
+//             Regions.findOne(course.region)?.nameEn,
+//             Math.round(
+//               (new Date().getTime() - course.time_created.getTime()) /
+//                 1000 /
+//                 60 /
+//                 60 /
+//                 24 /* Umrechnung in Tage */,
+//             ),
+//           );
+//         } else {
+//           Alert.success(
+//             i18n(
+//               "message.eventChangesSaved",
+//               'Your changes to the event "{TITLE}" have been saved.',
+//               { TITLE: editevent.title },
+//             ),
+//           );
+//         }
+
+//         if (updateReplicasInfos || updateReplicasTime) {
+//           Alert.success(
+//             i18n("eventEdit.replicatesUpdated", 'Replicas of "{TITLE}" have also been updated.', {
+//               TITLE: editevent.title,
+//             }),
+//           );
+//         }
+
+//         if (instance.data.courseId) {
+//           await CoursesMethods.save(instance.data.courseId, { customFields });
+//         }
+
+//         (instance.parent as any).editing.set(false);
+//       } catch (err) {
+//         Alert.serverError(
+//           err,
+//           i18n("eventEdit.replicatesUpdated.error", "Saving the event went wrong"),
+//         );
+//       } finally {
+//         instance.busy(false);
+//       }
+//     });
+//   },
+
+//   "click .js-event-cancel"(_event, instance) {
+//     if ("new" in event) {
+//       window.history.back();
+//     } else {
+//       (instance.parent as any).editing.set(false);
+//     }
+//   },
+
+//   "click .js-toggle-duration"() {
+//     Tooltips.hide();
+
+//     $(".js-time-end > *").toggle();
+//   },
+
+//   "click .js-check-notify"(_event, instance) {
+//     setNotifyChecked(instance.$(".js-check-notify").is(":checked"));
+//   },
+
+//   "click .js-check-no-rsvp"(_event, instance) {
+//     setNoRsvpChecked(instance.$(".js-check-no-rsvp").is(":checked"));
+//   },
+
+//   "change .js-event-start-date"(this: EventEditData, event, instance) {
+//     const newDate = instance.$(event.target as any).val();
+//     setStartDayChanged(!moment(newDate, "L").isSame(this.startLocal, "day"));
+//   },
+
+//   "change .js-event-duration, change .js-event-start-date, change .js-event-start-time"(
+//     this: EventEditData,
+//     _event,
+//     instance,
+//   ) {
+//     updateTimes(instance, true);
+//     const newStart = getEventStartMoment(instance);
+//     const newEnd = getEventEndMoment(instance);
+//     setTimeChanged(
+//       !(
+//         newStart.isSame(moment.utc(this.startLocal), "minute") &&
+//         newEnd.isSame(moment.utc(this.endLocal), "minute")
+//       ),
+//     );
+//   },
+
+//   "change .js-event-end-time"(this: EventEditData, _event, instance) {
+//     updateTimes(instance, false);
+//     const newStart = getEventStartMoment(instance);
+//     const newEnd = getEventEndMoment(instance);
+//     setTimeChanged(
+//       !(
+//         newStart.isSame(moment.utc(this.startLocal), "minute") &&
+//         newEnd.isSame(moment.utc(this.endLocal), "minute")
+//       ),
+//     );
+//   },
+// });
+
+export function Edit({ event }: { event: EventEditData; onClose: () => void }) {
   const { t } = useTranslation();
   const { timeFormat, dateFormat } = useDateTimeFormat();
 
   const currentRegion = useSession("region");
-  const [isLoading, regions] = useAll();
+  const [, regions] = useAll();
 
-  const [updateReplicasInfos, setUpdateReplicasInfos] = useState(false);
-  const [startDayChanged, setStartDayChanged] = useState(false);
-  const [timeChanged, setTimeChanged] = useState(false);
+  const [, setUpdateReplicasInfos] = useState(false);
+  const [startDayChanged] = useState(false);
+  const [timeChanged] = useState(false);
   const [updateReplicasTime, setUpdateReplicasTime] = useState(false);
   const [updateChangedReplicasTime, setUpdateChangedReplicasTime] = useState(false);
 
@@ -560,12 +553,12 @@ export function Edit({ event, onClose }: { event: EventEditData; onClose: () => 
     region = region || regions[0]?._id;
   }
   const [selectedRegion, setSelectedRegion] = useState<string>(region || currentRegion);
-  const [selectedLocation, setSelectedLocation] = useState(event.venue);
-  const [noRsvpChecked, setNoRsvpChecked] = useState(!!event.noRsvp);
+  // const [selectedLocation, setSelectedLocation] = useState(event.venue);
+  const [noRsvpChecked] = useState(!!event.noRsvp);
 
   // Sending an event notification is only possible when the event is
   // attached to a course. Otherwise there is nobody to inform.
-  const [notifyChecked, setNotifyChecked] = useState(!!(event.courseId && "new" in event));
+  const [notifyChecked] = useState(!!(event.courseId && "new" in event));
 
   function hasParentCourse() {
     return Boolean(event.courseId);
@@ -613,15 +606,15 @@ export function Edit({ event, onClose }: { event: EventEditData; onClose: () => 
     }
     return undefined;
   }
-  function venueEditAttr() {
-    return {
-      region: event.region,
-      value: selectedLocation,
-      onChange: (newValue: EventVenueEntity) => {
-        setSelectedLocation(newValue);
-      },
-    };
-  }
+  // function venueEditAttr() {
+  //   return {
+  //     region: event.region,
+  //     value: selectedLocation,
+  //     onChange: (newValue: EventVenueEntity) => {
+  //       setSelectedLocation(newValue);
+  //     },
+  //   };
+  // }
 
   return (
     <form>
@@ -778,9 +771,9 @@ export function Edit({ event, onClose }: { event: EventEditData; onClose: () => 
                   >
                     {t("_selection.pleaseSelect")}
                   </option>
-                  {regions.map((region) => (
-                    <option selected={currentRegion === region._id} value={region._id}>
-                      {region.name}
+                  {regions.map((r) => (
+                    <option selected={currentRegion === r._id} value={r._id}>
+                      {r.name}
                     </option>
                   ))}
                 </select>
@@ -790,7 +783,7 @@ export function Edit({ event, onClose }: { event: EventEditData; onClose: () => 
 
           {showVenueSelection() && (
             <>
-              <EditVenue {...venueEditAttr()} />
+              {/* <EditVenue {...venueEditAttr()} /> */}
               <div className="mb-3">
                 <label className="form-label">
                   {t("course.event.edit.room", "Room")}
@@ -813,7 +806,7 @@ export function Edit({ event, onClose }: { event: EventEditData; onClose: () => 
 
           {!!customFields()?.length && (
             <div className="mb-3">
-              <EditCustomFields fields={customFields()} values={customFields()} />
+              {/* <EditCustomFields fields={customFields()} values={customFields()} /> */}
             </div>
           )}
           <div className="mb-3">
@@ -1077,3 +1070,9 @@ export function Edit({ event, onClose }: { event: EventEditData; onClose: () => 
     </form>
   );
 }
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("EventEdit", () => Edit);
