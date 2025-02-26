@@ -81,8 +81,6 @@ template.onCreated(function () {
 
   instance.parent = parent;
 
-
-
   function getRegion() {
     let region;
     if (instance.data.courseId) {
@@ -489,7 +487,7 @@ template.events({
   },
 
   "click .js-event-cancel"(_event, instance) {
-    if (instance.data.new) {
+    if ("new" in event) {
       window.history.back();
     } else {
       (instance.parent as any).editing.set(false);
@@ -542,25 +540,9 @@ template.events({
       ),
     );
   },
-
-  "change .js-select-region"(_event, instance) {
-    setSelectedRegion(instance.$(".js-select-region").val() as string);
-  },
-
-  "change .js-update-replicas-infos"(event) {
-    setUpdateReplicasInfos((event.target as HTMLInputElement).checked);
-  },
-
-  "change .js-update-replicas-time"(event, instance) {
-    setUpdateReplicasTime((event.target as HTMLInputElement).checked);
-  },
-
-  "change .js-update-changed-replicas-time"(event, instance) {
-    setUpdateChangedReplicasTime((event.target as HTMLInputElement).checked);
-  },
 });
 
-export function Edit({ event, onClose }: { event: EventEditData , onClose:()=>void}) {
+export function Edit({ event, onClose }: { event: EventEditData; onClose: () => void }) {
   const { t } = useTranslation();
   const { timeFormat, dateFormat } = useDateTimeFormat();
 
@@ -583,7 +565,7 @@ export function Edit({ event, onClose }: { event: EventEditData , onClose:()=>vo
 
   // Sending an event notification is only possible when the event is
   // attached to a course. Otherwise there is nobody to inform.
-  const [notifyChecked, setNotifyChecked] = useState(!!(event.courseId && "new" in event && event.new);
+  const [notifyChecked, setNotifyChecked] = useState(!!(event.courseId && "new" in event));
 
   function hasParentCourse() {
     return Boolean(event.courseId);
@@ -645,7 +627,7 @@ export function Edit({ event, onClose }: { event: EventEditData , onClose:()=>vo
     <form>
       <div className="edit-page">
         <h3>
-          {"new" in event 
+          {"new" in event
             ? t("course.event.edit.add", "Create an event")
             : t("course.event.edit.edit", "Edit event")}
         </h3>
@@ -662,7 +644,7 @@ export function Edit({ event, onClose }: { event: EventEditData , onClose:()=>vo
         )}
 
         <div className="edit-page-header event-edit">
-          {(!("new" in event) && !event.courseId) && <RegionTag region={event.region} />}
+          {!("new" in event) && !event.courseId && <RegionTag region={event.region} />}
 
           <div className="mb-3">
             <label className="form-label">{t("course.event.edit.title", "Event title")}</label>
@@ -781,7 +763,13 @@ export function Edit({ event, onClose }: { event: EventEditData , onClose:()=>vo
                 <div className="input-group-text">
                   <span className="fa-solid fa-location-dot" aria-hidden="true"></span>
                 </div>
-                <select className="js-select-region form-select" name="region">
+                <select
+                  className="form-select"
+                  name="region"
+                  onChange={(ev) => {
+                    setSelectedRegion(ev.currentTarget.value);
+                  }}
+                >
                   <option
                     className="select-placeholder"
                     disabled
@@ -891,11 +879,14 @@ export function Edit({ event, onClose }: { event: EventEditData , onClose:()=>vo
               <>
                 <div className="form-check mt-2">
                   <input
-                    className="form-check-input js-update-replicas-infos"
+                    className="form-check-input"
                     type="checkbox"
                     name="updateReplicasInfo"
                     value=""
                     id="eventEditUpdateReplicasInfoCheck"
+                    onChange={(ev) => {
+                      setUpdateReplicasInfos(ev.currentTarget.checked);
+                    }}
                   />
                   <label className="form-check-label" htmlFor="eventEditUpdateReplicasInfoCheck">
                     {t(
@@ -909,12 +900,15 @@ export function Edit({ event, onClose }: { event: EventEditData , onClose:()=>vo
                   <>
                     <div className={`form-check ${startDayChanged ? "disabled" : ""}`}>
                       <input
-                        className="form-check-input js-update-replicas-time"
+                        className="form-check-input"
                         type="checkbox"
                         name="updateReplicasTime"
                         value=""
                         id="eventEditUpdateReplicasTimeCheck"
                         disabled={startDayChanged}
+                        onChange={(ev) => {
+                          setUpdateReplicasTime(ev.currentTarget.checked);
+                        }}
                       />
                       <label
                         className="form-check-label"
@@ -981,11 +975,14 @@ export function Edit({ event, onClose }: { event: EventEditData , onClose:()=>vo
                             </ul>
                             <div className="form-check">
                               <input
-                                className="form-check-input js-update-changed-replicas-time"
+                                className="form-check-input"
                                 type="checkbox"
                                 name="updateChangedReplicasTime"
                                 value=""
                                 id="eventEditUpdateChangedReplicasTimeCheck"
+                                onChange={(ev) => {
+                                  setUpdateChangedReplicasTime(ev.currentTarget.checked);
+                                }}
                               />
                               <label
                                 className="form-check-label"
@@ -1008,40 +1005,26 @@ export function Edit({ event, onClose }: { event: EventEditData , onClose:()=>vo
             )}
             {!!event.courseId && (
               <div className="form-check">
-                {"new" in event && event.new ? (
-                  <>
-                    <input
-                      className="form-check-input js-check-notify"
-                      type="checkbox"
-                      value=""
-                      id="eventEditCheckNotifyCheck"
-                      checked
-                    />
-                    <label className="form-check-label" htmlFor="eventEditCheckNotifyCheck">
-                      {t(
+                <input
+                  className="form-check-input js-check-notify"
+                  type="checkbox"
+                  value=""
+                  id="eventEditCheckNotifyCheck"
+                  checked
+                />
+                <label className="form-check-label" htmlFor="eventEditCheckNotifyCheck">
+                  {"new" in event
+                    ? t(
                         "event.edit.notifyNewEvent",
                         'Notify all members of the "{COURSE}" course about this event.',
                         { COURSE: course.name },
-                      )}
-                    </label>
-                  </>
-                ) : (
-                  <>
-                    <input
-                      className="form-check-input js-check-notify"
-                      type="checkbox"
-                      value=""
-                      id="eventEditCheckNotifyCheck"
-                    />
-                    <label className="form-check-label" htmlFor="eventEditCheckNotifyCheck">
-                      {t(
+                      )
+                    : t(
                         "event.edit.notifyEditEvent",
                         'Notify all members of the "{COURSE}" course about the changes you made.',
                         { COURSE: course.name },
                       )}
-                    </label>
-                  </>
-                )}
+                </label>
               </div>
             )}
             {notifyChecked && (
