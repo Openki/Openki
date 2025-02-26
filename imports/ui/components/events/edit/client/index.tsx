@@ -4,14 +4,13 @@
 // the timezone might actually change when a different region is selected. We
 // wouldn't want the time or even date field to change because of this switch.
 
+import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import { intersection, uniq } from "lodash";
 import { i18n } from "/imports/startup/both/i18next";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import { Template } from "meteor/templating";
 import { Session } from "meteor/session";
-import { ReactiveDict } from "meteor/reactive-dict";
-import { ReactiveVar } from "meteor/reactive-var";
 import moment from "moment";
 
 import * as Alert from "/imports/api/alerts/alert";
@@ -56,18 +55,7 @@ const Template = TemplateAny as TemplateStaticTyped<
   "eventEdit",
   EventEditData,
   {
-    state: ReactiveDict<{
-      updateReplicasInfos: boolean;
-      startDayChanged: boolean;
-      timeChanged: boolean;
-      updateReplicasTime: boolean;
-      updateChangedReplicasTime: boolean;
-    }>;
     parent: Blaze.TemplateInstance;
-    selectedRegion: ReactiveVar<string>;
-    selectedLocation: ReactiveVar<EventVenueEntity | undefined>;
-    noRsvpChecked: ReactiveVar<boolean>;
-    notifyChecked: ReactiveVar<boolean>;
     customFields: () => GroupEntityCustomCourseFields[];
   }
 >;
@@ -77,15 +65,6 @@ const template = Template.eventEdit;
 template.onCreated(function () {
   const instance = this;
   instance.busy(false);
-
-  this.state = new ReactiveDict();
-  this.state.setDefault({
-    updateReplicasInfos: false,
-    startDayChanged: false,
-    timeChanged: false,
-    updateReplicasTime: false,
-    updateChangedReplicasTime: false,
-  });
 
   const event = instance.data;
   if (event.courseId) {
@@ -101,21 +80,8 @@ template.onCreated(function () {
   if (!parent) throw new Error("Unexpected undefined: parent");
 
   instance.parent = parent;
-  {
-    let region: string | undefined = instance.data.region;
-    if (Regions.findFilter({}, 2).count() === 1) {
-      region = region || Regions.findOne()?._id;
-    }
-    instance.selectedRegion = new ReactiveVar(region || Session.get("region"));
-  }
-  instance.selectedLocation = new ReactiveVar(instance.data.venue);
 
-  instance.noRsvpChecked = new ReactiveVar(!!event.noRsvp);
 
-  // Sending an event notification is only possible when the event is
-  // attached to a course. Otherwise there is nobody to inform.
-  const notifyPreset = !!(event.courseId && instance.data.new);
-  instance.notifyChecked = new ReactiveVar(notifyPreset);
 
   function getRegion() {
     let region;
@@ -127,7 +93,6 @@ template.onCreated(function () {
 
       region = course.region;
     } else {
-      const selectedRegion = instance.selectedRegion.get();
       if (!selectedRegion || selectedRegion === "all") {
         return undefined;
       }
@@ -372,7 +337,7 @@ template.events({
     const editevent = {
       title,
       description: $description.html(),
-      venue: instance.selectedLocation.get() || {},
+      venue: selectedLocation || {},
       room: instance.$(".js-event-room").val() as string,
       startLocal: LocalTime.toString(start),
       endLocal: LocalTime.toString(end),
@@ -404,7 +369,7 @@ template.events({
         editevent.region = course.region;
         editevent.courseId = instance.data.courseId;
       } else {
-        editevent.region = instance.selectedRegion.get();
+        editevent.region = selectedRegion;
         if (!editevent.region || editevent.region === "all") {
           Alert.error(
             i18n("event.edit.plzSelectRegion", "Please select the region for this event"),
@@ -431,13 +396,8 @@ template.events({
       };
     });
 
-    const updateReplicasInfos = instance.state.get("updateReplicasInfos");
-    const updateReplicasTime =
-      !instance.state.get("startDayChanged") &&
-      instance.state.get("timeChanged") &&
-      instance.state.get("updateReplicasTime");
-    const updateChangedReplicasTime =
-      updateReplicasTime && instance.state.get("updateChangedReplicasTime");
+    const updateReplicasTime = !startDayChanged && timeChanged && updateReplicasTime;
+
     const sendNotifications = instance.$(".js-check-notify").is(":checked");
     const addNotificationMessage = instance.$(".js-event-add-message").val() as string;
 
@@ -449,7 +409,7 @@ template.events({
           editevent,
           updateReplicasInfos,
           updateReplicasTime,
-          updateChangedReplicasTime,
+          updateReplicasTime && updateChangedReplicasTime,
           sendNotifications,
           addNotificationMessage,
         );
@@ -543,18 +503,16 @@ template.events({
   },
 
   "click .js-check-notify"(_event, instance) {
-    instance.notifyChecked.set(instance.$(".js-check-notify").is(":checked"));
+    setNotifyChecked(instance.$(".js-check-notify").is(":checked"));
   },
 
   "click .js-check-no-rsvp"(_event, instance) {
-    instance.noRsvpChecked.set(instance.$(".js-check-no-rsvp").is(":checked"));
+    setNoRsvpChecked(instance.$(".js-check-no-rsvp").is(":checked"));
   },
 
   "change .js-event-start-date"(this: EventEditData, event, instance) {
     const newDate = instance.$(event.target as any).val();
-    instance.state.set({
-      startDayChanged: !moment(newDate, "L").isSame(this.startLocal, "day"),
-    });
+    setStartDayChanged(!moment(newDate, "L").isSame(this.startLocal, "day"));
   },
 
   "change .js-event-duration, change .js-event-start-date, change .js-event-start-time"(
@@ -565,91 +523,84 @@ template.events({
     updateTimes(instance, true);
     const newStart = getEventStartMoment(instance);
     const newEnd = getEventEndMoment(instance);
-    instance.state.set({
-      timeChanged: !(
+    setTimeChanged(
+      !(
         newStart.isSame(moment.utc(this.startLocal), "minute") &&
         newEnd.isSame(moment.utc(this.endLocal), "minute")
       ),
-    });
+    );
   },
 
   "change .js-event-end-time"(this: EventEditData, _event, instance) {
     updateTimes(instance, false);
     const newStart = getEventStartMoment(instance);
     const newEnd = getEventEndMoment(instance);
-    instance.state.set({
-      timeChanged: !(
+    setTimeChanged(
+      !(
         newStart.isSame(moment.utc(this.startLocal), "minute") &&
         newEnd.isSame(moment.utc(this.endLocal), "minute")
       ),
-    });
+    );
   },
 
   "change .js-select-region"(_event, instance) {
-    instance.selectedRegion.set(instance.$(".js-select-region").val() as string);
+    setSelectedRegion(instance.$(".js-select-region").val() as string);
   },
 
-  "change .js-update-replicas-infos"(event, instance) {
-    instance.state.set("updateReplicasInfos", (event.target as HTMLInputElement).checked);
+  "change .js-update-replicas-infos"(event) {
+    setUpdateReplicasInfos((event.target as HTMLInputElement).checked);
   },
 
   "change .js-update-replicas-time"(event, instance) {
-    instance.state.set("updateReplicasTime", (event.target as HTMLInputElement).checked);
+    setUpdateReplicasTime((event.target as HTMLInputElement).checked);
   },
 
   "change .js-update-changed-replicas-time"(event, instance) {
-    instance.state.set("updateChangedReplicasTime", (event.target as HTMLInputElement).checked);
+    setUpdateChangedReplicasTime((event.target as HTMLInputElement).checked);
   },
 });
 
-export function Edit({ event }: { event: EventEditData }) {
+export function Edit({ event, onClose }: { event: EventEditData , onClose:()=>void}) {
   const { t } = useTranslation();
   const { timeFormat, dateFormat } = useDateTimeFormat();
 
   const currentRegion = useSession("region");
   const [isLoading, regions] = useAll();
 
+  const [updateReplicasInfos, setUpdateReplicasInfos] = useState(false);
+  const [startDayChanged, setStartDayChanged] = useState(false);
+  const [timeChanged, setTimeChanged] = useState(false);
+  const [updateReplicasTime, setUpdateReplicasTime] = useState(false);
+  const [updateChangedReplicasTime, setUpdateChangedReplicasTime] = useState(false);
+
+  let region = event.region;
+  if (regions?.length === 1) {
+    region = region || regions[0]?._id;
+  }
+  const [selectedRegion, setSelectedRegion] = useState<string>(region || currentRegion);
+  const [selectedLocation, setSelectedLocation] = useState(event.venue);
+  const [noRsvpChecked, setNoRsvpChecked] = useState(!!event.noRsvp);
+
+  // Sending an event notification is only possible when the event is
+  // attached to a course. Otherwise there is nobody to inform.
+  const [notifyChecked, setNotifyChecked] = useState(!!(event.courseId && "new" in event && event.new);
+
   function hasParentCourse() {
     return Boolean(event.courseId);
   }
-  function showRegionTag() {
-    if (!event._id || event.courseId) {
-      return false;
-    }
-    return true;
-  }
+
   function localDate(date: string) {
     return moment.utc(date).format("L");
   }
   function affectedReplicaCount() {
     return Events.find(AffectedReplicaSelectors(event as any)).count();
   }
-  function disabledIfDayChanged() {
-    if (Template.instance().state.get("startDayChanged")) {
-      return true;
-    }
-    return false;
-  }
-  function startDayChanged() {
-    return Template.instance().state.get("startDayChanged");
-  }
-  function timeChanged() {
-    return Template.instance().state.get("timeChanged");
-  }
   function changedReplicas() {
     return Events.find(AffectedReplicaSelectors(event as any))
       .fetch()
       .filter((replica) => !replica.sameTime(event));
   }
-  function emphasizeClass() {
-    if (Template.instance().state.get("updateReplicasTime")) {
-      return "is-emphasized";
-    }
-    return "";
-  }
-  function updateChangedReplicasTime() {
-    return Template.instance().state.get("updateChangedReplicasTime");
-  }
+
   function showRegionSelection() {
     // You can select the region for events that are new and not associated
     // with a course
@@ -659,7 +610,6 @@ export function Edit({ event }: { event: EventEditData }) {
     return true;
   }
   function showVenueSelection() {
-    const selectedRegion = Template.instance().selectedRegion.get();
     return !!selectedRegion && selectedRegion !== "all";
   }
   function disableForPast() {
@@ -674,13 +624,6 @@ export function Edit({ event }: { event: EventEditData }) {
     return false;
   }
 
-  function noRsvpChecked() {
-    return Template.instance().noRsvpChecked.get();
-  }
-
-  function notifyChecked() {
-    return Template.instance().notifyChecked.get();
-  }
   function customFields() {
     const courseId = event.courseId;
     if (courseId) {
@@ -691,9 +634,9 @@ export function Edit({ event }: { event: EventEditData }) {
   function venueEditAttr() {
     return {
       region: event.region,
-      value: instance.selectedLocation.get(),
+      value: selectedLocation,
       onChange: (newValue: EventVenueEntity) => {
-        instance.selectedLocation.set(newValue);
+        setSelectedLocation(newValue);
       },
     };
   }
@@ -702,9 +645,9 @@ export function Edit({ event }: { event: EventEditData }) {
     <form>
       <div className="edit-page">
         <h3>
-          {"_id" in event
-            ? t("course.event.edit.edit", "Edit event")
-            : t("course.event.edit.add", "Create an event")}
+          {"new" in event 
+            ? t("course.event.edit.add", "Create an event")
+            : t("course.event.edit.edit", "Edit event")}
         </h3>
         {!hasParentCourse() && !("_id" in event) && (
           <>
@@ -719,7 +662,7 @@ export function Edit({ event }: { event: EventEditData }) {
         )}
 
         <div className="edit-page-header event-edit">
-          {showRegionTag() && <RegionTag region={event.region} />}
+          {(!("new" in event) && !event.courseId) && <RegionTag region={event.region} />}
 
           <div className="mb-3">
             <label className="form-label">{t("course.event.edit.title", "Event title")}</label>
@@ -892,11 +835,11 @@ export function Edit({ event }: { event: EventEditData }) {
                 type="checkbox"
                 value=""
                 id="eventEditNoRsvpCheck"
-                checked={noRsvpChecked()}
+                checked={noRsvpChecked}
               />
               <label className="form-check-label" htmlFor="eventEditNoRsvpCheck">
                 {t("event.edit.noRsvp", "No reservation required")}
-                {noRsvpChecked() && (
+                {noRsvpChecked && (
                   <span className="form-text d-block">
                     {t(
                       "event.edit.noRsvp.description",
@@ -906,7 +849,7 @@ export function Edit({ event }: { event: EventEditData }) {
                 )}
               </label>
             </div>
-            {!noRsvpChecked() && (
+            {!noRsvpChecked && (
               <>
                 <label className="form-label">
                   {t("course.event.edit.maxParticipants", "maximal number of participants")}
@@ -962,16 +905,16 @@ export function Edit({ event }: { event: EventEditData }) {
                     )}
                   </label>
                 </div>
-                {!!timeChanged() && (
+                {timeChanged && (
                   <>
-                    <div className="form-check {{disabledIfDayChanged}}">
+                    <div className={`form-check ${startDayChanged ? "disabled" : ""}`}>
                       <input
                         className="form-check-input js-update-replicas-time"
                         type="checkbox"
                         name="updateReplicasTime"
                         value=""
                         id="eventEditUpdateReplicasTimeCheck"
-                        disabled={disabledIfDayChanged()}
+                        disabled={startDayChanged}
                       />
                       <label
                         className="form-check-label"
@@ -984,7 +927,7 @@ export function Edit({ event }: { event: EventEditData }) {
                         )}
                       </label>
                     </div>
-                    {startDayChanged() ? (
+                    {startDayChanged ? (
                       <div className="card text-white bg-danger mb-4">
                         <div className="card-body p-2">
                           <span
@@ -999,7 +942,11 @@ export function Edit({ event }: { event: EventEditData }) {
                       </div>
                     ) : (
                       changedReplicas().length > 0 && (
-                        <div className={`card mb-4 changed-replicas ${emphasizeClass}`}>
+                        <div
+                          className={`card mb-4 changed-replicas ${
+                            updateReplicasTime ? "is-emphasized" : ""
+                          }`}
+                        >
                           <div className="card-header bg-warning">
                             <span
                               className="fa-solid fa-triangle-exclamation fa-fw"
@@ -1008,16 +955,16 @@ export function Edit({ event }: { event: EventEditData }) {
                             {t(
                               "event.edit.changedReplicas.heading",
                               "Found {NUM, plural, one{one copy which varies} other{# copies which vary} } in time",
-                              { NUM: changedReplicas.length },
+                              { NUM: changedReplicas().length },
                             )}
                           </div>
                           <div className="card-body">
-                            {!updateChangedReplicasTime() && (
+                            {!updateChangedReplicasTime && (
                               <span className="update-changed-replicas-help">
                                 {t(
                                   "event.edit.changedReplicas.body",
                                   "By default {NUM, plural, one{this copy} other{these copies} } won't be updated as {NUM, plural, one{it has} other{they have} } another time set than the original event:",
-                                  { NUM: changedReplicas.length },
+                                  { NUM: changedReplicas().length },
                                 )}
                               </span>
                             )}
@@ -1047,7 +994,7 @@ export function Edit({ event }: { event: EventEditData }) {
                                 {t(
                                   "event.edit.updateChangedReplicasTime",
                                   "Overwrite {NUM, plural, one{this events} other{these events} } time too",
-                                  { NUM: changedReplicas.length },
+                                  { NUM: changedReplicas().length },
                                 )}
                               </label>
                             </div>
@@ -1097,7 +1044,7 @@ export function Edit({ event }: { event: EventEditData }) {
                 )}
               </div>
             )}
-            {notifyChecked() && (
+            {notifyChecked && (
               <>
                 <label className="form-label">
                   {t("course.event.edit.AddMessage", "Add message")}
@@ -1119,7 +1066,7 @@ export function Edit({ event }: { event: EventEditData }) {
                 </div>
               </>
             )}
-            {!noRsvpChecked() && PublicSettings.feature.sendReminderIsEditable && (
+            {!noRsvpChecked && PublicSettings.feature.sendReminderIsEditable && (
               <div className="form-check">
                 <input
                   className="form-check-input js-check-event-send-reminder"
