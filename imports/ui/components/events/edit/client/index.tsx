@@ -315,123 +315,6 @@ template.onRendered(function () {
   });
 });
 
-template.helpers({
-  hasParentCourse() {
-    return Boolean(this.courseId);
-  },
-
-  showRegionTag() {
-    if (!this._id || this.courseId) {
-      return false;
-    }
-    return true;
-  },
-
-  localDate(date: string) {
-    return moment.utc(date).format("L");
-  },
-
-  affectedReplicaCount(this: EventEditData) {
-    return Events.find(AffectedReplicaSelectors(this as any)).count();
-  },
-
-  disabledIfDayChanged() {
-    if (Template.instance().state.get("startDayChanged")) {
-      return "disabled";
-    }
-    return "";
-  },
-
-  startDayChanged() {
-    return Template.instance().state.get("startDayChanged");
-  },
-
-  timeChanged() {
-    return Template.instance().state.get("timeChanged");
-  },
-
-  changedReplicas(this: EventEditData) {
-    return Events.find(AffectedReplicaSelectors(this as any))
-      .fetch()
-      .filter((replica) => !replica.sameTime(this));
-  },
-
-  emphasizeClass() {
-    if (Template.instance().state.get("updateReplicasTime")) {
-      return "is-emphasized";
-    }
-    return "";
-  },
-
-  updateChangedReplicasTime() {
-    return Template.instance().state.get("updateChangedReplicasTime");
-  },
-
-  showRegionSelection() {
-    // You can select the region for events that are new and not associated
-    // with a course
-    if (this._id || this.courseId) {
-      return false;
-    }
-    return true;
-  },
-
-  showVenueSelection() {
-    const selectedRegion = Template.instance().selectedRegion.get();
-    return selectedRegion && selectedRegion !== "all";
-  },
-
-  disableForPast(this: EventEditData) {
-    return this.start && this.start < new Date() ? "disabled" : "";
-  },
-
-  isInternal() {
-    return this.internal ? "checked" : null;
-  },
-
-  sendReminder() {
-    return this.sendReminder ? "checked" : null;
-  },
-
-  course(this: EventEditData) {
-    const { courseId } = this;
-    if (courseId) {
-      return Courses.findOne({ _id: courseId });
-    }
-    return false;
-  },
-
-  noRsvp() {
-    return Template.instance().noRsvpChecked.get() ? "checked" : null;
-  },
-  noRsvpChecked() {
-    return Template.instance().noRsvpChecked.get();
-  },
-  maxParticipants() {
-    // show empty input instead of 0
-    return this.maxParticipants || "";
-  },
-  notifyChecked() {
-    return Template.instance().notifyChecked.get();
-  },
-  customFields() {
-    const courseId = Template.instance().data.courseId;
-    if (courseId) {
-      return Courses.findOne({ _id: courseId })?.customFields;
-    }
-    return undefined;
-  },
-  venueEditAttr() {
-    const instance = Template.instance();
-    return {
-      region: instance.data.region,
-      value: instance.selectedLocation.get(),
-      onChange: (newValue: EventVenueEntity) => {
-        instance.selectedLocation.set(newValue);
-      },
-    };
-  },
-});
 
 template.events({
   submit(event, instance) {
@@ -730,14 +613,130 @@ template.events({
 export function Edit ({event}: {event:EventEditData }){
     const { t } = useTranslation();
   
+    hasParentCourse() {
+      return Boolean(this.courseId);
+    },
+  
+    showRegionTag() {
+      if (!this._id || this.courseId) {
+        return false;
+      }
+      return true;
+    },
+  
+    localDate(date: string) {
+      return moment.utc(date).format("L");
+    },
+  
+    affectedReplicaCount(this: EventEditData) {
+      return Events.find(AffectedReplicaSelectors(this as any)).count();
+    },
+  
+    disabledIfDayChanged() {
+      if (Template.instance().state.get("startDayChanged")) {
+        return "disabled";
+      }
+      return "";
+    },
+  
+    startDayChanged() {
+      return Template.instance().state.get("startDayChanged");
+    },
+  
+    timeChanged() {
+      return Template.instance().state.get("timeChanged");
+    },
+  
+    changedReplicas(this: EventEditData) {
+      return Events.find(AffectedReplicaSelectors(this as any))
+        .fetch()
+        .filter((replica) => !replica.sameTime(this));
+    },
+  
+    emphasizeClass() {
+      if (Template.instance().state.get("updateReplicasTime")) {
+        return "is-emphasized";
+      }
+      return "";
+    },
+  
+    updateChangedReplicasTime() {
+      return Template.instance().state.get("updateChangedReplicasTime");
+    },
+  
+    showRegionSelection() {
+      // You can select the region for events that are new and not associated
+      // with a course
+      if (this._id || this.courseId) {
+        return false;
+      }
+      return true;
+    },
+  
+    showVenueSelection() {
+      const selectedRegion = Template.instance().selectedRegion.get();
+      return selectedRegion && selectedRegion !== "all";
+    },
+  
+    disableForPast(this: EventEditData) {
+      return this.start && this.start < new Date() ? "disabled" : "";
+    },
+  
+    isInternal() {
+      return this.internal ? "checked" : null;
+    },
+  
+    sendReminder() {
+      return this.sendReminder ? "checked" : null;
+    },
+  
+    course(this: EventEditData) {
+      const { courseId } = this;
+      if (courseId) {
+        return Courses.findOne({ _id: courseId });
+      }
+      return false;
+    },
+  
+    noRsvp() {
+      return Template.instance().noRsvpChecked.get() ? "checked" : null;
+    },
+    noRsvpChecked() {
+      return Template.instance().noRsvpChecked.get();
+    },
+    maxParticipants() {
+      // show empty input instead of 0
+      return this.maxParticipants || "";
+    },
+    notifyChecked() {
+      return Template.instance().notifyChecked.get();
+    },
+    customFields() {
+      const courseId = Template.instance().data.courseId;
+      if (courseId) {
+        return Courses.findOne({ _id: courseId })?.customFields;
+      }
+      return undefined;
+    },
+    venueEditAttr() {
+      const instance = Template.instance();
+      return {
+        region: instance.data.region,
+        value: instance.selectedLocation.get(),
+        onChange: (newValue: EventVenueEntity) => {
+          instance.selectedLocation.set(newValue);
+        },
+      };
+    },
+
     return  <form>
     <div className="edit-page">
       <h3>
-        {{#if _id}}
-          {t('course.event.edit.edit' ,'Edit event')}
-        {{else}}
-          {t('course.event.edit.add' ,'Create an event')}
-        {{/if}}
+        {event._id ?
+          t('course.event.edit.edit' ,'Edit event')
+        :
+          t('course.event.edit.add' ,'Create an event')
+        }
       </h3>
       {{#unless hasParentCourse}}
         {{#unless _id}}
