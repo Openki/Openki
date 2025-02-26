@@ -15,7 +15,7 @@ import moment from "moment";
 
 // import * as Alert from "/imports/api/alerts/alert";
 import { Courses } from "/imports/api/courses/courses";
-import { EventModel, Events,  OEvent } from "/imports/api/events/events";
+import { EventModel, Events, OEvent } from "/imports/api/events/events";
 // import * as EventsMethods from "/imports/api/events/methods";
 // import { Regions } from "/imports/api/regions/regions";
 // import { SaveFields } from "/imports/api/events/methods";
@@ -39,6 +39,9 @@ import { useSession } from "/imports/utils/react-meteor-data";
 import { useAll } from "/imports/api/regions/publications";
 // import { EditVenue } from "../../edit-location/client";
 // import { EditCustomFields } from "../../../edit-custom-fields";
+
+import { ButtonCancel } from "../../../buttons";
+
 import "./styles.scss";
 
 type NewEventModel = {
@@ -54,7 +57,6 @@ export type EventEditData = EventModel | (NewEventModel & OEvent & Partial<Event
 //   "eventEdit",
 //   EventEditData,
 //   {
-//     parent: Blaze.TemplateInstance;
 //     customFields: () => GroupEntityCustomCourseFields[];
 //   }
 // >;
@@ -467,7 +469,7 @@ export type EventEditData = EventModel | (NewEventModel & OEvent & Partial<Event
 //           await CoursesMethods.save(instance.data.courseId, { customFields });
 //         }
 
-//         (instance.parent as any).editing.set(false);
+// afterSave();
 //       } catch (err) {
 //         Alert.serverError(
 //           err,
@@ -477,14 +479,6 @@ export type EventEditData = EventModel | (NewEventModel & OEvent & Partial<Event
 //         instance.busy(false);
 //       }
 //     });
-//   },
-
-//   "click .js-event-cancel"(_event, instance) {
-//     if ("new" in event) {
-//       window.history.back();
-//     } else {
-//       (instance.parent as any).editing.set(false);
-//     }
 //   },
 
 //   "click .js-toggle-duration"() {
@@ -535,7 +529,14 @@ export type EventEditData = EventModel | (NewEventModel & OEvent & Partial<Event
 //   },
 // });
 
-export function Edit({ event }: { event: EventEditData; onClose: () => void }) {
+export function Edit({
+  event,
+  onCancel,
+}: {
+  event: EventEditData;
+  onSave: () => void;
+  onCancel: () => void;
+}) {
   const { t } = useTranslation();
   const { timeFormat, dateFormat } = useDateTimeFormat();
 
@@ -1062,8 +1063,12 @@ export function Edit({ event }: { event: EventEditData; onClose: () => void }) {
           </div>
 
           <div className="form-actions">
-            {/* <ButtonSave saving={saving}/>
-          {{> buttonCancel event="js-event-cancel"}} */}
+            {/* <ButtonSave saving={saving}/> */}
+            <ButtonCancel
+              onClick={() => {
+                onCancel();
+              }}
+            />
           </div>
         </div>
       </div>
