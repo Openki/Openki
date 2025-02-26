@@ -1,7 +1,7 @@
 import { EJSON } from "meteor/ejson";
 import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
-import { differenceBy, intersectionBy, map, pick } from "lodash";
+import { differenceBy, intersectionBy, map } from "lodash";
 import { useTranslation } from "react-i18next";
 import { UserModel } from "/imports/api/users/users";
 
