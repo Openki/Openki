@@ -16,7 +16,7 @@ import moment from "moment";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { Courses } from "/imports/api/courses/courses";
-import { EventModel, Events, EventVenueEntity } from "/imports/api/events/events";
+import { EventModel, Events, EventVenueEntity, OEvent } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { Regions } from "/imports/api/regions/regions";
 import { SaveFields } from "/imports/api/events/methods";
@@ -31,32 +31,26 @@ import * as Tooltips from "/imports/utils/Tooltips";
 import { PleaseLogin } from "/imports/ui/lib/please-login";
 import * as Analytics from "/imports/ui/lib/analytics";
 
-import "/imports/ui/components/buttons";
-import "/imports/ui/components/richtext";
-import "../../edit-location/client";
-import "/imports/ui/components/price-policy";
-import "/imports/ui/components/regions/tag";
-import "/imports/ui/components/edit-custom-fields";
-
 import "./template.html";
 import "./styles.scss";
 import { useTranslation } from "react-i18next";
+import { RegionTag } from "../../../regions/tag";
+import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { Richtext } from "../../../richtext";
+import { PricePolicy } from "../../../price-policy";
+import { useSession } from "/imports/utils/react-meteor-data";
+import { useAll } from "/imports/api/regions/publications";
+import { EditVenue } from "../../edit-location/client";
+import { EditCustomFields } from "../../../edit-custom-fields";
 
 type NewEventModel = {
   new: boolean;
   startLocal: string;
   endLocal: string;
-  title: string;
-  courseId: string;
-  region: string;
-  description: string;
-  internal: boolean;
   sendReminder: boolean;
 };
 
-export type EventEditData =
-  | (EventModel & Partial<NewEventModel>)
-  | (NewEventModel & Partial<EventModel>);
+export type EventEditData = EventModel | (NewEventModel & OEvent & Partial<EventModel>);
 
 const Template = TemplateAny as TemplateStaticTyped<
   "eventEdit",
@@ -314,7 +308,6 @@ template.onRendered(function () {
     });
   });
 });
-
 
 template.events({
   submit(event, instance) {
@@ -609,416 +602,548 @@ template.events({
   },
 });
 
+export function Edit({ event }: { event: EventEditData }) {
+  const { t } = useTranslation();
+  const { timeFormat, dateFormat } = useDateTimeFormat();
 
-export function Edit ({event}: {event:EventEditData }){
-    const { t } = useTranslation();
-  
-    hasParentCourse() {
-      return Boolean(this.courseId);
-    },
-  
-    showRegionTag() {
-      if (!this._id || this.courseId) {
-        return false;
-      }
-      return true;
-    },
-  
-    localDate(date: string) {
-      return moment.utc(date).format("L");
-    },
-  
-    affectedReplicaCount(this: EventEditData) {
-      return Events.find(AffectedReplicaSelectors(this as any)).count();
-    },
-  
-    disabledIfDayChanged() {
-      if (Template.instance().state.get("startDayChanged")) {
-        return "disabled";
-      }
-      return "";
-    },
-  
-    startDayChanged() {
-      return Template.instance().state.get("startDayChanged");
-    },
-  
-    timeChanged() {
-      return Template.instance().state.get("timeChanged");
-    },
-  
-    changedReplicas(this: EventEditData) {
-      return Events.find(AffectedReplicaSelectors(this as any))
-        .fetch()
-        .filter((replica) => !replica.sameTime(this));
-    },
-  
-    emphasizeClass() {
-      if (Template.instance().state.get("updateReplicasTime")) {
-        return "is-emphasized";
-      }
-      return "";
-    },
-  
-    updateChangedReplicasTime() {
-      return Template.instance().state.get("updateChangedReplicasTime");
-    },
-  
-    showRegionSelection() {
-      // You can select the region for events that are new and not associated
-      // with a course
-      if (this._id || this.courseId) {
-        return false;
-      }
-      return true;
-    },
-  
-    showVenueSelection() {
-      const selectedRegion = Template.instance().selectedRegion.get();
-      return selectedRegion && selectedRegion !== "all";
-    },
-  
-    disableForPast(this: EventEditData) {
-      return this.start && this.start < new Date() ? "disabled" : "";
-    },
-  
-    isInternal() {
-      return this.internal ? "checked" : null;
-    },
-  
-    sendReminder() {
-      return this.sendReminder ? "checked" : null;
-    },
-  
-    course(this: EventEditData) {
-      const { courseId } = this;
-      if (courseId) {
-        return Courses.findOne({ _id: courseId });
-      }
+  const currentRegion = useSession("region");
+  const [isLoading, regions] = useAll();
+
+  function hasParentCourse() {
+    return Boolean(event.courseId);
+  }
+  function showRegionTag() {
+    if (!event._id || event.courseId) {
       return false;
-    },
-  
-    noRsvp() {
-      return Template.instance().noRsvpChecked.get() ? "checked" : null;
-    },
-    noRsvpChecked() {
-      return Template.instance().noRsvpChecked.get();
-    },
-    maxParticipants() {
-      // show empty input instead of 0
-      return this.maxParticipants || "";
-    },
-    notifyChecked() {
-      return Template.instance().notifyChecked.get();
-    },
-    customFields() {
-      const courseId = Template.instance().data.courseId;
-      if (courseId) {
-        return Courses.findOne({ _id: courseId })?.customFields;
-      }
-      return undefined;
-    },
-    venueEditAttr() {
-      const instance = Template.instance();
-      return {
-        region: instance.data.region,
-        value: instance.selectedLocation.get(),
-        onChange: (newValue: EventVenueEntity) => {
-          instance.selectedLocation.set(newValue);
-        },
-      };
-    },
+    }
+    return true;
+  }
+  function localDate(date: string) {
+    return moment.utc(date).format("L");
+  }
+  function affectedReplicaCount() {
+    return Events.find(AffectedReplicaSelectors(event as any)).count();
+  }
+  function disabledIfDayChanged() {
+    if (Template.instance().state.get("startDayChanged")) {
+      return true;
+    }
+    return false;
+  }
+  function startDayChanged() {
+    return Template.instance().state.get("startDayChanged");
+  }
+  function timeChanged() {
+    return Template.instance().state.get("timeChanged");
+  }
+  function changedReplicas() {
+    return Events.find(AffectedReplicaSelectors(event as any))
+      .fetch()
+      .filter((replica) => !replica.sameTime(event));
+  }
+  function emphasizeClass() {
+    if (Template.instance().state.get("updateReplicasTime")) {
+      return "is-emphasized";
+    }
+    return "";
+  }
+  function updateChangedReplicasTime() {
+    return Template.instance().state.get("updateChangedReplicasTime");
+  }
+  function showRegionSelection() {
+    // You can select the region for events that are new and not associated
+    // with a course
+    if (event._id || event.courseId) {
+      return false;
+    }
+    return true;
+  }
+  function showVenueSelection() {
+    const selectedRegion = Template.instance().selectedRegion.get();
+    return !!selectedRegion && selectedRegion !== "all";
+  }
+  function disableForPast() {
+    return !!event.start && event.start < new Date();
+  }
 
-    return  <form>
-    <div className="edit-page">
-      <h3>
-        {event._id ?
-          t('course.event.edit.edit' ,'Edit event')
-        :
-          t('course.event.edit.add' ,'Create an event')
-        }
-      </h3>
-      {{#unless hasParentCourse}}
-        {{#unless _id}}
-          {t('course.createEventInfo', 'Use this form to publish a singular, one-off, already organized event. Otherwise create or propose a course here:')}
-          <a
-            href="{{pathFor 'proposeCourse'}}">{t('menue.ProposeCourse', 'Propose a course')}</a>
-        {{/unless}}
-      {{/unless}}
+  function course() {
+    const { courseId } = event;
+    if (courseId) {
+      return Courses.findOne({ _id: courseId });
+    }
+    return false;
+  }
 
-      <div className="edit-page-header event-edit">
-        {{#if showRegionTag}}
-          {{> regionTag this}}
-        {{/if}}
-        <div className="mb-3">
-          <label className="form-label">{t('course.event.edit.title' ,'Event title')}</label>
-          <input type="text" className="js-event-title form-control form-control-lg" name="_"
-                placeholder={t('event.title.placeholder', 'Write a catchy title here')}
-                size={30} value="{{this.title}}" />
-        </div>
-        <div className="row">
-          <div className="col-md mb-3 mb-md-0">
-            <label className="form-label">{t('course.event.edit.date_start', 'Date')}</label>
-            <div className="input-group">
-              <label className="input-group-text" htmlFor="eventStartDate">
-                <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
-              </label>
-              <input id="eventStartDate" type="text" className="form-control js-event-start-date"
-                    value="{{localDate startLocal}}" {{disableForPast}}>
-            </div>
-          </div>
-          <div className="col-md mb-3 mb-md-0">
-            <label className="form-label">{t('course.event.edit.time_start' ,'Time start')}</label>
-            <div className="input-group">
-              <span className="input-group-text">
-                <span className="fa-solid fa-hourglass-start fa-fw" aria-hidden="true"></span>
-              </span>
-              <input type="text" className="js-event-start-time form-control" size={5}
-                    value="{{timeFormat startLocal}}" {{disableForPast}}>
-            </div>
-          </div>
-          <div className="col-md js-time-end">
-            <label className="form-label" style={{display:"none"}}>
-              {t('course.event.edit.duration', 'Duration (in minutes)')}
-              <button type="button" className="js-toggle-duration btn-icon" data-bs-toggle="tooltip"
-                      data-bs-title={t('course.event.edit.switch_time_end', 'Switch to end time' )}>
-                <span className="fa-solid fa-right-left"></span>
-              </button>
-            </label>
-            <div className="input-group" style={{display:"none"}}>
-              <span className="input-group-text">
-                <span className="fa-solid fa-hourglass-end fa-fw" aria-hidden="true"></span>
-              </span>
-              <input type="number" className="js-event-duration form-control" id="editEventDuration"
-                    value="" size={5} {{disableForPast}}/>
-            </div>
-            <label className="form-label">
-              {t('course.event.edit.time_end', 'Time end')}
-              <button type="button" className="js-toggle-duration btn-icon" data-bs-toggle="tooltip"
-                      data-bs-title={t('course.event.edit.swich_duration', 'Switch to duration')}>
-                <span className="fa-solid fa-right-left"></span>
-              </button>
-            </label>
-            <div className="input-group">
-              <span className="input-group-text">
-                <span className="fa-solid fa-hourglass-end fa-fw" aria-hidden="true"></span>
-              </span>
-              <input type="text" className="js-event-end-time form-control" size={5}
-                    value="{{timeFormat endLocal}}" {{disableForPast}}>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="edit-page-body event-edit">
-        <div className="mb-3">
-          <label className="form-label">{t('course.event.edit.desc' ,'Description')}</label>
-          {{> richtext className="js-event-description" text=description placeholder=(i18n 'event.description.placeholder' 'Describe your event as accurately as possible. This helps people know how to prepare and what to expect from this meeting (e.g. level, prerequisites, activities, teaching methods, what to bring, etc.)') maxlength=PublicSettings.eventDescriptionMax}}
-        </div>
-        {{#unless isPrivate}}
-          {{> pricePolicy dismissable=true wrap='mb-3'}}
-        {{/unless}}
+  function noRsvpChecked() {
+    return Template.instance().noRsvpChecked.get();
+  }
 
-        {{#if showRegionSelection}}
+  function notifyChecked() {
+    return Template.instance().notifyChecked.get();
+  }
+  function customFields() {
+    const courseId = event.courseId;
+    if (courseId) {
+      return Courses.findOne({ _id: courseId })?.customFields;
+    }
+    return undefined;
+  }
+  function venueEditAttr() {
+    return {
+      region: event.region,
+      value: instance.selectedLocation.get(),
+      onChange: (newValue: EventVenueEntity) => {
+        instance.selectedLocation.set(newValue);
+      },
+    };
+  }
+
+  return (
+    <form>
+      <div className="edit-page">
+        <h3>
+          {"_id" in event
+            ? t("course.event.edit.edit", "Edit event")
+            : t("course.event.edit.add", "Create an event")}
+        </h3>
+        {!hasParentCourse() && !("_id" in event) && (
+          <>
+            {t(
+              "course.createEventInfo",
+              "Use this form to publish a singular, one-off, already organized event. Otherwise create or propose a course here:",
+            )}
+            <a href={Router.path("proposeCourse")}>
+              {t("menue.ProposeCourse", "Propose a course")}
+            </a>
+          </>
+        )}
+
+        <div className="edit-page-header event-edit">
+          {showRegionTag() && <RegionTag region={event.region} />}
+
           <div className="mb-3">
-            <label className="form-label">{t('course.edit.region' ,'Region')}</label>
-            <div className="input-group">
-              <div className="input-group-text">
-                <span className="fa-solid fa-location-dot" aria-hidden="true"></span>
+            <label className="form-label">{t("course.event.edit.title", "Event title")}</label>
+            <input
+              type="text"
+              className="js-event-title form-control form-control-lg"
+              name="_"
+              placeholder={t("event.title.placeholder", "Write a catchy title here")}
+              size={30}
+              value={event.title}
+            />
+          </div>
+          <div className="row">
+            <div className="col-md mb-3 mb-md-0">
+              <label className="form-label">{t("course.event.edit.date_start", "Date")}</label>
+              <div className="input-group">
+                <label className="input-group-text" htmlFor="eventStartDate">
+                  <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
+                </label>
+                <input
+                  id="eventStartDate"
+                  type="text"
+                  className="form-control js-event-start-date"
+                  value={localDate(event.startLocal)}
+                  disabled={disableForPast()}
+                />
               </div>
-              <select className="js-select-region form-select" name='region'>
-                <option className="select-placeholder" disabled
-                        selected="{{#if isCurrentRegion 'all'}}selected{{/if}}" value=''>
-                  {t('_selection.pleaseSelect'}}
-                </option>
-                {{#each region in regions}}
-                  <option selected="{{#if isCurrentRegion region._id}}selected{{/if}}"
-                          value='{{region._id}}'>
-                    {{region.name}}
-                  </option>
-                {{/each}}
-              </select>
             </div>
-          </div>
-        {{/if}}
-
-        {{#if showVenueSelection}}
-          {{> eventEditVenue venueEditAttr}}
-          <div className="mb-3">
-            <label className="form-label">
-              {t('course.event.edit.room', 'Room')}
-              <small> {t('_inputField.optional')}</small>
-            </label>
-            <div className="input-group" id="editform_room" name="editform_room">
-              <span className="input-group-text">
-                <span className="fa-solid fa-signs-post fa-fw" aria-hidden="true"></span>
-              </span>
-              <input type="text" className="js-event-room form-control" size={40} value="{{room}}"/>
-            </div>
-          </div>
-        {{/if}}
-
-        {{#if instance.customFields.length}}
-          <div className="mb-3">
-            {{> editCustomFields fields=(instance.customFields) values=customFields}}
-          </div>
-        {{/if}}
-
-        <div className="mb-3">
-          <div className="form-check">
-            <input className="form-check-input js-check-no-rsvp" type="checkbox" value=""
-                  id="eventEditNoRsvpCheck" {{noRsvp}}/>
-            <label className="form-check-label" htmlFor="eventEditNoRsvpCheck">
-              {t('event.edit.noRsvp' ,'No reservation required')}
-              {{#if noRsvpChecked}}
-                <span className="form-text d-block">
-                  {t('event.edit.noRsvp.description', 'Registration for this event is disabled. You might want to explain why in the description.')}
+            <div className="col-md mb-3 mb-md-0">
+              <label className="form-label">
+                {t("course.event.edit.time_start", "Time start")}
+              </label>
+              <div className="input-group">
+                <span className="input-group-text">
+                  <span className="fa-solid fa-hourglass-start fa-fw" aria-hidden="true"></span>
                 </span>
-              {{/if}}
-            </label>
-          </div>
-          {{#unless noRsvpChecked}}
-            <label className="form-label">
-              {t('course.event.edit.maxParticipants' ,'maximal number of participants')}
-              <small> {t('_inputField.optional')}</small>
-            </label>
-            <div className="input-group">
-              <span className="input-group-text">
-                <span className="fa-solid fa-users fa-fw" aria-hidden="true"></span>
-              </span>
-              <input type="text" className="js-event-max-participants form-control" size={1}
-                    value="{{maxParticipants}}"/>
+                <input
+                  type="text"
+                  className="js-event-start-time form-control"
+                  size={5}
+                  value={timeFormat(event.startLocal)}
+                  disabled={disableForPast()}
+                />
+              </div>
             </div>
-          {{/unless}}
-        </div>
-
-        <div className="mb-3">
-          <div className="form-check">
-            <input className="form-check-input js-check-event-internal" type="checkbox" value=""
-                  id="eventEditInternalCheck" {{isInternal}} />
-            <label className="form-check-label" htmlFor="eventEditInternalCheck">
-              {t('event.edit.internal' ,'Hide on front page')}
-              <span className="form-text d-block">
-                {t('event.edit.internal.description', 'Show it only on group and venue pages')}
-              </span>
-            </label>
+            <div className="col-md js-time-end">
+              <label className="form-label" style={{ display: "none" }}>
+                {t("course.event.edit.duration", "Duration (in minutes)")}
+                <button
+                  type="button"
+                  className="js-toggle-duration btn-icon"
+                  data-bs-toggle="tooltip"
+                  data-bs-title={t("course.event.edit.switch_time_end", "Switch to end time")}
+                >
+                  <span className="fa-solid fa-right-left"></span>
+                </button>
+              </label>
+              <div className="input-group" style={{ display: "none" }}>
+                <span className="input-group-text">
+                  <span className="fa-solid fa-hourglass-end fa-fw" aria-hidden="true"></span>
+                </span>
+                <input
+                  type="number"
+                  className="js-event-duration form-control"
+                  id="editEventDuration"
+                  value=""
+                  size={5}
+                  disabled={disableForPast()}
+                />
+              </div>
+              <label className="form-label">
+                {t("course.event.edit.time_end", "Time end")}
+                <button
+                  type="button"
+                  className="js-toggle-duration btn-icon"
+                  data-bs-toggle="tooltip"
+                  data-bs-title={t("course.event.edit.swich_duration", "Switch to duration")}
+                >
+                  <span className="fa-solid fa-right-left"></span>
+                </button>
+              </label>
+              <div className="input-group">
+                <span className="input-group-text">
+                  <span className="fa-solid fa-hourglass-end fa-fw" aria-hidden="true"></span>
+                </span>
+                <input
+                  type="text"
+                  className="js-event-end-time form-control"
+                  size={5}
+                  value={timeFormat(event.endLocal)}
+                  disabled={disableForPast()}
+                />
+              </div>
+            </div>
           </div>
-          {{#if affectedReplicaCount}}
-            <div className="form-check mt-2">
-              <input className="form-check-input js-update-replicas-infos" type="checkbox"
-                    name="updateReplicasInfo" value="" id="eventEditUpdateReplicasInfoCheck"/>
-              <label className="form-check-label" htmlFor="eventEditUpdateReplicasInfoCheck">
-                {t('event.edit.updateReplicasInfo', 'Update {COUNT, plural, one{info from later copy} other{info from # later copies} } as well.' ,{COUNT:affectedReplicaCount})}
+        </div>
+        <div className="edit-page-body event-edit">
+          <div className="mb-3">
+            <label className="form-label">{t("course.event.edit.desc", "Description")}</label>
+            <Richtext
+              className="js-event-description"
+              text={event.description}
+              placeholder={t(
+                "event.description.placeholder",
+                "Describe your event as accurately as possible. This helps people know how to prepare and what to expect from this meeting (e.g. level, prerequisites, activities, teaching methods, what to bring, etc.)",
+              )}
+              maxlength={PublicSettings.eventDescriptionMax}
+            />
+          </div>
+          {!(!("new" in event) && event.isPrivate()) && <PricePolicy dismissable wrap="mb-3" />}
+
+          {showRegionSelection() && (
+            <div className="mb-3">
+              <label className="form-label">{t("course.edit.region", "Region")}</label>
+              <div className="input-group">
+                <div className="input-group-text">
+                  <span className="fa-solid fa-location-dot" aria-hidden="true"></span>
+                </div>
+                <select className="js-select-region form-select" name="region">
+                  <option
+                    className="select-placeholder"
+                    disabled
+                    selected={currentRegion === "all"}
+                    value=""
+                  >
+                    {t("_selection.pleaseSelect")}
+                  </option>
+                  {regions.map((region) => (
+                    <option selected={currentRegion === region._id} value={region._id}>
+                      {region.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          )}
+
+          {showVenueSelection() && (
+            <>
+              <EditVenue {...venueEditAttr()} />
+              <div className="mb-3">
+                <label className="form-label">
+                  {t("course.event.edit.room", "Room")}
+                  <small> {t("_inputField.optional")}</small>
+                </label>
+                <div className="input-group">
+                  <span className="input-group-text">
+                    <span className="fa-solid fa-signs-post fa-fw" aria-hidden="true"></span>
+                  </span>
+                  <input
+                    type="text"
+                    className="js-event-room form-control"
+                    size={40}
+                    value={event.room}
+                  />
+                </div>
+              </div>
+            </>
+          )}
+
+          {!!customFields()?.length && (
+            <div className="mb-3">
+              <EditCustomFields fields={customFields()} values={customFields()} />
+            </div>
+          )}
+          <div className="mb-3">
+            <div className="form-check">
+              <input
+                className="form-check-input js-check-no-rsvp"
+                type="checkbox"
+                value=""
+                id="eventEditNoRsvpCheck"
+                checked={noRsvpChecked()}
+              />
+              <label className="form-check-label" htmlFor="eventEditNoRsvpCheck">
+                {t("event.edit.noRsvp", "No reservation required")}
+                {noRsvpChecked() && (
+                  <span className="form-text d-block">
+                    {t(
+                      "event.edit.noRsvp.description",
+                      "Registration for this event is disabled. You might want to explain why in the description.",
+                    )}
+                  </span>
+                )}
               </label>
             </div>
-            {{#if timeChanged}}
-              <div className="form-check {{disabledIfDayChanged}}">
-                <input className="form-check-input js-update-replicas-time" type="checkbox"
-                      name="updateReplicasTime" value="" id="eventEditUpdateReplicasTimeCheck"
-                      {{disabledIfDayChanged}}>
-                <label className="form-check-label" htmlFor="eventEditUpdateReplicasTimeCheck">
-                  {t('event.edit.updateReplicasTime' ,'Update time from {COUNT, plural, one{copy} other{copies} }',
-                  {COUNT:affectedReplicaCount})}
+            {!noRsvpChecked() && (
+              <>
+                <label className="form-label">
+                  {t("course.event.edit.maxParticipants", "maximal number of participants")}
+                  <small> {t("_inputField.optional")}</small>
                 </label>
-              </div>
-              {{#if startDayChanged}}
-                <div className="card text-white bg-danger mb-4">
-                  <div className="card-body p-2">
-                    <span className="fa-solid fa-triangle-exclamation fa-fw" aria-hidden="true"></span>
-                    {t('event.edit.startDayChanged' ,'Updating the copies when the start day has been changed is not (yet) supported.')}
-                  </div>
+                <div className="input-group">
+                  <span className="input-group-text">
+                    <span className="fa-solid fa-users fa-fw" aria-hidden="true"></span>
+                  </span>
+                  {/* show empty input instead of 0 */}
+                  <input
+                    type="text"
+                    className="js-event-max-participants form-control"
+                    size={1}
+                    value={event.maxParticipants || ""}
+                  />
                 </div>
-              {{else}}
-                {{#if changedReplicas.length}}
-                  <div className="card mb-4 changed-replicas {{emphasizeClass}}">
-                    <div className="card-header bg-warning">
-                      <span className="fa-solid fa-triangle-exclamation fa-fw"
-                            aria-hidden="true"></span>
-                      {t('event.edit.changedReplicas.heading' ,'Found {NUM, plural, one{one copy which varies} other{# copies which vary} } in time', {NUM:changedReplicas.length})}
-                    </div>
-                    <div className="card-body">
-                      {{#unless updateChangedReplicas}}
-                        <span className="update-changed-replicas-help">
-                          {t('event.edit.changedReplicas.body', "By default {NUM, plural, one{this copy} other{these copies} } won't be updated as {NUM, plural, one{it has} other{they have} } another time set than the original event:",{ NUM:changedReplicas.length})}
-                        </span>
-                      {{/unless}}
-                      <ul>
-                        {{#each replica in changedReplicas}}
-                          <li>
-                            <a href={Router.path('showEvent', replica)} target="_blank">
-                              {{dateFormat replica.startLocal}}
-                              -
-                              {{replica.title}}
+              </>
+            )}
+          </div>
 
-                              ({{timeFormat replica.startLocal}}
-                              -
-                              {{timeFormat replica.endLocal}})
-                            </a>
-                          </li>
-                        {{/each}}
-                      </ul>
-                      <div className="form-check">
-                        <input className="form-check-input js-update-changed-replicas-time"
-                              type="checkbox" name="updateChangedReplicasTime" value=""
-                              id="eventEditUpdateChangedReplicasTimeCheck"/>
-                        <label className="form-check-label"
-                              htmlFor="eventEditUpdateChangedReplicasTimeCheck">
-                          {t('event.edit.updateChangedReplicasTime', 'Overwrite {NUM, plural, one{this events} other{these events} } time too',{ NUM:changedReplicas.length})}
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                {{/if}}
-              {{/if}}
-            {{/if}}
-          {{/if}}
-          {{#if courseId}}
+          <div className="mb-3">
             <div className="form-check">
-              {{#if new}}
-                <input className="form-check-input js-check-notify" type="checkbox" value=""
-                      id="eventEditCheckNotifyCheck" checked />
-                <label className="form-check-label" htmlFor="eventEditCheckNotifyCheck">
-                  {t('event.edit.notifyNewEvent', 'Notify all members of the "{COURSE}" course about this event.', {COURSE:course.name})}
-                </label>
-              {{else}}
-                <input className="form-check-input js-check-notify" type="checkbox" value=""
-                      id="eventEditCheckNotifyCheck" />
-                <label className="form-check-label" htmlFor="eventEditCheckNotifyCheck">
-                  {t('event.edit.notifyEditEvent' ,'Notify all members of the "{COURSE}" course about the changes you made.' ,{COURSE:course.name})}
-                </label>
-              {{/if}}
+              <input
+                className="form-check-input js-check-event-internal"
+                type="checkbox"
+                value=""
+                id="eventEditInternalCheck"
+                checked={event.internal}
+              />
+              <label className="form-check-label" htmlFor="eventEditInternalCheck">
+                {t("event.edit.internal", "Hide on front page")}
+                <span className="form-text d-block">
+                  {t("event.edit.internal.description", "Show it only on group and venue pages")}
+                </span>
+              </label>
             </div>
-          {{/if}}
-          {{#if notifyChecked}}
-            <label className="form-label">
-              {t('course.event.edit.AddMessage' ,'Add message')}
-              <small> {t('_inputField.optional')}</small>
-            </label>
-            <div className="input-group" id="editform_message" name="editform_message">
-              <span className="input-group-text">
-                <span className="fa-solid fa-pencil fa-fw" aria-hidden="true"></span>
-              </span>
-              <textarea rows={3} className="form-control js-event-add-message" maxlength={2000}
-                        placeholder={t('event.edit.additionalMessage', 'If you feel good about doing so, describe what members of the course should know. (This message is only sent to the interested users and will not be visible in the event description afterwards.)')}></textarea>
-            </div>
-          {{/if}}
-          {{#unless noRsvpChecked}}
-            {{#if PublicSettings.feature.sendReminderIsEditable}}
+            {affectedReplicaCount() > 0 && (
+              <>
+                <div className="form-check mt-2">
+                  <input
+                    className="form-check-input js-update-replicas-infos"
+                    type="checkbox"
+                    name="updateReplicasInfo"
+                    value=""
+                    id="eventEditUpdateReplicasInfoCheck"
+                  />
+                  <label className="form-check-label" htmlFor="eventEditUpdateReplicasInfoCheck">
+                    {t(
+                      "event.edit.updateReplicasInfo",
+                      "Update {COUNT, plural, one{info from later copy} other{info from # later copies} } as well.",
+                      { COUNT: affectedReplicaCount() },
+                    )}
+                  </label>
+                </div>
+                {!!timeChanged() && (
+                  <>
+                    <div className="form-check {{disabledIfDayChanged}}">
+                      <input
+                        className="form-check-input js-update-replicas-time"
+                        type="checkbox"
+                        name="updateReplicasTime"
+                        value=""
+                        id="eventEditUpdateReplicasTimeCheck"
+                        disabled={disabledIfDayChanged()}
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="eventEditUpdateReplicasTimeCheck"
+                      >
+                        {t(
+                          "event.edit.updateReplicasTime",
+                          "Update time from {COUNT, plural, one{copy} other{copies} }",
+                          { COUNT: affectedReplicaCount() },
+                        )}
+                      </label>
+                    </div>
+                    {startDayChanged() ? (
+                      <div className="card text-white bg-danger mb-4">
+                        <div className="card-body p-2">
+                          <span
+                            className="fa-solid fa-triangle-exclamation fa-fw"
+                            aria-hidden="true"
+                          ></span>
+                          {t(
+                            "event.edit.startDayChanged",
+                            "Updating the copies when the start day has been changed is not (yet) supported.",
+                          )}
+                        </div>
+                      </div>
+                    ) : (
+                      changedReplicas().length > 0 && (
+                        <div className={`card mb-4 changed-replicas ${emphasizeClass}`}>
+                          <div className="card-header bg-warning">
+                            <span
+                              className="fa-solid fa-triangle-exclamation fa-fw"
+                              aria-hidden="true"
+                            ></span>
+                            {t(
+                              "event.edit.changedReplicas.heading",
+                              "Found {NUM, plural, one{one copy which varies} other{# copies which vary} } in time",
+                              { NUM: changedReplicas.length },
+                            )}
+                          </div>
+                          <div className="card-body">
+                            {!updateChangedReplicasTime() && (
+                              <span className="update-changed-replicas-help">
+                                {t(
+                                  "event.edit.changedReplicas.body",
+                                  "By default {NUM, plural, one{this copy} other{these copies} } won't be updated as {NUM, plural, one{it has} other{they have} } another time set than the original event:",
+                                  { NUM: changedReplicas.length },
+                                )}
+                              </span>
+                            )}
+
+                            <ul>
+                              {changedReplicas().map((replica) => (
+                                <li>
+                                  <a href={Router.path("showEvent", replica)} target="_blank">
+                                    {dateFormat(replica.startLocal)}-{replica.title}(
+                                    {timeFormat(replica.startLocal)}-{timeFormat(replica.endLocal)})
+                                  </a>
+                                </li>
+                              ))}
+                            </ul>
+                            <div className="form-check">
+                              <input
+                                className="form-check-input js-update-changed-replicas-time"
+                                type="checkbox"
+                                name="updateChangedReplicasTime"
+                                value=""
+                                id="eventEditUpdateChangedReplicasTimeCheck"
+                              />
+                              <label
+                                className="form-check-label"
+                                htmlFor="eventEditUpdateChangedReplicasTimeCheck"
+                              >
+                                {t(
+                                  "event.edit.updateChangedReplicasTime",
+                                  "Overwrite {NUM, plural, one{this events} other{these events} } time too",
+                                  { NUM: changedReplicas.length },
+                                )}
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    )}
+                  </>
+                )}
+              </>
+            )}
+            {!!event.courseId && (
               <div className="form-check">
-                <input className="form-check-input js-check-event-send-reminder" type="checkbox"
-                      value="" id="eventEditSendReminderCheck" {{sendReminder}} />
+                {"new" in event && event.new ? (
+                  <>
+                    <input
+                      className="form-check-input js-check-notify"
+                      type="checkbox"
+                      value=""
+                      id="eventEditCheckNotifyCheck"
+                      checked
+                    />
+                    <label className="form-check-label" htmlFor="eventEditCheckNotifyCheck">
+                      {t(
+                        "event.edit.notifyNewEvent",
+                        'Notify all members of the "{COURSE}" course about this event.',
+                        { COURSE: course.name },
+                      )}
+                    </label>
+                  </>
+                ) : (
+                  <>
+                    <input
+                      className="form-check-input js-check-notify"
+                      type="checkbox"
+                      value=""
+                      id="eventEditCheckNotifyCheck"
+                    />
+                    <label className="form-check-label" htmlFor="eventEditCheckNotifyCheck">
+                      {t(
+                        "event.edit.notifyEditEvent",
+                        'Notify all members of the "{COURSE}" course about the changes you made.',
+                        { COURSE: course.name },
+                      )}
+                    </label>
+                  </>
+                )}
+              </div>
+            )}
+            {notifyChecked() && (
+              <>
+                <label className="form-label">
+                  {t("course.event.edit.AddMessage", "Add message")}
+                  <small> {t("_inputField.optional")}</small>
+                </label>
+                <div className="input-group">
+                  <span className="input-group-text">
+                    <span className="fa-solid fa-pencil fa-fw" aria-hidden="true"></span>
+                  </span>
+                  <textarea
+                    rows={3}
+                    className="form-control js-event-add-message"
+                    maxLength={2000}
+                    placeholder={t(
+                      "event.edit.additionalMessage",
+                      "If you feel good about doing so, describe what members of the course should know. (This message is only sent to the interested users and will not be visible in the event description afterwards.)",
+                    )}
+                  ></textarea>
+                </div>
+              </>
+            )}
+            {!noRsvpChecked() && PublicSettings.feature.sendReminderIsEditable && (
+              <div className="form-check">
+                <input
+                  className="form-check-input js-check-event-send-reminder"
+                  type="checkbox"
+                  value=""
+                  id="eventEditSendReminderCheck"
+                  checked={event.sendReminder}
+                />
                 <label className="form-check-label" htmlFor="eventEditSendReminderCheck">
-                  {t('event.edit.sendReminder' ,'Send a reminder e-mail to all participants 24 hours before the event starts.')}
+                  {t(
+                    "event.edit.sendReminder",
+                    "Send a reminder e-mail to all participants 24 hours before the event starts.",
+                  )}
                 </label>
               </div>
-            {{/if}}
-          {{/unless}}
-        </div>
+            )}
+          </div>
 
-        <div className="form-actions">
-          {{> buttonSave saving=saving}}
-          {{> buttonCancel event="js-event-cancel"}}
+          <div className="form-actions">
+            {/* <ButtonSave saving={saving}/>
+          {{> buttonCancel event="js-event-cancel"}} */}
+          </div>
         </div>
       </div>
-    </div>
-  </form>
+    </form>
+  );
 }
