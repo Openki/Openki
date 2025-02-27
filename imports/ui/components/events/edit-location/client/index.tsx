@@ -108,7 +108,7 @@ export function EditVenue({
   onChange,
 }: {
   region: string;
-  value: EventVenueEntity | undefined;
+  value?: EventVenueEntity | undefined;
   onChange: (newValue: EventVenueEntity | undefined) => void;
 }) {
   const { t } = useTranslation();
