@@ -15,7 +15,7 @@ import moment from "moment";
 
 // import * as Alert from "/imports/api/alerts/alert";
 import { Courses } from "/imports/api/courses/courses";
-import { EventModel, Events, OEvent } from "/imports/api/events/events";
+import { EventModel, Events, EventVenueEntity, OEvent } from "/imports/api/events/events";
 // import * as EventsMethods from "/imports/api/events/methods";
 // import { Regions } from "/imports/api/regions/regions";
 // import { SaveFields } from "/imports/api/events/methods";
@@ -37,7 +37,7 @@ import { Richtext } from "../../../richtext";
 import { PricePolicy } from "../../../price-policy";
 import { useSession } from "/imports/utils/react-meteor-data";
 import { useAll } from "/imports/api/regions/publications";
-// import { EditVenue } from "../../edit-location/client";
+import { EditVenue } from "../../edit-location/client";
 // import { EditCustomFields } from "../../../edit-custom-fields";
 
 import { ButtonCancel } from "../../../buttons";
@@ -287,7 +287,7 @@ export type EventEditData = EventModel | (NewEventModel & OEvent & Partial<Event
 //     }
 //     const end = getEventEndMoment(instance);
 
-//     const title = instance.$(".js-event-title").val() as string;
+//     const title =changes.title;
 //     if (title.length === 0) {
 //       Alert.error(i18n("event.edit.plzProvideTitle", "Please provide a title"));
 //       return;
@@ -311,7 +311,7 @@ export type EventEditData = EventModel | (NewEventModel & OEvent & Partial<Event
 //       }
 //     }
 
-//     const noRsvp = instance.$(".js-check-no-rsvp").is(":checked");
+//     const noRsvp = noRsvpChecked;
 
 //     let maxParticipants;
 //     if (!noRsvp) {
@@ -391,7 +391,7 @@ export type EventEditData = EventModel | (NewEventModel & OEvent & Partial<Event
 
 //     const updateReplicasTime = !startDayChanged && timeChanged && updateReplicasTime;
 
-//     const sendNotifications = instance.$(".js-check-notify").is(":checked");
+//     const sendNotifications =notifyChecked;
 //     const addNotificationMessage = instance.$(".js-event-add-message").val() as string;
 
 //     instance.busy("saving");
@@ -487,14 +487,6 @@ export type EventEditData = EventModel | (NewEventModel & OEvent & Partial<Event
 //     $(".js-time-end > *").toggle();
 //   },
 
-//   "click .js-check-notify"(_event, instance) {
-//     setNotifyChecked(instance.$(".js-check-notify").is(":checked"));
-//   },
-
-//   "click .js-check-no-rsvp"(_event, instance) {
-//     setNoRsvpChecked(instance.$(".js-check-no-rsvp").is(":checked"));
-//   },
-
 //   "change .js-event-start-date"(this: EventEditData, event, instance) {
 //     const newDate = instance.$(event.target as any).val();
 //     setStartDayChanged(!moment(newDate, "L").isSame(this.startLocal, "day"));
@@ -554,12 +546,16 @@ export function Edit({
     region = region || regions[0]?._id;
   }
   const [selectedRegion, setSelectedRegion] = useState<string>(region || currentRegion);
-  // const [selectedLocation, setSelectedLocation] = useState(event.venue);
-  const [noRsvpChecked] = useState(!!event.noRsvp);
+  const [selectedLocation, setSelectedLocation] = useState(event.venue);
+  const [noRsvpChecked, setNoRsvpChecked] = useState(!!event.noRsvp);
 
   // Sending an event notification is only possible when the event is
   // attached to a course. Otherwise there is nobody to inform.
-  const [notifyChecked] = useState(!!(event.courseId && "new" in event));
+  const [notifyChecked, setNotifyChecked] = useState(!!(event.courseId && "new" in event));
+
+  const [changes, setChanges] = useState({
+    title: event.title,
+  });
 
   function hasParentCourse() {
     return Boolean(event.courseId);
@@ -607,15 +603,15 @@ export function Edit({
     }
     return undefined;
   }
-  // function venueEditAttr() {
-  //   return {
-  //     region: event.region,
-  //     value: selectedLocation,
-  //     onChange: (newValue: EventVenueEntity) => {
-  //       setSelectedLocation(newValue);
-  //     },
-  //   };
-  // }
+  function venueEditAttr() {
+    return {
+      region: selectedRegion,
+      value: selectedLocation,
+      onChange: (newValue: EventVenueEntity | undefined) => {
+        setSelectedLocation(newValue);
+      },
+    };
+  }
 
   return (
     <form>
@@ -644,11 +640,13 @@ export function Edit({
             <label className="form-label">{t("course.event.edit.title", "Event title")}</label>
             <input
               type="text"
-              className="js-event-title form-control form-control-lg"
-              name="_"
+              className="form-control form-control-lg"
               placeholder={t("event.title.placeholder", "Write a catchy title here")}
               size={30}
-              value={event.title}
+              value={changes.title}
+              onChange={(ev) => {
+                setChanges({ ...changes, title: ev.currentTarget.value });
+              }}
             />
           </div>
           <div className="row">
@@ -784,7 +782,7 @@ export function Edit({
 
           {showVenueSelection() && (
             <>
-              {/* <EditVenue {...venueEditAttr()} /> */}
+              <EditVenue {...venueEditAttr()} />
               <div className="mb-3">
                 <label className="form-label">
                   {t("course.event.edit.room", "Room")}
@@ -813,11 +811,14 @@ export function Edit({
           <div className="mb-3">
             <div className="form-check">
               <input
-                className="form-check-input js-check-no-rsvp"
+                className="form-check-input"
                 type="checkbox"
                 value=""
                 id="eventEditNoRsvpCheck"
                 checked={noRsvpChecked}
+                onChange={(ev) => {
+                  setNoRsvpChecked(ev.currentTarget.checked);
+                }}
               />
               <label className="form-check-label" htmlFor="eventEditNoRsvpCheck">
                 {t("event.edit.noRsvp", "No reservation required")}
@@ -1000,11 +1001,14 @@ export function Edit({
             {!!event.courseId && (
               <div className="form-check">
                 <input
-                  className="form-check-input js-check-notify"
+                  className="form-check-input"
                   type="checkbox"
                   value=""
                   id="eventEditCheckNotifyCheck"
-                  checked
+                  checked={notifyChecked}
+                  onChange={(ev) => {
+                    setNotifyChecked(ev.currentTarget.checked);
+                  }}
                 />
                 <label className="form-check-label" htmlFor="eventEditCheckNotifyCheck">
                   {"new" in event
