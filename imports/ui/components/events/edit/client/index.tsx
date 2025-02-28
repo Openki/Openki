@@ -149,67 +149,6 @@ export type EventEditData = EventModel | (NewEventModel & OEvent & Partial<Event
 //   };
 // });
 
-// function getEventStartMoment(instance: ReturnType<(typeof Template)["instance"]>) {
-//   return LocalTime.fromString(
-//     instance.$(".js-event-start-date").val() as string,
-//     instance.$(".js-event-start-time").val() as string,
-//   );
-// }
-
-// function getEventEndMoment(instance: ReturnType<(typeof Template)["instance"]>) {
-//   const startMoment = getEventStartMoment(instance);
-//   let endMoment = LocalTime.fromString(
-//     startMoment.format("L"),
-//     instance.$(".js-event-end-time").val() as string,
-//   );
-
-//   // If the end time is earlier than the start time, assume the event
-//   // spans into the next day. This might result in some weird behavior
-//   // around hour-lapses due to DST (where 1:30 may be 'later' than 2:00).
-//   // Well maybe you shouldn't schedule your events to start or end
-//   // in these politically fucked hours.
-//   if (endMoment.diff(startMoment) < 0) {
-//     endMoment = LocalTime.fromString(
-//       startMoment.add(1, "day").format("L"),
-//       instance.$(".js-event-end-time").val() as string,
-//     );
-//   }
-
-//   return endMoment;
-// }
-
-// function getEventDuration(instance: ReturnType<(typeof Template)["instance"]>) {
-//   const duration = Number.parseInt(instance.$(".js-event-duration").val() as string, 10) || 0;
-//   return Math.max(0, duration);
-// }
-
-// /* Patch the end time and the duration when start, end or duration changes */
-// function updateTimes(instance: ReturnType<(typeof Template)["instance"]>, updateEnd: boolean) {
-//   const start = getEventStartMoment(instance);
-//   let end = getEventEndMoment(instance);
-//   let duration = getEventDuration(instance);
-//   if (!start.isValid() || !end.isValid()) {
-//     // If you put into the machine wrong figures, will the right answers come out?
-//     return;
-//   }
-
-//   if (updateEnd) {
-//     end = moment(start).add(duration, "minutes");
-//   }
-
-//   if (end.isBefore(start)) {
-//     // Let sanity prevail
-//     end = start;
-//     duration = 0;
-//   }
-
-//   duration = end.diff(start, "minutes");
-//   instance.$(".js-event-start-date").val(start.format("L"));
-//   instance.$(".js-event-start-time").val(start.format("LT"));
-//   instance.$(".js-event-end-time").val(end.format("LT"));
-//   instance.$(".js-event-duration").val(duration.toString());
-// }
-
 // /**
 //  * validates input for maxParticipants
 //  * @param maxParticipants the user-input
@@ -442,23 +381,6 @@ export type EventEditData = EventModel | (NewEventModel & OEvent & Partial<Event
 //     });
 //   },
 
-//   "click .js-toggle-duration"() {
-//     Tooltips.hide();
-
-//     $(".js-time-end > *").toggle();
-//   },
-
-//   "change .js-event-duration, change .js-event-start-date, change .js-event-start-time"(
-//     this: EventEditData,
-//     _event,
-//     instance,
-//   ) {
-//     updateTimes(instance, true);
-//   },
-
-//   "change .js-event-end-time"(this: EventEditData, _event, instance) {
-//     updateTimes(instance, false);
-//   },
 // });
 
 function EditStartEnd({
@@ -520,10 +442,10 @@ function EditStartEnd({
       })
       .on("changeDate", function (ev) {
         const newStart = LocalTime.fromString(
-          moment.utc(ev.date).format("L"),
+          (ev as any).currentTarget.value,
           timeFormat(startLocal),
         );
-        const newEnd = newStart.add(duration, "minutes");
+        const newEnd = newStart.clone().add(duration, "minutes");
         onChange({
           startLocal: LocalTime.toString(newStart),
           endLocal: LocalTime.toString(newEnd),
@@ -562,11 +484,11 @@ function EditStartEnd({
             value={timeFormat(startLocal)}
             disabled={disabled}
             onChange={(ev) => {
+              const newStart = LocalTime.fromString(localDate(startLocal), ev.currentTarget.value);
+              const newEnd = newStart.clone().add(duration, "minutes");
               onChange({
-                startLocal: LocalTime.toString(
-                  LocalTime.fromString(localDate(startLocal), ev.currentTarget.value),
-                ),
-                endLocal,
+                startLocal: LocalTime.toString(newStart),
+                endLocal: LocalTime.toString(newEnd),
               });
             }}
           />
@@ -600,6 +522,24 @@ function EditStartEnd({
                 size={5}
                 value={timeFormat(endLocal)}
                 disabled={disabled}
+                onChange={(ev) => {
+                  let newEnd = LocalTime.fromString(localDate(endLocal), ev.currentTarget.value);
+
+                  // If the end time is earlier than the start time, assume the event
+                  // spans into the next day. This might result in some weird behavior
+                  // around hour-lapses due to DST (where 1:30 may be 'later' than 2:00).
+                  if (newEnd.diff(start) < 0) {
+                    newEnd = LocalTime.fromString(
+                      start.clone().add(1, "day").format("L"),
+                      ev.currentTarget.value,
+                    );
+                  }
+
+                  onChange({
+                    startLocal,
+                    endLocal: LocalTime.toString(newEnd),
+                  });
+                }}
               />
             </div>
           </>
@@ -631,6 +571,13 @@ function EditStartEnd({
                 value={duration}
                 size={5}
                 disabled={disabled}
+                onChange={(ev) => {
+                  const newEnd = start.clone().add(ev.currentTarget.valueAsNumber, "minutes");
+                  onChange({
+                    startLocal,
+                    endLocal: LocalTime.toString(newEnd),
+                  });
+                }}
               />
             </div>
           </>
