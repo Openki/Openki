@@ -4,7 +4,7 @@
 // the timezone might actually change when a different region is selected. We
 // wouldn't want the time or even date field to change because of this switch.
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Router } from "meteor/iron:router";
 // import { Meteor } from "meteor/meteor";
 // import { intersection, uniq } from "lodash";
@@ -24,8 +24,8 @@ import { EventModel, Events, EventVenueEntity, OEvent } from "/imports/api/event
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { AffectedReplicaSelectors } from "/imports/utils/affected-replica-selectors";
-// import { LocalTime } from "/imports/utils/local-time";
-// import * as Tooltips from "/imports/utils/Tooltips";
+import { LocalTime } from "/imports/utils/local-time";
+import * as Tooltips from "/imports/utils/Tooltips";
 
 // import { PleaseLogin } from "/imports/ui/lib/please-login";
 // import * as Analytics from "/imports/ui/lib/analytics";
@@ -227,45 +227,6 @@ export type EventEditData = EventModel | (NewEventModel & OEvent & Partial<Event
 //   }
 //   return intVal;
 // };
-
-// template.onRendered(function () {
-//   const instance = this;
-//   updateTimes(instance, false);
-
-//   instance.autorun(() => {
-//     const desiredLocale = Session.get("locale");
-
-//     if (!desiredLocale) {
-//       // if nothing set we wait for a change
-//       return;
-//     }
-
-//     const language = desiredLocale.substring(0, 2);
-
-//     const $dateInput = instance.$(".js-event-start-date");
-
-//     // remove, re-add the datepicker when the locale changed
-//     $dateInput.datepicker("destroy");
-
-//     // I don't know why, but language: moment.locale() does not work here.
-//     // So instead we clobber the 'en' settings with settings for the
-//     // selected language.
-//     $dateInput.datepicker({
-//       language,
-//       weekStart: moment.localeData().firstDayOfWeek(),
-//       autoclose: true,
-//       startDate: new Date(),
-//       format: {
-//         toDisplay(date) {
-//           return moment.utc(date).format("L");
-//         },
-//         toValue(date) {
-//           return moment.utc(date, "L").toDate();
-//         },
-//       },
-//     });
-//   });
-// });
 
 // template.events({
 //   submit(event, instance) {
@@ -487,39 +448,197 @@ export type EventEditData = EventModel | (NewEventModel & OEvent & Partial<Event
 //     $(".js-time-end > *").toggle();
 //   },
 
-//   "change .js-event-start-date"(this: EventEditData, event, instance) {
-//     const newDate = instance.$(event.target as any).val();
-//     setStartDayChanged(!moment(newDate, "L").isSame(this.startLocal, "day"));
-//   },
-
 //   "change .js-event-duration, change .js-event-start-date, change .js-event-start-time"(
 //     this: EventEditData,
 //     _event,
 //     instance,
 //   ) {
 //     updateTimes(instance, true);
-//     const newStart = getEventStartMoment(instance);
-//     const newEnd = getEventEndMoment(instance);
-//     setTimeChanged(
-//       !(
-//         newStart.isSame(moment.utc(this.startLocal), "minute") &&
-//         newEnd.isSame(moment.utc(this.endLocal), "minute")
-//       ),
-//     );
 //   },
 
 //   "change .js-event-end-time"(this: EventEditData, _event, instance) {
 //     updateTimes(instance, false);
-//     const newStart = getEventStartMoment(instance);
-//     const newEnd = getEventEndMoment(instance);
-//     setTimeChanged(
-//       !(
-//         newStart.isSame(moment.utc(this.startLocal), "minute") &&
-//         newEnd.isSame(moment.utc(this.endLocal), "minute")
-//       ),
-//     );
 //   },
 // });
+
+function EditStartEnd({
+  startLocal,
+  endLocal,
+  disabled,
+  onChange,
+}: {
+  startLocal: string;
+  endLocal: string;
+  disabled: boolean;
+  onChange: (newValue: { startLocal: string; endLocal: string }) => void;
+}) {
+  const { t } = useTranslation();
+  const { timeFormat } = useDateTimeFormat();
+  const [durationEdit, setDurationEdit] = useState(false);
+  const dateElementRef = useRef(null);
+
+  function localDate(date: string) {
+    return moment.utc(date).format("L");
+  }
+
+  const start = moment.utc(startLocal);
+  const end = moment.utc(endLocal);
+  const duration = end.diff(start, "minutes");
+
+  useEffect(() => {
+    const desiredLocale = Session.get("locale");
+
+    if (!desiredLocale || !dateElementRef.current) {
+      // if nothing set we wait for a change
+      return;
+    }
+
+    const language = desiredLocale.substring(0, 2);
+
+    const $dateInput = $(dateElementRef.current);
+
+    // remove, re-add the datepicker when the locale changed
+    $dateInput.datepicker("destroy");
+
+    // I don't know why, but language: moment.locale() does not work here.
+    // So instead we clobber the 'en' settings with settings for the
+    // selected language.
+    $dateInput
+      .datepicker({
+        language,
+        weekStart: moment.localeData().firstDayOfWeek(),
+        autoclose: true,
+        startDate: new Date(),
+        format: {
+          toDisplay(date) {
+            return localDate(date);
+          },
+          toValue(date) {
+            return moment.utc(date, "L").toDate();
+          },
+        },
+      })
+      .on("changeDate", function (ev) {
+        const newStart = LocalTime.fromString(
+          moment.utc(ev.date).format("L"),
+          timeFormat(startLocal),
+        );
+        const newEnd = newStart.add(duration, "minutes");
+        onChange({
+          startLocal: LocalTime.toString(newStart),
+          endLocal: LocalTime.toString(newEnd),
+        });
+      });
+  });
+
+  return (
+    <div className="row">
+      <div className="col-md mb-3 mb-md-0">
+        <label className="form-label">{t("course.event.edit.date_start", "Date")}</label>
+        <div className="input-group">
+          <label className="input-group-text" htmlFor="eventStartDate">
+            <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
+          </label>
+          <input
+            id="eventStartDate"
+            ref={dateElementRef}
+            type="text"
+            className="form-control js-event-start-date"
+            value={localDate(startLocal)}
+            disabled={disabled}
+          />
+        </div>
+      </div>
+      <div className="col-md mb-3 mb-md-0">
+        <label className="form-label">{t("course.event.edit.time_start", "Time start")}</label>
+        <div className="input-group">
+          <span className="input-group-text">
+            <span className="fa-solid fa-hourglass-start fa-fw" aria-hidden="true"></span>
+          </span>
+          <input
+            type="time"
+            className="js-event-start-time form-control"
+            size={5}
+            value={timeFormat(startLocal)}
+            disabled={disabled}
+            onChange={(ev) => {
+              onChange({
+                startLocal: LocalTime.toString(
+                  LocalTime.fromString(localDate(startLocal), ev.currentTarget.value),
+                ),
+                endLocal,
+              });
+            }}
+          />
+        </div>
+      </div>
+      <div className="col-md js-time-end">
+        {!durationEdit ? (
+          <>
+            <label className="form-label">
+              {t("course.event.edit.time_end", "Time end")}
+              <button
+                type="button"
+                className="js-toggle-duration btn-icon"
+                data-bs-toggle="tooltip"
+                data-bs-title={t("course.event.edit.swich_duration", "Switch to duration")}
+                onClick={() => {
+                  Tooltips.hide();
+                  setDurationEdit(true);
+                }}
+              >
+                <span className="fa-solid fa-right-left"></span>
+              </button>
+            </label>
+            <div className="input-group">
+              <span className="input-group-text">
+                <span className="fa-solid fa-hourglass-end fa-fw" aria-hidden="true"></span>
+              </span>
+              <input
+                type="time"
+                className="js-event-end-time form-control"
+                size={5}
+                value={timeFormat(endLocal)}
+                disabled={disabled}
+              />
+            </div>
+          </>
+        ) : (
+          <>
+            <label className="form-label">
+              {t("course.event.edit.duration", "Duration (in minutes)")}
+              <button
+                type="button"
+                className="js-toggle-duration btn-icon"
+                data-bs-toggle="tooltip"
+                data-bs-title={t("course.event.edit.switch_time_end", "Switch to end time")}
+                onClick={() => {
+                  Tooltips.hide();
+                  setDurationEdit(false);
+                }}
+              >
+                <span className="fa-solid fa-right-left"></span>
+              </button>
+            </label>
+            <div className="input-group">
+              <span className="input-group-text">
+                <span className="fa-solid fa-hourglass-end fa-fw" aria-hidden="true"></span>
+              </span>
+              <input
+                type="number"
+                className="js-event-duration form-control"
+                id="editEventDuration"
+                value={duration}
+                size={5}
+                disabled={disabled}
+              />
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export function Edit({
   event,
@@ -536,8 +655,8 @@ export function Edit({
   const [, regions] = useAll();
 
   const [, setUpdateReplicasInfos] = useState(false);
-  const [startDayChanged] = useState(false);
-  const [timeChanged] = useState(false);
+  const [startDayChanged, setStartDayChanged] = useState(false);
+  const [timeChanged, setTimeChanged] = useState(false);
   const [updateReplicasTime, setUpdateReplicasTime] = useState(false);
   const [updateChangedReplicasTime, setUpdateChangedReplicasTime] = useState(false);
 
@@ -555,15 +674,14 @@ export function Edit({
 
   const [changes, setChanges] = useState({
     title: event.title,
+    startLocal: event.startLocal,
+    endLocal: event.endLocal,
   });
 
   function hasParentCourse() {
     return Boolean(event.courseId);
   }
 
-  function localDate(date: string) {
-    return moment.utc(date).format("L");
-  }
   function affectedReplicaCount() {
     return Events.find(AffectedReplicaSelectors(event as any)).count();
   }
@@ -583,9 +701,6 @@ export function Edit({
   }
   function showVenueSelection() {
     return !!selectedRegion && selectedRegion !== "all";
-  }
-  function disableForPast() {
-    return !!event.start && event.start < new Date();
   }
 
   function course() {
@@ -649,89 +764,21 @@ export function Edit({
               }}
             />
           </div>
-          <div className="row">
-            <div className="col-md mb-3 mb-md-0">
-              <label className="form-label">{t("course.event.edit.date_start", "Date")}</label>
-              <div className="input-group">
-                <label className="input-group-text" htmlFor="eventStartDate">
-                  <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
-                </label>
-                <input
-                  id="eventStartDate"
-                  type="text"
-                  className="form-control js-event-start-date"
-                  value={localDate(event.startLocal)}
-                  disabled={disableForPast()}
-                />
-              </div>
-            </div>
-            <div className="col-md mb-3 mb-md-0">
-              <label className="form-label">
-                {t("course.event.edit.time_start", "Time start")}
-              </label>
-              <div className="input-group">
-                <span className="input-group-text">
-                  <span className="fa-solid fa-hourglass-start fa-fw" aria-hidden="true"></span>
-                </span>
-                <input
-                  type="text"
-                  className="js-event-start-time form-control"
-                  size={5}
-                  value={timeFormat(event.startLocal)}
-                  disabled={disableForPast()}
-                />
-              </div>
-            </div>
-            <div className="col-md js-time-end">
-              <label className="form-label" style={{ display: "none" }}>
-                {t("course.event.edit.duration", "Duration (in minutes)")}
-                <button
-                  type="button"
-                  className="js-toggle-duration btn-icon"
-                  data-bs-toggle="tooltip"
-                  data-bs-title={t("course.event.edit.switch_time_end", "Switch to end time")}
-                >
-                  <span className="fa-solid fa-right-left"></span>
-                </button>
-              </label>
-              <div className="input-group" style={{ display: "none" }}>
-                <span className="input-group-text">
-                  <span className="fa-solid fa-hourglass-end fa-fw" aria-hidden="true"></span>
-                </span>
-                <input
-                  type="number"
-                  className="js-event-duration form-control"
-                  id="editEventDuration"
-                  value=""
-                  size={5}
-                  disabled={disableForPast()}
-                />
-              </div>
-              <label className="form-label">
-                {t("course.event.edit.time_end", "Time end")}
-                <button
-                  type="button"
-                  className="js-toggle-duration btn-icon"
-                  data-bs-toggle="tooltip"
-                  data-bs-title={t("course.event.edit.swich_duration", "Switch to duration")}
-                >
-                  <span className="fa-solid fa-right-left"></span>
-                </button>
-              </label>
-              <div className="input-group">
-                <span className="input-group-text">
-                  <span className="fa-solid fa-hourglass-end fa-fw" aria-hidden="true"></span>
-                </span>
-                <input
-                  type="text"
-                  className="js-event-end-time form-control"
-                  size={5}
-                  value={timeFormat(event.endLocal)}
-                  disabled={disableForPast()}
-                />
-              </div>
-            </div>
-          </div>
+          {/* Disabled for past */}
+          <EditStartEnd
+            {...changes}
+            onChange={(newValue) => {
+              setChanges({ ...changes, ...newValue });
+              setStartDayChanged(!moment.utc(newValue.startLocal).isSame(event.startLocal, "day"));
+              setTimeChanged(
+                !(
+                  moment.utc(newValue.startLocal).isSame(moment.utc(event.startLocal), "minute") &&
+                  moment.utc(newValue.endLocal).isSame(moment.utc(event.endLocal), "minute")
+                ),
+              );
+            }}
+            disabled={!!event.start && event.start < new Date()}
+          />
         </div>
         <div className="edit-page-body event-edit">
           <div className="mb-3">
