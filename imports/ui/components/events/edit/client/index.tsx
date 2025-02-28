@@ -39,6 +39,7 @@ import { useSession } from "/imports/utils/react-meteor-data";
 import { useAll } from "/imports/api/regions/publications";
 import { EditVenue } from "../../edit-location/client";
 // import { EditCustomFields } from "../../../edit-custom-fields";
+import { useDetails } from "/imports/api/courses/publications";
 
 import { ButtonCancel } from "../../../buttons";
 
@@ -383,6 +384,54 @@ export type EventEditData = EventModel | (NewEventModel & OEvent & Partial<Event
 
 // });
 
+function NotifyCourseMembers({
+  courseId,
+  isNew,
+  notifyChecked,
+  onChange,
+}: {
+  courseId: string;
+  isNew: boolean;
+  notifyChecked: boolean;
+  onChange: (newValue: boolean) => void;
+}) {
+  const { t } = useTranslation();
+
+  const [isLoading, course] = useDetails(courseId);
+
+  if (isLoading()) {
+    return null;
+  }
+
+  return (
+    <div className="form-check">
+      <input
+        className="form-check-input"
+        type="checkbox"
+        value=""
+        id="eventEditCheckNotifyCheck"
+        checked={notifyChecked}
+        onChange={(ev) => {
+          onChange(ev.currentTarget.checked);
+        }}
+      />
+      <label className="form-check-label" htmlFor="eventEditCheckNotifyCheck">
+        {isNew
+          ? t(
+              "event.edit.notifyNewEvent",
+              'Notify all members of the "{COURSE}" course about this event.',
+              { COURSE: course?.name || "..." },
+            )
+          : t(
+              "event.edit.notifyEditEvent",
+              'Notify all members of the "{COURSE}" course about the changes you made.',
+              { COURSE: course?.name || "..." },
+            )}
+      </label>
+    </div>
+  );
+}
+
 function EditStartEnd({
   startLocal,
   endLocal,
@@ -599,7 +648,7 @@ export function Edit({
   const { timeFormat, dateFormat } = useDateTimeFormat();
 
   const currentRegion = useSession("region");
-  const [, regions] = useAll();
+  const [isRegionsLoading, regions] = useAll();
 
   const [, setUpdateReplicasInfos] = useState(false);
   const [startDayChanged, setStartDayChanged] = useState(false);
@@ -650,14 +699,6 @@ export function Edit({
     return !!selectedRegion && selectedRegion !== "all";
   }
 
-  function course() {
-    const { courseId } = event;
-    if (courseId) {
-      return Courses.findOne({ _id: courseId });
-    }
-    return false;
-  }
-
   function customFields() {
     const courseId = event.courseId;
     if (courseId) {
@@ -673,6 +714,10 @@ export function Edit({
         setSelectedLocation(newValue);
       },
     };
+  }
+
+  if (isRegionsLoading()) {
+    return null;
   }
 
   return (
@@ -993,31 +1038,14 @@ export function Edit({
               </>
             )}
             {!!event.courseId && (
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="eventEditCheckNotifyCheck"
-                  checked={notifyChecked}
-                  onChange={(ev) => {
-                    setNotifyChecked(ev.currentTarget.checked);
-                  }}
-                />
-                <label className="form-check-label" htmlFor="eventEditCheckNotifyCheck">
-                  {"new" in event
-                    ? t(
-                        "event.edit.notifyNewEvent",
-                        'Notify all members of the "{COURSE}" course about this event.',
-                        { COURSE: course.name },
-                      )
-                    : t(
-                        "event.edit.notifyEditEvent",
-                        'Notify all members of the "{COURSE}" course about the changes you made.',
-                        { COURSE: course.name },
-                      )}
-                </label>
-              </div>
+              <NotifyCourseMembers
+                courseId={event.courseId}
+                isNew={"new" in event}
+                notifyChecked={notifyChecked}
+                onChange={(newValue) => {
+                  setNotifyChecked(newValue);
+                }}
+              />
             )}
             {notifyChecked && (
               <>
