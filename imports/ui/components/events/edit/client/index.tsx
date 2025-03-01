@@ -16,7 +16,6 @@ import { Regions } from "/imports/api/regions/regions";
 import { SaveFields } from "/imports/api/events/methods";
 import * as CoursesMethods from "/imports/api/courses/methods";
 import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
-import { useAffectedReplica } from "/imports/api/events/publications";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { LocalTime } from "/imports/utils/local-time";
@@ -25,7 +24,6 @@ import * as Analytics from "/imports/ui/lib/analytics";
 
 import { useTranslation } from "react-i18next";
 import { RegionTag } from "../../../regions/tag";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { Richtext } from "../../../richtext";
 import { PricePolicy } from "../../../price-policy";
 import { useSession, useUser } from "/imports/utils/react-meteor-data";
@@ -36,11 +34,12 @@ import { useDetails as useCourseDetails } from "/imports/api/courses/publication
 import { ButtonCancel, ButtonSave } from "../../../buttons";
 import { NotifyCourseMembers } from "./NotifyCourseMembers";
 import { EditStartEnd } from "./EditStartEnd";
+import { UpdateAffectedReplica } from "./UpdateAffectedReplica";
 
 import "./styles.scss";
 
 type NewEventModel = {
-  new: boolean;
+  new: true;
   startLocal: string;
   endLocal: string;
   sendReminder: boolean;
@@ -58,7 +57,6 @@ export function Edit({
   onCancel: () => void;
 }) {
   const { t } = useTranslation();
-  const { timeFormat, dateFormat } = useDateTimeFormat();
 
   const currentRegion = useSession("region");
   const [isRegionsLoading, regions] = useAll();
@@ -74,8 +72,6 @@ export function Edit({
   const [isBusy, setIsBusy] = useState(false);
 
   const [isCourseLoading, course] = useCourseDetails(event.courseId || "");
-
-  const [isAffectedReplicaLoading, affectedReplica] = useAffectedReplica(event._id);
 
   function getRegion() {
     let result: string;
@@ -139,11 +135,13 @@ export function Edit({
 
   const [groupsIsLoading, groups] = useGroupsFindFilter({ ids: getGroups() });
 
-  const [updateReplicasInfos, setUpdateReplicasInfos] = useState(false);
+  const [updateReplicas, setUpdateReplicas] = useState({
+    infos: false,
+    time: false,
+    timeOfChangedReplicas: false,
+  });
   const [startDayChanged, setStartDayChanged] = useState(false);
   const [timeChanged, setTimeChanged] = useState(false);
-  const [updateReplicasTime, setUpdateReplicasTime] = useState(false);
-  const [updateChangedReplicasTime, setUpdateChangedReplicasTime] = useState(false);
 
   // Sending an event notification is only possible when the event is
   // attached to a course. Otherwise there is nobody to inform.
@@ -154,10 +152,6 @@ export function Edit({
     startLocal: event.startLocal,
     endLocal: event.endLocal,
   });
-
-  function changedReplicas() {
-    return affectedReplica.filter((replica) => !replica.sameTime(event));
-  }
 
   function showRegionSelection() {
     // You can select the region for events that are new and not associated
@@ -318,7 +312,7 @@ export function Edit({
       };
     });
 
-    const newUpdateReplicasTime = !startDayChanged && timeChanged && updateReplicasTime;
+    const newUpdateReplicasTime = !startDayChanged && timeChanged && updateReplicas.time;
 
     const sendNotifications = notifyChecked;
     const addNotificationMessage = $(".js-event-add-message").val() as string;
@@ -328,9 +322,9 @@ export function Edit({
       const result = await EventsMethods.save(
         eventId,
         editevent,
-        updateReplicasInfos,
+        updateReplicas.infos,
         newUpdateReplicasTime,
-        newUpdateReplicasTime && updateChangedReplicasTime,
+        newUpdateReplicasTime && updateReplicas.timeOfChangedReplicas,
         sendNotifications,
         addNotificationMessage,
       );
@@ -381,7 +375,7 @@ export function Edit({
         );
       }
 
-      if (updateReplicasInfos || updateReplicasTime) {
+      if (updateReplicas.infos || updateReplicas.time) {
         Alert.success(
           t("eventEdit.replicatesUpdated", 'Replicas of "{TITLE}" have also been updated.', {
             TITLE: editevent.title,
@@ -401,7 +395,7 @@ export function Edit({
     }
   }
 
-  if (isRegionsLoading() || isCourseLoading() || groupsIsLoading() || isAffectedReplicaLoading()) {
+  if (isRegionsLoading() || isCourseLoading() || groupsIsLoading()) {
     return null;
   }
 
@@ -594,133 +588,16 @@ export function Edit({
                 </span>
               </label>
             </div>
-            {affectedReplica.length > 0 && (
-              <>
-                <div className="form-check mt-2">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    name="updateReplicasInfo"
-                    value=""
-                    id="eventEditUpdateReplicasInfoCheck"
-                    onChange={(ev) => {
-                      setUpdateReplicasInfos(ev.currentTarget.checked);
-                    }}
-                  />
-                  <label className="form-check-label" htmlFor="eventEditUpdateReplicasInfoCheck">
-                    {t(
-                      "event.edit.updateReplicasInfo",
-                      "Update {COUNT, plural, one{info from later copy} other{info from # later copies} } as well.",
-                      { COUNT: affectedReplica.length },
-                    )}
-                  </label>
-                </div>
-                {timeChanged && (
-                  <>
-                    <div className={`form-check ${startDayChanged ? "disabled" : ""}`}>
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        name="updateReplicasTime"
-                        value=""
-                        id="eventEditUpdateReplicasTimeCheck"
-                        disabled={startDayChanged}
-                        onChange={(ev) => {
-                          setUpdateReplicasTime(ev.currentTarget.checked);
-                        }}
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="eventEditUpdateReplicasTimeCheck"
-                      >
-                        {t(
-                          "event.edit.updateReplicasTime",
-                          "Update time from {COUNT, plural, one{copy} other{copies} }",
-                          { COUNT: affectedReplica.length },
-                        )}
-                      </label>
-                    </div>
-                    {startDayChanged ? (
-                      <div className="card text-white bg-danger mb-4">
-                        <div className="card-body p-2">
-                          <span
-                            className="fa-solid fa-triangle-exclamation fa-fw"
-                            aria-hidden="true"
-                          ></span>
-                          {t(
-                            "event.edit.startDayChanged",
-                            "Updating the copies when the start day has been changed is not (yet) supported.",
-                          )}
-                        </div>
-                      </div>
-                    ) : (
-                      changedReplicas().length > 0 && (
-                        <div
-                          className={`card mb-4 changed-replicas ${
-                            updateReplicasTime ? "is-emphasized" : ""
-                          }`}
-                        >
-                          <div className="card-header bg-warning">
-                            <span
-                              className="fa-solid fa-triangle-exclamation fa-fw"
-                              aria-hidden="true"
-                            ></span>
-                            {t(
-                              "event.edit.changedReplicas.heading",
-                              "Found {NUM, plural, one{one copy which varies} other{# copies which vary} } in time",
-                              { NUM: changedReplicas().length },
-                            )}
-                          </div>
-                          <div className="card-body">
-                            {!updateChangedReplicasTime && (
-                              <span className="update-changed-replicas-help">
-                                {t(
-                                  "event.edit.changedReplicas.body",
-                                  "By default {NUM, plural, one{this copy} other{these copies} } won't be updated as {NUM, plural, one{it has} other{they have} } another time set than the original event:",
-                                  { NUM: changedReplicas().length },
-                                )}
-                              </span>
-                            )}
-
-                            <ul>
-                              {changedReplicas().map((replica) => (
-                                <li>
-                                  <a href={Router.path("showEvent", replica)} target="_blank">
-                                    {dateFormat(replica.startLocal)}-{replica.title}(
-                                    {timeFormat(replica.startLocal)}-{timeFormat(replica.endLocal)})
-                                  </a>
-                                </li>
-                              ))}
-                            </ul>
-                            <div className="form-check">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                name="updateChangedReplicasTime"
-                                value=""
-                                id="eventEditUpdateChangedReplicasTimeCheck"
-                                onChange={(ev) => {
-                                  setUpdateChangedReplicasTime(ev.currentTarget.checked);
-                                }}
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="eventEditUpdateChangedReplicasTimeCheck"
-                              >
-                                {t(
-                                  "event.edit.updateChangedReplicasTime",
-                                  "Overwrite {NUM, plural, one{this events} other{these events} } time too",
-                                  { NUM: changedReplicas().length },
-                                )}
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      )
-                    )}
-                  </>
-                )}
-              </>
+            {!("new" in event) && (
+              <UpdateAffectedReplica
+                values={updateReplicas}
+                event={event}
+                startDayChanged={startDayChanged}
+                timeChanged={timeChanged}
+                onChange={(newValues) => {
+                  setUpdateReplicas(newValues);
+                }}
+              />
             )}
             {!!event.courseId && (
               <NotifyCourseMembers
@@ -790,6 +667,5 @@ export function Edit({
 // for Blaze
 // eslint-disable-next-line import/first
 import "./template.html";
-
 
 Template.registerHelper("EventEdit", () => Edit);
