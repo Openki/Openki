@@ -4,7 +4,7 @@
 // the timezone might actually change when a different region is selected. We
 // wouldn't want the time or even date field to change because of this switch.
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
 import { intersection, uniq } from "lodash";
 import moment from "moment";
@@ -20,7 +20,6 @@ import { useAffectedReplica } from "/imports/api/events/publications";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { LocalTime } from "/imports/utils/local-time";
-import * as Tooltips from "/imports/utils/Tooltips";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
@@ -34,8 +33,9 @@ import { useAll } from "/imports/api/regions/publications";
 import { EditVenue } from "../../edit-location/client";
 import { EditCustomFields } from "../../../edit-custom-fields";
 import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
-
 import { ButtonCancel, ButtonSave } from "../../../buttons";
+import { NotifyCourseMembers } from "./NotifyCourseMembers";
+import { EditStartEnd } from "./EditStartEnd";
 
 import "./styles.scss";
 
@@ -47,258 +47,6 @@ type NewEventModel = {
 };
 
 export type EventEditData = EventModel | (NewEventModel & OEvent & Partial<EventModel>);
-
-function NotifyCourseMembers({
-  courseId,
-  isNew,
-  notifyChecked,
-  onChange,
-}: {
-  courseId: string;
-  isNew: boolean;
-  notifyChecked: boolean;
-  onChange: (newValue: boolean) => void;
-}) {
-  const { t } = useTranslation();
-
-  const [isLoading, course] = useCourseDetails(courseId);
-
-  if (isLoading()) {
-    return null;
-  }
-
-  return (
-    <div className="form-check">
-      <input
-        className="form-check-input"
-        type="checkbox"
-        value=""
-        id="eventEditCheckNotifyCheck"
-        checked={notifyChecked}
-        onChange={(ev) => {
-          onChange(ev.currentTarget.checked);
-        }}
-      />
-      <label className="form-check-label" htmlFor="eventEditCheckNotifyCheck">
-        {isNew
-          ? t(
-              "event.edit.notifyNewEvent",
-              'Notify all members of the "{COURSE}" course about this event.',
-              { COURSE: course?.name || "..." },
-            )
-          : t(
-              "event.edit.notifyEditEvent",
-              'Notify all members of the "{COURSE}" course about the changes you made.',
-              { COURSE: course?.name || "..." },
-            )}
-      </label>
-    </div>
-  );
-}
-
-function EditStartEnd({
-  startLocal,
-  endLocal,
-  disabled,
-  onChange,
-}: {
-  startLocal: string;
-  endLocal: string;
-  disabled: boolean;
-  onChange: (newValue: { startLocal: string; endLocal: string }) => void;
-}) {
-  const { t } = useTranslation();
-  const { timeFormat } = useDateTimeFormat();
-  const [durationEdit, setDurationEdit] = useState(false);
-  const dateElementRef = useRef(null);
-
-  function localDate(date: string) {
-    return moment.utc(date).format("L");
-  }
-
-  const start = moment.utc(startLocal);
-  const end = moment.utc(endLocal);
-  const duration = end.diff(start, "minutes");
-
-  useEffect(() => {
-    const desiredLocale = Session.get("locale");
-
-    if (!desiredLocale || !dateElementRef.current) {
-      // if nothing set we wait for a change
-      return;
-    }
-
-    const language = desiredLocale.substring(0, 2);
-
-    const $dateInput = $(dateElementRef.current);
-
-    // remove, re-add the datepicker when the locale changed
-    $dateInput.datepicker("destroy");
-
-    // I don't know why, but language: moment.locale() does not work here.
-    // So instead we clobber the 'en' settings with settings for the
-    // selected language.
-    $dateInput
-      .datepicker({
-        language,
-        weekStart: moment.localeData().firstDayOfWeek(),
-        autoclose: true,
-        startDate: new Date(),
-        format: {
-          toDisplay(date) {
-            return localDate(date);
-          },
-          toValue(date) {
-            return moment.utc(date, "L").toDate();
-          },
-        },
-      })
-      .on("changeDate", function (ev) {
-        const newStart = LocalTime.fromString(
-          (ev as any).currentTarget.value,
-          timeFormat(startLocal),
-        );
-        const newEnd = newStart.clone().add(duration, "minutes");
-        onChange({
-          startLocal: LocalTime.toString(newStart),
-          endLocal: LocalTime.toString(newEnd),
-        });
-      });
-  });
-
-  return (
-    <div className="row">
-      <div className="col-md mb-3 mb-md-0">
-        <label className="form-label">{t("course.event.edit.date_start", "Date")}</label>
-        <div className="input-group">
-          <label className="input-group-text" htmlFor="eventStartDate">
-            <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
-          </label>
-          <input
-            id="eventStartDate"
-            ref={dateElementRef}
-            type="text"
-            className="form-control js-event-start-date"
-            value={localDate(startLocal)}
-            disabled={disabled}
-          />
-        </div>
-      </div>
-      <div className="col-md mb-3 mb-md-0">
-        <label className="form-label">{t("course.event.edit.time_start", "Time start")}</label>
-        <div className="input-group">
-          <span className="input-group-text">
-            <span className="fa-solid fa-hourglass-start fa-fw" aria-hidden="true"></span>
-          </span>
-          <input
-            type="time"
-            className="js-event-start-time form-control"
-            size={5}
-            value={timeFormat(startLocal)}
-            disabled={disabled}
-            onChange={(ev) => {
-              const newStart = LocalTime.fromString(localDate(startLocal), ev.currentTarget.value);
-              const newEnd = newStart.clone().add(duration, "minutes");
-              onChange({
-                startLocal: LocalTime.toString(newStart),
-                endLocal: LocalTime.toString(newEnd),
-              });
-            }}
-          />
-        </div>
-      </div>
-      <div className="col-md js-time-end">
-        {!durationEdit ? (
-          <>
-            <label className="form-label">
-              {t("course.event.edit.time_end", "Time end")}
-              <button
-                type="button"
-                className="js-toggle-duration btn-icon"
-                data-bs-toggle="tooltip"
-                data-bs-title={t("course.event.edit.swich_duration", "Switch to duration")}
-                onClick={() => {
-                  Tooltips.hide();
-                  setDurationEdit(true);
-                }}
-              >
-                <span className="fa-solid fa-right-left"></span>
-              </button>
-            </label>
-            <div className="input-group">
-              <span className="input-group-text">
-                <span className="fa-solid fa-hourglass-end fa-fw" aria-hidden="true"></span>
-              </span>
-              <input
-                type="time"
-                className="js-event-end-time form-control"
-                size={5}
-                value={timeFormat(endLocal)}
-                disabled={disabled}
-                onChange={(ev) => {
-                  let newEnd = LocalTime.fromString(localDate(endLocal), ev.currentTarget.value);
-
-                  // If the end time is earlier than the start time, assume the event
-                  // spans into the next day. This might result in some weird behavior
-                  // around hour-lapses due to DST (where 1:30 may be 'later' than 2:00).
-                  if (newEnd.diff(start) < 0) {
-                    newEnd = LocalTime.fromString(
-                      start.clone().add(1, "day").format("L"),
-                      ev.currentTarget.value,
-                    );
-                  }
-
-                  onChange({
-                    startLocal,
-                    endLocal: LocalTime.toString(newEnd),
-                  });
-                }}
-              />
-            </div>
-          </>
-        ) : (
-          <>
-            <label className="form-label">
-              {t("course.event.edit.duration", "Duration (in minutes)")}
-              <button
-                type="button"
-                className="js-toggle-duration btn-icon"
-                data-bs-toggle="tooltip"
-                data-bs-title={t("course.event.edit.switch_time_end", "Switch to end time")}
-                onClick={() => {
-                  Tooltips.hide();
-                  setDurationEdit(false);
-                }}
-              >
-                <span className="fa-solid fa-right-left"></span>
-              </button>
-            </label>
-            <div className="input-group">
-              <span className="input-group-text">
-                <span className="fa-solid fa-hourglass-end fa-fw" aria-hidden="true"></span>
-              </span>
-              <input
-                type="number"
-                className="js-event-duration form-control"
-                id="editEventDuration"
-                value={duration}
-                size={5}
-                disabled={disabled}
-                onChange={(ev) => {
-                  const newEnd = start.clone().add(ev.currentTarget.valueAsNumber, "minutes");
-                  onChange({
-                    startLocal,
-                    endLocal: LocalTime.toString(newEnd),
-                  });
-                }}
-              />
-            </div>
-          </>
-        )}
-      </div>
-    </div>
-  );
-}
 
 export function Edit({
   event,
@@ -325,9 +73,9 @@ export function Edit({
   const [noRsvpChecked, setNoRsvpChecked] = useState(!!event.noRsvp);
   const [isBusy, setIsBusy] = useState(false);
 
-  const [isCourseLoading, course] = useCourseDetails(event._id || "-1");
+  const [isCourseLoading, course] = useCourseDetails(event.courseId || "");
 
-  const [isAffectedReplicaLoading, affectedReplica] = useAffectedReplica(event._id || "-1");
+  const [isAffectedReplicaLoading, affectedReplica] = useAffectedReplica(event._id);
 
   function getRegion() {
     let result: string;
@@ -1042,5 +790,6 @@ export function Edit({
 // for Blaze
 // eslint-disable-next-line import/first
 import "./template.html";
+
 
 Template.registerHelper("EventEdit", () => Edit);
