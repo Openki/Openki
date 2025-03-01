@@ -145,7 +145,8 @@ export function Edit({
 
   // Sending an event notification is only possible when the event is
   // attached to a course. Otherwise there is nobody to inform.
-  const [notifyChecked, setNotifyChecked] = useState(!!(event.courseId && "new" in event));
+  const [notifyChecked, setNotifyChecked] = useState(!!event.courseId && "new" in event);
+  const [addNotificationMessage, setAddNotificationMessage] = useState("");
 
   const [changes, setChanges] = useState({
     title: event.title,
@@ -297,7 +298,6 @@ export function Edit({
     const newUpdateReplicasTime = !startDayChanged && timeChanged && updateReplicas.time;
 
     const sendNotifications = notifyChecked;
-    const addNotificationMessage = $(".js-event-add-message").val() as string;
 
     setIsBusy(true);
     try {
@@ -437,7 +437,6 @@ export function Edit({
           <div className="mb-3">
             <label className="form-label">{t("course.event.edit.desc", "Description")}</label>
             <Richtext
-              className="js-event-description"
               text={changes.description}
               placeholder={t(
                 "event.description.placeholder",
@@ -629,12 +628,16 @@ export function Edit({
                   </span>
                   <textarea
                     rows={3}
-                    className="form-control js-event-add-message"
+                    className="form-control"
                     maxLength={2000}
                     placeholder={t(
                       "event.edit.additionalMessage",
                       "If you feel good about doing so, describe what members of the course should know. (This message is only sent to the interested users and will not be visible in the event description afterwards.)",
                     )}
+                    value={addNotificationMessage}
+                    onChange={(ev) => {
+                      setAddNotificationMessage(ev.currentTarget.value);
+                    }}
                   ></textarea>
                 </div>
               </>
@@ -644,7 +647,6 @@ export function Edit({
                 <input
                   className="form-check-input"
                   type="checkbox"
-                  value=""
                   id="eventEditSendReminderCheck"
                   checked={changes.sendReminder}
                   onChange={(ev) => {
