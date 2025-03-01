@@ -149,8 +149,12 @@ export function Edit({
 
   const [changes, setChanges] = useState({
     title: event.title,
+    description: event.description,
+    descriptionError: false,
+    descriptionNumberOfCharacters: 0,
     startLocal: event.startLocal,
     endLocal: event.endLocal,
+    maxParticipants: event.maxParticipants,
   });
 
   function showRegionSelection() {
@@ -183,24 +187,6 @@ export function Edit({
     );
   };
 
-  /**
-   * validates input for maxParticipants
-   * @param maxParticipants the user-input
-   * @return an integer if the input passed validation.
-   */
-  function validateMaxParticipants(maxParticipants: string) {
-    const intVal = Number.parseInt(maxParticipants, 10);
-    if (Number.isNaN(intVal)) {
-      Alert.error(t("event.edit.mustBeInteger", "Must be a whole number"));
-      return false;
-    }
-    if (intVal < 0) {
-      Alert.error(t("event.edit.mustBePositive", "The number must be positive"));
-      return false;
-    }
-    return intVal;
-  }
-
   async function handleSubmit() {
     const start = LocalTime.fromString(changes.startLocal);
     if (!start.isValid()) {
@@ -219,18 +205,17 @@ export function Edit({
       return;
     }
 
-    const $description = $(".js-event-description");
-    if (!$description.text()) {
+    if (!changes.description) {
       Alert.error(t("event.edit.plzProvideDescr", "Please provide a description"));
       return;
     }
 
     if (PublicSettings.eventDescriptionMax) {
-      if ($description.text().length > PublicSettings.eventDescriptionMax) {
+      if (changes.descriptionError) {
         Alert.error(
           t("_inputField.maxlength", {
             MAXNUMBER: PublicSettings.eventDescriptionMax,
-            NUMBER: $description.text().length - PublicSettings.eventDescriptionMax,
+            NUMBER: changes.descriptionNumberOfCharacters - PublicSettings.eventDescriptionMax,
           }),
         );
         return;
@@ -241,13 +226,7 @@ export function Edit({
 
     let maxParticipants;
     if (!noRsvp) {
-      maxParticipants = validateMaxParticipants(
-        ($(".js-event-max-participants").val() as string) || "0",
-      );
-      // validation was unsuccessful
-      if (maxParticipants === false) {
-        return;
-      }
+      maxParticipants = changes.maxParticipants;
     } else {
       // if no rsvp is set there is none limit for maxParticipants;
       maxParticipants = 0;
@@ -255,7 +234,7 @@ export function Edit({
 
     const editevent = {
       title,
-      description: $description.html(),
+      description: changes.description,
       venue: selectedLocation || {},
       room: $(".js-event-room").val() as string,
       startLocal: changes.startLocal,
@@ -407,7 +386,7 @@ export function Edit({
             ? t("course.event.edit.add", "Create an event")
             : t("course.event.edit.edit", "Edit event")}
         </h3>
-        {!event.courseId && !("_id" in event) && (
+        {"new" in event && !event.courseId && (
           <>
             {t(
               "course.createEventInfo",
@@ -456,12 +435,22 @@ export function Edit({
             <label className="form-label">{t("course.event.edit.desc", "Description")}</label>
             <Richtext
               className="js-event-description"
-              text={event.description}
+              text={changes.description}
               placeholder={t(
                 "event.description.placeholder",
                 "Describe your event as accurately as possible. This helps people know how to prepare and what to expect from this meeting (e.g. level, prerequisites, activities, teaching methods, what to bring, etc.)",
               )}
               maxlength={PublicSettings.eventDescriptionMax}
+              onChange={(newValue, numberOfCharacters) => {
+                setChanges({
+                  ...changes,
+                  description: newValue,
+                  descriptionError:
+                    !!PublicSettings.eventDescriptionMax &&
+                    numberOfCharacters > PublicSettings.eventDescriptionMax,
+                  descriptionNumberOfCharacters: numberOfCharacters,
+                });
+              }}
             />
           </div>
           {!(!("new" in event) && event.isPrivate()) && <PricePolicy dismissable wrap="mb-3" />}
@@ -531,7 +520,6 @@ export function Edit({
               <input
                 className="form-check-input"
                 type="checkbox"
-                value=""
                 id="eventEditNoRsvpCheck"
                 checked={noRsvpChecked}
                 onChange={(ev) => {
@@ -562,10 +550,21 @@ export function Edit({
                   </span>
                   {/* show empty input instead of 0 */}
                   <input
-                    type="text"
-                    className="js-event-max-participants form-control"
-                    size={1}
-                    value={event.maxParticipants || ""}
+                    type="number"
+                    className="form-control"
+                    min={0}
+                    step={1}
+                    value={changes.maxParticipants || ""}
+                    onChange={(ev) => {
+                      const newValue = ev.currentTarget.valueAsNumber;
+                      if (Number.isNaN(newValue)) {
+                        return;
+                      }
+                      setChanges({
+                        ...changes,
+                        maxParticipants: Math.round(newValue),
+                      });
+                    }}
                   />
                 </div>
               </>
@@ -577,7 +576,6 @@ export function Edit({
               <input
                 className="form-check-input js-check-event-internal"
                 type="checkbox"
-                value=""
                 id="eventEditInternalCheck"
                 checked={event.internal}
               />
