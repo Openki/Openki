@@ -10,35 +10,32 @@ import { intersection, uniq } from "lodash";
 import moment from "moment";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { Courses } from "/imports/api/courses/courses";
-import { EventModel, Events, EventVenueEntity, OEvent } from "/imports/api/events/events";
+import { EventModel, EventVenueEntity, OEvent } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { Regions } from "/imports/api/regions/regions";
 import { SaveFields } from "/imports/api/events/methods";
-import { GroupEntityCustomCourseFields, Groups } from "/imports/api/groups/groups";
 import * as CoursesMethods from "/imports/api/courses/methods";
-import { useDetails, useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
+import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
 import { useAffectedReplica } from "/imports/api/events/publications";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { AffectedReplicaSelectors } from "/imports/utils/affected-replica-selectors";
 import { LocalTime } from "/imports/utils/local-time";
 import * as Tooltips from "/imports/utils/Tooltips";
 
-// import * as Analytics from "/imports/ui/lib/analytics";
+import * as Analytics from "/imports/ui/lib/analytics";
 
 import { useTranslation } from "react-i18next";
 import { RegionTag } from "../../../regions/tag";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { Richtext } from "../../../richtext";
 import { PricePolicy } from "../../../price-policy";
-import { useSession } from "/imports/utils/react-meteor-data";
+import { useSession, useUser } from "/imports/utils/react-meteor-data";
 import { useAll } from "/imports/api/regions/publications";
 import { EditVenue } from "../../edit-location/client";
 import { EditCustomFields } from "../../../edit-custom-fields";
 import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
 
-import { ButtonCancel } from "../../../buttons";
+import { ButtonCancel, ButtonSave } from "../../../buttons";
 
 import "./styles.scss";
 
@@ -305,10 +302,11 @@ function EditStartEnd({
 
 export function Edit({
   event,
+  afterSave,
   onCancel,
 }: {
   event: EventEditData;
-  onSave: () => void;
+  afterSave: () => void;
   onCancel: () => void;
 }) {
   const { t } = useTranslation();
@@ -316,6 +314,7 @@ export function Edit({
 
   const currentRegion = useSession("region");
   const [isRegionsLoading, regions] = useAll();
+  const user = useUser();
 
   let region = event.region;
   if (regions?.length === 1) {
@@ -324,13 +323,14 @@ export function Edit({
   const [selectedRegion, setSelectedRegion] = useState<string>(region || currentRegion);
   const [selectedLocation, setSelectedLocation] = useState(event.venue);
   const [noRsvpChecked, setNoRsvpChecked] = useState(!!event.noRsvp);
+  const [isBusy, setIsBusy] = useState(false);
 
   const [isCourseLoading, course] = useCourseDetails(event._id || "-1");
 
   const [isAffectedReplicaLoading, affectedReplica] = useAffectedReplica(event._id || "-1");
 
   function getRegion() {
-    let result;
+    let result: string;
     if (event.courseId) {
       if (!course) {
         throw new Error("Unexpected undefined: course");
@@ -391,7 +391,7 @@ export function Edit({
 
   const [groupsIsLoading, groups] = useGroupsFindFilter({ ids: getGroups() });
 
-  const [, setUpdateReplicasInfos] = useState(false);
+  const [updateReplicasInfos, setUpdateReplicasInfos] = useState(false);
   const [startDayChanged, setStartDayChanged] = useState(false);
   const [timeChanged, setTimeChanged] = useState(false);
   const [updateReplicasTime, setUpdateReplicasTime] = useState(false);
@@ -459,39 +459,34 @@ export function Edit({
     return intVal;
   }
 
-  function handleSubmit() {
-    const start = getEventStartMoment(instance);
+  async function handleSubmit() {
+    const start = LocalTime.fromString(changes.startLocal);
     if (!start.isValid()) {
       const exampleDate = moment().format("L");
       Alert.error(
-        i18n(
-          "event.edit.dateFormatWarning",
-          "The date format must be of the {EXAMPLEDATE} format.",
-          {
-            EXAMPLEDATE: exampleDate,
-          },
-        ),
+        t("event.edit.dateFormatWarning", "The date format must be of the {EXAMPLEDATE} format.", {
+          EXAMPLEDATE: exampleDate,
+        }),
       );
       return;
     }
-    const end = getEventEndMoment(instance);
 
     const title = changes.title;
-    if (title.length === 0) {
-      Alert.error(i18n("event.edit.plzProvideTitle", "Please provide a title"));
+    if (!title || title.length === 0) {
+      Alert.error(t("event.edit.plzProvideTitle", "Please provide a title"));
       return;
     }
 
-    const $description = instance.$(".js-event-description");
+    const $description = $(".js-event-description");
     if (!$description.text()) {
-      Alert.error(i18n("event.edit.plzProvideDescr", "Please provide a description"));
+      Alert.error(t("event.edit.plzProvideDescr", "Please provide a description"));
       return;
     }
 
     if (PublicSettings.eventDescriptionMax) {
       if ($description.text().length > PublicSettings.eventDescriptionMax) {
         Alert.error(
-          i18n("_inputField.maxlength", {
+          t("_inputField.maxlength", {
             MAXNUMBER: PublicSettings.eventDescriptionMax,
             NUMBER: $description.text().length - PublicSettings.eventDescriptionMax,
           }),
@@ -505,7 +500,7 @@ export function Edit({
     let maxParticipants;
     if (!noRsvp) {
       maxParticipants = validateMaxParticipants(
-        (instance.$(".js-event-max-participants").val() as string) || "0",
+        ($(".js-event-max-participants").val() as string) || "0",
       );
       // validation was unsuccessful
       if (maxParticipants === false) {
@@ -520,21 +515,21 @@ export function Edit({
       title,
       description: $description.html(),
       venue: selectedLocation || {},
-      room: instance.$(".js-event-room").val() as string,
-      startLocal: LocalTime.toString(start),
-      endLocal: LocalTime.toString(end),
-      internal: instance.$(".js-check-event-internal").is(":checked"),
-      sendReminder: instance.$(".js-check-event-send-reminder").is(":checked"),
+      room: $(".js-event-room").val() as string,
+      startLocal: changes.startLocal,
+      endLocal: changes.endLocal,
+      internal: $(".js-check-event-internal").is(":checked"),
+      sendReminder: $(".js-check-event-send-reminder").is(":checked"),
       noRsvp,
       maxParticipants,
     } as SaveFields;
 
-    let eventId = instance.data._id || "";
+    let eventId = event._id || "";
     const isNew = eventId === "";
     if (isNew) {
       if (start.isBefore(LocalTime.now())) {
         Alert.error(
-          i18n(
+          t(
             "event.edit.startInPast",
             "The event starts in the past. Have you selected a start date and time?",
           ),
@@ -542,132 +537,120 @@ export function Edit({
         return;
       }
 
-      if (instance.data.courseId) {
-        const course = Courses.findOne(instance.data.courseId);
+      if (event.courseId) {
         if (!course) {
           throw new Error("Unexpected undefined: course");
         }
 
         editevent.region = course.region;
-        editevent.courseId = instance.data.courseId;
+        editevent.courseId = event.courseId;
       } else {
         editevent.region = selectedRegion;
         if (!editevent.region || editevent.region === "all") {
-          Alert.error(
-            i18n("event.edit.plzSelectRegion", "Please select the region for this event"),
-          );
+          Alert.error(t("event.edit.plzSelectRegion", "Please select the region for this event"));
           return;
         }
 
         // We have this 'secret' feature where you can set a group ID
         // in the URL to assign a group to the event on creation
-        const groups = [];
+        const gs = [];
         if (Router.current().params.query.group) {
-          groups.push(Router.current().params.query.group as string);
+          gs.push(Router.current().params.query.group as string);
         }
-        editevent.groups = groups;
+        editevent.groups = gs;
       }
     }
 
-    const customFields = instance.customFields().map((i) => {
+    const newCustomFields = customFields().map((i) => {
       return {
         name: i.name,
         displayText: i.displayText,
-        value: instance.$(`.js-custom-field-${i.name}`).val() as string,
+        value: $(`.js-custom-field-${i.name}`).val() as string,
         visibleFor: i.visibleFor,
       };
     });
 
-    const updateReplicasTime = !startDayChanged && timeChanged && updateReplicasTime;
+    const newUpdateReplicasTime = !startDayChanged && timeChanged && updateReplicasTime;
 
     const sendNotifications = notifyChecked;
-    const addNotificationMessage = instance.$(".js-event-add-message").val() as string;
+    const addNotificationMessage = $(".js-event-add-message").val() as string;
 
-    instance.busy("saving");
-    PleaseLogin(instance, async () => {
-      try {
-        const result = await EventsMethods.save(
-          eventId,
-          editevent,
-          updateReplicasInfos,
-          updateReplicasTime,
-          updateReplicasTime && updateChangedReplicasTime,
-          sendNotifications,
-          addNotificationMessage,
-        );
-        if (!result) {
-          throw new Error("Unexpected undefined: eventId");
-        }
-        eventId = result;
-
-        if (isNew) {
-          Router.go("showEvent", { _id: eventId });
-          Alert.success(
-            i18n("message.eventCreated", 'The event "{TITLE}" has been created!', {
-              TITLE: editevent.title,
-            }),
-          );
-
-          const course = Courses.findOne(editevent.courseId);
-          if (!course) {
-            throw new Error("Unexpected undefined: course");
-          }
-          const user = Meteor.user();
-          if (!user) {
-            throw new Error("Unexpected undefined: user");
-          }
-          let role;
-          if (intersection(user.badges, course.editors).length > 0) {
-            role = "team";
-          } else if (user.privileged("admin")) {
-            role = "admin";
-          } else {
-            role = "unknown";
-          }
-          Analytics.trackEvent(
-            "Event creations",
-            `Event creations as ${role}`,
-            Regions.findOne(course.region)?.nameEn,
-            Math.round(
-              (new Date().getTime() - course.time_created.getTime()) /
-                1000 /
-                60 /
-                60 /
-                24 /* Umrechnung in Tage */,
-            ),
-          );
-        } else {
-          Alert.success(
-            i18n(
-              "message.eventChangesSaved",
-              'Your changes to the event "{TITLE}" have been saved.',
-              { TITLE: editevent.title },
-            ),
-          );
-        }
-
-        if (updateReplicasInfos || updateReplicasTime) {
-          Alert.success(
-            i18n("eventEdit.replicatesUpdated", 'Replicas of "{TITLE}" have also been updated.', {
-              TITLE: editevent.title,
-            }),
-          );
-        }
-
-        if (instance.data.courseId) {
-          await CoursesMethods.save(instance.data.courseId, { customFields });
-        }
-
-        afterSave();
-      } catch (err) {
-        Alert.serverError(
-          err,
-          i18n("eventEdit.replicatesUpdated.error", "Saving the event went wrong"),
-        );
-      } finally {
-        instance.busy(false);
+    setIsBusy(true);
+    try {
+      const result = await EventsMethods.save(
+        eventId,
+        editevent,
+        updateReplicasInfos,
+        newUpdateReplicasTime,
+        newUpdateReplicasTime && updateChangedReplicasTime,
+        sendNotifications,
+        addNotificationMessage,
+      );
+      if (!result) {
+        throw new Error("Unexpected undefined: eventId");
       }
-    });
+      eventId = result;
+
+      if (isNew) {
+        Router.go("showEvent", { _id: eventId });
+        Alert.success(
+          t("message.eventCreated", 'The event "{TITLE}" has been created!', {
+            TITLE: editevent.title,
+          }),
+        );
+
+        if (!course) {
+          throw new Error("Unexpected undefined: course");
+        }
+        if (!user) {
+          throw new Error("Unexpected undefined: user");
+        }
+        let role;
+        if (intersection(user.badges, course.editors).length > 0) {
+          role = "team";
+        } else if (user.privileged("admin")) {
+          role = "admin";
+        } else {
+          role = "unknown";
+        }
+        Analytics.trackEvent(
+          "Event creations",
+          `Event creations as ${role}`,
+          Regions.findOne(course.region)?.nameEn,
+          Math.round(
+            (new Date().getTime() - course.time_created.getTime()) /
+              1000 /
+              60 /
+              60 /
+              24 /* Umrechnung in Tage */,
+          ),
+        );
+      } else {
+        Alert.success(
+          t("message.eventChangesSaved", 'Your changes to the event "{TITLE}" have been saved.', {
+            TITLE: editevent.title,
+          }),
+        );
+      }
+
+      if (updateReplicasInfos || updateReplicasTime) {
+        Alert.success(
+          t("eventEdit.replicatesUpdated", 'Replicas of "{TITLE}" have also been updated.', {
+            TITLE: editevent.title,
+          }),
+        );
+      }
+
+      if (event.courseId) {
+        await CoursesMethods.save(event.courseId, { customFields: newCustomFields });
+      }
+
+      afterSave();
+    } catch (err) {
+      Alert.serverError(err, t("eventEdit.replicatesUpdated.error", "Saving the event went wrong"));
+    } finally {
+      setIsBusy(false);
+    }
   }
 
   if (isRegionsLoading() || isCourseLoading() || groupsIsLoading() || isAffectedReplicaLoading()) {
@@ -1043,7 +1026,7 @@ export function Edit({
           </div>
 
           <div className="form-actions">
-            {/* <ButtonSave saving={saving}/> */}
+            <ButtonSave onClick={handleSubmit} disabled={isBusy} />
             <ButtonCancel
               onClick={() => {
                 onCancel();
