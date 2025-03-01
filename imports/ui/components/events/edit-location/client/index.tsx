@@ -92,12 +92,16 @@ function CustomMenu({ results, menuProps }: { results: any[]; menuProps: RenderM
         </MenuItem>
       ))}
       <Menu.Divider />
-      <a className="px-3" href={Router.path("venueDetails", { _id: "create" })} target="_blank">
-        {t(
-          "profile.createNewVenue.linkText",
-          "Set up a venue that is visible to others and can be reused.",
-        )}
-      </a>
+      <div className="px-3">
+        <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>{" "}
+        {t("profile.createNewVenue.question", "Are you responsible for this venue?")}{" "}
+        <a href={Router.path("venueDetails", { _id: "create" })} target="_blank">
+          {t(
+            "profile.createNewVenue.linkText",
+            "Set up a venue that is visible to others and can be reused.",
+          )}
+        </a>
+      </div>
     </Menu>
   );
 }
@@ -281,7 +285,7 @@ export function EditVenue({
                   <div className="form-text">
                     {t(
                       "course.event.edit.locationMovePosition",
-                      "If the marker for the address is not positioned correctly, you can move the marker using drag and drop.",
+                      "You can drag the marker to the correct position.",
                     )}
                   </div>
                 </>
