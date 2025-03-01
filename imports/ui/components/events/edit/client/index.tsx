@@ -154,6 +154,9 @@ export function Edit({
     descriptionNumberOfCharacters: 0,
     startLocal: event.startLocal,
     endLocal: event.endLocal,
+    internal: event.internal,
+    sendReminder: event.sendReminder,
+    room: event.room,
     maxParticipants: event.maxParticipants,
   });
 
@@ -236,11 +239,11 @@ export function Edit({
       title,
       description: changes.description,
       venue: selectedLocation || {},
-      room: $(".js-event-room").val() as string,
+      room: changes.room,
       startLocal: changes.startLocal,
       endLocal: changes.endLocal,
-      internal: $(".js-check-event-internal").is(":checked"),
-      sendReminder: $(".js-check-event-send-reminder").is(":checked"),
+      internal: changes.internal,
+      sendReminder: changes.sendReminder,
       noRsvp,
       maxParticipants,
     } as SaveFields;
@@ -490,23 +493,27 @@ export function Edit({
           {showVenueSelection() && (
             <>
               <EditVenue {...venueEditAttr()} />
-              <div className="mb-3">
-                <label className="form-label">
-                  {t("course.event.edit.room", "Room")}
-                  <small> {t("_inputField.optional")}</small>
-                </label>
-                <div className="input-group">
-                  <span className="input-group-text">
-                    <span className="fa-solid fa-signs-post fa-fw" aria-hidden="true"></span>
-                  </span>
-                  <input
-                    type="text"
-                    className="js-event-room form-control"
-                    size={40}
-                    value={event.room}
-                  />
+              {!!selectedLocation && (
+                <div className="mb-3">
+                  <label className="form-label">
+                    {t("course.event.edit.room", "Room")}
+                    <small> {t("_inputField.optional")}</small>
+                  </label>
+                  <div className="input-group">
+                    <span className="input-group-text">
+                      <span className="fa-solid fa-signs-post fa-fw" aria-hidden="true"></span>
+                    </span>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={changes.room}
+                      onChange={(ev) => {
+                        setChanges({ ...changes, room: ev.currentTarget.value });
+                      }}
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
             </>
           )}
 
@@ -574,10 +581,13 @@ export function Edit({
           <div className="mb-3">
             <div className="form-check">
               <input
-                className="form-check-input js-check-event-internal"
+                className="form-check-input"
                 type="checkbox"
                 id="eventEditInternalCheck"
-                checked={event.internal}
+                checked={changes.internal}
+                onChange={(ev) => {
+                  setChanges({ ...changes, internal: ev.currentTarget.checked });
+                }}
               />
               <label className="form-check-label" htmlFor="eventEditInternalCheck">
                 {t("event.edit.internal", "Hide on front page")}
@@ -632,11 +642,17 @@ export function Edit({
             {!noRsvpChecked && PublicSettings.feature.sendReminderIsEditable && (
               <div className="form-check">
                 <input
-                  className="form-check-input js-check-event-send-reminder"
+                  className="form-check-input"
                   type="checkbox"
                   value=""
                   id="eventEditSendReminderCheck"
-                  checked={event.sendReminder}
+                  checked={changes.sendReminder}
+                  onChange={(ev) => {
+                    setChanges({
+                      ...changes,
+                      sendReminder: ev.currentTarget.checked,
+                    });
+                  }}
                 />
                 <label className="form-check-label" htmlFor="eventEditSendReminderCheck">
                   {t(
