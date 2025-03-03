@@ -104,7 +104,7 @@ export function EditStartEnd({
           <input
             type="time"
             className="js-event-start-time form-control"
-            size={5}
+            step={300}
             value={timeFormat(startLocal)}
             disabled={disabled}
             onChange={(ev) => {
@@ -143,11 +143,11 @@ export function EditStartEnd({
               <input
                 type="time"
                 className="js-event-end-time form-control"
-                size={5}
                 value={timeFormat(endLocal)}
+                step={300}
                 disabled={disabled}
                 onChange={(ev) => {
-                  let newEnd = LocalTime.fromString(localDate(endLocal), ev.currentTarget.value);
+                  let newEnd = LocalTime.fromString(localDate(startLocal), ev.currentTarget.value);
 
                   // If the end time is earlier than the start time, assume the event
                   // spans into the next day. This might result in some weird behavior
@@ -193,7 +193,7 @@ export function EditStartEnd({
                 className="js-event-duration form-control"
                 id="editEventDuration"
                 value={duration}
-                size={5}
+                step={5}
                 disabled={disabled}
                 onChange={(ev) => {
                   const newEnd = start.clone().add(ev.currentTarget.valueAsNumber, "minutes");

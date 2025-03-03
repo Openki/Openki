@@ -71,7 +71,12 @@ function CustomMenu({ results, menuProps }: { results: any[]; menuProps: RenderM
       {uvs.length > 0 && (
         <>
           {uvs.map((venue, index) => (
-            <MenuItem key={index} option={venue} position={index} className="bg-venue">
+            <MenuItem
+              key={index}
+              option={venue}
+              position={index}
+              className="bg-venue text-truncate"
+            >
               <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>{" "}
               {ReactJoin([!!venue.name && <strong>{venue.name}</strong>, venue.address])}
             </MenuItem>
@@ -86,7 +91,7 @@ function CustomMenu({ results, menuProps }: { results: any[]; menuProps: RenderM
               key={index + uvs.length}
               option={venue}
               position={index + uvs.length}
-              className={venue._id ? "bg-venue" : ""}
+              className={venue._id ? "bg-venue text-truncate" : ""}
             >
               {!!venue._id && (
                 <>
