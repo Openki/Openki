@@ -17,7 +17,7 @@ import "/imports/ui/components/events/display/course-header";
 import "/imports/ui/components/events/display/header";
 import "/imports/ui/components/events/display/body";
 import "/imports/ui/components/events/display/registration";
-import "../../../components/events/edit/client";
+import "/imports/ui/components/events/edit";
 import "/imports/ui/components/events/participants";
 import "/imports/ui/components/events/replication";
 import "/imports/ui/components/groups/tag";
