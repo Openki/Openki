@@ -60,6 +60,14 @@ function CustomMenu({ results, menuProps }: { results: any[]; menuProps: RenderM
   vs = differenceBy(vs, uvs, (v) => v._id);
   return (
     <Menu {...menuProps} id="event-venue">
+      {vs.length === 0 && (
+        <>
+          <BaseMenuItem disabled role="option">
+            {menuProps.emptyLabel}
+          </BaseMenuItem>
+          <Menu.Divider />
+        </>
+      )}
       {uvs.length > 0 && (
         <>
           {uvs.map((venue, index) => (
@@ -71,31 +79,31 @@ function CustomMenu({ results, menuProps }: { results: any[]; menuProps: RenderM
           <Menu.Divider />
         </>
       )}
-      {vs.length === 0 && (
-        <BaseMenuItem disabled role="option">
-          {menuProps.emptyLabel}
-        </BaseMenuItem>
+      {vs.length > 0 && (
+        <>
+          {vs.map((venue, index) => (
+            <MenuItem
+              key={index + uvs.length}
+              option={venue}
+              position={index + uvs.length}
+              className={venue._id ? "bg-venue" : ""}
+            >
+              {!!venue._id && (
+                <>
+                  <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>{" "}
+                </>
+              )}
+              {ReactJoin([!!venue.name && <strong>{venue.name}</strong>, venue.address])}
+            </MenuItem>
+          ))}
+          <Menu.Divider />
+        </>
       )}
-      {vs.map((venue, index) => (
-        <MenuItem
-          key={index + uvs.length}
-          option={venue}
-          position={index + uvs.length}
-          className={venue._id ? "bg-venue" : ""}
-        >
-          {!!venue._id && (
-            <>
-              <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>{" "}
-            </>
-          )}
-          {ReactJoin([!!venue.name && <strong>{venue.name}</strong>, venue.address])}
-        </MenuItem>
-      ))}
-      <Menu.Divider />
       <div className="px-3">
-        <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>{" "}
-        {t("profile.createNewVenue.question", "Are you responsible for this venue?")}{" "}
+        {t("profile.createNewVenue.question", "Are you responsible for a venue?")}
+        <br />
         <a href={Router.path("venueDetails", { _id: "create" })} target="_blank">
+          <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>{" "}
           {t(
             "profile.createNewVenue.linkText",
             "Set up a venue that is visible to others and can be reused.",
@@ -232,18 +240,41 @@ export function EditVenue({
         <>
           <div className="row">
             <div className="col-md-4 mb-3">
-              <label className="form-label">
-                {t("course.event.edit.locationName", "Display venue as")}
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                value={value.name}
-                onChange={(e) => {
-                  onChange({ ...value, name: e.currentTarget.value });
-                }}
-                disabled={!!value._id}
-              />
+              {!value._id ? (
+                <>
+                  <label className="form-label" id="displayVenueAs">
+                    {t("course.event.edit.locationName", "Display venue as")}
+                  </label>
+                  <input
+                    name="displayVenueAs"
+                    type="text"
+                    className="form-control"
+                    value={value.name}
+                    onChange={(e) => {
+                      onChange({ ...value, name: e.currentTarget.value });
+                    }}
+                  />
+                </>
+              ) : (
+                <>
+                  <label className="form-label">
+                    {t("course.event.edit.selectedVenue", "Selected venue")}
+                  </label>
+                  <div className="input-group flex-nowrap">
+                    <span className="input-group-text">
+                      <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>
+                    </span>
+                    <input type="text" className="form-control" value={value.name} disabled />
+                    <a
+                      className="btn btn-outline-primary"
+                      href={Router.url("venueDetails", value)}
+                      target="_blank"
+                    >
+                      <i className="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                  </div>
+                </>
+              )}
             </div>
             <div className="col-md-5 mb-3">
               <label className="form-label">
@@ -253,9 +284,13 @@ export function EditVenue({
                 type="text"
                 className="form-control"
                 value={value.address}
-                onChange={(e) => {
-                  onChange({ ...value, address: e.currentTarget.value });
-                }}
+                onChange={
+                  !value._id
+                    ? (e) => {
+                        onChange({ ...value, address: e.currentTarget.value });
+                      }
+                    : undefined
+                }
                 disabled={!!value._id}
               />
             </div>
