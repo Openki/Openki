@@ -305,12 +305,15 @@ export function EditVenue({
               </div>
             </div>
           </div>
-          <div className="alert alert-success p-2">
-            {t(
-              "event.editVenue.pleaseContactHost",
-              "Make sure you have contacted the host of this venue for availability.",
-            )}
-          </div>
+          {/* Not show hint if user is editor of venue */}
+          {filterUserVenues(user, [value]).length === 0 && (
+            <div className="alert alert-success p-2">
+              {t(
+                "event.editVenue.pleaseContactHost",
+                "Make sure you have contacted the host of this venue for availability.",
+              )}
+            </div>
+          )}
           {!!value.loc && (
             <div className="mb-3">
               {!value._id ? (
