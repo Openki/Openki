@@ -73,12 +73,12 @@ export function GroupDetailsPage({ courseQuery, group: group2, showCourses }: Da
   // for blaze, can be removed after migration
   // subscribe in react to keep reactivity
   // eslint-disable-next-line prefer-const
-  let [isLoading, group] = useDetails(group2._id || "-1") as [ () => boolean,  GroupModel];
+  let [isLoading, group] = useDetails(group2._id || "-1") as [() => boolean, GroupModel];
   if (!group) {
     group = group2;
   }
 
-  if (isLoading() ) {
+  if (isLoading()) {
     return null;
   }
 
@@ -102,7 +102,6 @@ export function GroupDetailsPage({ courseQuery, group: group2, showCourses }: Da
     return mayEdit && !group.isNew() && editingSettings;
   }
   function dashboardAttr(): DashboardProps {
-
     return {
       region: region?._id || "",
       group: group._id,
