@@ -19,8 +19,8 @@ import {
   RenderMenuProps,
 } from "react-bootstrap-typeahead";
 import { EditLocationMap } from "./edit-location-map";
-import { Display } from "../../../location/display";
-import { VenueTag } from "../../../venues/link";
+import { Display } from "../../location/display";
+import { VenueTag } from "../../venues/link";
 
 function ReactJoin(
   elements: (string | false | JSX.Element | undefined)[],

@@ -22,13 +22,13 @@ import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/public
 import { useAll } from "/imports/api/regions/publications";
 
 import { useTranslation } from "react-i18next";
-import { RegionTag } from "../../../regions/tag";
-import { Richtext } from "../../../richtext";
-import { PricePolicy } from "../../../price-policy";
-import { EditVenue } from "../../edit-location/client";
-import { EditCustomFields } from "../../../edit-custom-fields";
+import { RegionTag } from "../../regions/tag";
+import { Richtext } from "../../richtext";
+import { PricePolicy } from "../../price-policy";
+import { EditVenue } from "../edit-location";
+import { EditCustomFields } from "../../edit-custom-fields";
 import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
-import { ButtonCancel, ButtonSave } from "../../../buttons";
+import { ButtonCancel, ButtonSave } from "/imports/ui/components/buttons";
 import { NotifyCourseMembers } from "./NotifyCourseMembers";
 import { EditStartEnd } from "./EditStartEnd";
 import { UpdateAffectedReplica } from "./UpdateAffectedReplica";
