@@ -22,7 +22,6 @@ export function RegionSelection(data: {
   onSelect?: () => void;
   onClose?: () => void;
 }) {
-  debugger;
   const { t } = useTranslation();
   const minNumberOfRegionInSelection = PublicSettings.regionSelection.minNumber;
   const [search, setSearch] = useState("");
