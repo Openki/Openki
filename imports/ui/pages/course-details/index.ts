@@ -70,7 +70,7 @@ template.onCreated(function () {
     const { course } = Template.currentData();
     Metatags.setCommonTags(
       course.name,
-      truncate(textPlain(course.description), { length: 160 }),
+      truncate(textPlain(course.description || ""), { length: 160 }),
       course.publicUrlForDetailsImage(),
     );
   });

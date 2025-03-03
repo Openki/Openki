@@ -106,7 +106,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       return {
         course: <a href={courseLink}>{course.name}</a>,
         courseLink,
-        courseDescription: course.description,
+        courseDescription: course.description || "",
         groups: recipientsGroups
           .map((g) => (
             <a

@@ -357,7 +357,7 @@ RouterAsync.route("createEvent", {
       event.title = course.name;
       event.courseId = course._id;
       event.region = course.region;
-      event.description = course.description;
+      event.description = course.description || "";
       event.internal = course.internal;
     }
 
