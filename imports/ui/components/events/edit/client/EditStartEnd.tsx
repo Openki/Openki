@@ -2,7 +2,6 @@ import moment from "moment";
 import React, { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { LocalTime } from "/imports/utils/local-time";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import * as Tooltips from "/imports/utils/Tooltips";
 
 export function EditStartEnd({
@@ -17,12 +16,15 @@ export function EditStartEnd({
   onChange: (newValue: { startLocal: string; endLocal: string }) => void;
 }) {
   const { t } = useTranslation();
-  const { timeFormat } = useDateTimeFormat();
   const [durationEdit, setDurationEdit] = useState(false);
   const dateElementRef = useRef(null);
 
   function localDate(date: string) {
     return moment.utc(date).format("L");
+  }
+
+  function timeFormat(date: string) {
+    return moment.utc(date).format("HH:mm");
   }
 
   const start = moment.utc(startLocal);
