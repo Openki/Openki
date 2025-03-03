@@ -389,7 +389,7 @@
   "event.edit.dateFormatWarning": "The date format must be of the {EXAMPLEDATE} format.",
   "event.edit.internal": "Hide on front page",
   "event.edit.internal.description": "Show it only on group and venue pages",
-  "event.edit.locationNamePlaceholder": "Address or name of venue",
+  "event.edit.locationNamePlaceholder": "Search address or name of venue",
   "event.edit.noRsvp": "No reservation required",
   "event.edit.noRsvp.description": "Registration for this event is disabled. You might want to explain why in the description.",
   "event.edit.notifyEditEvent": "Notify all members of the \"{COURSE}\" course about the changes you made.",
