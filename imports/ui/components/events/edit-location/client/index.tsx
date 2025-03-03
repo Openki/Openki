@@ -307,6 +307,12 @@ export function EditVenue({
               </div>
             </div>
           </div>
+          <div className="alert alert-info">
+            {t(
+              "event.editVenue.pleaseContactHost",
+              "Make sure you have contacted the host of this venue for availability.",
+            )}
+          </div>
           {!!value.loc && (
             <div className="mb-3">
               {!value._id ? (
