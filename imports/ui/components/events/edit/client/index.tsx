@@ -8,26 +8,23 @@ import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
 import { intersection, uniq } from "lodash";
 import moment from "moment";
+import { useSession, useUser } from "/imports/utils/react-meteor-data";
+import { PublicSettings } from "/imports/utils/PublicSettings";
+import { LocalTime } from "/imports/utils/local-time";
+import * as Analytics from "/imports/ui/lib/analytics";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { EventModel, EventVenueEntity, OEvent } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
-import { Regions } from "/imports/api/regions/regions";
 import { SaveFields } from "/imports/api/events/methods";
 import * as CoursesMethods from "/imports/api/courses/methods";
 import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
-
-import { PublicSettings } from "/imports/utils/PublicSettings";
-import { LocalTime } from "/imports/utils/local-time";
-
-import * as Analytics from "/imports/ui/lib/analytics";
+import { useAll } from "/imports/api/regions/publications";
 
 import { useTranslation } from "react-i18next";
 import { RegionTag } from "../../../regions/tag";
 import { Richtext } from "../../../richtext";
 import { PricePolicy } from "../../../price-policy";
-import { useSession, useUser } from "/imports/utils/react-meteor-data";
-import { useAll } from "/imports/api/regions/publications";
 import { EditVenue } from "../../edit-location/client";
 import { EditCustomFields } from "../../../edit-custom-fields";
 import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
@@ -340,7 +337,7 @@ export function Edit({
         Analytics.trackEvent(
           "Event creations",
           `Event creations as ${role}`,
-          Regions.findOne(course.region)?.nameEn,
+          regions.find((r) => r._id === course.region)?.nameEn,
           Math.round(
             (new Date().getTime() - course.time_created.getTime()) /
               1000 /
