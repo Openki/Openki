@@ -6,6 +6,7 @@ export interface RoleEntity {
   icon: string;
   /** For always-on roles */
   preset?: boolean;
+  /** A role appears as "proposed only" */
   proposal?: boolean;
 }
 
