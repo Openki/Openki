@@ -59,7 +59,7 @@ export function Course({ course, hideInterested }: Props) {
             </div>
             <div
               className="col-sm-10"
-              dangerouslySetInnerHTML={{ __html: course.description }}
+              dangerouslySetInnerHTML={{ __html: course.description || "" }}
             ></div>
           </div>
           <div className="mt-2 d-grid d-sm-flex">
