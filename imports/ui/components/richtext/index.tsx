@@ -11,7 +11,7 @@ export type Props = {
   text?: string | undefined;
   placeholder?: string | undefined;
   maxlength?: number | undefined;
-  onChange?: ((value: string) => void) | undefined;
+  onChange?: ((value: string, numberOfCharacters: number) => void) | undefined;
 };
 
 export function Richtext({ className, text, placeholder, maxlength, onChange }: Props) {
@@ -46,7 +46,7 @@ export function Richtext({ className, text, placeholder, maxlength, onChange }: 
     // Get the number of visible characters
     setNumberOfCharacters(element.innerText.trim().length);
 
-    onChange?.(value);
+    onChange?.(value, element.innerText.trim().length);
   }
 
   useEffect(() => {
