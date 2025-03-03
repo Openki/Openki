@@ -20,6 +20,7 @@ import {
 } from "react-bootstrap-typeahead";
 import { EditLocationMap } from "./edit-location-map";
 import { Display } from "../../../location/display";
+import { VenueTag } from "../../../venues/link";
 
 function ReactJoin(
   elements: (string | false | JSX.Element | undefined)[],
@@ -232,7 +233,9 @@ export function EditVenue({
             promptText={t("_typeahead.promptText", "Type to search...")}
             searchText={t("_typeahead.searchText", "Searching...")}
             emptyLabel={t("_typeahead.emptyLabel", "No matches found.")}
-            placeholder={t("event.edit.locationNamePlaceholder", "Address or name of venue") || ""}
+            placeholder={
+              t("event.edit.locationNamePlaceholder", "Search address or name of venue") || ""
+            }
             renderMenu={(results, menuProps) => (
               <CustomMenu results={results} menuProps={menuProps} />
             )}
@@ -265,18 +268,8 @@ export function EditVenue({
                   <label className="form-label">
                     {t("course.event.edit.selectedVenue", "Selected venue")}
                   </label>
-                  <div className="input-group flex-nowrap">
-                    <span className="input-group-text">
-                      <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>
-                    </span>
-                    <input type="text" className="form-control" value={value.name} disabled />
-                    <a
-                      className="btn btn-outline-primary"
-                      href={Router.url("venueDetails", value)}
-                      target="_blank"
-                    >
-                      <i className="fa-solid fa-arrow-up-right-from-square"></i>
-                    </a>
+                  <div className="form-control">
+                    <VenueTag venue={value} />
                   </div>
                 </>
               )}
@@ -312,7 +305,7 @@ export function EditVenue({
               </div>
             </div>
           </div>
-          <div className="alert alert-info">
+          <div className="alert alert-success p-2">
             {t(
               "event.editVenue.pleaseContactHost",
               "Make sure you have contacted the host of this venue for availability.",
