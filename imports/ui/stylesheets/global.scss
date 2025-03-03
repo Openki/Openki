@@ -40,6 +40,12 @@ a:focus,
   background-color: css-var("openki-brand") !important;
 }
 
+.bg-venue,
+.bg-venue:hover {
+  background-color: $venue-bg;
+  color: $venue-color;
+}
+
 .border-none {
   border: 0 !important;
 }

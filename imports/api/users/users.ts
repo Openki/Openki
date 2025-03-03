@@ -106,6 +106,9 @@ export interface UserEntity extends Meteor.User {
   /** (calculated) List of groups the user is a member of, calculated by updateBadges() */
   groups: string[];
 
+  /** (calculated) List of venues the user is a editor of */
+  venues: string[];
+
   /** The user agrees to receive occasional e-mails. */
   allowNews: boolean;
 }
