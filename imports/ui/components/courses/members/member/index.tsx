@@ -80,23 +80,22 @@ export function Member({ member, course }: { member: CourseMemberEntity; course:
         <Contribution userId={member.user} />{" "}
         <ParticipantContact participant={member.user} course={course} />
         <div className="course-member-roles">
-          {memberRoles().length > 0 &&
-            memberRoles().map((role) => (
-              <div
-                key={role}
-                className={`course-member-role float-end ${
-                  getRole(role)?.proposal ? "is-proposal" : ""
-                }`}
-              >
-                <span className="course-member-role-text">
-                  <span className={`${getRole(role)?.icon} fa-fw`} aria-hidden="true"></span>{" "}
-                  <span className="role-short">{roleShort(role)}</span>
-                </span>{" "}
-                {mayUnsubscribeFromTeam(role) && (
-                  <RemoveFromTeamDropdown {...removeFromTeamDropdownAttr()} />
-                )}
-              </div>
-            ))}
+          {memberRoles().map((role) => (
+            <div
+              key={role}
+              className={`course-member-role float-end ${
+                getRole(role)?.proposal ? "is-proposal" : ""
+              }`}
+            >
+              <span className="course-member-role-text">
+                <span className={`${getRole(role)?.icon} fa-fw`} aria-hidden="true"></span>{" "}
+                <span className="role-short">{roleShort(role)}</span>
+              </span>{" "}
+              {mayUnsubscribeFromTeam(role) && (
+                <RemoveFromTeamDropdown {...removeFromTeamDropdownAttr()} />
+              )}
+            </div>
+          ))}
           {maySubscribeToTeam() && (
             <button
               type="button"
