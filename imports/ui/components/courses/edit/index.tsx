@@ -2,10 +2,10 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
-import { chain, union, uniq } from "lodash";
+import { chain, fromPairs, union, uniq } from "lodash";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { Course, CourseMemberEntity, CourseModel, Courses } from "/imports/api/courses/courses";
+import { CourseMemberEntity, CourseModel, Courses, isPrivate } from "/imports/api/courses/courses";
 import * as CoursesMethods from "/imports/api/courses/methods";
 import { Regions } from "/imports/api/regions/regions";
 import { Roles } from "/imports/api/roles/roles";
@@ -279,8 +279,8 @@ export function Edit(data: Data) {
       groups.push(...defaultTeamGroups);
     }
 
-    if (data && data instanceof Course && !(data as CourseModel).isNew()) {
-      groups.push(...data.groupOrganizers);
+    if (data && !data._id /* isNew */) {
+      groups.push(...(data.groupOrganizers || []));
     } else if (!data.isFrame) {
       if (data.group) {
         groups.push(data.group);
@@ -337,7 +337,7 @@ export function Edit(data: Data) {
         return false;
       }
 
-      if (data && data instanceof Course && (data as CourseModel).isNew())
+      if (data && !data._id /* isNew */)
         if (disableCreateRoles.includes(role.type)) {
           return false;
         }
@@ -350,17 +350,26 @@ export function Edit(data: Data) {
     return members && hasRoleUser(members, role, user?._id);
   }
 
-  const initaleRoles: { [type: string]: { icon: string; enabled: boolean; enroll: boolean } } = {};
+  const [roles, setRoles] = useState<{
+    [type: string]: { icon: string; enabled: boolean; enroll: boolean };
+  }>({});
 
-  availableRoles().forEach((r) => {
-    initaleRoles[r.type] = {
-      icon: r.icon,
-      enabled: data.roles?.includes(r.type) || false,
-      enroll: hasRole(data.members, r.type) || false,
-    };
-  });
+  const groupsAreLoaded = groupsIsLoading();
 
-  const [roles, setRoles] = useState(initaleRoles);
+  useEffect(() => {
+    setRoles(
+      fromPairs(
+        availableRoles().map((r) => [
+          r.type,
+          {
+            icon: r.icon,
+            enabled: data.roles?.includes(r.type) || false,
+            enroll: hasRole(data.members, r.type) || false,
+          },
+        ]),
+      ),
+    );
+  }, [groupsAreLoaded]);
 
   const showRegionSelection = () => {
     return (
@@ -472,9 +481,9 @@ export function Edit(data: Data) {
       return false;
     }
 
-    if (data && data instanceof Course) {
-      if (!(data as CourseModel).isNew()) {
-        return !(data as CourseModel).isPrivate();
+    if (data) {
+      if (!data._id /* isNew */) {
+        return !(data.tenant && isPrivate(data as { tenant: string }));
       }
     }
 
@@ -681,7 +690,7 @@ export function Edit(data: Data) {
     }
   };
 
-  if (groupsIsLoading()) {
+  if (groupsAreLoaded) {
     return null;
   }
 
