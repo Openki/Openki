@@ -32,3 +32,7 @@ export const Roles: RoleEntity[] = [
     preset: true,
   },
 ];
+
+export function getRole(type: string) {
+  return Roles.find((role) => role.type === type);
+}
