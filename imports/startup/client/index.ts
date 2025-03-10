@@ -2,6 +2,8 @@ import { Meteor } from "meteor/meteor";
 import { Router } from "meteor/iron:router";
 import { Session } from "meteor/session";
 
+import { Alerts } from "/imports/api/alerts/alerts";
+
 import "./client-error";
 import "./extend-instance";
 import "./locale";
@@ -17,9 +19,13 @@ import * as Tooltips from "/imports/utils/Tooltips";
 import { Introduction } from "/imports/ui/lib/introduction";
 
 import "./bootstrap";
+import moment from "moment";
 
 Router.onStop(function () {
   Tooltips.hide();
+  setTimeout(() => {
+    Alerts.remove({ createdAt: { $gt: moment().subtract(1, "seconds").toDate().valueOf() } });
+  }, 1);
 
   // close any verification dialogs still open
   Session.set("verify", false);
