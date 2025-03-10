@@ -279,7 +279,7 @@ export function Edit(data: Data) {
       groups.push(...defaultTeamGroups);
     }
 
-    if (data && !data._id /* isNew */) {
+    if (data && data._id /* is not new */) {
       groups.push(...(data.groupOrganizers || []));
     } else if (!data.isFrame) {
       if (data.group) {
@@ -337,7 +337,7 @@ export function Edit(data: Data) {
         return false;
       }
 
-      if (data && !data._id /* isNew */)
+      if (data && !data._id /* is new */)
         if (disableCreateRoles.includes(role.type)) {
           return false;
         }
@@ -481,10 +481,8 @@ export function Edit(data: Data) {
       return false;
     }
 
-    if (data) {
-      if (!data._id /* isNew */) {
-        return !(data.tenant && isPrivate(data as { tenant: string }));
-      }
+    if (data && data._id /* is not new */) {
+      return !(data.tenant && isPrivate(data as { tenant: string }));
     }
 
     if (data.isFrame && data.region) {
