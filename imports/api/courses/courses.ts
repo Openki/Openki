@@ -101,6 +101,10 @@ export interface CourseEntity {
 
 export type CourseModel = Course & CourseEntity;
 
+export function isPrivate(course: { tenant: string }) {
+  return !PublicSettings.publicTenants.includes(course.tenant);
+}
+
 export class Course {
   members: CourseMemberEntity[] = [];
 
@@ -120,7 +124,7 @@ export class Course {
   }
 
   isPrivate(this: CourseModel) {
-    return !PublicSettings.publicTenants.includes(this.tenant);
+    return isPrivate(this);
   }
 
   /**
