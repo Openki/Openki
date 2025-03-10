@@ -28,7 +28,7 @@ export function CalendarPage(data: Record<string, string>) {
   if (!data.group && !data.venue && data.internal === undefined) {
     filter.add("internal", "0");
   }
-  filter.add("region", region?._id || "all").done();
+  filter.add("region", region?._id || "all");
 
   const filterQuery = filter.toQuery();
 

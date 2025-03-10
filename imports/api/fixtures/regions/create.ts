@@ -19,6 +19,7 @@ export async function create() {
         : prng() > 0.3
         ? await ensure.tenant("Hmmm")
         : await ensure.tenant("Kopf", userKopf),
+      defaultTeamGroups: template.defaultTeamGroups,
     } as unknown as RegionEntity;
     if (template.loc) {
       const coordinates = clone(template.loc).reverse(); // GeoJSON takes latitude first
@@ -32,11 +33,6 @@ export async function create() {
       // simulate that we start two days after begining
       startDate.setDate(startDate.getDate() - 2);
       region.calendarStartDate = startDate;
-    }
-    if (template.defaultTeamGroups) {
-      region.defaultTeamGroups = await Promise.all(
-        template.defaultTeamGroups.map((g) => ensure.group(g)),
-      );
     }
     await Regions.insertAsync(region);
   }

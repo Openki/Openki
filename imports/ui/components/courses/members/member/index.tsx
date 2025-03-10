@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { Roles } from "/imports/api/roles/roles";
+import { getRole } from "/imports/api/roles/roles";
 import { Subscribe, Unsubscribe, Message, processChange } from "/imports/api/courses/subscription";
 import { CourseMemberEntity, CourseModel } from "/imports/api/courses/courses";
 
@@ -44,18 +44,7 @@ export function Member({ member, course }: { member: CourseMemberEntity; course:
     const change = subscribeToTeam();
     return change?.validFor(currentUser);
   }
-  function rolelistIcon(roletype: string) {
-    if (roletype !== "participant") {
-      return Roles.find((role) => role.type === roletype)?.icon || "";
-    }
-    return "";
-  }
-  function rolelistIsProposal(roletype: string) {
-    if (roletype !== "participant") {
-      return Roles.find((role) => role.type === roletype)?.proposal;
-    }
-    return "";
-  }
+
   function editableMessage() {
     const mayChangeComment = member.user === currentUser?._id;
     return mayChangeComment;
@@ -91,25 +80,24 @@ export function Member({ member, course }: { member: CourseMemberEntity; course:
         <Contribution userId={member.user} />{" "}
         <ParticipantContact participant={member.user} course={course} />
         <div className="course-member-roles">
-          {memberRoles().length
-            ? memberRoles().map((role) => (
-                <div
-                  key={role}
-                  className={`course-member-role float-end ${
-                    rolelistIsProposal(role) ? "is-proposal" : ""
-                  }`}
-                >
-                  <span className="course-member-role-text">
-                    <span className={`${rolelistIcon(role)} fa-fw`} aria-hidden="true"></span>{" "}
-                    <span className="role-short">{roleShort(role)}</span>
-                  </span>{" "}
-                  {mayUnsubscribeFromTeam(role) ? (
-                    <RemoveFromTeamDropdown {...removeFromTeamDropdownAttr()} />
-                  ) : null}
-                </div>
-              ))
-            : null}
-          {maySubscribeToTeam() ? (
+          {memberRoles().length > 0 &&
+            memberRoles().map((role) => (
+              <div
+                key={role}
+                className={`course-member-role float-end ${
+                  getRole(role)?.proposal ? "is-proposal" : ""
+                }`}
+              >
+                <span className="course-member-role-text">
+                  <span className={`${getRole(role)?.icon} fa-fw`} aria-hidden="true"></span>{" "}
+                  <span className="role-short">{roleShort(role)}</span>
+                </span>{" "}
+                {mayUnsubscribeFromTeam(role) && (
+                  <RemoveFromTeamDropdown {...removeFromTeamDropdownAttr()} />
+                )}
+              </div>
+            ))}
+          {maySubscribeToTeam() && (
             <button
               type="button"
               className="btn btn-sm btn-add float-end add-to-team-btn"
@@ -127,11 +115,11 @@ export function Member({ member, course }: { member: CourseMemberEntity; course:
               <span className={`fa-solid fa-plus ${member.user}`}></span>{" "}
               <span className="fa-solid fa-bullhorn fa-fw" aria-hidden="true"></span>
             </button>
-          ) : null}
+          )}
         </div>
       </div>
 
-      {showMemberComment() ? (
+      {!!showMemberComment() && (
         <div className="course-member-comment">
           <div className="course-member-comment-arrow"></div>
           <div className="course-member-comment-body">
@@ -159,7 +147,7 @@ export function Member({ member, course }: { member: CourseMemberEntity; course:
             )}
           </div>
         </div>
-      ) : null}
+      )}
     </div>
   );
 }

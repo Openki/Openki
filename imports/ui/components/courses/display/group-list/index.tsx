@@ -4,6 +4,7 @@ import { useUser } from "/imports/utils/react-meteor-data";
 
 import { CourseModel } from "/imports/api/courses/courses";
 import { useDetails } from "/imports/api/courses/publications";
+import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 
 import { GroupTag } from "/imports/ui/components/groups/tag";
 import { Add } from "./Add";
@@ -21,15 +22,17 @@ export function GroupList({ course: course2 }: Props) {
   // subscribe in react to keep reactivity
   const [isLoading, course] = useDetails(course2._id);
 
+  const [isRegionLoading, region] = useRegionDetails(course2?.region);
+
   // eslint-disable-next-line @typescript-eslint/no-shadow
   function tools(groupId: string, course: CourseModel) {
     return (
       <>
-        {user?.mayPromoteWith(groupId) || course.editableBy(user) ? (
+        {(!!user?.mayPromoteWith(groupId) || course.editableBy(user)) && (
           <li className="dialog-dropdown-btn">
             <Remove course={course} groupId={groupId} />
           </li>
-        ) : null}
+        )}
         {course.editableBy(user) && (
           <li className="dialog-dropdown-btn">
             {course.groupOrganizers.includes(groupId) ? (
@@ -43,16 +46,29 @@ export function GroupList({ course: course2 }: Props) {
     );
   }
 
-  if (isLoading() || !course) return null;
+  if (isLoading() || !course || isRegionLoading()) return null;
+
+  const groups = course.groups.filter(
+    (groupId) =>
+      !(
+        // hide group where are from the region set
+        (
+          region?.defaultTeamGroups?.includes(groupId) &&
+          // when user ist not member of the group or a admin
+          !user?.mayPromoteWith(groupId) &&
+          !course.editableBy(user)
+        )
+      ),
+  );
 
   return (
     <div className="tag-group multiline">
-      {course.groups.map((groupId) => {
+      {groups.map((groupId) => {
         const isOrganizer = course.groupOrganizers.includes(groupId);
         return (
           <React.Fragment key={groupId}>
             <GroupTag groupId={groupId} isOrganizer={isOrganizer} />
-            {isOrganizer ? (
+            {isOrganizer && (
               <div className="tag group-tag addon">
                 <span
                   className="fa-solid fa-bullhorn fa-fw"
@@ -62,9 +78,9 @@ export function GroupList({ course: course2 }: Props) {
                   })}
                 ></span>
               </div>
-            ) : null}
+            )}
 
-            {user?.mayPromoteWith(groupId) || course.editableBy(user) ? (
+            {(!!user?.mayPromoteWith(groupId) || course.editableBy(user)) && (
               <div className="btn-group tag-btn group-tag-btn addon align-top">
                 <button
                   type="button"
@@ -84,7 +100,7 @@ export function GroupList({ course: course2 }: Props) {
                   {tools(groupId, course)}
                 </ul>
               </div>
-            ) : null}
+            )}
           </React.Fragment>
         );
       })}

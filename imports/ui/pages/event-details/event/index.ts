@@ -105,6 +105,25 @@ template.helpers({
   editing() {
     return this.new || Template.instance().editing.get();
   },
+
+  eventEditAttr() {
+    const instance = Template.instance();
+    const event = instance.data;
+
+    return {
+      event,
+      afterSave: () => {
+        instance.editing.set(false);
+      },
+      onCancel: () => {
+        if ("new" in event) {
+          window.history.back();
+        } else {
+          instance.editing.set(false);
+        }
+      },
+    };
+  },
 });
 
 template.events({

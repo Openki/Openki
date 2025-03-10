@@ -204,7 +204,6 @@
 	"course.propose.CourseInfo": "Kendi {SITENAME} kursunuzu buradan başlatın. İster mentor ister katılımcı olarak neyi ve nasıl öğrenmek istediğinize siz karar verirsiniz. Daha fazla bilgi burada:",
 	"course.propose.faq": "SSS",
 	"discussion.anonymous": "Anonim",
-	"event.edit.locationAddressPlaceholder": "Adres",
 	"event.edit.locationNamePlaceholder": "Nerede?",
 	"event.group.confirmOrgNotes": "Bu grubun bütün üyeleri bu etkinliği değiştirebilir.",
 	"event.replication.freq.daily": "her gün",

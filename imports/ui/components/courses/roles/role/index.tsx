@@ -105,7 +105,7 @@ export function Role(data: Data) {
 
   return (
     <>
-      {searchParams.unsubscribe === data.role.type ? (
+      {searchParams.unsubscribe === data.role.type && (
         // unsubscribe by email
         // HACK this is not the right place to act on router actions
         <PleaseLogin
@@ -130,7 +130,7 @@ export function Role(data: Data) {
             }
           }}
         />
-      ) : null}
+      )}
       {data.subscribed ? (
         <>
           <div className="course-role-enrolled">
@@ -155,7 +155,7 @@ export function Role(data: Data) {
             </div>
           </div>
 
-          {showFirstSteps ? (
+          {showFirstSteps && (
             <div className="course-role-first-steps">
               <b>
                 {t("course.roles.firstSteps.title", "Thank you for your interest in {COURSE}.", {
@@ -164,19 +164,17 @@ export function Role(data: Data) {
                 })}
               </b>
               <br />
-              {roleIs("participant")
-                ? t(
-                    "course.roles.firstSteps.youllGetNotified",
-                    "You will get an e-mail notification as soon as a next date has been fixed.",
-                  )
-                : null}
-              {roleIs("host")
-                ? t(
-                    "course.roles.firstSteps.informAboutVenue",
-                    "If not done already, please mention the venue(s) you have access to in your personal message info.",
-                  )
-                : null}
-              {roleIs("mentor") ? (
+              {roleIs("participant") &&
+                t(
+                  "course.roles.firstSteps.youllGetNotified",
+                  "You will get an e-mail notification as soon as a next date has been fixed.",
+                )}
+              {roleIs("host") &&
+                t(
+                  "course.roles.firstSteps.informAboutVenue",
+                  "If not done already, please mention the venue(s) you have access to in your personal message info.",
+                )}
+              {roleIs("mentor") && (
                 <>
                   {t(
                     "course.roles.firstSteps.mentionExperience",
@@ -184,8 +182,8 @@ export function Role(data: Data) {
                   )}
                   <Guide />
                 </>
-              ) : null}
-              {roleIs("team") ? (
+              )}
+              {roleIs("team") && (
                 <>
                   {t(
                     "course.roles.firstSteps.team",
@@ -193,7 +191,7 @@ export function Role(data: Data) {
                   )}
                   <Guide />
                 </>
-              ) : null}
+              )}
               <br />
               <br />
               {t(
@@ -214,7 +212,7 @@ export function Role(data: Data) {
                 {t("course.discussion.write_comment")}
               </button>
             </div>
-          ) : null}
+          )}
         </>
       ) : (
         <div className={enrolling ? "course-role-enroll" : "course-role"}>
@@ -236,7 +234,7 @@ export function Role(data: Data) {
                       "You can leave a message to appear next to your name:",
                     )}
                   </label>
-                  {roleIs("participant") ? (
+                  {roleIs("participant") && (
                     <textarea
                       className="form-control js-comment"
                       placeholder={t(
@@ -247,8 +245,8 @@ export function Role(data: Data) {
                     >
                       {comment}
                     </textarea>
-                  ) : null}
-                  {roleIs("host") ? (
+                  )}
+                  {roleIs("host") && (
                     <textarea
                       className="form-control js-comment"
                       placeholder={t(
@@ -259,8 +257,8 @@ export function Role(data: Data) {
                     >
                       {comment}
                     </textarea>
-                  ) : null}
-                  {roleIs("mentor") ? (
+                  )}
+                  {roleIs("mentor") && (
                     <textarea
                       className="form-control js-comment"
                       placeholder={t(
@@ -271,8 +269,8 @@ export function Role(data: Data) {
                     >
                       {comment}
                     </textarea>
-                  ) : null}
-                  {roleIs("team") ? (
+                  )}
+                  {roleIs("team") && (
                     <textarea
                       className="form-control js-comment"
                       placeholder={t("course.roles.messageInfoMentor")}
@@ -280,7 +278,7 @@ export function Role(data: Data) {
                     >
                       {comment}
                     </textarea>
-                  ) : null}
+                  )}
                 </div>
                 <div className="form-actions">
                   <PleaseLogin
@@ -306,21 +304,23 @@ export function Role(data: Data) {
                 </div>
               </div>
             </>
-          ) : maySubscribe() ? (
-            <button
-              type="button"
-              className="btn btn-add text-start page-component-btn"
-              name="participant"
-              onClick={handelRoleEnrollClick}
-            >
-              <span
-                className={`${data.role.icon} fa-fw coursepage-role-icon`}
-                aria-hidden="true"
-              ></span>
-              &nbsp;
-              {roleSubscribe(data.role.type)}
-            </button>
-          ) : null}
+          ) : (
+            maySubscribe() && (
+              <button
+                type="button"
+                className="btn btn-add text-start page-component-btn"
+                name="participant"
+                onClick={handelRoleEnrollClick}
+              >
+                <span
+                  className={`${data.role.icon} fa-fw coursepage-role-icon`}
+                  aria-hidden="true"
+                ></span>
+                &nbsp;
+                {roleSubscribe(data.role.type)}
+              </button>
+            )
+          )}
         </div>
       )}
     </>

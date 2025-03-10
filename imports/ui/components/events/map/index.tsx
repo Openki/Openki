@@ -83,7 +83,7 @@ export function EventsMap({ events, fullscreenControl = true, openLinksInNewTab 
       <MapContainer
         bounds={markers.length > 0 ? (markers.map((mark) => mark.loc) as any) : undefined}
       >
-        {(TileLayers[locale] || TileLayers.default)()}
+        {TileLayers[locale] || TileLayers.default}
         {markers.map((mark) => (
           <React.Fragment key={mark._id}>
             <Marker
