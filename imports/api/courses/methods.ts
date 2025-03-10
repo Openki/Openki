@@ -235,7 +235,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     set.members = [
       {
         user: user._id,
-        roles: ["participant", "team"],
+        roles: Roles.filter((r) => r.preset).map((r) => r.type),
         comment: i18n("courses.creator.defaultMessage", "(has proposed this course)", {
           lng: user.locale,
         }),

@@ -15,7 +15,6 @@ import { buildCssVariableColor } from "/imports/utils/getColor";
 import { checkContribution } from "/imports/utils/checkContribution";
 import { locationFormat } from "/imports/utils/location-format";
 import { getCachedUser, getUserName } from "/imports/ui/lib/getUserName";
-import { Roles } from "/imports/api/roles/roles";
 
 /**
  * Converts the input to a moment that the locale is set to timeLocale.
@@ -36,21 +35,6 @@ const helpers: { [name: string]: Function } = {
 
   categoryName(name: string) {
     return i18n(`category.${name}`);
-  },
-
-  roleShort(type: string) {
-    if (!type) {
-      return "";
-    }
-    return i18n(`roles.${type}.short`);
-  },
-
-  roleIcon(type: string) {
-    if (!type) {
-      return "";
-    }
-
-    return Roles.find((r) => r.type === type)?.icon || "";
   },
 
   regions() {
@@ -87,14 +71,6 @@ const helpers: { [name: string]: Function } = {
     }
   },
 
-  // Date & Time format helper
-  dateShort(date: moment.MomentInput) {
-    if (!date) {
-      return false;
-    }
-    return toMomentWithTimeLocale(date).format("l");
-  },
-
   dateFormat(date: moment.MomentInput) {
     if (!date) {
       return false;
@@ -102,56 +78,11 @@ const helpers: { [name: string]: Function } = {
     return toMomentWithTimeLocale(date).format("L");
   },
 
-  dateLong(date: moment.MomentInput) {
-    if (!date) {
-      return false;
-    }
-    return toMomentWithTimeLocale(date).format("ll");
-  },
-
-  dateTimeLong(date: moment.MomentInput) {
-    if (!date) {
-      return false;
-    }
-    return toMomentWithTimeLocale(date).format("llll");
-  },
-
   timeFormat(date: moment.MomentInput) {
     if (!date) {
       return false;
     }
     return toMomentWithTimeLocale(date).format("LT");
-  },
-
-  fromNow(date: moment.MomentInput) {
-    if (!date) {
-      return false;
-    }
-    return toMomentWithTimeLocale(date).fromNow();
-  },
-
-  weekdayFormat(date: moment.MomentInput) {
-    if (!date) {
-      return false;
-    }
-    return toMomentWithTimeLocale(date).format("ddd");
-  },
-
-  weekNr(date: moment.MomentInput) {
-    if (!date) {
-      return false;
-    }
-    return toMomentWithTimeLocale(date).week();
-  },
-
-  calendarDayShort(date: moment.MomentInput) {
-    if (!date) {
-      return false;
-    }
-
-    const momentForYear = toMomentWithTimeLocale(date);
-    const year = momentForYear.year() !== moment().year() ? ` ${momentForYear.format("YYYY")}` : "";
-    return toMomentWithTimeLocale(date).format("D. MMMM") + year;
   },
 
   calendarDayFormat(date: moment.MomentInput) {
