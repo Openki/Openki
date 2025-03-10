@@ -46,6 +46,7 @@ import "./button-course-unarchive";
 
 import "./template.html";
 import "./styles.scss";
+import { mayShare } from "../../components/courses/edit/mayShare";
 
 const Template = TemplateMixins.Expandible(
   TemplateAny as TemplateStaticTyped<
@@ -128,6 +129,8 @@ template.helpers({
   mayEdit(course: CourseModel) {
     return course?.editableBy(Meteor.user());
   },
+
+  mayShare,
   courseStateClasses(course: CourseModel) {
     const classes = [];
 

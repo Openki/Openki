@@ -10,7 +10,7 @@ export interface RoleEntity {
   proposal?: boolean;
 }
 
-export const Roles: RoleEntity[] = [
+export const Roles: readonly RoleEntity[] = [
   {
     type: "participant",
     icon: "fa-solid fa-thumbs-up",
@@ -34,5 +34,11 @@ export const Roles: RoleEntity[] = [
 ];
 
 export function getRole(type: string) {
-  return Roles.find((role) => role.type === type);
+  const role = Roles.find((r) => r.type === type);
+
+  if (!role) {
+    throw new Error(`Unknown role type: ${type}`);
+  }
+
+  return role;
 }
