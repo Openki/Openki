@@ -142,7 +142,9 @@ export async function create() {
       categories: template.categories,
       startLocal,
       endLocal,
-      venue: await ensure.venue(template.venue.name, template.region, template.venue._id),
+      venue: template.venue._id
+        ? await ensure.venue(template.venue.name, template.region, template.venue._id)
+        : { name: template.venue.name },
       room: template.room || "",
       createdBy: (await ensure.user(template.createdBy, template.region))._id,
       time_created: new Date(template.time_created.$date),
