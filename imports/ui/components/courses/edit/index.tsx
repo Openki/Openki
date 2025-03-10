@@ -36,6 +36,7 @@ import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 import { SelectCategories } from "../select-categories";
 import { CourseCategories } from "../categories";
 import { EditCustomFields } from "../../edit-custom-fields";
+import { mayShare } from "./mayShare";
 import { PleaseLogin } from "../../please-login";
 import "./styles.scss";
 
@@ -609,6 +610,8 @@ export function Edit(data: Data) {
     try {
       courseId = await CoursesMethods.save(courseId, changes);
 
+      const course = Courses.findOne(courseId);
+
       if (data.isFrame) {
         setSavedCourseId(courseId);
         setSavedMessage(true);
@@ -639,7 +642,7 @@ export function Edit(data: Data) {
               text: t("message.courseCreated.addImage", "Add an image"),
               href: "#files-tab",
             },
-            !Regions.findOne(changes.region)?.isPrivate()
+            course && mayShare(course)
               ? { text: t("message.courseCreated.share", "Share it"), href: "#share" }
               : undefined,
           );
@@ -687,8 +690,8 @@ export function Edit(data: Data) {
       <PleaseLogin type="form" onSubmit={handleSave}>
         {data.filter ? <FindHeader {...{ ...data, filter: data.filter }} /> : <Header {...data} />}
         <div className={`edit-page-body course-edit-body ${editBodyClasses()}`}>
-          {data._id && data.region ? <RegionTag region={data.region} /> : null}
-          {showSavedMessage() && savedCourseId ? (
+          {!!data._id && !!data.region && <RegionTag region={data.region} />}
+          {showSavedMessage() && !!savedCourseId && (
             <AlertMessage
               isFrame={data.isFrame}
               savedCourseId={savedCourseId}
@@ -696,9 +699,9 @@ export function Edit(data: Data) {
                 setSavedMessage(false);
               }}
             />
-          ) : null}
+          )}
 
-          {simpleRoleSelection ? (
+          {simpleRoleSelection && (
             <div className="mb-3">
               <label className="form-label" id="learnOrTeachTitle">
                 {t("course.edit.learnOrTeach", "Learn or teach?")}
@@ -738,7 +741,7 @@ export function Edit(data: Data) {
                 </div>
               </div>
             </div>
-          ) : null}
+          )}
 
           <Title
             value={title}
@@ -752,7 +755,7 @@ export function Edit(data: Data) {
           </div>
           {hasPricePolicy() ? <PricePolicy dismissable={true} wrap="mb-3" /> : null}
           <div className="row gap-3 mb-3">
-            {!hideCategories() ? (
+            {!hideCategories() && (
               <div className="col-md">
                 {editingCategories ? (
                   <SelectCategories {...selectCategoriesAttr()} />
@@ -778,9 +781,9 @@ export function Edit(data: Data) {
                   </>
                 )}
               </div>
-            ) : null}
+            )}
 
-            {fullRoleSelection && availableRoles().length ? (
+            {fullRoleSelection && availableRoles().length > 0 && (
               <div className="col-md">
                 <label className="form-label">
                   {t("course.edit.needs.role", "This course might need…")}
@@ -789,10 +792,10 @@ export function Edit(data: Data) {
                   <Role key={courseEditRoleAttr.type} {...courseEditRoleAttr} />
                 ))}
               </div>
-            ) : null}
-            {showMoreInfo() ? (
+            )}
+            {showMoreInfo() && (
               <div className="col-md">
-                {showRegionSelection() ? (
+                {showRegionSelection() && (
                   <div className="mb-3">
                     <label className="form-label">{t("course.edit.region", "Region")}</label>
                     <div className="input-group">
@@ -818,7 +821,7 @@ export function Edit(data: Data) {
                       </select>
                     </div>
                   </div>
-                ) : null}
+                )}
 
                 <EditCustomFields fields={customFields("boolean")} values={customFields() as any} />
 
@@ -827,7 +830,7 @@ export function Edit(data: Data) {
                   values={customFields() as any}
                 />
               </div>
-            ) : null}
+            )}
           </div>
           <EditCustomFields fields={customFields("multiLine")} values={customFields() as any} />
 
