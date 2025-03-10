@@ -4,22 +4,25 @@ import { useUser } from "/imports/utils/react-meteor-data";
 
 import { EventModel } from "/imports/api/events/events";
 import { useDetails } from "/imports/api/events/publications";
+import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 
 import { GroupTag } from "/imports/ui/components/groups/tag";
-import { EventGroupAdd } from "/imports/ui/components/events/display/group-list/add";
-import { EventGroupRemove } from "/imports/ui/components/events/display/group-list/remove";
-import { EventGroupRemoveOrganizer } from "/imports/ui/components/events/display/group-list/remove-organizer";
-import { EventGroupMakeOrganizer } from "/imports/ui/components/events/display/group-list/make-organizer";
+import { Add } from "./Add";
+import { Remove } from "./Remove";
+import { RemoveOrganizer } from "./RemoveOrganizer";
+import { MakeOrganizer } from "./MakeOrganizer";
 
 export type Props = { event: EventModel };
 
-export function EventGroupList({ event: event2 }: Props) {
+export function GroupList({ event: event2 }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 
   // for blaze, can be removed after migration
   // subscribe in react to keep reactivity
   const [isLoading, event] = useDetails(event2._id);
+
+  const [isRegionLoading, region] = useRegionDetails(event2?.region);
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
   function tools(groupId: string, event: EventModel) {
@@ -28,29 +31,42 @@ export function EventGroupList({ event: event2 }: Props) {
 
     return (
       <>
-        {ownGroup && (user?.mayPromoteWith(groupId) || event.editableBy(user)) ? (
+        {ownGroup && (!!user?.mayPromoteWith(groupId) || event.editableBy(user)) && (
           <li className="dialog-dropdown-btn">
-            <EventGroupRemove event={event} groupId={groupId} />
+            <Remove event={event} groupId={groupId} />
           </li>
-        ) : null}
-        {ownGroup && event.editableBy(user) ? (
+        )}
+        {ownGroup && event.editableBy(user) && (
           <li className="dialog-dropdown-btn">
             {event.groupOrganizers.includes(groupId) ? (
-              <EventGroupRemoveOrganizer event={event} groupId={groupId} />
+              <RemoveOrganizer event={event} groupId={groupId} />
             ) : (
-              <EventGroupMakeOrganizer event={event} groupId={groupId} />
+              <MakeOrganizer event={event} groupId={groupId} />
             )}
           </li>
-        ) : null}
+        )}
       </>
     );
   }
 
-  if (isLoading() || !event) return null;
+  if (isLoading() || !event || isRegionLoading()) return null;
+
+  const groups = event.allGroups?.filter(
+    (groupId) =>
+      !(
+        // hide group where are from the region set
+        (
+          region?.defaultTeamGroups?.includes(groupId) &&
+          // when user ist not member of the group or a admin
+          !user?.mayPromoteWith(groupId) &&
+          !event.editableBy(user)
+        )
+      ),
+  );
 
   return (
     <div className="tag-group multiline">
-      {event.allGroups?.map((groupId) => {
+      {groups?.map((groupId) => {
         const isOrganizer = event.editors.includes(groupId);
         // Groups may be adopted from the course, these cannot be removed
         const ownGroup = event.groups.includes(groupId);
@@ -69,7 +85,7 @@ export function EventGroupList({ event: event2 }: Props) {
               </div>
             )}
 
-            {ownGroup && (user?.mayPromoteWith(groupId) || event.editableBy(user)) ? (
+            {ownGroup && (!!user?.mayPromoteWith(groupId) || event.editableBy(user)) && (
               <div className="btn-group tag-btn group-tag-btn addon align-top">
                 <button
                   type="button"
@@ -89,12 +105,12 @@ export function EventGroupList({ event: event2 }: Props) {
                   {tools(groupId, event)}
                 </ul>
               </div>
-            ) : null}
+            )}
           </React.Fragment>
         );
       })}
 
-      <EventGroupAdd event={event} />
+      <Add event={event} />
     </div>
   );
 }
@@ -103,4 +119,4 @@ export function EventGroupList({ event: event2 }: Props) {
 // eslint-disable-next-line import/first
 import "./template.html";
 
-Template.registerHelper("EventGroupList", () => EventGroupList);
+Template.registerHelper("EventGroupList", () => GroupList);

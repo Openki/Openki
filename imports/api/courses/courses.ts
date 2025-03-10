@@ -58,7 +58,7 @@ export interface CourseEntity {
    * Every "team group" promotes the course and is part of the groups list)
    */
   groupOrganizers: string[];
-  description: string;
+  description?: string;
   /** small image that is used for the compact view, scaled down to max size (width*height) 500px */
   compactImage: string;
   /** bigger image that is used for the detail view, scaled down to max size (width*height) 1500px */
@@ -101,6 +101,10 @@ export interface CourseEntity {
 
 export type CourseModel = Course & CourseEntity;
 
+export function isPrivate(course: { tenant: string }) {
+  return !PublicSettings.publicTenants.includes(course.tenant);
+}
+
 export class Course {
   members: CourseMemberEntity[] = [];
 
@@ -120,7 +124,7 @@ export class Course {
   }
 
   isPrivate(this: CourseModel) {
-    return !PublicSettings.publicTenants.includes(this.tenant);
+    return isPrivate(this);
   }
 
   /**

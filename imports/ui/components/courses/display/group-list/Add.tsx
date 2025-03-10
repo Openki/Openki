@@ -2,12 +2,12 @@ import React from "react";
 import { difference } from "lodash";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
+import { useUser } from "/imports/utils/react-meteor-data";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { CourseModel } from "/imports/api/courses/courses";
 import { useDetails } from "/imports/api/groups/publications";
 import * as CoursesMethods from "/imports/api/courses/methods";
-import { useUser } from "/imports/utils/react-meteor-data";
 
 import { name } from "/imports/ui/lib/group-name-helpers";
 

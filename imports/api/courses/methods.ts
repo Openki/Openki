@@ -100,6 +100,20 @@ async function loadCourse(courseId: string) {
   return course;
 }
 
+async function loadDisabledRoles(groupIds: string[]) {
+  const groups = await Promise.all(
+    uniq(groupIds).map(async (groupId) => {
+      const group = await Groups.findOneAsync(groupId);
+      if (!group) {
+        throw new Meteor.Error(404, `no group with id ${groupId}`);
+      }
+      return group;
+    }),
+  );
+
+  return groups.flatMap((g) => g.disableCreateRoles).filter((r) => r) as string[];
+}
+
 registerMethod(Subscribe);
 registerMethod(Unsubscribe);
 registerMethod(Message);
@@ -145,32 +159,39 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
   /* Changes we want to perform */
   const set = {} as Mongo.OptionalId<CourseEntity>;
 
+  const disabledRoles = await loadDisabledRoles(changes.groups || []);
+
   if (changes.roles) {
     await Promise.all(
       Roles.map(async (role) => {
         const { type } = role;
-        const shouldHave = !!(role.preset || changes.roles?.[type]);
-        const have = course.roles.includes(type);
 
-        if (have && !shouldHave) {
-          await Courses.updateAsync({ _id: courseId }, { $pull: { roles: type } });
+        if (course.isNew()) {
+          const shouldHave =
+            !!(role.preset || changes.roles?.[type]) && !disabledRoles.includes(type);
 
-          // HACK
-          // due to a mongo limitation we can't { $pull { 'members.roles': type } }
-          // so we keep removing one by one until there are none left
-          while (
-            // eslint-disable-next-line no-await-in-loop
-            await Courses.updateAsync(
-              { _id: courseId, "members.roles": type },
-              { $pull: { "members.$.roles": type } },
-            )
-          );
-        }
-        if (!have && shouldHave) {
-          if (course.isNew()) {
+          if (shouldHave) {
             set.roles = set.roles || [];
             set.roles.push(type);
-          } else {
+          }
+        } else {
+          const shouldHave = !!(role.preset || changes.roles?.[type]);
+          const have = course.roles.includes(type);
+          if (have && !shouldHave) {
+            await Courses.updateAsync({ _id: courseId }, { $pull: { roles: type } });
+
+            // HACK
+            // due to a mongo limitation we can't { $pull { 'members.roles': type } }
+            // so we keep removing one by one until there are none left
+            while (
+              // eslint-disable-next-line no-await-in-loop
+              await Courses.updateAsync(
+                { _id: courseId, "members.roles": type },
+                { $pull: { "members.$.roles": type } },
+              )
+            );
+          }
+          if (!have && shouldHave) {
             await Courses.updateAsync({ _id: courseId }, { $addToSet: { roles: type } });
           }
         }
@@ -235,7 +256,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     set.members = [
       {
         user: user._id,
-        roles: ["participant", "team"],
+        roles: ["participant", "team"].filter((r) => !disabledRoles.includes(r)),
         comment: i18n("courses.creator.defaultMessage", "(has proposed this course)", {
           lng: user.locale,
         }),

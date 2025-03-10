@@ -44,7 +44,7 @@ export function Description({ course }: { course: CourseModel }) {
       {course?.editableBy(user) ? (
         <Editable {...editableDescription} />
       ) : (
-        <p dangerouslySetInnerHTML={{ __html: course.description }}></p>
+        <p dangerouslySetInnerHTML={{ __html: course.description || "" }}></p>
       )}
     </div>
   );

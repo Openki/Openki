@@ -10,6 +10,7 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { GroupModel } from "/imports/api/groups/groups";
 import * as GroupsMethods from "/imports/api/groups/methods";
 import * as Alert from "/imports/api/alerts/alert";
+import { useDetails } from "/imports/api/groups/publications";
 
 import { Store } from "/imports/ui/lib/editable";
 import * as Analytics from "/imports/ui/lib/analytics";
@@ -49,7 +50,7 @@ export type Data = {
   showCourses: boolean;
 };
 
-export function GroupDetailsPage(data: Data) {
+export function GroupDetailsPage({ courseQuery, group: group2, showCourses }: Data) {
   const { t } = useTranslation();
   const region = useCurrentRegion();
   const [editingSettings, setEditingSettings] = useState(false);
@@ -69,14 +70,26 @@ export function GroupDetailsPage(data: Data) {
 
   const user = useUser();
 
-  const mayEdit = data.group.editableBy(user);
+  // for blaze, can be removed after migration
+  // subscribe in react to keep reactivity
+  // eslint-disable-next-line prefer-const
+  let [isLoading, group] = useDetails(group2._id || "-1") as [() => boolean, GroupModel];
+  if (!group) {
+    group = group2;
+  }
+
+  if (isLoading()) {
+    return null;
+  }
+
+  const mayEdit = group.editableBy(user);
 
   function isFeatured() {
-    return region && !data.group.isNew() && region.featuredGroup === data.group._id;
+    return region && !group.isNew() && region.featuredGroup === group._id;
   }
   function headerClasses() {
     const classes = [];
-    if (data.group.logoUrl) {
+    if (group.logoUrl) {
       classes.push("has-logo");
     }
     if (mayEdit) {
@@ -86,12 +99,9 @@ export function GroupDetailsPage(data: Data) {
   }
 
   function allowEditingSettings() {
-    const { group } = data;
     return mayEdit && !group.isNew() && editingSettings;
   }
   function dashboardAttr(): DashboardProps {
-    const { group } = data;
-
     return {
       region: region?._id || "",
       group: group._id,
@@ -109,7 +119,7 @@ export function GroupDetailsPage(data: Data) {
     onSuccess: () => {
       Alert.success(
         t("groupDetails.changesSaved", 'Changes to the "{GROUP}" group have been saved.', {
-          GROUP: data.group?.name,
+          GROUP: group.name,
         }),
       );
     },
@@ -117,7 +127,7 @@ export function GroupDetailsPage(data: Data) {
       Alert.serverError(
         err as string | Error,
         t("groupDetails.saveError", 'Could not save the "{GROUP}" group', {
-          GROUP: data.group?.name,
+          GROUP: group.name,
         }),
       );
     },
@@ -155,10 +165,10 @@ export function GroupDetailsPage(data: Data) {
     Router.go("profile"); // Got a better idea?
   };
 
-  const showControls = !data.group.isNew();
+  const showControls = !group.isNew();
 
   const editableNameAttr: EditableProps = {
-    text: data.group.name,
+    text: group.name,
     multiline: false,
     placeholder: t(
       "group.name.placeholder",
@@ -168,7 +178,7 @@ export function GroupDetailsPage(data: Data) {
       ? {
           ...handleSaving,
           onSave: async (newName) => {
-            await GroupsMethods.save(data.group._id, { name: newName });
+            await GroupsMethods.save(group._id, { name: newName });
           },
         }
       : undefined,
@@ -178,14 +188,14 @@ export function GroupDetailsPage(data: Data) {
   };
 
   const editableShortAttr: EditableProps = {
-    text: data.group.short,
+    text: group.short,
     multiline: false,
     placeholder: t("group.short.placeholder", "Abbreviation"),
     store: showControls
       ? {
           ...handleSaving,
           onSave: async (newShort) => {
-            await GroupsMethods.save(data.group._id, { short: newShort });
+            await GroupsMethods.save(group._id, { short: newShort });
           },
         }
       : undefined,
@@ -195,14 +205,14 @@ export function GroupDetailsPage(data: Data) {
   };
 
   const editableClaimAttr: EditableProps = {
-    text: data.group.claim,
+    text: group.claim,
     multiline: false,
     placeholder: t("group.claim.placeholder", "The core idea"),
     store: showControls
       ? {
           ...handleSaving,
           onSave: async (newClaim) => {
-            await GroupsMethods.save(data.group._id, { claim: newClaim });
+            await GroupsMethods.save(group._id, { claim: newClaim });
           },
         }
       : undefined,
@@ -212,7 +222,7 @@ export function GroupDetailsPage(data: Data) {
   };
 
   const editableDescriptionAttr: EditableProps = {
-    text: data.group.description,
+    text: group.description,
     multiline: true,
     placeholder: t(
       "group.description.placeholder",
@@ -222,7 +232,7 @@ export function GroupDetailsPage(data: Data) {
       ? {
           ...handleSaving,
           onSave: async (newDescription) => {
-            await GroupsMethods.save(data.group._id, { description: newDescription });
+            await GroupsMethods.save(group._id, { description: newDescription });
           },
         }
       : undefined,
@@ -231,17 +241,17 @@ export function GroupDetailsPage(data: Data) {
     },
   };
 
-  const title = data.group.name || t("group.windowtitle.create", "Create group");
+  const title = group.name || t("group.windowtitle.create", "Create group");
   let claim = "";
-  if (data.group.claim) {
-    claim = truncate(textPlain(data.group.claim), { length: 160 });
+  if (group.claim) {
+    claim = truncate(textPlain(group.claim), { length: 160 });
   }
-  Metatags.setCommonTags(title, claim, data.group.publicLogoUrl());
+  Metatags.setCommonTags(title, claim, group.publicLogoUrl());
 
   return (
     <>
       <div className="container mb-4">
-        {data.group.isNew() ? <h2>{t("group.details.titleNew", "Create new group")}</h2> : null}
+        {group.isNew() ? <h2>{t("group.details.titleNew", "Create new group")}</h2> : null}
         <div className="page-component group-details">
           <div className="group-details-titlebar clearfix">
             {t("group.details.group", "Group")}
@@ -267,7 +277,7 @@ export function GroupDetailsPage(data: Data) {
             >
               <i className="fa-solid fa-xmark fa-lg" aria-hidden="true"></i>
             </button>
-            {!data.group.isNew() && mayEdit ? (
+            {!group.isNew() && mayEdit ? (
               <button
                 className="btn btn-link float-end ms-2"
                 data-bs-toggle="tooltip"
@@ -281,16 +291,16 @@ export function GroupDetailsPage(data: Data) {
             ) : null}
           </div>
           <div className={`details-header group-details-header clearfix ${headerClasses()}`}>
-            {data.group.publicLogoUrl() ? (
+            {group.publicLogoUrl() ? (
               <div className="group-details-logo">
-                <img src={data.group.publicLogoUrl()} />
+                <img src={group.publicLogoUrl()} />
               </div>
             ) : null}
             <div className="group-details-name">
-              {mayEdit ? <Editable {...editableNameAttr} /> : data.group.name}
+              {mayEdit ? <Editable {...editableNameAttr} /> : group.name}
             </div>{" "}
             <div className="group-details-short">
-              {mayEdit ? <Editable {...editableShortAttr} /> : data.group.short}
+              {mayEdit ? <Editable {...editableShortAttr} /> : group.short}
             </div>
           </div>
           <div className="details-body group-details-body">
@@ -298,26 +308,26 @@ export function GroupDetailsPage(data: Data) {
               className={`details-content group-details-content ${errors.all ? "has-error" : ""}`}
             >
               <div className="group-details-claim">
-                {mayEdit ? <Editable {...editableClaimAttr} /> : data.group.claim}
+                {mayEdit ? <Editable {...editableClaimAttr} /> : group.claim}
               </div>
 
               <div className="group-details-description">
                 {mayEdit ? (
                   <Editable {...editableDescriptionAttr} />
                 ) : (
-                  <span dangerouslySetInnerHTML={{ __html: data.group.description }}></span>
+                  <span dangerouslySetInnerHTML={{ __html: group.description }}></span>
                 )}
               </div>
 
               {errors.all ? <span className="form-text d-block">{errors.all}</span> : null}
 
-              {!!(data.group.venues && data.group.venues.length > 0) && (
+              {!!(group.venues && group.venues.length > 0) && (
                 <div className="group-details-venues">
                   {t("group.details.venues", "{NUM, plural, one{Venue:} other{Venues:} }", {
-                    NUM: data.group.venues.length,
+                    NUM: group.venues.length,
                   })}{" "}
                   <span className="tag-group">
-                    {data.group.venues.map((v) => (
+                    {group.venues.map((v) => (
                       <VenueTag key={v._id} venue={v} />
                     ))}
                   </span>
@@ -325,19 +335,17 @@ export function GroupDetailsPage(data: Data) {
               )}
             </div>
           </div>
-          {data.group.isNew() ? (
+          {group.isNew() ? (
             <div className="actions">
               <ButtonSave onClick={handleSave} disabled={isBusy} />
               <ButtonCancel onClick={handleCancel} disabled={isBusy} />
             </div>
           ) : null}
-          {allowEditingSettings() ? <GroupSettings group={data.group} /> : null}
+          {allowEditingSettings() ? <GroupSettings group={group} /> : null}
         </div>
-        {!dashboardAttr().list.length && data.showCourses ? (
-          <Find query={data.courseQuery} />
-        ) : null}
+        {!dashboardAttr().list.length && showCourses ? <Find query={courseQuery} /> : null}
       </div>
-      {dashboardAttr().list.length && data.showCourses ? <Dashboard {...dashboardAttr()} /> : null}
+      {dashboardAttr().list.length && showCourses ? <Dashboard {...dashboardAttr()} /> : null}
     </>
   );
 }

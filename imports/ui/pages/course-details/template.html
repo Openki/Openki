@@ -44,9 +44,9 @@
               </div>
               {{> courseDetailsSubmenu course=course}}
             </div>
-            {{#unless course.isPrivate}}
+            {{#if mayShare}}
               {{> sharing}}
-            {{/unless}}
+            {{/if}}
             {{#if (mayEdit course)}}
               <div class="actions">
                 {{> buttonEdit event="js-course-edit"}}

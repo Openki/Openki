@@ -62,7 +62,7 @@ template.onCreated(function () {
   instance.autorun(() => {
     const data = Template.currentData();
 
-    instance.filter = Events.Filtering().read(data).done();
+    instance.filter = Events.Filtering().read(data);
 
     const date = instance.filter.get("after") || moment(reactiveNow.get());
 
@@ -86,7 +86,6 @@ template.onCreated(function () {
         count: Predicates.integer,
       })
         .read(data)
-        .done()
         .toQuery().count || DefaultLimit;
 
     instance.subscribe("Events.findFilter", filterQuery, instance.limit + 1);
@@ -94,7 +93,7 @@ template.onCreated(function () {
 
   instance.autorun(() => {
     const data = Template.currentData();
-    const filter = Events.Filtering().read(data).done();
+    const filter = Events.Filtering().read(data);
 
     const start = instance.startOfWeek;
     const end = moment(start).add(1, "week");
@@ -153,7 +152,7 @@ template.onRendered(function () {
   instance.autorun(async () => {
     const { data } = instance;
 
-    instance.filter = Events.Filtering().read(data).done();
+    instance.filter = Events.Filtering().read(data);
 
     const date = instance.filter.get("after") || moment(reactiveNow.get());
 
@@ -182,36 +181,35 @@ template.helpers({
       hideSwitches: instance.data.hideSwitches === "1",
       search: instance.filter.get("search"),
       onChangeSearch: (newValue: string) => {
-        instance.filter.add("search", newValue).done();
+        instance.filter.add("search", newValue);
         instance.update();
       },
       date: instance.startOfWeek,
       onChangeDate: (newDate) => {
-        instance.filter.add("after", newDate.startOf("week").toISOString()).done();
+        instance.filter.add("after", newDate.startOf("week").toISOString());
         instance.update();
       },
       availableGroups: new Filtering({
         filterGroups: Predicates.ids,
       })
         .read(instance.data)
-        .done()
         .get("filterGroups"),
       selectedGroups: instance.filter.get("groups"),
       onAddGroup: (group) => {
-        instance.filter.add("groups", group).done();
+        instance.filter.add("groups", group);
         instance.update();
       },
       onRemoveGroup: (group) => {
-        instance.filter.remove("groups", group).done();
+        instance.filter.remove("groups", group);
         instance.update();
       },
       categories: instance.filter.get("categories"),
       onAddCategory: (category) => {
-        instance.filter.add("categories", category).done();
+        instance.filter.add("categories", category);
         instance.update();
       },
       onRemoveCategory: (category) => {
-        instance.filter.remove("categories", category).done();
+        instance.filter.remove("categories", category);
         instance.update();
       },
       onChangeAttendingEventsOnly: (state) => {

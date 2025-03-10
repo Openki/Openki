@@ -10,6 +10,7 @@ import { serverError } from "../log/methods";
 import * as regionsCountDenormalizer from "../regions/countDenormalizer";
 import * as userBadgesDenormalizer from "../users/badgesDenormalizer";
 import * as usersTenantsDenormalizer from "../users/tenantsDenormalizer";
+import * as usersVenuesDenormalizer from "../users/venuesDenormalizer";
 
 export async function updateDbCacheFieldsServerOnly() {
   Log.record("DbCacheFields.Update.Start", [], {});
@@ -30,6 +31,8 @@ export async function updateDbCacheFieldsServerOnly() {
     await coursesTenantDenormalizer.onStartUp();
     await eventsTenantDenormalizer.onStartUp();
     await usersTenantsDenormalizer.onStartUp();
+
+    await usersVenuesDenormalizer.onStartUp();
 
     // Keep the nextEvent entry updated
     // On startup do a full scan to catch stragglers

@@ -2,10 +2,10 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
-import { chain, union, uniq } from "lodash";
+import { chain, fromPairs, union, uniq } from "lodash";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { Course, CourseMemberEntity, CourseModel, Courses } from "/imports/api/courses/courses";
+import { CourseMemberEntity, CourseModel, Courses, isPrivate } from "/imports/api/courses/courses";
 import * as CoursesMethods from "/imports/api/courses/methods";
 import { Regions } from "/imports/api/regions/regions";
 import { Roles } from "/imports/api/roles/roles";
@@ -36,6 +36,7 @@ import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 import { SelectCategories } from "../select-categories";
 import { CourseCategories } from "../categories";
 import { EditCustomFields } from "../../edit-custom-fields";
+import { mayShare } from "./mayShare";
 import { PleaseLogin } from "../../please-login";
 import "./styles.scss";
 
@@ -278,8 +279,8 @@ export function Edit(data: Data) {
       groups.push(...defaultTeamGroups);
     }
 
-    if (data && data instanceof Course && !(data as CourseModel).isNew()) {
-      groups.push(...data.groupOrganizers);
+    if (data && !data._id /* isNew */) {
+      groups.push(...(data.groupOrganizers || []));
     } else if (!data.isFrame) {
       if (data.group) {
         groups.push(data.group);
@@ -336,7 +337,7 @@ export function Edit(data: Data) {
         return false;
       }
 
-      if (data && data instanceof Course && (data as CourseModel).isNew())
+      if (data && !data._id /* isNew */)
         if (disableCreateRoles.includes(role.type)) {
           return false;
         }
@@ -349,17 +350,26 @@ export function Edit(data: Data) {
     return members && hasRoleUser(members, role, user?._id);
   }
 
-  const initaleRoles: { [type: string]: { icon: string; enabled: boolean; enroll: boolean } } = {};
+  const [roles, setRoles] = useState<{
+    [type: string]: { icon: string; enabled: boolean; enroll: boolean };
+  }>({});
 
-  availableRoles().forEach((r) => {
-    initaleRoles[r.type] = {
-      icon: r.icon,
-      enabled: data.roles?.includes(r.type) || false,
-      enroll: hasRole(data.members, r.type) || false,
-    };
-  });
+  const groupsAreLoaded = groupsIsLoading();
 
-  const [roles, setRoles] = useState(initaleRoles);
+  useEffect(() => {
+    setRoles(
+      fromPairs(
+        availableRoles().map((r) => [
+          r.type,
+          {
+            icon: r.icon,
+            enabled: data.roles?.includes(r.type) || false,
+            enroll: hasRole(data.members, r.type) || false,
+          },
+        ]),
+      ),
+    );
+  }, [groupsAreLoaded]);
 
   const showRegionSelection = () => {
     return (
@@ -471,9 +481,9 @@ export function Edit(data: Data) {
       return false;
     }
 
-    if (data && data instanceof Course) {
-      if (!(data as CourseModel).isNew()) {
-        return !(data as CourseModel).isPrivate();
+    if (data) {
+      if (!data._id /* isNew */) {
+        return !(data.tenant && isPrivate(data as { tenant: string }));
       }
     }
 
@@ -609,6 +619,8 @@ export function Edit(data: Data) {
     try {
       courseId = await CoursesMethods.save(courseId, changes);
 
+      const course = Courses.findOne(courseId);
+
       if (data.isFrame) {
         setSavedCourseId(courseId);
         setSavedMessage(true);
@@ -639,7 +651,7 @@ export function Edit(data: Data) {
               text: t("message.courseCreated.addImage", "Add an image"),
               href: "#files-tab",
             },
-            !Regions.findOne(changes.region)?.isPrivate()
+            course && mayShare(course)
               ? { text: t("message.courseCreated.share", "Share it"), href: "#share" }
               : undefined,
           );
@@ -678,7 +690,7 @@ export function Edit(data: Data) {
     }
   };
 
-  if (groupsIsLoading()) {
+  if (groupsAreLoaded) {
     return null;
   }
 
@@ -687,8 +699,8 @@ export function Edit(data: Data) {
       <PleaseLogin type="form" onSubmit={handleSave}>
         {data.filter ? <FindHeader {...{ ...data, filter: data.filter }} /> : <Header {...data} />}
         <div className={`edit-page-body course-edit-body ${editBodyClasses()}`}>
-          {data._id && data.region ? <RegionTag region={data.region} /> : null}
-          {showSavedMessage() && savedCourseId ? (
+          {!!data._id && !!data.region && <RegionTag region={data.region} />}
+          {showSavedMessage() && !!savedCourseId && (
             <AlertMessage
               isFrame={data.isFrame}
               savedCourseId={savedCourseId}
@@ -696,9 +708,9 @@ export function Edit(data: Data) {
                 setSavedMessage(false);
               }}
             />
-          ) : null}
+          )}
 
-          {simpleRoleSelection ? (
+          {simpleRoleSelection && (
             <div className="mb-3">
               <label className="form-label" id="learnOrTeachTitle">
                 {t("course.edit.learnOrTeach", "Learn or teach?")}
@@ -738,7 +750,7 @@ export function Edit(data: Data) {
                 </div>
               </div>
             </div>
-          ) : null}
+          )}
 
           <Title
             value={title}
@@ -752,7 +764,7 @@ export function Edit(data: Data) {
           </div>
           {hasPricePolicy() ? <PricePolicy dismissable={true} wrap="mb-3" /> : null}
           <div className="row gap-3 mb-3">
-            {!hideCategories() ? (
+            {!hideCategories() && (
               <div className="col-md">
                 {editingCategories ? (
                   <SelectCategories {...selectCategoriesAttr()} />
@@ -778,9 +790,9 @@ export function Edit(data: Data) {
                   </>
                 )}
               </div>
-            ) : null}
+            )}
 
-            {fullRoleSelection && availableRoles().length ? (
+            {fullRoleSelection && availableRoles().length > 0 && (
               <div className="col-md">
                 <label className="form-label">
                   {t("course.edit.needs.role", "This course might need…")}
@@ -789,10 +801,10 @@ export function Edit(data: Data) {
                   <Role key={courseEditRoleAttr.type} {...courseEditRoleAttr} />
                 ))}
               </div>
-            ) : null}
-            {showMoreInfo() ? (
+            )}
+            {showMoreInfo() && (
               <div className="col-md">
-                {showRegionSelection() ? (
+                {showRegionSelection() && (
                   <div className="mb-3">
                     <label className="form-label">{t("course.edit.region", "Region")}</label>
                     <div className="input-group">
@@ -818,7 +830,7 @@ export function Edit(data: Data) {
                       </select>
                     </div>
                   </div>
-                ) : null}
+                )}
 
                 <EditCustomFields fields={customFields("boolean")} values={customFields() as any} />
 
@@ -827,7 +839,7 @@ export function Edit(data: Data) {
                   values={customFields() as any}
                 />
               </div>
-            ) : null}
+            )}
           </div>
           <EditCustomFields fields={customFields("multiLine")} values={customFields() as any} />
 

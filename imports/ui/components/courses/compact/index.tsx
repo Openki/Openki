@@ -1,8 +1,10 @@
 import React, { useRef } from "react";
 import { Router } from "meteor/iron:router";
+import { useUser } from "/imports/utils/react-meteor-data";
 
 import { Roles } from "/imports/api/roles/roles";
 import { CourseModel } from "/imports/api/courses/courses";
+import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 
 import { hasRole } from "/imports/utils/course-role-utils";
 
@@ -35,6 +37,9 @@ export type Props = {
 
 export function CourseCompact({ course, groupTagEvents, categorieTagEvents }: Props) {
   const elementRef = useRef<HTMLDivElement>(null);
+  const user = useUser();
+
+  const [isRegionLoading, region] = useRegionDetails(course?.region);
 
   function courseCss() {
     if (!course.nextEvent) {
@@ -115,6 +120,19 @@ export function CourseCompact({ course, groupTagEvents, categorieTagEvents }: Pr
     };
   }
 
+  const groups = course.groups.filter(
+    (groupId) =>
+      !(
+        // hide group where are from the region set
+        (
+          region?.defaultTeamGroups?.includes(groupId) &&
+          // when user ist not member of the group or a admin
+          !user?.mayPromoteWith(groupId) &&
+          !course.editableBy(user)
+        )
+      ),
+  );
+
   return (
     <div
       ref={elementRef}
@@ -149,11 +167,13 @@ export function CourseCompact({ course, groupTagEvents, categorieTagEvents }: Pr
       ) : (
         <CourseCompactRoles course={course} />
       )}
-      <div className="tag-group course-groups">
-        {course.groups.map((group) => (
-          <GroupTag key={group} {...groupTagAttr(group)} />
-        ))}
-      </div>
+      {!isRegionLoading() && (
+        <div className="tag-group course-groups">
+          {groups.map((group) => (
+            <GroupTag key={group} {...groupTagAttr(group)} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

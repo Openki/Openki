@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { Roles } from "../../api/roles/roles";
+import { getRole } from "../../api/roles/roles";
 
 export function useRoleDisplay() {
   const { t } = useTranslation();
@@ -17,7 +17,7 @@ export function useRoleDisplay() {
         return "";
       }
 
-      return Roles.find((r) => r.type === type)?.icon || "";
+      return getRole(type).icon || "";
     },
   };
 }
