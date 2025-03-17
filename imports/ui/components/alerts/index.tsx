@@ -140,7 +140,7 @@ function Alert({
 }
 
 export function Alerts() {
-  const alerts = useTracker(() => AlertsCollection.find()).fetch();
+  const alerts = useTracker(() => AlertsCollection.find().fetch());
 
   useEffect(() => {
     const height = $(".alert-messages").height() || 0;
