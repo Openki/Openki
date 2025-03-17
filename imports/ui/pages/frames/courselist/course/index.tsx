@@ -6,6 +6,7 @@ import { useSiteName } from "/imports/utils/getSiteName";
 import { Regions } from "/imports/api/regions/regions";
 import { CourseModel } from "/imports/api/courses/courses";
 import { Router } from "meteor/iron:router";
+import { RoleIcon } from "/imports/ui/RoleIcon";
 
 export type Props = {
   course: CourseModel;
@@ -22,7 +23,7 @@ export function Course({ course, hideInterested }: Props) {
     return Regions.findOne(course.region)?.name;
   }
   function interestedPersons() {
-    return course.members.length;
+    return course.members.filter((m) => m.roles.includes("participant")).length;
   }
 
   return (
@@ -37,12 +38,12 @@ export function Course({ course, hideInterested }: Props) {
         <span className="frame-list-item-toggle-indicator">
           <i className="fa-solid fa-angle-down"></i>
         </span>
-        {!hideInterested ? (
+        {!hideInterested && course.roles.includes("participant") ? (
           <span
             className="frame-list-item-interested"
             title={t("frame.courseList.interestedPersons", "Interested people")}
           >
-            <i className="fa-solid fa-user fa-fw"></i>
+            <RoleIcon type="participant" />
             {interestedPersons()}
           </span>
         ) : null}

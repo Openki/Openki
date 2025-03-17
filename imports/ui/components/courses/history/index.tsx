@@ -4,6 +4,7 @@ import { Router } from "meteor/iron:router";
 import { EventModel, Events } from "/imports/api/events/events";
 import { CourseModel } from "/imports/api/courses/courses";
 import { useTranslation } from "react-i18next";
+import { useUser } from "/imports/utils/react-meteor-data";
 
 import { useRoleDisplay } from "../../../lib/useRoleDisplay";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
@@ -11,9 +12,9 @@ import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { ProfileLink } from "../../profile-link";
 import { Contribution } from "../../contribution";
 import { GroupTag } from "../../groups/tag";
+import { RoleIcon } from "/imports/ui/RoleIcon";
 
 import "./styles.scss";
-import { useUser } from "/imports/utils/react-meteor-data";
 
 export function EventHeldHistoryEntry({ _id, title, slug }: EventModel) {
   return (
@@ -26,10 +27,10 @@ export function EventHeldHistoryEntry({ _id, title, slug }: EventModel) {
 
 export function UserSubscribedHistoryEntry({ user, role }: { user: string; role: string }) {
   const { t } = useTranslation();
-  const { roleShort, roleIcon } = useRoleDisplay();
+  const { roleShort } = useRoleDisplay();
   return (
     <>
-      <i className={`${roleIcon(role)} fa-fw`} aria-hidden="true"></i>{" "}
+      <RoleIcon type={role} />{" "}
       {t("course.history.userSubscribed", "{USER} joined as {ROLE}", {
         USER: (
           <>
@@ -44,10 +45,10 @@ export function UserSubscribedHistoryEntry({ user, role }: { user: string; role:
 }
 export function UserUnsubscribedHistoryEntry({ user, role }: { user: string; role: string }) {
   const { t } = useTranslation();
-  const { roleShort, roleIcon } = useRoleDisplay();
+  const { roleShort } = useRoleDisplay();
   return (
     <>
-      <i className={`${roleIcon(role)} fa-fw`} aria-hidden="true"></i>{" "}
+      <RoleIcon type={role} />{" "}
       {t("course.history.userUnsubscribed", "{USER} retract {ROLE}", {
         USER: (
           <>
