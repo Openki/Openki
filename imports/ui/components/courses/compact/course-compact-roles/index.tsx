@@ -5,7 +5,8 @@ import { CourseModel } from "/imports/api/courses/courses";
 
 import { hasRole, hasRoleUser } from "/imports/utils/course-role-utils";
 import { useUserId } from "/imports/utils/react-meteor-data";
-import { useRoleDisplay } from "../../../../lib/useRoleDisplay";
+
+import { RoleIcon } from "/imports/ui/RoleIcon";
 
 import "./styles.scss";
 
@@ -14,25 +15,19 @@ export type Props = { course: CourseModel };
 export function CourseCompactRoles({ course }: Props) {
   const userId = useUserId();
   const { t } = useTranslation();
-  const { roleIcon } = useRoleDisplay();
-
-  function requiresRole(role: string) {
-    return course.roles.includes(role);
-  }
 
   function participantClass() {
-    let className = "course-compact-role-";
-
     const { members } = course;
+
     if (hasRoleUser(members, "participant", userId)) {
-      className += "occupied-by-user";
-    } else if (members.length) {
-      className += "occupied";
-    } else {
-      className += "needed";
+      return "course-compact-role-occupied-by-user";
     }
 
-    return className;
+    if (members.length) {
+      return "course-compact-role-occupied";
+    }
+
+    return "course-compact-role-needed";
   }
 
   function participantTooltip() {
@@ -110,34 +105,37 @@ export function CourseCompactRoles({ course }: Props) {
         data-bs-toggle="tooltip"
         data-bs-title={`${roleStateTooltip("team")}`}
       >
-        <i className={`${roleIcon("team")}`} aria-hidden="true"></i>
+        <RoleIcon type="team" />
       </div>
-      {requiresRole("mentor") ? (
+      {course.roles.includes("mentor") && (
         <div
           className={`course-compact-role ${roleStateClass("mentor")}`}
           data-bs-toggle="tooltip"
           data-bs-title={`${roleStateTooltip("mentor")}`}
         >
-          <i className={`${roleIcon("mentor")}`} aria-hidden="true"></i>
+          <RoleIcon type="mentor" />
         </div>
-      ) : null}
-      {requiresRole("host") ? (
+      )}
+      {course.roles.includes("host") && (
         <div
           className={`course-compact-role ${roleStateClass("host")}`}
           data-bs-toggle="tooltip"
           data-bs-title={`${roleStateTooltip("host")}`}
         >
-          <i className={`${roleIcon("host")}`} aria-hidden="true"></i>
+          <RoleIcon type="host" />
         </div>
-      ) : null}
-      <div
-        className={`course-compact-role ${participantClass()}`}
-        data-bs-toggle="tooltip"
-        data-bs-title={`${participantTooltip()}`}
-      >
-        <i className={`${roleIcon("participant")}`} aria-hidden="true"></i>&nbsp;
-        {course.members.length}
-      </div>
+      )}
+      {course.roles.includes("participant") && (
+        <div
+          className={`course-compact-role ${participantClass()}`}
+          data-bs-toggle="tooltip"
+          data-bs-title={`${participantTooltip()}`}
+        >
+          <RoleIcon type="participant" />
+          &nbsp;
+          {course.members.filter((m) => m.roles.includes("participant")).length}
+        </div>
+      )}
     </div>
   );
 }
