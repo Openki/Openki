@@ -25,7 +25,7 @@ export function Files({ course: course2 }: { course: CourseModel }) {
   function imageUploadArgs(): EditableImageData {
     return {
       thumbnail: { src: course?.publicUrlForCompactImage(), maxSize: 150 },
-      maxSize: 1500, // scale the image to max width/height. Note: image scaling also happens on the server
+      maxSize: 5000, // scale the image to max width/height. Note: image scaling also happens on the server
       async onUpload(file: UploadImage) {
         const courseId = course!._id;
         try {

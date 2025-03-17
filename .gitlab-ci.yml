@@ -2,8 +2,8 @@ image: registry.gitlab.com/openki/sysadmin/docker-ci-container:latest
 
 
 stages:
-  - cleanup
   - lint
+  - cleanup
   - test
   - deploy
 
@@ -39,6 +39,7 @@ lint:
   - gitlab-org
   script: ./ci/lint.sh
 
+
 # Unit tests
 test:
   stage: test
@@ -54,6 +55,8 @@ app-test:
   - gitlab-org-docker
   script: ./ci/app-test.sh
   allow_failure: true
+  timeout: 20m
+
 
 # Code Quality by "Code Climate" and Browser Perfomance
 include:
@@ -61,14 +64,17 @@ include:
    Code-Quality.gitlab-ci.yml
 #   Verify/Browser-Performance.gitlab-ci.yml
 
+
 #browser_performance:
 #  stage: test
 #  variables:
 #    URL: https://dev.openki.net
 
+
 # auto deploy triggers
 deploy_dev:
   stage: deploy
+  needs: []  #don't wait for another stage to finish, could be change to [lint]
   variables:
     SOURCE_BRANCH: dev
     TARGET_HOST: dev

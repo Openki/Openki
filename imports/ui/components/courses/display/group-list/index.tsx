@@ -4,16 +4,17 @@ import { useUser } from "/imports/utils/react-meteor-data";
 
 import { CourseModel } from "/imports/api/courses/courses";
 import { useDetails } from "/imports/api/courses/publications";
+import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 
 import { GroupTag } from "/imports/ui/components/groups/tag";
-import { CourseGroupAdd } from "/imports/ui/components/courses/display/group-list/add";
-import { CourseGroupRemove } from "/imports/ui/components/courses/display/group-list/remove";
-import { CourseGroupRemoveOrganizer } from "/imports/ui/components/courses/display/group-list/remove-organizer";
-import { CourseGroupMakeOrganizer } from "/imports/ui/components/courses/display/group-list/make-organizer";
+import { Add } from "./Add";
+import { Remove } from "./Remove";
+import { RemoveOrganizer } from "./RemoveOrganizer";
+import { MakeOrganizer } from "./MakeOrganizer";
 
 export type Props = { course: CourseModel };
 
-export function CourseGroupList({ course: course2 }: Props) {
+export function GroupList({ course: course2 }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 
@@ -21,38 +22,53 @@ export function CourseGroupList({ course: course2 }: Props) {
   // subscribe in react to keep reactivity
   const [isLoading, course] = useDetails(course2._id);
 
+  const [isRegionLoading, region] = useRegionDetails(course2?.region);
+
   // eslint-disable-next-line @typescript-eslint/no-shadow
   function tools(groupId: string, course: CourseModel) {
     return (
       <>
-        {user?.mayPromoteWith(groupId) || course.editableBy(user) ? (
+        {(!!user?.mayPromoteWith(groupId) || course.editableBy(user)) && (
           <li className="dialog-dropdown-btn">
-            <CourseGroupRemove course={course} groupId={groupId} />
+            <Remove course={course} groupId={groupId} />
           </li>
-        ) : null}
-        {user && course.editableBy(user) ? (
+        )}
+        {course.editableBy(user) && (
           <li className="dialog-dropdown-btn">
             {course.groupOrganizers.includes(groupId) ? (
-              <CourseGroupRemoveOrganizer course={course} groupId={groupId} />
+              <RemoveOrganizer course={course} groupId={groupId} />
             ) : (
-              <CourseGroupMakeOrganizer course={course} groupId={groupId} />
+              <MakeOrganizer course={course} groupId={groupId} />
             )}
           </li>
-        ) : null}
+        )}
       </>
     );
   }
 
-  if (isLoading() || !course) return null;
+  if (isLoading() || !course || isRegionLoading()) return null;
+
+  const groups = course.groups.filter(
+    (groupId) =>
+      !(
+        // hide group where are from the region set
+        (
+          region?.defaultTeamGroups?.includes(groupId) &&
+          // when user ist not member of the group or a admin
+          !user?.mayPromoteWith(groupId) &&
+          !course.editableBy(user)
+        )
+      ),
+  );
 
   return (
     <div className="tag-group multiline">
-      {course.groups.map((groupId) => {
+      {groups.map((groupId) => {
         const isOrganizer = course.groupOrganizers.includes(groupId);
         return (
           <React.Fragment key={groupId}>
             <GroupTag groupId={groupId} isOrganizer={isOrganizer} />
-            {isOrganizer ? (
+            {isOrganizer && (
               <div className="tag group-tag addon">
                 <span
                   className="fa-solid fa-bullhorn fa-fw"
@@ -62,9 +78,9 @@ export function CourseGroupList({ course: course2 }: Props) {
                   })}
                 ></span>
               </div>
-            ) : null}
+            )}
 
-            {user?.mayPromoteWith(groupId) || course.editableBy(user) ? (
+            {(!!user?.mayPromoteWith(groupId) || course.editableBy(user)) && (
               <div className="btn-group tag-btn group-tag-btn addon align-top">
                 <button
                   type="button"
@@ -84,12 +100,12 @@ export function CourseGroupList({ course: course2 }: Props) {
                   {tools(groupId, course)}
                 </ul>
               </div>
-            ) : null}
+            )}
           </React.Fragment>
         );
       })}
 
-      <CourseGroupAdd course={course} />
+      <Add course={course} />
     </div>
   );
 }
@@ -98,4 +114,4 @@ export function CourseGroupList({ course: course2 }: Props) {
 // eslint-disable-next-line import/first
 import "./template.html";
 
-Template.registerHelper("CourseGroupList", () => CourseGroupList);
+Template.registerHelper("CourseGroupList", () => GroupList);

@@ -327,11 +327,11 @@ export function GroupSettings({ group }: Props) {
                 />
               </div>
             </div>
-            {userSearch ? (
+            {!!userSearch && (
               <div className="tag-group multiline">
                 <FoundUsers group={group} userSearch={userSearch} onAdd={handleMemberAdd} />
               </div>
-            ) : null}
+            )}
           </div>
         </div>
       </div>
@@ -412,11 +412,11 @@ export function GroupSettings({ group }: Props) {
         ) : null}
       </div>
 
-      {currentUser?.privileged("admin") ? (
+      {group.editableBy(currentUser) && (
         <div className="actions">
           <DeleteConfirm {...deleteConfirmAttr()} />
         </div>
-      ) : null}
+      )}
     </form>
   );
 }

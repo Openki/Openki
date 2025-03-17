@@ -3,7 +3,7 @@ import { Match, check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
-import { capitalize } from "lodash";
+import { capitalize, truncate } from "lodash";
 
 import { Courses } from "/imports/api/courses/courses";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
@@ -11,11 +11,10 @@ import { Log } from "/imports/api/log/log";
 import { UserModel, Users } from "/imports/api/users/users";
 
 import * as HtmlTools from "/imports/utils/html-tools";
-import * as StringTools from "/imports/utils/string-tools";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { Model as NotificationModel } from "../notification";
-import { Join, Props } from "../../../../emails/notifications/Join";
+import { Join, Props } from "/imports/emails/notifications/Join";
 
 interface Body {
   courseId: string;
@@ -100,8 +99,8 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
       const roleTitle = t(`roles.${body.newRole}.short`);
       const subjectvars = {
-        COURSE: StringTools.truncate(course.name, 10),
-        USER: StringTools.truncate(newParticipant.getDisplayName(), 50),
+        COURSE: truncate(course.name, { length: 10 }),
+        USER: truncate(newParticipant.getDisplayName(), { length: 50 }),
         ROLE: roleTitle,
         ROLETYPE: body.newRole,
       };

@@ -14,7 +14,7 @@
           {{#unless singleEvent}}
             <h3>{{this.title}}</h3>
 
-            {{> eventGroupList this}}
+            {{> eventGroupList event=this}}
           {{/unless}}
           <p class="event-details-description">
             {{{description}}}
@@ -38,7 +38,7 @@
         <div class="col-md-5">
           <div class="details-map">
             {{#if hasVenue}}
-              {{> map markers=eventMarkers}}
+              {{> locationDisplay coordinates=eventMarker}}
             {{/if}}
 
             <div class="tag-group multiline mt-1">

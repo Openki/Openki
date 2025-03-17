@@ -10,14 +10,14 @@ import { Regions } from "/imports/api/regions/regions";
 import { Events } from "/imports/api/events/events";
 
 import * as HtmlTools from "/imports/utils/html-tools";
-import * as StringTools from "/imports/utils/string-tools";
+import { truncate } from "lodash";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { LocalTime } from "/imports/utils/local-time";
 import { Model as NotificationModel } from "../notification";
 import {
   EventContactParticipants,
   Props,
-} from "../../../../emails/notifications/EventContactParticipants";
+} from "/imports/emails/notifications/EventContactParticipants";
 
 interface Body {
   sender: string;
@@ -109,8 +109,8 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
 
       const subjectvars = {
-        EVENT: StringTools.truncate(event.title, 50),
-        SENDER: StringTools.truncate(sender.getDisplayName(), 10),
+        EVENT: truncate(event.title, { length: 50 }),
+        SENDER: truncate(sender.getDisplayName(), { length: 10 }),
       };
       const subject = t(
         "notification.event.contact-participants.mail.subject",

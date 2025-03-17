@@ -2,6 +2,8 @@ import { Meteor } from "meteor/meteor";
 import { Router } from "meteor/iron:router";
 import { Session } from "meteor/session";
 
+import { Alerts } from "/imports/api/alerts/alerts";
+
 import "./client-error";
 import "./extend-instance";
 import "./locale";
@@ -17,9 +19,16 @@ import * as Tooltips from "/imports/utils/Tooltips";
 import { Introduction } from "/imports/ui/lib/introduction";
 
 import "./bootstrap";
+import moment from "moment";
 
 Router.onStop(function () {
   Tooltips.hide();
+
+  // Remove success message with proposed actions when the user navigates away
+  Alerts.remove({
+    actions: { $exists: true },
+    createdAt: { $lt: moment().subtract(0.5, "seconds").toDate() },
+  });
 
   // close any verification dialogs still open
   Session.set("verify", false);

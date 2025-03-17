@@ -82,7 +82,7 @@ export function Edit(props: {
         ]}
         zoom={props.coordinates ? 19 : 13}
       >
-        {(TileLayers[locale] || TileLayers.default)()}
+        {TileLayers[locale] || TileLayers.default}
         {props.coordinates ? (
           <>
             <Marker

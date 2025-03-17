@@ -74,6 +74,22 @@ export const UpdateFieldsPattern = {
   description: Match.Maybe(String),
 };
 
+async function checkEditAllowed(regionId: string) {
+  const user = await Meteor.userAsync();
+  if (!user) {
+    throw new Meteor.Error(401, "please log in");
+  }
+
+  const region = await Regions.findOneAsync(regionId);
+  if (!region) {
+    throw new Meteor.Error(404, "region not found");
+  }
+
+  if (!region.editableBy(user)) {
+    throw new Meteor.Error(401, "not permitted");
+  }
+}
+
 export type UpdateFields = Type<typeof UpdateFieldsPattern>;
 
 export const update = ServerMethod(
@@ -82,19 +98,7 @@ export const update = ServerMethod(
     check(regionId, String);
     check(changes, UpdateFieldsPattern);
 
-    const user = await Meteor.userAsync();
-    if (!user) {
-      throw new Meteor.Error(401, "please log in");
-    }
-
-    const region = await Regions.findOneAsync(regionId);
-    if (!region) {
-      throw new Meteor.Error(404, "region not found");
-    }
-
-    if (!region.editableBy(user)) {
-      throw new Meteor.Error(401, "not permitted");
-    }
+    await checkEditAllowed(regionId);
 
     /* Changes we want to perform */
 
@@ -129,19 +133,7 @@ export const update = ServerMethod(
 export const remove = ServerMethod("region.remove", async (regionId: string) => {
   check(regionId, String);
 
-  const user = await Meteor.userAsync();
-  if (!user) {
-    throw new Meteor.Error(401, "please log in");
-  }
-
-  const region = await Regions.findOneAsync(regionId);
-  if (!region) {
-    throw new Meteor.Error(404, "region not found");
-  }
-
-  if (!region.editableBy(user)) {
-    throw new Meteor.Error(401, "not permitted");
-  }
+  await checkEditAllowed(regionId);
 
   if ((await Courses.countDocuments({ region: regionId })) > 20) {
     throw new Meteor.Error(

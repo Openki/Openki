@@ -15,7 +15,7 @@ import { Course } from "./course";
 function useOptions() {
   const query = useSearchParams();
 
-  const filter = Courses.Filtering().read(query).done();
+  const filter = Courses.Filtering().read(query);
   const filterQuery: FindFilter = filter.toQuery();
   // Show internal events only when a group is specified
   if (!filterQuery.group && filterQuery.internal === undefined) {

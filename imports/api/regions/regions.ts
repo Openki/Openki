@@ -42,8 +42,8 @@ export interface RegionEntity {
   futureEventCount: number;
   /** ID of featured group */
   featuredGroup: string;
-  /** Team group that is added to all courses on create. */
-  defaultTeamGroup?: string;
+  /** Team groups that is added to all courses on create. */
+  defaultTeamGroups?: string[];
   /** Courses in this region are default single events. */
   singleEvents?: boolean;
   /**
@@ -74,6 +74,18 @@ export interface RegionEntity {
     /** Can be a logo from the /private/* folder or a base64 encoded string. */
     emailLogo?: string;
   };
+
+  /** for the /api/0/xml/schedule See: https://c3voc.de/wiki/schedule#schedule_xml */
+  scheduleXmlData?: {
+    acronym: string;
+    title: string;
+    start: string;
+    end: string;
+    days: string;
+    time_zone_name: string;
+    base_url: string;
+  };
+
   dashboard?: {
     entity: "group" | "course" | "courseWithoutPropose" | "event" | "eventsMap" | "propose";
     title?: string;

@@ -14,11 +14,8 @@ import { ServerMethod } from "/imports/utils/ServerMethod";
 import { HtmlString, Type, UnsafeString } from "/imports/utils/CustomChecks";
 
 const sanitizeComment = (comment: { title?: string | undefined; text: UnsafeString }) => {
-  const saneTitle = StringTools.sanitizeSingleline(comment.title || "")
-    .substring(0, 200)
-    .trim();
-
-  const saneHtml = HtmlTools.saneHtml(comment.text);
+  const saneTitle = StringTools.sanitizeSingleline(comment.title, 200);
+  const saneHtml = HtmlTools.sanitizeHtml(comment.text);
 
   return { title: saneTitle, text: saneHtml };
 };

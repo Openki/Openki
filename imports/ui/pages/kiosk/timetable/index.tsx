@@ -1,12 +1,10 @@
 /* eslint-disable no-nested-ternary */
-import { Template } from "meteor/templating";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
-import { useUserId } from "/imports/utils/react-meteor-data";
 
-import { EventModel, Events } from "/imports/api/events/events";
+import { EventEntity, EventModel, Events, OEvent } from "/imports/api/events/events";
 import { VenueModel } from "/imports/api/venues/venues";
 
 import { textPlain } from "/imports/utils/html-tools";
@@ -44,22 +42,81 @@ export interface Props {
   future_length: number;
 }
 
-export function KioskTimetablePage(props: Props) {
+function position(rel: RelStartEnd) {
+  return { left: `${rel.relStart * 100}%`, right: `${rel.relEnd * 100}%` };
+}
+
+function Event({ entry }: { entry: OEvent & EventEntity & RelStartEnd }) {
   const { t } = useTranslation();
   const { timeFormat } = useDateTimeFormat();
-  const userId = useUserId();
-  const routeName = useCurrentRouteName();
+  const [active, setActive] = useState(false);
 
-  if (userId) {
-    Meteor.logout();
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  function onClick(ev: MouseEvent) {
+    let targetEl = ev.target; // clicked element
+    do {
+      if (targetEl === elementRef.current) {
+        // This is a click inside
+        setActive(!active);
+        return;
+      }
+      // Go up the DOM
+      targetEl = (targetEl as any)?.parentNode;
+    } while (targetEl);
+    // This is a click outside.
+    setActive(false);
   }
+
+  useEffect(() => {
+    document.addEventListener("click", onClick);
+    return () => {
+      document.removeEventListener("click", onClick);
+    };
+  });
+
+  return (
+    <div
+      className={`timetable-event${entry.relStart > 0.5 ? " timetable-event-right" : ""}${
+        active ? " active" : ""
+      }`}
+      style={position(entry)}
+    >
+      <div
+        ref={elementRef}
+        className={`timetable-event-title${
+          entry.canceled ? " timetable-event-title-canceled" : ""
+        }`}
+      >
+        {entry.title}
+      </div>
+      <div className="timetable-event-time">
+        <span className="fa-regular fa-clock fa-fw" aria-hidden="true"></span>
+        {timeFormat(entry.start)} - {timeFormat(entry.end)}
+      </div>
+      <div className="timetable-event-description">
+        {entry.canceled ? (
+          <span className="timetable-event-canceled">{t("_event.state.canceled")}</span>
+        ) : entry.isFullyBooked() ? (
+          <span className="timetable-event-fully-booked">{t("_event.state.fullyBooked")}</span>
+        ) : null}
+        <p>{textPlain(entry.description)}</p>
+        <a className="btn btn-outline-dark" href={Router.url("showEvent", entry)}>
+          {t("kiosk.timetable.showDetails", "Show details")}
+        </a>
+      </div>
+    </div>
+  );
+}
+
+export function KioskTimetablePage(props: Props) {
+  const { t } = useTranslation();
+  const routeName = useCurrentRouteName();
 
   function isRoomRow(room: string, index: number) {
     return room && index !== 0;
   }
-  function position(rel: RelStartEnd) {
-    return { left: `${rel.relStart * 100}%`, right: `${rel.relEnd * 100}%` };
-  }
+
   function showDay(m: moment.Moment) {
     return m.locale(Session.get("timeLocale") || "en").format("dddd, LL");
   }
@@ -163,50 +220,9 @@ export function KioskTimetablePage(props: Props) {
                   {event.rows.map((row, index3) => {
                     return (
                       <div key={index3} className="timetable-row-section">
-                        {row.map((entry) => {
-                          return (
-                            <div
-                              key={entry._id}
-                              className={`timetable-event${
-                                entry.relStart > 0.5 ? " timetable-event-right" : ""
-                              }`}
-                              style={position(entry)}
-                            >
-                              <div
-                                className={`timetable-event-title${
-                                  entry.canceled ? " timetable-event-title-canceled" : ""
-                                }`}
-                              >
-                                {entry.title}
-                              </div>
-                              <div className="timetable-event-time">
-                                <span
-                                  className="fa-regular fa-clock fa-fw"
-                                  aria-hidden="true"
-                                ></span>
-                                {timeFormat(entry.start)} - {timeFormat(entry.end)}
-                              </div>
-                              <div className="timetable-event-description">
-                                {entry.canceled ? (
-                                  <span className="timetable-event-canceled">
-                                    {t("_event.state.canceled")}
-                                  </span>
-                                ) : entry.isFullyBooked() ? (
-                                  <span className="timetable-event-fully-booked">
-                                    {t("_event.state.fullyBooked")}
-                                  </span>
-                                ) : null}
-                                <p>{textPlain(entry.description)}</p>
-                                <a
-                                  className="btn btn-outline-dark"
-                                  href={Router.url("showEvent", entry)}
-                                >
-                                  {t("kiosk.timetable.showDetails", "Show details")}
-                                </a>
-                              </div>
-                            </div>
-                          );
-                        })}
+                        {row.map((entry) => (
+                          <Event key={entry._id} entry={entry}></Event>
+                        ))}
                       </div>
                     );
                   })}

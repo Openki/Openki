@@ -199,7 +199,7 @@ const defaults = {
     rsvpWithCompanions: false,
     sendReminderIsEditable: true,
     proposeCourseBox: true,
-    resizeImagesOnServer: false,
+    resizeImagesOnServer: true,
   },
   nav: {
     brandLink: "/",

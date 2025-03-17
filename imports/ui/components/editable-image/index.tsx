@@ -2,6 +2,7 @@
 import React, { useState, DragEvent, ChangeEvent } from "react";
 import ImageBlobReduce from "image-blob-reduce";
 import { useTranslation } from "react-i18next";
+import mimeDb from "mime-db";
 
 import * as Alert from "/imports/api/alerts/alert";
 
@@ -36,6 +37,12 @@ export interface Data {
   onDelete?: (() => void) | undefined;
 }
 
+function changeExt(fileName: string, newExt: string) {
+  const pos = fileName.includes(".") ? fileName.lastIndexOf(".") : fileName.length;
+  const fileRoot = fileName.substring(0, pos);
+  return `${fileRoot}.${newExt}`;
+}
+
 export function EditableImage(data: Data) {
   const { t } = useTranslation();
   const [droppedFile, setDroppedFile] = useState<
@@ -61,7 +68,7 @@ export function EditableImage(data: Data) {
       return;
     }
 
-    let rezisedFile;
+    let rezisedFile: Blob;
     if (data.maxSize) {
       try {
         rezisedFile = await new ImageBlobReduce({
@@ -81,9 +88,16 @@ export function EditableImage(data: Data) {
     {
       const reader = new FileReader();
       reader.onload = () => {
+        let name = file.name;
+        // handle if resizing changed file type
+        const fileExtension = mimeDb[rezisedFile.type]?.extensions?.[0];
+        if (fileExtension) {
+          name = changeExt(name, fileExtension);
+        }
+
         setDroppedFile({
           lastModified: new Date(file.lastModified),
-          name: file.name,
+          name,
           size: file.size,
           mimeType: file.type,
           content: reader.result as string,
