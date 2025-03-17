@@ -6,6 +6,7 @@ import * as StringTools from "/imports/utils/string-tools";
 
 import { courses as coursesBase } from "./data";
 import { courses as coursesZuerichLernt } from "./zuerichlernt";
+import { Log } from "../../log/log";
 
 async function mapSync<T, U>(
   array: T[],
@@ -116,5 +117,7 @@ export async function create() {
     await Courses.insertAsync(course);
   }
 
-  return `Inserted ${coursesBase.length + coursesZuerichLernt.length} course fixtures.`;
+  Log.record("testdata", ["Courses"], {
+    message: `Inserted ${coursesBase.length + coursesZuerichLernt.length} course fixtures.`,
+  });
 }

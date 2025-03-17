@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { _ } from "meteor/underscore";
 import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 import { useFindFilter } from "/imports/api/courses/publications";
 import { Dropdown } from "/imports/startup/client/bootstrap";
 
 import "./styles.scss";
 import { Router } from "meteor/iron:router";
+import { debounce } from "lodash";
 
 function Courses({
   search,
@@ -107,7 +107,7 @@ export function Title(data: { value?: string | undefined; onChange: (newValue: s
       <label className="form-label">{t("course.edit.title", "Title")}</label>
       <div className="dropdown">
         <input
-          className={`form-control form-control-lg dropdown-toggle js-title ${value}`}
+          className="form-control form-control-lg dropdown-toggle js-title"
           ref={titleElement}
           id="editform_name"
           placeholder={t("course.title.placeholder", "What are you interested in?")}
@@ -140,12 +140,13 @@ export function Title(data: { value?: string | undefined; onChange: (newValue: s
             setValue(event.target.value);
             data.onChange(event.target.value);
           }}
-          onInput={_.debounce((event: any) => {
+          onInput={debounce((event: any) => {
             setProposedSearch(event.target.value);
           }, 220)}
           onFocus={() => {
             setFocused(true);
           }}
+          autoComplete="off"
         />
         <ul
           className={`dropdown-menu proposed-courses ${

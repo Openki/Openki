@@ -39,7 +39,7 @@
       {{> eventContent}}
     {{/if}}
     {{#if replicating}}
-      {{> eventReplication}}
+      {{> eventReplication eventReplicationAttr}}
     {{else}}
       {{#if (mayEdit this)}}
         <div class="actions">

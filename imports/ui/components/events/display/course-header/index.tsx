@@ -7,7 +7,7 @@ import { CourseModel } from "/imports/api/courses/courses";
 
 import { CourseCategories } from "/imports/ui/components/courses/categories";
 import { RegionTag } from "/imports/ui/components/regions/tag";
-import { CourseGroupList } from "/imports/ui/components/courses/display/group-list";
+import { GroupList } from "/imports/ui/components/courses/display/group-list";
 
 import "./styles.scss";
 
@@ -42,7 +42,7 @@ export function EventCourseHeader(props: Props) {
           : undefined
       }
     >
-      {props.backlink ? (
+      {!!props.backlink && (
         <>
           <a
             className="back-to-course-overview"
@@ -56,10 +56,10 @@ export function EventCourseHeader(props: Props) {
             {t("event.details.viewCourse", "To the course overview")}
           </a>
         </>
-      ) : null}
+      )}
       <h2>{props.title}</h2>
       <CourseCategories categories={props.categories} />
-      {props.course ? <CourseGroupList course={props.course} /> : null}
+      {!!props.course && <GroupList course={props.course} />}
       <RegionTag region={props.regionId} />
     </div>
   );

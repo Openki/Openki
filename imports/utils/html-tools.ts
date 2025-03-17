@@ -1,4 +1,4 @@
-import sanitizeHtml from "sanitize-html";
+import SanitizeHtml from "sanitize-html";
 import { check } from "meteor/check";
 import { UnsafeString } from "./CustomChecks";
 
@@ -24,7 +24,7 @@ export function plainToHtml(text: string) {
     );
 }
 
-export function saneHtml(
+export function sanitizeHtml(
   unsaneHtml: string | UnsafeString,
   maxLength = 640 * 1024 /* 640 k ought to be enough for everybody  -- Mao */,
 ): string {
@@ -38,15 +38,27 @@ export function saneHtml(
     allowedAttributes: {
       a: ["href", "rel"],
     },
-    transformTags: { a: sanitizeHtml.simpleTransform("a", { rel: "nofollow" }, true) },
+    transformTags: { a: SanitizeHtml.simpleTransform("a", { rel: "nofollow" }, true) },
   };
 
-  return sanitizeHtml(shortenUnsaneHtml, options);
+  return SanitizeHtml(shortenUnsaneHtml, options);
 }
 
 export function textPlain(html: string): string {
-  return sanitizeHtml(html, {
-    allowedTags: [],
-    allowedAttributes: {},
-  });
+  return SanitizeHtml(
+    // Prevent words from sticking together
+    // eg. <p>Kloradf dadeq gsd.</p><p>Loradf dadeq gsd.</p> => Kloradf dadeq gsd. Loradf dadeq gsd.
+    html
+      .replace(/<br \/>/g, "<br /> ")
+      .replace(/<p>/g, "<p> ")
+      .replace(/<\/p>/g, "</p> ")
+      .replace(/<h2>/g, "<h2> ")
+      .replace(/<\/h2>/g, "</h2> ")
+      .replace(/<h3>/g, "<h3> ")
+      .replace(/<\/h3>/g, "</h3> "),
+    {
+      allowedTags: [],
+      allowedAttributes: {},
+    },
+  );
 }

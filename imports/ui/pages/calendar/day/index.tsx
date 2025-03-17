@@ -21,13 +21,9 @@ export function Day(data: {
   const userId = useUserId();
   const { calendarDayFormat } = useDateTimeFormat();
 
-  function hasEvents() {
-    return data.events.length > 0;
-  }
-
-  function maybeFilteredEvents(filters: { hash: { isAttendeeFilterOn: boolean } }) {
+  function maybeFilteredEvents(filters: { isAttendeeFilterOn: boolean }) {
     let evs = [...data.events];
-    if (filters.hash.isAttendeeFilterOn && userId) {
+    if (filters.isAttendeeFilterOn && userId) {
       evs = evs.filter((event) => event.attendedBy(userId));
     }
     return evs;
@@ -36,11 +32,13 @@ export function Day(data: {
   return (
     <>
       <div className="js-calendar-date calendar-date">{calendarDayFormat(data.date)}</div>
-      {hasEvents() ? (
+      {maybeFilteredEvents({
+        isAttendeeFilterOn: data.isAttendeeFilterOn,
+      }).length > 0 ? (
         <div className="calendar-event-list">
           <EventList
             dataEvents={maybeFilteredEvents({
-              hash: { isAttendeeFilterOn: data.isAttendeeFilterOn },
+              isAttendeeFilterOn: data.isAttendeeFilterOn,
             })}
             withDate={false}
             withImage={true}

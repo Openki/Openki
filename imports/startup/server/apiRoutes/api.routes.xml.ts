@@ -6,6 +6,7 @@ import { Router } from "meteor/iron:router";
 import { FilteringReadError } from "/imports/utils/filtering";
 import { NoActionError, orderedResults } from "./api.routes.utils";
 import { textPlain } from "/imports/utils/html-tools";
+import { Regions } from "/imports/api/regions/regions";
 
 const OPENKI_UUID_NAMESPACE = "bfcc029a-5d16-4863-af43-17277e2e717b";
 
@@ -83,6 +84,8 @@ Router.route("api.0.xml", {
   where: "server",
   async action() {
     await xmlSendResponder(this.response, async () => {
+      const region = await Regions.findOneAsync({ _id: this.params.query.region });
+
       // Hide canceled events in schedule
       this.params.query.canceled = this.params.query.canceled ?? "0";
       const results = await orderedResults(this.params, "events");
@@ -98,25 +101,25 @@ Router.route("api.0.xml", {
       scheduleNode
         .ele("conference")
         .ele("acronym")
-        .txt("hackmas24")
+        .txt(region?.scheduleXmlData?.acronym || "")
         .up()
         .ele("title")
-        .txt("Håck ma's Castle")
+        .txt(region?.scheduleXmlData?.title || "")
         .up()
         .ele("start")
-        .txt("2024-08-29")
+        .txt(region?.scheduleXmlData?.start || "")
         .up()
         .ele("end")
-        .txt("2024-09-01")
+        .txt(region?.scheduleXmlData?.end || "")
         .up()
         .ele("days")
-        .txt("4")
+        .txt(region?.scheduleXmlData?.days || "")
         .up()
         .ele("time_zone_name")
-        .txt("Europe/Vienna")
+        .txt(region?.scheduleXmlData?.time_zone_name || "")
         .up()
         .ele("base_url")
-        .txt("https://sessions.hack-mas.at")
+        .txt(region?.scheduleXmlData?.base_url || "")
         .up();
 
       let dayIdx = 1;

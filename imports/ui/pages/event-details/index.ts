@@ -7,7 +7,7 @@ import { Events } from "/imports/api/events/events";
 
 import * as Metatags from "/imports/utils/metatags";
 import { appendAsJsonLdToBody } from "/imports/utils/event-to-json-ld";
-import { truncate } from "/imports/utils/string-tools";
+import { truncate } from "lodash";
 import { textPlain } from "/imports/utils/html-tools";
 
 import "/imports/ui/components/buttons";
@@ -50,7 +50,7 @@ template.onCreated(function () {
           .locale(Session.get("timeLocale") || "en")
           .format("ddd, MMM D"),
       });
-      description = truncate(textPlain(event.description), 160);
+      description = truncate(textPlain(event.description), { length: 160 });
       appendAsJsonLdToBody(event);
     } else {
       title = i18n("event.windowtitle.create", "Create event");

@@ -14,7 +14,7 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import * as FileStorage from "/imports/utils/FileStorage";
-import * as StringTools from "/imports/utils/string-tools";
+import { escapeRegExp, intersection } from "lodash";
 import { GroupEntityCustomCourseFields } from "/imports/api/groups/groups";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { StringEnum, Type } from "/imports/utils/CustomChecks";
@@ -58,7 +58,7 @@ export interface CourseEntity {
    * Every "team group" promotes the course and is part of the groups list)
    */
   groupOrganizers: string[];
-  description: string;
+  description?: string;
   /** small image that is used for the compact view, scaled down to max size (width*height) 500px */
   compactImage: string;
   /** bigger image that is used for the detail view, scaled down to max size (width*height) 1500px */
@@ -101,6 +101,10 @@ export interface CourseEntity {
 
 export type CourseModel = Course & CourseEntity;
 
+export function isPrivate(course: { tenant: string }) {
+  return !PublicSettings.publicTenants.includes(course.tenant);
+}
+
 export class Course {
   members: CourseMemberEntity[] = [];
 
@@ -120,7 +124,7 @@ export class Course {
   }
 
   isPrivate(this: CourseModel) {
-    return !PublicSettings.publicTenants.includes(this.tenant);
+    return isPrivate(this);
   }
 
   /**
@@ -133,7 +137,7 @@ export class Course {
     return (
       this.isNew() /* Anybody may create a new course */ ||
       user.privileged("admin") /* Admins can edit all courses */ ||
-      _.intersection(user.badges, this.editors).length > 0
+      intersection(user.badges, this.editors).length > 0
     );
   }
 
@@ -345,8 +349,8 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
       const searchTerms = filter.search.split(/\s+/);
       const searchQueries = searchTerms.map((searchTerm) => ({
         $or: [
-          { name: { $regex: StringTools.escapeRegex(searchTerm), $options: "i" } },
-          { description: { $regex: StringTools.escapeRegex(searchTerm), $options: "i" } },
+          { name: { $regex: escapeRegExp(searchTerm), $options: "i" } },
+          { description: { $regex: escapeRegExp(searchTerm), $options: "i" } },
         ],
       }));
 

@@ -21,46 +21,50 @@ import { EventCompact } from "../../components/events/compact";
 import { EventsMap } from "../../components/events/map";
 
 /** A list of entites. */
-export type ListOfEntites<T> = {
+
+export type ListOfEntitesElementComponent<T> = React.FC<{
+  entity: T;
+  index: number;
+  params: {
+    [k: string]: string;
+  };
+}>;
+export type ListOfEntities<T> = {
   route: string;
-  showAll?: { text?: string };
+  showAll?: { text?: string } | false;
   filter: () => Filtering<any>;
   find: Publication<any, T[]>;
-  element: (
-    entity: T,
-    index: number,
-    params: {
-      [k: string]: string;
-    },
-  ) => React.JSX.Element;
+  element: ListOfEntitesElementComponent<T>;
 };
 
 /** A static component with entites eg. like eventMap */
-export type ComponentWithEntites<T> = {
+export type ComponentWithEntitesComponent<T> = React.FC<{
+  entities: T[];
+  params: {
+    [k: string]: string;
+  };
+}>;
+export type ComponentWithEntities<T> = {
   route: string;
-  showAll?: { text?: string };
+  showAll?: { text?: string } | false;
   filter: () => Filtering<any>;
   find: Publication<any, T[]>;
-  component: (
-    entitys: T[],
-    params: {
-      [k: string]: string;
-    },
-  ) => React.JSX.Element;
+  component: ComponentWithEntitesComponent<T>;
 };
 
 /** A static component eg. like propose */
+export type StaticComponentComponent = React.FC<{
+  params: { [k: string]: string };
+}>;
 export type StaticComponent = {
-  route?: string;
-  showAll?: { text?: string };
-  component: (params: { [k: string]: string }) => React.JSX.Element;
+  component: StaticComponentComponent;
 };
 
-const course: ListOfEntites<CourseModel> = {
+const course: ListOfEntities<CourseModel> = {
   route: "search",
   filter: CourseCollection.Filtering,
   find: Courses.useFindFilter,
-  element: (entity, index, params) => (
+  element: ({ entity, index, params }) => (
     <React.Fragment key={entity._id}>
       {/* The sevent box should allways be the propose one, after then every 11 */}
       {PublicSettings.feature.proposeCourseBox && (index - 6) % 11 === 0 ? (
@@ -75,23 +79,23 @@ const course: ListOfEntites<CourseModel> = {
   ),
 };
 
-const courseWithoutPropose: ListOfEntites<CourseModel> = {
+const courseWithoutPropose: ListOfEntities<CourseModel> = {
   route: "search",
   filter: CourseCollection.Filtering,
   find: Courses.useFindFilter,
-  element: (entity) => (
+  element: ({ entity }) => (
     <div key={entity._id} className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
       <CourseCompact course={entity} />
     </div>
   ),
 };
 
-const event: ListOfEntites<EventModel> = {
+const event: ListOfEntities<EventModel> = {
   route: "calendar",
   showAll: { text: "dashboard.calendar.showAll" },
   filter: EventCollection.Filtering,
   find: Events.useFindFilter,
-  element: (entity) => (
+  element: ({ entity }) => (
     <div key={entity._id} className="me-2" style={{ inlineSize: "250px", minInlineSize: "250px" }}>
       <EventCompact event={entity} withDate={true} withImage={true} />
     </div>
@@ -110,11 +114,11 @@ function bodyStyle(imageUrl: string) {
     backgroundSize: "cover",
   };
 }
-const group: ListOfEntites<GroupModel> = {
+const group: ListOfEntities<GroupModel> = {
   route: "exploreGroups",
   filter: GroupCollection.Filtering,
   find: Groups.useFindFilter,
-  element: (entity) => (
+  element: ({ entity }) => (
     <div key={entity._id} className="me-2">
       <div className="card card-group border-0 rounded-0" style={bodyStyle(entity.publicLogoUrl())}>
         <div className="card-body">
@@ -130,20 +134,20 @@ const group: ListOfEntites<GroupModel> = {
   ),
 };
 
-const eventsMap: ComponentWithEntites<EventModel> = {
+const eventsMap: ComponentWithEntities<EventModel> = {
   route: "eventsMap",
-  showAll: { text: "dashboard.eventsMap.showAll" },
+  showAll: false,
   filter: EventCollection.Filtering,
   find: Events.useFindFilter,
-  component: (enities) => (
+  component: ({ entities }) => (
     <div style={{ height: "440px" }}>
-      <EventsMap events={enities} openLinksInNewTab={false} />
+      <EventsMap events={entities} openLinksInNewTab={false} />
     </div>
   ),
 };
 
 const propose: StaticComponent = {
-  component: (params) => (
+  component: ({ params }) => (
     <div className="container mw-md">
       <Edit {...CourseTemplate()} {...params} />
     </div>

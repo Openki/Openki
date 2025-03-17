@@ -6,10 +6,11 @@ export interface RoleEntity {
   icon: string;
   /** For always-on roles */
   preset?: boolean;
+  /** A role appears as "proposed only" */
   proposal?: boolean;
 }
 
-export const Roles: RoleEntity[] = [
+export const Roles: readonly RoleEntity[] = [
   {
     type: "participant",
     icon: "fa-solid fa-thumbs-up",
@@ -31,3 +32,13 @@ export const Roles: RoleEntity[] = [
     preset: true,
   },
 ];
+
+export function getRole(type: string) {
+  const role = Roles.find((r) => r.type === type);
+
+  if (!role) {
+    throw new Error(`Unknown role type: ${type}`);
+  }
+
+  return role;
+}

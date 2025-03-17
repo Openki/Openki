@@ -1,5 +1,6 @@
 /* eslint-disable no-await-in-loop */
 import { Events, EventEntity } from "../../events/events";
+import { Log } from "../../log/log";
 import { ensure } from "../ensureFixture";
 import { events as eventsNhw } from "./nachhaltigkeitswoche";
 import { events as eventsZuerichlernt } from "./zuerichlernt";
@@ -141,7 +142,9 @@ export async function create() {
       categories: template.categories,
       startLocal,
       endLocal,
-      venue: await ensure.venue(template.venue.name, template.region, template.venue._id),
+      venue: template.venue._id
+        ? await ensure.venue(template.venue.name, template.region, template.venue._id)
+        : { name: template.venue.name },
       room: template.room || "",
       createdBy: (await ensure.user(template.createdBy, template.region))._id,
       time_created: new Date(template.time_created.$date),
@@ -162,11 +165,13 @@ export async function create() {
       maxParticipants: template.maxParticipants,
       start: regionZone.fromString(startLocal).toDate(),
       end: regionZone.fromString(endLocal).toDate(),
-    } as unknown as EventEntity;
+    } as unknown as Omit<Mongo.OptionalId<EventEntity>, "tenant">;
 
     // eslint-disable-next-line no-await-in-loop
     await Events.insertAsync(event);
   }
 
-  return `Inserted ${eventsNhw.length + eventsZuerichlernt.length} event fixtures.`;
+  Log.record("testdata", ["Events"], {
+    message: `Inserted ${eventsNhw.length + eventsZuerichlernt.length} event fixtures.`,
+  });
 }

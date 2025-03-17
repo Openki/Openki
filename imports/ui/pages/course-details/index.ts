@@ -1,9 +1,8 @@
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import { intersection } from "lodash";
+import { intersection, truncate } from "lodash";
 import { textPlain } from "/imports/utils/html-tools";
-import { truncate } from "/imports/utils/string-tools";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { Regions } from "/imports/api/regions/regions";
@@ -47,6 +46,7 @@ import "./button-course-unarchive";
 
 import "./template.html";
 import "./styles.scss";
+import { mayShare } from "../../components/courses/edit/mayShare";
 
 const Template = TemplateMixins.Expandible(
   TemplateAny as TemplateStaticTyped<
@@ -71,7 +71,7 @@ template.onCreated(function () {
     const { course } = Template.currentData();
     Metatags.setCommonTags(
       course.name,
-      truncate(textPlain(course.description), 160),
+      truncate(textPlain(course.description || ""), { length: 160 }),
       course.publicUrlForDetailsImage(),
     );
   });
@@ -129,6 +129,8 @@ template.helpers({
   mayEdit(course: CourseModel) {
     return course?.editableBy(Meteor.user());
   },
+
+  mayShare,
   courseStateClasses(course: CourseModel) {
     const classes = [];
 

@@ -48,6 +48,22 @@ export interface GroupMemberEntity {
   notify: boolean;
 }
 
+export type GroupEntityDashboard = {
+  entity: "group" | "course" | "courseWithoutPropose" | "event" | "eventsMap" | "propose";
+  title?: string;
+  query?: string;
+  showAll?: {
+    link?: string;
+    text?: string;
+  };
+}[];
+
+export interface GroupVenueEntity {
+  _id: string;
+  name: string;
+  slug: string;
+}
+
 /** DB-Model */
 export interface GroupEntity {
   /** ID */
@@ -59,12 +75,7 @@ export interface GroupEntity {
   logoUrl?: string;
   /** Customize the inputs that the user can enter when creating and editing a course. */
   customCourseFields?: GroupEntityCustomCourseFields[];
-  dashboard?: {
-    entity: "group" | "course" | "courseWithoutPropose" | "event" | "eventsMap" | "propose";
-    title?: string;
-    query?: string;
-    showAll?: { link?: string; text?: string };
-  }[];
+  dashboard?: GroupEntityDashboard;
   /** Hide some role options in the propose new course. */
   disableCreateRoles?: string[];
   /** List of userIds with notify */
@@ -74,6 +85,8 @@ export interface GroupEntity {
   time_created?: Date;
   // eslint-disable-next-line camelcase
   time_lastedit?: Date;
+  /** (calculated) venues where the group is manger */
+  venues?: GroupVenueEntity[];
 }
 export type GroupModel = Group & GroupEntity;
 

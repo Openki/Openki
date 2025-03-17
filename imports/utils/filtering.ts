@@ -1,4 +1,3 @@
-import { _ } from "meteor/underscore";
 import { Tracker } from "meteor/tracker";
 import { ParamWrapper, Predicate } from "imports/utils/predicates";
 
@@ -25,8 +24,6 @@ type GetPredicateT3<C extends Predicate<any>> = C extends Predicate<infer _T1, i
 export class Filtering<T extends { [name: string]: Predicate<any> }> {
   private _predicates: { [name in keyof T]+?: ReturnType<T[name]> } = {};
 
-  private _settledPredicates: { [name in keyof T]+?: ReturnType<T[name]> } = {};
-
   private _dep = new Tracker.Dependency();
 
   // eslint-disable-next-line no-useless-constructor
@@ -34,6 +31,7 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
 
   clear() {
     this._predicates = {};
+    this._dep.changed();
     return this;
   }
 
@@ -41,7 +39,7 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
     if (Tracker.active) {
       this._dep.depend();
     }
-    return this._settledPredicates[name]?.get();
+    return this._predicates[name]?.get();
   }
 
   add<N extends keyof T>(name: N, param: GetPredicateT3<T[N]> | string) {
@@ -64,6 +62,7 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
       if (!this._predicates[name]) {
         delete this._predicates[name];
       }
+      this._dep.changed();
       return this;
     } catch (e) {
       if (e instanceof FilteringReadError) {
@@ -107,6 +106,7 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
       if (!this._predicates[name]) {
         delete this._predicates[name];
       }
+      this._dep.changed();
       return this;
     } catch (e) {
       if (e instanceof FilteringReadError) {
@@ -143,41 +143,17 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
 
   disable(name: keyof T) {
     delete this._predicates[name];
+    this._dep.changed();
     return this;
   }
 
-  done() {
-    const settled = this._settledPredicates;
-    this._settledPredicates = _.clone(this._predicates);
-
-    // Now find out whether the predicates changed
-    const settlingNames = Object.keys(this._predicates);
-    const settledNames = Object.keys(settled);
-
-    let same =
-      settlingNames.length === settledNames.length &&
-      _.intersection(settlingNames, settledNames).length === settlingNames.length;
-
-    if (same) {
-      // Look closer
-      Object.keys(this._predicates).every((name) => {
-        same = (this._predicates[name] as any).equals(settled[name]);
-        return same;
-      });
-    }
-    if (!same) {
-      this._dep.changed();
-    }
-    return this;
-  }
-
-  /** Convert back to query params that can be used as param in a url. */
+  /** Convert to query params that can be used as param in a url. */
   toParams() {
     if (Tracker.active) {
       this._dep.depend();
     }
     const params: { [name in keyof T]+?: string } = {};
-    Object.entries(this._settledPredicates).forEach(([name, value]) => {
+    Object.entries(this._predicates).forEach(([name, value]) => {
       params[name as keyof T] = value?.param();
     });
     return params;
@@ -191,7 +167,7 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
     const query: {
       [name in keyof T]+?: ReturnType<Extract<ReturnType<T[name]>, ParamWrapper>["query"]>;
     } = {};
-    Object.entries(this._settledPredicates).forEach(([name, value]) => {
+    Object.entries(this._predicates).forEach(([name, value]) => {
       query[name as keyof T] = value?.query();
     });
     return query;
