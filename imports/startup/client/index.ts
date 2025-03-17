@@ -23,7 +23,12 @@ import moment from "moment";
 
 Router.onStop(function () {
   Tooltips.hide();
-  Alerts.remove({ createdAt: { $lt: moment().subtract(0.5, "seconds").toDate() } });
+
+  // Remove success message with proposed actions when the user navigates away
+  Alerts.remove({
+    actions: { $exists: true },
+    createdAt: { $lt: moment().subtract(0.5, "seconds").toDate() },
+  });
 
   // close any verification dialogs still open
   Session.set("verify", false);
