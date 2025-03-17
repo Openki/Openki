@@ -177,15 +177,19 @@ function AlertMessage(data: {
         <i className="fa-solid fa-check" aria-hidden="true"></i>{" "}
         {t("course.edit.savedMessage", "Your proposal has been saved!")}
       </h4>
-      <a className="alert-link" href={savedCourseLink()} target="_blank">
-        {t("course.edit.linkToCourse", 'Click here to see your new "{NAME}" course on {SITENAME}', {
-          NAME: savedCourseName(),
+      <span className="pre-line">
+        {t("course.edit.linkToCourse", 'You can see your new proposal "{NAME}" on {SITENAME}', {
+          NAME: (
+            <a className="alert-link" href={savedCourseLink()} target="_blank">
+              {savedCourseName()}
+            </a>
+          ),
           SITENAME: siteName,
         })}
-      </a>
+      </span>
       <button
         type="button"
-        className="btn-close btn-close-white"
+        className="btn-close btn-close-black"
         data-bs-dismiss="alert"
         aria-label="Close"
         onClick={data.onClose}
