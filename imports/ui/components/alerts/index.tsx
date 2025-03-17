@@ -83,9 +83,9 @@ function Alert({
       className={`alert alert-${contextualClass()} alert-dismissible alert-message fs-4`}
       role="alert"
     >
-      {title ? <h3 className="alert-heading">{title}</h3> : null}
+      {!!title && <h3 className="alert-heading">{title}</h3>}
       {message}
-      {actions ? (
+      {!!actions && (
         <>
           <hr className="border border-black" />
           {actions.map((l) => (
@@ -123,7 +123,7 @@ function Alert({
             </React.Fragment>
           ))}
         </>
-      ) : null}
+      )}
       <button
         type="button"
         className="btn-close"
@@ -140,7 +140,12 @@ function Alert({
 }
 
 export function Alerts() {
-  const alerts = useTracker(() => AlertsCollection.find().fetch());
+  const alerts = useTracker(() => AlertsCollection.find()).fetch();
+
+  useEffect(() => {
+    const height = $(".alert-messages").height() || 0;
+    $(".alert-messages-spacer").height(height);
+  });
   return (
     <>
       <div className="alert-messages container mt-2">
