@@ -16,6 +16,6 @@ export interface AlertEnity {
   actions?: Action[] | undefined;
   /** Integer */
   timeout: number;
-  createdAt: number;
+  createdAt: Date;
 }
 export const Alerts: Mongo.Collection<AlertEnity> = new Mongo.Collection(null); // Local collection for in-memory storage
