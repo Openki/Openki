@@ -9,7 +9,7 @@ import { i18n } from "/imports/startup/both/i18next";
  */
 function _alert(type: string, message: string, timeout = 4000, title?: string, actions?: Action[]) {
   if (message) {
-    Alerts.insert({ type, title, message, timeout, actions, createdAt: new Date().valueOf() });
+    Alerts.insert({ type, title, message, timeout, actions, createdAt: new Date() });
   }
 }
 

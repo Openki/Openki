@@ -23,9 +23,7 @@ import moment from "moment";
 
 Router.onStop(function () {
   Tooltips.hide();
-  setTimeout(() => {
-    Alerts.remove({ createdAt: { $gt: moment().subtract(1, "seconds").toDate().valueOf() } });
-  }, 1);
+  Alerts.remove({ createdAt: { $lt: moment().subtract(0.5, "seconds").toDate() } });
 
   // close any verification dialogs still open
   Session.set("verify", false);
