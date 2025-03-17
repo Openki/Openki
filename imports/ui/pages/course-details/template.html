@@ -44,7 +44,7 @@
               </div>
               {{> courseDetailsSubmenu course=course}}
             </div>
-            {{#if mayShare}}
+            {{#if mayShare course}}
               {{> sharing}}
             {{/if}}
             {{#if (mayEdit course)}}
