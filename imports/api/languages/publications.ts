@@ -11,11 +11,9 @@ const weblateMapping = { de_ZH: "de-ZH", nb_NO: "nb" } as { [weblateCode: string
 const languages = { ...LanguagesRaw };
 
 if (Meteor.isServer) {
-  // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
-  const fetch = require("node-fetch").default;
-
   /** Enrich Languages with stats from weblate */
   (async function enrichLanguages() {
+    const fetch = (await import("node-fetch")).default;
     try {
       // See: https://docs.weblate.org/en/latest/api.html#exports
       const response = await fetch(
