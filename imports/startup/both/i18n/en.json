@@ -177,7 +177,7 @@
   "course.edit.internDescription": "Only show when looking at a group's courses",
   "course.edit.iWantToLearn": "I want to learn",
   "course.edit.learnOrTeach": "Learn or teach?",
-  "course.edit.linkToCourse": "Click here to see your new \"{NAME}\" course on {SITENAME}",
+  "course.edit.linkToCourse": "You can see your new proposal \"{NAME}\" on {SITENAME}",
   "course.edit.needs.role": "This course might need…",
   "course.edit.no.categories": "No categories",
   "course.edit.propose": "Propose new course",
