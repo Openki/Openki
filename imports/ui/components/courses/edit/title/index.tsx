@@ -23,7 +23,7 @@ function Courses({ search }: { search: string }) {
         <h5 className="m-0">
           <button
             type="button"
-            className="btn"
+            className="btn btn-link"
             onClick={() => {
               setCollapsed(!collapsed);
             }}
