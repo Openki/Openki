@@ -834,16 +834,13 @@ export function Edit(data: Data) {
                   </div>
                 )}
 
-                <EditCustomFields fields={customFields("boolean")} values={customFields() as any} />
+                <EditCustomFields fields={customFields("boolean")} values={data.customFields} />
 
-                <EditCustomFields
-                  fields={customFields("singleLine")}
-                  values={customFields() as any}
-                />
+                <EditCustomFields fields={customFields("singleLine")} values={data.customFields} />
               </div>
             )}
           </div>
-          <EditCustomFields fields={customFields("multiLine")} values={customFields() as any} />
+          <EditCustomFields fields={customFields("multiLine")} values={data.customFields} />
 
           {showInternalCheckbox() ? (
             <div className="mb-3">
