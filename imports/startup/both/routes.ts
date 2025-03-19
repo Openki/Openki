@@ -299,7 +299,7 @@ RouterAsync.route("showCourse", {
   path: "course/:_id/:slug?",
   template: "courseDetailsPage",
   async action() {
-    const course = this.data();
+    const { course } = this.data();
     if (course?.singleEvent && course.nextEvent && this.params.query.force !== "1") {
       this.redirect("showEvent", course.nextEvent, { replaceState: true });
     } else {
