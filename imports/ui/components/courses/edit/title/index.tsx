@@ -115,7 +115,7 @@ export function Title(data: { value?: string | undefined; onChange: (newValue: s
           type="text"
           value={value}
           data-bs-toggle="dropdown"
-          data-bs-auto-close="false"
+          data-bs-auto-close="outside"
           onKeyDown={(event) => {
             if (event.key === "Tab") {
               if (titleElement.current) {
@@ -155,7 +155,7 @@ export function Title(data: { value?: string | undefined; onChange: (newValue: s
           role="menu"
           aria-labelledby="editform_name"
         >
-          {dropdownVisible() ? (
+          {dropdownVisible() && (
             <Courses
               search={proposedSearch}
               onResult={(newHasResults) => {
@@ -165,7 +165,7 @@ export function Title(data: { value?: string | undefined; onChange: (newValue: s
                 setFocused(false);
               }}
             />
-          ) : null}
+          )}
           <button
             type="button"
             className="btn btn-cancel close-dropdown-button"
