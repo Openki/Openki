@@ -3,7 +3,7 @@ import { Match, check } from "meteor/check";
 
 import { Courses } from "/imports/api/courses/courses";
 import {
-  CourseDiscussionEnity,
+  CourseDiscussionEntity,
   CourseDiscussions,
 } from "/imports/api/course-discussions/course-discussions";
 import * as CourseDiscussionUtils from "/imports/utils/course-discussion-utils";
@@ -22,6 +22,7 @@ const sanitizeComment = (comment: { title?: string | undefined; text: UnsafeStri
 
 export const PostCommentFieldsPattern = {
   courseId: String,
+  eventId: Match.Optional(String),
   parentId: Match.Optional(String),
   title: Match.Optional(String),
   text: HtmlString(),
@@ -35,7 +36,7 @@ export const postComment = ServerMethod(
   async function (comment: PostCommentFields) {
     check(comment, PostCommentFieldsPattern);
 
-    const saneComment = sanitizeComment(comment) as CourseDiscussionEnity & { saving?: boolean };
+    const saneComment = sanitizeComment(comment) as CourseDiscussionEntity & { saving?: boolean };
 
     if (!saneComment.text) {
       throw new Meteor.Error(400, "Invalid comment");
@@ -105,7 +106,7 @@ export const editComment = ServerMethod(
   async (comment: EditCommentFields) => {
     check(comment, EditCommentFieldsPattern);
 
-    const update = sanitizeComment(comment) as CourseDiscussionEnity;
+    const update = sanitizeComment(comment) as CourseDiscussionEntity;
 
     const originalComment = await CourseDiscussions.findOneAsync(comment._id);
     if (!originalComment) {

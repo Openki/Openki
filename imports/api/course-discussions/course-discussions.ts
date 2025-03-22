@@ -3,7 +3,7 @@ import { Mongo } from "meteor/mongo";
 
 /** DB-Model */
 
-export interface CourseDiscussionEnity {
+export interface CourseDiscussionEntity {
   /** ID */
   _id: string;
   title: string;
@@ -12,6 +12,7 @@ export interface CourseDiscussionEnity {
   userId?: string;
   /** ID_Courses */
   courseId: string;
+  eventId?: string | undefined;
   notifyAll?: boolean | undefined;
   // eslint-disable-next-line camelcase
   time_created: Date;
@@ -21,7 +22,7 @@ export interface CourseDiscussionEnity {
   parentId?: string;
 }
 
-export class CourseDiscussionsCollection extends Mongo.Collection<CourseDiscussionEnity> {
+export class CourseDiscussionsCollection extends Mongo.Collection<CourseDiscussionEntity> {
   constructor() {
     super("CourseDiscussions");
 

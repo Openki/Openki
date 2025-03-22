@@ -1,5 +1,5 @@
 import React from "react";
-import { CourseDiscussionEnity } from "/imports/api/course-discussions/course-discussions";
+import { CourseDiscussionEntity } from "/imports/api/course-discussions/course-discussions";
 import { UserModel } from "/imports/api/users/users";
 import { useTranslation } from "react-i18next";
 import { Footer } from "./components/Footer";
@@ -10,7 +10,7 @@ export interface Props {
   course: any;
   commentLink: string;
   subject: string;
-  comment: CourseDiscussionEnity;
+  comment: CourseDiscussionEntity;
   commenter: UserModel | undefined;
   commenterLink: string;
   commenterName: string | undefined;

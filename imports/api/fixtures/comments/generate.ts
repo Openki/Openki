@@ -4,7 +4,7 @@ import { _ } from "meteor/underscore";
 
 import { Courses } from "/imports/api/courses/courses";
 import {
-  CourseDiscussionEnity,
+  CourseDiscussionEntity,
   CourseDiscussions,
 } from "/imports/api/course-discussions/course-discussions";
 import { Prng } from "/imports/api/fixtures/Prng";
@@ -46,7 +46,7 @@ export async function generate() {
     const words = description.split(" ");
 
     for (let n = 0; n < createCount; n += 1) {
-      const comment = {} as Mongo.OptionalId<CourseDiscussionEnity>;
+      const comment = {} as Mongo.OptionalId<CourseDiscussionEntity>;
       comment.courseId = course._id;
       comment.title = _.sample(words, 1 + Math.floor(prng() * 3)).join(" ");
       comment.text = HtmlTools.sanitizeHtml(

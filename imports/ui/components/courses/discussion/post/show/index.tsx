@@ -4,7 +4,7 @@ import moment from "moment";
 import { useTranslation } from "react-i18next";
 
 import { Courses } from "/imports/api/courses/courses";
-import { CourseDiscussionEnity } from "/imports/api/course-discussions/course-discussions";
+import { CourseDiscussionEntity } from "/imports/api/course-discussions/course-discussions";
 import * as CourseDiscussionsMethods from "/imports/api/course-discussions/methods";
 import * as Alert from "/imports/api/alerts/alert";
 
@@ -18,7 +18,7 @@ import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { RemoveDropdown } from "./remove-dropdown";
 
 export type Props = {
-  post: CourseDiscussionEnity & { new?: true } & { saving?: boolean };
+  post: CourseDiscussionEntity & { new?: true } & { saving?: boolean };
   onEdit: () => void;
 };
 
