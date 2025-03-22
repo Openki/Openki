@@ -17,6 +17,7 @@ import {
   Menu,
   MenuItem,
   RenderMenuProps,
+  TypeaheadInputSingle,
 } from "react-bootstrap-typeahead";
 import { EditLocationMap } from "./edit-location-map";
 import { Display } from "../../location/display";
@@ -236,6 +237,13 @@ export function EditVenue({
             placeholder={
               t("event.edit.locationNamePlaceholder", "Search address or name of venue") || ""
             }
+            renderInput={(inputProps, props) => {
+              // From https://github.com/ericgio/react-bootstrap-typeahead/blob/924627376275c78988718230c0438748ff673a6d/src/components/Typeahead/Typeahead.tsx#L229
+              const { isInvalid, isValid, size } = props as any;
+              const commonProps = { ...inputProps, isInvalid, isValid, size };
+              // Add type="search" to have a clear button
+              return <TypeaheadInputSingle {...commonProps} type="search" />;
+            }}
             renderMenu={(results, menuProps) => (
               <CustomMenu results={results} menuProps={menuProps} />
             )}
