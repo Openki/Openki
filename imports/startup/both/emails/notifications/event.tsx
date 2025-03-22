@@ -3,6 +3,7 @@ import { Match, check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
+import { uniq } from "lodash";
 
 import { CourseModel, Courses } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
@@ -55,7 +56,10 @@ export async function record(eventId: string, isNew: boolean, additionalMessage?
     // The list of recipients is built right away so that only course members
     // at the time of event creation will get the notice even if sending is
     // delayed.
-    recipients: course?.members.map((m) => m.user) || [],
+    // The notification is sended to all members of the course and on a event change to all participants
+    recipients: uniq([...(course?.members || []), ...(event.participants || [])])?.map(
+      (p) => p.user,
+    ),
     model: "Event",
   };
 
