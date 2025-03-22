@@ -12,6 +12,7 @@ import * as StringTools from "/imports/utils/string-tools";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { HtmlString, Type, UnsafeString } from "/imports/utils/CustomChecks";
+import { Events } from "../events/events";
 
 const sanitizeComment = (comment: { title?: string | undefined; text: UnsafeString }) => {
   const saneTitle = StringTools.sanitizeSingleline(comment.title, 200);
@@ -47,6 +48,14 @@ export const postComment = ServerMethod(
       throw new Meteor.Error(404, "course not found");
     }
     saneComment.courseId = course._id;
+
+    if (course.singleEvent) {
+      const event = await Events.findOneAsync(comment.eventId);
+      if (!event || event.courseId !== course._id) {
+        throw new Meteor.Error(404, "event not found");
+      }
+      saneComment.eventId = event._id;
+    }
 
     const user = await Meteor.userAsync();
     if (user && !comment.anon) {

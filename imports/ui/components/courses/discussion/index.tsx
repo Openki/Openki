@@ -128,7 +128,7 @@ export function Discussion({ select, courseId, eventId }: Props) {
               <Post post={post} responses={responses(post._id)} />
             </div>
           ))}
-          {limited() ? (
+          {limited() && (
             <button
               className="btn btn-add page-component-btn"
               type="button"
@@ -141,7 +141,7 @@ export function Discussion({ select, courseId, eventId }: Props) {
                 NUM: allDiscussions().length,
               })}
             </button>
-          ) : null}
+          )}
         </>
       )}
     </div>
