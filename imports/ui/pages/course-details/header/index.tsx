@@ -1,3 +1,4 @@
+import React from "react";
 import { Meteor } from "meteor/meteor";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 
@@ -105,3 +106,36 @@ template.helpers({
     return !course.nextEvent && !course.lastEvent;
   },
 });
+
+export function Header(){
+  return <div class="details-header" {{detailsHeaderAttr course}}>
+  {{#if course.internal}}
+    {{> internalIndicator}}
+  {{/if}}
+  {{#if course.singleEvent}}
+    {{> singleEventIndicator}}
+  {{/if}}
+  <div class="details-header-tags">
+    {{#if (isProposal course)}}
+      <div class="proposal-tag">
+        <span class="fa-regular fa-lightbulb fa-fw" aria-hidden="true"></span>
+        {{i18n 'course.details.is-proposalTag' 'Proposal'}}
+      </div>
+    {{/if}}
+    {{> regionTag course}}
+  </div>
+  <div class="course-details-title">
+    {{#if (mayEdit course)}}
+      {{> editable instance.editableName}}
+    {{else}}
+      <h2>{{course.name}}</h2>
+    {{/if}}
+  </div>
+  {{#if course.categories}}
+    <div class="course-details-categories">
+      {{> courseCategories categories=course.categories}}
+    </div>
+  {{/if}}
+  {{> courseGroupList course=course}}
+</div>
+}
