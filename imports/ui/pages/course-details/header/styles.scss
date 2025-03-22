@@ -24,6 +24,25 @@
   border-color: $archived-color;
 }
 
+// style fixes a problem that occurs during the transition to react. This can be removed when everything is changed to react.
+.course-details > div > .details-header {
+  border-color: $course-border-color;
+  border-style: solid;
+  border-width: $course-border-width $course-border-width 0;
+}
+.is-proposal > div > .details-header {
+  border-style: $proposal-border-style;
+}
+.has-past-events > div > .details-header {
+  border-style: $has-past-events-border-style;
+}
+.has-upcoming-events > div > .details-header {
+  background: $has-upcoming-events-bg;
+}
+.is-archived > div > .details-header {
+  border-color: $archived-color;
+}
+
 // ** Tags
 //========================================================================================
 .details-header-tags {

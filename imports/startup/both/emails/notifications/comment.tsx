@@ -14,6 +14,7 @@ import { Log } from "/imports/api/log/log";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { Model as NotificationModel } from "../notification";
 import { Comment, Props } from "/imports/emails/notifications/Comment";
+import { Events } from "/imports/api/events/events";
 
 export interface Body {
   commentId: string;
@@ -37,13 +38,22 @@ export async function record(commentId: string) {
     throw new Meteor.Error(`No course entry for ${commentId}`);
   }
 
-  let recipients;
+  let recipients = [];
   if (comment.notifyAll) {
-    recipients = course.members.map((m) => m.user);
-  } else {
-    recipients = [];
+    recipients.push(...course.members.map((m) => m.user));
 
-    recipients = course.membersWithRole("team").map((m) => m.user);
+    // if a post on a single event all participants also get notified
+    if (comment.eventId) {
+      const event = await Events.findOneAsync(comment.eventId);
+      if (!event) {
+        throw new Meteor.Error(`No event entry for ${commentId}`);
+      }
+      if (event.participants) {
+        recipients.push(...event.participants.map((m) => m.user));
+      }
+    }
+  } else {
+    recipients.push(...course.membersWithRole("team").map((m) => m.user));
 
     // All participants in the thread are notified.
     const threadId = comment.parentId;
