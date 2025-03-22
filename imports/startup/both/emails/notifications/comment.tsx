@@ -69,14 +69,14 @@ export async function record(commentId: string) {
         }
       });
     }
-
-    // Don't send to author of comment
-    if (comment.userId) {
-      recipients = recipients.filter((r) => r !== comment.userId);
-    }
-
-    recipients = uniq(recipients);
   }
+
+  // Don't send to author of comment
+  if (comment.userId) {
+    recipients = recipients.filter((r) => r !== comment.userId);
+  }
+
+  recipients = uniq(recipients);
 
   const body: Body = {
     commentId: comment._id,

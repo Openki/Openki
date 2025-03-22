@@ -97,18 +97,25 @@ export function Show({ post, onEdit }: Props) {
             <span data-bs-toggle="tooltip" data-bs-title={dateFormat(post.time_created)}>
               {fromNow(post.time_created)}
             </span>
-            {post.notifyAll ? (
+            {!!post.notifyAll && (
               <>
                 {" "}
                 <i
                   className="fa-solid fa-bell"
                   aria-hidden="true"
                   data-bs-toggle="tooltip"
-                  data-bs-title={t("course.discussion.allNotified", "All interested notified")}
+                  data-bs-title={
+                    !post.eventId
+                      ? t("course.discussion.allNotified", "All interested notified")
+                      : t(
+                          "event.discussion.allNotified",
+                          "All interested and participants notified",
+                        )
+                  }
                 ></i>
               </>
-            ) : null}
-            {hasBeenEdited() ? (
+            )}
+            {hasBeenEdited() && (
               <>
                 {" "}
                 - {t("course.discussion.lastUpdate", "Last update")}:{" "}
@@ -116,19 +123,19 @@ export function Show({ post, onEdit }: Props) {
                   {fromNow(post.time_updated)}
                 </span>
               </>
-            ) : null}
+            )}
           </span>
           <span className="discussion-buttons">
-            {mayEdit() ? (
+            {mayEdit() && (
               <button type="button" className="discussion-edit-btn" onClick={handleEditClick}>
                 <span className="fa-solid fa-pen-to-square" aria-hidden="true"></span>
               </button>
-            ) : null}
-            {mayDelete() ? <RemoveDropdown {...removeDropdownAttr()} /> : null}
+            )}
+            {mayDelete() && <RemoveDropdown {...removeDropdownAttr()} />}
           </span>
         </div>
         <div className="discussion-post-body">
-          {post.title ? <h4 className="discussion-post-title">{post.title}</h4> : null}
+          {!!post.title && <h4 className="discussion-post-title">{post.title}</h4>}
           <p dangerouslySetInnerHTML={{ __html: post.text }}></p>
         </div>
       </div>

@@ -165,7 +165,14 @@ export function Edit({ post, onSave, onCancel }: Props) {
                       className="fa-solid fa-bell"
                       aria-hidden="true"
                       data-bs-toggle="tooltip"
-                      data-bs-title={t("course.discussion.allNotified", "All interested notified")}
+                      data-bs-title={
+                        !post.eventId
+                          ? t("course.discussion.allNotified", "All interested notified")
+                          : t(
+                              "event.discussion.allNotified",
+                              "All interested and participants notified",
+                            )
+                      }
                     ></i>
                   </>
                 )}
