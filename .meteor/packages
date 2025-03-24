@@ -4,37 +4,36 @@
 # but you can also edit it by hand.
 
 # Server
-meteor-base@1.5.1               # Packages every Meteor app needs to have
-base64@1.0.12
-email@2.2.6
+meteor-base@1.5.2             # Packages every Meteor app needs to have
+base64@1.0.13
+email@3.1.1
 iron:router
-shell-server@0.5.0              # Server-side component of the `meteor shell` command
+shell-server@0.6.1            # Server-side component of the `meteor shell` command
 kadira:dochead
-session@1.2.1
-underscore@1.6.1
+session@1.2.2
+underscore@1.6.4
 mdg:validation-error
-dynamic-import@0.7.3
+dynamic-import@0.7.4
 
 # Accounts
-accounts-password@2.4.0
-accounts-base@2.2.11
-accounts-facebook@1.3.3
-accounts-google@1.4.0
-accounts-github@1.5.0
-facebook-config-ui@1.0.3
-google-config-ui@1.0.3
-github-config-ui@1.0.2
-service-configuration@1.3.4
+accounts-password@3.0.3
+accounts-base@3.0.3
+accounts-facebook@1.3.4
+accounts-google@1.4.1
+accounts-github@1.5.1
+facebook-config-ui@1.0.4
+google-config-ui@1.0.4
+github-config-ui@1.0.3
+service-configuration@1.3.5
 
 # UI
 blaze-html-templates            # Compile .html files into Meteor Blaze views
-reactive-var@1.0.12             # Reactive variable for tracker
+reactive-var@1.0.13             # Reactive variable for tracker
 bevanhunt:leaflet
-fourseven:scss
+leonardoventurini:scss
 jquery
 markdown
-mys:fonts
-react-meteor-data
+react-meteor-data@3.0.2         # React higher-order component for reactively tracking Meteor data
 react-template-helper
 react-meteor-accounts
 
@@ -42,15 +41,15 @@ react-meteor-accounts
 mdg:seo
 
 # Build
-es5-shim@4.8.0                  # ECMAScript 5 compatibility for older browsers
-ecmascript@0.16.8               # Enable ECMAScript2015+ syntax in app code
-standard-minifier-js@2.8.1      # JS minifier run for production mode
-standard-minifier-css@1.9.2     # Enables PostCSS
+es5-shim@4.8.1                  # ECMAScript 5 compatibility for older browsers
+ecmascript@0.16.10               # Enable ECMAScript2015+ syntax in app code
+zodern:standard-minifier-js     # JS minifier run for production mode
+standard-minifier-css@1.9.3     # CSS minifier run for production mode
+mys:fonts
 
 # DEV
-msavin:mongol
-zodern:types
-typescript@4.9.5
+zodern:types                    # Pull in type declarations from other Meteor packages
+typescript@5.6.3                # Enable TypeScript syntax in .ts and .tsx modules
 
 # Test
 meteortesting:mocha@2.0.1       # A package for writing and running your meteor app and package tests with mocha
