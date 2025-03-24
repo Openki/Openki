@@ -3,6 +3,7 @@ import { ReactiveVar } from "meteor/reactive-var";
 import { Router } from "meteor/iron:router";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import moment from "moment";
+import { Session } from "meteor/session";
 
 import { EventEntity, Events } from "/imports/api/events/events";
 

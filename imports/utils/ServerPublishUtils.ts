@@ -1,4 +1,5 @@
 import { Meteor, Subscription } from "meteor/meteor";
+import { Mongo } from "meteor/mongo";
 
 export type Record<T extends readonly Mongo.Cursor<any>[]> = Mongo.Cursor<any> | [...T] | undefined;
 

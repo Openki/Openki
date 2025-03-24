@@ -1,6 +1,7 @@
 import { Router } from "meteor/iron:router";
 import { i18n } from "/imports/startup/both/i18next";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import { Session } from "meteor/session";
 import moment from "moment";
 
 import { Events } from "/imports/api/events/events";
