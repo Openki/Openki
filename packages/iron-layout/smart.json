@@ -1,0 +1,13 @@
+{
+  "name": "iron-layout",
+  "description": "Dynamic layouts which enable rendering dynamic templates into regions on a page.",
+  "homepage": "https://github.com/eventedmind/iron-layout",
+  "author": "Chris Mather (https://github.com/cmather)",
+  "version": "0.2.0",
+  "git": "https://github.com/EventedMind/iron-layout.git",
+  "packages": {
+    "blaze-layout": {},
+    "iron-core": {},
+    "iron-dynamic-template": {}
+  }
+}

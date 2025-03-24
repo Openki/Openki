@@ -1,0 +1,80 @@
+<template name="Static">
+  {{> DynamicTemplate template="NoData"}}
+</template>
+
+<template name="StaticData">
+  {{> DynamicTemplate template="WithData" data=getData}}
+</template>
+
+<template name="Dynamic">
+  {{> DynamicTemplate template=getTemplate}}
+</template>
+
+<template name="DynamicData">
+  {{> DynamicTemplate template="WithData" data=getData}}
+</template>
+
+<template name="DynamicParentData">
+  {{#with getData}}
+    {{> DynamicTemplate template="WithData"}}
+  {{/with}}
+</template>
+
+<template name="DynamicParentDataOnTemplateDynamic">
+  {{! rename to Template.dynamic in 0.9.4}}
+  {{> UI.dynamic template='_DynamicParentDataOnTemplateDynamic' data=getData}}
+</template>
+
+<template name="_DynamicParentDataOnTemplateDynamic">
+  {{> DynamicTemplate template="WithData"}}
+</template>
+
+<template name="InheritedParentData">
+  {{#with 'outer'}}
+    {{#with 'inner'}}
+      {{> DynamicTemplate template="WithDataAndParentData"}}
+    {{/with}}
+  {{/with}}
+</template>
+
+<template name="DynamicWithBlock">
+  {{#DynamicTemplate template=getTemplate}}
+    default
+  {{/DynamicTemplate}}
+</template>
+
+<template name="NoData">
+NoData
+</template>
+
+<template name="WithData">
+WithData-{{this}} 
+</template>
+
+<template name="WithDataAndParentData">
+WithDataAndParentData-{{this}}-{{..}}
+</template>
+
+
+<template name="One">
+One
+</template>
+
+<template name="Two">
+Two
+</template>
+
+<template name="EventsTest">
+<div class="click">
+  Trigger Click
+</div>
+</template>
+
+<template name="LookupHostTest">
+{{getValue}}
+</template>
+
+<template name="LookupHostDepTest">
+{{getValueFromTemplate}}
+{{getValueFromHost}}
+</template>

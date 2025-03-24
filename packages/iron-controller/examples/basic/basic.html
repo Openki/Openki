@@ -1,0 +1,35 @@
+<head>
+  <title>basic</title>
+</head>
+
+<body>
+</body>
+
+<template name="MasterLayout">
+  <h1>Master Layout</h1>
+
+  {{> yield}}
+
+  <footer>
+    {{> yield "footer"}}
+  </footer>
+</template>
+
+<template name="PageOne">
+  <h2>Page One: {{title}}</h2>
+
+  <p>
+    Hello, {{greeting}} (from a Controller reactive variable)
+  </p>
+
+</template>
+
+<template name="Footer">
+  Footer content goes here.
+</template>
+
+<template name="Loading">
+  <p>
+    Loading (Session.set('sub1', true) to finish loading)...
+  </p>
+</template>

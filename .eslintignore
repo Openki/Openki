@@ -1,4 +1,5 @@
 .meteor/
 node_modules/
+packages/
 
 .eslintrc.js
