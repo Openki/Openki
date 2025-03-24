@@ -221,9 +221,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
                     />
                     <label className="form-check-label" htmlFor="canNotifyAllCheck">
                       <i className="fa-solid fa-bell" aria-hidden="true"></i>&nbsp;
-                      {!post.eventId
-                        ? t("course.discussion.notifyAll", "Notify all interested")
-                        : t("event.discussion.notifyAll", "Notify all interested and participants")}
+                      {t("course.discussion.notifyAll", "Notify all")}
                     </label>
                   </div>
                 )}

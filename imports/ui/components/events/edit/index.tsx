@@ -188,6 +188,20 @@ export function Edit({
     );
   };
 
+  function showAddMessage() {
+    return [...(course?.members || []), ...(event.participants || [])].length > 0;
+  }
+
+  function onlyYouReceive() {
+    if (!user) {
+      throw new Error(`unexpected falsy: ${user}`);
+    }
+
+    const involved = [...(course?.members || []), ...(event.participants || [])].map((m) => m.user);
+
+    return involved.length === 1 && involved.includes(user._id);
+  }
+
   async function handleSubmit() {
     const start = LocalTime.fromString(changes.startLocal);
     if (!start.isValid()) {
@@ -603,40 +617,60 @@ export function Edit({
                 }}
               />
             )}
-            {!!event.courseId && (
-              <NotifyCourseMembers
-                courseId={event.courseId}
-                isNew={"new" in event}
-                notifyChecked={notifyChecked}
-                onChange={(newValue) => {
-                  setNotifyChecked(newValue);
-                }}
-              />
-            )}
-            {notifyChecked && (
+
+            {showAddMessage() && (
               <>
-                <label className="form-label">
-                  {t("course.event.edit.AddMessage", "Add message")}
-                  <small> {t("_inputField.optional")}</small>
-                </label>
-                <div className="input-group">
-                  <span className="input-group-text">
-                    <span className="fa-solid fa-pencil fa-fw" aria-hidden="true"></span>
-                  </span>
-                  <textarea
-                    rows={3}
-                    className="form-control"
-                    maxLength={2000}
-                    placeholder={t(
-                      "event.edit.additionalMessage",
-                      "If you feel good about doing so, describe what members of the course should know. (This message is only sent to the interested users and will not be visible in the event description afterwards.)",
-                    )}
-                    value={addNotificationMessage}
-                    onChange={(ev) => {
-                      setAddNotificationMessage(ev.currentTarget.value);
+                {!!event.courseId && (
+                  <NotifyCourseMembers
+                    courseId={event.courseId}
+                    isNew={"new" in event}
+                    notifyChecked={notifyChecked}
+                    onChange={(newValue) => {
+                      setNotifyChecked(newValue);
                     }}
-                  ></textarea>
-                </div>
+                  />
+                )}
+                {notifyChecked &&
+                  (!onlyYouReceive() ? (
+                    <>
+                      <label className="form-label">
+                        {t("course.event.edit.AddMessage", "Add message")}
+                        <small> {t("_inputField.optional")}</small>
+                      </label>
+                      <div className="input-group">
+                        <span className="input-group-text">
+                          <span className="fa-solid fa-pencil fa-fw" aria-hidden="true"></span>
+                        </span>
+                        <textarea
+                          rows={3}
+                          className="form-control"
+                          maxLength={2000}
+                          placeholder={
+                            "new" in event
+                              ? t(
+                                  "event.create.additionalMessage",
+                                  "e.g. doodle result is Thursday next week. Looking forward to see you all there. Don't forget to register if you join. (This message is only sent to the involved users and will not be visible in the event description afterwards.)",
+                                )
+                              : t(
+                                  "event.edit.additionalMessage",
+                                  "e.g. I had to change the time to 5pm because of room availabilities. I added bringing your own laptop is mandatory in the description. Lookin forward to see you all there. (This message is only sent to the involved users and will not be visible in the event description afterwards.)",
+                                )
+                          }
+                          value={addNotificationMessage}
+                          onChange={(ev) => {
+                            setAddNotificationMessage(ev.currentTarget.value);
+                          }}
+                        ></textarea>
+                      </div>
+                    </>
+                  ) : (
+                    <span className="form-text d-block ms-4">
+                      {t(
+                        "course.event.edit.onlyYouReceive",
+                        "Only you will receive this notification.",
+                      )}
+                    </span>
+                  ))}
               </>
             )}
             {!noRsvpChecked && PublicSettings.feature.sendReminderIsEditable && (
