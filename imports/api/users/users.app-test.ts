@@ -24,7 +24,7 @@ if (Meteor.isClient) {
       const oldDummy = createDummy();
       const newDummy = createDummy();
       it("changes the username", async () => {
-        await AccountsAsync.createUser({
+        await Accounts.createUserAsync({
           username: oldDummy,
           email: `${oldDummy}@openki.example`,
           profile: { name: oldDummy },

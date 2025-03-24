@@ -1,4 +1,5 @@
 import { Base64 } from "meteor/base64";
+import { EJSON } from "meteor/ejson";
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace Assets {

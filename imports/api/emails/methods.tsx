@@ -17,13 +17,13 @@ import { Report } from "/imports/emails/Report";
 
 export const sendVerificationEmail = ServerMethod(
   "sendVerificationEmail",
-  () => {
+  async () => {
     const userId = Meteor.userId();
     if (!userId) {
       throw new Meteor.Error(401, "please log in");
     }
 
-    Accounts.sendVerificationEmail(userId);
+    await Accounts.sendVerificationEmail(userId);
   },
   { simulation: false },
 );
