@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useUserId } from "/imports/utils/react-meteor-data";
 import { useTranslation } from "react-i18next";
 
-import { CourseDiscussionEnity } from "/imports/api/course-discussions/course-discussions";
+import { CourseDiscussionEntity } from "/imports/api/course-discussions/course-discussions";
 
 import { Edit } from "./edit";
 import { Show } from "./show";
 
 import "./styles.scss";
 
-function Responses({ responses: replies }: { responses: CourseDiscussionEnity[] }) {
+function Responses({ responses: replies }: { responses: CourseDiscussionEntity[] }) {
   const { t } = useTranslation();
   const [limit, setLimit] = useState(2);
 
@@ -22,7 +22,7 @@ function Responses({ responses: replies }: { responses: CourseDiscussionEnity[] 
 
   return (
     <>
-      {notAllResponsesShown() ? (
+      {!!notAllResponsesShown() && (
         <button
           className="mt-3 btn btn-link p-0 toggle-all-responses"
           type="button"
@@ -32,7 +32,7 @@ function Responses({ responses: replies }: { responses: CourseDiscussionEnity[] 
         >
           {t("course.discussions.showPreviousReplies", "Show all previous answers")}
         </button>
-      ) : null}
+      )}
       {responses().map((response) => (
         // eslint-disable-next-line @typescript-eslint/no-use-before-define
         <Post key={response._id} post={response} />
@@ -42,8 +42,8 @@ function Responses({ responses: replies }: { responses: CourseDiscussionEnity[] 
 }
 
 export type Props = {
-  post: CourseDiscussionEnity & { new?: true };
-  responses?: CourseDiscussionEnity[];
+  post: CourseDiscussionEntity & { new?: true };
+  responses?: CourseDiscussionEntity[];
   edit?: boolean;
   onCancel?: () => void;
 };
@@ -62,6 +62,7 @@ export function Post({ post, responses, edit, onCancel }: Props) {
       new: true,
       parentId: post._id,
       courseId: post.courseId,
+      eventId: post.eventId,
       userId,
       title: "",
       text: "",

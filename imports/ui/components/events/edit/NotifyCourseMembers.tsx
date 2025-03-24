@@ -42,7 +42,7 @@ export function NotifyCourseMembers({
             )
           : t(
               "event.edit.notifyEditEvent",
-              'Notify all members of the "{COURSE}" course about the changes you made.',
+              'Notify all members and participants of the "{COURSE}" course about the changes you made.',
               { COURSE: course?.name || "..." },
             )}
       </label>

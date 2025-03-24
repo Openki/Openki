@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { CourseDiscussionEnity } from "/imports/api/course-discussions/course-discussions";
+import { CourseDiscussionEntity } from "/imports/api/course-discussions/course-discussions";
 import * as CourseDiscussionsMethods from "/imports/api/course-discussions/methods";
 import { EditCommentFields, PostCommentFields } from "/imports/api/course-discussions/methods";
 import * as Alert from "/imports/api/alerts/alert";
@@ -17,7 +17,7 @@ import { Richtext } from "/imports/ui/components/richtext";
 import { ButtonCancel } from "/imports/ui/components/buttons";
 
 export type Props = {
-  post: CourseDiscussionEnity & { new?: true };
+  post: CourseDiscussionEntity & { new?: true };
   onSave: () => void;
   onCancel: () => void;
 };
@@ -118,7 +118,9 @@ export function Edit({ post, onSave, onCancel }: Props) {
               if (post.new) {
                 const postComment = comment as PostCommentFields;
                 postComment.courseId = post.courseId;
-
+                if (post.eventId) {
+                  postComment.eventId = post.eventId;
+                }
                 if (post.parentId) {
                   postComment.parentId = post.parentId;
                 }
@@ -150,24 +152,31 @@ export function Edit({ post, onSave, onCancel }: Props) {
             ) : (
               <strong>{t("discussion.anonymous", "Anonymous")}</strong>
             )}
-            {!post.new ? (
+            {!post.new && (
               <span className="discussion-post-header-sub">
                 {" "}
                 <span data-bs-toggle="tooltip" data-bs-title={dateFormat(post.time_created)}>
                   {fromNow(post.time_created)}
                 </span>
-                {post.notifyAll ? (
+                {!!post.notifyAll && (
                   <>
                     {" "}
                     <i
                       className="fa-solid fa-bell"
                       aria-hidden="true"
                       data-bs-toggle="tooltip"
-                      data-bs-title={t("course.discussion.allNotified", "All interested notified")}
+                      data-bs-title={
+                        !post.eventId
+                          ? t("course.discussion.allNotified", "All interested notified")
+                          : t(
+                              "event.discussion.allNotified",
+                              "All interested and participants notified",
+                            )
+                      }
                     ></i>
                   </>
-                ) : null}
-                {hasBeenEdited() ? (
+                )}
+                {hasBeenEdited() && (
                   <>
                     {" "}
                     - {t("course.discussion.lastUpdate", "Last update")}:{" "}
@@ -175,9 +184,9 @@ export function Edit({ post, onSave, onCancel }: Props) {
                       {fromNow(post.time_updated)}
                     </span>
                   </>
-                ) : null}
+                )}
               </span>
-            ) : null}
+            )}
           </div>
           <div className="discussion-edit-body">
             <div className="mb-3">
@@ -197,9 +206,9 @@ export function Edit({ post, onSave, onCancel }: Props) {
             <div className="mb-3">
               <Richtext {...richtextAttr()} />
             </div>
-            {post.new ? (
+            {!!post.new && (
               <>
-                {canNotifyAll() ? (
+                {canNotifyAll() && (
                   <div className="form-check">
                     <input
                       className="form-check-input"
@@ -212,10 +221,12 @@ export function Edit({ post, onSave, onCancel }: Props) {
                     />
                     <label className="form-check-label" htmlFor="canNotifyAllCheck">
                       <i className="fa-solid fa-bell" aria-hidden="true"></i>&nbsp;
-                      {t("course.discussion.notifyAll", "Notify all interested")}
+                      {!post.eventId
+                        ? t("course.discussion.notifyAll", "Notify all interested")
+                        : t("event.discussion.notifyAll", "Notify all interested and participants")}
                     </label>
                   </div>
-                ) : null}
+                )}
                 <div className="form-check">
                   <input
                     className="form-check-input"
@@ -236,7 +247,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
                   </label>
                 </div>
               </>
-            ) : null}
+            )}
 
             <div className="form-actions">
               <button
