@@ -34,7 +34,7 @@ export async function record(courseId: string) {
   }
 
   const recipients = chain(
-    Groups.find({ _id: { $in: course.groupOrganizers } }).map((g) => g.members),
+    await Groups.find({ _id: { $in: course.groupOrganizers } }).mapAsync((g) => g.members),
   )
     .flatten()
     .filter((m) => m.notify)
