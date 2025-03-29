@@ -35,6 +35,7 @@ export interface EventVenueEntity {
   /** Address string where the event will take place */
   address?: string;
   editor?: string;
+  restrictedUse?: boolean | undefined;
 }
 
 /** DB-Model */

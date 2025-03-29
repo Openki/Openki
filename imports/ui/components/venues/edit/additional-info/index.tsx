@@ -9,6 +9,7 @@ import "./styles.scss";
 
 export type Data = {
   data: Pick<SaveFields, "short" | "maxPeople" | "maxWorkplaces" | "facilities"> & {
+    restrictedUse?: boolean | undefined;
     otherFacilities?: string | undefined;
   };
   onShortChange: (newValue: string) => void;
@@ -16,6 +17,7 @@ export type Data = {
   onMaxWorkplacesChange: (newValue: number) => void;
   onFacilitiesChange: (newValue: FacilityOption[]) => void;
   onOtherFacilitiesChange: (newValue: string) => void;
+  onRestrictedUseChange: (newValue: boolean) => void;
 };
 
 export function AdditionalInfo({
@@ -25,6 +27,7 @@ export function AdditionalInfo({
   onMaxWorkplacesChange,
   onFacilitiesChange,
   onOtherFacilitiesChange,
+  onRestrictedUseChange,
 }: Data) {
   const { t } = useTranslation();
 
@@ -132,6 +135,24 @@ export function AdditionalInfo({
             }}
             value={data.otherFacilities}
           />
+        </div>
+      </div>
+      <div className="mt-3">
+        <label className="form-label">{t("venue.edit.restrictedUse", "Restricted use")}</label>
+        <div className="form-check">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            value=""
+            id="eventRestrictedUseCheck"
+            checked={data.restrictedUse}
+            onChange={(ev) => {
+              onRestrictedUseChange(ev.currentTarget.checked);
+            }}
+          />
+          <label className="form-check-label" htmlFor="eventRestrictedUseCheck">
+            {t("venue.edit.restrictedUse.label", "Only hosts can create a event with this venue.")}
+          </label>
         </div>
       </div>
     </div>

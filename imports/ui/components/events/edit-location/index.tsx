@@ -31,6 +31,7 @@ function toEventVenue(v: EventVenueEntity) {
     loc: v.loc,
     address: v.address,
     editor: v.editor,
+    restrictedUse: v.restrictedUse,
   } as EventVenueEntity;
 }
 
@@ -87,7 +88,12 @@ function CustomMenu({ results, menuProps }: { results: any[]; menuProps: RenderM
             >
               {!!venue._id && (
                 <>
-                  <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>{" "}
+                  <span
+                    className={`fa-solid ${
+                      !venue.restrictedUse ? "fa-house" : "fa-house-lock"
+                    } fa-fw`}
+                    aria-hidden="true"
+                  ></span>{" "}
                 </>
               )}
               {ReactJoin([!!venue.name && <strong>{venue.name}</strong>, venue.address])}
