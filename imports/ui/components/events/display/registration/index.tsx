@@ -176,7 +176,7 @@ export function EventRegistration({ event }: Props) {
           ) : (
             <div className="page-component">
               <strong>
-                {t("event.details.registrationClosed", "The registration for this event is closed")}
+                {t("event.details.registrationClosed", "The registration for this event is closed.")}
               </strong>
             </div>
           )}
