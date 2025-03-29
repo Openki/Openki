@@ -27,6 +27,7 @@ import { ServerMethod } from "/imports/utils/ServerMethod";
 import { HtmlString, StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";
 import { GroupPromoters } from "/imports/utils/update-methods";
 import { PublicSettings } from "/imports/utils/PublicSettings";
+import { Venues } from "../venues/venues";
 
 /**
  * @param updateOptions What should be updated
@@ -300,6 +301,12 @@ export const save = ServerMethod(
           );
         }
       }
+    }
+
+    if (editFields.venue?._id && editFields.venue._id !== event.venue?._id) {
+      const venue = await Venues.findOneAsync(editFields.venue._id);
+      if (venue?.restrictedUse && venue.editableBy(user))
+        throw new Meteor.Error(400, `only host can create a event with this venue.`);
     }
 
     if (Meteor.isServer) {
