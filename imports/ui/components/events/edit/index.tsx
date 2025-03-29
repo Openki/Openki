@@ -223,6 +223,22 @@ export function Edit({
       }
     }
 
+    // on event creation or venue change for venues with restricted use can only selected by the host
+    if (
+      selectedLocation?._id &&
+      selectedLocation.restrictedUse &&
+      selectedLocation._id !== event._id &&
+      !user?.venues?.includes(selectedLocation._id)
+    ) {
+      Alert.error(
+        t(
+          "event.edit.venueRestricedUse",
+          "Please use a other venue or ask the host to create the event",
+        ),
+      );
+      return;
+    }
+
     const noRsvp = noRsvpChecked;
 
     let maxParticipants;
