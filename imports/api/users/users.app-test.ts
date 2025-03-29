@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { assert } from "chai";
 import { Promise } from "meteor/promise";
-import { MeteorAsync, AccountsAsync } from "/imports/utils/promisify";
+import { MeteorAsync } from "/imports/utils/promisify";
 import { userSearchPrefix } from "/imports/utils/user-search-prefix";
 import { Users } from "/imports/api/users/users";
 import * as usersMethods from "/imports/api/users/methods";

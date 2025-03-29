@@ -106,7 +106,6 @@ template.helpers({
   mobileViewport() {
     return Viewport.get().width <= ScssVars.screenMD;
   },
- 
 });
 
 template.events({

@@ -299,7 +299,6 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
                   <div className="event-caption col-3" title={dateTimeLong(date)}>
                     <div className="event-caption-header-wrap">
                       <div className="event-caption-header">
-                        <span className="fa-solid fa-map-pin"></span>
                         {weekdayFormat(date)}
                         <div className="event-caption-pseudoborder"></div>
                       </div>
@@ -320,7 +319,6 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
                 <div className="event-caption event-caption-placeholder">
                   <div className="event-caption-header-wrap">
                     <div className="event-caption-header">
-                      <span className="fa-solid fa-map-pin"></span>
                       <div className="event-caption-pseudoborder"></div>
                     </div>
                   </div>
