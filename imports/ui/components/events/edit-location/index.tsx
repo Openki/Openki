@@ -21,18 +21,8 @@ import {
 } from "react-bootstrap-typeahead";
 import { EditLocationMap } from "./edit-location-map";
 import { Display } from "../../location/display";
+import { ReactJoin } from "../../../../utils/ReactJoin";
 import { VenueTag } from "../../venues/link";
-
-function ReactJoin(
-  elements: (string | false | JSX.Element | undefined)[],
-  seperator: JSX.Element = <>, </>,
-) {
-  const notEmptyElements = elements.filter((v) => v);
-  if (notEmptyElements.length === 0) {
-    return null;
-  }
-  return notEmptyElements.reduce((prev, curr) => [prev, seperator, curr] as any);
-}
 
 function toEventVenue(v: EventVenueEntity) {
   return {
