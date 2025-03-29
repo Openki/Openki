@@ -43,7 +43,7 @@ export function Course({ course, hideInterested }: Props) {
             className="frame-list-item-interested"
             title={t("frame.courseList.interestedPersons", "Interested people")}
           >
-            <strong className="me-1">{interestedPersons()}</strong> <RoleIcon type="participant" />
+            <span className="me-1">{interestedPersons()}</span> <RoleIcon type="participant" />
           </span>
         )}
         {course.name}
