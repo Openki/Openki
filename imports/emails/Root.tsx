@@ -1,32 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { toEmailLogo } from "/imports/utils/toEmailLogo";
 
 export type Props = {
   subject: string | undefined;
+  logo: string;
   customSiteUrl?: string | undefined;
-  customEmailLogo?: string | undefined;
   customSiteName?: string | undefined;
 };
 
 export function Root({
   subject,
+  logo,
   customSiteUrl,
-  customEmailLogo,
   customSiteName,
   children,
 }: Props & { children: any }) {
-  const [logo, setLogo] = useState("");
 
   const brand = PublicSettings.theme.brand;
   const url = customSiteUrl || Meteor.absoluteUrl();
   const name = customSiteName || Accounts.emailTemplates.siteName;
 
-  useEffect(() => {
-    (async function () {
-      setLogo(await toEmailLogo(customEmailLogo || PublicSettings.emailLogo));
-    })();
-  });
 
   return (
     <>

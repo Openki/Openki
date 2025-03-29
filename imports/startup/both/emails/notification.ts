@@ -21,7 +21,8 @@ export type Model<T> = {
   ): Promise<
     {
       fromAddress?: string | undefined;
-    } & RootProps &
+      customEmailLogo?: string | undefined;
+    } & Omit<RootProps, "logo"> &
       // Remove some props
       Omit<T, "siteName" | "customSiteName" | "username" | "lng">
   >;
@@ -31,7 +32,7 @@ export type Model<T> = {
       siteName: string;
       username: string;
       lng: string;
-    } & RootProps &
+    } & Omit<RootProps, "logo"> &
       T,
   ) => React.JSX.Element;
 };
