@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 import { useSession } from "/imports/utils/react-meteor-data";
 import { useSiteName } from "/imports/utils/getSiteName";
-import { AccountsAsync } from "/imports/utils/promisify";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { Router } from "meteor/iron:router";
 

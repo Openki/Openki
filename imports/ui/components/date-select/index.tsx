@@ -3,6 +3,8 @@ import React, { useRef, useEffect } from "react";
 import { useSession } from "/imports/utils/react-meteor-data";
 import { todayOrAfter } from "../../lib/todayOrAfter";
 
+import "./styles.scss";
+
 export function DateSelect({
   id,
   value,

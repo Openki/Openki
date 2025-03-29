@@ -95,6 +95,16 @@
   position: relative;
 }
 
+/* 
+  backwards compatibility: a Blaze component to a React component for. 
+  Todo: Can be removed after complet migration.
+*/
+@media (max-width: 991px) {
+  .navbar-nav > div {
+    flex: 1 0 0%;
+  }
+}
+
 .navbar .nav-link {
   cursor: pointer;
   font-size: large;
