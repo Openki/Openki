@@ -19,6 +19,7 @@ import { getStartEndDate } from "./utils";
 interface Body {
   new: boolean;
   eventId: string;
+  replicats: string[];
   additionalMessage: string | undefined;
   recipients: string[];
   model: string;
@@ -30,9 +31,15 @@ interface Body {
  * @param isNew whether the event is a new one
  * @param additionalMessage custom message
  */
-export async function record(eventId: string, isNew: boolean, additionalMessage?: string) {
+export async function record(
+  eventId: string,
+  isNew: boolean,
+  replicats: string[],
+  additionalMessage?: string | undefined,
+) {
   check(eventId, String);
   check(isNew, Boolean);
+  check(replicats, [String]);
   check(additionalMessage, Match.Optional(String));
 
   const event = await Events.findOneAsync(eventId);
@@ -51,6 +58,7 @@ export async function record(eventId: string, isNew: boolean, additionalMessage?
   const body: Body = {
     new: isNew,
     eventId: event._id,
+    replicats,
     additionalMessage,
 
     // The list of recipients is built right away so that only course members
@@ -79,6 +87,8 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
     region = await Regions.findOneAsync(event.region);
   }
 
+  const replicats = await Events.find({ _id: { $in: entry.body.replicats } }).fetchAsync();
+
   return {
     accepted(actualRecipient: UserModel) {
       if (actualRecipient.notifications === false) {
@@ -98,6 +108,9 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
       if (!region) {
         throw new Error("Region does not exist (0.o)");
+      }
+      if (replicats.length !== entry.body.replicats.length) {
+        throw new Error("Not all replicats found (0.o)");
       }
 
       const { startMoment, tz } = await getStartEndDate(event, locale);
@@ -135,6 +148,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
           query: { unsubscribe: "participant", force: 1, campaign },
         }),
         isNew: entry.body.new,
+        replicats,
         subject,
         additionalMessage: entry.body.additionalMessage,
         customSiteUrl: Router.url("home", {}, { query: { campaign } }),

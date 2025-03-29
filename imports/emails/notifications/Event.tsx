@@ -5,6 +5,9 @@ import { EventModel } from "/imports/api/events/events";
 import { EventBox } from "./components/EventBox";
 import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
+import { Router } from "meteor/iron:router";
+import { getStartEndDateInTz } from "/imports/startup/both/emails/notifications/utils";
+import { ReactJoin } from "/imports/utils/ReactJoin";
 
 export type Props = {
   event: EventModel;
@@ -15,6 +18,7 @@ export type Props = {
   courseName: string;
   unsubscribeFromCourseLink: string;
   isNew: boolean;
+  replicats: EventModel[];
   subject: string;
   additionalMessage: string | undefined;
   username: string;
@@ -32,6 +36,7 @@ export function Event({
   courseName,
   unsubscribeFromCourseLink,
   isNew,
+  replicats,
   additionalMessage,
   username,
   unsubscribe,
@@ -39,21 +44,54 @@ export function Event({
   lng,
 }: Props) {
   const { t } = useTranslation(undefined, { lng });
+
+  function intro() {
+    if (isNew) {
+      if (replicats.length === 0) {
+        return t("notification.event.mail.new", "A new event was just published for {COURSE}:", {
+          COURSE: course,
+        });
+      }
+
+      return t(
+        "notification.event.mail.new.withReplicats",
+        "{NUM} new events where just published for {COURSE} on {EVENTS}. The next one is:",
+        {
+          NUM: replicats.length,
+          COURSE: course,
+          EVENTS: ReactJoin(
+            replicats.map((r) => {
+              const { startMoment } = getStartEndDateInTz(r, tz, lng);
+              return (
+                <a href={Router.url("showEvent", r, { query: campaign })}>
+                  {startMoment.format("dddd, LL")}
+                </a>
+              );
+            }),
+          ),
+        },
+      );
+    }
+    if (replicats.length === 0) {
+      return t("notification.event.mail.changed", "The following event for {COURSE} changed:", {
+        COURSE: course,
+      });
+    }
+
+    return t(
+      "notification.event.mail.changed.withReplicats",
+      "The following event for {COURSE} changed, these changes have also been applied to {NUM, plural, one{the later copy} other{# later copies} }:",
+      { COURSE: course, NUM: replicats.length },
+    );
+  }
+
   return (
     <>
       <tr>
         <td>
           <h5 className="title">{t("email.base.greeting", { USERNAME: username })}</h5>
-          <p>
-            {isNew
-              ? t("notification.event.mail.new", "A new event was just published for {COURSE}:", {
-                  COURSE: course,
-                })
-              : t("notification.event.mail.changed", "The following event for {COURSE} changed:", {
-                  COURSE: course,
-                })}
-          </p>
-          {additionalMessage ? (
+          <p>{intro()}</p>
+          {!!additionalMessage && (
             <>
               <p>
                 {t(
@@ -69,37 +107,35 @@ export function Event({
                 </tr>
               </table>
             </>
-          ) : null}
+          )}
 
           <EventBox event={event} tz={tz} campaign={campaign} lng={lng} />
 
-          {!event.noRsvp ? (
-            !recipientTakePart ? (
-              <>
-                <p className="gap-md text-center">
-                  {t(
-                    "notification.event.mail.informRegisterEvent",
-                    "Let us know if you participate in this event:",
-                  )}
-                </p>
-                <p className="text-center">
-                  <a className="button" href={registerToEventLink}>
-                    {t("notification.event.mail.registerEvent", "Yes, I take part.")}
-                  </a>
-                </p>
-                <p className="gap-md text-center">
-                  {t("notification.event.mail.notinterested", "Not interested anymore?")}
-                </p>
-                <p className="text-center">
-                  <a href={unsubscribeFromCourseLink}>
-                    {t("notification.event.mail.unsubscribe", "Unsubscribe from {COURSE}", {
-                      COURSE: courseName,
-                    })}
-                  </a>
-                </p>
-              </>
-            ) : null
-          ) : null}
+          {!event.noRsvp && !recipientTakePart && (
+            <>
+              <p className="gap-md text-center">
+                {t(
+                  "notification.event.mail.informRegisterEvent",
+                  "Let us know if you participate in this event:",
+                )}
+              </p>
+              <p className="text-center">
+                <a className="button" href={registerToEventLink}>
+                  {t("notification.event.mail.registerEvent", "Yes, I take part.")}
+                </a>
+              </p>
+              <p className="gap-md text-center">
+                {t("notification.event.mail.notinterested", "Not interested anymore?")}
+              </p>
+              <p className="text-center">
+                <a href={unsubscribeFromCourseLink}>
+                  {t("notification.event.mail.unsubscribe", "Unsubscribe from {COURSE}", {
+                    COURSE: courseName,
+                  })}
+                </a>
+              </p>
+            </>
+          )}
         </td>
       </tr>
       <Footer
