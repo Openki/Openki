@@ -8,6 +8,7 @@ import "./styles.scss";
 export type Venue = {
   _id?: string;
   name: string;
+  restrictedUse?: boolean | undefined;
   slug?: string;
 };
 
@@ -17,10 +18,14 @@ export type Props = {
   openInNewTab?: boolean | undefined;
 };
 
-function Venue({ name }: { name: string }) {
+function Venue({ name, restrictedUse }: { name: string; restrictedUse?: boolean | undefined }) {
   return (
     <>
-      <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>&nbsp;
+      <span
+        className={`fa-solid ${!restrictedUse ? "fa-house" : "fa-house-lock"} fa-fw`}
+        aria-hidden="true"
+      ></span>
+      &nbsp;
       {name}
     </>
   );
@@ -45,7 +50,7 @@ export function VenueTag({
           href={Router.url("venueDetails", venue)}
           target={openInNewTab ? "_blank" : ""}
         >
-          <Venue name={venue.name} />
+          <Venue name={venue.name} restrictedUse={venue.restrictedUse} />
         </a>
       </div>
     );

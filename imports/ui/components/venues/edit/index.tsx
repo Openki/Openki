@@ -47,6 +47,7 @@ export function Edit({
       .filter((f) => f[1])
       .map((f) => f[0] as FacilityOption),
     otherFacilities: venue.otherFacilities,
+    restrictedUse: venue.restrictedUse,
     selectedRegion: isNew ? sessionRegion : venue.region,
     loc: venue.loc as Geodata | undefined,
   });
@@ -77,6 +78,9 @@ export function Edit({
       onOtherFacilitiesChange: (newValue) => {
         setChanges((prevState) => ({ ...prevState, otherFacilities: newValue }));
       },
+      onRestrictedUseChange: (newValue) => {
+        setChanges((prevState) => ({ ...prevState, restrictedUse: newValue }));
+      },
     };
   }
   function regionSelectable() {
@@ -91,7 +95,7 @@ export function Edit({
     return false;
   }
   function showMapSelection() {
-    return regionSelectable || !!changes.selectedRegion;
+    return regionSelectable() || !!changes.selectedRegion;
   }
   function regionSelected() {
     return !!changes.selectedRegion;
@@ -107,6 +111,9 @@ export function Edit({
       maxWorkplaces: changes.maxWorkplaces,
       facilities: changes.facilities,
     };
+    if (changes.restrictedUse !== undefined) {
+      changes1.restrictedUse = changes.restrictedUse;
+    }
     if (changes.otherFacilities) {
       changes1.otherFacilities = changes.otherFacilities;
     }
@@ -215,9 +222,9 @@ export function Edit({
             }}
           />
         </div>
-        {showMapSelection() ? (
+        {showMapSelection() && (
           <div className="row gap-3 mb-3">
-            {regionSelectable() ? (
+            {regionSelectable() && (
               <div className="col-md">
                 <label className="form-label">{t("venue.edit.region", "Region")}</label>
                 <div className="input-group">
@@ -243,8 +250,8 @@ export function Edit({
                   )}
                 </div>
               </div>
-            ) : null}
-            {regionSelected() && regionCoordinates ? (
+            )}
+            {!!(regionSelected() && regionCoordinates) && (
               <div className="col-md">
                 <label className="form-label">
                   {t(
@@ -268,9 +275,9 @@ export function Edit({
                   }}
                 />
               </div>
-            ) : null}
+            )}
           </div>
-        ) : null}
+        )}
 
         <div className="mb-3">
           <label className="form-label">{t("venue.edit.address", "Address")}</label>

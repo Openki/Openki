@@ -158,6 +158,11 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
                     </ul>
                   </>
                 )}
+                {venue.restrictedUse &&
+                  t(
+                    "venue.details.restrictedUse.description",
+                    "Only hosts can create a event with this venue.",
+                  )}
               </div>
               {!!venue.loc && (
                 <div className="col-md-5">
