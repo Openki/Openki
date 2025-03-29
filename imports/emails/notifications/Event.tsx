@@ -5,9 +5,6 @@ import { EventModel } from "/imports/api/events/events";
 import { EventBox } from "./components/EventBox";
 import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
-import { Router } from "meteor/iron:router";
-import { getStartEndDateInTz } from "/imports/startup/both/emails/notifications/utils";
-import { ReactJoin } from "/imports/utils/ReactJoin";
 
 export type Props = {
   event: EventModel;
@@ -47,7 +44,7 @@ export function Event({
 
   function intro() {
     if (isNew) {
-      if (replicats.length === 0) {
+      if (!event.replicaOf) {
         return t("notification.event.mail.new", "A new event was just published for {COURSE}:", {
           COURSE: course,
         });
@@ -55,20 +52,9 @@ export function Event({
 
       return t(
         "notification.event.mail.new.withReplicats",
-        "{NUM} new events where just published for {COURSE} on {EVENTS}. The next one is:",
+        "New event(s) where just published for {COURSE}. The next one is:",
         {
-          NUM: replicats.length,
           COURSE: course,
-          EVENTS: ReactJoin(
-            replicats.map((r) => {
-              const { startMoment } = getStartEndDateInTz(r, tz, lng);
-              return (
-                <a href={Router.url("showEvent", r, { query: campaign })}>
-                  {startMoment.format("dddd, LL")}
-                </a>
-              );
-            }),
-          ),
         },
       );
     }
