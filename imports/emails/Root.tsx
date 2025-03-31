@@ -15,11 +15,9 @@ export function Root({
   customSiteName,
   children,
 }: Props & { children: any }) {
-
   const brand = PublicSettings.theme.brand;
   const url = customSiteUrl || Meteor.absoluteUrl();
   const name = customSiteName || Accounts.emailTemplates.siteName;
-
 
   return (
     <>
