@@ -11,6 +11,7 @@ import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
 import { ButtonCancel, ButtonSave } from "/imports/ui/components/buttons";
 import { DateSelect } from "../../date-select";
+import { Notify } from "../Notify";
 
 import { todayOrAfter } from "../../../lib/todayOrAfter";
 
@@ -88,6 +89,11 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
   // picked in the calendar
   const [pickDays, setPickDays] = useState<number[]>([]);
   const activeDays = () => (usingPicker ? pickDays : calcDays);
+
+  // Sending an event notification is only possible when the event is
+  // attached to a course. Otherwise there is nobody to inform.
+  const [notifyChecked, setNotifyChecked] = useState(!!event.courseId && "new" in event);
+  const [addNotificationMessage, setAddNotificationMessage] = useState("");
 
   function replicaDateCount() {
     return activeDays().length;
@@ -299,7 +305,6 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
                   <div className="event-caption col-3" title={dateTimeLong(date)}>
                     <div className="event-caption-header-wrap">
                       <div className="event-caption-header">
-                        <span className="fa-solid fa-map-pin"></span>
                         {weekdayFormat(date)}
                         <div className="event-caption-pseudoborder"></div>
                       </div>
@@ -320,7 +325,6 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
                 <div className="event-caption event-caption-placeholder">
                   <div className="event-caption-header-wrap">
                     <div className="event-caption-header">
-                      <span className="fa-solid fa-map-pin"></span>
                       <div className="event-caption-pseudoborder"></div>
                     </div>
                   </div>
@@ -333,6 +337,17 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
           )}
         </div>
       </div>
+      <div className="my-3">
+        <Notify
+          event={event}
+          checked={notifyChecked}
+          message={addNotificationMessage}
+          onToggle={(v) => setNotifyChecked(v)}
+          onMessageChange={(v) => {
+            setAddNotificationMessage(v);
+          }}
+        />
+      </div>
       <div className="replicate-actions">
         {!!replicaDateCount() && (
           <ButtonSave
@@ -341,7 +356,7 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
               const endLocal = LocalTime.fromString(event.endLocal);
 
               const replicaDays = activeDays();
-              let removed = 0;
+              let created = 0;
               let responses = 0;
               for (const days of replicaDays) {
                 /* create a new event for each time interval */
@@ -371,8 +386,16 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
 
                 try {
                   // eslint-disable-next-line no-await-in-loop
-                  await EventsMethods.save("", replicaEvent);
-                  removed += 1;
+                  await EventsMethods.save(
+                    "",
+                    replicaEvent,
+                    undefined,
+                    undefined,
+                    undefined,
+                    notifyChecked && created === 0,
+                    addNotificationMessage,
+                  );
+                  created += 1;
                 } catch (error) {
                   const start = moment(replicaEvent.startLocal).format("llll");
                   Alert.serverError(
@@ -384,7 +407,7 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
                 } finally {
                   responses += 1;
                   if (responses === replicaDays.length) {
-                    if (removed) {
+                    if (created) {
                       const start = moment(replicaEvent.startLocal).format("llll");
                       Alert.success(
                         t(
@@ -392,13 +415,13 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
                           'Cloned event "{TITLE}" {NUM, plural, one{for} other{# times until} } {DATE}',
                           {
                             TITLE: event.title,
-                            NUM: removed,
+                            NUM: created,
                             DATE: start,
                           },
                         ),
                       );
                     }
-                    if (removed === responses) {
+                    if (created === responses) {
                       afterSave();
                     }
                   }

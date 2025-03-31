@@ -78,6 +78,8 @@ export interface GroupEntity {
   dashboard?: GroupEntityDashboard;
   /** Hide some role options in the propose new course. */
   disableCreateRoles?: string[];
+  /** When a team group has this setting set, a message is shown that the registration is closed. */
+  registrationClosed?: boolean;
   /** List of userIds with notify */
   members: GroupMemberEntity[];
   createdby?: string;

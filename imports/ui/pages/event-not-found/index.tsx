@@ -1,5 +1,6 @@
 import React from "react";
 import { Template } from "meteor/templating";
+import { Session } from "meteor/session";
 import { useTranslation } from "react-i18next";
 import { useUserId } from "/imports/utils/react-meteor-data";
 

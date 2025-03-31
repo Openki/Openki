@@ -34,7 +34,11 @@ export const [details, useDetails] = ServerPublishOne(
 
     return Events.find({ _id: eventId, tenant: { $in: await visibleTenantsAsync() } });
   },
-  (eventId) => Events.findOne({ _id: eventId, tenant: { $in: visibleTenants() } }),
+  (eventId) => {
+    check(eventId, String);
+
+    return Events.findOne({ _id: eventId, tenant: { $in: visibleTenants() } });
+  },
 );
 
 export const [findFilter, useFindFilter] = ServerPublishMany(

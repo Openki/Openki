@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
+import { Session } from "meteor/session";
 
 import { EventEntity, EventModel, Events, OEvent } from "/imports/api/events/events";
 import { VenueModel } from "/imports/api/venues/venues";

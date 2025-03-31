@@ -21,7 +21,14 @@ export function Display({
 
   return (
     <li className={inNavbarClasses()}>
-      <a className="nav-link text-white" onClick={onClick}>
+      <a
+        className="nav-link text-white"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          onClick();
+        }}
+      >
         <span className="fa-solid fa-location-dot" aria-hidden="true"></span>&nbsp;
         {currentRegion ? currentRegion.name : t("menue.All regions", "All regions")}
       </a>

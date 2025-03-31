@@ -1,4 +1,5 @@
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import { Mongo } from "meteor/mongo";
 import { i18n } from "/imports/startup/both/i18next";
 
 import { Regions } from "/imports/api/regions/regions";

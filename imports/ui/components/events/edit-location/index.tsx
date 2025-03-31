@@ -17,21 +17,12 @@ import {
   Menu,
   MenuItem,
   RenderMenuProps,
+  TypeaheadInputSingle,
 } from "react-bootstrap-typeahead";
 import { EditLocationMap } from "./edit-location-map";
 import { Display } from "../../location/display";
+import { ReactJoin } from "../../../../utils/ReactJoin";
 import { VenueTag } from "../../venues/link";
-
-function ReactJoin(
-  elements: (string | false | JSX.Element | undefined)[],
-  seperator: JSX.Element = <>, </>,
-) {
-  const notEmptyElements = elements.filter((v) => v);
-  if (notEmptyElements.length === 0) {
-    return null;
-  }
-  return notEmptyElements.reduce((prev, curr) => [prev, seperator, curr] as any);
-}
 
 function toEventVenue(v: EventVenueEntity) {
   return {
@@ -40,6 +31,7 @@ function toEventVenue(v: EventVenueEntity) {
     loc: v.loc,
     address: v.address,
     editor: v.editor,
+    restrictedUse: v.restrictedUse,
   } as EventVenueEntity;
 }
 
@@ -92,14 +84,36 @@ function CustomMenu({ results, menuProps }: { results: any[]; menuProps: RenderM
               key={index + uvs.length}
               option={venue}
               position={index + uvs.length}
-              className={venue._id ? "bg-venue text-truncate" : ""}
+              className={
+                // eslint-disable-next-line no-nested-ternary
+                venue._id
+                  ? !venue.restrictedUse
+                    ? "bg-venue text-truncate"
+                    : "text-venue-restricted-use bg-venue-locked text-truncate"
+                  : ""
+              }
             >
               {!!venue._id && (
                 <>
-                  <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>{" "}
+                  <span
+                    className={`fa-solid ${
+                      !venue.restrictedUse ? "fa-house" : "fa-house-lock"
+                    } fa-fw`}
+                    aria-hidden="true"
+                  ></span>{" "}
                 </>
               )}
-              {ReactJoin([!!venue.name && <strong>{venue.name}</strong>, venue.address])}
+              {ReactJoin([
+                !!venue.name && (
+                  <>
+                    <strong>{venue.name}</strong>
+                    {!!venue.restrictedUse && (
+                      <> {t("location.link.restrictedUse", "(only restricted use)")}</>
+                    )}
+                  </>
+                ),
+                venue.address,
+              ])}
             </MenuItem>
           ))}
           <Menu.Divider />
@@ -236,6 +250,13 @@ export function EditVenue({
             placeholder={
               t("event.edit.locationNamePlaceholder", "Search address or name of venue") || ""
             }
+            renderInput={(inputProps, props) => {
+              // From https://github.com/ericgio/react-bootstrap-typeahead/blob/924627376275c78988718230c0438748ff673a6d/src/components/Typeahead/Typeahead.tsx#L229
+              const { isInvalid, isValid, size } = props as any;
+              const commonProps = { ...inputProps, isInvalid, isValid, size };
+              // Add type="search" to have a clear button
+              return <TypeaheadInputSingle {...commonProps} type="search" />;
+            }}
             renderMenu={(results, menuProps) => (
               <CustomMenu results={results} menuProps={menuProps} />
             )}
@@ -306,14 +327,23 @@ export function EditVenue({
             </div>
           </div>
           {/* Not show hint if user is editor of venue */}
-          {filterUserVenues(user, [value]).length === 0 && (
-            <div className="alert alert-success p-2">
-              {t(
-                "event.editVenue.pleaseContactHost",
-                "Make sure you have contacted the host of this venue for availability.",
-              )}
-            </div>
-          )}
+          {filterUserVenues(user, [value]).length === 0 &&
+            (value.restrictedUse ? (
+              <div className="alert alert-warning p-2">
+                <span className="fa-solid fa-triangle-exclamation fa-fw" aria-hidden="true"></span>{" "}
+                {t(
+                  "event.editVenue.restrictedUse",
+                  "This venue can only be chosen by its hosts to publish an event.",
+                )}
+              </div>
+            ) : (
+              <div className="alert alert-success p-2">
+                {t(
+                  "event.editVenue.pleaseContactHost",
+                  "Make sure you have contacted the host of this venue for availability.",
+                )}
+              </div>
+            ))}
           {!!value.loc && (
             <div className="mb-3">
               {!value._id ? (

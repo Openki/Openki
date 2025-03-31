@@ -1,3 +1,4 @@
+import { Meteor } from "meteor/meteor";
 import { _ } from "meteor/underscore";
 import { i18n } from "/imports/startup/both/i18next";
 import { Tracker } from "meteor/tracker";

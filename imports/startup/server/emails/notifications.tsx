@@ -14,6 +14,8 @@ import { Users } from "/imports/api/users/users";
 
 import { renderToEmail } from "/imports/utils/renderToEmail";
 import { Root } from "/imports/emails/Root";
+import { toEmailLogo } from "/imports/utils/toEmailLogo";
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
 /**
  * Record the result of a notification delivery attempt
@@ -114,8 +116,9 @@ async function send(
           const message = renderToEmail(
             <Root
               subject={vars.subject}
+              // eslint-disable-next-line no-await-in-loop
+              logo={await toEmailLogo(vars.customEmailLogo || PublicSettings.emailLogo)}
               customSiteUrl={vars.customSiteUrl}
-              customEmailLogo={vars.customEmailLogo}
               customSiteName={vars.customSiteName || siteName}
             >
               {model.template({

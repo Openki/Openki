@@ -9,7 +9,6 @@ import { Regions } from "/imports/api/regions/regions";
 import * as CoursesMethods from "/imports/api/courses/methods";
 import { CourseModel } from "/imports/api/courses/courses";
 
-import { Editable } from "/imports/ui/lib/editable";
 import { PleaseLogin } from "/imports/ui/lib/please-login";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import * as TemplateMixins from "/imports/ui/lib/template-mixins";
@@ -43,6 +42,7 @@ import "./confirm-dialog";
 import "./description";
 import "./submenu";
 import "./button-course-unarchive";
+import "./header";
 
 import "./template.html";
 import "./styles.scss";
@@ -56,8 +56,7 @@ const Template = TemplateMixins.Expandible(
       course: CourseModel;
       member: boolean;
       select: string;
-    },
-    { editableName: Editable }
+    }
   >,
   "courseDetailsPage",
 );
@@ -77,54 +76,10 @@ template.onCreated(function () {
   });
 
   instance.busy(false);
-
-  const { course } = instance.data;
-
-  instance.editableName = new Editable(false, i18n("course.title.placeholder"), undefined, {
-    onSave: async (newName) => {
-      await CoursesMethods.save(course._id, { name: newName });
-    },
-    onSuccess: (newName) => {
-      Alert.success(
-        i18n("courseDetails.message.nameChanged", 'The name has been changed to "{NAME}".', {
-          NAME: newName,
-        }),
-      );
-    },
-    onError: (err) => {
-      Alert.serverError(err as string | Error, i18n("course.save.error", "Saving went wrong"));
-    },
-  });
-
-  instance.autorun(() => {
-    const data = Template.currentData();
-
-    if (!data.course) {
-      return;
-    }
-
-    const { name: courseName } = data.course;
-
-    instance.editableName.setText(courseName);
-  });
 });
 
 template.helpers({
   // more helpers in course.roles.js
-
-  detailsHeaderAttr(course: CourseModel) {
-    const src = course?.publicUrlForDetailsImage();
-    if (!src) {
-      return {};
-    }
-
-    return {
-      style: `
-		background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('${src}');
-		background-position: center;
-		background-size: cover;`,
-    };
-  },
 
   mayEdit(course: CourseModel) {
     return course?.editableBy(Meteor.user());
@@ -150,9 +105,6 @@ template.helpers({
   },
   mobileViewport() {
     return Viewport.get().width <= ScssVars.screenMD;
-  },
-  isProposal(course: CourseModel) {
-    return !course.nextEvent && !course.lastEvent;
   },
 });
 

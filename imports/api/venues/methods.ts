@@ -42,6 +42,7 @@ export const SaveFieldPattern = {
   maxWorkplaces: Match.Optional(Match.Integer),
   facilities: Match.Optional([StringEnum(...Venues.facilityOptions)]),
   otherFacilities: Match.Optional(String),
+  restrictedUse: Match.Optional(Boolean),
 };
 export type SaveFields = Type<typeof SaveFieldPattern>;
 
@@ -102,6 +103,10 @@ export const save = ServerMethod("venue.save", async (venueId: string, changes: 
 
   if (changes.otherFacilities !== undefined) {
     set.otherFacilities = changes.otherFacilities.substring(0, 40 * 1024);
+  }
+
+  if (changes.restrictedUse !== undefined) {
+    set.restrictedUse = changes.restrictedUse;
   }
 
   if (isNew) {

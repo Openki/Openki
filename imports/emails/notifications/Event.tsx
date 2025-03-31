@@ -15,6 +15,7 @@ export type Props = {
   courseName: string;
   unsubscribeFromCourseLink: string;
   isNew: boolean;
+  replicats: EventModel[];
   subject: string;
   additionalMessage: string | undefined;
   username: string;
@@ -32,6 +33,7 @@ export function Event({
   courseName,
   unsubscribeFromCourseLink,
   isNew,
+  replicats,
   additionalMessage,
   username,
   unsubscribe,
@@ -39,21 +41,43 @@ export function Event({
   lng,
 }: Props) {
   const { t } = useTranslation(undefined, { lng });
+
+  function intro() {
+    if (isNew) {
+      if (!event.replicaOf) {
+        return t("notification.event.mail.new", "A new event was just published for {COURSE}:", {
+          COURSE: course,
+        });
+      }
+
+      return t(
+        "notification.event.mail.new.withReplicats",
+        "New event(s) where just published for {COURSE}. You can see the next one below.",
+        {
+          COURSE: course,
+        },
+      );
+    }
+    if (replicats.length === 0) {
+      return t("notification.event.mail.changed", "The following event for {COURSE} changed.", {
+        COURSE: course,
+      });
+    }
+
+    return t(
+      "notification.event.mail.changed.withReplicats",
+      "The following event for {COURSE} changed, these changes have also been applied to {NUM, plural, one{the later event} other{# later events} }.",
+      { COURSE: course, NUM: replicats.length },
+    );
+  }
+
   return (
     <>
       <tr>
         <td>
           <h5 className="title">{t("email.base.greeting", { USERNAME: username })}</h5>
-          <p>
-            {isNew
-              ? t("notification.event.mail.new", "A new event was just published for {COURSE}:", {
-                  COURSE: course,
-                })
-              : t("notification.event.mail.changed", "The following event for {COURSE} changed:", {
-                  COURSE: course,
-                })}
-          </p>
-          {additionalMessage ? (
+          <p>{intro()}</p>
+          {!!additionalMessage && (
             <>
               <p>
                 {t(
@@ -69,37 +93,35 @@ export function Event({
                 </tr>
               </table>
             </>
-          ) : null}
+          )}
 
           <EventBox event={event} tz={tz} campaign={campaign} lng={lng} />
 
-          {!event.noRsvp ? (
-            !recipientTakePart ? (
-              <>
-                <p className="gap-md text-center">
-                  {t(
-                    "notification.event.mail.informRegisterEvent",
-                    "Let us know if you participate in this event:",
-                  )}
-                </p>
-                <p className="text-center">
-                  <a className="button" href={registerToEventLink}>
-                    {t("notification.event.mail.registerEvent", "Yes, I take part.")}
-                  </a>
-                </p>
-                <p className="gap-md text-center">
-                  {t("notification.event.mail.notinterested", "Not interested anymore?")}
-                </p>
-                <p className="text-center">
-                  <a href={unsubscribeFromCourseLink}>
-                    {t("notification.event.mail.unsubscribe", "Unsubscribe from {COURSE}", {
-                      COURSE: courseName,
-                    })}
-                  </a>
-                </p>
-              </>
-            ) : null
-          ) : null}
+          {!event.noRsvp && !recipientTakePart && (
+            <>
+              <p className="gap-md text-center">
+                {t(
+                  "notification.event.mail.informRegisterEvent",
+                  "Let us know if you participate in this event:",
+                )}
+              </p>
+              <p className="text-center">
+                <a className="button" href={registerToEventLink}>
+                  {t("notification.event.mail.registerEvent", "Yes, I take part.")}
+                </a>
+              </p>
+              <p className="gap-md text-center">
+                {t("notification.event.mail.notinterested", "Not interested anymore?")}
+              </p>
+              <p className="text-center">
+                <a href={unsubscribeFromCourseLink}>
+                  {t("notification.event.mail.unsubscribe", "Unsubscribe from {COURSE}", {
+                    COURSE: courseName,
+                  })}
+                </a>
+              </p>
+            </>
+          )}
         </td>
       </tr>
       <Footer

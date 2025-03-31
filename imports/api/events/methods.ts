@@ -1,6 +1,5 @@
 import { Match, check } from "meteor/check";
 import { Meteor } from "meteor/meteor";
-import { i18n } from "/imports/startup/both/i18next";
 import { _ } from "meteor/underscore";
 import moment from "moment";
 
@@ -28,6 +27,7 @@ import { ServerMethod } from "/imports/utils/ServerMethod";
 import { HtmlString, StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";
 import { GroupPromoters } from "/imports/utils/update-methods";
 import { PublicSettings } from "/imports/utils/PublicSettings";
+import { Venues } from "../venues/venues";
 
 /**
  * @param updateOptions What should be updated
@@ -40,7 +40,7 @@ const ReplicaSync = function (
     changedReplicas?: { time?: boolean | undefined } | undefined;
   },
 ) {
-  let affected = 0;
+  const affected: string[] = [];
 
   const apply = async function (changes: Partial<EventEntity>) {
     const startMoment = moment(changes.start);
@@ -83,7 +83,7 @@ const ReplicaSync = function (
         await Events.updateAsync({ _id: replica._id }, { $set: replicaChanges });
       }
 
-      affected += 1;
+      affected.push(replica._id);
     }
   };
 
@@ -303,6 +303,12 @@ export const save = ServerMethod(
       }
     }
 
+    if (editFields.venue?._id && editFields.venue._id !== event.venue?._id) {
+      const venue = await Venues.findOneAsync(editFields.venue._id);
+      if (venue?.restrictedUse && venue.editableBy(user))
+        throw new Meteor.Error(400, `this venue can only be chosen by its hosts to publish an event.`);
+    }
+
     if (Meteor.isServer) {
       const sanitizedDescription = StringTools.sanitizeMultiline(editFields.description as string);
       editFields.description = HtmlTools.sanitizeHtml(sanitizedDescription);
@@ -313,7 +319,7 @@ export const save = ServerMethod(
       editFields.slug = StringTools.slug(editFields.title);
     }
 
-    let affectedReplicaCount = 0;
+    let affectedReplicas: string[] = [];
     if (isNew) {
       editFields.createdBy = user._id;
       editFields.groupOrganizers = [];
@@ -344,7 +350,7 @@ export const save = ServerMethod(
         };
         const replicaSync = ReplicaSync(event, updateOptions);
         await replicaSync.apply(editFields);
-        affectedReplicaCount = replicaSync.affected();
+        affectedReplicas = replicaSync.affected();
       }
 
       if (event.courseId) {
@@ -359,28 +365,12 @@ export const save = ServerMethod(
     }
 
     if (sendNotifications) {
-      if (affectedReplicaCount) {
-        const affectedReplicaMessage = i18n(
-          "notification.event.affectedReplicaMessage",
-          "These changes have also been applied to {NUM, plural, one{the later copy} other{# later copies} }",
-          { NUM: affectedReplicaCount, lng: user.locale },
-        );
-
-        if (comment === null || comment === undefined) {
-          // eslint-disable-next-line no-param-reassign
-          comment = affectedReplicaMessage;
-        } else {
-          // eslint-disable-next-line no-param-reassign
-          comment = `${affectedReplicaMessage}\n\n${comment}`;
-        }
-      }
-
       if (comment) {
         // eslint-disable-next-line no-param-reassign
         comment = comment.trim().substring(0, 2000).trim();
       }
 
-      await Notification.Event.record(eventId, isNew, comment || undefined);
+      await Notification.Event.record(eventId, isNew, affectedReplicas, comment || undefined);
     }
 
     await venueDenormalizer.updateVenue(eventId);

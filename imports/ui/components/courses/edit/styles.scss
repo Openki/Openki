@@ -8,9 +8,5 @@
 
   &.is-frame {
     margin-top: 0;
-
-    @include media-breakpoint-down(sm) {
-      padding: 10px;
-    }
   }
 }
