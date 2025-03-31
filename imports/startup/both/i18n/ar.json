@@ -618,8 +618,6 @@
   "notification.event.mail.notinterested": "لم تعد مهتما؟",
   "notification.event.mail.personalMessage": "ترك المنظم رسالة لك:",
   "notification.event.mail.registerEvent": "نعم، أنا أشارك.",
-  "notification.event.mail.subject.changed": "ثابت {DATE}: {TITLE}",
-  "notification.event.mail.subject.new": "في {DATE}: {TITLE}",
   "notification.event.mail.unsubscribe": "إلغاء الاشتراك في {COURSE}",
   "notification.group.course.mail.intro": "{CREATER} اقترح للتو الدورة التدريبية {COURSE} في مجموعتك {GROUPS}.",
   "notification.group.course.mail.next": "يمكنك الاتصال ب {CREATER} للمساعدة في تنظيم {COURSE}. لديك أيضا إمكانية تعديل الوصف والإعلان عن الأحداث.",
@@ -982,5 +980,7 @@
   "warning.noEmailProvided": "الرجاء إدخال عنوان البريد الإلكتروني.",
   "warning.noUserName": "الرجاء ادخال اسم المستخدم.",
   "warning.userExists": "اسم المستخدم هذا موجود بالفعل. الرجاء اختيار آخر.",
-  "notification.event.mail.changed.withReplicats": "تم تغيير الدورة التالية ل \"{COURSE}\" تم تطبيق هذه التغييرات أيضا على {NUM, plural, one{النسخة اللاحقة} other{# نسخ لاحقة} }:"
+  "notification.event.mail.changed.withReplicats": "تم تغيير الدورة التالية ل \"{COURSE}\" تم تطبيق هذه التغييرات أيضا على {NUM, plural, one{النسخة اللاحقة} other{# نسخ لاحقة} }:",
+  "notification.event.mail.subject.new": "ثابت {DATE}: {TITLE}",
+  "notification.event.mail.subject.changed": "في {DATE}: {TITLE}"
 }

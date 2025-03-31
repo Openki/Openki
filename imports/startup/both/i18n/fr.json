@@ -571,8 +571,6 @@
   "notification.event.mail.notinterested": "Plus intéressé-e ?",
   "notification.event.mail.personalMessage": "L'organisateur a laissé un message pour vous :",
   "notification.event.mail.registerEvent": "Oui, je participe.",
-  "notification.event.mail.subject.changed": "Fixé {DATE} : {TITLE}",
-  "notification.event.mail.subject.new": "Le {DATE} : {TITLE}",
   "notification.event.mail.unsubscribe": "Se désabonner du cours",
   "notification.event.reminder.mail.intro": "Nous sommes heureux de vous retrouver le {EVENTDATE} à l'évènement \"{EVENTTITLE}\" auquel vous êtes inscrit{COMPANIONS,plural,=0{.} other{ ainsi que votre saon compagnon.e.}}",
   "notification.event.reminder.mail.notice": "Vous recevez cette email car vous participez à {EVENTTITLE}.",
@@ -937,5 +935,7 @@
   "warning.noEmailProvided": "Entrez votre adresse e-mail.",
   "warning.noUserName": "Entrez un nom d'utilisateur.",
   "warning.userExists": "Ce nom d'utilisateur existe déjà. Merci d'en choisir un autre.",
-  "notification.event.mail.changed.withReplicats": "L'évènement suivant pour le cours {COURSE} a changé, ces modifications ont également été appliquées à {NUM, plural, one{une copie ultérieure} other{# copies ultérieures}}:"
+  "notification.event.mail.changed.withReplicats": "L'évènement suivant pour le cours {COURSE} a changé, ces modifications ont également été appliquées à {NUM, plural, one{une copie ultérieure} other{# copies ultérieures}}:",
+  "notification.event.mail.subject.new": "Fixé {DATE} : {TITLE}",
+  "notification.event.mail.subject.changed": "Le {DATE} : {TITLE}"
 }

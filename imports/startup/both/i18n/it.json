@@ -649,14 +649,12 @@
   "notification.event.contact-participants.mail.subject": "Messaggio da {SENDER} a tutti i partecipanti di {EVENT}",
   "notification.event.contact-participants.mail.title": "{DATE} — {EVENT}",
   "notification.event.mail.changed": "L'evento seguente per {COURSE} è stato modificato:",
-	"notification.event.mail.informRegisterEvent": "Facci sapere se partecipi a questo evento:",
+  "notification.event.mail.informRegisterEvent": "Facci sapere se partecipi a questo evento:",
   "notification.event.mail.new": "Un nuovo evento è stato appena pubblicato per {COURSE}:",
   "notification.event.mail.notice": "Ricevi questa e-mail perché sei coinvolto in {COURSE}.",
   "notification.event.mail.notinterested": "Non interessato più?",
   "notification.event.mail.personalMessage": "L'organizzatore ha lasciato un messaggio per te:",
   "notification.event.mail.registerEvent": "Sì, partecipo.",
-  "notification.event.mail.subject.changed": "Aggiornato {DATE}: {TITLE}",
-  "notification.event.mail.subject.new": "Il {DATE}: {TITLE}",
   "notification.event.mail.unsubscribe": "Annulla l'iscrizione da {COURSE}",
   "notification.event.reminder.informUnregisterEvent": "Nel caso in cui non possa partecipare, è importante farlo sapere agli organizzatori ora:",
   "notification.event.reminder.mail.intro": "Ti ricordiamo che sei registrato per \"{EVENTTITLE}\". Non vediamo l'ora di vederti {COMPANIONS, plural, =0{te} other{te e il tuo compagno} } {EVENTDATE}.",
@@ -1024,5 +1022,7 @@
   "warning.noEmailProvided": "Per favore inserisci un indirizzo e-mail.",
   "warning.noUserName": "Per favore inserisci un nome per il tuo utente.",
   "warning.userExists": "Nome utente già in uso. Per favore scegline un altro.",
-  "notification.event.mail.changed.withReplicats": "L'evento seguente per {COURSE} è stato modificato, queste modifiche sono state applicate anche a {NUM, plural, one{la copia successiva} other{# copie successive} }:"
+  "notification.event.mail.changed.withReplicats": "L'evento seguente per {COURSE} è stato modificato, queste modifiche sono state applicate anche a {NUM, plural, one{la copia successiva} other{# copie successive} }:",
+  "notification.event.mail.subject.new": "Aggiornato {DATE}: {TITLE}",
+  "notification.event.mail.subject.changed": "Il {DATE}: {TITLE}"
 }

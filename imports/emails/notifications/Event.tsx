@@ -52,21 +52,21 @@ export function Event({
 
       return t(
         "notification.event.mail.new.withReplicats",
-        "New event(s) where just published for {COURSE}. The next one is:",
+        "New event(s) where just published for {COURSE}. You can see the next one below.",
         {
           COURSE: course,
         },
       );
     }
     if (replicats.length === 0) {
-      return t("notification.event.mail.changed", "The following event for {COURSE} changed:", {
+      return t("notification.event.mail.changed", "The following event for {COURSE} changed.", {
         COURSE: course,
       });
     }
 
     return t(
       "notification.event.mail.changed.withReplicats",
-      "The following event for {COURSE} changed, these changes have also been applied to {NUM, plural, one{the later copy} other{# later copies} }:",
+      "The following event for {COURSE} changed, these changes have also been applied to {NUM, plural, one{the later event} other{# later events} }.",
       { COURSE: course, NUM: replicats.length },
     );
   }
