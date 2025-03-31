@@ -113,6 +113,9 @@ export const ensure = {
       profile: { name },
       notifications: true,
       allowPrivateMessages: true,
+      tenants: [],
+      groups: [],
+      badges: [],
     } as any);
 
     const age = Math.floor(prng() * 100000000000);

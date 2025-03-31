@@ -25,15 +25,6 @@ $event-caption-border: $yellow;
   vertical-align: top;
 }
 
-.event-caption-header > .fa-map-pin {
-  @include td-pos(left, 50%);
-  color: $body-color;
-  font-size: 8px;
-  position: absolute;
-  top: -5px;
-  transform: rotate(10deg);
-}
-
 .event-caption-pseudoborder {
   background-color: $white;
   bottom: 0;

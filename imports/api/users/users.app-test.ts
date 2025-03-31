@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { assert } from "chai";
 import { Promise } from "meteor/promise";
-import { MeteorAsync, AccountsAsync } from "/imports/utils/promisify";
+import { MeteorAsync } from "/imports/utils/promisify";
 import { userSearchPrefix } from "/imports/utils/user-search-prefix";
 import { Users } from "/imports/api/users/users";
 import * as usersMethods from "/imports/api/users/methods";
@@ -24,7 +24,7 @@ if (Meteor.isClient) {
       const oldDummy = createDummy();
       const newDummy = createDummy();
       it("changes the username", async () => {
-        await AccountsAsync.createUser({
+        await Accounts.createUserAsync({
           username: oldDummy,
           email: `${oldDummy}@openki.example`,
           profile: { name: oldDummy },

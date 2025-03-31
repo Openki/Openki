@@ -28,6 +28,7 @@
   font-size: 1.1em;
   margin: 0;
   padding: 7px;
+  font-weight: bold;
   transition: background-color $default-transition-time;
 
   &:hover {
@@ -44,7 +45,7 @@
 .frame-list-item-interested {
   @include td-float(right);
   font-size: small;
-  opacity: 0.6;
+  opacity: 0.45;
 }
 
 .frame-list-item-interested {

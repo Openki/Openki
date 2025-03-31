@@ -117,7 +117,7 @@ export const updateUsername = ServerMethod(
       return;
     }
 
-    if (Accounts.findUserByUsername(username)) {
+    if (await Accounts.findUserByUsername(username)) {
       throw new ValidationError(
         [{ name: "username", type: "userExists" }],
         "username is already taken",
@@ -224,7 +224,7 @@ export const updateEmail = ServerMethod(
     }
 
     // Don't allow using an address somebody else uses
-    const existingUser = Accounts.findUserByEmail(newEmail);
+    const existingUser = await Accounts.findUserByEmail(newEmail);
     if (existingUser) {
       throw new ValidationError([{ name: "email", type: "emailExists" }], "Email already exists.");
     }

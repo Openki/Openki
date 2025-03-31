@@ -47,6 +47,7 @@ export function Edit({
       .filter((f) => f[1])
       .map((f) => f[0] as FacilityOption),
     otherFacilities: venue.otherFacilities,
+    restrictedUse: venue.restrictedUse,
     selectedRegion: isNew ? sessionRegion : venue.region,
     loc: venue.loc as Geodata | undefined,
   });
@@ -91,7 +92,7 @@ export function Edit({
     return false;
   }
   function showMapSelection() {
-    return regionSelectable || !!changes.selectedRegion;
+    return regionSelectable() || !!changes.selectedRegion;
   }
   function regionSelected() {
     return !!changes.selectedRegion;
@@ -107,6 +108,9 @@ export function Edit({
       maxWorkplaces: changes.maxWorkplaces,
       facilities: changes.facilities,
     };
+    if (changes.restrictedUse !== undefined) {
+      changes1.restrictedUse = changes.restrictedUse;
+    }
     if (changes.otherFacilities) {
       changes1.otherFacilities = changes.otherFacilities;
     }
@@ -215,9 +219,9 @@ export function Edit({
             }}
           />
         </div>
-        {showMapSelection() ? (
+        {showMapSelection() && (
           <div className="row gap-3 mb-3">
-            {regionSelectable() ? (
+            {regionSelectable() && (
               <div className="col-md">
                 <label className="form-label">{t("venue.edit.region", "Region")}</label>
                 <div className="input-group">
@@ -243,8 +247,8 @@ export function Edit({
                   )}
                 </div>
               </div>
-            ) : null}
-            {regionSelected() && regionCoordinates ? (
+            )}
+            {!!(regionSelected() && regionCoordinates) && (
               <div className="col-md">
                 <label className="form-label">
                   {t(
@@ -268,9 +272,9 @@ export function Edit({
                   }}
                 />
               </div>
-            ) : null}
+            )}
           </div>
-        ) : null}
+        )}
 
         <div className="mb-3">
           <label className="form-label">{t("venue.edit.address", "Address")}</label>
@@ -311,6 +315,31 @@ export function Edit({
                 setChanges((prevState) => ({ ...prevState, route: value }));
               }}
             ></textarea>
+          </div>
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">{t("venue.edit.restrictedUse", "Restricted use")}</label>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              value=""
+              id="eventRestrictedUseCheck"
+              checked={changes.restrictedUse}
+              onChange={(ev) => {
+                setChanges((prevState) => ({
+                  ...prevState,
+                  restrictedUse: ev.currentTarget.checked,
+                }));
+              }}
+            />
+            <label className="form-check-label" htmlFor="eventRestrictedUseCheck">
+              {t(
+                "venue.edit.restrictedUse.label",
+                "This venue can only be chosen by its hosts to publish an event.",
+              )}
+            </label>
           </div>
         </div>
         <div className="mb-3">

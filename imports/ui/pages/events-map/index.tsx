@@ -1,4 +1,5 @@
 import React from "react";
+import { Mongo } from "meteor/mongo";
 import { useTranslation } from "react-i18next";
 import * as Metatags from "/imports/utils/metatags";
 

@@ -85,6 +85,7 @@ export async function generate() {
         loc: venue.loc,
         address: venue.address,
         editor: venue.editor,
+        restrictedUse: venue.restrictedUse,
       };
 
       if (prng() > 0.6) {
