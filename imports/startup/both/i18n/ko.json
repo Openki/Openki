@@ -631,14 +631,12 @@
   "notification.event.contact-participants.mail.subject": "{EVENT} 이벤트에 참가 등록한 모든 사용자들에게 보내는 {SENDER}의 메시지",
   "notification.event.contact-participants.mail.title": "{DATE} — {EVENT}",
   "notification.event.mail.changed": "{COURSE}의 다음 이벤트가 변경 되었습니다:",
-	"notification.event.mail.informRegisterEvent": "참가 등록한 이벤트가 맞는지 알려주세요:",
+  "notification.event.mail.informRegisterEvent": "참가 등록한 이벤트가 맞는지 알려주세요:",
   "notification.event.mail.new": "{COURSE}에 새로운 이벤트가 추가되었습니다:",
   "notification.event.mail.notice": "{COURSE}에 관심 등록 중인 모든 사람들에게 발송된 메일입니다.",
   "notification.event.mail.notinterested": "더 이상 관심이 없나요?",
   "notification.event.mail.personalMessage": "기획자가 당신에게 메시지를 남겼습니다:",
   "notification.event.mail.registerEvent": "네, 이벤트에 참여합니다.",
-  "notification.event.mail.subject.changed": "수정됨 {DATE}: {TITLE}",
-  "notification.event.mail.subject.new": "추가됨 {DATE}: {TITLE}",
   "notification.event.mail.unsubscribe": "{COURSE} 코스 관심 등록 해제",
   "notification.event.reminder.informUnregisterEvent": "만약 참석하기 어렵다면, 이벤트 기획자들에게 미리 알려주세요:",
   "notification.event.reminder.mail.intro": "\"{EVENTTITLE}\" 이벤트에 참가 등록하신 것 잊지 않으셨죠? {EVENTDATE}에 {COMPANIONS, plural, =0{함께} other{함께} } 만나요.",
@@ -1006,5 +1004,7 @@
   "warning.noEmailProvided": "이메일 주소를 입력해주세요.",
   "warning.noUserName": "사용할 사용자 이름을 입력해주세요.",
   "warning.userExists": "이미 사용 중인 사용자 이름입니다. 다시 입력해주세요.",
-  "notification.event.mail.changed.withReplicats": "{COURSE}의 다음 이벤트가 변경 되었습니다 해당 수정 사항들은 {NUM, plural, one{1개의 복사본에도} other{#개의 복사본들에도} } 적용되었습니다:"
+  "notification.event.mail.changed.withReplicats": "{COURSE}의 다음 이벤트가 변경 되었습니다 해당 수정 사항들은 {NUM, plural, one{1개의 복사본에도} other{#개의 복사본들에도} } 적용되었습니다:",
+  "notification.event.mail.subject.new": "수정됨 {DATE}: {TITLE}",
+  "notification.event.mail.subject.changed": "추가됨 {DATE}: {TITLE}"
 }
