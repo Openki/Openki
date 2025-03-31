@@ -710,7 +710,7 @@
   "notification.event.mail.notinterested": "Not interested anymore?",
   "notification.event.mail.personalMessage": "The organizer left a message for you:",
   "notification.event.mail.registerEvent": "Yes, I take part.",
-  "notification.event.mail.subject.changed": "On {DATE}: {TITLE}",
+  "notification.event.mail.subject.changed": "{DATE} changed: {TITLE}",
   "notification.event.mail.subject.new": "Fixed {DATE}: {TITLE}",
   "notification.event.mail.unsubscribe": "Unsubscribe from {COURSE}",
   "notification.event.reminder.informUnregisterEvent": "In case you can not make it, it's important to let the organizers know now:",
