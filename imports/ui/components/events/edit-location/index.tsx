@@ -84,7 +84,14 @@ function CustomMenu({ results, menuProps }: { results: any[]; menuProps: RenderM
               key={index + uvs.length}
               option={venue}
               position={index + uvs.length}
-              className={venue._id ? "bg-venue text-truncate" : ""}
+              className={
+                // eslint-disable-next-line no-nested-ternary
+                venue._id
+                  ? !venue.restrictedUse
+                    ? "bg-venue text-truncate"
+                    : "text-venue-restricted-use bg-venue-locked text-truncate"
+                  : ""
+              }
             >
               {!!venue._id && (
                 <>
@@ -96,7 +103,17 @@ function CustomMenu({ results, menuProps }: { results: any[]; menuProps: RenderM
                   ></span>{" "}
                 </>
               )}
-              {ReactJoin([!!venue.name && <strong>{venue.name}</strong>, venue.address])}
+              {ReactJoin([
+                !!venue.name && (
+                  <>
+                    <strong>{venue.name}</strong>
+                    {!!venue.restrictedUse && (
+                      <> {t("location.link.restrictedUse", "(only restricted use)")}</>
+                    )}
+                  </>
+                ),
+                venue.address,
+              ])}
             </MenuItem>
           ))}
           <Menu.Divider />
@@ -313,6 +330,7 @@ export function EditVenue({
           {filterUserVenues(user, [value]).length === 0 &&
             (value.restrictedUse ? (
               <div className="alert alert-warning p-2">
+                <span className="fa-solid fa-triangle-exclamation fa-fw" aria-hidden="true"></span>{" "}
                 {t(
                   "event.editVenue.restrictedUse",
                   "This venue can only be chosen by its hosts to publish an event.",
