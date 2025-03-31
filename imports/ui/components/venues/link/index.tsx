@@ -41,7 +41,7 @@ export function VenueTag({
   const { t } = useTranslation();
   if (venue?._id) {
     return (
-      <div className="tag tag-link venue-tag">
+      <div className={`tag tag-link venue-tag${venue.restrictedUse ? " venue-locked-tag" : ""}`}>
         <a
           data-bs-toggle="tooltip"
           data-bs-title={t("location.link.tooltip", "Show details of {VENUE}", {
