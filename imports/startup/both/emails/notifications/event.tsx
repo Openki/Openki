@@ -124,7 +124,11 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       if (entry.body.new) {
         subject = t("notification.event.mail.subject.new", "Fixed {DATE}: {TITLE}", subjectvars);
       } else {
-        subject = t("notification.event.mail.subject.changed", "On {DATE}: {TITLE}", subjectvars);
+        subject = t(
+          "notification.event.mail.subject.changed",
+          "{DATE} changed: {TITLE}",
+          subjectvars,
+        );
       }
 
       const siteName = getSiteName(region);
