@@ -78,9 +78,6 @@ export function Edit({
       onOtherFacilitiesChange: (newValue) => {
         setChanges((prevState) => ({ ...prevState, otherFacilities: newValue }));
       },
-      onRestrictedUseChange: (newValue) => {
-        setChanges((prevState) => ({ ...prevState, restrictedUse: newValue }));
-      },
     };
   }
   function regionSelectable() {
@@ -318,6 +315,31 @@ export function Edit({
                 setChanges((prevState) => ({ ...prevState, route: value }));
               }}
             ></textarea>
+          </div>
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">{t("venue.edit.restrictedUse", "Restricted use")}</label>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              value=""
+              id="eventRestrictedUseCheck"
+              checked={changes.restrictedUse}
+              onChange={(ev) => {
+                setChanges((prevState) => ({
+                  ...prevState,
+                  restrictedUse: ev.currentTarget.checked,
+                }));
+              }}
+            />
+            <label className="form-check-label" htmlFor="eventRestrictedUseCheck">
+              {t(
+                "venue.edit.restrictedUse.label",
+                "This venue can only be chosen by its hosts to publish an event.",
+              )}
+            </label>
           </div>
         </div>
         <div className="mb-3">

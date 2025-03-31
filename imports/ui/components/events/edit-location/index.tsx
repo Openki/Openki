@@ -315,7 +315,7 @@ export function EditVenue({
               <div className="alert alert-warning p-2">
                 {t(
                   "event.editVenue.restrictedUse",
-                  "Only the host can use this venue to create a event.",
+                  "This venue can only be chosen by its hosts to publish an event.",
                 )}
               </div>
             ) : (
