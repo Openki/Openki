@@ -2,7 +2,6 @@ import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 
 import { create as fixturesCreate } from "/imports/api/fixtures/methods";
-import { updateDbCacheFields } from "/imports/api/db-utilities/updateDbCacheFields";
 
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 
@@ -14,6 +13,5 @@ if (runBackgroundTasks && Meteor.isServer && PrivateSettings.testdata) {
     Accounts.removeDefaultRateLimit();
 
     await fixturesCreate();
-    await updateDbCacheFields();
   });
 }
