@@ -31,7 +31,9 @@ export function Display({ inNavbar, onClick }: Props) {
     <div className={inNavbarClasses()}>
       <a
         className={`nav-link ${inNavbarClassesLink()}`}
-        onClick={() => {
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
           onClick();
         }}
       >
