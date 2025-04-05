@@ -289,8 +289,13 @@ export function EditVenue({
                   <label className="form-label">
                     {t("course.event.edit.selectedVenue", "Selected venue")}
                   </label>
-                  <div className="form-control">
-                    <VenueTag venue={value} />
+                  <div className="form-control d-flex align-items-center">
+                    <VenueTag className="flex-fill" venue={value} />
+                    <button
+                      type="button"
+                      className="btn-close btn-close-black ms-2"
+                      onClick={() => onChange(undefined)}
+                    ></button>
                   </div>
                 </>
               )}
@@ -354,7 +359,7 @@ export function EditVenue({
                       onChange({ ...value, loc: newLoc });
                     }}
                   />
-                  <div className="form-text">
+                  <div className="form-text text-end">
                     {t(
                       "course.event.edit.locationMovePosition",
                       "You can drag the marker to the correct position.",

@@ -34,14 +34,20 @@ function Venue({ name, restrictedUse }: { name: string; restrictedUse?: boolean 
 export function VenueTag({
   venue,
   openInNewTab,
+  className = "",
 }: {
   venue: Venue;
   openInNewTab?: boolean | undefined;
+  className?: string | undefined;
 }) {
   const { t } = useTranslation();
   if (venue?._id) {
     return (
-      <div className={`tag tag-link venue-tag${venue.restrictedUse ? " venue-locked-tag" : ""}`}>
+      <div
+        className={`tag tag-link ${className} venue-tag${
+          venue.restrictedUse ? " venue-locked-tag" : ""
+        }`}
+      >
         <a
           data-bs-toggle="tooltip"
           data-bs-title={t("location.link.tooltip", "Show details of {VENUE}", {
