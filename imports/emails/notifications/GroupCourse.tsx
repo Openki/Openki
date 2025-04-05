@@ -39,13 +39,13 @@ export function GroupCourse({
             )}
           </p>
 
-          {courseDescription ? (
+          {!!courseDescription && (
             <table className="comment-box">
               <tr>
                 <td dangerouslySetInnerHTML={{ __html: courseDescription }}></td>
               </tr>
             </table>
-          ) : null}
+          )}
 
           <p>
             {t(
