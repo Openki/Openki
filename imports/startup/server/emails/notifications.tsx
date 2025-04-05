@@ -106,6 +106,7 @@ async function send(
           // use user locale for translation
           const locale = user.locale || "en";
 
+          const siteUrl = Meteor.absoluteUrl();
           const { siteName } = Accounts.emailTemplates;
           const subjectPrefix = `[${siteName}] `;
 
@@ -118,7 +119,7 @@ async function send(
               subject={vars.subject}
               // eslint-disable-next-line no-await-in-loop
               logo={await toEmailLogo(vars.customEmailLogo || PublicSettings.emailLogo)}
-              customSiteUrl={vars.customSiteUrl}
+              customSiteUrl={vars.customSiteUrl || siteUrl}
               customSiteName={vars.customSiteName || siteName}
             >
               {model.template({
@@ -126,6 +127,7 @@ async function send(
                 // For everything that is global use siteName from global settings, eg. unsubscribe
                 siteName,
                 // For everything context specifig us customSiteName from the region, eg. courses
+                customSiteUrl: vars.customSiteUrl || siteUrl,
                 customSiteName: vars.customSiteName || siteName,
                 username,
                 lng: locale,
