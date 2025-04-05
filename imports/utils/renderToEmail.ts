@@ -10,7 +10,7 @@ export function renderToEmail(element: React.ReactNode) {
     return juice(
       `<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-${renderToStaticMarkup(element).replaceAll("&#x27;", "'")}
+${renderToStaticMarkup(element).replaceAll("&#x27;", "'").replaceAll("&quot;", '"')}
 </html>`,
     );
   }
