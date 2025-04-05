@@ -50,7 +50,7 @@ export function Join({
             })}
           </p>
 
-          {message ? (
+          {!!message && (
             <>
               <p>{t("notification.join.mail.message", "They left this message:")}</p>
               <table className="comment-box">
@@ -59,8 +59,8 @@ export function Join({
                 </tr>
               </table>
             </>
-          ) : null}
-          {appendCollaborationHint ? (
+          )}
+          {appendCollaborationHint && (
             <p>
               {t(
                 "notification.join.mail.collaborationHint",
@@ -68,7 +68,7 @@ export function Join({
                 { COURSE: course },
               )}
             </p>
-          ) : null}
+          )}
           <strong>
             {t("notification.join.mail.statsOverview", "Overview over participants:")}
           </strong>
