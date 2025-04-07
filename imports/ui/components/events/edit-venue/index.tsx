@@ -19,7 +19,7 @@ import {
   RenderMenuProps,
   TypeaheadInputSingle,
 } from "react-bootstrap-typeahead";
-import { EditLocationMap } from "./edit-location-map";
+import { Map } from "./map";
 import { Display } from "../../location/display";
 import { ReactJoin } from "../../../../utils/ReactJoin";
 import { VenueTag } from "../../venues/link";
@@ -353,7 +353,7 @@ export function EditVenue({
             <div className="mb-3">
               {!value._id ? (
                 <>
-                  <EditLocationMap
+                  <Map
                     value={value.loc}
                     onChange={(newLoc) => {
                       onChange({ ...value, loc: newLoc });
