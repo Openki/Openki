@@ -1,0 +1,98 @@
+<template name="BlockLayout">
+  {{#Layout template="LayoutOne"}}
+    main-
+    {{#contentFor "footer"}}
+      footer
+    {{/contentFor}}
+  {{/Layout}}
+</template>
+
+<template name="BlockLayoutWithData">
+  {{#Layout template="LayoutWithData" data=getData}}
+    main-{{this}}-
+    {{#contentFor "footer"}}
+      footer-{{this}}
+    {{/contentFor}}
+  {{/Layout}}
+</template>
+
+<template name="BlockLayoutWithOuterData">
+  {{#with 'outerData'}}
+    {{#Layout template="LayoutWithData" data=getData}}
+      inner-{{this}}
+    {{/Layout}}
+  {{/with}}
+</template>
+
+<template name="BlockLayoutWithOuterDataAndWith">
+  {{#with 'outerData'}}
+    {{#Layout template="LayoutWithWith" data=getData}}
+      inner-{{this}}
+    {{/Layout}}
+  {{/with}}
+</template>
+
+<template name="LayoutOne">
+  layout-
+  {{> yield}}
+  {{> yield "footer"}}
+</template>
+
+<template name="RenderingTransactionsLayout">
+  layout-
+  {{> yield "aside"}}
+  {{> yield}}
+  {{> yield "footer"}}
+</template>
+
+<template name="LayoutOnePage">
+  main
+  {{#contentFor "footer"}}
+    footer
+  {{/contentFor}}
+</template>
+
+<template name="LayoutWithData">
+  layout-{{this}}-
+  {{> yield}}
+  {{> yield "footer"}}
+</template>
+
+<template name="LayoutWithWith">
+  layout-{{this}}-
+  {{#with 'innerData'}}
+    {{> yield}}
+  {{/with}}
+</template>
+
+<template name="LayoutWithHasRegion">
+  {{#if hasRegion 'test'}}
+    yes
+  {{else}}
+    no
+  {{/if}}
+</template>
+
+<template name="One">
+  One-{{this}}-
+</template>
+
+<template name="OneFoo">
+  One-{{foo}}-
+</template>
+
+<template name="Two">
+  Two-{{this}}-
+</template>
+
+<template name="Aside">
+  aside
+</template>
+
+<template name="Plain">
+  plain
+</template>
+
+<template name="Footer">
+  footer
+</template>

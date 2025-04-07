@@ -42,6 +42,8 @@ export interface VenueEntity {
     [key in FacilityOption]: boolean;
   }>;
   otherFacilities?: string;
+  /** Only hosts and admins can create a event with this venue. */
+  restrictedUse?: boolean;
   createdby: string;
   created: Date;
   updated: Date;

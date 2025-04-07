@@ -87,6 +87,10 @@ export async function generate() {
         editor: venue.editor,
       };
 
+      if (typeof venue.restrictedUse !== "undefined") {
+        event.venue.restrictedUse = venue.restrictedUse;
+      }
+
       if (prng() > 0.6) {
         event.room = rooms[Math.floor(prng() * rooms.length)];
       }

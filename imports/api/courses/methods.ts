@@ -269,6 +269,8 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     /* eslint-disable-next-line no-param-reassign */
     courseId = await Courses.insertAsync(enrichedSet);
 
+    await Notification.Course.record(courseId);
+
     if (set.groupOrganizers.length > 0) {
       await Notification["Group.Course"].record(courseId);
     }

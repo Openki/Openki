@@ -313,7 +313,7 @@ export function RegionSelection(data: {
                     onClick={() => handelItemClick(region)}
                   />
                 ))}
-                {aboutLink() ? (
+                {!!aboutLink() && (
                   <>
                     <li>
                       <hr className="dropdown-divider" />
@@ -325,7 +325,7 @@ export function RegionSelection(data: {
                       </a>
                     </li>
                   </>
-                ) : null}
+                )}
               </>
             ) : (
               // here follows the "short" version, only some regions are shown
@@ -338,7 +338,7 @@ export function RegionSelection(data: {
                     onClick={() => handelItemClick(region)}
                   />
                 ))}
-                {hasMore() ? (
+                {hasMore() && (
                   <>
                     <li>
                       <hr className="dropdown-divider" />
@@ -349,7 +349,7 @@ export function RegionSelection(data: {
                       </button>
                     </li>
                   </>
-                ) : null}
+                )}
               </>
             )}
           </ul>

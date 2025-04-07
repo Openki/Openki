@@ -15,6 +15,7 @@ import { runBackgroundTasks } from "/imports/utils/background-tasks";
 import { Invitation } from "/imports/emails/Invitation";
 import { Root } from "/imports/emails/Root";
 import { renderToEmail } from "/imports/utils/renderToEmail";
+import { toEmailLogo } from "/imports/utils/toEmailLogo";
 
 async function sendInvitation(invitation: InvitationEntity) {
   const tenant = await Tenants.findOneAsync(invitation.tenant);
@@ -38,7 +39,7 @@ async function sendInvitation(invitation: InvitationEntity) {
   const subject = `Invitation to ${tenant.name}`;
 
   const message = renderToEmail(
-    <Root subject={subject}>
+    <Root subject={subject} logo={await toEmailLogo(PublicSettings.emailLogo)}>
       <Invitation
         siteName={siteName}
         tenant={tenant}

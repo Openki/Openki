@@ -33,6 +33,11 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
         className="btn btn-sm btn-close btn-close-white"
         aria-expanded="false"
         data-bs-toggle="dropdown"
+        onClick={() => {
+          setTimeout(() => {
+            Tooltips.hide();
+          }, 0);
+        }}
       ></button>
       <ul className="dropdown-menu dialog-dropdown right">
         <li className="dropdown-header">
@@ -57,7 +62,9 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
             type="button"
             className="btn btn-danger"
             onClick={() => {
-              Tooltips.hide();
+              setTimeout(() => {
+                Tooltips.hide();
+              }, 0);
               onClick();
             }}
           >

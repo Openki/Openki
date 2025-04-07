@@ -55,7 +55,7 @@ export const MeteorAsync = {
  * so those can be used mit asnyc/await.
  */
 export const AccountsAsync = {
-  createUser: Accounts.createUser && promisify(Accounts.createUser),
+  changePassword: Accounts.changePassword && promisify(Accounts.changePassword),
   forgotPassword: Accounts.forgotPassword && promisify(Accounts.forgotPassword),
   resetPassword: Accounts.resetPassword && promisify(Accounts.resetPassword),
 };

@@ -43,18 +43,18 @@ export function EventBox({
               {eventDate}
               <br />
               {eventStart}
-              {eventEnd ? ` - ${eventEnd}` : null}
+              {!!eventEnd && ` - ${eventEnd}`}
             </strong>
-            {venueLine ? (
+            {!!venueLine && (
               <>
                 <br />
                 {venueLine}
               </>
-            ) : null}
+            )}
           </a>
         </td>
       </tr>
-      {event.canceled ? (
+      {!!event.canceled && (
         <>
           <tr>
             <td className="event-gap"></td>
@@ -68,19 +68,19 @@ export function EventBox({
             <td className="event-gap"></td>
           </tr>
         </>
-      ) : null}
+      )}
       <tr>
         <td className="event-body">
           <h5 className="title">{event.title}</h5>
           <p dangerouslySetInnerHTML={{ __html: event.description }}></p>
-          {!event.canceled ? (
+          {!event.canceled && (
             <a className="button event-confirmation-email-button" href={eventLink}>
               {t("notification.mail.event.linkEvent", "Visit Event")}
             </a>
-          ) : null}
+          )}
         </td>
       </tr>
-      {!event.canceled ? (
+      {!event.canceled && (
         <tr>
           <td className="event-link">
             <a href={calLink}>
@@ -89,7 +89,7 @@ export function EventBox({
             <br />
           </td>
         </tr>
-      ) : null}
+      )}
     </table>
   );
 }

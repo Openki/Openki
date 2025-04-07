@@ -103,7 +103,9 @@ export function Member({ member, course }: { member: CourseMemberEntity; course:
               data-bs-toggle="tooltip"
               data-bs-title={t("course.roles.maketeam", "Add to team")}
               onClick={async () => {
-                Tooltips.hide();
+                setTimeout(() => {
+                  Tooltips.hide();
+                }, 0);
                 const change = subscribeToTeam();
                 if (!change) {
                   throw new Error("Unexpected falsy: change");

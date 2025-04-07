@@ -38,21 +38,20 @@ export function Course({ course, hideInterested }: Props) {
         <span className="frame-list-item-toggle-indicator">
           <i className="fa-solid fa-angle-down"></i>
         </span>
-        {!hideInterested && course.roles.includes("participant") ? (
+        {!hideInterested && course.roles.includes("participant") && (
           <span
             className="frame-list-item-interested"
             title={t("frame.courseList.interestedPersons", "Interested people")}
           >
-            <RoleIcon type="participant" />
-            {interestedPersons()}
+            <span className="me-1">{interestedPersons()}</span> <RoleIcon type="participant" />
           </span>
-        ) : null}
+        )}
         {course.name}
-        {allRegions ? (
+        {!!allRegions && (
           <span className="badge bg-primary frame-list-item-region">{regionOf()}</span>
-        ) : null}
+        )}
       </h4>
-      {isExpanded ? (
+      {isExpanded && (
         <div className="p-2">
           <div className="row">
             <div className="col-sm-2">
@@ -75,7 +74,7 @@ export function Course({ course, hideInterested }: Props) {
             </a>
           </div>
         </div>
-      ) : null}
+      )}
     </div>
   );
 }

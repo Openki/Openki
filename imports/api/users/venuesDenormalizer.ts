@@ -5,15 +5,17 @@ import { GroupModel, Groups } from "../groups/groups";
 
 // Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers
 
-export async function onStartUp() {
+async function updateAll() {
   const venues = await Venues.find(
     {},
-    { projection: { _id: 1, editor: 1, editGroup: 1 } },
+    {
+      projection: { _id: 1, editor: 1, editGroup: 1 },
+    },
   ).fetchAsync();
 
   const updated = sum(
     await Promise.all(
-      await Users.find({}, { projection: { _id: 1 } }).mapAsync((u) => {
+      await Users.find({}, { projection: { _id: 1, groups: 1 } }).mapAsync((u) => {
         const userVenues = venues
           .filter((v) => v.editor === u._id || (v.editGroup && u.groups.includes(v.editGroup)))
           .map((v) => v._id);
@@ -22,6 +24,16 @@ export async function onStartUp() {
       }),
     ),
   );
+
+  return updated;
+}
+
+export async function onDbMigrate() {
+  return updateAll();
+}
+
+export async function onStartUp() {
+  const updated = await updateAll();
 
   /* eslint-disable-next-line no-console */
   console.log(`users.venuesDenormalizer.onStartUp: ${updated} affected users`);
