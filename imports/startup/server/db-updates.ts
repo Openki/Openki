@@ -19,6 +19,7 @@ import { update as update20230506extendEventParticipants } from "./updates/2023.
 import { update as update20230802ensureEventSendReminderField } from "./updates/2023.08.02 ensureEventSendReminderField";
 import { update as update20240224refactorGroupMembers } from "./updates/2024.02.24 refactorGroupMembers";
 import { update as update20241014enrichCourseCompactImage } from "./updates/2024.10.14 enrichCourseCompactImage";
+import { update as update20250407enrichUserVenues } from "./updates/2025.04.07 enrichUserVenues";
 
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
@@ -38,6 +39,7 @@ const UpdatesAvailable: { [name: string]: () => Promise<number> } = {
   "2023.08.02 ensureEventSendReminderField": update20230802ensureEventSendReminderField,
   "2024.02.24 refactorGroupMembers": update20240224refactorGroupMembers,
   "2024.10.14 enrichCourseCompactImage": update20241014enrichCourseCompactImage,
+  "2025.04.07 enrichUserVenues": update20250407enrichUserVenues,
 };
 
 interface UpdatesAppliedEntity {
