@@ -148,6 +148,7 @@ Accounts.onCreateUser((options: any, originalUser) => {
 
   user.groups = [];
   user.badges = [user._id];
+  user.venues = [];
 
   user.notifications = true;
   user.allowPrivateMessages = true;
