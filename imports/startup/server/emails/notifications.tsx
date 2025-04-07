@@ -14,6 +14,8 @@ import { Users } from "/imports/api/users/users";
 
 import { renderToEmail } from "/imports/utils/renderToEmail";
 import { Root } from "/imports/emails/Root";
+import { toEmailLogo } from "/imports/utils/toEmailLogo";
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
 /**
  * Record the result of a notification delivery attempt
@@ -104,6 +106,7 @@ async function send(
           // use user locale for translation
           const locale = user.locale || "en";
 
+          const siteUrl = Meteor.absoluteUrl();
           const { siteName } = Accounts.emailTemplates;
           const subjectPrefix = `[${siteName}] `;
 
@@ -114,8 +117,9 @@ async function send(
           const message = renderToEmail(
             <Root
               subject={vars.subject}
-              customSiteUrl={vars.customSiteUrl}
-              customEmailLogo={vars.customEmailLogo}
+              // eslint-disable-next-line no-await-in-loop
+              logo={await toEmailLogo(vars.customEmailLogo || PublicSettings.emailLogo)}
+              customSiteUrl={vars.customSiteUrl || siteUrl}
               customSiteName={vars.customSiteName || siteName}
             >
               {model.template({
@@ -123,6 +127,7 @@ async function send(
                 // For everything that is global use siteName from global settings, eg. unsubscribe
                 siteName,
                 // For everything context specifig us customSiteName from the region, eg. courses
+                customSiteUrl: vars.customSiteUrl || siteUrl,
                 customSiteName: vars.customSiteName || siteName,
                 username,
                 lng: locale,

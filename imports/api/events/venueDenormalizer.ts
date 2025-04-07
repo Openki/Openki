@@ -29,6 +29,7 @@ export async function updateVenue(eventIdOrSelector: string | Mongo.Selector<Eve
           "venue.address": venue.address,
           "venue.loc": venue.loc,
           "venue.editor": venue.editor,
+          "venue.restrictedUse": venue.restrictedUse,
         },
       };
     } else {

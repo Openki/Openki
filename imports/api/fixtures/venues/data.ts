@@ -38,6 +38,7 @@ export const venues: VenueTemplate[] = [
     },
     createdby: "Sandra",
     editor: "Barbie92",
+    restrictedUse: true,
   },
   {
     name: "ABS",

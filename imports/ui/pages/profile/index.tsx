@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Mongo } from "meteor/mongo";
-import { Accounts } from "meteor/accounts-base";
+import { AccountsAsync } from "/imports/utils/promisify";
 import { Router } from "meteor/iron:router";
 import { ValidationError } from "meteor/mdg:validation-error";
 import { useTranslation } from "react-i18next";
@@ -494,7 +494,7 @@ function DangerZoneSection() {
     };
   }
 
-  function handelChangePassword(event: React.FormEvent<HTMLFormElement>) {
+  async function handelChangePassword(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const old = oldPassword;
     const pass = newPassword;
@@ -509,19 +509,16 @@ function DangerZoneSection() {
         return;
       }
       setIsBusy(true);
-      Accounts.changePassword(old, pass, (err) => {
-        setIsBusy(false);
+      try {
+        await AccountsAsync.changePassword(old, pass);
 
-        if (err) {
-          Alert.serverError(
-            err,
-            t("profile.passwordChangeError", "Could not change your password"),
-          );
-        } else {
-          Alert.success(t("profile.passwordChangedSuccess", "You have changed your password."));
-          setChangingPassword(false);
-        }
-      });
+        Alert.success(t("profile.passwordChangedSuccess", "You have changed your password."));
+        setChangingPassword(false);
+      } catch (err) {
+        Alert.serverError(err, t("profile.passwordChangeError", "Could not change your password"));
+      } finally {
+        setIsBusy(false);
+      }
     }
   }
 

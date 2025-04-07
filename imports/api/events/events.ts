@@ -35,6 +35,7 @@ export interface EventVenueEntity {
   /** Address string where the event will take place */
   address?: string;
   editor?: string;
+  restrictedUse?: boolean;
 }
 
 /** DB-Model */
@@ -50,9 +51,9 @@ export interface EventEntity {
   description: string;
   /** (calculated) categories from the course */
   categories?: string[];
-  /** String of local date when event starts */
+  /** String of local date & time when event starts */
   startLocal: string;
-  /** String of local date when event ends */
+  /** String of local date & time when event ends */
   endLocal: string;
   venue?: EventVenueEntity;
   /** (Where inside the building the event will take place) */

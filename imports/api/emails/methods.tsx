@@ -14,16 +14,18 @@ import { Type } from "/imports/utils/CustomChecks";
 import { renderToEmail } from "/imports/utils/renderToEmail";
 import { Root } from "/imports/emails/Root";
 import { Report } from "/imports/emails/Report";
+import { PublicSettings } from "/imports/utils/PublicSettings";
+import { toEmailLogo } from "/imports/utils/toEmailLogo";
 
 export const sendVerificationEmail = ServerMethod(
   "sendVerificationEmail",
-  () => {
+  async () => {
     const userId = Meteor.userId();
     if (!userId) {
       throw new Meteor.Error(401, "please log in");
     }
 
-    Accounts.sendVerificationEmail(userId);
+    await Accounts.sendVerificationEmail(userId);
   },
   { simulation: false },
 );
@@ -92,7 +94,7 @@ export const sendReport = ServerMethod(
     const subject = `Report: ${title}`;
 
     const message = renderToEmail(
-      <Root subject={subject}>
+      <Root subject={subject} logo={await toEmailLogo(PublicSettings.emailLogo)}>
         <Report
           user={user}
           version={version}

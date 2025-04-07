@@ -3,6 +3,7 @@ import { Match, check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
+import { uniq } from "lodash";
 
 import { CourseModel, Courses } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
@@ -18,6 +19,7 @@ import { getStartEndDate } from "./utils";
 interface Body {
   new: boolean;
   eventId: string;
+  replicats: string[];
   additionalMessage: string | undefined;
   recipients: string[];
   model: string;
@@ -29,9 +31,15 @@ interface Body {
  * @param isNew whether the event is a new one
  * @param additionalMessage custom message
  */
-export async function record(eventId: string, isNew: boolean, additionalMessage?: string) {
+export async function record(
+  eventId: string,
+  isNew: boolean,
+  replicats: string[],
+  additionalMessage?: string | undefined,
+) {
   check(eventId, String);
   check(isNew, Boolean);
+  check(replicats, [String]);
   check(additionalMessage, Match.Optional(String));
 
   const event = await Events.findOneAsync(eventId);
@@ -50,12 +58,16 @@ export async function record(eventId: string, isNew: boolean, additionalMessage?
   const body: Body = {
     new: isNew,
     eventId: event._id,
+    replicats,
     additionalMessage,
 
     // The list of recipients is built right away so that only course members
     // at the time of event creation will get the notice even if sending is
     // delayed.
-    recipients: course?.members.map((m) => m.user) || [],
+    // The notification is sended to all members of the course and on a event change to all participants
+    recipients: uniq([...(course?.members || []), ...(event.participants || [])])?.map(
+      (p) => p.user,
+    ),
     model: "Event",
   };
 
@@ -74,6 +86,8 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
   if (event?.region) {
     region = await Regions.findOneAsync(event.region);
   }
+
+  const replicats = await Events.find({ _id: { $in: entry.body.replicats } }).fetchAsync();
 
   return {
     accepted(actualRecipient: UserModel) {
@@ -95,6 +109,9 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       if (!region) {
         throw new Error("Region does not exist (0.o)");
       }
+      if (replicats.length !== entry.body.replicats.length) {
+        throw new Error("Not all replicats found (0.o)");
+      }
 
       const { startMoment, tz } = await getStartEndDate(event, locale);
 
@@ -105,11 +122,11 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
       let subject;
       if (entry.body.new) {
-        subject = t("notification.event.mail.subject.new", "On {DATE}: {TITLE}", subjectvars);
+        subject = t("notification.event.mail.subject.new", "Fixed {DATE}: {TITLE}", subjectvars);
       } else {
         subject = t(
           "notification.event.mail.subject.changed",
-          "Fixed {DATE}: {TITLE}",
+          "{DATE} changed: {TITLE}",
           subjectvars,
         );
       }
@@ -131,6 +148,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
           query: { unsubscribe: "participant", force: 1, campaign },
         }),
         isNew: entry.body.new,
+        replicats,
         subject,
         additionalMessage: entry.body.additionalMessage,
         customSiteUrl: Router.url("home", {}, { query: { campaign } }),

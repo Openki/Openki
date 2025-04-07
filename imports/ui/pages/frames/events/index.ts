@@ -53,6 +53,12 @@ template.onCreated(function () {
 
     filterQuery.after = instance.date.toDate();
 
+    // by default internal and not internal are show
+    // in this view we want only show internal if a group is set
+    if (!filterQuery.group && !filterQuery.groups?.length) {
+      filterQuery.internal = filterQuery.internal || false;
+    }
+
     instance.limit =
       new Filtering({
         count: Predicates.integer,
@@ -142,6 +148,6 @@ template.helpers({
     const instance = Template.instance();
     const filterQuery = instance.filter.toQuery();
     filterQuery.after = instance.date.toDate();
-    return Events.findFilter(filterQuery, instance.limit);
+    return Events.findFilter(filterQuery, instance.limit).fetch();
   },
 });

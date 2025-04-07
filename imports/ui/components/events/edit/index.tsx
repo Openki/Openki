@@ -25,11 +25,11 @@ import { useTranslation } from "react-i18next";
 import { RegionTag } from "../../regions/tag";
 import { Richtext } from "../../richtext";
 import { PricePolicy } from "../../price-policy";
-import { EditVenue } from "../edit-location";
+import { EditVenue } from "../edit-venue";
 import { EditCustomFields } from "../../edit-custom-fields";
 import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
 import { ButtonCancel, ButtonSave } from "/imports/ui/components/buttons";
-import { NotifyCourseMembers } from "./NotifyCourseMembers";
+import { Notify } from "../Notify";
 import { EditStartEnd } from "./EditStartEnd";
 import { UpdateAffectedReplica } from "./UpdateAffectedReplica";
 
@@ -64,7 +64,7 @@ export function Edit({
     region = region || regions[0]?._id;
   }
   const [selectedRegion, setSelectedRegion] = useState<string>(region || currentRegion);
-  const [selectedLocation, setSelectedLocation] = useState(event.venue);
+  const [selectedVenue, setSelectedVenue] = useState(event.venue);
   const [noRsvpChecked, setNoRsvpChecked] = useState(!!event.noRsvp);
   const [isBusy, setIsBusy] = useState(false);
 
@@ -173,9 +173,9 @@ export function Edit({
   function venueEditAttr() {
     return {
       region: selectedRegion,
-      value: selectedLocation,
+      value: selectedVenue,
       onChange: (newValue: EventVenueEntity | undefined) => {
-        setSelectedLocation(newValue);
+        setSelectedVenue(newValue);
       },
     };
   }
@@ -223,6 +223,23 @@ export function Edit({
       }
     }
 
+    // on event creation or venue change for venues with restricted use can only selected by the host
+    if (
+      selectedVenue?._id &&
+      selectedVenue.restrictedUse &&
+      selectedVenue._id !== event._id &&
+      !user?.venues?.includes(selectedVenue._id)
+    ) {
+      Alert.error(
+        t(
+          "event.edit.venueRestricedUse",
+          "Please use a other venue than {VENUE} or ask its hosts to create your event.",
+          { VENUE: selectedVenue.name },
+        ),
+      );
+      return;
+    }
+
     const noRsvp = noRsvpChecked;
 
     let maxParticipants;
@@ -236,7 +253,7 @@ export function Edit({
     const editevent = {
       title,
       description: changes.description,
-      venue: selectedLocation || {},
+      venue: selectedVenue || {},
       room: changes.room,
       startLocal: changes.startLocal,
       endLocal: changes.endLocal,
@@ -489,7 +506,7 @@ export function Edit({
           {showVenueSelection() && (
             <>
               <EditVenue {...venueEditAttr()} />
-              {!!selectedLocation && (
+              {!!selectedVenue && (
                 <div className="mb-3">
                   <label className="form-label">
                     {t("course.event.edit.room", "Room")}
@@ -603,42 +620,16 @@ export function Edit({
                 }}
               />
             )}
-            {!!event.courseId && (
-              <NotifyCourseMembers
-                courseId={event.courseId}
-                isNew={"new" in event}
-                notifyChecked={notifyChecked}
-                onChange={(newValue) => {
-                  setNotifyChecked(newValue);
-                }}
-              />
-            )}
-            {notifyChecked && (
-              <>
-                <label className="form-label">
-                  {t("course.event.edit.AddMessage", "Add message")}
-                  <small> {t("_inputField.optional")}</small>
-                </label>
-                <div className="input-group">
-                  <span className="input-group-text">
-                    <span className="fa-solid fa-pencil fa-fw" aria-hidden="true"></span>
-                  </span>
-                  <textarea
-                    rows={3}
-                    className="form-control"
-                    maxLength={2000}
-                    placeholder={t(
-                      "event.edit.additionalMessage",
-                      "If you feel good about doing so, describe what members of the course should know. (This message is only sent to the interested users and will not be visible in the event description afterwards.)",
-                    )}
-                    value={addNotificationMessage}
-                    onChange={(ev) => {
-                      setAddNotificationMessage(ev.currentTarget.value);
-                    }}
-                  ></textarea>
-                </div>
-              </>
-            )}
+
+            <Notify
+              event={event}
+              checked={notifyChecked}
+              message={addNotificationMessage}
+              onToggle={(v) => setNotifyChecked(v)}
+              onMessageChange={(v) => {
+                setAddNotificationMessage(v);
+              }}
+            />
             {!noRsvpChecked && PublicSettings.feature.sendReminderIsEditable && (
               <div className="form-check">
                 <input

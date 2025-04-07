@@ -1,3 +1,4 @@
+import { Mongo } from "meteor/mongo";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 
 import { TenantEntity, TenantModel } from "/imports/api/tenants/tenants";

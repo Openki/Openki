@@ -109,7 +109,7 @@ export interface UserEntity extends Meteor.User {
   /** (calculated) List of venues the user is a editor of */
   venues: string[];
 
-  /** The user agrees to receive occasional e-mails. */
+  /** The user agrees to receive occasional e-mails. Set on create after that readonly because we past that information to email service. */
   allowNews: boolean;
 }
 

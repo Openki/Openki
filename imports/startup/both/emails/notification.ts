@@ -9,6 +9,7 @@ import * as rsvp from "./notifications/rsvp";
 import * as rsvpTeam from "./notifications/rsvp.team";
 import * as comment from "./notifications/comment";
 import * as join from "./notifications/join";
+import * as course from "./notifications/course";
 import * as groupCourse from "./notifications/group.course";
 import * as privateMessage from "./notifications/private-message";
 
@@ -21,7 +22,8 @@ export type Model<T> = {
   ): Promise<
     {
       fromAddress?: string | undefined;
-    } & RootProps &
+      customEmailLogo?: string | undefined;
+    } & Omit<RootProps, "logo"> &
       // Remove some props
       Omit<T, "siteName" | "customSiteName" | "username" | "lng">
   >;
@@ -31,7 +33,7 @@ export type Model<T> = {
       siteName: string;
       username: string;
       lng: string;
-    } & RootProps &
+    } & Omit<RootProps, "logo"> &
       T,
   ) => React.JSX.Element;
 };
@@ -45,6 +47,7 @@ export const Notification = {
   "Rsvp.Team": rsvpTeam,
   Comment: comment,
   Join: join,
+  Course: course,
   "Group.Course": groupCourse,
   PrivateMessage: privateMessage,
 };

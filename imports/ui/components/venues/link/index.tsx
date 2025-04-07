@@ -2,12 +2,15 @@ import React from "react";
 import { Router } from "meteor/iron:router";
 import { Template } from "meteor/templating";
 import { useTranslation } from "react-i18next";
+import { useUser } from "/imports/utils/react-meteor-data";
+import { Icon } from "../Icon";
 
 import "./styles.scss";
 
 export type Venue = {
   _id?: string;
   name: string;
+  restrictedUse?: boolean | undefined;
   slug?: string;
 };
 
@@ -17,10 +20,19 @@ export type Props = {
   openInNewTab?: boolean | undefined;
 };
 
-function Venue({ name }: { name: string }) {
+function Venue({
+  id,
+  name,
+  restrictedUse,
+}: {
+  id?: string | undefined;
+  name: string;
+  restrictedUse?: boolean | undefined;
+}) {
   return (
     <>
-      <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>&nbsp;
+      <Icon id={id} restrictedUse={restrictedUse}></Icon>
+      &nbsp;
       {name}
     </>
   );
@@ -29,14 +41,31 @@ function Venue({ name }: { name: string }) {
 export function VenueTag({
   venue,
   openInNewTab,
+  className = "",
 }: {
   venue: Venue;
   openInNewTab?: boolean | undefined;
+  className?: string | undefined;
 }) {
   const { t } = useTranslation();
+  const user = useUser();
+
+  function tagClassName() {
+    if (!venue.restrictedUse) {
+      return "";
+    }
+
+    if (venue._id && user?.venues.includes(venue._id)) {
+      return "";
+    }
+
+    // show disabled only when restricted use and current user is not editor
+    return "venue-locked-tag";
+  }
+
   if (venue?._id) {
     return (
-      <div className="tag tag-link venue-tag">
+      <div className={`tag tag-link ${className} venue-tag ${tagClassName()}`}>
         <a
           data-bs-toggle="tooltip"
           data-bs-title={t("location.link.tooltip", "Show details of {VENUE}", {
@@ -45,7 +74,7 @@ export function VenueTag({
           href={Router.url("venueDetails", venue)}
           target={openInNewTab ? "_blank" : ""}
         >
-          <Venue name={venue.name} />
+          <Venue id={venue._id} name={venue.name} restrictedUse={venue.restrictedUse} />
         </a>
       </div>
     );

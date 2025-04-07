@@ -11,9 +11,9 @@ import { Post } from "./post";
 
 import "./styles.scss";
 
-export type Props = { select: string; courseId: string };
+export type Props = { select: string; courseId: string; eventId?: string | undefined };
 
-export function Discussion({ select, courseId }: Props) {
+export function Discussion({ select, courseId, eventId }: Props) {
   const { t } = useTranslation();
   const userId = useUserId();
   // If we want to jump to a comment we don't fold the comments
@@ -50,6 +50,7 @@ export function Discussion({ select, courseId }: Props) {
       post: {
         new: true,
         courseId,
+        eventId,
         userId,
         title: "",
         text: "",
@@ -127,7 +128,7 @@ export function Discussion({ select, courseId }: Props) {
               <Post post={post} responses={responses(post._id)} />
             </div>
           ))}
-          {limited() ? (
+          {limited() && (
             <button
               className="btn btn-add page-component-btn"
               type="button"
@@ -140,7 +141,7 @@ export function Discussion({ select, courseId }: Props) {
                 NUM: allDiscussions().length,
               })}
             </button>
-          ) : null}
+          )}
         </>
       )}
     </div>

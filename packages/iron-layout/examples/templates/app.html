@@ -1,0 +1,25 @@
+<head>
+  <title>app</title>
+</head>
+
+<body>
+  {{#Layout template="MyLayout" data=getData}}
+    Main Content-{{this}}
+
+    {{#contentFor "footer"}}
+      Footer stuff goes here! {{this}}
+    {{/contentFor}}
+  {{/Layout}}
+</body>
+
+<template name="MyLayout">
+  <h1>My Layout</h1>
+
+  <article>
+    {{> yield}}
+  </article>
+
+  <footer>
+    {{> yield "footer"}}
+  </footer>
+</template>

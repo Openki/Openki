@@ -46,6 +46,12 @@ a:focus,
   color: $venue-color;
 }
 
+.bg-venue-locked,
+.bg-venue-locked:hover {
+  background-color: $venue-locked-bg;
+  color: $venue-locked-color;
+}
+
 .border-none {
   border: 0 !important;
 }

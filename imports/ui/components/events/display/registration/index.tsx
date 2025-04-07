@@ -10,6 +10,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import { EventModel } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { Regions } from "/imports/api/regions/regions";
+import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
 
 import { PleaseLogin } from "/imports/ui/components/please-login";
 import { EventParticipants } from "/imports/ui/components/events/participants";
@@ -55,6 +56,8 @@ export function EventRegistration({ event }: Props) {
   const { t } = useTranslation();
   const [isBusy, setIsBusy] = useState("");
 
+  const [groupsIsLoading, groups] = useGroupsFindFilter({ ids: event.groupOrganizers });
+
   async function addParticipant(companions = 0) {
     setIsBusy("registering");
     try {
@@ -91,9 +94,15 @@ export function EventRegistration({ event }: Props) {
     return moment().isBefore(event.end);
   }
 
+  if (groupsIsLoading()) {
+    return null;
+  }
+
+  const registrationClosed = groups.some((g) => g.registrationClosed);
+
   return (
     <>
-      {searchParams.action === "register" ? (
+      {searchParams.action === "register" && (
         <PleaseLogin
           type="auto"
           onRender={() => {
@@ -101,8 +110,8 @@ export function EventRegistration({ event }: Props) {
             addParticipant();
           }}
         />
-      ) : null}
-      {searchParams.action === "unregister" ? (
+      )}
+      {searchParams.action === "unregister" && (
         <PleaseLogin
           type="auto"
           onRender={() => {
@@ -110,37 +119,38 @@ export function EventRegistration({ event }: Props) {
             removeParticipant();
           }}
         />
-      ) : null}
-      {isFuture() ? (
+      )}
+      {isFuture() && (
         <>
           <div className="page-component">
             <div className="page-component-header">
               <h4>{t("event.details.registration", "Registration")}</h4>
             </div>
           </div>
-          {event.noRsvp ? (
-            <div className="page-component">
-              <b>{t("event.details.noRsvp", "Registration not required.")}</b>
-            </div>
-          ) : (
-            <>
+          {!registrationClosed ? (
+            event.noRsvp ? (
               <div className="page-component">
-                <b>
-                  {!event.attendedBy(user?._id)
-                    ? t(
-                        "event.details.i-participate-no",
-                        "Let it be known you are participating in this event. Your registration is binding.",
-                      )
-                    : t(
-                        "event.details.i-participate-yes",
-                        "You are now registered. Your registration is binding.",
-                      )}
-                </b>
+                <strong>{t("event.details.noRsvp", "Registration not required.")}</strong>
               </div>
-              <div className="page-component">
-                {!event.attendedBy(user?._id) ? (
-                  !event.canceled ? (
-                    !event.isFullyBooked() ? (
+            ) : (
+              <>
+                <div className="page-component">
+                  <b>
+                    {!event.attendedBy(user?._id)
+                      ? t(
+                          "event.details.i-participate-no",
+                          "Let it be known you are participating in this event. Your registration is binding.",
+                        )
+                      : t(
+                          "event.details.i-participate-yes",
+                          "You are now registered. Your registration is binding.",
+                        )}
+                  </b>
+                </div>
+                <div className="page-component">
+                  {!event.attendedBy(user?._id) ? (
+                    !event.canceled &&
+                    (!event.isFullyBooked() ? (
                       <RegisterPanel
                         event={event}
                         busy={isBusy === "registering"}
@@ -150,27 +160,38 @@ export function EventRegistration({ event }: Props) {
                       />
                     ) : (
                       <ButtonRegistrationClosed busy={isBusy === "registering"} />
-                    )
-                  ) : null
-                ) : (
-                  <UnregisterPanel
-                    busy={isBusy === "unregistering"}
-                    event={event}
-                    onUnregister={async () => {
-                      await removeParticipant();
-                    }}
-                  />
+                    ))
+                  ) : (
+                    <UnregisterPanel
+                      busy={isBusy === "unregistering"}
+                      event={event}
+                      onUnregister={async () => {
+                        await removeParticipant();
+                      }}
+                    />
+                  )}
+                </div>
+              </>
+            )
+          ) : (
+            <div className="page-component">
+              <strong>
+                {t(
+                  "event.details.registrationClosed",
+                  "The registration for this event is closed.",
                 )}
-              </div>
-            </>
+              </strong>
+            </div>
           )}
         </>
-      ) : null}
-      {!event.noRsvp ? (
-        <div className="page-component">
-          <EventParticipants event={event} />
-        </div>
-      ) : null}
+      )}
+      {!event.noRsvp &&
+        // when registration closed, only show participant list when more than 0 participants
+        (!registrationClosed || (event.participants && event.participants.length > 0)) && (
+          <div className="page-component">
+            <EventParticipants event={event} />
+          </div>
+        )}
     </>
   );
 }

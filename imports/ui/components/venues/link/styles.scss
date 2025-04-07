@@ -2,4 +2,8 @@
 
 .venue-tag {
   @include tag($venue-bg, $venue-color);
+
+  &.venue-locked-tag {
+    @include tag($venue-locked-bg, $venue-locked-color);
+  }
 }
