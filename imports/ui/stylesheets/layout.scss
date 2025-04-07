@@ -16,7 +16,6 @@ body {
   &.test-warning {
     padding-top: $navbar-height + 24px;
 
-    .alert-messages,
     .calendar-nav-container {
       top: $navbar-height + 24px;
     }
