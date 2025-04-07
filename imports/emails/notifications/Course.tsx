@@ -35,7 +35,7 @@ export function Course({
       <tr>
         <td>
           <h5 className="title">{t("email.base.greeting", { USERNAME: username })}</h5>
-          <p>
+          <p className="pre">
             {t(
               "notification.course.mail.intro",
               'Congratulations, you successfully created "{COURSE}" on `{SITENAME}`.',
@@ -48,7 +48,7 @@ export function Course({
               <p>
                 {t(
                   "notification.course.mail.description",
-                  "Here is a copy of the description you entered",
+                  "Here is a copy of the description you entered:",
                   { COURSE: course, SITENAME: <a href={customSiteUrl}>{customSiteName}</a> },
                 )}
               </p>
@@ -60,10 +60,10 @@ export function Course({
             </>
           )}
 
-          <p>
+          <p className="pre">
             {t(
               "notification.course.mail.next",
-              "We will inform you if people join your proposal. Here is the link if you want to change something or add an image... Or share it with friends",
+              "We will inform you if people join your proposal.\nHere is the link if you want to change something or add an image... Or share it with friends",
             )}
           </p>
           <p className="text-center">
