@@ -52,10 +52,14 @@ export function PrivateMessage({
           <p>
             {t("notification.privateMessage.mail.intro", "You got a private message from:")}
             <a href={senderLink}>{sender.getDisplayName()}</a>
-
-            {fromAddress ? <a href={`mailto:${fromAddress}`}>{fromAddress}</a> : null}
+            {!!fromAddress && (
+              <>
+                {" "}
+                (<a href={`mailto:${fromAddress}`}>{fromAddress}</a>)
+              </>
+            )}
           </p>
-          {course ? (
+          {!!course && (
             <p>
               {t(
                 "notification.privateMessage.mail.fromCourse",
@@ -63,9 +67,9 @@ export function PrivateMessage({
                 { COURSE: course },
               )}
             </p>
-          ) : null}
+          )}
 
-          {event ? (
+          {!!event && (
             <p>
               {t(
                 "notification.privateMessage.mail.fromEvent",
@@ -73,7 +77,7 @@ export function PrivateMessage({
                 { EVENT: event },
               )}
             </p>
-          ) : null}
+          )}
 
           <table className="comment-box">
             <tr>
@@ -96,11 +100,6 @@ export function PrivateMessage({
                   "You can also send {SENDERNAME} an email directly  by clicking reply in your email client",
                   { SENDERNAME: sender.getDisplayName() },
                 )}
-                <br />
-                <br />
-                <a className="text-center" href={`mailto:${fromAddress}`}>
-                  {fromAddress}
-                </a>
               </p>
             </>
           ) : (
