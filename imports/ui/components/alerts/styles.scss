@@ -1,29 +1,7 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
-.alert-messages {
-  left: calc(var(--bs-gutter-x) * 0.5);
-  position: fixed;
-  right: calc(var(--bs-gutter-x) * 0.5);
-  top: $navbar-height;
-  z-index: $zindex-navbar-fixed - 1;
-}
-
-$message-fade-duration: 0.1s;
-
 .alert-message {
   border-radius: 0;
   border-top: 0;
   margin: 0;
-  opacity: 0;
-  transition: opacity $message-fade-duration;
-
-  &.is-faded-in {
-    opacity: 1;
-    transition: opacity $message-fade-duration;
-  }
-}
-
-.alert-messages-spacer {
-  height: 0;
-  transition: height $message-fade-duration;
 }

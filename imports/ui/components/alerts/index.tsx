@@ -39,18 +39,6 @@ function Alert({
   const elementRef = useRef<HTMLDivElement>(null);
   const [timer, setTimer] = useState<number>();
 
-  const updateSpacerHeight = () => {
-    const height = $(".alert-messages").height() || 0;
-
-    if (height) {
-      elementRef.current?.classList.add("is-faded-in");
-    } else {
-      elementRef.current?.classList.remove("is-faded-in");
-    }
-
-    $(".alert-messages-spacer").height(height);
-  };
-
   const remove = (alertId: string) => {
     if (!elementRef.current) {
       throw new Error("Unexpected falsy: elementRef.current");
@@ -59,7 +47,6 @@ function Alert({
     // get 'transition-duration' and convert to miliseconds for fadeOut
     const duration = Number.parseFloat($alert.css("transition-duration")) * 1000;
     $alert.fadeOut(duration, () => {
-      updateSpacerHeight();
       AlertsCollection.remove({ _id: alertId });
     });
   };
@@ -69,12 +56,17 @@ function Alert({
   }
 
   useEffect(() => {
-    updateSpacerHeight();
     if (timer) {
       Meteor.clearTimeout(timer);
     }
     setTimer(Meteor.setTimeout(() => remove(id), timeout));
   }, [id, timeout]);
+
+  useEffect(() => {
+    if (elementRef.current) {
+      scrollIntoViewIfNotVisible(elementRef.current, ($(".navbar")?.height() || 0) + 7);
+    }
+  });
 
   let timeoutActionFocus: any = 0;
   return (
@@ -100,10 +92,7 @@ function Alert({
                   const elementId = l.href.split("#")[1];
                   const element = elementId && document.getElementById(elementId);
                   if (element) {
-                    scrollIntoViewIfNotVisible(
-                      element,
-                      ($(".alert-messages")?.height() || 0) + ($(".navbar")?.height() || 0),
-                    );
+                    scrollIntoViewIfNotVisible(element, $(".navbar")?.height() || 0);
 
                     element.classList.remove("action-focus");
                     Meteor.setTimeout(() => {
@@ -142,13 +131,9 @@ function Alert({
 export function Alerts() {
   const alerts = useTracker(() => AlertsCollection.find().fetch());
 
-  useEffect(() => {
-    const height = $(".alert-messages").height() || 0;
-    $(".alert-messages-spacer").height(height);
-  });
   return (
     <>
-      <div className="alert-messages container mt-2">
+      <div className="container mt-2">
         {alerts.map((a) => (
           <Alert
             key={a._id}
@@ -161,7 +146,6 @@ export function Alerts() {
           />
         ))}
       </div>
-      <div className="alert-messages-spacer"></div>
     </>
   );
 }
