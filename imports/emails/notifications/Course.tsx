@@ -48,7 +48,7 @@ export function Course({
               <p>
                 {t(
                   "notification.course.mail.description",
-                  'Here is a copy of the description you entered',
+                  "Here is a copy of the description you entered",
                   { COURSE: course, SITENAME: <a href={customSiteUrl}>{customSiteName}</a> },
                 )}
               </p>
@@ -58,7 +58,7 @@ export function Course({
                 </tr>
               </table>
             </>
-          ) }
+          )}
 
           <p>
             {t(
