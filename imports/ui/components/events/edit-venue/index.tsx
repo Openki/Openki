@@ -23,6 +23,7 @@ import { Map } from "./map";
 import { Display } from "../../location/display";
 import { ReactJoin } from "../../../../utils/ReactJoin";
 import { VenueTag } from "../../venues/link";
+import { Icon as VenueIcon } from "../../venues/Icon";
 
 function toEventVenue(v: EventVenueEntity) {
   return {
@@ -46,7 +47,6 @@ function filterUserVenues(user: UserModel | null, venues: EventVenueEntity[]) {
 function CustomMenu({ results, menuProps }: { results: any[]; menuProps: RenderMenuProps }) {
   const { t } = useTranslation();
   const user = useUser();
-
   let vs = results as EventVenueEntity[];
   const userVenues = filterUserVenues(user, vs);
   const uvs = intersectionBy(vs, userVenues, (v) => v._id);
@@ -70,7 +70,7 @@ function CustomMenu({ results, menuProps }: { results: any[]; menuProps: RenderM
               position={index}
               className="bg-venue text-truncate"
             >
-              <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>{" "}
+              <span className="fa-solid fa-house-user fa-fw" aria-hidden="true"></span>{" "}
               {ReactJoin([!!venue.name && <strong>{venue.name}</strong>, venue.address])}
             </MenuItem>
           ))}
@@ -95,12 +95,7 @@ function CustomMenu({ results, menuProps }: { results: any[]; menuProps: RenderM
             >
               {!!venue._id && (
                 <>
-                  <span
-                    className={`fa-solid ${
-                      !venue.restrictedUse ? "fa-house" : "fa-house-lock"
-                    } fa-fw`}
-                    aria-hidden="true"
-                  ></span>{" "}
+                  <VenueIcon id={venue._id} restrictedUse={venue.restrictedUse} />{" "}
                 </>
               )}
               {ReactJoin([

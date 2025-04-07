@@ -2,6 +2,8 @@ import React from "react";
 import { Router } from "meteor/iron:router";
 import { Template } from "meteor/templating";
 import { useTranslation } from "react-i18next";
+import { useUser } from "/imports/utils/react-meteor-data";
+import { Icon } from "../Icon";
 
 import "./styles.scss";
 
@@ -18,13 +20,18 @@ export type Props = {
   openInNewTab?: boolean | undefined;
 };
 
-function Venue({ name, restrictedUse }: { name: string; restrictedUse?: boolean | undefined }) {
+function Venue({
+  id,
+  name,
+  restrictedUse,
+}: {
+  id?: string | undefined;
+  name: string;
+  restrictedUse?: boolean | undefined;
+}) {
   return (
     <>
-      <span
-        className={`fa-solid ${!restrictedUse ? "fa-house" : "fa-house-lock"} fa-fw`}
-        aria-hidden="true"
-      ></span>
+      <Icon id={id} restrictedUse={restrictedUse}></Icon>
       &nbsp;
       {name}
     </>
@@ -41,13 +48,24 @@ export function VenueTag({
   className?: string | undefined;
 }) {
   const { t } = useTranslation();
+  const user = useUser();
+
+  function tagClassName() {
+    if (!venue.restrictedUse) {
+      return "";
+    }
+
+    if (venue._id && user?.venues.includes(venue._id)) {
+      return "";
+    }
+
+    // show disabled only when restricted use and current user is not editor
+    return "venue-locked-tag";
+  }
+
   if (venue?._id) {
     return (
-      <div
-        className={`tag tag-link ${className} venue-tag${
-          venue.restrictedUse ? " venue-locked-tag" : ""
-        }`}
-      >
+      <div className={`tag tag-link ${className} venue-tag ${tagClassName()}`}>
         <a
           data-bs-toggle="tooltip"
           data-bs-title={t("location.link.tooltip", "Show details of {VENUE}", {
@@ -56,7 +74,7 @@ export function VenueTag({
           href={Router.url("venueDetails", venue)}
           target={openInNewTab ? "_blank" : ""}
         >
-          <Venue name={venue.name} restrictedUse={venue.restrictedUse} />
+          <Venue id={venue._id} name={venue.name} restrictedUse={venue.restrictedUse} />
         </a>
       </div>
     );
