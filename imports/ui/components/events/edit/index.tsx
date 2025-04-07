@@ -25,7 +25,7 @@ import { useTranslation } from "react-i18next";
 import { RegionTag } from "../../regions/tag";
 import { Richtext } from "../../richtext";
 import { PricePolicy } from "../../price-policy";
-import { EditVenue } from "../edit-location";
+import { EditVenue } from "../edit-venue";
 import { EditCustomFields } from "../../edit-custom-fields";
 import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
 import { ButtonCancel, ButtonSave } from "/imports/ui/components/buttons";
@@ -64,7 +64,7 @@ export function Edit({
     region = region || regions[0]?._id;
   }
   const [selectedRegion, setSelectedRegion] = useState<string>(region || currentRegion);
-  const [selectedLocation, setSelectedLocation] = useState(event.venue);
+  const [selectedVenue, setSelectedVenue] = useState(event.venue);
   const [noRsvpChecked, setNoRsvpChecked] = useState(!!event.noRsvp);
   const [isBusy, setIsBusy] = useState(false);
 
@@ -173,9 +173,9 @@ export function Edit({
   function venueEditAttr() {
     return {
       region: selectedRegion,
-      value: selectedLocation,
+      value: selectedVenue,
       onChange: (newValue: EventVenueEntity | undefined) => {
-        setSelectedLocation(newValue);
+        setSelectedVenue(newValue);
       },
     };
   }
@@ -225,15 +225,16 @@ export function Edit({
 
     // on event creation or venue change for venues with restricted use can only selected by the host
     if (
-      selectedLocation?._id &&
-      selectedLocation.restrictedUse &&
-      selectedLocation._id !== event._id &&
-      !user?.venues?.includes(selectedLocation._id)
+      selectedVenue?._id &&
+      selectedVenue.restrictedUse &&
+      selectedVenue._id !== event._id &&
+      !user?.venues?.includes(selectedVenue._id)
     ) {
       Alert.error(
         t(
           "event.edit.venueRestricedUse",
-          "Please use a other venue or ask the host to create the event",
+          "Please use a other venue than {VENUE} or ask its hosts to create your event.",
+          { VENUE: selectedVenue.name },
         ),
       );
       return;
@@ -252,7 +253,7 @@ export function Edit({
     const editevent = {
       title,
       description: changes.description,
-      venue: selectedLocation || {},
+      venue: selectedVenue || {},
       room: changes.room,
       startLocal: changes.startLocal,
       endLocal: changes.endLocal,
@@ -505,7 +506,7 @@ export function Edit({
           {showVenueSelection() && (
             <>
               <EditVenue {...venueEditAttr()} />
-              {!!selectedLocation && (
+              {!!selectedVenue && (
                 <div className="mb-3">
                   <label className="form-label">
                     {t("course.event.edit.room", "Room")}

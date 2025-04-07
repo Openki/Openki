@@ -10,13 +10,7 @@ import { TileLayers } from "/imports/ui/components/TileLayer";
 
 import "./styles.scss";
 
-export function EditLocationMap({
-  value,
-  onChange,
-}: {
-  value: Geodata;
-  onChange: (value: Geodata) => void;
-}) {
+export function Map({ value, onChange }: { value: Geodata; onChange: (value: Geodata) => void }) {
   const mapRef = useRef<any>(null);
   const markerRef = useRef<any>(null);
 
@@ -37,7 +31,7 @@ export function EditLocationMap({
     className: "leaflet-marker-icon-pin",
   });
   return (
-    <div className="edit-location">
+    <div className="edit-venue-map">
       <MapContainer ref={mapRef} center={[value.coordinates[1], value.coordinates[0]]} zoom={19}>
         {TileLayers[locale] || TileLayers.default}
         <Marker

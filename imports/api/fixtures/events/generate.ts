@@ -85,8 +85,11 @@ export async function generate() {
         loc: venue.loc,
         address: venue.address,
         editor: venue.editor,
-        restrictedUse: venue.restrictedUse,
       };
+
+      if (typeof venue.restrictedUse !== "undefined") {
+        event.venue.restrictedUse = venue.restrictedUse;
+      }
 
       if (prng() > 0.6) {
         event.room = rooms[Math.floor(prng() * rooms.length)];

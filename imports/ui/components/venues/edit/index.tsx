@@ -328,9 +328,10 @@ export function Edit({
               id="eventRestrictedUseCheck"
               checked={changes.restrictedUse}
               onChange={(ev) => {
+                const restrictedUse = ev.currentTarget.checked;
                 setChanges((prevState) => ({
                   ...prevState,
-                  restrictedUse: ev.currentTarget.checked,
+                  restrictedUse,
                 }));
               }}
             />
