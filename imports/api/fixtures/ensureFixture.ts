@@ -116,6 +116,7 @@ export const ensure = {
       tenants: [],
       groups: [],
       badges: [],
+      venues: [],
     } as any);
 
     const age = Math.floor(prng() * 100000000000);
