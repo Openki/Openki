@@ -109,6 +109,7 @@ export const EventVenuePattern = {
   loc: Match.Optional(GeodataPattern),
   address: Match.Optional(String),
   editor: Match.Optional(String),
+  restrictedUse: Match.Optional(Boolean),
 };
 
 export const UpdateFieldsPattern = {
