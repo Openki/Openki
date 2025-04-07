@@ -32,6 +32,7 @@ export type VenueTemplate = {
   }>;
   createdby?: string;
   editor?: string;
+  restrictedUse?: boolean;
 };
 
 export async function create() {
@@ -67,6 +68,10 @@ export async function create() {
     venue.editor = venue.editor
       ? (await ensure.user(venue.editor, venueData.region))._id
       : (await ensure.user(venue.createdby, venueData.region))._id;
+
+    if (venue.restrictedUse) {
+      venue.name += " (only Hosts)";
+    }
 
     await Venues.updateAsync(venue._id, venue);
   }

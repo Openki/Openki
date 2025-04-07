@@ -1,0 +1,88 @@
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { UserModel } from "/imports/api/users/users";
+import { Footer } from "./components/Footer";
+import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
+
+export type Props = {
+  course: React.JSX.Element;
+  courseLink: string;
+  courseDescription: string;
+  creater: UserModel;
+  username: string;
+  customSiteUrl: string;
+  customSiteName: string;
+  unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
+  campaign: string;
+  lng: string;
+};
+
+export function Course({
+  course,
+  courseLink,
+  courseDescription,
+  username,
+  customSiteUrl,
+  customSiteName,
+  unsubscribe,
+  campaign,
+  lng,
+}: Props) {
+  const { t } = useTranslation(undefined, { lng });
+
+  return (
+    <>
+      <tr>
+        <td>
+          <h5 className="title">{t("email.base.greeting", { USERNAME: username })}</h5>
+          <p>
+            {t(
+              "notification.course.mail.intro",
+              'Congratulations, you successfully created "{COURSE}" on `{SITENAME}`.',
+              { COURSE: course, SITENAME: <a href={customSiteUrl}>{customSiteName}</a> },
+            )}
+          </p>
+
+          {!!courseDescription && (
+            <>
+              <p>
+                {t(
+                  "notification.course.mail.description",
+                  "Here is a copy of the description you entered",
+                  { COURSE: course, SITENAME: <a href={customSiteUrl}>{customSiteName}</a> },
+                )}
+              </p>
+              <table className="comment-box">
+                <tr>
+                  <td dangerouslySetInnerHTML={{ __html: courseDescription }}></td>
+                </tr>
+              </table>
+            </>
+          )}
+
+          <p>
+            {t(
+              "notification.course.mail.next",
+              "We will inform you if people join your proposal. Here is the link if you want to change something or add an image... Or share it with friends",
+            )}
+          </p>
+          <p className="text-center">
+            <a className="button" href={courseLink}>
+              {t("notification.course.mail.replyButton.simple", "Visit my proposal")}
+            </a>
+          </p>
+        </td>
+      </tr>
+
+      <Footer
+        receiveNote={t(
+          "notification.course.mail.recpnote",
+          "You receive this message because you're the creator of this course.",
+        )}
+        unsubscribe={unsubscribe}
+        campaign={campaign}
+        lng={lng}
+      />
+    </>
+  );
+}
