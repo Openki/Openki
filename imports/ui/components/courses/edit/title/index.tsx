@@ -68,7 +68,11 @@ function Courses({ search }: { search: string }) {
   ) : null;
 }
 
-export function Title(data: { value?: string | undefined; onChange: (newValue: string) => void }) {
+export function Title(data: {
+  value?: string | undefined;
+  showOtherProposals?: boolean | undefined;
+  onChange: (newValue: string) => void;
+}) {
   const { t } = useTranslation();
 
   const [proposedSearch, setProposedSearch] = useState(data?.value || "");
@@ -101,7 +105,7 @@ export function Title(data: { value?: string | undefined; onChange: (newValue: s
         }, 220)}
         autoComplete="off"
       />
-      {proposedSearch.length > 3 && <Courses search={proposedSearch} />}
+      {data.showOtherProposals && proposedSearch.length > 3 && <Courses search={proposedSearch} />}
     </div>
   );
 }
