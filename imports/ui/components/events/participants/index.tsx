@@ -85,14 +85,8 @@ export function EventParticipants({ event }: Props) {
       return false;
     }
 
-    if (user?.privileged("admin")) {
-      return true;
-    }
 
-    return !!(
-      (user && event?.editableBy(user)) ||
-      user?.groups.some((g) => event?.groupOrganizers.includes(g))
-    );
+    return !!(user && event.editableBy(user));
   }
 
   function sendMessageAttr(): SendMessageData {

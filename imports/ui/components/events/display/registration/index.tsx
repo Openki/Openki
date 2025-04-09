@@ -56,7 +56,9 @@ export function EventRegistration({ event }: Props) {
   const { t } = useTranslation();
   const [isBusy, setIsBusy] = useState("");
 
-  const [groupsIsLoading, groups] = useGroupsFindFilter({ ids: event.groupOrganizers });
+  const [groupsIsLoading, groups] = useGroupsFindFilter({
+    ids: event.allGroupOrganizers(),
+  });
 
   async function addParticipant(companions = 0) {
     setIsBusy("registering");
