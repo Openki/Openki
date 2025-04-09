@@ -75,7 +75,7 @@ export interface EventEntity {
   /** list of group._id that promote this event ("promote groups"). */
   groups: string[];
   /**
-   * list of group._id that are allowed to edit the course ("team groups", based on the ui design:
+   * list of group._id that are allowed to edit the event ("team groups", based on the ui design:
    * Every "team group" promotes the event and is part of the groups list). */
   groupOrganizers: string[];
   /** ID of the replication parent, only cloned events have this */
@@ -180,6 +180,12 @@ export class OEvent {
       return false;
     }
     return this.numberOfParticipants() >= this.maxParticipants;
+  }
+
+  /** list of group _id that are allowed to edit the event, calculated from
+   * the groupOranizers from the event and the course */
+  allGroupOrganizers(this: EventModel) {
+    return this.allGroups?.filter((g) => this.editors.includes(g)) || [];
   }
 }
 
