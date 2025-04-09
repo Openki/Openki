@@ -759,6 +759,7 @@ export function Edit(data: Data) {
             onChange={(newTitle) => {
               setTitle(newTitle);
             }}
+            showOtherProposals={!data._id}
           />
           <div className="mb-3">
             <label className="form-label">{t("course.edit.description", "Description")}</label>
