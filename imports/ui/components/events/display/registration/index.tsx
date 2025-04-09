@@ -129,52 +129,50 @@ export function EventRegistration({ event }: Props) {
               <h4>{t("event.details.registration", "Registration")}</h4>
             </div>
           </div>
-          {!registrationClosed ? (
-            event.noRsvp ? (
+          {event.noRsvp ? (
+            <div className="page-component">
+              <strong>{t("event.details.noRsvp", "Registration not required.")}</strong>
+            </div>
+          ) : !registrationClosed ? (
+            <>
               <div className="page-component">
-                <strong>{t("event.details.noRsvp", "Registration not required.")}</strong>
+                <b>
+                  {!event.attendedBy(user?._id)
+                    ? t(
+                        "event.details.i-participate-no",
+                        "Let it be known you are participating in this event. Your registration is binding.",
+                      )
+                    : t(
+                        "event.details.i-participate-yes",
+                        "You are now registered. Your registration is binding.",
+                      )}
+                </b>
               </div>
-            ) : (
-              <>
-                <div className="page-component">
-                  <b>
-                    {!event.attendedBy(user?._id)
-                      ? t(
-                          "event.details.i-participate-no",
-                          "Let it be known you are participating in this event. Your registration is binding.",
-                        )
-                      : t(
-                          "event.details.i-participate-yes",
-                          "You are now registered. Your registration is binding.",
-                        )}
-                  </b>
-                </div>
-                <div className="page-component">
-                  {!event.attendedBy(user?._id) ? (
-                    !event.canceled &&
-                    (!event.isFullyBooked() ? (
-                      <RegisterPanel
-                        event={event}
-                        busy={isBusy === "registering"}
-                        onRegister={async (companions) => {
-                          await addParticipant(companions);
-                        }}
-                      />
-                    ) : (
-                      <ButtonRegistrationClosed busy={isBusy === "registering"} />
-                    ))
-                  ) : (
-                    <UnregisterPanel
-                      busy={isBusy === "unregistering"}
+              <div className="page-component">
+                {!event.attendedBy(user?._id) ? (
+                  !event.canceled &&
+                  (!event.isFullyBooked() ? (
+                    <RegisterPanel
                       event={event}
-                      onUnregister={async () => {
-                        await removeParticipant();
+                      busy={isBusy === "registering"}
+                      onRegister={async (companions) => {
+                        await addParticipant(companions);
                       }}
                     />
-                  )}
-                </div>
-              </>
-            )
+                  ) : (
+                    <ButtonRegistrationClosed busy={isBusy === "registering"} />
+                  ))
+                ) : (
+                  <UnregisterPanel
+                    busy={isBusy === "unregistering"}
+                    event={event}
+                    onUnregister={async () => {
+                      await removeParticipant();
+                    }}
+                  />
+                )}
+              </div>
+            </>
           ) : (
             <div className="page-component">
               <strong>
@@ -189,7 +187,7 @@ export function EventRegistration({ event }: Props) {
       )}
       {!event.noRsvp &&
         // when registration closed, only show participant list when more than 0 participants
-        (!registrationClosed || (event.participants && event.participants.length > 0)) && (
+        (!registrationClosed || !!event.participants?.length) && (
           <div className="page-component">
             <EventParticipants event={event} />
           </div>
