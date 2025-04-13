@@ -204,14 +204,15 @@ export const save = ServerMethod(
         throw new Meteor.Error(400, "Event date not provided");
       }
 
-      const testedGroups =
-        editFields.groups?.map((groupId) => {
-          const group = Groups.findOne(groupId);
+      const testedGroups = await Promise.all(
+        editFields.groups?.map(async (groupId) => {
+          const group = await Groups.findOneAsync(groupId);
           if (!group) {
             throw new Meteor.Error(404, `no group with id ${groupId}`);
           }
           return group._id;
-        }) || [];
+        }) || [],
+      );
       editFields.groups = testedGroups;
 
       // Coerce faulty end dates
