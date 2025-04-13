@@ -3,7 +3,7 @@ import { Mongo } from "meteor/mongo";
 // ======== DB-Model: ========
 // "basic"         -> String    "v0.4.2-alpha"
 // "complete"      -> String    "v0.4.2-alpha-49-g1a8f329"
-// "branch"        -> String    "master"
+// "branch"        -> String    "main"
 // "commit"        -> String    "1a8f32979c6e367b64380b0ed443dfe0f4a2f46a"
 // "commitShort"   -> String    "1a8f329"
 // "timestamp"     -> String    "2016-01-13"
