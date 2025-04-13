@@ -30,7 +30,7 @@ cleanup:
   only:
   - dev
   - staging
-  - master
+  - main
 
 
 lint:
@@ -97,10 +97,10 @@ deploy_staging:
 deploy_sandbox:
   stage: deploy
   variables:
-    SOURCE_BRANCH: master
+    SOURCE_BRANCH: main
     TARGET_HOST: sandbox
   only:
-  - master
+  - main
   trigger: Openki/sysadmin/deploy-config
 
 
@@ -109,9 +109,9 @@ deploy_sandbox:
 #deploy_prod:
 #  stage: deploy
 #  variables:
-#    SOURCE_BRANCH: master
+#    SOURCE_BRANCH: main
 #    TARGET_HOST: live
 #  only:
-#  - master
+#  - main
 #  trigger: Openki/sysadmin/deploy-config
 #
