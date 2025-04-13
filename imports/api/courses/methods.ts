@@ -175,7 +175,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
             set.roles.push(type);
           }
         } else {
-          const shouldHave = !!(role.preset || changes.roles?.[type]);
+          const shouldHave = !!changes.roles?.[type];
           const have = course.roles.includes(type);
           if (have && !shouldHave) {
             await Courses.updateAsync({ _id: courseId }, { $pull: { roles: type } });
