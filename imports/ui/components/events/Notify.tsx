@@ -54,12 +54,14 @@ function CourseMembers({
 
 export function Notify({
   event,
+  isNew,
   checked,
   message,
   onToggle,
   onMessageChange,
 }: {
   event: EventEditData;
+  isNew: boolean;
   checked: boolean;
   message: string;
   onToggle: (value: boolean) => void;
@@ -93,7 +95,7 @@ export function Notify({
       {!!event.courseId && (
         <CourseMembers
           courseId={event.courseId}
-          isNew={"new" in event}
+          isNew={isNew}
           notifyChecked={checked}
           onChange={(newValue) => {
             onToggle(newValue);

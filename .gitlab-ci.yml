@@ -8,11 +8,11 @@ stages:
   - deploy
 
 
-cache:
-  paths:
-  - node_modules/
-  - .npm/
-  - .meteor/
+# cache:
+#  paths:
+#  - node_modules/
+#  - .npm/
+#  - .meteor/
 
 
 variables:
@@ -42,7 +42,7 @@ lint:
 
 # Unit tests
 test:
-  stage: test
+  stage: lint
   tags:
   - gitlab-org
   script: ./ci/test.sh
@@ -50,7 +50,7 @@ test:
 
 # e2e tests
 app-test:
-  stage: test
+  stage: lint
   tags:
   - gitlab-org-docker
   script: ./ci/app-test.sh

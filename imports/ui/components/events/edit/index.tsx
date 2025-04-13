@@ -623,6 +623,7 @@ export function Edit({
 
             <Notify
               event={event}
+              isNew={"new" in event}
               checked={notifyChecked}
               message={addNotificationMessage}
               onToggle={(v) => setNotifyChecked(v)}
