@@ -70,16 +70,16 @@ export function CourselistPage() {
   return (
     <>
       <style>{options.style.map((rule) => rule)}</style>
-      {courses().length === 0 ? (
+      {courses().length === 0 && (
         <h2 className="mt-5 text-center">
           {t("frame.courselist.empty", "There is nothing here yet")}
         </h2>
-      ) : null}
+      )}
       {courses().map((course) => (
         <Course key={course._id} course={course} hideInterested={options.hideInterested} />
       ))}
-      {isLoading() ? <LoadingRow /> : null}
-      {moreCourses() ? (
+      {isLoading() && <LoadingRow />}
+      {moreCourses() && (
         <div className="mt-2 text-center">
           <button
             className="btn btn-secondary"
@@ -91,7 +91,7 @@ export function CourselistPage() {
             {t("_button.more")}
           </button>
         </div>
-      ) : null}
+      )}
     </>
   );
 }
