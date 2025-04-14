@@ -44,7 +44,7 @@ function CourseMembers({
             )
           : t(
               "event.edit.notifyEditEvent",
-              'Send notification to all interested and participants of the "{COURSE}" course about the changes you made.',
+              'Send notification to all interested and participants of "{COURSE}" with the up-to-date event information.',
               { COURSE: course?.name || "..." },
             )}
       </label>
