@@ -5,11 +5,11 @@ NC='\033[0m'
 
 echo ""
 echo -e "${YELLOW}=============================================================${NC}"
-echo -e "\e[1;33mRun app-tests with:\e[21m
+echo -e "\e[1;33mRun integration tests with:\e[21m
     meteor npm run test:integration
     or  meteor npm run test:integration:watch (to run and witness it in your local browser: open https://localhost:3000/) \e[0m
 
-    If app-tests are run in a docker container, it needs a headless chromium to work"
+    If integration tests are run in a docker container, it needs a headless chromium to work"
 echo -e "${YELLOW}=============================================================${NC}"
 echo ""
 
