@@ -7,7 +7,7 @@ TEXT='\e[21m'
 echo ""
 echo -e "${YELLOW}=============================================================${NC}"
 echo -e "${MAINTEXT}Run tests with:${TEXT}
-    meteor npm run test${NC}"
+    meteor npm run test:unit${NC}"
 echo -e "${YELLOW}=============================================================${NC}"
 echo ""
 
@@ -21,4 +21,4 @@ meteor update --patch
 meteor npm i
 meteor node -v && meteor npm version
 
-meteor npm run test
+meteor npm run test:unit
