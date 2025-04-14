@@ -8,11 +8,11 @@ stages:
   - deploy
 
 
-# cache:
-#  paths:
-#  - node_modules/
-#  - .npm/
-#  - .meteor/
+cache:
+ paths:
+ - node_modules/
+ - .npm/
+ - .meteor/
 
 
 variables:
