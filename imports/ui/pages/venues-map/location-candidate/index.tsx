@@ -6,13 +6,13 @@ import { VenueModel } from "/imports/api/venues/venues";
 
 import { MarkerEntity } from "/imports/ui/lib/location-tracker";
 
-export type Props = {
+export interface Props {
   marker: MarkerEntity & VenueModel;
   handles: {
     onMouseEnter: (id: string) => void;
     onMouseLeave: () => void;
   };
-};
+}
 
 export function LocationCandidate({ marker, handles }: Props) {
   return (

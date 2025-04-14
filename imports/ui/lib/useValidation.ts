@@ -1,15 +1,13 @@
 import { useState } from "react";
 
-export type Mapping = {
-  [name: string]: {
+export type Mapping = Record<string, {
     onCheckValidity?: () => boolean;
     text: () => string | React.JSX.Element | undefined | null;
     field: string;
-  };
-};
+  }>;
 
 export function useValidation(mapping: Mapping, initialCheck = false) {
-  const initialState: { [field: string]: string | React.JSX.Element | undefined | null } = {};
+  const initialState: Record<string, string | React.JSX.Element | undefined | null> = {};
 
   if (initialCheck) {
     Object.keys(mapping).forEach((key) => {
@@ -49,7 +47,7 @@ export function useValidation(mapping: Mapping, initialCheck = false) {
   };
 
   return [errors, checkValidity, add, resetErrors] as readonly [
-    errors: { [field: string]: string },
+    errors: Record<string, string>,
     checkValidity: () => boolean,
     addError: (key: string) => void,
     resetErrors: () => void,

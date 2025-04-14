@@ -92,7 +92,7 @@ export const save = ServerMethod("venue.save", async (venueId: string, changes: 
     set.maxWorkplaces = Math.min(1e10, Math.max(0, changes.maxWorkplaces));
   }
   if (changes.facilities !== undefined) {
-    set.facilities = changes.facilities.reduce((originalFs: { [option: string]: boolean }, f) => {
+    set.facilities = changes.facilities.reduce((originalFs: Record<string, boolean>, f) => {
       const fs = { ...originalFs };
       if (Venues.facilityOptions.includes(f)) {
         fs[f] = true;

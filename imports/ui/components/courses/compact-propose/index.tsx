@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { GroupTag } from "../../groups/tag";
 
-export type Props = {
+export interface Props {
   group?: string | undefined;
   groupTagEvents?:
     | ((groupId: string) => {
@@ -12,7 +12,7 @@ export type Props = {
         onClick: () => Promise<void>;
       })
     | undefined;
-};
+}
 
 export function CompactPropose({ group, groupTagEvents }: Props) {
   const { t } = useTranslation();

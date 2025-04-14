@@ -5,7 +5,7 @@ import { CourseCompact } from "/imports/ui/components/courses/compact";
 import { CompactPropose } from "/imports/ui/components/courses/compact-propose";
 import { CourseModel } from "/imports/api/courses/courses";
 
-export type Props = {
+export interface Props {
   courses: CourseModel[];
   groupTagEvents?:
     | ((groupId: string) => {
@@ -25,7 +25,7 @@ export type Props = {
   containsPropose?: boolean;
   /** that should be added on propose a new course */
   group?: string | undefined;
-};
+}
 
 export function CourseList({
   courses,

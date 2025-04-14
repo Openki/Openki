@@ -1,4 +1,4 @@
-export function paramsToQueryString(params: { [name: string]: string | number | boolean }) {
+export function paramsToQueryString(params: Record<string, string | number | boolean>) {
   const queryParams = Object.entries(params).map(
     (nameValue) => `${encodeURIComponent(nameValue[0])}=${encodeURIComponent(nameValue[1])}`,
   );

@@ -405,7 +405,7 @@ RouterAsync.route("userprofile", {
     }
 
     // What privileges the user has
-    const privileges = (["admin"] as const).reduce<{ [role: string]: boolean }>((originalPs, p) => {
+    const privileges = (["admin"] as const).reduce<Record<string, boolean>>((originalPs, p) => {
       const ps = { ...originalPs };
       ps[p] = user.privileged(p);
       return ps;
@@ -865,8 +865,8 @@ RouterAsync.route("timetable", {
 
     const span = timestampEnd - timestampStart;
 
-    const days: { [day: string]: { moment: moment.Moment; relStart: number; relEnd: number } } = {};
-    const hours: { [hour: string]: { moment: moment.Moment; relStart: number; relEnd: number } } =
+    const days: Record<string, { moment: moment.Moment; relStart: number; relEnd: number }> = {};
+    const hours: Record<string, { moment: moment.Moment; relStart: number; relEnd: number }> =
       {};
     const cursor = moment(start);
     do {
@@ -898,21 +898,17 @@ RouterAsync.route("timetable", {
       cursor.add(1, "hour");
     } while (cursor.isBefore(end));
 
-    const perVenue: {
-      [venue: string]: {
+    const perVenue: Record<string, {
         venue: VenueModel;
-        perRoom: {
-          [room: string]: {
+        perRoom: Record<string, {
             room: string;
             venue: VenueModel;
             rows: (EventEntity & {
               relStart: number;
               relEnd: number;
             })[];
-          };
-        };
-      };
-    } = {};
+          }>;
+      }> = {};
     const useVenue = function (venue: any, room: any) {
       const id = venue._id || `#${venue.name}`;
       if (!perVenue[id]) {

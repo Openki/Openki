@@ -1,14 +1,14 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-export type Props = {
+export interface Props {
   type: string;
   icon: string;
   enabled: boolean;
   enroll: boolean;
   onRole: (checked: boolean) => void;
   onEnroll: (checked: boolean) => void;
-};
+}
 
 export function Role(data: Props) {
   const { t } = useTranslation();

@@ -82,13 +82,13 @@ function Header(data: { _id?: string; isFrame?: boolean; group?: string }) {
             "Start your own {SITENAME} course here. Whether as a mentor or participant, you decide what and how you want to learn. More info here:",
             { SITENAME: siteName },
           )}{" "}
-          <a href={getLocalizedValue(PublicSettings.courseGuideLink)} target="_blank">
+          <a href={getLocalizedValue(PublicSettings.courseGuideLink)} target="_blank" rel="noreferrer">
             {t("course.propose.guideLink", "How to organize my first {SITENAME} course?", {
               SITENAME: siteName,
             })}
           </a>
           {", "}
-          <a href={getLocalizedValue(PublicSettings.faqLink)} target="_blank">
+          <a href={getLocalizedValue(PublicSettings.faqLink)} target="_blank" rel="noreferrer">
             {t("course.propose.faq", "FAQ")}
           </a>
         </div>
@@ -180,7 +180,7 @@ function AlertMessage(data: {
       <span className="pre-line">
         {t("course.edit.linkToCourse", 'You can see your new proposal "{NAME}" on {SITENAME}', {
           NAME: (
-            <a className="alert-link" href={savedCourseLink()} target="_blank">
+            <a className="alert-link" href={savedCourseLink()} target="_blank" rel="noreferrer">
               {savedCourseName()}
             </a>
           ),
@@ -354,9 +354,7 @@ export function Edit(data: Data) {
     return members && hasRoleUser(members, role, user?._id);
   }
 
-  const [roles, setRoles] = useState<{
-    [type: string]: { icon: string; enabled: boolean; enroll: boolean };
-  }>({});
+  const [roles, setRoles] = useState<Record<string, { icon: string; enabled: boolean; enroll: boolean }>>({});
 
   const groupsAreLoaded = groupsIsLoading();
 

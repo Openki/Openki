@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { TenantModel } from "../api/tenants/tenants";
 import { UserModel } from "../api/users/users";
 
-export type Props = {
+export interface Props {
   siteName: string;
   tenant: TenantModel;
   inviter: UserModel;
@@ -12,7 +12,7 @@ export type Props = {
   moreLink: string | undefined;
   reportEmail: JSX.Element;
   lng: string;
-};
+}
 
 export function Invitation({
   siteName,

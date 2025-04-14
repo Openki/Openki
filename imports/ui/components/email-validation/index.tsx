@@ -9,9 +9,9 @@ import * as Alert from "/imports/api/alerts/alert";
 import * as emailMethods from "/imports/api/emails/methods";
 import { UserModel } from "/imports/api/users/users";
 
-export type Props = {
+export interface Props {
   user: UserModel;
-};
+}
 
 function EmailValidationModal({ user }: Props) {
   const { t } = useTranslation();

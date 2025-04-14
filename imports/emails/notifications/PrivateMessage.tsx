@@ -4,7 +4,7 @@ import { UserModel } from "/imports/api/users/users";
 import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 
-export type Props = {
+export interface Props {
   sender: UserModel;
   senderLink: string;
   message: string;
@@ -17,7 +17,7 @@ export type Props = {
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   campaign: string;
   lng: string;
-};
+}
 
 export function PrivateMessage({
   sender,

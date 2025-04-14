@@ -8,10 +8,10 @@ import * as EventsMethods from "/imports/api/events/methods";
 
 import { name } from "/imports/ui/lib/group-name-helpers";
 
-export type Props = {
+export interface Props {
   event: EventModel;
   groupId: string;
-};
+}
 
 export function MakeOrganizer({ event, groupId }: Props) {
   const { t } = useTranslation();

@@ -8,9 +8,9 @@ import { ReactSelect2 } from "/imports/ui/components/react-select2";
 
 import { name } from "/imports/ui/lib/group-name-helpers";
 
-type OptionProps = {
+interface OptionProps {
   groupId: string;
-};
+}
 
 function Option({ groupId }: OptionProps) {
   const [isLoading, group] = useDetails(groupId);
@@ -22,12 +22,12 @@ function Option({ groupId }: OptionProps) {
   );
 }
 
-export type Props = {
+export interface Props {
   availableGroups: string[] | undefined;
   selectedGroups: string[] | undefined;
   onAdd: (group: string) => void;
   onRemove: (group: string) => void;
-};
+}
 
 export function FilterGroups({ availableGroups, selectedGroups, onAdd, onRemove }: Props) {
   const { t } = useTranslation();

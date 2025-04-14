@@ -50,11 +50,11 @@ function mvDateHandler(
   return false;
 }
 
-export type Props = {
+export interface Props {
   date: moment.Moment;
   filter: ReturnType<(typeof Events)["Filtering"]>;
   setIsAttendeeFilterOn: (state: boolean) => void;
-};
+}
 
 export function Multi({ date, filter, setIsAttendeeFilterOn }: Props) {
   const { t } = useTranslation();

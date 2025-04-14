@@ -2,11 +2,11 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 
-export type Props = {
+export interface Props {
   type: "automatedNotifications" | "privateMessage";
   token: string;
   lng: string;
-};
+}
 
 export function UnsubscribeLink({ token, type, lng }: Props) {
   const { t } = useTranslation(undefined, { lng });

@@ -101,9 +101,9 @@ function FoundUsers({
   );
 }
 
-export type Props = {
+export interface Props {
   group: GroupModel;
-};
+}
 
 export function GroupSettings({ group }: Props) {
   const { t } = useTranslation();
@@ -343,43 +343,43 @@ export function GroupSettings({ group }: Props) {
         <ul className="list-unstyled">
           <li>
             Infoscreen-Link:{" "}
-            <a href={kioskEventURL()} target="_blank">
+            <a href={kioskEventURL()} target="_blank" rel="noreferrer">
               {kioskEventURL()}
             </a>
           </li>
           <li>
             Timetable-Link:{" "}
-            <a href={timetableURL()} target="_blank">
+            <a href={timetableURL()} target="_blank" rel="noreferrer">
               {timetableURL()}
             </a>
           </li>
           <li>
             Schedule-Link:{" "}
-            <a href={scheduleURL()} target="_blank">
+            <a href={scheduleURL()} target="_blank" rel="noreferrer">
               {scheduleURL()}
             </a>
           </li>
           <li>
             iframe-Eventboxes-Link:{" "}
-            <a href={frameEventsURL()} target="_blank">
+            <a href={frameEventsURL()} target="_blank" rel="noreferrer">
               {frameEventsURL()}
             </a>
           </li>
           <li>
             iframe-weekly-calendar-Link:{" "}
-            <a href={frameWeekURL()} target="_blank">
+            <a href={frameWeekURL()} target="_blank" rel="noreferrer">
               {frameWeekURL()}
             </a>
           </li>
           <li>
             iframe-calendar-Link:{" "}
-            <a href={frameCalendarURL()} target="_blank">
+            <a href={frameCalendarURL()} target="_blank" rel="noreferrer">
               {frameCalendarURL()}
             </a>
           </li>
           <li>
             iframe-List-Link:{" "}
-            <a href={frameListURL()} target="_blank">
+            <a href={frameListURL()} target="_blank" rel="noreferrer">
               {frameListURL()}
             </a>
           </li>

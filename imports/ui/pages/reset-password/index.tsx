@@ -11,10 +11,10 @@ import * as Metatags from "/imports/utils/metatags";
 import { ButtonCancel } from "/imports/ui/components/buttons";
 import { TokenExpired } from "../../components/token-expired";
 
-export type Props = {
+export interface Props {
   email: string;
   token: string;
-};
+}
 
 export function ResetPasswordPage({ token, email }: Props) {
   const { t } = useTranslation();

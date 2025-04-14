@@ -124,9 +124,7 @@ export function MultiExpandible<N extends string, D, T extends Record<string, un
   return template;
 }
 
-export interface FormfieldErrorsMapping {
-  [name: string]: { text: () => string; field: string };
-}
+export type FormfieldErrorsMapping = Record<string, { text: () => string; field: string }>;
 
 /** Manage errors for a form template
  *

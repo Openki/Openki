@@ -8,11 +8,11 @@ import { RegionTag } from "/imports/ui/components/regions/tag";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   regionId?: string;
   start: MomentInput;
   end: MomentInput;
-};
+}
 
 export function EventHeader(props: Props) {
   const { weekdayFormat, calendarDayShort, timeFormat } = useDateTimeFormat();

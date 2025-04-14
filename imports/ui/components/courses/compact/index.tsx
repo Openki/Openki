@@ -17,7 +17,7 @@ import { CourseCompactRoles } from "./course-compact-roles";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   course: CourseModel;
   groupTagEvents?:
     | ((groupId: string) => {
@@ -33,7 +33,7 @@ export type Props = {
         onClick: () => Promise<void>;
       })
     | undefined;
-};
+}
 
 export function CourseCompact({ course, groupTagEvents, categorieTagEvents }: Props) {
   const elementRef = useRef<HTMLDivElement>(null);

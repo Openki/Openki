@@ -4,14 +4,14 @@ import { Router } from "meteor/iron:router";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { UnsubscribeLink, Props as UnsubscribeLinkProps } from "./UnsubscribeLink";
 
-export type Props = {
+export interface Props {
   receiveNote?: string | undefined;
   children?: any | undefined;
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   spamPrevention?: boolean | undefined;
   campaign: string;
   lng: string;
-};
+}
 
 export function Footer({
   receiveNote,

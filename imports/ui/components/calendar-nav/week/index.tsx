@@ -13,7 +13,7 @@ import "../styles.scss";
 import { SearchField } from "../../search-field";
 import { FilterCategories } from "../../filter-categories";
 
-export type Props = {
+export interface Props {
   hideSwitches: boolean;
   search: string;
   onChangeSearch: (newValue: string) => void;
@@ -27,7 +27,7 @@ export type Props = {
   onAddCategory: (category: string) => void;
   onRemoveCategory: (category: string) => void;
   onChangeAttendingEventsOnly: (state: boolean) => void;
-};
+}
 
 export function CalendarNavWeek(props: Props) {
   const { hideSwitches, date, availableGroups } = props;

@@ -9,11 +9,9 @@ import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 import { Find } from "../../components/courses/find";
 import { Dashboard } from "../../components/dashboard";
 
-export type Props = {
-  query: {
-    [key: string]: string | undefined;
-  };
-};
+export interface Props {
+  query: Record<string, string | undefined>;
+}
 
 export function DashboardPage({ query }: Props) {
   const { group, search } = query;

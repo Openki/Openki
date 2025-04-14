@@ -110,8 +110,8 @@ template.onCreated(function () {
 
     // Track repeating events so we know how often they occur.
     // The key to this dict is a combination of courseId, weekday and start time.
-    const repetitionCount: { [key: string]: number } = {};
-    const repetitionCountDay: { [key: string]: number } = {};
+    const repetitionCount: Record<string, number> = {};
+    const repetitionCountDay: Record<string, number> = {};
 
     // Load events but keep only the first when they repeat on the same
     // weekday at the same time.
@@ -160,7 +160,7 @@ template.onCreated(function () {
 
     // List of intervals where events or separators are placed
     const intervals = separators.reduce(
-      (rIntervals: { [separator: number]: number }, separator) => {
+      (rIntervals: Record<number, number>, separator) => {
         /* eslint-disable-next-line no-param-reassign */
         rIntervals[separator] = separator;
         return rIntervals;
@@ -172,7 +172,7 @@ template.onCreated(function () {
     const days: _.Dictionary<number> = {};
 
     // Map of slots where events were found. Each slot holds a list of events.
-    const slots: { [mins: string]: { [day: string]: EventViewModel[] } } = {};
+    const slots: Record<string, Record<string, EventViewModel[]>> = {};
 
     // Count occurences of first few chars in event titles
     // This helps coloring the events so they're easier to scan.

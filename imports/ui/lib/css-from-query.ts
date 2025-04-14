@@ -5,7 +5,7 @@ export class CssFromQuery {
    * @param properties the customizable properties to add
    */
   constructor(
-    public query: { [param: string]: string | undefined },
+    public query: Record<string, string | undefined>,
     properties: [key: string, name: string, selector: string][] = [],
   ) {
     // define a default set of customizable properties

@@ -197,7 +197,7 @@ export function Selection(data: { inNavbar: boolean; onClose: () => void }) {
                   <hr className="dropdown-divider" />
                 </li>
                 <li>
-                  <a className="dropdown-item" href={helpLink()} target="_blank">
+                  <a className="dropdown-item" href={helpLink()} target="_blank" rel="noreferrer">
                     {t("Profile.translate_this_page", "Help us to translate this Page")}
                   </a>
                 </li>

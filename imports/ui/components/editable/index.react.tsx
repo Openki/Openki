@@ -10,7 +10,7 @@ import { Store } from "../../lib/editable";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   text?: string | undefined;
   multiline?: boolean;
   placeholder?: string | undefined;
@@ -21,7 +21,7 @@ export type Props = {
     totalFocusTimeInSeconds: number,
   ) => void;
   store?: Store | undefined;
-};
+}
 
 export function Editable({ text = "", multiline, placeholder, maxlength, onChange, store }: Props) {
   const { t } = useTranslation();

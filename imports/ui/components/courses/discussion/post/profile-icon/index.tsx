@@ -8,7 +8,7 @@ import { Avatar } from "/imports/ui/components/avatar";
 
 import "./styles.scss";
 
-export type Props = { userId: string | undefined };
+export interface Props { userId: string | undefined }
 
 export function DiscussionProfileIcon({ userId }: Props) {
   const userName = useTracker(() => {

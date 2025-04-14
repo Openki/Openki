@@ -1,9 +1,9 @@
 import React from "react";
 
-export type Props = {
+export interface Props {
   search: string;
   name: string;
-};
+}
 
 export function MarkedName({ search, name }: Props) {
   if (search === "") {

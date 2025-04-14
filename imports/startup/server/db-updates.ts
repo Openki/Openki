@@ -23,7 +23,7 @@ import { update as update20250407enrichUserVenues } from "./updates/2025.04.07 e
 
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
-const UpdatesAvailable: { [name: string]: () => Promise<number> } = {
+const UpdatesAvailable: Record<string, () => Promise<number>> = {
   "2020.12.16 mergeUserLocale": update20201216MergeUserLocale,
   "2021.01.06 ensureVenueSlugField": update20210106EnsureVenueSlugField,
   "2021.01.12 ensureCourseInterestedField": update20210112EnsureCourseInterestedField,

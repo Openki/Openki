@@ -8,7 +8,7 @@ import * as Metatags from "/imports/utils/metatags";
 
 import "./template.html";
 
-export type Data = { tenants: Mongo.Cursor<TenantEntity, TenantModel> | never[] };
+export interface Data { tenants: Mongo.Cursor<TenantEntity, TenantModel> | never[] }
 
 const Template = TemplateAny as TemplateStaticTyped<"adminTenantsPage", Data>;
 

@@ -12,7 +12,7 @@ import { Remove } from "./Remove";
 import { RemoveOrganizer } from "./RemoveOrganizer";
 import { MakeOrganizer } from "./MakeOrganizer";
 
-export type Props = { course: CourseModel };
+export interface Props { course: CourseModel }
 
 export function GroupList({ course: course2 }: Props) {
   const { t } = useTranslation();

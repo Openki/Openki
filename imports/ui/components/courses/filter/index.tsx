@@ -21,7 +21,7 @@ export type Props = {
   onArchivedMouseOut: () => void;
 } & AdditionalFiltersProps;
 
-export type StateFilter = { name: string; cssClass: string; label: string; title: string };
+export interface StateFilter { name: string; cssClass: string; label: string; title: string }
 
 export function Filter(props: Props) {
   const { showingFilters } = props;

@@ -23,12 +23,10 @@ const getEventFrequency = (
   endDate: moment.Moment,
   frequency: string,
 ) => {
-  const frequencies: {
-    [name: string]: {
+  const frequencies: Record<string, {
       unit: moment.unitOfTime.DurationConstructor;
       interval: moment.DurationInputArg1;
-    };
-  } = {
+    }> = {
     once: { unit: "days", interval: 1 },
     daily: { unit: "days", interval: 1 },
     weekly: { unit: "weeks", interval: 1 },
@@ -62,7 +60,7 @@ const getEventFrequency = (
   return days;
 };
 
-export type Props = { event: EventModel; afterSave: () => void; onCancel: () => void };
+export interface Props { event: EventModel; afterSave: () => void; onCancel: () => void }
 
 export function EventReplication({ event, afterSave, onCancel }: Props) {
   const { t } = useTranslation();

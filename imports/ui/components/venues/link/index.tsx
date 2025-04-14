@@ -7,18 +7,18 @@ import { Icon } from "../Icon";
 
 import "./styles.scss";
 
-export type Venue = {
+export interface Venue {
   _id?: string;
   name: string;
   restrictedUse?: boolean | undefined;
   slug?: string;
-};
+}
 
-export type Props = {
+export interface Props {
   venue: Venue;
   room?: string | undefined;
   openInNewTab?: boolean | undefined;
-};
+}
 
 function Venue({
   id,
@@ -72,7 +72,7 @@ export function VenueTag({
             VENUE: venue.name,
           })}
           href={Router.url("venueDetails", venue)}
-          target={openInNewTab ? "_blank" : ""}
+          target={openInNewTab ? "_blank" : ""} rel="noreferrer"
         >
           <Venue id={venue._id} name={venue.name} restrictedUse={venue.restrictedUse} />
         </a>

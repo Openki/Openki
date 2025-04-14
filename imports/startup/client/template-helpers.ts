@@ -27,8 +27,8 @@ function toMomentWithTimeLocale(date: moment.MomentInput) {
   return moment(date).locale(Session.get("timeLocale") || "en");
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-const helpers: { [name: string]: Function } = {
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+const helpers: Record<string, Function> = {
   siteName() {
     return getSiteName(Regions.currentRegion());
   },

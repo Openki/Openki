@@ -11,18 +11,18 @@ import { mapping, ListOfEntities, ComponentWithEntities } from "./mapping";
 
 import "./styles.scss";
 
-type ComponentSettings = {
+interface ComponentSettings {
   entity: keyof typeof mapping;
   title?: string;
   query?: string;
   showAll?: { link?: string; text?: string } | false;
-};
+}
 
-export type Props = {
+export interface Props {
   list: ComponentSettings[];
   region?: string | undefined;
   group?: string | undefined;
-};
+}
 
 function EntitiesComponent<T>({
   params,
@@ -30,7 +30,7 @@ function EntitiesComponent<T>({
   showAll,
   title,
 }: {
-  params: { [k: string]: string };
+  params: Record<string, string>;
   handler: ListOfEntities<T> | ComponentWithEntities<T>;
   showAll: { link: string | undefined; text: string | undefined } | false;
   title?: string | undefined;

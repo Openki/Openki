@@ -7,7 +7,7 @@ import { GroupTag } from "/imports/ui/components/groups/tag";
 import { Add } from "./add";
 import { Remove } from "./remove";
 
-export type Props = { venue: VenueModel };
+export interface Props { venue: VenueModel }
 
 export function EditGroup({ venue }: Props) {
   const user = useUser();

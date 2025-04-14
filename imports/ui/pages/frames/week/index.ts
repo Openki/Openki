@@ -25,10 +25,10 @@ import "./styles.scss";
 
 const DefaultLimit = 200;
 
-type Weekday = {
+interface Weekday {
   date: moment.Moment;
   dayEvents: Mongo.Cursor<EventEntity, EventModel>;
-};
+}
 
 const Template = TemplateAny as TemplateStaticTyped<
   "frameWeekPage",

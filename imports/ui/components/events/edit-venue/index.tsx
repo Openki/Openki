@@ -117,7 +117,7 @@ function CustomMenu({ results, menuProps }: { results: any[]; menuProps: RenderM
       <div className="px-3">
         {t("profile.createNewVenue.question", "Are you responsible for a venue?")}
         <br />
-        <a href={Router.path("venueDetails", { _id: "create" })} target="_blank">
+        <a href={Router.path("venueDetails", { _id: "create" })} target="_blank" rel="noreferrer">
           <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>{" "}
           {t(
             "profile.createNewVenue.linkText",

@@ -8,7 +8,7 @@ function extendPrototypeToJSON(o: { prototype: any }) {
   if (!("toJSON" in o.prototype)) {
     Object.defineProperty(o.prototype, "toJSON", {
       value() {
-        const alt: { [key: string]: string } = {};
+        const alt: Record<string, string> = {};
 
         Object.getOwnPropertyNames(this).forEach((key) => {
           alt[key] = this[key];

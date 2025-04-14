@@ -44,13 +44,13 @@ function bodyStyle(event: EventModel, withImage?: boolean | undefined) {
   };
 }
 
-export type Props = {
+export interface Props {
   event: EventModel;
   withDate?: boolean | undefined;
   withImage?: boolean | undefined;
   withVenue?: boolean | undefined;
   openInNewTab?: boolean | undefined;
-};
+}
 
 export function EventCompact({
   event,
@@ -107,7 +107,7 @@ export function EventCompact({
             <a
               className="stretched-link"
               href={Router.path("showEvent", event)}
-              target={openInNewTab ? "_blank" : ""}
+              target={openInNewTab ? "_blank" : ""} rel="noreferrer"
             >
               {event.title}
             </a>

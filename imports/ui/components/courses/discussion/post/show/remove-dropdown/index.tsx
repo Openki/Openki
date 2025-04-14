@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import "./styles.scss";
 
-export type Props = { onRemove: () => void };
+export interface Props { onRemove: () => void }
 
 export function RemoveDropdown({ onRemove }: Props) {
   const { t } = useTranslation();

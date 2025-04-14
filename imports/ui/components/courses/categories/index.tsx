@@ -5,7 +5,7 @@ import React from "react";
 
 import "./styles.scss";
 
-export type CategoryLabelProps = { category: string };
+export interface CategoryLabelProps { category: string }
 
 export function CategoryLabel({ category }: CategoryLabelProps) {
   const { t } = useTranslation();
@@ -44,12 +44,12 @@ function CategoryLabelLinked({
   );
 }
 
-export type CourseCategoriesProps = {
+export interface CourseCategoriesProps {
   categories: string[];
   onClick?: (categorie: string) => Promise<void>;
   onMouseOver?: (categorie: string) => Promise<void>;
   onMouseOut?: (categorie: string) => Promise<void>;
-};
+}
 
 export function CourseCategories({
   categories,

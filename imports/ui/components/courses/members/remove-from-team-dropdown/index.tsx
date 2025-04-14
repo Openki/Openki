@@ -8,10 +8,10 @@ import * as Tooltips from "/imports/utils/Tooltips";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   member: CourseMemberEntity;
   onClick: () => void;
-};
+}
 
 export function RemoveFromTeamDropdown({ member, onClick }: Props) {
   const { t } = useTranslation();

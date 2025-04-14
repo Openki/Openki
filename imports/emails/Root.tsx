@@ -1,12 +1,12 @@
 import React from "react";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
-export type Props = {
+export interface Props {
   subject: string | undefined;
   logo: string;
   customSiteUrl?: string | undefined;
   customSiteName?: string | undefined;
-};
+}
 
 export function Root({
   subject,

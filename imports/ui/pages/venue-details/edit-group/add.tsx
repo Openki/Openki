@@ -43,7 +43,7 @@ function GroupToAdd({ venue, groupId }: { venue: VenueModel; groupId: string }) 
   );
 }
 
-export type Props = { venue: VenueModel };
+export interface Props { venue: VenueModel }
 
 export function Add({ venue }: Props) {
   const { t } = useTranslation();

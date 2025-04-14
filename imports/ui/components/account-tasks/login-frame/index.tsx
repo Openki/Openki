@@ -16,14 +16,14 @@ import { useValidation } from "../../../lib/useValidation";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   username: string;
   password: string;
   onForgotPassword: (loginData: { username: string; password: string }) => void;
   onVisitorOpen: (loginData: { username: string }) => void;
   onRegisterOpen: (loginData: { username: string; password: string }) => void;
   onLogin: () => void;
-};
+}
 
 export function LoginFrame({
   username,

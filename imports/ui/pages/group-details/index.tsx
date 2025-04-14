@@ -41,14 +41,14 @@ function allSet(group: {
   return Object.values(group).every((u) => u);
 }
 
-export type Data = {
+export interface Data {
   courseQuery: Record<string, string | undefined> & {
     group: string;
     region: string | undefined;
   };
   group: GroupModel;
   showCourses: boolean;
-};
+}
 
 export function GroupDetailsPage({ courseQuery, group: group2, showCourses }: Data) {
   const { t } = useTranslation();

@@ -6,10 +6,10 @@ import { Categories } from "/imports/api/categories/categories";
 
 import { CategoryLabel } from "/imports/ui/components/courses/categories";
 
-export type Props = {
+export interface Props {
   onChange: (selectedCategories: string[]) => void;
   categories: string[];
-};
+}
 
 export function SelectCategories(props: Props) {
   const { t } = useTranslation();

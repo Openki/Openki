@@ -15,13 +15,13 @@ import { useValidation } from "/imports/ui/lib/useValidation";
 import { DataProtectionLaw } from "../data-protection-law";
 import { NotAllowedCharacter } from "../../../../startup/both/NotAllowedCharacter";
 
-export type Props = {
+export interface Props {
   username: string;
   email: string;
   allowNews: boolean;
   onRegister: () => void;
   onBack: () => void;
-};
+}
 
 export function VistiorFrame({ username, email, allowNews, onRegister, onBack }: Props) {
   const { t } = useTranslation();

@@ -14,14 +14,14 @@ function short(group: GroupModel | undefined) {
   return group ? group.short : "-";
 }
 
-export type Props = {
+export interface Props {
   groupId: string;
   full?: boolean;
   isOrganizer?: boolean;
   onClick?: () => Promise<void>;
   onMouseOver?: () => Promise<void>;
   onMouseOut?: () => Promise<void>;
-};
+}
 
 export function GroupTag({ groupId, full, isOrganizer, onMouseOver, onMouseOut, onClick }: Props) {
   const { t } = useTranslation();
