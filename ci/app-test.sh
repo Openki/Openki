@@ -6,8 +6,8 @@ NC='\033[0m'
 echo ""
 echo -e "${YELLOW}=============================================================${NC}"
 echo -e "\e[1;33mRun app-tests with:\e[21m
-    meteor npm run app-test
-    or  meteor npm run test-live (to run and witness it in your local browser: open https://localhost:3000/) \e[0m
+    meteor npm run test:integration
+    or  meteor npm run test:integration:watch (to run and witness it in your local browser: open https://localhost:3000/) \e[0m
 
     If app-tests are run in a docker container, it needs a headless chromium to work"
 echo -e "${YELLOW}=============================================================${NC}"
@@ -23,4 +23,4 @@ meteor update --patch
 meteor npm i
 meteor node -v && meteor npm version
 
-meteor npm run app-test
+meteor npm run test:integration
