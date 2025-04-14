@@ -30,7 +30,7 @@ export function Report({
   moment.locale("en");
   let versionElement = <></>;
   if (version) {
-    const fullVersion = version.basic + (version.branch !== "master" ? ` ${version.branch}` : "");
+    const fullVersion = version.basic + (version.branch !== "main" ? ` ${version.branch}` : "");
     const commit = version.commitShort;
     const deployDate = moment(version.activation).format("lll");
     const restart = moment(version.lastStart).format("lll");
