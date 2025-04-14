@@ -198,7 +198,7 @@ function UnsubscribeResultAlerts() {
   );
 }
 
-type User = {
+interface User {
   _id: string;
   name: string;
   notifications: boolean;
@@ -208,7 +208,7 @@ type User = {
   venues: Mongo.Cursor<VenueEntity, VenueModel>;
   email: string | undefined;
   verified: boolean;
-};
+}
 
 function EmailSection() {
   const { t } = useTranslation();

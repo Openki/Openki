@@ -33,11 +33,11 @@ function ButtonUnregister(props: {
   );
 }
 
-export type Props = {
+export interface Props {
   event: EventModel;
   busy: boolean;
   onUnregister: () => Promise<void>;
-};
+}
 
 export function UnregisterPanel({ event, busy, onUnregister }: Props) {
   const { dateFormat } = useDateTimeFormat();

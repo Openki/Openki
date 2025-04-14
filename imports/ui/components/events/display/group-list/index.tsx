@@ -12,7 +12,7 @@ import { Remove } from "./Remove";
 import { RemoveOrganizer } from "./RemoveOrganizer";
 import { MakeOrganizer } from "./MakeOrganizer";
 
-export type Props = { event: EventModel };
+export interface Props { event: EventModel }
 
 export function GroupList({ event: event2 }: Props) {
   const { t } = useTranslation();

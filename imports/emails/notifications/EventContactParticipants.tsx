@@ -4,7 +4,7 @@ import { UserModel } from "/imports/api/users/users";
 import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 
-export type Props = {
+export interface Props {
   username: string;
   sender: UserModel;
   senderLink: string;
@@ -17,7 +17,7 @@ export type Props = {
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   campaign: string;
   lng: string;
-};
+}
 
 export function EventContactParticipants({
   username,

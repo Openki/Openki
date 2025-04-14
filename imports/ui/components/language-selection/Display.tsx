@@ -3,10 +3,10 @@ import { useSession } from "/imports/utils/react-meteor-data";
 
 import { LanguagesRaw } from "/imports/api/languages/languages";
 
-export type Props = {
+export interface Props {
   inNavbar: boolean;
   onClick: () => void;
-};
+}
 
 export function Display({ inNavbar, onClick }: Props) {
   const locale = useSession("locale");

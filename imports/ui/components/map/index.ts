@@ -111,8 +111,8 @@ template.onRendered(function () {
   const instance = this;
   const maxZoom = instance.data.maxZoom || 19;
 
-  const layers: { [id: string]: L.GeoJSON<any> } = {};
-  const centers: { [id: string]: L.LatLngBounds } = {};
+  const layers: Record<string, L.GeoJSON<any>> = {};
+  const centers: Record<string, L.LatLngBounds> = {};
 
   L.Icon.Default.imagePath = "packages/bevanhunt_leaflet/images";
 
@@ -126,7 +126,7 @@ template.onRendered(function () {
 
   // Add tiles depending on language
   let tiles: L.TileLayer;
-  const tileLayers: { [lang: string]: () => L.TileLayer } = {
+  const tileLayers: Record<string, () => L.TileLayer> = {
     de() {
       return L.tileLayer("//{s}.tile.openstreetmap.de/{z}/{x}/{y}.png", {
         maxZoom,

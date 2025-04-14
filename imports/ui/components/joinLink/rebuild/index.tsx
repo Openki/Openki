@@ -8,9 +8,9 @@ import { ButtonCancel } from "/imports/ui/components/buttons";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   tenantId: string;
-};
+}
 
 export function JoinLinkRebuild({ tenantId }: Props) {
   const { t } = useTranslation();

@@ -13,9 +13,9 @@ import * as Metatags from "/imports/utils/metatags";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   page: InfoPagesEntity;
-};
+}
 
 export function InfoPage({ page }: Props) {
   const headerTag = "h2, h3";

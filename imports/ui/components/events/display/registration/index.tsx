@@ -46,9 +46,9 @@ function ButtonRegistrationClosed(props: {
   );
 }
 
-export type Props = {
+export interface Props {
   event: EventModel;
-};
+}
 
 export function EventRegistration({ event }: Props) {
   const user = useUser();

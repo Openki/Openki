@@ -41,12 +41,12 @@ function Responses({ responses: replies }: { responses: CourseDiscussionEntity[]
   );
 }
 
-export type Props = {
+export interface Props {
   post: CourseDiscussionEntity & { new?: true };
   responses?: CourseDiscussionEntity[];
   edit?: boolean;
   onCancel?: () => void;
-};
+}
 
 export function Post({ post, responses, edit, onCancel }: Props) {
   const isParent = !post.new && !post.parentId;

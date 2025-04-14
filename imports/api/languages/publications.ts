@@ -6,7 +6,7 @@ import { LanguagesRaw, Languages, LanguageEntity } from "/imports/api/languages/
 import { Type } from "/imports/utils/CustomChecks";
 import { ServerPublishMany } from "/imports/utils/ServerPublish";
 
-const weblateMapping = { de_ZH: "de-ZH", nb_NO: "nb" } as { [weblateCode: string]: string };
+const weblateMapping = { de_ZH: "de-ZH", nb_NO: "nb" } as Record<string, string>;
 
 const languages = { ...LanguagesRaw };
 

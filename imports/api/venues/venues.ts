@@ -38,9 +38,7 @@ export interface VenueEntity {
   /** Int */
   maxWorkplaces: number;
   /** For keys see: Venues.facilityOptions */
-  facilities: Partial<{
-    [key in FacilityOption]: boolean;
-  }>;
+  facilities: Partial<Record<FacilityOption, boolean>>;
   otherFacilities?: string;
   /** Only hosts and admins can create a event with this venue. */
   restrictedUse?: boolean;

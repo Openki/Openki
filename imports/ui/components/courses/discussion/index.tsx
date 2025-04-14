@@ -11,7 +11,7 @@ import { Post } from "./post";
 
 import "./styles.scss";
 
-export type Props = { select: string; courseId: string; eventId?: string | undefined };
+export interface Props { select: string; courseId: string; eventId?: string | undefined }
 
 export function Discussion({ select, courseId, eventId }: Props) {
   const { t } = useTranslation();

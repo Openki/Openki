@@ -11,7 +11,7 @@ import "./control";
 import "./template.html";
 import "../styles.scss";
 
-export type Data = {
+export interface Data {
   hideSwitches: boolean;
   search: string;
   onChangeSearch: (newValue: string) => void;
@@ -24,7 +24,7 @@ export type Data = {
   categories: string[];
   onAddCategory: (category: string) => void;
   onRemoveCategory: (category: string) => void;
-};
+}
 
 const Template = TemplateAny as TemplateStaticTyped<"calendarNavDay", Data>;
 

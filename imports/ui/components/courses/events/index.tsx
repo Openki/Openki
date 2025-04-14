@@ -23,9 +23,9 @@ import { EventList } from "/imports/ui/components/events/list";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   course: CourseModel;
-};
+}
 
 function compareByStartDate(event1: EventModel, event2: EventModel) {
   if (event1.start < event2.start) {
@@ -198,7 +198,7 @@ export function Events({ course }: Props) {
                 "Events downloads via course details",
                 Regions.findOne(course.region)?.nameEn,
               );
-            }}
+            }} rel="noreferrer"
           >
             {t("course.download_cal", "Download events to my calendar")}
           </a>

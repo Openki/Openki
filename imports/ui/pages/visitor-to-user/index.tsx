@@ -13,10 +13,10 @@ import { useValidation } from "/imports/ui/lib/useValidation";
 
 import { TokenExpired } from "../../components/token-expired";
 
-export type Props = {
+export interface Props {
   email: string;
   token: string;
-};
+}
 
 export function VisitorToUserPage({ token, email }: Props) {
   const { t } = useTranslation();

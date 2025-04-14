@@ -11,7 +11,7 @@ import { GroupList } from "/imports/ui/components/courses/display/group-list";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   course?: CourseModel;
   backlink?: string;
   headerlink?: string;
@@ -20,7 +20,7 @@ export type Props = {
   groups?: string[];
   title: string;
   image: string;
-};
+}
 
 export function EventCourseHeader(props: Props) {
   const { t } = useTranslation();

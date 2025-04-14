@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Contribution } from "/imports/ui/components/contribution";
 import { ProfileLink } from "/imports/ui/components/profile-link";
 
-export type Props = { userId: string | undefined };
+export interface Props { userId: string | undefined }
 
 export function DiscussionProfileLink({ userId }: Props) {
   const { t } = useTranslation();

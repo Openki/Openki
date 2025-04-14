@@ -12,7 +12,7 @@ export interface ServerValidationErrorHandler {
 }
 
 export interface Store {
-  clientValidations?: { [name: string]: ClientValidation };
+  clientValidations?: Record<string, ClientValidation>;
   serverValidationErrors?: ServerValidationErrorHandler[];
   onSave?: (text: string) => Promise<void>;
   onSuccess?: (text: string | undefined) => void;

@@ -92,7 +92,5 @@ export function Record<T extends Match.Pattern>(type: T) {
       check(value, type);
     });
     return true;
-  }) as Match.Matcher<{
-    [category: string]: Match.PatternMatch<T>;
-  }>;
+  }) as Match.Matcher<Record<string, Match.PatternMatch<T>>>;
 }

@@ -32,11 +32,9 @@ import "./styles.scss";
 const hiddenFilters = ["needsRole", "categories"];
 const filters = hiddenFilters.concat(["state"]);
 
-export type Props = {
-  query: {
-    [key: string]: string | undefined;
-  };
-};
+export interface Props {
+  query: Record<string, string | undefined>;
+}
 
 export function Find({ query }: Props) {
   const { t } = useTranslation();
@@ -56,9 +54,7 @@ export function Find({ query }: Props) {
   // change. For example, when the search-field receives keydowns, the filter
   // is updated but the change is not reflected in the URI.
   function updateUrl() {
-    const urlParams = filter.toParams() as {
-      [name: string]: string;
-    };
+    const urlParams = filter.toParams() as Record<string, string>;
     delete urlParams.region; // HACK region is kept in the session (for bad reasons)
     delete urlParams.internal;
 

@@ -9,9 +9,9 @@ import { getCachedUser } from "/imports/ui/lib/getUserName";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 import { getSiteName } from "/imports/utils/getSiteName";
 
-export type Props = {
+export interface Props {
   userId: string;
-};
+}
 
 export function Contribution({ userId }: Props) {
   const { t } = useTranslation();

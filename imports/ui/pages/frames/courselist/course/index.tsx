@@ -8,10 +8,10 @@ import { CourseModel } from "/imports/api/courses/courses";
 import { Router } from "meteor/iron:router";
 import { RoleIcon } from "/imports/ui/RoleIcon";
 
-export type Props = {
+export interface Props {
   course: CourseModel;
   hideInterested: boolean;
-};
+}
 
 export function Course({ course, hideInterested }: Props) {
   const { t } = useTranslation();
@@ -66,7 +66,7 @@ export function Course({ course, hideInterested }: Props) {
             <a
               className="btn btn-outline-dark"
               href={Router.path("showCourse", course)}
-              target="_blank"
+              target="_blank" rel="noreferrer"
             >
               {t("frame.courseList.moreAboutThisCourse", "More on {SITENAME}", {
                 SITENAME: siteName,

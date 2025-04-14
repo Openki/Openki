@@ -3,12 +3,12 @@ import React, { useState } from "react";
 import { ButtonDelete } from "/imports/ui/components/buttons";
 import { DeleteConfirmDialog } from "/imports/ui/components/delete-confirm-dialog";
 
-export type Props = {
+export interface Props {
   confirmText: string;
   confirmButton: string;
   onRemove: () => Promise<void>;
   busyButton: string;
-};
+}
 
 export function DeleteConfirm({ confirmText, confirmButton, onRemove, busyButton }: Props) {
   const [isConfirm, setIsConfirm] = useState(false);

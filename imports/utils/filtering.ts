@@ -21,7 +21,7 @@ type GetPredicateT3<C extends Predicate<any>> = C extends Predicate<infer _T1, i
   ? T3
   : unknown;
 
-export class Filtering<T extends { [name: string]: Predicate<any> }> {
+export class Filtering<T extends Record<string, Predicate<any>>> {
   private _predicates: { [name in keyof T]+?: ReturnType<T[name]> } = {};
 
   private _dep = new Tracker.Dependency();

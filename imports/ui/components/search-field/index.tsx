@@ -5,11 +5,11 @@ import { Template } from "meteor/templating";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   search: string | undefined;
   onChange: (newValue: string) => void;
   onFocusOut?: () => void;
-};
+}
 
 export function SearchField({ search, onChange, onFocusOut }: Props) {
   const [value, setValue] = useState(search ?? "");

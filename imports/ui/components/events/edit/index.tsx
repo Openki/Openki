@@ -35,12 +35,12 @@ import { UpdateAffectedReplica } from "./UpdateAffectedReplica";
 
 import "./styles.scss";
 
-type NewEventModel = {
+interface NewEventModel {
   new: true;
   startLocal: string;
   endLocal: string;
   sendReminder: boolean;
-};
+}
 
 export type EventEditData = EventModel | (NewEventModel & OEvent & Partial<EventModel>);
 

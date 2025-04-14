@@ -52,9 +52,9 @@ function EventParticipant({
   );
 }
 
-export type Props = {
+export interface Props {
   event: EventModel;
-};
+}
 
 export function EventParticipants({ event }: Props) {
   const { t } = useTranslation();

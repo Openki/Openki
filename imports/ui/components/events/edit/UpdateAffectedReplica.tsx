@@ -115,8 +115,8 @@ export function UpdateAffectedReplica({
 
                   <ul>
                     {changedReplicas().map((replica) => (
-                      <li>
-                        <a href={Router.path("showEvent", replica)} target="_blank">
+                      <li key={replica._id}>
+                        <a href={Router.path("showEvent", replica)} target="_blank" rel="noreferrer">
                           {dateFormat(replica.startLocal)}-{replica.title}(
                           {timeFormat(replica.startLocal)}-{timeFormat(replica.endLocal)})
                         </a>

@@ -12,11 +12,11 @@ import * as Users from "/imports/api/users/publications";
 
 import { SendMessage, Data as SendMessageData } from "/imports/ui/components/send-message";
 
-export type Props = {
+export interface Props {
   participant: string;
   course?: CourseModel;
   event?: EventModel;
-};
+}
 
 export function ParticipantContact(props: Props) {
   const modalRef = useRef(null);

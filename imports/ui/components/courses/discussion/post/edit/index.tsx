@@ -16,11 +16,11 @@ import { DiscussionProfileLink } from "../profile-link";
 import { Richtext } from "/imports/ui/components/richtext";
 import { ButtonCancel } from "/imports/ui/components/buttons";
 
-export type Props = {
+export interface Props {
   post: CourseDiscussionEntity & { new?: true };
   onSave: () => void;
   onCancel: () => void;
-};
+}
 
 export function Edit({ post, onSave, onCancel }: Props) {
   const { dateFormat, fromNow } = useDateTimeFormat();

@@ -21,7 +21,7 @@ type ToFilter<T> = { [name in keyof T]: ExtractQuery<T[name]> };
 export interface ApiCollection<
   T,
   U,
-  P extends { [name: string]: Predicate<any> },
+  P extends Record<string, Predicate<any>>,
   F = ToFilter<P>,
 > {
   findFilter(
@@ -34,7 +34,7 @@ export interface ApiCollection<
   Filtering(): Filtering<P>;
 }
 
-export type ApiEvent = {
+export interface ApiEvent {
   id: string;
   title: string;
   description: string;
@@ -71,9 +71,9 @@ export type ApiEvent = {
     short: string;
     link: string;
   }[];
-};
+}
 
-async function apiResponse<T, U, F extends { [name: string]: Predicate<any> }, R>(
+async function apiResponse<T, U, F extends Record<string, Predicate<any>>, R>(
   collection: ApiCollection<T, U, F, ToFilter<F> & typeof additionalFilters>,
   formatter: (model: U) => Promise<R>,
   additionalFilters = {},

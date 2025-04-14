@@ -12,7 +12,7 @@ const OPENKI_UUID_NAMESPACE = "bfcc029a-5d16-4863-af43-17277e2e717b";
 
 const sortByTimeAndRoom = (results: ApiEvent[]) =>
   results.reduce(
-    (accumulator: { [date: string]: { [room: string]: ApiEvent[] } }, current: ApiEvent) => {
+    (accumulator: Record<string, Record<string, ApiEvent[]>>, current: ApiEvent) => {
       const currentDate = moment(current.start).format("YYYY-MM-DD");
 
       let currentRoom;

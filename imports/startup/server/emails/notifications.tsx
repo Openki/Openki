@@ -78,11 +78,9 @@ async function send(
 
   try {
     const model = await (
-      Notification as {
-        [name: string]: {
+      Notification as Record<string, {
           Model<T>(_entry: unknown): Promise<Model<T>>;
-        };
-      }
+        }>
     )[entry.body.model].Model(entry);
 
     for (const recipientId of entry.body.recipients) {

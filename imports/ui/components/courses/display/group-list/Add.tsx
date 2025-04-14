@@ -46,7 +46,7 @@ function GroupToAdd({ course, groupId }: { course: CourseModel; groupId: string 
   );
 }
 
-export type Props = { course: CourseModel };
+export interface Props { course: CourseModel }
 
 export function Add({ course }: Props) {
   const { t } = useTranslation();

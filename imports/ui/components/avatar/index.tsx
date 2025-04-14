@@ -52,7 +52,7 @@ function UserAvatar(props: {
   );
 }
 
-export type Props = { color?: number; userId?: string; className?: string };
+export interface Props { color?: number; userId?: string; className?: string }
 
 export function Avatar(props: Props) {
   const currenctUserId = useUserId();
@@ -67,7 +67,6 @@ export function Avatar(props: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
 import "./template.html";
 
 Template.registerHelper("Avatar", () => Avatar);

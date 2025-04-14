@@ -6,10 +6,10 @@ import { GroupEntityCustomCourseFields } from "/imports/api/groups/groups";
 
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
-export type Props = {
+export interface Props {
   fields: GroupEntityCustomCourseFields[];
   values: CourseCustomField[] | undefined;
-};
+}
 
 export function EditCustomFields(props: Props) {
   const { getLocalizedValue } = useLocalizedSetting();

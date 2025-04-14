@@ -5,7 +5,7 @@ import { EventBox } from "./components/EventBox";
 import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 
-export type Props = {
+export interface Props {
   username: string;
   event: EventModel;
   tz: string;
@@ -14,7 +14,7 @@ export type Props = {
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   campaign: string;
   lng: string;
-};
+}
 
 export function EventCanceled({
   username,

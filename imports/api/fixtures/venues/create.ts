@@ -10,7 +10,7 @@ import { venues as venuesBase } from "./data";
 import { venues as zuerichlerntVenues } from "./zuerichlernt";
 import { Log } from "../../log/log";
 
-export type VenueTemplate = {
+export interface VenueTemplate {
   _id?: string;
   name: string;
   region?: string;
@@ -27,13 +27,11 @@ export type VenueTemplate = {
   otherFacilities?: "";
   description?: string;
   website?: string;
-  facilities?: Partial<{
-    [key in FacilityOption]: boolean;
-  }>;
+  facilities?: Partial<Record<FacilityOption, boolean>>;
   createdby?: string;
   editor?: string;
   restrictedUse?: boolean;
-};
+}
 
 export async function create() {
   const prng = Prng("loadLocations");

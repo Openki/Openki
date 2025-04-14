@@ -17,10 +17,10 @@ import { DiscussionProfileLink } from "../profile-link";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { RemoveDropdown } from "./remove-dropdown";
 
-export type Props = {
+export interface Props {
   post: CourseDiscussionEntity & { new?: true } & { saving?: boolean };
   onEdit: () => void;
-};
+}
 
 export function Show({ post, onEdit }: Props) {
   const { dateFormat, fromNow } = useDateTimeFormat();

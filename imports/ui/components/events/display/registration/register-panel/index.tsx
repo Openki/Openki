@@ -39,11 +39,11 @@ function ButtonRegister(props: {
   );
 }
 
-export type Props = {
+export interface Props {
   event: EventModel;
   busy: boolean;
   onRegister: (companions: number) => Promise<void>;
-};
+}
 
 export function RegisterPanel({ event, busy, onRegister }: Props) {
   const { t } = useTranslation();

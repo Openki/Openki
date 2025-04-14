@@ -6,13 +6,13 @@ import MediumEditor from "medium-editor";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   className?: string | undefined;
   text?: string | undefined;
   placeholder?: string | undefined;
   maxlength?: number | undefined;
   onChange?: ((value: string, numberOfCharacters: number) => void) | undefined;
-};
+}
 
 export function Richtext({ className, text, placeholder, maxlength, onChange }: Props) {
   const { t } = useTranslation();

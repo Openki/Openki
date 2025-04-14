@@ -17,9 +17,9 @@ import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   hasPricePolicy: boolean;
-};
+}
 
 export function Introduction({ hasPricePolicy }: Props) {
   const { t } = useTranslation();
