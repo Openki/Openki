@@ -1,7 +1,15 @@
 #!/bin/bash
+YELLOW='\033[0;33m'
+NC='\e[0m'
+MAINTEXT='\e[1;33m'
+TEXT='\e[21m'
 
-echo -e "\e[1;33mRun tests with:\e[21m
-    meteor npm run test\e[0m"
+echo ""
+echo -e "${YELLOW}=============================================================${NC}"
+echo -e "${MAINTEXT}Run tests with:${TEXT}
+    meteor npm run test${NC}"
+echo -e "${YELLOW}=============================================================${NC}"
+echo ""
 
 set -xe
 
