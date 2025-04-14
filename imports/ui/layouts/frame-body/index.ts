@@ -16,6 +16,10 @@ const Template = TemplateAny as TemplateStaticTyped<"frameLayout">;
 
 const template = Template.frameLayout;
 
+function between(x: number, min: number, max: number) {
+  return x >= min && x <= max;
+}
+
 /** The href/url Openki was loaded. */
 const initialHref = document.location.href;
 
@@ -24,10 +28,19 @@ template.onRendered(() => {
   // You can add the /plugins/iframeHeightAdjust.js into your website to adjust the size of the iframe to the size of the inner content.
   const frame = document.querySelector(".frame");
   if (frame) {
+    let lastHeight = 0;
+
     observeSize(frame, (element: Element) => {
       if (!element.scrollHeight) {
         return;
       }
+
+      // Fix endless flickering, because of small height changes. See: https://gitlab.com/Openki/Openki/-/issues/2153
+      if (between(element.scrollHeight, lastHeight - 1, lastHeight + 1)) {
+        return;
+      }
+
+      lastHeight = element.scrollHeight;
 
       const message = {
         type: "onFrameHeightChange",
