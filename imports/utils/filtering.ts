@@ -60,6 +60,7 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
         this._predicates[name] = toAdd as any;
       }
       if (!this._predicates[name]) {
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
         delete this._predicates[name];
       }
       this._dep.changed();
@@ -104,6 +105,7 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
         (this._predicates[name] as any) = predicate.without(toRemove as any);
       }
       if (!this._predicates[name]) {
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
         delete this._predicates[name];
       }
       this._dep.changed();
@@ -120,6 +122,7 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
   toggle(name: keyof T): Filtering<T>;
 
   /** eg. for string and id */
+  // eslint-disable-next-line @typescript-eslint/unified-signatures
   toggle(name: keyof T, param: string): Filtering<T>;
 
   toggle(name: keyof T, param?: string) {
@@ -142,6 +145,7 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
   }
 
   disable(name: keyof T) {
+    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
     delete this._predicates[name];
     this._dep.changed();
     return this;

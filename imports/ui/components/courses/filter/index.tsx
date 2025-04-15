@@ -21,7 +21,12 @@ export type Props = {
   onArchivedMouseOut: () => void;
 } & AdditionalFiltersProps;
 
-export interface StateFilter { name: string; cssClass: string; label: string; title: string }
+export interface StateFilter {
+  name: string;
+  cssClass: string;
+  label: string;
+  title: string;
+}
 
 export function Filter(props: Props) {
   const { showingFilters } = props;
@@ -193,7 +198,7 @@ export function Filter(props: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("Filter", () => Filter);

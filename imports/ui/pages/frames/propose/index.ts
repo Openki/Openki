@@ -13,6 +13,7 @@ const Template = TemplateAny as TemplateStaticTyped<"frameProposePage">;
 const template = Template.frameProposePage;
 
 template.onCreated(function () {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const instance = this;
 
   instance.autorun(() => {

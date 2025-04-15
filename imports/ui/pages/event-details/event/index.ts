@@ -44,6 +44,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 const template = Template.event;
 
 template.onCreated(function () {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const instance = this;
   const event = instance.data;
   instance.busy(false);

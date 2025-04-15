@@ -11,8 +11,8 @@ export function paramsToQueryString(params: Record<string, string | number | boo
  */
 export function queryParam(name: string) {
   const params = document.location.search.substring(1).split("&");
-  for (let i = 0; i < params.length; i += 1) {
-    const keyval = params[i].split("=");
+  for (const param of params) {
+    const keyval = param.split("=");
     if (decodeURIComponent(keyval[0]) === name) {
       return decodeURIComponent(keyval[1]);
     }

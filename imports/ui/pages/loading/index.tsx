@@ -40,7 +40,7 @@ export function LoadingRow() {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("LoadingPage", () => LoadingPage);

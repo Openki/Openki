@@ -159,7 +159,7 @@ export function ResetPasswordPage({ token, email }: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("ResetPasswordPage", () => ResetPasswordPage);

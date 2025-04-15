@@ -53,8 +53,9 @@ Meteor.startup(() => {
   // expose it we could ask the server for the Accept-Language headers but I'm
   // too lazy to implement this. It would become obsolete anyway.
   if (navigator.languages) {
-    for (let i = 0; i < navigator.languages.length; i += 1) {
-      if (setLocale(navigator.languages[i])) return;
+    for (const language of navigator.languages) {
+      if (setLocale(language))
+        continue;
     }
   }
 

@@ -239,7 +239,7 @@ export function Edit({
                     >
                       <option value="">{t("venue.edit.pls_select", "Please select")}</option>
                       {regions.map((region) => (
-                        <option value={region._id}>{region.name}</option>
+                        <option key={region._id} value={region._id}>{region.name}</option>
                       ))}
                     </select>
                   ) : (

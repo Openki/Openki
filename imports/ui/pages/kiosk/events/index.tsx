@@ -189,7 +189,7 @@ export function KioskEventsPage({
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("KioskEventsPage", () => KioskEventsPage);

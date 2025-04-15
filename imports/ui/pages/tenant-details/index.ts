@@ -22,6 +22,7 @@ const Template = TemplateAny as TemplateStaticTyped<"tenantDetailsPage", Data>;
 const template = Template.tenantDetailsPage;
 
 template.onCreated(function () {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const instance = this;
 
   instance.autorun(() => {

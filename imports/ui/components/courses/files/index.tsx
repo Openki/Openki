@@ -27,7 +27,10 @@ export function Files({ course: course2 }: { course: CourseModel }) {
       thumbnail: { src: course?.publicUrlForCompactImage(), maxSize: 150 },
       maxSize: 5000, // scale the image to max width/height. Note: image scaling also happens on the server
       async onUpload(file: UploadImage) {
-        const courseId = course!._id;
+        if (!course) {
+          throw new Error("Unexpected undefined");
+        }
+        const courseId = course._id;
         try {
           await CourseMethods.updateImage(courseId, file);
           Alert.success(t("course.edit.image.updated", "Image have been saved."));
@@ -68,7 +71,7 @@ export function Files({ course: course2 }: { course: CourseModel }) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("CourseFiles", () => Files);

@@ -51,7 +51,7 @@ export function Report({
         <td>
           <h5 className="title">Hi</h5>
           <p>
-            User {reporter} reports a problem on the page <a href={location}>"{title}"</a>
+            User {reporter} reports a problem on the page <a href={location}>&quot;{title}&quot;</a>
           </p>
           <p className="gap-md">Their report:</p>
           <table className="comment-box">
@@ -71,7 +71,7 @@ export function Report({
               <td>
                 {versionElement}
                 <br />
-                Now it's {new Date().toString()}.<br />
+                Now it&apos;s {new Date().toString()}.<br />
                 User Agent: <code>{userAgent}</code>
               </td>
             </tr>

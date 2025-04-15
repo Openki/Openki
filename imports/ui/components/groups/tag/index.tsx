@@ -50,7 +50,7 @@ export function GroupTag({ groupId, full, isOrganizer, onMouseOver, onMouseOut, 
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("GroupTag", () => GroupTag);

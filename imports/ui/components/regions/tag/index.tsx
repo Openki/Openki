@@ -28,7 +28,7 @@ export function RegionTag(props: { region: string }) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("RegionTag", () => RegionTag);

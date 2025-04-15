@@ -198,7 +198,8 @@ export function Events({ course }: Props) {
                 "Events downloads via course details",
                 Regions.findOne(course.region)?.nameEn,
               );
-            }} rel="noreferrer"
+            }}
+            rel="noreferrer"
           >
             {t("course.download_cal", "Download events to my calendar")}
           </a>
@@ -209,7 +210,7 @@ export function Events({ course }: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("CourseEvents", () => Events);

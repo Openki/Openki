@@ -54,7 +54,7 @@ export function FilterGroups({ availableGroups, selectedGroups, onAdd, onRemove 
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("FilterGroups", () => FilterGroups);

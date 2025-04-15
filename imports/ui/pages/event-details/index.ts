@@ -39,6 +39,7 @@ const Template = TemplateAny as TemplateStaticTyped<"eventPage">;
 const template = Template.eventPage;
 
 template.onCreated(function () {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const instance = this;
   instance.autorun(() => {
     const event = Events.findOne(Router.current().params._id);

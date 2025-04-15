@@ -72,7 +72,8 @@ export function VenueTag({
             VENUE: venue.name,
           })}
           href={Router.url("venueDetails", venue)}
-          target={openInNewTab ? "_blank" : ""} rel="noreferrer"
+          target={openInNewTab ? "_blank" : ""}
+          rel="noreferrer"
         >
           <Venue id={venue._id} name={venue.name} restrictedUse={venue.restrictedUse} />
         </a>
@@ -111,7 +112,7 @@ export function VenueLink({ venue, room, openInNewTab }: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("VenueLink", () => VenueLink);

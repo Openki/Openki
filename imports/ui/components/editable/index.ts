@@ -41,6 +41,7 @@ function EditableMixing<
 
   const template = Template[templateName];
   template.onCreated(function () {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const instance = this;
     // This reeks
     const { data } = instance;
@@ -73,6 +74,7 @@ function EditableMixing<
   });
 
   template.onRendered(function () {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const instance = this;
     const $editable = instance.$(".js-editable");
     let initialized = false;

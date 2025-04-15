@@ -351,7 +351,7 @@ export function GroupDetailsPage({ courseQuery, group: group2, showCourses }: Da
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("GroupDetailsPage", () => GroupDetailsPage);

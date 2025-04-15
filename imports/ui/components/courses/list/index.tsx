@@ -61,7 +61,7 @@ export function CourseList({
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("CourseList", () => CourseList);

@@ -158,7 +158,7 @@ export function Dashboard({ list, region, group }: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("Dashboard", () => Dashboard);

@@ -4,8 +4,6 @@ import { _ } from "meteor/underscore";
 import { Match, check } from "meteor/check";
 
 import { UserModel } from "/imports/api/users/users";
-import { EventEntity, OEvent } from "/imports/api/events/events";
-// eslint-disable-next-line import/no-cycle
 import * as tenantDenormalizer from "./tenantDenormalizer";
 import * as interestedDenormalizer from "./interestedDenormalizer";
 

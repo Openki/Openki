@@ -70,13 +70,15 @@ export function InfoPage({ page }: Props) {
 
   return (
     <div className="container mw-md info-page">
-      <ReactMarkdown linkTarget="_blank" children={page.body} skipHtml={true} />
+      <ReactMarkdown linkTarget="_blank" skipHtml={true}>
+        {page.body}
+      </ReactMarkdown>
     </div>
   );
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("InfoPage", () => InfoPage);

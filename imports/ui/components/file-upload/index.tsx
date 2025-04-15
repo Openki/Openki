@@ -138,7 +138,7 @@ export function FileUpload({ accept, onUpload, onCancel }: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("FileUpload", () => FileUpload);

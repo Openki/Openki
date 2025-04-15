@@ -36,7 +36,7 @@ export function DeleteConfirm({ confirmText, confirmButton, onRemove, busyButton
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("DeleteConfirm", () => DeleteConfirm);

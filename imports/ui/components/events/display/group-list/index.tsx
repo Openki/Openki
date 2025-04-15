@@ -12,7 +12,9 @@ import { Remove } from "./Remove";
 import { RemoveOrganizer } from "./RemoveOrganizer";
 import { MakeOrganizer } from "./MakeOrganizer";
 
-export interface Props { event: EventModel }
+export interface Props {
+  event: EventModel;
+}
 
 export function GroupList({ event: event2 }: Props) {
   const { t } = useTranslation();
@@ -116,7 +118,7 @@ export function GroupList({ event: event2 }: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("EventGroupList", () => GroupList);

@@ -108,6 +108,7 @@ const IconControl: new (options: {
 });
 
 template.onRendered(function () {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const instance = this;
   const maxZoom = instance.data.maxZoom || 19;
 
@@ -350,7 +351,9 @@ template.onRendered(function () {
       if (layers[mark._id]) {
         map.removeLayer(layers[mark._id]);
       }
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
       delete layers[mark._id];
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
       delete centers[mark._id];
     };
 

@@ -24,6 +24,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 const template = Template.joinPage;
 
 template.onCreated(function () {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const instance = this;
 
   instance.autorun(() => {
