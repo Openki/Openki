@@ -12,19 +12,14 @@ $group-member-bg: rgba($gray-600, 0.15);
 }
 
 .group-member-tag-btn-remove {
-  @include tag-btn(
-    $group-member-bg,
-    $body-color,
-    $danger,
-    color.adjust($danger, $lightness: -30%, $space: hsl)
-  );
+  @include tag-btn($group-member-bg, $body-color, $danger, color.adjust($danger, $lightness: -30%));
 }
 
 .group-member-tag-btn-add {
   @include tag-btn(
-    color.adjust($group-member-bg, $lightness: -10%, $space: hsl),
+    color.adjust($group-member-bg, $lightness: -10%),
     $body-color,
     $success,
-    color.adjust($success, $lightness: -45%, $space: hsl)
+    color.adjust($success, $lightness: -45%)
   );
 }

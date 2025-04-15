@@ -866,8 +866,7 @@ RouterAsync.route("timetable", {
     const span = timestampEnd - timestampStart;
 
     const days: Record<string, { moment: moment.Moment; relStart: number; relEnd: number }> = {};
-    const hours: Record<string, { moment: moment.Moment; relStart: number; relEnd: number }> =
-      {};
+    const hours: Record<string, { moment: moment.Moment; relStart: number; relEnd: number }> = {};
     const cursor = moment(start);
     do {
       const month = cursor.month();
@@ -898,17 +897,23 @@ RouterAsync.route("timetable", {
       cursor.add(1, "hour");
     } while (cursor.isBefore(end));
 
-    const perVenue: Record<string, {
+    const perVenue: Record<
+      string,
+      {
         venue: VenueModel;
-        perRoom: Record<string, {
+        perRoom: Record<
+          string,
+          {
             room: string;
             venue: VenueModel;
             rows: (EventEntity & {
               relStart: number;
               relEnd: number;
             })[];
-          }>;
-      }> = {};
+          }
+        >;
+      }
+    > = {};
     const useVenue = function (venue: any, room: any) {
       const id = venue._id || `#${venue.name}`;
       if (!perVenue[id]) {

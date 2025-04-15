@@ -34,7 +34,7 @@
 }
 
 .stats .course-stat::after {
-  background-color: color.adjust($blue-lighter, $lightness: 5%, $space: hsl);
+  background-color: color.adjust($blue-lighter, $lightness: 5%);
   content: "";
   height: 100%;
   left: 0;

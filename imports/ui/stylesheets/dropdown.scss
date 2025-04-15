@@ -34,7 +34,7 @@ $dropdown-transition-time: 0.3s;
 
 .dropdown-menu > li > a:not(.btn):focus,
 .dropdown-menu > li > .btn-link:focus {
-  background-color: color.adjust($dropdown-bg, $lightness: -5%, $space: hsl);
+  background-color: color.adjust($dropdown-bg, $lightness: -5%);
   color: $dropdown-link-color;
 }
 

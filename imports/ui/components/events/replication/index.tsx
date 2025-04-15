@@ -307,7 +307,11 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
               </label>
               <div className="replica-event-captions row">
                 {replicaDates().map((date) => (
-                  <div key={date.valueOf()} className="event-caption col-3" title={dateTimeLong(date)}>
+                  <div
+                    key={date.valueOf()}
+                    className="event-caption col-3"
+                    title={dateTimeLong(date)}
+                  >
                     <div className="event-caption-header-wrap">
                       <div className="event-caption-header">
                         {weekdayFormat(date)}

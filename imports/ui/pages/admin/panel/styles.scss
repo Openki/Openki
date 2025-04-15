@@ -2,7 +2,7 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .admin-task {
-  border: 1px solid color.adjust($blue-light, $lightness: 5%, $space: hsl);
+  border: 1px solid color.adjust($blue-light, $lightness: 5%);
   border-radius: 4px;
   padding: 30px 15px;
   text-align: center;
@@ -10,7 +10,7 @@
   transition-property: #{"background-color border-color"};
 
   &:hover {
-    background-color: color.adjust($gray-200, $lightness: 3%, $space: hsl);
+    background-color: color.adjust($gray-200, $lightness: 3%);
     cursor: pointer;
     transition-duration: 0.15s;
     transition-property: #{"background-color border-color"};

@@ -2,7 +2,7 @@
 
 .discussion-conversation {
   background: $blue-lighter;
-  padding: 15px ($grid-gutter-width / 2);
+  padding: 15px ($grid-gutter-width * 0.5);
 }
 
 .discussion-conversation + .discussion-conversation {

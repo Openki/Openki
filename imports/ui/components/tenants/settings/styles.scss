@@ -12,16 +12,16 @@ $tenant-member-bg: rgba($gray-600, 0.15);
     $tenant-member-bg,
     $body-color,
     $danger,
-    color.adjust($danger, $lightness: -30%, $space: hsl)
+    color.adjust($danger, $lightness: -30%)
   );
 }
 
 .tenant-member-tag-btn-add {
   @include tag-btn(
-    color.adjust($tenant-member-bg, $lightness: -10%, $space: hsl),
+    color.adjust($tenant-member-bg, $lightness: -10%),
     $body-color,
     $success,
-    color.adjust($success, $lightness: -45%, $space: hsl)
+    color.adjust($success, $lightness: -45%)
   );
 }
 
@@ -32,19 +32,14 @@ $tenant-admin-bg: rgba($red, 0.15);
 }
 
 .tenant-admin-tag-btn-remove {
-  @include tag-btn(
-    $tenant-admin-bg,
-    $body-color,
-    $danger,
-    color.adjust($danger, $lightness: -30%, $space: hsl)
-  );
+  @include tag-btn($tenant-admin-bg, $body-color, $danger, color.adjust($danger, $lightness: -30%));
 }
 
 .tenant-admin-tag-btn-add {
   @include tag-btn(
-    color.adjust($tenant-admin-bg, $lightness: -10%, $space: hsl),
+    color.adjust($tenant-admin-bg, $lightness: -10%),
     $body-color,
     $success,
-    color.adjust($success, $lightness: -45%, $space: hsl)
+    color.adjust($success, $lightness: -45%)
   );
 }

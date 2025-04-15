@@ -20,11 +20,11 @@
 .calendar-event-list {
   @include clearfix;
 
-  margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 2) * -1);
+  margin: (($grid-gutter-width * 0.25) * -1) (($grid-gutter-width * 0.5) * -1);
   padding: 10px 0;
   position: relative;
 
   @include media-breakpoint-up(sm) {
-    margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 8) * -1);
+    margin: (($grid-gutter-width * 0.25) * -1) (($grid-gutter-width * 0.125) * -1);
   }
 }

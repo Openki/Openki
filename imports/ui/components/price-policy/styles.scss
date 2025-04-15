@@ -2,7 +2,7 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .is-dismissable > .price-policy-content {
-  background-color: color.adjust($success, $lightness: 15%, $space: hsl);
+  background-color: color.adjust($success, $lightness: 15%);
   border: 1px solid $success;
   padding: 10px;
 }

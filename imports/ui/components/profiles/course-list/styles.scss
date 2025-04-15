@@ -16,7 +16,7 @@
 
 .profile-courselist .badge {
   background-color: $user-bg;
-  color: color.adjust(color.adjust($user-bg, $lightness: -40%), $saturation: -80%, $space: hsl);
+  color: color.adjust(color.adjust($user-bg, $lightness: -40%), $saturation: -80%);
 
   &.is-archived {
     background-color: $archived-color;
@@ -30,8 +30,8 @@
 
   &:hover,
   &:focus {
-    background: color.adjust($user-bg, $lightness: -5%, $space: hsl);
+    background: color.adjust($user-bg, $lightness: -5%);
     box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
-    color: color.adjust(color.adjust($user-bg, $lightness: -50%), $saturation: -80%, $space: hsl);
+    color: color.adjust(color.adjust($user-bg, $lightness: -50%), $saturation: -80%);
   }
 }

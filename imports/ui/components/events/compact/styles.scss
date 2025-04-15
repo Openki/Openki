@@ -68,19 +68,11 @@
 // ** Past event
 // ========================================================================================
 .event-compact.is-past {
-  background-color: color.adjust(
-    color.adjust($event-body-bg, $lightness: 5%),
-    $saturation: -20%,
-    $space: hsl
-  );
+  background-color: color.adjust(color.adjust($event-body-bg, $lightness: 5%), $saturation: -20%);
 }
 
 .event-compact.is-past > .event-compact-header {
-  background-color: color.adjust(
-    color.adjust($event-header-bg, $lightness: 5%),
-    $saturation: -50%,
-    $space: hsl
-  );
+  background-color: color.adjust(color.adjust($event-header-bg, $lightness: 5%), $saturation: -50%);
 }
 
 // ** Title

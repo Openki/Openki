@@ -18,7 +18,7 @@
   }
 
   &.active {
-    color: color.adjust($green, $lightness: -50%, $space: hsl);
+    color: color.adjust($green, $lightness: -50%);
   }
 }
 

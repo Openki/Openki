@@ -37,7 +37,7 @@
 }
 
 @mixin icon-btn-remove {
-  color: color.adjust($brand-danger, $lightness: 20%, $space: hsl);
+  color: color.adjust($brand-danger, $lightness: 20%);
   cursor: pointer;
   transition: color $default-transition-time;
 
