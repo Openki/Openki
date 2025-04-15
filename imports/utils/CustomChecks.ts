@@ -17,12 +17,12 @@ type RecursiveUndefinedToOptional<T> = UndefinedToOptional<{
   [P in keyof T]: T[P] extends (infer U)[]
     ? RecursiveUndefinedToOptional<U>[]
     : T[P] extends object
-    ? RecursiveUndefinedToOptional<T[P]>
-    : T[P] extends object | undefined
-    ? RecursiveUndefinedToOptional<T[P]> | undefined
-    : T[P] extends object | undefined | null
-    ? RecursiveUndefinedToOptional<T[P]> | undefined | null
-    : T[P];
+      ? RecursiveUndefinedToOptional<T[P]>
+      : T[P] extends object | undefined
+        ? RecursiveUndefinedToOptional<T[P]> | undefined
+        : T[P] extends object | undefined | null
+          ? RecursiveUndefinedToOptional<T[P]> | undefined | null
+          : T[P];
 }>;
 
 /** Match.Optional and Match.Maybe behaves diffrent when the pattern is a property of a object or not. */

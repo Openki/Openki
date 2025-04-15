@@ -46,7 +46,9 @@ function GroupToAdd({ event, groupId }: { event: EventModel; groupId: string }) 
   );
 }
 
-export interface Props { event: EventModel }
+export interface Props {
+  event: EventModel;
+}
 
 export function Add({ event }: Props) {
   const { t } = useTranslation();

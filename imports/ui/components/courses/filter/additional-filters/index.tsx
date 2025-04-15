@@ -17,7 +17,11 @@ export interface Props {
   onNeedsRoleMouseOut: (role: string) => void;
 }
 
-interface Role { icon?: string | undefined; name: string; label: string }
+interface Role {
+  icon?: string | undefined;
+  name: string;
+  label: string;
+}
 
 export function AdditionalFilters(props: Props) {
   const { t } = useTranslation();

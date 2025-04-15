@@ -17,8 +17,8 @@ export async function create() {
       tenant: template.tenant
         ? await ensure.tenant(template.tenant)
         : prng() > 0.3
-        ? await ensure.tenant("Hmmm")
-        : await ensure.tenant("Kopf", userKopf),
+          ? await ensure.tenant("Hmmm")
+          : await ensure.tenant("Kopf", userKopf),
       defaultTeamGroups: template.defaultTeamGroups,
     } as unknown as RegionEntity;
     if (template.loc) {

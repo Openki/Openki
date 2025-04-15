@@ -54,8 +54,7 @@ Meteor.startup(() => {
   // too lazy to implement this. It would become obsolete anyway.
   if (navigator.languages) {
     for (const language of navigator.languages) {
-      if (setLocale(language))
-        continue;
+      if (setLocale(language)) continue;
     }
   }
 

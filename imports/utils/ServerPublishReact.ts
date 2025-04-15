@@ -6,8 +6,8 @@ import { publish, QueryBuilder } from "./ServerPublishUtils";
 import { useUserId } from "./react-meteor-data";
 
 /**
-   * Subscribe to the record set.
-   */
+ * Subscribe to the record set.
+ */
 export type Publication<A extends any[], T> = (...args: A) => [isLoading: () => boolean, data: T];
 
 export function createPublicationMany<A extends any[], T>(

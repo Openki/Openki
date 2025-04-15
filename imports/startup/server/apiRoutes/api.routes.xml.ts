@@ -11,33 +11,30 @@ import { Regions } from "/imports/api/regions/regions";
 const OPENKI_UUID_NAMESPACE = "bfcc029a-5d16-4863-af43-17277e2e717b";
 
 const sortByTimeAndRoom = (results: ApiEvent[]) =>
-  results.reduce(
-    (accumulator: Record<string, Record<string, ApiEvent[]>>, current: ApiEvent) => {
-      const currentDate = moment(current.start).format("YYYY-MM-DD");
+  results.reduce((accumulator: Record<string, Record<string, ApiEvent[]>>, current: ApiEvent) => {
+    const currentDate = moment(current.start).format("YYYY-MM-DD");
 
-      let currentRoom;
-      if (current.venue?.name && current.room) {
-        currentRoom = `${current.venue?.name} (${current.room})`;
-      } else {
-        currentRoom = current.venue?.name || current.room;
-      }
+    let currentRoom;
+    if (current.venue?.name && current.room) {
+      currentRoom = `${current.venue?.name} (${current.room})`;
+    } else {
+      currentRoom = current.venue?.name || current.room;
+    }
 
-      if (currentDate in accumulator) {
-        const dateEvents = accumulator[currentDate];
-        if (currentRoom in dateEvents) {
-          dateEvents[currentRoom].push(current);
-        } else {
-          dateEvents[currentRoom] = [current];
-        }
+    if (currentDate in accumulator) {
+      const dateEvents = accumulator[currentDate];
+      if (currentRoom in dateEvents) {
+        dateEvents[currentRoom].push(current);
       } else {
-        accumulator[currentDate] = {
-          [currentRoom]: [current],
-        };
+        dateEvents[currentRoom] = [current];
       }
-      return accumulator;
-    },
-    {},
-  );
+    } else {
+      accumulator[currentDate] = {
+        [currentRoom]: [current],
+      };
+    }
+    return accumulator;
+  }, {});
 
 const xmlSendResponder = async function (res: any, process: any) {
   try {

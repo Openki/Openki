@@ -105,8 +105,8 @@
     "test:unit": "npm run type-check && MOCHA_GREP=$npm_config_grep TEST_BROWSER_DRIVER=chrome TEST_CHROME_ARGS=--user-data-dir=$(mktemp -u -p $HOME -t tmp4meteor_tests.XXXXXXXXXX) meteor test --once --driver-package meteortesting:mocha --inspect --settings settings/ci.json",
     "test:integration": "npm run type-check && MOCHA_GREP=$npm_config_grep TEST_BROWSER_DRIVER=chrome TEST_CHROME_ARGS=--user-data-dir=$(mktemp -u -p $HOME -t tmp4meteor_tests.XXXXXXXXXX) meteor test --full-app --once --driver-package meteortesting:mocha --inspect --settings settings/ci.json",
     "test:integration:watch": "npm run type-check && MOCHA_GREP=$npm_config_grep meteor test --full-app --driver-package meteortesting:mocha --inspect --settings settings/ci.json",
-    "lint": "eslint . && stylelint '**/*.scss' && prettier . --check",
-    "lint:fix": "eslint . --fix && stylelint '**/*.scss' --fix && prettier . --write && html-beautify '{client,imports,private,public,server}/**/*.html' -r",
+    "lint": "eslint . && stylelint '**/*.scss' && prettier --check '**/*.{ts,tsx,scss}'",
+    "lint:fix": "eslint . --fix && stylelint '**/*.scss' --fix && prettier --write '**/*.{ts,tsx,scss}' && html-beautify '{client,imports,private,public,server}/**/*.html' -r",
     "reset": "meteor reset && meteor reset --db && rm -rf node_modules package-lock.json && meteor npm install --verbose",
     "type-check": "meteor lint && tsc",
     "extract-translations": "rm -f imports/startup/both/i18n/en.json && npx i18next"

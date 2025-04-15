@@ -55,8 +55,8 @@ export async function create() {
     venueData.region = template.region
       ? template.region
       : prng() > 0.85
-      ? testRegions[0]
-      : testRegions[1];
+        ? testRegions[0]
+        : testRegions[1];
 
     const venue = await ensure.venue(venueData.name, venueData.region, venueData._id);
 
