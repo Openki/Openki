@@ -1,7 +1,8 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .admin-task {
-  border: 1px solid lighten($blue-light, 5%);
+  border: 1px solid color.adjust($blue-light, $lightness: 5%, $space: hsl);
   border-radius: 4px;
   padding: 30px 15px;
   text-align: center;
@@ -9,7 +10,7 @@
   transition-property: #{"background-color border-color"};
 
   &:hover {
-    background-color: lighten($gray-200, 3%);
+    background-color: color.adjust($gray-200, $lightness: 3%, $space: hsl);
     cursor: pointer;
     transition-duration: 0.15s;
     transition-property: #{"background-color border-color"};

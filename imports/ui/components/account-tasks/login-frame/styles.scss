@@ -1,3 +1,4 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .login {
@@ -5,6 +6,6 @@
 }
 
 .login hr {
-  border-top: 1px solid lighten($gray-400, 10%);
+  border-top: 1px solid color.adjust($gray-400, $lightness: 10%, $space: hsl);
   margin: 15px 0;
 }

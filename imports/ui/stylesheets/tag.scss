@@ -8,6 +8,24 @@
   transition: color $default-transition-time;
 }
 
+.tag-btn > button {
+  border: 0;
+  font-size: $font-size-base;
+  padding: 1px 4px;
+}
+
+.tag-link,
+.tag-btn > button {
+  transition-duration: $default-transition-time;
+  transition-property: #{"color background-color border-color box-shadow"};
+
+  &:hover,
+  &:focus,
+  &.highlight {
+    box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
+  }
+}
+
 .tag-group {
   // Set the font-size of the parent element to 0, in order to remove whitespace
   // made visible because of 'display: inline-block' property
@@ -40,12 +58,6 @@
   vertical-align: top;
 }
 
-.tag-btn > button {
-  border: 0;
-  font-size: $font-size-base;
-  padding: 1px 4px;
-}
-
 .tag-btn.addon > button,
 .tag-link.addon {
   border-style: solid;
@@ -58,14 +70,3 @@
   @include td-margin(left, 5px);
 }
 
-.tag-link,
-.tag-btn > button {
-  transition-duration: $default-transition-time;
-  transition-property: #{"color background-color border-color box-shadow"};
-
-  &:hover,
-  &:focus,
-  &.highlight {
-    box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
-  }
-}

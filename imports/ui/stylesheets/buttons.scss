@@ -4,12 +4,6 @@
   transition: border-color 0.15s ease-in-out;
 }
 
-.btn-primary:focus {
-  box-shadow:
-    0 1px 1px rgb(0 0 0 / 7.5%) inset,
-    0 0 8px rgb(56 130 156 / 60%);
-}
-
 .remove-btn {
   background-color: transparent;
   border: 0;
@@ -50,6 +44,12 @@
   &:hover {
     color: $white;
   }
+}
+
+.btn-primary:focus {
+  box-shadow:
+    0 1px 1px rgb(0 0 0 / 7.5%) inset,
+    0 0 8px rgb(56 130 156 / 60%);
 }
 
 .btn-add,

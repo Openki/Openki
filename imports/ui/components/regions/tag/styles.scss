@@ -1,7 +1,8 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .region-tag {
-  background-color: lighten($blue, 5%);
+  background-color: color.adjust($blue, $lightness: 5%, $space: hsl);
   border-end-start-radius: 3px;
   inset-block-start: 0;
   inset-inline-end: 0;

@@ -16,6 +16,7 @@ import { escapeRegExp, intersection } from "lodash";
 import { GroupEntityCustomCourseFields } from "/imports/api/groups/groups";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { StringEnum, Type } from "/imports/utils/CustomChecks";
+import { EventEntity, OEvent } from "../events/events";
 
 export interface CourseMemberEntity {
   user: string;

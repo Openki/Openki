@@ -1,3 +1,4 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .course-member {
@@ -23,6 +24,12 @@
   }
 }
 
+.course-member-role-text {
+  color: $white;
+  font-size: small;
+  font-weight: bold;
+}
+
 .course-member-role {
   background: $blue;
   margin-left: 3px;
@@ -33,19 +40,11 @@
     background-color: transparent;
     border: 3px dashed #a7c9d5;
     padding: 0 3px 2px;
-  }
-}
 
-.course-member-role.is-proposal {
-  .course-member-role-text {
-    color: #6d9daf;
+    .course-member-role-text {
+      color: #6d9daf;
+    }
   }
-}
-
-.course-member-role-text {
-  color: $white;
-  font-size: small;
-  font-weight: bold;
 }
 
 .team .course-member-role {
@@ -84,7 +83,7 @@
   @include td-float(left);
   @include break-word;
 
-  background-color: lighten($blue-lighter, 6%);
+  background-color: color.adjust($blue-lighter, $lightness: 6%, $space: hsl);
   border: 1px solid $course-member-comment-border-color;
   border-radius: 3px;
   font-size: $font-size-base;
