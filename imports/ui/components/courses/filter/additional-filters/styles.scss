@@ -1,3 +1,4 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .filter-course-role {
@@ -17,7 +18,7 @@
   }
 
   &.active {
-    color: darken($green, 50%);
+    color: color.adjust($green, $lightness: -50%, $space: hsl);
   }
 }
 

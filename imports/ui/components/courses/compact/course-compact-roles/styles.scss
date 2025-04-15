@@ -1,3 +1,4 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .course-compact-roles {
@@ -27,10 +28,14 @@
   $background-color: $green;
 
   background-color: $background-color;
-  color: desaturate(darken($background-color, 40%), 50%);
+  color: color.adjust(
+    color.adjust($background-color, $lightness: -40%),
+    $saturation: -50%,
+    $space: hsl
+  );
 }
 
 .course-compact-role-occupied-by-user {
   background-color: $user-bg;
-  color: desaturate(darken($user-bg, 40%), 60%);
+  color: color.adjust(color.adjust($user-bg, $lightness: -40%), $saturation: -60%, $space: hsl);
 }

@@ -1,9 +1,10 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .delete-confirm-dialog {
-  $background-color: lighten($danger, 20%);
+  $background-color: color.adjust($danger, $lightness: 20%, $space: hsl);
 
   background-color: $background-color;
-  border: 1px solid darken($background-color, 20%);
+  border: 1px solid color.adjust($background-color, $lightness: -20%, $space: hsl);
   padding: 15px 15px 0;
 }

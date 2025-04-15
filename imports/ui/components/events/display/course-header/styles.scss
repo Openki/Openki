@@ -1,6 +1,7 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
-$header-bg: darken($blue-lighter, 5%);
+$header-bg: color.adjust($blue-lighter, $lightness: -5%, $space: hsl);
 
 .event-course-header {
   background-color: $header-bg;
@@ -12,7 +13,7 @@ $header-bg: darken($blue-lighter, 5%);
   transition: background-color 0.15s;
 
   &:hover {
-    background-color: darken($header-bg, 2%);
+    background-color: color.adjust($header-bg, $lightness: -2%, $space: hsl);
   }
 
   .region-tag {

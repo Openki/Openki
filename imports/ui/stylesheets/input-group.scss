@@ -10,6 +10,7 @@
     border-color: $input-border-color;
     display: block !important;
     opacity: 1 !important;
+    border-right: 1px solid $input-border-color;
   }
 
   > .input-group-text,
@@ -24,7 +25,4 @@
     border-left: 1px solid $input-border-color;
   }
 
-  > .btn.dropdown-toggle {
-    border-right: 1px solid $input-border-color;
-  }
 }
