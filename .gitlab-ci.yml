@@ -39,14 +39,14 @@ test:unit:
   stage: lint
   tags:
     - gitlab-org
-  script: ./ci/test-unit.sh
+  script: ./ci/test.sh
 
 # integration/e2e tests
 test:integration:
   stage: lint
   tags:
     - gitlab-org-docker
-  script: ./ci/test-integration.sh
+  script: ./ci/app-test.sh
   allow_failure: true
   timeout: 20m
 
