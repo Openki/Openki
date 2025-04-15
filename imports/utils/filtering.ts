@@ -12,11 +12,11 @@ export class FilteringReadError {
 /**
  * A helper type to get the generic parameter.
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type GetPredicateT1<C extends Predicate<any>> =
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   C extends Predicate<infer T1, infer _T2, infer _T3> ? T1 : unknown;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type GetPredicateT3<C extends Predicate<any>> =
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   C extends Predicate<infer _T1, infer _T2, infer T3> ? T3 : unknown;
 
 export class Filtering<T extends Record<string, Predicate<any>>> {
