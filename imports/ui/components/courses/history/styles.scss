@@ -67,17 +67,17 @@
 .coursehistory-event {
   padding: 0;
 
+  a {
+    color: $primary;
+    overflow-wrap: normal;
+  }
+  
   &:hover a {
     color: $gray-800;
     /* stylelint-disable-next-line max-nesting-depth */
     &:hover {
       text-decoration: underline;
     }
-  }
-
-  a {
-    color: $primary;
-    overflow-wrap: normal;
   }
 
   h4 {

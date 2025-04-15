@@ -13,7 +13,7 @@ $enable-gradients: true;
 $secondary: #f0f0f0;
 
 // Typography
-//
+
 // Font, line-height, and color for body text, headings, and mo
 
 // $font-size-root affects the value of `rem`, which is used for as well font sizes, paddings, and
@@ -24,7 +24,7 @@ $font-size-large: ceil($font-size-root * 1.25) !default;
 $font-family-sans-serif: "Source Sans Pro", sans-serif !default;
 
 // Components
-//
+
 // Define common padding and border radius sizes and more. Values based on 14px text and 1.428 line-height (~20px to start).
 
 $padding-large-vertical: 10px !default;
@@ -33,7 +33,7 @@ $border-radius-large: 6px !default;
 $border-radius-base: 4px !default;
 
 // Buttons
-//
+
 // For each of Bootstrap's buttons, define text, background and border color.
 
 // Allows for customizing button radius independently from global border radius
@@ -41,7 +41,7 @@ $btn-border-radius-base: $border-radius-base !default;
 $btn-border-radius-large: $border-radius-large !default;
 
 // Links
-//
+
 // Style anchor elements.
 
 $link-decoration: none;
@@ -52,7 +52,7 @@ $form-label-color: shade-color($blue, 20%);
 $form-group-margin-bottom: 15px !default;
 
 // Dropdowns
-//
+
 // Dropdown menu container and contents.
 
 //** Background for the dropdown menu.
@@ -98,9 +98,8 @@ $custom-grid-breakpoints: (
 $grid-breakpoints: map-merge($grid-breakpoints, $custom-grid-breakpoints);
 
 // Grid containers
-//
-// Define the maximum width of `.container` for different screen sizes.
 
+// Define the maximum width of `.container` for different screen sizes.
 $container-max-widths: map-remove($container-max-widths, xxl);
 $canceled-color: #ff5252;
 $archived-color: #f5ecc6;
@@ -147,8 +146,7 @@ $theme-colors-border-subtle: map-merge(
 $utilities: map-merge(
   $utilities,
   (
-    "max-width":
-      map-merge(
+    "max-width": map-merge(
         map-get($utilities, "max-width"),
         (
           values: map-merge(map-get(map-get($utilities, "max-width"), "values"), $grid-breakpoints),
