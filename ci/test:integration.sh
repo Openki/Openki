@@ -2,14 +2,16 @@
 
 YELLOW='\033[0;33m'
 NC='\033[0m'
+MAINTEXT='\e[1;33m'
+TEXT='\e[21m'
 
 echo ""
 echo -e "${YELLOW}=============================================================${NC}"
-echo -e "\e[1;33mRun integration tests with:\e[21m
+echo -e "${MAINTEXT}Run integration tests with:${TEXT}
     meteor npm run test:integration
-    or  meteor npm run test:integration:watch (to run and witness it in your local browser: open https://localhost:3000/) \e[0m
+    or  meteor npm run test:integration:watch (to run and witness it in your local browser: open https://localhost:3000/) ${NC}
 
-    If integration tests are run in a docker container, it needs a headless chromium to work"
+    Hint: If integration tests are run in a docker container (e.g. in CI/CD), it needs a headless chromium to work"
 echo -e "${YELLOW}=============================================================${NC}"
 echo ""
 
