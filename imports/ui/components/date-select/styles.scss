@@ -3,6 +3,7 @@
 .date-select-weekday {
   @include td-padding(right, $input-padding-x);
   @include td-pos(right, 0);
+
   color: $gray-600;
   padding-top: $input-padding-y;
   position: absolute;

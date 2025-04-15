@@ -26,6 +26,7 @@
 
 .role-unsubscribe-btn {
   @include td-margin(left, 5px);
+
   font-size: medium;
   padding: 3px 12px;
 }
@@ -37,6 +38,7 @@
 
 .course-role-enroll-options {
   @include clearfix;
+
   background: $course-page-component-bg;
   padding: 15px 15px 0;
 }

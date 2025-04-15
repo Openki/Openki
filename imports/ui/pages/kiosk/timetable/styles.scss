@@ -81,6 +81,7 @@
 
 .timetable-location {
   @include td-pos(left, -1em);
+
   max-height: 100%;
   overflow: hidden;
   padding: 0 1em;
@@ -90,6 +91,7 @@
 
 .timetable-row-section {
   @include td-margin(left, 12em);
+
   height: 45px;
   position: relative;
 
@@ -132,8 +134,6 @@
   text-align: center;
   top: 16%;
   transform: rotate(-27deg);
-  transform: rotate(-27d300eg);
-  transform: rotate(-27deg);
   width: fit-content;
   z-index: 0;
 }
@@ -156,8 +156,6 @@
   position: absolute;
   text-align: center;
   top: 16%;
-  transform: rotate(-27deg);
-  transform: rotate(-27d300eg);
   transform: rotate(-27deg);
   width: fit-content;
   z-index: 0;
@@ -251,7 +249,7 @@
   border-left: 3px solid #f00;
   height: 100%;
   left: 50%;
-  opacity: 30%;
+  opacity: 0.3;
   position: absolute;
   z-index: 1;
 }

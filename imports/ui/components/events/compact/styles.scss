@@ -41,6 +41,7 @@
 //========================================================================================
 .event-compact-header {
   @include ellipsis;
+
   background: $event-header-bg;
   border-bottom: $event-compact-seperator-height solid $body-bg;
   color: $gray-800;
@@ -119,8 +120,6 @@
   text-align: center;
   top: 40%;
   transform: rotate(-27deg);
-  transform: rotate(-27d300eg);
-  transform: rotate(-27deg);
   width: fit-content;
   z-index: 0;
 }
@@ -143,8 +142,6 @@
   position: absolute;
   text-align: center;
   top: 40%;
-  transform: rotate(-27deg);
-  transform: rotate(-27d300eg);
   transform: rotate(-27deg);
   width: fit-content;
   z-index: 0;

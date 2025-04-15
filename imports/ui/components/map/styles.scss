@@ -15,11 +15,9 @@
 }
 
 .map-fullscreen {
-  bottom: 0;
-  left: 0;
-  right: 0;
   // position: fixed; Does not work on iOS check index.ts how it is fixed
-  top: 0;
+  inset: 0;
+
   z-index: $zindex-map;
 }
 

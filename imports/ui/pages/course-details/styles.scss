@@ -60,6 +60,7 @@ $course-details-content-padding-horizontal: (
 .course-description-fade-bottom {
   @include gradient-y(transparent, #ebf4f8);
   @include td-pos(left, 0);
+
   bottom: 0;
   height: 60px;
   position: absolute;

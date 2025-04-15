@@ -4,6 +4,7 @@
 
 .checkmark {
   @include td-padding(left, 5px);
+
   color: $green-dark;
 }
 
@@ -70,13 +71,10 @@ a:focus,
 
 .action-focus::after {
   animation: highlight 5s ease-out;
-  bottom: 0;
+  inset: 0;
   content: "";
   display: block;
-  left: 0;
   position: absolute;
-  right: 0;
-  top: 0;
   z-index: 10000;
   pointer-events: none;
 }
@@ -98,12 +96,12 @@ a:focus,
   }
 
   30% {
-    outline: 3px solid rgba(0, 0, 0, 0.6);
+    outline: 3px solid rgb(0 0 0 / 60%);
     outline-offset: 3px;
   }
 
   80% {
-    outline: 3px solid rgba(0, 0, 0, 0.6);
+    outline: 3px solid rgb(0 0 0 / 60%);
     outline-offset: 3px;
   }
 

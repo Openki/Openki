@@ -9,6 +9,7 @@
 .replica-date-weekday {
   @include td-padding(right, $input-padding-x);
   @include td-pos(right, 0);
+
   color: $gray-600;
   padding-top: $input-padding-y;
   position: absolute;
@@ -18,6 +19,7 @@
 
 .replica-event-captions {
   @include clearfix;
+
   margin: -2.5px -5px;
   padding-bottom: 10px;
 }

@@ -2,6 +2,7 @@
 
 .course-history {
   @include clearfix;
+
   padding-bottom: 10px;
 }
 
@@ -27,7 +28,8 @@
 
 .timeline-eventdate {
   @include ellipsis;
-  color: rgb(109, 112, 112);
+
+  color: rgb(109 112 112);
   padding: 0;
   text-align: end;
 
