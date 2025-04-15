@@ -28,6 +28,7 @@
 
 .filter.active .filter-active-tag {
   @include td-margin(left, 5px);
+
   background-color: darken($green, 35%);
   color: $white;
   display: inline;
@@ -37,6 +38,7 @@
 
 .filter-captions-header-buttons {
   @include td-float(right);
+
   display: block;
 }
 
@@ -109,7 +111,7 @@
 
   &.active,
   &:hover {
-    box-shadow: 0 0 4px rgba(67, 223, 37, 1);
+    box-shadow: 0 0 4px rgb(67 223 37 / 100%);
     opacity: 1;
     transition-duration: 0.15s;
     transition-property: #{"box-shadow opacity"};
@@ -118,6 +120,7 @@
 
 .filter-caption-text {
   @include ellipsis;
+
   display: block;
   line-height: 40px;
 }

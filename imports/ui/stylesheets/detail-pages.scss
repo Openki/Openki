@@ -43,6 +43,7 @@
 
 .page-component-btn {
   @include btn-lg;
+
   margin-top: $page-component-seperator-height;
   padding: 10px 12px;
   text-align: start;
@@ -70,6 +71,7 @@
 
 .details-content {
   @include clearfix;
+
   height: 100%;
   padding: ($grid-gutter-width / 2);
 }
@@ -103,6 +105,7 @@
 
 .details-form {
   @include clearfix;
+
   background-color: lighten($success, 10%);
   border-color: $success;
   border-style: solid;

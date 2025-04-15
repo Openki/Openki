@@ -8,6 +8,7 @@
 
 .actions {
   @extend %actions;
+
   background-color: $gray-200;
   border-color: darken($gray-200, 3%);
   border-style: solid;
@@ -17,5 +18,6 @@
 
 .form-actions {
   @extend %actions;
+
   padding-bottom: 1rem;
 }

@@ -6,8 +6,8 @@
 
 .btn-primary:focus {
   box-shadow:
-    0 1px 1px rgba(0, 0, 0, 0.075) inset,
-    0 0 8px rgba(56, 130, 156, 0.6);
+    0 1px 1px rgb(0 0 0 / 7.5%) inset,
+    0 0 8px rgb(56 130 156 / 60%);
 }
 
 .remove-btn {
@@ -66,6 +66,7 @@
 
   &:hover {
     @extend .btn-warning;
+
     border-color: $warning;
   }
 }
@@ -77,6 +78,7 @@
 
   &:hover {
     @extend .btn-danger;
+
     border-color: $danger;
     color: $black !important;
   }
@@ -91,6 +93,7 @@ $external-servies: (
 @each $color, $value in $external-servies {
   .btn-#{$color} {
     @include button-variant($value, $value, $white);
+
     font-weight: bold;
 
     &[disabled] {

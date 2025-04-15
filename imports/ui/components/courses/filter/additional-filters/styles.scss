@@ -27,6 +27,7 @@
 
 .filter-course-role-icon {
   @include td-margin(right, 5px);
+
   background-color: $role-needed-bg;
   color: $role-needed-color;
   display: inline-block;

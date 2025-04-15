@@ -21,7 +21,6 @@ $secondary: #f0f0f0;
 // bootstrap version 3, "14px" corresponds to the value at that time.
 $font-size-root: 14px;
 $font-size-large: ceil($font-size-root * 1.25) !default;
-
 $font-family-sans-serif: "Source Sans Pro", sans-serif !default;
 
 // Components
@@ -30,9 +29,7 @@ $font-family-sans-serif: "Source Sans Pro", sans-serif !default;
 
 $padding-large-vertical: 10px !default;
 $padding-large-horizontal: 16px !default;
-
 $border-radius-large: 6px !default;
-
 $border-radius-base: 4px !default;
 
 // Buttons
@@ -52,7 +49,6 @@ $link-decoration: none;
 // Forms
 
 $form-label-color: shade-color($blue, 20%);
-
 $form-group-margin-bottom: 15px !default;
 
 // Dropdowns
@@ -61,7 +57,6 @@ $form-group-margin-bottom: 15px !default;
 
 //** Background for the dropdown menu.
 $dropdown-bg: lighten($blue-lighter, 8.7%) !default;
-
 $hr-color: $blue-lighter;
 
 // Modals
@@ -107,22 +102,18 @@ $grid-breakpoints: map-merge($grid-breakpoints, $custom-grid-breakpoints);
 // Define the maximum width of `.container` for different screen sizes.
 
 $container-max-widths: map-remove($container-max-widths, xxl);
-
 $canceled-color: #ff5252;
 $archived-color: #f5ecc6;
-
 $custom-colors: (
   "canceled": $canceled-color,
   "archived": $archived-color,
 );
-
 $theme-colors: map-merge($theme-colors, $custom-colors);
 
 // https://github.com/twbs/bootstrap/issues/39155#issuecomment-1711508093
 $canceled-text-emphasis: shade-color($canceled-color, 60%) !default;
 $canceled-bg-subtle: tint-color($canceled-color, 80%) !default;
 $canceled-border-subtle: tint-color($canceled-color, 60%) !default;
-
 $archived-text-emphasis: shade-color($archived-color, 60%) !default;
 $archived-bg-subtle: tint-color($archived-color, 80%) !default;
 $archived-border-subtle: tint-color($archived-color, 60%) !default;
@@ -149,7 +140,6 @@ $theme-colors-border-subtle: map-merge(
 );
 
 @import "{}/node_modules/bootstrap/scss/mixins"; // Required
-
 @import "{}/node_modules/bootstrap/scss/utilities"; // Optional
 
 // Add grid-breakpoints to max-width utilites: mw-sm, mw-md, ...

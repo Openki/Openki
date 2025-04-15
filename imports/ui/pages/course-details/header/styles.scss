@@ -30,15 +30,19 @@
   border-style: solid;
   border-width: $course-border-width $course-border-width 0;
 }
+
 .is-proposal > div > .details-header {
   border-style: $proposal-border-style;
 }
+
 .has-past-events > div > .details-header {
   border-style: $has-past-events-border-style;
 }
+
 .has-upcoming-events > div > .details-header {
   background: $has-upcoming-events-bg;
 }
+
 .is-archived > div > .details-header {
   border-color: $archived-color;
 }
@@ -47,6 +51,7 @@
 //========================================================================================
 .details-header-tags {
   @include td-pos(right, -$course-border-width);
+
   max-width: 120px;
   position: absolute;
   top: -$course-border-width;
@@ -70,6 +75,7 @@
 //========================================================================================
 .course-details-title {
   @include editable-popout;
+
   font-size: 30px;
   margin-bottom: 10px;
   margin-right: 100px;

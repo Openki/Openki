@@ -60,7 +60,7 @@ $event-caption-body-bg: $event-body-bg;
 .event-caption-placeholder:not(:hover) .event-caption-body {
   background-color: rgba(desaturate($event-caption-body-bg, 50%), 0.5);
   color: transparent;
-  text-shadow: 0 0 1.5px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 0 1.5px rgb(0 0 0 / 50%);
 }
 
 .event-caption-placeholder:not(:hover) .event-caption-header,
@@ -100,6 +100,7 @@ $event-caption-body-bg: $event-body-bg;
 
 .event-caption-icon {
   @include td-pos(right, -5%);
+
   bottom: 0;
   position: absolute;
 }

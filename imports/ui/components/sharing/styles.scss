@@ -21,6 +21,7 @@ $shariff-bg-color: #77b8e9;
 
 .shariff > .orientation-horizontal {
   @include list-unstyled;
+
   margin-bottom: -($shariff-button-margin-bottom);
   margin-left: -($shariff-button-margin-left);
 }

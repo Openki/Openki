@@ -29,8 +29,7 @@
 
 .tab-pane {
   max-height: 300px;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden auto;
 }
 
 .tab-label {

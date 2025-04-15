@@ -5,6 +5,7 @@
   $background-color: lighten($gray-200, 5%);
 
   @include clearfix;
+
   background-color: $background-color;
   margin-top: 15px;
   padding: 2px ($grid-gutter-width / 2);

@@ -17,6 +17,7 @@ $dropdown-transition-time: 0.3s;
 .dropdown-menu > li > a:not(.btn),
 .dropdown-menu > li > .btn-link {
   @include ellipsis;
+
   border-radius: 0;
   color: $dropdown-link-color;
   padding: 3px 20px;
@@ -54,11 +55,13 @@ $dropdown-transition-time: 0.3s;
   @include clearfix;
   @include td-float(right);
   @include td-padding(left, 4px);
+
   display: inline-block;
 }
 
 .dropdown-legend {
   @include clearfix;
+
   color: $primary;
   text-align: start;
 }

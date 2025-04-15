@@ -4,6 +4,7 @@
 .user-frame {
   @include media-breakpoint-down(md) {
     @include clearfix;
+
     background-color: $dropdown-bg;
     padding-top: 15px;
   }

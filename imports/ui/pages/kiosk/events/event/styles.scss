@@ -51,8 +51,6 @@
   text-align: center;
   top: 27%;
   transform: rotate(-27deg);
-  transform: rotate(-27d300eg);
-  transform: rotate(-27deg);
   width: fit-content;
   z-index: 0;
 }
@@ -76,8 +74,6 @@
   position: absolute;
   text-align: center;
   top: 27%;
-  transform: rotate(-27deg);
-  transform: rotate(-27d300eg);
   transform: rotate(-27deg);
   width: fit-content;
   z-index: 0;
@@ -107,6 +103,7 @@ $kiosk-event-component-padding-horizontal: $grid-gutter-width / 2;
 
 .kiosk-event-header {
   @include clearfix;
+
   color: $gray-800;
   font-size: medium;
   padding: $kiosk-event-component-padding-vertical $kiosk-event-component-padding-horizontal;
@@ -140,6 +137,7 @@ $kiosk-event-component-padding-horizontal: $grid-gutter-width / 2;
 .kiosk-event-today .kiosk-event-moment,
 .kiosk-event-upcoming .kiosk-event-moment {
   @include td-float(left);
+
   text-align: start;
 }
 
@@ -148,6 +146,7 @@ $kiosk-event-component-padding-horizontal: $grid-gutter-width / 2;
 .kiosk-event-today .kiosk-event-location,
 .kiosk-event-upcoming .kiosk-event-location {
   @include td-float(right);
+
   text-align: end;
 }
 

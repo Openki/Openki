@@ -11,6 +11,7 @@ $discussion-post-bg: $blue-lighter;
 
 .discussion-post-content {
   @include break-word;
+
   border-color: darken($discussion-post-bg, 10%);
 }
 
@@ -77,6 +78,7 @@ $discussion-post-bg: $blue-lighter;
 
 .discussion-comment {
   @include td-padding-all(7px, 0, 0, ($discussion-thumb-width * 1px));
+
   display: table;
   position: relative;
   width: 100%;

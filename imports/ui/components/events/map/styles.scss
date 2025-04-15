@@ -82,6 +82,7 @@
 .events-map-location-map .leaflet-marker-icon-pin:hover {
   animation: 0.4s ease-in-out 0s 2 alternate pin-top;
 }
+
 @keyframes pin-top {
   0% {
     top: 0;
@@ -95,6 +96,7 @@
 .events-map-location-map .leaflet-marker-icon-pin:hover + .leaflet-marker-icon-shadow {
   animation: 0.4s ease-in-out 0s 2 alternate shadow-top;
 }
+
 @keyframes shadow-top {
   0% {
     text-shadow:
