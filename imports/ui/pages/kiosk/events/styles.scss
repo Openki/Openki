@@ -1,14 +1,14 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
-//== Kiosk
-//----------------------------------------
+// ** Kiosk
+// ==============================================
 .kiosk {
   padding-bottom: 10.5px;
   padding-top: 10.5px;
 }
 
-//== Logo
-//----------------------------------------
+// ** Logo
+// ==============================================
 .kiosk-logo {
   @include td-margin(right, 15px);
 
@@ -24,8 +24,8 @@
   height: 48px;
 }
 
-//== Heading
-//----------------------------------------
+// ** Heading
+// ==============================================
 .kiosk-heading {
   @include td-margin-all(0, 15px, 0, 0);
 
@@ -35,8 +35,8 @@
   padding-bottom: 15px;
 }
 
-//== Region selection
-//----------------------------------------
+// ** Region selection
+// ==============================================
 .kiosk-language-selection {
   display: inline-block;
   line-height: $line-height-base;
@@ -59,8 +59,8 @@
   @include td-pos(right, 0);
 }
 
-//== Clock
-//----------------------------------------
+// ** Clock
+// ==============================================
 .kiosk-moment {
   @include td-float(right);
 

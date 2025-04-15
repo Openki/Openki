@@ -27,6 +27,8 @@
 }
 
 .navbar-collapse {
+  margin-inline: calc(var(--bs-gutter-x) * -0.5);
+
   @include media-breakpoint-down(lg) {
     border-top: 1px solid $navbar-default-border;
     box-shadow: 0 5px 5px rgb(0 0 0 / 30%);
@@ -145,9 +147,26 @@
   width: 0;
 }
 
+.navbar-covering {
+  box-shadow: 0 0 5px rgb(0 0 0 / 30%);
+}
+
+.navbar-covering .nav-marker-caret {
+  opacity: 0;
+}
+
 .nav-link.active {
   @include media-breakpoint-down(lg) {
     background-color: css-lighten("openki-brand", 10%);
+  }
+}
+
+.navbar-covering .nav-link.active,
+.navbar-covering .nav-link.active:hover,
+.navbar-covering .nav-link.active:focus {
+  @include media-breakpoint-up(lg) {
+    background-color: css-lighten("openki-brand", 10%);
+    box-shadow: 0 0 5px rgb(0 0 0 / 30%);
   }
 }
 
@@ -170,23 +189,6 @@
   }
 }
 
-.navbar-covering {
-  box-shadow: 0 0 5px rgb(0 0 0 / 30%);
-}
-
-.navbar-covering .nav-marker-caret {
-  opacity: 0;
-}
-
-.navbar-covering .nav-link.active,
-.navbar-covering .nav-link.active:hover,
-.navbar-covering .nav-link.active:focus {
-  @include media-breakpoint-up(lg) {
-    background-color: css-lighten("openki-brand", 10%);
-    box-shadow: 0 0 5px rgb(0 0 0 / 30%);
-  }
-}
-
 .navbar .region-search-form {
   margin: 4px 0;
 }
@@ -197,6 +199,7 @@
 
 .navbar-toggler .fa-bars {
   transform: scale(1.7, 1);
+  display: none;
 }
 
 .navbar-toggler.collapsed .fa-bars,
@@ -204,13 +207,8 @@
   display: block;
 }
 
-.navbar-toggler .fa-bars,
 .navbar-toggler.collapsed .fa-x {
   display: none;
-}
-
-.navbar-collapse {
-  margin-inline: calc(var(--bs-gutter-x) * -0.5);
 }
 
 .navbar .navbar-nav > .open > .login-dropdown,

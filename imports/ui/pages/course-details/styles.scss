@@ -12,6 +12,11 @@
 
 // ** Content
 // ========================================================================================
+
+$course-details-content-padding-horizontal: (
+  $details-header-padding-horizontal + $course-border-width
+);
+
 .course-details-content {
   border-bottom-width: 0;
   border-color: shade-color($tab-content-bg, 5%);
@@ -25,6 +30,7 @@
     position: absolute;
     top: $tab-content-border-width * -1;
     z-index: 99;
+    width: $course-details-content-padding-horizontal;
   }
 
   &::before {
@@ -34,19 +40,8 @@
   &::after {
     right: $tab-content-border-width * -1;
   }
-}
 
-$course-details-content-padding-horizontal: (
-  $details-header-padding-horizontal + $course-border-width
-);
-
-.course-details-content {
   padding: 15px $course-details-content-padding-horizontal;
-}
-
-.course-details-content::after,
-.course-details-content::before {
-  width: $course-details-content-padding-horizontal;
 }
 
 .course-description {

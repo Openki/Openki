@@ -37,20 +37,10 @@ $shariff-bg-color: #77b8e9;
   font-size: 1.2em;
   opacity: 0.75;
   padding: $shariff-link-padding;
-
-  &:hover {
-    opacity: 1;
-  }
-}
-
-@function map-bg($bg, $bg-hover) {
-  @return ("bg": $bg, "bg-hover": $bg-hover);
-}
-
-.shariff-button > a {
   background-color: $shariff-bg-color;
 
   &:hover {
+    opacity: 1;
     background-color: darken($shariff-bg-color, 5%);
   }
 }
