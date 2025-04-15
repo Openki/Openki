@@ -8,7 +8,7 @@
 }
 
 .group-details-header {
-  background-color: color.adjust($group-bg, $lightness: -20%, $space: hsl);
+  background-color: color.adjust($group-bg, $lightness: -20%);
   font-size: x-large;
   padding: 0 10px 10px;
 
@@ -23,7 +23,7 @@
 }
 
 .group-details-titlebar {
-  background-color: color.adjust($group-bg, $lightness: -20%, $space: hsl);
+  background-color: color.adjust($group-bg, $lightness: -20%);
   padding: 15px 15px 0 23px;
 }
 
@@ -81,7 +81,7 @@
 }
 
 .group-details-body {
-  background: color.adjust($group-bg, $lightness: 10%, $space: hsl);
+  background: color.adjust($group-bg, $lightness: 10%);
 }
 
 .group-details-claim {

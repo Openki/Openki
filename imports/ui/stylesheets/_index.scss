@@ -1,31 +1,31 @@
-@use "variables/index";
+@import "variables/index";
 
 // Styles from packages
 @import "{}/node_modules/@fortawesome/fontawesome-free/css/all";
-@use "bootstrap";
-@use "bootstrap-datepicker";
-@use "fonts";
-@use "medium-editor";
+@import "bootstrap";
+@import "bootstrap-datepicker";
+@import "fonts";
+@import "medium-editor";
 
 // Own styles
-@use "global";
-@use "layout";
-@use "theme";
-@use "actions";
-@use "buttons";
-@use "dropdown";
-@use "input-group";
-@use "forms";
-@use "dialog-dropdown";
-@use "icon-text";
-@use "list-group";
-@use "modals";
-@use "responsive-table";
-@use "table";
-@use "event-caption";
-@use "tag";
-@use "nav-tabs";
-@use "detail-pages";
-@use "edit-pages";
-@use "frame-list";
-@use "mocha";
+@import "global";
+@import "layout";
+@import "theme";
+@import "actions";
+@import "buttons";
+@import "dropdown";
+@import "input-group";
+@import "forms";
+@import "dialog-dropdown";
+@import "icon-text";
+@import "list-group";
+@import "modals";
+@import "responsive-table";
+@import "table";
+@import "event-caption";
+@import "tag";
+@import "nav-tabs";
+@import "detail-pages";
+@import "edit-pages";
+@import "frame-list";
+@import "mocha";

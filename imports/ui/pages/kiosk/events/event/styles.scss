@@ -89,12 +89,12 @@
 $event-ongoing-header-bg: $beige;
 
 .kiosk-event-ongoing > .kiosk-event-timecount {
-  background-color: color.adjust($event-ongoing-header-bg, $lightness: 18%, $space: hsl);
+  background-color: color.adjust($event-ongoing-header-bg, $lightness: 18%);
 }
 
 .kiosk-event-today > .kiosk-event-timecount,
 .kiosk-event-upcoming > .kiosk-event-timecount {
-  background-color: color.adjust($event-header-bg, $lightness: 13%, $space: hsl);
+  background-color: color.adjust($event-header-bg, $lightness: 13%);
 }
 
 // ** Header

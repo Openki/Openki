@@ -90,14 +90,14 @@ $event-caption-body-bg: $event-body-bg;
 .event-caption-add .event-caption-body,
 /* stylelint-disable-next-line no-descending-specificity */
 .event-caption-add .event-caption-header {
-  border-color: color.adjust($green, $lightness: -25%, $space: hsl);
+  border-color: color.adjust($green, $lightness: -25%);
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
 .event-caption-delete .event-caption-body,
 /* stylelint-disable-next-line no-descending-specificity */
 .event-caption-delete .event-caption-header {
-  border-color: color.adjust($red, $lightness: 5%, $space: hsl);
+  border-color: color.adjust($red, $lightness: 5%);
 }
 
 .event-caption-action.event-caption-placeholder:not(:hover) .event-caption-body {

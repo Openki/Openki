@@ -6,29 +6,29 @@
 // ** Blue
 // ========================================================================================
 $blue: #38829c;
-$blue-light: color.adjust($blue, $lightness: 10%, $space: hsl);
-$blue-lighter: color.adjust($blue, $lightness: 48%, $space: hsl);
+$blue-light: color.adjust($blue, $lightness: 10%);
+$blue-lighter: color.adjust($blue, $lightness: 48%);
 $blue-alternative: #c8c3f9;
 
 // ** Green
 // ========================================================================================
 $green: #c1f2ae;
-$green-dark: color.adjust($green, $lightness: -20%, $space: hsl);
-$green-darker: color.adjust($green, $lightness: -50%, $space: hsl);
+$green-dark: color.adjust($green, $lightness: -20%);
+$green-darker: color.adjust($green, $lightness: -50%);
 $green-alternative: #b9e9b9;
 
 // ** Red
 // ========================================================================================
 $red: #ec6d6d;
-$red-dark: color.adjust($red, $lightness: -15%, $space: hsl);
-$red-darker: color.adjust($red, $lightness: -38%, $space: hsl);
-$red-darkest: color.adjust($red, $lightness: -56%, $space: hsl);
+$red-dark: color.adjust($red, $lightness: -15%);
+$red-darker: color.adjust($red, $lightness: -38%);
+$red-darkest: color.adjust($red, $lightness: -56%);
 
 // ** Yellow
 // ========================================================================================
 $yellow: #f9e744;
-$yellow-dark: color.adjust($yellow, $lightness: -10%, $space: hsl);
-$yellow-light: color.adjust($yellow, $lightness: 20%, $space: hsl);
+$yellow-dark: color.adjust($yellow, $lightness: -10%);
+$yellow-light: color.adjust($yellow, $lightness: 20%);
 
 // ** Orange
 // ========================================================================================

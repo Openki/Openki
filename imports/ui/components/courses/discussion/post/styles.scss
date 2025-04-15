@@ -13,7 +13,7 @@ $discussion-post-bg: $blue-lighter;
 .discussion-post-content {
   @include break-word;
 
-  border-color: color.adjust($discussion-post-bg, $lightness: -10%, $space: hsl);
+  border-color: color.adjust($discussion-post-bg, $lightness: -10%);
 }
 
 .discussion-post-header,
@@ -33,7 +33,7 @@ $discussion-post-bg: $blue-lighter;
 }
 
 .discussion-post-header {
-  background: color.adjust($discussion-post-bg, $lightness: -5%, $space: hsl);
+  background: color.adjust($discussion-post-bg, $lightness: -5%);
 }
 
 .discussion-buttons {
@@ -104,15 +104,15 @@ $discussion-post-bg: $blue-lighter;
   }
 }
 
-$discussion-edit-bg: color.adjust($gray-400, $lightness: 10%, $space: hsl);
+$discussion-edit-bg: color.adjust($gray-400, $lightness: 10%);
 
 .discussion-edit-content {
   background: $discussion-edit-bg;
-  border-color: color.adjust($discussion-edit-bg, $lightness: -5%, $space: hsl);
+  border-color: color.adjust($discussion-edit-bg, $lightness: -5%);
 }
 
 .discussion-edit-header {
-  background: color.adjust($discussion-edit-bg, $lightness: -5%, $space: hsl);
+  background: color.adjust($discussion-edit-bg, $lightness: -5%);
 }
 
 .discussion-reply {

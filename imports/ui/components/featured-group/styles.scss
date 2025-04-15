@@ -1,11 +1,11 @@
 @use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
-$featured-group-bg: color.adjust($green, $lightness: 10%, $space: hsl);
+$featured-group-bg: color.adjust($green, $lightness: 10%);
 
 .featured-group {
   background-color: $featured-group-bg;
-  border: 1px solid color.adjust($featured-group-bg, $lightness: -5%, $space: hsl);
+  border: 1px solid color.adjust($featured-group-bg, $lightness: -5%);
   margin-top: 15px;
 }
 
@@ -15,8 +15,8 @@ $featured-group-bg: color.adjust($green, $lightness: 10%, $space: hsl);
 }
 
 .featured-group-header {
-  background-color: color.adjust($featured-group-bg, $lightness: -5%, $space: hsl);
-  border-bottom: 1px solid color.adjust($featured-group-bg, $lightness: -10%, $space: hsl);
+  background-color: color.adjust($featured-group-bg, $lightness: -5%);
+  border-bottom: 1px solid color.adjust($featured-group-bg, $lightness: -10%);
 }
 
 .featured-group-logo {

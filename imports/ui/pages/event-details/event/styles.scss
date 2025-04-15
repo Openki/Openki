@@ -1,7 +1,7 @@
 @use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
-$header-bg: color.adjust($blue-lighter, $lightness: -5%, $space: hsl);
+$header-bg: color.adjust($blue-lighter, $lightness: -5%);
 
 .event.course-event {
   border-color: $header-bg;

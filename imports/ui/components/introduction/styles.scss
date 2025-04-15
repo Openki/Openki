@@ -3,7 +3,7 @@
 /* stylelint-disable selector-max-id, selector-max-compound-selectors */
 
 .introduction {
-  $background-color: color.adjust($gray-200, $lightness: 5%, $space: hsl);
+  $background-color: color.adjust($gray-200, $lightness: 5%);
 
   @include clearfix;
 
@@ -14,7 +14,7 @@
   transition: background-color 1s;
 
   &:hover {
-    background-color: color.adjust($background-color, $lightness: -2%, $space: hsl);
+    background-color: color.adjust($background-color, $lightness: -2%);
   }
 }
 
@@ -55,7 +55,7 @@
   text-align: center;
 
   &::after {
-    color: color.adjust($gray-600, $lightness: 15%, $space: hsl);
+    color: color.adjust($gray-600, $lightness: 15%);
     /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
     font-family: FontAwesome;
     font-size: 16px;
@@ -75,7 +75,7 @@
   text-align: center;
 
   &::after {
-    color: color.adjust($gray-600, $lightness: 15%, $space: hsl);
+    color: color.adjust($gray-600, $lightness: 15%);
     content: "";
     /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
     font-family: FontAwesome;
