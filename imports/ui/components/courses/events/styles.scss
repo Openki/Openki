@@ -3,13 +3,13 @@
 .container .course-event-list .event-compact-wrap {
   @include make-col(6);
 
-  padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
+  padding: ($grid-gutter-width * 0.25) ($grid-gutter-width * 0.125);
 }
 
 .course-event-list {
   @include clearfix;
 
-  margin: (($grid-gutter-width / 4) * -1);
+  margin: (($grid-gutter-width * 0.25) * -1);
   width: auto;
 }
 

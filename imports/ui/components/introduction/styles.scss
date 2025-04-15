@@ -9,7 +9,7 @@
 
   background-color: $background-color;
   margin-top: 15px;
-  padding: 2px ($grid-gutter-width / 2);
+  padding: 2px ($grid-gutter-width * 0.5);
   position: relative;
   transition: background-color 1s;
 
@@ -41,7 +41,7 @@
 .introduction-content {
   border-top: 1px solid $gray-300;
   margin-top: 5px;
-  padding: 12px ($grid-gutter-width / 2);
+  padding: 12px ($grid-gutter-width * 0.5);
 }
 
 .introduction-steps {

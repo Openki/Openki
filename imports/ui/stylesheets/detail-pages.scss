@@ -75,7 +75,7 @@
   @include clearfix;
 
   height: 100%;
-  padding: ($grid-gutter-width / 2);
+  padding: ($grid-gutter-width * 0.5);
 }
 
 .details-content > h3,
@@ -112,7 +112,7 @@
   border-color: $success;
   border-style: solid;
   border-width: 1px;
-  padding: ($grid-gutter-width / 2);
+  padding: ($grid-gutter-width * 0.5);
 }
 
 .details-form > h3 {

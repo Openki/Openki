@@ -18,12 +18,12 @@ $discussion-post-bg: $blue-lighter;
 
 .discussion-post-header,
 .discussion-edit-header {
-  padding: 5px ($grid-gutter-width / 2);
+  padding: 5px ($grid-gutter-width * 0.5);
 }
 
 .discussion-post-body,
 .discussion-edit-body {
-  padding: 10px ($grid-gutter-width / 2) 0;
+  padding: 10px ($grid-gutter-width * 0.5) 0;
 }
 
 .discussion-post {
@@ -121,7 +121,7 @@ $discussion-edit-bg: color.adjust($gray-400, $lightness: 10%);
 
 .discussion-post-new {
   margin-top: $page-component-seperator-height;
-  padding: 15px ($grid-gutter-width / 2);
+  padding: 15px ($grid-gutter-width * 0.5);
   width: 100%;
 }
 

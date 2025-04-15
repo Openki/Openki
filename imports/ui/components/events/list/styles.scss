@@ -1,3 +1,4 @@
+@use "sass:math";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 // ** Wrap
@@ -5,7 +6,7 @@
 .event-compact-wrap {
   @include make-col-ready;
 
-  padding: ($grid-gutter-width / 3) ($grid-gutter-width / 3 * 2);
+  padding: math.div($grid-gutter-width, 3) (math.div($grid-gutter-width, 3) * 2);
 }
 
 .frame-events-fluid .event-compact-wrap {
