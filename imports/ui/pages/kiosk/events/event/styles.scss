@@ -1,3 +1,4 @@
+@use "sass:math";
 @use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
@@ -83,7 +84,7 @@
 // ** Timecount
 // ========================================================================================
 .kiosk-event-timecount {
-  padding: 2px ($grid-gutter-width / 3);
+  padding: 2px math.div($grid-gutter-width, 3);
 }
 
 $event-ongoing-header-bg: $beige;
@@ -99,8 +100,8 @@ $event-ongoing-header-bg: $beige;
 
 // ** Header
 // ========================================================================================
-$kiosk-event-component-padding-vertical: $grid-gutter-width / 3;
-$kiosk-event-component-padding-horizontal: $grid-gutter-width / 2;
+$kiosk-event-component-padding-vertical: math.div($grid-gutter-width, 3);
+$kiosk-event-component-padding-horizontal: $grid-gutter-width * 0.5;
 
 .kiosk-event-header {
   @include clearfix;

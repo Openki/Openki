@@ -105,7 +105,7 @@ $tenant-label-color: $blue;
 
 // ** Kiosk
 // ========================================================================================
-$kiosk-wrap-padding-horizontal: $grid-gutter-width / 4;
+$kiosk-wrap-padding-horizontal: $grid-gutter-width * 0.25;
 $kiosk-wrap-padding-vertical: $kiosk-wrap-padding-horizontal;
 
 // ** Footer
