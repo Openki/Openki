@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 YELLOW='\033[0;33m'
 NC='\033[0m'
