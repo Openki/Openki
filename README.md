@@ -92,7 +92,7 @@ or
 
 Add `--grep=<pattern>` at the end to only run tests that match the pattern. eg. `meteor npm run test:integration:watch --grep="Propose course via frame"`
 
-**Note:** To run the integration test, you need a `chromedriver` binary. On Debian, you can get one with `apt install chromuim-driver`. Also make sure to run `meteor npm install`.
+**Note:** To run the integration tests, you need a `chromedriver` binary. On Debian, you can get one with `apt install chromuim-driver`. Also make sure to run `meteor npm install`.
 
 Run linters and formatting with these commands:
 
