@@ -1,10 +1,13 @@
 import { useState } from "react";
 
-export type Mapping = Record<string, {
+export type Mapping = Record<
+  string,
+  {
     onCheckValidity?: () => boolean;
     text: () => string | React.JSX.Element | undefined | null;
     field: string;
-  }>;
+  }
+>;
 
 export function useValidation(mapping: Mapping, initialCheck = false) {
   const initialState: Record<string, string | React.JSX.Element | undefined | null> = {};

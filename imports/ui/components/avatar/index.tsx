@@ -52,7 +52,11 @@ function UserAvatar(props: {
   );
 }
 
-export interface Props { color?: number; userId?: string; className?: string }
+export interface Props {
+  color?: number;
+  userId?: string;
+  className?: string;
+}
 
 export function Avatar(props: Props) {
   const currenctUserId = useUserId();

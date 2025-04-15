@@ -12,7 +12,7 @@
   @extend %actions;
 
   background-color: $gray-200;
-  border-color: color.adjust($gray-200, $lightness: -3%, $space: hsl);
+  border-color: color.adjust($gray-200, $lightness: -3%);
   border-style: solid;
   border-width: 1px;
   padding: 10px;

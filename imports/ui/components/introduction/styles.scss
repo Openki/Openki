@@ -3,18 +3,18 @@
 /* stylelint-disable selector-max-id, selector-max-compound-selectors */
 
 .introduction {
-  $background-color: color.adjust($gray-200, $lightness: 5%, $space: hsl);
+  $background-color: color.adjust($gray-200, $lightness: 5%);
 
   @include clearfix;
 
   background-color: $background-color;
   margin-top: 15px;
-  padding: 2px ($grid-gutter-width / 2);
+  padding: 2px ($grid-gutter-width * 0.5);
   position: relative;
   transition: background-color 1s;
 
   &:hover {
-    background-color: color.adjust($background-color, $lightness: -2%, $space: hsl);
+    background-color: color.adjust($background-color, $lightness: -2%);
   }
 }
 
@@ -41,7 +41,7 @@
 .introduction-content {
   border-top: 1px solid $gray-300;
   margin-top: 5px;
-  padding: 12px ($grid-gutter-width / 2);
+  padding: 12px ($grid-gutter-width * 0.5);
 }
 
 .introduction-steps {
@@ -55,7 +55,7 @@
   text-align: center;
 
   &::after {
-    color: color.adjust($gray-600, $lightness: 15%, $space: hsl);
+    color: color.adjust($gray-600, $lightness: 15%);
     /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
     font-family: FontAwesome;
     font-size: 16px;
@@ -75,7 +75,7 @@
   text-align: center;
 
   &::after {
-    color: color.adjust($gray-600, $lightness: 15%, $space: hsl);
+    color: color.adjust($gray-600, $lightness: 15%);
     content: "";
     /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
     font-family: FontAwesome;

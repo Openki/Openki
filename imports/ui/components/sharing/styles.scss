@@ -42,7 +42,7 @@ $shariff-bg-color: #77b8e9;
 
   &:hover {
     opacity: 1;
-    background-color: color.adjust($shariff-bg-color, $lightness: -5%, $space: hsl);
+    background-color: color.adjust($shariff-bg-color, $lightness: -5%);
   }
 }
 

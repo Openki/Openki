@@ -30,7 +30,7 @@
 .filter.active .filter-active-tag {
   @include td-margin(left, 5px);
 
-  background-color: color.adjust($green, $lightness: -35%, $space: hsl);
+  background-color: color.adjust($green, $lightness: -35%);
   color: $white;
   display: inline;
   font-size: smaller;
@@ -69,7 +69,7 @@
 
 .filter-component .active {
   .fa-check {
-    color: color.adjust($success, $lightness: -20%, $space: hsl);
+    color: color.adjust($success, $lightness: -20%);
     display: inline-block;
   }
 

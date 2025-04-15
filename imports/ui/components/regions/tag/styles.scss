@@ -2,7 +2,7 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .region-tag {
-  background-color: color.adjust($blue, $lightness: 5%, $space: hsl);
+  background-color: color.adjust($blue, $lightness: 5%);
   border-end-start-radius: 3px;
   inset-block-start: 0;
   inset-inline-end: 0;

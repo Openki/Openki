@@ -3,7 +3,7 @@
 .frame-events {
   @include clearfix;
 
-  margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 8) * -1);
+  margin: (($grid-gutter-width * 0.25) * -1) (($grid-gutter-width * 0.125) * -1);
   padding: 20px 0;
   width: auto;
 }

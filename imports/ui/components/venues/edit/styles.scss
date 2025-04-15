@@ -2,7 +2,7 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .venue-edit {
-  background-color: color.adjust($venue-bg, $lightness: 10%, $space: hsl);
+  background-color: color.adjust($venue-bg, $lightness: 10%);
   border: 4px solid $venue-bg;
   padding: 15px 20px;
 }

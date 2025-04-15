@@ -2,7 +2,10 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Arrow, Direction } from "../../Arrow";
 
-export interface Props { direction: Direction; onChangeDate: () => void }
+export interface Props {
+  direction: Direction;
+  onChangeDate: () => void;
+}
 
 export function Control({ direction, onChangeDate }: Props) {
   const { t } = useTranslation();

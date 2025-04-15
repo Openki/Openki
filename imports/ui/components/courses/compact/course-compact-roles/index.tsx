@@ -10,7 +10,9 @@ import { RoleIcon } from "/imports/ui/RoleIcon";
 
 import "./styles.scss";
 
-export interface Props { course: CourseModel }
+export interface Props {
+  course: CourseModel;
+}
 
 export function CourseCompactRoles({ course }: Props) {
   const userId = useUserId();

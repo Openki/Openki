@@ -2,9 +2,9 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .admin-featured-group {
-  $bg-color: color.adjust($green, $lightness: 10%, $space: hsl);
+  $bg-color: color.adjust($green, $lightness: 10%);
 
   background-color: $bg-color;
-  border: 1px solid color.adjust($bg-color, $lightness: -5%, $space: hsl);
+  border: 1px solid color.adjust($bg-color, $lightness: -5%);
   padding: 15px;
 }
