@@ -1,88 +1,76 @@
 image: registry.gitlab.com/openki/sysadmin/docker-ci-container:latest
 
-
 stages:
   - lint
   - cleanup
   - test
   - deploy
 
-
 cache:
- paths:
- - node_modules/
- - .npm/
- - .meteor/
-
+  paths:
+    - node_modules/
+    - .npm/
+    - .meteor/
 
 variables:
   DISPLAY: ":99.0"
   # Reduce git traffic
   GIT_DEPTH: "10"
   METEOR_ALLOW_SUPERUSER: "true"
-  TOOL_NODE_FLAGS: '--max_old_space_size=4096'
-
+  TOOL_NODE_FLAGS: "--max_old_space_size=4096"
 
 cleanup:
   stage: cleanup
   script:
-  - rm -rf .meteor/ .npm/ node_modules/
+    - rm -rf .meteor/ .npm/ node_modules/
   only:
-  - dev
-  - staging
-  - main
-
+    - dev
+    - staging
+    - main
 
 lint:
   stage: lint
   tags:
-  - gitlab-org
+    - gitlab-org
   script: ./ci/lint.sh
-
 
 # Unit tests
 test:unit:
   stage: lint
   tags:
-  - gitlab-org
-  script: ./ci/test:unit.sh
-
+    - gitlab-org
+  script: ./ci/test-unit.sh
 
 # integration/e2e tests
 test:integration:
   stage: lint
   tags:
-  - gitlab-org-docker
-  script: ./ci/test:integration.sh
+    - gitlab-org-docker
+  script: ./ci/test-integration.sh
   allow_failure: true
   timeout: 20m
 
-
 # Code Quality by "Code Climate" and Browser Perfomance
 include:
-  template:
-   Code-Quality.gitlab-ci.yml
+  template: Code-Quality.gitlab-ci.yml
 #   Verify/Browser-Performance.gitlab-ci.yml
-
 
 #browser_performance:
 #  stage: test
 #  variables:
 #    URL: https://dev.openki.net
 
-
 # auto deploy triggers
 deploy_dev:
   stage: deploy
-  needs: []  #don't wait for another stage to finish, could be change to [lint]
+  needs: [] #don't wait for another stage to finish, could be change to [lint]
   variables:
     SOURCE_BRANCH: dev
     TARGET_HOST: dev
   only:
-  - dev
+    - dev
   when: always
   trigger: Openki/sysadmin/deploy-config
-
 
 deploy_staging:
   stage: deploy
@@ -90,9 +78,8 @@ deploy_staging:
     SOURCE_BRANCH: staging
     TARGET_HOST: staging
   only:
-  - staging
+    - staging
   trigger: Openki/sysadmin/deploy-config
-
 
 deploy_sandbox:
   stage: deploy
@@ -100,11 +87,8 @@ deploy_sandbox:
     SOURCE_BRANCH: main
     TARGET_HOST: sandbox
   only:
-  - main
+    - main
   trigger: Openki/sysadmin/deploy-config
-
-
-
 ## Not possible yet: https://gitlab.com/gitlab-org/gitlab-ce/issues/27818
 #deploy_prod:
 #  stage: deploy
