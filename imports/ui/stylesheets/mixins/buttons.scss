@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // Button mixins
 // --------------------------------------------------
 
@@ -35,7 +37,7 @@
 }
 
 @mixin icon-btn-remove {
-  color: lighten($brand-danger, 20%);
+  color: color.adjust($brand-danger, $lightness: 20%, $space: hsl);
   cursor: pointer;
   transition: color $default-transition-time;
 

@@ -1,3 +1,4 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .discussion-post-content,
@@ -12,7 +13,7 @@ $discussion-post-bg: $blue-lighter;
 .discussion-post-content {
   @include break-word;
 
-  border-color: darken($discussion-post-bg, 10%);
+  border-color: color.adjust($discussion-post-bg, $lightness: -10%, $space: hsl);
 }
 
 .discussion-post-header,
@@ -32,7 +33,7 @@ $discussion-post-bg: $blue-lighter;
 }
 
 .discussion-post-header {
-  background: darken($discussion-post-bg, 5%);
+  background: color.adjust($discussion-post-bg, $lightness: -5%, $space: hsl);
 }
 
 .discussion-buttons {
@@ -103,15 +104,15 @@ $discussion-post-bg: $blue-lighter;
   }
 }
 
-$discussion-edit-bg: lighten($gray-400, 10%);
+$discussion-edit-bg: color.adjust($gray-400, $lightness: 10%, $space: hsl);
 
 .discussion-edit-content {
   background: $discussion-edit-bg;
-  border-color: darken($discussion-edit-bg, 5%);
+  border-color: color.adjust($discussion-edit-bg, $lightness: -5%, $space: hsl);
 }
 
 .discussion-edit-header {
-  background: darken($discussion-edit-bg, 5%);
+  background: color.adjust($discussion-edit-bg, $lightness: -5%, $space: hsl);
 }
 
 .discussion-reply {

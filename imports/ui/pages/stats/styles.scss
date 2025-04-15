@@ -1,3 +1,4 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .stats {
@@ -33,7 +34,7 @@
 }
 
 .stats .course-stat::after {
-  background-color: lighten($blue-lighter, 5%);
+  background-color: color.adjust($blue-lighter, $lightness: 5%, $space: hsl);
   content: "";
   height: 100%;
   left: 0;

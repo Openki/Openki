@@ -1,3 +1,4 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .course-role-title,
@@ -10,7 +11,6 @@
 
 .course-role-title {
   padding: 8px 13px;
-
   background: $user-bg;
 
   > span {
@@ -42,7 +42,7 @@
 }
 
 .course-role-first-steps {
-  background-color: lighten($user-bg, 10%);
+  background-color: color.adjust($user-bg, $lightness: 10%, $space: hsl);
   padding: 15px;
 }
 

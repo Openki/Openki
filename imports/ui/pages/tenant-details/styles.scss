@@ -1,12 +1,13 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .tenant-details-titlebar {
-  background-color: darken($tenant-bg, 20%);
+  background-color: color.adjust($tenant-bg, $lightness: -20%, $space: hsl);
   padding: 10px 15px 0;
 }
 
 .tenant-details-header {
-  background-color: darken($tenant-bg, 20%);
+  background-color: color.adjust($tenant-bg, $lightness: -20%, $space: hsl);
   font-size: x-large;
   padding-top: 0;
 }

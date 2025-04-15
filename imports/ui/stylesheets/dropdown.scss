@@ -1,3 +1,5 @@
+@use "sass:color";
+
 /* stylelint-disable selector-no-qualifying-type, max-nesting-depth, scss/at-extend-no-missing-placeholder */
 
 $dropdown-transition-time: 0.3s;
@@ -32,7 +34,7 @@ $dropdown-transition-time: 0.3s;
 
 .dropdown-menu > li > a:not(.btn):focus,
 .dropdown-menu > li > .btn-link:focus {
-  background-color: darken($dropdown-bg, 5%);
+  background-color: color.adjust($dropdown-bg, $lightness: -5%, $space: hsl);
   color: $dropdown-link-color;
 }
 

@@ -1,3 +1,4 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 $tenant-member-bg: rgba($gray-600, 0.15);
@@ -7,11 +8,21 @@ $tenant-member-bg: rgba($gray-600, 0.15);
 }
 
 .tenant-member-tag-btn-remove {
-  @include tag-btn($tenant-member-bg, $body-color, $danger, darken($danger, 30%));
+  @include tag-btn(
+    $tenant-member-bg,
+    $body-color,
+    $danger,
+    color.adjust($danger, $lightness: -30%, $space: hsl)
+  );
 }
 
 .tenant-member-tag-btn-add {
-  @include tag-btn(darken($tenant-member-bg, 10%), $body-color, $success, darken($success, 45%));
+  @include tag-btn(
+    color.adjust($tenant-member-bg, $lightness: -10%, $space: hsl),
+    $body-color,
+    $success,
+    color.adjust($success, $lightness: -45%, $space: hsl)
+  );
 }
 
 $tenant-admin-bg: rgba($red, 0.15);
@@ -21,9 +32,19 @@ $tenant-admin-bg: rgba($red, 0.15);
 }
 
 .tenant-admin-tag-btn-remove {
-  @include tag-btn($tenant-admin-bg, $body-color, $danger, darken($danger, 30%));
+  @include tag-btn(
+    $tenant-admin-bg,
+    $body-color,
+    $danger,
+    color.adjust($danger, $lightness: -30%, $space: hsl)
+  );
 }
 
 .tenant-admin-tag-btn-add {
-  @include tag-btn(darken($tenant-admin-bg, 10%), $body-color, $success, darken($success, 45%));
+  @include tag-btn(
+    color.adjust($tenant-admin-bg, $lightness: -10%, $space: hsl),
+    $body-color,
+    $success,
+    color.adjust($success, $lightness: -45%, $space: hsl)
+  );
 }

@@ -1,3 +1,4 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .filter {
@@ -29,7 +30,7 @@
 .filter.active .filter-active-tag {
   @include td-margin(left, 5px);
 
-  background-color: darken($green, 35%);
+  background-color: color.adjust($green, $lightness: -35%, $space: hsl);
   color: $white;
   display: inline;
   font-size: smaller;
@@ -68,7 +69,7 @@
 
 .filter-component .active {
   .fa-check {
-    color: darken($success, 20%);
+    color: color.adjust($success, $lightness: -20%, $space: hsl);
     display: inline-block;
   }
 

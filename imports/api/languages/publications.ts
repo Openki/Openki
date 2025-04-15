@@ -54,6 +54,7 @@ export const [findFilter, useFindFilter] = ServerPublishMany(
     Object.entries(languages).forEach(([code, value]) => {
       this.added("Languages", code, value);
     });
+    return undefined;
   },
   (filter: FindFilter) => {
     check(filter, Match.Maybe(FindFilterPattern));

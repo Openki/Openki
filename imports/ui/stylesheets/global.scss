@@ -1,3 +1,5 @@
+@use "sass:string";
+
 .mh-none {
   max-height: none !important;
 }
@@ -81,17 +83,17 @@ a:focus,
 
 @keyframes highlight {
   0% {
-    outline: unquote("max(100vw, 100vh) solid transparent");
+    outline: string.unquote("max(100vw, 100vh) solid transparent");
     outline-offset: 3px;
   }
 
   10% {
-    outline: unquote("max(100vw, 100vh) solid rgba(0, 0, 0, 0.2)");
+    outline: string.unquote("max(100vw, 100vh) solid rgba(0, 0, 0, 0.2)");
     outline-offset: 3px;
   }
 
   20% {
-    outline: unquote("max(100vw, 100vh) solid rgba(0, 0, 0, 0.2)");
+    outline: string.unquote("max(100vw, 100vh) solid rgba(0, 0, 0, 0.2)");
     outline-offset: 3px;
   }
 

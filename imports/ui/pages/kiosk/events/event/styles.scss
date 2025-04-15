@@ -1,3 +1,4 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 // *** Kiosk event ***
@@ -88,12 +89,12 @@
 $event-ongoing-header-bg: $beige;
 
 .kiosk-event-ongoing > .kiosk-event-timecount {
-  background-color: lighten($event-ongoing-header-bg, 18%);
+  background-color: color.adjust($event-ongoing-header-bg, $lightness: 18%, $space: hsl);
 }
 
 .kiosk-event-today > .kiosk-event-timecount,
 .kiosk-event-upcoming > .kiosk-event-timecount {
-  background-color: lighten($event-header-bg, 13%);
+  background-color: color.adjust($event-header-bg, $lightness: 13%, $space: hsl);
 }
 
 // ** Header

@@ -24,7 +24,7 @@
 @mixin editable-form-control {
   .editable {
     border: 1px solid #fff0;
-    line-height: 1.42857;
+    line-height: 1.4286;
     padding: 6px 12px;
     transition: box-shadow ease-in-out 0.15s;
 
@@ -81,12 +81,14 @@
   }
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 .editable-icon {
   color: $gray-600;
   cursor: default;
   padding: 0.2em;
   transition: color 0.25s;
 
+  /* stylelint-disable-next-line no-descending-specificity */
   &:hover {
     cursor: pointer;
   }
@@ -96,6 +98,7 @@
   color: $gray-800;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 .editable-wrap-multiline .editable-icon {
   @include td-pos(right, 0);
 
@@ -104,6 +107,7 @@
 }
 
 .editable:focus + .editable-icon,
+/* stylelint-disable-next-line no-descending-specificity */
 .editable-changed + .editable-icon {
   color: $gray-800;
 }
