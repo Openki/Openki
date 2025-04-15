@@ -45,7 +45,7 @@ export function Control(data: {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("CalendarNavDayControl", () => Control);

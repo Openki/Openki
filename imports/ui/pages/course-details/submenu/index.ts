@@ -44,6 +44,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 const template = Template.courseDetailsSubmenu;
 
 template.onCreated(function () {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const instance = this;
   instance.state = new ReactiveDict();
   instance.state.setDefault({
@@ -52,6 +53,7 @@ template.onCreated(function () {
 });
 
 template.onRendered(function () {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const instance = this;
 
   instance.autorun(async () => {

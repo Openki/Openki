@@ -82,7 +82,11 @@ function Header(data: { _id?: string; isFrame?: boolean; group?: string }) {
             "Start your own {SITENAME} course here. Whether as a mentor or participant, you decide what and how you want to learn. More info here:",
             { SITENAME: siteName },
           )}{" "}
-          <a href={getLocalizedValue(PublicSettings.courseGuideLink)} target="_blank" rel="noreferrer">
+          <a
+            href={getLocalizedValue(PublicSettings.courseGuideLink)}
+            target="_blank"
+            rel="noreferrer"
+          >
             {t("course.propose.guideLink", "How to organize my first {SITENAME} course?", {
               SITENAME: siteName,
             })}
@@ -354,7 +358,9 @@ export function Edit(data: Data) {
     return members && hasRoleUser(members, role, user?._id);
   }
 
-  const [roles, setRoles] = useState<Record<string, { icon: string; enabled: boolean; enroll: boolean }>>({});
+  const [roles, setRoles] = useState<
+    Record<string, { icon: string; enabled: boolean; enroll: boolean }>
+  >({});
 
   const groupsAreLoaded = groupsIsLoading();
 
@@ -874,7 +880,7 @@ export function Edit(data: Data) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("CourseEdit", () => Edit);

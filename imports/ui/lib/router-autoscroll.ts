@@ -38,6 +38,7 @@ class RouterAutoscroll {
   public marginTop = 0;
 
   constructor() {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
 
     // TODO use history state so we don't litter

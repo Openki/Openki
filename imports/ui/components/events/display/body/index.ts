@@ -51,6 +51,7 @@ import "./styles.scss";
   const template = Template.eventDisplay;
 
   template.onCreated(function () {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const instance = this;
     instance.replicating = new ReactiveVar(false);
     instance.canceling = new ReactiveVar(false);

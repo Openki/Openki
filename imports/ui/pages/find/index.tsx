@@ -28,7 +28,7 @@ export function FindPage({ query }: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("FindPage", () => FindPage);

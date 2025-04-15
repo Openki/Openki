@@ -85,7 +85,6 @@ export function EventParticipants({ event }: Props) {
       return false;
     }
 
-
     return !!(user && event.editableBy(user));
   }
 
@@ -204,7 +203,7 @@ export function EventParticipants({ event }: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("EventParticipants", () => EventParticipants);

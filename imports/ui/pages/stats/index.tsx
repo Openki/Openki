@@ -238,9 +238,9 @@ export function StatsPage() {
                   <td>&nbsp;</td>
                   <Descriptions />
                 </tr>
-                {stats.groups.map((group) => {
+                {stats.groups.map((group, index) => {
                   return (
-                    <tr>
+                    <tr key={index}>
                       <td>
                         {group.id ? (
                           <a href={Router.path("groupDetails", { _id: group.id })}>
@@ -267,7 +267,7 @@ export function StatsPage() {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("StatsPage", () => StatsPage);

@@ -39,6 +39,7 @@ const template = Template.frameSchedulePage;
 template.onCreated(function () {
   const filter = Events.Filtering();
 
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const instance = this;
   instance.interval = new ReactiveVar(60);
   instance.scheduleStart = new ReactiveVar(moment());
@@ -159,14 +160,11 @@ template.onCreated(function () {
     const separators = instance.separators.get().slice().reverse();
 
     // List of intervals where events or separators are placed
-    const intervals = separators.reduce(
-      (rIntervals: Record<number, number>, separator) => {
-        /* eslint-disable-next-line no-param-reassign */
-        rIntervals[separator] = separator;
-        return rIntervals;
-      },
-      {},
-    );
+    const intervals = separators.reduce((rIntervals: Record<number, number>, separator) => {
+      /* eslint-disable-next-line no-param-reassign */
+      rIntervals[separator] = separator;
+      return rIntervals;
+    }, {});
 
     // List of days where events where found
     const days: _.Dictionary<number> = {};
@@ -296,6 +294,7 @@ template.helpers({
   },
 
   customStartTime(this: EventViewModel, intervalStart: moment.Moment) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const event = this;
     const startTime = moment(LocalTime.fromString(event.startLocal));
     startTime.locale(intervalStart.locale());

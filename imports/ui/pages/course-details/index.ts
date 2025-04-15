@@ -64,6 +64,7 @@ const Template = TemplateMixins.Expandible(
 const template = Template.courseDetailsPage;
 
 template.onCreated(function () {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const instance = this;
 
   instance.autorun(() => {

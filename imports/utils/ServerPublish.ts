@@ -42,7 +42,7 @@ export function ServerPublishMany<A extends any[], T, U>(
   publisher: (
     this: Subscription,
     ...args: A
-  ) => Promise<Mongo.Cursor<T, U>> | Mongo.Cursor<T, U> | void,
+  ) => Promise<Mongo.Cursor<T, U>> | Mongo.Cursor<T, U> | undefined,
   queryBuilder: QueryBuilder<A, Mongo.Cursor<T, U>>,
 ): [Blaze.Publication<A, Mongo.Cursor<T, U>>, React.Publication<A, U[]>];
 
@@ -51,7 +51,7 @@ export function ServerPublishMany<A extends any[], T, U>(
   publisher: (
     this: Subscription,
     ...args: A
-  ) => Promise<Mongo.Cursor<T, U>> | Mongo.Cursor<T, U> | void,
+  ) => Promise<Mongo.Cursor<T, U>> | Mongo.Cursor<T, U> | undefined,
   queryBuilder: QueryBuilder<A, Mongo.Cursor<T, U>> = publisher as unknown as QueryBuilder<
     A,
     Mongo.Cursor<T, U>

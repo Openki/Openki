@@ -2,7 +2,7 @@ import { Mongo } from "meteor/mongo";
 import { Meteor } from "meteor/meteor";
 import { _ } from "meteor/underscore";
 import { Match, check } from "meteor/check";
-// eslint-disable-next-line import/no-cycle
+
 import * as tenantDenormalizer from "./tenantDenormalizer";
 
 import { Geodata } from "/imports/api/regions/regions";

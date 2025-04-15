@@ -33,7 +33,7 @@ export function DeleteEvents(props: { onShowEventsDeleteModal: () => void }) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("DeleteCourseEvents", () => DeleteEvents);

@@ -24,7 +24,7 @@ export function ProfileLink(props: { userId: string }) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("ProfileLink", () => ProfileLink);

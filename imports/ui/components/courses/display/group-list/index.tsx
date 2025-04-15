@@ -12,7 +12,9 @@ import { Remove } from "./Remove";
 import { RemoveOrganizer } from "./RemoveOrganizer";
 import { MakeOrganizer } from "./MakeOrganizer";
 
-export interface Props { course: CourseModel }
+export interface Props {
+  course: CourseModel;
+}
 
 export function GroupList({ course: course2 }: Props) {
   const { t } = useTranslation();
@@ -111,7 +113,7 @@ export function GroupList({ course: course2 }: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("CourseGroupList", () => GroupList);

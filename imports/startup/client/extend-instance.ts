@@ -30,6 +30,7 @@ Blaze.TemplateInstance.prototype.busy = function (
 Blaze.TemplateInstance.prototype.findBusiness = function (this: any) {
   if (this.business) return this.business; // Short-circuit common case
 
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   let businessInstance = this;
   while (businessInstance && !businessInstance.business) {
     businessInstance = businessInstance.parentInstance();

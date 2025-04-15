@@ -38,7 +38,7 @@ export function Roles({ course: course2 }: { course: CourseModel }) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("CourseRoles", () => Roles);

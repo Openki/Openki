@@ -41,6 +41,7 @@ export function Expandible<N extends string, D, T extends Record<string, unknown
   const template = Template[templateName];
 
   template.onCreated(function () {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const instance = this;
     const expander = Random.id(); // Token to keep track of which Expandible is open
     instance._expander = expander; // Read by event handlers
@@ -190,6 +191,7 @@ export function FormfieldErrors<N extends string, D, T extends Record<string, un
   const template = Template[templateName];
 
   template.onCreated(function () {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const instance = this;
     const messages = new Mongo.Collection<{ key: string; field: string }>(null); // Local collection for in-memory storage
     instance.errors = {

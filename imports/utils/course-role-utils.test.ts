@@ -1,5 +1,3 @@
-/* eslint no-unused-expressions: 0 */
-
 import { expect } from "chai";
 
 import { CourseMemberEntity } from "/imports/api/courses/courses";

@@ -55,7 +55,7 @@ export function Day(data: {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("CalendarDay", () => Day);

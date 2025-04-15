@@ -494,7 +494,7 @@ export function Edit({
                     {t("_selection.pleaseSelect")}
                   </option>
                   {regions.map((r) => (
-                    <option selected={currentRegion === r._id} value={r._id}>
+                    <option key={r._id} selected={currentRegion === r._id} value={r._id}>
                       {r.name}
                     </option>
                   ))}
@@ -670,7 +670,7 @@ export function Edit({
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("EventEdit", () => Edit);

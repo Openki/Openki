@@ -247,6 +247,7 @@ export function EditVenue({
             }
             renderInput={(inputProps, props) => {
               // From https://github.com/ericgio/react-bootstrap-typeahead/blob/924627376275c78988718230c0438748ff673a6d/src/components/Typeahead/Typeahead.tsx#L229
+              // eslint-disable-next-line react/prop-types
               const { isInvalid, isValid, size } = props as any;
               const commonProps = { ...inputProps, isInvalid, isValid, size };
               // Add type="search" to have a clear button
@@ -373,7 +374,7 @@ export function EditVenue({
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("EventEditVenue", () => EditVenue);

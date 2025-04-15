@@ -5,7 +5,9 @@ import React from "react";
 
 import "./styles.scss";
 
-export interface CategoryLabelProps { category: string }
+export interface CategoryLabelProps {
+  category: string;
+}
 
 export function CategoryLabel({ category }: CategoryLabelProps) {
   const { t } = useTranslation();
@@ -82,7 +84,7 @@ export function CourseCategories({
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("CategoryLabel", () => CategoryLabel);

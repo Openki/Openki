@@ -38,6 +38,7 @@ const Template = TemplateMixins.FormfieldErrors(TemplateBase, "invitationsCreate
 const template = Template.invitationsCreate;
 
 template.onCreated(function () {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const instance = this;
   instance.busy("notReady");
 

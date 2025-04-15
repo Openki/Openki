@@ -283,7 +283,7 @@ export function Modal(props: {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("DeleteEventsModal", () => Modal);

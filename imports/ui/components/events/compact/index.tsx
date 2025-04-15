@@ -107,7 +107,8 @@ export function EventCompact({
             <a
               className="stretched-link"
               href={Router.path("showEvent", event)}
-              target={openInNewTab ? "_blank" : ""} rel="noreferrer"
+              target={openInNewTab ? "_blank" : ""}
+              rel="noreferrer"
             >
               {event.title}
             </a>
@@ -124,7 +125,7 @@ export function EventCompact({
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("EventCompact", () => EventCompact);

@@ -19,17 +19,16 @@ export function route<D, S extends Record<string, SubscriptionHandle<any>> | und
 ): void;
 export function route<D>(
   pathOrRouteName: string,
-  options: Omit<Router.RouteOptions<D>, "data"> & {
-    onRun?: () => Promise<unknown>;
-  },
+  options:
+    | (Omit<Router.RouteOptions<D>, "data"> & {
+        onRun?: () => Promise<unknown>;
+      })
+    | {
+        onRun?: () => Promise<unknown>;
+        data: (this: Router.RouteThis) => D;
+      },
 ): void;
-export function route<D>(
-  pathOrRouteName: string,
-  options: Omit<Router.RouteOptions<D>, "data"> & {
-    onRun?: () => Promise<unknown>;
-    data: (this: Router.RouteThis) => D;
-  },
-): void;
+
 export function route<D, S extends Record<string, SubscriptionHandle<any>> | undefined>(
   pathOrRouteName: string,
   options: Omit<Router.RouteOptions<D>, "data"> & {

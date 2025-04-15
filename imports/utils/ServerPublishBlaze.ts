@@ -102,7 +102,7 @@ export function ServerPublish<
   Q,
 >(
   name: string,
-  publisher: (this: Subscription, ...args: A) => T | void,
+  publisher: (this: Subscription, ...args: A) => T | undefined,
   queryBuilder: QueryBuilder<A, Q>,
 ): Publication<A, Q>;
 
@@ -113,7 +113,7 @@ export function ServerPublish<
   Q extends T | any,
 >(
   name: string,
-  publisher: (this: Subscription, ...args: A) => T | void,
+  publisher: (this: Subscription, ...args: A) => T | undefined,
   queryBuilder: QueryBuilder<A, Q> = publisher as QueryBuilder<A, Q>,
 ) {
   publish(name, publisher);

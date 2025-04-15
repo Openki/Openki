@@ -96,7 +96,7 @@ export function Header({ course: course2 }: { course: CourseModel }) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("CourseDetailsHeader", () => Header);
