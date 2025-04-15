@@ -5,7 +5,7 @@ echo -e "\e[1;33mFormat files and automatically fix fixable problems with these 
 
 set -xe
 
-meteor update --patch
+meteor update
 meteor npm i
 meteor node -v && meteor npm version
 
