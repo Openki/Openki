@@ -36,5 +36,5 @@ export const orderedResults = async (params: any, handler: HandlerType): Promise
   // Sort the results again so computed fields are sorted too
   // WARNING: In many cases this will be too late, because the limit
   // has already excluded results.
-  return FieldOrdering(sorting).sorted(results as any) as ApiEvent[];
+  return FieldOrdering(sorting).sorted(results as any) as unknown as ApiEvent[];
 };
