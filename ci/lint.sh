@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo -e "\e[1;33mFormat files and automatically fix fixable problems with these commands:\e[21m
     meteor npm run lint:fix\e[0m"

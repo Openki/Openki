@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
 YELLOW='\033[0;33m'
 NC='\e[0m'
 MAINTEXT='\e[1;33m'
