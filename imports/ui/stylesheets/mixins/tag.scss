@@ -1,6 +1,11 @@
 @use "sass:color";
 
-@mixin tag($bg, $color, $bg-hover: color.adjust($bg, $lightness: -5%, $space: hsl), $color-hover: $color) {
+@mixin tag(
+  $bg,
+  $color,
+  $bg-hover: color.adjust($bg, $lightness: -5%, $space: hsl),
+  $color-hover: $color
+) {
   background-color: $bg;
   color: $color;
   padding: 0.07em 0.3em;
@@ -24,7 +29,12 @@
   }
 }
 
-@mixin tag-btn($bg, $color, $bg-hover: color.adjust($bg, $lightness: -5%, $space: hsl), $color-hover: $color) {
+@mixin tag-btn(
+  $bg,
+  $color,
+  $bg-hover: color.adjust($bg, $lightness: -5%, $space: hsl),
+  $color-hover: $color
+) {
   > button {
     background-color: $bg;
     border: 0;

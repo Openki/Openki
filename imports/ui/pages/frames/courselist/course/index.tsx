@@ -66,7 +66,8 @@ export function Course({ course, hideInterested }: Props) {
             <a
               className="btn btn-outline-dark"
               href={Router.path("showCourse", course)}
-              target="_blank" rel="noreferrer"
+              target="_blank"
+              rel="noreferrer"
             >
               {t("frame.courseList.moreAboutThisCourse", "More on {SITENAME}", {
                 SITENAME: siteName,
