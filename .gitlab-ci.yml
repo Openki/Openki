@@ -46,7 +46,7 @@ test:integration:
   stage: lint
   tags:
     - gitlab-org-docker
-  script: ./ci/test:integration.sh
+  script: ./ci/test:integration_renamed.sh
   allow_failure: true
   timeout: 20m
 
