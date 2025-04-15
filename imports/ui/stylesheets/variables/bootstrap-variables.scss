@@ -1,6 +1,7 @@
 @use "sass:map";
 @use "sass:math";
 @use "sass:color";
+@import "base-colors";
 
 // Nearly all variables in Bootstrap are written with the `!default` flag.
 // This allows use to override the default values of those variables before
@@ -11,7 +12,7 @@
 $enable-gradients: true;
 
 // Include functions first (so we can manipulate colors, SVGs, calc, etc)
-@import "{}/importsbootstrap/scss/functions"; // Required
+@import "{}/node_modules/bootstrap/scss/functions"; // Required
 
 // Default variable overrides
 $secondary: #f0f0f0;
@@ -60,14 +61,14 @@ $form-group-margin-bottom: 15px !default;
 // Dropdown menu container and contents.
 
 // ** Background for the dropdown menu.
-$dropdown-bg: color.adjust($blue-lighter, $lightness: 8.7%, $space: hsl) !default;
+$dropdown-bg: color.adjust($blue-lighter, $lightness: 8.7%) !default;
 $hr-color: $blue-lighter;
 
 // Modals
 
 $modal-sm: 400px;
 
-@import "{}/importsbootstrap/scss/variables"; // Required
+@import "{}/node_modules/bootstrap/scss/variables"; // Required
 
 // Navbar
 $nav-link-padding-y: 0.822rem;
@@ -92,7 +93,7 @@ $tooltip-bg: $blue;
 $tooltip-opacity: 1;
 $tooltip-font-size: $font-size-base;
 
-@import "{}/importsbootstrap/scss/variables-dark";
+@import "{}/node_modules/bootstrap/scss/variables-dark";
 
 // Modify Bootstrap maps
 
@@ -121,7 +122,7 @@ $archived-text-emphasis: shade-color($archived-color, 60%) !default;
 $archived-bg-subtle: tint-color($archived-color, 80%) !default;
 $archived-border-subtle: tint-color($archived-color, 60%) !default;
 
-@import "{}/importsbootstrap/scss/maps"; // Optional
+@import "{}/node_modules/bootstrap/scss/maps"; // Optional
 
 $custom-theme-colors-text: (
   "canceled": $canceled-text-emphasis,
@@ -142,8 +143,8 @@ $theme-colors-border-subtle: map.merge(
   $custom-theme-colors-border-subtle
 );
 
-@import "{}/importsbootstrap/scss/mixins"; // Required
-@import "{}/importsbootstrap/scss/utilities"; // Optional
+@import "{}/node_modules/bootstrap/scss/mixins"; // Required
+@import "{}/node_modules/bootstrap/scss/utilities"; // Optional
 
 // Add grid-breakpoints to max-width utilites: mw-sm, mw-md, ...
 

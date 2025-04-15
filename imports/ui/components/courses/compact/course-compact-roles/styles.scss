@@ -28,14 +28,10 @@
   $background-color: $green;
 
   background-color: $background-color;
-  color: color.adjust(
-    color.adjust($background-color, $lightness: -40%),
-    $saturation: -50%,
-    $space: hsl
-  );
+  color: color.adjust(color.adjust($background-color, $lightness: -40%), $saturation: -50%);
 }
 
 .course-compact-role-occupied-by-user {
   background-color: $user-bg;
-  color: color.adjust(color.adjust($user-bg, $lightness: -40%), $saturation: -60%, $space: hsl);
+  color: color.adjust(color.adjust($user-bg, $lightness: -40%), $saturation: -60%);
 }

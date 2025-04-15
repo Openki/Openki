@@ -108,7 +108,7 @@
 .details-form {
   @include clearfix;
 
-  background-color: color.adjust($success, $lightness: 10%, $space: hsl);
+  background-color: color.adjust($success, $lightness: 10%);
   border-color: $success;
   border-style: solid;
   border-width: 1px;
@@ -129,7 +129,7 @@
 
 .details-addition {
   background-color: $gray-200;
-  border-color: color.adjust($gray-200, $lightness: -3%, $space: hsl);
+  border-color: color.adjust($gray-200, $lightness: -3%);
   border-style: solid;
   border-width: 1px;
   padding: $form-group-margin-bottom;
