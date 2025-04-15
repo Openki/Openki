@@ -1,3 +1,4 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 // *** Event compact ***
@@ -67,11 +68,19 @@
 // ** Past event
 // ========================================================================================
 .event-compact.is-past {
-  background-color: desaturate(lighten($event-body-bg, 5%), 20%);
+  background-color: color.adjust(
+    color.adjust($event-body-bg, $lightness: 5%),
+    $saturation: -20%,
+    $space: hsl
+  );
 }
 
 .event-compact.is-past > .event-compact-header {
-  background-color: desaturate(lighten($event-header-bg, 5%), 50%);
+  background-color: color.adjust(
+    color.adjust($event-header-bg, $lightness: 5%),
+    $saturation: -50%,
+    $space: hsl
+  );
 }
 
 // ** Title

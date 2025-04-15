@@ -1,3 +1,4 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .shariff-wrapper {
@@ -41,7 +42,7 @@ $shariff-bg-color: #77b8e9;
 
   &:hover {
     opacity: 1;
-    background-color: darken($shariff-bg-color, 5%);
+    background-color: color.adjust($shariff-bg-color, $lightness: -5%, $space: hsl);
   }
 }
 

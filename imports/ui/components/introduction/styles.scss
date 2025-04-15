@@ -1,8 +1,9 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 /* stylelint-disable selector-max-id, selector-max-compound-selectors */
 
 .introduction {
-  $background-color: lighten($gray-200, 5%);
+  $background-color: color.adjust($gray-200, $lightness: 5%, $space: hsl);
 
   @include clearfix;
 
@@ -13,7 +14,7 @@
   transition: background-color 1s;
 
   &:hover {
-    background-color: darken($background-color, 2%);
+    background-color: color.adjust($background-color, $lightness: -2%, $space: hsl);
   }
 }
 
@@ -54,7 +55,8 @@
   text-align: center;
 
   &::after {
-    color: lighten($gray-600, 15%);
+    color: color.adjust($gray-600, $lightness: 15%, $space: hsl);
+    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
     font-family: FontAwesome;
     font-size: 16px;
     opacity: 0.5;
@@ -73,8 +75,9 @@
   text-align: center;
 
   &::after {
-    color: lighten($gray-600, 15%);
+    color: color.adjust($gray-600, $lightness: 15%, $space: hsl);
     content: "";
+    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
     font-family: FontAwesome;
     font-size: 16px;
     inset-inline-end: 0;

@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .page-component {
   @include clearfix;
 }
@@ -106,7 +108,7 @@
 .details-form {
   @include clearfix;
 
-  background-color: lighten($success, 10%);
+  background-color: color.adjust($success, $lightness: 10%, $space: hsl);
   border-color: $success;
   border-style: solid;
   border-width: 1px;
@@ -117,13 +119,17 @@
   margin-top: 0;
 }
 
+.details-addition > *:last-child {
+  margin-bottom: 0;
+}
+
 .details-form > form > *:last-child {
   margin-bottom: 0;
 }
 
 .details-addition {
   background-color: $gray-200;
-  border-color: darken($gray-200, 3%);
+  border-color: color.adjust($gray-200, $lightness: -3%, $space: hsl);
   border-style: solid;
   border-width: 1px;
   padding: $form-group-margin-bottom;
@@ -132,8 +138,4 @@
 .details-addition > h3,
 .details-addition > h4 {
   margin-top: 0;
-}
-
-.details-addition > *:last-child {
-  margin-bottom: 0;
 }

@@ -1,32 +1,34 @@
+@use "sass:color";
+
 // *** Base colors ***
 // ====================
 
 // ** Blue
 // ========================================================================================
 $blue: #38829c;
-$blue-light: lighten($blue, 10%);
-$blue-lighter: lighten($blue, 48%);
+$blue-light: color.adjust($blue, $lightness: 10%, $space: hsl);
+$blue-lighter: color.adjust($blue, $lightness: 48%, $space: hsl);
 $blue-alternative: #c8c3f9;
 
 // ** Green
 // ========================================================================================
 $green: #c1f2ae;
-$green-dark: darken($green, 20%);
-$green-darker: darken($green, 50%);
+$green-dark: color.adjust($green, $lightness: -20%, $space: hsl);
+$green-darker: color.adjust($green, $lightness: -50%, $space: hsl);
 $green-alternative: #b9e9b9;
 
 // ** Red
 // ========================================================================================
 $red: #ec6d6d;
-$red-dark: darken($red, 15%);
-$red-darker: darken($red, 38%);
-$red-darkest: darken($red, 56%);
+$red-dark: color.adjust($red, $lightness: -15%, $space: hsl);
+$red-darker: color.adjust($red, $lightness: -38%, $space: hsl);
+$red-darkest: color.adjust($red, $lightness: -56%, $space: hsl);
 
 // ** Yellow
 // ========================================================================================
 $yellow: #f9e744;
-$yellow-dark: darken($yellow, 10%);
-$yellow-light: lighten($yellow, 20%);
+$yellow-dark: color.adjust($yellow, $lightness: -10%, $space: hsl);
+$yellow-light: color.adjust($yellow, $lightness: 20%, $space: hsl);
 
 // ** Orange
 // ========================================================================================
