@@ -62,9 +62,9 @@ Further:
 - :closed_lock_with_key: More privacy settings
 - :heavy_check_mark: Voting-/polling-system, fix-a-date schedules
 - :iphone: Smartphone App
-- ...see more in our [issues](https://gitlab.com/Openki/Openki/-/issues/?sort=milestone&state=opened&not%5Blabel_name%5D%5B%5D=defect%3A%3Anot%20urgent&not%5Blabel_name%5D%5B%5D=defect%3A%3A&not%5Blabel_name%5D%5B%5D=urgent%20%E2%98%A0&label_name%5B%5D=size%3A%3Abig&first_page_size=20).  
-  
-*Please upvote new features you would like to see or propose new ones.*
+- ...see more in our [issues](https://gitlab.com/Openki/Openki/-/issues/?sort=milestone&state=opened&not%5Blabel_name%5D%5B%5D=defect%3A%3Anot%20urgent&not%5Blabel_name%5D%5B%5D=defect%3A%3A&not%5Blabel_name%5D%5B%5D=urgent%20%E2%98%A0&label_name%5B%5D=size%3A%3Abig&first_page_size=20).
+
+_Please upvote new features you would like to see or propose new ones._
 
 ## Contribution
 
@@ -86,9 +86,9 @@ Further reading in our [wiki](https://gitlab.com/Openki/Openki/-/wikis/Docs%20fo
 ### Running the tests
 
 Run tests with:
-    `meteor npm run test` for both unit and integration tests. See: https://guide.meteor.com/testing
+`meteor npm run test` for both unit and integration tests. See: https://guide.meteor.com/testing
 or
-    `meteor npm run test:integration:watch`
+`meteor npm run test:integration:watch`
 
 Add `--grep=<pattern>` at the end to only run tests that match the pattern. eg. `meteor npm run test:integration:watch --grep="Propose course via frame"`
 

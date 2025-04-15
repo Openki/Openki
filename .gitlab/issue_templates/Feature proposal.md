@@ -4,15 +4,19 @@ Before opening a new issue, please search for keywords in the issues to make sur
 --->
 
 ### Problem to solve
+
 <!-- What problem do we solve? -->
 
 ### Intended users
+
 <!-- Who will use this feature? If known, include any of the following: types of users (e.g. Mentors, GroupMembers). It's okay to write "Unknown" and fill this field in later. -->
 
 ### Further details
+
 <!-- Include use cases, benefits, and/or goals (contributes to our vision?) -->
 
 ### Proposal
+
 <!-- How are we going to solve the problem? -->
 
 ### Permissions and Security
@@ -20,4 +24,5 @@ Before opening a new issue, please search for keywords in the issues to make sur
 <!-- What permissions are required to perform the described actions? Are they consistent with the existing permissions as documented for users and groups -->
 
 ### Links / references
+
 <!-- Put here some references and links (ex. link this issue to already existing issues that concern this one or have similar approaches) -->
