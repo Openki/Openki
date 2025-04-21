@@ -309,7 +309,7 @@ export function Role(data: Data) {
               <button
                 type="button"
                 className="btn btn-add text-start page-component-btn"
-                name="participant"
+                name={data.role.type}
                 onClick={handelRoleEnrollClick}
               >
                 <span

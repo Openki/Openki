@@ -82,7 +82,7 @@ if (Meteor.isClient) {
       it("should allow to archive a course internal", async () => {
         const randomTitle = `ARCHIVED${1000 + Math.floor(Math.random() * 9000)}`;
 
-        Router.go("/");
+        Router.go("/search");
         const haveEditfield = () => {
           assert($(".js-title").length > 0, "New course edit field present");
         };
@@ -106,21 +106,21 @@ if (Meteor.isClient) {
 
         $(".js-course-archive").trigger("click");
 
-        Router.go("/");
+        Router.go("/search");
 
         await waitFor(() => {
           assert(
             !$("body").text().includes(randomTitle),
-            `The archived course should not be visible on the start page ${window.location}`,
+            `The archived course should not be visible on the search page ${window.location}`,
           );
         }, 5000);
 
-        Router.go("/?archived=1");
+        Router.go("/search?archived=1");
 
         await waitFor(() => {
           assert(
             !$("body").text().includes(randomTitle),
-            `The archived course should be visible on the start page ${window.location} with archived filter on`,
+            `The archived course should be visible on the search page ${window.location} with archived filter on`,
           );
         }, 5000);
       });

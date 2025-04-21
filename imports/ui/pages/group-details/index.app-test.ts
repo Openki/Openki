@@ -8,6 +8,8 @@ import {
   waitFor,
   setInputValue,
   setSelectValue,
+  setContent,
+  setChecked,
 } from "/imports/ClientUtils.app-test";
 import { MeteorAsync } from "/imports/utils/promisify";
 
@@ -51,16 +53,20 @@ if (Meteor.isClient) {
         await waitForSubscriptions();
         await waitFor(haveEditfield);
 
-        $(".group-details-name [contenteditable=true]").html(randomTitle);
-        $(".group-details-short [contenteditable=true]").html(`${randomTitle} short`);
-        $(".group-details-claim [contenteditable=true]").html(`${randomTitle} claim`);
-        $(".group-details-description [contenteditable=true]").html(`${randomTitle} description`);
+        setContent(".group-details-name [contenteditable=true]", randomTitle);
+        setContent(".group-details-short [contenteditable=true]", `${randomTitle} short`);
+        setContent(".group-details-claim [contenteditable=true]", `${randomTitle} claim`);
+        setContent(
+          ".group-details-description [contenteditable=true]",
+          `${randomTitle} description`,
+        );
+
         $(".group-details .btn-save")[0].click();
 
         await waitFor(() => {
           assert(
             $(".alert.alert-success").text().includes(randomTitle),
-            "A message that the course was created is shown",
+            "A message that the group was created is shown",
           );
           assert($(".group-details-name").text().includes(randomTitle), "The title is visible");
         });
@@ -133,10 +139,10 @@ if (Meteor.isClient) {
           assert.match(actualTitle, expectedTitle, "Form title must mention group");
         };
         const haveNotInternalCheckbox = () => {
-          assert($(".js-check-internal").length === 0, "Internal checkbox is not present");
+          assert($("#internalCheckbox").length === 0, "Internal checkbox is not present");
         };
         const haveInternalCheckbox = () => {
-          assert($(".js-check-internal").length > 0, "Internal checkbox present");
+          assert($("#internalCheckbox").length > 0, "Internal checkbox present");
         };
         await waitForSubscriptions();
         await waitFor(haveEditfield);
@@ -148,7 +154,7 @@ if (Meteor.isClient) {
         // Create the course
         setInputValue(".js-title", randomTitle);
         setSelectValue("[name='region']", "9JyFCoKWkxnf8LWPh"); // Testistan
-        $(".js-check-internal").prop("checked", true);
+        setChecked("#internalCheckbox", true);
         $(".course-edit-body .btn-save")[0].click();
 
         // We should be redirected to the created course
@@ -165,12 +171,12 @@ if (Meteor.isClient) {
           );
         });
 
-        Router.go("/");
+        Router.go("/search");
 
         await waitFor(() => {
           assert(
             !$("body").text().includes(randomTitle),
-            `The internal course should not be visible on the start page ${window.location}`,
+            `The internal course should not be visible on the search page ${window.location}`,
           );
         }, 5000);
       });
