@@ -10,7 +10,7 @@
   {{#each day in days}}
     <h4 class="frame-list-title">{{day}}</h4>
     {{#each event in (eventsOn day)}}
-      {{> frameCalendarEvent event}}
+      {{> frameCalendarEvent data=event}}
     {{/each}}
   {{/each}}
   {{#if Template.subscriptionsReady}}

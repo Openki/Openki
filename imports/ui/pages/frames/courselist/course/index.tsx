@@ -27,7 +27,7 @@ export function Course({ course, hideInterested }: Props) {
   }
 
   return (
-    <div className="frame-list-item">
+    <div className="frame-list-item-course">
       <h4
         className="frame-list-item-header"
         onClick={(event) => {

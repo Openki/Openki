@@ -28,7 +28,7 @@ export function Event({ data }: { data: EventModel }) {
   }
 
   return (
-    <div className={`frame-list-item ${data.canceled ? "frame-list-item-canceled" : ""}`}>
+    <div className={`frame-list-item-event ${data.canceled ? "frame-list-item-canceled" : ""}`}>
       <h4
         className={`frame-list-item-header ${isExpanded ? "active" : ""}`}
         onClick={() => {
