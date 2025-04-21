@@ -53,6 +53,3 @@ typescript@5.6.3                # Enable TypeScript syntax in .ts and .tsx modul
 
 # Test
 meteortesting:mocha@3.2.0            # A package for writing and running your meteor app and package tests with mocha
-blaze-hot
-hot-module-replacement
-modules-runtime-hot
