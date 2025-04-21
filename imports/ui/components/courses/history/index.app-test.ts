@@ -64,9 +64,11 @@ if (Meteor.isClient) {
       const lastNumberOfHistoryEntries = $(".coursehistory-event").length;
 
       // Subscribe as user "Flumsi" to course
-      $(".js-role-enroll-btn:first").trigger("click");
+      // expand
+      $("#subscribe button:first").trigger("click");
       await waitForSubscriptions();
-      $(".js-role-subscribe-btn:first").trigger("click");
+      // subscribe
+      $("#subscribe button:first").trigger("click");
 
       await waitFor(() => {
         assert.isAbove(

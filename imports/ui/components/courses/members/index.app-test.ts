@@ -14,12 +14,12 @@ if (Meteor.isClient) {
     it("keeps comment", async () => {
       Router.go("/course/6cac962a5f/game-design-mit-unity");
       const findJoinButton = () => {
-        const sel = $(".js-role-enroll-btn[name=participant]");
+        const sel = $("button[name=participant]");
         assert(sel.length > 0, "Join as participant button present");
         return sel;
       };
       const findCommentField = () => {
-        const sel = $(".js-comment");
+        const sel = $(".js-comment:first");
         assert(sel.length > 0, "Comment field present");
         return sel;
       };
@@ -35,7 +35,7 @@ if (Meteor.isClient) {
       await MeteorAsync.loginWithPassword("Seee", "greg");
       const field = await waitFor(findCommentField);
       field.text(comment);
-      $(".js-role-subscribe-btn:first").trigger("click");
+      $("#subscribe .btn-save:first").trigger("click");
       await waitFor(findComment);
     });
   });

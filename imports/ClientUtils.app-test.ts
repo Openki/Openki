@@ -63,14 +63,29 @@ export function waitFor<T>(assertion: () => T, timeout = 10000): Promise<T> {
   });
 }
 
-export function setInputValue(selector: string, value: string) {
+export async function setInputValue(selector: string, value: string) {
   // https://stackoverflow.com/questions/23892547/what-is-the-best-way-to-trigger-change-or-input-event-in-react-js/46012210#46012210
   const nativeValueSetter = (Object as any).getOwnPropertyDescriptor(
     window.HTMLInputElement.prototype,
     "value",
   ).set;
   nativeValueSetter.call($(selector)[0], value);
+  $(selector)[0].dispatchEvent(new Event("keyUp", { bubbles: true }));
   $(selector)[0].dispatchEvent(new Event("input", { bubbles: true }));
+  $(selector)[0].dispatchEvent(new Event("change", { bubbles: true }));
+}
+
+export async function setContent(selector: string, value: string) {
+  $(selector).html(value);
+
+  const nativeValueSetter = (Object as any).getOwnPropertyDescriptor(
+    window.HTMLDivElement.prototype,
+    "innerHTML",
+  ).set;
+  nativeValueSetter.call($(selector)[0], value);
+  $(selector)[0].dispatchEvent(new Event("keyUp", { bubbles: true }));
+  $(selector)[0].dispatchEvent(new Event("input", { bubbles: true }));
+  $(selector)[0].dispatchEvent(new Event("change", { bubbles: true }));
 }
 
 export function setSelectValue(selector: string, value: string) {
@@ -81,4 +96,20 @@ export function setSelectValue(selector: string, value: string) {
   ).set;
   nativeValueSetter.call($(selector)[0], value);
   $(selector)[0].dispatchEvent(new Event("input", { bubbles: true }));
+  $(selector)[0].dispatchEvent(new Event("change", { bubbles: true }));
+}
+
+export function setChecked(selector: string, value: boolean) {
+  // https://stackoverflow.com/questions/23892547/what-is-the-best-way-to-trigger-change-or-input-event-in-react-js/46012210#46012210
+  const nativeValueSetter = (Object as any).getOwnPropertyDescriptor(
+    window.HTMLInputElement.prototype,
+    "value",
+  ).set;
+  nativeValueSetter.call($(selector)[0], "" + value);
+  const nativeCheckedSetter = (Object as any).getOwnPropertyDescriptor(
+    window.HTMLInputElement.prototype,
+    "checked",
+  ).set;
+  nativeCheckedSetter.call($(selector)[0], value);
+  $(selector)[0].dispatchEvent(new Event("change", { bubbles: true }));
 }
