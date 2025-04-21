@@ -9,8 +9,12 @@
   font-size: 1.2em;
 }
 
-.frame-list-item {
+.frame-list-item-course {
   background-color: $blue-lighter;
+}
+
+.frame-list-item-event {
+  background-color: $event-body-bg;
 }
 
 .frame-list-item-canceled {
@@ -20,7 +24,8 @@
   background-size: contain;
 }
 
-.frame-list-item + .frame-list-item {
+.frame-list-item-course + .frame-list-item-course,
+.frame-list-item-event + .frame-list-item-event {
   margin-top: 5px;
 }
 

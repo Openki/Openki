@@ -29,9 +29,9 @@ function useOptions() {
   const hideInterested = !!Number.parseInt(query.hideInterested || "", 10) || false;
 
   const style = new CssFromQuery(query, [
-    ["itembg", "background-color", ".frame-list-item"],
-    ["itemcolor", "color", ".frame-list-item"],
-    ["linkcolor", "color", ".frame-list-item a"],
+    ["itembg", "background-color", ".frame-list-item-course"],
+    ["itemcolor", "color", ".frame-list-item-course"],
+    ["linkcolor", "color", ".frame-list-item-course a"],
     ["regionbg", "background-color", ".frame-list-item-region"],
     ["regioncolor", "color", ".frame-list-item-region"],
     ["itemfontweight", "font-weight", ".frame-list-item-header"],

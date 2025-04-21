@@ -637,9 +637,9 @@ RouterAsync.route("frameCalendar", {
   },
   data() {
     const cssRules = new CssFromQuery(this.params.query, [
-      ["itembg", "background-color", ".frame-list-item"],
-      ["itemcolor", "color", ".frame-list-item"],
-      ["linkcolor", "color", ".frame-list-item a"],
+      ["itembg", "background-color", ".frame-list-item-event"],
+      ["itemcolor", "color", ".frame-list-item-event"],
+      ["linkcolor", "color", ".frame-list-item-event a"],
       ["regionbg", "background-color", ".frame-list-item-region"],
       ["regioncolor", "color", ".frame-list-item-region"],
     ]).getCssRules();
