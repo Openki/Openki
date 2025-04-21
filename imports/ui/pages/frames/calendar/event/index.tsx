@@ -1,130 +1,125 @@
-import { ReactiveVar } from "meteor/reactive-var";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import { Spacebars } from "meteor/spacebars";
-import { Session } from "meteor/session";
-
+import React, { useState } from "react";
 import { EventModel } from "/imports/api/events/events";
 import { Regions } from "/imports/api/regions/regions";
+import { useTranslation } from "react-i18next";
+import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useSessionEquals } from "/imports/utils/react-meteor-data";
+import { useSiteName } from "/imports/utils/getSiteName";
+import { Router } from "meteor/iron:router";
 
-import "./template.html";
+export function Event({ data }: { data: EventModel }) {
+  const { t } = useTranslation();
+  const [isExpanded, setIsExpanded] = useState(false);
+  const { timeFormat } = useDateTimeFormat();
+  const allRegions = useSessionEquals("region", "all");
+  const siteName = useSiteName();
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "frameCalendarEvent",
-  EventModel,
-  {
-    expanded: ReactiveVar<boolean>;
+  function regionName() {
+    return Regions.findOne(data.region)?.name;
   }
->;
-
-const template = Template.frameCalendarEvent;
-
-template.onCreated(function () {
-  this.expanded = new ReactiveVar(false);
-});
-
-template.helpers({
-  allRegions() {
-    return Session.equals("region", "all");
-  },
-
-  regionName() {
-    return Regions.findOne(this.region)?.name;
-  },
-
-  expanded: () => Template.instance().expanded.get(),
-
-  getAttendees() {
-    const { data } = Template.instance();
+  function getAttendees() {
     return data.numberOfParticipants();
-  },
-
-  getTotalAvailableSeats() {
-    const { data } = Template.instance();
-    return data.maxParticipants || Spacebars.SafeString("&#8734;");
-  },
-
-  isUnlimited() {
-    const { data } = Template.instance();
+  }
+  function getTotalAvailableSeats() {
+    return data.maxParticipants || <>&#8734;</>;
+  }
+  function isUnlimited() {
     return !data.maxParticipants;
-  },
-});
+  }
 
-template.events({
-  "click .js-toggle-event-details"(event, instance) {
-    $(event.currentTarget).toggleClass("active");
-    instance.$(".frame-list-item-time").toggle();
-    instance.expanded.set(!instance.expanded.get());
-  },
-});
+  return (
+    <div className={`frame-list-item ${data.canceled ? "frame-list-item-canceled" : ""}`}>
+      <h4
+        className={`frame-list-item-header ${isExpanded ? "active" : ""}`}
+        onClick={() => {
+          setIsExpanded(!isExpanded);
+        }}
+      >
+        <span className="frame-list-item-toggle-indicator">
+          <i className="fa-solid fa-angle-down"></i>
+        </span>
+        {!data.noRsvp && (
+          <>
+            <div
+              className="frame-list-free-seats"
+              data-bs-toggle="tooltip"
+              data-bs-title={
+                isUnlimited()
+                  ? t(
+                      "frame.list.reservation.status.unlimited.tooltip",
+                      "{RESERVEDSEATS} of unlimited seats reserved",
+                      { RESERVEDSEATS: getAttendees() },
+                    )
+                  : t(
+                      "frame.list.reservation.status.tooltip",
+                      "{RESERVEDSEATS} of {TOTALSEATS} seats reserved",
+                      { RESERVEDSEATS: getAttendees(), TOTALSEATS: getTotalAvailableSeats() },
+                    )
+              }
+            >
+              {getAttendees()}/{getTotalAvailableSeats()}
+            </div>
+            <i className="fa-solid fa-user frame-list-free-seats" aria-hidden="true"></i>
+          </>
+        )}
 
-
-export function Event(){
-  return <div class="frame-list-item {{#if canceled}}frame-list-item-canceled{{/if}}">
-  <h4 class="frame-list-item-header js-toggle-event-details">
-    <span class="frame-list-item-toggle-indicator">
-      <i class="fa-solid fa-angle-down"></i>
-    </span>
-    {{#unless noRsvp}}
-      <div class="frame-list-free-seats" data-bs-toggle="tooltip" data-bs-title="{{#if isUnlimited}}
-                {{i18n 'frame.list.reservation.status.unlimited.tooltip' '{RESERVEDSEATS} of unlimited seats reserved' RESERVEDSEATS=getAttendees}}
-              {{else}}
-                {{i18n 'frame.list.reservation.status.tooltip' '{RESERVEDSEATS} of {TOTALSEATS} seats reserved' RESERVEDSEATS=getAttendees TOTALSEATS=getTotalAvailableSeats}}
-              {{/if}}">
-        {{getAttendees}}/{{getTotalAvailableSeats}}
-      </div>
-      <i class="fa-solid fa-user frame-list-free-seats" aria-hidden="true"></i>
-    {{/unless}}
-
-    <span class="frame-list-item-time">
-      {{timeFormat start}}
-    </span>
-    <strong>{{title}}</strong>
-    {{#if allRegions}}
-      <span class="badge bg-primary frame-list-item-region">{{regionName}}</span>
-    {{/if}}
-
-  </h4>
-  {{#if expanded}}
-    <div class="p-2">
-      <div class="row">
-        <div class="col-4 col-sm-2">
-          <strong>{{i18n 'frame.eventsList.when' 'When:'}}</strong>
-        </div>
-        <div class="col-8 col-sm-10">
-          {{timeFormat start}} - {{timeFormat end}}
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-4 col-sm-2">
-          <strong>{{i18n 'frame.eventsList.where' 'Where:'}}</strong>
-        </div>
-        <div class="col-8 col-sm-10">
-          {{#if venue._id}}
-            <a href="{{pathFor 'venueDetails' _id=venue._id}}" target="_blank">
-              {{venue.name}}
+        <span className={`frame-list-item-time ${isExpanded ? "hidden" : ""}`}>
+          {timeFormat(data.start)}
+        </span>
+        <strong>{data.title}</strong>
+        {allRegions && (
+          <span className="badge bg-primary frame-list-item-region">{regionName()}</span>
+        )}
+      </h4>
+      {isExpanded && (
+        <div className="p-2">
+          <div className="row">
+            <div className="col-4 col-sm-2">
+              <strong>{t("frame.eventsList.when", "When:")}</strong>
+            </div>
+            <div className="col-8 col-sm-10">
+              {timeFormat(data.start)} - {timeFormat(data.end)}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-4 col-sm-2">
+              <strong>{t("frame.eventsList.where", "Where:")}</strong>
+            </div>
+            <div className="col-8 col-sm-10">
+              {data.venue?._id ? (
+                <a href={Router.path("venueDetails", data.venue)} target="_blank" rel="noreferrer">
+                  {data.venue.name}
+                </a>
+              ) : (
+                data.venue?.name
+              )}
+              {!!data.room && <>- {data.room}</>}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-sm-2">
+              <strong>{t("frame.eventsList.description", "Description:")}</strong>
+            </div>
+            <div className="col-sm-10" dangerouslySetInnerHTML={{ __html: data.description }}></div>
+          </div>
+          <div className="mt-2 d-grid d-sm-flex">
+            <a
+              className="btn btn-outline-dark"
+              href={Router.path("showEvent", data)}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {t("frame.calendar.moreAboutThisEvent", "More about this event on {SITENAME}", {
+                SITENAME: siteName,
+              })}
             </a>
-          {{else}}
-            {{venue.name}}
-          {{/if}}
-          {{#if room}}
-            - {{room}}
-          {{/if}}
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-2">
-          <strong>{{i18n 'frame.eventsList.description' 'Description:'}}</strong>
-        </div>
-        <div class="col-sm-10">
-          {{{description}}}
-        </div>
-      </div>
-      <div class="mt-2 d-grid d-sm-flex">
-        <a class="btn btn-outline-dark" href="{{pathFor 'showEvent'}}" target="_blank">
-          {{i18n 'frame.calendar.moreAboutThisEvent' 'More about this event on {SITENAME}' SITENAME=siteName}}
-        </a>
-      </div>
+      )}
     </div>
-  {{/if}}
-</div>
+  );
 }
+
+// for Blaze
+import "./template.html";
+Template.registerHelper("FrameCalendarEvent", () => Event);
