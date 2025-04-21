@@ -57,7 +57,7 @@
 		, "customEntries": [ ]
 		}
   , "regionDashboardDefault": 
-    [ { "entity": "course"
+    [ { "entity": "courseWithoutPropose"
       , "title": "dashboard.userInvolvedIn.title"
       , "query": "userInvolved={currentUser}"
       }
@@ -85,11 +85,11 @@
       , "title": "dashboard.newProposals.title"
       , "query": "state=proposal&internal=0&sort=-time_created"
       }
-    , { "entity": "course"
+    , { "entity": "courseWithoutPropose"
       , "title": "dashboard.lookingForMentors.title"
       ,  "query": "needsRole=mentor&state=proposal,resting&internal=0"
       }
-    , { "entity": "course"
+    , { "entity": "courseWithoutPropose"
       , "title": "dashboard.lookingForVenues.title"
       , "query": "needsRole=host&state=proposal,resting&internal=0"
       }
@@ -113,11 +113,11 @@
       , "title": "dashboard.newProposals.title"
       , "query": "state=proposal&sort=-time_created"
       }
-    , { "entity": "course"
+    , { "entity": "courseWithoutPropose"
       , "title": "dashboard.lookingForMentors.title"
       ,  "query": "needsRole=mentor&state=proposal,resting"
       }
-    , { "entity": "course"
+    , { "entity": "courseWithoutPropose"
       , "title": "dashboard.lookingForVenues.title"
       , "query": "needsRole=host&state=proposal,resting"
       }
