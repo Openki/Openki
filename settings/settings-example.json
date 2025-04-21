@@ -66,7 +66,7 @@
 			]
 		}
   , "regionDashboardDefault": // Standard for all regions, can be overwritten if the "dashboard" property is set in the region, if not set, the ‘find’ page is displayed, default: undefined
-    [	{ "entity": "" // The entity to show: "course", "event", "group", "eventsMap" are supported
+    [	{ "entity": "" // The entity to show: "course", "courseWithoutPropose", "event", "group", "eventsMap", "propose" are supported
       , "title": "" // Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
       , "query": "" // Query how the data should be filtered and sorted, all options and filters can be found in the wiki, can be an empty string "". The entities are filtered by region.
       , "showAll": // Overwrite the standard showAll button (Optional)
@@ -76,7 +76,7 @@
       }
     ]
   , "groupDashboardDefault": // Standard for all groups, can be overwritten if the "dashboard" property is set in the group, if not set, the ‘find’ page is displayed, default: undefined
-    [	{ "entity": "" // The entity to show: "course", "event", "group", "eventsMap" are supported
+    [	{ "entity": "" // The entity to show: "course", "courseWithoutPropose", "event", "group", "eventsMap", "propose" are supported
       , "title": "" // Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
       , "query": "" // Query how the data should be filtered and sorted, all options and filters can be found in the wiki, can be an empty string "". The entities are filtered by region and group.
       , "showAll": // Overwrite the standard showAll button (Optional)
@@ -120,7 +120,7 @@
 	, "eventDescriptionMax": 15000 // Max characters allowed for the description-field of events. Default: 15000
 	, "categories":  // Categories for courses, main and/or sub categories
 			{ "sports":
-				["martialarts"
+				[ "martialarts"
 				, "teamsport"
 				, "artistry"
 				]
@@ -128,8 +128,7 @@
 				[
 				]
 		, "[categoryname]":
-				[
-				, "subcategoryname1"
+				[ "subcategoryname1"
 				, "subcategoryname2"
 				]
 		}
