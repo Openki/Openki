@@ -39,28 +39,28 @@ export function Event({ data }: { data: EventModel }) {
           <i className="fa-solid fa-angle-down"></i>
         </span>
         {!data.noRsvp && (
-          <>
-            <div
-              className="frame-list-free-seats"
-              data-bs-toggle="tooltip"
-              data-bs-title={
-                isUnlimited()
-                  ? t(
-                      "frame.list.reservation.status.unlimited.tooltip",
-                      "{RESERVEDSEATS} of unlimited seats reserved",
-                      { RESERVEDSEATS: getAttendees() },
-                    )
-                  : t(
-                      "frame.list.reservation.status.tooltip",
-                      "{RESERVEDSEATS} of {TOTALSEATS} seats reserved",
-                      { RESERVEDSEATS: getAttendees(), TOTALSEATS: getTotalAvailableSeats() },
-                    )
-              }
-            >
+          <div
+            className="frame-list-free-seats"
+            data-bs-toggle="tooltip"
+            data-bs-title={
+              isUnlimited()
+                ? t(
+                    "frame.list.reservation.status.unlimited.tooltip",
+                    "{RESERVEDSEATS} of unlimited seats reserved",
+                    { RESERVEDSEATS: getAttendees() },
+                  )
+                : t(
+                    "frame.list.reservation.status.tooltip",
+                    "{RESERVEDSEATS} of {TOTALSEATS} seats reserved",
+                    { RESERVEDSEATS: getAttendees(), TOTALSEATS: getTotalAvailableSeats() },
+                  )
+            }
+          >
+            <span className="me-1">
               {getAttendees()}/{getTotalAvailableSeats()}
-            </div>
-            <i className="fa-solid fa-user frame-list-free-seats" aria-hidden="true"></i>
-          </>
+            </span>
+            <i className="fa-solid fa-user fa-fw" aria-hidden="true"></i>
+          </div>
         )}
 
         <span className={`frame-list-item-time ${isExpanded ? "hidden" : ""}`}>

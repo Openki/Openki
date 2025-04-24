@@ -43,7 +43,6 @@ import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 import { CourseTemplate } from "/imports/ui/lib/course-template";
-import { CssFromQuery } from "/imports/ui/lib/css-from-query";
 
 import type { Data as GroupDetailsData } from "/imports/ui/pages/group-details";
 import type { Data as VenuesMapData } from "/imports/ui/pages/venues-map";

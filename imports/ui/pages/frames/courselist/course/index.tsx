@@ -41,7 +41,8 @@ export function Course({ course, hideInterested }: Props) {
         {!hideInterested && course.roles.includes("participant") && (
           <span
             className="frame-list-item-interested"
-            title={t("frame.courseList.interestedPersons", "Interested people")}
+            data-bs-toggle="tooltip"
+            data-bs-title={t("frame.courseList.interestedPersons", "Interested people")}
           >
             <span className="me-1">{interestedPersons()}</span> <RoleIcon type="participant" />
           </span>
