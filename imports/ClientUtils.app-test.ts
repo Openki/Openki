@@ -1,7 +1,7 @@
 import { DDP } from "meteor/ddp-client";
 import { Meteor } from "meteor/meteor";
 import { Promise } from "meteor/promise";
-import { AssertionError } from "chai";
+import { AssertionError, expect } from "chai";
 
 /**
  * Returns a promise which resolves when all subscriptions are done.
@@ -63,6 +63,14 @@ export function waitFor<T>(assertion: () => T, timeout = 10000): Promise<T> {
   });
 }
 
+export async function expectElement(selector: string, message?: string) {
+  return await waitFor(() => {
+    const elements = document.querySelectorAll(selector);
+    expect(elements.length).to.be.equal(1, message);
+    return elements[0];
+  });
+}
+
 export async function setInputValue(selector: string, value: string) {
   // https://stackoverflow.com/questions/23892547/what-is-the-best-way-to-trigger-change-or-input-event-in-react-js/46012210#46012210
   const nativeValueSetter = (Object as any).getOwnPropertyDescriptor(
@@ -75,17 +83,27 @@ export async function setInputValue(selector: string, value: string) {
   $(selector)[0].dispatchEvent(new Event("change", { bubbles: true }));
 }
 
-export async function setContent(selector: string, value: string) {
-  $(selector).html(value);
-
+export async function setTextAreaValue(element: Element, value: string) {
+  // https://stackoverflow.com/questions/23892547/what-is-the-best-way-to-trigger-change-or-input-event-in-react-js/46012210#46012210
   const nativeValueSetter = (Object as any).getOwnPropertyDescriptor(
-    window.HTMLDivElement.prototype,
+    window.HTMLTextAreaElement.prototype,
+    "value",
+  ).set;
+  nativeValueSetter.call(element, value);
+  element.dispatchEvent(new Event("keyUp", { bubbles: true }));
+  element.dispatchEvent(new Event("input", { bubbles: true }));
+  element.dispatchEvent(new Event("change", { bubbles: true }));
+}
+
+export async function setContent(element: Element, value: string) {
+  const nativeValueSetter = (Object as any).getOwnPropertyDescriptor(
+    window.Element.prototype,
     "innerHTML",
   ).set;
-  nativeValueSetter.call($(selector)[0], value);
-  $(selector)[0].dispatchEvent(new Event("keyUp", { bubbles: true }));
-  $(selector)[0].dispatchEvent(new Event("input", { bubbles: true }));
-  $(selector)[0].dispatchEvent(new Event("change", { bubbles: true }));
+  nativeValueSetter.call(element, value);
+  element.dispatchEvent(new Event("keyUp", { bubbles: true }));
+  element.dispatchEvent(new Event("input", { bubbles: true }));
+  element.dispatchEvent(new Event("change", { bubbles: true }));
 }
 
 export function setSelectValue(selector: string, value: string) {
