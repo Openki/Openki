@@ -29,7 +29,11 @@ function useOptions() {
 
   const filter = Events.Filtering().read(query);
   if (startDate.isValid()) {
-    filter.add("after", startDate.toISOString());
+    if (query.ongoing !== "0") {
+      filter.add("start", startDate.toISOString());
+    } else {
+      filter.add("after", startDate.toISOString());
+    }
   }
   if (endDate && endDate.isValid()) {
     filter.add("end", endDate.toISOString());

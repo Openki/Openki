@@ -10,7 +10,7 @@ import { Router } from "meteor/iron:router";
 export function Event({ data }: { data: EventModel }) {
   const { t } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
-  const { timeFormat } = useDateTimeFormat();
+  const { timeFormat, fromNow } = useDateTimeFormat();
   const allRegions = useSessionEquals("region", "all");
   const siteName = useSiteName();
 
@@ -29,48 +29,56 @@ export function Event({ data }: { data: EventModel }) {
 
   return (
     <div className={`frame-list-item-event ${data.canceled ? "frame-list-item-canceled" : ""}`}>
-      <h4
-        className={`frame-list-item-header ${isExpanded ? "active" : ""}`}
-        onClick={() => {
-          setIsExpanded(!isExpanded);
-        }}
-      >
-        <span className="frame-list-item-toggle-indicator">
-          <i className="fa-solid fa-angle-down"></i>
-        </span>
-        {!data.noRsvp && (
-          <div
-            className="frame-list-free-seats"
-            data-bs-toggle="tooltip"
-            data-bs-title={
-              isUnlimited()
-                ? t(
-                    "frame.list.reservation.status.unlimited.tooltip",
-                    "{RESERVEDSEATS} of unlimited seats reserved",
-                    { RESERVEDSEATS: getAttendees() },
-                  )
-                : t(
-                    "frame.list.reservation.status.tooltip",
-                    "{RESERVEDSEATS} of {TOTALSEATS} seats reserved",
-                    { RESERVEDSEATS: getAttendees(), TOTALSEATS: getTotalAvailableSeats() },
-                  )
-            }
-          >
-            <span className="me-1">
-              {getAttendees()}/{getTotalAvailableSeats()}
-            </span>
-            <i className="fa-solid fa-user fa-fw" aria-hidden="true"></i>
+      <div className="position-relative">
+        {new Date() > data.start && (
+          <div className="text-primary">
+            <span className="fa-solid fa-circle-play fa-fw" aria-hidden="true"></span>{" "}
+            {t("frame.eventsList.started", "Started {FROMNOW}", { FROMNOW: fromNow(data.start) })}
           </div>
         )}
+        <h4
+          className={`frame-list-item-header ${isExpanded ? "active" : ""} stretched-link`}
+          onClick={() => {
+            setIsExpanded(!isExpanded);
+          }}
+        >
+          <span className="frame-list-item-toggle-indicator">
+            <i className="fa-solid fa-angle-down"></i>
+          </span>
+          {!data.noRsvp && (
+            <div
+              className="frame-list-free-seats"
+              data-bs-toggle="tooltip"
+              data-bs-title={
+                isUnlimited()
+                  ? t(
+                      "frame.list.reservation.status.unlimited.tooltip",
+                      "{RESERVEDSEATS} of unlimited seats reserved",
+                      { RESERVEDSEATS: getAttendees() },
+                    )
+                  : t(
+                      "frame.list.reservation.status.tooltip",
+                      "{RESERVEDSEATS} of {TOTALSEATS} seats reserved",
+                      { RESERVEDSEATS: getAttendees(), TOTALSEATS: getTotalAvailableSeats() },
+                    )
+              }
+            >
+              <span className="me-1">
+                {getAttendees()}/{getTotalAvailableSeats()}
+              </span>
+              <i className="fa-solid fa-user fa-fw" aria-hidden="true"></i>
+            </div>
+          )}
 
-        <span className={`frame-list-item-time ${isExpanded ? "hidden" : ""}`}>
-          {timeFormat(data.start)}
-        </span>
-        <strong>{data.title}</strong>
-        {allRegions && (
-          <span className="badge bg-primary frame-list-item-region">{regionName()}</span>
-        )}
-      </h4>
+          <span className={`frame-list-item-time ${isExpanded ? "hidden" : ""}`}>
+            {timeFormat(data.start)}
+          </span>
+          <strong>{data.title}</strong>
+          {allRegions && (
+            <span className="badge bg-primary frame-list-item-region">{regionName()}</span>
+          )}
+        </h4>
+      </div>
       {isExpanded && (
         <div className="p-2">
           <div className="row">
@@ -93,7 +101,7 @@ export function Event({ data }: { data: EventModel }) {
               ) : (
                 data.venue?.name
               )}
-              {!!data.room && <>- {data.room}</>}
+              {!!data.room && <> - {data.room}</>}
             </div>
           </div>
           <div className="row">
