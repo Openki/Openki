@@ -107,3 +107,36 @@ template.events({
     limit.set(limit.get() + 10);
   },
 });
+
+
+export function Calendar(){
+
+  return <style>
+  /* beautify ignore:start */
+  {{#each cssRule in cssRules}}
+    {{cssRule}}
+  {{/each}}
+  /* beautify ignore:end */
+
+</style>
+{{#each day in days}}
+  <h4 class="frame-list-title">{{day}}</h4>
+  {{#each event in (eventsOn day)}}
+    {{> frameCalendarEvent data=event}}
+  {{/each}}
+{{/each}}
+{{#if Template.subscriptionsReady}}
+  {{#unless days}}
+    <h2 class="mt-5 text-center">{{i18n 'frame.calendar.noEvents' 'No events planned'}}</h2>
+  {{/unless}}
+  {{#if moreEvents}}
+    <div class="mt-2 text-center">
+      <button class="btn btn-secondary js-show-more-events" type="button">
+        {{i18n '_button.more'}}
+      </button>
+    </div>
+  {{/if}}
+{{else}}
+  {{> loadingRow}}
+{{/if}}
+}
