@@ -23,7 +23,7 @@ function useOptions() {
     filterQuery.internal = false;
   }
 
-  const count = Number.parseInt(query.count || "", 10) || 5;
+  const count = Number.parseInt(query.count || "", 10) || 200;
 
   const sort = query.sort ? SortSpec.fromString(query.sort) : SortSpec.unordered();
 
@@ -86,7 +86,7 @@ export function CourselistPage() {
             className="btn btn-secondary"
             type="button"
             onClick={() => {
-              setLimit(limit + 5);
+              setLimit(limit + 10);
             }}
           >
             {t("_button.more")}
