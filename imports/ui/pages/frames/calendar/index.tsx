@@ -1,142 +1,135 @@
 import React, { useState } from "react";
-import { ReactiveVar } from "meteor/reactive-var";
-import { Router } from "meteor/iron:router";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import { _ } from "meteor/underscore";
 import moment from "moment";
-import { i18n } from "/imports/startup/both/i18next";
-import { Session } from "meteor/session";
-
-import { EventModel, Events } from "/imports/api/events/events";
-
+import { useTranslation } from "react-i18next";
+import { useSearchParams } from "/imports/utils/react-meteor-router";
 import * as Metatags from "/imports/utils/metatags";
+import { chain } from "lodash";
+import { useSession } from "/imports/utils/react-meteor-data";
+import { useReactiveNow } from "/imports/utils/reactive-now";
 
-import "./event";
+import { useFindFilter } from "/imports/api/events/publications";
+import { Events } from "/imports/api/events/events";
 
-import "./template.html";
+import { LoadingRow } from "../../loading";
+import { Event } from "./event";
+import { CssFromQuery } from "/imports/ui/lib/css-from-query";
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "frameCalendarPage",
-  unknown,
-  {
-    groupedEvents: ReactiveVar<_.Dictionary<EventModel[]>>;
-    days: ReactiveVar<string[]>;
-    limit: ReactiveVar<number>;
-  }
->;
+function useOptions() {
+  const query = useSearchParams();
+  const now = useReactiveNow();
 
-const template = Template.frameCalendarPage;
-
-template.onCreated(function () {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const instance = this;
-
-  instance.autorun(() => {
-    Metatags.setCommonTags(i18n("calendar.windowtitle", "Calendar"));
-  });
-
-  instance.groupedEvents = new ReactiveVar({});
-  instance.days = new ReactiveVar([]);
-
-  const { query } = Router.current().params;
-  instance.limit = new ReactiveVar(parseInt(query.count || "", 10) || 200);
-
-  let startDate = moment();
+  let startDate = moment(now);
   if (query.start) {
     startDate = moment(query.start);
   }
-  let endDate: moment.Moment;
+  let endDate: moment.Moment | undefined;
   if (query.end) {
     endDate = moment(query.end).add(1, "day");
   }
 
-  instance.autorun(() => {
-    const filter = Events.Filtering().read(query);
-    if (startDate && startDate.isValid()) {
-      filter.add("after", startDate.toISOString());
-    }
-    if (endDate && endDate.isValid()) {
-      filter.add("end", endDate.toISOString());
-    }
+  const filter = Events.Filtering().read(query);
+  if (startDate.isValid()) {
+    filter.add("after", startDate.toISOString());
+  }
+  if (endDate && endDate.isValid()) {
+    filter.add("end", endDate.toISOString());
+  }
 
-    const filterQuery = filter.toQuery();
-    const limit = instance.limit.get();
+  const filterQuery = filter.toQuery();
 
-    // Show internal events only when a group or venue is specified
-    if (!filterQuery.group && !filterQuery.venue && filterQuery.internal === undefined) {
-      filterQuery.internal = false;
-    }
+  // Show internal events only when a group or venue is specified
+  if (!filterQuery.group && !filterQuery.venue && filterQuery.internal === undefined) {
+    filterQuery.internal = false;
+  }
 
-    instance.subscribe("Events.findFilter", filterQuery, limit + 1);
-  });
+  const count = Number.parseInt(query.count || "", 10) || 200;
 
-  instance.autorun(() => {
-    const limit = instance.limit.get();
-    const events = Events.find({}, { sort: { start: 1 }, limit }).fetch();
-    const groupedEvents = _.groupBy(events, (event) =>
-      moment(event.start)
-        .locale(Session.get("timeLocale") || "en")
-        .format("LL"),
-    );
+  const style = new CssFromQuery(query, [
+    ["itembg", "background-color", ".frame-list-item-course"],
+    ["itemcolor", "color", ".frame-list-item-course"],
+    ["linkcolor", "color", ".frame-list-item-course a"],
+    ["regionbg", "background-color", ".frame-list-item-region"],
+    ["regioncolor", "color", ".frame-list-item-region"],
+    ["itemfontweight", "font-weight", ".frame-list-item-header"],
+  ]).getCssRules();
 
-    instance.groupedEvents.set(groupedEvents);
-    instance.days.set(Object.keys(groupedEvents));
-  });
-});
-
-template.helpers({
-  days() {
-    return Template.instance().days.get();
-  },
-
-  eventsOn(day: string) {
-    return Template.instance().groupedEvents.get()[day];
-  },
-
-  moreEvents() {
-    const limit = Template.instance().limit.get();
-    const eventsCount = Events.find({}, { limit: limit + 1 }).count();
-
-    return eventsCount > limit;
-  },
-});
-
-template.events({
-  "click .js-show-more-events"(_event, instance) {
-    const { limit } = instance;
-    limit.set(limit.get() + 10);
-  },
-});
-
-
-export function Calendar(){
-
-  return <style>
-  /* beautify ignore:start */
-  {{#each cssRule in cssRules}}
-    {{cssRule}}
-  {{/each}}
-  /* beautify ignore:end */
-
-</style>
-{{#each day in days}}
-  <h4 class="frame-list-title">{{day}}</h4>
-  {{#each event in (eventsOn day)}}
-    {{> frameCalendarEvent data=event}}
-  {{/each}}
-{{/each}}
-{{#if Template.subscriptionsReady}}
-  {{#unless days}}
-    <h2 class="mt-5 text-center">{{i18n 'frame.calendar.noEvents' 'No events planned'}}</h2>
-  {{/unless}}
-  {{#if moreEvents}}
-    <div class="mt-2 text-center">
-      <button class="btn btn-secondary js-show-more-events" type="button">
-        {{i18n '_button.more'}}
-      </button>
-    </div>
-  {{/if}}
-{{else}}
-  {{> loadingRow}}
-{{/if}}
+  return {
+    filter: filterQuery,
+    count,
+    style,
+  };
 }
+
+export function CalendarPage() {
+  const { t } = useTranslation();
+  const options = useOptions();
+  const [limit, setLimit] = useState(options.count);
+  const timeLocale = useSession("timeLocale");
+
+  const [isLoading, events] = useFindFilter(options.filter, limit + 1, undefined, [
+    ["start", "asc"],
+  ]);
+
+  const groupedEvents = chain(events)
+    .take(limit)
+    .groupBy((event) =>
+      moment(event.start)
+        .locale(timeLocale || "en")
+        .format("LL"),
+    )
+    .value();
+
+  Metatags.setCommonTags(t("calendar.windowtitle", "Calendar"));
+
+  function days() {
+    return Object.keys(groupedEvents);
+  }
+  function eventsOn(day: string) {
+    return groupedEvents[day];
+  }
+  function moreEvents() {
+    return events.length > limit;
+  }
+
+  return (
+    <>
+      <style>{options.style.map((rule) => rule)}</style>
+      {days().map((day) => (
+        <React.Fragment key={day}>
+          <h4 className="frame-list-title">{day}</h4>
+          {eventsOn(day).map((event) => (
+            <Event key={event._id} data={event} />
+          ))}
+        </React.Fragment>
+      ))}
+      {!isLoading() ? (
+        <>
+          {!days().length && (
+            <h2 className="mt-5 text-center">
+              {t("frame.calendar.noEvents", "No events planned")}
+            </h2>
+          )}
+          {moreEvents() && (
+            <div className="mt-2 text-center">
+              <button
+                className="btn btn-secondary"
+                type="button"
+                onClick={() => {
+                  setLimit(limit + 10);
+                }}
+              >
+                {t("_button.more")}
+              </button>
+            </div>
+          )}
+        </>
+      ) : (
+        <LoadingRow />
+      )}
+    </>
+  );
+}
+
+// for Blaze
+import "./template.html";
+Template.registerHelper("FrameCalendarPage", () => CalendarPage);
