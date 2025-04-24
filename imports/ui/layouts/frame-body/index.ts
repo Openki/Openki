@@ -36,7 +36,7 @@ template.onRendered(() => {
       }
 
       // Fix endless flickering, because of small height changes. See: https://gitlab.com/Openki/Openki/-/issues/2153
-      if (between(element.scrollHeight, lastHeight - 1, lastHeight + 1)) {
+      if (between(element.scrollHeight, lastHeight - 1, element.scrollHeight)) {
         return;
       }
 
