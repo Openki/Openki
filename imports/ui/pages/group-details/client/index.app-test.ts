@@ -10,6 +10,7 @@ import {
   setSelectValue,
   setContent,
   setChecked,
+  expectElement,
 } from "/imports/ClientUtils.app-test";
 import { MeteorAsync } from "/imports/utils/promisify";
 
@@ -18,12 +19,12 @@ if (Meteor.isClient) {
     describe("Create", function () {
       this.timeout(30000);
 
-      const haveEditfield = () => {
+      function haveEditfield() {
         assert(
           $(".group-details-name [contenteditable=true]").length > 0,
           "Group name edit field present",
         );
-      };
+      }
 
       it("should throw a error on create a group with only a name", async () => {
         const randomTitle = `CREATE${1000 + Math.floor(Math.random() * 9000)}`;
@@ -53,23 +54,30 @@ if (Meteor.isClient) {
         await waitForSubscriptions();
         await waitFor(haveEditfield);
 
-        setContent(".group-details-name [contenteditable=true]", randomTitle);
-        setContent(".group-details-short [contenteditable=true]", `${randomTitle} short`);
-        setContent(".group-details-claim [contenteditable=true]", `${randomTitle} claim`);
-        setContent(
+        const name = await expectElement(".group-details-name [contenteditable=true]");
+        await setContent(name, randomTitle);
+
+        const short = await expectElement(".group-details-short [contenteditable=true]");
+        await setContent(short, `${randomTitle} short`);
+
+        const claim = await expectElement(".group-details-claim [contenteditable=true]");
+        await setContent(claim, `${randomTitle} claim`);
+
+        const description = await expectElement(
           ".group-details-description [contenteditable=true]",
-          `${randomTitle} description`,
         );
+        await setContent(description, `${randomTitle} description`);
+        setTimeout(async () => {
+          ((await expectElement(".group-details .btn-save")) as HTMLElement).click();
 
-        $(".group-details .btn-save")[0].click();
-
-        await waitFor(() => {
-          assert(
-            $(".alert.alert-success").text().includes(randomTitle),
-            "A message that the group was created is shown",
-          );
-          assert($(".group-details-name").text().includes(randomTitle), "The title is visible");
-        });
+          await waitFor(() => {
+            assert(
+              $(".alert.alert-success").text().includes(randomTitle),
+              "A message that the group was created is shown",
+            );
+            assert($(".group-details-name").text().includes(randomTitle), "The title is visible");
+          });
+        }, 1);
       });
     });
 
