@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
+import { take } from "lodash";
 
 import { Courses, FindFilter } from "/imports/api/courses/courses";
 
@@ -17,7 +18,7 @@ function useOptions() {
 
   const filter = Courses.Filtering().read(query);
   const filterQuery: FindFilter = filter.toQuery();
-  // Show internal events only when a group is specified
+  // Show internal courses only when a group is specified
   if (!filterQuery.group && filterQuery.internal === undefined) {
     filterQuery.internal = false;
   }
@@ -61,7 +62,7 @@ export function CourselistPage() {
   Metatags.setCommonTags(t("course.list.windowtitle", "Courses"));
 
   function courses() {
-    return coursesList.slice(0, limit);
+    return take(coursesList, limit);
   }
   function moreCourses() {
     return coursesList.length > limit;

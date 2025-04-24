@@ -635,16 +635,6 @@ RouterAsync.route("frameCalendar", {
   async onRun() {
     await import("/imports/ui/pages/frames/calendar");
   },
-  data() {
-    const cssRules = new CssFromQuery(this.params.query, [
-      ["itembg", "background-color", ".frame-list-item-event"],
-      ["itemcolor", "color", ".frame-list-item-event"],
-      ["linkcolor", "color", ".frame-list-item-event a"],
-      ["regionbg", "background-color", ".frame-list-item-region"],
-      ["regioncolor", "color", ".frame-list-item-region"],
-    ]).getCssRules();
-    return { cssRules };
-  },
 });
 
 RouterAsync.route("frameCourselist", {
