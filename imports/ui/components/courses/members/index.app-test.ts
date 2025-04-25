@@ -11,7 +11,6 @@ import {
 } from "/imports/ClientUtils.app-test";
 import { expect } from "chai";
 
-
 if (Meteor.isClient) {
   describe("Course members component", function () {
     describe("Subscribe to participant role", function () {
