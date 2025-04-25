@@ -17,9 +17,6 @@ if (Meteor.isClient) {
       await Meteor.callAsync("fixtures.clean.forAppTest");
       await Meteor.callAsync("fixtures.create.forAppTest");
     });
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    it("should be prepared", () => {});
-  });
 
     it("should list 5 courses for unauthenticated user (Testistan)", async () => {
       Router.go("/search");

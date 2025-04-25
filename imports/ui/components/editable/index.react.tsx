@@ -15,6 +15,7 @@ export interface Props {
   multiline?: boolean;
   placeholder?: string | undefined;
   maxlength?: number | undefined;
+  onStartEditing?: (() => void) | undefined;
   onChange?: (
     newText: string | undefined,
     numberOfCharacters: number,
@@ -23,7 +24,15 @@ export interface Props {
   store?: Store | undefined;
 }
 
-export function Editable({ text = "", multiline, placeholder, maxlength, onChange, store }: Props) {
+export function Editable({
+  text = "",
+  multiline,
+  placeholder,
+  maxlength,
+  onStartEditing,
+  onChange,
+  store,
+}: Props) {
   const { t } = useTranslation();
   const [numberOfCharacters, setNumberOfCharacters] = useState(0);
   const [changed, setChanged] = useState(!store);
@@ -261,7 +270,12 @@ export function Editable({ text = "", multiline, placeholder, maxlength, onChang
   };
   return (
     <>
-      <div className={`editable-wrap ${wrapClasses()}`}>
+      <div
+        className={`editable-wrap ${wrapClasses()}`}
+        onClick={() => {
+          onStartEditing?.();
+        }}
+      >
         <div
           ref={elementRef}
           className={`editable ${editableClasses()} ${

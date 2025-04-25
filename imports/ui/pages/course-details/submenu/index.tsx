@@ -1,81 +1,31 @@
+import React, { useEffect, useRef, useState } from "react";
 import { Meteor } from "meteor/meteor";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import { ReactiveDict } from "meteor/reactive-dict";
+import { useTranslation } from "react-i18next";
+import { useUser } from "/imports/utils/react-meteor-data";
 
 import { CourseModel } from "/imports/api/courses/courses";
 
 import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 
-import "/imports/ui/components/buttons";
-import "/imports/ui/components/courses/display/group-list";
-import "/imports/ui/components/courses/categories";
-import "/imports/ui/components/courses/discussion";
-import "/imports/ui/components/courses/edit";
-import "/imports/ui/components/courses/events";
-import "/imports/ui/components/courses/history";
-import "/imports/ui/components/courses/files";
-import "/imports/ui/components/courses/members";
-import "/imports/ui/components/courses/roles";
-import "/imports/ui/components/editable";
-import "/imports/ui/components/groups/tag";
-import "/imports/ui/components/price-policy";
-import "/imports/ui/components/regions/tag";
-import "/imports/ui/components/sharing";
-import "/imports/ui/components/report";
-import "/imports/ui/components/internal-indicator";
+import { Description } from "../description";
+import { History } from "/imports/ui/components/courses/history";
+import { Files } from "/imports/ui/components/courses/files";
+import { PricePolicy } from "/imports/ui/components/price-policy";
 
-import "./template.html";
 import "./styles.scss";
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "courseDetailsSubmenu",
-  {
-    edit: boolean;
-    course: CourseModel;
-    select: string;
-  },
-  {
-    state: ReactiveDict<{
-      descriptionTruncated: boolean;
-    }>;
-  }
->;
+export function Submenu(data: { edit: boolean; course: CourseModel; select: string }) {
+  const { t } = useTranslation();
+  const user = useUser();
+  const [descriptionTruncated, setDescriptionTruncated] = useState(true);
+  const elementRef = useRef<HTMLDivElement>(null);
 
-const template = Template.courseDetailsSubmenu;
-
-template.onCreated(function () {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const instance = this;
-  instance.state = new ReactiveDict();
-  instance.state.setDefault({
-    descriptionTruncated: true,
-  });
-});
-
-template.onRendered(function () {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const instance = this;
-
-  instance.autorun(async () => {
-    // function to check if the description is longer than the div that displays it
-    const courseDescriptionElement = instance.$(".course-description")[0];
-    if (courseDescriptionElement) {
-      instance.state.set({
-        descriptionTruncated:
-          courseDescriptionElement.scrollHeight > courseDescriptionElement.clientHeight,
-      });
-    }
-  });
-});
-
-template.helpers({
-  mayEdit() {
-    const { course } = Template.instance().data;
+  function mayEdit() {
+    const { course } = data;
     return course?.editableBy(Meteor.user());
-  },
-  customFields() {
-    const { course } = Template.instance().data;
-    const user = Meteor.user();
+  }
+  function customFields() {
+    const { course } = data;
 
     const isEditor = user && course.editableBy(user);
 
@@ -88,97 +38,141 @@ template.helpers({
           value: i.value,
         })) || []
     );
-  },
-});
+  }
 
-template.events({
-  "click .js-course-description-show-more"() {
-    // toggles the showMore
-    const { state } = Template.instance();
-    state.set({ descriptionTruncated: false });
-  },
+  useEffect(() => {
+    // function to check if the description is longer than the div that displays it
+    if (elementRef.current) {
+      setDescriptionTruncated(elementRef.current.scrollHeight > elementRef.current.clientHeight);
+    }
+  }, []);
 
-  "click .editable-wrap"() {
-    // sets the state when the user starts editing
-    const instance = Template.instance();
-    instance.state.set({ descriptionTruncated: false });
-  },
-});
-
-
-export function Submenu(){
-  return<> <nav class="course-details-nav">
-  <ul class="nav nav-tabs" role="tablist">
-    <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
-              data-bs-target="#description" type="button" role="tab" aria-controls="description"
-              aria-selected="true">
-        <span class="fa-solid fa-file-lines fa-fw" aria-hidden="true"></span>
-        <span class="tab-label">{{i18n 'course.subnav.descr' 'Description'}}</span>
-      </button>
-    </li>
-    {{#if mayEdit}}
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="files-tab" data-bs-toggle="tab" data-bs-target="#files"
-                type="button" role="tab" aria-controls="files" aria-selected="false">
-          <span class="fa-solid fa-file fa-fw" aria-hidden="true"></span>
-          <span class="tab-label">{{i18n 'course.subnav.files' 'Files'}}</span>
-        </button>
-      </li>
-    {{/if}}
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history"
-              type="button" role="tab" aria-controls="history" aria-selected="false">
-        <span class="fa-solid fa-clock-rotate-left fa-fw" aria-hidden="true"></span>
-        <span class="tab-label">{{i18n 'course.subnav.history' 'History'}}</span>
-      </button>
-    </li>
-  </ul>
-</nav>
-<div class="tab-content course-details-content">
-  <div class="tab-pane {{#unless state 'descriptionTruncated'}}mh-none overflow-visible{{else}}overflow-hidden{{/unless}} active"
-       id="description" role="tabpanel" aria-labelledby="description-tab" tabindex="0">
-    <div class="course-description-fade-wrap">
-      <div
-           class="course-description {{#unless state 'descriptionTruncated'}}mh-none overflow-visible{{else}}overflow-hidden{{/unless}}">
-        {{> courseDetailsDescription course=course}}
-        {{#each info in customFields}}
-          <p>
-            <strong>{{info.displayText}}</strong>:
-            {{#unless info.isboolean}}
-              <span class="pre-line">{{info.value}}</span>
-            {{else}}
-              {{#if info.value}}
-                {{i18n 'customField.boolean.yes' 'Yes'}}
-              {{else}}
-                {{i18n 'customField.boolean.no' 'No'}}
-              {{/if}}
-            {{/unless}}
-          </p>
-        {{/each}}
+  return (
+    <>
+      <nav className="course-details-nav">
+        <ul className="nav nav-tabs" role="tablist">
+          <li className="nav-item" role="presentation">
+            <button
+              className="nav-link active"
+              id="description-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#description"
+              type="button"
+              role="tab"
+              aria-controls="description"
+              aria-selected="true"
+            >
+              <span className="fa-solid fa-file-lines fa-fw" aria-hidden="true"></span>
+              <span className="tab-label">{t("course.subnav.descr", "Description")}</span>
+            </button>
+          </li>
+          {mayEdit() && (
+            <li className="nav-item" role="presentation">
+              <button
+                className="nav-link"
+                id="files-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#files"
+                type="button"
+                role="tab"
+                aria-controls="files"
+                aria-selected="false"
+              >
+                <span className="fa-solid fa-file fa-fw" aria-hidden="true"></span>
+                <span className="tab-label">{t("course.subnav.files", "Files")}</span>
+              </button>
+            </li>
+          )}
+          <li className="nav-item" role="presentation">
+            <button
+              className="nav-link"
+              id="history-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#history"
+              type="button"
+              role="tab"
+              aria-controls="history"
+              aria-selected="false"
+            >
+              <span className="fa-solid fa-clock-rotate-left fa-fw" aria-hidden="true"></span>
+              <span className="tab-label">{t("course.subnav.history", "History")}</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+      <div className="tab-content course-details-content">
+        <div
+          className={`tab-pane ${!descriptionTruncated ? "mh-none overflow-visible" : "overflow-hidden"} active`}
+          id="description"
+          role="tabpanel"
+          aria-labelledby="description-tab"
+          tabIndex={0}
+        >
+          <div className="course-description-fade-wrap">
+            <div
+              className={`course-description ${!descriptionTruncated ? "mh-none overflow-visible" : "overflow-hidden"} `}
+              ref={elementRef}
+            >
+              <Description
+                course={data.course}
+                onStartEditing={() => {
+                  // sets the state when the user starts editing
+                  setDescriptionTruncated(false);
+                }}
+              />
+              {customFields().map((info, index) => (
+                <p key={index}>
+                  <strong>{info.displayText}</strong>:
+                  {!info.isboolean ? (
+                    <span className="pre-line">{info.value}</span>
+                  ) : info.value ? (
+                    t("customField.boolean.yes", "Yes")
+                  ) : (
+                    t("customField.boolean.no", "No")
+                  )}
+                </p>
+              ))}
+            </div>
+            {descriptionTruncated && <div className="course-description-fade-bottom"></div>}
+          </div>
+          {descriptionTruncated && (
+            <div
+              role="button"
+              className="link-primary text-center"
+              onClick={() => {
+                setDescriptionTruncated(false);
+              }}
+            >
+              — {t("courseDetails.showMore", "show more")} —
+            </div>
+          )}
+        </div>
+        <div
+          className="tab-pane course-history"
+          id="history"
+          role="tabpanel"
+          aria-labelledby="history-tab"
+          tabIndex={0}
+        >
+          <History course={data.course} />
+        </div>
+        {mayEdit() && (
+          <div
+            className="tab-pane mh-none"
+            id="files"
+            role="tabpanel"
+            aria-labelledby="files-tab"
+            tabIndex={0}
+          >
+            <Files course={data.course} />
+          </div>
+        )}
+        {!data.course.isPrivate() && <PricePolicy dismissable wrap="course-details-price-policy" />}
       </div>
-      {{#if state 'descriptionTruncated'}}
-        <div class="course-description-fade-bottom"></div>
-      {{/if}}
-    </div>
-    {{#if state 'descriptionTruncated'}}
-      <div role="button" class="js-course-description-show-more link-primary text-center">
-        — {{i18n 'courseDetails.showMore' 'show more'}} —
-      </div>
-    {{/if}}
-  </div>
-  <div class="tab-pane course-history" id="history" role="tabpanel" aria-labelledby="history-tab"
-       tabindex="0">
-    {{> coursehistory}}
-  </div>
-  {{#if mayEdit}}
-    <div class="tab-pane mh-none" id="files" role="tabpanel" aria-labelledby="files-tab"
-         tabindex="0">
-      {{> courseFiles course=course}}
-    </div>
-  {{/if}}
-  {{#unless course.isPrivate}}
-    {{> pricePolicy dismissable=true wrap='course-details-price-policy'}}
-  {{/unless}}
-</div></>
+    </>
+  );
 }
+
+// for Blaze
+import "./template.html";
+Template.registerHelper("CourseDetailsSubmenu", () => Submenu);
