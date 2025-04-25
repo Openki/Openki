@@ -7,7 +7,7 @@ import { MeteorAsync } from "/imports/utils/promisify";
 import { waitForSubscriptions, waitFor } from "/imports/ClientUtils.app-test";
 
 if (Meteor.isClient) {
-  describe("Test", function () {
+  describe("Course list component", function () {
     this.timeout(120000);
     before(async () => {
       // A previous test might have logged us in.
@@ -20,11 +20,6 @@ if (Meteor.isClient) {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     it("should be prepared", () => {});
   });
-}
-
-if (Meteor.isClient) {
-  describe("Course list component", function () {
-    this.timeout(30000);
 
     it("should list 5 courses for unauthenticated user (Testistan)", async () => {
       Router.go("/search");
