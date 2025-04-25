@@ -104,3 +104,81 @@ template.events({
     instance.state.set({ descriptionTruncated: false });
   },
 });
+
+
+export function Submenu(){
+  return<> <nav class="course-details-nav">
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
+              data-bs-target="#description" type="button" role="tab" aria-controls="description"
+              aria-selected="true">
+        <span class="fa-solid fa-file-lines fa-fw" aria-hidden="true"></span>
+        <span class="tab-label">{{i18n 'course.subnav.descr' 'Description'}}</span>
+      </button>
+    </li>
+    {{#if mayEdit}}
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="files-tab" data-bs-toggle="tab" data-bs-target="#files"
+                type="button" role="tab" aria-controls="files" aria-selected="false">
+          <span class="fa-solid fa-file fa-fw" aria-hidden="true"></span>
+          <span class="tab-label">{{i18n 'course.subnav.files' 'Files'}}</span>
+        </button>
+      </li>
+    {{/if}}
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history"
+              type="button" role="tab" aria-controls="history" aria-selected="false">
+        <span class="fa-solid fa-clock-rotate-left fa-fw" aria-hidden="true"></span>
+        <span class="tab-label">{{i18n 'course.subnav.history' 'History'}}</span>
+      </button>
+    </li>
+  </ul>
+</nav>
+<div class="tab-content course-details-content">
+  <div class="tab-pane {{#unless state 'descriptionTruncated'}}mh-none overflow-visible{{else}}overflow-hidden{{/unless}} active"
+       id="description" role="tabpanel" aria-labelledby="description-tab" tabindex="0">
+    <div class="course-description-fade-wrap">
+      <div
+           class="course-description {{#unless state 'descriptionTruncated'}}mh-none overflow-visible{{else}}overflow-hidden{{/unless}}">
+        {{> courseDetailsDescription course=course}}
+        {{#each info in customFields}}
+          <p>
+            <strong>{{info.displayText}}</strong>:
+            {{#unless info.isboolean}}
+              <span class="pre-line">{{info.value}}</span>
+            {{else}}
+              {{#if info.value}}
+                {{i18n 'customField.boolean.yes' 'Yes'}}
+              {{else}}
+                {{i18n 'customField.boolean.no' 'No'}}
+              {{/if}}
+            {{/unless}}
+          </p>
+        {{/each}}
+      </div>
+      {{#if state 'descriptionTruncated'}}
+        <div class="course-description-fade-bottom"></div>
+      {{/if}}
+    </div>
+    {{#if state 'descriptionTruncated'}}
+      <div role="button" class="js-course-description-show-more link-primary text-center">
+        — {{i18n 'courseDetails.showMore' 'show more'}} —
+      </div>
+    {{/if}}
+  </div>
+  <div class="tab-pane course-history" id="history" role="tabpanel" aria-labelledby="history-tab"
+       tabindex="0">
+    {{> coursehistory}}
+  </div>
+  {{#if mayEdit}}
+    <div class="tab-pane mh-none" id="files" role="tabpanel" aria-labelledby="files-tab"
+         tabindex="0">
+      {{> courseFiles course=course}}
+    </div>
+  {{/if}}
+  {{#unless course.isPrivate}}
+    {{> pricePolicy dismissable=true wrap='course-details-price-policy'}}
+  {{/unless}}
+</div></>
+}
