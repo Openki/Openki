@@ -11,7 +11,13 @@ import { Editable, Props as EditableProps } from "/imports/ui/components/editabl
 
 import "./styles.scss";
 
-export function Description({ course }: { course: CourseModel }) {
+export function Description({
+  course,
+  onStartEditing,
+}: {
+  course: CourseModel;
+  onStartEditing?: () => void;
+}) {
   const { t } = useTranslation();
   const user = useUser();
 
@@ -42,7 +48,7 @@ export function Description({ course }: { course: CourseModel }) {
   return (
     <div className="course-details-description" id="course-description">
       {course?.editableBy(user) ? (
-        <Editable {...editableDescription} />
+        <Editable {...editableDescription} onStartEditing={onStartEditing} />
       ) : (
         <p dangerouslySetInnerHTML={{ __html: course.description || "" }}></p>
       )}
