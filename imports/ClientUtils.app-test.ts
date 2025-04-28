@@ -71,6 +71,20 @@ export async function expectElement(selector: string, message?: string) {
   });
 }
 
+export async function expectNoneElement(selector: string, message?: string) {
+  return await waitFor(() => {
+    const elements = document.querySelectorAll(selector);
+    expect(elements.length).not.to.be.above(0, message);
+    return elements[0];
+  });
+}
+
+export async function expectHtmlButton(selector: string, message?: string) {
+  const element = await expectElement(selector, message);
+  expect(element).to.be.instanceof(HTMLButtonElement);
+  return element as HTMLButtonElement;
+}
+
 export async function expectText(selector: string, text: string, message?: string) {
   return await waitFor(() => {
     const elements = Array.from(document.querySelectorAll(selector)).filter((element) =>
