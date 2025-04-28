@@ -86,8 +86,8 @@ export class TenantsCollection extends Mongo.Collection<TenantEntity, TenantMode
     check(sort, Match.Maybe([FieldSortPattern]));
 
     if (!me) {
-      // User is not logged in...
-      return [];
+      // User is not logged in, give back empty result
+      return this.find({ members: "-1" }, { limit: 0 }) as Mongo.Cursor<TenantEntity, TenantModel>;
     }
 
     const find: Mongo.Selector<TenantEntity> = {};

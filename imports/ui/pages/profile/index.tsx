@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Mongo } from "meteor/mongo";
 import { AccountsAsync } from "/imports/utils/promisify";
 import { Router } from "meteor/iron:router";
 import { ValidationError } from "meteor/mdg:validation-error";
@@ -11,9 +10,13 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import * as Alert from "/imports/api/alerts/alert";
 import * as usersMethods from "/imports/api/users/methods";
-import { VenueEntity, VenueModel } from "/imports/api/venues/venues";
-import { TenantEntity, TenantModel } from "/imports/api/tenants/tenants";
-import { GroupEntity } from "/imports/api/groups/groups";
+import { VenueModel } from "/imports/api/venues/venues";
+import { TenantModel } from "/imports/api/tenants/tenants";
+import { GroupModel } from "/imports/api/groups/groups";
+import { UserModel } from "/imports/api/users/users";
+import * as Tenants from "/imports/api/tenants/publications";
+import * as Venues from "/imports/api/venues/publications";
+import * as Groups from "/imports/api/groups/publications";
 
 import { useValidation } from "../../lib/useValidation";
 import * as Analytics from "/imports/ui/lib/analytics";
@@ -48,7 +51,7 @@ function AdminSection() {
   );
 }
 
-function TenantSection({ tenants }: { tenants: Mongo.Cursor<TenantEntity, TenantModel> }) {
+function TenantSection({ tenants }: { tenants: TenantModel[] }) {
   const { t } = useTranslation();
 
   return (
@@ -58,7 +61,7 @@ function TenantSection({ tenants }: { tenants: Mongo.Cursor<TenantEntity, Tenant
         {t(
           "profile.tenantMembership",
           "You are {NUM_TENANTS, plural, =0{not admin of any organization} one{admin of the organization:} other{admin of # organizations:} }",
-          { NUM_TENANTS: tenants.count() },
+          { NUM_TENANTS: tenants.length },
         )}
       </h5>
       <ul className="list-unstyled">
@@ -74,7 +77,7 @@ function TenantSection({ tenants }: { tenants: Mongo.Cursor<TenantEntity, Tenant
   );
 }
 
-function GroupSection({ groups }: { groups: Mongo.Cursor<GroupEntity, GroupEntity> }) {
+function GroupSection({ groups }: { groups: GroupModel[] }) {
   const { t } = useTranslation();
   return (
     <div className="page-component page-component-seperated">
@@ -84,7 +87,7 @@ function GroupSection({ groups }: { groups: Mongo.Cursor<GroupEntity, GroupEntit
           "profile.groupMembership",
           "You are {NUM_GROUPS, plural, =0{not member of any group} one{member of the group:} other{member of # groups:} }",
           {
-            NUM_GROUPS: groups.count(),
+            NUM_GROUPS: groups.length,
           },
         )}
       </h5>
@@ -106,10 +109,10 @@ function GroupSection({ groups }: { groups: Mongo.Cursor<GroupEntity, GroupEntit
     </div>
   );
 }
-function VenuesSection({ venues }: { venues: Mongo.Cursor<VenueEntity, VenueModel> }) {
+function VenuesSection({ venues }: { venues: VenueModel[] }) {
   const { t } = useTranslation();
   function isVenueEditor() {
-    return venues.count() > 0;
+    return venues.length > 0;
   }
   return (
     <div className="page-component page-component-seperated profile-venues-list">
@@ -164,7 +167,7 @@ function UnsubscribeResultAlerts() {
   }
   return (
     <>
-      {notificationsUnsubscribeSuccess() ? (
+      {notificationsUnsubscribeSuccess() && (
         <div className="alert alert-success" role="alert">
           <span className="fa-stack fa-lg">
             <i className="fa-regular fa-envelope fa-stack-1x"></i>
@@ -175,8 +178,8 @@ function UnsubscribeResultAlerts() {
             "You have unsubscribed from automated notifications.",
           )}
         </div>
-      ) : null}
-      {privateMessagesUnsubscribeSuccess() ? (
+      )}
+      {privateMessagesUnsubscribeSuccess() && (
         <div className="alert alert-success" role="alert">
           <span className="fa-stack fa-lg">
             <i className="fa-regular fa-envelope fa-stack-1x"></i>
@@ -184,8 +187,8 @@ function UnsubscribeResultAlerts() {
           </span>{" "}
           {t("privateMessages.unsubscribeSuccess", "You will not get private messages from users.")}
         </div>
-      ) : null}
-      {unsubscribeError() ? (
+      )}
+      {unsubscribeError() && (
         <div className="alert alert-danger" role="alert">
           <span className="fa-stack fa-lg">
             <i className="fa-regular fa-envelope fa-stack-1x"></i>
@@ -193,21 +196,9 @@ function UnsubscribeResultAlerts() {
           </span>{" "}
           {t("notifications.unsubscribeError", "Could not unsubscribe. Please Try again.")}
         </div>
-      ) : null}
+      )}
     </>
   );
-}
-
-interface User {
-  _id: string;
-  name: string;
-  notifications: boolean;
-  allowPrivateMessages: boolean;
-  tenants: Mongo.Cursor<TenantEntity, TenantModel>;
-  groups: Mongo.Cursor<GroupEntity>;
-  venues: Mongo.Cursor<VenueEntity, VenueModel>;
-  email: string | undefined;
-  verified: boolean;
 }
 
 function EmailSection() {
@@ -313,13 +304,13 @@ function EmailSection() {
                   setNewEmail(event.currentTarget.value);
                 }}
               />
-              {errors.email ? <span className="form-text d-block">{errors.email}</span> : null}
+              {!!errors.email && <span className="form-text d-block">{errors.email}</span>}
             </div>
             <div className="col-auto">
               <ButtonSubmit isBusy={isBusy} />
             </div>
           </form>
-          {!user.verifiedEmailAddress() && !isBusy ? <VerifyEmail /> : null}
+          {!user.verifiedEmailAddress() && !isBusy && <VerifyEmail />}
         </div>
         <div className="col-sm-6">
           <div className="form-check form-switch mb-2">
@@ -442,7 +433,7 @@ function ProfileSection() {
   );
 }
 
-function CreateUserSection({ user }: { user: User }) {
+function CreateUserSection({ user }: { user: UserModel }) {
   const { t } = useTranslation();
   return (
     <div className="page-component page-component-seperated">
@@ -456,7 +447,7 @@ function CreateUserSection({ user }: { user: User }) {
 
       <a
         className="button btn btn-primary"
-        href={Router.path("resetPasswortEmail", { email: user.email })}
+        href={Router.path("resetPasswortEmail", { email: user.emailAddress() })}
       >
         {t("profile.createUser.button", "Send me an account creation email")}
       </a>
@@ -526,7 +517,7 @@ function DangerZoneSection() {
     <div className="page-component page-component-seperated">
       <h3>{t("profile.danger_zone", "Danger zone")}</h3>
 
-      {!isVisitor() ? (
+      {!isVisitor() && (
         <div className="mb-3">
           {!changingPassword ? (
             <button
@@ -600,7 +591,7 @@ function DangerZoneSection() {
             </div>
           )}
         </div>
-      ) : null}
+      )}
 
       <span>
         <DeleteConfirm {...deleteConfirmAttr()} />
@@ -652,22 +643,66 @@ function Appearance() {
   );
 }
 
-export interface ProfilePageData {
-  user: User;
+function NotLoggedIn() {
+  const { t } = useTranslation();
+  return (
+    <>
+      <h4 className="mt-5">{t("profile.not_logged_in", "You are not logged in")}</h4>
+      <button
+        className="btn btn-success"
+        onClick={() => {
+          Session.set("pleaseLogin", true);
+        }}
+      >
+        {t("login.unlogged", "Log in")}
+      </button>
+    </>
+  );
 }
 
-export function ProfilePage(data: ProfilePageData) {
-  const { t } = useTranslation();
-  const user = useUser();
+function LoggedIn({ user }: { user: UserModel }) {
+  const [tenantsAreLoading, tenants] = Tenants.useFindFilter({ adminOf: true });
+  const [venuesAreLoading, venues] = Venues.useFindFilter({ editor: user._id });
+  const [groupsAreLoading, groups] = Groups.useFindFilter({ own: true });
 
-  function tenantCount() {
-    return data.user.tenants.count();
+  function isVisitor() {
+    return !!user?.privileged("visitor");
   }
   function isAdmin() {
-    return user?.privileged("admin");
+    return user.privileged("admin");
   }
+  function hasTenants() {
+    return user.tenants.length > 0;
+  }
+
+  return (
+    <>
+      <ProfileSection />
+      <Appearance />
+      {!isVisitor() ? (
+        <>
+          {!!user.emailAddress() && <EmailSection />}
+          {isAdmin() && <AdminSection />}
+          {!tenantsAreLoading() && hasTenants() && <TenantSection tenants={tenants} />}
+          {!groupsAreLoading() && <GroupSection groups={groups} />}
+          {!venuesAreLoading() && <VenuesSection venues={venues} />}
+        </>
+      ) : (
+        <CreateUserSection user={user} />
+      )}
+
+      <DangerZoneSection />
+    </>
+  );
+}
+
+export function ProfilePage() {
+  const { t } = useTranslation();
+
+  const user = useUser();
+
   function isVisitor() {
-    return user?.privileged("visitor");
+    return !!user?.privileged("visitor");
   }
 
   useEffect(() => {
@@ -682,36 +717,16 @@ export function ProfilePage(data: ProfilePageData) {
 
   return (
     <div className="container mw-md">
-      {!isVisitor() ? (
+      <UnsubscribeResultAlerts />
+      {!isVisitor() && (
         <div className="page-component">
           <h1>
             <span className="fa-solid fa-gears fa-fw" aria-hidden="true"></span>{" "}
             {t("login.frame.settings")}
           </h1>
         </div>
-      ) : null}
-      <UnsubscribeResultAlerts />
-      {!user ? (
-        t("profile.not_logged_in", "You are not logged in")
-      ) : (
-        <>
-          <ProfileSection />
-          <Appearance />
-          {!isVisitor() ? (
-            <>
-              {data.user.email ? <EmailSection /> : null}
-              {isAdmin() ? <AdminSection /> : null}
-              {tenantCount() ? <TenantSection tenants={data.user.tenants} /> : null}
-              <GroupSection groups={data.user.groups} />
-              <VenuesSection venues={data.user.venues} />
-            </>
-          ) : (
-            <CreateUserSection user={data.user} />
-          )}
-
-          <DangerZoneSection />
-        </>
       )}
+      {!user ? <NotLoggedIn /> : <LoggedIn user={user} />}
     </div>
   );
 }

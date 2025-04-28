@@ -4,9 +4,8 @@ import { check } from "meteor/check";
 
 import { FindFilter, TenantEntity, Tenants } from "/imports/api/tenants/tenants";
 
-import { ServerPublishOne } from "/imports/utils/ServerPublish";
+import { ServerPublishMany, ServerPublishOne } from "/imports/utils/ServerPublish";
 import { FieldSort } from "/imports/utils/sort-spec";
-import { ServerPublish } from "/imports/utils/ServerPublishBlaze";
 
 export const [details, useDetails] = ServerPublishOne(
   "tenant",
@@ -58,7 +57,7 @@ export const [details, useDetails] = ServerPublishOne(
   },
 );
 
-export const findFilter = ServerPublish(
+export const [findFilter, useFindFilter] = ServerPublishMany(
   "Tenants.findFilter",
   async (find?: FindFilter, limit?: number, skip?: number, sort?: FieldSort[]) =>
     Tenants.findFilter(await Meteor.userAsync(), find, limit, skip, sort),
