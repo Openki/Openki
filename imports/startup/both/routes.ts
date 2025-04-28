@@ -1,5 +1,4 @@
 import { Meteor } from "meteor/meteor";
-import { Mongo } from "meteor/mongo";
 import { Session } from "meteor/session";
 import { _ } from "meteor/underscore";
 import moment from "moment";
@@ -12,18 +11,13 @@ import {
   OEvent,
   FindParams as EventParamPredicates,
 } from "/imports/api/events/events";
-import { Group, GroupEntity, GroupModel } from "/imports/api/groups/groups";
+import { Group, GroupModel } from "/imports/api/groups/groups";
 import * as Groups from "/imports/api/groups/publications";
 import { Region, RegionModel } from "/imports/api/regions/regions";
 import * as Regions from "/imports/api/regions/publications";
 import * as InfoPages from "/imports/api/infoPages/publications";
-import { Tenant, TenantEntity, TenantModel } from "/imports/api/tenants/tenants";
-import {
-  Venue,
-  VenueEntity,
-  VenueModel,
-  FindParams as VenueParamPredicates,
-} from "/imports/api/venues/venues";
+import { Tenant, TenantModel } from "/imports/api/tenants/tenants";
+import { Venue, VenueModel, FindParams as VenueParamPredicates } from "/imports/api/venues/venues";
 import * as Venues from "/imports/api/venues/publications";
 import * as Events from "/imports/api/events/publications";
 import * as Tenants from "/imports/api/tenants/publications";
@@ -208,51 +202,6 @@ RouterAsync.route("profile", {
   template: "profilePage",
   async onRun() {
     await import("/imports/ui/pages/profile");
-  },
-  subscriptions() {
-    const userId = Meteor.userId();
-
-    if (!userId) {
-      return {};
-    }
-
-    return {
-      tenants: Tenants.findFilter.subscribe({ adminOf: true }),
-      venues: Venues.findFilter.subscribe({ editor: userId }),
-      groups: Groups.findFilter.subscribe({ own: true }),
-    };
-  },
-  async data() {
-    const data: {
-      user?: {
-        _id: string;
-        name: string;
-        notifications: boolean;
-        allowPrivateMessages: boolean;
-        tenants: Mongo.Cursor<TenantEntity, TenantModel> | never[];
-        groups: globalThis.Mongo.Cursor<GroupEntity, GroupModel>;
-        venues: globalThis.Mongo.Cursor<VenueEntity, VenueModel>;
-        email: string;
-        verified: boolean;
-      };
-    } = {};
-    const subs = this.subscriptions();
-    const user = await Meteor.userAsync();
-    if (user && subs && subs.tenants) {
-      const userdata = {
-        _id: user._id,
-        name: user.getDisplayName(),
-        notifications: user.notifications,
-        allowPrivateMessages: user.allowPrivateMessages,
-        tenants: await subs.tenants(),
-        groups: await subs.groups(),
-        venues: await subs.venues(),
-        email: user.emails?.[0]?.address,
-        verified: user.emails?.[0]?.verified || false,
-      };
-      data.user = userdata;
-    }
-    return data;
   },
 });
 
