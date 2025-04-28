@@ -71,6 +71,16 @@ export async function expectElement(selector: string, message?: string) {
   });
 }
 
+export async function expectText(selector: string, text: string, message?: string) {
+  return await waitFor(() => {
+    const elements = Array.from(document.querySelectorAll(selector)).filter((element) =>
+      element.textContent?.includes(text),
+    );
+    expect(elements.length).to.be.equal(1, message);
+    return elements[0];
+  });
+}
+
 export async function setInputValue(selector: string, value: string) {
   // https://stackoverflow.com/questions/23892547/what-is-the-best-way-to-trigger-change-or-input-event-in-react-js/46012210#46012210
   const nativeValueSetter = (Object as any).getOwnPropertyDescriptor(
