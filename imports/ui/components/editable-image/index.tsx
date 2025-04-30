@@ -118,7 +118,7 @@ export function EditableImage(data: Data) {
     }
   }
 
-  function onUpload() {
+  async function onUpload() {
     if (!droppedFile) {
       throw new Error(`Unexpected undefined: file`);
     }
@@ -132,7 +132,7 @@ export function EditableImage(data: Data) {
     setProgress("display");
   }
 
-  function onDelete() {
+  async function onDelete() {
     if (data.onDelete) {
       data.onDelete();
     }
@@ -158,7 +158,7 @@ export function EditableImage(data: Data) {
   }
   function uploadButtonAttributes() {
     const attributes: {
-      onClick: () => void;
+      onClick: () => Promise<void>;
       disabled?: boolean;
     } = {
       onClick: onUpload,

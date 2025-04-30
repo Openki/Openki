@@ -104,7 +104,7 @@ export function FileUpload({ accept, onUpload, onCancel }: Props) {
       {progress === "ready" ? (
         <div className="file-upload-controls">
           <ButtonSave
-            onClick={() => {
+            onClick={async () => {
               if (!droppedFile) {
                 throw new Error(`Unexpected undefined: file`);
               }

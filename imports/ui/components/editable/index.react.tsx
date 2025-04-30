@@ -237,7 +237,7 @@ export function Editable({
     selectEnd(element);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     resetErrors();
     // Check if input is invalid
     // eslint-disable-next-line @typescript-eslint/no-shadow

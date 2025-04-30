@@ -107,18 +107,18 @@ export function EventRegistration({ event }: Props) {
       {searchParams.action === "register" && (
         <PleaseLogin
           type="auto"
-          onRender={() => {
+          onRender={async () => {
             // register from email
-            addParticipant();
+            await addParticipant();
           }}
         />
       )}
       {searchParams.action === "unregister" && (
         <PleaseLogin
           type="auto"
-          onRender={() => {
+          onRender={async () => {
             // unregister from email
-            removeParticipant();
+            await removeParticipant();
           }}
         />
       )}
