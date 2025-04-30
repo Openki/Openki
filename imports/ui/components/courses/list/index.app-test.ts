@@ -19,7 +19,7 @@ if (Meteor.isClient) {
     });
 
     it("should list 5 courses for unauthenticated user (Testistan)", async () => {
-      Router.go("/search");
+      Router.go("search");
 
       Session.set("region", "9JyFCoKWkxnf8LWPh"); // Testistan
 

@@ -25,8 +25,8 @@ if (Meteor.isClient) {
       }
 
       (await MeteorAsync.subscribe("userSearch", "Sandro")).stop(); // load user from server
-      const userId = Users.findOne({ username: "Sandro" })?._id;
-      Router.go("userprofile", { _id: userId, username: "Sandro" });
+      const user = Users.findOne({ username: "Sandro" });
+      Router.go("userprofile", user);
     });
 
     it("should be navigable", async () => {
