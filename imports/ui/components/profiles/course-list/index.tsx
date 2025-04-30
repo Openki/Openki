@@ -13,7 +13,7 @@ import { useRoleDisplay } from "../../../lib/useRoleDisplay";
 
 import "./styles.scss";
 
-export function UsersCourselist(data: { user: UserModel; ownProfile: boolean }) {
+export function CourseList(data: { user: UserModel; ownProfile: boolean }) {
   const { t } = useTranslation();
   const { roleShort } = useRoleDisplay();
   const id = data.user._id;
@@ -147,4 +147,4 @@ export function UsersCourselist(data: { user: UserModel; ownProfile: boolean }) 
 
 import "./template.html";
 
-Template.registerHelper("UsersCourselist", () => UsersCourselist);
+Template.registerHelper("UsersCourselist", () => CourseList);

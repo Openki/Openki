@@ -367,7 +367,7 @@ RouterAsync.route("userprofile", {
       user,
       alterPrivileges,
       privileges,
-      inviteGroups: sub?.groups(),
+      inviteGroups: (await sub?.groups())?.fetch(),
       showPrivileges,
     };
   },
