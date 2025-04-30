@@ -171,7 +171,7 @@ if (Meteor.isClient) {
             randomTitle,
             `The internal course should not be visible on the search page ${window.location}`,
           );
-        }, 50000);
+        }, 5000);
       });
     });
   });

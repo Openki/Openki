@@ -1,4 +1,4 @@
-import { assert } from "chai";
+import { assert, expect } from "chai";
 import { Router } from "meteor/iron:router";
 import $ from "jquery";
 import { Meteor } from "meteor/meteor";
@@ -8,6 +8,9 @@ import {
   waitFor,
   setInputValue,
   setSelectValue,
+  expectElement,
+  expectHtmlButton,
+  expectText,
 } from "/imports/ClientUtils.app-test";
 import { MeteorAsync } from "/imports/utils/promisify";
 
@@ -83,46 +86,41 @@ if (Meteor.isClient) {
         const randomTitle = `ARCHIVED${1000 + Math.floor(Math.random() * 9000)}`;
 
         Router.go("search");
-        const haveEditfield = () => {
-          assert($(".js-title").length > 0, "New course edit field present");
-        };
+
         await MeteorAsync.loginWithPassword("greg", "greg");
         await waitForSubscriptions();
-        await waitFor(haveEditfield);
+        await expectElement(".js-title", "New course edit field present");
 
         // Create the course
         setInputValue(".js-title", randomTitle);
         setSelectValue("[name='region']", "9JyFCoKWkxnf8LWPh"); // Testistan
-        $(".course-edit-body .btn-save")[0].click();
+        (await expectHtmlButton(".course-edit-body .btn-save")).click();
 
         // We should be redirected to the created course
 
-        await waitFor(() => {
-          assert(
-            $(".course-details").length > 0,
-            `Details of the new course ${randomTitle} are shown`,
-          );
-        });
+        await expectElement(
+          ".course-details",
+          `Details of the new course ${randomTitle} are shown`,
+        );
 
-        $(".js-course-archive").trigger("click");
+        (await expectHtmlButton(".js-course-archive")).click();
 
         Router.go("search");
 
         await waitFor(() => {
-          assert(
-            !$("body").text().includes(randomTitle),
+          expect($(".course-compact-title").text()).not.includes(
+            randomTitle,
             `The archived course should not be visible on the search page ${window.location}`,
           );
         }, 5000);
 
         Router.go("search", undefined, { query: { archived: "1" } });
 
-        await waitFor(() => {
-          assert(
-            !$("body").text().includes(randomTitle),
-            `The archived course should be visible on the search page ${window.location} with archived filter on`,
-          );
-        }, 5000);
+        expectText(
+          ".course-compact-title",
+          randomTitle,
+          `The archived course should be visible on the search page ${window.location} with archived filter on`,
+        );
       });
     });
   });
