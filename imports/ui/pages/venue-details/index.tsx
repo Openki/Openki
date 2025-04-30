@@ -190,7 +190,7 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
               />
               {!verifyDelete ? (
                 <ButtonDelete
-                  onClick={() => {
+                  onClick={async () => {
                     setVerifyDelete(true);
                   }}
                 />

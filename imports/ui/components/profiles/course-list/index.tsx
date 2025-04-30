@@ -13,7 +13,7 @@ import { useRoleDisplay } from "../../../lib/useRoleDisplay";
 
 import "./styles.scss";
 
-export function CourseList(data: { user: UserModel; ownProfile: boolean }) {
+export function Courselist(data: { user: UserModel; ownProfile: boolean }) {
   const { t } = useTranslation();
   const { roleShort } = useRoleDisplay();
   const id = data.user._id;

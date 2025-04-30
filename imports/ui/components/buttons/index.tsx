@@ -7,12 +7,16 @@ import "/imports/ui/components/buttons";
 
 export function Button({
   className,
+  disabled,
   onClick,
   children,
+  busyText,
 }: {
-  className: string;
-  onClick: () => Promise<void>;
+  className?: string | undefined;
+  disabled?: boolean | undefined;
+  onClick: (event: { preventDefault: () => void }) => Promise<void>;
   children: any;
+  busyText?: string | undefined;
 }) {
   const [isBusy, setIsBusy] = useState(false);
 
@@ -20,11 +24,11 @@ export function Button({
     <button
       type="button"
       className={`${className} text-nowrap`}
-      disabled={isBusy}
-      onClick={async () => {
+      disabled={isBusy || disabled}
+      onClick={async (event) => {
         setIsBusy(true);
         try {
-          await onClick();
+          await onClick(event);
         } finally {
           setIsBusy(false);
         }
@@ -34,7 +38,8 @@ export function Button({
         children
       ) : (
         <>
-          <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
+          <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
+          {busyText}
         </>
       )}
     </button>
@@ -42,7 +47,7 @@ export function Button({
 }
 
 export function ButtonSave(props: {
-  onClick: () => void;
+  onClick: () => Promise<void>;
   disabled?: boolean | undefined;
   isBusy?: boolean | undefined;
 }) {
@@ -113,7 +118,10 @@ export function ButtonCancel(props: { onClick: () => void; disabled?: boolean | 
   );
 }
 
-export function ButtonDelete(props: { onClick: () => void; disabled?: boolean | undefined }) {
+export function ButtonDelete(props: {
+  onClick: () => Promise<void>;
+  disabled?: boolean | undefined;
+}) {
   const { t } = useTranslation();
   return (
     <PleaseLogin

@@ -12,7 +12,7 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 
 function ButtonRegister(props: {
   forTwo: boolean;
-  onClick: () => void;
+  onClick: () => Promise<void>;
   busy?: boolean | undefined;
 }) {
   const { t } = useTranslation();
