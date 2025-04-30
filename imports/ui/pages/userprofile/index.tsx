@@ -267,7 +267,7 @@ export function UserprofilePage(data: UserProfilePageProps) {
                       {data.alterPrivileges && (
                         <button
                           type="button"
-                          className="btn-close btn-close-white float-end"
+                          className="btn-close btn-close-black float-end"
                           data-bs-toggle="tooltip"
                           data-bs-title={t("privilege.remove", "Remove privilege")}
                           onClick={() => handleRemovePrivilege("admin")}
