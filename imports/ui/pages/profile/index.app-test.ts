@@ -13,7 +13,7 @@ if (Meteor.isClient) {
         await MeteorAsync.logout();
       }
       await MeteorAsync.loginWithPassword("Kopf", "greg");
-      
+
       Router.go("profile");
     });
 
