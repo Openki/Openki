@@ -141,17 +141,9 @@ export function setSelectValue(selector: string, value: string) {
   $(selector)[0].dispatchEvent(new Event("change", { bubbles: true }));
 }
 
-export function setChecked(selector: string, value: boolean) {
-  // https://stackoverflow.com/questions/23892547/what-is-the-best-way-to-trigger-change-or-input-event-in-react-js/46012210#46012210
-  const nativeValueSetter = (Object as any).getOwnPropertyDescriptor(
-    window.HTMLInputElement.prototype,
-    "value",
-  ).set;
-  nativeValueSetter.call($(selector)[0], "" + value);
-  const nativeCheckedSetter = (Object as any).getOwnPropertyDescriptor(
-    window.HTMLInputElement.prototype,
-    "checked",
-  ).set;
-  nativeCheckedSetter.call($(selector)[0], value);
+export async function setChecked(selector: string, value: boolean) {
+  $(selector)[0].setAttribute("type", "text");
+  ($(selector)[0] as HTMLInputElement).checked = value;
   $(selector)[0].dispatchEvent(new Event("change", { bubbles: true }));
+  $(selector)[0].setAttribute("type", "checkbox");
 }

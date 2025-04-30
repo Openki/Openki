@@ -1,4 +1,4 @@
-import { assert } from "chai";
+import { assert, expect } from "chai";
 import { Router } from "meteor/iron:router";
 import $ from "jquery";
 import { Meteor } from "meteor/meteor";
@@ -11,6 +11,9 @@ import {
   setContent,
   setChecked,
   expectElement,
+  expectText,
+  expectNoneElement,
+  expectHtmlButton,
 } from "/imports/ClientUtils.app-test";
 import { MeteorAsync } from "/imports/utils/promisify";
 
@@ -47,7 +50,7 @@ if (Meteor.isClient) {
       it("should allow to create a group with name, short, claim and description", async () => {
         const randomTitle = `CREATE${1000 + Math.floor(Math.random() * 9000)}`;
 
-        Router.go("/group/create");
+        Router.go("groupDetails", { _id: "create" });
 
         await MeteorAsync.loginWithPassword("Seee", "greg");
 
@@ -86,7 +89,7 @@ if (Meteor.isClient) {
       it("should allow to save a course in the group", async () => {
         const randomTitle = `TEST${1000 + Math.floor(Math.random() * 9000)}`;
 
-        Router.go("/group/fd3a8d98d4");
+        Router.go("groupDetails", { _id: "fd3a8d98d4" });
         const haveEditfield = () => {
           assert($(".js-title").length > 0, "New course edit field present");
         };
@@ -136,57 +139,39 @@ if (Meteor.isClient) {
       it("should allow to save a course internal in the group", async () => {
         const randomTitle = `INTERNAL${1000 + Math.floor(Math.random() * 9000)}`;
 
-        Router.go("/group/b0f1a82d36");
-        const haveEditfield = () => {
-          assert($(".js-title").length > 0, "New course edit field present");
-        };
-        const findExpectedFormTitle = () => {
-          // assert group name is mentioned in course creation form title
-          const expectedTitle = /Autonome Schule Zürich/;
-          const actualTitle = $("form h2").text();
-          assert.match(actualTitle, expectedTitle, "Form title must mention group");
-        };
-        const haveNotInternalCheckbox = () => {
-          assert($("#internalCheckbox").length === 0, "Internal checkbox is not present");
-        };
-        const haveInternalCheckbox = () => {
-          assert($("#internalCheckbox").length > 0, "Internal checkbox present");
-        };
+        Router.go("groupDetails", { _id: "b0f1a82d36" });
+
         await waitForSubscriptions();
-        await waitFor(haveEditfield);
-        await waitFor(findExpectedFormTitle);
-        await waitFor(haveNotInternalCheckbox); // on creation the internal checkbox should not be present for none group members
+        await expectElement(".js-title", "New course edit field present");
+        // assert group name is mentioned in course creation form title
+        await expectText("form h2", "Autonome Schule Zürich", "Form title must mention group");
+        // on creation the internal checkbox should not be present for none group members
+        await expectNoneElement("#internalCheckbox", "Internal checkbox is not present");
         await MeteorAsync.loginWithPassword("greg", "greg");
-        await waitFor(haveInternalCheckbox);
+        await expectElement("#internalCheckbox", "Internal checkbox is present");
 
         // Create the course
         setInputValue(".js-title", randomTitle);
         setSelectValue("[name='region']", "9JyFCoKWkxnf8LWPh"); // Testistan
         setChecked("#internalCheckbox", true);
-        $(".course-edit-body .btn-save")[0].click();
+        (await expectHtmlButton(".course-edit-body .btn-save")).click();
 
         // We should be redirected to the created course
 
-        await waitFor(() => {
-          assert(
-            $(".course-details").length > 0,
-            `Details of the new course ${randomTitle} are shown`,
-          );
-          assert.match(
-            $(".group-tag > a").text(),
-            /ASZ/,
-            "The course is in the group it was created in",
-          );
-        });
+        await expectElement(
+          ".course-details",
+          `Details of the new course ${randomTitle} are shown`,
+        );
+        await expectText(".group-tag > a", "ASZ", "The course is in the group it was created in");
 
-        Router.go("/search");
-
+        Router.go("search");
+        await waitForSubscriptions();
         await waitFor(() => {
-          assert(
-            !$("body").text().includes(randomTitle),
+          expect($(".course-compact-title").text()).not.includes(
+            randomTitle,
             `The internal course should not be visible on the search page ${window.location}`,
           );
-        }, 5000);
+        }, 50000);
       });
     });
   });

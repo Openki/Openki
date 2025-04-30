@@ -82,7 +82,7 @@ if (Meteor.isClient) {
       it("should allow to archive a course internal", async () => {
         const randomTitle = `ARCHIVED${1000 + Math.floor(Math.random() * 9000)}`;
 
-        Router.go("/search");
+        Router.go("search");
         const haveEditfield = () => {
           assert($(".js-title").length > 0, "New course edit field present");
         };
@@ -106,7 +106,7 @@ if (Meteor.isClient) {
 
         $(".js-course-archive").trigger("click");
 
-        Router.go("/search");
+        Router.go("search");
 
         await waitFor(() => {
           assert(
@@ -115,7 +115,7 @@ if (Meteor.isClient) {
           );
         }, 5000);
 
-        Router.go("/search?archived=1");
+        Router.go("search", undefined, { query: { archived: "1" } });
 
         await waitFor(() => {
           assert(
