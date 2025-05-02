@@ -1,42 +1,25 @@
 import { Meteor } from "meteor/meteor";
 
 import { FindFilter, JoinLinks } from "/imports/api/joinLinks/joinLinks";
-import { Tenants } from "/imports/api/tenants/tenants";
 
-import { ServerPublish } from "/imports/utils/ServerPublishBlaze";
+import { ServerPublishMany, ServerPublishOne } from "/imports/utils/ServerPublish";
 import { FieldSort } from "/imports/utils/sort-spec";
 
-export const details = ServerPublish(
+export const [details, useDetails] = ServerPublishOne(
   "joinLink",
-  async (tenantId: string, token: string) => {
-    const joinLink = JoinLinks.find({ tenant: tenantId, token });
-
-    if ((await joinLink.countAsync()) === 0) {
-      return undefined;
-    }
-
-    return [joinLink, Tenants.find(tenantId)];
-  },
-  (tenantId, token) => {
-    const joinLink = JoinLinks.findOne({ tenant: tenantId, token });
-
-    if (!joinLink) {
-      return undefined;
-    }
-
-    return { joinLink, tenant: Tenants.findOne(tenantId) };
-  },
+  async (tenantId: string, token: string) => JoinLinks.find({ tenant: tenantId, token }),
+  (tenantId, token) => JoinLinks.findOne({ tenant: tenantId, token }),
 );
 
-export const findFilter = ServerPublish(
+export const [findFilter, useFindFilter] = ServerPublishMany(
   "joinLinks.findFilter",
-  async (filter: FindFilter, limit?, skip?, sort?: FieldSort[]) => {
+  async (filter: FindFilter, limit?: number, skip?: number, sort?: FieldSort[]) => {
     const tenantId = filter.tenant;
 
     const user = await Meteor.userAsync();
 
     if (!user || !(user.privileged("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
-      return undefined;
+      return JoinLinks.find({ _id: "-1" });
     }
 
     return JoinLinks.findFilter(filter, limit, skip, sort);
@@ -47,7 +30,7 @@ export const findFilter = ServerPublish(
     const user = Meteor.user();
 
     if (!user || !(user.privileged("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
-      return undefined;
+      return JoinLinks.find({ _id: "-1" });
     }
 
     return JoinLinks.findFilter(filter, limit, skip, sort);
