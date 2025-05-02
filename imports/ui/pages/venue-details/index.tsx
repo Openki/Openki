@@ -188,16 +188,15 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
                   setVerifyDelete(false);
                 }}
               />
-              {!verifyDelete ? (
+              {!verifyDelete && (
                 <ButtonDelete
                   onClick={async () => {
                     setVerifyDelete(true);
                   }}
                 />
-              ) : (
-                <DeleteConfirmDialog {...deleteConfirmDialogAttr()} />
               )}
             </div>
+            {verifyDelete && <DeleteConfirmDialog {...deleteConfirmDialogAttr()} />}
           </>
         )}
       </div>

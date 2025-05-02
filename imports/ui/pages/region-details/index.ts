@@ -11,7 +11,7 @@ import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
 
 import "/imports/ui/components/regions/display";
-import type { Data as DisplayData } from "/imports/ui/components/regions/display";
+import type { Props as DisplayData } from "/imports/ui/components/regions/display";
 import "/imports/ui/components/regions/edit";
 import type { Data as EditData } from "/imports/ui/components/regions/edit";
 
