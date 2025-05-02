@@ -20,7 +20,7 @@ export interface Props {
 export function JoinLink({ tenant }: Props) {
   const { t } = useTranslation();
 
-  const [isLoading, joinLink] = JoinLinks.useDetails(tenant._id );
+  const [isLoading, joinLink] = JoinLinks.useDetails(tenant._id);
 
   function deleteConfirmAttr(): DeleteConfirmProps {
     return {
@@ -36,9 +36,10 @@ export function JoinLink({ tenant }: Props) {
     };
   }
 
-  if (!isLoading()) {
+  if (isLoading()) {
     return null;
   }
+
   return (
     <div>
       <h3>
@@ -59,8 +60,8 @@ export function JoinLink({ tenant }: Props) {
             type="text"
             value={Router.url(
               "join",
-              { token: joinLink[0]?.token },
-              { query: { tenant: joinLink[0]?.tenant } },
+              { token: joinLink?.token },
+              { query: { tenant: joinLink?.tenant } },
             )}
             readOnly
           />

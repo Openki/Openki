@@ -68,7 +68,7 @@ export class JoinLinksCollection extends Mongo.Collection<JoinLinkEntity> {
 
     options.sort = order;
 
-    return this.find(find, options);
+    return this.find(find, options) as Mongo.Cursor<JoinLinkEntity>;
   }
 }
 

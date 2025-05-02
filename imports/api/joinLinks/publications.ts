@@ -1,7 +1,8 @@
 import { Meteor } from "meteor/meteor";
+import { Mongo } from "meteor/mongo";
 import { check } from "meteor/check";
 
-import { JoinLinks } from "/imports/api/joinLinks/joinLinks";
+import { JoinLinkEntity, JoinLinks } from "/imports/api/joinLinks/joinLinks";
 
 import { ServerPublishOne } from "/imports/utils/ServerPublish";
 
@@ -12,25 +13,25 @@ export const [details, useDetails] = ServerPublishOne(
 
     if (token) {
       check(token, String);
-      return JoinLinks.find({ tenant: tenantId, token });
+      return JoinLinks.find({ tenant: tenantId, token }) as Mongo.Cursor<JoinLinkEntity>;
     } else {
       const user = await Meteor.userAsync();
 
       if (!user || !(user.privileged("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
-        return JoinLinks.find({ _id: "-1" });
+        return JoinLinks.find({ _id: "-1" }) as Mongo.Cursor<JoinLinkEntity>;
       }
 
       return JoinLinks.findFilter({ tenant: tenantId });
     }
   },
-  async function (tenantId: string, token?: string) {
+  function (tenantId: string, token?: string) {
     if (token) {
       return JoinLinks.findOne({ tenant: tenantId, token });
     } else {
-      const user = await Meteor.userAsync();
+      const user = Meteor.user();
 
       if (!user || !(user.privileged("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
-        return JoinLinks.findOne({ _id: "-1" });
+        return undefined;
       }
 
       return JoinLinks.findOne({ tenant: tenantId });
