@@ -101,3 +101,17 @@ template.events({
     instance.data.onCancel(); // from the parent component
   },
 });
+
+export function Edit(){
+  return   <div class="edit-page region-edit">
+  <h2>{{title}}</h2>
+  <form>
+    {{> regionEditFields region=region locationTracker=locationTracker}}
+
+    <div class="form-actions">
+      {{> buttonSave saving=saving}}
+      {{> buttonCancel event="js-edit-cancel"}}
+    </div>
+  </form>
+</div>
+}
