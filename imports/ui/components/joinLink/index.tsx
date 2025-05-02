@@ -65,3 +65,27 @@ template.helpers({
     };
   },
 });
+
+export function JoinLink(){
+  return   <h3>
+  <span class="fa-solid fa-chain fa-fw" aria-hidden="true"></span>
+  {{i18n 'joinLink.title' 'Invite via link'}}
+</h3>
+<label
+       class="form-label">{{i18n 'joinLink.description' 'Anyone with this link can join your organisation as member.'}}</label>
+{{#unless joinLink}}
+  {{> joinLinkCreate tenantId=tenant._id}}
+{{else}}
+  <input class="form-control js-join-link mb-3" id="joinLink" type="text"
+         value="{{urlFor 'join' token=joinLink.token query=(concat 'tenant=' joinLink.tenant)}}"
+         readonly />
+  <form class="row g-2 mb-2 js-email-form">
+    <div class="col-auto">
+      {{> joinLinkRebuild tenantId=tenant._id}}
+    </div>
+    <div class="col-auto">
+      {{> deleteConfirm deleteConfirmAttr}}
+    </div>
+  </form>
+{{/unless}}
+}
