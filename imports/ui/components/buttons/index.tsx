@@ -47,19 +47,21 @@ export function Button({
 }
 
 export function ButtonSave(props: {
-  onClick: () => Promise<void>;
+  className?: string;
   disabled?: boolean | undefined;
+  children?: any;
+  onClick: () => Promise<void>;
 }) {
   const { t } = useTranslation();
   return (
     <PleaseLogin
       type="button"
-      className="btn btn-save text-nowrap"
+      className={`btn btn-save text-nowrap ${props.className}`}
       onClick={props.onClick}
       disabled={props.disabled}
       busyText={t("_button.saving", "Saving…")}
     >
-      {t("_button.save")}
+      {props.children || t("_button.save")}
     </PleaseLogin>
   );
 }
