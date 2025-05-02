@@ -1,18 +1,13 @@
-import { i18n } from "/imports/startup/both/i18next";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Geodata, RegionEntity } from "/imports/api/regions/regions";
 import * as Alert from "/imports/api/alerts/alert";
 
-import { LocationTracker } from "/imports/ui/lib/location-tracker";
-import { PleaseLogin } from "/imports/ui/lib/please-login";
+import { Fields } from "./fields";
+import { ButtonCancel, ButtonSave } from "../../buttons";
+import { PleaseLogin } from "../../please-login";
 
-import "/imports/ui/components/buttons";
-import "/imports/ui/components/editable";
-import "/imports/ui/components/map";
-import "./fields";
-
-import "./template.html";
 import "./styles.scss";
 
 export interface Data {
@@ -29,49 +24,25 @@ export interface OnSaveFields {
   loc: Geodata;
 }
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "regionEdit",
-  Data,
-  { locationTracker: LocationTracker }
->;
+export function Edit(data: Data) {
+  const { t } = useTranslation();
 
-const template = Template.regionEdit;
+  const [changes, setChanges] = useState({
+    name: data.region.name,
+    description: data.region.description,
+    tz: data.region.tz,
+    loc: data.region.loc as Geodata | undefined,
+  });
 
-template.onCreated(function () {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const instance = this;
-  instance.busy(false);
-
-  instance.locationTracker = new LocationTracker();
-});
-
-template.helpers({
-  locationTracker() {
-    return Template.instance().locationTracker;
-  },
-});
-
-template.events({
-  submit(event, instance) {
-    event.preventDefault();
-
-    const changes = {
-      name: instance.$(".js-name").val(),
-      tz: instance.$(".js-timezone").val(),
-      description: instance.$(".js-description").val(),
-    } as OnSaveFields;
-
+  async function handleSave() {
     if (!changes.name) {
-      Alert.error(i18n("region.create.plsGiveName", "Please give your region a name"));
+      Alert.error(t("region.create.plsGiveName", "Please give your region a name"));
       return;
     }
 
-    const loc = instance.locationTracker.getLocation();
-    if (loc) {
-      changes.loc = loc;
-    } else {
+    if (!changes.loc) {
       Alert.error(
-        i18n(
+        t(
           "region.create.plsSelectPointOnMap",
           'Please add a marker on the map by clicking on the "+" sign.',
         ),
@@ -79,39 +50,39 @@ template.events({
       return;
     }
 
-    instance.busy("saving");
-    PleaseLogin(instance, async () => {
-      try {
-        await instance.data.onSave(changes); // from the parent component
+    try {
+      await data.onSave(changes as OnSaveFields);
 
-        Alert.success(
-          i18n("region.saving.success", 'Saved changes to region "{NAME}".', {
-            NAME: changes.name,
-          }),
-        );
-      } catch (err) {
-        Alert.serverError(err, i18n("region.saving.error", "Saving the region went wrong"));
-      } finally {
-        instance.busy(false);
-      }
-    });
-  },
+      Alert.success(
+        t("region.saving.success", 'Saved changes to region "{NAME}".', {
+          NAME: changes.name,
+        }),
+      );
+    } catch (err) {
+      Alert.serverError(err, t("region.saving.error", "Saving the region went wrong"));
+    }
+  }
 
-  "click .js-edit-cancel"(_event, instance) {
-    instance.data.onCancel(); // from the parent component
-  },
-});
-
-export function Edit(){
-  return   <div class="edit-page region-edit">
-  <h2>{{title}}</h2>
-  <form>
-    {{> regionEditFields region=region locationTracker=locationTracker}}
-
-    <div class="form-actions">
-      {{> buttonSave saving=saving}}
-      {{> buttonCancel event="js-edit-cancel"}}
+  return (
+    <div className="edit-page region-edit">
+      <h2>{data.title}</h2>
+      <PleaseLogin type="form" onSubmit={handleSave}>
+        <Fields
+          region={changes}
+          onChange={(newChanges) => {
+            setChanges(newChanges);
+          }}
+        />
+        <div className="form-actions">
+          <ButtonSave onClick={handleSave} />
+          <ButtonCancel onClick={() => data.onCancel()} />
+        </div>
+      </PleaseLogin>
     </div>
-  </form>
-</div>
+  );
 }
+
+// for Blaze
+import "./template.html";
+
+Template.registerHelper("RegionEdit", () => Edit);

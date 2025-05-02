@@ -11,7 +11,7 @@ export interface Change {
   loc:
     | {
         coordinates: Coordinates;
-        type: string;
+        type: "Point";
       }
     | undefined;
 }
@@ -21,7 +21,7 @@ export interface Props {
   onChange: (change: Change) => void;
 }
 
-export function RegionEditFields({ region, onChange }: Props) {
+export function Fields({ region, onChange }: Props) {
   const { t } = useTranslation();
 
   function timezones() {
@@ -55,6 +55,7 @@ export function RegionEditFields({ region, onChange }: Props) {
         </label>
 
         <LocationEdit
+          maxZoom={16}
           coordinates={region.loc?.coordinates}
           onChange={(coordinates) => {
             onChange({
