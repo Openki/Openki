@@ -341,34 +341,18 @@ RouterAsync.route("userprofile", {
   },
   subscriptions() {
     return {
-      groups: Groups.findFilter.subscribe({ own: true }),
       user: Users.details.subscribe(this.params._id as string),
     };
   },
   async data() {
     const sub = this.subscriptions();
-
     const user = await sub?.user();
     if (!user) {
       return undefined; // not loaded?
     }
 
-    // What privileges the user has
-    const privileges = (["admin"] as const).reduce<Record<string, boolean>>((originalPs, p) => {
-      const ps = { ...originalPs };
-      ps[p] = user.privileged(p);
-      return ps;
-    }, {});
-
-    const alterPrivileges = (await Meteor.userAsync())?.privileged("admin");
-    const showPrivileges = alterPrivileges || user.privileges?.length;
-
     return {
       user,
-      alterPrivileges,
-      privileges,
-      inviteGroups: (await sub?.groups())?.fetch(),
-      showPrivileges,
     };
   },
 });
