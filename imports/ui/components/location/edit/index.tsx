@@ -53,6 +53,7 @@ export type Coordinates = [long: number, lat: number];
 export function Edit(props: {
   coordinates?: Coordinates | undefined;
   center?: Coordinates | undefined;
+  maxZoom?: number;
   onChange: (coordinates: Coordinates | undefined) => void;
 }) {
   const { t } = useTranslation();
@@ -84,7 +85,7 @@ export function Edit(props: {
                 props.coordinates?.[0] || props.center?.[0],
               ] as [number, number],
             })}
-        zoom={props.coordinates ? 19 : 13}
+        zoom={props.maxZoom ? props.maxZoom : props.coordinates ? 19 : 13}
       >
         {TileLayers[locale] || TileLayers.default}
         {props.coordinates ? (
