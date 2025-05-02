@@ -3,12 +3,13 @@ import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { GroupEntity, GroupModel } from "/imports/api/groups/groups";
+import { GroupEntity } from "/imports/api/groups/groups";
 import * as GroupsMethods from "/imports/api/groups/methods";
 import { UserModel } from "/imports/api/users/users";
 import * as usersMethods from "/imports/api/users/methods";
 import * as emailMethods from "/imports/api/emails/methods";
-import { useFindFilter } from "/imports/api/courses/publications";
+import * as Courses from "/imports/api/courses/publications";
+import * as Groups from "/imports/api/groups/publications";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 import * as Metatags from "/imports/utils/metatags";
@@ -26,21 +27,26 @@ import { Button, ButtonCancel, ButtonDelete } from "../../components/buttons";
 
 export interface UserProfilePageProps {
   user: UserModel;
-  alterPrivileges: boolean;
-  privileges: Record<string, boolean>;
-  inviteGroups: GroupModel[];
-  showPrivileges: boolean;
 }
 
 export function UserprofilePage(data: UserProfilePageProps) {
   const { t } = useTranslation();
   const [reason, setReason] = useState("");
-
   const [verifyUserDelete, setVerifyUserDelete] = useState(false);
-
   const user = useUser();
 
-  const [isLoading, coursesCreatedBy] = useFindFilter({ createdby: data.user._id });
+  // What privileges the user has
+  const privileges = (["admin"] as const).reduce<Record<string, boolean>>((originalPs, p) => {
+    const ps = { ...originalPs };
+    ps[p] = data.user.privileged(p);
+    return ps;
+  }, {});
+
+  const alterPrivileges = user?.privileged("admin") || false;
+  const [isLoadingGroups, inviteGroups] = Groups.useFindFilter({ own: true });
+  const showPrivileges = alterPrivileges || !!data.user.privileges?.length;
+
+  const [isLoading, coursesCreatedBy] = Courses.useFindFilter({ createdby: data.user._id });
 
   /**
    * whether userprofile is for the logged-in user
@@ -61,10 +67,10 @@ export function UserprofilePage(data: UserProfilePageProps) {
     if (data.user._id === user?._id) {
       return false;
     }
-    return data.inviteGroups.length > 0;
+    return inviteGroups.length > 0;
   }
   function showSettings() {
-    if (data.showPrivileges) {
+    if (showPrivileges) {
       return true;
     }
 
@@ -72,7 +78,7 @@ export function UserprofilePage(data: UserProfilePageProps) {
       return false;
     }
 
-    return data.inviteGroups.length > 0;
+    return inviteGroups.length > 0;
   }
   function sendMessageAttr(): SendMessageData {
     return {
@@ -217,17 +223,21 @@ export function UserprofilePage(data: UserProfilePageProps) {
             {ownuser() ? (
               <em>({t("profile.its_you", "It's you.")})</em>
             ) : (
-              data.alterPrivileges &&
+              alterPrivileges &&
               PublicSettings.contribution &&
               (!hasContributed() ? (
-                <button type="button" className="btn btn-primary" onClick={handleSetHasContributed}>
+                <button
+                  type="button"
+                  className="btn btn-primary js-has-contributed"
+                  onClick={handleSetHasContributed}
+                >
                   <i className={PublicSettings.contribution.icon} aria-hidden="true"></i>{" "}
                   {t("profile.setHasContributed.button", "Mark this user has contributed")}
                 </button>
               ) : (
                 <button
                   type="button"
-                  className="btn btn-secondary"
+                  className="btn btn-secondary js-has-contributed"
                   onClick={handleUnsetHasContributed}
                 >
                   {t("profile.unsetHasContributed.button", "Remove this user has contributed")}
@@ -252,19 +262,19 @@ export function UserprofilePage(data: UserProfilePageProps) {
         </div>
       </div>
 
-      {showSettings() && (
+      {!isLoadingGroups() && showSettings() && (
         <div className="page-component page-component-seperated">
           <div className="row gap-3 mb-3">
-            {data.showPrivileges && (
+            {showPrivileges && (
               <div className="col-md">
                 <h3>
                   <span className="fa-solid fa-gear fa-fw" aria-hidden="true"></span>{" "}
                   {t("privileges.title", "Edit Privileges")}
                 </h3>
                 <div className="list-group">
-                  {data.privileges.admin ? (
+                  {privileges.admin ? (
                     <li className="list-group-item list-group-item-success">
-                      {data.alterPrivileges && (
+                      {alterPrivileges && (
                         <button
                           type="button"
                           className="btn-close btn-close-black float-end"
@@ -276,7 +286,7 @@ export function UserprofilePage(data: UserProfilePageProps) {
                       {t("privilege.has.admin", "Administrator privileges granted")}
                     </li>
                   ) : (
-                    data.alterPrivileges && (
+                    alterPrivileges && (
                       <button
                         type="button"
                         className="list-group-item-action list-group-item-secondary btn"
@@ -297,7 +307,7 @@ export function UserprofilePage(data: UserProfilePageProps) {
                   {t("userprofile.groups.header", "Edit groups")}
                 </h3>
                 <div className="list-group">
-                  {data.inviteGroups.map((group) =>
+                  {inviteGroups.map((group) =>
                     groupMember(group, data.user) ? (
                       <li key={group._id} className="list-group-item list-group-item-success">
                         <button
@@ -332,7 +342,7 @@ export function UserprofilePage(data: UserProfilePageProps) {
 
       <Courselist user={data.user} ownProfile={false} />
 
-      {data.alterPrivileges && (
+      {alterPrivileges && (
         <>
           <h3 className="text-danger">
             {t("profile.account.delete.header", "Is this a spammer?")}

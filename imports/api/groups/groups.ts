@@ -195,7 +195,7 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
       const me = Meteor.userId();
       if (!me) {
         // User is not logged in...
-        return [];
+        find["members.user"] = "-1";
       }
 
       find["members.user"] = me;
