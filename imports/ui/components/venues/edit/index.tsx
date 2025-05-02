@@ -33,8 +33,6 @@ export function Edit({
   const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
   const isNew = !venue._id;
 
-  const [isBusy, setIsBusy] = useState(false);
-
   const [changes, setChanges] = useState({
     name: venue.name,
     description: venue.description,
@@ -148,7 +146,6 @@ export function Edit({
     }
 
     const venueId = venue._id || "";
-    setIsBusy(true);
     try {
       const res = await VenuesMethods.save(venueId, changes1);
 
@@ -171,8 +168,6 @@ export function Edit({
       }
     } catch (err) {
       Alert.serverError(err, t("venue.saving.error", "Could not save the venue"));
-    } finally {
-      setIsBusy(false);
     }
   };
 
@@ -380,8 +375,8 @@ export function Edit({
           </div>
         </div>
         <div className="form-actions">
-          <ButtonSave disabled={isBusy} isBusy={isBusy} onClick={handleSave} />
-          <ButtonCancel disabled={isBusy} onClick={handleCancel} />
+          <ButtonSave onClick={handleSave} />
+          <ButtonCancel onClick={handleCancel} />
         </div>
       </form>
     </div>
