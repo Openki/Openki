@@ -473,16 +473,9 @@ RouterAsync.route("join", {
   async data() {
     const sub = this.subscriptions();
 
-    if (!sub) {
-      return undefined;
-    }
-
     const joinLink = await sub.joinLink?.();
-    if (!joinLink) {
-      return undefined;
-    }
 
-    return joinLink;
+    return { joinLink };
   },
 });
 

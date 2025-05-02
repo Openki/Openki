@@ -20,7 +20,7 @@ export interface Props {
 export function JoinLink({ tenant }: Props) {
   const { t } = useTranslation();
 
-  const [isLoading, joinLink] = JoinLinks.useFindFilter({ tenant: tenant._id });
+  const [isLoading, joinLink] = JoinLinks.useDetails(tenant._id );
 
   function deleteConfirmAttr(): DeleteConfirmProps {
     return {
@@ -78,3 +78,8 @@ export function JoinLink({ tenant }: Props) {
     </div>
   );
 }
+
+// for Blaze
+
+import "./template.html";
+Template.registerHelper("JoinLink", () => JoinLink);

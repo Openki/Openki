@@ -1,91 +1,96 @@
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
+import { useSiteName } from "/imports/utils/getSiteName";
 
-import * as Alert from "/imports/api/alerts/alert";
 import { JoinLinkEntity } from "/imports/api/joinLinks/joinLinks";
 import * as JoinLinksMethods from "/imports/api/joinLinks/methods";
-import { TenantModel } from "/imports/api/tenants/tenants";
+import * as Alert from "/imports/api/alerts/alert";
+import * as Users from "/imports/api/users/publications";
+import * as Tenants from "/imports/api/tenants/publications";
 
-import { PleaseLogin } from "/imports/ui/lib/please-login";
-import * as RegionSelection from "/imports/utils/region-selection";
-import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
+import { useUser } from "/imports/utils/react-meteor-data";
 
-import "./template.html";
+import { ButtonSave } from "../../components/buttons";
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "joinPage",
-  {
-    tenant: TenantModel;
-    joinLink: JoinLinkEntity;
-  }
->;
+interface Props {
+  joinLink: JoinLinkEntity;
+}
 
-const template = Template.joinPage;
+export function JoinPage({ joinLink }: Props) {
+  const { t } = useTranslation();
+  const user = useUser();
 
-template.onCreated(function () {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const instance = this;
+  const siteName = useSiteName();
 
-  instance.autorun(() => {
-    const { tenant } = Template.currentData();
-    const title = i18n("joinPage.show.siteTitle", "Join {TENANT}", {
-      TENANT: tenant.name,
+  const [isLoadingInviter, inviter] = Users.useDetails(joinLink.createdBy);
+  const [isLoadingTenant, tenant] = Tenants.useDetails(joinLink.tenant, joinLink.token);
+
+  useEffect(() => {
+    const title = t("joinPage.show.siteTitle", "Join {TENANT}", {
+      TENANT: tenant?.name,
     });
     Metatags.setCommonTags(title);
   });
-});
 
-template.events({
-  async "click .js-join"(event, instance) {
-    event.preventDefault();
+  async function handleClick() {
+    try {
+      await JoinLinksMethods.join(joinLink.tenant, joinLink.token);
 
-    instance.busy("join");
-    PleaseLogin(instance, async () => {
-      try {
-        await JoinLinksMethods.join(instance.data.joinLink.tenant, instance.data.joinLink.token);
+      Router.go("home");
 
-        // Reload regions to load regions from tenant
-        RegionSelection.subscribe(instance, instance.data.joinLink.tenant, false);
+      Alert.success(
+        t("joinPage.join.success", 'You joined the organization "{NAME}".', {
+          NAME: tenant?.name,
+        }),
+      );
+    } catch (err) {
+      Alert.serverError(err, t("joinPage.join.error", "Joining didn't work."));
+    }
+  }
 
-        Router.go("/");
+  if (isLoadingInviter() || isLoadingTenant()) {
+    return null;
+  }
 
-        Alert.success(
-          i18n("joinPage.join.success", 'You joined the organization "{NAME}".', {
-            NAME: instance.data.tenant.name,
-          }),
-        );
-      } catch (err) {
-        Alert.serverError(err, i18n("joinPage.join.error", "Joining didn't work."));
-      } finally {
-        instance.busy(false);
-      }
-    });
-  },
-});
-
-export function JoinPage(){
-  return   <div class="container">
-  <div class="p-2 p-md-5 bg-light rounded-3">
-    <div class="container-fluid py-2 py-md-5">
-      <h1 class="display-5">
-        {{i18n 'joinPage.welcome' "Welcome to {SITENAME}!" SITENAME=siteName}}
-      </h1>
-      <p class="fs-4">
-        {{i18n 'joinPage.text' "Become part of the organization {TENANT} and propose, discuss, develop, organize and publish courses with {INVITER} and other nice people in the organization {TENANT}." TENANT=tenant.name INVITER=(username invitation.createdBy)}}
-      </p>
-      <button class="btn btn-lg btn-save js-join" {{disabledIfBusy}}>
-        {{#unless currentUser}}
-          {{i18n "joinPage.newUser" "Join {TENANT}" TENANT=tenant.name}}
-        {{else}}
-          {{i18n "joinPage.existingUser" "Join {TENANT} with my user {USER}" TENANT=tenant.name USER=currentUser.getDisplayName}}
-        {{/unless}}
-      </button>
-      <a class="btn btn-lg btn-secondary" href="{{pathFor 'home'}}">
-        {{i18n 'joinPage.no' 'No thanks'}}
-      </a>
+  return (
+    <div className="container">
+      <div className="p-2 p-md-5 bg-light rounded-3">
+        <div className="container-fluid py-2 py-md-5">
+          <h1 className="display-5">
+            {t("joinPage.welcome", "Welcome to {SITENAME}!", {
+              SITENAME: siteName,
+            })}
+          </h1>
+          <p className="fs-4">
+            {t(
+              "joinPage.text",
+              "Become part of the organization {TENANT} and propose, discuss, develop, organize and publish courses with {INVITER} and other nice people in the organization {TENANT}.",
+              {
+                TENANT: tenant?.name,
+                INVITER: inviter?.getDisplayName(),
+              },
+            )}
+          </p>
+          <ButtonSave className="btn-lg" onClick={handleClick}>
+            {!user
+              ? t("joinPage.newUser", "Join {TENANT}", { TENANT: tenant?.name })
+              : t("joinPage.existingUser", "Join {TENANT} with my user {USER}", {
+                  TENANT: tenant?.name,
+                  USER: user.getDisplayName(),
+                })}
+          </ButtonSave>
+          <a className="btn btn-lg btn-secondary ms-2" href={Router.path("home")}>
+            {t("joinPage.no", "No thanks")}
+          </a>
+        </div>
+      </div>
     </div>
-  </div>
-
-</div>
+  );
 }
+
+// for Blaze
+
+import "./template.html";
+Template.registerHelper("JoinPage", () => JoinPage);

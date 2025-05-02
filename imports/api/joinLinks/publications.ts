@@ -1,38 +1,39 @@
 import { Meteor } from "meteor/meteor";
+import { check } from "meteor/check";
 
-import { FindFilter, JoinLinks } from "/imports/api/joinLinks/joinLinks";
+import { JoinLinks } from "/imports/api/joinLinks/joinLinks";
 
-import { ServerPublishMany, ServerPublishOne } from "/imports/utils/ServerPublish";
-import { FieldSort } from "/imports/utils/sort-spec";
+import { ServerPublishOne } from "/imports/utils/ServerPublish";
 
 export const [details, useDetails] = ServerPublishOne(
   "joinLink",
-  async (tenantId: string, token: string) => JoinLinks.find({ tenant: tenantId, token }),
-  (tenantId, token) => JoinLinks.findOne({ tenant: tenantId, token }),
-);
+  async function (tenantId: string, token?: string) {
+    check(tenantId, String);
 
-export const [findFilter, useFindFilter] = ServerPublishMany(
-  "joinLinks.findFilter",
-  async (filter: FindFilter, limit?: number, skip?: number, sort?: FieldSort[]) => {
-    const tenantId = filter.tenant;
+    if (token) {
+      check(token, String);
+      return JoinLinks.find({ tenant: tenantId, token });
+    } else {
+      const user = await Meteor.userAsync();
 
-    const user = await Meteor.userAsync();
+      if (!user || !(user.privileged("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
+        return JoinLinks.find({ _id: "-1" });
+      }
 
-    if (!user || !(user.privileged("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
-      return JoinLinks.find({ _id: "-1" });
+      return JoinLinks.findFilter({ tenant: tenantId });
     }
-
-    return JoinLinks.findFilter(filter, limit, skip, sort);
   },
-  (filter, limit?, skip?, sort?) => {
-    const tenantId = filter.tenant;
+  async function (tenantId: string, token?: string) {
+    if (token) {
+      return JoinLinks.findOne({ tenant: tenantId, token });
+    } else {
+      const user = await Meteor.userAsync();
 
-    const user = Meteor.user();
+      if (!user || !(user.privileged("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
+        return JoinLinks.findOne({ _id: "-1" });
+      }
 
-    if (!user || !(user.privileged("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
-      return JoinLinks.find({ _id: "-1" });
+      return JoinLinks.findOne({ tenant: tenantId });
     }
-
-    return JoinLinks.findFilter(filter, limit, skip, sort);
   },
 );
