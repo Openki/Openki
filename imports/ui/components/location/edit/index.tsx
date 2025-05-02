@@ -48,11 +48,11 @@ function IconControl({
   );
 }
 
-type Coordinates = [long: number, lat: number];
+export type Coordinates = [long: number, lat: number];
 
 export function Edit(props: {
   coordinates?: Coordinates | undefined;
-  center: Coordinates;
+  center?: Coordinates | undefined;
   onChange: (coordinates: Coordinates | undefined) => void;
 }) {
   const { t } = useTranslation();
@@ -76,10 +76,14 @@ export function Edit(props: {
     <div className="location-map">
       <MapContainer
         ref={mapRef}
-        center={[
-          props.coordinates?.[1] || props.center[1],
-          props.coordinates?.[0] || props.center[0],
-        ]}
+        {...(!props.coordinates && !props.center
+          ? {}
+          : {
+              center: [
+                props.coordinates?.[1] || props.center?.[1],
+                props.coordinates?.[0] || props.center?.[0],
+              ] as [number, number],
+            })}
         zoom={props.coordinates ? 19 : 13}
       >
         {TileLayers[locale] || TileLayers.default}

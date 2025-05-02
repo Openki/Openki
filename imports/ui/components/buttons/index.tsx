@@ -49,7 +49,6 @@ export function Button({
 export function ButtonSave(props: {
   onClick: () => Promise<void>;
   disabled?: boolean | undefined;
-  isBusy?: boolean | undefined;
 }) {
   const { t } = useTranslation();
   return (
@@ -58,15 +57,9 @@ export function ButtonSave(props: {
       className="btn btn-save text-nowrap"
       onClick={props.onClick}
       disabled={props.disabled}
+      busyText={t("_button.saving", "Saving…")}
     >
-      {!props.isBusy ? (
-        t("_button.save")
-      ) : (
-        <>
-          <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
-          {t("_button.saving", "Saving…")}
-        </>
-      )}
+      {t("_button.save")}
     </PleaseLogin>
   );
 }
