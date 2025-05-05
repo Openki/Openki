@@ -23,8 +23,11 @@ export function Control(data: {
     return <span className={`fa-solid fa-arrow-${direction} fa-fw`} aria-hidden="true"></span>;
   }
 
-  function text(direction: string, length: string) {
-    return t(`calendar.${direction}.day.${length}`);
+  function text() {
+    if (data.direction === "previous") {
+      return t("calendar.previous.day.short", "previous day");
+    }
+    return t("calendar.next.day.short", "next day");
   }
 
   function handleChangeDateClick() {
@@ -38,14 +41,8 @@ export function Control(data: {
   return (
     <div className="col-auto px-4">
       <button type="button" className="btn btn-secondary" onClick={handleChangeDateClick}>
-        {arrow()} <span className="d-none d-md-inline-block">{text(data.direction, "short")}</span>
+        {arrow()} <span className="d-none d-md-inline-block">{text()}</span>
       </button>
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("CalendarNavDayControl", () => Control);

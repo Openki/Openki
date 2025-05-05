@@ -1,14 +1,15 @@
-import $ from "jquery";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React, { useEffect, useRef, useState } from "react";
 import moment from "moment";
+import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useTranslation } from "react-i18next";
+import { useUser } from "/imports/utils/react-meteor-data";
 
-import "/imports/ui/components/search-field";
-import "/imports/ui/components/filter-groups";
-import "/imports/ui/components/filter-categories";
+import { SearchField } from "../../search-field";
+import { Control } from "./Control";
+import { FilterGroups } from "../../filter-groups";
+import { FilterCategories } from "../../filter-categories";
+import { Direction } from "../Arrow";
 
-import "./control";
-
-import "./template.html";
 import "../styles.scss";
 
 export interface Data {
@@ -24,103 +25,114 @@ export interface Data {
   categories: string[];
   onAddCategory: (category: string) => void;
   onRemoveCategory: (category: string) => void;
+  onChangeAttendingEventsOnly: (state: boolean) => void;
 }
 
-const Template = TemplateAny as TemplateStaticTyped<"calendarNavDay", Data>;
+export function Day(data: Data) {
+  const { t } = useTranslation();
+  const { weekNr, dateLong, dateShort } = useDateTimeFormat();
+  const [covering, setCovering] = useState(false);
+  const currentUser = useUser();
+  const navRef = useRef<HTMLDivElement>(null);
 
-const template = Template.calendarNavDay;
-
-template.onRendered(function () {
-  const navContainer = this.$(".calendar-nav-container");
-  navContainer.slideDown();
-
-  $(window).on("scroll", () => {
-    const isCovering = navContainer.hasClass("calendar-nav-container-covering");
-    const atTop = ($(window).scrollTop() || 0) < 5;
-
-    if (!isCovering && !atTop) {
-      navContainer.addClass("calendar-nav-container-covering");
-    } else if (isCovering && atTop) {
-      navContainer.removeClass("calendar-nav-container-covering");
-    }
-  });
-});
-template.helpers({
-  controlAttr(direction: string) {
-    const data = Template.instance().data;
+  function controlAttr(direction: Direction) {
     return { direction, date: data.date, onChangeDate: data.onChangeDate };
-  },
-  searchFieldAttr() {
-    const data = Template.instance().data;
+  }
+  function searchFieldAttr() {
     return { search: data.search, onChange: data.onChangeSearch };
-  },
-  filterGroupsAttr() {
-    const data = Template.instance().data;
+  }
+  function filterGroupsAttr() {
     return {
       availableGroups: data.availableGroups,
       selectedGroups: data.selectedGroups,
       onAdd: data.onAddGroup,
       onRemove: data.onRemoveGroup,
     };
-  },
-  filterCategoriesAttr() {
-    const data = Template.instance().data;
+  }
+  function filterCategoriesAttr() {
     return {
       categories: data.categories,
       onAdd: data.onAddCategory,
       onRemove: data.onRemoveCategory,
     };
-  },
-});
+  }
 
+  useEffect(() => {
+    if (navRef.current) {
+      $(navRef.current).slideDown();
+    }
 
-export function Day(){
-  return <div class="calendar-nav-container">
-  <div class="row align-items-center p-1">
-    <div class="col-md-3 col-lg-4 p-1">
-      {{> searchField searchFieldAttr}}
-    </div>
-    <div class="col-md-6 col-lg-4 p-1">
-      <div class="row justify-content-center align-items-center">
-        {{#unless hideSwitches}}
-          {{> calendarNavDayControl controlAttr 'previous'}}
-        {{/unless}}
-        <div class="col-auto">
-          <div class="lead">
-            <span class="d-none d-md-inline-block">{{dateLong date}}</span>
-            <span class="d-md-none">{{dateShort date}}</span>
-          </div>
-          <div>
-            {{i18n "calendar.weekNumber" "Week"}} {{weekNr date}}
+    const handleScroll = () => {
+      const atTop = window.scrollY < 5;
+      setCovering(!atTop);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <div
+      className={`calendar-nav-container${covering ? " calendar-nav-container-covering" : ""}`}
+      ref={navRef}
+    >
+      <div className="row align-items-center p-1">
+        <div className="col-md-3 col-lg-4 p-1">
+          <SearchField {...searchFieldAttr()} />
+        </div>
+        <div className="col-md-6 col-lg-4 p-1">
+          <div className="row justify-content-center align-items-center">
+            {!data.hideSwitches && <Control {...controlAttr("previous")} />}
+            <div className="col-auto">
+              <div className="lead">
+                <span className="d-none d-md-inline-block">{dateLong(data.date)}</span>
+                <span className="d-md-none">{dateShort(data.date)}</span>
+              </div>
+              <div>
+                {t("calendar.weekNumber", "Week")} {weekNr(data.date)}
+              </div>
+            </div>
+            {!data.hideSwitches && <Control {...controlAttr("next")} />}
           </div>
         </div>
-        {{#unless hideSwitches}}
-          {{> calendarNavDayControl controlAttr 'next' }}
-        {{/unless}}
+        <div className="row align-items-center p-1">
+          {!!data.availableGroups && (
+            <div className="col-md-4 col-lg-2 p-1">
+              <FilterGroups {...filterGroupsAttr()} />
+            </div>
+          )}
+          <div className="col-md-4 col-lg-2 p-1">
+            <FilterCategories {...filterCategoriesAttr()} />
+          </div>
+          {!!currentUser && (
+            <div
+              className={`${data.availableGroups ? "offset-md-4 offset-lg-2 " : ""}col-md-8 col-lg-4 p-1`}
+            >
+              <div className="form-check form-switch">
+                <input
+                  type="checkbox"
+                  id="filter-own-events"
+                  className="form-check-input float-none "
+                  name="filter-own-events"
+                  onChange={(event) => {
+                    const radioSwitch = event.currentTarget;
+                    data.onChangeAttendingEventsOnly(radioSwitch.checked);
+                  }}
+                />{" "}
+                <label htmlFor="filter-own-events">
+                  {t("calendar.filter-own-events", "Show my events only")}
+                </label>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
-    <div class="row align-items-center p-1">
-      {{#if availableGroups}}
-        <div class="col-md-4 col-lg-2 p-1">
-          {{> filterGroups filterGroupsAttr}}
-        </div>
-      {{/if}}
-      <div class="col-md-4 col-lg-2 p-1">
-        {{> filterCategories filterCategoriesAttr}}
-      </div>
-      {{#if currentUser}}
-        <div
-             class="{{#unless availableGroups}}offset-md-4 offset-lg-2 {{/unless}}col-md-8 col-lg-4 p-1">
-          <div class="form-check form-switch">
-            <input type="checkbox" id="filter-own-events"
-                   class="form-check-input float-none js-filter-own-events"
-                   name="filter-own-events">
-            <label
-                   for="filter-own-events">{{i18n 'calendar.filter-own-events' 'Show my events only'}}</label>
-          </div>
-        </div>
-      {{/if}}
-    </div>
-  </div>
-</div>
+  );
 }
+
+// for Blaze
+
+import "./template.html";
+
+Template.registerHelper("CalendarNavDay", () => Day);
