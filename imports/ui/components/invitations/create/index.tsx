@@ -119,3 +119,18 @@ template.events({
     }
   },
 });
+
+
+export function Create(){
+  return  <form class="js-create-invitations">
+  <div class="mb-3 {{errorClass 'invitations-emails'}}">
+    <label
+           class="form-label">{{i18n 'invitations.create.field.emails' 'Send e-mail invitations to join your "{TENANTNAME}" organization. Each invitation can only be used once.' TENANTNAME=tenant.name}}</label>
+    <textarea class="js-invitations-emails form-control" rows="5"
+              placeholder="{{i18n 'invitations.create.field.emails.placeholder' 'Add an e-mail address or a list of e-mail addresses.' attr=true}}"></textarea>
+    {{errorMessage 'invitations-emails'}}
+  </div>
+  <button type="submit" class="btn btn-add"
+          {{disabledIfBusy}}>{{i18n 'invitations.create.button.text' 'Send invitation'}}</button>
+</form>
+}
