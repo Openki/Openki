@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { TFunction } from "i18next";
-import { Template } from "meteor/templating";
 
 import { InvitationEntity, Status } from "/imports/api/invitations/invitations";
 import { useFindFilter } from "/imports/api/invitations/publications";
@@ -28,13 +27,7 @@ function statusFormat(t: TFunction<"translation", undefined>, status: Status) {
   }
 }
 
-function Invitations({
-  tenantId,
-  invitations,
-}: {
-  tenantId: string;
-  invitations: InvitationEntity[];
-}) {
+function Table({ tenantId, invitations }: { tenantId: string; invitations: InvitationEntity[] }) {
   const { t } = useTranslation();
   const { dateFormat, timeFormat } = useDateTimeFormat();
 
@@ -129,7 +122,7 @@ export interface Props {
   tenantId: string;
 }
 
-export function InvitationsList({ tenantId }: Props) {
+export function List({ tenantId }: Props) {
   const { t } = useTranslation();
   const [showAccepted, setShowAccepted] = useState(false);
   const [isLoading, invitations] = useFindFilter({ tenant: tenantId });
@@ -156,7 +149,6 @@ export function InvitationsList({ tenantId }: Props) {
         <input
           className="form-check-input"
           type="checkbox"
-          value=""
           id="invitationsListShowAcceptedCheck"
           onChange={(event) => {
             setShowAccepted(event.currentTarget.checked);
@@ -166,16 +158,10 @@ export function InvitationsList({ tenantId }: Props) {
           {t("invitations.list.showAccepted", "Show accepted invitations")}
         </label>
       </div>
-      <Invitations
+      <Table
         tenantId={tenantId}
         invitations={invitations.filter((i) => status.includes(i.status))}
       />
     </>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("InvitationsList", () => InvitationsList);
