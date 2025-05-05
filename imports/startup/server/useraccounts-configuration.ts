@@ -176,4 +176,5 @@ Accounts.config({
   sendVerificationEmail: true,
   loginExpirationInDays: LoginExpirationInDays,
   passwordResetTokenExpirationInDays: PasswordResetTokenExpirationInDays,
+  ambiguousErrorMessages: false,
 });
