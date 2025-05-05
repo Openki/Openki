@@ -8,9 +8,7 @@ import { TenantEntity } from "/imports/api/tenants/tenants";
 import { isEmail } from "/imports/utils/email-tools";
 import { useValidation } from "/imports/ui/lib/useValidation";
 
-import "./template.html";
-
-interface Props {
+export interface Props {
   tenant: TenantEntity;
 }
 
@@ -100,8 +98,8 @@ export function Create({ tenant }: Props) {
           )}
         </label>
         <textarea
-         className={`form-control ${errors.emails ? "is-invalid" : ""}`}
-         rows={5}
+          className={`form-control ${errors.emails ? "is-invalid" : ""}`}
+          rows={5}
           placeholder={t(
             "invitations.create.field.emails.placeholder",
             "Add an e-mail address or a list of e-mail addresses.",
@@ -118,8 +116,3 @@ export function Create({ tenant }: Props) {
     </form>
   );
 }
-
-// for Blaze
-import "./template.html";
-
-Template.registerHelper("InvitationsCreate", () => Create);
