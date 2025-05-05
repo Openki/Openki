@@ -54,16 +54,44 @@ if (Meteor.isClient) {
           });
       });
 
-      it("does not allow setting duplicate email", async () => {
+      it("does not allow setting duplicate email on update", async () => {
         let hasFailed = false;
+        let expectedMessage = false;
         try {
           await usersMethods.updateEmail("greg@openki.example");
         } catch (err) {
           if (err) {
             hasFailed = true;
+            if (err.reason === "Email already exists.") {
+              expectedMessage = true;
+            }
           }
         }
         assert.isTrue(hasFailed, "user.updateEmail throws on duplicate email");
+        assert.isTrue(expectedMessage, "user.updateEmail throws 'Email already exists.'");
+      });
+
+      it("does not allow setting duplicate name on creation", async () => {
+        let hasFailed = false;
+        let expectedMessage = false;
+        try {
+          await Accounts.createUserAsync({
+            username: "Seee",
+            password: "greg",
+            email: "seee@openki.example",
+            allowNews: false,
+            locale: "en",
+          } as any);
+        } catch (err) {
+          if (err) {
+            hasFailed = true;
+            if (err.reason === "Username already exists.") {
+              expectedMessage = true;
+            }
+          }
+        }
+        assert.isTrue(hasFailed, "Accounts.createUser throws on duplicate name");
+        assert.isTrue(expectedMessage, "Accounts.createUser throws 'Username already exists.'");
       });
     });
   });
