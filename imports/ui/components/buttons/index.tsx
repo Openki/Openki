@@ -6,12 +6,14 @@ import { PleaseLogin } from "../please-login";
 import "/imports/ui/components/buttons";
 
 export function Button({
+  type,
   className,
   disabled,
   onClick,
   children,
   busyText,
 }: {
+  type?: "reset" | "button" | "submit" | undefined;
   className?: string | undefined;
   disabled?: boolean | undefined;
   onClick: (event: { preventDefault: () => void }) => Promise<void>;
@@ -22,7 +24,7 @@ export function Button({
 
   return (
     <button
-      type="button"
+      type={type || "button"}
       className={`${className} text-nowrap`}
       disabled={isBusy || disabled}
       onClick={async (event) => {

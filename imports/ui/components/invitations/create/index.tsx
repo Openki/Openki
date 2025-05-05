@@ -1,136 +1,125 @@
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import { ReactiveDict } from "meteor/reactive-dict";
-import { i18n } from "/imports/startup/both/i18next";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import * as InvitationsMethods from "/imports/api/invitations/methods";
 import * as Alert from "/imports/api/alerts/alert";
 import { TenantEntity } from "/imports/api/tenants/tenants";
 
 import { isEmail } from "/imports/utils/email-tools";
-import * as TemplateMixins from "/imports/ui/lib/template-mixins";
+import { useValidation } from "/imports/ui/lib/useValidation";
 
 import "./template.html";
 
-const TemplateBase = TemplateAny as TemplateStaticTyped<
-  "invitationsCreate",
-  { tenant: TenantEntity },
-  {
-    state: ReactiveDict<{ tried: boolean }>;
-    reset(): void;
-    getLines(): string[];
-    normalizeList(): void;
-    checkList(): boolean;
-    getEmails(): string[];
-  }
->;
+interface Props {
+  tenant: TenantEntity;
+}
 
-const Template = TemplateMixins.FormfieldErrors(TemplateBase, "invitationsCreate", {
-  notValid: {
-    text: () =>
-      i18n(
-        "tenant.settings.invitations.error.notValid",
-        "Some of the e-mail addresses are invalid.",
-      ),
-    field: "invitations-emails",
-  },
-});
+export function Create({ tenant }: Props) {
+  const { t } = useTranslation();
 
-const template = Template.invitationsCreate;
+  const [emailsInput, setEmailsInput] = useState("");
+  const [isBusy, setIsBusy] = useState(false);
+  const [tried, setTried] = useState(false);
 
-template.onCreated(function () {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const instance = this;
-  instance.busy("notReady");
-
-  instance.state = new ReactiveDict(undefined, {
-    tried: false,
+  const [errors, checkValidity, , resetErrors] = useValidation({
+    notValid: {
+      text: () =>
+        t(
+          "tenant.settings.invitations.error.notValid",
+          "Some of the e-mail addresses are invalid.",
+        ),
+      field: "emails",
+      onCheckValidity: () => {
+        const emails = getLines();
+        return emails.length > 0 && emails.every((e) => isEmail(e));
+      },
+    },
   });
 
-  instance.reset = () => {
-    instance.errors.reset();
-    instance.$(".js-invitations-emails").val("");
-    instance.state.set("tried", false);
-  };
+  function reset() {
+    resetErrors();
+    setEmailsInput("");
+    setTried(false);
+  }
 
-  instance.getLines = () => {
-    const emails = instance.$(".js-invitations-emails").val() as string;
+  function getLines() {
+    return emailsInput.split(/[\s;,|]+/g).filter((line) => !!line);
+  }
 
-    return emails.split(/[\s;,|]+/g).filter((l) => l);
-  };
-  instance.normalizeList = () => {
-    instance.$(".js-invitations-emails").val(instance.getLines().join("\n"));
-  };
-  instance.checkList = () => {
-    instance.errors.reset();
+  function normalizeList() {
+    const normalized = getLines().join("\n");
+    setEmailsInput(normalized);
+  }
 
-    const lines = instance.getLines();
+  function getEmails() {
+    return getLines().filter((e) => isEmail(e));
+  }
 
-    if (lines.length === 0) {
-      return false;
-    }
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
 
-    if (lines.some((e) => !isEmail(e))) {
-      instance.errors.add("notValid");
-      return false;
-    }
+    setTried(true);
 
-    return true;
-  };
-  instance.getEmails = () => instance.getLines().filter((e) => isEmail(e));
-});
+    const isValid = checkValidity();
+    if (!isValid) return;
 
-template.events({
-  "keyup .js-invitations-emails, change .js-invitations-emails"(_event, instance) {
-    if (instance.getLines() && (!instance.state.get("tried") || instance.checkList())) {
-      instance.busy(false);
-    } else {
-      instance.busy("notReady");
-    }
-  },
-  "focusout .js-invitations-emails"(_event, instance) {
-    instance.normalizeList();
-  },
-  async "submit .js-create-invitations"(event, instance) {
-    event.preventDefault();
+    setIsBusy(true);
 
-    instance.state.set("tried", true);
-
-    if (!instance.checkList()) {
-      instance.busy("notReady");
-      return;
-    }
-
-    instance.busy("sending");
     try {
-      await InvitationsMethods.createMany(instance.data.tenant._id, instance.getEmails());
+      await InvitationsMethods.createMany(tenant._id, getEmails());
 
       Alert.success(
-        i18n("tenant.settings.invitations.creation.success", "Invitations have been created."),
+        t("tenant.settings.invitations.creation.success", "Invitations have been created."),
       );
 
-      instance.reset();
+      reset();
     } catch (err) {
       Alert.serverError(
         err,
-        i18n("tenant.settings.invitations.creation.error", "Invitations could not be created."),
+        t("tenant.settings.invitations.creation.error", "Invitations could not be created."),
       );
     } finally {
-      instance.busy(false);
+      setIsBusy(false);
     }
-  },
-});
+  }
 
+  useEffect(() => {
+    if (tried) {
+      checkValidity();
+    }
+  }, [emailsInput]);
 
-export function Create(){
-  return  <form class="js-create-invitations">
-  <div class="mb-3 {{errorClass 'invitations-emails'}}">
-    <label
-           class="form-label">{{i18n 'invitations.create.field.emails' 'Send e-mail invitations to join your "{TENANTNAME}" organization. Each invitation can only be used once.' TENANTNAME=tenant.name}}</label>
-    <textarea class="js-invitations-emails form-control" rows="5"
-              placeholder="{{i18n 'invitations.create.field.emails.placeholder' 'Add an e-mail address or a list of e-mail addresses.' attr=true}}"></textarea>
-    {{errorMessage 'invitations-emails'}}
-  </div>
-  <button type="submit" class="btn btn-add"
-          {{disabledIfBusy}}>{{i18n 'invitations.create.button.text' 'Send invitation'}}</button>
-</form>
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className="mb-3 {{errorClass 'invitations-emails'}}">
+        <label className="form-label">
+          {t(
+            "invitations.create.field.emails",
+            'Send e-mail invitations to join your "{TENANTNAME}" organization. Each invitation can only be used once.',
+            { TENANTNAME: tenant.name },
+          )}
+        </label>
+        <textarea
+         className={`form-control ${errors.emails ? "is-invalid" : ""}`}
+         rows={5}
+          placeholder={t(
+            "invitations.create.field.emails.placeholder",
+            "Add an e-mail address or a list of e-mail addresses.",
+          )}
+          value={emailsInput}
+          onBlur={normalizeList}
+          onChange={(e) => setEmailsInput(e.target.value)}
+        ></textarea>
+        {!!errors.emails && <div className="invalid-feedback">{errors.emails}</div>}
+      </div>
+      <button type="submit" className="btn btn-add" disabled={isBusy || !!errors.emails}>
+        {t("invitations.create.button.text", "Send invitation")}
+      </button>
+    </form>
+  );
 }
+
+// for Blaze
+import "./template.html";
+
+Template.registerHelper("InvitationsCreate", () => Create);
