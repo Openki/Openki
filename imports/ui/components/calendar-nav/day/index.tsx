@@ -72,3 +72,55 @@ template.helpers({
     };
   },
 });
+
+
+export function Day(){
+  return <div class="calendar-nav-container">
+  <div class="row align-items-center p-1">
+    <div class="col-md-3 col-lg-4 p-1">
+      {{> searchField searchFieldAttr}}
+    </div>
+    <div class="col-md-6 col-lg-4 p-1">
+      <div class="row justify-content-center align-items-center">
+        {{#unless hideSwitches}}
+          {{> calendarNavDayControl controlAttr 'previous'}}
+        {{/unless}}
+        <div class="col-auto">
+          <div class="lead">
+            <span class="d-none d-md-inline-block">{{dateLong date}}</span>
+            <span class="d-md-none">{{dateShort date}}</span>
+          </div>
+          <div>
+            {{i18n "calendar.weekNumber" "Week"}} {{weekNr date}}
+          </div>
+        </div>
+        {{#unless hideSwitches}}
+          {{> calendarNavDayControl controlAttr 'next' }}
+        {{/unless}}
+      </div>
+    </div>
+    <div class="row align-items-center p-1">
+      {{#if availableGroups}}
+        <div class="col-md-4 col-lg-2 p-1">
+          {{> filterGroups filterGroupsAttr}}
+        </div>
+      {{/if}}
+      <div class="col-md-4 col-lg-2 p-1">
+        {{> filterCategories filterCategoriesAttr}}
+      </div>
+      {{#if currentUser}}
+        <div
+             class="{{#unless availableGroups}}offset-md-4 offset-lg-2 {{/unless}}col-md-8 col-lg-4 p-1">
+          <div class="form-check form-switch">
+            <input type="checkbox" id="filter-own-events"
+                   class="form-check-input float-none js-filter-own-events"
+                   name="filter-own-events">
+            <label
+                   for="filter-own-events">{{i18n 'calendar.filter-own-events' 'Show my events only'}}</label>
+          </div>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</div>
+}
