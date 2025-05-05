@@ -81,11 +81,11 @@ export function ForgotPwdFrame(props: Props) {
               }}
             />
           </div>
-          {errors.email ? (
+          {!!errors.email && (
             <div id="forgotPwdMailHelp" className="form-text">
               {errors.email}
             </div>
-          ) : null}
+          )}
         </div>
         <div className="mb-3">
           <button
