@@ -1041,14 +1041,14 @@ RouterAsync.route("resetPasswortEmail", {
     const email = this.params.query.email as string;
 
     if (email) {
-      const user = UsersCollection.findOne({ "emails.address": email });
+      const user = await UsersCollection.findOneAsync({ "emails.address": email });
       if (user) {
         Meteor.call("forgotPassword", { email });
       }
     } else {
       const currentUserId = Meteor.userId();
       if (currentUserId) {
-        const currentUser = UsersCollection.findOne(currentUserId);
+        const currentUser = await UsersCollection.findOneAsync(currentUserId);
         if (currentUser) {
           // if a visitor user want to create an account from his profile.
           Meteor.call("forgotPassword", { email: currentUser?.emailAddress() });
