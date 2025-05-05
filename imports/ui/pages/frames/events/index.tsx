@@ -168,3 +168,13 @@ template.helpers({
     return Events.findFilter(filterQuery, instance.limit).fetch();
   },
 });
+
+
+export function Events(){
+  return<> {{#if control}}
+  {{> calendarNavDay calendarNavAttr}}
+{{/if}}
+<div class="frame-events">
+  {{> eventList dataEvents=events withDate=true withImage=true openInNewTab=true}}
+</div></>
+}
