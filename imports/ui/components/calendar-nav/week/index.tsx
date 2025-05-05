@@ -5,7 +5,7 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useTranslation } from "react-i18next";
 
-import { Control } from "./control";
+import { Control } from "./Control";
 import { FilterGroups } from "/imports/ui/components/filter-groups";
 import { Direction } from "../Arrow";
 

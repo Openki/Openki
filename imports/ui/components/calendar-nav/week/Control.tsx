@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Arrow, Direction } from "../../Arrow";
+import { Arrow, Direction } from "../Arrow";
 
 export interface Props {
   direction: Direction;

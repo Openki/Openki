@@ -13,7 +13,7 @@ import * as UrlTools from "/imports/utils/url-tools";
 import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 
 import { Direction, Unit } from "../Arrow";
-import { Control } from "./control";
+import { Control } from "./Control";
 
 import "../styles.scss";
 
