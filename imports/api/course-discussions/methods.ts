@@ -49,7 +49,7 @@ export const postComment = ServerMethod(
     }
     saneComment.courseId = course._id;
 
-    if (course.singleEvent) {
+    if (course.singleEvent && comment.eventId) {
       const event = await Events.findOneAsync(comment.eventId);
       if (!event || event.courseId !== course._id) {
         throw new Meteor.Error(404, "event not found");
