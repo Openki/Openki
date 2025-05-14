@@ -59,3 +59,9 @@ template.onCreated(function () {
     Metatags.setCommonTags(title, description, event?.publicUrlForDetailsImage());
   });
 });
+
+template.helpers({
+  data(){
+    return Events.findOne(Router.current().params._id)
+  }
+})
