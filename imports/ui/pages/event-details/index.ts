@@ -61,13 +61,3 @@ template.onCreated(function () {
   });
 });
 
-template.helpers({
-  data() {
-    const event = Events.findOne(Router.current().params._id);
-    if (event) {
-      return event;
-    } else {
-      return Template.instance().data;
-    }
-  },
-});
