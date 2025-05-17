@@ -41,7 +41,7 @@ export function createPublication<A extends any[], T>(
 
       const queryArgs = removeCallback(args);
 
-      const query = async function () {
+      const query = function () {
         return queryBuilder.call({ userId: Meteor.userId() }, ...queryArgs);
       };
       query.isLoading = function () {
