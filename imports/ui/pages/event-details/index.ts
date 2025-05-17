@@ -60,3 +60,14 @@ template.onCreated(function () {
     Metatags.setCommonTags(title, description, event?.publicUrlForDetailsImage());
   });
 });
+
+template.helpers({
+  data() {
+    const event = Events.findOne(Router.current().params._id);
+    if (event) {
+      return event;
+    } else {
+      return Template.instance().data;
+    }
+  },
+});
