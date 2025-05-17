@@ -8,7 +8,6 @@ import { truncate } from "lodash";
 import * as Alert from "/imports/api/alerts/alert";
 import { VenueModel } from "/imports/api/venues/venues";
 import * as VenuesMethods from "/imports/api/venues/methods";
-import { useDetails } from "/imports/api/venues/publications";
 
 import * as Metatags from "/imports/utils/metatags";
 import { textPlain } from "/imports/utils/html-tools";
@@ -206,16 +205,8 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
   );
 }
 
-export function VenueDetailsPage({ venue: venue2 }: { venue: VenueModel }) {
+export function VenueDetailsPage({ venue }: { venue: VenueModel }) {
   const { t } = useTranslation();
-
-  // for blaze, can be removed after migration
-  // subscribe in react to keep reactivity
-  // eslint-disable-next-line prefer-const
-  let [isLoading, venue] = useDetails(venue2._id || "-1");
-  if (!venue) {
-    venue = venue2;
-  }
 
   const [editing, setEditing] = useState(!venue?._id);
 
@@ -240,10 +231,6 @@ export function VenueDetailsPage({ venue: venue2 }: { venue: VenueModel }) {
     }
     Metatags.setCommonTags(title, truncate(textPlain(venue?.description || ""), { length: 160 }));
   });
-
-  if (isLoading()) {
-    return null;
-  }
 
   return (
     <div className="container mw-md">

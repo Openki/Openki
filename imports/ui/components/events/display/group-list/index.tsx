@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 import { EventModel } from "/imports/api/events/events";
-import { useDetails } from "/imports/api/events/publications";
 import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 
 import { GroupTag } from "/imports/ui/components/groups/tag";
@@ -16,15 +15,11 @@ export interface Props {
   event: EventModel;
 }
 
-export function GroupList({ event: event2 }: Props) {
+export function GroupList({ event }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 
-  // for blaze, can be removed after migration
-  // subscribe in react to keep reactivity
-  const [isLoading, event] = useDetails(event2._id);
-
-  const [isRegionLoading, region] = useRegionDetails(event2?.region);
+  const [isRegionLoading, region] = useRegionDetails(event.region);
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
   function tools(groupId: string, event: EventModel) {
@@ -51,7 +46,7 @@ export function GroupList({ event: event2 }: Props) {
     );
   }
 
-  if (isLoading() || !event || isRegionLoading()) return null;
+  if (isRegionLoading()) return null;
 
   const groups = event.allGroups?.filter(
     (groupId) =>

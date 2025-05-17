@@ -122,7 +122,7 @@ export function Submenu(data: { edit: boolean; course: CourseModel; select: stri
               />
               {customFields().map((info, index) => (
                 <p key={index}>
-                  <strong>{info.displayText}</strong>:
+                  <strong>{info.displayText}</strong>:{" "}
                   {!info.isboolean ? (
                     <span className="pre-line">{info.value}</span>
                   ) : info.value ? (

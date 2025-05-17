@@ -10,7 +10,6 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { GroupModel } from "/imports/api/groups/groups";
 import * as GroupsMethods from "/imports/api/groups/methods";
 import * as Alert from "/imports/api/alerts/alert";
-import { useDetails } from "/imports/api/groups/publications";
 
 import { Store } from "/imports/ui/lib/editable";
 import * as Analytics from "/imports/ui/lib/analytics";
@@ -50,7 +49,7 @@ export interface Data {
   showCourses: boolean;
 }
 
-export function GroupDetailsPage({ courseQuery, group: group2, showCourses }: Data) {
+export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
   const { t } = useTranslation();
   const region = useCurrentRegion();
   const [editingSettings, setEditingSettings] = useState(false);
@@ -69,18 +68,6 @@ export function GroupDetailsPage({ courseQuery, group: group2, showCourses }: Da
   }>({ name: undefined, short: undefined, claim: undefined, description: undefined });
 
   const user = useUser();
-
-  // for blaze, can be removed after migration
-  // subscribe in react to keep reactivity
-  // eslint-disable-next-line prefer-const
-  let [isLoading, group] = useDetails(group2._id || "-1") as [() => boolean, GroupModel];
-  if (!group) {
-    group = group2;
-  }
-
-  if (isLoading()) {
-    return null;
-  }
 
   const mayEdit = group.editableBy(user);
 

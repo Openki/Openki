@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import * as Alert from "/imports/api/alerts/alert";
 import * as CoursesMethods from "/imports/api/courses/methods";
 import { CourseModel } from "/imports/api/courses/courses";
-import { useDetails } from "/imports/api/courses/publications";
 
 import { Editable, Props as EditableProps } from "/imports/ui/components/editable/index.react";
 import { InternalIndicator } from "/imports/ui/components/internal-indicator";
@@ -16,18 +15,10 @@ import { GroupList } from "/imports/ui/components/courses/display/group-list";
 
 import "./styles.scss";
 
-export function Header({ course: course2 }: { course: CourseModel }) {
+export function Header({ course }: { course: CourseModel }) {
   const { t } = useTranslation();
 
   const user = useUser();
-
-  // for blaze, can be removed after migration
-  // subscribe in react to keep reactivity
-  const [isLoading, course] = useDetails(course2._id);
-
-  if (isLoading() || !course) {
-    return null;
-  }
 
   const editableNameAttr: EditableProps = {
     text: course.name,

@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 import { CourseModel } from "/imports/api/courses/courses";
-import { useDetails } from "/imports/api/courses/publications";
 import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 
 import { GroupTag } from "/imports/ui/components/groups/tag";
@@ -16,15 +15,11 @@ export interface Props {
   course: CourseModel;
 }
 
-export function GroupList({ course: course2 }: Props) {
+export function GroupList({ course }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 
-  // for blaze, can be removed after migration
-  // subscribe in react to keep reactivity
-  const [isLoading, course] = useDetails(course2._id);
-
-  const [isRegionLoading, region] = useRegionDetails(course2?.region);
+  const [isRegionLoading, region] = useRegionDetails(course.region);
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
   function tools(groupId: string, course: CourseModel) {
@@ -48,7 +43,7 @@ export function GroupList({ course: course2 }: Props) {
     );
   }
 
-  if (isLoading() || !course || isRegionLoading()) return null;
+  if (isRegionLoading()) return null;
 
   const groups = course.groups.filter(
     (groupId) =>

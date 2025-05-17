@@ -3,7 +3,6 @@ import React from "react";
 import { CourseModel } from "/imports/api/courses/courses";
 import * as CourseMethods from "/imports/api/courses/methods";
 import * as Alert from "/imports/api/alerts/alert";
-import { useDetails } from "/imports/api/courses/publications";
 
 import {
   UploadImage,
@@ -12,16 +11,9 @@ import {
 } from "/imports/ui/components/editable-image";
 import { useTranslation } from "react-i18next";
 
-export function Files({ course: course2 }: { course: CourseModel }) {
+export function Files({ course }: { course: CourseModel }) {
   const { t } = useTranslation();
 
-  // for blaze, can be removed after migration
-  // subscribe in react to keep reactivity
-  const [isLoading, course] = useDetails(course2._id);
-
-  if (isLoading() || !course) {
-    return null;
-  }
   function imageUploadArgs(): EditableImageData {
     return {
       thumbnail: { src: course?.publicUrlForCompactImage(), maxSize: 150 },
