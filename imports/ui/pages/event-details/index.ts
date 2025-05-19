@@ -60,4 +60,3 @@ template.onCreated(function () {
     Metatags.setCommonTags(title, description, event?.publicUrlForDetailsImage());
   });
 });
-
