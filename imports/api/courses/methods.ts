@@ -344,6 +344,10 @@ export const updateImage = ServerMethod(
       FileStorage.remove(course.image);
     }
 
+    if (course.compactImage && !course.compactImage.startsWith("https://")) {
+      FileStorage.remove(course.compactImage);
+    }
+
     // Note: image scaling also happens on the client
     const resizedCompactImage = await resizeImage(file.content, 500);
     const compactResult = await FileStorage.upload("courses/image/compact", {
@@ -392,7 +396,11 @@ export const deleteImage = ServerMethod(
       FileStorage.remove(course.image);
     }
 
-    const update = { image: "" };
+    if (course.compactImage && !course.compactImage.startsWith("https://")) {
+      FileStorage.remove(course.compactImage);
+    }
+
+    const update = { image: "", compactImage: "" };
 
     const set = timeLastEditDenormalizer.beforeDeleteImage();
     await Courses.updateAsync(course._id, {
