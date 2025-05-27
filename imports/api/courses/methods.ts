@@ -174,7 +174,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
             set.roles = set.roles || [];
             set.roles.push(type);
           }
-        } else {
+        } else if (role.editable) {
           const shouldHave = !!changes.roles?.[type];
           const have = course.roles.includes(type);
           if (have && !shouldHave) {
