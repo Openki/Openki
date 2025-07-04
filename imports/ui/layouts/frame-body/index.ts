@@ -1,6 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import { Session } from "meteor/session";
+import moment from "moment";
 
 import * as Tooltips from "/imports/utils/Tooltips";
 
@@ -16,10 +17,6 @@ const Template = TemplateAny as TemplateStaticTyped<"frameLayout">;
 
 const template = Template.frameLayout;
 
-function between(x: number, min: number, max: number) {
-  return x >= min && x <= max;
-}
-
 /** The href/url Openki was loaded. */
 const initialHref = document.location.href;
 
@@ -28,19 +25,37 @@ template.onRendered(() => {
   // You can add the /plugins/iframeHeightAdjust.js into your website to adjust the size of the iframe to the size of the inner content.
   const frame = document.querySelector(".frame");
   if (frame) {
-    let lastHeight = 0;
+    let startTracking: moment.Moment;
+    let heightFirst = 0;
+    let heightSecond = 0;
 
     observeSize(frame, (element: Element) => {
       if (!element.scrollHeight) {
         return;
       }
 
-      // Fix endless flickering, because of small height changes. See: https://gitlab.com/Openki/Openki/-/issues/2153
-      if (between(element.scrollHeight, lastHeight - 1, element.scrollHeight)) {
-        return;
+      // Fix endless flickering, because of height changes based on scrollbar (hide <=> visible change). See: https://gitlab.com/Openki/Openki/-/issues/2153
+      if (!startTracking || startTracking.diff(moment()) < -200) {
+        // reset height tracking after 200 ms, mybe the height change is because of new user reaction
+        startTracking = moment();
+        heightFirst = 0;
+        heightSecond = 0;
+      } else {
+        if (!heightFirst) {
+          heightFirst = element.scrollHeight;
+        } else if (!heightSecond) {
+          heightSecond = element.scrollHeight;
+        } else if (heightFirst === element.scrollHeight) {
+          if (heightFirst < heightSecond) {
+            // it is flackering do not send a update
+            return;
+          } else {
+            // it is flackering, but the current size is smaller send a update, and then do not send a update.
+            heightSecond = heightFirst;
+            heightFirst = element.scrollHeight;
+          }
+        }
       }
-
-      lastHeight = element.scrollHeight;
 
       const message = {
         type: "onFrameHeightChange",
