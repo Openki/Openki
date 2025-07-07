@@ -34,17 +34,19 @@ export function CalendarSection() {
         <ul className="dropdown-menu">
           <li>
             <a className="dropdown-item" href={webcalUrl}>
-              {t("profile.calendar.iCal", "iCal")}
+              <i className="fa-fw fa-solid fa-download"></i> {t("profile.calendar.iCal", "iCal")}
             </a>
           </li>
           <li>
             <a className="dropdown-item" href={generateForOutlook(webcalUrl)}>
-              {t("profile.calendar.outlook", "Outlook.com")}
+              <i className="fa-fw fa-solid fa-arrow-up-right-from-square"></i>{" "}
+              {t("profile.calendar.outlook", "Outlook.com (Web)")}
             </a>
           </li>
           <li>
             <a className="dropdown-item" href={generateForGoogle(webcalUrl)}>
-              {t("profile.calendar.google", "Google Kalender")}
+              <i className="fa-fw fa-solid fa-arrow-up-right-from-square"></i>{" "}
+              {t("profile.calendar.google", "Google Kalender (Web)")}
             </a>
           </li>
           <li>
@@ -56,6 +58,7 @@ export function CalendarSection() {
                 Alert.success(t("profile.calendar.urlCopied", "Url copied to the clipboard."));
               }}
             >
+              <i className="fa-fw fa-regular fa-copy"></i>{" "}
               {t("profile.calendar.copyUrl", "Copy url to clipboard")}
             </a>
           </li>
