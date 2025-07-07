@@ -796,6 +796,8 @@
   "profile.apperance.theme.light": "Light theme",
   "profile.apperance.theme.system": "Sync theme with system",
   "profile.avatar.inputLabel": "Change hair color",
+  "profile.calendar": "My events",
+  "profile.calendar.add": "Add my events to my calendar",
   "profile.changePass": "Change my password",
   "profile.createNewGroup.button": "Create a new group",
   "profile.createNewVenue.button": "Create a new venue",
