@@ -1,0 +1,66 @@
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { useUser } from "/imports/utils/react-meteor-data";
+import * as Alert from "/imports/api/alerts/alert";
+
+function generateForOutlook(url: string) {
+  const baseUrl = "https://outlook.live.com/calendar/0/addfromweb/?url=";
+  return baseUrl + encodeURIComponent(url);
+}
+
+function generateForGoogle(url: string) {
+  const baseUrl = "https://calendar.google.com/calendar/u/0/r?cid=";
+  return baseUrl + encodeURIComponent(url);
+}
+
+export function CalendarSection() {
+  const { t } = useTranslation();
+  const user = useUser();
+
+  const webcalUrl = `webcal://${location.host}/cal?participant=${user?._id}`;
+
+  return (
+    <div className="page-component page-component-seperated">
+      <h3>{t("profile.calendar", "My events")}</h3>
+      <div className="dropdown">
+        <button
+          className="btn btn-secondary dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          {t("profile.calendar.add", "Add my events to my calendar")}
+        </button>
+        <ul className="dropdown-menu">
+          <li>
+            <a className="dropdown-item" href={webcalUrl}>
+              {t("profile.calendar.iCal", "iCal")}
+            </a>
+          </li>
+          <li>
+            <a className="dropdown-item" href={generateForOutlook(webcalUrl)}>
+              {t("profile.calendar.outlook", "Outlook.com")}
+            </a>
+          </li>
+          <li>
+            <a className="dropdown-item" href={generateForGoogle(webcalUrl)}>
+              {t("profile.calendar.google", "Google Kalender")}
+            </a>
+          </li>
+          <li>
+            <a
+              className="dropdown-item"
+              href="#"
+              onClick={() => {
+                navigator.clipboard.writeText(webcalUrl);
+                Alert.success(t("profile.calendar.urlCopied", "Url copied to the clipboard."));
+              }}
+            >
+              {t("profile.calendar.copyUrl", "Copy url to clipboard")}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+}
