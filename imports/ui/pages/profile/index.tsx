@@ -20,6 +20,7 @@ import { VenuesSection } from "./VenuesSection";
 import { GroupSection } from "./GroupSection";
 import { TenantSection } from "./TenantSection";
 import { AdminSection } from "./AdminSection";
+import { CalendarSection } from "./CalendarSection";
 
 import "./styles.scss";
 
@@ -131,7 +132,7 @@ function LoggedIn({ user }: { user: UserModel }) {
       ) : (
         <CreateUserSection user={user} />
       )}
-
+      <CalendarSection />
       <DangerZoneSection />
     </>
   );
