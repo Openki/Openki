@@ -30,7 +30,7 @@ export function EventBox({
   const eventEnd = endMoment.format("LT");
   const venueLine = getVenueLine(event);
   const eventLink = Router.url("showEvent", event, { query: campaign });
-  const calLink = Router.url("calEvent", event, { query: campaign });
+  const calLink = Router.url("calEvent", event);
 
   const { t } = useTranslation(undefined, { lng });
 
