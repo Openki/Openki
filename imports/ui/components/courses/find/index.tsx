@@ -108,7 +108,7 @@ export function Find({ query }: Props) {
       },
       state: filter.get("state") || [],
       onStateClick: (state) => {
-        filter.disable("state").toggle("state", state.name);
+        filter.toggle("state", state.name);
 
         updateUrl();
       },
