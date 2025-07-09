@@ -21,11 +21,11 @@ function EventParticipant({
   participant: EventParticipantEntity;
   event: EventModel;
 }) {
-  const userId = useUserId();
   const { t } = useTranslation();
+  const user = useUser();
 
   function ownUserParticipantClass() {
-    if (participant.user === userId) {
+    if (participant.user === user?._id) {
       return "is-own-user";
     }
     return "";
@@ -40,16 +40,26 @@ function EventParticipant({
         <Contribution userId={participant.user} />
       </div>
       <ParticipantContact participant={participant.user} event={event} />
-      {!!participant.companions && (
-        <strong
-          className="ms-auto p-1 bg-primary text-light"
-          data-bs-toggle="tooltip"
-          data-bs-title={t("eventParticipant.iBringCompanions", "Brings companion.")}
-        >
-          +{participant.companions}{" "}
-          <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
-        </strong>
-      )}
+      <div className="ms-auto d-flex flex-wrap align-items-center">
+        {!!participant.companions && (
+          <strong
+            className="p-1 bg-primary text-light"
+            data-bs-toggle="tooltip"
+            data-bs-title={t("eventParticipant.iBringCompanions", "Brings companion.")}
+          >
+            +{participant.companions}{" "}
+            <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
+          </strong>
+        )}
+
+        {!!user && user._id !== participant.user && event.editableBy(user) && (
+          <RemoveDropdown
+            onClick={() => {
+              EventsMethods.removeParticipant(event._id, participant.user);
+            }}
+          />
+        )}
+      </div>
     </div>
   );
 }
@@ -207,5 +217,6 @@ export function EventParticipants({ event }: Props) {
 // for Blaze
 
 import "./template.html";
+import { RemoveDropdown } from "./remove-dropdown";
 
 Template.registerHelper("EventParticipants", () => EventParticipants);

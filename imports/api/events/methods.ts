@@ -527,13 +527,18 @@ export const addParticipant = ServerMethod(
   { simulation: false },
 );
 
+/**
+ * Remove participant from the event.
+ * If no participant is set, the currently logged in user is removed.
+ */
 export const removeParticipant = ServerMethod(
   "event.removeParticipant",
-  async (eventId: string) => {
+  async (eventId: string, participantId?: string) => {
     check(eventId, String);
+    check(participantId, Match.Optional(String));
 
-    const userId = Meteor.userId();
-    if (!userId) {
+    const operator = await Meteor.userAsync();
+    if (!operator) {
       throw new Meteor.Error(401, "please log in");
     }
 
@@ -547,7 +552,19 @@ export const removeParticipant = ServerMethod(
       throw new Meteor.Error(401, "cannot unregister, event has already passed");
     }
 
-    await Events.updateAsync({ _id: eventId }, { $pull: { participants: { user: userId } } });
+    if (participantId) {
+      // only users that have edit permissions (admin, group-orga-members, orga-team) can remove other users.
+      if (!event.editableBy(operator)) {
+        throw new Meteor.Error(403, "not enough authorisation.");
+      }
+    } else {
+      participantId = operator._id;
+    }
+
+    await Events.updateAsync(
+      { _id: eventId },
+      { $pull: { participants: { user: participantId } } },
+    );
 
     if (!event.courseId) {
       return;
