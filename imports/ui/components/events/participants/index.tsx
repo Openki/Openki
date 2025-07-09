@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Modal from "bootstrap/js/dist/modal";
-import { useUserId, useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/utils/react-meteor-data";
 import { Template } from "meteor/templating";
 
 import { EventModel, EventParticipantEntity } from "/imports/api/events/events";
