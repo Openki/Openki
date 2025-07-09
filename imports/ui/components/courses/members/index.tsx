@@ -74,20 +74,20 @@ export function Members({ course }: { course: CourseModel }) {
             "{NUM, plural, =0{No interested yet} one{1 interested} other{# interested} }",
             { NUM: howManyEnrolled() },
           )}{" "}
-          {canNotifyAll() ? (
+          {canNotifyAll() && (
             <i
               className="fa-solid fa-envelope contact-members"
               onClick={handleContactMembersClick}
             ></i>
-          ) : null}
+          )}
         </h4>
       </div>
-      {course?.members ? (
+      {!!course?.members && (
         <div className="course-members">
           {sortedMembers()?.map((member) => (
             <Member key={member.user} member={member} course={course} />
           ))}
-          {limited() ? (
+          {limited() && (
             <button
               className="btn btn-add page-component-btn"
               type="button"
@@ -95,9 +95,9 @@ export function Members({ course }: { course: CourseModel }) {
             >
               {t("_button.more")}
             </button>
-          ) : null}
+          )}
         </div>
-      ) : null}
+      )}
     </>
   );
 }
