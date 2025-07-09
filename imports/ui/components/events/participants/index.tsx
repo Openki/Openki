@@ -32,22 +32,24 @@ function EventParticipant({
   }
 
   return (
-    <div className={`event-participant ${ownUserParticipantClass()}`}>
-      <ProfileLink userId={participant.user} />
-      &nbsp;
-      <Contribution userId={participant.user} />
-      &nbsp;
+    <div
+      className={`event-participant ${ownUserParticipantClass()} d-flex flex-wrap align-items-center`}
+    >
+      <div className="me-1">
+        <ProfileLink userId={participant.user} />
+        <Contribution userId={participant.user} />
+      </div>
       <ParticipantContact participant={participant.user} event={event} />
-      {participant.companions ? (
+      {!!participant.companions && (
         <strong
-          className="float-end p-1 bg-primary text-light"
+          className="ms-auto p-1 bg-primary text-light"
           data-bs-toggle="tooltip"
           data-bs-title={t("eventParticipant.iBringCompanions", "Brings companion.")}
         >
           +{participant.companions}{" "}
           <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
         </strong>
-      ) : null}
+      )}
     </div>
   );
 }
