@@ -34,17 +34,17 @@ export function CalendarSection() {
         <ul className="dropdown-menu">
           <li>
             <a className="dropdown-item" href={webcalUrl}>
-              <i className="fa-fw fa-solid fa-download"></i> {t("profile.calendar.iCal", "iCal")}
+              <i className="fa-fw fa-solid fa-download"></i> {t("profile.calendar.iCal", "iCal-Calendar")}
             </a>
           </li>
           <li>
-            <a className="dropdown-item" href={generateForOutlook(webcalUrl)}>
+            <a className="dropdown-item" href={generateForOutlook(webcalUrl)} target="_blank" rel="noreferrer">
               <i className="fa-fw fa-solid fa-arrow-up-right-from-square"></i>{" "}
               {t("profile.calendar.outlook", "Outlook.com (Web)")}
             </a>
           </li>
           <li>
-            <a className="dropdown-item" href={generateForGoogle(webcalUrl)}>
+            <a className="dropdown-item" href={generateForGoogle(webcalUrl)} target="_blank" rel="noreferrer">
               <i className="fa-fw fa-solid fa-arrow-up-right-from-square"></i>{" "}
               {t("profile.calendar.google", "Google Kalender (Web)")}
             </a>
