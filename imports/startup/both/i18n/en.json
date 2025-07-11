@@ -951,7 +951,7 @@
   "regionsSplash.plsChooseRegion": "Please choose a region",
   "regionsSplash.welcome": "Welcome to {SITE}!",
   "regionTag.inRegion": "in {REGION}",
-  "register.warning.emailExists": "This email is already in use. In case you forgot your password, you can reset it. In case you interacted as guest, please create a user.",
+  "register.warning.emailExists": "This email is already in use. We can send you an email with the next step.",
   "register.warning.emailExists.sendEmail": "Ok, send me an email to continue",
   "register.warning.emailNotValid": "",
   "register.warning.noEmailProvided": "Please enter an email-address to register.",
