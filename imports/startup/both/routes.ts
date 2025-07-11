@@ -244,6 +244,17 @@ RouterAsync.route("visitorToUser", {
   },
 });
 
+RouterAsync.route("autoLoginVisitor", {
+  path: "auto-login-visitor/:token",
+  template: "AutoLoginVisitorPage",
+  async onRun() {
+    await import("/imports/ui/pages/auto-login-visitor");
+  },
+  data() {
+    return { token: this.params.token, email: this.params.query.email };
+  },
+});
+
 RouterAsync.route("showCourse", {
   path: "course/:_id/:slug?",
   template: "courseDetailsPage",
@@ -1044,15 +1055,6 @@ RouterAsync.route("resetPasswortEmail", {
       const user = await UsersCollection.findOneAsync({ "emails.address": email });
       if (user) {
         Meteor.call("forgotPassword", { email });
-      }
-    } else {
-      const currentUserId = Meteor.userId();
-      if (currentUserId) {
-        const currentUser = await UsersCollection.findOneAsync(currentUserId);
-        if (currentUser) {
-          // if a visitor user want to create an account from his profile.
-          Meteor.call("forgotPassword", { email: currentUser?.emailAddress() });
-        }
       }
     }
 

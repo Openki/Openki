@@ -435,3 +435,11 @@ export const updateLastLogin = ServerMethod("user.updateLastLogin", async () => 
     $set: { lastLogin: new Date() },
   });
 });
+
+export const removeVisitorFlag = ServerMethod("user.removeVisitorFlag", async () => {
+  const userId = Meteor.userId();
+  if (!userId) {
+    throw new Meteor.Error(401, "please log in");
+  }
+  await Users.updateAsync(userId, { $pull: { privileges: "visitor" } });
+});

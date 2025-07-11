@@ -5,11 +5,13 @@ import { useTranslation } from "react-i18next";
 
 export function CreateAccount({
   username,
-  url,
+  createAccountUrl,
+  autoLoginUrl,
   lng,
 }: {
   username: string;
-  url: string;
+  createAccountUrl: string;
+  autoLoginUrl: string;
   lng: string;
 }) {
   const { t } = useTranslation(undefined, { lng });
@@ -23,20 +25,29 @@ export function CreateAccount({
         <td>
           <h5 className="title">{t("email.base.greeting", { USERNAME: username })}</h5>
           <p>
+            {t("createAccount.email.introduction", "Login or create a user account on {SITE}.", {
+              SITE: siteName,
+            })}
+          </p>
+          <p className="gap-md">
             {t(
-              "createAccount.email.introduction",
-              "You requested creating a user account on {SITE}.",
-              { SITE: siteName },
+              "createAccount.email.autoLogin",
+              "You can click this link to login and continues as a vistor.",
             )}
+          </p>
+          <p className="text-center">
+            <a className="button" href={autoLoginUrl}>
+              {t("createAccount.email.autoLoginButton", "Login")}
+            </a>
           </p>
           <p className="gap-md">
             {t(
               "createAccount.email.accountCreation",
-              "You can click this link to choose a password and create your account.",
+              "Or you can click this link to choose a password and create your account.",
             )}
           </p>
           <p className="text-center">
-            <a className="button" href={url}>
+            <a className="button" href={createAccountUrl}>
               {t("createAccount.email.accountCreateButton", "Create account")}
             </a>
           </p>
