@@ -132,9 +132,13 @@ Accounts.emailTemplates.resetPassword = {
         >
           <CreateAccount
             username={userModel.getDisplayName()}
-            url={`${url.replace(
+            createAccountUrl={`${url.replace(
               "reset-password",
               "visitor-to-user",
+            )}?email=${userModel.emailAddress()}`}
+            autoLoginUrl={`${url.replace(
+              "reset-password",
+              "auto-login-visitor",
             )}?email=${userModel.emailAddress()}`}
             lng={userModel.locale}
           />
