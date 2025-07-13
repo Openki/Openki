@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { Mongo } from "meteor/mongo";
 import { Router } from "meteor/iron:router";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
@@ -228,3 +229,32 @@ template.helpers({
     return Template.instance().weekdays;
   },
 });
+
+export function WeekPage(){
+  return <>
+    {{> accountTasks}}
+    {{#if control}}
+      {{> calendarNavWeek calendarNavAttr }}
+    {{/if}}
+    <div class="py-4">
+      {{#each weekday in weekdays}}
+        <div class="js-calendar-date frame-week-date">
+          {{calendarDayFormat weekday.date}}
+        </div>
+        <div class="frame-week-date-events">
+          {{#if Template.subscriptionsReady}}
+            {{#if hasDayEvents weekday}}
+              {{> eventList dataEvents=weekday.dayEvents withDate=false withImage=true openInNewTab=true}}
+            {{else}}
+              <div class="text-center">
+                {{i18n 'frameCalendar.nothingOnThisDay' "Relax, nothing happening today."}}
+              </div>
+            {{/if}}
+          {{else}}
+            {{> loadingRow}}
+          {{/if}}
+        </div>
+      {{/each}}
+    </div>
+  </>
+}
