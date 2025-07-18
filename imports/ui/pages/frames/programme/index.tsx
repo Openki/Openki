@@ -20,7 +20,7 @@ import { AccountTasks } from "/imports/ui/components/account-tasks";
 import {
   CalendarNavWeek,
   Props as CalendarNavData,
-} from "/imports/ui/components/calendar-nav/week";
+} from "/imports/ui/components/calendar-nav/programme";
 import { EventList } from "/imports/ui/components/events/list";
 import { LoadingRow } from "../../loading";
 
