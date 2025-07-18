@@ -668,6 +668,18 @@ RouterAsync.route("frameWeek", {
   },
 });
 
+RouterAsync.route("frameProgramme", {
+  path: "/frame/programme",
+  template: "frameProgrammePage",
+  layoutTemplate: "frameLayout",
+  async onRun() {
+    await import("/imports/ui/pages/frames/programme");
+  },
+  data() {
+    return this.params.query;
+  },
+});
+
 RouterAsync.route("kioskEvents", {
   path: "/kiosk/events",
   template: "kioskEventsPage",
