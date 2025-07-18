@@ -130,9 +130,3 @@ export function Day(data: Data) {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("CalendarNavDay", () => Day);

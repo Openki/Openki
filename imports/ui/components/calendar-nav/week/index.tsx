@@ -157,9 +157,3 @@ export function CalendarNavWeek(props: Props) {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("CalendarNavWeek", () => CalendarNavWeek);

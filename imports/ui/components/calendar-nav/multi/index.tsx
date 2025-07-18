@@ -137,9 +137,3 @@ export function Multi({ date, filter, setIsAttendeeFilterOn }: Props) {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("CalendarNavMulti", () => Multi);
