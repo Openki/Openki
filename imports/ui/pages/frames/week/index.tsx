@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Mongo } from "meteor/mongo";
+import { chain } from "lodash";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
@@ -7,7 +7,7 @@ import { useUserId } from "/imports/utils/react-meteor-data";
 
 import moment from "moment";
 
-import { EventEntity, EventModel, Events } from "/imports/api/events/events";
+import { EventModel, Events } from "/imports/api/events/events";
 import { useFindFilter } from "/imports/api/events/publications";
 
 import * as UrlTools from "/imports/utils/url-tools";
@@ -31,7 +31,7 @@ const DefaultLimit = 200;
 
 interface Weekday {
   date: moment.Moment;
-  dayEvents: Mongo.Cursor<EventEntity, EventModel>;
+  dayEvents: EventModel[];
 }
 
 export function WeekPage(data: Record<string, string>) {
@@ -65,7 +65,7 @@ export function WeekPage(data: Record<string, string>) {
       .read(data)
       .toQuery().count || DefaultLimit;
 
-  const [isLoading] = useFindFilter(filterQuery, limit + 1);
+  const [isLoading, events] = useFindFilter(filterQuery, limit + 1);
 
   function control() {
     return data.control === "1";
@@ -114,12 +114,10 @@ export function WeekPage(data: Record<string, string>) {
   }
 
   function hasDayEvents(weekday: Weekday) {
-    return weekday.dayEvents.count() > 0;
+    return weekday.dayEvents.length > 0;
   }
 
   function weekdays() {
-    const filter = Events.Filtering().read(data);
-
     const start = startOfWeek;
     const end = moment(start).add(1, "week");
 
@@ -127,13 +125,15 @@ export function WeekPage(data: Record<string, string>) {
     let current = moment(start);
     while (current.isBefore(end)) {
       const next = moment(current).add(1, "day");
-      const filterQuery = filter.toQuery();
-      filterQuery.after = current.toDate();
-      filterQuery.end = next.toDate();
+      const after = current.toDate();
+      const end = next.toDate();
 
       weekdays.push({
         date: current,
-        dayEvents: Events.findFilter(filterQuery, limit),
+        dayEvents: chain(events)
+          .filter((e) => e.start > after && e.start <= end)
+          .take(limit)
+          .value(),
       });
       current = next;
     }
@@ -187,7 +187,7 @@ export function WeekPage(data: Record<string, string>) {
               {!isLoading() ? (
                 hasDayEvents(weekday) ? (
                   <EventList
-                    dataEvents={weekday.dayEvents.fetch()}
+                    dataEvents={weekday.dayEvents}
                     withDate={false}
                     withImage={true}
                     openInNewTab={true}
