@@ -64,7 +64,7 @@ export function CalendarNavProgramme(props: Props) {
         </div>
         <div className="col-md-3 col-lg-4 p-1">
           {!hideSwitches && (
-            <div className="row">
+            <div className="row px-2">
               {days.map((d) => (
                 <div key={d.toISOString()} className="col px-1">
                   <div className="d-grid">
