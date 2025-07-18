@@ -18,7 +18,7 @@ import * as Metatags from "/imports/utils/metatags";
 
 import { AccountTasks } from "/imports/ui/components/account-tasks";
 import {
-  CalendarNavWeek,
+  CalendarNavProgramme,
   Props as CalendarNavData,
 } from "/imports/ui/components/calendar-nav/programme";
 import { EventList } from "/imports/ui/components/events/list";
@@ -34,6 +34,17 @@ interface Weekday {
   dayEvents: EventModel[];
 }
 
+function getDays(start: moment.Moment, end: moment.Moment) {
+  const days = [];
+  let current = moment(start);
+  while (current.isBefore(end)) {
+    const next = moment(current).add(1, "day");
+    days.push(current);
+    current = next;
+  }
+  return days;
+}
+
 export function ProgrammePage(data: Record<string, string>) {
   const { t } = useTranslation();
   const { calendarDayFormat } = useDateTimeFormat();
@@ -42,9 +53,11 @@ export function ProgrammePage(data: Record<string, string>) {
 
   const filter = Events.Filtering().read(data);
 
-  const date = filter.get("after") || moment(reactiveNow.get());
+  const date = moment(reactiveNow.get());
+  const start = filter.get("start") || date.startOf("week");
+  const end = filter.get("end") || moment(start).add(1, "week");
 
-  const startOfWeek = date.startOf("week");
+  const [selectedDays, setSelectedDays] = useState(getDays(start, end));
 
   const filterQuery = filter.toQuery();
 
@@ -53,10 +66,8 @@ export function ProgrammePage(data: Record<string, string>) {
     filterQuery.participant = userId;
   }
 
-  if (startOfWeek) {
-    filterQuery.after = startOfWeek.toDate();
-    filterQuery.end = moment(startOfWeek).add(1, "week").toDate();
-  }
+  filterQuery.after = start.toDate();
+  filterQuery.end = end.toDate();
 
   const limit =
     new Filtering({
@@ -79,10 +90,13 @@ export function ProgrammePage(data: Record<string, string>) {
         filter.add("search", newValue);
         update();
       },
-      date: startOfWeek,
-      onChangeDate: (newDate) => {
-        filter.add("after", newDate.startOf("week").toISOString());
-        update();
+      days: getDays(start, end),
+      selectedDays,
+      onAddDay: (day) => {
+        setSelectedDays([...selectedDays, day].sort());
+      },
+      onRemoveDay: (day) => {
+        setSelectedDays(selectedDays.filter((d) => !d.isSame(day)));
       },
       availableGroups: new Filtering({
         filterGroups: Predicates.ids,
@@ -117,18 +131,15 @@ export function ProgrammePage(data: Record<string, string>) {
     return weekday.dayEvents.length > 0;
   }
 
-  function weekdays() {
-    const start = startOfWeek;
-    const end = moment(start).add(1, "week");
-
-    const weekdays = [];
+  function days() {
+    const days = [];
     let current = moment(start);
     while (current.isBefore(end)) {
       const next = moment(current).add(1, "day");
       const after = current.toDate();
       const end = next.toDate();
 
-      weekdays.push({
+      days.push({
         date: current,
         dayEvents: chain(events)
           .filter((e) => e.start > after && e.start <= end)
@@ -137,7 +148,7 @@ export function ProgrammePage(data: Record<string, string>) {
       });
       current = next;
     }
-    return weekdays;
+    return days;
   }
 
   useEffect(() => {
@@ -176,33 +187,35 @@ export function ProgrammePage(data: Record<string, string>) {
   return (
     <>
       <AccountTasks />
-      {control() && <CalendarNavWeek {...calendarNavAttr()} />}
+      {control() && <CalendarNavProgramme {...calendarNavAttr()} />}
       <div className="py-4">
-        {weekdays().map((weekday) => (
-          <>
-            <div className="js-calendar-date frame-programme-date">
-              {calendarDayFormat(weekday.date)}
-            </div>
-            <div className="frame-programme-date-events">
-              {!isLoading() ? (
-                hasDayEvents(weekday) ? (
-                  <EventList
-                    dataEvents={weekday.dayEvents}
-                    withDate={false}
-                    withImage={true}
-                    openInNewTab={true}
-                  />
+        {days()
+          .filter((day) => selectedDays.find((s) => s.isSame(day.date)))
+          .map((day) => (
+            <>
+              <div className="js-calendar-date frame-programme-date">
+                {calendarDayFormat(day.date)}
+              </div>
+              <div className="frame-programme-date-events">
+                {!isLoading() ? (
+                  hasDayEvents(day) ? (
+                    <EventList
+                      dataEvents={day.dayEvents}
+                      withDate={false}
+                      withImage={true}
+                      openInNewTab={true}
+                    />
+                  ) : (
+                    <div className="text-center">
+                      {t("frameCalendar.nothingOnThisDay", "Relax, nothing happening today.")}
+                    </div>
+                  )
                 ) : (
-                  <div className="text-center">
-                    {t("frameCalendar.nothingOnThisDay", "Relax, nothing happening today.")}
-                  </div>
-                )
-              ) : (
-                <LoadingRow />
-              )}
-            </div>
-          </>
-        ))}
+                  <LoadingRow />
+                )}
+              </div>
+            </>
+          ))}
       </div>
     </>
   );
