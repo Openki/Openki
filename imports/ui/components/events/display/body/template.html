@@ -24,7 +24,7 @@
         <div class="tab-content border-none">
           <div class="tab-pane mh-none overflow-visible active" id="description" role="tabpanel"
                aria-labelledby="description-tab" tabindex="0">
-            {{> eventContent}}
+            {{> eventContent event=this}}
           </div>
           <div class="tab-pane mh-none" id="files" role="tabpanel" aria-labelledby="files-tab"
                tabindex="0">
@@ -34,10 +34,10 @@
           </div>
         </div>
       {{else}}
-        {{> eventContent}}
+        {{> eventContent event=this}}
       {{/if}}
     {{else}}
-      {{> eventContent}}
+      {{> eventContent event=this}}
     {{/if}}
     {{#if replicating}}
       {{> eventReplication eventReplicationAttr}}
