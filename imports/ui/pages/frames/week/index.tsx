@@ -1,25 +1,28 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Mongo } from "meteor/mongo";
 import { Router } from "meteor/iron:router";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import { ReactiveDict } from "meteor/reactive-dict";
-import { Meteor } from "meteor/meteor";
-import { MeteorAsync, TrackerAsync } from "/imports/utils/promisify";
+import { useTranslation } from "react-i18next";
+import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useUserId } from "/imports/utils/react-meteor-data";
 
 import moment from "moment";
 
 import { EventEntity, EventModel, Events } from "/imports/api/events/events";
+import { useFindFilter } from "/imports/api/events/publications";
 
 import * as UrlTools from "/imports/utils/url-tools";
 import { reactiveNow } from "/imports/utils/reactive-now";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
-import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
 
-import "/imports/ui/components/events/list";
-import "/imports/ui/components/calendar-nav/week";
-import type { Props as CalendarNavData } from "/imports/ui/components/calendar-nav/week";
+import { AccountTasks } from "/imports/ui/components/account-tasks";
+import {
+  CalendarNavWeek,
+  Props as CalendarNavData,
+} from "/imports/ui/components/calendar-nav/week";
+import { EventList } from "/imports/ui/components/events/list";
+import { LoadingRow } from "../../loading";
 
 import "./template.html";
 import "./styles.scss";
@@ -31,74 +34,93 @@ interface Weekday {
   dayEvents: Mongo.Cursor<EventEntity, EventModel>;
 }
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "frameWeekPage",
-  Record<string, string>,
-  {
-    startOfWeek: moment.Moment;
-    weekdays: Weekday[];
-    filter: ReturnType<(typeof Events)["Filtering"]>;
-    limit: number;
-    update: () => void;
-    state: ReactiveDict<{
-      isAttendeeFilterOn: boolean;
-    }>;
+export function WeekPage(data: Record<string, string>) {
+  const { t } = useTranslation();
+  const { calendarDayFormat } = useDateTimeFormat();
+  const userId = useUserId();
+  const [isAttendeeFilterOn, setIsAttendeeFilterOn] = useState(false);
+
+  const filter = Events.Filtering().read(data);
+
+  const date = filter.get("after") || moment(reactiveNow.get());
+
+  const startOfWeek = date.startOf("week");
+
+  const filterQuery = filter.toQuery();
+
+  // filter isAttendeeFilterOn in addition to filtering that get's passed in via url
+  if (userId && isAttendeeFilterOn) {
+    filterQuery.participant = userId;
   }
->;
 
-const template = Template.frameWeekPage;
+  if (startOfWeek) {
+    filterQuery.after = startOfWeek.toDate();
+    filterQuery.end = moment(startOfWeek).add(1, "week").toDate();
+  }
 
-template.onCreated(function () {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const instance = this;
+  const limit =
+    new Filtering({
+      count: Predicates.integer,
+    })
+      .read(data)
+      .toQuery().count || DefaultLimit;
 
-  instance.autorun(() => {
-    Metatags.setCommonTags(i18n("calendar.windowtitle", "Calendar"));
-  });
+  const [isLoading] = useFindFilter(filterQuery, limit + 1);
 
-  instance.weekdays = [];
+  function control() {
+    return data.control === "1";
+  }
 
-  instance.state = new ReactiveDict();
-  instance.state.setDefault({ isAttendeeFilterOn: false });
-
-  instance.autorun(() => {
-    const data = Template.currentData();
-
-    instance.filter = Events.Filtering().read(data);
-
-    const date = instance.filter.get("after") || moment(reactiveNow.get());
-
-    instance.startOfWeek = date.startOf("week");
-
-    const filterQuery = instance.filter.toQuery();
-
-    const userId = Meteor.userId();
-    // filter isAttendeeFilterOn in addition to filtering that get's passed in via url
-    if (userId && instance.state.get("isAttendeeFilterOn")) {
-      filterQuery.participant = userId;
-    }
-
-    const startOfWeek = instance.startOfWeek;
-    if (startOfWeek) {
-      filterQuery.after = startOfWeek.toDate();
-      filterQuery.end = moment(startOfWeek).add(1, "week").toDate();
-    }
-
-    instance.limit =
-      new Filtering({
-        count: Predicates.integer,
+  function calendarNavAttr() {
+    return {
+      hideSwitches: data.hideSwitches === "1",
+      search: filter.get("search"),
+      onChangeSearch: (newValue: string) => {
+        filter.add("search", newValue);
+        update();
+      },
+      date: startOfWeek,
+      onChangeDate: (newDate) => {
+        filter.add("after", newDate.startOf("week").toISOString());
+        update();
+      },
+      availableGroups: new Filtering({
+        filterGroups: Predicates.ids,
       })
         .read(data)
-        .toQuery().count || DefaultLimit;
+        .get("filterGroups"),
+      selectedGroups: filter.get("groups"),
+      onAddGroup: (group) => {
+        filter.add("groups", group);
+        update();
+      },
+      onRemoveGroup: (group) => {
+        filter.remove("groups", group);
+        update();
+      },
+      categories: filter.get("categories"),
+      onAddCategory: (category) => {
+        filter.add("categories", category);
+        update();
+      },
+      onRemoveCategory: (category) => {
+        filter.remove("categories", category);
+        update();
+      },
+      onChangeAttendingEventsOnly: (state) => {
+        setIsAttendeeFilterOn(state);
+      },
+    } as CalendarNavData;
+  }
 
-    instance.subscribe("Events.findFilter", filterQuery, instance.limit + 1);
-  });
+  function hasDayEvents(weekday: Weekday) {
+    return weekday.dayEvents.count() > 0;
+  }
 
-  instance.autorun(() => {
-    const data = Template.currentData();
+  function weekdays() {
     const filter = Events.Filtering().read(data);
 
-    const start = instance.startOfWeek;
+    const start = startOfWeek;
     const end = moment(start).add(1, "week");
 
     const weekdays = [];
@@ -111,28 +133,32 @@ template.onCreated(function () {
 
       weekdays.push({
         date: current,
-        dayEvents: Events.findFilter(filterQuery, instance.limit),
+        dayEvents: Events.findFilter(filterQuery, limit),
       });
       current = next;
     }
-    instance.weekdays = weekdays;
+    return weekdays;
+  }
+
+  useEffect(() => {
+    Metatags.setCommonTags(t("calendar.windowtitle", "Calendar"));
   });
 
-  instance.update = () => {
-    const filterParams = instance.filter.toParams() as Record<string, string>;
-    filterParams.count = instance.limit.toString();
-    if (instance.data.control) {
-      filterParams.control = instance.data.control;
+  function update() {
+    const filterParams = filter.toParams() as Record<string, string>;
+    filterParams.count = limit.toString();
+    if (data.control) {
+      filterParams.control = data.control;
     } else {
       delete filterParams.control;
     }
-    if (instance.data.hideSwitches) {
-      filterParams.hideSwitches = instance.data.hideSwitches;
+    if (data.hideSwitches) {
+      filterParams.hideSwitches = data.hideSwitches;
     } else {
       delete filterParams.hideSwitches;
     }
-    if (instance.data.filterGroups) {
-      filterParams.filterGroups = instance.data.filterGroups;
+    if (data.filterGroups) {
+      filterParams.filterGroups = data.filterGroups;
     } else {
       delete filterParams.filterGroups;
     }
@@ -145,116 +171,45 @@ template.onCreated(function () {
     }
 
     Router.go(Router.current().route.getName(), {}, options);
-  };
-});
+  }
 
-template.onRendered(function () {
-  const instance = Template.instance();
-
-  // change of week does not trigger onRendered again
-  instance.autorun(async () => {
-    const { data } = instance;
-
-    instance.filter = Events.Filtering().read(data);
-
-    const date = instance.filter.get("after") || moment(reactiveNow.get());
-
-    // only do this in the current week
-    if (moment().format("w") === date?.format("w")) {
-      if (instance.subscriptionsReady()) {
-        await TrackerAsync.afterFlush();
-        await MeteorAsync.defer();
-        const elem = instance.$(".js-calendar-date").eq(moment().weekday());
-
-        // calendar nav and topnav are together 137px fixed height, we add 3px margin
-        document.querySelector(".frame")?.scrollTo(0, (elem.offset() || { top: 0 }).top - 3);
-      }
-    }
-  });
-});
-
-template.helpers({
-  control() {
-    return Template.instance().data.control === "1";
-  },
-
-  calendarNavAttr() {
-    const instance = Template.instance();
-    return {
-      hideSwitches: instance.data.hideSwitches === "1",
-      search: instance.filter.get("search"),
-      onChangeSearch: (newValue: string) => {
-        instance.filter.add("search", newValue);
-        instance.update();
-      },
-      date: instance.startOfWeek,
-      onChangeDate: (newDate) => {
-        instance.filter.add("after", newDate.startOf("week").toISOString());
-        instance.update();
-      },
-      availableGroups: new Filtering({
-        filterGroups: Predicates.ids,
-      })
-        .read(instance.data)
-        .get("filterGroups"),
-      selectedGroups: instance.filter.get("groups"),
-      onAddGroup: (group) => {
-        instance.filter.add("groups", group);
-        instance.update();
-      },
-      onRemoveGroup: (group) => {
-        instance.filter.remove("groups", group);
-        instance.update();
-      },
-      categories: instance.filter.get("categories"),
-      onAddCategory: (category) => {
-        instance.filter.add("categories", category);
-        instance.update();
-      },
-      onRemoveCategory: (category) => {
-        instance.filter.remove("categories", category);
-        instance.update();
-      },
-      onChangeAttendingEventsOnly: (state) => {
-        instance.state.set("isAttendeeFilterOn", state);
-      },
-    } as CalendarNavData;
-  },
-
-  hasDayEvents(weekday: Weekday) {
-    return weekday.dayEvents.count() > 0;
-  },
-
-  weekdays() {
-    return Template.instance().weekdays;
-  },
-});
-
-export function WeekPage(){
-  return <>
-    {{> accountTasks}}
-    {{#if control}}
-      {{> calendarNavWeek calendarNavAttr }}
-    {{/if}}
-    <div class="py-4">
-      {{#each weekday in weekdays}}
-        <div class="js-calendar-date frame-week-date">
-          {{calendarDayFormat weekday.date}}
-        </div>
-        <div class="frame-week-date-events">
-          {{#if Template.subscriptionsReady}}
-            {{#if hasDayEvents weekday}}
-              {{> eventList dataEvents=weekday.dayEvents withDate=false withImage=true openInNewTab=true}}
-            {{else}}
-              <div class="text-center">
-                {{i18n 'frameCalendar.nothingOnThisDay' "Relax, nothing happening today."}}
-              </div>
-            {{/if}}
-          {{else}}
-            {{> loadingRow}}
-          {{/if}}
-        </div>
-      {{/each}}
-    </div>
-  </>
+  return (
+    <>
+      <AccountTasks />
+      {control() && <CalendarNavWeek {...calendarNavAttr()} />}
+      <div className="py-4">
+        {weekdays().map((weekday) => (
+          <>
+            <div className="js-calendar-date frame-week-date">
+              {calendarDayFormat(weekday.date)}
+            </div>
+            <div className="frame-week-date-events">
+              {!isLoading() ? (
+                hasDayEvents(weekday) ? (
+                  <EventList
+                    dataEvents={weekday.dayEvents.fetch()}
+                    withDate={false}
+                    withImage={true}
+                    openInNewTab={true}
+                  />
+                ) : (
+                  <div className="text-center">
+                    {t("frameCalendar.nothingOnThisDay", "Relax, nothing happening today.")}
+                  </div>
+                )
+              ) : (
+                <LoadingRow />
+              )}
+            </div>
+          </>
+        ))}
+      </div>
+    </>
+  );
 }
+
+// for Blaze
+
+import "./template.html";
+
+Template.registerHelper("FrameWeekPage", () => WeekPage);

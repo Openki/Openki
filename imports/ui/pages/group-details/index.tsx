@@ -72,7 +72,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
   const mayEdit = group.editableBy(user);
 
   function isFeatured() {
-    return region && !group.isNew() && region.featuredGroup === group._id;
+    return !!region && !group.isNew() && region.featuredGroup === group._id;
   }
   function headerClasses() {
     const classes = [];
@@ -238,12 +238,12 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
   return (
     <>
       <div className="container mb-4">
-        {group.isNew() ? <h2>{t("group.details.titleNew", "Create new group")}</h2> : null}
+        {group.isNew() && <h2>{t("group.details.titleNew", "Create new group")}</h2>}
         <div className="page-component group-details">
           <div className="group-details-titlebar clearfix">
             {t("group.details.group", "Group")}
 
-            {isFeatured() ? (
+            {isFeatured() && (
               <>
                 {" "}
                 <i
@@ -252,7 +252,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
                   className="fa-solid fa-star fa-fw"
                 ></i>
               </>
-            ) : null}
+            )}
 
             <button
               className="btn btn-link float-end ms-2"
@@ -264,7 +264,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
             >
               <i className="fa-solid fa-xmark fa-lg" aria-hidden="true"></i>
             </button>
-            {!group.isNew() && mayEdit ? (
+            {!group.isNew() && mayEdit && (
               <button
                 className="btn btn-link float-end ms-2"
                 data-bs-toggle="tooltip"
@@ -275,14 +275,14 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
               >
                 <i className="fa-solid fa-gear fa-lg" aria-hidden="true"></i>
               </button>
-            ) : null}
+            )}
           </div>
           <div className={`details-header group-details-header clearfix ${headerClasses()}`}>
-            {group.publicLogoUrl() ? (
+            {!!group.publicLogoUrl() && (
               <div className="group-details-logo">
                 <img src={group.publicLogoUrl()} />
               </div>
-            ) : null}
+            )}
             <div className="group-details-name">
               {mayEdit ? <Editable {...editableNameAttr} /> : group.name}
             </div>{" "}
@@ -306,7 +306,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
                 )}
               </div>
 
-              {errors.all ? <span className="form-text d-block">{errors.all}</span> : null}
+              {!!errors.all && <span className="form-text d-block">{errors.all}</span>}
 
               {!!(group.venues && group.venues.length > 0) && (
                 <div className="group-details-venues">
@@ -322,17 +322,17 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
               )}
             </div>
           </div>
-          {group.isNew() ? (
+          {group.isNew() && (
             <div className="actions">
               <ButtonSave onClick={handleSave} disabled={isBusy} />
               <ButtonCancel onClick={handleCancel} disabled={isBusy} />
             </div>
-          ) : null}
-          {allowEditingSettings() ? <GroupSettings group={group} /> : null}
+          )}
+          {allowEditingSettings() && <GroupSettings group={group} />}
         </div>
-        {!dashboardAttr().list.length && showCourses ? <Find query={courseQuery} /> : null}
+        {!dashboardAttr().list.length && showCourses && <Find query={courseQuery} />}
       </div>
-      {dashboardAttr().list.length && showCourses ? <Dashboard {...dashboardAttr()} /> : null}
+      {!!dashboardAttr().list.length && showCourses && <Dashboard {...dashboardAttr()} />}
     </>
   );
 }
