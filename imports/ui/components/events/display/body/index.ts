@@ -10,7 +10,6 @@ import { EventModel } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { Regions } from "/imports/api/regions/regions";
 
-import * as TemplateMixins from "/imports/ui/lib/template-mixins";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { PleaseLogin } from "/imports/ui/lib/please-login";
 
@@ -41,14 +40,15 @@ import "./template.html";
 import "./styles.scss";
 
 {
-  const Template = TemplateMixins.Expandible(
-    TemplateAny as TemplateStaticTyped<
-      "eventDisplay",
-      { event: EventModel },
-      { replicating: ReactiveVar<boolean>; canceling: ReactiveVar<boolean> }
-    >,
+  const Template = TemplateAny as TemplateStaticTyped<
     "eventDisplay",
-  );
+    { event: EventModel },
+    {
+      replicating: ReactiveVar<boolean>;
+      canceling: ReactiveVar<boolean>;
+      expanded: ReactiveVar<boolean>;
+    }
+  >;
 
   const template = Template.eventDisplay;
 
@@ -57,6 +57,7 @@ import "./styles.scss";
     const instance = this;
     instance.replicating = new ReactiveVar(false);
     instance.canceling = new ReactiveVar(false);
+    instance.expanded = new ReactiveVar(false);
   });
 
   template.helpers({
@@ -77,7 +78,7 @@ import "./styles.scss";
       return Courses.findOne(Template.instance().data.event.courseId);
     },
     isExpanded() {
-      return Template.instance().canceling.get() || Template.instance().expanded();
+      return Template.instance().canceling.get() || Template.instance().expanded.get();
     },
     cancelConfirmDialogAttr(): CancelConfirmDialogProps {
       const instance = Template.instance();
@@ -155,7 +156,7 @@ import "./styles.scss";
           }
         },
         onCancel: async () => {
-          Session.set("verify", false);
+          instance.expanded.set(false);
         },
       };
     },
@@ -165,11 +166,11 @@ import "./styles.scss";
         event: instance.data.event,
         afterSave: async () => {
           instance.replicating.set(false);
-          instance.collapse();
+          instance.expanded.set(false);
         },
         onCancel: async () => {
           instance.replicating.set(false);
-          instance.collapse();
+          instance.expanded.set(false);
         },
       };
     },
@@ -178,11 +179,14 @@ import "./styles.scss";
   template.events({
     "click .js-show-replication"(_event, instance) {
       instance.replicating.set(true);
-      instance.collapse();
+      instance.expanded.set(false);
     },
     "click .js-cancel"(_event, instance) {
       instance.canceling.set(true);
-      instance.collapse();
+      instance.expanded.set(false);
+    },
+    "click .js-expand"(_event, instance) {
+      instance.expanded.set(true);
     },
 
     async "click .js-event-uncancel"(_event, instance) {
