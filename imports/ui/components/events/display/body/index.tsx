@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { ReactiveVar } from "meteor/reactive-var";
 import { Router } from "meteor/iron:router";
-import { i18n } from "/imports/startup/both/i18next";
-import { Meteor } from "meteor/meteor";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import { useTranslation } from "react-i18next";
+import { useUser } from "/imports/utils/react-meteor-data";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { Courses } from "/imports/api/courses/courses";
@@ -14,31 +14,15 @@ import { Regions } from "/imports/api/regions/regions";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { PleaseLogin } from "/imports/ui/lib/please-login";
 
-import "/imports/ui/components/courses/files";
-import "/imports/ui/components/buttons";
-import "/imports/ui/components/courses/categories";
-import "/imports/ui/components/events/display/course-header";
-import "/imports/ui/components/events/display/header";
-import "/imports/ui/components/events/edit";
-import "/imports/ui/components/events/participants";
-import "/imports/ui/components/events/replication";
-import "/imports/ui/components/events/display/content";
-import "/imports/ui/components/events/display/group-list";
-import "/imports/ui/components/groups/tag";
-import "/imports/ui/components/price-policy";
-import "/imports/ui/components/regions/tag";
-import "/imports/ui/components/sharing";
-import "/imports/ui/components/report";
-import "/imports/ui/components/venues/link";
-import "/imports/ui/components/internal-indicator";
-import "./delete-confirm-dialog";
-import "./cancel-confirm-dialog";
-import type { Props as DeleteConfirmDialogProps } from "./delete-confirm-dialog";
-import type { Props as CancelConfirmDialogProps } from "./cancel-confirm-dialog";
-import type { Props as EventReplicationProps } from "../../replication";
+import  { Props as DeleteConfirmDialogProps } from "./delete-confirm-dialog";
+import  { CancelConfirmDialog, Props as CancelConfirmDialogProps } from "./cancel-confirm-dialog";
+import  { Props as EventReplicationProps } from "../../replication";
 
 import "./template.html";
 import "./styles.scss";
+import { Content } from "../content";
+import { Files } from "../../../courses/files";
+import { DeleteConfirmDialog } from "../../../delete-confirm-dialog";
 
 const Template = TemplateAny as TemplateStaticTyped<
   "eventDisplay",
@@ -60,118 +44,6 @@ template.onCreated(function () {
   instance.expanded = new ReactiveVar(false);
 });
 
-template.helpers({
-  mayEdit(event: EventModel) {
-    const user = Meteor.user();
-    if (!user) {
-      return false;
-    }
-    return event.editableBy(user);
-  },
-  replicating() {
-    return Template.instance().replicating.get();
-  },
-  singleEvent() {
-    return Courses.findOne(Template.instance().data.event.courseId)?.singleEvent;
-  },
-  course() {
-    return Courses.findOne(Template.instance().data.event.courseId);
-  },
-  isExpanded() {
-    return Template.instance().canceling.get() || Template.instance().expanded.get();
-  },
-  cancelConfirmDialogAttr(): CancelConfirmDialogProps {
-    const instance = Template.instance();
-    return {
-      event: instance.data.event,
-      onCancel: async (reason) => {
-        instance.busy("cancel");
-        PleaseLogin(instance, async () => {
-          const { event } = instance.data;
-          try {
-            await EventsMethods.cancel(event._id, reason);
-
-            instance.canceling.set(false);
-            Alert.success(
-              i18n("event.details.message.eventHasBeenCanceled", "{EVENT} was canceled.", {
-                EVENT: event.title,
-              }),
-            );
-          } catch (err) {
-            Alert.serverError(
-              err,
-              i18n("event.details.message.eventHasBeenCanceled.error", "Cancelling went wrong"),
-            );
-          } finally {
-            instance.busy(false);
-          }
-        });
-      },
-      onClose: () => {
-        instance.canceling.set(false);
-      },
-    };
-  },
-  deleteConfirmDialogAttr(): DeleteConfirmDialogProps {
-    const instance = Template.instance();
-    return {
-      confirmText: i18n(
-        "event.reallydelete",
-        "Please confirm that you would like to delete this event. This might confuse other users and cannot be undone. The event will be permanently deleted and not visible any more.",
-      ),
-      confirmButton: i18n("event.delete.confirm.button", "Delete event without notifying anyone"),
-      cancelButton: i18n("event.delete.confirm.cancel.button", "Rather mark as canceled"),
-      busyButton: i18n("event.delete.confirm.button.busy", "Deleting event…"),
-      onRemove: async () => {
-        const oEvent = instance.data.event;
-        const { title, region } = oEvent;
-        const course = oEvent.courseId;
-
-        instance.data.onRemove();
-        try {
-          await EventsMethods.remove(oEvent._id);
-
-          Alert.success(
-            i18n("eventDetails.eventRemoved", 'The "{TITLE}" event has been deleted.', {
-              TITLE: title,
-            }),
-          );
-
-          Analytics.trackEvent(
-            "Event deletions",
-            "Event deletions as team",
-            Regions.findOne(region)?.nameEn,
-          );
-
-          if (course) {
-            Router.go("showCourse", { _id: course });
-          } else {
-            Router.go("/");
-          }
-        } catch (err) {
-          Alert.serverError(err, i18n("eventDetails.eventRemoved.error", "Could not remove event"));
-        }
-      },
-      onCancel: async () => {
-        instance.expanded.set(false);
-      },
-    };
-  },
-  eventReplicationAttr(): EventReplicationProps {
-    const instance = Template.instance();
-    return {
-      event: instance.data.event,
-      afterSave: async () => {
-        instance.replicating.set(false);
-        instance.expanded.set(false);
-      },
-      onCancel: async () => {
-        instance.replicating.set(false);
-        instance.expanded.set(false);
-      },
-    };
-  },
-});
 
 template.events({
   "click .js-show-replication"(_event, instance) {
@@ -193,7 +65,7 @@ template.events({
       try {
         await EventsMethods.uncancel(event._id);
         Alert.success(
-          i18n(
+          t(
             "event.details.message.eventHasBeenUncanceled",
             "{EVENT} has been uncaneled. No notifications have been sent.",
             {
@@ -204,7 +76,7 @@ template.events({
       } catch (err) {
         Alert.serverError(
           err,
-          i18n("event.details.message.eventHasBeenUncanceled.error", "Uncancelling went wrong"),
+          t("event.details.message.eventHasBeenUncanceled.error", "Uncancelling went wrong"),
         );
       } finally {
         instance.busy(false);
@@ -222,79 +94,189 @@ template.events({
 });
 
 
-export function Display(){
-  return   <div class="page-component">
+export function Display( { event , onRemove}: { event: EventModel; onRemove: () => void },){
+  const { t } = useTranslation();
+const user = useUser()
+
+const [replicating, setReplicating]= useState(false);
+    const [canceling, setCanceling]= useState(false);
+    const [expanded,setExpanded]= useState(false);
+
+ 
+function  mayEdit(event: EventModel) {
+    if (!user) {
+      return false;
+    }
+    return event.editableBy(user);
+  }
+function  singleEvent() {
+    return Courses.findOne(event.courseId)?.singleEvent;
+  }
+function   course() {
+    return Courses.findOne(event.courseId);
+  }
+function   isExpanded() {
+    return canceling || expanded;
+  }
+function   cancelConfirmDialogAttr(): CancelConfirmDialogProps {
+    return {
+      event,
+      onCancel: async (reason) => {
+        instance.busy("cancel");
+        PleaseLogin(instance, async () => {
+          try {
+            await EventsMethods.cancel(event._id, reason);
+
+            setCanceling(false);
+            Alert.success(
+              t("event.details.message.eventHasBeenCanceled", "{EVENT} was canceled.", {
+                EVENT: event.title,
+              }),
+            );
+          } catch (err) {
+            Alert.serverError(
+              err,
+              t("event.details.message.eventHasBeenCanceled.error", "Cancelling went wrong"),
+            );
+          } finally {
+            instance.busy(false);
+          }
+        });
+      },
+      onClose: () => {
+        setCanceling(false);
+      },
+    };
+  }
+function   deleteConfirmDialogAttr(): DeleteConfirmDialogProps {
+    return {
+      confirmText: t(
+        "event.reallydelete",
+        "Please confirm that you would like to delete this event. This might confuse other users and cannot be undone. The event will be permanently deleted and not visible any more.",
+      ),
+      confirmButton: t("event.delete.confirm.button", "Delete event without notifying anyone"),
+      cancelButton: t("event.delete.confirm.cancel.button", "Rather mark as canceled"),
+      busyButton: t("event.delete.confirm.button.busy", "Deleting event…"),
+      onRemove: async () => {
+        const { title, region } = event;
+        const course = event.courseId;
+
+        onRemove();
+        try {
+          await EventsMethods.remove(event._id);
+
+          Alert.success(
+            t("eventDetails.eventRemoved", 'The "{TITLE}" event has been deleted.', {
+              TITLE: title,
+            }),
+          );
+
+          Analytics.trackEvent(
+            "Event deletions",
+            "Event deletions as team",
+            Regions.findOne(region)?.nameEn,
+          );
+
+          if (course) {
+            Router.go("showCourse", { _id: course });
+          } else {
+            Router.go("/");
+          }
+        } catch (err) {
+          Alert.serverError(err, t("eventDetails.eventRemoved.error", "Could not remove event"));
+        }
+      },
+      onCancel: async () => {
+        setExpanded(false);
+      },
+    };
+  }
+function  eventReplicationAttr(): EventReplicationProps {
+    return {
+      event,
+      afterSave: async () => {
+        setReplicating(false);
+        setExpanded(false);
+      },
+      onCancel: async () => {
+        setReplicating(false);
+        setExpanded(false);
+      },
+    };
+  }
+
+  return   <div className="page-component">
     {{#if mayEdit event}}
       {{#if singleEvent}}
         <nav>
-          <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item" role="presentation">
-              <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
+          <ul className="nav nav-tabs" role="tablist">
+            <li className="nav-item" role="presentation">
+              <button className="nav-link active" id="description-tab" data-bs-toggle="tab"
                       data-bs-target="#description" type="button" role="tab"
                       aria-controls="description" aria-selected="true">
-                <span class="fa-solid fa-file-lines fa-fw" aria-hidden="true"></span>
-                <span class="tab-label">{{i18n 'course.subnav.descr' 'Description'}}</span>
+                <span className="fa-solid fa-file-lines fa-fw" aria-hidden="true"></span>
+                <span className="tab-label">{t('course.subnav.descr', 'Description')}</span>
               </button>
             </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="files-tab" data-bs-toggle="tab" data-bs-target="#files"
+            <li className="nav-item" role="presentation">
+              <button className="nav-link" id="files-tab" data-bs-toggle="tab" data-bs-target="#files"
                       type="button" role="tab" aria-controls="files" aria-selected="false">
-                <span class="fa-solid fa-file fa-fw" aria-hidden="true"></span>
-                <span class="tab-label">{{i18n 'course.subnav.files' 'Files'}}</span>
+                <span className="fa-solid fa-file fa-fw" aria-hidden="true"></span>
+                <span className="tab-label">{t( 'course.subnav.files', 'Files')}</span>
               </button>
             </li>
           </ul>
         </nav>
-        <div class="tab-content border-none">
-          <div class="tab-pane mh-none overflow-visible active" id="description" role="tabpanel"
-               aria-labelledby="description-tab" tabindex="0">
-            {{> eventContent event=event}}
+        <div className="tab-content border-none">
+          <div className="tab-pane mh-none overflow-visible active" id="description" role="tabpanel"
+               aria-labelledby="description-tab" tabIndex={0}>
+            <Content event={event}/>
           </div>
-          <div class="tab-pane mh-none" id="files" role="tabpanel" aria-labelledby="files-tab"
-               tabindex="0">
-            <div class="p-3">
-              {{> courseFiles course=event.course}}
+          <div className="tab-pane mh-none" id="files" role="tabpanel" aria-labelledby="files-tab"
+               tabIndex={0}>
+            <div className="p-3">
+              <Files course={course()}/>
             </div>
           </div>
         </div>
       {{else}}
-        {{> eventContent event=event}}
+       <Content event={event}/>
       {{/if}}
     {{else}}
-      {{> eventContent event=event}}
+     <Content event={event}/>
     {{/if}}
     {{#if replicating}}
       {{> eventReplication eventReplicationAttr}}
     {{else}}
       {{#if (mayEdit event)}}
-        <div class="actions">
+        <div className="actions">
           {{#unless isExpanded}}
             {{> buttonEdit event="js-event-edit"}}
-            <button type="button" class="btn btn-edit js-show-replication">
-              {{i18n 'event.details.repl_menu_btn' 'Repeat'}}
+            <button type="button" className="btn btn-edit js-show-replication">
+              {t('event.details.repl_menu_btn', 'Repeat')}
             </button>
-            <a class="btn btn-edit js-download js-track-cal-download"
+            <a className="btn btn-edit js-download js-track-cal-download"
                href="{{pathFor 'calEvent' event}}"
-               title="{{i18n 'event.detail.download_cal' 'Download event to my calendar' attr=true}}">
-              {{i18n 'event.details.download' 'Download'}}
+               title={t( 'event.detail.download_cal', 'Download event to my calendar' )}>
+              {t('event.details.download', 'Download')}
             </a>
             {{#unless event.canceled}}
-              <button type="button" class="btn btn-remove js-cancel">
-                {{i18n 'event.details.cancel' 'Cancel this event'}}
+              <button type="button" className="btn btn-remove js-cancel">
+                {t('event.details.cancel', 'Cancel this event')}
               </button>
             {{else}}
-              <button type="button" class="btn btn-edit js-event-uncancel">
-                {{i18n 'event.details.uncancel' 'Uncancel this event'}}
+              <button type="button" className="btn btn-edit js-event-uncancel">
+                {t('event.details.uncancel', 'Uncancel this event')}
               </button>
             {{/unless}}
             {{> buttonDelete event="js-expand"}}
           {{/unless}}
         </div>
         {{#if instance.expanded.get}}
-          {{> eventDeleteConfirmDialog deleteConfirmDialogAttr}}
+          <DeleteConfirmDialog {...deleteConfirmDialogAttr()}/>
         {{/if}}
         {{#if instance.canceling.get}}
-          {{> cancelConfirmDialog cancelConfirmDialogAttr}}
+          <CancelConfirmDialog {...cancelConfirmDialogAttr()}/>
         {{/if}}
       {{/if}}
     {{/if}}
