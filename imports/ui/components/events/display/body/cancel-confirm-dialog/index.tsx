@@ -6,16 +6,17 @@ import { EventModel } from "/imports/api/events/events";
 import "./template.html";
 import "./styles.scss";
 
-export function CancelConfirmDialog({
-  event,
-  onCancel,
-}: {
+export interface Props {
   event: EventModel;
-  onCancel: () => Promise<void>;
-}) {
+  onCancel: (reason: string) => Promise<void>;
+  onClose: () => void;
+}
+
+export function CancelConfirmDialog({ event, onCancel, onClose }: Props) {
   const { t } = useTranslation();
 
   const [isBusy, setIsBusy] = useState(false);
+  const [reason, setReason] = useState("");
 
   return (
     <div className="event-cancel-confirm">
@@ -38,10 +39,17 @@ export function CancelConfirmDialog({
               </span>
               <textarea
                 rows={3}
-                className="form-control js-event-cancel-message"
+                className="form-control"
                 id="event-cancel-message"
                 maxLength={2000}
-                placeholder={t('event.cancel.reason.placeholder' ,'Please add a reason here. (This message will be sent to all the registered users and not be visible here afterwards)'}
+                placeholder={t(
+                  "event.cancel.reason.placeholder",
+                  "Please add a reason here. (This message will be sent to all the registered users and not be visible here afterwards)",
+                )}
+                value={reason}
+                onChange={(e) => {
+                  setReason(e.target.value);
+                }}
               ></textarea>
             </div>
           </div>
@@ -55,7 +63,7 @@ export function CancelConfirmDialog({
             className="btn btn-danger text-nowrap"
             onClick={async () => {
               setIsBusy(true);
-              await onCancel();
+              await onCancel(reason);
             }}
           >
             {t("event.cancel.confirm.button", "Cancel {EVENT}", { EVENT: event.title })}
@@ -66,10 +74,22 @@ export function CancelConfirmDialog({
             {t("event.canceling", "Canceling...")}
           </button>
         )}
-        <button type="button" className="btn btn-edit js-cancel-event-close">
+        <button
+          type="button"
+          className="btn btn-edit"
+          onClick={() => {
+            onClose();
+          }}
+        >
           {t("event.details.close", "Close")}
         </button>
       </div>
     </div>
   );
 }
+
+// for Blaze
+
+import "./template.html";
+
+Template.registerHelper("CancelConfirmDialog", () => CancelConfirmDialog);

@@ -34,6 +34,7 @@ import "/imports/ui/components/internal-indicator";
 import "./delete-confirm-dialog";
 import "./cancel-confirm-dialog";
 import type { Props as DeleteConfirmDialogProps } from "./delete-confirm-dialog";
+import type { Props as CancelConfirmDialogProps } from "./cancel-confirm-dialog";
 import type { Props as EventReplicationProps } from "../../replication";
 
 import "./template.html";
@@ -78,8 +79,37 @@ import "./styles.scss";
     isExpanded() {
       return Template.instance().canceling.get() || Template.instance().expanded();
     },
-    cancelConfirmDialogAttr() {
-      return { event: Template.instance().data };
+    cancelConfirmDialogAttr(): CancelConfirmDialogProps {
+      const instance = Template.instance();
+      return {
+        event: instance.data,
+        onCancel: async (reason) => {
+          instance.busy("cancel");
+          PleaseLogin(instance, async () => {
+            const event = instance.data;
+            try {
+              await EventsMethods.cancel(event._id, reason);
+
+              instance.canceling.set(false);
+              Alert.success(
+                i18n("event.details.message.eventHasBeenCanceled", "{EVENT} was canceled.", {
+                  EVENT: event.title,
+                }),
+              );
+            } catch (err) {
+              Alert.serverError(
+                err,
+                i18n("event.details.message.eventHasBeenCanceled.error", "Cancelling went wrong"),
+              );
+            } finally {
+              instance.busy(false);
+            }
+          });
+        },
+        onClose: () => {
+          instance.canceling.set(false);
+        },
+      };
     },
     deleteConfirmDialogAttr(): DeleteConfirmDialogProps {
       const instance = Template.instance();
@@ -153,34 +183,6 @@ import "./styles.scss";
     "click .js-cancel"(_event, instance) {
       instance.canceling.set(true);
       instance.collapse();
-    },
-    "click .js-cancel-event-close"(_event, instance) {
-      instance.canceling.set(false);
-    },
-    async "click .js-event-cancel"(_event, instance) {
-      const reason = instance.$(".js-event-cancel-message").val() as string;
-
-      instance.busy("cancel");
-      PleaseLogin(instance, async () => {
-        const event = instance.data;
-        try {
-          await EventsMethods.cancel(event._id, reason);
-
-          instance.canceling.set(false);
-          Alert.success(
-            i18n("event.details.message.eventHasBeenCanceled", "{EVENT} was canceled.", {
-              EVENT: event.title,
-            }),
-          );
-        } catch (err) {
-          Alert.serverError(
-            err,
-            i18n("event.details.message.eventHasBeenCanceled.error", "Cancelling went wrong"),
-          );
-        } finally {
-          instance.busy(false);
-        }
-      });
     },
 
     async "click .js-event-uncancel"(_event, instance) {
