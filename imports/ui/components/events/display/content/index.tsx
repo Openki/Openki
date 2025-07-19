@@ -15,7 +15,6 @@ import { VenueLink } from "../../../venues/link";
 import { PricePolicy } from "../../../price-policy";
 import { Sharing } from "../../../sharing";
 
-import "./template.html";
 import "./styles.scss";
 
 export function Content({ event }: { event: EventModel }) {
