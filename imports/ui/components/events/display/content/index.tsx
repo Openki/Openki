@@ -116,9 +116,3 @@ export function Content({ event }: { event: EventModel }) {
     </>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("EventContent", () => Content);

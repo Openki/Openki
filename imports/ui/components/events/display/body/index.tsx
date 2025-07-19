@@ -305,9 +305,3 @@ export function Display({
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("EventDisplay", () => Display);
