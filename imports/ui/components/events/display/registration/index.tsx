@@ -195,9 +195,3 @@ export function EventRegistration({ event }: Props) {
     </>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("EventRegistration", () => EventRegistration);
