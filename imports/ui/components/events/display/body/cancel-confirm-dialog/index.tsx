@@ -3,7 +3,8 @@ import { useTranslation } from "react-i18next";
 
 import { EventModel } from "/imports/api/events/events";
 
-import "./template.html";
+import { PleaseLogin } from "/imports/ui/components/please-login";
+
 import "./styles.scss";
 
 export interface Props {
@@ -15,7 +16,6 @@ export interface Props {
 export function CancelConfirmDialog({ event, onCancel, onClose }: Props) {
   const { t } = useTranslation();
 
-  const [isBusy, setIsBusy] = useState(false);
   const [reason, setReason] = useState("");
 
   return (
@@ -57,23 +57,16 @@ export function CancelConfirmDialog({ event, onCancel, onClose }: Props) {
       )}
 
       <div className="form-actions">
-        {!isBusy ? (
-          <button
-            type="button"
-            className="btn btn-danger text-nowrap"
-            onClick={async () => {
-              setIsBusy(true);
-              await onCancel(reason);
-            }}
-          >
-            {t("event.cancel.confirm.button", "Cancel {EVENT}", { EVENT: event.title })}
-          </button>
-        ) : (
-          <button type="button" className="btn btn-danger text-nowrap" disabled={true}>
-            <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
-            {t("event.canceling", "Canceling...")}
-          </button>
-        )}
+        <PleaseLogin
+          type="button"
+          className="btn btn-danger text-nowrap"
+          onClick={async () => {
+            await onCancel(reason);
+          }}
+          busyText={t("event.canceling", "Canceling...")}
+        >
+          {t("event.cancel.confirm.button", "Cancel {EVENT}", { EVENT: event.title })}
+        </PleaseLogin>
         <button
           type="button"
           className="btn btn-edit"
@@ -87,9 +80,3 @@ export function CancelConfirmDialog({ event, onCancel, onClose }: Props) {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("CancelConfirmDialog", () => CancelConfirmDialog);
