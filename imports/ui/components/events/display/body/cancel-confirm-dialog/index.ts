@@ -1,0 +1,20 @@
+import "/imports/ui/components/courses/files";
+import "/imports/ui/components/buttons";
+import "/imports/ui/components/courses/categories";
+import "/imports/ui/components/events/display/course-header";
+import "/imports/ui/components/events/display/header";
+import "/imports/ui/components/events/edit";
+import "/imports/ui/components/events/participants";
+import "/imports/ui/components/events/replication";
+import "/imports/ui/components/events/display/content";
+import "/imports/ui/components/events/display/group-list";
+import "/imports/ui/components/groups/tag";
+import "/imports/ui/components/price-policy";
+import "/imports/ui/components/regions/tag";
+import "/imports/ui/components/sharing";
+import "/imports/ui/components/report";
+import "/imports/ui/components/venues/link";
+import "/imports/ui/components/internal-indicator";
+
+import "./template.html";
+import "./styles.scss";

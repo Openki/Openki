@@ -32,6 +32,7 @@ import "/imports/ui/components/report";
 import "/imports/ui/components/venues/link";
 import "/imports/ui/components/internal-indicator";
 import "./delete-confirm-dialog";
+import "./cancel-confirm-dialog";
 import type { Props as DeleteConfirmDialogProps } from "./delete-confirm-dialog";
 import type { Props as EventReplicationProps } from "../../replication";
 
