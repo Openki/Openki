@@ -1,9 +1,8 @@
-import React from "react";
-import { ReactiveVar } from "meteor/reactive-var";
+import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
-import { i18n } from "/imports/startup/both/i18next";
-import { Meteor } from "meteor/meteor";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import { useUser } from "/imports/utils/react-meteor-data";
+import { useTranslation } from "react-i18next";
+import { useParams } from "/imports/utils/react-meteor-router";
 
 import { Courses } from "/imports/api/courses/courses";
 import { EventModel } from "/imports/api/events/events";
@@ -11,72 +10,29 @@ import { EventModel } from "/imports/api/events/events";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import * as Viewport from "/imports/ui/lib/viewport";
 
-import "/imports/ui/components/buttons";
-import "/imports/ui/components/courses/categories";
-import "/imports/ui/components/courses/discussion";
-import "/imports/ui/components/events/display/course-header";
-import "/imports/ui/components/events/display/header";
-import "/imports/ui/components/events/display/body";
-import "/imports/ui/components/events/display/registration";
-import "/imports/ui/components/events/edit";
-import "/imports/ui/components/events/participants";
-import "/imports/ui/components/events/replication";
-import "/imports/ui/components/groups/tag";
-import "/imports/ui/components/price-policy";
-import "/imports/ui/components/regions/tag";
-import "/imports/ui/components/sharing";
-import "/imports/ui/components/report";
-import "/imports/ui/components/venues/link";
-import "/imports/ui/components/internal-indicator";
-import "/imports/ui/components/delete-confirm-dialog";
+import { EventCourseHeader } from "/imports/ui/components/events/display/course-header";
+import { Edit } from "/imports/ui/components/events/edit";
+import { Display } from "/imports/ui/components/events/display/body";
+import { Discussion } from "/imports/ui/components/courses/discussion";
+import { EventRegistration } from "/imports/ui/components/events/display/registration";
+import { Report } from "/imports/ui/components/report";
 
-import "./template.html";
 import "./styles.scss";
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "event",
-  EventModel,
-  {
-    editing: ReactiveVar<boolean>;
-    getCourseTitleIfAny: () => string | undefined;
-  }
->;
+export function Event(data: { event: EventModel; new: boolean }) {
+  const { event } = data;
+  const { t } = useTranslation();
+  const user = useUser();
+  const [editing, setEditing] = useState(!event._id);
+  const params = useParams();
 
-const template = Template.event;
-
-template.onCreated(function () {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const instance = this;
-  const event = instance.data;
-  instance.busy(false);
-  instance.editing = new ReactiveVar(!event._id);
-  if (event.courseId) {
-    instance.subscribe("courseDetails", event.courseId);
-  }
-
-  instance.getCourseTitleIfAny = () => {
-    if (this.data.courseId) {
-      return Courses.findOne({ _id: this.data.courseId })?.name;
-    }
-    return undefined;
-  };
-});
-
-template.helpers({
-  userName() {
-    return Meteor.user()?.getDisplayName() || i18n("eventDetails.notLoggedIn", "(not logged in?)");
-  },
-
-  mobileViewport() {
+  function mobileViewport() {
     return Viewport.get().width <= ScssVars.screenMD;
-  },
-
-  select() {
-    return Router.current().params.select;
-  },
-
-  courseLink() {
-    const event = Template.instance().data;
+  }
+  function select() {
+    return params.select;
+  }
+  function courseLink() {
     if (!event.courseId) {
       return "";
     }
@@ -86,110 +42,110 @@ template.helpers({
       { _id: event.courseId },
       course?.singleEvent ? { query: { force: "1" } } : {},
     );
-  },
-
-  course() {
-    if (this.courseId) {
-      return Courses.findOne(this.courseId);
+  }
+  function course() {
+    if (event.courseId) {
+      return Courses.findOne(event.courseId);
     }
-    return false;
-  },
-
-  mayEdit() {
-    const event = Template.instance().data;
-    const user = Meteor.user();
+    return undefined;
+  }
+  function mayEdit() {
     if (!user) {
       return false;
     }
     return event.editableBy(user);
-  },
-
-  editing() {
-    return this.new || Template.instance().editing.get();
-  },
-
-  eventEditAttr() {
-    const instance = Template.instance();
-    const event = instance.data;
-
+  }
+  function isEditing() {
+    return data.new || editing;
+  }
+  function eventEditAttr() {
     return {
       event,
       afterSave: () => {
-        instance.editing.set(false);
+        setEditing(false);
       },
       onCancel: () => {
-        if ("new" in event) {
+        if (data.new) {
           window.history.back();
         } else {
-          instance.editing.set(false);
+          setEditing(false);
         }
       },
     };
-  },
-
-  eventDisplayAttr() {
-    const instance = Template.instance();
-    const event = instance.data;
-
+  }
+  function eventDisplayAttr() {
     return {
       event,
       onRemove: () => {
-        instance.editing.set(false);
+        setEditing(false);
       },
       onEdit: () => {
-        instance.editing.set(true);
+        setEditing(true);
       },
     };
-  },
-});
+  }
 
-function Event(){
-  return   <div class="row">
-    <div class="col-lg-8 mb-3">
-      {{#if this.canceled}}
-        <div class="alert alert-canceled text-center" role="alert">
-          <strong>{{i18n 'event.canceled.alert' '{EVENT} got canceled.' EVENT=this.title}}</strong>
+  return (
+    <div className="row">
+      <div className="col-lg-8 mb-3">
+        {!!event.canceled && (
+          <div className="alert alert-canceled text-center" role="alert">
+            <strong>
+              {t("event.canceled.alert", "{EVENT} got canceled.", { EVENT: event.title })}
+            </strong>
+          </div>
+        )}
+
+        {!!course() && (
+          <>
+            {!course().singleEvent ? (
+              <EventCourseHeader
+                backlink={courseLink()}
+                headerlink={courseLink()}
+                regionId={event.region}
+                categories={event.categories}
+                title={course().name}
+                image={course().publicUrlForDetailsImage()}
+              />
+            ) : mayEdit() ? (
+              <EventCourseHeader
+                course={course()}
+                backlink={courseLink()}
+                regionId={event.region}
+                categories={event.categories}
+                title={event.title}
+                image={course().publicUrlForDetailsImage()}
+              />
+            ) : (
+              <EventCourseHeader
+                course={course()}
+                regionId={event.region}
+                categories={event.categories}
+                title={event.title}
+                image={course().publicUrlForDetailsImage()}
+              />
+            )}
+          </>
+        )}
+
+        <div className={`event${course() ? " course-event" : ""}`}>
+          {isEditing() ? <Edit {...eventEditAttr()} /> : <Display {...eventDisplayAttr()} />}
         </div>
-      {{/if}}
-      {{#if course}}
-        {{#unless course.singleEvent}}
-          {{> eventCourseHeader backlink=courseLink headerlink=courseLink regionId=region categories=categories title=course.name image=course.publicUrlForDetailsImage}}
-        {{else}}
-          {{#if mayEdit}}
-            {{> eventCourseHeader course=course backlink=courseLink regionId=region categories=categories title=title image=course.publicUrlForDetailsImage}}
-          {{else}}
-            {{> eventCourseHeader course=course regionId=region categories=categories title=title image=course.publicUrlForDetailsImage}}
-          {{/if}}
-        {{/unless}}
-      {{/if}}
-      <div class="event{{#if course}} course-event{{/if}}">
-        {{#if editing}}
-          {{> eventEdit eventEditAttr}}
-        {{else}}
-          {{> eventDisplay eventDisplayAttr}}
-        {{/if}}
+        {!mobileViewport() && !isEditing() && !!course().singleEvent && (
+          <Discussion courseId={course()._id} eventId={event._id} select={select()} />
+        )}
       </div>
-      {{#unless mobileViewport}}
-        {{#unless editing}}
-          {{#if course.singleEvent}}
-            {{> discussion courseId=course._id eventId=_id select=select}}
-          {{/if}}
-        {{/unless}}
-      {{/unless}}
+      {!isEditing() && (
+        <div className="col-lg-4">
+          <EventRegistration event={event} />
+          {mobileViewport() && !!course().singleEvent && (
+            <Discussion courseId={course()._id} eventId={event._id} select={select()} />
+          )}
+          <div className="page-component mt-3">
+            <Report />
+          </div>
+        </div>
+      )}
     </div>
-    {{#unless editing}}
-      <div class="col-lg-4">
-        {{> eventRegistration event=this}}
-        {{#if mobileViewport}}
-          {{#if course.singleEvent}}
-            {{> discussion courseId=course._id eventId=_id select=select}}
-          {{/if}}
-        {{/if}}
-        {{! style fixes a problem that occurs during the transition to react. This can be removed when everything is changed to react. }}
-        <div class="page-component mt-3">
-          {{> report}}
-        </div>
-      </div>
-    {{/unless}}
-  </div>
+  );
 }
