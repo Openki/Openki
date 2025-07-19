@@ -1,6 +1,6 @@
 <template name="eventDisplay">
   <div class="page-component">
-    {{#if mayEdit this}}
+    {{#if mayEdit event}}
       {{#if singleEvent}}
         <nav>
           <ul class="nav nav-tabs" role="tablist">
@@ -24,25 +24,25 @@
         <div class="tab-content border-none">
           <div class="tab-pane mh-none overflow-visible active" id="description" role="tabpanel"
                aria-labelledby="description-tab" tabindex="0">
-            {{> eventContent event=this}}
+            {{> eventContent event=event}}
           </div>
           <div class="tab-pane mh-none" id="files" role="tabpanel" aria-labelledby="files-tab"
                tabindex="0">
             <div class="p-3">
-              {{> courseFiles course=course}}
+              {{> courseFiles course=event.course}}
             </div>
           </div>
         </div>
       {{else}}
-        {{> eventContent event=this}}
+        {{> eventContent event=event}}
       {{/if}}
     {{else}}
-      {{> eventContent event=this}}
+      {{> eventContent event=event}}
     {{/if}}
     {{#if replicating}}
       {{> eventReplication eventReplicationAttr}}
     {{else}}
-      {{#if (mayEdit this)}}
+      {{#if (mayEdit event)}}
         <div class="actions">
           {{#unless isExpanded}}
             {{> buttonEdit event="js-event-edit"}}
@@ -50,11 +50,11 @@
               {{i18n 'event.details.repl_menu_btn' 'Repeat'}}
             </button>
             <a class="btn btn-edit js-download js-track-cal-download"
-               href="{{pathFor 'calEvent' this}}"
+               href="{{pathFor 'calEvent' event}}"
                title="{{i18n 'event.detail.download_cal' 'Download event to my calendar' attr=true}}">
               {{i18n 'event.details.download' 'Download'}}
             </a>
-            {{#unless this.canceled}}
+            {{#unless event.canceled}}
               <button type="button" class="btn btn-remove js-cancel">
                 {{i18n 'event.details.cancel' 'Cancel this event'}}
               </button>

@@ -21,7 +21,7 @@
         {{#if editing}}
           {{> eventEdit eventEditAttr}}
         {{else}}
-          {{> eventDisplay}}
+          {{> eventDisplay event=this}}
         {{/if}}
       </div>
       {{#unless mobileViewport}}
