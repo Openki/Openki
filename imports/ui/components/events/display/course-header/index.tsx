@@ -16,10 +16,10 @@ export interface Props {
   backlink?: string;
   headerlink?: string;
   regionId: string;
-  categories: string[];
+  categories: string[] | undefined;
   groups?: string[];
   title: string;
-  image: string;
+  image: string | undefined;
 }
 
 export function EventCourseHeader(props: Props) {

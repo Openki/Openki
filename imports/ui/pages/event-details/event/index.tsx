@@ -6,6 +6,7 @@ import { useParams } from "/imports/utils/react-meteor-router";
 
 import { Courses } from "/imports/api/courses/courses";
 import { EventModel } from "/imports/api/events/events";
+import { useDetails } from "/imports/api/courses/publications";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import * as Viewport from "/imports/ui/lib/viewport";
@@ -19,19 +20,18 @@ import { Report } from "/imports/ui/components/report";
 
 import "./styles.scss";
 
-export function Event(data: { event: EventModel; new: boolean }) {
-  const { event } = data;
-  const { t } = useTranslation();
-  const user = useUser();
-  const [editing, setEditing] = useState(!event._id);
-  const params = useParams();
+function CourseEvent({ event, courseId }: { event: EventModel; courseId: string }) {
+  const [isLoading, course] = useDetails(courseId);
 
-  function mobileViewport() {
-    return Viewport.get().width <= ScssVars.screenMD;
+  const user = useUser();
+
+  function mayEdit() {
+    if (!user) {
+      return false;
+    }
+    return event.editableBy(user);
   }
-  function select() {
-    return params.select;
-  }
+
   function courseLink() {
     if (!event.courseId) {
       return "";
@@ -43,17 +43,66 @@ export function Event(data: { event: EventModel; new: boolean }) {
       course?.singleEvent ? { query: { force: "1" } } : {},
     );
   }
-  function course() {
-    if (event.courseId) {
-      return Courses.findOne(event.courseId);
-    }
-    return undefined;
+
+  if (isLoading() || !course) {
+    return null;
   }
-  function mayEdit() {
-    if (!user) {
-      return false;
-    }
-    return event.editableBy(user);
+
+  return (
+    <>
+      {!course.singleEvent ? (
+        <EventCourseHeader
+          backlink={courseLink()}
+          headerlink={courseLink()}
+          regionId={event.region}
+          categories={event.categories}
+          title={course.name}
+          image={course.publicUrlForDetailsImage()}
+        />
+      ) : mayEdit() ? (
+        <EventCourseHeader
+          course={course}
+          backlink={courseLink()}
+          regionId={event.region}
+          categories={event.categories}
+          title={event.title}
+          image={course.publicUrlForDetailsImage()}
+        />
+      ) : (
+        <EventCourseHeader
+          course={course}
+          regionId={event.region}
+          categories={event.categories}
+          title={event.title}
+          image={course.publicUrlForDetailsImage()}
+        />
+      )}
+    </>
+  );
+}
+
+function DisplayDiscussion({ eventId, courseId }: { eventId: string; courseId: string }) {
+  const [isLoading, course] = useDetails(courseId);
+  const params = useParams();
+
+  function select() {
+    return params.select;
+  }
+
+  if (isLoading() || !course || !course.singleEvent) {
+    return null;
+  }
+
+  return <Discussion courseId={course._id} eventId={eventId} select={select()} />;
+}
+
+export function Event(data: { event: EventModel; new: boolean }) {
+  const { event } = data;
+  const { t } = useTranslation();
+  const [editing, setEditing] = useState(!event._id);
+
+  function mobileViewport() {
+    return Viewport.get().width <= ScssVars.screenMD;
   }
   function isEditing() {
     return data.new || editing;
@@ -96,50 +145,20 @@ export function Event(data: { event: EventModel; new: boolean }) {
           </div>
         )}
 
-        {!!course() && (
-          <>
-            {!course().singleEvent ? (
-              <EventCourseHeader
-                backlink={courseLink()}
-                headerlink={courseLink()}
-                regionId={event.region}
-                categories={event.categories}
-                title={course().name}
-                image={course().publicUrlForDetailsImage()}
-              />
-            ) : mayEdit() ? (
-              <EventCourseHeader
-                course={course()}
-                backlink={courseLink()}
-                regionId={event.region}
-                categories={event.categories}
-                title={event.title}
-                image={course().publicUrlForDetailsImage()}
-              />
-            ) : (
-              <EventCourseHeader
-                course={course()}
-                regionId={event.region}
-                categories={event.categories}
-                title={event.title}
-                image={course().publicUrlForDetailsImage()}
-              />
-            )}
-          </>
-        )}
+        {!!event.courseId && <CourseEvent event={event} courseId={event.courseId} />}
 
-        <div className={`event${course() ? " course-event" : ""}`}>
+        <div className={`event${event.courseId ? " course-event" : ""}`}>
           {isEditing() ? <Edit {...eventEditAttr()} /> : <Display {...eventDisplayAttr()} />}
         </div>
-        {!mobileViewport() && !isEditing() && !!course().singleEvent && (
-          <Discussion courseId={course()._id} eventId={event._id} select={select()} />
+        {!mobileViewport() && !isEditing() && !!event.courseId && (
+          <DisplayDiscussion courseId={event.courseId} eventId={event._id} />
         )}
       </div>
       {!isEditing() && (
         <div className="col-lg-4">
           <EventRegistration event={event} />
-          {mobileViewport() && !!course().singleEvent && (
-            <Discussion courseId={course()._id} eventId={event._id} select={select()} />
+          {mobileViewport() && !!event.courseId && (
+            <DisplayDiscussion courseId={event.courseId} eventId={event._id} />
           )}
           <div className="page-component mt-3">
             <Report />
@@ -149,3 +168,9 @@ export function Event(data: { event: EventModel; new: boolean }) {
     </div>
   );
 }
+
+// for Blaze
+
+import "./template.html";
+
+Template.registerHelper("Event", () => Event);
