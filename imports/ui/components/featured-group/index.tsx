@@ -23,11 +23,11 @@ function FeaturedGroupBody(props: { groupId: string }) {
 
   return (
     <div className="featured-group-body">
-      {featuredGroup.logoUrl ? (
+      {!!featuredGroup.logoUrl && (
         <div className="featured-group-body-logo">
           <img className="featured-group-logo" src={featuredGroup.publicLogoUrl()} />
         </div>
-      ) : null}
+      )}
 
       <div className="featured-group-body-content">
         <div className="featured-group-name">

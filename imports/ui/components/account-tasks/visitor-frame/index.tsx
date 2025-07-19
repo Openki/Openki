@@ -126,7 +126,7 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
               });
             }}
           />
-          {errors.username ? <div className="invalid-feedback">{errors.username}</div> : null}
+          {!!errors.username && <div className="invalid-feedback">{errors.username}</div>}
         </div>
       </div>
       <div className="mb-3">
@@ -146,7 +146,7 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
               });
             }}
           />
-          {errors.email ? <div className="invalid-feedback">{errors.email}</div> : null}
+          {!!errors.email && <div className="invalid-feedback">{errors.email}</div>}
         </div>
       </div>
       <div className="mb-3">
@@ -156,7 +156,7 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
         )}
       </div>
       <DataProtectionLaw />
-      {PublicSettings.askNewsletterConsent ? (
+      {PublicSettings.askNewsletterConsent && (
         <div className="mb-3">
           <div className="form-check">
             <input
@@ -180,7 +180,7 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
             </label>
           </div>
         </div>
-      ) : null}
+      )}
       <div className="mb-3">
         <button type="submit" className="btn btn-add form-control" disabled={isBusy}>
           {isBusy ? (

@@ -76,9 +76,9 @@ export function CompactPropose({ group, groupTagEvents }: Props) {
           )}
         </div>
       </div>
-      {group ? (
+      {!!group && (
         <div className="tag-group course-groups">{<GroupTag {...groupTagAttr(group)} />}</div>
-      ) : null}
+      )}
     </div>
   );
 }

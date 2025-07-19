@@ -38,14 +38,14 @@ export function EventContactParticipants({
     <>
       <tr>
         <td>
-          {senderCopy ? (
+          {!!senderCopy && (
             <p>
               {t(
                 "notification.event.contact-participants.mail.copyintro",
                 "This is a copy of the message that was sent by you.",
               )}
             </p>
-          ) : null}
+          )}
 
           <h5 className="title">{t("email.base.greeting", { USERNAME: username })}</h5>
           <p>
