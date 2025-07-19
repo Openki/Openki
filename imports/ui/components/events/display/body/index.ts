@@ -44,7 +44,7 @@ import "./styles.scss";
   const Template = TemplateMixins.Expandible(
     TemplateAny as TemplateStaticTyped<
       "eventDisplay",
-      EventModel,
+      { event: EventModel },
       { replicating: ReactiveVar<boolean>; canceling: ReactiveVar<boolean> }
     >,
     "eventDisplay",
@@ -71,10 +71,10 @@ import "./styles.scss";
       return Template.instance().replicating.get();
     },
     singleEvent() {
-      return Courses.findOne(this.courseId)?.singleEvent;
+      return Courses.findOne(Template.instance().data.event.courseId)?.singleEvent;
     },
     course() {
-      return Courses.findOne(this.courseId);
+      return Courses.findOne(Template.instance().data.event.courseId);
     },
     isExpanded() {
       return Template.instance().canceling.get() || Template.instance().expanded();
@@ -82,11 +82,11 @@ import "./styles.scss";
     cancelConfirmDialogAttr(): CancelConfirmDialogProps {
       const instance = Template.instance();
       return {
-        event: instance.data,
+        event: instance.data.event,
         onCancel: async (reason) => {
           instance.busy("cancel");
           PleaseLogin(instance, async () => {
-            const event = instance.data;
+            const { event } = instance.data;
             try {
               await EventsMethods.cancel(event._id, reason);
 
@@ -122,7 +122,7 @@ import "./styles.scss";
         cancelButton: i18n("event.delete.confirm.cancel.button", "Rather mark as canceled"),
         busyButton: i18n("event.delete.confirm.button.busy", "Deleting event…"),
         onRemove: async () => {
-          const oEvent = instance.data;
+          const oEvent = instance.data.event;
           const { title, region } = oEvent;
           const course = oEvent.courseId;
 
@@ -162,7 +162,7 @@ import "./styles.scss";
     eventReplicationAttr(): EventReplicationProps {
       const instance = Template.instance();
       return {
-        event: instance.data,
+        event: instance.data.event,
         afterSave: async () => {
           instance.replicating.set(false);
           instance.collapse();
@@ -188,7 +188,7 @@ import "./styles.scss";
     async "click .js-event-uncancel"(_event, instance) {
       instance.busy("unarchive");
       PleaseLogin(instance, async () => {
-        const event = instance.data;
+        const { event } = instance.data;
         try {
           await EventsMethods.uncancel(event._id);
           Alert.success(
@@ -215,7 +215,7 @@ import "./styles.scss";
       Analytics.trackEvent(
         "Events downloads",
         "Event downloads via event details",
-        Regions.findOne(instance.data.region)?.nameEn,
+        Regions.findOne(instance.data.event.region)?.nameEn,
       );
     },
   });
