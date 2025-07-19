@@ -42,7 +42,7 @@ import "./styles.scss";
 {
   const Template = TemplateAny as TemplateStaticTyped<
     "eventDisplay",
-    { event: EventModel },
+    { event: EventModel; onRemove: () => void },
     {
       replicating: ReactiveVar<boolean>;
       canceling: ReactiveVar<boolean>;
@@ -127,7 +127,7 @@ import "./styles.scss";
           const { title, region } = oEvent;
           const course = oEvent.courseId;
 
-          (instance.parentInstance() as any).editing.set(false);
+          instance.data.onRemove();
           try {
             await EventsMethods.remove(oEvent._id);
 

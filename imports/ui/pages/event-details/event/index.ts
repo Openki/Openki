@@ -125,6 +125,18 @@ template.helpers({
       },
     };
   },
+
+  eventDisplayAttr() {
+    const instance = Template.instance();
+    const event = instance.data;
+
+    return {
+      event,
+      onRemove: () => {
+        instance.editing.set(false);
+      },
+    };
+  },
 });
 
 template.events({
