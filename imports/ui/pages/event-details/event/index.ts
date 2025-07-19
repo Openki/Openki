@@ -135,12 +135,9 @@ template.helpers({
       onRemove: () => {
         instance.editing.set(false);
       },
+      onEdit: () => {
+        instance.editing.set(true);
+      },
     };
-  },
-});
-
-template.events({
-  "click .js-event-edit"(_event, instance) {
-    instance.editing.set(true);
   },
 });
