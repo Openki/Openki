@@ -4,10 +4,10 @@ import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { Courses } from "/imports/api/courses/courses";
 import { EventModel } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { Regions } from "/imports/api/regions/regions";
+import { useDetails } from "/imports/api/courses/publications";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
@@ -22,6 +22,85 @@ import { PleaseLogin } from "../../../please-login";
 
 import "./template.html";
 import "./styles.scss";
+
+function CourseEvent({ event, courseId }: { event: EventModel; courseId: string }) {
+  const { t } = useTranslation();
+
+  const [isLoading, course] = useDetails(courseId);
+
+  function singleEvent() {
+    return course?.singleEvent;
+  }
+
+  if (isLoading()) {
+    return null;
+  }
+
+  return singleEvent() ? (
+    <>
+      <nav>
+        <ul className="nav nav-tabs" role="tablist">
+          <li className="nav-item" role="presentation">
+            <button
+              className="nav-link active"
+              id="description-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#description"
+              type="button"
+              role="tab"
+              aria-controls="description"
+              aria-selected="true"
+            >
+              <span className="fa-solid fa-file-lines fa-fw" aria-hidden="true"></span>
+              <span className="tab-label">{t("course.subnav.descr", "Description")}</span>
+            </button>
+          </li>
+          <li className="nav-item" role="presentation">
+            <button
+              className="nav-link"
+              id="files-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#files"
+              type="button"
+              role="tab"
+              aria-controls="files"
+              aria-selected="false"
+            >
+              <span className="fa-solid fa-file fa-fw" aria-hidden="true"></span>
+              <span className="tab-label">{t("course.subnav.files", "Files")}</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+      <div className="tab-content border-none">
+        <div
+          className="tab-pane mh-none overflow-visible active"
+          id="description"
+          role="tabpanel"
+          aria-labelledby="description-tab"
+          tabIndex={0}
+        >
+          <Content event={event} />
+        </div>
+        {!!course && (
+          <div
+            className="tab-pane mh-none"
+            id="files"
+            role="tabpanel"
+            aria-labelledby="files-tab"
+            tabIndex={0}
+          >
+            <div className="p-3">
+              <Files course={course} />
+            </div>
+          </div>
+        )}
+      </div>
+    </>
+  ) : (
+    <Content event={event} />
+  );
+}
 
 export function Display({
   event,
@@ -44,12 +123,6 @@ export function Display({
       return false;
     }
     return event.editableBy(user);
-  }
-  function singleEvent() {
-    return Courses.findOne(event.courseId)?.singleEvent;
-  }
-  function course() {
-    return Courses.findOne(event.courseId);
   }
   function isExpanded() {
     return canceling || expanded;
@@ -182,67 +255,8 @@ export function Display({
   return (
     <div className="page-component">
       {mayEdit(event) ? (
-        singleEvent() ? (
-          <>
-            <nav>
-              <ul className="nav nav-tabs" role="tablist">
-                <li className="nav-item" role="presentation">
-                  <button
-                    className="nav-link active"
-                    id="description-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#description"
-                    type="button"
-                    role="tab"
-                    aria-controls="description"
-                    aria-selected="true"
-                  >
-                    <span className="fa-solid fa-file-lines fa-fw" aria-hidden="true"></span>
-                    <span className="tab-label">{t("course.subnav.descr", "Description")}</span>
-                  </button>
-                </li>
-                <li className="nav-item" role="presentation">
-                  <button
-                    className="nav-link"
-                    id="files-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#files"
-                    type="button"
-                    role="tab"
-                    aria-controls="files"
-                    aria-selected="false"
-                  >
-                    <span className="fa-solid fa-file fa-fw" aria-hidden="true"></span>
-                    <span className="tab-label">{t("course.subnav.files", "Files")}</span>
-                  </button>
-                </li>
-              </ul>
-            </nav>
-            <div className="tab-content border-none">
-              <div
-                className="tab-pane mh-none overflow-visible active"
-                id="description"
-                role="tabpanel"
-                aria-labelledby="description-tab"
-                tabIndex={0}
-              >
-                <Content event={event} />
-              </div>
-              {!!course() && (
-                <div
-                  className="tab-pane mh-none"
-                  id="files"
-                  role="tabpanel"
-                  aria-labelledby="files-tab"
-                  tabIndex={0}
-                >
-                  <div className="p-3">
-                    <Files course={course()} />
-                  </div>
-                </div>
-              )}
-            </div>
-          </>
+        event.courseId ? (
+          <CourseEvent event={event} courseId={event.courseId} />
         ) : (
           <Content event={event} />
         )
@@ -291,3 +305,9 @@ export function Display({
     </div>
   );
 }
+
+// for Blaze
+
+import "./template.html";
+
+Template.registerHelper("EventDisplay", () => Display);
