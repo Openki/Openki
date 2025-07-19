@@ -259,14 +259,14 @@ export function EditableImage(data: Data) {
               <span className="btn btn-secondary">
                 {t("fileUpload.choose.text", "Choose a file")}
               </span>
-              {supportsDragndrop ? (
+              {supportsDragndrop && (
                 <>
                   <br />
                   <span className="editable-image-dragndrop">
                     {t("fileUpload.drag.text", "or drag it here")}
                   </span>
                 </>
-              ) : null}
+              )}
             </>
           ) : progress === "uploading" ? (
             <div className="editable-image-uploading">
@@ -279,7 +279,7 @@ export function EditableImage(data: Data) {
           )}
         </label>
 
-        {progress === "ready" ? (
+        {progress === "ready" && (
           <div className="form-check text-start">
             <input
               className="form-check-input"
@@ -295,7 +295,7 @@ export function EditableImage(data: Data) {
               {t("fileUpload.copyrights", "I have the copy rights to publish that file.")}
             </label>
           </div>
-        ) : null}
+        )}
       </form>
       <div className="editable-image-controls">
         {progress === "ready" ? (
@@ -326,7 +326,7 @@ export function EditableImage(data: Data) {
         className="align-top fa-solid fa-pencil cursor-pointer"
         onClick={handleEditClick}
       ></span>
-      {data.thumbnail?.src ? (
+      {!!data.thumbnail?.src && (
         <>
           {" "}
           <span
@@ -352,7 +352,7 @@ export function EditableImage(data: Data) {
             </div>
           </div>
         </>
-      ) : null}
+      )}
     </div>
   );
 }

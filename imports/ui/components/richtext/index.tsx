@@ -111,11 +111,11 @@ export function Richtext({ className, text, placeholder, maxlength, onChange }: 
         onChange={handleChange}
         onInput={handleChange}
       ></div>
-      {characterLimitReached() ? (
+      {characterLimitReached() && (
         <div className="invalid-feedback">
           {t("_inputField.maxlength", { NUMBER: removeNumberOfCharacters(), MAXNUMBER: maxlength })}
         </div>
-      ) : null}
+      )}
     </>
   );
 }
