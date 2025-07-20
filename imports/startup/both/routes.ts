@@ -296,11 +296,11 @@ RouterAsync.route("createEvent", {
 
     const propose = LocalTime.now().startOf("hour");
     const event = _.extend(new OEvent(), {
-      new: true,
       startLocal: LocalTime.toString(propose),
       endLocal: LocalTime.toString(moment(propose).add(2, "hour")),
       sendReminder: PublicSettings.sendReminderPreset,
-    }) as EventModel & { new: true };
+    }) as EventModel;
+    
     const course = await subs?.course?.();
     if (course) {
       event.title = course.name;
@@ -310,7 +310,7 @@ RouterAsync.route("createEvent", {
       event.internal = course.internal;
     }
 
-    return event;
+    return { event, new: true };
   },
 });
 

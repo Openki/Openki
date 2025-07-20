@@ -1,52 +1,28 @@
-import { Router } from "meteor/iron:router";
-import { i18n } from "/imports/startup/both/i18next";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React, { useEffect } from "react";
 import { Session } from "meteor/session";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 
-import { Events } from "/imports/api/events/events";
+import { EventModel} from "/imports/api/events/events";
 
 import * as Metatags from "/imports/utils/metatags";
 import { appendAsJsonLdToBody } from "/imports/utils/event-to-json-ld";
 import { truncate } from "lodash";
 import { textPlain } from "/imports/utils/html-tools";
 
-import "/imports/ui/components/buttons";
-import "/imports/ui/components/courses/categories";
-import "/imports/ui/components/courses/discussion";
-import "/imports/ui/components/events/display/course-header";
-import "/imports/ui/components/events/display/header";
-import "/imports/ui/components/events/display/body";
-import "/imports/ui/components/events/display/registration";
-import "/imports/ui/components/events/edit";
-import "/imports/ui/components/events/participants";
-import "/imports/ui/components/events/replication";
-import "/imports/ui/components/groups/tag";
-import "/imports/ui/components/price-policy";
-import "/imports/ui/components/regions/tag";
-import "/imports/ui/components/sharing";
-import "/imports/ui/components/report";
-import "/imports/ui/components/venues/link";
-import "/imports/ui/components/internal-indicator";
-import "/imports/ui/components/delete-confirm-dialog";
+import { Event } from "./event";
 
-import "./event";
 
-import "./template.html";
+export function EventPage(data: { event: EventModel; new: boolean }) {
+  const {event}= data;
+  const { t } = useTranslation();
 
-const Template = TemplateAny as TemplateStaticTyped<"eventPage">;
 
-const template = Template.eventPage;
-
-template.onCreated(function () {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const instance = this;
-  instance.autorun(() => {
-    const event = Events.findOne(Router.current().params._id);
+  useEffect(() => {
     let title;
     let description = "";
     if (event) {
-      title = i18n("event.windowtitle", "{DATE} – {EVENT}", {
+      title = t("event.windowtitle", "{DATE} – {EVENT}", {
         EVENT: event.title,
         DATE: moment(event.startLocal)
           .locale(Session.get("timeLocale") || "en")
@@ -55,8 +31,14 @@ template.onCreated(function () {
       description = truncate(textPlain(event.description), { length: 160 });
       appendAsJsonLdToBody(event);
     } else {
-      title = i18n("event.windowtitle.create", "Create event");
+      title = t("event.windowtitle.create", "Create event");
     }
     Metatags.setCommonTags(title, description, event?.publicUrlForDetailsImage());
   });
-});
+
+  return (
+    <div className="container">
+      <Event event={event} new={data.new} />
+    </div>
+  );
+}
