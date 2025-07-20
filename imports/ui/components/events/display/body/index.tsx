@@ -20,7 +20,6 @@ import { DeleteConfirmDialog } from "../../../delete-confirm-dialog";
 import { ButtonDelete, ButtonEdit } from "../../../buttons";
 import { PleaseLogin } from "../../../please-login";
 
-import "./template.html";
 import "./styles.scss";
 
 function CourseEvent({ event, courseId }: { event: EventModel; courseId: string }) {
