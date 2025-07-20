@@ -168,9 +168,3 @@ export function Event(data: { event: EventModel; new: boolean }) {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("Event", () => Event);

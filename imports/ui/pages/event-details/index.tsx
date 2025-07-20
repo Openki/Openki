@@ -3,7 +3,7 @@ import { Session } from "meteor/session";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 
-import { EventModel} from "/imports/api/events/events";
+import { EventModel } from "/imports/api/events/events";
 
 import * as Metatags from "/imports/utils/metatags";
 import { appendAsJsonLdToBody } from "/imports/utils/event-to-json-ld";
@@ -12,11 +12,9 @@ import { textPlain } from "/imports/utils/html-tools";
 
 import { Event } from "./event";
 
-
 export function EventPage(data: { event: EventModel; new: boolean }) {
-  const {event}= data;
+  const { event } = data;
   const { t } = useTranslation();
-
 
   useEffect(() => {
     let title;
@@ -42,3 +40,9 @@ export function EventPage(data: { event: EventModel; new: boolean }) {
     </div>
   );
 }
+
+// for Blaze
+
+import "./template.html";
+
+Template.registerHelper("EventPage", () => EventPage);

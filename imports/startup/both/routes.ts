@@ -300,7 +300,7 @@ RouterAsync.route("createEvent", {
       endLocal: LocalTime.toString(moment(propose).add(2, "hour")),
       sendReminder: PublicSettings.sendReminderPreset,
     }) as EventModel;
-    
+
     const course = await subs?.course?.();
     if (course) {
       event.title = course.name;
@@ -329,7 +329,7 @@ RouterAsync.route("showEvent", {
   async data() {
     const subs = this.subscriptions();
 
-    return subs?.event();
+    return { event: subs?.event() };
   },
 });
 
