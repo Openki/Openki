@@ -14,6 +14,11 @@ import { getSiteName } from "/imports/utils/getSiteName";
 import { Model as NotificationModel } from "../notification";
 import { EventCanceled, Props } from "/imports/emails/notifications/EventCanceled";
 import { getStartEndDate } from "./utils";
+import * as StringTools from "/imports/utils/string-tools";
+import moment from "moment";
+
+import ical from "ical-generator";
+import { convertToIcal } from "/imports/utils/convertToIcal";
 
 interface Body {
   sender: string;
@@ -101,6 +106,19 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);
 
+      const calendar = ical({ name: "Openki Calendar" });
+      calendar.addEvent(convertToIcal(event));
+      const content = calendar.toString();
+
+      const sName = StringTools.slug(event.title);
+      const sDate = moment(event.start).format("YYYY-MM-DD");
+
+      const icalEvent = {
+        method: "cancel" as const,
+        content,
+        filename: `openki-${sName}-${sDate}.ics`,
+      };
+
       const vars = {
         event,
         tz,
@@ -112,6 +130,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         message: entry.body.message,
         unsubscribe: { type: "automatedNotifications" as const, token: unsubToken },
         campaign,
+        icalEvent,
       };
 
       const eventFullTitle = t("notification.event.canceled.mail.title", "{DATE} — {EVENT}", {

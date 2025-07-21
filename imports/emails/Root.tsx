@@ -6,6 +6,11 @@ export interface Props {
   logo: string;
   customSiteUrl?: string | undefined;
   customSiteName?: string | undefined;
+  icalEvent?: {
+    method: "publish" | "request" | "reply" | "cancel";
+    filename: string;
+    content: string;
+  };
 }
 
 export function Root({
