@@ -13,6 +13,11 @@ import { Model as NotificationModel } from "../notification";
 import { Rsvp, Props } from "../../../../emails/notifications/Rsvp";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { getStartEndDate } from "./utils";
+import * as StringTools from "/imports/utils/string-tools";
+import moment from "moment";
+
+import ical from "ical-generator";
+import { convertToIcal } from "/imports/utils/convertToIcal";
 
 interface Body {
   eventId: string;
@@ -95,6 +100,19 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       const siteName = getSiteName(region);
       const emailLogo = region.custom?.emailLogo;
 
+      const calendar = ical({ name: "Openki Calendar" });
+      calendar.addEvent(convertToIcal(event));
+      const content = calendar.toString();
+
+      const sName = StringTools.slug(event.title);
+      const sDate = moment(event.start).format("YYYY-MM-DD");
+
+      const icalEvent = {
+        method: "publish" as const,
+        content,
+        filename: `openki-${sName}-${sDate}.ics`,
+      };
+   
       return {
         companions: body.companions,
         event,
@@ -106,6 +124,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         customEmailLogo: emailLogo,
         unsubscribe: { type: "automatedNotifications", token: unsubToken },
         campaign,
+        icalEvent,
       };
     },
     template: (props) => <Rsvp {...props} />,
