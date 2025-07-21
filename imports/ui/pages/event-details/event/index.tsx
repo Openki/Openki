@@ -110,6 +110,7 @@ export function Event(data: { event: EventModel; new: boolean }) {
   function eventEditAttr() {
     return {
       event,
+      isNew: data.new,
       afterSave: () => {
         setEditing(false);
       },
