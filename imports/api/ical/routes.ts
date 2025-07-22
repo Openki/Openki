@@ -14,7 +14,7 @@ async function sendIcal(events: EventModel[], response: any) {
 
   events.forEach((dbevent) => {
     const event = convertToIcal(dbevent);
-    calendar.addEvent(event);
+    calendar.createEvent(event);
 
     if (!name) {
       const sName = StringTools.slug(dbevent.title);

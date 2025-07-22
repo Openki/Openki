@@ -1,21 +1,10 @@
 import { Router } from "meteor/iron:router";
 import { EventModel } from "../api/events/events";
 import * as HtmlTools from "/imports/utils/html-tools";
+import { ICalEventData, ICalEventStatus, ICalLocationWithTitle } from "ical-generator";
 
-export function convertToIcal(dbevent: EventModel) {
+export function convertToIcal(dbevent: EventModel): ICalEventData {
   const end = dbevent.end || dbevent.start;
-
-  const location = [];
-  if (dbevent.room) {
-    location.push(dbevent.room);
-  }
-  if (dbevent.venue) {
-    const { venue } = dbevent;
-    location.push(venue.name);
-    if (venue.address) {
-      location.push(venue.address);
-    }
-  }
 
   const twoLines = /<(p|div|h[0-9])>/g;
   const oneLine = /<(ul|ol|li|br ?\/?)>/g;
@@ -24,14 +13,22 @@ export function convertToIcal(dbevent: EventModel) {
     .replace(oneLine, "\n")
     .trim();
   const plainDescription = HtmlTools.textPlain(lineDescription);
-  const event = {
-    uid: dbevent._id,
+  return {
+    id: dbevent._id,
     start: dbevent.start,
     end,
     summary: dbevent.title,
-    location: location.join(", "),
+    location: dbevent.venue
+      ? ({
+          title: dbevent.venue.name + (dbevent.room ? " (" + dbevent.room + ")" : ""),
+          address: dbevent.venue.address || "",
+          geo: dbevent.venue.loc
+            ? { lat: dbevent.venue.loc.coordinates[1], lon: dbevent.venue.loc.coordinates[0] }
+            : undefined,
+        } as ICalLocationWithTitle)
+      : null,
     description: plainDescription,
     url: Router.url("showEvent", dbevent),
+    status: !dbevent.canceled ? ICalEventStatus.CONFIRMED : ICalEventStatus.CANCELLED,
   };
-  return event;
 }
