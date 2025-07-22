@@ -744,7 +744,7 @@
   "notification.join.mail.statsOverview": "Overview over participants:",
   "notification.join.mail.subject": "{USER} joined {COURSE}: {ROLE}",
   "notification.mail.event.canceled": "This event got canceled",
-  "notification.mail.event.linkCalendar": "Add this event to my calendar",
+  "notification.mail.event.linkCalendar": "Save all my events to my calendar",
   "notification.mail.event.linkEvent": "Visit Event",
   "notification.privateMessage.mail.copyintro": "This is a copy of your message that was sent to \"{RECIPIENT}\"",
   "notification.privateMessage.mail.direct.answerText": "You can also send {SENDERNAME} an email directly  by clicking reply in your email client",
