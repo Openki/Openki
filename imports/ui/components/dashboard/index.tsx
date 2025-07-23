@@ -20,8 +20,8 @@ interface ComponentSettings {
 
 export interface Props {
   list: ComponentSettings[];
-  region?: string | undefined;
-  group?: string | undefined;
+  defaultRegion?: string | undefined;
+  defaultGroup?: string | undefined;
 }
 
 function EntitiesComponent<T>({
@@ -74,12 +74,12 @@ function EntitiesComponent<T>({
 
 function DashboardComponent({
   settings,
-  region,
-  group,
+  defaultRegion,
+  defaultGroup,
 }: {
   settings: ComponentSettings;
-  region?: string | undefined;
-  group?: string | undefined;
+  defaultRegion?: string | undefined;
+  defaultGroup?: string | undefined;
 }) {
   const { t } = useTranslation();
   const { getLocalizedValue } = useLocalizedSetting();
@@ -124,11 +124,11 @@ function DashboardComponent({
   const queryString = (settings.query || "").replaceAll("{currentUser}", currentUserId || "");
 
   const urlParams = new URLSearchParams(queryString);
-  if (region) {
-    urlParams.append("region", region);
+  if (defaultRegion) {
+    urlParams.append("region", defaultRegion);
   }
-  if (group) {
-    urlParams.append("group", group);
+  if (defaultGroup) {
+    urlParams.append("group", defaultGroup);
   }
   const params = Object.fromEntries(urlParams);
 
@@ -147,11 +147,16 @@ function DashboardComponent({
   );
 }
 
-export function Dashboard({ list, region, group }: Props) {
+export function Dashboard({ list, defaultRegion, defaultGroup }: Props) {
   return (
     <>
       {list.map((h, i) => (
-        <DashboardComponent key={i} settings={h} region={region} group={group} />
+        <DashboardComponent
+          key={i}
+          settings={h}
+          defaultRegion={defaultRegion}
+          defaultGroup={defaultGroup}
+        />
       ))}
     </>
   );
