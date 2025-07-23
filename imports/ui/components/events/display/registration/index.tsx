@@ -112,15 +112,7 @@ export function EventRegistration({ event }: Props) {
           }}
         />
       )}
-      {searchParams.action === "unregister" && (
-        <PleaseLogin
-          type="auto"
-          onRender={async () => {
-            // unregister from email
-            await removeParticipant();
-          }}
-        />
-      )}
+
       {isFuture() && (
         <>
           <div className="page-component">
