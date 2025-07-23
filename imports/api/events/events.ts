@@ -20,6 +20,7 @@ import { Tuple, Type } from "/imports/utils/CustomChecks";
 export interface EventParticipantEntity {
   user: string;
   companions?: number;
+  removeToken: string;
 }
 
 export interface EventVenueEntity {

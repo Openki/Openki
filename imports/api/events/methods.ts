@@ -2,6 +2,7 @@ import { Match, check } from "meteor/check";
 import { Meteor } from "meteor/meteor";
 import { _ } from "meteor/underscore";
 import moment from "moment";
+import { Random } from "meteor/random";
 
 import { Courses } from "/imports/api/courses/courses";
 import { Subscribe, processChange } from "/imports/api/courses/subscription";
@@ -500,7 +501,7 @@ export const addParticipant = ServerMethod(
 
     await Events.updateAsync(
       { _id: eventId },
-      { $addToSet: { participants: { user: user._id, companions } } },
+      { $addToSet: { participants: { user: user._id, companions, removeToken: Random.secret() } } },
     );
 
     // Send notifications to user
