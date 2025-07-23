@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { chain } from "lodash";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
@@ -7,8 +6,7 @@ import { useUserId } from "/imports/utils/react-meteor-data";
 
 import moment from "moment";
 
-import { EventModel, Events } from "/imports/api/events/events";
-import { useFindFilter } from "/imports/api/events/publications";
+import { Events } from "/imports/api/events/events";
 
 import * as UrlTools from "/imports/utils/url-tools";
 import { reactiveNow } from "/imports/utils/reactive-now";
@@ -16,23 +14,15 @@ import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import * as Metatags from "/imports/utils/metatags";
 
+import { Dashboard } from "/imports/ui/components/dashboard";
 import { AccountTasks } from "/imports/ui/components/account-tasks";
 import {
   CalendarNavProgramme,
   Props as CalendarNavData,
 } from "/imports/ui/components/calendar-nav/programme";
-import { EventList } from "/imports/ui/components/events/list";
-import { LoadingRow } from "../../loading";
 
 import "./template.html";
 import "./styles.scss";
-
-const DefaultLimit = 200;
-
-interface Weekday {
-  date: moment.Moment;
-  dayEvents: EventModel[];
-}
 
 function getDays(start: moment.Moment, end: moment.Moment) {
   const days = [];
@@ -58,25 +48,6 @@ export function ProgrammePage(data: Record<string, string>) {
   const end = filter.get("end") || moment(start).add(1, "week");
 
   const [selectedDays, setSelectedDays] = useState(getDays(start, end));
-
-  const filterQuery = filter.toQuery();
-
-  // filter isAttendeeFilterOn in addition to filtering that get's passed in via url
-  if (userId && isAttendeeFilterOn) {
-    filterQuery.participant = userId;
-  }
-
-  filterQuery.after = start.toDate();
-  filterQuery.end = end.toDate();
-
-  const limit =
-    new Filtering({
-      count: Predicates.integer,
-    })
-      .read(data)
-      .toQuery().count || DefaultLimit;
-
-  const [isLoading, events] = useFindFilter(filterQuery, limit + 1);
 
   function control() {
     return data.control === "1";
@@ -127,25 +98,13 @@ export function ProgrammePage(data: Record<string, string>) {
     } as CalendarNavData;
   }
 
-  function hasDayEvents(weekday: Weekday) {
-    return weekday.dayEvents.length > 0;
-  }
-
   function days() {
     const days = [];
     let current = moment(start);
     while (current.isBefore(end)) {
       const next = moment(current).add(1, "day");
-      const after = current.toDate();
-      const end = next.toDate();
 
-      days.push({
-        date: current,
-        dayEvents: chain(events)
-          .filter((e) => e.start > after && e.start <= end)
-          .take(limit)
-          .value(),
-      });
+      days.push(current);
       current = next;
     }
     return days;
@@ -157,7 +116,6 @@ export function ProgrammePage(data: Record<string, string>) {
 
   function update() {
     const filterParams = filter.toParams() as Record<string, string>;
-    filterParams.count = limit.toString();
     if (data.control) {
       filterParams.control = data.control;
     } else {
@@ -189,33 +147,27 @@ export function ProgrammePage(data: Record<string, string>) {
       <AccountTasks />
       {control() && <CalendarNavProgramme {...calendarNavAttr()} />}
       <div className="py-4">
-        {days()
-          .filter((day) => selectedDays.find((s) => s.isSame(day.date)))
-          .map((day) => (
-            <>
-              <div className="js-calendar-date frame-programme-date">
-                {calendarDayFormat(day.date)}
-              </div>
-              <div className="frame-programme-date-events">
-                {!isLoading() ? (
-                  hasDayEvents(day) ? (
-                    <EventList
-                      dataEvents={day.dayEvents}
-                      withDate={false}
-                      withImage={true}
-                      openInNewTab={true}
-                    />
-                  ) : (
-                    <div className="text-center">
-                      {t("frameCalendar.nothingOnThisDay", "Relax, nothing happening today.")}
-                    </div>
-                  )
-                ) : (
-                  <LoadingRow />
-                )}
-              </div>
-            </>
-          ))}
+        <Dashboard
+          list={days()
+            .filter((day) => selectedDays.find((s) => s.isSame(day)))
+            .map((day) => {
+              const f = Events.Filtering().read(data);
+
+              f.add("after", day);
+              f.add("end", moment(day).add(1, "day"));
+
+              // filter isAttendeeFilterOn in addition to filtering that get's passed in via url
+              if (userId && isAttendeeFilterOn) {
+                f.add("participant", userId);
+              }
+              return {
+                title: calendarDayFormat(day),
+                entity: "event",
+                showAll: false,
+                query: UrlTools.paramsToQueryString(f.toParams()),
+              };
+            })}
+        />
       </div>
     </>
   );
