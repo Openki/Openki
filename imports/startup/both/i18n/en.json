@@ -386,7 +386,7 @@
   "event.details.repl_menu_btn": "Repeat",
   "event.details.reserve-a-seat": "Reserve a seat",
   "event.details.uncancel": "Uncancel this event",
-  "event.details.unregister": "You have unsubscribed from {EVENT}.",
+  "event.details.unregister": "You have been unsubscribed from {EVENT} successfully.",
   "event.details.unregister-withdraw": "Withdraw",
   "event.details.viewCourse": "To the course overview",
   "event.details.want-to-register": "Do you want to reserve a seat as {USERNAME} for the event \"{EVENTTITLE}\" on the {DATE}? Your reservation is binding.",
