@@ -22,15 +22,13 @@ import { convertToIcal } from "/imports/utils/convertToIcal";
 interface Body {
   eventId: string;
   participantId: string;
-  companions: number;
   recipients: string[];
   model: string;
 }
 
-export async function record(eventId: string, participantId: string, companions: number) {
+export async function record(eventId: string, participantId: string) {
   check(eventId, String);
   check(participantId, String);
-  check(companions, Number);
 
   const event = await Events.findOneAsync(eventId);
   if (!event) {
@@ -45,7 +43,6 @@ export async function record(eventId: string, participantId: string, companions:
   const body: Body = {
     eventId: event._id,
     participantId: participant._id,
-    companions,
     recipients: [participant._id],
     model: "Rsvp",
   };
@@ -70,7 +67,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
     },
 
-    async vars(locale: string, _actualRecipient: UserModel, unsubToken: string) {
+    async vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
       const campaign = "rsvpNotify";
 
@@ -114,9 +111,18 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       };
 
       return {
-        companions: body.companions,
+        companions:
+          event.participants?.find((p) => p.user === actualRecipient._id)?.companions || 0,
         event,
         tz,
+        unregisterToEventLink: Router.url("showEvent", event, {
+          query: {
+            action: "unregister",
+            participant: actualRecipient._id,
+            token: event.participants?.find((p) => p.user === actualRecipient._id)?.removeToken,
+            campaign,
+          },
+        }),
         eventDate: startMoment.format("dddd, LL"),
         subject,
         customSiteUrl: Router.url("home", {}, { query: { campaign } }),
