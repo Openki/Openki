@@ -34,7 +34,7 @@ function Panel({ thumb, full, onChange }: { thumb: any; full: any; onChange: () 
       setTimeout(() => {
         setExpanded(false);
         setClose(false);
-      }, 3350);
+      }, 350);
     }
   }, [close]);
 
@@ -54,35 +54,40 @@ function Panel({ thumb, full, onChange }: { thumb: any; full: any; onChange: () 
       {expanded && (
         <div ref={fullRef}>
           <div
-            className="panel-full"
-            style={{
-              left: thumbRef.current?.getBoundingClientRect().left,
-              right: thumbRef.current?.getBoundingClientRect().right,
-              width: thumbRef.current?.clientWidth,
-              top: thumbRef.current?.getBoundingClientRect().top,
-              height: thumbRef.current?.clientHeight,
-            }}
-          >
-            <div className="panel-full-body">
-              {full}
-              <div
-                className="panel-minimize display-4"
-                onClick={() => {
-                  setClose(true);
-                  onChange();
-                }}
-              >
-                <i className="fa-solid fa-minimize"></i>
-              </div>
-            </div>
-          </div>
-          <div
-            className="modal-backdrop show"
+            className="panel-full-bg"
             onClick={() => {
               setClose(true);
               onChange();
             }}
-          ></div>
+          >
+            <div
+              className="panel-full"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              style={{
+                left: thumbRef.current?.getBoundingClientRect().left,
+                right: thumbRef.current?.getBoundingClientRect().right,
+                width: thumbRef.current?.clientWidth,
+                top: thumbRef.current?.getBoundingClientRect().top,
+                height: thumbRef.current?.clientHeight,
+              }}
+            >
+              <div className="panel-full-body">
+                {full}
+                <div
+                  className="panel-minimize display-4"
+                  onClick={() => {
+                    setClose(true);
+                    onChange();
+                  }}
+                >
+                  <i className="fa-solid fa-minimize"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="modal-backdrop show"></div>
         </div>
       )}
     </div>
@@ -180,81 +185,4 @@ export function EventCompact2({ event }: Props) {
       }
     />
   );
-
-  // const [a, setA] = useState(false);
-  // const elementRef = useRef<HTMLDivElement>(null);
-
-  // return (
-  //   <div ref={elementRef} className={"me-2 panel " + (!a ? "panel-small" : "panel-extended")}>
-  //     <div className="card">
-  //       <div
-  //         className="card-header card-header-img"
-  //         style={{ backgroundImage: `url('${event?.publicUrlForCompactImage()}')` }}
-  //       ></div>
-  //       <div className="card-body">
-  //         <h5 className="card-title text-truncate">
-  //           {
-  //             <a
-  //               className="stretched-link"
-  //               data-bs-toggle="collapse"
-  //               href={"#collapseExample" + event._id}
-  //               role="button"
-  //               aria-expanded="false"
-  //               aria-controls={"collapseExample" + event._id}
-  //               onClick={() => {
-  //                 const element = elementRef.current;
-  //                 if (element) {
-  //                   if (!a) {
-  //                     element.style.left = element?.offsetLeft + "px";
-  //                     element.style.top = element?.offsetTop + "px";
-  //                     element.style.position = "fixed";
-  //                   } else {
-  //                     setTimeout(() => {
-  //                       element.style.position = "static";
-  //                     }, 350);
-  //                   }
-  //                 }
-
-  //                 setA(!a);
-  //               }}
-  //             >
-  //               {event.title}
-  //             </a>
-  //           }
-  //         </h5>
-  //         <p className="card-text text-truncate">
-  //           {timeFormat(event.startLocal)} - {timeFormat(event.endLocal)}
-  //           <br />
-  //           {!!event.venue?.name && <>{event.venue.name}</>}
-  //         </p>
-  //       </div>
-  //       <div className="collapse" id={"collapseExample" + event._id}>
-  //         <div className="card-body">
-  //           <p className="card-text" dangerouslySetInnerHTML={{ __html: event.description }}></p>
-  //           <EventRegistration event={event} />
-  //           <p className="card-text">
-  //             <div className="tag-group multiline">
-  //               {!!event.venue && <VenueLink venue={event.venue} room={event.room} />}
-  //             </div>
-  //             {!!event.venue?.address && (
-  //               <div className="tag">
-  //                 <span className="fa-solid fa-location-dot fa-fw" aria-hidden="true"></span>
-  //                 {event.venue.address}
-  //               </div>
-  //             )}
-  //           </p>
-  //           {!!event.venue?.loc?.coordinates && (
-  //             <Display coordinates={event.venue?.loc?.coordinates} />
-  //           )}
-  //           {!!event.courseId && (
-  //             <DisplayDiscussion courseId={event.courseId} eventId={event._id} />
-  //           )}
-  //           <GroupList event={event} />
-  //           <CourseCategories categories={event.categories} />
-  //           <Report />
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
 }

@@ -47,28 +47,27 @@
   z-index: 0;
 }
 
-.panel {
-  transition: all 0.35s;
-}
-
 .panel-thumb {
   position: relative;
 }
 
 .panel-thumb-body::after {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   z-index: 1;
   content: "";
 }
 
-.panel-full {
+.panel-full-bg {
   z-index: 1055;
   position: fixed;
-  transition: all 3.35s ease-in-out;
+  inset: 0;
+  overflow: auto;
+}
+
+.panel-full {
+  position: absolute;
+  transition: all 0.35s ease-in-out;
 }
 
 .panel-animation .panel-full {
@@ -76,24 +75,25 @@
   right: 4% !important;
   width: 92% !important;
   top: 10px !important;
+  padding-bottom: 10px !important;
   height: auto !important;
 }
 
-@media (min-width: 1200px) {
+@media (width >= 1200px) {
   .panel-full {
     max-width: 1140px;
   }
 }
 
-@media (min-width: 1200px) {
+@media (width >= 1200px) {
   .panel-animation .panel-full {
-    left: auto !important;
-    right: auto !important;
+    left: calc((100vw - 1140px) / 2) !important;
+    right: calc((100vw - 1140px) / 2) !important;
   }
 }
 
 .panel .modal-backdrop.show {
-  transition: all 3.35s;
+  transition: all 0.35s;
   opacity: 0;
 }
 
@@ -102,13 +102,19 @@
 }
 
 .panel-minimize {
+  transition: all 0.35s;
+  opacity: 0;
   position: absolute;
   top: 10px;
   right: 10px;
 }
 
+.panel .panel-animation .panel-minimize {
+  opacity: 1;
+}
+
 .panel .card-header {
-  transition: all 3.35s;
+  transition: all 0.35s;
   height: 160px;
 }
 
