@@ -142,6 +142,7 @@ async function send(
             to: address || undefined,
             subject: subjectPrefix + vars.subject,
             html: message,
+            icalEvent: vars.icalEvent,
           };
 
           // eslint-disable-next-line no-await-in-loop

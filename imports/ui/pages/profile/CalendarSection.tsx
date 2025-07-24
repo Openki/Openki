@@ -21,7 +21,7 @@ export function CalendarSection() {
 
   return (
     <div className="page-component page-component-seperated">
-      <h3>{t("profile.calendar", "My events")}</h3>
+      <h3 id="my-events">{t("profile.calendar", "My events")}</h3>
       <div className="dropdown">
         <button
           className="btn btn-secondary dropdown-toggle"

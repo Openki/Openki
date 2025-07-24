@@ -43,13 +43,12 @@ function RemoveMember({
         }}
       >
         <i className="fa-solid fa-xmark fa-fw" aria-hidden="true"></i> {userName}
-        {currentUserId !== user ? (
-          notify ? (
+        {currentUserId !== user &&
+          (notify ? (
             <i className="fa-solid fa-bell fa-fw" aria-hidden="true"></i>
           ) : (
             <i className="fa-solid fa-bell-slash fa-fw" aria-hidden="true"></i>
-          )
-        ) : null}
+          ))}
       </button>
     </div>
   );
@@ -262,8 +261,8 @@ export function GroupSettings({ group }: Props) {
                 <React.Fragment key={member.user}>
                   <RemoveMember {...member} onRemove={handleMemberRemove} />
 
-                  {currentUser?._id === member.user ? (
-                    member.notify ? (
+                  {currentUser?._id === member.user &&
+                    (member.notify ? (
                       <div className="tag tag-btn group-member-tag-notify addon">
                         <button
                           type="button"
@@ -289,8 +288,7 @@ export function GroupSettings({ group }: Props) {
                           <i className="fa-solid fa-bell-slash fa-fw" aria-hidden="true"></i>
                         </button>
                       </div>
-                    )
-                  ) : null}
+                    ))}
 
                   <div className="tag tag-link group-member-tag-profile addon">
                     <a
@@ -385,31 +383,31 @@ export function GroupSettings({ group }: Props) {
           </li>
         </ul>
 
-        {currentUser?.privileged("admin") ? (
+        {currentUser?.privileged("admin") && (
           <p>
-            {group.createdby ? (
+            {!!group.createdby && (
               <>
                 <strong>{t("group.settings.createdBy", "Created by")}</strong>:{" "}
                 <ProfileLink userId={group.createdby} />
                 <br />
               </>
-            ) : null}
-            {group.time_created ? (
+            )}
+            {!!group.time_created && (
               <>
                 <strong>{t("group.settings.timeCreated", "Created at")}</strong>:{" "}
                 {calendarDayFormat(group.time_created)}
                 <br />
               </>
-            ) : null}
+            )}
 
-            {group.time_lastedit ? (
+            {!!group.time_lastedit && (
               <>
                 <strong>{t("group.settings.timeLastEdit", "Last edit at")}</strong>:{" "}
                 {calendarDayFormat(group.time_lastedit)}
               </>
-            ) : null}
+            )}
           </p>
-        ) : null}
+        )}
       </div>
 
       {group.editableBy(currentUser) && (

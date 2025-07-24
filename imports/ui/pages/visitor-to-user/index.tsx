@@ -134,7 +134,7 @@ export function VisitorToUserPage({ token, email }: Props) {
                 setPassword(event.target.value);
               }}
             />
-            {errors.password ? <div className="invalid-feedback">{errors.password}</div> : null}
+            {!!errors.password && <div className="invalid-feedback">{errors.password}</div>}
           </div>
         </div>
         <div className="form-actions">

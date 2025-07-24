@@ -13,19 +13,22 @@ import { Model as NotificationModel } from "../notification";
 import { Rsvp, Props } from "../../../../emails/notifications/Rsvp";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { getStartEndDate } from "./utils";
+import * as StringTools from "/imports/utils/string-tools";
+import moment from "moment";
+
+import ical, { ICalCalendarMethod } from "ical-generator";
+import { convertToIcal } from "/imports/utils/convertToIcal";
 
 interface Body {
   eventId: string;
   participantId: string;
-  companions: number;
   recipients: string[];
   model: string;
 }
 
-export async function record(eventId: string, participantId: string, companions: number) {
+export async function record(eventId: string, participantId: string) {
   check(eventId, String);
   check(participantId, String);
-  check(companions, Number);
 
   const event = await Events.findOneAsync(eventId);
   if (!event) {
@@ -40,7 +43,6 @@ export async function record(eventId: string, participantId: string, companions:
   const body: Body = {
     eventId: event._id,
     participantId: participant._id,
-    companions,
     recipients: [participant._id],
     model: "Rsvp",
   };
@@ -65,7 +67,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
     },
 
-    async vars(locale: string, _actualRecipient: UserModel, unsubToken: string) {
+    async vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
       const campaign = "rsvpNotify";
 
@@ -95,10 +97,32 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       const siteName = getSiteName(region);
       const emailLogo = region.custom?.emailLogo;
 
+      const calendar = ical({ name: "Openki Calendar", method: ICalCalendarMethod.PUBLISH });
+      calendar.createEvent(convertToIcal(event));
+      const content = calendar.toString();
+
+      const sName = StringTools.slug(event.title);
+      const sDate = moment(event.start).format("YYYY-MM-DD");
+
+      const icalEvent = {
+        method: calendar.method() || undefined,
+        content,
+        filename: `openki-${sName}-${sDate}.ics`,
+      };
+
       return {
-        companions: body.companions,
+        companions:
+          event.participants?.find((p) => p.user === actualRecipient._id)?.companions || 0,
         event,
         tz,
+        unregisterToEventLink: Router.url("showEvent", event, {
+          query: {
+            action: "unregister",
+            participant: actualRecipient._id,
+            token: event.participants?.find((p) => p.user === actualRecipient._id)?.removeToken,
+            campaign,
+          },
+        }),
         eventDate: startMoment.format("dddd, LL"),
         subject,
         customSiteUrl: Router.url("home", {}, { query: { campaign } }),
@@ -106,6 +130,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         customEmailLogo: emailLogo,
         unsubscribe: { type: "automatedNotifications", token: unsubToken },
         campaign,
+        icalEvent,
       };
     },
     template: (props) => <Rsvp {...props} />,
