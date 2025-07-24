@@ -60,7 +60,7 @@ export function Courselist(data: { user: UserModel; ownProfile: boolean }) {
 
   return (
     <div className="page-component page-component-seperated profile-courselist">
-      {isInvolved() ? (
+      {isInvolved() && (
         <>
           <h3 className="badge-title">
             {data.ownProfile
@@ -138,7 +138,7 @@ export function Courselist(data: { user: UserModel; ownProfile: boolean }) {
             <LoadingPage />
           )}
         </>
-      ) : null}
+      )}
     </div>
   );
 }

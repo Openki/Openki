@@ -329,7 +329,7 @@ export function Find({ query }: Props) {
               containsPropose={true}
               group={filter.get("group")}
             />
-            {hasMore() ? (
+            {hasMore() && (
               <div className="text-center mt-3">
                 <button
                   type="button"
@@ -341,7 +341,7 @@ export function Find({ query }: Props) {
                   {t("_button.more")}
                 </button>
               </div>
-            ) : null}
+            )}
           </>
         ) : (
           <>
@@ -350,9 +350,9 @@ export function Find({ query }: Props) {
                 <span className="fa-solid fa-circle-exclamation fa-fw" aria-hidden="true"></span>{" "}
                 {t("find.no-courses-found", "No Courses found")}
               </div>
-              {searchIsLimited() ? (
+              {searchIsLimited() && (
                 <div className="btn-group">
-                  {filteredRegion() ? (
+                  {filteredRegion() && (
                     <button
                       type="button"
                       className="btn btn-secondary"
@@ -363,15 +363,15 @@ export function Find({ query }: Props) {
                       <span className="fa-solid fa-location-dot" aria-hidden="true"></span>{" "}
                       {t("find.searchAllRegions", "Search in all regions")}
                     </button>
-                  ) : null}
+                  )}
 
-                  {activeFilters() ? (
+                  {activeFilters() && (
                     <button type="button" className="btn btn-cancel" onClick={handleToggleFilter}>
                       {t("find.hideFilters")}
                     </button>
-                  ) : null}
+                  )}
                 </div>
-              ) : null}
+              )}
             </div>
           </>
         )}
