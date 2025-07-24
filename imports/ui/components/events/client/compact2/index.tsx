@@ -3,12 +3,12 @@ import Collapse from "bootstrap/js/dist/collapse";
 
 import { EventModel } from "/imports/api/events/events";
 import { useDetails } from "/imports/api/courses/publications";
+import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useParams } from "/imports/utils/react-meteor-router";
 
 import { EventRegistration } from "../../display/registration";
-import { Report } from "/imports/ui/components/report";
 import { Discussion } from "../../../courses/discussion";
 
 import "./styles.scss";
@@ -16,6 +16,7 @@ import { GroupList } from "../../display/group-list";
 import { Display } from "../../../location/display";
 import { VenueLink } from "../../../venues/link";
 import { CourseCategories } from "../../../courses/categories";
+import { useUser } from "/imports/utils/react-meteor-data";
 
 function Panel({ thumb, full, onChange }: { thumb: any; full: any; onChange: () => void }) {
   const [expanded, setExpanded] = useState(false);
@@ -115,6 +116,22 @@ export interface Props {
 export function EventCompact2({ event }: Props) {
   const { timeFormat } = useDateTimeFormat();
 
+  const user = useUser();
+
+  const [isRegionLoading, region] = useRegionDetails(event.region);
+  const groups = event.allGroups?.filter(
+    (groupId) =>
+      !(
+        // hide group where are from the region set
+        (
+          region?.defaultTeamGroups?.includes(groupId) &&
+          // when user ist not member of the group or a admin
+          !user?.mayPromoteWith(groupId) &&
+          !event.editableBy(user)
+        )
+      ),
+  );
+
   const collapseElementRef = useRef<HTMLDivElement>(null);
   return (
     <Panel
@@ -132,7 +149,7 @@ export function EventCompact2({ event }: Props) {
             style={{ backgroundImage: `url('${event?.publicUrlForCompactImage()}')` }}
           ></div>
           <div className="card-body">
-            <h5 className="card-title text-truncate">{event.title}</h5>
+            <h4 className="card-title text-truncate">{event.title}</h4>
             <p className="card-text text-truncate">
               <i className="fa-regular fa-fw fa-clock"></i> {timeFormat(event.startLocal)} -{" "}
               {timeFormat(event.endLocal)}
@@ -154,7 +171,7 @@ export function EventCompact2({ event }: Props) {
             style={{ backgroundImage: `url('${event?.publicUrlForDetailsImage()}')` }}
           ></div>
           <div className="card-body">
-            <h5 className="card-title text-truncate">{event.title}</h5>
+            <h4 className="card-title text-truncate">{event.title}</h4>
             <p className="card-text text-truncate">
               <i className="fa-regular fa-fw fa-clock"></i> {timeFormat(event.startLocal)} -{" "}
               {timeFormat(event.endLocal)}
@@ -168,27 +185,50 @@ export function EventCompact2({ event }: Props) {
             </p>
             <div className="collapse" ref={collapseElementRef}>
               <p className="card-text" dangerouslySetInnerHTML={{ __html: event.description }}></p>
-              <EventRegistration event={event} />
               <p className="card-text">
-                <div className="tag-group multiline">
-                  {!!event.venue && <VenueLink venue={event.venue} room={event.room} />}
-                </div>
-                {!!event.venue?.address && (
-                  <div className="tag">
-                    <span className="fa-solid fa-location-dot fa-fw" aria-hidden="true"></span>
-                    {event.venue.address}
-                  </div>
-                )}
+                <EventRegistration event={event} />
               </p>
-              {!!event.venue?.loc?.coordinates && (
-                <Display coordinates={event.venue?.loc?.coordinates} />
+              {!!event.venue && (
+                <>
+                  <h5 className="card-title">Place</h5>
+                  <p className="card-text">
+                    <div className="tag-group multiline">
+                      <VenueLink venue={event.venue} room={event.room} />
+                    </div>
+                    {!!event.venue?.address && (
+                      <div className="tag">
+                        <span className="fa-solid fa-location-dot fa-fw" aria-hidden="true"></span>
+                        {event.venue.address}
+                      </div>
+                    )}
+                    {!!event.venue?.loc?.coordinates && (
+                      <Display coordinates={event.venue?.loc?.coordinates} />
+                    )}
+                  </p>
+                </>
               )}
+
               {!!event.courseId && (
-                <DisplayDiscussion courseId={event.courseId} eventId={event._id} />
+                <p className="card-text">
+                  <DisplayDiscussion courseId={event.courseId} eventId={event._id} />
+                </p>
               )}
-              <GroupList event={event} />
-              <CourseCategories categories={event.categories} />
-              <Report />
+              {!isRegionLoading() && !!groups?.length && (
+                <>
+                  <h5 className="card-title">Groups</h5>
+                  <p className="card-text">
+                    <GroupList event={event} />
+                  </p>
+                </>
+              )}
+              {!!event.categories?.length && (
+                <>
+                  <h5 className="card-title">Categories</h5>
+                  <p className="card-text">
+                    <CourseCategories categories={event.categories} />
+                  </p>
+                </>
+              )}
             </div>
           </div>
         </div>
