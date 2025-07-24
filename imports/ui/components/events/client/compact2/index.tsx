@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import Collapse from "bootstrap/js/dist/collapse";
 
 import { EventModel } from "/imports/api/events/events";
 import { useDetails } from "/imports/api/courses/publications";
@@ -16,34 +17,59 @@ import { Display } from "../../../location/display";
 import { VenueLink } from "../../../venues/link";
 import { CourseCategories } from "../../../courses/categories";
 
-function Panel({ thumb, full }: { thumb: any; full: any }) {
+function Panel({ thumb, full, onChange }: { thumb: any; full: any; onChange: () => void }) {
   const [expanded, setExpanded] = useState(false);
+  const [close, setClose] = useState(false);
+  const thumbRef = useRef<HTMLDivElement>(null);
+  const fullRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (expanded) {
+      fullRef.current?.classList.add("panel-animation");
+    }
+  }, [expanded]);
+  useEffect(() => {
+    if (close) {
+      fullRef.current?.classList.remove("panel-animation");
+      setTimeout(() => {
+        setExpanded(false);
+        setClose(false);
+      }, 3350);
+    }
+  }, [close]);
+
   return (
     <div className="panel">
-      <div className="panel-thumb">
+      <div className="panel-thumb" ref={thumbRef}>
         <div
           className="panel-thumb-body"
           onClick={() => {
             setExpanded(true);
+            onChange();
           }}
         >
           {thumb}
         </div>
       </div>
       {expanded && (
-        <div className="panel-full">
+        <div ref={fullRef}>
           <div
-            className="panel-full-body"
-            onClick={() => {
-              setExpanded(false);
+            className="panel-full"
+            style={{
+              left: thumbRef.current?.getBoundingClientRect().left,
+              right: thumbRef.current?.getBoundingClientRect().right,
+              width: thumbRef.current?.clientWidth,
+              top: thumbRef.current?.getBoundingClientRect().top,
+              height: thumbRef.current?.clientHeight,
             }}
           >
-            <div className="container">
+            <div className="panel-full-body">
               {full}
               <div
                 className="panel-minimize display-4"
                 onClick={() => {
-                  setExpanded(false);
+                  setClose(true);
+                  onChange();
                 }}
               >
                 <i className="fa-solid fa-minimize"></i>
@@ -53,7 +79,8 @@ function Panel({ thumb, full }: { thumb: any; full: any }) {
           <div
             className="modal-backdrop show"
             onClick={() => {
-              setExpanded(false);
+              setClose(true);
+              onChange();
             }}
           ></div>
         </div>
@@ -83,8 +110,16 @@ export interface Props {
 export function EventCompact2({ event }: Props) {
   const { timeFormat } = useDateTimeFormat();
 
+  const collapseElementRef = useRef<HTMLDivElement>(null);
   return (
     <Panel
+      onChange={() => {
+        setTimeout(() => {
+          if (collapseElementRef.current) {
+            Collapse.getOrCreateInstance(collapseElementRef.current).toggle();
+          }
+        }, 0);
+      }}
       thumb={
         <div className="card">
           <div
@@ -115,7 +150,7 @@ export function EventCompact2({ event }: Props) {
               {!!event.venue?.name && <>{event.venue.name}</>}
             </p>
           </div>
-          <div className="collapse" id={"collapseExample" + event._id}>
+          <div className="collapse" ref={collapseElementRef}>
             <div className="card-body">
               <p className="card-text" dangerouslySetInnerHTML={{ __html: event.description }}></p>
               <EventRegistration event={event} />
