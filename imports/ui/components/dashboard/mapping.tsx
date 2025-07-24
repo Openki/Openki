@@ -104,10 +104,7 @@ const eventModern: ListOfEntities<EventModel> = {
   showAll: { text: "dashboard.calendar.showAll" },
   filter: EventCollection.Filtering,
   find: Events.useFindFilter,
-  element: ({ entity }) => (
-      <EventCompact2 event={entity} />
-  
-  ),
+  element: ({ entity }) => <EventCompact2 event={entity} />,
 };
 
 function bodyStyle(imageUrl: string) {

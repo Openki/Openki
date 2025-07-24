@@ -164,7 +164,7 @@ export function ProgrammePage(data: Record<string, string>) {
                 title: calendarDayFormat(day),
                 entity: "eventModern",
                 showAll: false,
-                query: "" //UrlTools.paramsToQueryString(f.toParams()),
+                query: "", //UrlTools.paramsToQueryString(f.toParams()),
               };
             })}
         />
