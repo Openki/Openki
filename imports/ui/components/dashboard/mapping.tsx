@@ -18,6 +18,7 @@ import { Edit } from "../courses/edit";
 import { CourseCompact } from "../../components/courses/compact";
 import { CompactPropose } from "/imports/ui/components/courses/compact-propose";
 import { EventCompact } from "../../components/events/compact";
+import { EventCompact2 } from "../events/client/compact2";
 import { EventsMap } from "../../components/events/map";
 
 /** A list of entites. */
@@ -98,6 +99,17 @@ const event: ListOfEntities<EventModel> = {
   ),
 };
 
+const eventModern: ListOfEntities<EventModel> = {
+  route: "calendar",
+  showAll: { text: "dashboard.calendar.showAll" },
+  filter: EventCollection.Filtering,
+  find: Events.useFindFilter,
+  element: ({ entity }) => (
+      <EventCompact2 event={entity} />
+  
+  ),
+};
+
 function bodyStyle(imageUrl: string) {
   const src = imageUrl;
   if (!src) {
@@ -154,6 +166,7 @@ export const mapping = {
   course,
   courseWithoutPropose,
   event,
+  eventModern,
   group,
   eventsMap,
   propose,
