@@ -1,0 +1,89 @@
+@use "sass:color";
+@import "{}/imports/ui/stylesheets/variables/index";
+
+// event canceled
+// ============================================================================================
+.event-canceled {
+  background-color: $canceled-color;
+  border-radius: 5px;
+  color: $white;
+  display: flow-root;
+  font-family: monospace, sans-serif;
+  font-size: 2em;
+  font-stretch: narrower;
+  font-weight: 950;
+  left: 5%;
+  margin-block-start: 18px;
+  opacity: 0.4;
+  padding: 5px;
+  position: absolute;
+  text-align: center;
+  top: 40%;
+  transform: rotate(-27deg);
+  width: fit-content;
+  z-index: 0;
+}
+
+// event fully booked
+// ============================================================================================
+.event-fully-booked {
+  background-color: #f99248;
+  border-radius: 5px;
+  color: $white;
+  display: flow-root;
+  font-family: monospace, sans-serif;
+  font-size: 2em;
+  font-stretch: narrower;
+  font-weight: 950;
+  left: 5%;
+  margin-block-start: 18px;
+  opacity: 0.4;
+  padding: 5px;
+  position: absolute;
+  text-align: center;
+  top: 40%;
+  transform: rotate(-27deg);
+  width: fit-content;
+  z-index: 0;
+}
+
+.panel {
+  transition: all 0.35s;
+}
+
+.panel-small {
+  inline-size: 320px;
+  min-inline-size: 320px;
+  transition: all 0.4s ease-in-out;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.panel-extended {
+  top: 100px !important;
+  left: 20% !important;
+  width: 60vw;
+  height: 100vh;
+  object-fit: contain;
+  z-index: 9999;
+  margin: 0;
+  padding: 0;
+  transition: all 0.4s ease-in-out;
+}
+
+.card-header-img {
+  background-position: center;
+  background-size: cover;
+}
+
+.card-header {
+  transition: all 0.35s;
+}
+
+.panel .card-header {
+  height: 160px;
+}
+
+.panel-extended .card-header {
+  height: 320px;
+}

@@ -162,9 +162,9 @@ export function ProgrammePage(data: Record<string, string>) {
               }
               return {
                 title: calendarDayFormat(day),
-                entity: "event",
+                entity: "eventModern",
                 showAll: false,
-                query: UrlTools.paramsToQueryString(f.toParams()),
+                query: "" //UrlTools.paramsToQueryString(f.toParams()),
               };
             })}
         />
