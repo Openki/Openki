@@ -126,7 +126,7 @@ export function EventCompact2({ event }: Props) {
         }, 0);
       }}
       thumb={
-        <div className="card">
+        <div className="card me-1" style={{ width: 320, minWidth: 320 }}>
           <div
             className="card-header card-header-img"
             style={{ backgroundImage: `url('${event?.publicUrlForCompactImage()}')` }}
@@ -134,9 +134,15 @@ export function EventCompact2({ event }: Props) {
           <div className="card-body">
             <h5 className="card-title text-truncate">{event.title}</h5>
             <p className="card-text text-truncate">
-              {timeFormat(event.startLocal)} - {timeFormat(event.endLocal)}
-              <br />
-              {!!event.venue?.name && <>{event.venue.name}</>}
+              <i className="fa-regular fa-fw fa-clock"></i> {timeFormat(event.startLocal)} -{" "}
+              {timeFormat(event.endLocal)}
+              {!!event.venue?.name && (
+                <>
+                  <br />
+                  <i className="fa-solid fa-fw fa-location-dot"></i>
+                  {event.venue.name}
+                </>
+              )}
             </p>
           </div>
         </div>
@@ -150,13 +156,17 @@ export function EventCompact2({ event }: Props) {
           <div className="card-body">
             <h5 className="card-title text-truncate">{event.title}</h5>
             <p className="card-text text-truncate">
-              {timeFormat(event.startLocal)} - {timeFormat(event.endLocal)}
-              <br />
-              {!!event.venue?.name && <>{event.venue.name}</>}
+              <i className="fa-regular fa-fw fa-clock"></i> {timeFormat(event.startLocal)} -{" "}
+              {timeFormat(event.endLocal)}
+              {!!event.venue?.name && (
+                <>
+                  <br />
+                  <i className="fa-solid fa-fw fa-location-dot"></i>
+                  {event.venue.name}
+                </>
+              )}
             </p>
-          </div>
-          <div className="collapse" ref={collapseElementRef}>
-            <div className="card-body">
+            <div className="collapse" ref={collapseElementRef}>
               <p className="card-text" dangerouslySetInnerHTML={{ __html: event.description }}></p>
               <EventRegistration event={event} />
               <p className="card-text">
