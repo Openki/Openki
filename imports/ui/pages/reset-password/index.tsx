@@ -120,7 +120,7 @@ export function ResetPasswordPage({ token, email }: Props) {
             defaultValue={password}
           />
         </fieldset>
-        {!showPassword ? (
+        {!showPassword && (
           <fieldset className="mb-3">
             <label className="form-label" htmlFor="passConfirm">
               {t("passwordReset.label.confirm", "Confirm")}
@@ -136,12 +136,11 @@ export function ResetPasswordPage({ token, email }: Props) {
               }}
               defaultValue={passwordConfirm}
             />
-            {passwordSame ? t("resetPassword.message.passwordsSame", "Passwords match") : null}
-            {passwordNotSame
-              ? t("resetPassword.message.passwordsNotSame", "Passwords don't match")
-              : null}
+            {!!passwordSame && t("resetPassword.message.passwordsSame", "Passwords match")}
+            {!!passwordNotSame &&
+              t("resetPassword.message.passwordsNotSame", "Passwords don't match")}
           </fieldset>
-        ) : null}
+        )}
 
         <div className="form-actions">
           <button

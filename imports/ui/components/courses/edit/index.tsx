@@ -769,7 +769,7 @@ export function Edit(data: Data) {
             <label className="form-label">{t("course.edit.description", "Description")}</label>
             <Editable {...editableDescription} />
           </div>
-          {hasPricePolicy() ? <PricePolicy dismissable={true} wrap="mb-3" /> : null}
+          {hasPricePolicy() && <PricePolicy dismissable={true} wrap="mb-3" />}
           <div className="row gap-3 mb-3">
             {!hideCategories() && (
               <div className="col-md">
@@ -847,7 +847,7 @@ export function Edit(data: Data) {
           </div>
           <EditCustomFields fields={customFields("multiLine")} values={data.customFields} />
 
-          {showInternalCheckbox() ? (
+          {showInternalCheckbox() && (
             <div className="mb-3">
               <label className="form-label">{t("course.edit.intern", "Hide on front page")}</label>
               <div className="form-check">
@@ -867,11 +867,11 @@ export function Edit(data: Data) {
                 </label>
               </div>
             </div>
-          ) : null}
+          )}
 
           <div className="form-actions">
             <ButtonSave onClick={handleSave} disabled={isBusy} />
-            {!data.isFrame ? <ButtonCancel onClick={handleCancel} /> : null}
+            {!data.isFrame && <ButtonCancel onClick={handleCancel} />}
           </div>
         </div>
       </PleaseLogin>

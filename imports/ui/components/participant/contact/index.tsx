@@ -72,11 +72,11 @@ export function ParticipantContact(props: Props) {
 
   return (
     <>
-      {showParticipantContact() ? (
+      {showParticipantContact() && (
         <>
           <div className="d-inline-block">
-            {!isLoading() ? (
-              participant?.allowPrivateMessages ? (
+            {!isLoading() &&
+              (participant?.allowPrivateMessages ? (
                 <button
                   className="btn btn-link p-0"
                   type="button"
@@ -96,10 +96,9 @@ export function ParticipantContact(props: Props) {
                     )}
                   ></i>
                 </button>
-              )
-            ) : null}
+              ))}
           </div>
-          {showModal ? (
+          {showModal && (
             <div className="modal" tabIndex={-1} role="dialog" ref={modalRef}>
               <div className="modal-dialog modal-sm" role="document">
                 <div className="modal-content">
@@ -124,9 +123,9 @@ export function ParticipantContact(props: Props) {
                 </div>
               </div>
             </div>
-          ) : null}
+          )}
         </>
-      ) : null}
+      )}
     </>
   );
 }

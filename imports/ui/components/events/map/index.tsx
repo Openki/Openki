@@ -114,7 +114,7 @@ export function EventsMap({ events, fullscreenControl = true, openLinksInNewTab 
             ></Marker>
           </React.Fragment>
         ))}
-        {fullscreenControl ? <FullscreenControl /> : null}
+        {fullscreenControl && <FullscreenControl />}
       </MapContainer>
     </div>
   );

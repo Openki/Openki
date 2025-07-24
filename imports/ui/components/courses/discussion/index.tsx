@@ -12,7 +12,7 @@ import { Post } from "./post";
 import "./styles.scss";
 
 export interface Props {
-  select: string;
+  select: string | undefined;
   courseId: string;
   eventId?: string | undefined;
 }

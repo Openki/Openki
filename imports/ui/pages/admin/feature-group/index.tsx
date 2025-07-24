@@ -30,7 +30,7 @@ export function AdminFeatureGroupPage() {
 
   return (
     <>
-      {featuredGroup() ? (
+      {!!featuredGroup() && (
         <div className="admin-featured-group">
           <div className="mb-2">
             {t(
@@ -70,7 +70,7 @@ export function AdminFeatureGroupPage() {
             )}
           </button>
         </div>
-      ) : null}
+      )}
       <h3>{t("featureGroup.featureGroup", "Feature group")}</h3>
       <form
         onSubmit={async (event) => {

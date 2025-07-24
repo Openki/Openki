@@ -93,12 +93,12 @@ export function Post({ post, responses, edit, onCancel }: Props) {
     <>
       {editing ? <Edit {...postEditAttr()} /> : <Show {...postShowAttr()} />}
 
-      {isParent ? (
+      {isParent && (
         <>
-          {responses ? <Responses responses={responses} /> : null}
+          {!!responses && <Responses responses={responses} />}
           <Post post={newResponse() as any} />
         </>
-      ) : null}
+      )}
     </>
   );
 }

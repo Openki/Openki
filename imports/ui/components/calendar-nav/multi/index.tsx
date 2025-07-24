@@ -118,7 +118,7 @@ export function Multi({ date, filter, setIsAttendeeFilterOn }: Props) {
         </div>
         <Control {...controlAttr("next")} />
       </div>
-      {currentUser ? (
+      {!!currentUser && (
         <div className="form-check form-switch align-content-center text-center pb-2">
           <input
             type="checkbox"
@@ -133,7 +133,7 @@ export function Multi({ date, filter, setIsAttendeeFilterOn }: Props) {
             {t("calendar.filter-own-events", "Show my events only")}
           </label>
         </div>
-      ) : null}
+      )}
     </div>
   );
 }

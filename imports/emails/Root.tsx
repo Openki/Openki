@@ -1,11 +1,17 @@
 import React from "react";
 import { PublicSettings } from "/imports/utils/PublicSettings";
+import { ICalCalendarMethod } from "ical-generator";
 
 export interface Props {
   subject: string | undefined;
   logo: string;
   customSiteUrl?: string | undefined;
   customSiteName?: string | undefined;
+  icalEvent?: {
+    method: ICalCalendarMethod | undefined;
+    filename: string;
+    content: string;
+  };
 }
 
 export function Root({
