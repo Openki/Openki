@@ -124,15 +124,18 @@ function LoggedIn({ user }: { user: UserModel }) {
       {!isVisitor() ? (
         <>
           {!!user.emailAddress() && <EmailSection />}
+          <CalendarSection />
           {isAdmin() && <AdminSection />}
           {!tenantsAreLoading() && hasTenants() && <TenantSection tenants={tenants} />}
           {!groupsAreLoading() && <GroupSection groups={groups} />}
           {!venuesAreLoading() && <VenuesSection venues={venues} />}
         </>
       ) : (
-        <CreateUserSection user={user} />
+        <>
+          <CreateUserSection user={user} />
+          <CalendarSection />
+        </>
       )}
-      <CalendarSection />
       <DangerZoneSection />
     </>
   );

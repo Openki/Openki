@@ -445,9 +445,3 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("EventReplication", () => EventReplication);

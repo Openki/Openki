@@ -79,7 +79,7 @@ export function Introduction({ hasPricePolicy }: Props) {
             <span className="remove-btn fa-solid fa-xmark" aria-hidden="true"></span>
           </a>
         </h3>
-        {openedIntro ? (
+        {!!openedIntro && (
           <div className="introduction-content">
             <div className="introduction-steps row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6">
               <div className="col">
@@ -131,9 +131,9 @@ export function Introduction({ hasPricePolicy }: Props) {
                 <a href={getLocalizedValue(PublicSettings.faqLink)}>{t("main.faq_link", "FAQ")}</a>
               </div>
             </div>
-            {hasPricePolicy ? <PricePolicy /> : null}
+            {hasPricePolicy && <PricePolicy />}
           </div>
-        ) : null}
+        )}
       </div>
     </div>
   );

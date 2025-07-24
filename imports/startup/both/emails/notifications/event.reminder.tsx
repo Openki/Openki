@@ -92,11 +92,16 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
       const vars = {
         companions:
-          event.participants?.filter((p) => p.user === actualRecipient._id)[0].companions || 0,
+          event.participants?.find((p) => p.user === actualRecipient._id)?.companions || 0,
         event,
         tz,
         unregisterToEventLink: Router.url("showEvent", event, {
-          query: { action: "unregister", campaign },
+          query: {
+            action: "unregister",
+            participant: actualRecipient._id,
+            token: event.participants?.find((p) => p.user === actualRecipient._id)?.removeToken,
+            campaign,
+          },
         }),
         subject,
         customSiteUrl: Router.url("home", {}, { query: { campaign } }),

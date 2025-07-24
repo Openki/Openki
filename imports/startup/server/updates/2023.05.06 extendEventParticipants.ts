@@ -11,7 +11,7 @@ export async function update() {
         $set: {
           participants:
             event.participants?.map((p) => {
-              return { user: p as unknown as string };
+              return { user: p as unknown as string } as any;
             }) || [],
         },
       },

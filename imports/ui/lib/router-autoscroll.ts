@@ -100,7 +100,7 @@ class RouterAutoscroll {
   public async scheduleScroll() {
     await TrackerAsync.afterFlush();
 
-    await MeteorAsync.defer();
+    await MeteorAsync.setTimeout(200);
 
     const position = this.getScrollToPosition();
     RouterAutoscroll.scrollToPos(position);

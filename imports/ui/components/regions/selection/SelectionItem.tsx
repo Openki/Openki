@@ -68,7 +68,7 @@ export function SelectionItem({
             {region.futureEventCount}
           </span>
         </div>
-        {isCurrentRegion ? <span className="checkmark fa-solid fa-check"></span> : null}{" "}
+        {isCurrentRegion && <span className="checkmark fa-solid fa-check"></span>}{" "}
         <MarkedName search={search} name={region.name} />
       </a>
     </li>

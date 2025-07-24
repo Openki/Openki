@@ -327,20 +327,20 @@ export function Editable({
                   "There are too many characters here. You should edit it.",
                 )}
           </div>
-        ) : errors.input ? (
-          <div className="invalid-feedback">{errors.input}</div>
-        ) : null}
+        ) : (
+          !!errors.input && <div className="invalid-feedback">{errors.input}</div>
+        )}
 
-        {!showControls() ? (
+        {!showControls() && (
           <span className="fa-solid fa-pencil editable-icon" onClick={handleEdit}></span>
-        ) : null}
+        )}
       </div>
-      {showControls() ? (
+      {showControls() && (
         <div className="editable-controls">
-          {!characterLimitReached() ? <ButtonSave onClick={handleSave} /> : null}
+          {!characterLimitReached() && <ButtonSave onClick={handleSave} />}
           <ButtonCancel onClick={handleCancel} />
         </div>
-      ) : null}
+      )}
     </>
   );
 }

@@ -207,7 +207,7 @@ export function AccountTasks() {
       ref={elementRef}
     >
       <div className="modal-dialog modal-sm" role="document">
-        {show ? (
+        {show && (
           <div className="modal-content">
             <div className="modal-header">
               <h4 className="modal-title">
@@ -243,7 +243,7 @@ export function AccountTasks() {
               />
             </div>
           </div>
-        ) : null}
+        )}
       </div>
     </div>
   );

@@ -42,11 +42,13 @@ export function CourseList({
       {courses.map((course, index) => (
         <React.Fragment key={course._id}>
           {/* The sevent box should allways be the propose one, after then every 11 */}
-          {PublicSettings.feature.proposeCourseBox && containsPropose && (index - 6) % 10 === 0 ? (
-            <div className="col">
-              <CompactPropose group={group} groupTagEvents={groupTagEvents} />
-            </div>
-          ) : null}
+          {PublicSettings.feature.proposeCourseBox &&
+            !!containsPropose &&
+            (index - 6) % 10 === 0 && (
+              <div className="col">
+                <CompactPropose group={group} groupTagEvents={groupTagEvents} />
+              </div>
+            )}
           <div className="col">
             <CourseCompact
               course={course}
