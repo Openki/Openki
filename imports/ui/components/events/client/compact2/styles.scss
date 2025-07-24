@@ -51,6 +51,39 @@
   transition: all 0.35s;
 }
 
+.panel-thumb {
+  position: relative;
+}
+
+.panel-thumb-body::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  content: "";
+}
+
+.panel-full-body {
+  z-index: 1055;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.panel-full-body .container {
+  position: relative;
+}
+
+.panel-minimize {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 .panel-small {
   inline-size: 320px;
   min-inline-size: 320px;
