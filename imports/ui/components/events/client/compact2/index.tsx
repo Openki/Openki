@@ -26,7 +26,9 @@ function Panel({ thumb, full, onChange }: { thumb: any; full: any; onChange: () 
 
   useEffect(() => {
     if (expanded) {
-      fullRef.current?.classList.add("panel-animation");
+      setTimeout(() => {
+        fullRef.current?.classList.add("panel-animation");
+      }, 0);
     }
   }, [expanded]);
   useEffect(() => {
