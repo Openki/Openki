@@ -9,7 +9,7 @@ import { AccountsAsync } from "/imports/utils/promisify";
 import * as Metatags from "/imports/utils/metatags";
 
 import { ButtonCancel } from "/imports/ui/components/buttons";
-import { TokenExpired } from "../../components/token-expired";
+import { TokenExpired } from "../../components/TokenExpired";
 
 export interface Props {
   email: string;

@@ -30,9 +30,3 @@ export function Display(props: {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("LocationDisplay", () => Display);
