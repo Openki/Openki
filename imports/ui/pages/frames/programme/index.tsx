@@ -44,10 +44,12 @@ export function ProgrammePage(data: Record<string, string>) {
   const filter = Events.Filtering().read(data);
 
   const date = moment(reactiveNow.get());
-  const start = filter.get("start") || date.startOf("week");
+  const start = filter.get("start") || moment(date).startOf("week");
   const end = filter.get("end") || moment(start).add(1, "week");
 
-  const [selectedDays, setSelectedDays] = useState(getDays(start, end));
+  const [selectedDays, setSelectedDays] = useState(
+    getDays(start, end).filter((d) => !d.isBefore(date, "day")),
+  );
 
   function control() {
     return data.control === "1";
