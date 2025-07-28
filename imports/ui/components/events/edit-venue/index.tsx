@@ -372,9 +372,3 @@ export function EditVenue({
     </>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("EventEditVenue", () => EditVenue);

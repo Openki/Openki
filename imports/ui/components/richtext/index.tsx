@@ -119,9 +119,3 @@ export function Richtext({ className, text, placeholder, maxlength, onChange }: 
     </>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("Richtext", () => Richtext);
