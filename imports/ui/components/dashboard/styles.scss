@@ -16,3 +16,40 @@
     color: $gray-700;
   }
 }
+
+.btn-scroll {
+  position: absolute;
+  z-index: 2;
+  font-size: 49px;
+  top: 50%;
+  margin-top: -29px;
+  opacity: 0;
+  transition:
+    opacity 0.35s,
+    left 0.35s,
+    right 0.35s;
+}
+
+.btn-scroll-right {
+  right: 5px;
+}
+
+.btn-scroll-right:hover {
+  right: 0 !important;
+}
+
+.btn-scroll-left {
+  left: 5px;
+}
+
+.btn-scroll-left:hover {
+  left: 0 !important;
+}
+
+.scroll-container:hover .btn-scroll {
+  opacity: 0.6;
+}
+
+.scroll-container .btn-scroll:hover {
+  opacity: 1 !important;
+}
