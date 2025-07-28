@@ -15,10 +15,10 @@ import { Publication } from "/imports/utils/ServerPublishReact";
 import { CourseTemplate } from "../../lib/course-template";
 
 import { Edit } from "../courses/edit";
-import { CourseCompact } from "../../components/courses/compact";
+import { CourseCompact } from "../courses/compact";
 import { CompactPropose } from "/imports/ui/components/courses/compact-propose";
-import { EventCompact } from "../../components/events/compact";
-import { EventsMap } from "../../components/events/map";
+import { EventCompact } from "../events/compact";
+import { EventsMap } from "../events/map";
 
 /** A list of entites. */
 
