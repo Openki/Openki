@@ -180,8 +180,10 @@ export function EventCompact2({ event }: Props) {
               {!!event.venue?.name && (
                 <>
                   <br />
-                  <i className="fa-solid fa-fw fa-location-dot"></i>
-                  {event.venue.name}
+                  <a href="#place">
+                    <i className="fa-solid fa-fw fa-location-dot"></i>
+                    {event.venue.name}
+                  </a>
                 </>
               )}
             </p>
@@ -192,17 +194,22 @@ export function EventCompact2({ event }: Props) {
               </p>
               {!!event.venue && (
                 <>
-                  <h5 className="card-title">Place</h5>
+                  <h5 id="place" className="card-title">
+                    Place
+                  </h5>
                   <p className="card-text">
                     <div className="tag-group multiline">
                       <VenueLink venue={event.venue} room={event.room} />
+                      {!!event.venue?.address && (
+                        <div className="tag">
+                          <span
+                            className="fa-solid fa-location-dot fa-fw"
+                            aria-hidden="true"
+                          ></span>
+                          {event.venue.address}
+                        </div>
+                      )}
                     </div>
-                    {!!event.venue?.address && (
-                      <div className="tag">
-                        <span className="fa-solid fa-location-dot fa-fw" aria-hidden="true"></span>
-                        {event.venue.address}
-                      </div>
-                    )}
                     {!!event.venue?.loc?.coordinates && (
                       <Display coordinates={event.venue?.loc?.coordinates} />
                     )}
