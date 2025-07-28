@@ -8,6 +8,8 @@ import { FilterGroups } from "/imports/ui/components/filter-groups";
 import { SearchField } from "../../search-field";
 import { FilterCategories } from "../../filter-categories";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import { ScssVars } from "/imports/ui/lib/scss-vars";
 
 import "../styles.scss";
 
@@ -35,6 +37,9 @@ export function CalendarNavProgramme(props: Props) {
   const { t } = useTranslation();
   const { weekdayFormat } = useDateTimeFormat();
 
+  const viewport = useViewportSize();
+  const isMobileScreen = viewport.width <= ScssVars.screenXS;
+
   const elementRef = useRef(null);
 
   function searchFieldAttr() {
@@ -57,82 +62,82 @@ export function CalendarNavProgramme(props: Props) {
   }
 
   return (
-    <div className="calendar-nav-container flex-container d-block" ref={elementRef}>
-      <div className="row align-items-center px-1">
-        <div className="col-md-3 col-lg-4 p-1">
-          <SearchField {...searchFieldAttr()} />
+    <div className="calendar-nav-container d-block" ref={elementRef}>
+      <div className="container py-1">
+        <div className="row align-items-center px-1">
+          <div className="col-md-8 col-lg-6 p-1">
+            <SearchField {...searchFieldAttr()} />
+          </div>
         </div>
-        <div className="col-md-3 col-lg-4 p-1">
-          {!hideSwitches && (
-            <div className="row px-2">
-              {days.map((d) => (
-                <div key={d.toISOString()} className="col px-1">
-                  <div className="d-grid">
-                    {props.selectedDays.find((s) => s.isSame(d)) ? (
-                      <button
-                        type="button"
-                        className="btn bg-white btn-lg d-block active"
-                        data-bs-toggle="button"
-                        aria-pressed="true"
-                        onClick={() => props.onRemoveDay(d)}
-                      >
-                        {weekdayFormat(d)}{" "}
-                        <i className="fa-solid fa-check fa-fw text-success" aria-hidden="true"></i>
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        className="btn bg-white btn-lg d-block"
-                        data-bs-toggle="button"
-                        onClick={() => props.onAddDay(d)}
-                      >
-                        {weekdayFormat(d)} <i className="fa fa-fw" aria-hidden="true"></i>
-                      </button>
-                    )}
-                  </div>
-                </div>
-              ))}
+        <div className="row align-items-center px-1">
+          {availableGroups ? (
+            <>
+              <div className="col-md-4 col-lg-3 p-1">
+                <FilterGroups {...filterGroupsAttr()} />
+              </div>
+              <div className="col-md-4 col-lg-3 p-1">
+                <FilterCategories {...filterCategoriesAttr()} />
+              </div>
+            </>
+          ) : (
+            <div className="col-md-4 col-lg-3 p-1">
+              <FilterCategories {...filterCategoriesAttr()} />
+            </div>
+          )}
+          {!!currentUser && (
+            <div className={`col-md-8 col-lg-6 p-1`}>
+              <div className="form-check form-switch">
+                <input
+                  type="checkbox"
+                  id="filter-own-events"
+                  className="form-check-input float-none"
+                  name="filter-own-events"
+                  onClick={(event) => {
+                    const radioSwitch = event.currentTarget;
+                    props.onChangeAttendingEventsOnly(radioSwitch.checked);
+                  }}
+                />{" "}
+                <label htmlFor="filter-own-events">
+                  {t("calendar.filter-own-events", "Show my events only")}
+                </label>
+              </div>
             </div>
           )}
         </div>
-      </div>
-      <div className="row align-items-center px-1">
-        {availableGroups ? (
-          <>
-            <div className="col-md-3 col-lg-2 p-1">
-              <FilterGroups {...filterGroupsAttr()} />
-            </div>
-            <div className="col-md-3 col-lg-2 p-1">
-              <FilterCategories {...filterCategoriesAttr()} />
-            </div>
-          </>
-        ) : (
-          <div className="col-md-4 col-lg-2 p-1">
-            <FilterCategories {...filterCategoriesAttr()} />
-          </div>
-        )}
-      </div>
-      {!!currentUser && (
         <div className="row align-items-center px-1">
-          <div className={`col-md-8 col-lg-4 p-1`}>
-            <div className="form-check form-switch">
-              <input
-                type="checkbox"
-                id="filter-own-events"
-                className="form-check-input float-none"
-                name="filter-own-events"
-                onClick={(event) => {
-                  const radioSwitch = event.currentTarget;
-                  props.onChangeAttendingEventsOnly(radioSwitch.checked);
-                }}
-              />{" "}
-              <label htmlFor="filter-own-events">
-                {t("calendar.filter-own-events", "Show my events only")}
-              </label>
-            </div>
-          </div>
+          {!hideSwitches &&
+            days.map((d) => (
+              <div key={d.toISOString()} className="col p-1">
+                <div className="d-grid">
+                  {props.selectedDays.find((s) => s.isSame(d)) ? (
+                    <button
+                      type="button"
+                      className={`btn ${isMobileScreen ? "p-1" : "btn-lg"} bg-white d-block active`}
+                      data-bs-toggle="button"
+                      aria-pressed="true"
+                      onClick={() => props.onRemoveDay(d)}
+                    >
+                      {weekdayFormat(d)}
+                      {isMobileScreen ? <br /> : " "}
+                      <i className="fa-solid fa-check fa-fw text-success" aria-hidden="true"></i>
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className={`btn ${isMobileScreen ? "p-1" : "btn-lg"} bg-white d-block`}
+                      data-bs-toggle="button"
+                      onClick={() => props.onAddDay(d)}
+                    >
+                      {weekdayFormat(d)}
+                      {isMobileScreen ? <br /> : " "}
+                      <i className="fa fa-fw" aria-hidden="true"></i>
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
         </div>
-      )}
+      </div>
     </div>
   );
 }
