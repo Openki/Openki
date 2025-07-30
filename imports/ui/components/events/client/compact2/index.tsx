@@ -6,7 +6,7 @@ import { useDetails } from "/imports/api/courses/publications";
 import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
-import { useParams } from "/imports/utils/react-meteor-router";
+import { useHash, useParams } from "/imports/utils/react-meteor-router";
 
 import { EventRegistration } from "../../display/registration";
 import { Discussion } from "../../../courses/discussion";
@@ -18,11 +18,33 @@ import { VenueLink } from "../../../venues/link";
 import { CourseCategories } from "../../../courses/categories";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-function Panel({ thumb, full, onChange }: { thumb: any; full: any; onChange: () => void }) {
+function Panel({
+  id,
+  thumb,
+  full,
+  onChange,
+}: {
+  id: string;
+  thumb: any;
+  full: any;
+  onChange: (view: "thumb" | "full") => void;
+}) {
   const [expanded, setExpanded] = useState(false);
   const [close, setClose] = useState(false);
   const thumbRef = useRef<HTMLDivElement>(null);
   const fullRef = useRef<HTMLDivElement>(null);
+
+  const hash = (useHash() as string).slice(1);
+  const hashParams = new URLSearchParams(hash);
+  const isShowed = id === hashParams.get("show");
+  useEffect(() => {
+    onChange(isShowed ? "full" : "thumb");
+    if (isShowed) {
+      setExpanded(true);
+    } else {
+      setClose(true);
+    }
+  }, [isShowed]);
 
   useEffect(() => {
     if (expanded) {
@@ -47,8 +69,7 @@ function Panel({ thumb, full, onChange }: { thumb: any; full: any; onChange: () 
         <div
           className="panel-thumb-body"
           onClick={() => {
-            setExpanded(true);
-            onChange();
+            location.hash = "show=" + id;
           }}
         >
           {thumb}
@@ -59,8 +80,7 @@ function Panel({ thumb, full, onChange }: { thumb: any; full: any; onChange: () 
           <div
             className="panel-full-bg"
             onClick={() => {
-              setClose(true);
-              onChange();
+              location.hash = "";
             }}
           >
             <div
@@ -81,8 +101,7 @@ function Panel({ thumb, full, onChange }: { thumb: any; full: any; onChange: () 
                 <div
                   className="panel-minimize display-4"
                   onClick={() => {
-                    setClose(true);
-                    onChange();
+                    location.hash = "";
                   }}
                 >
                   <i className="fa-solid fa-minimize"></i>
@@ -137,10 +156,15 @@ export function EventCompact2({ event }: Props) {
   const collapseElementRef = useRef<HTMLDivElement>(null);
   return (
     <Panel
-      onChange={() => {
+      id={event._id}
+      onChange={(view) => {
         setTimeout(() => {
           if (collapseElementRef.current) {
-            Collapse.getOrCreateInstance(collapseElementRef.current).toggle();
+            if (view === "full") {
+              Collapse.getOrCreateInstance(collapseElementRef.current).show();
+            } else {
+              Collapse.getOrCreateInstance(collapseElementRef.current).hide();
+            }
           }
         }, 0);
       }}
@@ -180,7 +204,7 @@ export function EventCompact2({ event }: Props) {
               {!!event.venue?.name && (
                 <>
                   <br />
-                  <a href="#place">
+                  <a href={"#show=" + event._id + "&place"}>
                     <i className="fa-solid fa-fw fa-location-dot"></i>
                     {event.venue.name}
                   </a>
@@ -194,7 +218,7 @@ export function EventCompact2({ event }: Props) {
               </p>
               {!!event.venue && (
                 <>
-                  <h5 id="place" className="card-title">
+                  <h5 id={"show=" + event._id + "&place"} className="card-title">
                     Place
                   </h5>
                   <p className="card-text">
