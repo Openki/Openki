@@ -5,9 +5,6 @@ import * as Metatags from "/imports/utils/metatags";
 
 import { EventEntity, EventModel } from "/imports/api/events/events";
 
-import "react-leaflet-fullscreen/styles.css";
-import "leaflet/dist/leaflet.css";
-
 import { EventsMap } from "/imports/ui/components/events/map";
 
 import "./styles.scss";

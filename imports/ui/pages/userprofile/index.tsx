@@ -18,7 +18,7 @@ import * as Tooltips from "/imports/utils/Tooltips";
 
 import "./template.html";
 import { Avatar } from "../../components/avatar";
-import { Contribution } from "../../components/contribution";
+import { Contribution } from "../../components/Contribution";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { SendMessage, Data as SendMessageData } from "/imports/ui/components/send-message";
 

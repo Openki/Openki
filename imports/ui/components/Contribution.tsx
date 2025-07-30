@@ -57,9 +57,3 @@ export function Contribution({ userId }: Props) {
     </a>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("Contribution", () => Contribution);

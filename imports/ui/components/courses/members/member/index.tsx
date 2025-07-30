@@ -10,7 +10,7 @@ import * as Tooltips from "/imports/utils/Tooltips";
 
 import { useUser } from "/imports/utils/react-meteor-data";
 import { ProfileLink } from "/imports/ui/components/profile-link";
-import { Contribution } from "../../../contribution";
+import { Contribution } from "../../../Contribution";
 import { ParticipantContact } from "/imports/ui/components/participant/contact";
 import { RemoveFromTeamDropdown } from "../remove-from-team-dropdown";
 import { Editable } from "../../../editable/index.react";

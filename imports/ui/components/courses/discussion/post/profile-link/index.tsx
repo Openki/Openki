@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { Contribution } from "/imports/ui/components/contribution";
+import { Contribution } from "../../../../Contribution";
 import { ProfileLink } from "/imports/ui/components/profile-link";
 
 export interface Props {
