@@ -111,6 +111,9 @@
     "type-check": "meteor lint && tsc",
     "extract-translations": "rm -f imports/startup/both/i18n/en.json && npx i18next"
   },
+  "meteor": {
+    "modern": true
+  },
   "repository": {
     "type": "git",
     "url": "git+https://gitlab.com/Openki/Openki.git"
