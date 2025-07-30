@@ -5,8 +5,7 @@ import { DivIcon } from "leaflet";
 
 import { EventModel, EventVenueEntity } from "/imports/api/events/events";
 
-import { FullscreenControl } from "react-leaflet-fullscreen";
-import "react-leaflet-fullscreen/styles.css";
+import { FullscreenControl } from "../../FullscreenControl";
 import "leaflet/dist/leaflet.css";
 import { TileLayers } from "../../TileLayer";
 

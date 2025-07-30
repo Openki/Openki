@@ -69,8 +69,3 @@ export function Avatar(props: Props) {
 
   return <UserAvatar color={props.color} userId={userId} className={props.className} />;
 }
-
-// for Blaze
-import "./template.html";
-
-Template.registerHelper("Avatar", () => Avatar);

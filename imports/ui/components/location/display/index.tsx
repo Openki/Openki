@@ -3,10 +3,9 @@ import { MapContainer, Marker } from "react-leaflet";
 import { useSession } from "/imports/utils/react-meteor-data";
 import { DivIcon } from "leaflet";
 
-import { FullscreenControl } from "react-leaflet-fullscreen";
-import "react-leaflet-fullscreen/styles.css";
 import "leaflet/dist/leaflet.css";
 import { TileLayers } from "../../TileLayer";
+import { FullscreenControl } from "../../FullscreenControl";
 
 import "./styles.scss";
 
@@ -30,9 +29,3 @@ export function Display(props: {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("LocationDisplay", () => Display);

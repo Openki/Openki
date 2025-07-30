@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import { Template } from "meteor/templating";
 import React from "react";
 
 import "./styles.scss";
@@ -14,9 +13,3 @@ export function SingleEventIndicator() {
     ></span>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("SingleEventIndicator", () => SingleEventIndicator);

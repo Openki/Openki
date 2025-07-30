@@ -11,7 +11,7 @@ import { useAccount } from "/imports/api/users/publications";
 
 import { useValidation } from "/imports/ui/lib/useValidation";
 
-import { TokenExpired } from "../../components/token-expired";
+import { TokenExpired } from "../../components/TokenExpired";
 
 export interface Props {
   email: string;
