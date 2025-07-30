@@ -64,7 +64,7 @@ function EntitiesComponent<T>({
       {"element" in handler ? (
         // ListOfEntities
         <div
-          className="scroll-container d-flex flex-row flex-nowrap pb-3 overflow-x-scroll"
+          className="scroll-container d-flex flex-row flex-nowrap pb-3 overflow-x-auto"
           style={{ scrollBehavior: "smooth" }}
           ref={elementRef}
           onScroll={() => {
