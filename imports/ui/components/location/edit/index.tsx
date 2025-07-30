@@ -4,8 +4,7 @@ import { useSession } from "/imports/utils/react-meteor-data";
 import { DivIcon } from "leaflet";
 import { useTranslation } from "react-i18next";
 
-import { FullscreenControl } from "react-leaflet-fullscreen";
-import "react-leaflet-fullscreen/styles.css";
+import { FullscreenControl } from "../../FullscreenControl";
 import "leaflet/dist/leaflet.css";
 import { TileLayers } from "../../TileLayer";
 

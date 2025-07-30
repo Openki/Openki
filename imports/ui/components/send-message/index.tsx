@@ -1,5 +1,4 @@
 /* eslint-disable no-nested-ternary */
-import { Template } from "meteor/templating";
 import { useTranslation } from "react-i18next";
 import React, { useState } from "react";
 
@@ -142,9 +141,3 @@ export function SendMessage(props: Data) {
     </PleaseLogin>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("SendMessage", () => SendMessage);

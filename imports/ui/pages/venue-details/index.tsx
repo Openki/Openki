@@ -14,7 +14,7 @@ import { textPlain } from "/imports/utils/html-tools";
 
 import { Edit } from "../../components/venues/edit";
 import { ProfileLink } from "../../components/profile-link";
-import { Contribution } from "../../components/contribution";
+import { Contribution } from "../../components/Contribution";
 import { Display as LocationDisplay } from "../../components/location/display";
 import { format } from "/imports/utils/location-format";
 import { ButtonDelete, ButtonEdit } from "../../components/buttons";

@@ -10,7 +10,7 @@ import { useRoleDisplay } from "../../../lib/useRoleDisplay";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
 import { ProfileLink } from "../../profile-link";
-import { Contribution } from "../../contribution";
+import { Contribution } from "../../Contribution";
 import { GroupTag } from "../../groups/tag";
 import { RoleIcon } from "/imports/ui/RoleIcon";
 
