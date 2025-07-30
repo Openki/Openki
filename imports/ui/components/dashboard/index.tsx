@@ -176,7 +176,7 @@ function DashboardComponent({
   if (group) {
     urlParams.append("group", group);
   }
-  const params = Object.fromEntries(Array.from(urlParams.entries()));
+  const params = Object.fromEntries(urlParams);
 
   if (!("filter" in handler)) {
     // StaticComponent
