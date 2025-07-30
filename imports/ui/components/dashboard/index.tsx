@@ -176,7 +176,7 @@ function DashboardComponent({
   if (defaultGroup) {
     urlParams.append("group", defaultGroup);
   }
-  const params = Object.fromEntries(urlParams);
+  const params = Object.fromEntries(Array.from(urlParams.entries()));
 
   if (!("filter" in handler)) {
     // StaticComponent

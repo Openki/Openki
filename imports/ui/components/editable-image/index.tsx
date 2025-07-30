@@ -356,9 +356,3 @@ export function EditableImage(data: Data) {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("EditableImage", () => EditableImage);

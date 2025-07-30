@@ -9,7 +9,7 @@ import * as EventsMethods from "/imports/api/events/methods";
 import { ParticipantContact } from "/imports/ui/components/participant/contact";
 import { ProfileLink } from "/imports/ui/components/profile-link";
 import { SendMessage, Data as SendMessageData } from "/imports/ui/components/send-message";
-import { Contribution } from "/imports/ui/components/contribution";
+import { Contribution } from "../../Contribution";
 import { RemoveDropdown } from "./remove-dropdown";
 
 import "./styles.scss";
