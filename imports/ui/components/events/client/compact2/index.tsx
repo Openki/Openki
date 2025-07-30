@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Collapse from "bootstrap/js/dist/collapse";
+import scrollIntoView from "scroll-into-view-if-needed";
 
 import { EventModel } from "/imports/api/events/events";
 import { useDetails } from "/imports/api/courses/publications";
@@ -40,6 +41,14 @@ function Panel({
   useEffect(() => {
     onChange(isShowed ? "full" : "thumb");
     if (isShowed) {
+      if (thumbRef.current) {
+        scrollIntoView(thumbRef.current, {
+          block: "nearest",
+          inline: "nearest",
+          scrollMode: "if-needed",
+          behavior: "smooth" as ScrollBehavior,
+        });
+      }
       setExpanded(true);
     } else {
       setClose(true);
