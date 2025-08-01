@@ -97,7 +97,7 @@ Accounts.onCreateUser((options: any, originalUser) => {
   let name;
   let username;
   let provider: { name?: string; username?: string } | undefined;
-  /* eslint-disable-next-line no-cond-assign */
+
   while ((provider = nameProviders.pop()) !== undefined) {
     if (!name && provider.name) {
       name = provider.name;

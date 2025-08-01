@@ -10,7 +10,6 @@ export async function update() {
       notify: true,
     }));
 
-    // eslint-disable-next-line no-await-in-loop
     updated += await Groups.updateAsync(group._id, group);
   }
 

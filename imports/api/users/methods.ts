@@ -266,7 +266,7 @@ export const adminRemove = ServerMethod(
       // Remove courses created by this user
       for (const course of await Courses.find({ createdby: userId }).fetchAsync()) {
         deletedCourses.push(course);
-        // eslint-disable-next-line no-await-in-loop
+
         numberOfDeletedEvents += await Events.removeAsync({ courseId: course._id });
       }
 

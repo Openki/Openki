@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useEffect, useRef, useState } from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";

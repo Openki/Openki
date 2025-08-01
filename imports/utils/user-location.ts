@@ -21,7 +21,6 @@ export async function detect(tenant?: string) {
   // When we're connected to localhost, it's likely a dev-setup.
   const hostname = document.location?.hostname;
   if (hostname === "localhost" || hostname.startsWith("127.")) {
-    // eslint-disable-next-line no-console
     console.info("Region autodetection: Using Testistan for localhost");
     return Regions.findOne("9JyFCoKWkxnf8LWPh");
   }

@@ -81,7 +81,6 @@ async function apiResponse<T, U, F extends Record<string, Predicate<any>>, R>(
 
     const formattedModels: R[] = [];
     for (const model of models) {
-      // eslint-disable-next-line no-await-in-loop
       const formattedModel = await formatter(model);
       formattedModels.push(formattedModel);
     }
@@ -172,7 +171,6 @@ export const Api = {
       evr.groups = [];
       const groups = ev.allGroups || [];
       for (const groupId of groups) {
-        // eslint-disable-next-line no-await-in-loop
         const group = await Groups.findOneAsync(groupId);
         if (group) {
           evr.groups.push({

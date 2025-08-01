@@ -42,7 +42,7 @@ export function route<D, S extends Record<string, SubscriptionHandle<any>> | und
   },
 ) {
   const subscriptions = options.subscriptions;
-  // eslint-disable-next-line no-param-reassign
+
   delete options.subscriptions;
 
   if (subscriptions && options.waitOn) {
@@ -58,7 +58,6 @@ export function route<D, S extends Record<string, SubscriptionHandle<any>> | und
     const dataLoaded = new ReactiveVar(false);
 
     if (data) {
-      // eslint-disable-next-line no-param-reassign
       options.data = function () {
         this.subscriptions = () => handlers;
         try {
@@ -72,7 +71,6 @@ export function route<D, S extends Record<string, SubscriptionHandle<any>> | und
       dataLoaded.set(true);
     }
 
-    // eslint-disable-next-line no-param-reassign
     options.waitOn = function () {
       // prevent loading multiple times the same data;
       handlers = subscriptions.call(this);
@@ -99,11 +97,11 @@ export function route<D, S extends Record<string, SubscriptionHandle<any>> | und
   }
 
   const onRunOption = options.onRun;
-  // eslint-disable-next-line no-param-reassign
+
   delete options.onRun;
 
   const waitOn = options.waitOn;
-  // eslint-disable-next-line no-param-reassign
+
   delete options.waitOn;
 
   const onRunAwaited = new ReactiveVar<boolean>(false);

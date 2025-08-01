@@ -1,5 +1,5 @@
 import { Meteor } from "meteor/meteor";
-import i18next, { TFunction } from "i18next";
+import i18next from "i18next";
 import ICU from "i18next-icu";
 import ChainedBackend from "i18next-chained-backend";
 import resourcesToBackend from "i18next-resources-to-backend";
@@ -117,7 +117,7 @@ i18next.on("loaded", function () {
  * A reactive wrapper for i18next.t. Use { escapeText: true } to escape the i18n text. You can use
  * Spacebars.SafeString(..) for params to allow some HTML.
  */
-export const i18n: TFunction = (...args: any[]) => {
+export const i18n = (...args: any[]) => {
   reactiveLang.get();
   const result = (i18next.t as any)(...args);
 
@@ -143,7 +143,7 @@ export const i18n: TFunction = (...args: any[]) => {
       .join("");
   }
 
-  return escapeText !== false ? Blaze._escape(result) : result;
+  return (escapeText !== false ? Blaze._escape(result) : result) as any;
 };
 
 if (Meteor.isClient) {
@@ -160,7 +160,6 @@ if (Meteor.isClient) {
         // function (key, defaultValue, data)
 
         if (data?.hash?.attr) {
-          // eslint-disable-next-line no-param-reassign
           delete data?.hash?.attr;
           return i18n(key, defaultValueOrData, { ...data?.hash });
         }
@@ -173,7 +172,6 @@ if (Meteor.isClient) {
       // function (key, data)
 
       if (defaultValueOrData?.hash?.attr) {
-        // eslint-disable-next-line no-param-reassign
         delete defaultValueOrData?.hash?.attr;
         return i18n(key, { ...defaultValueOrData?.hash });
       }

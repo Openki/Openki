@@ -395,7 +395,6 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
                 }
 
                 try {
-                  // eslint-disable-next-line no-await-in-loop
                   await EventsMethods.save(
                     "",
                     replicaEvent,

@@ -30,7 +30,7 @@ export function ProfileSection() {
         {
           type: "notAllowedCharacter",
           message: () =>
-            t("register.warning.notAllowedCharacter", undefined, {
+            t("register.warning.notAllowedCharacter", {
               CHARACTERS: NotAllowedCharacter.join(", "),
             }),
         },

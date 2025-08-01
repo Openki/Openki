@@ -68,9 +68,9 @@ export interface CourseEntity {
   customFields: CourseCustomField[];
   /** ID_user */
   createdby: string;
-  // eslint-disable-next-line camelcase
+
   time_created: Date;
-  // eslint-disable-next-line camelcase
+
   time_lastedit: Date;
   /** [role-keys] */
   roles: string[];
@@ -217,7 +217,6 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
     return super.insertAsync(enrichedCourse, callback);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   Filtering() {
     return new Filtering({
       region: Predicates.id,

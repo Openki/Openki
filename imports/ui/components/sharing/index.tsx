@@ -12,7 +12,7 @@ export function Sharing() {
   const { t } = useTranslation();
   useEffect(() => {
     const $shariff = $(".shariff");
-    // eslint-disable-next-line no-new
+
     new Shariff($shariff, {
       lang: Session.get("locale"),
       mailUrl: "mailto:",

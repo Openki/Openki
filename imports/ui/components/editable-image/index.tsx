@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useState, DragEvent, ChangeEvent } from "react";
 import ImageBlobReduce from "image-blob-reduce";
 import { useTranslation } from "react-i18next";
@@ -75,7 +74,6 @@ export function EditableImage(data: Data) {
           pica: ImageBlobReduce.pica({ features: ["js", "wasm"] }),
         }).toBlob(file, { max: data.maxSize });
       } catch (ex) {
-        // eslint-disable-next-line no-console
         console.info(
           `Some browsers do not support this. It is okay to use the original. Errormessage: ${ex}`,
         );

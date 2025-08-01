@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop */
 import { Mongo } from "meteor/mongo";
 import { _ } from "meteor/underscore";
 

@@ -52,7 +52,6 @@ export class TenantsCollection extends Mongo.Collection<TenantEntity, TenantMode
     });
   }
 
-  // eslint-disable-next-line class-methods-use-this
   get publicFields() {
     return {
       _id: 1,
@@ -61,7 +60,6 @@ export class TenantsCollection extends Mongo.Collection<TenantEntity, TenantMode
     };
   }
 
-  // eslint-disable-next-line class-methods-use-this
   Filtering() {
     return new Filtering({});
   }

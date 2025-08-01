@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop */
 import { clone } from "lodash";
 import { Log } from "../../log/log";
 import { Geodata, RegionEntity, Regions } from "../../regions/regions";
@@ -13,7 +12,7 @@ export async function create() {
   for (const template of regions) {
     const region = {
       ...template,
-      // eslint-disable-next-line no-nested-ternary
+
       tenant: template.tenant
         ? await ensure.tenant(template.tenant)
         : prng() > 0.3

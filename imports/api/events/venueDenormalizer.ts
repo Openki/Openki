@@ -10,7 +10,6 @@ export async function updateVenue(eventIdOrSelector: string | Mongo.Selector<Eve
   for (const event of await Events.find(eventIdOrSelector).fetchAsync()) {
     let venue: VenueModel | undefined;
     if (event.venue?._id) {
-      // eslint-disable-next-line no-await-in-loop
       venue = await Venues.findOneAsync(event.venue._id);
     }
 
@@ -18,7 +17,7 @@ export async function updateVenue(eventIdOrSelector: string | Mongo.Selector<Eve
     if (venue) {
       if (event.start < new Date()) {
         // Do not update venue for historical events
-        // eslint-disable-next-line no-continue
+
         continue;
       }
 
@@ -38,7 +37,6 @@ export async function updateVenue(eventIdOrSelector: string | Mongo.Selector<Eve
       update = { $unset: { "venue._id": 1 } };
     }
 
-    // eslint-disable-next-line no-await-in-loop
     await Events.updateAsync({ _id: event._id }, update);
   }
 }

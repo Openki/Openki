@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React from "react";
 import { Router } from "meteor/iron:router";
 import { useUserId } from "/imports/utils/react-meteor-data";

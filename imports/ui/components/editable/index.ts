@@ -194,7 +194,7 @@ function EditableMixing<
     }
 
     // Initialize the editor interface
-    // eslint-disable-next-line no-new
+
     new MediumEditor($editable[0], meOptions);
 
     instance.numberOfCharacters.set($editable.text().trim().length);

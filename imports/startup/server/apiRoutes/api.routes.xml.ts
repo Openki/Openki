@@ -54,7 +54,6 @@ const xmlSendResponder = async function (res: any, process: any) {
         body.data.error = e.message;
       }
     } else {
-      /* eslint-disable-next-line no-console */
       console.log(e, e.stack);
       res.statusCode = 500;
       body.status = "error";
@@ -68,9 +67,9 @@ const pseudoHash = function (str: string) {
   let hash = 0;
   for (let i = 0, len = str.length; i < len; i += 1) {
     const chr = str.charCodeAt(i);
-    // eslint-disable-next-line no-bitwise
+
     hash = (hash << 5) - hash + chr;
-    // eslint-disable-next-line no-bitwise
+
     hash |= 0; // Convert to 32bit integer
   }
   return hash < 0 ? hash * -1 : hash;
@@ -133,93 +132,90 @@ Router.route("api.0.xml", {
           const roomNode = dayNode.ele("room", {
             name: room,
           });
-          // eslint-disable-next-line no-loop-func
-          roomEvents.forEach(
-            // eslint-disable-next-line no-loop-func
-            (event: any) => {
-              const durationMinutes = `00${event.duration % 60}`.slice(-2);
-              const duration = `${Math.floor(event.duration / 60)}:${durationMinutes}`;
-              const eventNode = roomNode
-                .ele("event", {
-                  id: pseudoHash(event.id),
-                  guid: uuidv5(event.id, OPENKI_UUID_NAMESPACE),
-                })
-                .ele("date")
-                .txt(moment(event.startLocal).format("YYYY-MM-DDTHH:mm:ssZ"))
-                .up()
-                .ele("start")
-                .txt(moment(event.startLocal).format("HH:mm"))
-                .up()
-                .ele("duration")
-                .txt(duration)
-                .up()
-                .ele("room")
-                .txt(room)
-                .up()
-                .ele("slug")
-                .txt(event.slug || "")
-                .up()
-                .ele("url")
-                .txt(event.link || "")
-                .up()
-                .ele("recording")
-                .ele("license")
-                .up()
-                .ele("optout")
-                .txt("false")
-                .up()
-                .up()
-                .ele("title")
-                .txt(event.title)
-                .up()
-                .ele("subtitle")
-                .up()
-                .ele("type")
-                .up()
-                .ele("language")
-                .up()
-                .ele("abstract")
-                .up()
-                .ele("description")
-                .txt(textPlain(event.description))
-                .up()
-                .ele("logo")
-                .up()
-                .ele("links")
-                .up()
-                .ele("attachements")
-                .up();
 
-              let hasPerson = false;
-              const fields = event.course.customFields;
-              if (typeof fields === `object`) {
-                const persons = eventNode.ele("persons");
-                fields.forEach((field: any) => {
-                  if (field.name === `speaker`) {
-                    hasPerson = true;
-                    persons
-                      .ele("person", {
-                        id: pseudoHash(field.value),
-                      })
-                      .txt(field.value);
-                  }
-                });
-              }
+          roomEvents.forEach((event: any) => {
+            const durationMinutes = `00${event.duration % 60}`.slice(-2);
+            const duration = `${Math.floor(event.duration / 60)}:${durationMinutes}`;
+            const eventNode = roomNode
+              .ele("event", {
+                id: pseudoHash(event.id),
+                guid: uuidv5(event.id, OPENKI_UUID_NAMESPACE),
+              })
+              .ele("date")
+              .txt(moment(event.startLocal).format("YYYY-MM-DDTHH:mm:ssZ"))
+              .up()
+              .ele("start")
+              .txt(moment(event.startLocal).format("HH:mm"))
+              .up()
+              .ele("duration")
+              .txt(duration)
+              .up()
+              .ele("room")
+              .txt(room)
+              .up()
+              .ele("slug")
+              .txt(event.slug || "")
+              .up()
+              .ele("url")
+              .txt(event.link || "")
+              .up()
+              .ele("recording")
+              .ele("license")
+              .up()
+              .ele("optout")
+              .txt("false")
+              .up()
+              .up()
+              .ele("title")
+              .txt(event.title)
+              .up()
+              .ele("subtitle")
+              .up()
+              .ele("type")
+              .up()
+              .ele("language")
+              .up()
+              .ele("abstract")
+              .up()
+              .ele("description")
+              .txt(textPlain(event.description))
+              .up()
+              .ele("logo")
+              .up()
+              .ele("links")
+              .up()
+              .ele("attachements")
+              .up();
 
-              // If no custom field with speaker exists we use de group
-              if (!hasPerson) {
-                const persons = eventNode.ele("persons");
-                // eslint-disable-next-line no-loop-func
-                event.groups.forEach((group: any) => {
+            let hasPerson = false;
+            const fields = event.course.customFields;
+            if (typeof fields === `object`) {
+              const persons = eventNode.ele("persons");
+              fields.forEach((field: any) => {
+                if (field.name === `speaker`) {
+                  hasPerson = true;
                   persons
                     .ele("person", {
-                      id: group.id,
+                      id: pseudoHash(field.value),
                     })
-                    .txt(group.name);
-                });
-              }
-            },
-          );
+                    .txt(field.value);
+                }
+              });
+            }
+
+            // If no custom field with speaker exists we use de group
+            if (!hasPerson) {
+              const persons = eventNode.ele("persons");
+
+              event.groups.forEach((group: any) => {
+                persons
+                  .ele("person", {
+                    id: group.id,
+                  })
+                  .txt(group.name);
+              });
+            }
+          });
         }
       }
       return scheduleNode.end({ prettyPrint: true });
