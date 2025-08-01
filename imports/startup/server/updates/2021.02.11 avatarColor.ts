@@ -10,7 +10,6 @@ export async function update() {
     user.avatar = {};
     user.avatar.color = _.random(360);
 
-    // eslint-disable-next-line no-await-in-loop
     updated += await Users.updateAsync(user._id, user);
   }
 

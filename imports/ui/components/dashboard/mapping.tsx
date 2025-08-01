@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React from "react";
 import { Router } from "meteor/iron:router";
 import { PublicSettings } from "/imports/utils/PublicSettings";

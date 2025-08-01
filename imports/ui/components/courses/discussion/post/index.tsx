@@ -34,7 +34,6 @@ function Responses({ responses: replies }: { responses: CourseDiscussionEntity[]
         </button>
       )}
       {responses().map((response) => (
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
         <Post key={response._id} post={response} />
       ))}
     </>

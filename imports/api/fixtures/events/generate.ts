@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop */
 import { Mongo } from "meteor/mongo";
 import { _ } from "meteor/underscore";
 
@@ -59,7 +58,6 @@ export async function generate() {
 
   for (const course of await Courses.find().fetchAsync()) {
     if ((await Events.countDocuments({ courseId: course._id })) > 0) {
-      // eslint-disable-next-line no-continue
       continue;
     }
 

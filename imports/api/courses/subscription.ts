@@ -24,7 +24,6 @@ export async function processChange<T>(change: Change<T>, options?: { isSimulati
       await Meteor.callAsync(change.constructor.method, change.dict());
     }
   } catch (err) {
-    /* eslint-disable-next-line no-console */
     console.error(err);
     Alert.serverError(err);
   }
@@ -401,7 +400,6 @@ export class Message extends Change<{
     return `${this.constructor.method}()`;
   }
 
-  /* eslint-disable-next-line class-methods-use-this */
   validate() {
     return true;
   }

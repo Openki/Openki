@@ -21,7 +21,6 @@ export function GroupList({ course }: Props) {
 
   const [isRegionLoading, region] = useRegionDetails(course.region);
 
-  // eslint-disable-next-line @typescript-eslint/no-shadow
   function tools(groupId: string, course: CourseModel) {
     return (
       <>

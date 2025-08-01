@@ -80,7 +80,7 @@ export class Editable {
 
   constructor(multiline = false, placeholderText = "", maxlength?: number, store?: Store) {
     this.multiline = multiline;
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
+
     this.store = store || {};
     this.placeholderText = placeholderText;
     this.showControls = !!store;

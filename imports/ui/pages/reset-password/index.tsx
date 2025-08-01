@@ -29,7 +29,6 @@ export function ResetPasswordPage({ token, email }: Props) {
   const [passwordNotSame, setPasswordNotSame] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  // eslint-disable-next-line @typescript-eslint/no-shadow
   function updatePassword(password: string, passwordConfirm: string, showPassword: boolean) {
     if (showPassword) {
       setPasswordValid(password.length > 0);

@@ -66,7 +66,6 @@ const helpers: Record<string, Function> = {
 
   log(context: unknown) {
     if (window.console) {
-      /* eslint-disable-next-line no-console */
       console.log(arguments.length > 0 ? context : this);
     }
   },

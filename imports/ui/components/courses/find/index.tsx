@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useCurrentRouteName, useParams } from "/imports/utils/react-meteor-router";

@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
@@ -279,7 +278,6 @@ export function Edit(data: Data) {
     return undefined;
   }
   const getGroups = () => {
-    // eslint-disable-next-line @typescript-eslint/no-shadow
     const groups = [];
 
     const defaultTeamGroups = getRegion()?.defaultTeamGroups;

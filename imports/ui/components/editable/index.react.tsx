@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ValidationError, ValidationErrorDetail } from "meteor/mdg:validation-error";
@@ -211,7 +210,7 @@ export function Editable({
     }
 
     // Initialize the editor interface
-    // eslint-disable-next-line no-new
+
     new MediumEditor(element, meOptions);
 
     setNumberOfCharacters(element.innerText.trim().length);
@@ -240,7 +239,7 @@ export function Editable({
   const handleSave = async () => {
     resetErrors();
     // Check if input is invalid
-    // eslint-disable-next-line @typescript-eslint/no-shadow
+
     const clientValidations = store?.clientValidations;
     if (clientValidations) {
       Object.entries(clientValidations).forEach(([key, validation]) => {
@@ -286,7 +285,6 @@ export function Editable({
 
             // Fix placeholder position on empty after change
             if (event.currentTarget.innerText.length === 0) {
-              // eslint-disable-next-line no-param-reassign
               event.currentTarget.innerHTML = "";
             }
 

@@ -22,7 +22,6 @@ export interface Data {
 
 function groupBy<T>(array: T[], predicate: (value: T, index: number, array: T[]) => string) {
   return array.reduce(
-    // eslint-disable-next-line @typescript-eslint/no-shadow
     (acc, value, index, array) => {
       (acc[predicate(value, index, array)] ||= []).push(value);
       return acc;
@@ -51,7 +50,6 @@ export function EventsMap({ events, fullscreenControl = true, openLinksInNewTab 
     className: "leaflet-marker-icon-shadow",
   });
 
-  // eslint-disable-next-line no-param-reassign
   events = events.filter((e) => e.venue?.loc);
   const markers = Object.entries(
     groupBy(

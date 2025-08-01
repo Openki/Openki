@@ -118,7 +118,6 @@ template.onCreated(function () {
     // weekday at the same time.
     const dedupedEvents: EventViewModel[] = [];
     Events.findFilter(filter.toQuery()).forEach((originalEvent) => {
-      // eslint-disable-next-line no-param-reassign
       const event = { ...originalEvent } as EventViewModel;
       const eventStart = LocalTime.fromString(event.startLocal);
 
@@ -147,9 +146,8 @@ template.onCreated(function () {
       } else {
         repetitionCountDay[repKeyDay] = 1;
 
-        // eslint-disable-next-line no-param-reassign
         event.repKey = repKey;
-        // eslint-disable-next-line no-param-reassign
+
         event.repKeyDay = repKeyDay;
         dedupedEvents.push(event);
       }
@@ -161,7 +159,6 @@ template.onCreated(function () {
 
     // List of intervals where events or separators are placed
     const intervals = separators.reduce((rIntervals: Record<number, number>, separator) => {
-      /* eslint-disable-next-line no-param-reassign */
       rIntervals[separator] = separator;
       return rIntervals;
     }, {});

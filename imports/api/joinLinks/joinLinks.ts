@@ -32,7 +32,6 @@ export class JoinLinksCollection extends Mongo.Collection<JoinLinkEntity> {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
   Filtering() {
     return new Filtering({});
   }

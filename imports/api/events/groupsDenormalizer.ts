@@ -15,7 +15,6 @@ export async function updateGroups(eventIdOrSelector: string | Mongo.Selector<Ev
     // If an event has a parent course, it inherits all groups and all editors from it.
     let courseGroups: string[] = [];
     if (event.courseId) {
-      // eslint-disable-next-line no-await-in-loop
       const course = await Courses.findOneAsync(event.courseId);
       if (!course) {
         throw new Error(`Missing course ${event.courseId} for event ${event._id}`);

@@ -196,7 +196,6 @@ template.onRendered(function () {
     title: i18n("map.addMarker", "Set marker"),
     position: "bottomright",
     onMouseDown: () => {
-      // eslint-disable-next-line no-param-reassign
       instance.cancelNextFitBounds = true;
       instance.proposeMarker();
     },
@@ -216,12 +215,10 @@ template.onRendered(function () {
 
     const show = function (control: { shown?: boolean } & L.Control, toggle: boolean) {
       if (control.shown === undefined) {
-        /* eslint-disable-next-line no-param-reassign */
         control.shown = false;
       }
 
       if (control.shown !== toggle) {
-        /* eslint-disable-next-line no-param-reassign */
         control.shown = toggle;
         if (toggle) {
           map.addControl(control);
