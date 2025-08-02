@@ -310,7 +310,7 @@ RouterAsync.route("createEvent", {
       event.internal = course.internal;
     }
 
-    return { event, new: true };
+    return { event, isNew: true };
   },
 });
 

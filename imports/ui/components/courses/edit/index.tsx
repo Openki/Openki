@@ -690,7 +690,7 @@ export function Edit(data: Data) {
     if (course._id) {
       Router.go("showCourse", course);
     } else {
-      Router.go("/");
+      Router.go("home");
     }
   };
 

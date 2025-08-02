@@ -100,7 +100,7 @@ export function RegionSelection(data: {
     if (changed) {
       const routeName = currentRouteName;
       if (!RegionSelectionUtils.regionDependentRoutes.includes(routeName)) {
-        Router.go("/");
+        Router.go("home");
       }
     }
     data.onClose?.();

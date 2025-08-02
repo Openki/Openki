@@ -13,11 +13,11 @@ import { Filtering } from "/imports/utils/filtering";
 import { Publication } from "/imports/utils/ServerPublishReact";
 import { CourseTemplate } from "../../lib/course-template";
 
-import { Edit } from "../courses/edit";
-import { CourseCompact } from "../courses/compact";
-import { CompactPropose } from "../courses/CompactPropose";
-import { EventCompact } from "../events/compact";
-import { EventsMap } from "../events/map";
+import { Edit } from "/imports/ui/components/courses/edit";
+import { CourseCompact } from "/imports/ui/components/courses/compact";
+import { CompactPropose } from "/imports/ui/components/courses/CompactPropose";
+import { EventCompact } from "/imports/ui/components/events/compact";
+import { EventsMap } from "/imports/ui/components/events/map";
 
 /** A list of entites. */
 

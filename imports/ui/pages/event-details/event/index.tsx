@@ -4,7 +4,6 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { useTranslation } from "react-i18next";
 import { useParams } from "/imports/utils/react-meteor-router";
 
-import { Courses } from "/imports/api/courses/courses";
 import { EventModel } from "/imports/api/events/events";
 import { useDetails } from "/imports/api/courses/publications";
 
@@ -20,16 +19,14 @@ import { Report } from "/imports/ui/components/report";
 
 import "./styles.scss";
 
-function CourseEvent({ event, courseId }: { event: EventModel; courseId: string }) {
-  const [isLoading, course] = useDetails(courseId);
+type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };
+
+function CourseEvent({ event }: { event: WithRequired<EventModel, "courseId"> }) {
+  const [isLoading, course] = useDetails(event.courseId);
 
   const user = useUser();
 
   function courseLink() {
-    if (!event.courseId) {
-      return "";
-    }
-    const course = Courses.findOne({ _id: event.courseId });
     return Router.path(
       "showCourse",
       { _id: event.courseId },
@@ -81,7 +78,7 @@ function DisplayDiscussion({ eventId, courseId }: { eventId: string; courseId: s
   return <Discussion courseId={course._id} eventId={eventId} select={select()} />;
 }
 
-export function Event(data: { event: EventModel; new: boolean }) {
+export function Event(data: { event: EventModel; isNew: boolean }) {
   const { event } = data;
   const { t } = useTranslation();
   const [editing, setEditing] = useState(!event._id);
@@ -90,17 +87,17 @@ export function Event(data: { event: EventModel; new: boolean }) {
     return Viewport.get().width <= ScssVars.screenMD;
   }
   function isEditing() {
-    return data.new || editing;
+    return data.isNew || editing;
   }
   function eventEditAttr() {
     return {
       event,
-      isNew: data.new,
+      isNew: data.isNew,
       afterSave: () => {
         setEditing(false);
       },
       onCancel: () => {
-        if (data.new) {
+        if (data.isNew) {
           window.history.back();
         } else {
           setEditing(false);
@@ -131,7 +128,7 @@ export function Event(data: { event: EventModel; new: boolean }) {
           </div>
         )}
 
-        {!!event.courseId && <CourseEvent event={event} courseId={event.courseId} />}
+        {!!event.courseId && <CourseEvent event={event as WithRequired<EventModel, "courseId">} />}
 
         <div className={`event${event.courseId ? " course-event" : ""}`}>
           {isEditing() ? <Edit {...eventEditAttr()} /> : <Display {...eventDisplayAttr()} />}

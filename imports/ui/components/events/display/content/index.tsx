@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { useUser } from "/imports/utils/react-meteor-data";
 
 import { Courses } from "/imports/api/courses/courses";
 import { EventModel } from "/imports/api/events/events";
@@ -15,7 +16,6 @@ import { PricePolicy } from "../../../price-policy";
 import { Sharing } from "../../../sharing";
 
 import "./styles.scss";
-import { useUser } from "/imports/utils/react-meteor-data";
 
 export function Content({ event }: { event: EventModel }) {
   const { t } = useTranslation();

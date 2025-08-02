@@ -259,7 +259,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
               data-bs-toggle="tooltip"
               data-bs-title={t("group.page.removeFilter", "See all courses")}
               onClick={() => {
-                Router.go("/"); // Got a better idea?
+                Router.go("home"); // Got a better idea?
               }}
             >
               <i className="fa-solid fa-xmark fa-lg" aria-hidden="true"></i>
