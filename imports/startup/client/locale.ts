@@ -2,7 +2,7 @@ import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
 import moment from "moment";
 import { Accounts } from "meteor/accounts-base";
-import { _ } from "meteor/underscore";
+import { range } from "lodash";
 import { Session } from "meteor/session";
 import { Tracker } from "meteor/tracker";
 import "bootstrap-datepicker";
@@ -109,7 +109,7 @@ Meteor.startup(() => {
 
     const monthsShort = function () {
       if (typeof locale.monthsShort === "function") {
-        return _.range(12).map((month) => locale.monthsShort(moment().month(month), ""));
+        return range(12).map((month) => locale.monthsShort(moment().month(month), ""));
       }
       return locale._monthsShort;
     };

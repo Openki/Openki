@@ -152,7 +152,7 @@ export function VisitorToUserPage({ token, email }: Props) {
             className="btn btn-secondary"
             type="button"
             onClick={() => {
-              Router.go("/");
+              Router.go("home");
             }}
           >
             {t("_button.cancel")}

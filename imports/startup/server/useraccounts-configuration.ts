@@ -1,5 +1,5 @@
 import { Meteor } from "meteor/meteor";
-import { _ } from "meteor/underscore";
+import { toArray } from "lodash";
 import { ServiceConfiguration } from "meteor/service-configuration";
 import { Accounts } from "meteor/accounts-base";
 
@@ -90,7 +90,7 @@ Accounts.onCreateUser((options: any, originalUser) => {
   // Collect info where a username could possibly be found
   let nameProviders = [user, user.profile];
   if (user.services) {
-    nameProviders = nameProviders.concat(_.toArray(originalUser.services));
+    nameProviders = nameProviders.concat(toArray(originalUser.services));
   }
 
   // Try to glean a username

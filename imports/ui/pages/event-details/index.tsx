@@ -19,7 +19,7 @@ import * as Analytics from "/imports/ui/lib/analytics";
 
 import { Event } from "./event";
 
-export function EventPage(data: { event: EventModel; new: boolean }) {
+export function EventPage(data: { event: EventModel; isNew: boolean }) {
   const { event } = data;
   const { t } = useTranslation();
   const searchParams = useSearchParams();
@@ -83,7 +83,7 @@ export function EventPage(data: { event: EventModel; new: boolean }) {
 
   return (
     <div className="container">
-      <Event event={event} new={data.new} />
+      <Event event={event} isNew={data.isNew} />
     </div>
   );
 }

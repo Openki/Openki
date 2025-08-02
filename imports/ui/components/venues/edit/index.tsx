@@ -173,7 +173,7 @@ export function Edit({
 
   const handleCancel = () => {
     if (isNew) {
-      Router.go("/");
+      Router.go("home");
     } else {
       onCanceled();
     }

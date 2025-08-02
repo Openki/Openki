@@ -111,7 +111,6 @@ async function send(
           const subjectPrefix = `[${siteName}] `;
 
           unsubToken = Random.secret();
-
           const vars = await model.vars(locale, user, unsubToken);
 
           const message = renderToEmail(

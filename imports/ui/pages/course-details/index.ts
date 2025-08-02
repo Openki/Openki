@@ -140,7 +140,7 @@ template.events({
           Regions.findOne(course.region)?.nameEn,
         );
 
-        Router.go("/");
+        Router.go("home");
       } catch (err) {
         Alert.serverError(
           err,

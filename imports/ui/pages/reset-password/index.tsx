@@ -60,7 +60,7 @@ export function ResetPasswordPage({ token, email }: Props) {
   }
 
   function handelCancel() {
-    Router.go("/");
+    Router.go("home");
   }
 
   useEffect(() => {

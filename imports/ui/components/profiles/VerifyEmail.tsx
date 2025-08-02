@@ -54,9 +54,3 @@ export function VerifyEmail() {
     </button>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("VerifyEmail", () => VerifyEmail);

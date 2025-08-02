@@ -177,7 +177,7 @@ export function Display({
           if (course) {
             Router.go("showCourse", { _id: course });
           } else {
-            Router.go("/");
+            Router.go("home");
           }
         } catch (err) {
           Alert.serverError(err, t("eventDetails.eventRemoved.error", "Could not remove event"));

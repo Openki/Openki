@@ -5,7 +5,7 @@ import * as Alert from "/imports/api/alerts/alert";
 
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { VerifyEmail } from "../profiles/VerifyEmail";
+import { VerifyEmail } from "/imports/ui/components/profiles/VerifyEmail";
 import { PleaseLogin } from "/imports/ui/components/please-login";
 
 import "./styles.scss";
@@ -23,7 +23,7 @@ export interface Data {
 
 export function SendMessage(props: Data) {
   const { t } = useTranslation();
-  const currentUser = useUser();
+  const user = useUser();
   const [isBusy, setIsBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [revealAddress, setRevealAddress] = useState(false);
@@ -68,7 +68,7 @@ export function SendMessage(props: Data) {
           }}
         ></textarea>
       </div>
-      {currentUser?.hasVerifiedEmail() ? (
+      {user?.hasVerifiedEmail() ? (
         <>
           <div className="form-check">
             <input
@@ -102,7 +102,7 @@ export function SendMessage(props: Data) {
           </div>
         </>
       ) : (
-        !!currentUser && (
+        !!user && (
           <div className="card mb-3">
             <div className="card-header bg-warning">
               <span className="fa-regular fa-circle-check" aria-hidden="true"></span>{" "}

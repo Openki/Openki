@@ -1,6 +1,6 @@
 import { Mongo } from "meteor/mongo";
 import { ReactiveVar } from "meteor/reactive-var";
-import { _ } from "meteor/underscore";
+import { debounce } from "lodash";
 import { i18n } from "/imports/startup/both/i18next";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import { Session } from "meteor/session";
@@ -257,7 +257,7 @@ template.onRendered(function () {
 
   // Zoom to show all markers
   // This is debounc'd so it's only done after the last marker in a series is added
-  const fitBounds = _.debounce(() => {
+  const fitBounds = debounce(() => {
     if (instance.cancelNextFitBounds) {
       instance.cancelNextFitBounds = false;
       return;

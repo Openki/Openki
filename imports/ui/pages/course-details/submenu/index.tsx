@@ -8,7 +8,7 @@ import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 
 import { Description } from "../description";
 import { History } from "/imports/ui/components/courses/history";
-import { Files } from "../../../components/courses/Files";
+import { Files } from "/imports/ui/components/courses/Files";
 import { PricePolicy } from "/imports/ui/components/price-policy";
 
 import "./styles.scss";
