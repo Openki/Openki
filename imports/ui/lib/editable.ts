@@ -80,7 +80,6 @@ export class Editable {
 
   constructor(multiline = false, placeholderText = "", maxlength?: number, store?: Store) {
     this.multiline = multiline;
-
     this.store = store || {};
     this.placeholderText = placeholderText;
     this.showControls = !!store;

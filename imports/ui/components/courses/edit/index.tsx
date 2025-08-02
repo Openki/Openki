@@ -267,7 +267,7 @@ export function Edit(data: Data) {
     if (isNew) {
       if (data.isFrame && data.region) {
         // The region was preset for the frame
-        return allRegions.filter((r) => r._id === data.region)[0];
+        return allRegions.find((r) => r._id === data.region);
       }
       if (allRegions.length === 1) {
         // There is only one region
@@ -493,7 +493,7 @@ export function Edit(data: Data) {
 
     if (data.isFrame && data.region) {
       // The region was preset for the frame
-      const region = allRegions.filter((r) => r._id === data.region)[0];
+      const region = allRegions.find((r) => r._id === data.region);
       if (region) {
         return !region.isPrivate();
       }

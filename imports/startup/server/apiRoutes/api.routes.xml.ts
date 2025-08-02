@@ -67,9 +67,7 @@ const pseudoHash = function (str: string) {
   let hash = 0;
   for (let i = 0, len = str.length; i < len; i += 1) {
     const chr = str.charCodeAt(i);
-
     hash = (hash << 5) - hash + chr;
-
     hash |= 0; // Convert to 32bit integer
   }
   return hash < 0 ? hash * -1 : hash;
@@ -133,7 +131,7 @@ Router.route("api.0.xml", {
             name: room,
           });
 
-          roomEvents.forEach((event: any) => {
+          roomEvents.forEach((event) => {
             const durationMinutes = `00${event.duration % 60}`.slice(-2);
             const duration = `${Math.floor(event.duration / 60)}:${durationMinutes}`;
             const eventNode = roomNode
@@ -188,7 +186,7 @@ Router.route("api.0.xml", {
               .up();
 
             let hasPerson = false;
-            const fields = event.course.customFields;
+            const fields = event.course?.customFields;
             if (typeof fields === `object`) {
               const persons = eventNode.ele("persons");
               fields.forEach((field: any) => {
@@ -207,7 +205,7 @@ Router.route("api.0.xml", {
             if (!hasPerson) {
               const persons = eventNode.ele("persons");
 
-              event.groups.forEach((group: any) => {
+              event.groups.forEach((group) => {
                 persons
                   .ele("person", {
                     id: group.id,

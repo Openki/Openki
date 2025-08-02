@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import { CourseModel } from "/imports/api/courses/courses";
 import * as CourseMethods from "/imports/api/courses/methods";
@@ -9,32 +10,26 @@ import {
   Data as EditableImageData,
   EditableImage,
 } from "/imports/ui/components/editable-image";
-import { useTranslation } from "react-i18next";
 
 export function Files({ course }: { course: CourseModel }) {
   const { t } = useTranslation();
 
   function imageUploadArgs(): EditableImageData {
     return {
-      thumbnail: { src: course?.publicUrlForCompactImage(), maxSize: 150 },
+      thumbnail: { src: course.publicUrlForCompactImage(), maxSize: 150 },
       maxSize: 5000, // scale the image to max width/height. Note: image scaling also happens on the server
       async onUpload(file: UploadImage) {
-        if (!course) {
-          throw new Error("Unexpected undefined");
-        }
-        const courseId = course._id;
         try {
-          await CourseMethods.updateImage(courseId, file);
+          await CourseMethods.updateImage(course._id, file);
           Alert.success(t("course.edit.image.updated", "Image have been saved."));
         } catch (err) {
           Alert.serverError(err, t("course.edit.image.updated.error", "Could not save image."));
         }
       },
-      onDelete: course?.image
+      onDelete: course.image
         ? async function () {
-            const courseId = course._id;
             try {
-              await CourseMethods.deleteImage(courseId);
+              await CourseMethods.deleteImage(course._id);
               Alert.success(t("course.edit.image.removed", "Image have been removed."));
             } catch (err) {
               Alert.serverError(
@@ -61,9 +56,3 @@ export function Files({ course }: { course: CourseModel }) {
     </>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("CourseFiles", () => Files);

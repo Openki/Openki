@@ -1,6 +1,5 @@
 import React from "react";
 import { Router } from "meteor/iron:router";
-import { Template } from "meteor/templating";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { Icon } from "../Icon";
@@ -110,9 +109,3 @@ export function VenueLink({ venue, room, openInNewTab }: Props) {
     </>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("VenueLink", () => VenueLink);

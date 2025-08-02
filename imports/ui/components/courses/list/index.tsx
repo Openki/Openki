@@ -2,7 +2,7 @@ import React from "react";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import { CourseCompact } from "/imports/ui/components/courses/compact";
-import { CompactPropose } from "/imports/ui/components/courses/compact-propose";
+import { CompactPropose } from "../CompactPropose";
 import { CourseModel } from "/imports/api/courses/courses";
 
 export interface Props {

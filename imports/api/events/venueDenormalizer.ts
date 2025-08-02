@@ -17,7 +17,6 @@ export async function updateVenue(eventIdOrSelector: string | Mongo.Selector<Eve
     if (venue) {
       if (event.start < new Date()) {
         // Do not update venue for historical events
-
         continue;
       }
 

@@ -6,6 +6,7 @@ import { Match, check } from "meteor/check";
 import { UserModel } from "/imports/api/users/users";
 import * as tenantDenormalizer from "./tenantDenormalizer";
 import * as interestedDenormalizer from "./interestedDenormalizer";
+import { EventEntity, OEvent } from "/imports/api/events/events";
 
 import { hasRoleUser } from "/imports/utils/course-role-utils";
 import { PublicSettings } from "/imports/utils/PublicSettings";
@@ -16,7 +17,6 @@ import { escapeRegExp, intersection } from "lodash";
 import { GroupEntityCustomCourseFields } from "/imports/api/groups/groups";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { StringEnum, Type } from "/imports/utils/CustomChecks";
-import { EventEntity, OEvent } from "../events/events";
 
 export interface CourseMemberEntity {
   user: string;
