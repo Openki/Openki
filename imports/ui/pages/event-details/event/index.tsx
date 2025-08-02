@@ -25,13 +25,6 @@ function CourseEvent({ event, courseId }: { event: EventModel; courseId: string 
 
   const user = useUser();
 
-  function mayEdit() {
-    if (!user) {
-      return false;
-    }
-    return event.editableBy(user);
-  }
-
   function courseLink() {
     if (!event.courseId) {
       return "";
@@ -59,18 +52,10 @@ function CourseEvent({ event, courseId }: { event: EventModel; courseId: string 
           title={course.name}
           image={course.publicUrlForDetailsImage()}
         />
-      ) : mayEdit() ? (
-        <EventCourseHeader
-          course={course}
-          backlink={courseLink()}
-          regionId={event.region}
-          categories={event.categories}
-          title={event.title}
-          image={course.publicUrlForDetailsImage()}
-        />
       ) : (
         <EventCourseHeader
           course={course}
+          backlink={event.editableBy(user) ? courseLink() : undefined}
           regionId={event.region}
           categories={event.categories}
           title={event.title}

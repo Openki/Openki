@@ -8,7 +8,7 @@ if (runBackgroundTasks)
   Meteor.startup(async () => {
     const runningVersion = await Version.findOneAsync();
     if (
-      typeof VERSION !== "undefined" &&
+      VERSION !== undefined &&
       (!runningVersion ||
         runningVersion.complete !== VERSION.complete ||
         runningVersion.commit !== VERSION.commit)

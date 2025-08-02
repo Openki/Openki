@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Meteor } from "meteor/meteor";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
@@ -22,7 +21,7 @@ export function Submenu(data: { edit: boolean; course: CourseModel; select: stri
 
   function mayEdit() {
     const { course } = data;
-    return course?.editableBy(Meteor.user());
+    return course?.editableBy(user);
   }
   function customFields() {
     const { course } = data;

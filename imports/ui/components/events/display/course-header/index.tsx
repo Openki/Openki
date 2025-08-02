@@ -12,7 +12,7 @@ import "./styles.scss";
 
 export interface Props {
   course?: CourseModel;
-  backlink?: string;
+  backlink?: string | undefined;
   headerlink?: string;
   regionId: string;
   categories: string[] | undefined;

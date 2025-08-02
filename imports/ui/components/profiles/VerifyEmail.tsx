@@ -1,14 +1,15 @@
-import { Meteor } from "meteor/meteor";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Template } from "meteor/templating";
+import { useUser } from "/imports/utils/react-meteor-data";
 
 import * as Alert from "/imports/api/alerts/alert";
 import * as emailMethods from "/imports/api/emails/methods";
 
 export function VerifyEmail() {
   const { t } = useTranslation();
+  const user = useUser();
   const [sending, setSending] = useState(false);
+
   if (sending) {
     return (
       <div className="alert alert-success" role="alert">
@@ -36,7 +37,7 @@ export function VerifyEmail() {
             t(
               "profile.sentVerificationMail",
               'Verification mail has been sent to your address: "{MAIL}".',
-              { MAIL: Meteor.user()?.emails[0].address },
+              { MAIL: user?.emails[0].address },
             ),
           );
         } catch (err) {
