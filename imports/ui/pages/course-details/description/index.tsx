@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import * as Alert from "/imports/api/alerts/alert";
 import * as CoursesMethods from "/imports/api/courses/methods";
 
-import { Editable, Props as EditableProps } from "/imports/ui/components/editable/index.react";
+import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 
 import "./styles.scss";
 

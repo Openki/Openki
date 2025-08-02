@@ -14,7 +14,7 @@ import * as StringTools from "/imports/utils/string-tools";
 import { hasRoleUser } from "/imports/utils/course-role-utils";
 
 import * as Analytics from "/imports/ui/lib/analytics";
-import { Editable, Props as EditableProps } from "/imports/ui/components/editable/index.react";
+import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 
 import { RegionTag } from "../../regions/tag";
 import { Title } from "./title";
