@@ -3,6 +3,7 @@ import { Meteor } from "meteor/meteor";
 import { Router } from "meteor/iron:router";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useTranslation } from "react-i18next";
+import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 
 import "./styles.scss";
 
@@ -13,6 +14,7 @@ function collapse() {
 export function UserFrame() {
   const { t } = useTranslation();
   const currentUser = useUser();
+  const routeName = useCurrentRouteName();
 
   if (!currentUser) {
     return null;
@@ -27,7 +29,7 @@ export function UserFrame() {
         <div className="mb-3">
           <a
             className="btn btn-secondary form-control"
-            href={Router.path("userprofile", { _id: currentUser._id })}
+            href={Router.path("userprofile", currentUser)}
             onClick={() => {
               collapse();
             }}
@@ -57,9 +59,8 @@ export function UserFrame() {
               collapse();
               Meteor.logout();
 
-              const routeName = Router.current().route?.getName();
               if (routeName === "profile") {
-                Router.go("userprofile", currentUser ?? undefined);
+                Router.go("userprofile", currentUser);
               }
             }}
           >

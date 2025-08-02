@@ -42,7 +42,6 @@ export function route<D, S extends Record<string, SubscriptionHandle<any>> | und
   },
 ) {
   const subscriptions = options.subscriptions;
-
   delete options.subscriptions;
 
   if (subscriptions && options.waitOn) {

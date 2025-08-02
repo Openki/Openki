@@ -401,7 +401,7 @@ RouterAsync.route("tenantCreate", {
 });
 
 RouterAsync.route("tenantDetails", {
-  path: "tenant/:_id/:short?",
+  path: "tenant/:_id/:name?",
   template: "tenantDetailsPage",
   async onRun() {
     await import("/imports/ui/pages/tenant-details");
