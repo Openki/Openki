@@ -14,7 +14,7 @@ export function ProfileLink(props: { userId: string }) {
       className="profilelink"
       href={Router.path("userprofile", {
         _id: props.userId,
-        username: encodeURIComponent(userName),
+        username: userName,
       })}
     >
       {userName}
