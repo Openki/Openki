@@ -116,7 +116,6 @@ export function trackEvent(category: string, action: string, name?: string, valu
     });
   } else {
     // For debugging
-
     console.debug(
       `Analytics.Event: {category: ${category}, action: ${action}${name ? `, name: ${name}` : ""}${
         value ? `, value: ${value}` : ""

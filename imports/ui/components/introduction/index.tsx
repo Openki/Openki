@@ -46,7 +46,7 @@ export function Introduction({ hasPricePolicy }: Props) {
   }
 
   return (
-    <div className={`container ${isInCalendar() ? "calendar-introduction" : null}`}>
+    <div className={`container ${isInCalendar() ? "calendar-introduction" : ""}`}>
       <div className="introduction">
         <h3>
           <a

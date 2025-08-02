@@ -15,7 +15,7 @@ import { CourseTemplate } from "../../lib/course-template";
 
 import { Edit } from "../courses/edit";
 import { CourseCompact } from "../courses/compact";
-import { CompactPropose } from "/imports/ui/components/courses/compact-propose";
+import { CompactPropose } from "../courses/CompactPropose";
 import { EventCompact } from "../events/compact";
 import { EventsMap } from "../events/map";
 

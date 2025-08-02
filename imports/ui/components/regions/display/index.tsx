@@ -27,10 +27,6 @@ export function Display({ region, onEdit, onDelete }: Props) {
 
   const [verifyDelete, setVerifyDelete] = useState(false);
 
-  function mayEdit() {
-    return region.editableBy(user);
-  }
-
   function deleteConfirmDialogAttr(): DeleteConfirmDialogProps {
     return {
       confirmText: t(
@@ -100,7 +96,7 @@ export function Display({ region, onEdit, onDelete }: Props) {
         </div>
       </div>
 
-      {mayEdit() && (
+      {region.editableBy(user) && (
         <>
           <div className="actions">
             <ButtonEdit

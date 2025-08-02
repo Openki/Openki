@@ -210,7 +210,6 @@ export function Editable({
     }
 
     // Initialize the editor interface
-
     new MediumEditor(element, meOptions);
 
     setNumberOfCharacters(element.innerText.trim().length);

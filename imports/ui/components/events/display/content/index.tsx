@@ -1,5 +1,4 @@
 import React from "react";
-import { Meteor } from "meteor/meteor";
 import { useTranslation } from "react-i18next";
 
 import { Courses } from "/imports/api/courses/courses";
@@ -16,9 +15,11 @@ import { PricePolicy } from "../../../price-policy";
 import { Sharing } from "../../../sharing";
 
 import "./styles.scss";
+import { useUser } from "/imports/utils/react-meteor-data";
 
 export function Content({ event }: { event: EventModel }) {
   const { t } = useTranslation();
+  const user = useUser();
 
   function singleEvent() {
     return Courses.findOne(event.courseId)?.singleEvent;
@@ -32,8 +33,6 @@ export function Content({ event }: { event: EventModel }) {
     if (!course) {
       return [];
     }
-
-    const user = Meteor.user();
 
     const isEditor = user && course.editableBy(user);
 

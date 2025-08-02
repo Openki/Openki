@@ -47,7 +47,7 @@ function CategoryLabelLinked({
 }
 
 export interface CourseCategoriesProps {
-  categories: string[] | undefined;
+  categories: string[];
   onClick?: (categorie: string) => Promise<void>;
   onMouseOver?: (categorie: string) => Promise<void>;
   onMouseOut?: (categorie: string) => Promise<void>;

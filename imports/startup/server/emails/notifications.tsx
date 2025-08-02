@@ -151,7 +151,6 @@ async function send(
           if (typeof e === "object" && "toJSON" in e) {
             reason = e.toJSON();
           }
-
           await record(entry, unsubToken, false, recipientId, mail, reason);
         }
       }

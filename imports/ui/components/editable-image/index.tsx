@@ -173,7 +173,7 @@ export function EditableImage(data: Data) {
   }
 
   function deleteAllowed() {
-    return data.onDelete;
+    return !!data.onDelete;
   }
 
   function handleDragOver(event: DragEvent<HTMLFormElement>) {
@@ -298,9 +298,9 @@ export function EditableImage(data: Data) {
       <div className="editable-image-controls">
         {progress === "ready" ? (
           <ButtonSave {...uploadButtonAttributes()} />
-        ) : deleteAllowed() ? (
-          <ButtonDelete onClick={onDelete} />
-        ) : null}{" "}
+        ) : (
+          deleteAllowed() && <ButtonDelete onClick={onDelete} />
+        )}{" "}
         <ButtonCancel onClick={onCancel} />
       </div>
     </>

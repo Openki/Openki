@@ -194,7 +194,6 @@ function EditableMixing<
     }
 
     // Initialize the editor interface
-
     new MediumEditor($editable[0], meOptions);
 
     instance.numberOfCharacters.set($editable.text().trim().length);

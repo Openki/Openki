@@ -12,7 +12,6 @@ export async function create() {
   for (const template of regions) {
     const region = {
       ...template,
-
       tenant: template.tenant
         ? await ensure.tenant(template.tenant)
         : prng() > 0.3
