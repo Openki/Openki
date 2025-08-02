@@ -147,7 +147,6 @@ template.onCreated(function () {
         repetitionCountDay[repKeyDay] = 1;
 
         event.repKey = repKey;
-
         event.repKeyDay = repKeyDay;
         dedupedEvents.push(event);
       }

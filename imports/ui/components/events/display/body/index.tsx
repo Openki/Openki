@@ -117,12 +117,6 @@ export function Display({
   const [canceling, setCanceling] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
-  function mayEdit(event: EventModel) {
-    if (!user) {
-      return false;
-    }
-    return event.editableBy(user);
-  }
   function isExpanded() {
     return canceling || expanded;
   }
@@ -253,20 +247,15 @@ export function Display({
 
   return (
     <div className="page-component">
-      {mayEdit(event) ? (
-        event.courseId ? (
-          <CourseEvent event={event} courseId={event.courseId} />
-        ) : (
-          <Content event={event} />
-        )
+      {event.editableBy(user) && event.courseId ? (
+        <CourseEvent event={event} courseId={event.courseId} />
       ) : (
         <Content event={event} />
       )}
-
       {replicating ? (
         <EventReplication {...eventReplicationAttr()} />
       ) : (
-        !!mayEdit(event) && (
+        event.editableBy(user) && (
           <>
             <div className="actions">
               {!isExpanded() && (

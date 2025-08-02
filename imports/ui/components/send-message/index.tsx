@@ -5,7 +5,7 @@ import * as Alert from "/imports/api/alerts/alert";
 
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { VerifyEmail } from "/imports/ui/components/profiles/verify-email";
+import { VerifyEmail } from "../profiles/VerifyEmail";
 import { PleaseLogin } from "/imports/ui/components/please-login";
 
 import "./styles.scss";

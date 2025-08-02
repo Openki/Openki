@@ -85,7 +85,7 @@ export async function generate() {
         editor: venue.editor,
       };
 
-      if (typeof venue.restrictedUse !== "undefined") {
+      if (venue.restrictedUse !== undefined) {
         event.venue.restrictedUse = venue.restrictedUse;
       }
 

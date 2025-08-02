@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
-import { Meteor } from "meteor/meteor";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useTranslation } from "react-i18next";
 import { truncate } from "lodash";
@@ -35,14 +34,8 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
 
   const [verifyDelete, setVerifyDelete] = useState(false);
 
-  function mayEdit() {
-    return venue.editableBy(Meteor.user());
-  }
   function facilityNames() {
     return Object.keys(venue.facilities);
-  }
-  function facilitiesDisplay(name: string) {
-    return t(`venue.facility.${name}`);
   }
 
   function deleteConfirmDialogAttr(): DeleteConfirmDialogProps {
@@ -123,7 +116,7 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
                     </span>
                     <ul>
                       {facilityNames().map((facilityName) => (
-                        <li key={facilityName}>{facilitiesDisplay(facilityName)}</li>
+                        <li key={facilityName}>{t(`venue.facility.${facilityName}`)}</li>
                       ))}
                     </ul>
                   </>
@@ -178,7 +171,7 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
             </div>
           </div>
         </div>
-        {mayEdit() && (
+        {venue.editableBy(user) && (
           <>
             <div className="actions">
               <ButtonEdit

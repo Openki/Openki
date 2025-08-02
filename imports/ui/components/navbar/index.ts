@@ -184,9 +184,9 @@ template.events({
           const containerScrollTop = container.scrollTop();
 
           if (
-            typeof scrollToOffset === "undefined" ||
-            typeof containerOffset === "undefined" ||
-            typeof containerScrollTop === "undefined"
+            scrollToOffset === undefined ||
+            containerOffset === undefined ||
+            containerScrollTop === undefined
           ) {
             throw new Error("Unexpected undefined");
           }
