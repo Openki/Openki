@@ -6,7 +6,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import * as CoursesMethods from "/imports/api/courses/methods";
 import { CourseModel } from "/imports/api/courses/courses";
 
-import { Editable, Props as EditableProps } from "/imports/ui/components/editable/index.react";
+import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 import { InternalIndicator } from "/imports/ui/components/internal-indicator";
 import { SingleEventIndicator } from "/imports/ui/components/single-event-indicator";
 import { RegionTag } from "/imports/ui/components/regions/tag";

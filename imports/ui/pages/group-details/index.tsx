@@ -16,7 +16,7 @@ import * as Analytics from "/imports/ui/lib/analytics";
 import * as Metatags from "/imports/utils/metatags";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
-import { Editable, Props as EditableProps } from "/imports/ui/components/editable/index.react";
+import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 
 import { Dashboard, Props as DashboardProps } from "../../components/dashboard";
 import { ButtonCancel, ButtonSave } from "/imports/ui/components/buttons";

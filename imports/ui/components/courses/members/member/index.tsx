@@ -13,7 +13,7 @@ import { ProfileLink } from "/imports/ui/components/profile-link";
 import { Contribution } from "../../../Contribution";
 import { ParticipantContact } from "/imports/ui/components/participant/contact";
 import { RemoveFromTeamDropdown } from "../remove-from-team-dropdown";
-import { Editable } from "../../../editable/index.react";
+import { Editable } from "/imports/ui/components/editable";
 import { useRoleDisplay } from "../../../../lib/useRoleDisplay";
 
 import "./styles.scss";
