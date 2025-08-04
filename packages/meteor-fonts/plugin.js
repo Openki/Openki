@@ -38,6 +38,7 @@ class FontsCompiler {
     if (customPath) {
       this.log(`"${path}" as ${customPath}`);
 
+  console.info(`"${path}" as ${customPath}`)
       file.addAsset({
         data: file.getContentsAsBuffer(),
         path: customPath
