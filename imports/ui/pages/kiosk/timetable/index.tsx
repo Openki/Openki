@@ -14,7 +14,7 @@ import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 
 import "./styles.scss";
 
-interface RelStartEnd {
+export interface RelStartEnd {
   relStart: number;
   relEnd: number;
 }

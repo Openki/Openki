@@ -140,7 +140,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
 
       Analytics.trackEvent("Group creations", "Group creations");
 
-      Router.go("groupDetails", { _id: groupId });
+      Router.go("groupDetails", { _id: groupId, short: newGroup.short });
     } catch (err) {
       Alert.serverError(err, t("groupDetails.saveError", { GROUP: newGroup.name }));
     } finally {
