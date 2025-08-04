@@ -96,11 +96,9 @@ export function route<D, S extends Record<string, SubscriptionHandle<any>> | und
   }
 
   const onRunOption = options.onRun;
-
   delete options.onRun;
 
   const waitOn = options.waitOn;
-
   delete options.waitOn;
 
   const onRunAwaited = new ReactiveVar<boolean>(false);
