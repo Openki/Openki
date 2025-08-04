@@ -34,7 +34,7 @@ function FeaturedGroupBody(props: { groupId: string }) {
           {featuredGroup.name} ({featuredGroup.short})
         </div>
         <div className="featured-group-links">
-          <a href={Router.path("groupDetails",  featuredGroup)}>
+          <a href={Router.path("groupDetails", featuredGroup)}>
             {t("featuredGroup.coursesOnOpenki", "Check out the courses of {GROUP} on {SITENAME}!", {
               GROUP: featuredGroup.name,
               SITENAME: siteName,
