@@ -29,7 +29,7 @@ function CourseEvent({ event }: { event: WithRequired<EventModel, "courseId"> })
   function courseLink() {
     return Router.path(
       "showCourse",
-      { _id: event.courseId },
+      { _id: event.courseId, slug: course?.slug },
       course?.singleEvent ? { query: { force: "1" } } : {},
     );
   }
