@@ -38,7 +38,6 @@ class FontsCompiler {
     if (customPath) {
       this.log(`"${path}" as ${customPath}`);
 
-  console.info(`"${path}" as ${customPath}`)
       file.addAsset({
         data: file.getContentsAsBuffer(),
         path: customPath
@@ -47,9 +46,9 @@ class FontsCompiler {
   }
 
   log(msg) {
-    //if (config.verbose === true) {
+    if (config.verbose === true) {
       console.log(colors.blue('[Fonts]'), msg);
-    //}
+    }
   }
 }
 
@@ -58,16 +57,14 @@ Plugin.registerCompiler({
 }, () => new FontsCompiler);
 
 function getConfig(configFileName) {
-  console.info("test: "+Plugin.path)
   var path = Plugin.path;
 
   var appdir = process.env.PWD || process.cwd();
   var custom_config_filename = path.join(appdir, configFileName);
-  console.info("hallo: "+custom_config_filename)
   var userConfig = {};
 
-  if (fs.existsSync(custom_config_filename+"")) {
-    userConfig = fs.readFileSync(custom_config_filename+"", {
+  if (fs.existsSync(custom_config_filename)) {
+    userConfig = fs.readFileSync(custom_config_filename, {
       encoding: 'utf8'
     });
     userConfig = JSON.parse(userConfig);
