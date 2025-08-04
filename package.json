@@ -2,14 +2,14 @@
   "name": "openki",
   "version": "0.10.0",
   "description": "CourseOragnisationPlatform",
-  "main": "server/main.js",
+  "main": "server/main.ts",
   "directories": {
     "test": "tests"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "3.856.0",
     "@aws-sdk/lib-storage": "3.856.0",
-    "@babel/runtime": "7.26.0",
+    "@babel/runtime": "7.28.2",
     "@fortawesome/fontawesome-free": "6.5.2",
     "@popperjs/core": "2.11.8",
     "bootstrap": "5.3.7",
@@ -114,10 +114,6 @@
   "meteor": {
     "modern": {
       "transpiler": true
-    },
-    "mainModule": {
-      "client": "client/main.ts",
-      "server": "server/main.ts"
     }
   },
   "repository": {
