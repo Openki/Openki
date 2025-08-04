@@ -5,11 +5,5 @@ import "./styles.scss";
 
 export function InternalIndicator() {
   const { t } = useTranslation();
-  return (
-    <span
-      className="internal-indicator"
-      data-bs-toggle="tooltip"
-      data-bs-title={t("_label.internal")}
-    ></span>
-  );
+  return <span className="internal-indicator" data-bs-title={t("_label.internal")}></span>;
 }
