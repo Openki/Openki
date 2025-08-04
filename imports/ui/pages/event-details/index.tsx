@@ -68,13 +68,12 @@ export function EventPage(data: { event: EventModel; isNew: boolean }) {
     return (
       <div className="container mt-3">
         <div className="alert alert-success display-1" role="alert">
-          <i className="fa-solid fa-user-xmark fa-lg fa-fw"></i>{" "}
           {t("event.details.unregister", "You have been unsubscribed from {EVENT} successfully.", {
             EVENT: event.title,
           })}
           <hr className="border border-black" />
           <a className="btn btn-lg btn-success" href={Router.path("showEvent", event)}>
-            {t("event.details.gotoEvent", "Visit the event")}
+            {t("event.details.gotoEvent", "Visit event")}
           </a>
         </div>
       </div>

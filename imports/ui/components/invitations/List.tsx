@@ -46,7 +46,6 @@ function Table({ tenantId, invitations }: { tenantId: string; invitations: Invit
           {t("invitations.list.remove", "Remove")}&nbsp;
           <span
             className="fa-solid fa-circle-info fa-fw"
-            data-bs-toggle="tooltip"
             data-bs-title={t(
               "invitations.list.remove.tooltip",
               "Removing the invitation has no effect on the member who has already accepted.",
@@ -85,7 +84,6 @@ function Table({ tenantId, invitations }: { tenantId: string; invitations: Invit
               {t("invitations.list.remove")}
               <span
                 className="fa-solid fa-circle-info fa-fw"
-                data-bs-toggle="tooltip"
                 data-bs-title={t("invitations.list.remove.tooltip")}
                 data-tooltip-classes="tooltip-compact"
               ></span>

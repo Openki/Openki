@@ -256,7 +256,6 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
 
             <button
               className="btn btn-link float-end ms-2"
-              data-bs-toggle="tooltip"
               data-bs-title={t("group.page.removeFilter", "See all courses")}
               onClick={() => {
                 Router.go("home"); // Got a better idea?
@@ -267,7 +266,6 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
             {!group.isNew() && mayEdit && (
               <button
                 className="btn btn-link float-end ms-2"
-                data-bs-toggle="tooltip"
                 data-bs-title={t("group.settings.title")}
                 onClick={() => {
                   setEditingSettings(!editingSettings);

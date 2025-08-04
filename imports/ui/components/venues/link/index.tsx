@@ -66,7 +66,6 @@ export function VenueTag({
     return (
       <div className={`tag tag-link ${className} venue-tag ${tagClassName()}`}>
         <a
-          data-bs-toggle="tooltip"
           data-bs-title={t("location.link.tooltip", "Show details of {VENUE}", {
             VENUE: venue.name,
           })}

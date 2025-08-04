@@ -43,7 +43,7 @@ if (Meteor.isClient) {
       button.click();
 
       expectElement(
-        'a[data-bs-toggle="tooltip"][data-bs-title^="Sandro supported Hmmm with a donation."] i.fa-solid.fa-heart',
+        'a[data-bs-title^="Sandro supported Hmmm with a donation."] i.fa-solid.fa-heart',
         "Icon is present",
       );
     });
@@ -58,7 +58,7 @@ if (Meteor.isClient) {
       button.click();
 
       expectNoneElement(
-        'a[data-bs-toggle="tooltip"][data-bs-title^="Sandro supported Hmmm with a donation."] i.fa-solid.fa-heart',
+        'a[data-bs-title^="Sandro supported Hmmm with a donation."] i.fa-solid.fa-heart',
         "Icon is not present",
       );
     });

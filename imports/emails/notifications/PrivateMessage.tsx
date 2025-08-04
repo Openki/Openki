@@ -41,7 +41,7 @@ export function PrivateMessage({
           <td>
             {t(
               "notification.privateMessage.mail.copyintro",
-              'This is a copy of your message that was sent to "{RECIPIENT}"',
+              'This is a copy of your message that was sent to "{RECIPIENT}".',
               { RECIPIENT: recipientName },
             )}
           </td>
@@ -98,7 +98,7 @@ export function PrivateMessage({
               <p className="text-center">
                 {t(
                   "notification.privateMessage.mail.direct.answerText",
-                  "You can also send {SENDERNAME} an email directly  by clicking reply in your email client",
+                  "You can also send {SENDERNAME} an email directly  by clicking reply in your email client.",
                   { SENDERNAME: sender.getDisplayName() },
                 )}
               </p>

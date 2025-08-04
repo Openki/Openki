@@ -100,7 +100,6 @@ export function Member({ member, course }: { member: CourseMemberEntity; course:
             <button
               type="button"
               className="btn btn-sm btn-add add-to-team-btn"
-              data-bs-toggle="tooltip"
               data-bs-title={t("course.roles.maketeam", "Add to team")}
               onClick={async () => {
                 setTimeout(() => {
