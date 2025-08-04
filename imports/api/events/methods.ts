@@ -450,6 +450,7 @@ export const promote = ServerMethod(
     await UpdateMethods.promote(Events as unknown as GroupPromoters)(eventId, groupId, enable);
     await groupsDenormalizer.updateGroups(eventId);
   },
+  { simulation: false },
 );
 
 /**
@@ -466,6 +467,7 @@ export const editing = ServerMethod(
     await UpdateMethods.editing(Events as unknown as GroupPromoters)(eventId, groupId, enable);
     await groupsDenormalizer.updateGroups(eventId);
   },
+  { simulation: false },
 );
 
 /**
