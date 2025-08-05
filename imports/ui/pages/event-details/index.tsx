@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Session } from "meteor/session";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
@@ -7,7 +7,6 @@ import { useSearchParams } from "/imports/utils/react-meteor-router";
 
 import { EventModel } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
-import * as Alert from "/imports/api/alerts/alert";
 import { Regions } from "/imports/api/regions/regions";
 
 import * as Metatags from "/imports/utils/metatags";
@@ -19,24 +18,88 @@ import * as Analytics from "/imports/ui/lib/analytics";
 
 import { Event } from "./event";
 
+function Unregister({
+  event,
+  participant,
+  token,
+}: {
+  event: EventModel;
+  participant: string;
+  token: string;
+}) {
+  const { t } = useTranslation();
+  const [result, setResult] = useState<undefined | "success" | "failed">(undefined);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        await EventsMethods.removeParticipant(event._id, participant, token);
+        setResult("success");
+
+        Analytics.trackEvent(
+          "Unsubscribes RSVPs",
+          "Unsubscribes RSVPs as participant",
+          Regions.findOne(event.region)?.nameEn,
+        );
+      } catch {
+        setResult("failed");
+      }
+    })();
+  }, [participant, token]);
+
+  if (result === "success") {
+    return (
+      <ActionResult
+        type="success"
+        title={t(
+          "event.details.unregister.success",
+          'You have been unsubscribed from "{EVENT}" successfully.',
+          { EVENT: event.title },
+        )}
+        actions={[
+          {
+            href: Router.path("showEvent", event),
+            text: t("event.details.gotoEvent", "Visit event"),
+          },
+        ]}
+      />
+    );
+  }
+
+  if (result === "failed") {
+    return (
+      <ActionResult
+        type="failed"
+        title={t("event.details.unregister.failed.title", "Something went wrong")}
+        actions={[
+          {
+            description: t(
+              "event.details.unregister.failed.action.description",
+              "You might also want to check if you were already unsubscribed:",
+            ),
+            href: Router.path("showEvent", event),
+            text: t("event.details.gotoEvent", "Visit event"),
+          },
+        ]}
+      >
+        {t(
+          "event.details.unregister.failed.description",
+          'Unsubscribing from "{EVENT}" did not work. The link might be broken.',
+          {
+            EVENT: event.title,
+          },
+        )}
+      </ActionResult>
+    );
+  }
+
+  return null;
+}
+
 export function EventPage(data: { event: EventModel; isNew: boolean }) {
   const { event } = data;
   const { t } = useTranslation();
   const searchParams = useSearchParams();
-
-  async function removeParticipant(participantId: string, token: string) {
-    try {
-      await EventsMethods.removeParticipant(event._id, participantId, token);
-
-      Analytics.trackEvent(
-        "Unsubscribes RSVPs",
-        "Unsubscribes RSVPs as participant",
-        Regions.findOne(event.region)?.nameEn,
-      );
-    } catch (err) {
-      Alert.serverError(err, "could not remove participant");
-    }
-  }
 
   useEffect(() => {
     let title;
@@ -56,27 +119,9 @@ export function EventPage(data: { event: EventModel; isNew: boolean }) {
     Metatags.setCommonTags(title, description, event?.publicUrlForDetailsImage());
   });
 
-  useEffect(() => {
-    (async () => {
-      if (searchParams.action === "unregister" && searchParams.participant && searchParams.token) {
-        await removeParticipant(searchParams.participant, searchParams.token);
-      }
-    })();
-  }, [searchParams.action, searchParams.participant, searchParams.token]);
-
   if (searchParams.action === "unregister" && searchParams.participant && searchParams.token) {
     return (
-      <div className="container mt-3">
-        <div className="alert alert-success display-1" role="alert">
-          {t("event.details.unregister", "You have been unsubscribed from {EVENT} successfully.", {
-            EVENT: event.title,
-          })}
-          <hr className="border border-black" />
-          <a className="btn btn-lg btn-success" href={Router.path("showEvent", event)}>
-            {t("event.details.gotoEvent", "Visit event")}
-          </a>
-        </div>
-      </div>
+      <Unregister event={event} participant={searchParams.participant} token={searchParams.token} />
     );
   }
 
@@ -90,5 +135,6 @@ export function EventPage(data: { event: EventModel; isNew: boolean }) {
 // for Blaze
 
 import "./template.html";
+import { ActionResult } from "../../components/action-result";
 
 Template.registerHelper("EventPage", () => EventPage);

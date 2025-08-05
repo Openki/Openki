@@ -310,7 +310,6 @@
   "email.base.unexpected": "Se non sai perché hai ricevuto questa email, ignorala o inviaci una notifica a: {REPORTEMAIL}",
   "email.base.unsubscribeLink.automatedNotifications": "Annulla l'iscrizione a tutte le notifiche automatiche.",
   "email.base.unsubscribeLink.privateMessage": "Annulla l'iscrizione da tutti i messaggi privati degli utenti.",
-  "email.verified": "La tua email è stata verificata.",
   "event.cancel.confirm.button": "Annulla {EVENT}",
   "event.cancel.reason": "Motivo",
   "event.cancel.reason.placeholder": "Inserisci qui un motivo. (Questo messaggio sarà inviato a tutti gli utenti registrati e non sarà visibile qui in seguito)",
@@ -1024,5 +1023,6 @@
   "warning.emailNotValid": "Il tuo indirizzo e-mail sembra avere un errore.",
   "warning.noEmailProvided": "Per favore inserisci un indirizzo e-mail.",
   "warning.noUserName": "Per favore inserisci un nome per il tuo utente.",
-  "warning.userExists": "Nome utente già in uso. Per favore scegline un altro."
+  "warning.userExists": "Nome utente già in uso. Per favore scegline un altro.",
+  "profile.verifyEmail.success": "La tua email è stata verificata."
 }

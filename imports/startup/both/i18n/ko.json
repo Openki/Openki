@@ -299,7 +299,6 @@
   "email.base.unexpected": "이 메일을 요청한 적이 없으면, 무시하거나 {REPORTEMAIL}으로 알려주세요",
   "email.base.unsubscribeLink.automatedNotifications": "모든 자동 알림 설정을 해제합니다.",
   "email.base.unsubscribeLink.privateMessage": "모든 개인 메시지의 알림을 해제합니다.",
-  "email.verified": "이메일 인증을 완료했습니다.",
   "event.cancel.confirm.button": "{EVENT} 취소",
   "event.cancel.reason": "취소 사유",
   "event.cancel.reason.placeholder": "이 곳에 사유를 입력하세요. (해당 메시지는 참가 등록된 모든 사용자들에게 전송되며, 이후에는 더 이상 수정이 불가합니다.)",
@@ -1006,5 +1005,6 @@
   "warning.emailNotValid": "사용 가능한 이메일 주소가 아닙니다.",
   "warning.noEmailProvided": "이메일 주소를 입력해주세요.",
   "warning.noUserName": "사용할 사용자 이름을 입력해주세요.",
-  "warning.userExists": "이미 사용 중인 사용자 이름입니다. 다시 입력해주세요."
+  "warning.userExists": "이미 사용 중인 사용자 이름입니다. 다시 입력해주세요.",
+  "profile.verifyEmail.success": "이메일 인증을 완료했습니다."
 }

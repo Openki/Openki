@@ -316,7 +316,6 @@
   "email.base.unexpected": "If you don't know why you got this e-mail, ignore it or send us a notification to: {REPORTEMAIL}",
   "email.base.unsubscribeLink.automatedNotifications": "Unsubscribe from all automated notifications.",
   "email.base.unsubscribeLink.privateMessage": "Unsubscribe from all private messages from users.",
-  "email.verified": "Your e-mail has been verified.",
   "event.cancel.confirm.button": "Cancel {EVENT}",
   "event.cancel.reason": "Reason",
   "event.cancel.reason.placeholder": "Please add a reason here. (This message will be sent to all the registered users and not be visible here afterwards)",
@@ -1062,5 +1061,6 @@
   "warning.emailNotValid": "Your e-mail address seems to have an error.",
   "warning.noEmailProvided": "Please enter an e-mail address.",
   "warning.noUserName": "Please enter a name for your user.",
-  "warning.userExists": "This username is already in use. Please choose another one."
+  "warning.userExists": "This username is already in use. Please choose another one.",
+  "profile.verifyEmail.success": "Your e-mail has been verified."
 }
