@@ -737,6 +737,7 @@
   "profile.users_profile_page": "صفحة الملف الشخصي ل{NAME}",
   "profile.venues": "أماكني:",
   "profile.verifyEmail.mailOnItsWay": "رسالة التأكيد الإلكترونية في طريقها.",
+  "profile.verifyEmail.success": "تم تأكيد بريدك الإلكتروني.",
   "profile.verifymail": "إعادة إرسال رسالة التأكيد الإلكترونية",
   "profile.windowtitle": "الملف الشخصي ل{USER}",
   "proposedCoursesDropdown.joinExistingCourseQuestion": "هل ترغب في المشاركة في دورة موجودة مسبقاََ؟",
@@ -981,6 +982,5 @@
   "warning.emailNotValid": "عنوان بريدك الإلكتروني لا يبدو صحيحًا.",
   "warning.noEmailProvided": "الرجاء إدخال عنوان البريد الإلكتروني.",
   "warning.noUserName": "الرجاء ادخال اسم المستخدم.",
-  "warning.userExists": "اسم المستخدم هذا موجود بالفعل. الرجاء اختيار آخر.",
-  "profile.verifyEmail.success": "تم تأكيد بريدك الإلكتروني."
+  "warning.userExists": "اسم المستخدم هذا موجود بالفعل. الرجاء اختيار آخر."
 }
