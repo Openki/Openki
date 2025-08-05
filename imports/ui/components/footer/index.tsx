@@ -47,7 +47,7 @@ export function Footer() {
   const locale = useTracker(() => Session.get("timeLocale")) || "en";
 
   function versionName() {
-    return version && version.basic + (version.branch !== "master" ? ` ${version.branch}` : "");
+    return version && version.basic + (version.branch !== "main" ? ` ${version.branch}` : "");
   }
   function fullInfo() {
     return (
@@ -93,7 +93,7 @@ export function Footer() {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("Footer", () => Footer);

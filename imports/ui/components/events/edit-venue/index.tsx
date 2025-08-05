@@ -85,7 +85,6 @@ function CustomMenu({ results, menuProps }: { results: any[]; menuProps: RenderM
               option={venue}
               position={index + uvs.length}
               className={
-                // eslint-disable-next-line no-nested-ternary
                 venue._id
                   ? !venue.restrictedUse
                     ? "bg-venue text-truncate"
@@ -117,7 +116,7 @@ function CustomMenu({ results, menuProps }: { results: any[]; menuProps: RenderM
       <div className="px-3">
         {t("profile.createNewVenue.question", "Are you responsible for a venue?")}
         <br />
-        <a href={Router.path("venueDetails", { _id: "create" })} target="_blank">
+        <a href={Router.path("venueDetails", { _id: "create" })} target="_blank" rel="noreferrer">
           <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>{" "}
           {t(
             "profile.createNewVenue.linkText",
@@ -175,7 +174,6 @@ export function EditVenue({
         `https://nominatim.openstreetmap.org?${new URLSearchParams(nominatimQuery)}`,
       );
 
-      // eslint-disable-next-line no-param-reassign
       query = query.toUpperCase();
       const filteredVenues = venues
         .filter((venue) =>
@@ -247,6 +245,7 @@ export function EditVenue({
             }
             renderInput={(inputProps, props) => {
               // From https://github.com/ericgio/react-bootstrap-typeahead/blob/924627376275c78988718230c0438748ff673a6d/src/components/Typeahead/Typeahead.tsx#L229
+              // eslint-disable-next-line react/prop-types
               const { isInvalid, isValid, size } = props as any;
               const commonProps = { ...inputProps, isInvalid, isValid, size };
               // Add type="search" to have a clear button
@@ -371,9 +370,3 @@ export function EditVenue({
     </>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("EventEditVenue", () => EditVenue);

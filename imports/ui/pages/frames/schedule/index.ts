@@ -39,6 +39,7 @@ const template = Template.frameSchedulePage;
 template.onCreated(function () {
   const filter = Events.Filtering();
 
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const instance = this;
   instance.interval = new ReactiveVar(60);
   instance.scheduleStart = new ReactiveVar(moment());
@@ -110,14 +111,13 @@ template.onCreated(function () {
 
     // Track repeating events so we know how often they occur.
     // The key to this dict is a combination of courseId, weekday and start time.
-    const repetitionCount: { [key: string]: number } = {};
-    const repetitionCountDay: { [key: string]: number } = {};
+    const repetitionCount: Record<string, number> = {};
+    const repetitionCountDay: Record<string, number> = {};
 
     // Load events but keep only the first when they repeat on the same
     // weekday at the same time.
     const dedupedEvents: EventViewModel[] = [];
     Events.findFilter(filter.toQuery()).forEach((originalEvent) => {
-      // eslint-disable-next-line no-param-reassign
       const event = { ...originalEvent } as EventViewModel;
       const eventStart = LocalTime.fromString(event.startLocal);
 
@@ -146,9 +146,7 @@ template.onCreated(function () {
       } else {
         repetitionCountDay[repKeyDay] = 1;
 
-        // eslint-disable-next-line no-param-reassign
         event.repKey = repKey;
-        // eslint-disable-next-line no-param-reassign
         event.repKeyDay = repKeyDay;
         dedupedEvents.push(event);
       }
@@ -159,20 +157,16 @@ template.onCreated(function () {
     const separators = instance.separators.get().slice().reverse();
 
     // List of intervals where events or separators are placed
-    const intervals = separators.reduce(
-      (rIntervals: { [separator: number]: number }, separator) => {
-        /* eslint-disable-next-line no-param-reassign */
-        rIntervals[separator] = separator;
-        return rIntervals;
-      },
-      {},
-    );
+    const intervals = separators.reduce((rIntervals: Record<number, number>, separator) => {
+      rIntervals[separator] = separator;
+      return rIntervals;
+    }, {});
 
     // List of days where events where found
     const days: _.Dictionary<number> = {};
 
     // Map of slots where events were found. Each slot holds a list of events.
-    const slots: { [mins: string]: { [day: string]: EventViewModel[] } } = {};
+    const slots: Record<string, Record<string, EventViewModel[]>> = {};
 
     // Count occurences of first few chars in event titles
     // This helps coloring the events so they're easier to scan.
@@ -296,6 +290,7 @@ template.helpers({
   },
 
   customStartTime(this: EventViewModel, intervalStart: moment.Moment) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const event = this;
     const startTime = moment(LocalTime.fromString(event.startLocal));
     startTime.locale(intervalStart.locale());

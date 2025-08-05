@@ -16,14 +16,14 @@ import { useValidation } from "../../../lib/useValidation";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   username: string;
   password: string;
   onForgotPassword: (loginData: { username: string; password: string }) => void;
   onVisitorOpen: (loginData: { username: string }) => void;
   onRegisterOpen: (loginData: { username: string; password: string }) => void;
   onLogin: () => void;
-};
+}
 
 export function LoginFrame({
   username,
@@ -142,7 +142,7 @@ export function LoginFrame({
                 });
               }}
             />
-            {errors.username ? <div className="invalid-feedback">{errors.username}</div> : null}
+            {!!errors.username && <div className="invalid-feedback">{errors.username}</div>}
           </div>
         </div>
         <div className="mb-3">
@@ -162,7 +162,7 @@ export function LoginFrame({
                 });
               }}
             />
-            {errors.password ? <div className="invalid-feedback">{errors.password}</div> : null}
+            {!!errors.password && <div className="invalid-feedback">{errors.password}</div>}
           </div>
         </div>
         <div className="mb-3 text-end">
@@ -291,7 +291,7 @@ export function LoginFrame({
             </button>
           </div>
         </div>
-        {PublicSettings.feature.visitorUser && visitorUserAllowed ? (
+        {PublicSettings.feature.visitorUser && visitorUserAllowed && (
           <div className="row g-2 align-items-center">
             <div className="col">
               <button
@@ -305,7 +305,7 @@ export function LoginFrame({
               </button>
             </div>
           </div>
-        ) : null}
+        )}
       </div>
     </form>
   );

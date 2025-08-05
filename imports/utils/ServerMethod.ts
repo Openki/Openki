@@ -36,7 +36,6 @@ export function ServerMethod<T extends any[], R>(
       // this runs on the server (and is simulated on the client)
 
       if (Meteor.isDevelopment && Meteor.isClient) {
-        /* eslint-disable-next-line no-console */
         console.debug(`Meteor.callAsync("${name}",${JSON.stringify(args)})`);
       }
 

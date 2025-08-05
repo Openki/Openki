@@ -1,120 +1,124 @@
+@use "sass:color";
+@import "bootstrap-variables";
+
 /* prettier-ignore */
 /* stylelint-disable */
 
 //** Global text color on `<body>`.
-$body-color:                                     $gray-800;
+$body-color: $gray-800;
 
 // ** Tabs
-//========================================================================================
-$tab-content-bg:                                 lighten($blue-lighter, 5%);
-$tab-content-border-width:                       1px;
+// ========================================================================================
+$tab-content-bg: color.adjust($blue-lighter, $lightness: 5%);
+$tab-content-border-width: 1px;
 
 // ** Box shadow
-//========================================================================================
-$default-shadow:                                 rgba($gray-600, .4);
+// ========================================================================================
+$default-shadow: rgba($gray-600, 0.4);
 
-$shadow-lg-offset-x:                             2px;
-$shadow-lg-offset-y:                             5px;
-$shadow-lg-blur:                                 8px;
+$shadow-lg-offset-x: 2px;
+$shadow-lg-offset-y: 5px;
+$shadow-lg-blur: 8px;
 
-$shadow-sm-offset-x:                             1px;
-$shadow-sm-offset-y:                             2px;
-$shadow-sm-blur:                                 4px;
+$shadow-sm-offset-x: 1px;
+$shadow-sm-offset-y: 2px;
+$shadow-sm-blur: 4px;
 
 // ** Detail pages
-//========================================================================================
-$page-component-seperator-height:                3px;
-$details-header-padding-horizontal:              15px;
+// ========================================================================================
+$page-component-seperator-height: 3px;
+$details-header-padding-horizontal: 15px;
 
 // ** Events
-//========================================================================================
-$event-body-bg:                                  tint-color($green, 65%);
-$event-header-bg:                                $green;
+// ========================================================================================
+$event-body-bg: tint-color($green, 65%);
+$event-header-bg: $green;
 
-$event-compact-height:                           200px;
-$event-compact-seperator-height:                 3px;
+$event-compact-height: 200px;
+$event-compact-seperator-height: 3px;
 
-$event-compact-with-date-height:                 220px;
+$event-compact-with-date-height: 220px;
 
-$event-page-component-bg:                        tint-color($green, 65%);
-$event-trashcan-color:                           #bfbfbf;
+$event-page-component-bg: tint-color($green, 65%);
+$event-trashcan-color: #bfbfbf;
 
 // ** Courses
-//========================================================================================
-$course-border-width:                            7px;
-$course-border-color:                            $blue-lighter;
-$has-upcoming-events-bg:                         $blue-lighter;
-$proposal-border-style:                          dashed;
-$has-past-events-border-style:                   solid;
+// ========================================================================================
+$course-border-width: 7px;
+$course-border-color: $blue-lighter;
+$has-upcoming-events-bg: $blue-lighter;
+$proposal-border-style: dashed;
+$has-past-events-border-style: solid;
 
-$course-page-role-icon-color:                    #4c4c4c;
+$course-page-role-icon-color: #4c4c4c;
 
-$course-compact-next-event-bg:                   $green;
-$course-compact-next-event-color:                $gray-800;
+$course-compact-next-event-bg: $green;
+$course-compact-next-event-color: $gray-800;
 
-$course-page-component-bg:                       $blue-lighter;
+$course-page-component-bg: $blue-lighter;
 
-$course-member-comment-border-color:             shade-color($blue-lighter, 40%);
+$course-member-comment-border-color: shade-color($blue-lighter, 40%);
 
 // ** Category
-//========================================================================================
-$category-bg:                                    rgba(206,212,218,0.5);
+// ========================================================================================
+$category-bg: rgba(206, 212, 218, 0.5);
 
 // ** Group
-//========================================================================================
-$group-bg:                                       $green-alternative;
-$group-label-color:                              $blue;
+// ========================================================================================
+$group-bg: $green-alternative;
+$group-label-color: $blue;
 
 // ** Region
-//========================================================================================
-$region-bg:                                       desaturate($green, 40%);
-$region-color:                                    $red-darkest;
+// ========================================================================================
+$region-bg: color.adjust($green, $saturation: -40%);
+$region-color: $red-darkest;
 
 // ** Venue
-//========================================================================================
-$venue-bg:                                       #c9dfc19e;
-$venue-color:                                    #4a4a4a;
+// ========================================================================================
+$venue-bg: #c9dfc19e;
+$venue-color: #4a4a4a;
 
-$venue-locked-bg:                              #ddd; 
-$venue-locked-color:                          #666;
+$venue-locked-bg: #ddd;
+$venue-locked-color: #666;
 
 // ** User
-//========================================================================================
-$user-bg:                                        $blue-alternative;
+// ========================================================================================
+$user-bg: $blue-alternative;
 
 // ** Discussion
-//========================================================================================
-$discussion-thumb-width:                         50;
+// ========================================================================================
+$discussion-thumb-width: 50;
 
 // ** Roles
-//========================================================================================
-$role-needed-bg:                                 $gray-200;
-$role-needed-color:                              darken($role-needed-bg, 38%);
+// ========================================================================================
+$role-needed-bg: $gray-200;
+$role-needed-color: color.adjust($role-needed-bg, $lightness: -38%);
 
 // ** Calendar
-//========================================================================================
-$calendar-nav-bg:                                $blue-lighter;
+// ========================================================================================
+$calendar-nav-bg: $blue-lighter;
 
 // ** Tenant
-//========================================================================================
-$tenant-bg:                                       $green-alternative;
-$tenant-label-color:                              $blue;
+// ========================================================================================
+$tenant-bg: $green-alternative;
+$tenant-label-color: $blue;
 
 // ** Kiosk
-//========================================================================================
-$kiosk-wrap-padding-horizontal:                  $grid-gutter-width / 4;
-$kiosk-wrap-padding-vertical:                    $kiosk-wrap-padding-horizontal;
+// ========================================================================================
+$kiosk-wrap-padding-horizontal: $grid-gutter-width * 0.25;
+$kiosk-wrap-padding-vertical: $kiosk-wrap-padding-horizontal;
 
 // ** Footer
-//========================================================================================
-$footer-height:                                  50px;
-$footer-padding-vertical:                        15px;
+// ========================================================================================
+$footer-height: 50px;
+$footer-padding-vertical: 15px;
 
-// ** Z-index master list
-$zindex-file-upload:                             900;
-$zindex-map:                                     9999;
-$zindex-back-to-kiosk:                           1000;
+// ** Project-wide Z-Index Definitions
+// ========================================================================================
+$zindex-file-upload: 900;
+$zindex-map: 9999;
+$zindex-back-to-kiosk: 1000;
 
 // ** Default values
-//========================================================================================
-$default-transition-time:                        .25s;
+// ========================================================================================
+$default-transition-time: 0.25s;

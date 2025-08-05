@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
@@ -309,7 +308,7 @@ export function Role(data: Data) {
               <button
                 type="button"
                 className="btn btn-add text-start page-component-btn"
-                name="participant"
+                name={data.role.type}
                 onClick={handelRoleEnrollClick}
               >
                 <span

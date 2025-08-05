@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Modal from "bootstrap/js/dist/modal";
@@ -12,11 +11,11 @@ import * as Users from "/imports/api/users/publications";
 
 import { SendMessage, Data as SendMessageData } from "/imports/ui/components/send-message";
 
-export type Props = {
+export interface Props {
   participant: string;
   course?: CourseModel;
   event?: EventModel;
-};
+}
 
 export function ParticipantContact(props: Props) {
   const modalRef = useRef(null);
@@ -72,11 +71,11 @@ export function ParticipantContact(props: Props) {
 
   return (
     <>
-      {showParticipantContact() ? (
+      {showParticipantContact() && (
         <>
           <div className="d-inline-block">
-            {!isLoading() ? (
-              participant?.allowPrivateMessages ? (
+            {!isLoading() &&
+              (participant?.allowPrivateMessages ? (
                 <button
                   className="btn btn-link p-0"
                   type="button"
@@ -96,10 +95,9 @@ export function ParticipantContact(props: Props) {
                     )}
                   ></i>
                 </button>
-              )
-            ) : null}
+              ))}
           </div>
-          {showModal ? (
+          {showModal && (
             <div className="modal" tabIndex={-1} role="dialog" ref={modalRef}>
               <div className="modal-dialog modal-sm" role="document">
                 <div className="modal-content">
@@ -124,9 +122,9 @@ export function ParticipantContact(props: Props) {
                 </div>
               </div>
             </div>
-          ) : null}
+          )}
         </>
-      ) : null}
+      )}
     </>
   );
 }

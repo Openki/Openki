@@ -27,9 +27,11 @@
 }
 
 .navbar-collapse {
+  margin-inline: calc(var(--bs-gutter-x) * -0.5);
+
   @include media-breakpoint-down(lg) {
     border-top: 1px solid $navbar-default-border;
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 5px 5px rgb(0 0 0 / 30%);
   }
 }
 
@@ -83,7 +85,7 @@
 }
 
 .navbar-brand:hover {
-  text-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
+  text-shadow: rgb(0 0 0 / 25%) 1px 1px 1px;
 }
 
 .navbar-brand:hover > .site-name,
@@ -99,7 +101,7 @@
   backwards compatibility: a Blaze component to a React component for. 
   Todo: Can be removed after complet migration.
 */
-@media (max-width: 991px) {
+@media (width <= 991px) {
   .navbar-nav > div {
     flex: 1 0 0%;
   }
@@ -116,7 +118,7 @@
   }
 
   &:hover {
-    text-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
+    text-shadow: rgb(0 0 0 / 25%) 1px 1px 1px;
   }
 }
 
@@ -145,9 +147,26 @@
   width: 0;
 }
 
+.navbar-covering {
+  box-shadow: 0 0 5px rgb(0 0 0 / 30%);
+}
+
+.navbar-covering .nav-marker-caret {
+  opacity: 0;
+}
+
 .nav-link.active {
   @include media-breakpoint-down(lg) {
     background-color: css-lighten("openki-brand", 10%);
+  }
+}
+
+.navbar-covering .nav-link.active,
+.navbar-covering .nav-link.active:hover,
+.navbar-covering .nav-link.active:focus {
+  @include media-breakpoint-up(lg) {
+    background-color: css-lighten("openki-brand", 10%);
+    box-shadow: 0 0 5px rgb(0 0 0 / 30%);
   }
 }
 
@@ -170,23 +189,6 @@
   }
 }
 
-.navbar-covering {
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-}
-
-.navbar-covering .nav-marker-caret {
-  opacity: 0;
-}
-
-.navbar-covering .nav-link.active,
-.navbar-covering .nav-link.active:hover,
-.navbar-covering .nav-link.active:focus {
-  @include media-breakpoint-up(lg) {
-    background-color: css-lighten("openki-brand", 10%);
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  }
-}
-
 .navbar .region-search-form {
   margin: 4px 0;
 }
@@ -197,6 +199,7 @@
 
 .navbar-toggler .fa-bars {
   transform: scale(1.7, 1);
+  display: none;
 }
 
 .navbar-toggler.collapsed .fa-bars,
@@ -204,14 +207,8 @@
   display: block;
 }
 
-.navbar-toggler .fa-bars,
 .navbar-toggler.collapsed .fa-x {
   display: none;
-}
-
-.navbar-collapse {
-  margin-inline-end: calc(var(--bs-gutter-x) * -0.5);
-  margin-inline-start: calc(var(--bs-gutter-x) * -0.5);
 }
 
 .navbar .navbar-nav > .open > .login-dropdown,
@@ -222,8 +219,8 @@
 }
 
 .navbar-custom-modal {
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  background-color: rgb(0 0 0); /* Fallback color */
+  background-color: rgb(0 0 0 / 40%); /* Black w/ opacity */
   height: 100%; /* Full height */
   left: 0;
   overflow: auto; /* Enable scroll if needed */

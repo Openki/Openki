@@ -7,11 +7,17 @@ import { useTranslation } from "react-i18next";
 import * as Alert from "/imports/api/alerts/alert";
 import * as CoursesMethods from "/imports/api/courses/methods";
 
-import { Editable, Props as EditableProps } from "/imports/ui/components/editable/index.react";
+import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 
 import "./styles.scss";
 
-export function Description({ course }: { course: CourseModel }) {
+export function Description({
+  course,
+  onStartEditing,
+}: {
+  course: CourseModel;
+  onStartEditing?: () => void;
+}) {
   const { t } = useTranslation();
   const user = useUser();
 
@@ -42,7 +48,7 @@ export function Description({ course }: { course: CourseModel }) {
   return (
     <div className="course-details-description" id="course-description">
       {course?.editableBy(user) ? (
-        <Editable {...editableDescription} />
+        <Editable {...editableDescription} onStartEditing={onStartEditing} />
       ) : (
         <p dangerouslySetInnerHTML={{ __html: course.description || "" }}></p>
       )}
@@ -51,7 +57,7 @@ export function Description({ course }: { course: CourseModel }) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("CourseDetailsDescription", () => Description);

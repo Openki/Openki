@@ -1,5 +1,5 @@
 import { Meteor } from "meteor/meteor";
-import { Mongo } from "meteor/mongo";
+import { Router } from "meteor/iron:router";
 import { Session } from "meteor/session";
 import { _ } from "meteor/underscore";
 import moment from "moment";
@@ -12,18 +12,13 @@ import {
   OEvent,
   FindParams as EventParamPredicates,
 } from "/imports/api/events/events";
-import { Group, GroupEntity, GroupModel } from "/imports/api/groups/groups";
+import { Group, GroupModel } from "/imports/api/groups/groups";
 import * as Groups from "/imports/api/groups/publications";
 import { Region, RegionModel } from "/imports/api/regions/regions";
 import * as Regions from "/imports/api/regions/publications";
 import * as InfoPages from "/imports/api/infoPages/publications";
-import { Tenant, TenantEntity, TenantModel } from "/imports/api/tenants/tenants";
-import {
-  Venue,
-  VenueEntity,
-  VenueModel,
-  FindParams as VenueParamPredicates,
-} from "/imports/api/venues/venues";
+import { Tenant, TenantModel } from "/imports/api/tenants/tenants";
+import { Venue, VenueModel, FindParams as VenueParamPredicates } from "/imports/api/venues/venues";
 import * as Venues from "/imports/api/venues/publications";
 import * as Events from "/imports/api/events/publications";
 import * as Tenants from "/imports/api/tenants/publications";
@@ -50,7 +45,7 @@ import type { Data as VenuesMapData } from "/imports/ui/pages/venues-map";
 import type { Data as EventsMapData } from "/imports/ui/pages/events-map";
 import type { Props as FrameEventsMapProps } from "/imports/ui/pages/frames/events-map";
 import type { Data as AdminTenantsData } from "/imports/ui/pages/admin/tenants";
-import { Router } from "meteor/iron:router";
+import { RelStartEnd } from "/imports/ui/pages/kiosk/timetable";
 
 const makeFilterQuery = function (
   params: Record<string, string | undefined>,
@@ -209,51 +204,6 @@ RouterAsync.route("profile", {
   async onRun() {
     await import("/imports/ui/pages/profile");
   },
-  subscriptions() {
-    const userId = Meteor.userId();
-
-    if (!userId) {
-      return {};
-    }
-
-    return {
-      tenants: Tenants.findFilter.subscribe({ adminOf: true }),
-      venues: Venues.findFilter.subscribe({ editor: userId }),
-      groups: Groups.findFilter.subscribe({ own: true }),
-    };
-  },
-  async data() {
-    const data: {
-      user?: {
-        _id: string;
-        name: string;
-        notifications: boolean;
-        allowPrivateMessages: boolean;
-        tenants: Mongo.Cursor<TenantEntity, TenantModel> | never[];
-        groups: globalThis.Mongo.Cursor<GroupEntity, GroupModel>;
-        venues: globalThis.Mongo.Cursor<VenueEntity, VenueModel>;
-        email: string;
-        verified: boolean;
-      };
-    } = {};
-    const subs = this.subscriptions();
-    const user = await Meteor.userAsync();
-    if (user && subs && subs.tenants) {
-      const userdata = {
-        _id: user._id,
-        name: user.getDisplayName(),
-        notifications: user.notifications,
-        allowPrivateMessages: user.allowPrivateMessages,
-        tenants: await subs.tenants(),
-        groups: await subs.groups(),
-        venues: await subs.venues(),
-        email: user.emails?.[0]?.address,
-        verified: user.emails?.[0]?.verified || false,
-      };
-      data.user = userdata;
-    }
-    return data;
-  },
 });
 
 RouterAsync.route("proposeCourse", {
@@ -347,11 +297,11 @@ RouterAsync.route("createEvent", {
 
     const propose = LocalTime.now().startOf("hour");
     const event = _.extend(new OEvent(), {
-      new: true,
       startLocal: LocalTime.toString(propose),
       endLocal: LocalTime.toString(moment(propose).add(2, "hour")),
       sendReminder: PublicSettings.sendReminderPreset,
-    }) as EventModel & { new: true };
+    }) as EventModel;
+
     const course = await subs?.course?.();
     if (course) {
       event.title = course.name;
@@ -361,7 +311,7 @@ RouterAsync.route("createEvent", {
       event.internal = course.internal;
     }
 
-    return event;
+    return { event, isNew: true };
   },
 });
 
@@ -380,7 +330,7 @@ RouterAsync.route("showEvent", {
   async data() {
     const subs = this.subscriptions();
 
-    return subs?.event();
+    return { event: subs?.event() };
   },
 });
 
@@ -392,34 +342,18 @@ RouterAsync.route("userprofile", {
   },
   subscriptions() {
     return {
-      groups: Groups.findFilter.subscribe({ own: true }),
       user: Users.details.subscribe(this.params._id as string),
     };
   },
   async data() {
     const sub = this.subscriptions();
-
     const user = await sub?.user();
     if (!user) {
       return undefined; // not loaded?
     }
 
-    // What privileges the user has
-    const privileges = (["admin"] as const).reduce<{ [role: string]: boolean }>((originalPs, p) => {
-      const ps = { ...originalPs };
-      ps[p] = user.privileged(p);
-      return ps;
-    }, {});
-
-    const alterPrivileges = (await Meteor.userAsync())?.privileged("admin");
-    const showPrivileges = alterPrivileges || user.privileges?.length;
-
     return {
       user,
-      alterPrivileges,
-      privileges,
-      inviteGroups: sub?.groups(),
-      showPrivileges,
     };
   },
 });
@@ -468,7 +402,7 @@ RouterAsync.route("tenantCreate", {
 });
 
 RouterAsync.route("tenantDetails", {
-  path: "tenant/:_id/:short?",
+  path: "tenant/:_id",
   template: "tenantDetailsPage",
   async onRun() {
     await import("/imports/ui/pages/tenant-details");
@@ -540,16 +474,9 @@ RouterAsync.route("join", {
   async data() {
     const sub = this.subscriptions();
 
-    if (!sub) {
-      return undefined;
-    }
-
     const joinLink = await sub.joinLink?.();
-    if (!joinLink) {
-      return undefined;
-    }
 
-    return joinLink;
+    return { joinLink };
   },
 });
 
@@ -865,9 +792,8 @@ RouterAsync.route("timetable", {
 
     const span = timestampEnd - timestampStart;
 
-    const days: { [day: string]: { moment: moment.Moment; relStart: number; relEnd: number } } = {};
-    const hours: { [hour: string]: { moment: moment.Moment; relStart: number; relEnd: number } } =
-      {};
+    const days: Record<string, { moment: moment.Moment } & RelStartEnd> = {};
+    const hours: Record<string, { moment: moment.Moment } & RelStartEnd> = {};
     const cursor = moment(start);
     do {
       const month = cursor.month();
@@ -898,21 +824,20 @@ RouterAsync.route("timetable", {
       cursor.add(1, "hour");
     } while (cursor.isBefore(end));
 
-    const perVenue: {
-      [venue: string]: {
+    const perVenue: Record<
+      string,
+      {
         venue: VenueModel;
-        perRoom: {
-          [room: string]: {
+        perRoom: Record<
+          string,
+          {
             room: string;
             venue: VenueModel;
-            rows: (EventEntity & {
-              relStart: number;
-              relEnd: number;
-            })[];
-          };
-        };
-      };
-    } = {};
+            rows: (EventEntity & RelStartEnd)[];
+          }
+        >;
+      }
+    > = {};
     const useVenue = function (venue: any, room: any) {
       const id = venue._id || `#${venue.name}`;
       if (!perVenue[id]) {
@@ -937,20 +862,14 @@ RouterAsync.route("timetable", {
     };
 
     events.forEach((originalEvent: EventModel) => {
-      const event = originalEvent as EventModel & {
-        relStart: number;
-        relEnd: number;
-      };
+      const event = originalEvent as EventModel & RelStartEnd;
       event.relStart = (originalEvent.start.getTime() - timestampStart) / span;
       event.relEnd = (timestampEnd - originalEvent.end.getTime()) / span;
 
       let placed = false;
 
       const room = event.room || null;
-      const roomRows = useVenue(event.venue, room) as unknown as (EventModel & {
-        relStart: number;
-        relEnd: number;
-      })[][];
+      const roomRows = useVenue(event.venue, room) as unknown as (EventModel & RelStartEnd)[][];
       roomRows.forEach((roomRow) => {
         if (placed) {
           return;
@@ -1114,14 +1033,14 @@ RouterAsync.route("resetPasswortEmail", {
     const email = this.params.query.email as string;
 
     if (email) {
-      const user = UsersCollection.findOne({ "emails.address": email });
+      const user = await UsersCollection.findOneAsync({ "emails.address": email });
       if (user) {
         Meteor.call("forgotPassword", { email });
       }
     } else {
       const currentUserId = Meteor.userId();
       if (currentUserId) {
-        const currentUser = UsersCollection.findOne(currentUserId);
+        const currentUser = await UsersCollection.findOneAsync(currentUserId);
         if (currentUser) {
           // if a visitor user want to create an account from his profile.
           Meteor.call("forgotPassword", { email: currentUser?.emailAddress() });

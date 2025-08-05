@@ -1,3 +1,4 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .shariff-wrapper {
@@ -21,6 +22,7 @@ $shariff-bg-color: #77b8e9;
 
 .shariff > .orientation-horizontal {
   @include list-unstyled;
+
   margin-bottom: -($shariff-button-margin-bottom);
   margin-left: -($shariff-button-margin-left);
 }
@@ -36,21 +38,11 @@ $shariff-bg-color: #77b8e9;
   font-size: 1.2em;
   opacity: 0.75;
   padding: $shariff-link-padding;
-
-  &:hover {
-    opacity: 1;
-  }
-}
-
-@function map-bg($bg, $bg-hover) {
-  @return ("bg": $bg, "bg-hover": $bg-hover);
-}
-
-.shariff-button > a {
   background-color: $shariff-bg-color;
 
   &:hover {
-    background-color: darken($shariff-bg-color, 5%);
+    opacity: 1;
+    background-color: color.adjust($shariff-bg-color, $lightness: -5%);
   }
 }
 

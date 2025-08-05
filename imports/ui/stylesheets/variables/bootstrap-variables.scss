@@ -1,3 +1,8 @@
+@use "sass:map";
+@use "sass:math";
+@use "sass:color";
+@import "base-colors";
+
 // Nearly all variables in Bootstrap are written with the `!default` flag.
 // This allows use to override the default values of those variables before
 // we import Bootstrap's source Sass files.
@@ -13,30 +18,27 @@ $enable-gradients: true;
 $secondary: #f0f0f0;
 
 // Typography
-//
+
 // Font, line-height, and color for body text, headings, and mo
 
 // $font-size-root affects the value of `rem`, which is used for as well font sizes, paddings, and
 // margins. For compatibility reasons we use "14px", many views were made at a time when we used
 // bootstrap version 3, "14px" corresponds to the value at that time.
 $font-size-root: 14px;
-$font-size-large: ceil($font-size-root * 1.25) !default;
-
+$font-size-large: math.ceil($font-size-root * 1.25) !default;
 $font-family-sans-serif: "Source Sans Pro", sans-serif !default;
 
 // Components
-//
+
 // Define common padding and border radius sizes and more. Values based on 14px text and 1.428 line-height (~20px to start).
 
 $padding-large-vertical: 10px !default;
 $padding-large-horizontal: 16px !default;
-
 $border-radius-large: 6px !default;
-
 $border-radius-base: 4px !default;
 
 // Buttons
-//
+
 // For each of Bootstrap's buttons, define text, background and border color.
 
 // Allows for customizing button radius independently from global border radius
@@ -44,7 +46,7 @@ $btn-border-radius-base: $border-radius-base !default;
 $btn-border-radius-large: $border-radius-large !default;
 
 // Links
-//
+
 // Style anchor elements.
 
 $link-decoration: none;
@@ -52,16 +54,14 @@ $link-decoration: none;
 // Forms
 
 $form-label-color: shade-color($blue, 20%);
-
 $form-group-margin-bottom: 15px !default;
 
 // Dropdowns
-//
+
 // Dropdown menu container and contents.
 
-//** Background for the dropdown menu.
-$dropdown-bg: lighten($blue-lighter, 8.7%) !default;
-
+// ** Background for the dropdown menu.
+$dropdown-bg: color.adjust($blue-lighter, $lightness: 8.7%) !default;
 $hr-color: $blue-lighter;
 
 // Modals
@@ -100,29 +100,24 @@ $tooltip-font-size: $font-size-base;
 $custom-grid-breakpoints: (
   "sm": 480px,
 );
-$grid-breakpoints: map-merge($grid-breakpoints, $custom-grid-breakpoints);
+$grid-breakpoints: map.merge($grid-breakpoints, $custom-grid-breakpoints);
 
 // Grid containers
-//
+
 // Define the maximum width of `.container` for different screen sizes.
-
-$container-max-widths: map-remove($container-max-widths, xxl);
-
+$container-max-widths: map.remove($container-max-widths, xxl);
 $canceled-color: #ff5252;
 $archived-color: #f5ecc6;
-
 $custom-colors: (
   "canceled": $canceled-color,
   "archived": $archived-color,
 );
-
-$theme-colors: map-merge($theme-colors, $custom-colors);
+$theme-colors: map.merge($theme-colors, $custom-colors);
 
 // https://github.com/twbs/bootstrap/issues/39155#issuecomment-1711508093
 $canceled-text-emphasis: shade-color($canceled-color, 60%) !default;
 $canceled-bg-subtle: tint-color($canceled-color, 80%) !default;
 $canceled-border-subtle: tint-color($canceled-color, 60%) !default;
-
 $archived-text-emphasis: shade-color($archived-color, 60%) !default;
 $archived-bg-subtle: tint-color($archived-color, 80%) !default;
 $archived-border-subtle: tint-color($archived-color, 60%) !default;
@@ -141,27 +136,25 @@ $custom-theme-colors-border-subtle: (
   "canceled": $canceled-border-subtle,
   "archived": $archived-border-subtle,
 );
-$theme-colors-text: map-merge($theme-colors-text, $custom-theme-colors-text);
-$theme-colors-bg-subtle: map-merge($theme-colors-bg-subtle, $custom-theme-colors-bg-subtle);
-$theme-colors-border-subtle: map-merge(
+$theme-colors-text: map.merge($theme-colors-text, $custom-theme-colors-text);
+$theme-colors-bg-subtle: map.merge($theme-colors-bg-subtle, $custom-theme-colors-bg-subtle);
+$theme-colors-border-subtle: map.merge(
   $theme-colors-border-subtle,
   $custom-theme-colors-border-subtle
 );
 
 @import "{}/node_modules/bootstrap/scss/mixins"; // Required
-
 @import "{}/node_modules/bootstrap/scss/utilities"; // Optional
 
 // Add grid-breakpoints to max-width utilites: mw-sm, mw-md, ...
 
-$utilities: map-merge(
+$utilities: map.merge(
   $utilities,
   (
-    "max-width":
-      map-merge(
-        map-get($utilities, "max-width"),
+    "max-width": map.merge(
+        map.get($utilities, "max-width"),
         (
-          values: map-merge(map-get(map-get($utilities, "max-width"), "values"), $grid-breakpoints),
+          values: map.merge(map.get(map.get($utilities, "max-width"), "values"), $grid-breakpoints),
         )
       ),
   )

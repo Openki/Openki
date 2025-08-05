@@ -5,7 +5,7 @@
         <i class="fa-solid fa-angle-down"></i>
       </span>
       {{#unless noRsvp}}
-        <div class="frame-list-free-seats" data-bs-toggle="tooltip" data-bs-title="{{#if isUnlimited}}
+        <div class="frame-list-free-seats" data-bs-title="{{#if isUnlimited}}
 									{{i18n 'frame.list.reservation.status.unlimited.tooltip' '{RESERVEDSEATS} of unlimited seats reserved' RESERVEDSEATS=getAttendees}}
 								{{else}}
 									{{i18n 'frame.list.reservation.status.tooltip' '{RESERVEDSEATS} of {TOTALSEATS} seats reserved' RESERVEDSEATS=getAttendees TOTALSEATS=getTotalAvailableSeats}}

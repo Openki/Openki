@@ -4,9 +4,9 @@ import { Router } from "meteor/iron:router";
 
 import { CourseModel } from "/imports/api/courses/courses";
 
-export type Props = {
+export interface Props {
   course: CourseModel;
-};
+}
 
 export function Add({ course }: Props) {
   const { t } = useTranslation();

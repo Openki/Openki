@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Modal from "bootstrap/js/dist/modal";
-import { useUserId, useUser } from "/imports/utils/react-meteor-data";
-import { Template } from "meteor/templating";
+import { useUser } from "/imports/utils/react-meteor-data";
 
 import { EventModel, EventParticipantEntity } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
@@ -10,7 +9,8 @@ import * as EventsMethods from "/imports/api/events/methods";
 import { ParticipantContact } from "/imports/ui/components/participant/contact";
 import { ProfileLink } from "/imports/ui/components/profile-link";
 import { SendMessage, Data as SendMessageData } from "/imports/ui/components/send-message";
-import { Contribution } from "/imports/ui/components/contribution";
+import { Contribution } from "../../Contribution";
+import { RemoveDropdown } from "./remove-dropdown";
 
 import "./styles.scss";
 
@@ -21,40 +21,52 @@ function EventParticipant({
   participant: EventParticipantEntity;
   event: EventModel;
 }) {
-  const userId = useUserId();
   const { t } = useTranslation();
+  const user = useUser();
 
   function ownUserParticipantClass() {
-    if (participant.user === userId) {
+    if (participant.user === user?._id) {
       return "is-own-user";
     }
     return "";
   }
 
   return (
-    <div className={`event-participant ${ownUserParticipantClass()}`}>
-      <ProfileLink userId={participant.user} />
-      &nbsp;
-      <Contribution userId={participant.user} />
-      &nbsp;
+    <div
+      className={`event-participant ${ownUserParticipantClass()} d-flex flex-wrap align-items-center`}
+    >
+      <div className="me-1">
+        <ProfileLink userId={participant.user} />
+        <Contribution userId={participant.user} />
+      </div>
       <ParticipantContact participant={participant.user} event={event} />
-      {participant.companions ? (
-        <strong
-          className="float-end p-1 bg-primary text-light"
-          data-bs-toggle="tooltip"
-          data-bs-title={t("eventParticipant.iBringCompanions", "Brings companion.")}
-        >
-          +{participant.companions}{" "}
-          <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
-        </strong>
-      ) : null}
+      <div className="ms-auto d-flex flex-wrap align-items-center">
+        {!!participant.companions && (
+          <strong
+            className="p-1 bg-primary text-light"
+            data-bs-title={t("eventParticipant.iBringCompanions", "Brings companion.")}
+          >
+            +{participant.companions}{" "}
+            <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
+          </strong>
+        )}
+
+        {!!user && user._id !== participant.user && event.editableBy(user) && (
+          <RemoveDropdown
+            userId={participant.user}
+            onClick={() => {
+              EventsMethods.removeParticipant(event._id, participant.user);
+            }}
+          />
+        )}
+      </div>
     </div>
   );
 }
 
-export type Props = {
+export interface Props {
   event: EventModel;
-};
+}
 
 export function EventParticipants({ event }: Props) {
   const { t } = useTranslation();
@@ -84,7 +96,6 @@ export function EventParticipants({ event }: Props) {
     if (!((event.participants?.length || 0) > 1)) {
       return false;
     }
-
 
     return !!(user && event.editableBy(user));
   }
@@ -117,8 +128,8 @@ export function EventParticipants({ event }: Props) {
 
   function limited() {
     return (
-      participantsDisplayLimit &&
-      event.participants &&
+      !!participantsDisplayLimit &&
+      !!event.participants &&
       event.participants.length > participantsDisplayLimit
     );
   }
@@ -126,7 +137,7 @@ export function EventParticipants({ event }: Props) {
   return (
     <>
       <div className="page-component-header">
-        {showModal ? (
+        {showModal && (
           <div className="modal" tabIndex={-1} role="dialog" ref={modalRef}>
             <div className="modal-dialog modal-sm" role="document">
               <div className="modal-content">
@@ -151,7 +162,7 @@ export function EventParticipants({ event }: Props) {
               </div>
             </div>
           </div>
-        ) : null}
+        )}
         <h4>
           <span className="fa-solid fa-users fa-fw" aria-hidden="true"></span>&nbsp;
           {t(
@@ -159,16 +170,16 @@ export function EventParticipants({ event }: Props) {
             "{NUM, plural, =0{No participants yet} one{1 Participant} other{# Participants} }",
             { NUM: event.numberOfParticipants() },
           )}
-          {canNotifyAll() ? (
+          {canNotifyAll() && (
             <i
               className="fa-solid fa-envelope event-participants-contact float-end"
               onClick={() => {
                 setShowModal(!showModal);
               }}
             ></i>
-          ) : null}
+          )}
           <br />
-          {event.maxParticipants ? (
+          {!!event.maxParticipants && (
             <span className="free-places">
               {t(
                 "event.details.participants.free.places",
@@ -176,17 +187,17 @@ export function EventParticipants({ event }: Props) {
                 { NUM: howManyFreePlaces() },
               )}
             </span>
-          ) : null}
+          )}
         </h4>
       </div>
-      {event.participants ? (
+      {!!event.participants && (
         <div className="event-participants">
           {sortedParticipants()?.map((participant) => {
             return (
               <EventParticipant key={participant.user} participant={participant} event={event} />
             );
           })}
-          {limited() ? (
+          {limited() && (
             <button
               className="btn btn-add page-component-btn"
               type="button"
@@ -196,15 +207,9 @@ export function EventParticipants({ event }: Props) {
             >
               {t("_button.more")}
             </button>
-          ) : null}
+          )}
         </div>
-      ) : null}
+      )}
     </>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("EventParticipants", () => EventParticipants);

@@ -1,8 +1,8 @@
-/* stylelint-disable selector-max-id */
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .venue-edit-additional-info {
-  background-color: lighten($venue-bg, 15%);
+  background-color: color.adjust($venue-bg, $lightness: 15%);
   border: 1px solid $venue-bg;
   margin-top: 10px;
   padding: 15px;

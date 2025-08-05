@@ -10,11 +10,11 @@ import { isEmail } from "/imports/utils/email-tools";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   email: string;
   onForgotPwd: () => void;
   onClose: () => void;
-};
+}
 
 export function ForgotPwdFrame(props: Props) {
   const { onForgotPwd, onClose } = props;
@@ -81,11 +81,11 @@ export function ForgotPwdFrame(props: Props) {
               }}
             />
           </div>
-          {errors.email ? (
+          {!!errors.email && (
             <div id="forgotPwdMailHelp" className="form-text">
               {errors.email}
             </div>
-          ) : null}
+          )}
         </div>
         <div className="mb-3">
           <button

@@ -22,7 +22,6 @@ export async function onStartUp() {
     ),
   );
 
-  /* eslint-disable-next-line no-console */
   console.log(`users.tenantsDenormalizer.onStartUp: ${updated} affected users`);
 }
 

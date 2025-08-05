@@ -152,7 +152,6 @@ export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionMode
     return this.findOne(regionId);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   Filtering() {
     return new Filtering({ tenant: Predicates.id });
   }

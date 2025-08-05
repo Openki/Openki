@@ -7,13 +7,13 @@ import { EventCompact } from "/imports/ui/components/events/compact";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   dataEvents: EventModel[];
   withDate?: boolean | undefined;
   withImage?: boolean | undefined;
   withVenue?: boolean | undefined;
   openInNewTab?: boolean | undefined;
-};
+}
 
 export function EventList({ dataEvents, withDate, withImage, withVenue, openInNewTab }: Props) {
   return (
@@ -36,7 +36,7 @@ export function EventList({ dataEvents, withDate, withImage, withVenue, openInNe
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("EventList", () => EventList);

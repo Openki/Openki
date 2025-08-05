@@ -1,14 +1,21 @@
 # EditorConfig is awesome: https://EditorConfig.org
+# Some options are also used by prettier.io: https://prettier.io/docs/configuration#editorconfig
 
 # top-most EditorConfig file
 root = true
 
+# every file
 [*]
+
 # Set default charset
 charset = utf-8
+
+# 2 space indentation
 indent_style = space
 indent_size = 2
+
 max_line_length = 100
+
 # Unix-style newlines with a newline ending every file
 end_of_line = lf
 insert_final_newline = true

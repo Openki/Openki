@@ -2,11 +2,12 @@
 
 .frame-week-date {
   @include td-padding-all(5px, 7px, 5px, 9px);
+
   background: $blue-lighter;
   border-color: $blue;
   border-style: solid;
   border-width: 0 0 0 10px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 1px rgb(0 0 0 / 30%);
   font-size: large;
   text-align: center;
   width: 250px;
@@ -14,7 +15,8 @@
 
 .frame-week-date-events {
   @include clearfix;
-  margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 8) * -1);
+
+  margin: (($grid-gutter-width * 0.25) * -1) (($grid-gutter-width * 0.125) * -1);
   padding: 10px 0;
   width: auto;
 }

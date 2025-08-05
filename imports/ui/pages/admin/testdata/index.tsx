@@ -22,7 +22,6 @@ export function TestdataPage() {
         className="btn btn-lg btn-danger"
         onClick={async () => {
           if (
-            // eslint-disable-next-line no-alert
             !window.confirm(
               t(
                 "testdata.clean.confirm",
@@ -49,7 +48,7 @@ export function TestdataPage() {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("AdminTestdataPage", () => TestdataPage);

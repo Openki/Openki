@@ -4,7 +4,7 @@ import { UserModel } from "/imports/api/users/users";
 import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 
-export type Props = {
+export interface Props {
   course: React.JSX.Element;
   courseDescription: string;
   groups: React.JSX.Element;
@@ -13,7 +13,7 @@ export type Props = {
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   campaign: string;
   lng: string;
-};
+}
 
 export function GroupCourse({
   course,

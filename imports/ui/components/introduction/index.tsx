@@ -17,9 +17,9 @@ import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   hasPricePolicy: boolean;
-};
+}
 
 export function Introduction({ hasPricePolicy }: Props) {
   const { t } = useTranslation();
@@ -46,7 +46,7 @@ export function Introduction({ hasPricePolicy }: Props) {
   }
 
   return (
-    <div className={`container ${isInCalendar() ? "calendar-introduction" : null}`}>
+    <div className={`container ${isInCalendar() ? "calendar-introduction" : ""}`}>
       <div className="introduction">
         <h3>
           <a
@@ -79,7 +79,7 @@ export function Introduction({ hasPricePolicy }: Props) {
             <span className="remove-btn fa-solid fa-xmark" aria-hidden="true"></span>
           </a>
         </h3>
-        {openedIntro ? (
+        {!!openedIntro && (
           <div className="introduction-content">
             <div className="introduction-steps row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6">
               <div className="col">
@@ -131,16 +131,16 @@ export function Introduction({ hasPricePolicy }: Props) {
                 <a href={getLocalizedValue(PublicSettings.faqLink)}>{t("main.faq_link", "FAQ")}</a>
               </div>
             </div>
-            {hasPricePolicy ? <PricePolicy /> : null}
+            {hasPricePolicy && <PricePolicy />}
           </div>
-        ) : null}
+        )}
       </div>
     </div>
   );
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("Introduction", () => Introduction);

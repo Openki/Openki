@@ -16,7 +16,7 @@ export interface LanguageEntity {
   translatedPercent?: number;
 }
 
-export const LanguagesRaw: { [abbreviation: string]: Omit<LanguageEntity, "_id"> } = {
+export const LanguagesRaw: Record<string, Omit<LanguageEntity, "_id">> = {
   ar: {
     lg: "ar",
     name: "العربية",

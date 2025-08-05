@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop */
 import { Mongo } from "meteor/mongo";
 import { _ } from "meteor/underscore";
 
@@ -14,7 +13,7 @@ import { Log } from "../../log/log";
 /**
  * Make a number that looks like a human chose it, favouring 2 and 5
  */
-function humandistrib(prng: { (): number }): number {
+function humandistrib(prng: () => number): number {
   const factors = [0, 0, 1, 2, 2, 3, 5, 5];
   return (
     factors[Math.floor(Math.random() * factors.length)] * (prng() > 0.7 ? humandistrib(prng) : 1) +
@@ -59,7 +58,6 @@ export async function generate() {
 
   for (const course of await Courses.find().fetchAsync()) {
     if ((await Events.countDocuments({ courseId: course._id })) > 0) {
-      // eslint-disable-next-line no-continue
       continue;
     }
 
@@ -87,7 +85,7 @@ export async function generate() {
         editor: venue.editor,
       };
 
-      if (typeof venue.restrictedUse !== "undefined") {
+      if (venue.restrictedUse !== undefined) {
         event.venue.restrictedUse = venue.restrictedUse;
       }
 

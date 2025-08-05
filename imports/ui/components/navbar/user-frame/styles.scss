@@ -4,13 +4,14 @@
 .user-frame {
   @include media-breakpoint-down(md) {
     @include clearfix;
+
     background-color: $dropdown-bg;
     padding-top: 15px;
   }
 }
 
 .ownuser-frame {
-  padding: 0 ($grid-gutter-width / 2);
+  padding: 0 ($grid-gutter-width * 0.5);
 }
 
 .ownuser-frame-welcome {

@@ -11,7 +11,11 @@ import { Post } from "./post";
 
 import "./styles.scss";
 
-export type Props = { select: string; courseId: string; eventId?: string | undefined };
+export interface Props {
+  select: string | undefined;
+  courseId: string;
+  eventId?: string | undefined;
+}
 
 export function Discussion({ select, courseId, eventId }: Props) {
   const { t } = useTranslation();
@@ -149,7 +153,7 @@ export function Discussion({ select, courseId, eventId }: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("Discussion", () => Discussion);

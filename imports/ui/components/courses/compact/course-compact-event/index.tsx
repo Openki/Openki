@@ -13,23 +13,23 @@ export function CourseCompactEvent(props: { event: CourseNextEventEntity & OEven
 
   return (
     <div className="course-compact-next-event col">
-      {event.venue?.name ? (
+      {!!event.venue?.name && (
         <div className="course-compact-next-event-component">
           <i className="fa-solid fa-house fa-fw" aria-hidden="true"></i>&nbsp;{event.venue.name}
         </div>
-      ) : null}
+      )}
       <div className="course-compact-next-event-component">
         <i className="fa-regular fa-clock fa-fw" aria-hidden="true"></i>&nbsp;
         <span title={`${dateShort(event?.startLocal)} ${timeFormat(event?.startLocal)}`}>
           {dateToRelativeString(event?.startLocal)}
         </span>
       </div>
-      {!event.noRsvp ? (
+      {!event.noRsvp && (
         <div className="course-compact-next-event-component">
           <i className="fa-solid fa-user fa-fw" aria-hidden="true"></i>&nbsp;
           {event?.numberOfParticipants()}
         </div>
-      ) : null}
+      )}
     </div>
   );
 }

@@ -1,8 +1,5 @@
 <template name="frameEventsPage">
-  {{#if control}}
-    {{> calendarNavDay calendarNavAttr}}
-  {{/if}}
-  <div class="frame-events">
-    {{> eventList dataEvents=events withDate=true withImage=true openInNewTab=true}}
+  <div>
+    {{> React (component FrameEventsPage)}}
   </div>
 </template>

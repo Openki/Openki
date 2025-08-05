@@ -8,10 +8,10 @@ import * as Tooltips from "/imports/utils/Tooltips";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   member: CourseMemberEntity;
   onClick: () => void;
-};
+}
 
 export function RemoveFromTeamDropdown({ member, onClick }: Props) {
   const { t } = useTranslation();
@@ -23,11 +23,7 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
   }
 
   return (
-    <span
-      className="dropdown"
-      data-bs-toggle="tooltip"
-      data-bs-title={t("course.roles.removeTeam", "Remove from team")}
-    >
+    <span className="dropdown" data-bs-title={t("course.roles.removeTeam", "Remove from team")}>
       <button
         type="button"
         className="btn btn-sm btn-close btn-close-white"
@@ -39,7 +35,7 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
           }, 0);
         }}
       ></button>
-      <ul className="dropdown-menu dialog-dropdown right">
+      <ul className="dropdown-menu dropdown-menu-end dialog-dropdown">
         <li className="dropdown-header">
           {isNotPriviledgedSelf()
             ? t("course.details.removeTeam.self.header", "Remove yourself from the team")

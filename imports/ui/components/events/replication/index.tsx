@@ -23,12 +23,13 @@ const getEventFrequency = (
   endDate: moment.Moment,
   frequency: string,
 ) => {
-  const frequencies: {
-    [name: string]: {
+  const frequencies: Record<
+    string,
+    {
       unit: moment.unitOfTime.DurationConstructor;
       interval: moment.DurationInputArg1;
-    };
-  } = {
+    }
+  > = {
     once: { unit: "days", interval: 1 },
     daily: { unit: "days", interval: 1 },
     weekly: { unit: "weeks", interval: 1 },
@@ -62,7 +63,11 @@ const getEventFrequency = (
   return days;
 };
 
-export type Props = { event: EventModel; afterSave: () => void; onCancel: () => void };
+export interface Props {
+  event: EventModel;
+  afterSave: () => void;
+  onCancel: () => void;
+}
 
 export function EventReplication({ event, afterSave, onCancel }: Props) {
   const { t } = useTranslation();
@@ -302,7 +307,11 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
               </label>
               <div className="replica-event-captions row">
                 {replicaDates().map((date) => (
-                  <div className="event-caption col-3" title={dateTimeLong(date)}>
+                  <div
+                    key={date.valueOf()}
+                    className="event-caption col-3"
+                    title={dateTimeLong(date)}
+                  >
                     <div className="event-caption-header-wrap">
                       <div className="event-caption-header">
                         {weekdayFormat(date)}
@@ -386,7 +395,6 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
                 }
 
                 try {
-                  // eslint-disable-next-line no-await-in-loop
                   await EventsMethods.save(
                     "",
                     replicaEvent,
@@ -436,9 +444,3 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
     </div>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("EventReplication", () => EventReplication);
