@@ -775,6 +775,7 @@
   "profile.users_profile_page": "Profilseite von {NAME}",
   "profile.venues": "Meine Veranstaltungsorte:",
   "profile.verifyEmail.mailOnItsWay": "Bestätigungs E-Mail ist unterwegs.",
+  "profile.verifyEmail.success": "Deine E-Mail wurde bestätigt.",
   "profile.verifymail": "Bestätigungs E-Mail nochmals senden",
   "profile.windowtitle": "Profil von {USER}",
   "proposedCoursesDropdown.joinExistingCourseQuestion": "Möchtest du an einem bestehende Session teilnehmen?",
@@ -1019,6 +1020,5 @@
   "warning.emailNotValid": "Deine E-Mail Adresse scheint nicht korrekt.",
   "warning.noEmailProvided": "Bitte E-Mail Adresse eingeben.",
   "warning.noUserName": "Bitte einen Benutzernamen eingeben.",
-  "warning.userExists": "Dieser Benutzername existiert bereits. Bitte wähle einen anderen.",
-  "profile.verifyEmail.success": "Deine E-Mail wurde bestätigt."
+  "warning.userExists": "Dieser Benutzername existiert bereits. Bitte wähle einen anderen."
 }
