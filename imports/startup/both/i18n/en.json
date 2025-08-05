@@ -818,6 +818,7 @@
   "profile.calendar.copyUrl": "Copy url to clipboard",
   "profile.calendar.google": "Google Kalender (Web)",
   "profile.calendar.iCal": "Into app on my local device",
+  "profile.calendar.iCal.message": "Your calendar app should now appear. If not, try an other option.",
   "profile.calendar.outlook": "Outlook.com (Web)",
   "profile.calendar.urlCopied": "Url copied to the clipboard.",
   "profile.changePass": "Change my password",

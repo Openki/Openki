@@ -1,15 +1,15 @@
 import { Router } from "meteor/iron:router";
 import moment from "moment";
+import ical from "ical-generator";
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import { EventModel, Events } from "/imports/api/events/events";
 
 import * as StringTools from "/imports/utils/string-tools";
-
-import ical from "ical-generator";
 import { convertToIcal } from "../../utils/convertToIcal";
 
 async function sendIcal(events: EventModel[], response: any) {
-  const calendar = ical({ name: "Openki Calendar" });
+  const calendar = ical({ name: `${PublicSettings.siteName} Calendar` });
   let name = "";
 
   events.forEach((dbevent) => {
@@ -19,9 +19,9 @@ async function sendIcal(events: EventModel[], response: any) {
     if (!name) {
       const sName = StringTools.slug(dbevent.title);
       const sDate = moment(dbevent.start).format("YYYY-MM-DD");
-      name = `openki-${sName}-${sDate}.ics`;
+      name = `${StringTools.slug(PublicSettings.siteName)}-${sName}-${sDate}.ics`;
     } else {
-      name = "openki-calendar.ics";
+      name = `${StringTools.slug(PublicSettings.siteName)}-calendar.ics`;
     }
   });
 
