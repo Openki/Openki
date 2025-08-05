@@ -761,6 +761,7 @@
   "profile.users_profile_page": "{NAME}의 프로필",
   "profile.venues": "내 장소:",
   "profile.verifyEmail.mailOnItsWay": "인증 메일이 곧 전송됩니다.",
+  "profile.verifyEmail.success": "이메일 인증을 완료했습니다.",
   "profile.verifymail": "인증 메일 재전송",
   "profile.windowtitle": "{USER}의 프로필",
   "proposedCoursesDropdown.joinExistingCourseQuestion": "사람들이 만든 코스에 참여하고 싶은가요?",
@@ -1005,6 +1006,5 @@
   "warning.emailNotValid": "사용 가능한 이메일 주소가 아닙니다.",
   "warning.noEmailProvided": "이메일 주소를 입력해주세요.",
   "warning.noUserName": "사용할 사용자 이름을 입력해주세요.",
-  "warning.userExists": "이미 사용 중인 사용자 이름입니다. 다시 입력해주세요.",
-  "profile.verifyEmail.success": "이메일 인증을 완료했습니다."
+  "warning.userExists": "이미 사용 중인 사용자 이름입니다. 다시 입력해주세요."
 }
