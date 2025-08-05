@@ -692,6 +692,7 @@
   "profile.users_profile_page": "Profil de {NAME}",
   "profile.venues": "Mes lieux :",
   "profile.verifyEmail.mailOnItsWay": "L'email de vérification a été envoyé.",
+  "profile.verifyEmail.success": "Votre E-mail a été vérifié.",
   "profile.verifymail": "Renvoyer l'email de vérification",
   "profile.windowtitle": "Profile de {USER}",
   "proposedCoursesDropdown.joinExistingCourseQuestion": "Peut-être souhaitez-vous vous inscrire à un cours existant ?",
@@ -936,6 +937,5 @@
   "warning.emailNotValid": "Votre e-mail semble contenir une erreur.",
   "warning.noEmailProvided": "Entrez votre adresse e-mail.",
   "warning.noUserName": "Entrez un nom d'utilisateur.",
-  "warning.userExists": "Ce nom d'utilisateur existe déjà. Merci d'en choisir un autre.",
-  "profile.verifyEmail.success": "Votre E-mail a été vérifié."
+  "warning.userExists": "Ce nom d'utilisateur existe déjà. Merci d'en choisir un autre."
 }

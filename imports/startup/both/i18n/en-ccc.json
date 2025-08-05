@@ -790,6 +790,7 @@
   "profile.users_profile_page": "{NAME}'s Profile",
   "profile.venues": "My venues:",
   "profile.verifyEmail.mailOnItsWay": "Verification e-mail on its way.",
+  "profile.verifyEmail.success": "Your e-mail has been verified.",
   "profile.verifymail": "Resend verification e-mail",
   "profile.windowtitle": "Profile of {USER}",
   "proposedCoursesDropdown.joinExistingCourseQuestion": "Maybe you would like to join an existing session?",
@@ -1061,6 +1062,5 @@
   "warning.emailNotValid": "Your e-mail address seems to have an error.",
   "warning.noEmailProvided": "Please enter an e-mail address.",
   "warning.noUserName": "Please enter a name for your user.",
-  "warning.userExists": "This username is already in use. Please choose another one.",
-  "profile.verifyEmail.success": "Your e-mail has been verified."
+  "warning.userExists": "This username is already in use. Please choose another one."
 }
