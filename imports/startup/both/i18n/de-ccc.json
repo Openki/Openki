@@ -452,6 +452,8 @@
   "frame.login.usernameOrEmail": "Benutzername oder E-Mail",
   "frame.visitor.email": "E-Mail",
   "frameCalendar.nothingOnThisDay": "Entspann dich, heute ist nichts los.",
+  "fullscreen.exit": "Vollbild verlassen",
+  "fullscreen.show": "Vollbild",
   "group.claim.placeholder": "Das zentrale Thema des Tags",
   "group.delete.confirm.button": "Lösche {GROUP}",
   "group.delete.confirm.button.busy": "Lösche Tag…",
@@ -480,6 +482,7 @@
   "group.settings.title": "Einstellungen",
   "group.settings.title.Members": "Mitglieder",
   "group.short.placeholder": "Kürzel",
+  "group.windowtitle.create": "Gruppe erstellen",
   "groupDetails.changesSaved": "Die Änderungen an des Tags \"{GROUP}\" wurden gespeichert.",
   "groupDetails.groupCreated": "Der \"{GROUP}\" Tag wurde erstellt.",
   "groupDetails.saveError": "Der Tag \"{GROUP}\" konnte nicht gespeichert werden",
@@ -772,6 +775,7 @@
   "profile.users_profile_page": "Profilseite von {NAME}",
   "profile.venues": "Meine Veranstaltungsorte:",
   "profile.verifyEmail.mailOnItsWay": "Bestätigungs E-Mail ist unterwegs.",
+  "profile.verifyEmail.success": "Deine E-Mail wurde bestätigt.",
   "profile.verifymail": "Bestätigungs E-Mail nochmals senden",
   "profile.windowtitle": "Profil von {USER}",
   "proposedCoursesDropdown.joinExistingCourseQuestion": "Möchtest du an einem bestehende Session teilnehmen?",
@@ -1016,6 +1020,5 @@
   "warning.emailNotValid": "Deine E-Mail Adresse scheint nicht korrekt.",
   "warning.noEmailProvided": "Bitte E-Mail Adresse eingeben.",
   "warning.noUserName": "Bitte einen Benutzernamen eingeben.",
-  "warning.userExists": "Dieser Benutzername existiert bereits. Bitte wähle einen anderen.",
-  "profile.verifyEmail.success": "Deine E-Mail wurde bestätigt."
+  "warning.userExists": "Dieser Benutzername existiert bereits. Bitte wähle einen anderen."
 }
