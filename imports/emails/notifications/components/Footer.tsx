@@ -4,14 +4,14 @@ import { Router } from "meteor/iron:router";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { UnsubscribeLink, Props as UnsubscribeLinkProps } from "./UnsubscribeLink";
 
-export type Props = {
+export interface Props {
   receiveNote?: string | undefined;
   children?: any | undefined;
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   spamPrevention?: boolean | undefined;
   campaign: string;
   lng: string;
-};
+}
 
 export function Footer({
   receiveNote,
@@ -27,16 +27,16 @@ export function Footer({
     <tr>
       <td>
         <table className="footer">
-          {receiveNote ? (
+          {!!receiveNote && (
             <tr>
               <td>{receiveNote}</td>
             </tr>
-          ) : null}
-          {children ? (
+          )}
+          {!!children && (
             <tr>
               <td>{children}</td>
             </tr>
-          ) : null}
+          )}
           <tr>
             <td>
               {<UnsubscribeLink {...unsubscribe} lng={lng} />}
@@ -46,7 +46,7 @@ export function Footer({
               </a>
             </td>
           </tr>
-          {spamPrevention ? (
+          {!!spamPrevention && (
             <tr>
               <td style={{ paddingTop: "16px" }}>
                 {t("email.base.spamPrevention", {
@@ -54,7 +54,7 @@ export function Footer({
                 })}
               </td>
             </tr>
-          ) : null}
+          )}
         </table>
       </td>
     </tr>

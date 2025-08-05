@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .page-component {
   @include clearfix;
 }
@@ -43,6 +45,7 @@
 
 .page-component-btn {
   @include btn-lg;
+
   margin-top: $page-component-seperator-height;
   padding: 10px 12px;
   text-align: start;
@@ -70,8 +73,9 @@
 
 .details-content {
   @include clearfix;
+
   height: 100%;
-  padding: ($grid-gutter-width / 2);
+  padding: ($grid-gutter-width * 0.5);
 }
 
 .details-content > h3,
@@ -103,15 +107,20 @@
 
 .details-form {
   @include clearfix;
-  background-color: lighten($success, 10%);
+
+  background-color: color.adjust($success, $lightness: 10%);
   border-color: $success;
   border-style: solid;
   border-width: 1px;
-  padding: ($grid-gutter-width / 2);
+  padding: ($grid-gutter-width * 0.5);
 }
 
 .details-form > h3 {
   margin-top: 0;
+}
+
+.details-addition > *:last-child {
+  margin-bottom: 0;
 }
 
 .details-form > form > *:last-child {
@@ -120,7 +129,7 @@
 
 .details-addition {
   background-color: $gray-200;
-  border-color: darken($gray-200, 3%);
+  border-color: color.adjust($gray-200, $lightness: -3%);
   border-style: solid;
   border-width: 1px;
   padding: $form-group-margin-bottom;
@@ -129,8 +138,4 @@
 .details-addition > h3,
 .details-addition > h4 {
   margin-top: 0;
-}
-
-.details-addition > *:last-child {
-  margin-bottom: 0;
 }

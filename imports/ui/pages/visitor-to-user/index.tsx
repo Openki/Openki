@@ -11,12 +11,12 @@ import { useAccount } from "/imports/api/users/publications";
 
 import { useValidation } from "/imports/ui/lib/useValidation";
 
-import { TokenExpired } from "../../components/token-expired";
+import { TokenExpired } from "../../components/TokenExpired";
 
-export type Props = {
+export interface Props {
   email: string;
   token: string;
-};
+}
 
 export function VisitorToUserPage({ token, email }: Props) {
   const { t } = useTranslation();
@@ -134,7 +134,7 @@ export function VisitorToUserPage({ token, email }: Props) {
                 setPassword(event.target.value);
               }}
             />
-            {errors.password ? <div className="invalid-feedback">{errors.password}</div> : null}
+            {!!errors.password && <div className="invalid-feedback">{errors.password}</div>}
           </div>
         </div>
         <div className="form-actions">
@@ -152,7 +152,7 @@ export function VisitorToUserPage({ token, email }: Props) {
             className="btn btn-secondary"
             type="button"
             onClick={() => {
-              Router.go("/");
+              Router.go("home");
             }}
           >
             {t("_button.cancel")}
@@ -164,7 +164,6 @@ export function VisitorToUserPage({ token, email }: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
 import "./template.html";
 
 Template.registerHelper("VisitorToUserPage", () => VisitorToUserPage);

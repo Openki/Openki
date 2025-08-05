@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 import { EventModel } from "/imports/api/events/events";
-import { useDetails } from "/imports/api/events/publications";
 import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 
 import { GroupTag } from "/imports/ui/components/groups/tag";
@@ -12,19 +11,16 @@ import { Remove } from "./Remove";
 import { RemoveOrganizer } from "./RemoveOrganizer";
 import { MakeOrganizer } from "./MakeOrganizer";
 
-export type Props = { event: EventModel };
+export interface Props {
+  event: EventModel;
+}
 
-export function GroupList({ event: event2 }: Props) {
+export function GroupList({ event }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 
-  // for blaze, can be removed after migration
-  // subscribe in react to keep reactivity
-  const [isLoading, event] = useDetails(event2._id);
+  const [isRegionLoading, region] = useRegionDetails(event.region);
 
-  const [isRegionLoading, region] = useRegionDetails(event2?.region);
-
-  // eslint-disable-next-line @typescript-eslint/no-shadow
   function tools(groupId: string, event: EventModel) {
     // Groups may be adopted from the course, these cannot be removed
     const ownGroup = event.groups.includes(groupId);
@@ -49,7 +45,7 @@ export function GroupList({ event: event2 }: Props) {
     );
   }
 
-  if (isLoading() || !event || isRegionLoading()) return null;
+  if (isRegionLoading()) return null;
 
   const groups = event.allGroups?.filter(
     (groupId) =>
@@ -116,7 +112,7 @@ export function GroupList({ event: event2 }: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("EventGroupList", () => GroupList);

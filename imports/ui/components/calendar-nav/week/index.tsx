@@ -5,7 +5,7 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useTranslation } from "react-i18next";
 
-import { Control } from "./control";
+import { Control } from "./Control";
 import { FilterGroups } from "/imports/ui/components/filter-groups";
 import { Direction } from "../Arrow";
 
@@ -13,7 +13,7 @@ import "../styles.scss";
 import { SearchField } from "../../search-field";
 import { FilterCategories } from "../../filter-categories";
 
-export type Props = {
+export interface Props {
   hideSwitches: boolean;
   search: string;
   onChangeSearch: (newValue: string) => void;
@@ -27,7 +27,7 @@ export type Props = {
   onAddCategory: (category: string) => void;
   onRemoveCategory: (category: string) => void;
   onChangeAttendingEventsOnly: (state: boolean) => void;
-};
+}
 
 export function CalendarNavWeek(props: Props) {
   const { hideSwitches, date, availableGroups } = props;
@@ -99,7 +99,7 @@ export function CalendarNavWeek(props: Props) {
         </div>
         <div className="col-md-6 col-lg-4 p-1">
           <div className="row justify-content-center align-items-center">
-            {!hideSwitches ? <Control {...controlAttr("previous")} /> : null}
+            {!hideSwitches && <Control {...controlAttr("previous")} />}
             <div className="col-auto text-center">
               <div className="lead">
                 {t("calendar.weekNumber", "Week")} {weekNr(date)}
@@ -113,7 +113,7 @@ export function CalendarNavWeek(props: Props) {
                 </span>
               </div>
             </div>
-            {!hideSwitches ? <Control {...controlAttr("next")} /> : null}
+            {!hideSwitches && <Control {...controlAttr("next")} />}
           </div>
         </div>
         <div className="row align-items-center">
@@ -132,7 +132,7 @@ export function CalendarNavWeek(props: Props) {
             </div>
           )}
         </div>
-        {currentUser ? (
+        {!currentUser && (
           <div
             className={`${!availableGroups ? "offset-md-4 offset-lg-2 " : ""}col-md-8 col-lg-4 p-1`}
           >
@@ -152,14 +152,14 @@ export function CalendarNavWeek(props: Props) {
               </label>
             </div>
           </div>
-        ) : null}
+        )}
       </div>
     </div>
   );
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("CalendarNavWeek", () => CalendarNavWeek);

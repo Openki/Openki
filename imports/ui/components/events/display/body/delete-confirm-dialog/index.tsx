@@ -3,14 +3,14 @@ import { useTranslation } from "react-i18next";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   confirmText: string;
   confirmButton: string;
   cancelButton: string;
   onRemove: () => Promise<void>;
   onCancel: () => Promise<void>;
   busyButton: string;
-};
+}
 
 export function EventDeleteConfirmDialog(props: Props) {
   const { t } = useTranslation();
@@ -60,9 +60,3 @@ export function EventDeleteConfirmDialog(props: Props) {
     </div>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("EventDeleteConfirmDialog", () => EventDeleteConfirmDialog);

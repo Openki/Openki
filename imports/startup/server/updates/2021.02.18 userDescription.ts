@@ -7,7 +7,6 @@ export async function update() {
     const user = { ...orginalUser };
     user.description = "";
 
-    // eslint-disable-next-line no-await-in-loop
     updated += await Users.updateAsync(user._id, user);
   }
 

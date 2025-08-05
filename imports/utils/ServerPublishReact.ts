@@ -5,12 +5,10 @@ import { useSubscribe, useTracker } from "meteor/react-meteor-data";
 import { publish, QueryBuilder } from "./ServerPublishUtils";
 import { useUserId } from "./react-meteor-data";
 
-export interface Publication<A extends any[], T> {
-  /**
-   * Subscribe to the record set.
-   */
-  (...args: A): [isLoading: () => boolean, data: T];
-}
+/**
+ * Subscribe to the record set.
+ */
+export type Publication<A extends any[], T> = (...args: A) => [isLoading: () => boolean, data: T];
 
 export function createPublicationMany<A extends any[], T>(
   name: string,

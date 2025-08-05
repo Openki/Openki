@@ -1,25 +1,5 @@
 <template name="joinPage">
-  <div class="container">
-    <div class="p-2 p-md-5 bg-light rounded-3">
-      <div class="container-fluid py-2 py-md-5">
-        <h1 class="display-5">
-          {{i18n 'joinPage.welcome' "Welcome to {SITENAME}!" SITENAME=siteName}}
-        </h1>
-        <p class="fs-4">
-          {{i18n 'joinPage.text' "Become part of the organization {TENANT} and propose, discuss, develop, organize and publish courses with {INVITER} and other nice people in the organization {TENANT}." TENANT=tenant.name INVITER=(username invitation.createdBy)}}
-        </p>
-        <button class="btn btn-lg btn-save js-join" {{disabledIfBusy}}>
-          {{#unless currentUser}}
-            {{i18n "joinPage.newUser" "Join {TENANT}" TENANT=tenant.name}}
-          {{else}}
-            {{i18n "joinPage.existingUser" "Join {TENANT} with my user {USER}" TENANT=tenant.name USER=currentUser.getDisplayName}}
-          {{/unless}}
-        </button>
-        <a class="btn btn-lg btn-secondary" href="{{pathFor 'home'}}">
-          {{i18n 'joinPage.no' 'No thanks'}}
-        </a>
-      </div>
-    </div>
-
+  <div>
+    {{> React (component JoinPage)}}
   </div>
 </template>

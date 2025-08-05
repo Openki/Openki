@@ -38,7 +38,6 @@ export interface LogEntity {
 }
 
 class ResultLogger {
-  // eslint-disable-next-line no-useless-constructor
   constructor(
     public id: string,
     public log: LogCollection,
@@ -58,7 +57,6 @@ class ResultLogger {
     if (message) resolution.message = message;
 
     if (Meteor.isServer && PrivateSettings.printLog) {
-      /* eslint-disable-next-line no-console */
       console.log({ id: this.id, resolution });
     }
 
@@ -97,7 +95,6 @@ export class LogCollection extends Mongo.Collection<LogEntity> {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
   Filtering() {
     return new Filtering({
       start: Predicates.date,
@@ -127,7 +124,6 @@ export class LogCollection extends Mongo.Collection<LogEntity> {
     const id = await this.insertAsync(entry);
 
     if (Meteor.isServer && PrivateSettings.printLog) {
-      /* eslint-disable-next-line no-console */
       console.log(entry);
     }
 

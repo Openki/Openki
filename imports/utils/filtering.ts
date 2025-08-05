@@ -2,7 +2,6 @@ import { Tracker } from "meteor/tracker";
 import { ParamWrapper, Predicate } from "imports/utils/predicates";
 
 export class FilteringReadError {
-  // eslint-disable-next-line no-useless-constructor
   constructor(
     public name: string,
     public message: string,
@@ -12,21 +11,18 @@ export class FilteringReadError {
 /**
  * A helper type to get the generic parameter.
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-type GetPredicateT1<C extends Predicate<any>> = C extends Predicate<infer T1, infer _T2, infer _T3>
-  ? T1
-  : unknown;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-type GetPredicateT3<C extends Predicate<any>> = C extends Predicate<infer _T1, infer _T2, infer T3>
-  ? T3
-  : unknown;
+type GetPredicateT1<C extends Predicate<any>> =
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  C extends Predicate<infer T1, infer _T2, infer _T3> ? T1 : unknown;
+type GetPredicateT3<C extends Predicate<any>> =
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  C extends Predicate<infer _T1, infer _T2, infer T3> ? T3 : unknown;
 
-export class Filtering<T extends { [name: string]: Predicate<any> }> {
+export class Filtering<T extends Record<string, Predicate<any>>> {
   private _predicates: { [name in keyof T]+?: ReturnType<T[name]> } = {};
 
   private _dep = new Tracker.Dependency();
 
-  // eslint-disable-next-line no-useless-constructor
   constructor(private _availablePredicates: T) {}
 
   clear() {
@@ -60,6 +56,7 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
         this._predicates[name] = toAdd as any;
       }
       if (!this._predicates[name]) {
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
         delete this._predicates[name];
       }
       this._dep.changed();
@@ -104,6 +101,7 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
         (this._predicates[name] as any) = predicate.without(toRemove as any);
       }
       if (!this._predicates[name]) {
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
         delete this._predicates[name];
       }
       this._dep.changed();
@@ -142,6 +140,7 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
   }
 
   disable(name: keyof T) {
+    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
     delete this._predicates[name];
     this._dep.changed();
     return this;

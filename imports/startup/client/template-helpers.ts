@@ -27,8 +27,8 @@ function toMomentWithTimeLocale(date: moment.MomentInput) {
   return moment(date).locale(Session.get("timeLocale") || "en");
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-const helpers: { [name: string]: Function } = {
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+const helpers: Record<string, Function> = {
   siteName() {
     return getSiteName(Regions.currentRegion());
   },
@@ -66,7 +66,6 @@ const helpers: { [name: string]: Function } = {
 
   log(context: unknown) {
     if (window.console) {
-      /* eslint-disable-next-line no-console */
       console.log(arguments.length > 0 ? context : this);
     }
   },
@@ -213,9 +212,7 @@ Template.registerHelper("contribution", function (userId: string) {
   }
 
   return Spacebars.SafeString(
-    `<a href="${getLocalizedValue(
-      contribution.link,
-    )}" data-bs-toggle="tooltip" data-bs-title="${Blaze._escape(
+    `<a href="${getLocalizedValue(contribution.link)}"  data-bs-title="${Blaze._escape(
       i18n(
         "user.hasContributed",
         "{USERNAME} supported {SITENAME} with a donation. Click the {ICON} for how to contribute.",

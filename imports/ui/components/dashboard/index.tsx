@@ -1,8 +1,8 @@
-/* eslint-disable no-nested-ternary */
-import React from "react";
+import React, { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 import { useUserId } from "/imports/utils/react-meteor-data";
+import { take } from "lodash";
 
 import { SortSpec } from "/imports/utils/sort-spec";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
@@ -11,18 +11,18 @@ import { mapping, ListOfEntities, ComponentWithEntities } from "./mapping";
 
 import "./styles.scss";
 
-type ComponentSettings = {
+interface ComponentSettings {
   entity: keyof typeof mapping;
   title?: string;
   query?: string;
   showAll?: { link?: string; text?: string } | false;
-};
+}
 
-export type Props = {
+export interface Props {
   list: ComponentSettings[];
   region?: string | undefined;
   group?: string | undefined;
-};
+}
 
 function EntitiesComponent<T>({
   params,
@@ -30,7 +30,7 @@ function EntitiesComponent<T>({
   showAll,
   title,
 }: {
-  params: { [k: string]: string };
+  params: Record<string, string>;
   handler: ListOfEntities<T> | ComponentWithEntities<T>;
   showAll: { link: string | undefined; text: string | undefined } | false;
   title?: string | undefined;
@@ -43,15 +43,20 @@ function EntitiesComponent<T>({
   const sortParam = params.sort;
   const sort = sortParam ? SortSpec.fromString(sortParam) : SortSpec.unordered();
 
-  const [isLoading, data] = handler.find(query, 10, 0, sort.spec());
+  const limit = 10;
+  const [isLoading, data] = handler.find(query, limit + 1, 0, sort.spec());
 
-  if (!(!isLoading() && (!Array.isArray(data) || data.length > 0))) {
+  const elementRef = useRef<HTMLDivElement>(null);
+  const [scrollLeft, setScrollLeft] = useState(elementRef.current?.scrollLeft || 0);
+  const [scrollLeftMax, setScrollLeftMax] = useState(0);
+
+  if (isLoading() || (Array.isArray(data) && data.length === 0)) {
     return null;
   }
 
   return (
-    <div className="container mb-4">
-      {showAll !== false && !!showAll?.link && (
+    <div className="container position-relative mb-4">
+      {showAll !== false && !!showAll?.link && data.length > limit && (
         <a className="btn btn-sm btn-success float-end" href={showAll.link}>
           {showAll.text}
         </a>
@@ -59,14 +64,56 @@ function EntitiesComponent<T>({
       {!!title && <h2>{getLocalizedValue(title)}</h2>}
       {"element" in handler ? (
         // ListOfEntities
-        <div className="d-flex flex-row flex-nowrap pb-3 overflow-x-scroll">
-          {data.map((d, i) => (
+        <div
+          className="scroll-container d-flex flex-row flex-nowrap pb-3 overflow-x-auto"
+          style={{ scrollBehavior: "smooth" }}
+          ref={elementRef}
+          onScroll={() => {
+            setScrollLeft(elementRef.current?.scrollLeft || 0);
+          }}
+          onMouseOver={() => {
+            const element = elementRef.current;
+            if (element) {
+              if (element.scrollWidth - element.clientWidth !== scrollLeftMax) {
+                setScrollLeftMax(element.scrollWidth - element.clientWidth);
+              }
+            }
+          }}
+        >
+          {take(data, 10).map((d, i) => (
             <handler.element key={i} entity={d} index={i} params={params} />
           ))}
+          {scrollLeft !== 0 && (
+            <a
+              className="btn-scroll btn-scroll-left text-primary"
+              onClick={() => {
+                const element = elementRef.current;
+                if (element) {
+                  element.scrollLeft = element.scrollLeft - element.clientWidth * 0.66;
+                }
+              }}
+            >
+              <i className="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
+            </a>
+          )}
+          {elementRef.current &&
+            scrollLeft !== elementRef.current.scrollWidth - elementRef.current.clientWidth && (
+              <a
+                className="btn-scroll btn-scroll-right text-primary"
+                onClick={() => {
+                  const element = elementRef.current;
+                  if (element) {
+                    element.scrollLeft = element.scrollLeft + element.clientWidth * 0.66;
+                  }
+                }}
+              >
+                <i className="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i>
+              </a>
+            )}
         </div>
       ) : (
         // ComponentWithEntities
-        <handler.component entities={data} params={params} />
+        <handler.component entities={take(data, 10)} params={params} />
       )}
     </div>
   );
@@ -158,7 +205,7 @@ export function Dashboard({ list, region, group }: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("Dashboard", () => Dashboard);

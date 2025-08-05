@@ -1,14 +1,14 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-export type Props = {
+export interface Props {
   type: string;
   icon: string;
   enabled: boolean;
   enroll: boolean;
   onRole: (checked: boolean) => void;
   onEnroll: (checked: boolean) => void;
-};
+}
 
 export function Role(data: Props) {
   const { t } = useTranslation();
@@ -41,7 +41,7 @@ export function Role(data: Props) {
           <span className={`${data.icon} fa-fw`} aria-hidden="true"></span> {t(roleDescription())}
         </label>
       </div>
-      {data.enabled ? (
+      {data.enabled && (
         <div className="form-check ms-4">
           <input
             className={`form-check-input js-check-enroll ${data.type}`}
@@ -57,7 +57,7 @@ export function Role(data: Props) {
             {t(roleSubscription())}
           </label>
         </div>
-      ) : null}
+      )}
     </>
   );
 }

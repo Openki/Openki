@@ -6,13 +6,13 @@ import { VenueModel } from "/imports/api/venues/venues";
 
 import { MarkerEntity } from "/imports/ui/lib/location-tracker";
 
-export type Props = {
+export interface Props {
   marker: MarkerEntity & VenueModel;
   handles: {
     onMouseEnter: (id: string) => void;
     onMouseLeave: () => void;
   };
-};
+}
 
 export function LocationCandidate({ marker, handles }: Props) {
   return (
@@ -39,7 +39,7 @@ export function LocationCandidate({ marker, handles }: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("LocationCandidate", () => LocationCandidate);

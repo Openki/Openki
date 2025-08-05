@@ -109,7 +109,7 @@ export function CalendarPage(data: Record<string, string>) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("CalendarPage", () => CalendarPage);

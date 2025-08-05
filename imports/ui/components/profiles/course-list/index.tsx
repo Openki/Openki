@@ -13,7 +13,7 @@ import { useRoleDisplay } from "../../../lib/useRoleDisplay";
 
 import "./styles.scss";
 
-export function UsersCourselist(data: { user: UserModel; ownProfile: boolean }) {
+export function Courselist(data: { user: UserModel; ownProfile: boolean }) {
   const { t } = useTranslation();
   const { roleShort } = useRoleDisplay();
   const id = data.user._id;
@@ -60,7 +60,7 @@ export function UsersCourselist(data: { user: UserModel; ownProfile: boolean }) 
 
   return (
     <div className="page-component page-component-seperated profile-courselist">
-      {isInvolved() ? (
+      {isInvolved() && (
         <>
           <h3 className="badge-title">
             {data.ownProfile
@@ -108,7 +108,7 @@ export function UsersCourselist(data: { user: UserModel; ownProfile: boolean }) 
                       </div>{" "}
                       {data.ownProfile
                         ? t(roleMyList(role.type))
-                        : t(roleUserList(role.type), undefined, {
+                        : t(roleUserList(role.type), {
                             NAME: data.user.getDisplayName(),
                           })}
                     </h3>
@@ -126,7 +126,7 @@ export function UsersCourselist(data: { user: UserModel; ownProfile: boolean }) 
                       </div>{" "}
                       {data.ownProfile
                         ? t(roleMyListPast(role.type))
-                        : t(roleUserListPast(role.type), undefined, {
+                        : t(roleUserListPast(role.type), {
                             NAME: data.user.getDisplayName(),
                           })}
                     </h3>
@@ -138,13 +138,13 @@ export function UsersCourselist(data: { user: UserModel; ownProfile: boolean }) 
             <LoadingPage />
           )}
         </>
-      ) : null}
+      )}
     </div>
   );
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
-Template.registerHelper("UsersCourselist", () => UsersCourselist);
+Template.registerHelper("UsersCourselist", () => CourseList);

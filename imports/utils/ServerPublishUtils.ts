@@ -12,7 +12,7 @@ export function publish<
   A extends any[],
   C extends readonly Mongo.Cursor<any>[],
   T extends Record<C>,
->(name: string, publisher: (this: Subscription, ...args: A) => Promise<T> | T | void) {
+>(name: string, publisher: (this: Subscription, ...args: A) => Promise<T> | T | undefined) {
   if (Meteor.isServer) {
     // on the server register the publisher / publish the record set
     // wrap the call to handle options

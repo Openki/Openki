@@ -6,9 +6,6 @@ import * as Metatags from "/imports/utils/metatags";
 import { EventEntity, EventModel } from "/imports/api/events/events";
 import { useDetails } from "/imports/api/regions/publications";
 
-import "react-leaflet-fullscreen/styles.css";
-import "leaflet/dist/leaflet.css";
-
 import { EventsMap } from "/imports/ui/components/events/map";
 
 import "./styles.scss";
@@ -51,7 +48,7 @@ export function EventsMapPage(props: Data) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("EventsMapPage", () => EventsMapPage);

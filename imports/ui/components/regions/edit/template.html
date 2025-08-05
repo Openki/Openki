@@ -1,13 +1,5 @@
 <template name="regionEdit">
-  <div class="edit-page region-edit">
-    <h2>{{title}}</h2>
-    <form>
-      {{> regionEditFields region=region locationTracker=locationTracker}}
-
-      <div class="form-actions">
-        {{> buttonSave saving=saving}}
-        {{> buttonCancel event="js-edit-cancel"}}
-      </div>
-    </form>
+  <div>
+    {{> React (component RegionEdit)}}
   </div>
 </template>

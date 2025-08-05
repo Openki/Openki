@@ -35,7 +35,6 @@ export async function onDbMigrate() {
 export async function onStartUp() {
   const updated = await updateAll();
 
-  /* eslint-disable-next-line no-console */
   console.log(`users.venuesDenormalizer.onStartUp: ${updated} affected users`);
 }
 

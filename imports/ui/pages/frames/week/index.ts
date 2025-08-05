@@ -25,10 +25,10 @@ import "./styles.scss";
 
 const DefaultLimit = 200;
 
-type Weekday = {
+interface Weekday {
   date: moment.Moment;
   dayEvents: Mongo.Cursor<EventEntity, EventModel>;
-};
+}
 
 const Template = TemplateAny as TemplateStaticTyped<
   "frameWeekPage",
@@ -48,6 +48,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 const template = Template.frameWeekPage;
 
 template.onCreated(function () {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const instance = this;
 
   instance.autorun(() => {
@@ -70,9 +71,10 @@ template.onCreated(function () {
 
     const filterQuery = instance.filter.toQuery();
 
+    const userId = Meteor.userId();
     // filter isAttendeeFilterOn in addition to filtering that get's passed in via url
-    if (Meteor.userId() && instance.state.get("isAttendeeFilterOn")) {
-      filterQuery.participant = Meteor.userId()!;
+    if (userId && instance.state.get("isAttendeeFilterOn")) {
+      filterQuery.participant = userId;
     }
 
     const startOfWeek = instance.startOfWeek;

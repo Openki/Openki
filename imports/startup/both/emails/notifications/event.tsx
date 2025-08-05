@@ -17,7 +17,7 @@ import { Event, Props } from "../../../../emails/notifications/Event";
 import { getStartEndDate } from "./utils";
 
 interface Body {
-  new: boolean;
+  isNew: boolean;
   eventId: string;
   replicats: string[];
   additionalMessage: string | undefined;
@@ -56,7 +56,7 @@ export async function record(
   }
 
   const body: Body = {
-    new: isNew,
+    isNew,
     eventId: event._id,
     replicats,
     additionalMessage,
@@ -121,7 +121,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       };
 
       let subject;
-      if (entry.body.new) {
+      if (entry.body.isNew) {
         subject = t("notification.event.mail.subject.new", "Fixed {DATE}: {TITLE}", subjectvars);
       } else {
         subject = t(
@@ -147,7 +147,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         unsubscribeFromCourseLink: Router.url("showCourse", course, {
           query: { unsubscribe: "participant", force: 1, campaign },
         }),
-        isNew: entry.body.new,
+        isNew: entry.body.isNew,
         replicats,
         subject,
         additionalMessage: entry.body.additionalMessage,

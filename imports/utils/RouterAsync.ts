@@ -19,17 +19,16 @@ export function route<D, S extends Record<string, SubscriptionHandle<any>> | und
 ): void;
 export function route<D>(
   pathOrRouteName: string,
-  options: Omit<Router.RouteOptions<D>, "data"> & {
-    onRun?: () => Promise<unknown>;
-  },
+  options:
+    | (Omit<Router.RouteOptions<D>, "data"> & {
+        onRun?: () => Promise<unknown>;
+      })
+    | {
+        onRun?: () => Promise<unknown>;
+        data: (this: Router.RouteThis) => D;
+      },
 ): void;
-export function route<D>(
-  pathOrRouteName: string,
-  options: Omit<Router.RouteOptions<D>, "data"> & {
-    onRun?: () => Promise<unknown>;
-    data: (this: Router.RouteThis) => D;
-  },
-): void;
+
 export function route<D, S extends Record<string, SubscriptionHandle<any>> | undefined>(
   pathOrRouteName: string,
   options: Omit<Router.RouteOptions<D>, "data"> & {
@@ -43,7 +42,6 @@ export function route<D, S extends Record<string, SubscriptionHandle<any>> | und
   },
 ) {
   const subscriptions = options.subscriptions;
-  // eslint-disable-next-line no-param-reassign
   delete options.subscriptions;
 
   if (subscriptions && options.waitOn) {
@@ -55,32 +53,15 @@ export function route<D, S extends Record<string, SubscriptionHandle<any>> | und
     let handlers: NonNullable<S>;
 
     // load data, remove async call, keep reactive
-    let result: D;
     let currentRequestId = "";
     const dataLoaded = new ReactiveVar(false);
-    let dataLoading = false;
 
     if (data) {
-      // eslint-disable-next-line no-param-reassign
       options.data = function () {
         this.subscriptions = () => handlers;
         try {
-          if (
-            !dataLoading &&
-            !dataLoaded.get() &&
-            Object.values(handlers).every((s) => !s.isLoading())
-          ) {
-            dataLoading = true;
-            (async () => data?.call(this))()
-              .then((r) => {
-                result = r;
-              })
-              .finally(() => {
-                dataLoading = false;
-                dataLoaded.set(true);
-              });
-          }
-          return result;
+          dataLoaded.set(true);
+          return data.call(this);
         } finally {
           delete (this as any).subscriptions;
         }
@@ -89,7 +70,6 @@ export function route<D, S extends Record<string, SubscriptionHandle<any>> | und
       dataLoaded.set(true);
     }
 
-    // eslint-disable-next-line no-param-reassign
     options.waitOn = function () {
       // prevent loading multiple times the same data;
       handlers = subscriptions.call(this);
@@ -97,7 +77,6 @@ export function route<D, S extends Record<string, SubscriptionHandle<any>> | und
         currentRequestId = JSON.stringify(Object.entries(this.params));
 
         // reset state of loading
-        dataLoading = false;
         if (data) {
           dataLoaded.set(false);
         } else {
@@ -117,11 +96,9 @@ export function route<D, S extends Record<string, SubscriptionHandle<any>> | und
   }
 
   const onRunOption = options.onRun;
-  // eslint-disable-next-line no-param-reassign
   delete options.onRun;
 
   const waitOn = options.waitOn;
-  // eslint-disable-next-line no-param-reassign
   delete options.waitOn;
 
   const onRunAwaited = new ReactiveVar<boolean>(false);

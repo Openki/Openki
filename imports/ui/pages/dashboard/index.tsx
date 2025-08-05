@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { PublicSettings } from "/imports/utils/PublicSettings";
@@ -9,11 +8,9 @@ import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 import { Find } from "../../components/courses/find";
 import { Dashboard } from "../../components/dashboard";
 
-export type Props = {
-  query: {
-    [key: string]: string | undefined;
-  };
-};
+export interface Props {
+  query: Record<string, string | undefined>;
+}
 
 export function DashboardPage({ query }: Props) {
   const { group, search } = query;
@@ -46,7 +43,7 @@ export function DashboardPage({ query }: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("DashboardPage", () => DashboardPage);

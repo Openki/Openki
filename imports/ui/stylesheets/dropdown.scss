@@ -1,3 +1,5 @@
+@use "sass:color";
+
 /* stylelint-disable selector-no-qualifying-type, max-nesting-depth, scss/at-extend-no-missing-placeholder */
 
 $dropdown-transition-time: 0.3s;
@@ -17,6 +19,7 @@ $dropdown-transition-time: 0.3s;
 .dropdown-menu > li > a:not(.btn),
 .dropdown-menu > li > .btn-link {
   @include ellipsis;
+
   border-radius: 0;
   color: $dropdown-link-color;
   padding: 3px 20px;
@@ -31,7 +34,7 @@ $dropdown-transition-time: 0.3s;
 
 .dropdown-menu > li > a:not(.btn):focus,
 .dropdown-menu > li > .btn-link:focus {
-  background-color: darken($dropdown-bg, 5%);
+  background-color: color.adjust($dropdown-bg, $lightness: -5%);
   color: $dropdown-link-color;
 }
 
@@ -54,11 +57,13 @@ $dropdown-transition-time: 0.3s;
   @include clearfix;
   @include td-float(right);
   @include td-padding(left, 4px);
+
   display: inline-block;
 }
 
 .dropdown-legend {
   @include clearfix;
+
   color: $primary;
   text-align: start;
 }

@@ -9,11 +9,11 @@ import "/imports/ui/components/courses/categories";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   categories: string[] | undefined;
   onAdd: (category: string) => void;
   onRemove: (category: string) => void;
-};
+}
 
 export function FilterCategories({ categories, onAdd, onRemove }: Props) {
   const allCategories = Object.keys(Categories);
@@ -50,7 +50,7 @@ export function FilterCategories({ categories, onAdd, onRemove }: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("FilterCategories", () => FilterCategories);

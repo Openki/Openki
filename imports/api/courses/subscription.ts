@@ -24,7 +24,6 @@ export async function processChange<T>(change: Change<T>, options?: { isSimulati
       await Meteor.callAsync(change.constructor.method, change.dict());
     }
   } catch (err) {
-    /* eslint-disable-next-line no-console */
     console.error(err);
     Alert.serverError(err);
   }
@@ -98,9 +97,7 @@ export class Subscribe extends Change<{
 
   comment: string | undefined;
 
-  static get method() {
-    return "Courses.Subscribe";
-  }
+  static readonly method = "Courses.Subscribe";
 
   static async read(body: {
     courseId: string;
@@ -268,9 +265,7 @@ export class Unsubscribe extends Change<{
 
   role: string;
 
-  static get method() {
-    return "Courses.Unsubscribe";
-  }
+  static readonly method = "Courses.Unsubscribe";
 
   static async read(body: { courseId: string; userId: string; role: string }) {
     return new this(await Courses.findOneAsync(body.courseId), body.userId, body.role);
@@ -383,9 +378,7 @@ export class Message extends Change<{
 
   message: string | undefined;
 
-  static get method() {
-    return "Courses.Message";
-  }
+  static readonly method = "Courses.Message";
 
   static async read(body: { courseId: string; userId: string; message: string | undefined }) {
     return new this(await Courses.findOneAsync(body.courseId), body.userId, body.message);
@@ -407,7 +400,6 @@ export class Message extends Change<{
     return `${this.constructor.method}()`;
   }
 
-  /* eslint-disable-next-line class-methods-use-this */
   validate() {
     return true;
   }

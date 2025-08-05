@@ -18,12 +18,7 @@ type ExtractQuery<P> = P extends ParamWrapper<infer _G, infer Q> ? Q : never;
 
 type ToFilter<T> = { [name in keyof T]: ExtractQuery<T[name]> };
 
-export interface ApiCollection<
-  T,
-  U,
-  P extends { [name: string]: Predicate<any> },
-  F = ToFilter<P>,
-> {
+export interface ApiCollection<T, U, P extends Record<string, Predicate<any>>, F = ToFilter<P>> {
   findFilter(
     filter?: Partial<F>,
     limit?: number,
@@ -34,7 +29,7 @@ export interface ApiCollection<
   Filtering(): Filtering<P>;
 }
 
-export type ApiEvent = {
+export interface ApiEvent {
   id: string;
   title: string;
   description: string;
@@ -71,9 +66,9 @@ export type ApiEvent = {
     short: string;
     link: string;
   }[];
-};
+}
 
-async function apiResponse<T, U, F extends { [name: string]: Predicate<any> }, R>(
+async function apiResponse<T, U, F extends Record<string, Predicate<any>>, R>(
   collection: ApiCollection<T, U, F, ToFilter<F> & typeof additionalFilters>,
   formatter: (model: U) => Promise<R>,
   additionalFilters = {},
@@ -86,7 +81,6 @@ async function apiResponse<T, U, F extends { [name: string]: Predicate<any> }, R
 
     const formattedModels: R[] = [];
     for (const model of models) {
-      // eslint-disable-next-line no-await-in-loop
       const formattedModel = await formatter(model);
       formattedModels.push(formattedModel);
     }
@@ -177,7 +171,6 @@ export const Api = {
       evr.groups = [];
       const groups = ev.allGroups || [];
       for (const groupId of groups) {
-        // eslint-disable-next-line no-await-in-loop
         const group = await Groups.findOneAsync(groupId);
         if (group) {
           evr.groups.push({

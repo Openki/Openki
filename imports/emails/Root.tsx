@@ -1,12 +1,18 @@
 import React from "react";
 import { PublicSettings } from "/imports/utils/PublicSettings";
+import { ICalCalendarMethod } from "ical-generator";
 
-export type Props = {
+export interface Props {
   subject: string | undefined;
   logo: string;
   customSiteUrl?: string | undefined;
   customSiteName?: string | undefined;
-};
+  icalEvent?: {
+    method: ICalCalendarMethod | undefined;
+    filename: string;
+    content: string;
+  };
+}
 
 export function Root({
   subject,
@@ -65,20 +71,20 @@ export function Root({
             max-width: 500px;
           }
 
-          .container>tr>td {
+          .container > tr > td {
             padding: 0 20px;
           }
 
-          .container>tr:first-child>td,
-          .container>tr:last-child>td {
+          .container > tr:first-child > td,
+          .container > tr:last-child > td {
             padding: 0;
           }
 
-          .container>tr:nth-child(2)>td {
+          .container > tr:nth-child(2) > td {
             padding-top: 20px;
           }
 
-          .container>tr:nth-last-child(2)>td {
+          .container > tr:nth-last-child(2) > td {
             padding-bottom: 20px;
           }
 
@@ -92,6 +98,15 @@ export function Root({
 
           .header td {
             vertical-align: middle;
+          }
+
+          .alert > td {
+            background: #eee;
+            padding-bottom: 20px !important;
+          }
+
+          .alert + tr > td { 
+            padding-top: 20px;
           }
 
           .logo-wrapper {

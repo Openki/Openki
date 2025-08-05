@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useEffect } from "react";
 import { Mongo } from "meteor/mongo";
 import moment from "moment";
@@ -189,7 +188,7 @@ export function KioskEventsPage({
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("KioskEventsPage", () => KioskEventsPage);

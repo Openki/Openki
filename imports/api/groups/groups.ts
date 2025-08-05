@@ -83,9 +83,9 @@ export interface GroupEntity {
   /** List of userIds with notify */
   members: GroupMemberEntity[];
   createdby?: string;
-  // eslint-disable-next-line camelcase
+
   time_created?: Date;
-  // eslint-disable-next-line camelcase
+
   time_lastedit?: Date;
   /** (calculated) venues where the group is manger */
   venues?: GroupVenueEntity[];
@@ -145,7 +145,6 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
   Filtering() {
     return new Filtering({});
   }
@@ -195,7 +194,7 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
       const me = Meteor.userId();
       if (!me) {
         // User is not logged in...
-        return [];
+        find["members.user"] = "-1";
       }
 
       find["members.user"] = me;

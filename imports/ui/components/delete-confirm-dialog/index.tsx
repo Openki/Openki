@@ -3,13 +3,13 @@ import { useTranslation } from "react-i18next";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   confirmText: string;
   confirmButton: string;
   onRemove: () => Promise<void>;
   onCancel: () => Promise<void>;
   busyButton: string;
-};
+}
 
 export function DeleteConfirmDialog(props: Props) {
   const { t } = useTranslation();
@@ -52,7 +52,7 @@ export function DeleteConfirmDialog(props: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("DeleteConfirmDialog", () => DeleteConfirmDialog);

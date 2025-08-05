@@ -6,10 +6,10 @@ import { Categories } from "/imports/api/categories/categories";
 
 import { CategoryLabel } from "/imports/ui/components/courses/categories";
 
-export type Props = {
+export interface Props {
   onChange: (selectedCategories: string[]) => void;
   categories: string[];
-};
+}
 
 export function SelectCategories(props: Props) {
   const { t } = useTranslation();
@@ -73,9 +73,7 @@ export function SelectCategories(props: Props) {
               />
               <label className="form-check-label" htmlFor={`editCategory${category}`}>
                 <CategoryLabel category={category} />
-                {hasSubcategories(category) ? (
-                  <i className="fa-solid fa-angle-down fa-fw"></i>
-                ) : null}
+                {hasSubcategories(category) && <i className="fa-solid fa-angle-down fa-fw"></i>}
               </label>
             </div>
             {availableSubcategories(category).map((subcategory) => {
@@ -104,7 +102,7 @@ export function SelectCategories(props: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("SelectCategories", () => SelectCategories);

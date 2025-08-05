@@ -1,6 +1,1 @@
-{
-  "plugins": ["stylelint-prettier"],
-  "rules": {
-    "prettier/prettier": [true, { "severity": "warning" }]
-  }
-}
+{ "extends": ["stylelint-config-standard-scss"] }

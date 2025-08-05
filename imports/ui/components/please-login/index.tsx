@@ -4,18 +4,17 @@ import { useSessionEquals, useUserId } from "/imports/utils/react-meteor-data";
 
 interface AutoProps {
   type: "auto";
-  onRender: () => void;
+  onRender: () => Promise<void>;
 }
-
 interface FormProps {
   type: "form";
-  onSubmit: () => void;
+  onSubmit: () => Promise<void>;
 }
-
 interface ButtonProps {
   type: "button";
-  onClick: () => void;
+  onClick: () => Promise<void>;
   disabled?: boolean | undefined;
+  busyText?: string | undefined;
 }
 interface Props {
   type: "auto" | "form" | "button";
@@ -26,6 +25,7 @@ interface Props {
 
 export function PleaseLogin(props: Props & (AutoProps | FormProps | ButtonProps)) {
   const [actionActive, setActionActive] = useState(props.type === "auto");
+  const [isBusy, setIsBusy] = useState(false);
   const [openedLogin, setOpenedLogin] = useState(false);
   const userId = useUserId();
   const notPleaseLogin = useSessionEquals("pleaseLogin", false);
@@ -34,20 +34,26 @@ export function PleaseLogin(props: Props & (AutoProps | FormProps | ButtonProps)
     if (actionActive) {
       if (userId) {
         setActionActive(false);
-        // if the user is logged in call the save function
-        switch (props.type) {
-          case "auto":
-            props.onRender();
-            break;
-          case "form":
-            props.onSubmit();
-            break;
-          case "button":
-            props.onClick();
-            break;
-          default:
-            throw new Error("Unexpected value: type");
-        }
+        (async function () {
+          try {
+            // if the user is logged in call the save function
+            switch (props.type) {
+              case "auto":
+                await props.onRender();
+                break;
+              case "form":
+                await props.onSubmit();
+                break;
+              case "button":
+                await props.onClick();
+                break;
+              default:
+                throw new Error("Unexpected value: type");
+            }
+          } finally {
+            setIsBusy(false);
+          }
+        })();
       } else if (!openedLogin) {
         // if the user is not logged in open up the login window
         Session.set("visitorUserAllowed", props.visitorUserAllowed || false);
@@ -57,13 +63,15 @@ export function PleaseLogin(props: Props & (AutoProps | FormProps | ButtonProps)
         // if the user closed the login window without logged in reset without call the save function
         setActionActive(false);
         setOpenedLogin(false);
+        setIsBusy(false);
       }
     }
   }, [actionActive, userId, openedLogin, notPleaseLogin, props]);
 
-  function handleEvent(event: { preventDefault: () => void }) {
+  async function handleEvent(event: { preventDefault: () => void }) {
     event.preventDefault();
     setActionActive(true);
+    setIsBusy(true);
   }
 
   switch (props.type) {
@@ -75,8 +83,15 @@ export function PleaseLogin(props: Props & (AutoProps | FormProps | ButtonProps)
       );
     case "button":
       return (
-        <button className={props.className} onClick={handleEvent} disabled={props.disabled}>
-          {props.children}
+        <button className={props.className} disabled={props.disabled} onClick={handleEvent}>
+          {!isBusy ? (
+            props.children
+          ) : (
+            <>
+              <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
+              {props.busyText}
+            </>
+          )}
         </button>
       );
     default:

@@ -7,7 +7,7 @@ import { SaveFields } from "/imports/api/venues/methods";
 
 import "./styles.scss";
 
-export type Data = {
+export interface Data {
   data: Pick<SaveFields, "short" | "maxPeople" | "maxWorkplaces" | "facilities"> & {
     otherFacilities?: string | undefined;
   };
@@ -16,7 +16,7 @@ export type Data = {
   onMaxWorkplacesChange: (newValue: number) => void;
   onFacilitiesChange: (newValue: FacilityOption[]) => void;
   onOtherFacilitiesChange: (newValue: string) => void;
-};
+}
 
 export function AdditionalInfo({
   data,

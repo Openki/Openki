@@ -1,7 +1,7 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
 // ** Course buttons
-//========================================================================================
+// ========================================================================================
 .course-delete-confirm {
   $background-color: tint-color($danger, 20%);
 
@@ -11,7 +11,12 @@
 }
 
 // ** Content
-//========================================================================================
+// ========================================================================================
+
+$course-details-content-padding-horizontal: (
+  $details-header-padding-horizontal + $course-border-width
+);
+
 .course-details-content {
   border-bottom-width: 0;
   border-color: shade-color($tab-content-bg, 5%);
@@ -25,6 +30,7 @@
     position: absolute;
     top: $tab-content-border-width * -1;
     z-index: 99;
+    width: $course-details-content-padding-horizontal;
   }
 
   &::before {
@@ -34,19 +40,8 @@
   &::after {
     right: $tab-content-border-width * -1;
   }
-}
 
-$course-details-content-padding-horizontal: (
-  $details-header-padding-horizontal + $course-border-width
-);
-
-.course-details-content {
   padding: 15px $course-details-content-padding-horizontal;
-}
-
-.course-details-content::after,
-.course-details-content::before {
-  width: $course-details-content-padding-horizontal;
 }
 
 .course-description {
@@ -60,6 +55,7 @@ $course-details-content-padding-horizontal: (
 .course-description-fade-bottom {
   @include gradient-y(transparent, #ebf4f8);
   @include td-pos(left, 0);
+
   bottom: 0;
   height: 60px;
   position: absolute;
@@ -67,13 +63,13 @@ $course-details-content-padding-horizontal: (
 }
 
 // ** Price Policy
-//========================================================================================
+// ========================================================================================
 .course-details-price-policy {
   margin-top: 10px;
 }
 
 // ** Sharing
-//========================================================================================
+// ========================================================================================
 .course-page .shariff-wrapper {
   background-color: $tab-content-bg;
   border-color: shade-color($tab-content-bg, 5%);

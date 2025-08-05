@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { EventModel } from "/imports/api/events/events";
@@ -6,7 +5,7 @@ import { EventBox } from "./components/EventBox";
 import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 
-export type Props = {
+export interface Props {
   event: EventModel;
   tz: string;
   recipientTakePart: boolean | undefined;
@@ -22,7 +21,7 @@ export type Props = {
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   campaign: string;
   lng: string;
-};
+}
 
 export function Event({
   event,

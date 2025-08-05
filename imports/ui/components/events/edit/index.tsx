@@ -35,24 +35,29 @@ import { UpdateAffectedReplica } from "./UpdateAffectedReplica";
 
 import "./styles.scss";
 
-type NewEventModel = {
-  new: true;
+interface NewEventModel {
   startLocal: string;
   endLocal: string;
   sendReminder: boolean;
-};
+}
 
 export type EventEditData = EventModel | (NewEventModel & OEvent & Partial<EventModel>);
 
-export function Edit({
-  event,
-  afterSave,
-  onCancel,
-}: {
-  event: EventEditData;
-  afterSave: () => void;
-  onCancel: () => void;
-}) {
+export type Props =
+  | {
+      event: EventModel;
+      isNew: false;
+      afterSave: () => void;
+      onCancel: () => void;
+    }
+  | {
+      event: NewEventModel & OEvent & Partial<EventModel>;
+      isNew: true;
+      afterSave: () => void;
+      onCancel: () => void;
+    };
+
+export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   const { t } = useTranslation();
 
   const currentRegion = useSession("region");
@@ -142,7 +147,7 @@ export function Edit({
 
   // Sending an event notification is only possible when the event is
   // attached to a course. Otherwise there is nobody to inform.
-  const [notifyChecked, setNotifyChecked] = useState(!!event.courseId && "new" in event);
+  const [notifyChecked, setNotifyChecked] = useState(!!event.courseId && isNew);
   const [addNotificationMessage, setAddNotificationMessage] = useState("");
 
   const [changes, setChanges] = useState({
@@ -399,11 +404,11 @@ export function Edit({
     <form>
       <div className="edit-page">
         <h3>
-          {"new" in event
+          {isNew
             ? t("course.event.edit.add", "Create an event")
             : t("course.event.edit.edit", "Edit event")}
         </h3>
-        {"new" in event && !event.courseId && (
+        {isNew && !event.courseId && (
           <>
             {t(
               "course.createEventInfo",
@@ -416,7 +421,7 @@ export function Edit({
         )}
 
         <div className="edit-page-header event-edit">
-          {!("new" in event) && !event.courseId && <RegionTag region={event.region} />}
+          {!isNew && !event.courseId && <RegionTag region={event.region} />}
 
           <div className="mb-3">
             <label className="form-label">{t("course.event.edit.title", "Event title")}</label>
@@ -469,7 +474,7 @@ export function Edit({
               }}
             />
           </div>
-          {!(!("new" in event) && event.isPrivate()) && <PricePolicy dismissable wrap="mb-3" />}
+          {!(!isNew && event.isPrivate()) && <PricePolicy dismissable wrap="mb-3" />}
 
           {showRegionSelection() && (
             <div className="mb-3">
@@ -494,7 +499,7 @@ export function Edit({
                     {t("_selection.pleaseSelect")}
                   </option>
                   {regions.map((r) => (
-                    <option selected={currentRegion === r._id} value={r._id}>
+                    <option key={r._id} selected={currentRegion === r._id} value={r._id}>
                       {r.name}
                     </option>
                   ))}
@@ -609,7 +614,7 @@ export function Edit({
                 </span>
               </label>
             </div>
-            {!("new" in event) && (
+            {!isNew && (
               <UpdateAffectedReplica
                 values={updateReplicas}
                 event={event}
@@ -623,7 +628,7 @@ export function Edit({
 
             <Notify
               event={event}
-              isNew={"new" in event}
+              isNew={isNew}
               checked={notifyChecked}
               message={addNotificationMessage}
               onToggle={(v) => setNotifyChecked(v)}
@@ -670,7 +675,7 @@ export function Edit({
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("EventEdit", () => Edit);

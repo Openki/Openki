@@ -9,10 +9,10 @@ import { User, UserEntity, Users } from "/imports/api/users/users";
 // To prevent unlimited cache-growth, after a enough lookups we
 // build a new cache from the old
 const cacheLimit = 1000;
-let cache: { [id: string]: Pick<UserEntity, "username" | "contribution"> & User } = {};
+let cache: Record<string, Pick<UserEntity, "username" | "contribution"> & User> = {};
 let previousCache: typeof cache = {};
 let lookups = 0;
-const pending: { [id: string]: Tracker.Dependency } = {};
+const pending: Record<string, Tracker.Dependency> = {};
 
 // Update the cache if users are pushed to the collection
 Users.find({}, { projection: { _id: 1, username: 1, contribution: 1 } }).observe({
@@ -20,6 +20,7 @@ Users.find({}, { projection: { _id: 1, username: 1, contribution: 1 } }).observe
     cache[user._id] = _.extend(new User(), user || { username: "?!" });
     if (pending[user._id]) {
       pending[user._id].changed();
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
       delete pending[user._id];
     }
   },

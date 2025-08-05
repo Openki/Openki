@@ -28,6 +28,7 @@
 
 .responsive-table-row {
   margin: 0;
+
   @include media-breakpoint-down(md) {
     border: 2px solid #ddd;
     margin-bottom: 10px;
@@ -38,8 +39,10 @@
     }
   }
 
+  /* stylelint-disable-next-line no-descending-specificity */
   [class*="col-"] {
     padding: 8px;
+
     @include media-breakpoint-up(md) {
       border-top: 2px solid #ddd;
     }

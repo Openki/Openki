@@ -8,10 +8,10 @@ import * as VenuesMethods from "/imports/api/venues/methods";
 
 import { name } from "/imports/ui/lib/group-name-helpers";
 
-export type Props = {
+export interface Props {
   venue: VenueModel;
   groupId: string;
-};
+}
 
 export function Remove({ venue, groupId }: Props) {
   const { t } = useTranslation();

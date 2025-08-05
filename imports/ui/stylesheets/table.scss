@@ -13,6 +13,11 @@
   }
 
   td:hover::after,
+  th:hover::after {
+    background-color: #ffa !important;
+  }
+
+  td:hover::after,
   thead th:not(:empty):hover::after,
   td:focus::after,
   thead th:not(:empty):focus::after {
@@ -23,10 +28,5 @@
     top: -5000px;
     width: 100%;
     z-index: -1;
-  }
-
-  td:hover::after,
-  th:hover::after {
-    background-color: #ffa !important;
   }
 }

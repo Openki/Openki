@@ -110,6 +110,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         groups: recipientsGroups
           .map((g) => (
             <a
+              key={g._id}
               href={Router.url("groupDetails", g, {
                 query: { campaign },
               })}
@@ -117,7 +118,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
               {g.name}
             </a>
           ))
-          .reduce((prev, curr) => [prev, <>", "</>, curr] as any),
+          .reduce((prev, curr) => [prev, <>&quot;, &quot;</>, curr] as any),
         creater,
         subject,
         customSiteUrl: Router.url("home", {}, { query: { campaign } }),

@@ -13,9 +13,9 @@ import * as Metatags from "/imports/utils/metatags";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   page: InfoPagesEntity;
-};
+}
 
 export function InfoPage({ page }: Props) {
   const headerTag = "h2, h3";
@@ -61,22 +61,32 @@ export function InfoPage({ page }: Props) {
 
     $('a[href^="#"]').attr("target", "");
 
-    $(headerTag).on("click", function (event) {
+    function handleClick(
+      event: JQuery.ClickEvent<HTMLElement, undefined, HTMLElement, HTMLElement>,
+    ) {
       const title = $(event.currentTarget);
       title.nextUntil(headerTag, contentTags).toggle();
       title.toggleClass("active");
-    });
+    }
+
+    const element = $(headerTag);
+    element.on("click", handleClick);
+    return () => {
+      element.off("click", handleClick);
+    };
   });
 
   return (
     <div className="container mw-md info-page">
-      <ReactMarkdown linkTarget="_blank" children={page.body} skipHtml={true} />
+      <ReactMarkdown linkTarget="_blank" skipHtml={true}>
+        {page.body}
+      </ReactMarkdown>
     </div>
   );
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("InfoPage", () => InfoPage);

@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
@@ -17,10 +16,10 @@ import { DiscussionProfileLink } from "../profile-link";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { RemoveDropdown } from "./remove-dropdown";
 
-export type Props = {
+export interface Props {
   post: CourseDiscussionEntity & { new?: true } & { saving?: boolean };
   onEdit: () => void;
-};
+}
 
 export function Show({ post, onEdit }: Props) {
   const { dateFormat, fromNow } = useDateTimeFormat();
@@ -94,16 +93,13 @@ export function Show({ post, onEdit }: Props) {
         <div className="discussion-post-header">
           <DiscussionProfileLink userId={post.userId} />{" "}
           <span className="discussion-post-header-sub">
-            <span data-bs-toggle="tooltip" data-bs-title={dateFormat(post.time_created)}>
-              {fromNow(post.time_created)}
-            </span>
+            <span data-bs-title={dateFormat(post.time_created)}>{fromNow(post.time_created)}</span>
             {!!post.notifyAll && (
               <>
                 {" "}
                 <i
                   className="fa-solid fa-bell"
                   aria-hidden="true"
-                  data-bs-toggle="tooltip"
                   data-bs-title={
                     !post.eventId
                       ? t("course.discussion.allNotified", "All interested notified")
@@ -119,7 +115,7 @@ export function Show({ post, onEdit }: Props) {
               <>
                 {" "}
                 - {t("course.discussion.lastUpdate", "Last update")}:{" "}
-                <span data-bs-toggle="tooltip" data-bs-title={dateFormat(post.time_updated)}>
+                <span data-bs-title={dateFormat(post.time_updated)}>
                   {fromNow(post.time_updated)}
                 </span>
               </>
