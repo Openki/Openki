@@ -387,7 +387,6 @@
   "event.details.repl_menu_btn": "Wiederholen",
   "event.details.reserve-a-seat": "Einen Platz reservieren",
   "event.details.uncancel": "Hebe die Absage dieser Veranstaltung auf",
-  "event.details.unregister": "Sie wurden erfolgreich von {EVENT} abgemeldet.",
   "event.details.unregister-withdraw": "Meine Anmeldung zurückziehen",
   "event.details.viewCourse": "Zur Kursübersicht",
   "event.details.want-to-register": "Willst du als {USERNAME} einen Platz reservieren für den Event \"{EVENTTITLE}\" am {DATE}? Deine Reservation ist verbindlich.",
@@ -875,6 +874,7 @@
   "profile.users_profile_page": "Profilseite von {NAME}",
   "profile.venues": "Meine Veranstaltungsorte",
   "profile.verifyEmail.mailOnItsWay": "Bestätigungs E-Mail ist unterwegs.",
+  "profile.verifyEmail.success": "Deine E-Mail wurde bestätigt.",
   "profile.verifymail": "Bestätigungs E-Mail nochmals senden",
   "profile.windowtitle": "Profil von {USER}",
   "proposedCoursesDropdown.joinExistingCourseQuestion": "Möchtest du an einem bestehenden Kurs teilnehmen?",
@@ -1174,6 +1174,5 @@
   "warning.emailNotValid": "Deine E-Mail Adresse scheint nicht korrekt.",
   "warning.noEmailProvided": "Bitte E-Mail Adresse eingeben.",
   "warning.noUserName": "Bitte einen Benutzernamen eingeben.",
-  "warning.userExists": "Dieser Benutzername existiert bereits. Bitte wähle einen anderen.",
-  "profile.verifyEmail.success": "Deine E-Mail wurde bestätigt."
+  "warning.userExists": "Dieser Benutzername existiert bereits. Bitte wähle einen anderen."
 }
