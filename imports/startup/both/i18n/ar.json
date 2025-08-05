@@ -292,7 +292,6 @@
   "email.base.unexpected": "إذا كنت لا تعرف سبب تلقي هذه الرسالة الإلكترونية، تجاهلها أو أرسل لنا رسالة إلى: {REPORTEMAIL}",
   "email.base.unsubscribeLink.automatedNotifications": "ألغ الاشتراك في جميع الإشعارات التلقائية الأخرى.",
   "email.base.unsubscribeLink.privateMessage": "إلغاء الاشتراك في جميع الرسائل الخاصة من المستخدمين.",
-  "email.verified": "تم تأكيد بريدك الإلكتروني.",
   "event.cancel.confirm.button": "إلغاء {EVENT}",
   "event.cancel.reason": "سبب",
   "event.cancel.reason.placeholder": "الرجاء إضافة سبب هنا. (سيتم إرسال هذه الرسالة إلى جميع المستخدمين المسجلين ولن تظهر هنا بعد ذلك)",
@@ -982,5 +981,6 @@
   "warning.emailNotValid": "عنوان بريدك الإلكتروني لا يبدو صحيحًا.",
   "warning.noEmailProvided": "الرجاء إدخال عنوان البريد الإلكتروني.",
   "warning.noUserName": "الرجاء ادخال اسم المستخدم.",
-  "warning.userExists": "اسم المستخدم هذا موجود بالفعل. الرجاء اختيار آخر."
+  "warning.userExists": "اسم المستخدم هذا موجود بالفعل. الرجاء اختيار آخر.",
+  "profile.verifyEmail.success": "تم تأكيد بريدك الإلكتروني."
 }

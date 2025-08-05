@@ -294,7 +294,6 @@
   "email.base.unexpected": "Si vous ignorez pourquoi vous recevez cet email, vous pouvez l'ignorer ou nous envoyez une notification à : {REPORTEMAIL}",
   "email.base.unsubscribeLink.automatedNotifications": "Se désinscrire à toutes les notifications automatiques.",
   "email.base.unsubscribeLink.privateMessage": "Se désinscrire de tous les messages privées venant des utilisateurs.",
-  "email.verified": "Votre E-mail a été vérifié.",
   "event.delete.confirm.button": "Effacer cet évènement",
   "event.delete.confirm.button.busy": "Suppression de événement…",
   "event.description.placeholder": "Décrivez votre événement aussi précisément que possible. Cela permet à chacun de savoir comment préparer l'événement et à quoi s'attendre pour cette rencontre (niveau, prérequis, activités, méthodes pédagogiques, quoi amener, etc.)",
@@ -937,5 +936,6 @@
   "warning.emailNotValid": "Votre e-mail semble contenir une erreur.",
   "warning.noEmailProvided": "Entrez votre adresse e-mail.",
   "warning.noUserName": "Entrez un nom d'utilisateur.",
-  "warning.userExists": "Ce nom d'utilisateur existe déjà. Merci d'en choisir un autre."
+  "warning.userExists": "Ce nom d'utilisateur existe déjà. Merci d'en choisir un autre.",
+  "profile.verifyEmail.success": "Votre E-mail a été vérifié."
 }

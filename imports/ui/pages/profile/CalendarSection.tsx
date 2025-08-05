@@ -35,7 +35,7 @@ export function CalendarSection() {
           <li>
             <a className="dropdown-item" href={webcalUrl}>
               <i className="fa-fw fa-solid fa-download"></i>{" "}
-              {t("profile.calendar.iCal", "iCal-Calendar")}
+              {t("profile.calendar.iCal", "Into app on my local device")}
             </a>
           </li>
           <li>
