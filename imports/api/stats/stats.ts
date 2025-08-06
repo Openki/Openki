@@ -45,8 +45,9 @@ export interface Stat {
 }
 
 export interface GroupStat extends Stat {
-  id?: string | undefined;
+  _id?: string | undefined;
   name?: string | undefined;
+  short?: string | undefined;
   members?: number | undefined;
 }
 
@@ -87,15 +88,16 @@ async function getGroups(courses: CourseModel[], events: EventModel[]) {
   const groupEntities = await Groups.find(
     {},
     {
-      projection: { _id: 1, name: 1, members: 1 },
+      projection: { _id: 1, name: 1, short: 1, members: 1 },
     },
   ).fetchAsync();
 
   return groupIds.map((g) => {
     const group = groupEntities.find((e) => e._id === g);
     return {
-      id: g,
+      _id: g,
       name: group?.name,
+      short: group?.short,
       members: group?.members.length,
     };
   });
@@ -155,8 +157,8 @@ export async function getRegionStats(regionId: string): Promise<Stats> {
       ...groups.map((g) => ({
         ...g,
         ...calcStats(
-          courses.filter((c) => c.groups?.includes(g.id)),
-          events.filter((e) => e.allGroups?.includes(g.id) || e.groups?.includes(g.id)),
+          courses.filter((c) => c.groups?.includes(g._id)),
+          events.filter((e) => e.allGroups?.includes(g._id) || e.groups?.includes(g._id)),
         ),
       })),
     ]

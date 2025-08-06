@@ -9,29 +9,33 @@ export function FullscreenControl() {
   const map = useMap();
   const { t } = useTranslation();
 
-  const fullscreenControl = L.control.fullscreen({
-    position: "topleft",
-    title: t("fullscreen.show", "Full screen"),
-    titleCancel: t("fullscreen.exit", "Exit full screen"),
-    forcePseudoFullscreen: true,
-    content: '<i class="fa-solid fa-expand" style="font-size: 18px;vertical-align: middle;"></i>',
-  });
-
-  map.on("enterFullscreen", function () {
-    (fullscreenControl as any).link.innerHTML =
-      '<i class="fa-solid fa-compress" style="font-size: 18px;vertical-align: middle;"></i>';
-  });
-
-  map.on("exitFullscreen", function () {
-    (fullscreenControl as any).link.innerHTML =
-      '<i class="fa-solid fa-expand" style="font-size: 18px;vertical-align: middle;"></i>';
-  });
-
   useEffect(() => {
+    const fullscreenControl = L.control.fullscreen({
+      position: "topleft",
+      title: t("fullscreen.show", "Full screen"),
+      titleCancel: t("fullscreen.exit", "Exit full screen"),
+      forcePseudoFullscreen: true,
+      content: '<i class="fa-solid fa-expand" style="font-size: 18px;vertical-align: middle;"></i>',
+    });
+
+    const handleEnterFullscreen = function () {
+      (map as any).fullscreenControl.link.innerHTML =
+        '<i class="fa-solid fa-compress" style="font-size: 18px;vertical-align: middle;"></i>';
+    };
+    map.on("enterFullscreen", handleEnterFullscreen);
+
+    const handleExitFullscreen = function () {
+      (map as any).fullscreenControl.link.innerHTML =
+        '<i class="fa-solid fa-expand" style="font-size: 18px;vertical-align: middle;"></i>';
+    };
+    map.on("exitFullscreen", handleExitFullscreen);
+
     fullscreenControl.addTo(map);
 
     return () => {
-      fullscreenControl.remove();
+      (map as any).fullscreenControl.link.remove();
+      map.off("enterFullscreen", handleEnterFullscreen);
+      map.off("exitFullscreen", handleExitFullscreen);
     };
   });
 

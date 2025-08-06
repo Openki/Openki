@@ -15,7 +15,7 @@ import { Props as DeleteConfirmDialogProps } from "./delete-confirm-dialog";
 import { CancelConfirmDialog, Props as CancelConfirmDialogProps } from "./cancel-confirm-dialog";
 import { EventReplication, Props as EventReplicationProps } from "../../replication";
 import { Content } from "../content";
-import { Files } from "../../../courses/files";
+import { Files } from "../../../courses/Files";
 import { DeleteConfirmDialog } from "../../../delete-confirm-dialog";
 import { ButtonDelete, ButtonEdit } from "../../../buttons";
 import { PleaseLogin } from "../../../please-login";
@@ -117,12 +117,6 @@ export function Display({
   const [canceling, setCanceling] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
-  function mayEdit(event: EventModel) {
-    if (!user) {
-      return false;
-    }
-    return event.editableBy(user);
-  }
   function isExpanded() {
     return canceling || expanded;
   }
@@ -183,7 +177,7 @@ export function Display({
           if (course) {
             Router.go("showCourse", { _id: course });
           } else {
-            Router.go("/");
+            Router.go("home");
           }
         } catch (err) {
           Alert.serverError(err, t("eventDetails.eventRemoved.error", "Could not remove event"));
@@ -253,20 +247,15 @@ export function Display({
 
   return (
     <div className="page-component">
-      {mayEdit(event) ? (
-        event.courseId ? (
-          <CourseEvent event={event} courseId={event.courseId} />
-        ) : (
-          <Content event={event} />
-        )
+      {event.editableBy(user) && event.courseId ? (
+        <CourseEvent event={event} courseId={event.courseId} />
       ) : (
         <Content event={event} />
       )}
-
       {replicating ? (
         <EventReplication {...eventReplicationAttr()} />
       ) : (
-        !!mayEdit(event) && (
+        event.editableBy(user) && (
           <>
             <div className="actions">
               {!isExpanded() && (

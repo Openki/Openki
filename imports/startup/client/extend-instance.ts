@@ -7,7 +7,6 @@ Blaze.TemplateInstance.prototype.parentInstance = function (
 ): Blaze.TemplateInstance | undefined {
   let { view } = this;
   while (view) {
-    /* eslint-disable-next-line no-param-reassign, no-plusplus */
     if (view.name.substring(0, 9) === "Template." && !levels--) {
       return view.templateInstance();
     }

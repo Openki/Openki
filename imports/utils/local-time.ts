@@ -28,7 +28,6 @@ import moment from "moment-timezone";
  */
 
 export class Zone {
-  // eslint-disable-next-line no-useless-constructor
   constructor(public readonly tz: string) {}
 
   fromString(date: string) {

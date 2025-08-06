@@ -44,7 +44,6 @@ function EventParticipant({
         {!!participant.companions && (
           <strong
             className="p-1 bg-primary text-light"
-            data-bs-toggle="tooltip"
             data-bs-title={t("eventParticipant.iBringCompanions", "Brings companion.")}
           >
             +{participant.companions}{" "}
@@ -54,6 +53,7 @@ function EventParticipant({
 
         {!!user && user._id !== participant.user && event.editableBy(user) && (
           <RemoveDropdown
+            userId={participant.user}
             onClick={() => {
               EventsMethods.removeParticipant(event._id, participant.user);
             }}

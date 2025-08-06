@@ -25,7 +25,7 @@ import "/imports/ui/components/courses/discussion";
 import "/imports/ui/components/courses/edit";
 import "/imports/ui/components/courses/events";
 import "/imports/ui/components/courses/history";
-import "/imports/ui/components/courses/files";
+import "/imports/ui/components/courses/Files";
 import "/imports/ui/components/courses/members";
 import "/imports/ui/components/courses/roles";
 import "/imports/ui/components/editable";
@@ -140,7 +140,7 @@ template.events({
           Regions.findOne(course.region)?.nameEn,
         );
 
-        Router.go("/");
+        Router.go("home");
       } catch (err) {
         Alert.serverError(
           err,

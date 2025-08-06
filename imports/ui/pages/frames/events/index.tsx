@@ -2,22 +2,23 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
+import { useUserId } from "/imports/utils/react-meteor-data";
+import { take } from "lodash";
 
 import { Events } from "/imports/api/events/events";
+import { useFindFilter } from "/imports/api/events/publications";
 
 import * as UrlTools from "/imports/utils/url-tools";
 import { useReactiveNow } from "/imports/utils/reactive-now";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import * as Metatags from "/imports/utils/metatags";
+import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 
 import { Data as CalendarNavData, Day } from "/imports/ui/components/calendar-nav/day";
+import { EventList } from "/imports/ui/components/events/list";
 
 import "./styles.scss";
-import { EventList } from "/imports/ui/components/events/list";
-import { useFindFilter } from "/imports/api/events/publications";
-import { take } from "lodash";
-import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 
 const DefaultLimit = 6;
 
@@ -34,7 +35,7 @@ export function EventsPage(data: Record<string, string>) {
 
   const filterQuery = filter.toQuery();
 
-  const userId = Meteor.userId();
+  const userId = useUserId();
   // filter isAttendeeFilterOn in addition to filtering that get's passed in via url
   if (userId && isAttendeeFilterOn) {
     filterQuery.participant = userId;

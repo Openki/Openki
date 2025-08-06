@@ -1,8 +1,8 @@
-/* eslint-disable no-nested-ternary */
 import React, { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 import { useUserId } from "/imports/utils/react-meteor-data";
+import { take } from "lodash";
 
 import { SortSpec } from "/imports/utils/sort-spec";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
@@ -43,19 +43,20 @@ function EntitiesComponent<T>({
   const sortParam = params.sort;
   const sort = sortParam ? SortSpec.fromString(sortParam) : SortSpec.unordered();
 
-  const [isLoading, data] = handler.find(query, 10, 0, sort.spec());
+  const limit = 10;
+  const [isLoading, data] = handler.find(query, limit + 1, 0, sort.spec());
 
   const elementRef = useRef<HTMLDivElement>(null);
   const [scrollLeft, setScrollLeft] = useState(elementRef.current?.scrollLeft || 0);
   const [scrollLeftMax, setScrollLeftMax] = useState(0);
 
-  if (!(!isLoading() && (!Array.isArray(data) || data.length > 0))) {
+  if (isLoading() || (Array.isArray(data) && data.length === 0)) {
     return null;
   }
 
   return (
     <div className="container position-relative mb-4">
-      {showAll !== false && !!showAll?.link && (
+      {showAll !== false && !!showAll?.link && data.length > limit && (
         <a className="btn btn-sm btn-success float-end" href={showAll.link}>
           {showAll.text}
         </a>
@@ -64,7 +65,7 @@ function EntitiesComponent<T>({
       {"element" in handler ? (
         // ListOfEntities
         <div
-          className="scroll-container d-flex flex-row flex-nowrap pb-3 overflow-x-scroll"
+          className="scroll-container d-flex flex-row flex-nowrap pb-3 overflow-x-auto"
           style={{ scrollBehavior: "smooth" }}
           ref={elementRef}
           onScroll={() => {
@@ -79,7 +80,7 @@ function EntitiesComponent<T>({
             }
           }}
         >
-          {data.map((d, i) => (
+          {take(data, 10).map((d, i) => (
             <handler.element key={i} entity={d} index={i} params={params} />
           ))}
           {scrollLeft !== 0 && (
@@ -88,7 +89,7 @@ function EntitiesComponent<T>({
               onClick={() => {
                 const element = elementRef.current;
                 if (element) {
-                  element.scrollLeft = element.scrollLeft - element.clientWidth / 1.5;
+                  element.scrollLeft = element.scrollLeft - element.clientWidth * 0.66;
                 }
               }}
             >
@@ -102,7 +103,7 @@ function EntitiesComponent<T>({
                 onClick={() => {
                   const element = elementRef.current;
                   if (element) {
-                    element.scrollLeft = element.scrollLeft + element.clientWidth / 1.5;
+                    element.scrollLeft = element.scrollLeft + element.clientWidth * 0.66;
                   }
                 }}
               >
@@ -112,7 +113,7 @@ function EntitiesComponent<T>({
         </div>
       ) : (
         // ComponentWithEntities
-        <handler.component entities={data} params={params} />
+        <handler.component entities={take(data, 10)} params={params} />
       )}
     </div>
   );
@@ -176,7 +177,7 @@ function DashboardComponent({
   if (defaultGroup) {
     urlParams.append("group", defaultGroup);
   }
-  const params = Object.fromEntries(Array.from(urlParams.entries()));
+  const params = Object.fromEntries(urlParams);
 
   if (!("filter" in handler)) {
     // StaticComponent

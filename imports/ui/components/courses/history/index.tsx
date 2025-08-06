@@ -354,9 +354,3 @@ export function History({ course }: { course: CourseModel }) {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("Coursehistory", () => History);

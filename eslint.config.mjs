@@ -14,6 +14,14 @@ export default tseslint.config(
   react.configs.flat.recommended,
   reactHooks.configs["recommended-latest"],
 
+  {
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
+  },
+
   // Global ignores
   {
     ignores: [
@@ -21,7 +29,7 @@ export default tseslint.config(
       "node_modules/",
       "packages/",
       "i18next-parser.config.js",
-      "postcsss.config.js",
+      "postcss.config.js",
     ],
   },
 
@@ -43,7 +51,10 @@ export default tseslint.config(
       "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/unified-signatures": [
         "error",
-        { ignoreDifferentlyNamedParameters: true, ignoreOverloadsWithDifferentJSDoc: true },
+        {
+          ignoreDifferentlyNamedParameters: true,
+          ignoreOverloadsWithDifferentJSDoc: true,
+        },
       ],
     },
   },

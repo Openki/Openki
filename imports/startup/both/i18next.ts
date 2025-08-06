@@ -1,5 +1,5 @@
 import { Meteor } from "meteor/meteor";
-import i18next, { TFunction } from "i18next";
+import i18next from "i18next";
 import ICU from "i18next-icu";
 import ChainedBackend from "i18next-chained-backend";
 import resourcesToBackend from "i18next-resources-to-backend";
@@ -16,34 +16,34 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 if (false) {
   // whitelist, this is needed for meteor's dynamic-import module, to allow dynamic loading of modules
   // on the client: https://docs.meteor.com/packages/dynamic-import.html#Using-import-with-dynamic-expressions
-  import(`/imports/startup/both/i18n/en.json`);
+  import("/imports/startup/both/i18n/en.json");
 
-  import(`/imports/startup/both/i18n/en-ccc.json`);
-  import(`/imports/startup/both/i18n/af.json`);
-  import(`/imports/startup/both/i18n/am.json`);
-  import(`/imports/startup/both/i18n/ar.json`);
-  import(`/imports/startup/both/i18n/da.json`);
-  import(`/imports/startup/both/i18n/de.json`);
-  import(`/imports/startup/both/i18n/de-ccc.json`);
-  import(`/imports/startup/both/i18n/de-ZH.json`);
-  import(`/imports/startup/both/i18n/de-zuerich-lernt.json`);
-  import(`/imports/startup/both/i18n/el.json`);
-  import(`/imports/startup/both/i18n/es.json`);
-  import(`/imports/startup/both/i18n/fa.json`);
-  import(`/imports/startup/both/i18n/fr.json`);
-  import(`/imports/startup/both/i18n/hu.json`);
-  import(`/imports/startup/both/i18n/it.json`);
-  import(`/imports/startup/both/i18n/ja.json`);
-  import(`/imports/startup/both/i18n/ko.json`);
-  import(`/imports/startup/both/i18n/nb.json`);
-  import(`/imports/startup/both/i18n/nl.json`);
-  import(`/imports/startup/both/i18n/pt.json`);
-  import(`/imports/startup/both/i18n/rm.json`);
-  import(`/imports/startup/both/i18n/ru.json`);
-  import(`/imports/startup/both/i18n/sv.json`);
-  import(`/imports/startup/both/i18n/tr.json`);
-  import(`/imports/startup/both/i18n/zh-CN.json`);
-  import(`/imports/startup/both/i18n/zh-TW.json`);
+  import("/imports/startup/both/i18n/en-ccc.json");
+  import("/imports/startup/both/i18n/af.json");
+  import("/imports/startup/both/i18n/am.json");
+  import("/imports/startup/both/i18n/ar.json");
+  import("/imports/startup/both/i18n/da.json");
+  import("/imports/startup/both/i18n/de.json");
+  import("/imports/startup/both/i18n/de-ccc.json");
+  import("/imports/startup/both/i18n/de-ZH.json");
+  import("/imports/startup/both/i18n/de-zuerich-lernt.json");
+  import("/imports/startup/both/i18n/el.json");
+  import("/imports/startup/both/i18n/es.json");
+  import("/imports/startup/both/i18n/fa.json");
+  import("/imports/startup/both/i18n/fr.json");
+  import("/imports/startup/both/i18n/hu.json");
+  import("/imports/startup/both/i18n/it.json");
+  import("/imports/startup/both/i18n/ja.json");
+  import("/imports/startup/both/i18n/ko.json");
+  import("/imports/startup/both/i18n/nb.json");
+  import("/imports/startup/both/i18n/nl.json");
+  import("/imports/startup/both/i18n/pt.json");
+  import("/imports/startup/both/i18n/rm.json");
+  import("/imports/startup/both/i18n/ru.json");
+  import("/imports/startup/both/i18n/sv.json");
+  import("/imports/startup/both/i18n/tr.json");
+  import("/imports/startup/both/i18n/zh-CN.json");
+  import("/imports/startup/both/i18n/zh-TW.json");
 }
 
 let localStorageSupported;
@@ -117,7 +117,7 @@ i18next.on("loaded", function () {
  * A reactive wrapper for i18next.t. Use { escapeText: true } to escape the i18n text. You can use
  * Spacebars.SafeString(..) for params to allow some HTML.
  */
-export const i18n: TFunction = (...args: any[]) => {
+export const i18n = (...args: any[]) => {
   reactiveLang.get();
   const result = (i18next.t as any)(...args);
 
@@ -143,7 +143,7 @@ export const i18n: TFunction = (...args: any[]) => {
       .join("");
   }
 
-  return escapeText !== false ? Blaze._escape(result) : result;
+  return (escapeText !== false ? Blaze._escape(result) : result) as any;
 };
 
 if (Meteor.isClient) {
@@ -160,7 +160,6 @@ if (Meteor.isClient) {
         // function (key, defaultValue, data)
 
         if (data?.hash?.attr) {
-          // eslint-disable-next-line no-param-reassign
           delete data?.hash?.attr;
           return i18n(key, defaultValueOrData, { ...data?.hash });
         }
@@ -173,7 +172,6 @@ if (Meteor.isClient) {
       // function (key, data)
 
       if (defaultValueOrData?.hash?.attr) {
-        // eslint-disable-next-line no-param-reassign
         delete defaultValueOrData?.hash?.attr;
         return i18n(key, { ...defaultValueOrData?.hash });
       }

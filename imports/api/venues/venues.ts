@@ -124,7 +124,6 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
   Filtering() {
     return new Filtering(FindParams);
   }

@@ -17,7 +17,6 @@ export async function onStartUp() {
     ),
   );
 
-  /* eslint-disable-next-line no-console */
   console.log(`events.categoriesDenormalizer.onStartUp: ${updated} affected events`);
 }
 

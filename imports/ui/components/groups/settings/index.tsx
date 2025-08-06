@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
@@ -87,10 +86,7 @@ function FoundUsers({
             </button>
           </div>
           <div className="tag tag-link group-member-tag-profile addon">
-            <a
-              href={Router.path("userprofile", { _id: user._id })}
-              title={t("group.settings.member.profile")}
-            >
+            <a href={Router.path("userprofile", user)} title={t("group.settings.member.profile")}>
               <i className="fa-solid fa-user fa-fw" aria-hidden="true"></i>
             </a>
           </div>

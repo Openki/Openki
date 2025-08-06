@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 import { useTranslation } from "react-i18next";
@@ -242,8 +241,8 @@ export function StatsPage() {
                   return (
                     <tr key={index}>
                       <td>
-                        {group.id ? (
-                          <a href={Router.path("groupDetails", { _id: group.id })}>
+                        {group._id ? (
+                          <a href={Router.path("groupDetails", group)}>
                             {group.name || t("group.missing")}
                           </a>
                         ) : (

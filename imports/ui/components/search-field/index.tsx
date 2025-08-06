@@ -1,4 +1,4 @@
-import { _ } from "meteor/underscore";
+import { debounce } from "lodash";
 import { useTranslation } from "react-i18next";
 import React, { useCallback, useState } from "react";
 import { Template } from "meteor/templating";
@@ -18,7 +18,7 @@ export function SearchField({ search, onChange, onFocusOut }: Props) {
 
   // prevented unwanted input in the search
   const handleSearch = useCallback(
-    _.debounce((newValue: string) => {
+    debounce((newValue: string) => {
       setValue(newValue);
       onChange(newValue);
       // we don't updateURL() here, only after the field loses focus
