@@ -1,0 +1,48 @@
+@use "sass:color";
+@import "{}/imports/ui/stylesheets/variables/index";
+
+// event canceled
+// ============================================================================================
+.event-canceled {
+  background-color: $canceled-color;
+  border-radius: 5px;
+  color: $white;
+  display: flow-root;
+  font-family: monospace, sans-serif;
+  font-size: 2em;
+  font-stretch: narrower;
+  font-weight: 950;
+  left: 5%;
+  margin-block-start: 18px;
+  opacity: 0.4;
+  padding: 5px;
+  position: absolute;
+  text-align: center;
+  top: 40%;
+  transform: rotate(-27deg);
+  width: fit-content;
+  z-index: 0;
+}
+
+// event fully booked
+// ============================================================================================
+.event-fully-booked {
+  background-color: #f99248;
+  border-radius: 5px;
+  color: $white;
+  display: flow-root;
+  font-family: monospace, sans-serif;
+  font-size: 2em;
+  font-stretch: narrower;
+  font-weight: 950;
+  left: 5%;
+  margin-block-start: 18px;
+  opacity: 0.4;
+  padding: 5px;
+  position: absolute;
+  text-align: center;
+  top: 40%;
+  transform: rotate(-27deg);
+  width: fit-content;
+  z-index: 0;
+}
