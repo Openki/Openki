@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop */
 import { CourseEntity, Courses } from "/imports/api/courses/courses";
 import { ensure } from "/imports/api/fixtures/ensureFixture";
 import { Prng } from "/imports/api/fixtures/Prng";
@@ -65,7 +64,6 @@ export async function create() {
       history: [],
     } as unknown as CourseEntity;
 
-    // eslint-disable-next-line no-await-in-loop
     await Courses.insertAsync(course);
   }
 
@@ -97,23 +95,17 @@ export async function create() {
       archived: template.archived,
       history: template.history
         ? await mapSync(template.history, async (h) => {
-            // eslint-disable-next-line no-param-reassign
             h.dateTime = new Date(h.dateTime.$date) as any;
             if (h.data.createdby)
-              // eslint-disable-next-line no-param-reassign
               h.data.createdby = (await ensure.user(h.data.createdby, template.region))._id;
             if (h.data.updatedBy)
-              // eslint-disable-next-line no-param-reassign
               h.data.updatedBy = (await ensure.user(h.data.updatedBy, template.region))._id;
-            if (h.data.user)
-              // eslint-disable-next-line no-param-reassign
-              h.data.user = (await ensure.user(h.data.user, template.region))._id;
+            if (h.data.user) h.data.user = (await ensure.user(h.data.user, template.region))._id;
             return h;
           })
         : [],
     } as unknown as CourseEntity;
 
-    // eslint-disable-next-line no-await-in-loop
     await Courses.insertAsync(course);
   }
 

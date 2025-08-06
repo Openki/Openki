@@ -8,7 +8,6 @@ export async function resizeImage(
 ): Promise<string>;
 export async function resizeImage(base64: string, maxWidth: number, maxHeigth = maxWidth) {
   if (!PublicSettings.feature.resizeImagesOnServer) {
-    // eslint-disable-next-line no-console
     console.info("Resizing images with sharp on the server is disabled.");
     return base64.substring(base64.indexOf("base64") + 7);
   }

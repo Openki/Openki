@@ -31,7 +31,6 @@ function CategoryLabelLinked({
       <a
         className={`js-category-label category-${category}`}
         data-category={category}
-        data-bs-toggle="tooltip"
         data-bs-title={`${t("categories.show_courses", "Show all in {CATEGORY}", {
           CATEGORY: t(`category.${category}`),
         })}`}
@@ -47,7 +46,7 @@ function CategoryLabelLinked({
 }
 
 export interface CourseCategoriesProps {
-  categories: string[] | undefined;
+  categories: string[];
   onClick?: (categorie: string) => Promise<void>;
   onMouseOver?: (categorie: string) => Promise<void>;
   onMouseOut?: (categorie: string) => Promise<void>;

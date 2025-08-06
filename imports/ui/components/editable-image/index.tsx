@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useState, DragEvent, ChangeEvent } from "react";
 import ImageBlobReduce from "image-blob-reduce";
 import { useTranslation } from "react-i18next";
@@ -75,7 +74,6 @@ export function EditableImage(data: Data) {
           pica: ImageBlobReduce.pica({ features: ["js", "wasm"] }),
         }).toBlob(file, { max: data.maxSize });
       } catch (ex) {
-        // eslint-disable-next-line no-console
         console.info(
           `Some browsers do not support this. It is okay to use the original. Errormessage: ${ex}`,
         );
@@ -175,7 +173,7 @@ export function EditableImage(data: Data) {
   }
 
   function deleteAllowed() {
-    return data.onDelete;
+    return !!data.onDelete;
   }
 
   function handleDragOver(event: DragEvent<HTMLFormElement>) {
@@ -300,9 +298,9 @@ export function EditableImage(data: Data) {
       <div className="editable-image-controls">
         {progress === "ready" ? (
           <ButtonSave {...uploadButtonAttributes()} />
-        ) : deleteAllowed() ? (
-          <ButtonDelete onClick={onDelete} />
-        ) : null}{" "}
+        ) : (
+          deleteAllowed() && <ButtonDelete onClick={onDelete} />
+        )}{" "}
         <ButtonCancel onClick={onCancel} />
       </div>
     </>

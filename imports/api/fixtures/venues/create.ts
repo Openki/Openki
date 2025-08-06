@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop */
 import { _ } from "meteor/underscore";
 
 import { ensure } from "/imports/api/fixtures/ensureFixture";
@@ -51,7 +50,7 @@ export async function create() {
 
   for (const template of venues) {
     const venueData = { ...template };
-    // eslint-disable-next-line no-nested-ternary
+
     venueData.region = template.region
       ? template.region
       : prng() > 0.85

@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React from "react";
 import { Router } from "meteor/iron:router";
 import { PublicSettings } from "/imports/utils/PublicSettings";
@@ -16,10 +15,10 @@ import { CourseTemplate } from "../../lib/course-template";
 
 import { Edit } from "../courses/edit";
 import { CourseCompact } from "../courses/compact";
-import { CompactPropose } from "/imports/ui/components/courses/compact-propose";
 import { EventCompact } from "../../components/events/compact";
 import { EventCompact2 } from "../events/client/compact2";
 import { EventsMap } from "../../components/events/map";
+import { CompactPropose } from "../courses/CompactPropose";
 
 /** A list of entites. */
 

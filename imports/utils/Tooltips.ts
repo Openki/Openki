@@ -1,14 +1,14 @@
 import Tooltip from "bootstrap/js/dist/tooltip";
 
 export function create(target: ParentNode = document) {
-  const tooltipTriggerList = target.querySelectorAll('[data-bs-toggle="tooltip"]');
+  const tooltipTriggerList = target.querySelectorAll("[data-bs-title]");
   [...(tooltipTriggerList as any)].map((tooltipTriggerEl) =>
     Tooltip.getOrCreateInstance(tooltipTriggerEl, { html: true }),
   );
 }
 
 export function update(target: ParentNode = document) {
-  const tooltipTriggerList = target.querySelectorAll('[data-bs-toggle="tooltip"]');
+  const tooltipTriggerList = target.querySelectorAll("[data-bs-title]");
   [...(tooltipTriggerList as any)].map((tooltipTriggerEl) => {
     Tooltip.getOrCreateInstance(tooltipTriggerEl).dispose();
     return Tooltip.getOrCreateInstance(tooltipTriggerEl, { html: true });
@@ -16,7 +16,7 @@ export function update(target: ParentNode = document) {
 }
 
 export function hide(target: ParentNode = document) {
-  const tooltipTriggerList = target.querySelectorAll('[data-bs-toggle="tooltip"]');
+  const tooltipTriggerList = target.querySelectorAll("[data-bs-title]");
   [...(tooltipTriggerList as any)].forEach((tooltipTriggerEl) => {
     const tooltip = Tooltip.getOrCreateInstance(tooltipTriggerEl, { html: true });
     tooltip.hide();

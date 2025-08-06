@@ -40,7 +40,6 @@ export function Contribution({ userId }: Props) {
   return (
     <a
       href={getLocalizedValue(contribution.link)}
-      data-bs-toggle="tooltip"
       data-bs-title={t(
         "user.hasContributed",
         "{USERNAME} supported {SITENAME} with a donation. Click the {ICON} for how to contribute.",

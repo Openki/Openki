@@ -1,6 +1,5 @@
 import React from "react";
 import { Router } from "meteor/iron:router";
-import { Template } from "meteor/templating";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { Icon } from "../Icon";
@@ -67,7 +66,6 @@ export function VenueTag({
     return (
       <div className={`tag tag-link ${className} venue-tag ${tagClassName()}`}>
         <a
-          data-bs-toggle="tooltip"
           data-bs-title={t("location.link.tooltip", "Show details of {VENUE}", {
             VENUE: venue.name,
           })}
@@ -110,9 +108,3 @@ export function VenueLink({ venue, room, openInNewTab }: Props) {
     </>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("VenueLink", () => VenueLink);

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Meteor } from "meteor/meteor";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
@@ -9,7 +8,7 @@ import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 
 import { Description } from "../description";
 import { History } from "/imports/ui/components/courses/history";
-import { Files } from "/imports/ui/components/courses/files";
+import { Files } from "/imports/ui/components/courses/Files";
 import { PricePolicy } from "/imports/ui/components/price-policy";
 
 import "./styles.scss";
@@ -22,7 +21,7 @@ export function Submenu(data: { edit: boolean; course: CourseModel; select: stri
 
   function mayEdit() {
     const { course } = data;
-    return course?.editableBy(Meteor.user());
+    return course?.editableBy(user);
   }
   function customFields() {
     const { course } = data;

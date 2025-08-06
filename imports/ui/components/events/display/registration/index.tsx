@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 import { useTranslation } from "react-i18next";
 import React, { useState } from "react";

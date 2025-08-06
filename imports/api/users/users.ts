@@ -34,9 +34,9 @@ export interface UserEntity extends Meteor.User {
       /** (not allways) */
       email: string;
       name: string;
-      // eslint-disable-next-line camelcase
+
       first_name: string;
-      // eslint-disable-next-line camelcase
+
       last_name: string;
       link: string;
       gender: string;
@@ -50,12 +50,12 @@ export interface UserEntity extends Meteor.User {
       expiresAt: number;
       id: string;
       email: string;
-      // eslint-disable-next-line camelcase
+
       verified_email: boolean;
       name: string;
-      // eslint-disable-next-line camelcase
+
       given_name: string;
-      // eslint-disable-next-line camelcase
+
       family_name: string;
       /** (link) */
       picture: string;

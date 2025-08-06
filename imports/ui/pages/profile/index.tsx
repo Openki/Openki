@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
+import { Router } from "meteor/iron:router";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 
 import { UserModel } from "/imports/api/users/users";
@@ -21,68 +22,157 @@ import { GroupSection } from "./GroupSection";
 import { TenantSection } from "./TenantSection";
 import { AdminSection } from "./AdminSection";
 import { CalendarSection } from "./CalendarSection";
+import { Report } from "/imports/ui/components/report";
+import { ActionResult } from "../../components/action-result";
 
 import "./styles.scss";
+
+function VisitProfileAction({ color }: { color: string }) {
+  const { t } = useTranslation();
+  return (
+    <a className={`btn btn-lg btn-${color}`} href={Router.path("profile")}>
+      {t("profile.gotoProfile", "Visit your profile")}
+    </a>
+  );
+}
+
+function VerifyEmailAlerts() {
+  const { t } = useTranslation();
+  const query = useSearchParams();
+
+  if (query.verifyEmail === "success") {
+    return (
+      <ActionResult
+        type="success"
+        title={t("profile.verifyEmail.success", "Your e-mail has been verified.")}
+        actions={[<VisitProfileAction key={1} color="success" />]}
+      />
+    );
+  }
+
+  if (query.verifyEmail === "failed") {
+    return (
+      <ActionResult
+        type="failed"
+        title={t("profile.verifyEmail.failed", "Address could not be verified. Please Try again.")}
+        actions={[<VisitProfileAction key={1} color="secondary" />]}
+      />
+    );
+  }
+
+  throw new Error("Unexpected value for verifyEmail param.");
+}
 
 function UnsubscribeResultAlerts() {
   const { t } = useTranslation();
   const query = useSearchParams();
+
   function notificationsUnsubscribeSuccess() {
-    return query?.unsubscribed === "notifications";
+    return query.unsubscribed === "notifications";
   }
   function privateMessagesUnsubscribeSuccess() {
-    return query?.unsubscribed === "privatemessages";
+    return query.unsubscribed === "privatemessages";
   }
   function unsubscribeError() {
-    return query?.["unsubscribe-error"] === "";
+    return query["unsubscribe-error"] === "";
   }
 
+  useEffect(() => {
+    if (notificationsUnsubscribeSuccess()) {
+      Analytics.trackEvent(
+        "Unsubscribes from notifications",
+        "Unsubscribes from notifications via e-mail",
+      );
+    }
+    if (privateMessagesUnsubscribeSuccess()) {
+      Analytics.trackEvent(
+        "Unsubscribes from notifications",
+        "Unsubscribes from private messages via e-mail",
+      );
+    }
+  }, [query.unsubscribe]);
+
   if (notificationsUnsubscribeSuccess()) {
-    Analytics.trackEvent(
-      "Unsubscribes from notifications",
-      "Unsubscribes from notifications via e-mail",
+    return (
+      <ActionResult
+        type="success"
+        icon={
+          <span className="fa-stack fa-2xs">
+            <i className="fa-regular fa-envelope fa-stack-1x"></i>
+            <i className="fa-solid fa-ban fa-stack-2x"></i>
+          </span>
+        }
+        title={t(
+          "notifications.unsubscribeSuccess",
+          "You have successfully unsubscribed from all automated notifications.",
+        )}
+        actions={[
+          <>
+            {t(
+              "notifications.unsubscribeSuccess.action",
+              "If you want to unsubscribe from a specific course you can unsubscribe there. Manage your notifications settings:",
+            )}{" "}
+            <VisitProfileAction color="success" />
+          </>,
+        ]}
+      >
+        {t(
+          "notifications.unsubscribeSuccess.description",
+          "Are you sure? This could cause problems. You will not receive notifications about updates to courses, events, etc.",
+        )}
+      </ActionResult>
     );
   }
   if (privateMessagesUnsubscribeSuccess()) {
-    Analytics.trackEvent(
-      "Unsubscribes from notifications",
-      "Unsubscribes from private messages via e-mail",
+    return (
+      <ActionResult
+        type="success"
+        icon={
+          <span className="fa-stack fa-2xs">
+            <i className="fa-regular fa-envelope fa-stack-1x"></i>
+            <i className="fa-solid fa-ban fa-stack-2x"></i>
+          </span>
+        }
+        title={t(
+          "privateMessages.unsubscribeSuccess",
+          "You will not get private messages from users anymore.",
+        )}
+        actions={[
+          <>
+            {t(
+              "privateMessages.unsubscribeSuccess.action.manage",
+              "Manage your notifications settings:",
+            )}{" "}
+            <VisitProfileAction color="success" />
+          </>,
+          <>
+            {t(
+              "privateMessages.unsubscribeSuccess.action.reportHarassment",
+              "Report harassment by another user:",
+            )}{" "}
+            <Report />
+          </>,
+        ]}
+      >
+        {t(
+          "privateMessages.unsubscribeSuccess.description",
+          "Are you sure? This could cause problems. Other users will no longer be able to contact you.",
+        )}
+      </ActionResult>
     );
   }
-  return (
-    <>
-      {notificationsUnsubscribeSuccess() && (
-        <div className="alert alert-success" role="alert">
-          <span className="fa-stack fa-lg">
-            <i className="fa-regular fa-envelope fa-stack-1x"></i>
-            <i className="fa-solid fa-ban fa-stack-2x"></i>
-          </span>{" "}
-          {t(
-            "notifications.unsubscribeSuccess",
-            "You have unsubscribed from automated notifications.",
-          )}
-        </div>
-      )}
-      {privateMessagesUnsubscribeSuccess() && (
-        <div className="alert alert-success" role="alert">
-          <span className="fa-stack fa-lg">
-            <i className="fa-regular fa-envelope fa-stack-1x"></i>
-            <i className="fa-solid fa-ban fa-stack-2x"></i>
-          </span>{" "}
-          {t("privateMessages.unsubscribeSuccess", "You will not get private messages from users.")}
-        </div>
-      )}
-      {unsubscribeError() && (
-        <div className="alert alert-danger" role="alert">
-          <span className="fa-stack fa-lg">
-            <i className="fa-regular fa-envelope fa-stack-1x"></i>
-            <i className="fa-solid fa-ban fa-stack-2x"></i>
-          </span>{" "}
-          {t("notifications.unsubscribeError", "Could not unsubscribe. Please Try again.")}
-        </div>
-      )}
-    </>
-  );
+
+  if (unsubscribeError()) {
+    return (
+      <ActionResult
+        type="failed"
+        title={t("notifications.unsubscribeError", "Could not unsubscribe. Please Try again.")}
+        actions={[<VisitProfileAction key={1} color="secondary" />]}
+      />
+    );
+  }
+
+  throw new Error('Unexpected value for params "unsubscribed" and "unsubscribe-error".');
 }
 
 function NotLoggedIn() {
@@ -143,7 +233,7 @@ function LoggedIn({ user }: { user: UserModel }) {
 
 export function ProfilePage() {
   const { t } = useTranslation();
-
+  const query = useSearchParams();
   const user = useUser();
 
   function isVisitor() {
@@ -160,9 +250,16 @@ export function ProfilePage() {
     Metatags.setCommonTags(title);
   });
 
+  if (query.unsubscribed || query["unsubscribe-error"] === "") {
+    return <UnsubscribeResultAlerts />;
+  }
+
+  if (query.verifyEmail) {
+    return <VerifyEmailAlerts />;
+  }
+
   return (
     <div className="container mw-md">
-      <UnsubscribeResultAlerts />
       {!isVisitor() && (
         <div className="page-component">
           <h1>

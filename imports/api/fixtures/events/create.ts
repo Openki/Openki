@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop */
 import { Events, EventEntity } from "../../events/events";
 import { Log } from "../../log/log";
 import { ensure } from "../ensureFixture";
@@ -99,7 +98,6 @@ export async function create() {
       editor: event.venue?.editor,
     } as any;
 
-    // eslint-disable-next-line no-await-in-loop
     await Events.insertAsync(event);
   }
 
@@ -167,7 +165,6 @@ export async function create() {
       end: regionZone.fromString(endLocal).toDate(),
     } as unknown as Omit<Mongo.OptionalId<EventEntity>, "tenant">;
 
-    // eslint-disable-next-line no-await-in-loop
     await Events.insertAsync(event);
   }
 

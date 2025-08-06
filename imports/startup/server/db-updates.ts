@@ -58,7 +58,6 @@ if (runBackgroundTasks)
     const skipInitial = (await UpdatesApplied.countDocuments()) === 0;
 
     for (const [name, updateAvailable] of Object.entries(UpdatesAvailable)) {
-      // eslint-disable-next-line no-await-in-loop
       if ((await UpdatesApplied.countDocuments({ name })) === 0) {
         const entry: UpdatesAppliedEntity = {
           name,
@@ -67,18 +66,16 @@ if (runBackgroundTasks)
         };
 
         if (skipInitial) {
-          /* eslint-disable-next-line no-console */
           console.log(`Skipping update ${name}`);
         } else {
-          /* eslint-disable-next-line no-console */
           console.log(`Applying update ${name}`);
-          // eslint-disable-next-line no-await-in-loop
+
           entry.affected = await updateAvailable();
           entry.applied = new Date();
-          /* eslint-disable-next-line no-console */
+
           console.log(`${name}: ${entry.affected} affected documents`);
         }
-        // eslint-disable-next-line no-await-in-loop
+
         await UpdatesApplied.insertAsync(entry);
       }
     }

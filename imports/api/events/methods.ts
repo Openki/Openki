@@ -66,7 +66,6 @@ const ReplicaSync = function (
           end: newStartMoment.add(timeDelta).toDate(),
         });
 
-        // eslint-disable-next-line no-await-in-loop
         const regionZone = await LocalTime.zone(replica.region);
         Object.assign(replicaChanges, {
           startLocal: regionZone.toString(replicaChanges.start as Date),
@@ -81,7 +80,7 @@ const ReplicaSync = function (
 
       if (updateOptions.infos || updateTime) {
         // only update if something has changed
-        // eslint-disable-next-line no-await-in-loop
+
         await Events.updateAsync({ _id: replica._id }, { $set: replicaChanges });
       }
 
@@ -334,7 +333,7 @@ export const save = ServerMethod(
       if (enrichedEvent.courseId) {
         enrichedEvent = await categoriesDenormalizer.beforeInsert(enrichedEvent);
       }
-      // eslint-disable-next-line no-param-reassign
+
       eventId = await Events.insertAsync(enrichedEvent);
 
       if (editFields.courseId) {
@@ -373,7 +372,6 @@ export const save = ServerMethod(
 
     if (sendNotifications) {
       if (comment) {
-        // eslint-disable-next-line no-param-reassign
         comment = comment.trim().substring(0, 2000).trim();
       }
 
@@ -452,6 +450,7 @@ export const promote = ServerMethod(
     await UpdateMethods.promote(Events as unknown as GroupPromoters)(eventId, groupId, enable);
     await groupsDenormalizer.updateGroups(eventId);
   },
+  { simulation: false },
 );
 
 /**
@@ -468,6 +467,7 @@ export const editing = ServerMethod(
     await UpdateMethods.editing(Events as unknown as GroupPromoters)(eventId, groupId, enable);
     await groupsDenormalizer.updateGroups(eventId);
   },
+  { simulation: false },
 );
 
 /**
@@ -627,7 +627,6 @@ export const cancel = ServerMethod(
 
     if (event.participants?.length) {
       if (comment) {
-        // eslint-disable-next-line no-param-reassign
         comment = comment.trim().substring(0, 2000).trim();
       }
 

@@ -16,7 +16,7 @@ import * as Analytics from "/imports/ui/lib/analytics";
 import * as Metatags from "/imports/utils/metatags";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
-import { Editable, Props as EditableProps } from "/imports/ui/components/editable/index.react";
+import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 
 import { Dashboard, Props as DashboardProps } from "../../components/dashboard";
 import { ButtonCancel, ButtonSave } from "/imports/ui/components/buttons";
@@ -140,7 +140,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
 
       Analytics.trackEvent("Group creations", "Group creations");
 
-      Router.go("groupDetails", { _id: groupId });
+      Router.go("groupDetails", { _id: groupId, short: newGroup.short });
     } catch (err) {
       Alert.serverError(err, t("groupDetails.saveError", { GROUP: newGroup.name }));
     } finally {
@@ -256,10 +256,9 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
 
             <button
               className="btn btn-link float-end ms-2"
-              data-bs-toggle="tooltip"
               data-bs-title={t("group.page.removeFilter", "See all courses")}
               onClick={() => {
-                Router.go("/"); // Got a better idea?
+                Router.go("home"); // Got a better idea?
               }}
             >
               <i className="fa-solid fa-xmark fa-lg" aria-hidden="true"></i>
@@ -267,7 +266,6 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
             {!group.isNew() && mayEdit && (
               <button
                 className="btn btn-link float-end ms-2"
-                data-bs-toggle="tooltip"
                 data-bs-title={t("group.settings.title")}
                 onClick={() => {
                   setEditingSettings(!editingSettings);

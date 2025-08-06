@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import { useTranslation } from "react-i18next";
 import React, { useState } from "react";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";

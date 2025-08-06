@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
@@ -15,7 +14,7 @@ import * as StringTools from "/imports/utils/string-tools";
 import { hasRoleUser } from "/imports/utils/course-role-utils";
 
 import * as Analytics from "/imports/ui/lib/analytics";
-import { Editable, Props as EditableProps } from "/imports/ui/components/editable/index.react";
+import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 
 import { RegionTag } from "../../regions/tag";
 import { Title } from "./title";
@@ -268,7 +267,7 @@ export function Edit(data: Data) {
     if (isNew) {
       if (data.isFrame && data.region) {
         // The region was preset for the frame
-        return allRegions.filter((r) => r._id === data.region)[0];
+        return allRegions.find((r) => r._id === data.region);
       }
       if (allRegions.length === 1) {
         // There is only one region
@@ -279,7 +278,6 @@ export function Edit(data: Data) {
     return undefined;
   }
   const getGroups = () => {
-    // eslint-disable-next-line @typescript-eslint/no-shadow
     const groups = [];
 
     const defaultTeamGroups = getRegion()?.defaultTeamGroups;
@@ -495,7 +493,7 @@ export function Edit(data: Data) {
 
     if (data.isFrame && data.region) {
       // The region was preset for the frame
-      const region = allRegions.filter((r) => r._id === data.region)[0];
+      const region = allRegions.find((r) => r._id === data.region);
       if (region) {
         return !region.isPrivate();
       }
@@ -692,7 +690,7 @@ export function Edit(data: Data) {
     if (course._id) {
       Router.go("showCourse", course);
     } else {
-      Router.go("/");
+      Router.go("home");
     }
   };
 

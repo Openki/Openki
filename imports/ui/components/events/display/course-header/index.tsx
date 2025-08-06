@@ -12,7 +12,7 @@ import "./styles.scss";
 
 export interface Props {
   course?: CourseModel;
-  backlink?: string;
+  backlink?: string | undefined;
   headerlink?: string;
   regionId: string;
   categories: string[] | undefined;
@@ -57,7 +57,7 @@ export function EventCourseHeader(props: Props) {
         </>
       )}
       <h2>{props.title}</h2>
-      <CourseCategories categories={props.categories} />
+      {!!props.categories && <CourseCategories categories={props.categories} />}
       {!!props.course && <GroupList course={props.course} />}
       <RegionTag region={props.regionId} />
     </div>

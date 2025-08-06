@@ -21,7 +21,6 @@ export function GroupList({ event }: Props) {
 
   const [isRegionLoading, region] = useRegionDetails(event.region);
 
-  // eslint-disable-next-line @typescript-eslint/no-shadow
   function tools(groupId: string, event: EventModel) {
     // Groups may be adopted from the course, these cannot be removed
     const ownGroup = event.groups.includes(groupId);

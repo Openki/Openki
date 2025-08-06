@@ -99,7 +99,6 @@ function Task({
         // Move entered username over to email field if it contains a @
         if (isEmail(username)) {
           email = username;
-          // eslint-disable-next-line no-param-reassign
           username = "";
         }
 
@@ -248,8 +247,8 @@ export function AccountTasks() {
     </div>
   );
 }
-// for Blaze
 
+// for Blaze
 import "./template.html";
 
 Template.registerHelper("AccountTasks", () => AccountTasks);
