@@ -20,7 +20,7 @@ export function convertToIcal(dbevent: EventModel): ICalEventData {
     summary: dbevent.title,
     location: dbevent.venue
       ? ({
-          title: dbevent.venue.name + (dbevent.room ? " (" + dbevent.room + ")" : ""),
+          title: (dbevent.venue.name || "") + (dbevent.room ? " (" + dbevent.room + ")" : ""),
           address: dbevent.venue.address || "",
           geo: dbevent.venue.loc
             ? { lat: dbevent.venue.loc.coordinates[1], lon: dbevent.venue.loc.coordinates[0] }
