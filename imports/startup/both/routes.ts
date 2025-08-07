@@ -43,7 +43,6 @@ import { CssFromQuery } from "/imports/ui/lib/css-from-query";
 import type { Data as GroupDetailsData } from "/imports/ui/pages/group-details";
 import type { Data as VenuesMapData } from "/imports/ui/pages/venues-map";
 import type { Data as EventsMapData } from "/imports/ui/pages/events-map";
-import type { Props as FrameEventsMapProps } from "/imports/ui/pages/frames/events-map";
 import type { Data as AdminTenantsData } from "/imports/ui/pages/admin/tenants";
 import { RelStartEnd } from "/imports/ui/pages/kiosk/timetable";
 
@@ -538,20 +537,6 @@ RouterAsync.route("frame/eventsMap", {
   layoutTemplate: "frameLayout",
   async onRun() {
     await import("/imports/ui/pages/frames/events-map");
-  },
-  subscriptions() {
-    const filter = new Filtering(EventParamPredicates);
-    filter.read(this.params.query);
-    const query = filter.toQuery();
-    query.after = moment().startOf("day").toDate();
-    return {
-      events: Events.findFilter.subscribe({ ...{ canceled: false }, ...query }),
-    };
-  },
-  async data(): Promise<FrameEventsMapProps> {
-    return {
-      events: await this.subscriptions()?.events(),
-    };
   },
 });
 
