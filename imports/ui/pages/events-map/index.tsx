@@ -37,10 +37,7 @@ export function EventsMapPage(props: Data) {
       </h1>
       <div className="row">
         <div className="col-12">
-          <EventsMap
-            events={props.events.fetch().filter((e) => e.start > now)}
-            openLinksInNewTab={false}
-          />
+          <EventsMap events={props.events.fetch().filter((e) => e.start > now)} fullscreenControl />
         </div>
       </div>
     </div>

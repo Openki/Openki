@@ -145,7 +145,7 @@ const eventsMap: ComponentWithEntities<EventModel> = {
   find: Events.useFindFilter,
   component: ({ entities }) => (
     <div style={{ height: "440px" }}>
-      <EventsMap events={entities} openLinksInNewTab={false} />
+      <EventsMap events={entities} fullscreenControl />
     </div>
   ),
 };
