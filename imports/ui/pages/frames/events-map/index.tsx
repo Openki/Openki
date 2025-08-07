@@ -23,11 +23,13 @@ export function FrameEventsMapPage(props: Props) {
   Metatags.setCommonTags(t("frameEventsMap.windowtitle", "Events map"));
 
   return (
-    <EventsMap
-      events={props.events.fetch().filter((e) => e.start > now)}
-      openLinksInNewTab={true}
-      fullscreenControl={false}
-    />
+    <div className="vh-100">
+      <EventsMap
+        events={props.events.fetch().filter((e) => e.start > now)}
+        openLinksInNewTab={true}
+        fullscreenControl={false}
+      />
+    </div>
   );
 }
 
