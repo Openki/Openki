@@ -1,5 +1,6 @@
-import React, {  useRef } from "react";
+import React, { useRef } from "react";
 import Collapse from "bootstrap/js/dist/collapse";
+import { useTranslation } from "react-i18next";
 
 import { EventModel } from "/imports/api/events/events";
 import { useDetails } from "/imports/api/courses/publications";
@@ -14,7 +15,6 @@ import { Discussion } from "../../../courses/discussion";
 import { GroupList } from "../../display/group-list";
 import { Display } from "../../../location/display";
 import { VenueLink } from "../../../venues/link";
-import { CourseCategories } from "../../../courses/categories";
 import { Panel } from "./panel";
 
 import "./styles.scss";
@@ -39,6 +39,7 @@ export interface Props {
 
 export function EventCompact2({ event }: Props) {
   const { timeFormat } = useDateTimeFormat();
+  const { t } = useTranslation();
 
   const user = useUser();
 
@@ -75,7 +76,11 @@ export function EventCompact2({ event }: Props) {
         <div className="card me-1" style={{ width: 320, minWidth: 320 }}>
           <div
             className="card-header card-header-img"
-            style={{ backgroundImage: `url('${event?.publicUrlForCompactImage()}')` }}
+            style={
+              event?.publicUrlForCompactImage()
+                ? { backgroundImage: `url('${event?.publicUrlForCompactImage()}')` }
+                : {}
+            }
           ></div>
           <div className="card-body">
             <h4 className="card-title text-truncate">{event.title}</h4>
@@ -159,9 +164,9 @@ export function EventCompact2({ event }: Props) {
               )}
               {!!event.categories?.length && (
                 <>
-                  <h5 className="card-title">Categories</h5>
+                  <h5 className="card-title">{t("event.details.categories", "Categories")}</h5>
                   <p className="card-text">
-                    <CourseCategories categories={event.categories} />
+                    {event.categories.map((category) => t(`category.${category}`)).join(", ")}
                   </p>
                 </>
               )}

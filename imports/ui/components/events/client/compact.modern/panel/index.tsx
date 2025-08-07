@@ -3,7 +3,6 @@ import scrollIntoView from "scroll-into-view-if-needed";
 
 import { useHash } from "/imports/utils/react-meteor-router";
 
-
 import "./styles.scss";
 
 export function Panel({
@@ -100,7 +99,7 @@ export function Panel({
                     location.hash = "";
                   }}
                 >
-                  <i className="fa-solid fa-minimize"></i>
+                  <i className="fa-solid fa-xmark fa-fw"></i>
                 </div>
               </div>
             </div>
@@ -111,4 +110,3 @@ export function Panel({
     </div>
   );
 }
-
