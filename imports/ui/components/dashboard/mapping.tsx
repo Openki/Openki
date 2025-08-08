@@ -16,7 +16,7 @@ import { CourseTemplate } from "../../lib/course-template";
 import { Edit } from "../courses/edit";
 import { CourseCompact } from "../courses/compact";
 import { EventCompact } from "../../components/events/compact";
-import { EventCompact2 } from "../events/client/compact.modern";
+import { EventCompact as EventCompactModern } from "../events/client/compact.modern";
 import { EventsMap } from "../../components/events/map";
 import { CompactPropose } from "../courses/CompactPropose";
 
@@ -103,7 +103,7 @@ const eventModern: ListOfEntities<EventModel> = {
   showAll: { text: "dashboard.calendar.showAll" },
   filter: EventCollection.Filtering,
   find: Events.useFindFilter,
-  element: ({ entity }) => <EventCompact2 event={entity} />,
+  element: ({ entity }) => <EventCompactModern event={entity} />,
 };
 
 function bodyStyle(imageUrl: string) {
