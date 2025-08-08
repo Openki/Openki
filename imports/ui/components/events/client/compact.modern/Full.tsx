@@ -19,6 +19,7 @@ import { GroupName } from "./GroupName";
 import { useParams } from "/imports/utils/react-meteor-router";
 import { useDetails } from "/imports/api/courses/publications";
 import { StatePanel } from "./StatePanel";
+import { CustomFieldDisplay } from "../../../courses/CustomFieldDisplay";
 
 function DisplayDiscussion({ eventId, courseId }: { eventId: string; courseId: string }) {
   const [isLoading, course] = useDetails(courseId);
@@ -103,6 +104,9 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
         </p>
         <div className="collapse" ref={collapseElementRef}>
           <p className="card-text" dangerouslySetInnerHTML={{ __html: event.description }}></p>
+          {!!event.courseId && (
+            <CustomFieldDisplay courseId={event.courseId} customClassName="card-text" />
+          )}
           <p className="card-text">
             <EventRegistration event={event} />
           </p>

@@ -4,12 +4,11 @@ import { useUser } from "/imports/utils/react-meteor-data";
 
 import { CourseModel } from "/imports/api/courses/courses";
 
-import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
-
 import { Description } from "../description";
 import { History } from "/imports/ui/components/courses/history";
 import { Files } from "/imports/ui/components/courses/Files";
 import { PricePolicy } from "/imports/ui/components/price-policy";
+import { CustomFieldDisplay } from "/imports/ui/components/courses/CustomFieldDisplay";
 
 import "./styles.scss";
 
@@ -22,21 +21,6 @@ export function Submenu(data: { edit: boolean; course: CourseModel; select: stri
   function mayEdit() {
     const { course } = data;
     return course?.editableBy(user);
-  }
-  function customFields() {
-    const { course } = data;
-
-    const isEditor = user && course.editableBy(user);
-
-    return (
-      course.customFields
-        ?.filter((i) => i.visibleFor === "all" || (i.visibleFor === "editors" && isEditor))
-        .map((i) => ({
-          displayText: getLocalizedValue(i.displayText),
-          isboolean: typeof i.value === "boolean",
-          value: i.value,
-        })) || []
-    );
   }
 
   useEffect(() => {
@@ -119,18 +103,7 @@ export function Submenu(data: { edit: boolean; course: CourseModel; select: stri
                   setDescriptionTruncated(false);
                 }}
               />
-              {customFields().map((info, index) => (
-                <p key={index}>
-                  <strong>{info.displayText}</strong>:{" "}
-                  {!info.isboolean ? (
-                    <span className="pre-line">{info.value}</span>
-                  ) : info.value ? (
-                    t("customField.boolean.yes", "Yes")
-                  ) : (
-                    t("customField.boolean.no", "No")
-                  )}
-                </p>
-              ))}
+              <CustomFieldDisplay courseId={data.course._id} />
             </div>
             {descriptionTruncated && <div className="course-description-fade-bottom"></div>}
           </div>
