@@ -1,6 +1,9 @@
 import React, { useRef } from "react";
 import Collapse from "bootstrap/js/dist/collapse";
 import { useTranslation } from "react-i18next";
+import { Router } from "meteor/iron:router";
+import { useSiteName } from "/imports/utils/getSiteName";
+import { isEmpty, isNil, omitBy } from "lodash";
 
 import { EventModel } from "/imports/api/events/events";
 import { useDetails } from "/imports/api/courses/publications";
@@ -13,7 +16,6 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { EventRegistration } from "../../display/registration";
 import { Discussion } from "../../../courses/client/discussion.modern";
 import { Display } from "../../../location/display";
-import { VenueLink } from "../../../venues/link";
 import { Panel } from "./panel";
 
 import { GroupName } from "./GroupName";
@@ -55,6 +57,7 @@ function StatePanel({ event }: { event: EventModel }) {
 export function EventCompact({ event }: Props) {
   const { timeFormat } = useDateTimeFormat();
   const { t } = useTranslation();
+  const siteName = useSiteName();
 
   const user = useUser();
 
@@ -76,6 +79,9 @@ export function EventCompact({ event }: Props) {
   const promotedByGroups = visibleGroups?.filter((group) => !event.editors.includes(group));
 
   const collapseElementRef = useRef<HTMLDivElement>(null);
+
+  const locationPreview = [event.venue?.name, event.venue?.address].filter((v) => v)[0];
+
   return (
     <Panel
       id={event._id}
@@ -107,13 +113,15 @@ export function EventCompact({ event }: Props) {
             <p className="card-text text-truncate">
               <i className="fa-regular fa-fw fa-clock"></i> {timeFormat(event.startLocal)} -{" "}
               {timeFormat(event.endLocal)}
-              {!!event.venue?.name && (
+              <br />
+              {!!locationPreview && (
                 <>
-                  <br />
                   <i className="fa-solid fa-fw fa-location-dot"></i>
-                  {event.venue.name}
+                  {locationPreview}
                 </>
               )}
+              {/* Force the same height if no value is set for venue */}
+              &nbsp;
             </p>
           </div>
         </div>
@@ -122,7 +130,11 @@ export function EventCompact({ event }: Props) {
         <div className="card">
           <div
             className="position-relative card-header card-header-img"
-            style={{ backgroundImage: `url('${event?.publicUrlForDetailsImage()}')` }}
+            style={
+              event?.publicUrlForCompactImage()
+                ? { backgroundImage: `url('${event?.publicUrlForCompactImage()}')` }
+                : {}
+            }
           >
             <StatePanel event={event} />
           </div>
@@ -131,39 +143,37 @@ export function EventCompact({ event }: Props) {
             <p className="card-text">
               <i className="fa-regular fa-fw fa-clock"></i> {timeFormat(event.startLocal)} -{" "}
               {timeFormat(event.endLocal)}
-              {!!event.venue?.name && (
+              <br />
+              {!!locationPreview && (
                 <>
-                  <br />
-                  <a href={"#show=" + event._id + "&place"}>
+                  <a href={`#show=${event._id}&place`}>
                     <i className="fa-solid fa-fw fa-location-dot"></i>
-                    {event.venue.name}
+                    {locationPreview}
                   </a>
                 </>
               )}
+              {/* Force the same height if no value is set for venue */}
+              &nbsp;
             </p>
             <div className="collapse" ref={collapseElementRef}>
               <p className="card-text" dangerouslySetInnerHTML={{ __html: event.description }}></p>
               <p className="card-text">
                 <EventRegistration event={event} />
               </p>
-              {!!event.venue && (
+              {!!event.venue && !isEmpty(omitBy(event.venue, isNil)) && (
                 <>
-                  <h5 id={"show=" + event._id + "&place"} className="card-title">
-                    Location
+                  <h5 id={`show=${event._id}&place`} className="card-title">
+                    {t("event.details.location", "Location")}
                   </h5>
                   <p className="card-text">
-                    <div className="tag-group multiline">
-                      <VenueLink venue={event.venue} room={event.room} />
-                      {!!event.venue?.address && (
-                        <div className="tag">
-                          <span
-                            className="fa-solid fa-location-dot fa-fw"
-                            aria-hidden="true"
-                          ></span>
-                          {event.venue.address}
-                        </div>
-                      )}
-                    </div>
+                    <i className="fa-solid fa-fw fa-location-dot"></i>
+                    {[event.venue.name, event.venue.address].filter((v) => v).join(", ")}
+                    {!!event.room && (
+                      <>
+                        <br />
+                        {t("event.details.room", "Room: ")} {event.room}
+                      </>
+                    )}
                     {!!event.venue?.loc?.coordinates && (
                       <Display coordinates={event.venue?.loc?.coordinates} />
                     )}
@@ -192,9 +202,7 @@ export function EventCompact({ event }: Props) {
               )}
               {!isRegionLoading() && !!promotedByGroups?.length && (
                 <>
-                  <h5 className="card-title">
-                    {t("event.details.promotedBy", "Also promoted by")}
-                  </h5>
+                  <h5 className="card-title">{t("event.details.promotedBy", "Promoted by")}</h5>
                   <p className="card-text">
                     {promotedByGroups
                       .map((group) => <GroupName key={group} id={group} />)
@@ -214,6 +222,20 @@ export function EventCompact({ event }: Props) {
                   </p>
                 </>
               )}
+              <hr className="border-dark" />
+              <p className="card-text text-center mb-0">
+                <a
+                  className="btn btn-light border-dark"
+                  href={Router.path("showEvent", event)}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {t("frame.calendar.moreAboutThisEvent", "More about this event on {SITENAME}", {
+                    SITENAME: siteName,
+                  })}{" "}
+                  <i className="fa-fw fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+              </p>
             </div>
           </div>
         </div>
