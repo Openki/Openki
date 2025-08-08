@@ -1,10 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useUserId } from "/imports/utils/react-meteor-data";
 
 import * as CourseDiscussions from "/imports/api/course-discussions/publications";
-
-import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 
 import { LoadingRow } from "/imports/ui/pages/loading";
 import { Post } from "./post";
