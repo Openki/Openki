@@ -11,11 +11,12 @@ import { useParams } from "/imports/utils/react-meteor-router";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 import { EventRegistration } from "../../display/registration";
-import { Discussion } from "../../../courses/discussion";
-import { GroupList } from "../../display/group-list";
+import { Discussion } from "../../../courses/client/discussion.modern";
 import { Display } from "../../../location/display";
 import { VenueLink } from "../../../venues/link";
 import { Panel } from "./panel";
+
+import { GroupName } from "./GroupName";
 
 import "./styles.scss";
 
@@ -44,7 +45,7 @@ export function EventCompact2({ event }: Props) {
   const user = useUser();
 
   const [isRegionLoading, region] = useRegionDetails(event.region);
-  const groups = event.allGroups?.filter(
+  const visibleGroups = event.allGroups?.filter(
     (groupId) =>
       !(
         // hide group where are from the region set
@@ -56,6 +57,9 @@ export function EventCompact2({ event }: Props) {
         )
       ),
   );
+
+  const organizedByGroups = visibleGroups?.filter((group) => event.editors.includes(group));
+  const promotedByGroups = visibleGroups?.filter((group) => !event.editors.includes(group));
 
   const collapseElementRef = useRef<HTMLDivElement>(null);
   return (
@@ -154,11 +158,33 @@ export function EventCompact2({ event }: Props) {
                   <DisplayDiscussion courseId={event.courseId} eventId={event._id} />
                 </p>
               )}
-              {!isRegionLoading() && !!groups?.length && (
+              {!isRegionLoading() && !!organizedByGroups?.length && (
                 <>
-                  <h5 className="card-title">Groups</h5>
+                  <h5 className="card-title">{t("event.details.organziedBy", "Organized by")}</h5>
                   <p className="card-text">
-                    <GroupList event={event} />
+                    {organizedByGroups
+                      .map((group) => <GroupName key={group} id={group} />)
+                      .reduce((prev, curr) => (
+                        <>
+                          {prev}, {curr}
+                        </>
+                      ))}
+                  </p>
+                </>
+              )}
+              {!isRegionLoading() && !!promotedByGroups?.length && (
+                <>
+                  <h5 className="card-title">
+                    {t("event.details.promotedBy", "Also promoted by")}
+                  </h5>
+                  <p className="card-text">
+                    {promotedByGroups
+                      .map((group) => <GroupName key={group} id={group} />)
+                      .reduce((prev, curr) => (
+                        <>
+                          {prev}, {curr}
+                        </>
+                      ))}
                   </p>
                 </>
               )}
