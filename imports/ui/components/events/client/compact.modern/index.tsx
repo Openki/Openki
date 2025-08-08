@@ -38,7 +38,21 @@ export interface Props {
   event: EventModel;
 }
 
-export function EventCompact2({ event }: Props) {
+function StatePanel({ event }: { event: EventModel }) {
+  const { t } = useTranslation();
+
+  if (event.canceled) {
+    return <span className="event-canceled">{t("_event.state.canceled")}</span>;
+  }
+
+  if (event.isFullyBooked()) {
+    return <span className="event-fully-booked">{t("_event.state.fullyBooked")}</span>;
+  }
+
+  return null;
+}
+
+export function EventCompact({ event }: Props) {
   const { timeFormat } = useDateTimeFormat();
   const { t } = useTranslation();
 
@@ -79,13 +93,15 @@ export function EventCompact2({ event }: Props) {
       thumb={
         <div className="card me-1" style={{ width: 320, minWidth: 320 }}>
           <div
-            className="card-header card-header-img"
+            className="position-relative card-header card-header-img"
             style={
               event?.publicUrlForCompactImage()
                 ? { backgroundImage: `url('${event?.publicUrlForCompactImage()}')` }
                 : {}
             }
-          ></div>
+          >
+            <StatePanel event={event} />
+          </div>
           <div className="card-body">
             <h4 className="card-title text-truncate">{event.title}</h4>
             <p className="card-text text-truncate">
@@ -105,12 +121,14 @@ export function EventCompact2({ event }: Props) {
       full={
         <div className="card">
           <div
-            className="card-header card-header-img"
+            className="position-relative card-header card-header-img"
             style={{ backgroundImage: `url('${event?.publicUrlForDetailsImage()}')` }}
-          ></div>
+          >
+            <StatePanel event={event} />
+          </div>
           <div className="card-body">
-            <h4 className="card-title text-truncate">{event.title}</h4>
-            <p className="card-text text-truncate">
+            <h4 className="card-title">{event.title}</h4>
+            <p className="card-text">
               <i className="fa-regular fa-fw fa-clock"></i> {timeFormat(event.startLocal)} -{" "}
               {timeFormat(event.endLocal)}
               {!!event.venue?.name && (
@@ -131,7 +149,7 @@ export function EventCompact2({ event }: Props) {
               {!!event.venue && (
                 <>
                   <h5 id={"show=" + event._id + "&place"} className="card-title">
-                    Place
+                    Location
                   </h5>
                   <p className="card-text">
                     <div className="tag-group multiline">

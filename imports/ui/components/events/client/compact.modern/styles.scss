@@ -3,7 +3,7 @@
 
 // event canceled
 // ============================================================================================
-.event-canceled {
+.card-header .event-canceled {
   background-color: $canceled-color;
   border-radius: 5px;
   color: $white;
@@ -18,7 +18,7 @@
   padding: 5px;
   position: absolute;
   text-align: center;
-  top: 40%;
+  top: 25%;
   transform: rotate(-27deg);
   width: fit-content;
   z-index: 0;
@@ -26,7 +26,7 @@
 
 // event fully booked
 // ============================================================================================
-.event-fully-booked {
+.card-header .event-fully-booked {
   background-color: #f99248;
   border-radius: 5px;
   color: $white;
@@ -41,7 +41,7 @@
   padding: 5px;
   position: absolute;
   text-align: center;
-  top: 40%;
+  top: 25%;
   transform: rotate(-27deg);
   width: fit-content;
   z-index: 0;
