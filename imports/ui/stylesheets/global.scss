@@ -112,3 +112,9 @@ a:focus,
     outline-offset: 3px;
   }
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  .smooth-scroll {
+    scroll-behavior: smooth;
+  }
+}

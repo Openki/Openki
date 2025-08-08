@@ -93,7 +93,15 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
           <br />
           {!!locationPreview && (
             <>
-              <a href={`#show=${event._id}&place`}>
+              <a
+                href={`#show=${event._id}&place`}
+                onClick={() => {
+                  // Fix: Remove this entry from browser history. Otherwise, nothing will happen on history back.
+                  setTimeout(() => {
+                    history.back();
+                  }, 0);
+                }}
+              >
                 <i className="fa-solid fa-fw fa-location-dot"></i>
                 {locationPreview}
               </a>
