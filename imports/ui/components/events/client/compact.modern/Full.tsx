@@ -11,7 +11,7 @@ import { useDetails as useRegionDetails } from "/imports/api/regions/publication
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { EventRegistration } from "../../display/registration";
+import { RegistrationParticipants } from "../../display/registration.modern";
 import { Discussion } from "../../../courses/client/discussion.modern";
 import { Display } from "../../../location/display";
 
@@ -116,7 +116,7 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
             <CustomFieldDisplay courseId={event.courseId} customClassName="card-text" />
           )}
           <p className="card-text">
-            <EventRegistration event={event} />
+            <RegistrationParticipants event={event} />
           </p>
           {!!event.venue && !isEmpty(omitBy(event.venue, isNil)) && (
             <>
