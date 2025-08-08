@@ -122,7 +122,7 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
               {t("event.details.yourAreOrganizer", "You are organizer")}{" "}
               <a
                 className="btn btn-sm btn-secondary"
-                href={Router.path("showEvent", event)}
+                href={Router.path("showEvent", event, { query: { edit: "1" } })}
                 target="_blank"
                 rel="noreferrer"
               >
