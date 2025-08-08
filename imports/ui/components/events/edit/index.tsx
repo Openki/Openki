@@ -79,6 +79,9 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     let result: string;
     if (event.courseId) {
       if (!course) {
+        if (isCourseLoading()) {
+          return undefined;
+        }
         throw new Error("Unexpected undefined: course");
       }
 
@@ -117,6 +120,10 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     }
 
     if (courseId) {
+      if (isCourseLoading()) {
+        return groups;
+      }
+
       if (!course) {
         throw new Error("Unexpected undefined: course");
       }
@@ -283,6 +290,10 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
       if (event.courseId) {
         if (!course) {
+          if (isCourseLoading()) {
+            return;
+          }
+
           throw new Error("Unexpected undefined: course");
         }
 
