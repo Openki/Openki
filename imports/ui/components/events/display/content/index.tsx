@@ -69,7 +69,9 @@ export function Content({ event }: { event: EventModel }) {
         {!event.isPrivate() && (
           <>
             <PricePolicy dismissable wrap="event-details-price-policy" />
-            <Sharing />
+            <div className="p-3" id="share">
+              <Sharing align="end" />
+            </div>
           </>
         )}
       </div>
