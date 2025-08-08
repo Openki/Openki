@@ -1,245 +1,28 @@
-import React, { useRef } from "react";
-import Collapse from "bootstrap/js/dist/collapse";
-import { useTranslation } from "react-i18next";
-import { Router } from "meteor/iron:router";
-import { useSiteName } from "/imports/utils/getSiteName";
-import { isEmpty, isNil, omitBy } from "lodash";
+import React, { useState } from "react";
 
 import { EventModel } from "/imports/api/events/events";
-import { useDetails } from "/imports/api/courses/publications";
-import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
-import { useParams } from "/imports/utils/react-meteor-router";
-import { useUser } from "/imports/utils/react-meteor-data";
-
-import { EventRegistration } from "../../display/registration";
-import { Discussion } from "../../../courses/client/discussion.modern";
-import { Display } from "../../../location/display";
 import { Panel } from "./panel";
-
-import { GroupName } from "./GroupName";
+import { Full } from "./Full";
+import { Thumb } from "./Thumb";
 
 import "./styles.scss";
 
-function DisplayDiscussion({ eventId, courseId }: { eventId: string; courseId: string }) {
-  const [isLoading, course] = useDetails(courseId);
-  const params = useParams();
-
-  function select() {
-    return params.select;
-  }
-
-  if (isLoading() || !course || !course.singleEvent) {
-    return null;
-  }
-
-  return <Discussion courseId={course._id} eventId={eventId} select={select()} />;
-}
 export interface Props {
   event: EventModel;
 }
 
-function StatePanel({ event }: { event: EventModel }) {
-  const { t } = useTranslation();
-
-  if (event.canceled) {
-    return <span className="event-canceled">{t("_event.state.canceled")}</span>;
-  }
-
-  if (event.isFullyBooked()) {
-    return <span className="event-fully-booked">{t("_event.state.fullyBooked")}</span>;
-  }
-
-  return null;
-}
-
 export function EventCompact({ event }: Props) {
-  const { timeFormat } = useDateTimeFormat();
-  const { t } = useTranslation();
-  const siteName = useSiteName();
-
-  const user = useUser();
-
-  const [isRegionLoading, region] = useRegionDetails(event.region);
-  const visibleGroups = event.allGroups?.filter(
-    (groupId) =>
-      !(
-        // hide group where are from the region set
-        (
-          region?.defaultTeamGroups?.includes(groupId) &&
-          // when user ist not member of the group or a admin
-          !user?.mayPromoteWith(groupId) &&
-          !event.editableBy(user)
-        )
-      ),
-  );
-
-  const organizedByGroups = visibleGroups?.filter((group) => event.editors.includes(group));
-  const promotedByGroups = visibleGroups?.filter((group) => !event.editors.includes(group));
-
-  const collapseElementRef = useRef<HTMLDivElement>(null);
-
-  const locationPreview = [event.venue?.name, event.venue?.address].filter((v) => v)[0];
+  const [view, setView] = useState("");
 
   return (
     <Panel
       id={event._id}
       onChange={(view) => {
-        setTimeout(() => {
-          if (collapseElementRef.current) {
-            if (view === "full") {
-              Collapse.getOrCreateInstance(collapseElementRef.current).show();
-            } else {
-              Collapse.getOrCreateInstance(collapseElementRef.current).hide();
-            }
-          }
-        }, 0);
+        setView(view);
       }}
-      thumb={
-        <div className="card me-1" style={{ width: 320, minWidth: 320 }}>
-          <div
-            className="position-relative card-header card-header-img"
-            style={
-              event?.publicUrlForCompactImage()
-                ? { backgroundImage: `url('${event?.publicUrlForCompactImage()}')` }
-                : {}
-            }
-          >
-            <StatePanel event={event} />
-          </div>
-          <div className="card-body">
-            <h4 className="card-title text-truncate">{event.title}</h4>
-            <p className="card-text text-truncate">
-              <i className="fa-regular fa-fw fa-clock"></i> {timeFormat(event.startLocal)} -{" "}
-              {timeFormat(event.endLocal)}
-              <br />
-              {!!locationPreview && (
-                <>
-                  <i className="fa-solid fa-fw fa-location-dot"></i>
-                  {locationPreview}
-                </>
-              )}
-              {/* Force the same height if no value is set for venue */}
-              &nbsp;
-            </p>
-          </div>
-        </div>
-      }
-      full={
-        <div className="card">
-          <div
-            className="position-relative card-header card-header-img"
-            style={
-              event?.publicUrlForCompactImage()
-                ? { backgroundImage: `url('${event?.publicUrlForCompactImage()}')` }
-                : {}
-            }
-          >
-            <StatePanel event={event} />
-          </div>
-          <div className="card-body">
-            <h4 className="card-title">{event.title}</h4>
-            <p className="card-text">
-              <i className="fa-regular fa-fw fa-clock"></i> {timeFormat(event.startLocal)} -{" "}
-              {timeFormat(event.endLocal)}
-              <br />
-              {!!locationPreview && (
-                <>
-                  <a href={`#show=${event._id}&place`}>
-                    <i className="fa-solid fa-fw fa-location-dot"></i>
-                    {locationPreview}
-                  </a>
-                </>
-              )}
-              {/* Force the same height if no value is set for venue */}
-              &nbsp;
-            </p>
-            <div className="collapse" ref={collapseElementRef}>
-              <p className="card-text" dangerouslySetInnerHTML={{ __html: event.description }}></p>
-              <p className="card-text">
-                <EventRegistration event={event} />
-              </p>
-              {!!event.venue && !isEmpty(omitBy(event.venue, isNil)) && (
-                <>
-                  <h5 id={`show=${event._id}&place`} className="card-title">
-                    {t("event.details.location", "Location")}
-                  </h5>
-                  <p className="card-text">
-                    <i className="fa-solid fa-fw fa-location-dot"></i>
-                    {[event.venue.name, event.venue.address].filter((v) => v).join(", ")}
-                    {!!event.room && (
-                      <>
-                        <br />
-                        {t("event.details.room", "Room: ")} {event.room}
-                      </>
-                    )}
-                    {!!event.venue?.loc?.coordinates && (
-                      <Display coordinates={event.venue?.loc?.coordinates} />
-                    )}
-                  </p>
-                </>
-              )}
-
-              {!!event.courseId && (
-                <p className="card-text">
-                  <DisplayDiscussion courseId={event.courseId} eventId={event._id} />
-                </p>
-              )}
-              {!isRegionLoading() && !!organizedByGroups?.length && (
-                <>
-                  <h5 className="card-title">{t("event.details.organziedBy", "Organized by")}</h5>
-                  <p className="card-text">
-                    {organizedByGroups
-                      .map((group) => <GroupName key={group} id={group} />)
-                      .reduce((prev, curr) => (
-                        <>
-                          {prev}, {curr}
-                        </>
-                      ))}
-                  </p>
-                </>
-              )}
-              {!isRegionLoading() && !!promotedByGroups?.length && (
-                <>
-                  <h5 className="card-title">{t("event.details.promotedBy", "Promoted by")}</h5>
-                  <p className="card-text">
-                    {promotedByGroups
-                      .map((group) => <GroupName key={group} id={group} />)
-                      .reduce((prev, curr) => (
-                        <>
-                          {prev}, {curr}
-                        </>
-                      ))}
-                  </p>
-                </>
-              )}
-              {!!event.categories?.length && (
-                <>
-                  <h5 className="card-title">{t("event.details.categories", "Categories")}</h5>
-                  <p className="card-text">
-                    {event.categories.map((category) => t(`category.${category}`)).join(", ")}
-                  </p>
-                </>
-              )}
-              <hr className="border-dark" />
-              <p className="card-text text-center mb-0">
-                <a
-                  className="btn btn-light border-dark"
-                  href={Router.path("showEvent", event)}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {t("frame.calendar.moreAboutThisEvent", "More about this event on {SITENAME}", {
-                    SITENAME: siteName,
-                  })}{" "}
-                  <i className="fa-fw fa-solid fa-arrow-up-right-from-square"></i>
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      }
+      thumb={<Thumb event={event} />}
+      full={<Full event={event} animation={view === "full" ? "show" : "hide"} />}
     />
   );
 }
