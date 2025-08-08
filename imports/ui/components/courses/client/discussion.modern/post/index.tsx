@@ -23,15 +23,17 @@ function Responses({ responses: replies }: { responses: CourseDiscussionEntity[]
   return (
     <>
       {!!notAllResponsesShown() && (
-        <button
-          className="mt-3 btn btn-link p-0 toggle-all-responses"
-          type="button"
-          onClick={() => {
-            setLimit(0);
-          }}
-        >
-          {t("course.discussions.showPreviousReplies", "Show all previous answers")}
-        </button>
+        <div className="list-group-item ps-5">
+          <button
+            className="btn btn-sm btn-secondary"
+            type="button"
+            onClick={() => {
+              setLimit(0);
+            }}
+          >
+            {t("course.discussions.showPreviousReplies", "Show all previous answers")}
+          </button>
+        </div>
       )}
       {responses().map((response) => (
         <Post key={response._id} post={response} />
@@ -90,7 +92,17 @@ export function Post({ post, responses, edit, onCancel }: Props) {
 
   return (
     <>
-      {editing ? <Edit {...postEditAttr()} /> : <Show {...postShowAttr()} />}
+      {editing ? (
+        !post.parentId ? (
+          <div className="list-group mb-3">
+            <Edit {...postEditAttr()} />
+          </div>
+        ) : (
+          <Edit {...postEditAttr()} />
+        )
+      ) : (
+        <Show {...postShowAttr()} />
+      )}
 
       {isParent && (
         <>

@@ -16,7 +16,6 @@ import { Discussion } from "../../../courses/client/discussion.modern";
 import { Display } from "../../../location/display";
 
 import { GroupName } from "./GroupName";
-import { useParams } from "/imports/utils/react-meteor-router";
 import { useDetails } from "/imports/api/courses/publications";
 import { StatePanel } from "./StatePanel";
 import { CustomFieldDisplay } from "../../../courses/CustomFieldDisplay";
@@ -24,17 +23,12 @@ import { ReactJoin } from "/imports/utils/ReactJoin";
 
 function DisplayDiscussion({ eventId, courseId }: { eventId: string; courseId: string }) {
   const [isLoading, course] = useDetails(courseId);
-  const params = useParams();
-
-  function select() {
-    return params.select;
-  }
 
   if (isLoading() || !course || !course.singleEvent) {
     return null;
   }
 
-  return <Discussion courseId={course._id} eventId={eventId} select={select()} />;
+  return <Discussion courseId={course._id} eventId={eventId} />;
 }
 
 export function Full({ event, animation }: { event: EventModel; animation: "show" | "hide" }) {
@@ -159,11 +153,7 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
             </>
           )}
 
-          {!!event.courseId && (
-            <p className="card-text">
-              <DisplayDiscussion courseId={event.courseId} eventId={event._id} />
-            </p>
-          )}
+          {!!event.courseId && <DisplayDiscussion courseId={event.courseId} eventId={event._id} />}
 
           {!isRegionLoading() && !!organizedByGroups?.length && (
             <>

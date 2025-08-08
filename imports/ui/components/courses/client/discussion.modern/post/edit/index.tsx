@@ -54,9 +54,6 @@ export function Edit({ post, onSave, onCancel }: Props) {
       : t("course.discussion.text_placeholder", "Your comment");
   };
 
-  function postClass() {
-    return post.parentId ? "discussion-comment" : "discussion-post";
-  }
   function showUserId() {
     return !post.new || !anon;
   }
@@ -100,173 +97,174 @@ export function Edit({ post, onSave, onCancel }: Props) {
   }
 
   return (
-    <div className={`${postClass()} ${post.new && !post.parentId ? "discussion-post-new" : ""}`}>
+    <div
+      className={`list-group-item d-flex align-items-start gap-3${post.parentId ? " ps-5" : ""}`}
+    >
       <DiscussionProfileIcon userId={post.userId} />
-      <div className="discussion-edit-content">
-        <form
-          onSubmit={async (event) => {
-            event.preventDefault();
 
-            setIsBusy(true);
+      <form
+        onSubmit={async (event) => {
+          event.preventDefault();
 
-            const comment = { title: commentTitle || "" } as PostCommentFields | EditCommentFields;
+          setIsBusy(true);
 
-            comment.text = commentText;
+          const comment = { title: commentTitle || "" } as PostCommentFields | EditCommentFields;
 
-            try {
-              if (post.new) {
-                const postComment = comment as PostCommentFields;
-                postComment.courseId = post.courseId;
-                if (post.eventId) {
-                  postComment.eventId = post.eventId;
-                }
-                if (post.parentId) {
-                  postComment.parentId = post.parentId;
-                }
+          comment.text = commentText;
 
-                postComment.anon = anon;
-                postComment.notifyAll = notifyAll;
-
-                await CourseDiscussionsMethods.postComment(postComment);
-              } else {
-                const editComment = comment as EditCommentFields;
-                editComment._id = post._id;
-                await CourseDiscussionsMethods.editComment(editComment);
+          try {
+            if (post.new) {
+              const postComment = comment as PostCommentFields;
+              postComment.courseId = post.courseId;
+              if (post.eventId) {
+                postComment.eventId = post.eventId;
+              }
+              if (post.parentId) {
+                postComment.parentId = post.parentId;
               }
 
-              onSave();
-            } catch (err) {
-              Alert.serverError(
-                err,
-                t("courseDiscussions.postComment.error", "Posting your comment went wrong"),
-              );
-            } finally {
-              setIsBusy(false);
+              postComment.anon = anon;
+              postComment.notifyAll = notifyAll;
+
+              await CourseDiscussionsMethods.postComment(postComment);
+            } else {
+              const editComment = comment as EditCommentFields;
+              editComment._id = post._id;
+              await CourseDiscussionsMethods.editComment(editComment);
             }
-          }}
-        >
-          <div className="discussion-edit-header">
-            {showUserId() ? (
-              <DiscussionProfileLink userId={post.userId} />
-            ) : (
-              <strong>{t("discussion.anonymous", "Anonymous")}</strong>
-            )}
-            {!post.new && (
-              <span className="discussion-post-header-sub">
-                {" "}
-                <span data-bs-title={dateFormat(post.time_created)}>
-                  {fromNow(post.time_created)}
-                </span>
-                {!!post.notifyAll && (
-                  <>
-                    {" "}
-                    <i
-                      className="fa-solid fa-bell"
-                      aria-hidden="true"
-                      data-bs-title={
-                        !post.eventId
-                          ? t("course.discussion.allNotified", "All interested notified")
-                          : t(
-                              "event.discussion.allNotified",
-                              "All interested and participants notified",
-                            )
-                      }
-                    ></i>
-                  </>
-                )}
-                {hasBeenEdited() && (
-                  <>
-                    {" "}
-                    - {t("course.discussion.lastUpdate", "Last update")}:{" "}
-                    <span data-bs-title={dateFormat(post.time_updated)}>
-                      {fromNow(post.time_updated)}
-                    </span>
-                  </>
-                )}
+
+            onSave();
+          } catch (err) {
+            Alert.serverError(
+              err,
+              t("courseDiscussions.postComment.error", "Posting your comment went wrong"),
+            );
+          } finally {
+            setIsBusy(false);
+          }
+        }}
+      >
+        <div>
+          {showUserId() ? (
+            <DiscussionProfileLink userId={post.userId} />
+          ) : (
+            <strong>{t("discussion.anonymous", "Anonymous")}</strong>
+          )}
+          {!post.new && (
+            <span>
+              {" "}
+              <span data-bs-title={dateFormat(post.time_created)}>
+                {fromNow(post.time_created)}
               </span>
-            )}
+              {!!post.notifyAll && (
+                <>
+                  {" "}
+                  <i
+                    className="fa-solid fa-bell"
+                    aria-hidden="true"
+                    data-bs-title={
+                      !post.eventId
+                        ? t("course.discussion.allNotified", "All interested notified")
+                        : t(
+                            "event.discussion.allNotified",
+                            "All interested and participants notified",
+                          )
+                    }
+                  ></i>
+                </>
+              )}
+              {hasBeenEdited() && (
+                <>
+                  {" "}
+                  - {t("course.discussion.lastUpdate", "Last update")}:{" "}
+                  <span data-bs-title={dateFormat(post.time_updated)}>
+                    {fromNow(post.time_updated)}
+                  </span>
+                </>
+              )}
+            </span>
+          )}
+        </div>
+        <div>
+          <div className="mb-3">
+            <input
+              className="form-control form-control-lg"
+              type="text"
+              placeholder={`${t("course.discussion.title_placeholder", "Title")} ${t(
+                "_inputField.optional",
+              )}`}
+              value={commentTitle}
+              onChange={(event) => {
+                setCommentTitle(event.currentTarget.value);
+              }}
+              autoFocus={true}
+            />
           </div>
-          <div className="discussion-edit-body">
-            <div className="mb-3">
-              <input
-                className="form-control form-control-lg"
-                type="text"
-                placeholder={`${t("course.discussion.title_placeholder", "Title")} ${t(
-                  "_inputField.optional",
-                )}`}
-                value={commentTitle}
-                onChange={(event) => {
-                  setCommentTitle(event.currentTarget.value);
-                }}
-                autoFocus={true}
-              />
-            </div>
-            <div className="mb-3">
-              <Richtext {...richtextAttr()} />
-            </div>
-            {!!post.new && (
-              <>
-                {canNotifyAll() && (
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      checked={notifyAll}
-                      id="canNotifyAllCheck"
-                      onChange={(event) => {
-                        setNotifyAll(event.currentTarget.checked);
-                      }}
-                    />
-                    <label className="form-check-label" htmlFor="canNotifyAllCheck">
-                      <i className="fa-solid fa-bell" aria-hidden="true"></i>&nbsp;
-                      {t("course.discussion.notifyAll", "Notify all")}
-                    </label>
-                  </div>
-                )}
+          <div className="mb-3">
+            <Richtext {...richtextAttr()} />
+          </div>
+          {!!post.new && (
+            <>
+              {canNotifyAll() && (
                 <div className="form-check">
                   <input
                     className="form-check-input"
                     type="checkbox"
-                    checked={anon}
-                    {...anonDisabled()}
-                    id="anonymousCheck"
+                    checked={notifyAll}
+                    id="canNotifyAllCheck"
                     onChange={(event) => {
-                      setAnon(event.currentTarget.checked);
+                      setNotifyAll(event.currentTarget.checked);
                     }}
                   />
-                  <label
-                    className="form-check-label discussion-toggle-anonymous"
-                    htmlFor="anonymousCheck"
-                  >
-                    <i className="fa-solid fa-user-secret" aria-hidden="true"></i>&nbsp;
-                    {t("course.discussion.anon", "Anonymous comment")}
+                  <label className="form-check-label" htmlFor="canNotifyAllCheck">
+                    <i className="fa-solid fa-bell" aria-hidden="true"></i>&nbsp;
+                    {t("course.discussion.notifyAll", "Notify all")}
                   </label>
                 </div>
-              </>
-            )}
+              )}
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  checked={anon}
+                  {...anonDisabled()}
+                  id="anonymousCheck"
+                  onChange={(event) => {
+                    setAnon(event.currentTarget.checked);
+                  }}
+                />
+                <label
+                  className="form-check-label discussion-toggle-anonymous"
+                  htmlFor="anonymousCheck"
+                >
+                  <i className="fa-solid fa-user-secret" aria-hidden="true"></i>&nbsp;
+                  {t("course.discussion.anon", "Anonymous comment")}
+                </label>
+              </div>
+            </>
+          )}
 
-            <div className="form-actions">
-              <button
-                type="submit"
-                className="btn btn-save discussion-save-btn"
-                disabled={!validComment || isBusy}
-              >
-                <span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>{" "}
-                {post.new
-                  ? post.parentId
-                    ? t("course.discussion.comment_btn.answer", "Answer")
-                    : t("course.discussion.comment_btn.write", "Write")
-                  : t("course.discussion.comment_btn.update", "Update my comment")}
-              </button>
-              <ButtonCancel
-                onClick={() => {
-                  onCancel();
-                }}
-              />
-            </div>
+          <div>
+            <button
+              type="submit"
+              className="btn btn-save discussion-save-btn"
+              disabled={!validComment || isBusy}
+            >
+              <span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>{" "}
+              {post.new
+                ? post.parentId
+                  ? t("course.discussion.comment_btn.answer", "Answer")
+                  : t("course.discussion.comment_btn.write", "Write")
+                : t("course.discussion.comment_btn.update", "Update my comment")}
+            </button>{" "}
+            <ButtonCancel
+              onClick={() => {
+                onCancel();
+              }}
+            />
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   );
 }

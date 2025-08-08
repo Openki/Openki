@@ -1,8 +1,4 @@
 import React from "react";
-import { Router } from "meteor/iron:router";
-import { useTracker } from "meteor/react-meteor-data";
-
-import { getUserName } from "/imports/ui/lib/getUserName";
 
 import { Avatar } from "/imports/ui/components/avatar";
 
@@ -13,22 +9,9 @@ export interface Props {
 }
 
 export function DiscussionProfileIcon({ userId }: Props) {
-  const userName = useTracker(() => {
-    if (!userId) {
-      return "";
-    }
-    return getUserName(userId);
-  });
-
-  return (
-    <div className="discussion-thumb">
-      {userId ? (
-        <a href={Router.path("userprofile", { _id: userId, username: userName })}>
-          <Avatar className="discussion-profile-icon" userId={userId} />
-        </a>
-      ) : (
-        <Avatar className="discussion-profile-icon" color={0} />
-      )}
-    </div>
+  return userId ? (
+    <Avatar className="discussion-profile-icon2" userId={userId} />
+  ) : (
+    <Avatar className="discussion-profile-icon2" color={0} />
   );
 }

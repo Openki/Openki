@@ -12,9 +12,9 @@ import * as Tooltips from "/imports/utils/Tooltips";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 import { DiscussionProfileIcon } from "../profile-icon";
-import { DiscussionProfileLink } from "../profile-link";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { RemoveDropdown } from "./remove-dropdown";
+import { UserName } from "/imports/ui/components/events/participants.modern";
 
 export interface Props {
   post: CourseDiscussionEntity & { new?: true } & { saving?: boolean };
@@ -26,16 +26,6 @@ export function Show({ post, onEdit }: Props) {
   const user = useUser();
   const { t } = useTranslation();
 
-  function postClasses() {
-    const classes = [];
-
-    classes.push(post.parentId ? "discussion-comment" : "discussion-post");
-    if (post.saving) {
-      classes.push("is-saving");
-    }
-
-    return classes.join(" ");
-  }
   function mayEdit() {
     return CourseDiscussionUtils.mayEditPost(user ?? undefined, post);
   }
@@ -71,28 +61,31 @@ export function Show({ post, onEdit }: Props) {
 
   return post.new ? (
     post.parentId ? (
-      <div className="discussion-reply">
-        <button
-          type="button"
-          className="btn btn-add discussion-reply-btn"
-          onClick={handleEditClick}
-        >
+      <div className="list-group-item ps-5">
+        <button type="button" className="btn btn-add" onClick={handleEditClick}>
           {t("course.discussion.comment_answer", "Answer")}
         </button>
       </div>
     ) : (
-      <button type="button" className="btn btn-add page-component-btn" onClick={handleEditClick}>
-        <span className="fa-solid fa-pencil fa-fw" aria-hidden="true"></span>&nbsp;
+      <button type="button" className="btn btn-add mb-3" onClick={handleEditClick}>
         {t("course.discussion.write_comment", "Write a comment")}
       </button>
     )
   ) : (
-    <div className={postClasses()} id={`comment${post._id}`}>
+    <div
+      className={`list-group-item d-flex align-items-start gap-3${post.parentId ? " ps-5" : ""}`}
+    >
       <DiscussionProfileIcon userId={post.userId} />
-      <div className="discussion-post-content">
-        <div className="discussion-post-header">
-          <DiscussionProfileLink userId={post.userId} />{" "}
-          <span className="discussion-post-header-sub">
+      <div className="flex-grow-1">
+        <div className="d-flex justify-content-between">
+          <p>
+            <strong>
+              {post.userId ? (
+                <UserName userId={post.userId} />
+              ) : (
+                t("discussion.anonymous", "Anonymous")
+              )}
+            </strong>{" "}
             <span data-bs-title={dateFormat(post.time_created)}>{fromNow(post.time_created)}</span>
             {!!post.notifyAll && (
               <>
@@ -120,8 +113,8 @@ export function Show({ post, onEdit }: Props) {
                 </span>
               </>
             )}
-          </span>
-          <span className="discussion-buttons">
+          </p>
+          <span>
             {mayEdit() && (
               <button type="button" className="discussion-edit-btn" onClick={handleEditClick}>
                 <span className="fa-solid fa-pen-to-square" aria-hidden="true"></span>
@@ -130,10 +123,8 @@ export function Show({ post, onEdit }: Props) {
             {mayDelete() && <RemoveDropdown {...removeDropdownAttr()} />}
           </span>
         </div>
-        <div className="discussion-post-body">
-          {!!post.title && <h4 className="discussion-post-title">{post.title}</h4>}
-          <p dangerouslySetInnerHTML={{ __html: post.text }}></p>
-        </div>
+        {!!post.title && <h4>{post.title}</h4>}
+        <p dangerouslySetInnerHTML={{ __html: post.text }}></p>
       </div>
     </div>
   );
