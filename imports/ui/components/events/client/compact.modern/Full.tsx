@@ -116,9 +116,28 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
           {!!event.courseId && (
             <CustomFieldDisplay courseId={event.courseId} customClassName="card-text" />
           )}
+
+          {event.editableBy(user) && (
+            <p className="card-text lead">
+              {t("event.details.yourAreOrganizer", "You are organizer")}{" "}
+              <a
+                className="btn btn-sm btn-secondary"
+                href={Router.path("showEvent", event)}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {t("frame.programme.editMode", "Edit mode", {
+                  SITENAME: siteName,
+                })}{" "}
+                <i className="fa-fw fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+            </p>
+          )}
+
           <p className="card-text">
             <RegistrationParticipants event={event} />
           </p>
+
           {!!event.venue && !isEmpty(omitBy(event.venue, isNil)) && (
             <>
               <h4 id={`show=${event._id}&place`} className="card-title">
@@ -145,6 +164,7 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
               <DisplayDiscussion courseId={event.courseId} eventId={event._id} />
             </p>
           )}
+
           {!isRegionLoading() && !!organizedByGroups?.length && (
             <>
               <h4 className="card-title">{t("event.details.organziedBy", "Organized by")}</h4>
@@ -161,6 +181,7 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
               </p>
             </>
           )}
+
           {!!event.categories?.length && (
             <>
               <h4 className="card-title">{t("event.details.categories", "Categories")}</h4>
@@ -169,7 +190,9 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
               </p>
             </>
           )}
+
           <hr className="border-dark" />
+
           <p className="card-text text-center mb-0">
             <a
               className="btn btn-secondary"

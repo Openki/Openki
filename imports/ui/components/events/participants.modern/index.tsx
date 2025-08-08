@@ -30,8 +30,7 @@ function EventParticipant({ participant }: { participant: EventParticipantEntity
             className="badge rounded-pill text-bg-primary text-white"
             data-bs-title={t("eventParticipant.iBringCompanions", "Brings companion.")}
           >
-            +{participant.companions}{" "}
-            <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
+            +{participant.companions}
           </span>
         </>
       )}
