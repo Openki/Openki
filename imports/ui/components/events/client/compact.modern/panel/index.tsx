@@ -64,7 +64,7 @@ export function Panel({
         <div
           className="panel-thumb-body"
           onClick={() => {
-            location.hash = "show=" + id;
+            location.hash = `show=${id}`;
           }}
         >
           {thumb}
@@ -73,7 +73,7 @@ export function Panel({
       {expanded && (
         <div ref={fullRef}>
           <div
-            className="panel-full-bg"
+            className="panel-full-bg smooth-scroll"
             onClick={() => {
               location.hash = "";
             }}
