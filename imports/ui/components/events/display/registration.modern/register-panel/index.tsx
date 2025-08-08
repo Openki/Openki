@@ -51,10 +51,6 @@ export function RegisterPanel({ event, busy, onRegister }: Props) {
   const [registerDropdown, setRegisterDropdown] = useState(false);
   const [registerWithCompanions, setRegisterWithCompanions] = useState(false);
 
-  function userName() {
-    return user?.getDisplayName() || t("eventDetails.notLoggedIn", "(not logged in?)");
-  }
-
   return (
     <>
       {!registerDropdown ? (
@@ -70,15 +66,24 @@ export function RegisterPanel({ event, busy, onRegister }: Props) {
       ) : (
         <div className="p-3 event-detail-register-dropdown">
           <p>
-            {t(
-              "event.details.want-to-register",
-              'Do you want to reserve a seat as {USERNAME} for the event "{EVENTTITLE}" on the {DATE}? Your reservation is binding.',
-              {
-                USERNAME: userName(),
-                EVENTTITLE: event.title,
-                DATE: dateFormat(event.startLocal),
-              },
-            )}
+            {user
+              ? t(
+                  "event.details.want-to-register",
+                  'Do you want to reserve a seat as {USERNAME} for the event "{EVENTTITLE}" on the {DATE}? Your reservation is binding.',
+                  {
+                    USERNAME: user.getDisplayName(),
+                    EVENTTITLE: event.title,
+                    DATE: dateFormat(event.startLocal),
+                  },
+                )
+              : t(
+                  "event.details.want-to-register.noUser",
+                  'Do you want to reserve a seat for the event "{EVENTTITLE}" on the {DATE}? Your reservation is binding.',
+                  {
+                    EVENTTITLE: event.title,
+                    DATE: dateFormat(event.startLocal),
+                  },
+                )}
           </p>
           {PublicSettings.feature.rsvpWithCompanions &&
             (!event.maxParticipants ||

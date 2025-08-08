@@ -397,6 +397,7 @@
   "event.details.unregister.success": "You have been unsubscribed from \"{EVENT}\" successfully.",
   "event.details.viewCourse": "To the course overview",
   "event.details.want-to-register": "Do you want to reserve a seat as {USERNAME} for the event \"{EVENTTITLE}\" on the {DATE}? Your reservation is binding.",
+  "event.details.want-to-register.noUser": "Do you want to reserve a seat for the event \"{EVENTTITLE}\" on the {DATE}? Your reservation is binding.",
   "event.details.want-to-withdraw": "Do you want to withdraw your registration for the event \"{EVENTTITLE}\" on the {DATE}?",
   "event.details.withdraw-registration": "Withdraw my registration",
   "event.details.youStayEnrolled": "Note that you will stay enrolled as interested for {COURSETITLE}.",
