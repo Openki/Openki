@@ -1,0 +1,16 @@
+@import "{}/imports/ui/stylesheets/variables/index";
+
+.discussion-thumb {
+  display: table-cell;
+  position: relative;
+  width: $discussion-thumb-width * 1px;
+}
+
+.discussion-profile-icon {
+  @include td-pos(left, 0);
+
+  position: absolute;
+  top: 0;
+  vertical-align: text-bottom;
+  width: ($discussion-thumb-width - 10) * 1px;
+}
