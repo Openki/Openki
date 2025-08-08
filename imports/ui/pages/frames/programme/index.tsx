@@ -41,6 +41,7 @@ export function ProgrammePage(data: Record<string, string>) {
   const userId = useUserId();
   const [isAttendeeFilterOn, setIsAttendeeFilterOn] = useState(false);
 
+  const count = Number.parseInt(data.count || "", 10) || 10;
   const filter = Events.Filtering().read(data);
 
   const date = moment(reactiveNow.get());
@@ -165,10 +166,10 @@ export function ProgrammePage(data: Record<string, string>) {
               return {
                 title: calendarDayFormat(day),
                 entity: "eventModern",
-                showAll: false,
                 query: UrlTools.paramsToQueryString(f.toParams()),
               };
             })}
+          limit={count}
         />
       </div>
     </>

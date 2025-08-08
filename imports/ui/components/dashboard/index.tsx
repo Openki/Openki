@@ -22,6 +22,7 @@ export interface Props {
   list: ComponentSettings[];
   defaultRegion?: string | undefined;
   defaultGroup?: string | undefined;
+  limit?: number | undefined;
 }
 
 function EntitiesComponent<T>({
@@ -29,11 +30,13 @@ function EntitiesComponent<T>({
   handler,
   showAll,
   title,
+  limit = 10,
 }: {
   params: Record<string, string>;
   handler: ListOfEntities<T> | ComponentWithEntities<T>;
   showAll: { link: string | undefined; text: string | undefined } | false;
   title?: string | undefined;
+  limit?: number | undefined;
 }) {
   const { getLocalizedValue } = useLocalizedSetting();
   const filter = handler.filter();
@@ -43,7 +46,6 @@ function EntitiesComponent<T>({
   const sortParam = params.sort;
   const sort = sortParam ? SortSpec.fromString(sortParam) : SortSpec.unordered();
 
-  const limit = 10;
   const [isLoading, data] = handler.find(query, limit + 1, 0, sort.spec());
 
   const elementRef = useRef<HTMLDivElement>(null);
@@ -80,7 +82,7 @@ function EntitiesComponent<T>({
             }
           }}
         >
-          {take(data, 10).map((d, i) => (
+          {take(data, limit).map((d, i) => (
             <handler.element key={i} entity={d} index={i} params={params} />
           ))}
           {scrollLeft !== 0 && (
@@ -113,7 +115,7 @@ function EntitiesComponent<T>({
         </div>
       ) : (
         // ComponentWithEntities
-        <handler.component entities={take(data, 10)} params={params} />
+        <handler.component entities={take(data, limit)} params={params} />
       )}
     </div>
   );
@@ -123,10 +125,12 @@ function DashboardComponent({
   settings,
   defaultRegion,
   defaultGroup,
+  limit,
 }: {
   settings: ComponentSettings;
   defaultRegion?: string | undefined;
   defaultGroup?: string | undefined;
+  limit?: number | undefined;
 }) {
   const { t } = useTranslation();
   const { getLocalizedValue } = useLocalizedSetting();
@@ -190,11 +194,12 @@ function DashboardComponent({
       params={params}
       showAll={generateShowAll(handler, urlParams)}
       title={settings.title}
+      limit={limit}
     />
   );
 }
 
-export function Dashboard({ list, defaultRegion, defaultGroup }: Props) {
+export function Dashboard({ list, defaultRegion, defaultGroup, limit }: Props) {
   return (
     <>
       {list.map((h, i) => (
@@ -203,6 +208,7 @@ export function Dashboard({ list, defaultRegion, defaultGroup }: Props) {
           settings={h}
           defaultRegion={defaultRegion}
           defaultGroup={defaultGroup}
+          limit={limit}
         />
       ))}
     </>
