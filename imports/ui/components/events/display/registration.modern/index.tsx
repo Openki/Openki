@@ -9,7 +9,7 @@ import * as EventsMethods from "/imports/api/events/methods";
 import { Regions } from "/imports/api/regions/regions";
 import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
 
-import { EventParticipants } from "/imports/ui/components/events/participants";
+import { EventParticipants } from "/imports/ui/components/events/participants.modern";
 import { RegisterPanel } from "./register-panel";
 import { UnregisterPanel } from "./unregister-panel";
 
@@ -51,6 +51,11 @@ function Registration({ event }: { event: EventModel }) {
   const { t } = useTranslation();
   const [isBusy, setIsBusy] = useState("");
 
+  function howManyFreePlaces() {
+    const occupied = event.numberOfParticipants();
+    return event.maxParticipants - occupied;
+  }
+
   async function addParticipant(companions = 0) {
     setIsBusy("registering");
     try {
@@ -86,22 +91,36 @@ function Registration({ event }: { event: EventModel }) {
   return (
     <>
       <p className="card-text">
-        <strong>
-          {!event.attendedBy(user?._id) ? (
-            t(
-              "event.details.i-participate-no",
-              "Let it be known you are participating in this event. Your registration is binding.",
-            )
-          ) : (
+        {!event.attendedBy(user?._id) ? (
+          howManyFreePlaces() > 0 && (
             <>
-              {t(
-                "event.details.i-participate-yes",
-                "You are now registered. Your registration is binding.",
-              )}{" "}
-              <i className="fa-solid fa-check fa-fw text-success" aria-hidden="true"></i>
+              {!!event.maxParticipants && (
+                <>
+                  {t(
+                    "event.details.participants.free.places",
+                    "{NUM, plural, =0{No free seats} one{one free seat} other{# free seats} }",
+                    { NUM: howManyFreePlaces() },
+                  )}
+                  <br />
+                </>
+              )}
+              <strong>
+                {t(
+                  "event.details.i-participate-no",
+                  "Let it be known you are participating in this event. Your registration is binding.",
+                )}
+              </strong>
             </>
-          )}
-        </strong>
+          )
+        ) : (
+          <strong>
+            {t(
+              "event.details.i-participate-yes",
+              "You are now registered. Your registration is binding.",
+            )}{" "}
+            <i className="fa-solid fa-check fa-fw text-success" aria-hidden="true"></i>
+          </strong>
+        )}
       </p>
       <p className="card-text">
         {!event.attendedBy(user?._id) ? (
