@@ -6,6 +6,7 @@ import { useTracker } from "meteor/react-meteor-data";
 
 import { EventModel, EventParticipantEntity } from "/imports/api/events/events";
 
+import { ReactJoin } from "/imports/utils/ReactJoin";
 import { getUserName } from "/imports/ui/lib/getUserName";
 
 import "./styles.scss";
@@ -92,15 +93,11 @@ export function EventParticipants({ event }: Props) {
       </h4>
       {!!event.participants && (
         <>
-          {sortedParticipants()
-            ?.map((participant) => (
+          {ReactJoin(
+            sortedParticipants()?.map((participant) => (
               <EventParticipant key={participant.user} participant={participant} />
-            ))
-            .reduce((prev, curr) => (
-              <>
-                {prev}, {curr}
-              </>
-            ))}
+            )),
+          )}
           {limited() && (
             <>
               {" "}

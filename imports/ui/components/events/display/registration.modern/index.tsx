@@ -92,7 +92,8 @@ function Registration({ event }: { event: EventModel }) {
     <>
       <p className="card-text">
         {!event.attendedBy(user?._id) ? (
-          howManyFreePlaces() > 0 && (
+          !event.maxParticipants ||
+          (howManyFreePlaces() > 0 && (
             <>
               {!!event.maxParticipants && (
                 <>
@@ -111,7 +112,7 @@ function Registration({ event }: { event: EventModel }) {
                 )}
               </strong>
             </>
-          )
+          ))
         ) : (
           <strong>
             {t(
