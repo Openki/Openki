@@ -20,6 +20,7 @@ import { useParams } from "/imports/utils/react-meteor-router";
 import { useDetails } from "/imports/api/courses/publications";
 import { StatePanel } from "./StatePanel";
 import { CustomFieldDisplay } from "../../../courses/CustomFieldDisplay";
+import { ReactJoin } from "/imports/utils/ReactJoin";
 
 function DisplayDiscussion({ eventId, courseId }: { eventId: string; courseId: string }) {
   const [isLoading, course] = useDetails(courseId);
@@ -148,13 +149,7 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
             <>
               <h4 className="card-title">{t("event.details.organziedBy", "Organized by")}</h4>
               <p className="card-text">
-                {organizedByGroups
-                  .map((group) => <GroupName key={group} id={group} />)
-                  .reduce((prev, curr) => (
-                    <>
-                      {prev}, {curr}
-                    </>
-                  ))}
+                {ReactJoin(organizedByGroups.map((group) => <GroupName key={group} id={group} />))}
               </p>
             </>
           )}
@@ -162,13 +157,7 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
             <>
               <h4 className="card-title">{t("event.details.promotedBy", "Promoted by")}</h4>
               <p className="card-text">
-                {promotedByGroups
-                  .map((group) => <GroupName key={group} id={group} />)
-                  .reduce((prev, curr) => (
-                    <>
-                      {prev}, {curr}
-                    </>
-                  ))}
+                {ReactJoin(promotedByGroups.map((group) => <GroupName key={group} id={group} />))}
               </p>
             </>
           )}
