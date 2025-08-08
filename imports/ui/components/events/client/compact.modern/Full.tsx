@@ -86,7 +86,7 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
         <StatePanel event={event} />
       </div>
       <div className="card-body">
-        <h4 className="card-title">{event.title}</h4>
+        <h3 className="card-title">{event.title}</h3>
         <p className="card-text">
           <i className="fa-regular fa-fw fa-clock"></i> {timeFormat(event.startLocal)} -{" "}
           {timeFormat(event.endLocal)}
@@ -120,9 +120,9 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
           </p>
           {!!event.venue && !isEmpty(omitBy(event.venue, isNil)) && (
             <>
-              <h5 id={`show=${event._id}&place`} className="card-title">
+              <h4 id={`show=${event._id}&place`} className="card-title">
                 {t("event.details.location", "Location")}
-              </h5>
+              </h4>
               <p className="card-text">
                 <i className="fa-solid fa-fw fa-location-dot"></i>
                 {[event.venue.name, event.venue.address].filter((v) => v).join(", ")}
@@ -146,7 +146,7 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
           )}
           {!isRegionLoading() && !!organizedByGroups?.length && (
             <>
-              <h5 className="card-title">{t("event.details.organziedBy", "Organized by")}</h5>
+              <h4 className="card-title">{t("event.details.organziedBy", "Organized by")}</h4>
               <p className="card-text">
                 {organizedByGroups
                   .map((group) => <GroupName key={group} id={group} />)
@@ -160,7 +160,7 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
           )}
           {!isRegionLoading() && !!promotedByGroups?.length && (
             <>
-              <h5 className="card-title">{t("event.details.promotedBy", "Promoted by")}</h5>
+              <h4 className="card-title">{t("event.details.promotedBy", "Promoted by")}</h4>
               <p className="card-text">
                 {promotedByGroups
                   .map((group) => <GroupName key={group} id={group} />)
@@ -174,7 +174,7 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
           )}
           {!!event.categories?.length && (
             <>
-              <h5 className="card-title">{t("event.details.categories", "Categories")}</h5>
+              <h4 className="card-title">{t("event.details.categories", "Categories")}</h4>
               <p className="card-text">
                 {event.categories.map((category) => t(`category.${category}`)).join(", ")}
               </p>
@@ -183,7 +183,7 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
           <hr className="border-dark" />
           <p className="card-text text-center mb-0">
             <a
-              className="btn btn-light border-dark"
+              className="btn btn-secondary"
               href={Router.path("showEvent", event)}
               target="_blank"
               rel="noreferrer"
