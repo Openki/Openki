@@ -20,6 +20,8 @@ import { useDetails } from "/imports/api/courses/publications";
 import { StatePanel } from "./StatePanel";
 import { CustomFieldDisplay } from "../../../courses/CustomFieldDisplay";
 import { ReactJoin } from "/imports/utils/ReactJoin";
+import { Sharing } from "../../../sharing";
+import moment from "moment";
 
 function DisplayDiscussion({ eventId, courseId }: { eventId: string; courseId: string }) {
   const [isLoading, course] = useDetails(courseId);
@@ -67,6 +69,10 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
   const organizedByGroups = visibleGroups?.filter((group) => event.editors.includes(group));
   const promotedByGroups = visibleGroups?.filter((group) => !event.editors.includes(group));
   const locationPreview = [event.venue?.name, event.venue?.address].filter((v) => v)[0];
+
+  function isFuture() {
+    return moment().isBefore(event.end);
+  }
 
   return (
     <div className="card">
@@ -130,6 +136,9 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
 
           <p className="card-text">
             <RegistrationParticipants event={event} />
+          </p>
+          <p className="card-text">
+            {isFuture() && !event.isPrivate() && event.attendedBy(user?._id) && <Sharing />}
           </p>
 
           {!!event.venue && !isEmpty(omitBy(event.venue, isNil)) && (
