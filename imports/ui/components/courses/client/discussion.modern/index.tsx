@@ -12,19 +12,17 @@ import { Post } from "./post";
 import "./styles.scss";
 
 export interface Props {
-  select: string | undefined;
   courseId: string;
   eventId?: string | undefined;
 }
 
-export function Discussion({ select, courseId, eventId }: Props) {
+export function Discussion({ courseId, eventId }: Props) {
   const { t } = useTranslation();
   const userId = useUserId();
   // If we want to jump to a comment we don't fold the comments
-  const [limit, setLimit] = useState(select ? 0 : 3);
+  const [limit, setLimit] = useState(3);
   const [edit, setEdit] = useState(false);
   const [notifyAll, setNotifyAll] = useState(false);
-  const elementRef = useRef<HTMLDivElement>(null);
 
   const [isLoading, posts] = CourseDiscussions.useForCourse(courseId);
 
@@ -73,68 +71,23 @@ export function Discussion({ select, courseId, eventId }: Props) {
     }
     return false;
   }
-
-  useEffect(() => {
-    const element = elementRef.current;
-    const handleNotifyAll = () => {
-      setEdit(true);
-      setNotifyAll(true);
-      window.location.hash = "#discussion";
-      routerAutoscroll.scheduleScroll();
-    };
-    element?.addEventListener("notifyAll", handleNotifyAll);
-
-    const handleWriteComment = () => {
-      setEdit(true);
-      window.location.hash = "#discussion";
-      routerAutoscroll.scheduleScroll();
-    };
-    element?.addEventListener("writeComment", handleWriteComment);
-
-    return () => {
-      element?.removeEventListener("notifyAll", handleNotifyAll);
-      element?.removeEventListener("writeComment", handleWriteComment);
-    };
-  });
-
-  useEffect(() => {
-    if (!select) {
-      return;
-    }
-    // Jump to the selected comment.
-    // This method should work for screenreaders too.
-    window.location.hash = `#comment${select}`;
-    routerAutoscroll.scheduleScroll();
-  });
-
   // style fixes a problem that occurs during the transition to react. This can be removed when everything is changed to react.
   return (
-    <div
-      className="page-component discussion"
-      id="discussion"
-      ref={elementRef}
-      style={{ marginTop: "15px" }}
-    >
-      <div className="page-component-header">
-        <h4>
-          <span className="fa-solid fa-comments fa-fw" aria-hidden="true"></span>&nbsp;
-          {t("course.title.Discussion", "Discussion")}
-        </h4>
-      </div>
-
+    <>
+      <h4 className="card-title">{t("course.title.Discussion", "Discussion")}</h4>
       {isLoading() ? (
         <LoadingRow />
       ) : (
         <>
           <Post {...newPostAttr()} />
           {dicussions().map((post) => (
-            <div key={post._id} className="discussion-conversation">
+            <div className="list-group mb-3" key={post._id}>
               <Post post={post} responses={responses(post._id)} />
             </div>
           ))}
           {limited() && (
             <button
-              className="btn btn-add page-component-btn"
+              className="btn btn-secondary mb-3"
               type="button"
               onClick={() => {
                 setLimit(0);
@@ -148,7 +101,7 @@ export function Discussion({ select, courseId, eventId }: Props) {
           )}
         </>
       )}
-    </div>
+    </>
   );
 }
 
