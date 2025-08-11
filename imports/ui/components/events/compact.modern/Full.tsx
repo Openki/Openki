@@ -22,6 +22,7 @@ import { CustomFieldDisplay } from "../../courses/CustomFieldDisplay";
 import { ReactJoin } from "/imports/utils/ReactJoin";
 import { Sharing } from "../../sharing";
 import moment from "moment";
+import { ImagePlaceholder } from "./ImagePlaceholder";
 
 function DisplayDiscussion({ eventId, courseId }: { eventId: string; courseId: string }) {
   const [isLoading, course] = useDetails(courseId);
@@ -76,16 +77,18 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
 
   return (
     <div className="card">
-      <div
-        className="position-relative card-header card-header-img"
-        style={
-          event?.publicUrlForCompactImage()
-            ? { backgroundImage: `url('${event?.publicUrlForCompactImage()}')` }
-            : {}
-        }
-      >
-        <StatePanel event={event} />
-      </div>
+      {event?.publicUrlForDetailsImage() ? (
+        <div
+          className="position-relative card-header card-header-img"
+          style={{ backgroundImage: `url('${event.publicUrlForDetailsImage()}')` }}
+        >
+          <StatePanel event={event} />
+        </div>
+      ) : (
+        <ImagePlaceholder seed={event._id} regionId={event.region}>
+          <StatePanel event={event} />
+        </ImagePlaceholder>
+      )}
       <div className="card-body">
         <h3 className="card-title">{event.title}</h3>
         <p className="card-text">

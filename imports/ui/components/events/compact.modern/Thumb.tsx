@@ -2,6 +2,7 @@ import React from "react";
 import { StatePanel } from "./StatePanel";
 import { EventModel } from "/imports/api/events/events";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { ImagePlaceholder } from "./ImagePlaceholder";
 
 export function Thumb({ event }: { event: EventModel }) {
   const { timeFormat } = useDateTimeFormat();
@@ -9,16 +10,18 @@ export function Thumb({ event }: { event: EventModel }) {
 
   return (
     <div className="card me-1" style={{ width: 320, minWidth: 320 }}>
-      <div
-        className="position-relative card-header card-header-img"
-        style={
-          event?.publicUrlForCompactImage()
-            ? { backgroundImage: `url('${event?.publicUrlForCompactImage()}')` }
-            : {}
-        }
-      >
-        <StatePanel event={event} />
-      </div>
+      {event?.publicUrlForCompactImage() ? (
+        <div
+          className="position-relative card-header card-header-img"
+          style={{ backgroundImage: `url('${event.publicUrlForCompactImage()}')` }}
+        >
+          <StatePanel event={event} />
+        </div>
+      ) : (
+        <ImagePlaceholder seed={event._id} regionId={event.region}>
+          <StatePanel event={event} />
+        </ImagePlaceholder>
+      )}
       <div className="card-body">
         <h3 className="card-title text-truncate">{event.title}</h3>
         <p className="card-text text-truncate">
