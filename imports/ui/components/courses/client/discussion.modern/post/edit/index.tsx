@@ -11,9 +11,9 @@ import * as Alert from "/imports/api/alerts/alert";
 import * as Courses from "/imports/api/courses/publications";
 
 import { DiscussionProfileIcon } from "../profile-icon";
-import { DiscussionProfileLink } from "../profile-link";
 import { Richtext } from "/imports/ui/components/richtext";
 import { ButtonCancel } from "/imports/ui/components/buttons";
+import { UserName } from "/imports/ui/components/events/participants.modern";
 
 export interface Props {
   post: CourseDiscussionEntity & { new?: true };
@@ -145,8 +145,8 @@ export function Edit({ post, onSave, onCancel }: Props) {
         }}
       >
         <div>
-          {showUserId() ? (
-            <DiscussionProfileLink userId={post.userId} />
+          {showUserId() && post.userId ? (
+            <UserName userId={post.userId} />
           ) : (
             <strong>{t("discussion.anonymous", "Anonymous")}</strong>
           )}
