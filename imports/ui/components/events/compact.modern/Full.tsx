@@ -80,7 +80,9 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
       {event?.publicUrlForDetailsImage() ? (
         <div
           className="position-relative card-header card-header-img"
-          style={{ backgroundImage: `url('${event.publicUrlForDetailsImage()}')` }}
+          style={{
+            backgroundImage: `url('${event.publicUrlForDetailsImage()}'), url('${event.publicUrlForCompactImage()}')`,
+          }}
         >
           <StatePanel event={event} />
         </div>
