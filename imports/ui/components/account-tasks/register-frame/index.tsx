@@ -72,10 +72,10 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
         <>
           {t(
             "register.warning.emailExists",
-            "This email is already in use. We can send you an email with the next step.",
+            "This email is already in use. We can send you an email to login.",
           )}{" "}
           <a href={Router.path("resetPasswortEmail", {}, { query: { email: registerData.email } })}>
-            {t("register.warning.emailExists.sendEmail", "Ok, send me an email to continue")}
+            {t("register.warning.emailExists.sendEmail", "Ok, send me an email")}
           </a>
         </>
       ),

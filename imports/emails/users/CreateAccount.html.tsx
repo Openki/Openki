@@ -25,25 +25,25 @@ export function CreateAccount({
         <td>
           <h5 className="title">{t("email.base.greeting", { USERNAME: username })}</h5>
           <p>
-            {t("createAccount.email.introduction", "Login or create a user account on {SITE}.", {
+            {t("createAccount.email.introduction", "You were previously interacting as guest on {SITE}.", {
               SITE: siteName,
             })}
           </p>
           <p className="gap-md">
             {t(
               "createAccount.email.autoLogin",
-              "You can click this link to login and continues as a vistor.",
+              "You can either continue as guest",
             )}
           </p>
           <p className="text-center">
             <a className="button" href={autoLoginUrl}>
-              {t("createAccount.email.autoLoginButton", "Login")}
+              {t("createAccount.email.autoLoginButton", "Continue as guest")}
             </a>
           </p>
           <p className="gap-md">
             {t(
               "createAccount.email.accountCreation",
-              "Or you can click this link to choose a password and create your account.",
+              "Or you can choose a password and hence create your account.",
             )}
           </p>
           <p className="text-center">
@@ -52,8 +52,6 @@ export function CreateAccount({
             </a>
           </p>
           <p>
-            {t("email.base.farewell")}
-            <br />
             {t("email.base.postscript", { SITE: siteName })}
           </p>
         </td>
