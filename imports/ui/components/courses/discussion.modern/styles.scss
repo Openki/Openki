@@ -1,0 +1,14 @@
+@import "{}/imports/ui/stylesheets/variables/index";
+
+.discussion-conversation {
+  background: $blue-lighter;
+  padding: 15px ($grid-gutter-width * 0.5);
+}
+
+.discussion-conversation + .discussion-conversation {
+  padding-top: 0;
+}
+
+.page-component-btn + .discussion-conversation {
+  margin-top: $page-component-seperator-height;
+}

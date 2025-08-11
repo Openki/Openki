@@ -13,11 +13,12 @@ import { Filtering } from "/imports/utils/filtering";
 import { Publication } from "/imports/utils/ServerPublishReact";
 import { CourseTemplate } from "../../lib/course-template";
 
-import { Edit } from "/imports/ui/components/courses/edit";
-import { CourseCompact } from "/imports/ui/components/courses/compact";
-import { CompactPropose } from "/imports/ui/components/courses/CompactPropose";
-import { EventCompact } from "/imports/ui/components/events/compact";
-import { EventsMap } from "/imports/ui/components/events/map";
+import { Edit } from "../courses/edit";
+import { CourseCompact } from "../courses/compact";
+import { EventCompact } from "../../components/events/compact";
+import { EventCompact as EventCompactModern } from "../events/compact.modern";
+import { EventsMap } from "../../components/events/map";
+import { CompactPropose } from "../courses/CompactPropose";
 
 /** A list of entites. */
 
@@ -97,6 +98,14 @@ const event: ListOfEntities<EventModel> = {
   ),
 };
 
+const eventModern: ListOfEntities<EventModel> = {
+  route: "calendar",
+  showAll: { text: "dashboard.calendar.showAll" },
+  filter: EventCollection.Filtering,
+  find: Events.useFindFilter,
+  element: ({ entity }) => <EventCompactModern event={entity} />,
+};
+
 function bodyStyle(imageUrl: string) {
   const src = imageUrl;
   if (!src) {
@@ -136,7 +145,7 @@ const eventsMap: ComponentWithEntities<EventModel> = {
   find: Events.useFindFilter,
   component: ({ entities }) => (
     <div style={{ height: "440px" }}>
-      <EventsMap events={entities} openLinksInNewTab={false} />
+      <EventsMap events={entities} fullscreenControl />
     </div>
   ),
 };
@@ -153,6 +162,7 @@ export const mapping = {
   course,
   courseWithoutPropose,
   event,
+  eventModern,
   group,
   eventsMap,
   propose,

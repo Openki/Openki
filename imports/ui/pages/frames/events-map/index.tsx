@@ -1,30 +1,40 @@
 import React from "react";
-import { Mongo } from "meteor/mongo";
 import { useTranslation } from "react-i18next";
 import * as Metatags from "/imports/utils/metatags";
+import { Filtering } from "/imports/utils/filtering";
+import { useSearchParams } from "/imports/utils/react-meteor-router";
+import moment from "moment";
 
-import { EventEntity, EventModel } from "/imports/api/events/events";
+import { useFindFilter } from "/imports/api/events/publications";
+import { FindParams } from "/imports/api/events/events";
 
 import { EventsMap } from "/imports/ui/components/events/map";
+import { LoadingPage } from "../../loading";
 
 import "./styles.scss";
 
-export interface Props {
-  events: Mongo.Cursor<EventEntity, EventModel>;
-}
-
-export function FrameEventsMapPage(props: Props) {
+export function FrameEventsMapPage() {
   const { t } = useTranslation();
   const now = new Date();
+  const searchParams = useSearchParams();
+
+  const filter = new Filtering(FindParams);
+  filter.read(searchParams);
+  const query = filter.toQuery();
+  query.after = moment().startOf("day").toDate();
+
+  const [isLoading, events] = useFindFilter(query);
 
   Metatags.setCommonTags(t("frameEventsMap.windowtitle", "Events map"));
 
+  if (isLoading()) {
+    return <LoadingPage />;
+  }
+
   return (
-    <EventsMap
-      events={props.events.fetch().filter((e) => e.start > now)}
-      openLinksInNewTab={true}
-      fullscreenControl={false}
-    />
+    <div className="vh-100">
+      <EventsMap events={events.filter((e) => e.start > now)} openLinksInNewTab />
+    </div>
   );
 }
 

@@ -90,9 +90,9 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
   }
   function dashboardAttr(): DashboardProps {
     return {
-      region: region?._id || "",
-      group: group._id,
       list: group.dashboard || PublicSettings.groupDashboardDefault || [],
+      defaultRegion: region?._id || "",
+      defaultGroup: group._id,
     };
   }
 

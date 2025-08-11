@@ -14,7 +14,7 @@ import { VenueTag } from "../../venues/link";
 
 import "./styles.scss";
 
-export interface Data {
+export interface Props {
   events: EventModel[];
   fullscreenControl?: boolean;
   openLinksInNewTab?: boolean;
@@ -30,7 +30,7 @@ function groupBy<T>(array: T[], predicate: (value: T, index: number, array: T[])
   );
 }
 
-export function EventsMap({ events, fullscreenControl = true, openLinksInNewTab = false }: Data) {
+export function EventsMap({ events, fullscreenControl = false, openLinksInNewTab = false }: Props) {
   const locale = useSession("locale");
 
   const eventMarkerIcon = new DivIcon({

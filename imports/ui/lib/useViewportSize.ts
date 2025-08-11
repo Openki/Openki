@@ -8,7 +8,9 @@ export function useViewportSize() {
   const [width, setWidth] = useState(getWidth());
   useLayoutEffect(() => {
     function updateWidth() {
-      setWidth(getWidth());
+      if (width != getWidth()) {
+        setWidth(getWidth());
+      }
     }
     window.addEventListener("resize", updateWidth);
     updateWidth();

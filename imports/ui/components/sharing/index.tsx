@@ -8,7 +8,7 @@ import * as Analytics from "/imports/ui/lib/analytics";
 
 import "./styles.scss";
 
-export function Sharing() {
+export function Sharing({ align }: { align?: "start" | "end" }) {
   const { t } = useTranslation();
   const shariffElementRef = useRef<HTMLDivElement>(null);
 
@@ -40,7 +40,7 @@ export function Sharing() {
   });
 
   return (
-    <div className="shariff-wrapper" id="share">
+    <div className={`shariff-wrapper${align === "end" ? " text-end" : ""}`}>
       <p>{t("sharing.title", "Share it with your friends")}</p>
       <div
         ref={shariffElementRef}

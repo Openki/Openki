@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useTranslation } from "react-i18next";
-import { useParams } from "/imports/utils/react-meteor-router";
+import { useParams, useSearchParams } from "/imports/utils/react-meteor-router";
 
 import { EventModel } from "/imports/api/events/events";
 import { useDetails } from "/imports/api/courses/publications";
@@ -81,7 +81,8 @@ function DisplayDiscussion({ eventId, courseId }: { eventId: string; courseId: s
 export function Event(data: { event: EventModel; isNew: boolean }) {
   const { event } = data;
   const { t } = useTranslation();
-  const [editing, setEditing] = useState(!event._id);
+  const param = useSearchParams();
+  const [editing, setEditing] = useState(!event._id || param.edit === "1");
 
   function mobileViewport() {
     return Viewport.get().width <= ScssVars.screenMD;
@@ -98,7 +99,7 @@ export function Event(data: { event: EventModel; isNew: boolean }) {
       },
       onCancel: () => {
         if (data.isNew) {
-          window.history.back();
+          history.back();
         } else {
           setEditing(false);
         }
