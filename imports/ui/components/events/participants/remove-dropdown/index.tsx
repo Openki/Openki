@@ -36,7 +36,7 @@ export function RemoveDropdown({ userId, onClick }: Props) {
       <ul className="dropdown-menu dropdown-menu-end dialog-dropdown">
         <li className="dropdown-header">
           {t("eventParticipant.remove.header", "Cancel registration?")}
-          <button type="button" className="btn-close btn-close-white"></button>
+          <button type="button" className="btn-close"></button>
         </li>
         <li>
           <hr className="dropdown-divider" />

@@ -33,7 +33,7 @@ export function Remove({ venue, groupId }: Props) {
       <div className="dropdown-menu dialog-dropdown">
         <div className="dropdown-header">
           {t("editGroup.remove.header", "Remove group")}
-          <button type="button" className="btn-close btn-close-white"></button>
+          <button type="button" className="btn-close"></button>
         </div>
         <div className="p-2">
           {t("editGroup.remove.desc", "Disable members of {GROUP} to manage this venue.", {

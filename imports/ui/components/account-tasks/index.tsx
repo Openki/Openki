@@ -214,7 +214,7 @@ export function AccountTasks() {
               </h4>
               <button
                 type="button"
-                className="btn-close btn-close-white"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
