@@ -655,7 +655,7 @@
   "notification.event.mail.subject.new": "{DATE} festgelegt: {TITLE}",
   "notification.event.mail.unsubscribe": "Von {COURSE} abmelden",
   "notification.event.reminder.informUnregisterEvent": "Falls du nicht kommen kannst, lass es die Organisierenden unbedingt wissen:",
-  "notification.event.reminder.mail.intro": "Wir möchten dich daran erinnern, dass du für \"{EVENTTITLE}\" registriert bist. Wir freuen uns darauf, {COMPANIONS, Plural, =0{dich} other{dich und deine Begleitung} } am {EVENTDATE} zu sehen.",
+  "notification.event.reminder.mail.intro": "Wir möchten dich daran erinnern, dass du für \"{EVENTTITLE}\" registriert bist. Wir freuen uns darauf, {COMPANIONS, plural, =0{dich} other{dich und deine Begleitung} } am {EVENTDATE} zu sehen.",
   "notification.event.reminder.mail.notice": "Du erhälst diese E-Mail weil du bei {EVENTTITLE} angemeldet bist.",
   "notification.event.reminder.mail.subject": "Reminder: {EVENT}",
   "notification.event.reminder.unregisterEvent": "Abmelden",
