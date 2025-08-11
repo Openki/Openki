@@ -11,16 +11,16 @@ import { useDetails as useRegionDetails } from "/imports/api/regions/publication
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { RegistrationParticipants } from "../../display/registration.modern";
-import { Discussion } from "../../../courses/client/discussion.modern";
-import { Display } from "../../../location/display";
+import { RegistrationParticipants } from "../display/registration.modern";
+import { Discussion } from "../../courses/discussion.modern";
+import { Display } from "../../location/display";
 
 import { GroupName } from "./GroupName";
 import { useDetails } from "/imports/api/courses/publications";
 import { StatePanel } from "./StatePanel";
-import { CustomFieldDisplay } from "../../../courses/CustomFieldDisplay";
+import { CustomFieldDisplay } from "../../courses/CustomFieldDisplay";
 import { ReactJoin } from "/imports/utils/ReactJoin";
-import { Sharing } from "../../../sharing";
+import { Sharing } from "../../sharing";
 import moment from "moment";
 
 function DisplayDiscussion({ eventId, courseId }: { eventId: string; courseId: string }) {
