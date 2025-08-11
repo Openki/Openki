@@ -21,7 +21,7 @@ export function ImagePlaceholder({
   // "random" chooses of a image from the regions courseBackgroundImages setting
   let imageIndex = 0;
   for (let i = 0; i < seed.length; i++) {
-    imageIndex = imageIndex + (seed.charCodeAt(i) % images.length);
+    imageIndex = (imageIndex + seed.charCodeAt(i)) % images.length;
   }
 
   return (
