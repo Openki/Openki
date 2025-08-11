@@ -102,9 +102,3 @@ export function Discussion({ courseId, eventId }: Props) {
     </>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("Discussion", () => Discussion);
