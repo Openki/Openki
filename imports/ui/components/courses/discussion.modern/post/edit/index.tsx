@@ -103,6 +103,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
       <DiscussionProfileIcon userId={post.userId} />
 
       <form
+        className="flex-grow-1"
         onSubmit={async (event) => {
           event.preventDefault();
 

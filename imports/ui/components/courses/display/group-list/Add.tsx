@@ -75,7 +75,7 @@ export function Add({ course }: Props) {
       <ul className="dropdown-menu dialog-dropdown">
         <li className="dropdown-header">
           {t("grouplist.addgroups.header", "Add group")}
-          <button type="button" className="btn-close btn-close-white"></button>
+          <button type="button" className="btn-close"></button>
         </li>
         <li>
           <hr className="dropdown-divider" />
