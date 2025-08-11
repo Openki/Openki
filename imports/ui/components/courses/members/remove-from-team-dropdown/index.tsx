@@ -26,9 +26,10 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
     <span className="dropdown" data-bs-title={t("course.roles.removeTeam", "Remove from team")}>
       <button
         type="button"
-        className="btn btn-sm btn-close btn-close-white"
+        className="btn btn-sm btn-close"
         aria-expanded="false"
         data-bs-toggle="dropdown"
+        data-bs-theme="dark"
         onClick={() => {
           setTimeout(() => {
             Tooltips.hide();
@@ -40,7 +41,7 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
           {isNotPriviledgedSelf()
             ? t("course.details.removeTeam.self.header", "Remove yourself from the team")
             : t("course.details.removeTeam.others.header", "Remove member from the team")}
-          <button type="button" className="btn-close btn-close-white"></button>
+          <button type="button" className="btn-close"></button>
         </li>
         <li>
           <hr className="dropdown-divider" />
