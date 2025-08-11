@@ -1,7 +1,8 @@
-import React from "react";
-import { MapContainer, Marker } from "react-leaflet";
+import React, { useEffect } from "react";
+import { MapContainer, Marker, useMap } from "react-leaflet";
 import { useSession } from "/imports/utils/react-meteor-data";
 import { DivIcon } from "leaflet";
+import { observeSize } from "/imports/ui/lib/observeHeight";
 
 import "leaflet/dist/leaflet.css";
 import { TileLayers } from "../../TileLayer";
@@ -9,6 +10,21 @@ import { FullscreenControl } from "../../FullscreenControl";
 
 import "./styles.scss";
 
+function AutoInvalidateSize() {
+  const map = useMap();
+
+  useEffect(() => {
+    const observer = observeSize(map.getContainer(), () => {
+      map.invalidateSize();
+    });
+
+    return () => {
+      observer.stop();
+    };
+  });
+
+  return null;
+}
 export function Display(props: {
   coordinates: [long: number, lat: number];
   fullscreen?: boolean | undefined;
@@ -25,6 +41,7 @@ export function Display(props: {
         {TileLayers[locale] || TileLayers.default}
         <Marker position={[props.coordinates[1], props.coordinates[0]]} icon={markerIcon}></Marker>
         {props.fullscreen && <FullscreenControl />}
+        <AutoInvalidateSize />
       </MapContainer>
     </div>
   );

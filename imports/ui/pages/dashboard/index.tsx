@@ -28,12 +28,12 @@ export function DashboardPage({ query }: Props) {
   return (
     <div className="container">
       {region?.dashboard ? (
-        <Dashboard region={region._id} list={region.dashboard} group={group} />
+        <Dashboard defaultRegion={region._id} list={region.dashboard} defaultGroup={group} />
       ) : PublicSettings.regionDashboardDefault ? (
         <Dashboard
-          region={region?._id}
+          defaultRegion={region?._id}
           list={PublicSettings.regionDashboardDefault}
-          group={group}
+          defaultGroup={group}
         />
       ) : (
         <Find query={query} />
