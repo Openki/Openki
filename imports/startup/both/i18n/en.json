@@ -302,7 +302,7 @@
   "createAccount.email.autoLogin": "You can either continue as guest",
   "createAccount.email.autoLoginButton": "Continue as guest",
   "createAccount.email.introduction": "You were previously interacting as guest on {SITE}.",
-  "createAccount.subject": "[{SITE}] Create your account on {SITE}",
+  "createAccount.subject": "[{SITE}] Login or create your account on {SITE}",
   "customField.boolean.no": "No",
   "customField.boolean.yes": "Yes",
   "dashboard.activeGroups.title": "Active groups",

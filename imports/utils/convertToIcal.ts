@@ -37,5 +37,5 @@ export function convertToIcal(dbevent: EventModel): ICalEventData {
       status: !dbevent.canceled ? ICalEventStatus.CONFIRMED : ICalEventStatus.CANCELLED,
     },
     isEmpty,
-  );
+  ) as unknown as ICalEventData;
 }
