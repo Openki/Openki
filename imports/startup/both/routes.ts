@@ -38,7 +38,6 @@ import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 import { CourseTemplate } from "/imports/ui/lib/course-template";
-import { CssFromQuery } from "/imports/ui/lib/css-from-query";
 
 import type { Data as GroupDetailsData } from "/imports/ui/pages/group-details";
 import type { Data as VenuesMapData } from "/imports/ui/pages/venues-map";
@@ -557,16 +556,6 @@ RouterAsync.route("frameCalendar", {
   layoutTemplate: "frameLayout",
   async onRun() {
     await import("/imports/ui/pages/frames/calendar");
-  },
-  data() {
-    const cssRules = new CssFromQuery(this.params.query, [
-      ["itembg", "background-color", ".frame-list-item"],
-      ["itemcolor", "color", ".frame-list-item"],
-      ["linkcolor", "color", ".frame-list-item a"],
-      ["regionbg", "background-color", ".frame-list-item-region"],
-      ["regioncolor", "color", ".frame-list-item-region"],
-    ]).getCssRules();
-    return { cssRules };
   },
 });
 

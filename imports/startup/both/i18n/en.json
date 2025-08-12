@@ -519,6 +519,7 @@
   "frame.courseList.interestedPersons": "Interested people",
   "frame.courseList.moreAboutThisCourse": "More on {SITENAME}",
   "frame.eventsList.description": "Description:",
+  "frame.eventsList.started": "Started {FROMNOW}",
   "frame.eventsList.when": "When:",
   "frame.eventsList.where": "Where:",
   "frame.list.reservation.status.tooltip": "{RESERVEDSEATS} of {TOTALSEATS} seats reserved",
