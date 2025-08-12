@@ -11,7 +11,7 @@ export function CreateUserSection({ user }: { user: UserModel }) {
       <p>
         {t(
           "profile.createUser.description",
-          "You are currently here as a guest user. If you want to be able to log in again later or from an other device, you can create a normal user account here. For this, we will send you an email with the instructions and a link to set a password for your account.",
+          "You are currently here as a guest user. If you want to be able to log in with a password and use all features of this plattform, you can create a normal user account here. For this, we will send you an email with the instructions and a link to set a password for your account.",
         )}
       </p>
 
