@@ -7,7 +7,7 @@ export async function update() {
   for (const orginalVenue of await Venues.find({ slug: { $exists: false } }).fetchAsync()) {
     const venue = { ...orginalVenue };
     venue.slug = StringTools.slug(venue.name);
-    // eslint-disable-next-line no-await-in-loop
+
     updated += await Venues.updateAsync(venue._id, venue);
   }
 

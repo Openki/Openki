@@ -184,7 +184,7 @@ export function createEnumPredicate<T extends readonly string[]>(...values: read
 
     const state = values.find((v) => v.toUpperCase() === param.toUpperCase());
 
-    if (typeof state === "undefined") {
+    if (state === undefined) {
       throw new FilteringReadError("", "Invalid value");
     }
 
@@ -223,7 +223,7 @@ export function createEnumsPredicate<T extends readonly string[]>(...states: rea
       const values = params.map((v) => {
         const state = states.find((s) => s.toUpperCase() === v.toUpperCase());
 
-        if (typeof state === "undefined") {
+        if (state === undefined) {
           throw new FilteringReadError("", "Invalid value");
         }
         return state;

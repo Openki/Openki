@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
@@ -15,7 +14,7 @@ import * as StringTools from "/imports/utils/string-tools";
 import { hasRoleUser } from "/imports/utils/course-role-utils";
 
 import * as Analytics from "/imports/ui/lib/analytics";
-import { Editable, Props as EditableProps } from "/imports/ui/components/editable/index.react";
+import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 
 import { RegionTag } from "../../regions/tag";
 import { Title } from "./title";
@@ -268,7 +267,7 @@ export function Edit(data: Data) {
     if (isNew) {
       if (data.isFrame && data.region) {
         // The region was preset for the frame
-        return allRegions.filter((r) => r._id === data.region)[0];
+        return allRegions.find((r) => r._id === data.region);
       }
       if (allRegions.length === 1) {
         // There is only one region
@@ -279,7 +278,6 @@ export function Edit(data: Data) {
     return undefined;
   }
   const getGroups = () => {
-    // eslint-disable-next-line @typescript-eslint/no-shadow
     const groups = [];
 
     const defaultTeamGroups = getRegion()?.defaultTeamGroups;
@@ -495,7 +493,7 @@ export function Edit(data: Data) {
 
     if (data.isFrame && data.region) {
       // The region was preset for the frame
-      const region = allRegions.filter((r) => r._id === data.region)[0];
+      const region = allRegions.find((r) => r._id === data.region);
       if (region) {
         return !region.isPrivate();
       }
@@ -692,7 +690,7 @@ export function Edit(data: Data) {
     if (course._id) {
       Router.go("showCourse", course);
     } else {
-      Router.go("/");
+      Router.go("home");
     }
   };
 
@@ -769,7 +767,7 @@ export function Edit(data: Data) {
             <label className="form-label">{t("course.edit.description", "Description")}</label>
             <Editable {...editableDescription} />
           </div>
-          {hasPricePolicy() ? <PricePolicy dismissable={true} wrap="mb-3" /> : null}
+          {hasPricePolicy() && <PricePolicy dismissable={true} wrap="mb-3" />}
           <div className="row gap-3 mb-3">
             {!hideCategories() && (
               <div className="col-md">
@@ -847,7 +845,7 @@ export function Edit(data: Data) {
           </div>
           <EditCustomFields fields={customFields("multiLine")} values={data.customFields} />
 
-          {showInternalCheckbox() ? (
+          {showInternalCheckbox() && (
             <div className="mb-3">
               <label className="form-label">{t("course.edit.intern", "Hide on front page")}</label>
               <div className="form-check">
@@ -867,11 +865,11 @@ export function Edit(data: Data) {
                 </label>
               </div>
             </div>
-          ) : null}
+          )}
 
           <div className="form-actions">
             <ButtonSave onClick={handleSave} disabled={isBusy} />
-            {!data.isFrame ? <ButtonCancel onClick={handleCancel} /> : null}
+            {!data.isFrame && <ButtonCancel onClick={handleCancel} />}
           </div>
         </div>
       </PleaseLogin>

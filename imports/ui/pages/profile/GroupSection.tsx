@@ -9,7 +9,7 @@ export function GroupSection({ groups }: { groups: GroupModel[] }) {
   return (
     <div className="page-component page-component-seperated">
       <h3>{t("profile.groups", "My groups")}</h3>
-      <h5>
+      <p>
         {t(
           "profile.groupMembership",
           "You are {NUM_GROUPS, plural, =0{not member of any group} one{member of the group:} other{member of # groups:} }",
@@ -17,7 +17,7 @@ export function GroupSection({ groups }: { groups: GroupModel[] }) {
             NUM_GROUPS: groups.length,
           },
         )}
-      </h5>
+      </p>
       <ul className="list-unstyled">
         {groups.map((group) => (
           <li key={group._id} className="mb-3">

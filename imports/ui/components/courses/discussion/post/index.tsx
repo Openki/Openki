@@ -34,7 +34,6 @@ function Responses({ responses: replies }: { responses: CourseDiscussionEntity[]
         </button>
       )}
       {responses().map((response) => (
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
         <Post key={response._id} post={response} />
       ))}
     </>
@@ -93,12 +92,12 @@ export function Post({ post, responses, edit, onCancel }: Props) {
     <>
       {editing ? <Edit {...postEditAttr()} /> : <Show {...postShowAttr()} />}
 
-      {isParent ? (
+      {isParent && (
         <>
-          {responses ? <Responses responses={responses} /> : null}
+          {!!responses && <Responses responses={responses} />}
           <Post post={newResponse() as any} />
         </>
-      ) : null}
+      )}
     </>
   );
 }

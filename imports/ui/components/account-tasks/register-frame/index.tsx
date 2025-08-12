@@ -141,7 +141,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
               });
             }}
           />
-          {errors.username ? <div className="invalid-feedback">{errors.username}</div> : null}
+          {!!errors.username && <div className="invalid-feedback">{errors.username}</div>}
         </div>
       </div>
       <div className="mb-3">
@@ -161,7 +161,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
               });
             }}
           />
-          {errors.password ? <div className="invalid-feedback">{errors.password}</div> : null}
+          {!!errors.password && <div className="invalid-feedback">{errors.password}</div>}
         </div>
       </div>
       <div className="mb-3">
@@ -183,7 +183,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
                   });
                 }}
               />
-              {errors.email ? <div className="invalid-feedback">{errors.email}</div> : null}
+              {!!errors.email && <div className="invalid-feedback">{errors.email}</div>}
             </div>
           </div>
           <div className="col-auto">
@@ -209,7 +209,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
         </div>
       </div>
       <DataProtectionLaw />
-      {PublicSettings.askNewsletterConsent ? (
+      {PublicSettings.askNewsletterConsent && (
         <div className="mb-3">
           <div className="form-check">
             <input
@@ -233,7 +233,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
             </label>
           </div>
         </div>
-      ) : null}
+      )}
       <div className="mb-3">
         <button type="submit" className="btn btn-add form-control" disabled={isBusy}>
           {isBusy ? (

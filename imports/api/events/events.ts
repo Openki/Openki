@@ -20,6 +20,7 @@ import { Tuple, Type } from "/imports/utils/CustomChecks";
 export interface EventParticipantEntity {
   user: string;
   companions?: number;
+  removeToken: string;
 }
 
 export interface EventVenueEntity {
@@ -60,9 +61,9 @@ export interface EventEntity {
   room: string;
   /** userId */
   createdBy: string;
-  // eslint-disable-next-line camelcase
+
   time_created: Date;
-  // eslint-disable-next-line camelcase
+
   time_lastedit: Date;
   /** course._id of parent course, optional */
   courseId?: string;
@@ -286,7 +287,6 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
     return super.insertAsync(enrichedEvent, callback);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   Filtering() {
     return new Filtering(FindParams);
   }

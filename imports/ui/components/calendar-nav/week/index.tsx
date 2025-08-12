@@ -99,7 +99,7 @@ export function CalendarNavWeek(props: Props) {
         </div>
         <div className="col-md-6 col-lg-4 p-1">
           <div className="row justify-content-center align-items-center">
-            {!hideSwitches ? <Control {...controlAttr("previous")} /> : null}
+            {!hideSwitches && <Control {...controlAttr("previous")} />}
             <div className="col-auto text-center">
               <div className="lead">
                 {t("calendar.weekNumber", "Week")} {weekNr(date)}
@@ -113,7 +113,7 @@ export function CalendarNavWeek(props: Props) {
                 </span>
               </div>
             </div>
-            {!hideSwitches ? <Control {...controlAttr("next")} /> : null}
+            {!hideSwitches && <Control {...controlAttr("next")} />}
           </div>
         </div>
         <div className="row align-items-center">
@@ -132,7 +132,7 @@ export function CalendarNavWeek(props: Props) {
             </div>
           )}
         </div>
-        {currentUser ? (
+        {!currentUser && (
           <div
             className={`${!availableGroups ? "offset-md-4 offset-lg-2 " : ""}col-md-8 col-lg-4 p-1`}
           >
@@ -152,14 +152,8 @@ export function CalendarNavWeek(props: Props) {
               </label>
             </div>
           </div>
-        ) : null}
+        )}
       </div>
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("CalendarNavWeek", () => CalendarNavWeek);

@@ -50,7 +50,7 @@ export const ensure = {
       members: adminId ? [adminId] : [],
       admins: adminId ? [adminId] : [],
     });
-    /* eslint-disable-next-line no-console */
+
     console.log(`Added tenant: ${name} ${id}`);
 
     return id;
@@ -86,7 +86,6 @@ export const ensure = {
     const prng = Prng("ensureUser");
 
     if (!name) {
-      /* eslint-disable-next-line no-param-reassign */
       name = "Ed Dillinger";
     }
     const email = `${name.split(" ").join("")}@openki.example`.toLowerCase();
@@ -168,7 +167,7 @@ export const ensure = {
       name,
       loc: { type: "Point", coordinates: [8.3, 47.05] },
     } as Mongo.OptionalId<RegionEntity>);
-    /* eslint-disable-next-line no-console */
+
     console.log(`Added region: ${name} ${id}`);
 
     return id;
@@ -192,7 +191,7 @@ export const ensure = {
       time_created: new Date(),
       time_lastedit: new Date(),
     });
-    /* eslint-disable-next-line no-console */
+
     console.log(`Added fixture group '${short}' id: ${id}`);
 
     return id;

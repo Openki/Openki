@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useState, DragEvent, ChangeEvent } from "react";
 import ImageBlobReduce from "image-blob-reduce";
 import { useTranslation } from "react-i18next";
@@ -75,7 +74,6 @@ export function EditableImage(data: Data) {
           pica: ImageBlobReduce.pica({ features: ["js", "wasm"] }),
         }).toBlob(file, { max: data.maxSize });
       } catch (ex) {
-        // eslint-disable-next-line no-console
         console.info(
           `Some browsers do not support this. It is okay to use the original. Errormessage: ${ex}`,
         );
@@ -175,7 +173,7 @@ export function EditableImage(data: Data) {
   }
 
   function deleteAllowed() {
-    return data.onDelete;
+    return !!data.onDelete;
   }
 
   function handleDragOver(event: DragEvent<HTMLFormElement>) {
@@ -259,14 +257,14 @@ export function EditableImage(data: Data) {
               <span className="btn btn-secondary">
                 {t("fileUpload.choose.text", "Choose a file")}
               </span>
-              {supportsDragndrop ? (
+              {supportsDragndrop && (
                 <>
                   <br />
                   <span className="editable-image-dragndrop">
                     {t("fileUpload.drag.text", "or drag it here")}
                   </span>
                 </>
-              ) : null}
+              )}
             </>
           ) : progress === "uploading" ? (
             <div className="editable-image-uploading">
@@ -279,7 +277,7 @@ export function EditableImage(data: Data) {
           )}
         </label>
 
-        {progress === "ready" ? (
+        {progress === "ready" && (
           <div className="form-check text-start">
             <input
               className="form-check-input"
@@ -295,14 +293,14 @@ export function EditableImage(data: Data) {
               {t("fileUpload.copyrights", "I have the copy rights to publish that file.")}
             </label>
           </div>
-        ) : null}
+        )}
       </form>
       <div className="editable-image-controls">
         {progress === "ready" ? (
           <ButtonSave {...uploadButtonAttributes()} />
-        ) : deleteAllowed() ? (
-          <ButtonDelete onClick={onDelete} />
-        ) : null}{" "}
+        ) : (
+          deleteAllowed() && <ButtonDelete onClick={onDelete} />
+        )}{" "}
         <ButtonCancel onClick={onCancel} />
       </div>
     </>
@@ -326,7 +324,7 @@ export function EditableImage(data: Data) {
         className="align-top fa-solid fa-pencil cursor-pointer"
         onClick={handleEditClick}
       ></span>
-      {data.thumbnail?.src ? (
+      {!!data.thumbnail?.src && (
         <>
           {" "}
           <span
@@ -340,7 +338,7 @@ export function EditableImage(data: Data) {
                 <div className="modal-header">
                   <button
                     type="button"
-                    className="btn-close btn-close-white"
+                    className="btn-close"
                     data-bs-dismiss="modal"
                     aria-label="Close"
                   ></button>
@@ -352,13 +350,7 @@ export function EditableImage(data: Data) {
             </div>
           </div>
         </>
-      ) : null}
+      )}
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("EditableImage", () => EditableImage);

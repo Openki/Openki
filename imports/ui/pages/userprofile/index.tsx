@@ -18,7 +18,7 @@ import * as Tooltips from "/imports/utils/Tooltips";
 
 import "./template.html";
 import { Avatar } from "../../components/avatar";
-import { Contribution } from "../../components/contribution";
+import { Contribution } from "../../components/Contribution";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { SendMessage, Data as SendMessageData } from "/imports/ui/components/send-message";
 
@@ -278,7 +278,6 @@ export function UserprofilePage(data: UserProfilePageProps) {
                         <button
                           type="button"
                           className="btn-close btn-close-black float-end"
-                          data-bs-toggle="tooltip"
                           data-bs-title={t("privilege.remove", "Remove privilege")}
                           onClick={() => handleRemovePrivilege("admin")}
                         ></button>
@@ -313,7 +312,6 @@ export function UserprofilePage(data: UserProfilePageProps) {
                         <button
                           type="button"
                           className="btn-close btn-close-black float-end"
-                          data-bs-toggle="tooltip"
                           data-bs-title={t("profile.group.expel", "Expel from group {GROUPNAME}", {
                             GROUPNAME: group.name,
                           })}

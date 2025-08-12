@@ -29,8 +29,8 @@ export function EventBox({
   const eventStart = startMoment.format("LT");
   const eventEnd = endMoment.format("LT");
   const venueLine = getVenueLine(event);
-  const eventLink = Router.url("showEvent", event, { query: campaign });
-  const calLink = Router.url("calEvent", event, { query: campaign });
+  const eventLink = Router.url("showEvent", event, { query: { campaign } });
+  const profileLink = Router.url("profile", {}, { query: { campaign }, hash: "my-events" });
 
   const { t } = useTranslation(undefined, { lng });
 
@@ -83,8 +83,8 @@ export function EventBox({
       {!event.canceled && (
         <tr>
           <td className="event-link">
-            <a href={calLink}>
-              {t("notification.mail.event.linkCalendar", "Add this event to my calendar")}
+            <a href={profileLink}>
+              {t("notification.mail.event.linkCalendar", "Save all my events to my calendar")}
             </a>
             <br />
           </td>

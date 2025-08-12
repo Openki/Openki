@@ -21,7 +21,7 @@ export function CalendarSection() {
 
   return (
     <div className="page-component page-component-seperated">
-      <h3>{t("profile.calendar", "My events")}</h3>
+      <h3 id="my-events">{t("profile.calendar", "My events")}</h3>
       <div className="dropdown">
         <button
           className="btn btn-secondary dropdown-toggle"
@@ -33,20 +33,20 @@ export function CalendarSection() {
         </button>
         <ul className="dropdown-menu">
           <li>
-            <a className="dropdown-item" href={webcalUrl}>
-              <i className="fa-fw fa-solid fa-download"></i>{" "}
-              {t("profile.calendar.iCal", "iCal-Calendar")}
-            </a>
-          </li>
-          <li>
             <a
               className="dropdown-item"
-              href={generateForOutlook(webcalUrl)}
-              target="_blank"
-              rel="noreferrer"
+              href={webcalUrl}
+              onClick={() => {
+                Alert.success(
+                  t(
+                    "profile.calendar.iCal.message",
+                    "Your calendar app should now appear. If not, try an other option.",
+                  ),
+                );
+              }}
             >
-              <i className="fa-fw fa-solid fa-arrow-up-right-from-square"></i>{" "}
-              {t("profile.calendar.outlook", "Outlook.com (Web)")}
+              <i className="fa-fw fa-solid fa-download"></i>{" "}
+              {t("profile.calendar.iCal", "Into app on my local device")}
             </a>
           </li>
           <li>
@@ -58,6 +58,17 @@ export function CalendarSection() {
             >
               <i className="fa-fw fa-solid fa-arrow-up-right-from-square"></i>{" "}
               {t("profile.calendar.google", "Google Kalender (Web)")}
+            </a>
+          </li>
+          <li>
+            <a
+              className="dropdown-item"
+              href={generateForOutlook(webcalUrl)}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <i className="fa-fw fa-solid fa-arrow-up-right-from-square"></i>{" "}
+              {t("profile.calendar.outlook", "Outlook.com (Web)")}
             </a>
           </li>
           <li>

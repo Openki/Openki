@@ -34,7 +34,7 @@ export const MeteorAsync = {
       user: string | { email: string } | { username: string } | { id: string },
       password: string,
     ) => Promise<void>),
-  logout: Meteor.logout && promisify<undefined>(Meteor.logout),
+  logout: Meteor.logout && promisify(Meteor.logout),
   setTimeout:
     Meteor.setTimeout &&
     ((delay: number) =>

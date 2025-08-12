@@ -208,7 +208,7 @@ const defaults = {
     calendar: true,
     customEntries: [] as { link: string; icon: string; key?: string; text?: string }[],
   },
-  // eslint-disable-next-line camelcase
+
   footerLinks: [] as { link: string; key?: string; title_key?: string; text?: string }[],
   faqLink: "/info/faq",
   pricePolicyLink: {

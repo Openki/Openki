@@ -60,8 +60,8 @@ export function JoinLink({ tenant }: Props) {
             type="text"
             value={Router.url(
               "join",
-              { token: joinLink?.token },
-              { query: { tenant: joinLink?.tenant } },
+              { token: joinLink.token },
+              { query: { tenant: joinLink.tenant } },
             )}
             readOnly
           />

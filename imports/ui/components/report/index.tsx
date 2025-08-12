@@ -23,7 +23,7 @@ export function Report() {
 
   return (
     <>
-      {sending() ? t("report.sending", "Report is being sent…") : null}
+      {sending() && t("report.sending", "Report is being sent…")}
       {reporting() ? (
         <div className="report p-3">
           <form

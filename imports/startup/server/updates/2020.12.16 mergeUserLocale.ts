@@ -13,7 +13,7 @@ export async function update() {
       delete user.profile.locale;
     }
     user.locale = user.locale || "en";
-    // eslint-disable-next-line no-await-in-loop
+
     updated += await Users.updateAsync(user._id, user);
   }
 

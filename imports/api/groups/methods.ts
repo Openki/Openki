@@ -90,7 +90,6 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
   }
 
   if (group.isNew()) {
-    /* eslint-disable-next-line no-param-reassign */
     groupId = await Groups.insertAsync(_.extend(group, updates));
     await userBadgesDenormalizer.updateBadges(user._id);
   } else {

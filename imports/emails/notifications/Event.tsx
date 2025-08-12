@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { EventModel } from "/imports/api/events/events";

@@ -99,7 +99,6 @@ function Task({
         // Move entered username over to email field if it contains a @
         if (isEmail(username)) {
           email = username;
-          // eslint-disable-next-line no-param-reassign
           username = "";
         }
 
@@ -207,7 +206,7 @@ export function AccountTasks() {
       ref={elementRef}
     >
       <div className="modal-dialog modal-sm" role="document">
-        {show ? (
+        {show && (
           <div className="modal-content">
             <div className="modal-header">
               <h4 className="modal-title">
@@ -215,7 +214,7 @@ export function AccountTasks() {
               </h4>
               <button
                 type="button"
-                className="btn-close btn-close-white"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
@@ -243,13 +242,13 @@ export function AccountTasks() {
               />
             </div>
           </div>
-        ) : null}
+        )}
       </div>
     </div>
   );
 }
-// for Blaze
 
+// for Blaze
 import "./template.html";
 
 Template.registerHelper("AccountTasks", () => AccountTasks);

@@ -20,6 +20,7 @@ import { update as update20230802ensureEventSendReminderField } from "./updates/
 import { update as update20240224refactorGroupMembers } from "./updates/2024.02.24 refactorGroupMembers";
 import { update as update20241014enrichCourseCompactImage } from "./updates/2024.10.14 enrichCourseCompactImage";
 import { update as update20250407enrichUserVenues } from "./updates/2025.04.07 enrichUserVenues";
+import { update as update20250723extendEventParticipants } from "./updates/2025.07.23 extendEventParticipants";
 
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
@@ -40,6 +41,7 @@ const UpdatesAvailable: Record<string, () => Promise<number>> = {
   "2024.02.24 refactorGroupMembers": update20240224refactorGroupMembers,
   "2024.10.14 enrichCourseCompactImage": update20241014enrichCourseCompactImage,
   "2025.04.07 enrichUserVenues": update20250407enrichUserVenues,
+  "2025.07.23 extendEventParticipants": update20250723extendEventParticipants,
 };
 
 interface UpdatesAppliedEntity {
@@ -56,7 +58,6 @@ if (runBackgroundTasks)
     const skipInitial = (await UpdatesApplied.countDocuments()) === 0;
 
     for (const [name, updateAvailable] of Object.entries(UpdatesAvailable)) {
-      // eslint-disable-next-line no-await-in-loop
       if ((await UpdatesApplied.countDocuments({ name })) === 0) {
         const entry: UpdatesAppliedEntity = {
           name,
@@ -65,18 +66,16 @@ if (runBackgroundTasks)
         };
 
         if (skipInitial) {
-          /* eslint-disable-next-line no-console */
           console.log(`Skipping update ${name}`);
         } else {
-          /* eslint-disable-next-line no-console */
           console.log(`Applying update ${name}`);
-          // eslint-disable-next-line no-await-in-loop
+
           entry.affected = await updateAvailable();
           entry.applied = new Date();
-          /* eslint-disable-next-line no-console */
+
           console.log(`${name}: ${entry.affected} affected documents`);
         }
-        // eslint-disable-next-line no-await-in-loop
+
         await UpdatesApplied.insertAsync(entry);
       }
     }

@@ -30,7 +30,6 @@ if (Meteor.isServer) {
         )[0]?.translated_percent;
 
         if (translatedPercent) {
-          // eslint-disable-next-line no-param-reassign
           value.translatedPercent = Math.round(translatedPercent);
         }
       });
