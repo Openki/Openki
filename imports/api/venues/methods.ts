@@ -118,7 +118,6 @@ export const save = ServerMethod("venue.save", async (venueId: string, changes: 
 
     set.region = region._id;
 
-    /* eslint-disable-next-line no-param-reassign */
     venueId = await Venues.insertAsync({
       ...set,
       editor: user._id,

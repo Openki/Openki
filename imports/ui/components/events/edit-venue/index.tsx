@@ -85,7 +85,6 @@ function CustomMenu({ results, menuProps }: { results: any[]; menuProps: RenderM
               option={venue}
               position={index + uvs.length}
               className={
-                // eslint-disable-next-line no-nested-ternary
                 venue._id
                   ? !venue.restrictedUse
                     ? "bg-venue text-truncate"
@@ -175,7 +174,6 @@ export function EditVenue({
         `https://nominatim.openstreetmap.org?${new URLSearchParams(nominatimQuery)}`,
       );
 
-      // eslint-disable-next-line no-param-reassign
       query = query.toUpperCase();
       const filteredVenues = venues
         .filter((venue) =>
@@ -372,9 +370,3 @@ export function EditVenue({
     </>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("EventEditVenue", () => EditVenue);

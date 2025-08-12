@@ -6,9 +6,6 @@ import * as Metatags from "/imports/utils/metatags";
 import { EventEntity, EventModel } from "/imports/api/events/events";
 import { useDetails } from "/imports/api/regions/publications";
 
-import "react-leaflet-fullscreen/styles.css";
-import "leaflet/dist/leaflet.css";
-
 import { EventsMap } from "/imports/ui/components/events/map";
 
 import "./styles.scss";
@@ -40,10 +37,7 @@ export function EventsMapPage(props: Data) {
       </h1>
       <div className="row">
         <div className="col-12">
-          <EventsMap
-            events={props.events.fetch().filter((e) => e.start > now)}
-            openLinksInNewTab={false}
-          />
+          <EventsMap events={props.events.fetch().filter((e) => e.start > now)} fullscreenControl />
         </div>
       </div>
     </div>

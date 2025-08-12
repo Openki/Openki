@@ -11,7 +11,7 @@ import { useAccount } from "/imports/api/users/publications";
 
 import { useValidation } from "/imports/ui/lib/useValidation";
 
-import { TokenExpired } from "../../components/token-expired";
+import { TokenExpired } from "../../components/TokenExpired";
 
 export interface Props {
   email: string;
@@ -134,7 +134,7 @@ export function VisitorToUserPage({ token, email }: Props) {
                 setPassword(event.target.value);
               }}
             />
-            {errors.password ? <div className="invalid-feedback">{errors.password}</div> : null}
+            {!!errors.password && <div className="invalid-feedback">{errors.password}</div>}
           </div>
         </div>
         <div className="form-actions">
@@ -152,7 +152,7 @@ export function VisitorToUserPage({ token, email }: Props) {
             className="btn btn-secondary"
             type="button"
             onClick={() => {
-              Router.go("/");
+              Router.go("home");
             }}
           >
             {t("_button.cancel")}

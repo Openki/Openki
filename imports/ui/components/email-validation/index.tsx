@@ -1,4 +1,3 @@
-import { Meteor } from "meteor/meteor";
 import moment from "moment";
 import { Template } from "meteor/templating";
 import React, { useEffect, useRef, useState } from "react";
@@ -36,7 +35,7 @@ function EmailValidationModal({ user }: Props) {
     try {
       await emailMethods.sendVerificationEmail();
 
-      Alert.success(t("profile.sentVerificationMail", { MAIL: Meteor.user()?.emails[0].address }));
+      Alert.success(t("profile.sentVerificationMail", { MAIL: user?.emails[0].address }));
       if (elementRef.current) {
         $(elementRef.current).modal("hide");
       }
@@ -60,7 +59,7 @@ function EmailValidationModal({ user }: Props) {
               &nbsp;
               {t("validate.email.title", "Validate e-mail address")}
             </h4>
-            <span className="btn-close btn-close-white" data-bs-dismiss="modal"></span>
+            <span className="btn-close" data-bs-dismiss="modal"></span>
           </div>
           <div className="modal-body">
             <span>

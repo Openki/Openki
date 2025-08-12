@@ -61,11 +61,19 @@ export function InfoPage({ page }: Props) {
 
     $('a[href^="#"]').attr("target", "");
 
-    $(headerTag).on("click", function (event) {
+    function handleClick(
+      event: JQuery.ClickEvent<HTMLElement, undefined, HTMLElement, HTMLElement>,
+    ) {
       const title = $(event.currentTarget);
       title.nextUntil(headerTag, contentTags).toggle();
       title.toggleClass("active");
-    });
+    }
+
+    const element = $(headerTag);
+    element.on("click", handleClick);
+    return () => {
+      element.off("click", handleClick);
+    };
   });
 
   return (

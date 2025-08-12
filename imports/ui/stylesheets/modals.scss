@@ -3,4 +3,8 @@
 .modal-header {
   background: $primary;
   color: $white;
+
+  .btn-close {
+    --bs-btn-close-filter: invert(1) grayscale(100%) brightness(200%);
+  }
 }

@@ -4,8 +4,7 @@ import { useSession } from "/imports/utils/react-meteor-data";
 import { DivIcon } from "leaflet";
 import { useTranslation } from "react-i18next";
 
-import { FullscreenControl } from "react-leaflet-fullscreen";
-import "react-leaflet-fullscreen/styles.css";
+import { FullscreenControl } from "../../FullscreenControl";
 import "leaflet/dist/leaflet.css";
 import { TileLayers } from "../../TileLayer";
 
@@ -48,11 +47,12 @@ function IconControl({
   );
 }
 
-type Coordinates = [long: number, lat: number];
+export type Coordinates = [long: number, lat: number];
 
 export function Edit(props: {
   coordinates?: Coordinates | undefined;
-  center: Coordinates;
+  center?: Coordinates | undefined;
+  maxZoom?: number;
   onChange: (coordinates: Coordinates | undefined) => void;
 }) {
   const { t } = useTranslation();
@@ -76,11 +76,15 @@ export function Edit(props: {
     <div className="location-map">
       <MapContainer
         ref={mapRef}
-        center={[
-          props.coordinates?.[1] || props.center[1],
-          props.coordinates?.[0] || props.center[0],
-        ]}
-        zoom={props.coordinates ? 19 : 13}
+        {...(!props.coordinates && !props.center
+          ? {}
+          : {
+              center: [
+                props.coordinates?.[1] || props.center?.[1],
+                props.coordinates?.[0] || props.center?.[0],
+              ] as [number, number],
+            })}
+        zoom={props.maxZoom ? props.maxZoom : props.coordinates ? 19 : 13}
       >
         {TileLayers[locale] || TileLayers.default}
         {props.coordinates ? (

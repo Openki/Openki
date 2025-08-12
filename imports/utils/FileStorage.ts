@@ -1,6 +1,5 @@
 import path from "path";
-import { PutObjectCommandInput, S3 } from "@aws-sdk/client-s3";
-import { Upload } from "@aws-sdk/lib-storage";
+import type { PutObjectCommandInput } from "@aws-sdk/client-s3";
 import mime from "mime-types";
 import urljoin from "url-join";
 import { Mongo } from "meteor/mongo";
@@ -14,15 +13,20 @@ function getBucket() {
 }
 
 function createS3Client() {
-  return new S3({
-    region: PrivateSettings.s3.region,
-    endpoint: PrivateSettings.s3.bucketEndpoint,
-    bucketEndpoint: true,
-    credentials: {
-      accessKeyId: PrivateSettings.s3.accessKeyId,
-      secretAccessKey: PrivateSettings.s3.secretAccessKey,
-    },
-  });
+  if (Meteor.isServer) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { S3 } = require("@aws-sdk/client-s3");
+
+    return new S3({
+      region: PrivateSettings.s3.region,
+      endpoint: PrivateSettings.s3.bucketEndpoint,
+      bucketEndpoint: true,
+      credentials: {
+        accessKeyId: PrivateSettings.s3.accessKeyId,
+        secretAccessKey: PrivateSettings.s3.secretAccessKey,
+      },
+    });
+  }
 }
 
 export const UploadFilePattern = Match.ObjectIncluding({
@@ -42,20 +46,25 @@ export async function upload(directoryName: string, file: UploadFile) {
     `${new Mongo.ObjectID().toHexString()}.${mime.extension(file.mimeType)}`,
   );
 
-  const s3 = createS3Client();
+  if (Meteor.isServer) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { Upload } = require("@aws-sdk/lib-storage");
 
-  const params: PutObjectCommandInput = {
-    Bucket: getBucket(),
-    Key: fullKey,
-    ContentType: file.mimeType,
-    ACL: "public-read",
-    Body: Buffer.from(file.content, "base64url"),
-  };
+    const s3 = createS3Client();
 
-  await new Upload({
-    client: s3,
-    params,
-  }).done();
+    const params: PutObjectCommandInput = {
+      Bucket: getBucket(),
+      Key: fullKey,
+      ContentType: file.mimeType,
+      ACL: "public-read",
+      Body: Buffer.from(file.content, "base64url"),
+    };
+
+    await new Upload({
+      client: s3,
+      params,
+    }).done();
+  }
 
   return { fullFileName: fullKey, publicUrl: generatePublicUrl(fullKey) };
 }

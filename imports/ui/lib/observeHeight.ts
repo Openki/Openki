@@ -12,10 +12,23 @@ const observeDOM = (function () {
 
       // have the observer observe for changes in children
       mutationObserver.observe(obj, { childList: true, subtree: true });
+
+      return {
+        disconnect: () => {
+          mutationObserver.disconnect();
+        },
+      };
     } else {
       // browser support fallback
       obj.addEventListener("DOMNodeInserted", callback, false);
       obj.addEventListener("DOMNodeRemoved", callback, false);
+
+      return {
+        disconnect: () => {
+          obj.removeEventListener("DOMNodeInserted", callback, false);
+          obj.removeEventListener("DOMNodeRemoved", callback, false);
+        },
+      };
     }
   };
 })();
@@ -26,7 +39,14 @@ export function observeSize(element: Element, onChange: (element: Element) => vo
     onChange(element);
   });
   resizeObserver.observe(element);
-  observeDOM(element, () => {
+  const domObserver = observeDOM(element, () => {
     onChange(element);
   });
+
+  return {
+    stop: () => {
+      resizeObserver.disconnect();
+      domObserver?.disconnect();
+    },
+  };
 }

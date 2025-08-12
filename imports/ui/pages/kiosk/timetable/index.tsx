@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useEffect, useRef, useState } from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
@@ -15,7 +14,7 @@ import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 
 import "./styles.scss";
 
-interface RelStartEnd {
+export interface RelStartEnd {
   relStart: number;
   relEnd: number;
 }
@@ -98,9 +97,11 @@ function Event({ entry }: { entry: OEvent & EventEntity & RelStartEnd }) {
       <div className="timetable-event-description">
         {entry.canceled ? (
           <span className="timetable-event-canceled">{t("_event.state.canceled")}</span>
-        ) : entry.isFullyBooked() ? (
-          <span className="timetable-event-fully-booked">{t("_event.state.fullyBooked")}</span>
-        ) : null}
+        ) : (
+          entry.isFullyBooked() && (
+            <span className="timetable-event-fully-booked">{t("_event.state.fullyBooked")}</span>
+          )
+        )}
         <p>{textPlain(entry.description)}</p>
         <a className="btn btn-outline-dark" href={Router.url("showEvent", entry)}>
           {t("kiosk.timetable.showDetails", "Show details")}
@@ -115,7 +116,7 @@ export function KioskTimetablePage(props: Props) {
   const routeName = useCurrentRouteName();
 
   function isRoomRow(room: string, index: number) {
-    return room && index !== 0;
+    return !!room && index !== 0;
   }
 
   function showDay(m: moment.Moment) {
@@ -141,9 +142,9 @@ export function KioskTimetablePage(props: Props) {
 
   return (
     <div className="container-fluid timetable">
-      {props.control ? (
+      {props.control && (
         <>
-          {props.day > 0 ? (
+          {props.day > 0 && (
             <a
               className="timetable-day-control timetable-day-control-previous"
               href={controlDay(-1)}
@@ -151,8 +152,8 @@ export function KioskTimetablePage(props: Props) {
             >
               <i className="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
             </a>
-          ) : null}
-          {typeof props.dayLimit === "undefined" || props.dayLimit - 1 > props.day ? (
+          )}
+          {(props.dayLimit === undefined || props.dayLimit - 1 > props.day) && (
             <a
               className="timetable-day-control timetable-day-control-next"
               href={controlDay(1)}
@@ -160,88 +161,72 @@ export function KioskTimetablePage(props: Props) {
             >
               <i className="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i>
             </a>
-          ) : null}
+          )}
         </>
-      ) : null}
+      )}
       <div className="timetable-header">
         <div className="timetable-days">
-          {props.days.map((day) => {
-            return (
-              <div key={day.moment.toISOString()} className="timetable-day" style={position(day)}>
-                {showDay(day.moment)}
-              </div>
-            );
-          })}
+          {props.days.map((day) => (
+            <div key={day.moment.toISOString()} className="timetable-day" style={position(day)}>
+              {showDay(day.moment)}
+            </div>
+          ))}
         </div>
-        {props.future_length ? (
+        <div className="timetable-hours">
+          {props.hours.map((hour) => (
+            <div key={hour.moment.toISOString()} className="timetable-hour" style={position(hour)}>
+              {showHour(hour.moment)}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="timetable-header" style={{ zIndex: "1" }}>
+        {!!props.future_length && (
           <div className="vertical-wrapper">
             <div
               className="vertical"
               style={position({ relStart: props.now, relEnd: props.now + 1 })}
             ></div>
           </div>
-        ) : null}
-        <div className="timetable-hours">
-          {props.hours.map((hour) => {
+        )}
+      </div>
+      {props.grouped.map((groups, index) => (
+        <React.Fragment key={index}>
+          {groups.perRoom.map((event, index2) => {
             return (
               <div
-                key={hour.moment.toISOString()}
-                className="timetable-hour"
-                style={position(hour)}
+                key={index2}
+                className={`timetable-row ${isRoomRow(event.room, index2) ? "timetable-row-room" : ""}`}
               >
-                {showHour(hour.moment)}
+                <div className="timetable-location text-start">
+                  <span className="text-nowrap">
+                    <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>&nbsp;
+                    {event.venue.name}
+                  </span>{" "}
+                  {!!event.room && (
+                    <span className="text-nowrap">
+                      <span className="fa-solid fa-signs-post fa-fw" aria-hidden="true"></span>
+                      &nbsp;{event.room}
+                    </span>
+                  )}
+                </div>
+                {event.rows.map((row, index3) => (
+                  <div key={index3} className="timetable-row-section">
+                    {row.map((entry) => (
+                      <Event key={entry._id} entry={entry}></Event>
+                    ))}
+                  </div>
+                ))}
               </div>
             );
           })}
-        </div>
-      </div>
-      {props.grouped.map((groups, index) => {
-        return (
-          <React.Fragment key={index}>
-            {groups.perRoom.map((event, index2) => {
-              return (
-                <div
-                  key={index2}
-                  className={`timetable-row ${
-                    isRoomRow(event.room, index2) ? "timetable-row-room" : ""
-                  }`}
-                >
-                  <div className="timetable-location text-start">
-                    <span className="text-nowrap">
-                      <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>&nbsp;
-                      {event.venue.name}
-                    </span>{" "}
-                    {event.room ? (
-                      <span className="text-nowrap">
-                        <span className="fa-solid fa-signs-post fa-fw" aria-hidden="true"></span>
-                        &nbsp;{event.room}
-                      </span>
-                    ) : null}
-                  </div>
-                  {event.rows.map((row, index3) => {
-                    return (
-                      <div key={index3} className="timetable-row-section">
-                        {row.map((entry) => (
-                          <Event key={entry._id} entry={entry}></Event>
-                        ))}
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            })}
-          </React.Fragment>
-        );
-      })}
-      {!props.future_length ? (
-        <h3>{t("kiosk.noFutureEvents", "There are no future events")}</h3>
-      ) : null}
+        </React.Fragment>
+      ))}
+      {!props.future_length && <h3>{t("kiosk.noFutureEvents", "There are no future events")}</h3>}
     </div>
   );
 }
 
 // for Blaze
-
 import "./template.html";
-
 Template.registerHelper("KioskTimetablePage", () => KioskTimetablePage);

@@ -36,18 +36,19 @@ export function PrivateMessage({
   const { t } = useTranslation(undefined, { lng });
   return (
     <>
+      {senderCopy && (
+        <tr className="alert">
+          <td>
+            {t(
+              "notification.privateMessage.mail.copyintro",
+              'This is a copy of your message that was sent to "{RECIPIENT}".',
+              { RECIPIENT: recipientName },
+            )}
+          </td>
+        </tr>
+      )}
       <tr>
         <td>
-          {senderCopy ? (
-            <p>
-              {t(
-                "notification.privateMessage.mail.copyintro",
-                'This is a copy of your message that was sent to "{RECIPIENT}"',
-                { RECIPIENT: recipientName },
-              )}
-            </p>
-          ) : null}
-
           <h5 className="title">{t("email.base.greeting", { USERNAME: recipientName })}</h5>
           <p>
             {t("notification.privateMessage.mail.intro", "You got a private message from:")}
@@ -97,7 +98,7 @@ export function PrivateMessage({
               <p className="text-center">
                 {t(
                   "notification.privateMessage.mail.direct.answerText",
-                  "You can also send {SENDERNAME} an email directly  by clicking reply in your email client",
+                  "You can also send {SENDERNAME} an email directly  by clicking reply in your email client.",
                   { SENDERNAME: sender.getDisplayName() },
                 )}
               </p>

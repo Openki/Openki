@@ -18,11 +18,10 @@ export async function updateGroups(courseIdOrSelector: string | Mongo.Selector<C
 
     const update = { $set: { editors } };
 
-    // eslint-disable-next-line no-await-in-loop
     await Courses.updateAsync({ _id: course._id }, update);
 
     // At some point we'll have to figure out a proper caching hierarchy
-    // eslint-disable-next-line no-await-in-loop
+
     await eventGroupsDenormalizer.updateGroups({ courseId: course._id });
   }
 }

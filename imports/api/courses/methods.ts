@@ -174,7 +174,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
             set.roles = set.roles || [];
             set.roles.push(type);
           }
-        } else {
+        } else if (role.editable) {
           const shouldHave = !!changes.roles?.[type];
           const have = course.roles.includes(type);
           if (have && !shouldHave) {
@@ -184,7 +184,6 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
             // due to a mongo limitation we can't { $pull { 'members.roles': type } }
             // so we keep removing one by one until there are none left
             while (
-              // eslint-disable-next-line no-await-in-loop
               await Courses.updateAsync(
                 { _id: courseId, "members.roles": type },
                 { $pull: { "members.$.roles": type } },
@@ -266,7 +265,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     set.createdby = user._id;
     set.time_created = new Date();
     const enrichedSet = timeLastEditDenormalizer.beforeInsert(set);
-    /* eslint-disable-next-line no-param-reassign */
+
     courseId = await Courses.insertAsync(enrichedSet);
 
     await Notification.Course.record(courseId);
@@ -344,6 +343,10 @@ export const updateImage = ServerMethod(
       FileStorage.remove(course.image);
     }
 
+    if (course.compactImage && !course.compactImage.startsWith("https://")) {
+      FileStorage.remove(course.compactImage);
+    }
+
     // Note: image scaling also happens on the client
     const resizedCompactImage = await resizeImage(file.content, 500);
     const compactResult = await FileStorage.upload("courses/image/compact", {
@@ -392,7 +395,11 @@ export const deleteImage = ServerMethod(
       FileStorage.remove(course.image);
     }
 
-    const update = { image: "" };
+    if (course.compactImage && !course.compactImage.startsWith("https://")) {
+      FileStorage.remove(course.compactImage);
+    }
+
+    const update = { image: "", compactImage: "" };
 
     const set = timeLastEditDenormalizer.beforeDeleteImage();
     await Courses.updateAsync(course._id, {

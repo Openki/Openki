@@ -23,18 +23,18 @@ function FeaturedGroupBody(props: { groupId: string }) {
 
   return (
     <div className="featured-group-body">
-      {featuredGroup.logoUrl ? (
+      {!!featuredGroup.logoUrl && (
         <div className="featured-group-body-logo">
           <img className="featured-group-logo" src={featuredGroup.publicLogoUrl()} />
         </div>
-      ) : null}
+      )}
 
       <div className="featured-group-body-content">
         <div className="featured-group-name">
           {featuredGroup.name} ({featuredGroup.short})
         </div>
         <div className="featured-group-links">
-          <a href={Router.path("groupDetails", { _id: featuredGroup._id })}>
+          <a href={Router.path("groupDetails", featuredGroup)}>
             {t("featuredGroup.coursesOnOpenki", "Check out the courses of {GROUP} on {SITENAME}!", {
               GROUP: featuredGroup.name,
               SITENAME: siteName,

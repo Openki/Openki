@@ -14,6 +14,7 @@ import { Model as NotificationModel } from "../notification";
 import { GroupCourse, Props } from "../../../../emails/notifications/GroupCourse";
 
 import { getSiteName } from "/imports/utils/getSiteName";
+import { ReactJoin } from "/imports/utils/ReactJoin";
 
 interface Body {
   courseId: string;
@@ -107,8 +108,8 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         course: <a href={courseLink}>{course.name}</a>,
         courseLink,
         courseDescription: course.description || "",
-        groups: recipientsGroups
-          .map((g) => (
+        groups: ReactJoin(
+          recipientsGroups.map((g) => (
             <a
               key={g._id}
               href={Router.url("groupDetails", g, {
@@ -117,8 +118,9 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
             >
               {g.name}
             </a>
-          ))
-          .reduce((prev, curr) => [prev, <>&quot;, &quot;</>, curr] as any),
+          )),
+          <>&quot;, &quot;</>,
+        ) as JSX.Element,
         creater,
         subject,
         customSiteUrl: Router.url("home", {}, { query: { campaign } }),

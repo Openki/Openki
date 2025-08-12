@@ -9,6 +9,8 @@ import {
   waitFor,
   setInputValue,
   setSelectValue,
+  expectElement,
+  expectHtmlButton,
 } from "/imports/ClientUtils.app-test";
 
 if (Meteor.isClient) {
@@ -17,29 +19,19 @@ if (Meteor.isClient) {
     const randomTitle = `COURSEHISTORY${1000 + Math.floor(Math.random() * 9000)}`;
 
     it("should show a entry for course create", async () => {
-      const haveEditfield = () => {
-        assert($(".js-title").length > 0, "New course edit field present");
-      };
+      Router.go("proposeCourse");
 
-      Router.go("/");
-
-      await waitForSubscriptions();
-      await waitFor(haveEditfield);
+      await expectElement(".js-title", "New course edit field present");
       await MeteorAsync.loginWithPassword("Seee", "greg");
 
       // Create the course
       setInputValue(".js-title", randomTitle);
       setSelectValue("[name='region']", "9JyFCoKWkxnf8LWPh"); // Testistan
-      $(".course-edit-body .btn-save")[0].click();
+      (await expectHtmlButton(".course-edit-body .btn-save")).click();
 
       // We should be redirected to the created course
 
-      await waitFor(() => {
-        assert(
-          $(".course-details").length > 0,
-          `Details of the new course ${randomTitle} are shown`,
-        );
-      });
+      await expectElement(".course-details", `Details of the new course ${randomTitle} are shown`);
 
       const lastNumberOfHistoryEntries = 0;
       await waitFor(() => {

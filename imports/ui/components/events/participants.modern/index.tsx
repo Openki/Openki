@@ -1,0 +1,118 @@
+import React, { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import Modal from "bootstrap/js/dist/modal";
+import { useUser } from "/imports/utils/react-meteor-data";
+import { useTracker } from "meteor/react-meteor-data";
+
+import { EventModel, EventParticipantEntity } from "/imports/api/events/events";
+
+import { ReactJoin } from "/imports/utils/ReactJoin";
+import { getUserName } from "/imports/ui/lib/getUserName";
+
+import "./styles.scss";
+
+export function UserName({ userId }: { userId: string }) {
+  const userName = useTracker(() => getUserName(userId));
+  return <>{userName}</>;
+}
+
+function EventParticipant({ participant }: { participant: EventParticipantEntity }) {
+  const { t } = useTranslation();
+  const user = useUser();
+
+  return (
+    <span className={participant.user === user?._id ? "fw-bold" : ""}>
+      <UserName userId={participant.user} />
+      {!!participant.companions && (
+        <>
+          {" "}
+          <span
+            className="badge rounded-pill text-bg-primary text-white"
+            data-bs-title={t("eventParticipant.iBringCompanions", "Brings companion.")}
+          >
+            +{participant.companions}
+          </span>
+        </>
+      )}
+    </span>
+  );
+}
+
+export interface Props {
+  event: EventModel;
+}
+
+export function EventParticipants({ event }: Props) {
+  const { t } = useTranslation();
+  const modalRef = useRef(null);
+  const user = useUser();
+  const IncreaseBy = 15;
+  const [participantsDisplayLimit, setParticipantsDisplayLimit] = useState(IncreaseBy);
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    const element = modalRef.current as unknown as Element;
+    if (!showModal || !element) {
+      return;
+    }
+    Modal.getOrCreateInstance(element).show();
+    element.addEventListener("hidden.bs.modal", () => {
+      setShowModal(false);
+    });
+  });
+
+  function sortedParticipants() {
+    const participants = event.participants || [];
+    if (user?._id && event.attendedBy(user._id)) {
+      const userArrayPosition = participants.findIndex((p) => p.user === user._id);
+      const userParticipant = participants[userArrayPosition];
+      // remove current user form array and read him at index 0
+      participants.splice(userArrayPosition, 1); // remove
+      participants.splice(0, 0, userParticipant); // read
+    }
+    return participants.slice(0, participantsDisplayLimit);
+  }
+
+  function limited() {
+    return (
+      !!participantsDisplayLimit &&
+      !!event.participants &&
+      event.participants.length > participantsDisplayLimit
+    );
+  }
+
+  return (
+    <>
+      <h4 className="card-title">
+        {t(
+          "event.details.paticipants.title",
+          "{NUM, plural, =0{No participants yet} one{1 Participant} other{# Participants} }",
+          { NUM: event.numberOfParticipants() },
+        )}
+      </h4>
+      {!!event.participants && (
+        <>
+          {ReactJoin(
+            sortedParticipants()?.map((participant) => (
+              <EventParticipant key={participant.user} participant={participant} />
+            )),
+          )}
+          {limited() && (
+            <>
+              {" "}
+              <button
+                className="btn btn-sm btn-secondary"
+                type="button"
+                onClick={() => {
+                  setParticipantsDisplayLimit(participantsDisplayLimit + IncreaseBy);
+                }}
+              >
+                {t("_button.more")}
+              </button>
+            </>
+          )}
+        </>
+      )}
+    </>
+  );
+}

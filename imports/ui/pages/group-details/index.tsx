@@ -10,14 +10,13 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { GroupModel } from "/imports/api/groups/groups";
 import * as GroupsMethods from "/imports/api/groups/methods";
 import * as Alert from "/imports/api/alerts/alert";
-import { useDetails } from "/imports/api/groups/publications";
 
 import { Store } from "/imports/ui/lib/editable";
 import * as Analytics from "/imports/ui/lib/analytics";
 import * as Metatags from "/imports/utils/metatags";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
-import { Editable, Props as EditableProps } from "/imports/ui/components/editable/index.react";
+import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 
 import { Dashboard, Props as DashboardProps } from "../../components/dashboard";
 import { ButtonCancel, ButtonSave } from "/imports/ui/components/buttons";
@@ -50,7 +49,7 @@ export interface Data {
   showCourses: boolean;
 }
 
-export function GroupDetailsPage({ courseQuery, group: group2, showCourses }: Data) {
+export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
   const { t } = useTranslation();
   const region = useCurrentRegion();
   const [editingSettings, setEditingSettings] = useState(false);
@@ -70,22 +69,10 @@ export function GroupDetailsPage({ courseQuery, group: group2, showCourses }: Da
 
   const user = useUser();
 
-  // for blaze, can be removed after migration
-  // subscribe in react to keep reactivity
-  // eslint-disable-next-line prefer-const
-  let [isLoading, group] = useDetails(group2._id || "-1") as [() => boolean, GroupModel];
-  if (!group) {
-    group = group2;
-  }
-
-  if (isLoading()) {
-    return null;
-  }
-
   const mayEdit = group.editableBy(user);
 
   function isFeatured() {
-    return region && !group.isNew() && region.featuredGroup === group._id;
+    return !!region && !group.isNew() && region.featuredGroup === group._id;
   }
   function headerClasses() {
     const classes = [];
@@ -103,9 +90,9 @@ export function GroupDetailsPage({ courseQuery, group: group2, showCourses }: Da
   }
   function dashboardAttr(): DashboardProps {
     return {
-      region: region?._id || "",
-      group: group._id,
       list: group.dashboard || PublicSettings.groupDashboardDefault || [],
+      defaultRegion: region?._id || "",
+      defaultGroup: group._id,
     };
   }
 
@@ -153,7 +140,7 @@ export function GroupDetailsPage({ courseQuery, group: group2, showCourses }: Da
 
       Analytics.trackEvent("Group creations", "Group creations");
 
-      Router.go("groupDetails", { _id: groupId });
+      Router.go("groupDetails", { _id: groupId, short: newGroup.short });
     } catch (err) {
       Alert.serverError(err, t("groupDetails.saveError", { GROUP: newGroup.name }));
     } finally {
@@ -251,12 +238,12 @@ export function GroupDetailsPage({ courseQuery, group: group2, showCourses }: Da
   return (
     <>
       <div className="container mb-4">
-        {group.isNew() ? <h2>{t("group.details.titleNew", "Create new group")}</h2> : null}
+        {group.isNew() && <h2>{t("group.details.titleNew", "Create new group")}</h2>}
         <div className="page-component group-details">
           <div className="group-details-titlebar clearfix">
             {t("group.details.group", "Group")}
 
-            {isFeatured() ? (
+            {isFeatured() && (
               <>
                 {" "}
                 <i
@@ -265,22 +252,20 @@ export function GroupDetailsPage({ courseQuery, group: group2, showCourses }: Da
                   className="fa-solid fa-star fa-fw"
                 ></i>
               </>
-            ) : null}
+            )}
 
             <button
               className="btn btn-link float-end ms-2"
-              data-bs-toggle="tooltip"
               data-bs-title={t("group.page.removeFilter", "See all courses")}
               onClick={() => {
-                Router.go("/"); // Got a better idea?
+                Router.go("home"); // Got a better idea?
               }}
             >
               <i className="fa-solid fa-xmark fa-lg" aria-hidden="true"></i>
             </button>
-            {!group.isNew() && mayEdit ? (
+            {!group.isNew() && mayEdit && (
               <button
                 className="btn btn-link float-end ms-2"
-                data-bs-toggle="tooltip"
                 data-bs-title={t("group.settings.title")}
                 onClick={() => {
                   setEditingSettings(!editingSettings);
@@ -288,14 +273,14 @@ export function GroupDetailsPage({ courseQuery, group: group2, showCourses }: Da
               >
                 <i className="fa-solid fa-gear fa-lg" aria-hidden="true"></i>
               </button>
-            ) : null}
+            )}
           </div>
           <div className={`details-header group-details-header clearfix ${headerClasses()}`}>
-            {group.publicLogoUrl() ? (
+            {!!group.publicLogoUrl() && (
               <div className="group-details-logo">
                 <img src={group.publicLogoUrl()} />
               </div>
-            ) : null}
+            )}
             <div className="group-details-name">
               {mayEdit ? <Editable {...editableNameAttr} /> : group.name}
             </div>{" "}
@@ -319,7 +304,7 @@ export function GroupDetailsPage({ courseQuery, group: group2, showCourses }: Da
                 )}
               </div>
 
-              {errors.all ? <span className="form-text d-block">{errors.all}</span> : null}
+              {!!errors.all && <span className="form-text d-block">{errors.all}</span>}
 
               {!!(group.venues && group.venues.length > 0) && (
                 <div className="group-details-venues">
@@ -335,17 +320,17 @@ export function GroupDetailsPage({ courseQuery, group: group2, showCourses }: Da
               )}
             </div>
           </div>
-          {group.isNew() ? (
+          {group.isNew() && (
             <div className="actions">
               <ButtonSave onClick={handleSave} disabled={isBusy} />
               <ButtonCancel onClick={handleCancel} disabled={isBusy} />
             </div>
-          ) : null}
-          {allowEditingSettings() ? <GroupSettings group={group} /> : null}
+          )}
+          {allowEditingSettings() && <GroupSettings group={group} />}
         </div>
-        {!dashboardAttr().list.length && showCourses ? <Find query={courseQuery} /> : null}
+        {!dashboardAttr().list.length && showCourses && <Find query={courseQuery} />}
       </div>
-      {dashboardAttr().list.length && showCourses ? <Dashboard {...dashboardAttr()} /> : null}
+      {!!dashboardAttr().list.length && showCourses && <Dashboard {...dashboardAttr()} />}
     </>
   );
 }

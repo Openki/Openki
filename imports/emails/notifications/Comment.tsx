@@ -67,7 +67,7 @@ export function Comment({
                 SITENAME: customSiteName,
               })}
             </a>
-            {commenter ? (
+            {!!commenter && (
               <>
                 <br />
                 <a href={commenterLink}>
@@ -76,7 +76,7 @@ export function Comment({
                   })}
                 </a>
               </>
-            ) : null}
+            )}
           </p>
         </td>
       </tr>

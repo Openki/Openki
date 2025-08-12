@@ -45,9 +45,3 @@ export function AvatarForm() {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("AvatarForm", () => AvatarForm);

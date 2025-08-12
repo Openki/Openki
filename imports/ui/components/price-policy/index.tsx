@@ -1,7 +1,6 @@
 import { Session } from "meteor/session";
 import { Meteor } from "meteor/meteor";
 import React from "react";
-import { Template } from "meteor/templating";
 import { useTranslation } from "react-i18next";
 import { useTracker } from "meteor/react-meteor-data";
 import { useSessionEquals, useUser } from "/imports/utils/react-meteor-data";
@@ -174,9 +173,3 @@ export function PricePolicy(props: Props) {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("PricePolicy", () => PricePolicy);

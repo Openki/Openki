@@ -23,9 +23,7 @@ export function DiscussionProfileIcon({ userId }: Props) {
   return (
     <div className="discussion-thumb">
       {userId ? (
-        <a
-          href={Router.path("userprofile", { _id: userId, username: encodeURIComponent(userName) })}
-        >
+        <a href={Router.path("userprofile", { _id: userId, username: userName })}>
           <Avatar className="discussion-profile-icon" userId={userId} />
         </a>
       ) : (

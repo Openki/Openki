@@ -37,7 +37,6 @@ export function GroupTag({ groupId, full, isOrganizer, onMouseOver, onMouseOut, 
           onMouseOut={onMouseOut}
           onClick={onClick}
           href={Router.path("groupDetails", group)}
-          data-bs-toggle="tooltip"
           data-bs-title={t("groupList.show_courses", "{NAME}, show all their courses", {
             NAME: name(group),
           })}

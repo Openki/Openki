@@ -4,6 +4,7 @@ import { _ } from "meteor/underscore";
 import { Match, check } from "meteor/check";
 
 import { UserModel } from "/imports/api/users/users";
+import { EventEntity, OEvent } from "/imports/api/events/events";
 import * as tenantDenormalizer from "./tenantDenormalizer";
 import * as interestedDenormalizer from "./interestedDenormalizer";
 
@@ -16,7 +17,6 @@ import { escapeRegExp, intersection } from "lodash";
 import { GroupEntityCustomCourseFields } from "/imports/api/groups/groups";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { StringEnum, Type } from "/imports/utils/CustomChecks";
-import { EventEntity, OEvent } from "../events/events";
 
 export interface CourseMemberEntity {
   user: string;
@@ -68,9 +68,9 @@ export interface CourseEntity {
   customFields: CourseCustomField[];
   /** ID_user */
   createdby: string;
-  // eslint-disable-next-line camelcase
+
   time_created: Date;
-  // eslint-disable-next-line camelcase
+
   time_lastedit: Date;
   /** [role-keys] */
   roles: string[];
@@ -217,7 +217,6 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
     return super.insertAsync(enrichedCourse, callback);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   Filtering() {
     return new Filtering({
       region: Predicates.id,

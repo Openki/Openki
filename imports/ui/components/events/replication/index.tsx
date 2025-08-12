@@ -395,7 +395,6 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
                 }
 
                 try {
-                  // eslint-disable-next-line no-await-in-loop
                   await EventsMethods.save(
                     "",
                     replicaEvent,
@@ -445,9 +444,3 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("EventReplication", () => EventReplication);

@@ -7,7 +7,7 @@ export async function update() {
     const user = { ...orginalUser } as any;
     user.allowPrivateMessages = true;
     delete user.acceptsMessages;
-    // eslint-disable-next-line no-await-in-loop
+
     updated += await Users.updateAsync(user._id, user);
   }
 

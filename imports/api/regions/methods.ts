@@ -145,7 +145,6 @@ export const remove = ServerMethod("region.remove", async (regionId: string) => 
   await Events.removeAsync({ region: regionId });
   // CourseDiscussionEntity do not currently have a region.
   for (const c of await Courses.find({ region: regionId }).fetchAsync()) {
-    // eslint-disable-next-line no-await-in-loop
     await CourseDiscussions.removeAsync({ courseId: c._id });
   }
   await Courses.removeAsync({ region: regionId });

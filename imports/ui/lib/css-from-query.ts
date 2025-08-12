@@ -36,7 +36,7 @@ export class CssFromQuery {
     this.customizableProperties.forEach((property) => {
       const queryValue = this.query[property.key];
       let cssValue;
-      if (typeof queryValue !== "undefined") {
+      if (queryValue !== undefined) {
         // hexify color values
         if (property.name.includes("color")) {
           if (queryValue.match(/^[0-9A-F]+$/i)) {
