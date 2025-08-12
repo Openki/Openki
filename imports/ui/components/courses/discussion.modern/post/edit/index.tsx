@@ -201,7 +201,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
               autoFocus={true}
             />
           </div>
-          <div className="mb-3">
+          <div className="mb-2">
             <Richtext {...richtextAttr()} />
           </div>
           {!!post.new && (
@@ -248,7 +248,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
           <div>
             <button
               type="submit"
-              className="btn btn-save discussion-save-btn"
+              className="btn btn-secondary discussion-save-btn"
               disabled={!validComment || isBusy}
             >
               <span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>{" "}

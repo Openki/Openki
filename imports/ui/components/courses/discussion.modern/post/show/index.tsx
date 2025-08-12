@@ -62,12 +62,12 @@ export function Show({ post, onEdit }: Props) {
   return post.new ? (
     post.parentId ? (
       <div className="list-group-item ps-5">
-        <button type="button" className="btn btn-add" onClick={handleEditClick}>
+        <button type="button" className="btn btn-secondary" onClick={handleEditClick}>
           {t("course.discussion.comment_answer", "Answer")}
         </button>
       </div>
     ) : (
-      <button type="button" className="btn btn-add mb-3" onClick={handleEditClick}>
+      <button type="button" className="btn btn-secondary mb-3" onClick={handleEditClick}>
         {t("course.discussion.write_comment", "Write a comment")}
       </button>
     )

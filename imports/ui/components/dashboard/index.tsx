@@ -91,7 +91,7 @@ function EntitiesComponent<T>({
               onClick={() => {
                 const element = elementRef.current;
                 if (element) {
-                  element.scrollLeft = element.scrollLeft - element.clientWidth * 0.66;
+                  element.scrollLeft = element.scrollLeft - element.clientWidth * 0.9;
                 }
               }}
             >
@@ -105,7 +105,7 @@ function EntitiesComponent<T>({
                 onClick={() => {
                   const element = elementRef.current;
                   if (element) {
-                    element.scrollLeft = element.scrollLeft + element.clientWidth * 0.66;
+                    element.scrollLeft = element.scrollLeft + element.clientWidth * 0.9;
                   }
                 }}
               >
