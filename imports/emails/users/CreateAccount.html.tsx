@@ -5,11 +5,13 @@ import { useTranslation } from "react-i18next";
 
 export function CreateAccount({
   username,
-  url,
+  createAccountUrl,
+  autoLoginUrl,
   lng,
 }: {
   username: string;
-  url: string;
+  createAccountUrl: string;
+  autoLoginUrl: string;
   lng: string;
 }) {
   const { t } = useTranslation(undefined, { lng });
@@ -23,26 +25,33 @@ export function CreateAccount({
         <td>
           <h5 className="title">{t("email.base.greeting", { USERNAME: username })}</h5>
           <p>
+            {t("createAccount.email.introduction", "You were previously interacting as guest on {SITE}.", {
+              SITE: siteName,
+            })}
+          </p>
+          <p className="gap-md">
             {t(
-              "createAccount.email.introduction",
-              "You requested creating a user account on {SITE}.",
-              { SITE: siteName },
+              "createAccount.email.autoLogin",
+              "You can either continue as guest",
             )}
+          </p>
+          <p className="text-center">
+            <a className="button" href={autoLoginUrl}>
+              {t("createAccount.email.autoLoginButton", "Continue as guest")}
+            </a>
           </p>
           <p className="gap-md">
             {t(
               "createAccount.email.accountCreation",
-              "You can click this link to choose a password and create your account.",
+              "Or you can choose a password and hence create your account.",
             )}
           </p>
           <p className="text-center">
-            <a className="button" href={url}>
+            <a className="button" href={createAccountUrl}>
               {t("createAccount.email.accountCreateButton", "Create account")}
             </a>
           </p>
           <p>
-            {t("email.base.farewell")}
-            <br />
             {t("email.base.postscript", { SITE: siteName })}
           </p>
         </td>
