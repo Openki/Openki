@@ -14,9 +14,9 @@ export interface CourseDiscussionEntity {
   courseId: string;
   eventId?: string | undefined;
   notifyAll?: boolean | undefined;
-  // eslint-disable-next-line camelcase
+
   time_created: Date;
-  // eslint-disable-next-line camelcase
+
   time_updated: Date;
   /** ID_CourseDiscussions (optional) */
   parentId?: string;

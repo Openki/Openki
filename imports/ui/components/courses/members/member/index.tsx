@@ -10,10 +10,10 @@ import * as Tooltips from "/imports/utils/Tooltips";
 
 import { useUser } from "/imports/utils/react-meteor-data";
 import { ProfileLink } from "/imports/ui/components/profile-link";
-import { Contribution } from "../../../contribution";
+import { Contribution } from "../../../Contribution";
 import { ParticipantContact } from "/imports/ui/components/participant/contact";
 import { RemoveFromTeamDropdown } from "../remove-from-team-dropdown";
-import { Editable } from "../../../editable/index.react";
+import { Editable } from "/imports/ui/components/editable";
 import { useRoleDisplay } from "../../../../lib/useRoleDisplay";
 
 import "./styles.scss";
@@ -75,17 +75,17 @@ export function Member({ member, course }: { member: CourseMemberEntity; course:
 
   return (
     <div className={`course-member ${ownUserMemberClass()}`}>
-      <div className="clearfix">
-        <ProfileLink userId={member.user} />
-        <Contribution userId={member.user} />{" "}
+      <div className="d-flex flex-wrap align-items-center">
+        <div className="me-1">
+          <ProfileLink userId={member.user} />
+          <Contribution userId={member.user} />
+        </div>
         <ParticipantContact participant={member.user} course={course} />
-        <div className="course-member-roles">
+        <div className="ms-auto d-flex flex-wrap align-items-center">
           {memberRoles().map((role) => (
             <div
               key={role}
-              className={`course-member-role float-end ${
-                getRole(role)?.proposal ? "is-proposal" : ""
-              }`}
+              className={`course-member-role ${getRole(role)?.proposal ? "is-proposal" : ""}`}
             >
               <span className="course-member-role-text">
                 <span className={`${getRole(role)?.icon} fa-fw`} aria-hidden="true"></span>{" "}
@@ -99,8 +99,7 @@ export function Member({ member, course }: { member: CourseMemberEntity; course:
           {maySubscribeToTeam() && (
             <button
               type="button"
-              className="btn btn-sm btn-add float-end add-to-team-btn"
-              data-bs-toggle="tooltip"
+              className="btn btn-sm btn-add add-to-team-btn"
               data-bs-title={t("course.roles.maketeam", "Add to team")}
               onClick={async () => {
                 setTimeout(() => {

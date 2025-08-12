@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop */
 import { _ } from "meteor/underscore";
 
 import { ensure } from "/imports/api/fixtures/ensureFixture";
@@ -10,7 +9,7 @@ import { venues as venuesBase } from "./data";
 import { venues as zuerichlerntVenues } from "./zuerichlernt";
 import { Log } from "../../log/log";
 
-export type VenueTemplate = {
+export interface VenueTemplate {
   _id?: string;
   name: string;
   region?: string;
@@ -27,13 +26,11 @@ export type VenueTemplate = {
   otherFacilities?: "";
   description?: string;
   website?: string;
-  facilities?: Partial<{
-    [key in FacilityOption]: boolean;
-  }>;
+  facilities?: Partial<Record<FacilityOption, boolean>>;
   createdby?: string;
   editor?: string;
   restrictedUse?: boolean;
-};
+}
 
 export async function create() {
   const prng = Prng("loadLocations");
@@ -53,12 +50,12 @@ export async function create() {
 
   for (const template of venues) {
     const venueData = { ...template };
-    // eslint-disable-next-line no-nested-ternary
+
     venueData.region = template.region
       ? template.region
       : prng() > 0.85
-      ? testRegions[0]
-      : testRegions[1];
+        ? testRegions[0]
+        : testRegions[1];
 
     const venue = await ensure.venue(venueData.name, venueData.region, venueData._id);
 

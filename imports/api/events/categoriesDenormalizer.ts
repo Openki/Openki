@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-cycle
 import { EventEntity, Events } from "/imports/api/events/events";
 import { Courses } from "/imports/api/courses/courses";
 import { sum } from "../../utils/sum";
@@ -18,7 +17,6 @@ export async function onStartUp() {
     ),
   );
 
-  /* eslint-disable-next-line no-console */
   console.log(`events.categoriesDenormalizer.onStartUp: ${updated} affected events`);
 }
 

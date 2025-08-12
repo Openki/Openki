@@ -7,7 +7,7 @@ import { FilterCategories } from "/imports/ui/components/filter-categories";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   categories: string[];
   onCategoryAdd: (category: string) => void;
   onCategoryRemove: (category: string) => void;
@@ -15,9 +15,13 @@ export type Props = {
   onNeedsRoleClick: (role: string) => void;
   onNeedsRoleMouseOver: (role: string) => void;
   onNeedsRoleMouseOut: (role: string) => void;
-};
+}
 
-type Role = { icon?: string | undefined; name: string; label: string };
+interface Role {
+  icon?: string | undefined;
+  name: string;
+  label: string;
+}
 
 export function AdditionalFilters(props: Props) {
   const { t } = useTranslation();

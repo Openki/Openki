@@ -10,7 +10,9 @@ import { RoleIcon } from "/imports/ui/RoleIcon";
 
 import "./styles.scss";
 
-export type Props = { course: CourseModel };
+export interface Props {
+  course: CourseModel;
+}
 
 export function CourseCompactRoles({ course }: Props) {
   const userId = useUserId();
@@ -102,7 +104,6 @@ export function CourseCompactRoles({ course }: Props) {
     <div className="course-compact-roles col">
       <div
         className={`course-compact-role ${roleStateClass("team")}`}
-        data-bs-toggle="tooltip"
         data-bs-title={`${roleStateTooltip("team")}`}
       >
         <RoleIcon type="team" />
@@ -110,7 +111,6 @@ export function CourseCompactRoles({ course }: Props) {
       {course.roles.includes("mentor") && (
         <div
           className={`course-compact-role ${roleStateClass("mentor")}`}
-          data-bs-toggle="tooltip"
           data-bs-title={`${roleStateTooltip("mentor")}`}
         >
           <RoleIcon type="mentor" />
@@ -119,7 +119,6 @@ export function CourseCompactRoles({ course }: Props) {
       {course.roles.includes("host") && (
         <div
           className={`course-compact-role ${roleStateClass("host")}`}
-          data-bs-toggle="tooltip"
           data-bs-title={`${roleStateTooltip("host")}`}
         >
           <RoleIcon type="host" />
@@ -128,7 +127,6 @@ export function CourseCompactRoles({ course }: Props) {
       {course.roles.includes("participant") && (
         <div
           className={`course-compact-role ${participantClass()}`}
-          data-bs-toggle="tooltip"
           data-bs-title={`${participantTooltip()}`}
         >
           <RoleIcon type="participant" />

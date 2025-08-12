@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React from "react";
 import { Router } from "meteor/iron:router";
 import { PublicSettings } from "/imports/utils/PublicSettings";
@@ -15,50 +14,47 @@ import { Publication } from "/imports/utils/ServerPublishReact";
 import { CourseTemplate } from "../../lib/course-template";
 
 import { Edit } from "../courses/edit";
-import { CourseCompact } from "../../components/courses/compact";
-import { CompactPropose } from "/imports/ui/components/courses/compact-propose";
+import { CourseCompact } from "../courses/compact";
 import { EventCompact } from "../../components/events/compact";
+import { EventCompact as EventCompactModern } from "../events/compact.modern";
 import { EventsMap } from "../../components/events/map";
+import { CompactPropose } from "../courses/CompactPropose";
 
 /** A list of entites. */
 
 export type ListOfEntitesElementComponent<T> = React.FC<{
   entity: T;
   index: number;
-  params: {
-    [k: string]: string;
-  };
+  params: Record<string, string>;
 }>;
-export type ListOfEntities<T> = {
+export interface ListOfEntities<T> {
   route: string;
   showAll?: { text?: string } | false;
   filter: () => Filtering<any>;
   find: Publication<any, T[]>;
   element: ListOfEntitesElementComponent<T>;
-};
+}
 
 /** A static component with entites eg. like eventMap */
 export type ComponentWithEntitesComponent<T> = React.FC<{
   entities: T[];
-  params: {
-    [k: string]: string;
-  };
+  params: Record<string, string>;
 }>;
-export type ComponentWithEntities<T> = {
+export interface ComponentWithEntities<T> {
   route: string;
   showAll?: { text?: string } | false;
   filter: () => Filtering<any>;
   find: Publication<any, T[]>;
   component: ComponentWithEntitesComponent<T>;
-};
+}
 
 /** A static component eg. like propose */
 export type StaticComponentComponent = React.FC<{
-  params: { [k: string]: string };
+  params: Record<string, string>;
 }>;
-export type StaticComponent = {
+export interface StaticComponent {
   component: StaticComponentComponent;
-};
+}
 
 const course: ListOfEntities<CourseModel> = {
   route: "search",
@@ -67,11 +63,11 @@ const course: ListOfEntities<CourseModel> = {
   element: ({ entity, index, params }) => (
     <React.Fragment key={entity._id}>
       {/* The sevent box should allways be the propose one, after then every 21 */}
-      {PublicSettings.feature.proposeCourseBox && (index - 6) % 21 === 0 ? (
+      {PublicSettings.feature.proposeCourseBox && (index - 6) % 21 === 0 && (
         <div className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
           <CompactPropose group={params.group} />
         </div>
-      ) : null}
+      )}
       <div className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
         <CourseCompact course={entity} />
       </div>
@@ -100,6 +96,14 @@ const event: ListOfEntities<EventModel> = {
       <EventCompact event={entity} withDate={true} withImage={true} />
     </div>
   ),
+};
+
+const eventModern: ListOfEntities<EventModel> = {
+  route: "calendar",
+  showAll: { text: "dashboard.calendar.showAll" },
+  filter: EventCollection.Filtering,
+  find: Events.useFindFilter,
+  element: ({ entity }) => <EventCompactModern event={entity} />,
 };
 
 function bodyStyle(imageUrl: string) {
@@ -141,7 +145,7 @@ const eventsMap: ComponentWithEntities<EventModel> = {
   find: Events.useFindFilter,
   component: ({ entities }) => (
     <div style={{ height: "440px" }}>
-      <EventsMap events={entities} openLinksInNewTab={false} />
+      <EventsMap events={entities} fullscreenControl />
     </div>
   ),
 };
@@ -158,6 +162,7 @@ export const mapping = {
   course,
   courseWithoutPropose,
   event,
+  eventModern,
   group,
   eventsMap,
   propose,

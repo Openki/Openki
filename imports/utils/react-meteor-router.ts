@@ -12,3 +12,7 @@ export function useParams(): Record<string, string | undefined> {
 export function useSearchParams() {
   return useTracker(() => Router.current().params.query || {});
 }
+
+export function useHash(): string {
+  return useTracker(() => Iron.Location.get().hash || "");
+}

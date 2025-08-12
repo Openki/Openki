@@ -4,21 +4,18 @@
 .loading-page {
   width: 100%;
   z-index: 1029;
+
+  .fa-regular,
+  .fa-brands,
+  .fa-solid {
+    color: $green;
+  }
 }
 
 .loading-row img,
 .loading-page img {
   height: 1.2em;
   vertical-align: -0.3em;
-}
-
-.loading-row,
-.loading-page {
-  .fa-regular,
-  .fa-brands,
-  .fa-solid {
-    color: $green;
-  }
 }
 
 .loading-page {

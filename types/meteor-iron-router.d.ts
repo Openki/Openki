@@ -212,3 +212,7 @@ declare module "meteor/iron:router" {
     }): void;
   }
 }
+
+declare namespace Iron {
+  const Location: any;
+}

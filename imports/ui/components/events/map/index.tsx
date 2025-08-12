@@ -5,8 +5,7 @@ import { DivIcon } from "leaflet";
 
 import { EventModel, EventVenueEntity } from "/imports/api/events/events";
 
-import { FullscreenControl } from "react-leaflet-fullscreen";
-import "react-leaflet-fullscreen/styles.css";
+import { FullscreenControl } from "../../FullscreenControl";
 import "leaflet/dist/leaflet.css";
 import { TileLayers } from "../../TileLayer";
 
@@ -15,7 +14,7 @@ import { VenueTag } from "../../venues/link";
 
 import "./styles.scss";
 
-export interface Data {
+export interface Props {
   events: EventModel[];
   fullscreenControl?: boolean;
   openLinksInNewTab?: boolean;
@@ -23,16 +22,15 @@ export interface Data {
 
 function groupBy<T>(array: T[], predicate: (value: T, index: number, array: T[]) => string) {
   return array.reduce(
-    // eslint-disable-next-line @typescript-eslint/no-shadow
     (acc, value, index, array) => {
       (acc[predicate(value, index, array)] ||= []).push(value);
       return acc;
     },
-    {} as { [key: string]: T[] },
+    {} as Record<string, T[]>,
   );
 }
 
-export function EventsMap({ events, fullscreenControl = true, openLinksInNewTab = false }: Data) {
+export function EventsMap({ events, fullscreenControl = false, openLinksInNewTab = false }: Props) {
   const locale = useSession("locale");
 
   const eventMarkerIcon = new DivIcon({
@@ -52,7 +50,6 @@ export function EventsMap({ events, fullscreenControl = true, openLinksInNewTab 
     className: "leaflet-marker-icon-shadow",
   });
 
-  // eslint-disable-next-line no-param-reassign
   events = events.filter((e) => e.venue?.loc);
   const markers = Object.entries(
     groupBy(
@@ -114,7 +111,7 @@ export function EventsMap({ events, fullscreenControl = true, openLinksInNewTab 
             ></Marker>
           </React.Fragment>
         ))}
-        {fullscreenControl ? <FullscreenControl /> : null}
+        {fullscreenControl && <FullscreenControl />}
       </MapContainer>
     </div>
   );

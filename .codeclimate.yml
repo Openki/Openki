@@ -9,8 +9,8 @@ plugins:
     enabled: true
     config:
       languages:
-      - typescript
-      - javascript
+        - typescript
+        - javascript
   eslint:
     enabled: false
   fixme:
@@ -18,18 +18,18 @@ plugins:
   rubocop:
     enabled: true
 exclude_patterns:
-- .meteor/
-- .gitlab/
-- .reuse
-- settings/
-- "**/node_modules/"
-- script/
-- "**/spec/"
-- "**/test/"
-- "**/tests/"
-- Tests/
-- "**/vendor/"
-- "**/*_test.go"
-- "**/*.d.ts"
-- "**/*.min.js"
-- "**/*.min.css"
+  - .meteor/
+  - .gitlab/
+  - .reuse
+  - settings/
+  - "**/node_modules/"
+  - script/
+  - "**/spec/"
+  - "**/test/"
+  - "**/tests/"
+  - Tests/
+  - "**/vendor/"
+  - "**/*_test.go"
+  - "**/*.d.ts"
+  - "**/*.min.js"
+  - "**/*.min.css"

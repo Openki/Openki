@@ -1,3 +1,4 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .course-role-title,
@@ -10,9 +11,6 @@
 
 .course-role-title {
   padding: 8px 13px;
-}
-
-.course-role-title {
   background: $user-bg;
 
   > span {
@@ -26,6 +24,7 @@
 
 .role-unsubscribe-btn {
   @include td-margin(left, 5px);
+
   font-size: medium;
   padding: 3px 12px;
 }
@@ -37,12 +36,13 @@
 
 .course-role-enroll-options {
   @include clearfix;
+
   background: $course-page-component-bg;
   padding: 15px 15px 0;
 }
 
 .course-role-first-steps {
-  background-color: lighten($user-bg, 10%);
+  background-color: color.adjust($user-bg, $lightness: 10%);
   padding: 15px;
 }
 

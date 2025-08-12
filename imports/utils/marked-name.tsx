@@ -1,9 +1,9 @@
 import React from "react";
 
-export type Props = {
+export interface Props {
   search: string;
   name: string;
-};
+}
 
 export function MarkedName({ search, name }: Props) {
   if (search === "") {
@@ -19,7 +19,7 @@ export function MarkedName({ search, name }: Props) {
         {parts.map((p, i) => (
           <React.Fragment key={i}>
             {p}
-            {i + 1 < parts.length ? <strong>{term}</strong> : null}
+            {i + 1 < parts.length && <strong>{term}</strong>}
           </React.Fragment>
         ))}
       </>

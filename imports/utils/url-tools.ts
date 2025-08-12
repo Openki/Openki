@@ -1,4 +1,4 @@
-export function paramsToQueryString(params: { [name: string]: string | number | boolean }) {
+export function paramsToQueryString(params: Record<string, string | number | boolean>) {
   const queryParams = Object.entries(params).map(
     (nameValue) => `${encodeURIComponent(nameValue[0])}=${encodeURIComponent(nameValue[1])}`,
   );
@@ -11,8 +11,8 @@ export function paramsToQueryString(params: { [name: string]: string | number | 
  */
 export function queryParam(name: string) {
   const params = document.location.search.substring(1).split("&");
-  for (let i = 0; i < params.length; i += 1) {
-    const keyval = params[i].split("=");
+  for (const param of params) {
+    const keyval = param.split("=");
     if (decodeURIComponent(keyval[0]) === name) {
       return decodeURIComponent(keyval[1]);
     }

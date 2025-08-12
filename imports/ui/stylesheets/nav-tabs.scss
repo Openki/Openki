@@ -8,6 +8,7 @@
   }
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 .nav-tabs .active > a,
 .nav-tabs .active > a:hover,
 .nav-tabs .active > a:focus {
@@ -29,8 +30,7 @@
 
 .tab-pane {
   max-height: 300px;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden auto;
 }
 
 .tab-label {

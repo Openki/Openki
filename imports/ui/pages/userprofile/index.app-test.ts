@@ -1,13 +1,15 @@
-import { assert } from "chai";
 import { Router } from "meteor/iron:router";
-import $ from "jquery";
 import { Meteor } from "meteor/meteor";
 import { MeteorAsync } from "/imports/utils/promisify";
 import { Session } from "meteor/session";
+import {
+  expectText,
+  expectElement,
+  expectNoneElement,
+  expectHtmlButton,
+} from "/imports/ClientUtils.app-test";
 
 import { Users } from "/imports/api/users/users";
-
-import { waitForSubscriptions, waitFor } from "/imports/ClientUtils.app-test";
 
 if (Meteor.isClient) {
   describe("userprofile page", function () {
@@ -16,95 +18,49 @@ if (Meteor.isClient) {
       this.timeout(8000);
       Session.set("locale", "en");
       Session.set("region", "all");
+
+      // A previous test might have logged us in.
+      if (Meteor.userId()) {
+        await MeteorAsync.logout();
+      }
+
+      (await MeteorAsync.subscribe("userSearch", "Sandro")).stop(); // load user from server
+      const user = Users.findOne({ username: "Sandro" });
+      Router.go("userprofile", user);
     });
 
     it("should be navigable", async () => {
-      const haveTitle = () => {
-        assert($("h1").text().includes("s Profile"), "Title is present");
-      };
-
-      (await MeteorAsync.subscribe("userSearch", "Sandro")).stop(); // load user from server
-      const userId = Users.findOne({ username: "Sandro" })?._id;
-      Router.go("userprofile", { _id: userId, username: "Sandro" });
-
-      await waitForSubscriptions();
-      await waitFor(haveTitle);
+      await expectText("h1", "s Profile", "Title is present");
     });
 
     it('should allow admins to set "User has contributed"', async () => {
-      const buttonIsNotPresent = () => {
-        assert($(".js-has-contributed").length === 0, "Button is not present");
-      };
-      const buttonIsPresent = () => {
-        assert($(".js-has-contributed").length > 0, "Button is present");
-      };
-      const contributionIconIsPresent = () => {
-        assert(
-          $(
-            'a[data-bs-toggle="tooltip"][data-bs-title^="Sandro supported Hmmm with a donation."] i.fa-solid.fa-heart',
-          ).length > 0,
-          "Icon is present",
-        );
-      };
-
-      // A previous test might have logged us in.
-      if (Meteor.userId()) {
-        await MeteorAsync.logout();
-      }
-
-      (await MeteorAsync.subscribe("userSearch", "Sandro")).stop(); // load user from server
-      const userId = Users.findOne({ username: "Sandro" })?._id;
-      Router.go("userprofile", { _id: userId, username: "Sandro" });
-
-      await waitForSubscriptions();
-
-      await waitFor(buttonIsNotPresent);
+      await expectNoneElement(".js-has-contributed", "Button is not present");
 
       await MeteorAsync.loginWithPassword("greg", "greg");
 
-      await waitFor(buttonIsPresent);
+      const button = await expectHtmlButton(".js-has-contributed", "Button is present");
 
-      $(".js-has-contributed").trigger("click");
+      button.click();
 
-      await waitFor(contributionIconIsPresent);
+      expectElement(
+        'a[data-bs-title^="Sandro supported Hmmm with a donation."] i.fa-solid.fa-heart',
+        "Icon is present",
+      );
     });
 
     it('should allow admins to unset "User has contributed"', async () => {
-      const buttonIsNotPresent = () => {
-        assert($(".js-unset-has-contributed").length === 0, "Button is not present");
-      };
-      const buttonIsPresent = () => {
-        assert($(".js-unset-has-contributed").length > 0, "Button is present");
-      };
-      const contributionIconIsNotPresent = () => {
-        assert(
-          $(
-            'a[data-bs-toggle="tooltip"][data-bs-title^="Sandro supported Hmmm with a donation."] i.fa-solid.fa-heart',
-          ).length === 0,
-          "Icon is not present",
-        );
-      };
-
-      // A previous test might have logged us in.
-      if (Meteor.userId()) {
-        await MeteorAsync.logout();
-      }
-
-      (await MeteorAsync.subscribe("userSearch", "Sandro")).stop(); // load user from server
-      const userId = Users.findOne({ username: "Sandro" })?._id;
-      Router.go("userprofile", { _id: userId, username: "Sandro" });
-
-      await waitForSubscriptions();
-
-      await waitFor(buttonIsNotPresent);
+      await expectNoneElement(".js-has-contributed", "Button is not present");
 
       await MeteorAsync.loginWithPassword("greg", "greg");
 
-      await waitFor(buttonIsPresent);
+      const button = await expectHtmlButton(".js-has-contributed", "Button is present");
 
-      $(".js-unset-has-contributed").trigger("click");
+      button.click();
 
-      await waitFor(contributionIconIsNotPresent);
+      expectNoneElement(
+        'a[data-bs-title^="Sandro supported Hmmm with a donation."] i.fa-solid.fa-heart',
+        "Icon is not present",
+      );
     });
   });
 }

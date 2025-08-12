@@ -21,7 +21,12 @@ export type Props = {
   onArchivedMouseOut: () => void;
 } & AdditionalFiltersProps;
 
-export type StateFilter = { name: string; cssClass: string; label: string; title: string };
+export interface StateFilter {
+  name: string;
+  cssClass: string;
+  label: string;
+  title: string;
+}
 
 export function Filter(props: Props) {
   const { showingFilters } = props;
@@ -94,7 +99,7 @@ export function Filter(props: Props) {
 
   return (
     <div className={`filter ${filterClasses()}`}>
-      {showingFilters ? (
+      {showingFilters && (
         <h4 className="filter-heading">
           <i className="fa-solid fa-filter fa-fw" aria-hidden="true"></i>
           {t("find.search_filter.title", "Filter search")}
@@ -113,7 +118,7 @@ export function Filter(props: Props) {
             </button>
           </div>
         </h4>
-      ) : null}
+      )}
       <div className="row">
         <div className="col filter-component">
           <h4 className="filter-component-header">{t("find.filter.courseStates", "States")}</h4>
@@ -143,7 +148,7 @@ export function Filter(props: Props) {
               </div>
             ))}
           </div>
-          {showingFilters ? (
+          {showingFilters && (
             <div className="mt-2 row gx-3">
               <div className="col-sm-4 offset-sm-8 filter-captions-column">
                 <div className="filter-caption-wrap">
@@ -171,11 +176,11 @@ export function Filter(props: Props) {
                 </div>
               </div>
             </div>
-          ) : null}
+          )}
         </div>
-        {showingFilters ? <AdditionalFilters {...additionalFiltersAttr()} /> : null}
+        {showingFilters && <AdditionalFilters {...additionalFiltersAttr()} />}
       </div>
-      {!showingFilters ? (
+      {!showingFilters && (
         <div className="filter-actions">
           <button
             className="btn btn-link p-0"
@@ -187,13 +192,13 @@ export function Filter(props: Props) {
             {t("filter.showAllFilters", "Show all filters")}
           </button>
         </div>
-      ) : null}
+      )}
     </div>
   );
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("Filter", () => Filter);

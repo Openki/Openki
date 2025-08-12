@@ -7,7 +7,6 @@ Blaze.TemplateInstance.prototype.parentInstance = function (
 ): Blaze.TemplateInstance | undefined {
   let { view } = this;
   while (view) {
-    /* eslint-disable-next-line no-param-reassign, no-plusplus */
     if (view.name.substring(0, 9) === "Template." && !levels--) {
       return view.templateInstance();
     }
@@ -30,6 +29,7 @@ Blaze.TemplateInstance.prototype.busy = function (
 Blaze.TemplateInstance.prototype.findBusiness = function (this: any) {
   if (this.business) return this.business; // Short-circuit common case
 
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   let businessInstance = this;
   while (businessInstance && !businessInstance.business) {
     businessInstance = businessInstance.parentInstance();

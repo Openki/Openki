@@ -1,10 +1,12 @@
+@use "sass:math";
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 // *** Kiosk event ***
-//====================
+// ====================
 
 // ** Event
-//========================================================================================
+// ========================================================================================
 .kiosk-event-wrap {
   position: relative;
 }
@@ -32,7 +34,7 @@
 }
 
 // event canceled
-//============================================================================================
+// ============================================================================================
 .kiosk-event-canceled {
   background-color: $canceled-color;
   border-radius: 5px;
@@ -51,14 +53,12 @@
   text-align: center;
   top: 27%;
   transform: rotate(-27deg);
-  transform: rotate(-27d300eg);
-  transform: rotate(-27deg);
   width: fit-content;
   z-index: 0;
 }
 
 // event fully booked
-//============================================================================================
+// ============================================================================================
 .kiosk-event-fully-booked {
   background-color: #f99248;
   border-radius: 5px;
@@ -77,36 +77,35 @@
   text-align: center;
   top: 27%;
   transform: rotate(-27deg);
-  transform: rotate(-27d300eg);
-  transform: rotate(-27deg);
   width: fit-content;
   z-index: 0;
 }
 
 // ** Timecount
-//========================================================================================
+// ========================================================================================
 .kiosk-event-timecount {
-  padding: 2px ($grid-gutter-width / 3);
+  padding: 2px math.div($grid-gutter-width, 3);
 }
 
 $event-ongoing-header-bg: $beige;
 
 .kiosk-event-ongoing > .kiosk-event-timecount {
-  background-color: lighten($event-ongoing-header-bg, 18%);
+  background-color: color.adjust($event-ongoing-header-bg, $lightness: 18%);
 }
 
 .kiosk-event-today > .kiosk-event-timecount,
 .kiosk-event-upcoming > .kiosk-event-timecount {
-  background-color: lighten($event-header-bg, 13%);
+  background-color: color.adjust($event-header-bg, $lightness: 13%);
 }
 
 // ** Header
-//========================================================================================
-$kiosk-event-component-padding-vertical: $grid-gutter-width / 3;
-$kiosk-event-component-padding-horizontal: $grid-gutter-width / 2;
+// ========================================================================================
+$kiosk-event-component-padding-vertical: math.div($grid-gutter-width, 3);
+$kiosk-event-component-padding-horizontal: $grid-gutter-width * 0.5;
 
 .kiosk-event-header {
   @include clearfix;
+
   color: $gray-800;
   font-size: medium;
   padding: $kiosk-event-component-padding-vertical $kiosk-event-component-padding-horizontal;
@@ -122,7 +121,7 @@ $kiosk-event-component-padding-horizontal: $grid-gutter-width / 2;
 }
 
 // ** Moment & Location
-//========================================================================================
+// ========================================================================================
 .kiosk-event-moment,
 .kiosk-event-location {
   @include ellipsis;
@@ -136,23 +135,25 @@ $kiosk-event-component-padding-horizontal: $grid-gutter-width / 2;
 }
 
 // ** Moment
-//========================================================================================
+// ========================================================================================
 .kiosk-event-today .kiosk-event-moment,
 .kiosk-event-upcoming .kiosk-event-moment {
   @include td-float(left);
+
   text-align: start;
 }
 
 // ** Location
-//========================================================================================
+// ========================================================================================
 .kiosk-event-today .kiosk-event-location,
 .kiosk-event-upcoming .kiosk-event-location {
   @include td-float(right);
+
   text-align: end;
 }
 
 // ** Body
-//========================================================================================
+// ========================================================================================
 .kiosk-event-body {
   @include ellipsis-multiline(2);
 
@@ -162,7 +163,7 @@ $kiosk-event-component-padding-horizontal: $grid-gutter-width / 2;
 }
 
 // ** Title
-//========================================================================================
+// ========================================================================================
 .kiosk-event-title {
   color: $gray-800;
   display: inline;

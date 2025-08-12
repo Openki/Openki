@@ -1,6 +1,6 @@
 import { GroupEntityCustomCourseFields, GroupEntityDashboard } from "../../groups/groups";
 
-export type Template = {
+export interface Template {
   _id?: string;
   name: string;
   short: string;
@@ -11,4 +11,4 @@ export type Template = {
   logoUrl?: string;
   customCourseFields?: GroupEntityCustomCourseFields[];
   dashboard?: GroupEntityDashboard;
-};
+}

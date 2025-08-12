@@ -23,7 +23,7 @@ export function Report() {
 
   return (
     <>
-      {sending() ? t("report.sending", "Report is being sent…") : null}
+      {sending() && t("report.sending", "Report is being sent…")}
       {reporting() ? (
         <div className="report p-3">
           <form
@@ -107,7 +107,7 @@ export function Report() {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("Report", () => Report);

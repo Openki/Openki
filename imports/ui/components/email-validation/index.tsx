@@ -1,4 +1,3 @@
-import { Meteor } from "meteor/meteor";
 import moment from "moment";
 import { Template } from "meteor/templating";
 import React, { useEffect, useRef, useState } from "react";
@@ -9,9 +8,9 @@ import * as Alert from "/imports/api/alerts/alert";
 import * as emailMethods from "/imports/api/emails/methods";
 import { UserModel } from "/imports/api/users/users";
 
-export type Props = {
+export interface Props {
   user: UserModel;
-};
+}
 
 function EmailValidationModal({ user }: Props) {
   const { t } = useTranslation();
@@ -36,7 +35,7 @@ function EmailValidationModal({ user }: Props) {
     try {
       await emailMethods.sendVerificationEmail();
 
-      Alert.success(t("profile.sentVerificationMail", { MAIL: Meteor.user()?.emails[0].address }));
+      Alert.success(t("profile.sentVerificationMail", { MAIL: user?.emails[0].address }));
       if (elementRef.current) {
         $(elementRef.current).modal("hide");
       }
@@ -60,7 +59,7 @@ function EmailValidationModal({ user }: Props) {
               &nbsp;
               {t("validate.email.title", "Validate e-mail address")}
             </h4>
-            <span className="btn-close btn-close-white" data-bs-dismiss="modal"></span>
+            <span className="btn-close" data-bs-dismiss="modal"></span>
           </div>
           <div className="modal-body">
             <span>
@@ -118,7 +117,7 @@ export function EmailValidation() {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("EmailValidation", () => EmailValidation);

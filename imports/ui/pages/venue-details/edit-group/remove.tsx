@@ -8,10 +8,10 @@ import * as VenuesMethods from "/imports/api/venues/methods";
 
 import { name } from "/imports/ui/lib/group-name-helpers";
 
-export type Props = {
+export interface Props {
   venue: VenueModel;
   groupId: string;
-};
+}
 
 export function Remove({ venue, groupId }: Props) {
   const { t } = useTranslation();
@@ -33,7 +33,7 @@ export function Remove({ venue, groupId }: Props) {
       <div className="dropdown-menu dialog-dropdown">
         <div className="dropdown-header">
           {t("editGroup.remove.header", "Remove group")}
-          <button type="button" className="btn-close btn-close-white"></button>
+          <button type="button" className="btn-close"></button>
         </div>
         <div className="p-2">
           {t("editGroup.remove.desc", "Disable members of {GROUP} to manage this venue.", {

@@ -1,6 +1,5 @@
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
-import { Template } from "meteor/templating";
 import React from "react";
 
 import { CourseModel } from "/imports/api/courses/courses";
@@ -11,16 +10,16 @@ import { GroupList } from "/imports/ui/components/courses/display/group-list";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   course?: CourseModel;
-  backlink?: string;
+  backlink?: string | undefined;
   headerlink?: string;
   regionId: string;
-  categories: string[];
+  categories: string[] | undefined;
   groups?: string[];
   title: string;
-  image: string;
-};
+  image: string | undefined;
+}
 
 export function EventCourseHeader(props: Props) {
   const { t } = useTranslation();
@@ -58,15 +57,9 @@ export function EventCourseHeader(props: Props) {
         </>
       )}
       <h2>{props.title}</h2>
-      <CourseCategories categories={props.categories} />
+      {!!props.categories && <CourseCategories categories={props.categories} />}
       {!!props.course && <GroupList course={props.course} />}
       <RegionTag region={props.regionId} />
     </div>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("EventCourseHeader", () => EventCourseHeader);

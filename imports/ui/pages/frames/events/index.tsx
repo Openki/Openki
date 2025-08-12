@@ -1,0 +1,159 @@
+import React, { useEffect, useState } from "react";
+import moment from "moment";
+import { Router } from "meteor/iron:router";
+import { useTranslation } from "react-i18next";
+import { useUserId } from "/imports/utils/react-meteor-data";
+import { take } from "lodash";
+
+import { Events } from "/imports/api/events/events";
+import { useFindFilter } from "/imports/api/events/publications";
+
+import * as UrlTools from "/imports/utils/url-tools";
+import { useReactiveNow } from "/imports/utils/reactive-now";
+import { Filtering } from "/imports/utils/filtering";
+import * as Predicates from "/imports/utils/predicates";
+import * as Metatags from "/imports/utils/metatags";
+import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
+
+import { Data as CalendarNavData, Day } from "/imports/ui/components/calendar-nav/day";
+import { EventList } from "/imports/ui/components/events/list";
+
+import "./styles.scss";
+
+const DefaultLimit = 6;
+
+export function EventsPage(data: Record<string, string>) {
+  const { t } = useTranslation();
+
+  const reactiveNow = useReactiveNow();
+
+  const [isAttendeeFilterOn, setIsAttendeeFilterOn] = useState(false);
+
+  const filter = Events.Filtering().read(data);
+
+  const date = (filter.get("after") || moment(reactiveNow)).startOf("day");
+
+  const filterQuery = filter.toQuery();
+
+  const userId = useUserId();
+  // filter isAttendeeFilterOn in addition to filtering that get's passed in via url
+  if (userId && isAttendeeFilterOn) {
+    filterQuery.participant = userId;
+  }
+
+  filterQuery.after = date.toDate();
+
+  // by default internal and not internal are show
+  // in this view we want only show internal if a group is set
+  if (!filterQuery.group && !filterQuery.groups?.length) {
+    filterQuery.internal = filterQuery.internal || false;
+  }
+
+  const limit =
+    new Filtering({
+      count: Predicates.integer,
+    })
+      .read(data)
+      .toQuery().count || DefaultLimit;
+
+  const [isLoading, events] = useFindFilter(filterQuery, limit + 1);
+
+  const routerName = useCurrentRouteName();
+
+  const update = () => {
+    const filterParams = filter.toParams() as Record<string, string>;
+    filterParams.count = limit.toString();
+    if (data.control) {
+      filterParams.control = data.control;
+    } else {
+      delete filterParams.control;
+    }
+    if (data.hideSwitches) {
+      filterParams.hideSwitches = data.hideSwitches;
+    } else {
+      delete filterParams.hideSwitches;
+    }
+    if (data.filterGroups) {
+      filterParams.filterGroups = data.filterGroups;
+    } else {
+      delete filterParams.filterGroups;
+    }
+    delete filterParams.region; // HACK region is kept in the session (for bad reasons)
+    const queryString = UrlTools.paramsToQueryString(filterParams);
+
+    const options: { query?: string } = {};
+    if (queryString.length) {
+      options.query = queryString;
+    }
+
+    Router.go(routerName, {}, options);
+  };
+
+  function control() {
+    return data.control === "1";
+  }
+  function calendarNavAttr() {
+    return {
+      hideSwitches: data.hideSwitches === "1",
+      search: filter.get("search"),
+      onChangeSearch: (newValue: string) => {
+        filter.add("search", newValue);
+        update();
+      },
+      date,
+      onChangeDate: (newDate) => {
+        filter.add("after", newDate.startOf("day").toISOString());
+        update();
+      },
+      availableGroups: new Filtering({
+        filterGroups: Predicates.ids,
+      })
+        .read(data)
+        .get("filterGroups"),
+      selectedGroups: filter.get("groups"),
+      onAddGroup: (group) => {
+        filter.add("groups", group);
+        update();
+      },
+      onRemoveGroup: (group) => {
+        filter.remove("groups", group);
+        update();
+      },
+      categories: filter.get("categories"),
+      onAddCategory: (category) => {
+        filter.add("categories", category);
+        update();
+      },
+      onRemoveCategory: (category) => {
+        filter.remove("categories", category);
+        update();
+      },
+      onChangeAttendingEventsOnly: (state) => {
+        setIsAttendeeFilterOn(state);
+      },
+    } as CalendarNavData;
+  }
+
+  useEffect(() => {
+    Metatags.setCommonTags(t("event.list.windowtitle", "Events"));
+  });
+
+  if (isLoading()) {
+    return null;
+  }
+
+  return (
+    <>
+      {control() && <Day {...calendarNavAttr()} />}
+      <div className="frame-events">
+        <EventList dataEvents={take(events, limit)} withDate withImage openInNewTab />
+      </div>
+    </>
+  );
+}
+
+// for Blaze
+
+import "./template.html";
+
+Template.registerHelper("FrameEventsPage", () => EventsPage);

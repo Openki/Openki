@@ -3,19 +3,15 @@ import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 import { CourseModel } from "/imports/api/courses/courses";
-import { useDetails } from "/imports/api/courses/publications";
 
 import { Member } from "./member";
 
 import "./styles.scss";
 
-export function Members({ course: course2 }: { course: CourseModel }) {
+export function Members({ course }: { course: CourseModel }) {
   const { t } = useTranslation();
   const user = useUser();
 
-  // for blaze, can be removed after migration
-  // subscribe in react to keep reactivity
-  const [isLoading, course] = useDetails(course2._id);
   const increaseBy = 10;
   const [membersDisplayLimit, setMembersDisplayLimit] = useState(increaseBy);
 
@@ -68,8 +64,6 @@ export function Members({ course: course2 }: { course: CourseModel }) {
     setMembersDisplayLimit(membersDisplayLimit + increaseBy);
   }
 
-  if (isLoading()) return null;
-
   return (
     <>
       <div className="page-component-header">
@@ -80,20 +74,20 @@ export function Members({ course: course2 }: { course: CourseModel }) {
             "{NUM, plural, =0{No interested yet} one{1 interested} other{# interested} }",
             { NUM: howManyEnrolled() },
           )}{" "}
-          {canNotifyAll() ? (
+          {canNotifyAll() && (
             <i
               className="fa-solid fa-envelope contact-members"
               onClick={handleContactMembersClick}
             ></i>
-          ) : null}
+          )}
         </h4>
       </div>
-      {course?.members ? (
+      {!!course?.members && (
         <div className="course-members">
           {sortedMembers()?.map((member) => (
             <Member key={member.user} member={member} course={course} />
           ))}
-          {limited() ? (
+          {limited() && (
             <button
               className="btn btn-add page-component-btn"
               type="button"
@@ -101,15 +95,15 @@ export function Members({ course: course2 }: { course: CourseModel }) {
             >
               {t("_button.more")}
             </button>
-          ) : null}
+          )}
         </div>
-      ) : null}
+      )}
     </>
   );
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("CourseMembers", () => Members);

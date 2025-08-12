@@ -274,7 +274,7 @@ export function LogPage({
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("LogPage", () => LogPage);

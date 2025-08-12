@@ -1,16 +1,17 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
-//== Kiosk
-//----------------------------------------
+// ** Kiosk
+// ==============================================
 .kiosk {
   padding-bottom: 10.5px;
   padding-top: 10.5px;
 }
 
-//== Logo
-//----------------------------------------
+// ** Logo
+// ==============================================
 .kiosk-logo {
   @include td-margin(right, 15px);
+
   line-height: $line-height-base;
   vertical-align: text-bottom;
 }
@@ -23,18 +24,19 @@
   height: 48px;
 }
 
-//== Heading
-//----------------------------------------
+// ** Heading
+// ==============================================
 .kiosk-heading {
   @include td-margin-all(0, 15px, 0, 0);
+
   display: inline-block;
   font-size: $h1-font-size;
   line-height: $line-height-base;
   padding-bottom: 15px;
 }
 
-//== Region selection
-//----------------------------------------
+// ** Region selection
+// ==============================================
 .kiosk-language-selection {
   display: inline-block;
   line-height: $line-height-base;
@@ -57,10 +59,11 @@
   @include td-pos(right, 0);
 }
 
-//== Clock
-//----------------------------------------
+// ** Clock
+// ==============================================
 .kiosk-moment {
   @include td-float(right);
+
   line-height: $line-height-base;
 }
 
@@ -70,5 +73,6 @@
 
 .kiosk-moment-date {
   @include td-margin(left, 5px);
+
   font-size: $h4-font-size;
 }

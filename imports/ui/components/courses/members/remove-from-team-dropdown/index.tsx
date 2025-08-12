@@ -8,10 +8,10 @@ import * as Tooltips from "/imports/utils/Tooltips";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   member: CourseMemberEntity;
   onClick: () => void;
-};
+}
 
 export function RemoveFromTeamDropdown({ member, onClick }: Props) {
   const { t } = useTranslation();
@@ -23,28 +23,25 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
   }
 
   return (
-    <span
-      className="dropdown"
-      data-bs-toggle="tooltip"
-      data-bs-title={t("course.roles.removeTeam", "Remove from team")}
-    >
+    <span className="dropdown" data-bs-title={t("course.roles.removeTeam", "Remove from team")}>
       <button
         type="button"
-        className="btn btn-sm btn-close btn-close-white"
+        className="btn btn-sm btn-close"
         aria-expanded="false"
         data-bs-toggle="dropdown"
+        data-bs-theme="dark"
         onClick={() => {
           setTimeout(() => {
             Tooltips.hide();
           }, 0);
         }}
       ></button>
-      <ul className="dropdown-menu dialog-dropdown right">
+      <ul className="dropdown-menu dropdown-menu-end dialog-dropdown">
         <li className="dropdown-header">
           {isNotPriviledgedSelf()
             ? t("course.details.removeTeam.self.header", "Remove yourself from the team")
             : t("course.details.removeTeam.others.header", "Remove member from the team")}
-          <button type="button" className="btn-close btn-close-white"></button>
+          <button type="button" className="btn-close"></button>
         </li>
         <li>
           <hr className="dropdown-divider" />

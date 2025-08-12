@@ -75,14 +75,14 @@ export class ScrubRule {
     }
 
     if (this.unset) {
-      const expr: { [selector: string]: string } = {};
+      const expr: Record<string, string> = {};
 
       // Query for existence of one of the fields that are to be
       // unset. This is not done for performance reasons but
       // so that the count in the result is correct. Records
       // where all the fields were already unset must not show
       // up in the count of newly unset records.
-      const fieldSelects: { [selector: string]: { $exists: boolean } }[] = [];
+      const fieldSelects: Record<string, { $exists: boolean }>[] = [];
       this.unset.forEach((name) => {
         const selector = `body.${name}`;
         expr[selector] = "";
@@ -126,7 +126,6 @@ export class Scrubber {
 
   async scrub(log: LogCollection, now: moment.Moment) {
     for (const rule of this.rules) {
-      // eslint-disable-next-line no-await-in-loop
       await rule.scrub(log, now);
     }
   }

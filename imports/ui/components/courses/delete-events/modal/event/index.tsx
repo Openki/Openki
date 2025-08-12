@@ -5,7 +5,9 @@ import { EventModel } from "/imports/api/events/events";
 
 import "./styles.scss";
 
-export type Props = { event: EventModel };
+export interface Props {
+  event: EventModel;
+}
 
 export function Event({ event }: Props) {
   const { dateFormat, weekdayFormat, timeFormat } = useDateTimeFormat();

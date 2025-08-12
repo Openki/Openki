@@ -2,6 +2,7 @@ import { Match, check } from "meteor/check";
 import { Meteor } from "meteor/meteor";
 import { _ } from "meteor/underscore";
 import moment from "moment";
+import { Random } from "meteor/random";
 
 import { Courses } from "/imports/api/courses/courses";
 import { Subscribe, processChange } from "/imports/api/courses/subscription";
@@ -28,6 +29,7 @@ import { HtmlString, StringEnum, Tuple, Type } from "/imports/utils/CustomChecks
 import { GroupPromoters } from "/imports/utils/update-methods";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { Venues } from "../venues/venues";
+import { UserModel } from "../users/users";
 
 /**
  * @param updateOptions What should be updated
@@ -64,7 +66,6 @@ const ReplicaSync = function (
           end: newStartMoment.add(timeDelta).toDate(),
         });
 
-        // eslint-disable-next-line no-await-in-loop
         const regionZone = await LocalTime.zone(replica.region);
         Object.assign(replicaChanges, {
           startLocal: regionZone.toString(replicaChanges.start as Date),
@@ -79,7 +80,7 @@ const ReplicaSync = function (
 
       if (updateOptions.infos || updateTime) {
         // only update if something has changed
-        // eslint-disable-next-line no-await-in-loop
+
         await Events.updateAsync({ _id: replica._id }, { $set: replicaChanges });
       }
 
@@ -332,7 +333,7 @@ export const save = ServerMethod(
       if (enrichedEvent.courseId) {
         enrichedEvent = await categoriesDenormalizer.beforeInsert(enrichedEvent);
       }
-      // eslint-disable-next-line no-param-reassign
+
       eventId = await Events.insertAsync(enrichedEvent);
 
       if (editFields.courseId) {
@@ -371,7 +372,6 @@ export const save = ServerMethod(
 
     if (sendNotifications) {
       if (comment) {
-        // eslint-disable-next-line no-param-reassign
         comment = comment.trim().substring(0, 2000).trim();
       }
 
@@ -450,6 +450,7 @@ export const promote = ServerMethod(
     await UpdateMethods.promote(Events as unknown as GroupPromoters)(eventId, groupId, enable);
     await groupsDenormalizer.updateGroups(eventId);
   },
+  { simulation: false },
 );
 
 /**
@@ -466,6 +467,7 @@ export const editing = ServerMethod(
     await UpdateMethods.editing(Events as unknown as GroupPromoters)(eventId, groupId, enable);
     await groupsDenormalizer.updateGroups(eventId);
   },
+  { simulation: false },
 );
 
 /**
@@ -500,13 +502,13 @@ export const addParticipant = ServerMethod(
 
     await Events.updateAsync(
       { _id: eventId },
-      { $addToSet: { participants: { user: user._id, companions } } },
+      { $addToSet: { participants: { user: user._id, companions, removeToken: Random.secret() } } },
     );
 
     // Send notifications to user
-    await Notification.Rsvp.record(eventId, user._id, companions);
+    await Notification.Rsvp.record(eventId, user._id);
     // Send notification to team
-    await Notification["Rsvp.Team"].record(eventId, user._id, companions);
+    await Notification["Rsvp.Team"].record(eventId, user._id);
 
     if (!event.courseId) {
       return;
@@ -527,14 +529,28 @@ export const addParticipant = ServerMethod(
   { simulation: false },
 );
 
+/**
+ * Remove participant from the event.
+ * If no participant is set, the currently logged in user is removed.
+ * The participant can be removed with a remove token found in the event entity.
+ */
 export const removeParticipant = ServerMethod(
   "event.removeParticipant",
-  async (eventId: string) => {
+  async (eventId: string, participantId?: string, token?: string) => {
     check(eventId, String);
+    check(participantId, Match.Optional(String));
+    check(token, Match.Optional(String));
 
-    const userId = Meteor.userId();
-    if (!userId) {
-      throw new Meteor.Error(401, "please log in");
+    if (token && !participantId) {
+      throw new Meteor.Error(400, "participantId missed");
+    }
+
+    let operator: UserModel | null = null;
+    if (!token) {
+      operator = await Meteor.userAsync();
+      if (!operator) {
+        throw new Meteor.Error(401, "please log in");
+      }
     }
 
     const event = await Events.findOneAsync(eventId);
@@ -547,7 +563,24 @@ export const removeParticipant = ServerMethod(
       throw new Meteor.Error(401, "cannot unregister, event has already passed");
     }
 
-    await Events.updateAsync({ _id: eventId }, { $pull: { participants: { user: userId } } });
+    if (participantId) {
+      if (token) {
+        if (!event.participants?.find((p) => p.user === participantId && p.removeToken === token)) {
+          throw new Meteor.Error(403, "not enough authorisation.");
+        }
+      } else if (!event.editableBy(operator)) {
+        // only users that have edit permissions (admin, group-orga-members, orga-team) can remove other users.
+        throw new Meteor.Error(403, "not enough authorisation.");
+      }
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      participantId = operator!._id;
+    }
+
+    await Events.updateAsync(
+      { _id: eventId },
+      { $pull: { participants: { user: participantId } } },
+    );
 
     if (!event.courseId) {
       return;
@@ -594,7 +627,6 @@ export const cancel = ServerMethod(
 
     if (event.participants?.length) {
       if (comment) {
-        // eslint-disable-next-line no-param-reassign
         comment = comment.trim().substring(0, 2000).trim();
       }
 

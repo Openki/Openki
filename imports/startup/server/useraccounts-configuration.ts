@@ -1,10 +1,10 @@
 import { Meteor } from "meteor/meteor";
-import { _ } from "meteor/underscore";
+import { toArray } from "lodash";
 import { ServiceConfiguration } from "meteor/service-configuration";
 import { Accounts } from "meteor/accounts-base";
 
-import * as usersMethods from "/imports/api/users/methods";
-import { UserModel, UserProfile, Users } from "/imports/api/users/users";
+import * as UsersMethods from "/imports/api/users/methods";
+import { UserModel, UserProfile } from "/imports/api/users/users";
 
 import { isEmail } from "/imports/utils/email-tools";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
@@ -90,14 +90,14 @@ Accounts.onCreateUser((options: any, originalUser) => {
   // Collect info where a username could possibly be found
   let nameProviders = [user, user.profile];
   if (user.services) {
-    nameProviders = nameProviders.concat(_.toArray(originalUser.services));
+    nameProviders = nameProviders.concat(toArray(originalUser.services));
   }
 
   // Try to glean a username
   let name;
   let username;
   let provider: { name?: string; username?: string } | undefined;
-  /* eslint-disable-next-line no-cond-assign */
+
   while ((provider = nameProviders.pop()) !== undefined) {
     if (!name && provider.name) {
       name = provider.name;
@@ -156,19 +156,14 @@ Accounts.onCreateUser((options: any, originalUser) => {
   return user;
 });
 
-Accounts.onLogin(async (options: any) => {
-  await usersMethods.updateLastLogin();
+Accounts.onLogin(async () => {
+  await UsersMethods.updateLastLogin();
 
   const user = await Meteor.userAsync();
 
   // generate a avatar color for every new user
   if (user && user.avatar?.color === undefined) {
-    await usersMethods.updateAvatarColor();
-  }
-
-  // Remove visitor flag after passwort reset. https://github.com/meteor/meteor/blob/devel/packages/accounts-password/password_server.js
-  if (options.methodName === "resetPassword" && user?.privileged("visitor")) {
-    await Users.updateAsync(user._id, { $pull: { privileges: "visitor" } });
+    await UsersMethods.updateAvatarColor();
   }
 });
 

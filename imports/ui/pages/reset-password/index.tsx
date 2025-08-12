@@ -9,12 +9,12 @@ import { AccountsAsync } from "/imports/utils/promisify";
 import * as Metatags from "/imports/utils/metatags";
 
 import { ButtonCancel } from "/imports/ui/components/buttons";
-import { TokenExpired } from "../../components/token-expired";
+import { TokenExpired } from "../../components/TokenExpired";
 
-export type Props = {
+export interface Props {
   email: string;
   token: string;
-};
+}
 
 export function ResetPasswordPage({ token, email }: Props) {
   const { t } = useTranslation();
@@ -29,7 +29,6 @@ export function ResetPasswordPage({ token, email }: Props) {
   const [passwordNotSame, setPasswordNotSame] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  // eslint-disable-next-line @typescript-eslint/no-shadow
   function updatePassword(password: string, passwordConfirm: string, showPassword: boolean) {
     if (showPassword) {
       setPasswordValid(password.length > 0);
@@ -61,7 +60,7 @@ export function ResetPasswordPage({ token, email }: Props) {
   }
 
   function handelCancel() {
-    Router.go("/");
+    Router.go("home");
   }
 
   useEffect(() => {
@@ -120,7 +119,7 @@ export function ResetPasswordPage({ token, email }: Props) {
             defaultValue={password}
           />
         </fieldset>
-        {!showPassword ? (
+        {!showPassword && (
           <fieldset className="mb-3">
             <label className="form-label" htmlFor="passConfirm">
               {t("passwordReset.label.confirm", "Confirm")}
@@ -136,12 +135,11 @@ export function ResetPasswordPage({ token, email }: Props) {
               }}
               defaultValue={passwordConfirm}
             />
-            {passwordSame ? t("resetPassword.message.passwordsSame", "Passwords match") : null}
-            {passwordNotSame
-              ? t("resetPassword.message.passwordsNotSame", "Passwords don't match")
-              : null}
+            {!!passwordSame && t("resetPassword.message.passwordsSame", "Passwords match")}
+            {!!passwordNotSame &&
+              t("resetPassword.message.passwordsNotSame", "Passwords don't match")}
           </fieldset>
-        ) : null}
+        )}
 
         <div className="form-actions">
           <button
@@ -159,7 +157,7 @@ export function ResetPasswordPage({ token, email }: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("ResetPasswordPage", () => ResetPasswordPage);

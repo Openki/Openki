@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
@@ -23,9 +22,9 @@ import { EventList } from "/imports/ui/components/events/list";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   course: CourseModel;
-};
+}
 
 function compareByStartDate(event1: EventModel, event2: EventModel) {
   if (event1.start < event2.start) {
@@ -110,7 +109,7 @@ export function Events({ course }: Props) {
       {!isLoading() ? (
         haveEvents() ? (
           <div className="page-component">
-            {haveOngoingEvents() ? (
+            {haveOngoingEvents() && (
               <>
                 <div className="page-component-header">
                   <h4>
@@ -123,9 +122,9 @@ export function Events({ course }: Props) {
                   <EventList dataEvents={ongoingEvents()} />
                 </div>
               </>
-            ) : null}
+            )}
 
-            {haveFutureEvents() ? (
+            {haveFutureEvents() && (
               <>
                 <div className="page-component-header">
                   <h4>
@@ -142,7 +141,7 @@ export function Events({ course }: Props) {
                   <EventList dataEvents={futureEvents()} withDate={true} />
                 </div>
                 <div className="mt-2 text-center">
-                  {showHaveMoreEvents() ? (
+                  {showHaveMoreEvents() && (
                     <button
                       type="button"
                       className="btn btn-add"
@@ -152,10 +151,10 @@ export function Events({ course }: Props) {
                     >
                       {t("course.events.showAllEvents", "Show all")}
                     </button>
-                  ) : null}
+                  )}
                 </div>
               </>
-            ) : null}
+            )}
           </div>
         ) : (
           <div className="page-component">
@@ -179,15 +178,15 @@ export function Events({ course }: Props) {
         </div>
       )}
 
-      {mayAdd() ? (
+      {mayAdd() && (
         <div className="page-component course-event-tasks">
           <Add course={course} />
-          {haveEvents() ? <DeleteEvents {...deleteCourseEventsArgs()} /> : null}
-          {showModal ? <DeleteEventsModal {...deleteEventsModalArgs()} /> : null}
+          {haveEvents() && <DeleteEvents {...deleteCourseEventsArgs()} />}
+          {showModal && <DeleteEventsModal {...deleteEventsModalArgs()} />}
         </div>
-      ) : null}
+      )}
 
-      {!isLoading() && haveEvents() ? (
+      {!isLoading() && haveEvents() && (
         <div className="page-component">
           <a
             href={Router.path("calCourse", course)}
@@ -199,17 +198,18 @@ export function Events({ course }: Props) {
                 Regions.findOne(course.region)?.nameEn,
               );
             }}
+            rel="noreferrer"
           >
             {t("course.download_cal", "Download events to my calendar")}
           </a>
         </div>
-      ) : null}
+      )}
     </>
   );
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("CourseEvents", () => Events);

@@ -8,10 +8,10 @@ import * as CoursesMethods from "/imports/api/courses/methods";
 
 import { name } from "/imports/ui/lib/group-name-helpers";
 
-export type Props = {
+export interface Props {
   course: CourseModel;
   groupId: string;
-};
+}
 
 export function MakeOrganizer({ course, groupId }: Props) {
   const { t } = useTranslation();

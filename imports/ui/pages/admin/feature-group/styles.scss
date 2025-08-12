@@ -1,9 +1,10 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .admin-featured-group {
-  $bg-color: lighten($green, 10%);
+  $bg-color: color.adjust($green, $lightness: 10%);
 
   background-color: $bg-color;
-  border: 1px solid darken($bg-color, 5%);
+  border: 1px solid color.adjust($bg-color, $lightness: -5%);
   padding: 15px;
 }

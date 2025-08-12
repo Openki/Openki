@@ -2,10 +2,10 @@ import React from "react";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import { CourseCompact } from "/imports/ui/components/courses/compact";
-import { CompactPropose } from "/imports/ui/components/courses/compact-propose";
+import { CompactPropose } from "/imports/ui/components/courses/CompactPropose";
 import { CourseModel } from "/imports/api/courses/courses";
 
-export type Props = {
+export interface Props {
   courses: CourseModel[];
   groupTagEvents?:
     | ((groupId: string) => {
@@ -25,7 +25,7 @@ export type Props = {
   containsPropose?: boolean;
   /** that should be added on propose a new course */
   group?: string | undefined;
-};
+}
 
 export function CourseList({
   courses,
@@ -42,11 +42,13 @@ export function CourseList({
       {courses.map((course, index) => (
         <React.Fragment key={course._id}>
           {/* The sevent box should allways be the propose one, after then every 11 */}
-          {PublicSettings.feature.proposeCourseBox && containsPropose && (index - 6) % 10 === 0 ? (
-            <div className="col">
-              <CompactPropose group={group} groupTagEvents={groupTagEvents} />
-            </div>
-          ) : null}
+          {PublicSettings.feature.proposeCourseBox &&
+            !!containsPropose &&
+            (index - 6) % 10 === 0 && (
+              <div className="col">
+                <CompactPropose group={group} groupTagEvents={groupTagEvents} />
+              </div>
+            )}
           <div className="col">
             <CourseCompact
               course={course}
@@ -61,7 +63,7 @@ export function CourseList({
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("CourseList", () => CourseList);

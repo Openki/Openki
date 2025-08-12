@@ -1,7 +1,5 @@
-/* eslint-disable no-nested-ternary */
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 import { useTranslation } from "react-i18next";
-import { Template } from "meteor/templating";
 import React, { useState } from "react";
 import { useUser } from "/imports/utils/react-meteor-data";
 import moment from "moment";
@@ -46,9 +44,9 @@ function ButtonRegistrationClosed(props: {
   );
 }
 
-export type Props = {
+export interface Props {
   event: EventModel;
-};
+}
 
 export function EventRegistration({ event }: Props) {
   const user = useUser();
@@ -107,21 +105,13 @@ export function EventRegistration({ event }: Props) {
       {searchParams.action === "register" && (
         <PleaseLogin
           type="auto"
-          onRender={() => {
+          onRender={async () => {
             // register from email
-            addParticipant();
+            await addParticipant();
           }}
         />
       )}
-      {searchParams.action === "unregister" && (
-        <PleaseLogin
-          type="auto"
-          onRender={() => {
-            // unregister from email
-            removeParticipant();
-          }}
-        />
-      )}
+
       {isFuture() && (
         <>
           <div className="page-component">
@@ -195,9 +185,3 @@ export function EventRegistration({ event }: Props) {
     </>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("EventRegistration", () => EventRegistration);

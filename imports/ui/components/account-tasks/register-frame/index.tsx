@@ -15,14 +15,14 @@ import { useValidation } from "/imports/ui/lib/useValidation";
 import { DataProtectionLaw } from "../data-protection-law";
 import { NotAllowedCharacter } from "../../../../startup/both/NotAllowedCharacter";
 
-export type Props = {
+export interface Props {
   username: string;
   password: string;
   email: string;
   allowNews: boolean;
   onRegister: () => void;
   onBack: () => void;
-};
+}
 
 export function RegisterFrame({ username, password, email, allowNews, onRegister, onBack }: Props) {
   const { t } = useTranslation();
@@ -72,10 +72,10 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
         <>
           {t(
             "register.warning.emailExists",
-            "This email is already in use. In case you forgot your password, you can reset it. In case you interacted as guest, please create a user.",
+            "This email is already in use. We can send you an email to login.",
           )}{" "}
           <a href={Router.path("resetPasswortEmail", {}, { query: { email: registerData.email } })}>
-            {t("register.warning.emailExists.sendEmail", "Ok, send me an email to continue")}
+            {t("register.warning.emailExists.sendEmail", "Ok, send me an email")}
           </a>
         </>
       ),
@@ -141,7 +141,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
               });
             }}
           />
-          {errors.username ? <div className="invalid-feedback">{errors.username}</div> : null}
+          {!!errors.username && <div className="invalid-feedback">{errors.username}</div>}
         </div>
       </div>
       <div className="mb-3">
@@ -161,7 +161,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
               });
             }}
           />
-          {errors.password ? <div className="invalid-feedback">{errors.password}</div> : null}
+          {!!errors.password && <div className="invalid-feedback">{errors.password}</div>}
         </div>
       </div>
       <div className="mb-3">
@@ -183,7 +183,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
                   });
                 }}
               />
-              {errors.email ? <div className="invalid-feedback">{errors.email}</div> : null}
+              {!!errors.email && <div className="invalid-feedback">{errors.email}</div>}
             </div>
           </div>
           <div className="col-auto">
@@ -209,7 +209,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
         </div>
       </div>
       <DataProtectionLaw />
-      {PublicSettings.askNewsletterConsent ? (
+      {PublicSettings.askNewsletterConsent && (
         <div className="mb-3">
           <div className="form-check">
             <input
@@ -233,7 +233,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
             </label>
           </div>
         </div>
-      ) : null}
+      )}
       <div className="mb-3">
         <button type="submit" className="btn btn-add form-control" disabled={isBusy}>
           {isBusy ? (

@@ -80,31 +80,31 @@ export function FileUpload({ accept, onUpload, onCancel }: Props) {
             </div>
           ) : (
             <>
-              {progress === "start" ? (
+              {progress === "start" && (
                 <>
                   <strong>{t("fileUpload.choose.text", "Choose a file")}</strong>
 
-                  {supportsDragndrop ? (
+                  {supportsDragndrop && (
                     <span className="file-upload-dragndrop">
                       {t("fileUpload.drag.text", "or drag it here")}
                     </span>
-                  ) : null}
+                  )}
                 </>
-              ) : null}
-              {progress === "uploading" ? (
+              )}
+              {progress === "uploading" && (
                 <div className="file-upload-uploading">
                   {t("fileUpload.uploading.text", "Uploading…")}
                 </div>
-              ) : null}
-              {progress === "ready" ? fileName : null}
+              )}
+              {progress === "ready" && fileName}
             </>
           )}
         </label>
       </form>
-      {progress === "ready" ? (
+      {progress === "ready" && (
         <div className="file-upload-controls">
           <ButtonSave
-            onClick={() => {
+            onClick={async () => {
               if (!droppedFile) {
                 throw new Error(`Unexpected undefined: file`);
               }
@@ -132,13 +132,13 @@ export function FileUpload({ accept, onUpload, onCancel }: Props) {
             }}
           />
         </div>
-      ) : null}
+      )}
     </>
   );
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("FileUpload", () => FileUpload);

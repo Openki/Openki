@@ -5,7 +5,6 @@ import { Match, check } from "meteor/check";
 
 import { UserModel } from "/imports/api/users/users";
 import { EventEntity, OEvent } from "/imports/api/events/events";
-// eslint-disable-next-line import/no-cycle
 import * as tenantDenormalizer from "./tenantDenormalizer";
 import * as interestedDenormalizer from "./interestedDenormalizer";
 
@@ -69,9 +68,9 @@ export interface CourseEntity {
   customFields: CourseCustomField[];
   /** ID_user */
   createdby: string;
-  // eslint-disable-next-line camelcase
+
   time_created: Date;
-  // eslint-disable-next-line camelcase
+
   time_lastedit: Date;
   /** [role-keys] */
   roles: string[];
@@ -218,7 +217,6 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
     return super.insertAsync(enrichedCourse, callback);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   Filtering() {
     return new Filtering({
       region: Predicates.id,

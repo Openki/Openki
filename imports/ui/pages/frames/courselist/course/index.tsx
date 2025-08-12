@@ -8,10 +8,10 @@ import { CourseModel } from "/imports/api/courses/courses";
 import { Router } from "meteor/iron:router";
 import { RoleIcon } from "/imports/ui/RoleIcon";
 
-export type Props = {
+export interface Props {
   course: CourseModel;
   hideInterested: boolean;
-};
+}
 
 export function Course({ course, hideInterested }: Props) {
   const { t } = useTranslation();
@@ -27,7 +27,7 @@ export function Course({ course, hideInterested }: Props) {
   }
 
   return (
-    <div className="frame-list-item">
+    <div className="frame-list-item-course">
       <h4
         className="frame-list-item-header"
         onClick={(event) => {
@@ -41,7 +41,7 @@ export function Course({ course, hideInterested }: Props) {
         {!hideInterested && course.roles.includes("participant") && (
           <span
             className="frame-list-item-interested"
-            title={t("frame.courseList.interestedPersons", "Interested people")}
+            data-bs-title={t("frame.courseList.interestedPersons", "Interested people")}
           >
             <span className="me-1">{interestedPersons()}</span> <RoleIcon type="participant" />
           </span>
@@ -67,6 +67,7 @@ export function Course({ course, hideInterested }: Props) {
               className="btn btn-outline-dark"
               href={Router.path("showCourse", course)}
               target="_blank"
+              rel="noreferrer"
             >
               {t("frame.courseList.moreAboutThisCourse", "More on {SITENAME}", {
                 SITENAME: siteName,

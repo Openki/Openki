@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
+import { take } from "lodash";
 
 import { Courses, FindFilter } from "/imports/api/courses/courses";
 
@@ -17,21 +18,21 @@ function useOptions() {
 
   const filter = Courses.Filtering().read(query);
   const filterQuery: FindFilter = filter.toQuery();
-  // Show internal events only when a group is specified
+  // Show internal courses only when a group is specified
   if (!filterQuery.group && filterQuery.internal === undefined) {
     filterQuery.internal = false;
   }
 
-  const count = Number.parseInt(query.count || "", 10) || 5;
+  const count = Number.parseInt(query.count || "", 10) || 200;
 
   const sort = query.sort ? SortSpec.fromString(query.sort) : SortSpec.unordered();
 
   const hideInterested = !!Number.parseInt(query.hideInterested || "", 10) || false;
 
   const style = new CssFromQuery(query, [
-    ["itembg", "background-color", ".frame-list-item"],
-    ["itemcolor", "color", ".frame-list-item"],
-    ["linkcolor", "color", ".frame-list-item a"],
+    ["itembg", "background-color", ".frame-list-item-course"],
+    ["itemcolor", "color", ".frame-list-item-course"],
+    ["linkcolor", "color", ".frame-list-item-course a"],
     ["regionbg", "background-color", ".frame-list-item-region"],
     ["regioncolor", "color", ".frame-list-item-region"],
     ["itemfontweight", "font-weight", ".frame-list-item-header"],
@@ -61,7 +62,7 @@ export function CourselistPage() {
   Metatags.setCommonTags(t("course.list.windowtitle", "Courses"));
 
   function courses() {
-    return coursesList.slice(0, limit);
+    return take(coursesList, limit);
   }
   function moreCourses() {
     return coursesList.length > limit;
@@ -85,7 +86,7 @@ export function CourselistPage() {
             className="btn btn-secondary"
             type="button"
             onClick={() => {
-              setLimit(limit + 5);
+              setLimit(limit + 10);
             }}
           >
             {t("_button.more")}
@@ -97,7 +98,7 @@ export function CourselistPage() {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("CourselistPage", () => CourselistPage);

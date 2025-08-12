@@ -34,6 +34,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 const template = Template.navbar;
 
 template.onCreated(function () {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const instance = this;
   instance.state = new ReactiveDict();
   instance.state.setDefault({
@@ -42,6 +43,7 @@ template.onCreated(function () {
 });
 
 template.onRendered(function () {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const instance = this;
   const { gridFloatBreakpoint } = ScssVars;
 
@@ -177,8 +179,20 @@ template.events({
       if (event.type === "show") {
         const scrollTo = $(event.currentTarget);
         if (scrollTo && container) {
+          const scrollToOffset = scrollTo.offset();
+          const containerOffset = container.offset();
+          const containerScrollTop = container.scrollTop();
+
+          if (
+            scrollToOffset === undefined ||
+            containerOffset === undefined ||
+            containerScrollTop === undefined
+          ) {
+            throw new Error("Unexpected undefined");
+          }
+
           container.animate({
-            scrollTop: scrollTo.offset()!.top - container.offset()!.top + container.scrollTop()!,
+            scrollTop: scrollToOffset.top - containerOffset.top + containerScrollTop,
           });
         }
       } else {

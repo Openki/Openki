@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
@@ -16,11 +15,11 @@ import { DiscussionProfileLink } from "../profile-link";
 import { Richtext } from "/imports/ui/components/richtext";
 import { ButtonCancel } from "/imports/ui/components/buttons";
 
-export type Props = {
+export interface Props {
   post: CourseDiscussionEntity & { new?: true };
   onSave: () => void;
   onCancel: () => void;
-};
+}
 
 export function Edit({ post, onSave, onCancel }: Props) {
   const { dateFormat, fromNow } = useDateTimeFormat();
@@ -155,7 +154,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
             {!post.new && (
               <span className="discussion-post-header-sub">
                 {" "}
-                <span data-bs-toggle="tooltip" data-bs-title={dateFormat(post.time_created)}>
+                <span data-bs-title={dateFormat(post.time_created)}>
                   {fromNow(post.time_created)}
                 </span>
                 {!!post.notifyAll && (
@@ -164,7 +163,6 @@ export function Edit({ post, onSave, onCancel }: Props) {
                     <i
                       className="fa-solid fa-bell"
                       aria-hidden="true"
-                      data-bs-toggle="tooltip"
                       data-bs-title={
                         !post.eventId
                           ? t("course.discussion.allNotified", "All interested notified")
@@ -180,7 +178,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
                   <>
                     {" "}
                     - {t("course.discussion.lastUpdate", "Last update")}:{" "}
-                    <span data-bs-toggle="tooltip" data-bs-title={dateFormat(post.time_updated)}>
+                    <span data-bs-title={dateFormat(post.time_updated)}>
                       {fromNow(post.time_updated)}
                     </span>
                   </>

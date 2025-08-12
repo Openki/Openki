@@ -1,5 +1,3 @@
-/* eslint-disable no-nested-ternary */
-import { Template } from "meteor/templating";
 import React from "react";
 import { Router } from "meteor/iron:router";
 import { useUserId } from "/imports/utils/react-meteor-data";
@@ -44,13 +42,13 @@ function bodyStyle(event: EventModel, withImage?: boolean | undefined) {
   };
 }
 
-export type Props = {
+export interface Props {
   event: EventModel;
   withDate?: boolean | undefined;
   withImage?: boolean | undefined;
   withVenue?: boolean | undefined;
   openInNewTab?: boolean | undefined;
-};
+}
 
 export function EventCompact({
   event,
@@ -67,47 +65,50 @@ export function EventCompact({
     <div className={`event-compact ${eventCompactClasses(event, withDate)}`}>
       {event.canceled ? (
         <span className="event-canceled">{t("_event.state.canceled")}</span>
-      ) : event.isFullyBooked() ? (
-        <span className="event-fully-booked">{t("_event.state.fullyBooked")}</span>
-      ) : null}
+      ) : (
+        event.isFullyBooked() && (
+          <span className="event-fully-booked">{t("_event.state.fullyBooked")}</span>
+        )
+      )}
       <div
         className={`event-compact-header${event.attendedBy(userId) ? " user-attends-event" : ""}`}
       >
-        {withDate ? (
+        {!!withDate && (
           <>
             <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>{" "}
             {weekdayFormat(event.startLocal)} {calendarDayShort(event.startLocal)}
             <br />
           </>
-        ) : null}
+        )}
         <span className="fa-regular fa-clock fa-fw" aria-hidden="true"></span>{" "}
         <span className="event-compact-time">
           {timeFormat(event.startLocal)} - {timeFormat(event.endLocal)}
         </span>
-        {withVenue ? (
-          event.venue ? (
-            <>
-              <br />
-              <div className="tag-group">
-                <VenueLink venue={event.venue} room={event.room} openInNewTab={openInNewTab} />
-              </div>
-            </>
-          ) : null
-        ) : event.room ? (
-          <>
-            <br />
-            <RoomTag name={event.room} />
-          </>
-        ) : null}
+        {withVenue
+          ? !!event.venue && (
+              <>
+                <br />
+                <div className="tag-group">
+                  <VenueLink venue={event.venue} room={event.room} openInNewTab={openInNewTab} />
+                </div>
+              </>
+            )
+          : !!event.room && (
+              <>
+                <br />
+                <RoomTag name={event.room} />
+              </>
+            )}
       </div>
       <div className="event-compact-body-wrap" style={bodyStyle(event, withImage)}>
         <div className="event-compact-body">
-          {event.internal ? <InternalIndicator /> : null}
+          {event.internal && <InternalIndicator />}
           <h4 className="event-compact-title">
             <a
               className="stretched-link"
               href={Router.path("showEvent", event)}
               target={openInNewTab ? "_blank" : ""}
+              rel="noreferrer"
             >
               {event.title}
             </a>
@@ -122,9 +123,3 @@ export function EventCompact({
     </div>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("EventCompact", () => EventCompact);
