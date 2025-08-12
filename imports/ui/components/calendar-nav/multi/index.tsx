@@ -13,7 +13,7 @@ import * as UrlTools from "/imports/utils/url-tools";
 import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 
 import { Direction, Unit } from "../Arrow";
-import { Control } from "./control";
+import { Control } from "./Control";
 
 import "../styles.scss";
 
@@ -118,7 +118,7 @@ export function Multi({ date, filter, setIsAttendeeFilterOn }: Props) {
         </div>
         <Control {...controlAttr("next")} />
       </div>
-      {currentUser ? (
+      {!!currentUser && (
         <div className="form-check form-switch align-content-center text-center pb-2">
           <input
             type="checkbox"
@@ -133,13 +133,7 @@ export function Multi({ date, filter, setIsAttendeeFilterOn }: Props) {
             {t("calendar.filter-own-events", "Show my events only")}
           </label>
         </div>
-      ) : null}
+      )}
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("CalendarNavMulti", () => Multi);

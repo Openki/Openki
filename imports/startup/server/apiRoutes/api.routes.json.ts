@@ -29,7 +29,6 @@ const jsonSendResponder = async function (res: any, process: any) {
         body.data.error = e.message;
       }
     } else {
-      /* eslint-disable-next-line no-console */
       console.log(e, e.stack);
       res.statusCode = 500;
       body.status = "error";

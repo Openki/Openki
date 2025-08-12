@@ -25,7 +25,7 @@ export interface Model<T> {
       customEmailLogo?: string | undefined;
     } & Omit<RootProps, "logo"> &
       // Remove some props
-      Omit<T, "siteName" | "customSiteName" | "username" | "lng">
+      Omit<T, "siteName" | "customSiteName" | "username" | "lng" | "icalEvent">
   >;
   template: (
     props: {

@@ -60,9 +60,3 @@ export function EventDeleteConfirmDialog(props: Props) {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("EventDeleteConfirmDialog", () => EventDeleteConfirmDialog);

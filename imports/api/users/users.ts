@@ -34,9 +34,9 @@ export interface UserEntity extends Meteor.User {
       /** (not allways) */
       email: string;
       name: string;
-      // eslint-disable-next-line camelcase
+
       first_name: string;
-      // eslint-disable-next-line camelcase
+
       last_name: string;
       link: string;
       gender: string;
@@ -50,12 +50,12 @@ export interface UserEntity extends Meteor.User {
       expiresAt: number;
       id: string;
       email: string;
-      // eslint-disable-next-line camelcase
+
       verified_email: boolean;
       name: string;
-      // eslint-disable-next-line camelcase
+
       given_name: string;
-      // eslint-disable-next-line camelcase
+
       family_name: string;
       /** (link) */
       picture: string;
@@ -139,7 +139,7 @@ export class User {
 
   /**
    * Get email address of user
-   * @returns String with email address or Boolean false
+   * @returns String with email address or undefined
    */
   emailAddress(this: UserModel) {
     return this.emails?.[0]?.address || undefined;
@@ -147,11 +147,11 @@ export class User {
 
   /**
    * Get verified email address of user
-   * @returns String with verified email address or Boolean false
+   * @returns String with verified email address or undefined
    */
   verifiedEmailAddress(this: UserModel) {
     const emailRecord = this.emails?.[0];
-    return (emailRecord && emailRecord.verified && emailRecord.address) || false;
+    return (emailRecord && emailRecord.verified && emailRecord.address) || undefined;
   }
 
   privileged(this: UserModel, role: Role) {

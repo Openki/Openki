@@ -94,7 +94,6 @@ export function Richtext({ className, text, placeholder, maxlength, onChange }: 
     meExtensions.anchor.prototype.aria = t("richtext.button.anchor.title", "link");
 
     // Initialize the editor interface
-    // eslint-disable-next-line no-new
     new MediumEditor(elementRef.current, meOptions);
 
     setNumberOfCharacters(elementRef.current.innerText.trim().length);
@@ -111,17 +110,11 @@ export function Richtext({ className, text, placeholder, maxlength, onChange }: 
         onChange={handleChange}
         onInput={handleChange}
       ></div>
-      {characterLimitReached() ? (
+      {characterLimitReached() && (
         <div className="invalid-feedback">
           {t("_inputField.maxlength", { NUMBER: removeNumberOfCharacters(), MAXNUMBER: maxlength })}
         </div>
-      ) : null}
+      )}
     </>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("Richtext", () => Richtext);

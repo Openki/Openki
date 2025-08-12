@@ -2,7 +2,6 @@ import { Tracker } from "meteor/tracker";
 import { ParamWrapper, Predicate } from "imports/utils/predicates";
 
 export class FilteringReadError {
-  // eslint-disable-next-line no-useless-constructor
   constructor(
     public name: string,
     public message: string,
@@ -24,7 +23,6 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
 
   private _dep = new Tracker.Dependency();
 
-  // eslint-disable-next-line no-useless-constructor
   constructor(private _availablePredicates: T) {}
 
   clear() {
@@ -120,7 +118,6 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
   toggle(name: keyof T): Filtering<T>;
 
   /** eg. for string and id */
-  // eslint-disable-next-line @typescript-eslint/unified-signatures
   toggle(name: keyof T, param: string): Filtering<T>;
 
   toggle(name: keyof T, param?: string) {

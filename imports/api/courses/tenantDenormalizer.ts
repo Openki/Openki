@@ -19,7 +19,6 @@ export async function onStartUp() {
     ),
   );
 
-  /* eslint-disable-next-line no-console */
   console.log(`courses.tenantDenormalizer.onStartUp: ${updated} affected courses`);
 }
 

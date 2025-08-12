@@ -1,5 +1,4 @@
 import React from "react";
-import { useDetails } from "/imports/api/courses/publications";
 import { useUserId } from "/imports/utils/react-meteor-data";
 import { Roles as RolesEntities } from "/imports/api/roles/roles";
 import { CourseMemberEntity, CourseModel } from "/imports/api/courses/courses";
@@ -15,15 +14,8 @@ function loadRoles(course: CourseModel, member?: CourseMemberEntity) {
   }));
 }
 
-export function Roles({ course: course2 }: { course: CourseModel }) {
+export function Roles({ course }: { course: CourseModel }) {
   const userId = useUserId();
-
-  // for blaze, can be removed after migration
-  // subscribe in react to keep reactivity
-  const [isLoading, course] = useDetails(course2._id);
-  if (isLoading() || !course) {
-    return null;
-  }
 
   const member = course.members?.find((m) => m.user === userId);
   const roles = loadRoles(course, member);

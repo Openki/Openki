@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 import { Match, check } from "meteor/check";
-import { _ } from "meteor/underscore";
+import { random } from "lodash";
 import { ValidationError } from "meteor/mdg:validation-error";
 
 import { Log } from "/imports/api/log/log";
@@ -50,7 +50,7 @@ export const updateAvatarColor = ServerMethod(
       throw new Meteor.Error(401, "please log in");
     }
 
-    const color = newColor ?? _.random(360);
+    const color = newColor ?? random(360);
     await Profile.AvatarColor.change(userId, color);
   },
 );
@@ -266,7 +266,7 @@ export const adminRemove = ServerMethod(
       // Remove courses created by this user
       for (const course of await Courses.find({ createdby: userId }).fetchAsync()) {
         deletedCourses.push(course);
-        // eslint-disable-next-line no-await-in-loop
+
         numberOfDeletedEvents += await Events.removeAsync({ courseId: course._id });
       }
 

@@ -126,7 +126,6 @@ export function EditStartEnd({
               <button
                 type="button"
                 className="js-toggle-duration btn-icon"
-                data-bs-toggle="tooltip"
                 data-bs-title={t("course.event.edit.swich_duration", "Switch to duration")}
                 onClick={() => {
                   Tooltips.hide();
@@ -174,7 +173,6 @@ export function EditStartEnd({
               <button
                 type="button"
                 className="js-toggle-duration btn-icon"
-                data-bs-toggle="tooltip"
                 data-bs-title={t("course.event.edit.switch_time_end", "Switch to end time")}
                 onClick={() => {
                   Tooltips.hide();

@@ -6,25 +6,31 @@ import { PleaseLogin } from "../please-login";
 import "/imports/ui/components/buttons";
 
 export function Button({
+  type,
   className,
+  disabled,
   onClick,
   children,
+  busyText,
 }: {
-  className: string;
-  onClick: () => Promise<void>;
+  type?: "reset" | "button" | "submit" | undefined;
+  className?: string | undefined;
+  disabled?: boolean | undefined;
+  onClick: (event: { preventDefault: () => void }) => Promise<void>;
   children: any;
+  busyText?: string | undefined;
 }) {
   const [isBusy, setIsBusy] = useState(false);
 
   return (
     <button
-      type="button"
+      type={type || "button"}
       className={`${className} text-nowrap`}
-      disabled={isBusy}
-      onClick={async () => {
+      disabled={isBusy || disabled}
+      onClick={async (event) => {
         setIsBusy(true);
         try {
-          await onClick();
+          await onClick(event);
         } finally {
           setIsBusy(false);
         }
@@ -34,7 +40,8 @@ export function Button({
         children
       ) : (
         <>
-          <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
+          <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
+          {busyText}
         </>
       )}
     </button>
@@ -42,26 +49,21 @@ export function Button({
 }
 
 export function ButtonSave(props: {
-  onClick: () => void;
+  className?: string;
   disabled?: boolean | undefined;
-  isBusy?: boolean | undefined;
+  children?: any;
+  onClick: () => Promise<void>;
 }) {
   const { t } = useTranslation();
   return (
     <PleaseLogin
       type="button"
-      className="btn btn-save text-nowrap"
+      className={`btn btn-save text-nowrap ${props.className}`}
       onClick={props.onClick}
       disabled={props.disabled}
+      busyText={t("_button.saving", "Saving…")}
     >
-      {!props.isBusy ? (
-        t("_button.save")
-      ) : (
-        <>
-          <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
-          {t("_button.saving", "Saving…")}
-        </>
-      )}
+      {props.children || t("_button.save")}
     </PleaseLogin>
   );
 }
@@ -113,7 +115,10 @@ export function ButtonCancel(props: { onClick: () => void; disabled?: boolean | 
   );
 }
 
-export function ButtonDelete(props: { onClick: () => void; disabled?: boolean | undefined }) {
+export function ButtonDelete(props: {
+  onClick: () => Promise<void>;
+  disabled?: boolean | undefined;
+}) {
   const { t } = useTranslation();
   return (
     <PleaseLogin

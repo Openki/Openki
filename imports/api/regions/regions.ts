@@ -73,6 +73,9 @@ export interface RegionEntity {
     };
     /** Can be a logo from the /private/* folder or a base64 encoded string. */
     emailLogo?: string;
+
+    /** Default images for courses in overviews if none is set on the course. */
+    courseBackgroundImages: string[];
   };
 
   /** for the /api/0/xml/schedule See: https://c3voc.de/wiki/schedule#schedule_xml */
@@ -152,7 +155,6 @@ export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionMode
     return this.findOne(regionId);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   Filtering() {
     return new Filtering({ tenant: Predicates.id });
   }

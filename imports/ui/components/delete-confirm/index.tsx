@@ -16,7 +16,7 @@ export function DeleteConfirm({ confirmText, confirmButton, onRemove, busyButton
   if (!isConfirm) {
     return (
       <ButtonDelete
-        onClick={() => {
+        onClick={async () => {
           setIsConfirm(true);
         }}
       />

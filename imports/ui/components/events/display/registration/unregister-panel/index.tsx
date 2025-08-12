@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import { useTranslation } from "react-i18next";
 import React, { useState } from "react";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
@@ -93,7 +92,7 @@ export function UnregisterPanel({ event, busy, onUnregister }: Props) {
               />
             </div>
           </div>
-          {!isLoading() && courseTitle() ? (
+          {!isLoading() && !!courseTitle() && (
             <p className="pt-3 mb-0">
               {t(
                 "event.details.youStayEnrolled",
@@ -101,7 +100,7 @@ export function UnregisterPanel({ event, busy, onUnregister }: Props) {
                 { COURSETITLE: courseTitle() },
               )}
             </p>
-          ) : null}
+          )}
         </div>
       )}
     </>

@@ -7,7 +7,6 @@ export async function update() {
   for (const entry of await Log.find({ tr: "Courses.Subscribe" }).fetchAsync()) {
     const { courseId, userId, role } = entry.body as any;
 
-    // eslint-disable-next-line no-await-in-loop
     await Courses.updateAsync(courseId, {
       $addToSet: {
         history: {
@@ -23,7 +22,6 @@ export async function update() {
   for (const entry of await Log.find({ tr: "Courses.Unsubscribe" }).fetchAsync()) {
     const { courseId, userId, role } = entry.body as any;
 
-    // eslint-disable-next-line no-await-in-loop
     await Courses.updateAsync(courseId, {
       $addToSet: {
         history: {

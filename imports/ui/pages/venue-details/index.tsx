@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
-import { Meteor } from "meteor/meteor";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useTranslation } from "react-i18next";
 import { truncate } from "lodash";
@@ -8,14 +7,13 @@ import { truncate } from "lodash";
 import * as Alert from "/imports/api/alerts/alert";
 import { VenueModel } from "/imports/api/venues/venues";
 import * as VenuesMethods from "/imports/api/venues/methods";
-import { useDetails } from "/imports/api/venues/publications";
 
 import * as Metatags from "/imports/utils/metatags";
 import { textPlain } from "/imports/utils/html-tools";
 
 import { Edit } from "../../components/venues/edit";
 import { ProfileLink } from "../../components/profile-link";
-import { Contribution } from "../../components/contribution";
+import { Contribution } from "../../components/Contribution";
 import { Display as LocationDisplay } from "../../components/location/display";
 import { format } from "/imports/utils/location-format";
 import { ButtonDelete, ButtonEdit } from "../../components/buttons";
@@ -36,14 +34,8 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
 
   const [verifyDelete, setVerifyDelete] = useState(false);
 
-  function mayEdit() {
-    return venue.editableBy(Meteor.user());
-  }
   function facilityNames() {
     return Object.keys(venue.facilities);
-  }
-  function facilitiesDisplay(name: string) {
-    return t(`venue.facility.${name}`);
   }
 
   function deleteConfirmDialogAttr(): DeleteConfirmDialogProps {
@@ -124,7 +116,7 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
                     </span>
                     <ul>
                       {facilityNames().map((facilityName) => (
-                        <li key={facilityName}>{facilitiesDisplay(facilityName)}</li>
+                        <li key={facilityName}>{t(`venue.facility.${facilityName}`)}</li>
                       ))}
                     </ul>
                   </>
@@ -179,7 +171,7 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
             </div>
           </div>
         </div>
-        {mayEdit() && (
+        {venue.editableBy(user) && (
           <>
             <div className="actions">
               <ButtonEdit
@@ -188,16 +180,15 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
                   setVerifyDelete(false);
                 }}
               />
-              {!verifyDelete ? (
+              {!verifyDelete && (
                 <ButtonDelete
-                  onClick={() => {
+                  onClick={async () => {
                     setVerifyDelete(true);
                   }}
                 />
-              ) : (
-                <DeleteConfirmDialog {...deleteConfirmDialogAttr()} />
               )}
             </div>
+            {verifyDelete && <DeleteConfirmDialog {...deleteConfirmDialogAttr()} />}
           </>
         )}
       </div>
@@ -207,16 +198,8 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
   );
 }
 
-export function VenueDetailsPage({ venue: venue2 }: { venue: VenueModel }) {
+export function VenueDetailsPage({ venue }: { venue: VenueModel }) {
   const { t } = useTranslation();
-
-  // for blaze, can be removed after migration
-  // subscribe in react to keep reactivity
-  // eslint-disable-next-line prefer-const
-  let [isLoading, venue] = useDetails(venue2._id || "-1");
-  if (!venue) {
-    venue = venue2;
-  }
 
   const [editing, setEditing] = useState(!venue?._id);
 
@@ -241,10 +224,6 @@ export function VenueDetailsPage({ venue: venue2 }: { venue: VenueModel }) {
     }
     Metatags.setCommonTags(title, truncate(textPlain(venue?.description || ""), { length: 160 }));
   });
-
-  if (isLoading()) {
-    return null;
-  }
 
   return (
     <div className="container mw-md">
