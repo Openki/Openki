@@ -38,7 +38,6 @@ import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 import { CourseTemplate } from "/imports/ui/lib/course-template";
-import { CssFromQuery } from "/imports/ui/lib/css-from-query";
 
 import type { Data as GroupDetailsData } from "/imports/ui/pages/group-details";
 import type { Data as VenuesMapData } from "/imports/ui/pages/venues-map";
@@ -238,6 +237,17 @@ RouterAsync.route("visitorToUser", {
   template: "VisitorToUserPage",
   async onRun() {
     await import("/imports/ui/pages/visitor-to-user");
+  },
+  data() {
+    return { token: this.params.token, email: this.params.query.email };
+  },
+});
+
+RouterAsync.route("autoLoginVisitor", {
+  path: "auto-login-visitor/:token",
+  template: "AutoLoginVisitorPage",
+  async onRun() {
+    await import("/imports/ui/pages/auto-login-visitor");
   },
   data() {
     return { token: this.params.token, email: this.params.query.email };
@@ -546,16 +556,6 @@ RouterAsync.route("frameCalendar", {
   layoutTemplate: "frameLayout",
   async onRun() {
     await import("/imports/ui/pages/frames/calendar");
-  },
-  data() {
-    const cssRules = new CssFromQuery(this.params.query, [
-      ["itembg", "background-color", ".frame-list-item"],
-      ["itemcolor", "color", ".frame-list-item"],
-      ["linkcolor", "color", ".frame-list-item a"],
-      ["regionbg", "background-color", ".frame-list-item-region"],
-      ["regioncolor", "color", ".frame-list-item-region"],
-    ]).getCssRules();
-    return { cssRules };
   },
 });
 
@@ -1033,15 +1033,6 @@ RouterAsync.route("resetPasswortEmail", {
       const user = await UsersCollection.findOneAsync({ "emails.address": email });
       if (user) {
         Meteor.call("forgotPassword", { email });
-      }
-    } else {
-      const currentUserId = Meteor.userId();
-      if (currentUserId) {
-        const currentUser = await UsersCollection.findOneAsync(currentUserId);
-        if (currentUser) {
-          // if a visitor user want to create an account from his profile.
-          Meteor.call("forgotPassword", { email: currentUser?.emailAddress() });
-        }
       }
     }
 

@@ -7,10 +7,15 @@
 
 .frame-list-title {
   font-size: 1.2em;
+  margin: 7px 0;
 }
 
-.frame-list-item {
+.frame-list-item-course {
   background-color: $blue-lighter;
+}
+
+.frame-list-item-event {
+  background-color: $event-body-bg;
 }
 
 .frame-list-item-canceled {
@@ -20,7 +25,8 @@
   background-size: contain;
 }
 
-.frame-list-item + .frame-list-item {
+.frame-list-item-course + .frame-list-item-course,
+.frame-list-item-event + .frame-list-item-event {
   margin-top: 5px;
 }
 
@@ -42,14 +48,16 @@
 }
 
 .frame-list-item-toggle-indicator,
-.frame-list-item-interested {
+.frame-list-item-interested,
+.frame-list-free-seats {
   @include td-float(right);
 
   font-size: small;
   opacity: 0.45;
 }
 
-.frame-list-item-interested {
+.frame-list-item-interested,
+.frame-list-free-seats {
   @include td-margin(right, 20px);
 }
 
@@ -60,15 +68,6 @@
 .frame-list-item-region {
   font-size: 0.8em;
   margin-left: 5px;
-}
-
-.frame-list-free-seats {
-  @include td-float(right);
-
-  display: inline-block;
-  margin-right: 15px;
-  position: relative;
-  text-align: right;
 }
 
 .frame-list-item-header > i {
