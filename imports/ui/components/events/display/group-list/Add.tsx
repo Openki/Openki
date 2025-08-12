@@ -46,7 +46,9 @@ function GroupToAdd({ event, groupId }: { event: EventModel; groupId: string }) 
   );
 }
 
-export type Props = { event: EventModel };
+export interface Props {
+  event: EventModel;
+}
 
 export function Add({ event }: Props) {
   const { t } = useTranslation();
@@ -73,7 +75,7 @@ export function Add({ event }: Props) {
       <ul className="dropdown-menu dialog-dropdown">
         <li className="dropdown-header">
           {t("grouplist.addgroups.header")}
-          <button type="button" className="btn-close btn-close-white"></button>
+          <button type="button" className="btn-close"></button>
         </li>
         <li>
           <hr className="dropdown-divider" />

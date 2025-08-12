@@ -43,7 +43,6 @@ export class InvitationsCollection extends Mongo.Collection<InvitationEntity> {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
   Filtering() {
     return new Filtering({
       status: Predicates.ids,

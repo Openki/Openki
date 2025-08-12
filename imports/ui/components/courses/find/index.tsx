@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useCurrentRouteName, useParams } from "/imports/utils/react-meteor-router";
@@ -32,11 +31,9 @@ import "./styles.scss";
 const hiddenFilters = ["needsRole", "categories"];
 const filters = hiddenFilters.concat(["state"]);
 
-export type Props = {
-  query: {
-    [key: string]: string | undefined;
-  };
-};
+export interface Props {
+  query: Record<string, string | undefined>;
+}
 
 export function Find({ query }: Props) {
   const { t } = useTranslation();
@@ -56,9 +53,7 @@ export function Find({ query }: Props) {
   // change. For example, when the search-field receives keydowns, the filter
   // is updated but the change is not reflected in the URI.
   function updateUrl() {
-    const urlParams = filter.toParams() as {
-      [name: string]: string;
-    };
+    const urlParams = filter.toParams() as Record<string, string>;
     delete urlParams.region; // HACK region is kept in the session (for bad reasons)
     delete urlParams.internal;
 
@@ -112,7 +107,7 @@ export function Find({ query }: Props) {
       },
       state: filter.get("state") || [],
       onStateClick: (state) => {
-        filter.disable("state").toggle("state", state.name);
+        filter.toggle("state", state.name);
 
         updateUrl();
       },
@@ -333,7 +328,7 @@ export function Find({ query }: Props) {
               containsPropose={true}
               group={filter.get("group")}
             />
-            {hasMore() ? (
+            {hasMore() && (
               <div className="text-center mt-3">
                 <button
                   type="button"
@@ -345,7 +340,7 @@ export function Find({ query }: Props) {
                   {t("_button.more")}
                 </button>
               </div>
-            ) : null}
+            )}
           </>
         ) : (
           <>
@@ -354,9 +349,9 @@ export function Find({ query }: Props) {
                 <span className="fa-solid fa-circle-exclamation fa-fw" aria-hidden="true"></span>{" "}
                 {t("find.no-courses-found", "No Courses found")}
               </div>
-              {searchIsLimited() ? (
+              {searchIsLimited() && (
                 <div className="btn-group">
-                  {filteredRegion() ? (
+                  {filteredRegion() && (
                     <button
                       type="button"
                       className="btn btn-secondary"
@@ -367,15 +362,15 @@ export function Find({ query }: Props) {
                       <span className="fa-solid fa-location-dot" aria-hidden="true"></span>{" "}
                       {t("find.searchAllRegions", "Search in all regions")}
                     </button>
-                  ) : null}
+                  )}
 
-                  {activeFilters() ? (
+                  {activeFilters() && (
                     <button type="button" className="btn btn-cancel" onClick={handleToggleFilter}>
                       {t("find.hideFilters")}
                     </button>
-                  ) : null}
+                  )}
                 </div>
-              ) : null}
+              )}
             </div>
           </>
         )}
@@ -390,7 +385,7 @@ export function Find({ query }: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("Find", () => Find);

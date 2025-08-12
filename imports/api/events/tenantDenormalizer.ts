@@ -2,7 +2,7 @@ import { Mongo } from "meteor/mongo";
 import { sum } from "../../utils/sum";
 
 import { Regions } from "/imports/api/regions/regions";
-// eslint-disable-next-line import/no-cycle
+
 import { EventEntity, Events } from "/imports/api/events/events";
 
 // Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers
@@ -20,7 +20,6 @@ export async function onStartUp() {
     ),
   );
 
-  /* eslint-disable-next-line no-console */
   console.log(`events.tenantDenormalizer.onStartUp: ${updated} affected events`);
 }
 

@@ -1,7 +1,6 @@
 import { Router } from "meteor/iron:router";
 import React from "react";
 import { useTracker } from "meteor/react-meteor-data";
-import { Template } from "meteor/templating";
 
 import { getUserName } from "/imports/ui/lib/getUserName";
 
@@ -15,16 +14,10 @@ export function ProfileLink(props: { userId: string }) {
       className="profilelink"
       href={Router.path("userprofile", {
         _id: props.userId,
-        username: encodeURIComponent(userName),
+        username: userName,
       })}
     >
       {userName}
     </a>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("ProfileLink", () => ProfileLink);

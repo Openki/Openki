@@ -6,7 +6,7 @@ import { LanguagesRaw, Languages, LanguageEntity } from "/imports/api/languages/
 import { Type } from "/imports/utils/CustomChecks";
 import { ServerPublishMany } from "/imports/utils/ServerPublish";
 
-const weblateMapping = { de_ZH: "de-ZH", nb_NO: "nb" } as { [weblateCode: string]: string };
+const weblateMapping = { de_ZH: "de-ZH", nb_NO: "nb" } as Record<string, string>;
 
 const languages = { ...LanguagesRaw };
 
@@ -30,7 +30,6 @@ if (Meteor.isServer) {
         )[0]?.translated_percent;
 
         if (translatedPercent) {
-          // eslint-disable-next-line no-param-reassign
           value.translatedPercent = Math.round(translatedPercent);
         }
       });
@@ -54,6 +53,7 @@ export const [findFilter, useFindFilter] = ServerPublishMany(
     Object.entries(languages).forEach(([code, value]) => {
       this.added("Languages", code, value);
     });
+    return undefined;
   },
   (filter: FindFilter) => {
     check(filter, Match.Maybe(FindFilterPattern));

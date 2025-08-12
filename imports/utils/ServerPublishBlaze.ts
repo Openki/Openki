@@ -41,7 +41,7 @@ export function createPublication<A extends any[], T>(
 
       const queryArgs = removeCallback(args);
 
-      const query = async function () {
+      const query = function () {
         return queryBuilder.call({ userId: Meteor.userId() }, ...queryArgs);
       };
       query.isLoading = function () {
@@ -102,7 +102,7 @@ export function ServerPublish<
   Q,
 >(
   name: string,
-  publisher: (this: Subscription, ...args: A) => T | void,
+  publisher: (this: Subscription, ...args: A) => T | undefined,
   queryBuilder: QueryBuilder<A, Q>,
 ): Publication<A, Q>;
 
@@ -113,7 +113,7 @@ export function ServerPublish<
   Q extends T | any,
 >(
   name: string,
-  publisher: (this: Subscription, ...args: A) => T | void,
+  publisher: (this: Subscription, ...args: A) => T | undefined,
   queryBuilder: QueryBuilder<A, Q> = publisher as QueryBuilder<A, Q>,
 ) {
   publish(name, publisher);

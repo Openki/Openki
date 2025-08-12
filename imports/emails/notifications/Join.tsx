@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 
-export type Props = {
+export interface Props {
   course: React.JSX.Element;
   newParticipant: React.JSX.Element;
   roleTitle: string;
@@ -19,7 +19,7 @@ export type Props = {
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   campaign: string;
   lng: string;
-};
+}
 
 export function Join({
   course,

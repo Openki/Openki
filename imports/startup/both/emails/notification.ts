@@ -13,7 +13,7 @@ import * as course from "./notifications/course";
 import * as groupCourse from "./notifications/group.course";
 import * as privateMessage from "./notifications/private-message";
 
-export type Model<T> = {
+export interface Model<T> {
   accepted(user: UserModel): void;
   vars(
     locale: string,
@@ -25,7 +25,7 @@ export type Model<T> = {
       customEmailLogo?: string | undefined;
     } & Omit<RootProps, "logo"> &
       // Remove some props
-      Omit<T, "siteName" | "customSiteName" | "username" | "lng">
+      Omit<T, "siteName" | "customSiteName" | "username" | "lng" | "icalEvent">
   >;
   template: (
     props: {
@@ -36,7 +36,7 @@ export type Model<T> = {
     } & Omit<RootProps, "logo"> &
       T,
   ) => React.JSX.Element;
-};
+}
 
 export const Notification = {
   Event: event,

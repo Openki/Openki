@@ -1,9 +1,12 @@
+@use "sass:string";
+
 .mh-none {
   max-height: none !important;
 }
 
 .checkmark {
   @include td-padding(left, 5px);
+
   color: $green-dark;
 }
 
@@ -25,11 +28,6 @@ a:focus,
 .btn-link:focus {
   box-shadow: none !important;
   text-decoration: none;
-}
-
-.collapsing,
-.fade {
-  transition: none;
 }
 
 .cursor-pointer:hover {
@@ -56,10 +54,6 @@ a:focus,
   border: 0 !important;
 }
 
-.modal-header .btn-close {
-  filter: var(--bs-btn-close-white-filter);
-}
-
 .pre-line {
   white-space: pre-line;
 }
@@ -70,40 +64,37 @@ a:focus,
 
 .action-focus::after {
   animation: highlight 5s ease-out;
-  bottom: 0;
+  inset: 0;
   content: "";
   display: block;
-  left: 0;
   position: absolute;
-  right: 0;
-  top: 0;
   z-index: 10000;
   pointer-events: none;
 }
 
 @keyframes highlight {
   0% {
-    outline: unquote("max(100vw, 100vh) solid transparent");
+    outline: string.unquote("max(100vw, 100vh) solid transparent");
     outline-offset: 3px;
   }
 
   10% {
-    outline: unquote("max(100vw, 100vh) solid rgba(0, 0, 0, 0.2)");
+    outline: string.unquote("max(100vw, 100vh) solid rgba(0, 0, 0, 0.2)");
     outline-offset: 3px;
   }
 
   20% {
-    outline: unquote("max(100vw, 100vh) solid rgba(0, 0, 0, 0.2)");
+    outline: string.unquote("max(100vw, 100vh) solid rgba(0, 0, 0, 0.2)");
     outline-offset: 3px;
   }
 
   30% {
-    outline: 3px solid rgba(0, 0, 0, 0.6);
+    outline: 3px solid rgb(0 0 0 / 60%);
     outline-offset: 3px;
   }
 
   80% {
-    outline: 3px solid rgba(0, 0, 0, 0.6);
+    outline: 3px solid rgb(0 0 0 / 60%);
     outline-offset: 3px;
   }
 
@@ -111,4 +102,26 @@ a:focus,
     outline: 3px solid transparent;
     outline-offset: 3px;
   }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .smooth-scroll {
+    scroll-behavior: smooth;
+  }
+}
+
+.bg-img-cover {
+  background-position: center;
+  background-size: cover;
+}
+
+.card-body .hr-flush {
+  margin-left: calc(var(--bs-card-spacer-x) * -1);
+  margin-right: calc(var(--bs-card-spacer-x) * -1);
+}
+
+.btn-close-circle {
+  background: rgb(128 128 128 / 50%) var(--bs-btn-close-bg) center / 1em auto no-repeat;
+  border-radius: 50%;
+  padding: 0.7em;
 }

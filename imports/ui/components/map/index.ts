@@ -1,6 +1,6 @@
 import { Mongo } from "meteor/mongo";
 import { ReactiveVar } from "meteor/reactive-var";
-import { _ } from "meteor/underscore";
+import { debounce } from "lodash";
 import { i18n } from "/imports/startup/both/i18next";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import { Session } from "meteor/session";
@@ -108,11 +108,12 @@ const IconControl: new (options: {
 });
 
 template.onRendered(function () {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const instance = this;
   const maxZoom = instance.data.maxZoom || 19;
 
-  const layers: { [id: string]: L.GeoJSON<any> } = {};
-  const centers: { [id: string]: L.LatLngBounds } = {};
+  const layers: Record<string, L.GeoJSON<any>> = {};
+  const centers: Record<string, L.LatLngBounds> = {};
 
   L.Icon.Default.imagePath = "packages/bevanhunt_leaflet/images";
 
@@ -126,7 +127,7 @@ template.onRendered(function () {
 
   // Add tiles depending on language
   let tiles: L.TileLayer;
-  const tileLayers: { [lang: string]: () => L.TileLayer } = {
+  const tileLayers: Record<string, () => L.TileLayer> = {
     de() {
       return L.tileLayer("//{s}.tile.openstreetmap.de/{z}/{x}/{y}.png", {
         maxZoom,
@@ -195,7 +196,6 @@ template.onRendered(function () {
     title: i18n("map.addMarker", "Set marker"),
     position: "bottomright",
     onMouseDown: () => {
-      // eslint-disable-next-line no-param-reassign
       instance.cancelNextFitBounds = true;
       instance.proposeMarker();
     },
@@ -215,12 +215,10 @@ template.onRendered(function () {
 
     const show = function (control: { shown?: boolean } & L.Control, toggle: boolean) {
       if (control.shown === undefined) {
-        /* eslint-disable-next-line no-param-reassign */
         control.shown = false;
       }
 
       if (control.shown !== toggle) {
-        /* eslint-disable-next-line no-param-reassign */
         control.shown = toggle;
         if (toggle) {
           map.addControl(control);
@@ -259,7 +257,7 @@ template.onRendered(function () {
 
   // Zoom to show all markers
   // This is debounc'd so it's only done after the last marker in a series is added
-  const fitBounds = _.debounce(() => {
+  const fitBounds = debounce(() => {
     if (instance.cancelNextFitBounds) {
       instance.cancelNextFitBounds = false;
       return;
@@ -350,7 +348,9 @@ template.onRendered(function () {
       if (layers[mark._id]) {
         map.removeLayer(layers[mark._id]);
       }
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
       delete layers[mark._id];
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
       delete centers[mark._id];
     };
 

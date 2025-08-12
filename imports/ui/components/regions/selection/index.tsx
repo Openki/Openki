@@ -100,7 +100,7 @@ export function RegionSelection(data: {
     if (changed) {
       const routeName = currentRouteName;
       if (!RegionSelectionUtils.regionDependentRoutes.includes(routeName)) {
-        Router.go("/");
+        Router.go("home");
       }
     }
     data.onClose?.();
@@ -360,7 +360,7 @@ export function RegionSelection(data: {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("RegionSelection", () => RegionSelection);

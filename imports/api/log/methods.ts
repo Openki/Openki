@@ -42,7 +42,6 @@ export const clientError = ServerMethod(
 );
 
 export async function serverError(error: Error) {
-  /* eslint-disable-next-line no-console */
   console.log(error.stack);
   try {
     await Log.record("serverError", [], {

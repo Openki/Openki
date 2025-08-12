@@ -2,7 +2,7 @@
 
 .categories-select-sub-option {
   @include td-margin(left, 0.5rem);
-
   @include td-padding(left, 0.5rem);
+
   border-left: 1px solid $blue-light;
 }

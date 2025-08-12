@@ -17,7 +17,7 @@ import { CourseCompactRoles } from "./course-compact-roles";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   course: CourseModel;
   groupTagEvents?:
     | ((groupId: string) => {
@@ -33,7 +33,7 @@ export type Props = {
         onClick: () => Promise<void>;
       })
     | undefined;
-};
+}
 
 export function CourseCompact({ course, groupTagEvents, categorieTagEvents }: Props) {
   const elementRef = useRef<HTMLDivElement>(null);
@@ -140,8 +140,8 @@ export function CourseCompact({ course, groupTagEvents, categorieTagEvents }: Pr
       style={courseCss()}
     >
       <div className="course-compact-content col-8">
-        {course.internal ? <InternalIndicator /> : null}
-        {course.singleEvent ? <SingleEventIndicator /> : null}
+        {course.internal && <InternalIndicator />}
+        {course.singleEvent && <SingleEventIndicator />}
         <div className="course-compact-title" title={course.name}>
           <a className="stretched-link" href={Router.path("showCourse", course)}>
             {course.name}

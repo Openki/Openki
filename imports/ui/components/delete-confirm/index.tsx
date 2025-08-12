@@ -3,12 +3,12 @@ import React, { useState } from "react";
 import { ButtonDelete } from "/imports/ui/components/buttons";
 import { DeleteConfirmDialog } from "/imports/ui/components/delete-confirm-dialog";
 
-export type Props = {
+export interface Props {
   confirmText: string;
   confirmButton: string;
   onRemove: () => Promise<void>;
   busyButton: string;
-};
+}
 
 export function DeleteConfirm({ confirmText, confirmButton, onRemove, busyButton }: Props) {
   const [isConfirm, setIsConfirm] = useState(false);
@@ -16,7 +16,7 @@ export function DeleteConfirm({ confirmText, confirmButton, onRemove, busyButton
   if (!isConfirm) {
     return (
       <ButtonDelete
-        onClick={() => {
+        onClick={async () => {
           setIsConfirm(true);
         }}
       />
@@ -36,7 +36,7 @@ export function DeleteConfirm({ confirmText, confirmButton, onRemove, busyButton
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("DeleteConfirm", () => DeleteConfirm);

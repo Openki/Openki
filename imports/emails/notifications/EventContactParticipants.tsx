@@ -4,7 +4,7 @@ import { UserModel } from "/imports/api/users/users";
 import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 
-export type Props = {
+export interface Props {
   username: string;
   sender: UserModel;
   senderLink: string;
@@ -17,7 +17,7 @@ export type Props = {
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   campaign: string;
   lng: string;
-};
+}
 
 export function EventContactParticipants({
   username,
@@ -38,14 +38,14 @@ export function EventContactParticipants({
     <>
       <tr>
         <td>
-          {senderCopy ? (
+          {!!senderCopy && (
             <p>
               {t(
                 "notification.event.contact-participants.mail.copyintro",
                 "This is a copy of the message that was sent by you.",
               )}
             </p>
-          ) : null}
+          )}
 
           <h5 className="title">{t("email.base.greeting", { USERNAME: username })}</h5>
           <p>

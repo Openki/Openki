@@ -72,7 +72,7 @@ export function Modal(props: {
             </h4>
             <button
               type="button"
-              className="btn-close btn-close-white"
+              className="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
@@ -97,7 +97,7 @@ export function Modal(props: {
                         <li key={event._id} className="list-group-item list-group-item-danger">
                           <button
                             type="button"
-                            className="btn-close btn-close-white float-end"
+                            className="btn-close float-end"
                             aria-label="Close"
                             onClick={() => {
                               setSelectedEvents(
@@ -283,7 +283,7 @@ export function Modal(props: {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("DeleteEventsModal", () => Modal);

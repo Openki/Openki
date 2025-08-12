@@ -1,8 +1,9 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .course-member {
   background: $course-page-component-bg;
-  padding: 10px ($grid-gutter-width / 2);
+  padding: 10px ($grid-gutter-width * 0.5);
 
   &.is-own-user {
     background: $user-bg;
@@ -23,6 +24,12 @@
   }
 }
 
+.course-member-role-text {
+  color: $white;
+  font-size: small;
+  font-weight: bold;
+}
+
 .course-member-role {
   background: $blue;
   margin-left: 3px;
@@ -33,19 +40,11 @@
     background-color: transparent;
     border: 3px dashed #a7c9d5;
     padding: 0 3px 2px;
-  }
-}
 
-.course-member-role.is-proposal {
-  .course-member-role-text {
-    color: #6d9daf;
+    .course-member-role-text {
+      color: #6d9daf;
+    }
   }
-}
-
-.course-member-role-text {
-  color: $white;
-  font-size: small;
-  font-weight: bold;
 }
 
 .team .course-member-role {
@@ -58,12 +57,14 @@
 
 .add-to-team-btn {
   @include td-margin(left, 6px);
+
   margin-top: 2px;
   padding: 2px 6px;
 }
 
 .course-member-comment {
   @include clearfix;
+
   padding-top: 10px;
   position: relative;
 }
@@ -81,7 +82,8 @@
 .course-member-comment-body {
   @include td-float(left);
   @include break-word;
-  background-color: lighten($blue-lighter, 6%);
+
+  background-color: color.adjust($blue-lighter, $lightness: 6%);
   border: 1px solid $course-member-comment-border-color;
   border-radius: 3px;
   font-size: $font-size-base;

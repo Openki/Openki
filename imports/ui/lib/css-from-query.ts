@@ -5,7 +5,7 @@ export class CssFromQuery {
    * @param properties the customizable properties to add
    */
   constructor(
-    public query: { [param: string]: string | undefined },
+    public query: Record<string, string | undefined>,
     properties: [key: string, name: string, selector: string][] = [],
   ) {
     // define a default set of customizable properties
@@ -36,7 +36,7 @@ export class CssFromQuery {
     this.customizableProperties.forEach((property) => {
       const queryValue = this.query[property.key];
       let cssValue;
-      if (typeof queryValue !== "undefined") {
+      if (queryValue !== undefined) {
         // hexify color values
         if (property.name.includes("color")) {
           if (queryValue.match(/^[0-9A-F]+$/i)) {

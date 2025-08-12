@@ -43,7 +43,7 @@ export function RegionSplash() {
             </h4>
             <button
               type="button"
-              className="btn-close btn-close-white"
+              className="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
@@ -98,7 +98,7 @@ export function RegionSplash() {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("RegionSplash", () => RegionSplash);

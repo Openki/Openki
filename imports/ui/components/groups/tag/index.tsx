@@ -14,14 +14,14 @@ function short(group: GroupModel | undefined) {
   return group ? group.short : "-";
 }
 
-export type Props = {
+export interface Props {
   groupId: string;
   full?: boolean;
   isOrganizer?: boolean;
   onClick?: () => Promise<void>;
   onMouseOver?: () => Promise<void>;
   onMouseOut?: () => Promise<void>;
-};
+}
 
 export function GroupTag({ groupId, full, isOrganizer, onMouseOver, onMouseOut, onClick }: Props) {
   const { t } = useTranslation();
@@ -37,7 +37,6 @@ export function GroupTag({ groupId, full, isOrganizer, onMouseOver, onMouseOut, 
           onMouseOut={onMouseOut}
           onClick={onClick}
           href={Router.path("groupDetails", group)}
-          data-bs-toggle="tooltip"
           data-bs-title={t("groupList.show_courses", "{NAME}, show all their courses", {
             NAME: name(group),
           })}
@@ -50,7 +49,7 @@ export function GroupTag({ groupId, full, isOrganizer, onMouseOver, onMouseOut, 
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("GroupTag", () => GroupTag);

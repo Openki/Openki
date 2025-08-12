@@ -8,9 +8,9 @@ import { ButtonCancel } from "/imports/ui/components/buttons";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   tenantId: string;
-};
+}
 
 export function JoinLinkRebuild({ tenantId }: Props) {
   const { t } = useTranslation();
@@ -60,7 +60,7 @@ export function JoinLinkRebuild({ tenantId }: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("JoinLinkRebuild", () => JoinLinkRebuild);

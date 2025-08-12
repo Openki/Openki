@@ -5,12 +5,11 @@ export async function update() {
   let updated = 0;
 
   for (const course of await Courses.find({ image: { $exists: true } }).fetchAsync()) {
-    // eslint-disable-next-line no-await-in-loop
     updated += await Courses.updateAsync(
       { _id: course._id },
       { $set: { compactImage: course.image } },
     );
-    // eslint-disable-next-line no-await-in-loop
+
     updated += await Events.updateAsync(
       { courseId: course._id },
       { $set: { courseImage: course.image, courseCompactImage: course.image } },

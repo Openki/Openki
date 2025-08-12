@@ -1,6 +1,6 @@
 import Shariff from "shariff";
 import { useTranslation } from "react-i18next";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Template } from "meteor/templating";
 import { Session } from "meteor/session";
 
@@ -8,11 +8,17 @@ import * as Analytics from "/imports/ui/lib/analytics";
 
 import "./styles.scss";
 
-export function Sharing() {
+export function Sharing({ align }: { align?: "start" | "end" }) {
   const { t } = useTranslation();
+  const shariffElementRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const $shariff = $(".shariff");
-    // eslint-disable-next-line no-new
+    if (!shariffElementRef.current) {
+      return;
+    }
+
+    const $shariff = $(shariffElementRef.current);
+
     new Shariff($shariff, {
       lang: Session.get("locale"),
       mailUrl: "mailto:",
@@ -34,9 +40,10 @@ export function Sharing() {
   });
 
   return (
-    <div className="shariff-wrapper" id="share">
+    <div className={`shariff-wrapper${align === "end" ? " text-end" : ""}`}>
       <p>{t("sharing.title", "Share it with your friends")}</p>
       <div
+        ref={shariffElementRef}
         className="shariff"
         data-mail-body={`${t(
           "sharing.mailbody.quote",
@@ -48,7 +55,7 @@ export function Sharing() {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("Sharing", () => Sharing);

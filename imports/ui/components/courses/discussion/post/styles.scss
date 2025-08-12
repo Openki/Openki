@@ -1,3 +1,4 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .discussion-post-content,
@@ -11,17 +12,18 @@ $discussion-post-bg: $blue-lighter;
 
 .discussion-post-content {
   @include break-word;
-  border-color: darken($discussion-post-bg, 10%);
+
+  border-color: color.adjust($discussion-post-bg, $lightness: -10%);
 }
 
 .discussion-post-header,
 .discussion-edit-header {
-  padding: 5px ($grid-gutter-width / 2);
+  padding: 5px ($grid-gutter-width * 0.5);
 }
 
 .discussion-post-body,
 .discussion-edit-body {
-  padding: 10px ($grid-gutter-width / 2) 0;
+  padding: 10px ($grid-gutter-width * 0.5) 0;
 }
 
 .discussion-post {
@@ -31,7 +33,7 @@ $discussion-post-bg: $blue-lighter;
 }
 
 .discussion-post-header {
-  background: darken($discussion-post-bg, 5%);
+  background: color.adjust($discussion-post-bg, $lightness: -5%);
 }
 
 .discussion-buttons {
@@ -77,6 +79,7 @@ $discussion-post-bg: $blue-lighter;
 
 .discussion-comment {
   @include td-padding-all(7px, 0, 0, ($discussion-thumb-width * 1px));
+
   display: table;
   position: relative;
   width: 100%;
@@ -101,15 +104,15 @@ $discussion-post-bg: $blue-lighter;
   }
 }
 
-$discussion-edit-bg: lighten($gray-400, 10%);
+$discussion-edit-bg: color.adjust($gray-400, $lightness: 10%);
 
 .discussion-edit-content {
   background: $discussion-edit-bg;
-  border-color: darken($discussion-edit-bg, 5%);
+  border-color: color.adjust($discussion-edit-bg, $lightness: -5%);
 }
 
 .discussion-edit-header {
-  background: darken($discussion-edit-bg, 5%);
+  background: color.adjust($discussion-edit-bg, $lightness: -5%);
 }
 
 .discussion-reply {
@@ -118,7 +121,7 @@ $discussion-edit-bg: lighten($gray-400, 10%);
 
 .discussion-post-new {
   margin-top: $page-component-seperator-height;
-  padding: 15px ($grid-gutter-width / 2);
+  padding: 15px ($grid-gutter-width * 0.5);
   width: 100%;
 }
 

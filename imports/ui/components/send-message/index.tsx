@@ -1,5 +1,3 @@
-/* eslint-disable no-nested-ternary */
-import { Template } from "meteor/templating";
 import { useTranslation } from "react-i18next";
 import React, { useState } from "react";
 
@@ -7,7 +5,7 @@ import * as Alert from "/imports/api/alerts/alert";
 
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { VerifyEmail } from "/imports/ui/components/profiles/verify-email";
+import { VerifyEmail } from "/imports/ui/components/profiles/VerifyEmail";
 import { PleaseLogin } from "/imports/ui/components/please-login";
 
 import "./styles.scss";
@@ -25,7 +23,7 @@ export interface Data {
 
 export function SendMessage(props: Data) {
   const { t } = useTranslation();
-  const currentUser = useUser();
+  const user = useUser();
   const [isBusy, setIsBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [revealAddress, setRevealAddress] = useState(false);
@@ -70,7 +68,7 @@ export function SendMessage(props: Data) {
           }}
         ></textarea>
       </div>
-      {currentUser?.hasVerifiedEmail() ? (
+      {user?.hasVerifiedEmail() ? (
         <>
           <div className="form-check">
             <input
@@ -103,23 +101,25 @@ export function SendMessage(props: Data) {
             </label>
           </div>
         </>
-      ) : currentUser ? (
-        <div className="card mb-3">
-          <div className="card-header bg-warning">
-            <span className="fa-regular fa-circle-check" aria-hidden="true"></span>{" "}
-            {t("sendMessage.plsVerifyEmail", "Please verify your e-mail address")}
+      ) : (
+        !!user && (
+          <div className="card mb-3">
+            <div className="card-header bg-warning">
+              <span className="fa-regular fa-circle-check" aria-hidden="true"></span>{" "}
+              {t("sendMessage.plsVerifyEmail", "Please verify your e-mail address")}
+            </div>
+            <div className="card-body p-3">
+              <p>
+                {t(
+                  "userprofile.infoForUnverifiedMail",
+                  "Verify your e-mail address to receive a copy or to attach it to the message.",
+                )}
+              </p>
+              <VerifyEmail />
+            </div>
           </div>
-          <div className="card-body p-3">
-            <p>
-              {t(
-                "userprofile.infoForUnverifiedMail",
-                "Verify your e-mail address to receive a copy or to attach it to the message.",
-              )}
-            </p>
-            <VerifyEmail />
-          </div>
-        </div>
-      ) : null}
+        )
+      )}
 
       <div className="form-actions">
         <button type="submit" className="btn btn-save" disabled={isBusy}>
@@ -140,9 +140,3 @@ export function SendMessage(props: Data) {
     </PleaseLogin>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("SendMessage", () => SendMessage);

@@ -43,7 +43,9 @@ function GroupToAdd({ venue, groupId }: { venue: VenueModel; groupId: string }) 
   );
 }
 
-export type Props = { venue: VenueModel };
+export interface Props {
+  venue: VenueModel;
+}
 
 export function Add({ venue }: Props) {
   const { t } = useTranslation();
@@ -82,7 +84,7 @@ export function Add({ venue }: Props) {
       <div className="dropdown-menu dialog-dropdown dropdown-menu-scrollable-content">
         <div className="dropdown-header">
           {t("editGroup.add.header", "Choose group")}
-          <button type="button" className="btn-close btn-close-white"></button>
+          <button type="button" className="btn-close"></button>
         </div>
         <div className="p-2">
           {t("editGroup.add.desc", "All members of that group will be able to mange this venue.")}

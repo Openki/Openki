@@ -10,9 +10,12 @@ export function TestWarningTicker() {
     <>
       {/* @ts-ignore */}
       <marquee
+        // eslint-disable-next-line react/no-unknown-property
         bgcolor="#000"
         direction="left"
+        // eslint-disable-next-line react/no-unknown-property
         scrollamount="5"
+        // eslint-disable-next-line react/no-unknown-property
         scrolldelay="1"
         style={{ color: "white", position: "absolute", top: "50px" }}
       >
@@ -27,7 +30,7 @@ export function TestWarningTicker() {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("TestWarningTicker", () => TestWarningTicker);

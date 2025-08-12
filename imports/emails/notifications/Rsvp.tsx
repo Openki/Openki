@@ -5,19 +5,21 @@ import { EventBox } from "./components/EventBox";
 import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 
-export type Props = {
+export interface Props {
   companions: number;
   event: EventModel;
+  unregisterToEventLink: string;
   tz: string;
   eventDate: string;
   username: string;
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   campaign: string;
   lng: string;
-};
+}
 export function Rsvp({
   companions,
   event,
+  unregisterToEventLink,
   tz,
   eventDate,
   username,
@@ -40,6 +42,14 @@ export function Rsvp({
           </p>
           <p>{t("notification.rsvp.mail.attending", "You are attending the following event:")}</p>
           <EventBox event={event} tz={tz} campaign={campaign} lng={lng} />
+          <p className="gap-md text-center">
+            {t("notification.event.rsvp.informUnregisterEvent", "In case you can not make it:")}
+          </p>
+          <p className="text-center">
+            <a className="button" href={unregisterToEventLink}>
+              {t("notification.event.rsvp.unregisterEvent", "Un-enroll")}
+            </a>
+          </p>
         </td>
       </tr>
       <Footer unsubscribe={unsubscribe} campaign={campaign} lng={lng} />

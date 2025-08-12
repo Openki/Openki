@@ -1,13 +1,13 @@
 import { Mongo } from "meteor/mongo";
 import { Geodata, Regions } from "/imports/api/regions/regions";
 
-export type PresetMarkerEntity = {
+export interface PresetMarkerEntity {
   preset: true;
 
   presetName: string;
   presetAddress: string;
   editor: string;
-};
+}
 
 export type ProposedMarkerEntity = {
   proposed: true;
@@ -19,32 +19,32 @@ export type ProposedMarkerEntity = {
   name: string;
 } & PresetMarkerEntity;
 
-export type SelectedMarkerEntity = {
+export interface SelectedMarkerEntity {
   selected: true;
-};
+}
 
-export type MainMarkerEntity = {
+export interface MainMarkerEntity {
   main: true;
 
   _id: string;
   loc: Geodata;
   draggable?: boolean;
-};
+}
 
-export type CenteredMarkerEntity = {
+export interface CenteredMarkerEntity {
   /** Marks that have the center flage set are not displayed but used for anchoring the map */
   center: true;
 
   _id: string;
   loc: Geodata;
-};
+}
 
-export type RemoveMarkerEntity = {
+export interface RemoveMarkerEntity {
   remove: true;
 
   _id: string;
   loc: Geodata;
-};
+}
 
 export type MarkerEntity = {
   _id: string;

@@ -34,7 +34,7 @@ export function LanguageSelection(props: { inNavbar?: boolean }) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("LanguageSelectionWrap", () => LanguageSelection);

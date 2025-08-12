@@ -3,7 +3,7 @@ import { Template } from "meteor/templating";
 import { Session } from "meteor/session";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useUserId } from "/imports/utils/react-meteor-data";
 
 import { Report } from "/imports/ui/components/report";
 
@@ -17,7 +17,7 @@ function BackArrow() {
 
 export function NotFound() {
   const { t } = useTranslation();
-  const currentUser = useUser();
+  const loggedIn = !!useUserId();
 
   return (
     <div className="container text-center">
@@ -29,7 +29,7 @@ export function NotFound() {
           &nbsp;<span className="fa-solid fa-bolt fa-fw text-warning" aria-hidden="true"></span>
         </h1>
         <h3>{t("notFound.explanation", "This page is not available. Maybe it never existed.")}</h3>
-        {currentUser ? null : (
+        {!loggedIn && (
           <>
             <h4 className="mt-5">{t("notFound.login", "If it's private content, try:")}</h4>
             <button
@@ -75,7 +75,7 @@ export function NotFound() {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("NotFound", () => NotFound);

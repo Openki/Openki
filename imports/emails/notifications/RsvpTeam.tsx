@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 
-export type Props = {
+export interface Props {
   course: string;
   event: JSX.Element;
   newParticipant: JSX.Element;
@@ -13,7 +13,7 @@ export type Props = {
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   campaign: string;
   lng: string;
-};
+}
 
 export function RsvpTeam({
   course,

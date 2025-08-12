@@ -24,6 +24,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 const template = Template.invitationPage;
 
 template.onCreated(function () {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const instance = this;
 
   instance.autorun(() => {
@@ -50,7 +51,7 @@ template.events({
         // Reload regions to load regions from tenant
         RegionSelection.subscribe(instance, instance.data.invitation.tenant, false);
 
-        Router.go("/");
+        Router.go("home");
 
         Alert.success(
           i18n("invitation.join.success", 'You joined "{NAME}".', {

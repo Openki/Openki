@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React from "react";
 import moment from "moment";
 import { useUserId } from "/imports/utils/react-meteor-data";
@@ -55,7 +54,7 @@ export function Day(data: {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("CalendarDay", () => Day);

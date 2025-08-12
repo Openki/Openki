@@ -14,7 +14,7 @@ function getBucket() {
 
 function createS3Client() {
   if (Meteor.isServer) {
-    // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { S3 } = require("@aws-sdk/client-s3");
 
     return new S3({
@@ -47,6 +47,7 @@ export async function upload(directoryName: string, file: UploadFile) {
   );
 
   if (Meteor.isServer) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { Upload } = require("@aws-sdk/lib-storage");
 
     const s3 = createS3Client();

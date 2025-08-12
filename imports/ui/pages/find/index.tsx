@@ -5,11 +5,9 @@ import * as Metatags from "/imports/utils/metatags";
 
 import { Find } from "/imports/ui/components/courses/find";
 
-export type Props = {
-  query: {
-    [key: string]: string | undefined;
-  };
-};
+export interface Props {
+  query: Record<string, string | undefined>;
+}
 
 export function FindPage({ query }: Props) {
   const { t } = useTranslation();
@@ -30,7 +28,7 @@ export function FindPage({ query }: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("FindPage", () => FindPage);

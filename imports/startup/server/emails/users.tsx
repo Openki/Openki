@@ -93,7 +93,7 @@ Accounts.emailTemplates.resetPassword = {
     const t = i18next.getFixedT(userModel.locale);
 
     if (userModel.privileged("visitor")) {
-      return t("createAccount.subject", "[{SITE}] Create your account on {SITE}", {
+      return t("createAccount.subject", "[{SITE}] Login or create your account on {SITE}", {
         SITE: Accounts.emailTemplates.siteName,
       });
     }
@@ -110,6 +110,7 @@ Accounts.emailTemplates.resetPassword = {
       return createAccount(
         userModel.getDisplayName(),
         `${url.replace("reset-password", "visitor-to-user")}?email=${userModel.emailAddress()}`,
+        `${url.replace("reset-password", "auto-login-visitor")}?email=${userModel.emailAddress()}`,
         userModel.locale,
       );
     }
@@ -132,9 +133,13 @@ Accounts.emailTemplates.resetPassword = {
         >
           <CreateAccount
             username={userModel.getDisplayName()}
-            url={`${url.replace(
+            createAccountUrl={`${url.replace(
               "reset-password",
               "visitor-to-user",
+            )}?email=${userModel.emailAddress()}`}
+            autoLoginUrl={`${url.replace(
+              "reset-password",
+              "auto-login-visitor",
             )}?email=${userModel.emailAddress()}`}
             lng={userModel.locale}
           />

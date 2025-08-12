@@ -1,9 +1,10 @@
+@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .event-cancel-confirm {
-  $background-color: lighten($warning, 20%);
+  $background-color: color.adjust($warning, $lightness: 20%);
 
   background-color: $background-color;
-  border: 1px solid darken($background-color, 20%);
+  border: 1px solid color.adjust($background-color, $lightness: -20%);
   padding: 15px 15px 0;
 }

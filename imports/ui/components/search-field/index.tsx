@@ -1,15 +1,15 @@
-import { _ } from "meteor/underscore";
+import { debounce } from "lodash";
 import { useTranslation } from "react-i18next";
 import React, { useCallback, useState } from "react";
 import { Template } from "meteor/templating";
 
 import "./styles.scss";
 
-export type Props = {
+export interface Props {
   search: string | undefined;
   onChange: (newValue: string) => void;
   onFocusOut?: () => void;
-};
+}
 
 export function SearchField({ search, onChange, onFocusOut }: Props) {
   const [value, setValue] = useState(search ?? "");
@@ -18,7 +18,7 @@ export function SearchField({ search, onChange, onFocusOut }: Props) {
 
   // prevented unwanted input in the search
   const handleSearch = useCallback(
-    _.debounce((newValue: string) => {
+    debounce((newValue: string) => {
       setValue(newValue);
       onChange(newValue);
       // we don't updateURL() here, only after the field loses focus
@@ -68,7 +68,7 @@ export function SearchField({ search, onChange, onFocusOut }: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("SearchField", () => SearchField);

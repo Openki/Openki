@@ -8,7 +8,9 @@ import { Avatar } from "/imports/ui/components/avatar";
 
 import "./styles.scss";
 
-export type Props = { userId: string | undefined };
+export interface Props {
+  userId: string | undefined;
+}
 
 export function DiscussionProfileIcon({ userId }: Props) {
   const userName = useTracker(() => {
@@ -21,9 +23,7 @@ export function DiscussionProfileIcon({ userId }: Props) {
   return (
     <div className="discussion-thumb">
       {userId ? (
-        <a
-          href={Router.path("userprofile", { _id: userId, username: encodeURIComponent(userName) })}
-        >
+        <a href={Router.path("userprofile", { _id: userId, username: userName })}>
           <Avatar className="discussion-profile-icon" userId={userId} />
         </a>
       ) : (

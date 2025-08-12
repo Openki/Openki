@@ -1,55 +1,40 @@
 import { Meteor } from "meteor/meteor";
+import { Mongo } from "meteor/mongo";
+import { check } from "meteor/check";
 
-import { FindFilter, JoinLinks } from "/imports/api/joinLinks/joinLinks";
-import { Tenants } from "/imports/api/tenants/tenants";
+import { JoinLinkEntity, JoinLinks } from "/imports/api/joinLinks/joinLinks";
 
-import { ServerPublish } from "/imports/utils/ServerPublishBlaze";
-import { FieldSort } from "/imports/utils/sort-spec";
+import { ServerPublishOne } from "/imports/utils/ServerPublish";
 
-export const details = ServerPublish(
+export const [details, useDetails] = ServerPublishOne(
   "joinLink",
-  async (tenantId: string, token: string) => {
-    const joinLink = JoinLinks.find({ tenant: tenantId, token });
+  async function (tenantId: string, token?: string) {
+    check(tenantId, String);
 
-    if ((await joinLink.countAsync()) === 0) {
-      return undefined;
+    if (token) {
+      check(token, String);
+      return JoinLinks.find({ tenant: tenantId, token }) as Mongo.Cursor<JoinLinkEntity>;
+    } else {
+      const user = await Meteor.userAsync();
+
+      if (!user || !(user.privileged("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
+        return JoinLinks.find({ _id: "-1" }) as Mongo.Cursor<JoinLinkEntity>;
+      }
+
+      return JoinLinks.findFilter({ tenant: tenantId });
     }
-
-    return [joinLink, Tenants.find(tenantId)];
   },
-  (tenantId, token) => {
-    const joinLink = JoinLinks.findOne({ tenant: tenantId, token });
+  function (tenantId: string, token?: string) {
+    if (token) {
+      return JoinLinks.findOne({ tenant: tenantId, token });
+    } else {
+      const user = Meteor.user();
 
-    if (!joinLink) {
-      return undefined;
+      if (!user || !(user.privileged("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
+        return undefined;
+      }
+
+      return JoinLinks.findOne({ tenant: tenantId });
     }
-
-    return { joinLink, tenant: Tenants.findOne(tenantId) };
-  },
-);
-
-export const findFilter = ServerPublish(
-  "joinLinks.findFilter",
-  async (filter: FindFilter, limit?, skip?, sort?: FieldSort[]) => {
-    const tenantId = filter.tenant;
-
-    const user = await Meteor.userAsync();
-
-    if (!user || !(user.privileged("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
-      return undefined;
-    }
-
-    return JoinLinks.findFilter(filter, limit, skip, sort);
-  },
-  (filter, limit?, skip?, sort?) => {
-    const tenantId = filter.tenant;
-
-    const user = Meteor.user();
-
-    if (!user || !(user.privileged("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
-      return undefined;
-    }
-
-    return JoinLinks.findFilter(filter, limit, skip, sort);
   },
 );

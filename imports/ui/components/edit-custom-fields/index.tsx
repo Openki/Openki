@@ -6,15 +6,15 @@ import { GroupEntityCustomCourseFields } from "/imports/api/groups/groups";
 
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
-export type Props = {
+export interface Props {
   fields: GroupEntityCustomCourseFields[];
   values: CourseCustomField[] | undefined;
-};
+}
 
 export function EditCustomFields(props: Props) {
   const { getLocalizedValue } = useLocalizedSetting();
   function value(name: string) {
-    return props.values?.filter((a) => a.name === name)[0]?.value;
+    return props.values?.find((a) => a.name === name)?.value;
   }
 
   return (
@@ -69,7 +69,7 @@ export function EditCustomFields(props: Props) {
 }
 
 // for Blaze
-// eslint-disable-next-line import/first
+
 import "./template.html";
 
 Template.registerHelper("EditCustomFields", () => EditCustomFields);

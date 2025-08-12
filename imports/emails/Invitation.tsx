@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { TenantModel } from "../api/tenants/tenants";
 import { UserModel } from "../api/users/users";
 
-export type Props = {
+export interface Props {
   siteName: string;
   tenant: TenantModel;
   inviter: UserModel;
@@ -12,7 +12,7 @@ export type Props = {
   moreLink: string | undefined;
   reportEmail: JSX.Element;
   lng: string;
-};
+}
 
 export function Invitation({
   siteName,
@@ -53,7 +53,7 @@ export function Invitation({
               "invitation.email.about",
               "{SITENAME} is a open peer-to-peer education platform where users collectively organize Courses. You can propose, discuss, develop and publish ideas and eventually meet nice people online or in real life. Enjoy sharing your experiences.",
               { SITENAME: siteName },
-            )}
+            )}{" "}
             <a href={moreLink}>{t("invitation.email.more", "Find out more")}</a>
           </p>
         </td>
