@@ -68,7 +68,6 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
   );
 
   const organizedByGroups = visibleGroups?.filter((group) => event.editors.includes(group));
-  const promotedByGroups = visibleGroups?.filter((group) => !event.editors.includes(group));
   const locationPreview = [event.venue?.name, event.venue?.address].filter((v) => v)[0];
 
   function isFuture() {
@@ -79,7 +78,7 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
     <div className="card">
       {event?.publicUrlForDetailsImage() ? (
         <div
-          className="position-relative card-header card-header-img"
+          className="position-relative card-header card-header-img border-bottom"
           style={{
             backgroundImage: `url('${event.publicUrlForDetailsImage()}'), url('${event.publicUrlForCompactImage()}')`,
           }}
@@ -123,7 +122,7 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
           )}
 
           {event.editableBy(user) && (
-            <p className="card-text lead">
+            <h4 className="card-title">
               {t("event.details.yourAreOrganizer", "You are organizer")}{" "}
               <a
                 className="btn btn-sm btn-secondary"
@@ -136,8 +135,10 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
                 })}{" "}
                 <i className="fa-fw fa-solid fa-arrow-up-right-from-square"></i>
               </a>
-            </p>
+            </h4>
           )}
+
+          <hr className="hr-flush border-dark" />
 
           <p className="card-text">
             <RegistrationParticipants event={event} />
@@ -157,7 +158,7 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
                 {!!event.room && (
                   <>
                     <br />
-                    {t("event.details.room", "Room: ")} {event.room}
+                    {t("event.details.room", "Room:")} {event.room}
                   </>
                 )}
                 {!!event.venue?.loc?.coordinates && (
@@ -167,8 +168,6 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
             </>
           )}
 
-          {!!event.courseId && <DisplayDiscussion courseId={event.courseId} eventId={event._id} />}
-
           {!isRegionLoading() && !!organizedByGroups?.length && (
             <>
               <h4 className="card-title">{t("event.details.organziedBy", "Organized by")}</h4>
@@ -177,25 +176,19 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
               </p>
             </>
           )}
-          {!isRegionLoading() && !!promotedByGroups?.length && (
-            <>
-              <h4 className="card-title">{t("event.details.promotedBy", "Promoted by")}</h4>
-              <p className="card-text">
-                {ReactJoin(promotedByGroups.map((group) => <GroupName key={group} id={group} />))}
-              </p>
-            </>
-          )}
+
+          {!!event.courseId && <DisplayDiscussion courseId={event.courseId} eventId={event._id} />}
 
           {!!event.categories?.length && (
-            <>
-              <h4 className="card-title">{t("event.details.categories", "Categories")}</h4>
-              <p className="card-text">
+            <p className="card-text">
+              <small className="text-body-secondary">
+                <strong>{t("event.details.categories", "Categories:")}</strong>{" "}
                 {event.categories.map((category) => t(`category.${category}`)).join(", ")}
-              </p>
-            </>
+              </small>
+            </p>
           )}
 
-          <hr className="border-dark" />
+          <hr className="hr-flush border-dark" />
 
           <p className="card-text text-center mb-0">
             <a

@@ -13,7 +13,9 @@ export function ImagePlaceholder({
   const [isLoading, region] = useDetails(regionId);
 
   if (isLoading() || !region || !region.custom?.courseBackgroundImages) {
-    return <div className="position-relative card-header card-header-img">{children}</div>;
+    return (
+      <div className="position-relative card-header card-header-img border-bottom">{children}</div>
+    );
   }
 
   const images = region.custom.courseBackgroundImages;
@@ -26,7 +28,7 @@ export function ImagePlaceholder({
 
   return (
     <div
-      className="position-relative card-header card-header-img"
+      className="position-relative card-header card-header-img border-bottom"
       style={{ backgroundImage: `url('${images[imageIndex]}')` }}
     >
       {children}

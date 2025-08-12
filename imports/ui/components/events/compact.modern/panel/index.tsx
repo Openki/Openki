@@ -93,13 +93,13 @@ export function Panel({
             >
               <div className="panel-full-body">
                 {full}
-                <div
-                  className="panel-minimize display-4"
-                  onClick={() => {
-                    location.hash = "";
-                  }}
-                >
-                  <i className="fa-solid fa-xmark fa-fw"></i>
+                <div className="panel-minimize">
+                  <button
+                    className="btn-close btn-close-circle"
+                    onClick={() => {
+                      location.hash = "";
+                    }}
+                  ></button>
                 </div>
               </div>
             </div>
