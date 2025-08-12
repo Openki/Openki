@@ -8,6 +8,7 @@ import * as Metatags from "/imports/utils/metatags";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { useAccount } from "/imports/api/users/publications";
+import * as UsersMethods from "/imports/api/users/methods";
 
 import { useValidation } from "/imports/ui/lib/useValidation";
 
@@ -69,6 +70,7 @@ export function VisitorToUserPage({ token, email }: Props) {
 
           try {
             await AccountsAsync.resetPassword(token, password);
+            UsersMethods.removeVisitorFlag();
 
             Alert.success(t("visitorToUser.success.", "Your account is now created."));
             Router.go("profile");

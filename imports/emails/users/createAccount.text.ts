@@ -2,7 +2,12 @@ import i18next from "i18next";
 import { Accounts } from "meteor/accounts-base";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 
-export function createAccount(username: string, url: string, lng: string): string {
+export function createAccount(
+  username: string,
+  createAccountUrl: string,
+  autoLoginUrl: string,
+  lng: string,
+): string {
   const t = i18next.getFixedT(lng);
 
   const siteName = Accounts.emailTemplates.siteName;
@@ -12,10 +17,12 @@ export function createAccount(username: string, url: string, lng: string): strin
 				
 ${t("createAccount.email.introduction", { SITE: siteName })}
 
-${t("createAccount.email.accountCreation")}
-${url}
+${t("createAccount.email.autoLogin")}
+${autoLoginUrl}
 
-${t("email.base.farewell")}
+${t("createAccount.email.accountCreation")}
+${createAccountUrl}
+
 ${t("email.base.postscript", { SITE: siteName })}
 
 ${t("email.base.unexpected", { REPORTEMAIL: reportEmail })}`;
