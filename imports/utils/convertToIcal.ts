@@ -1,7 +1,8 @@
 import { Router } from "meteor/iron:router";
 import { EventModel } from "../api/events/events";
 import * as HtmlTools from "/imports/utils/html-tools";
-import { ICalEventData, ICalEventStatus, ICalLocationWithTitle } from "ical-generator";
+import { ICalEventData, ICalEventStatus } from "ical-generator";
+import { isEmpty, omitBy } from "lodash";
 
 export function convertToIcal(dbevent: EventModel): ICalEventData {
   const end = dbevent.end || dbevent.start;
@@ -13,22 +14,28 @@ export function convertToIcal(dbevent: EventModel): ICalEventData {
     .replace(oneLine, "\n")
     .trim();
   const plainDescription = HtmlTools.textPlain(lineDescription);
-  return {
-    id: dbevent._id,
-    start: dbevent.start,
-    end,
-    summary: dbevent.title,
-    location: dbevent.venue
-      ? ({
-          title: (dbevent.venue.name || "") + (dbevent.room ? " (" + dbevent.room + ")" : ""),
-          address: dbevent.venue.address || "",
-          geo: dbevent.venue.loc
-            ? { lat: dbevent.venue.loc.coordinates[1], lon: dbevent.venue.loc.coordinates[0] }
-            : undefined,
-        } as ICalLocationWithTitle)
-      : null,
-    description: plainDescription,
-    url: Router.url("showEvent", dbevent),
-    status: !dbevent.canceled ? ICalEventStatus.CONFIRMED : ICalEventStatus.CANCELLED,
-  };
+  return omitBy(
+    {
+      id: dbevent._id,
+      start: dbevent.start,
+      end,
+      summary: dbevent.title,
+      location: dbevent.venue
+        ? omitBy(
+            {
+              title: (dbevent.venue.name || "") + (dbevent.room ? " (" + dbevent.room + ")" : ""),
+              address: dbevent.venue.address,
+              geo: dbevent.venue.loc
+                ? { lat: dbevent.venue.loc.coordinates[1], lon: dbevent.venue.loc.coordinates[0] }
+                : undefined,
+            },
+            isEmpty,
+          )
+        : undefined,
+      description: plainDescription,
+      url: Router.url("showEvent", dbevent),
+      status: !dbevent.canceled ? ICalEventStatus.CONFIRMED : ICalEventStatus.CANCELLED,
+    },
+    isEmpty,
+  );
 }
