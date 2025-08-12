@@ -93,7 +93,7 @@ Accounts.emailTemplates.resetPassword = {
     const t = i18next.getFixedT(userModel.locale);
 
     if (userModel.privileged("visitor")) {
-      return t("createAccount.subject", "[{SITE}] Create your account on {SITE}", {
+      return t("createAccount.subject", "[{SITE}] Login or create your account on {SITE}", {
         SITE: Accounts.emailTemplates.siteName,
       });
     }
