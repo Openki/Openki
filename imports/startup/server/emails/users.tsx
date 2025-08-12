@@ -110,6 +110,7 @@ Accounts.emailTemplates.resetPassword = {
       return createAccount(
         userModel.getDisplayName(),
         `${url.replace("reset-password", "visitor-to-user")}?email=${userModel.emailAddress()}`,
+        `${url.replace("reset-password", "auto-login-visitor")}?email=${userModel.emailAddress()}`,
         userModel.locale,
       );
     }
