@@ -14,7 +14,7 @@ export function ResetPasswortEmailSended() {
     >
       {t(
         "resetPasswort.sendEmail",
-        "An e-mail with further instructions on how to reset your password or create your user account has been sent to you. It may take a few minutes for the email to appear in your inbox. Please also check your spam folder.",
+        "An e-mail with further instructions on how to reset your password, login or create your user account has been sent to you. It may take a few minutes for the email to appear in your inbox. Please also check your spam folder.",
       )}
     </ActionResult>
   );
