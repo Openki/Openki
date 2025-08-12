@@ -48,7 +48,6 @@ export function Event({ data }: { data: EventModel }) {
           {!data.noRsvp && (
             <div
               className="frame-list-free-seats"
-              data-bs-toggle="tooltip"
               data-bs-title={
                 isUnlimited()
                   ? t(
