@@ -12,7 +12,7 @@ export function Thumb({ event }: { event: EventModel }) {
     <div className="card me-1" style={{ width: 320, minWidth: 320 }}>
       {event?.publicUrlForCompactImage() ? (
         <div
-          className="position-relative card-header card-header-img"
+          className="position-relative card-header card-header-img border-bottom"
           style={{ backgroundImage: `url('${event.publicUrlForCompactImage()}')` }}
         >
           <StatePanel event={event} />
