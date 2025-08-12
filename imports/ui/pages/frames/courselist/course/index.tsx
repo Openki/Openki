@@ -27,7 +27,7 @@ export function Course({ course, hideInterested }: Props) {
   }
 
   return (
-    <div className="frame-list-item">
+    <div className="frame-list-item-course">
       <h4
         className="frame-list-item-header"
         onClick={(event) => {
@@ -41,7 +41,7 @@ export function Course({ course, hideInterested }: Props) {
         {!hideInterested && course.roles.includes("participant") && (
           <span
             className="frame-list-item-interested"
-            title={t("frame.courseList.interestedPersons", "Interested people")}
+            data-bs-title={t("frame.courseList.interestedPersons", "Interested people")}
           >
             <span className="me-1">{interestedPersons()}</span> <RoleIcon type="participant" />
           </span>
