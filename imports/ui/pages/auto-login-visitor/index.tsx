@@ -5,7 +5,7 @@ import { Random } from "meteor/random";
 import { AccountsAsync } from "/imports/utils/promisify";
 import { useAccount } from "/imports/api/users/publications";
 
-import { TokenExpired } from "../../components/token-expired";
+import { TokenExpired } from "../../components/TokenExpired";
 
 export interface Props {
   email: string;
