@@ -20,7 +20,6 @@ export async function onStartUp() {
     ),
   );
 
-  /* eslint-disable-next-line no-console */
   console.log(`events.tenantDenormalizer.onStartUp: ${updated} affected events`);
 }
 

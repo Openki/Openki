@@ -92,7 +92,6 @@ async function send(
         let unsubToken = null;
 
         try {
-          // eslint-disable-next-line no-await-in-loop
           const user = await Users.findOneAsync(recipientId);
 
           if (!user) {
@@ -112,13 +111,11 @@ async function send(
           const subjectPrefix = `[${siteName}] `;
 
           unsubToken = Random.secret();
-          // eslint-disable-next-line no-await-in-loop
           const vars = await model.vars(locale, user, unsubToken);
 
           const message = renderToEmail(
             <Root
               subject={vars.subject}
-              // eslint-disable-next-line no-await-in-loop
               logo={await toEmailLogo(vars.customEmailLogo || PublicSettings.emailLogo)}
               customSiteUrl={vars.customSiteUrl || siteUrl}
               customSiteName={vars.customSiteName || siteName}
@@ -142,19 +139,17 @@ async function send(
             to: address || undefined,
             subject: subjectPrefix + vars.subject,
             html: message,
+            icalEvent: vars.icalEvent,
           };
 
-          // eslint-disable-next-line no-await-in-loop
           await Email.sendAsync(mail);
 
-          // eslint-disable-next-line no-await-in-loop
           await record(entry, unsubToken, true, recipientId, mail, "success");
         } catch (e) {
           let reason = e;
           if (typeof e === "object" && "toJSON" in e) {
             reason = e.toJSON();
           }
-          // eslint-disable-next-line no-await-in-loop
           await record(entry, unsubToken, false, recipientId, mail, reason);
         }
       }
@@ -165,9 +160,7 @@ async function send(
       reason = e.toJSON();
     }
 
-    // eslint-disable-next-line no-restricted-syntax
     for (const recipientId of Object.keys(concluded)) {
-      // eslint-disable-next-line no-await-in-loop
       await record(entry, null, false, recipientId, null, reason);
     }
   }

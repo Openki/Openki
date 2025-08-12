@@ -64,7 +64,6 @@ template.onRendered(() => {
       };
       window.parent.postMessage(message, "*");
       if (Meteor.isDevelopment) {
-        /* eslint-disable-next-line no-console */
         console.debug(`window.parent.postMessage(${JSON.stringify(message)})`);
       }
     });

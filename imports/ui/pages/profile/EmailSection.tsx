@@ -2,7 +2,7 @@ import { ValidationError } from "meteor/mdg:validation-error";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ButtonSubmit } from "../../components/buttons";
-import { VerifyEmail } from "../../components/profiles/verify-email";
+import { VerifyEmail } from "../../components/profiles/VerifyEmail";
 import * as Analytics from "../../lib/analytics";
 import { routerAutoscroll } from "../../lib/router-autoscroll";
 import { useValidation } from "../../lib/useValidation";

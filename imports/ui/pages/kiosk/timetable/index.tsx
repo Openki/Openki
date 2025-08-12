@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useEffect, useRef, useState } from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
@@ -15,7 +14,7 @@ import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 
 import "./styles.scss";
 
-interface RelStartEnd {
+export interface RelStartEnd {
   relStart: number;
   relEnd: number;
 }

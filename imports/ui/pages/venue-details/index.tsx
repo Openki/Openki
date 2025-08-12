@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
-import { Meteor } from "meteor/meteor";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useTranslation } from "react-i18next";
 import { truncate } from "lodash";
@@ -14,7 +13,7 @@ import { textPlain } from "/imports/utils/html-tools";
 
 import { Edit } from "../../components/venues/edit";
 import { ProfileLink } from "../../components/profile-link";
-import { Contribution } from "../../components/contribution";
+import { Contribution } from "../../components/Contribution";
 import { Display as LocationDisplay } from "../../components/location/display";
 import { format } from "/imports/utils/location-format";
 import { ButtonDelete, ButtonEdit } from "../../components/buttons";
@@ -35,14 +34,8 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
 
   const [verifyDelete, setVerifyDelete] = useState(false);
 
-  function mayEdit() {
-    return venue.editableBy(Meteor.user());
-  }
   function facilityNames() {
     return Object.keys(venue.facilities);
-  }
-  function facilitiesDisplay(name: string) {
-    return t(`venue.facility.${name}`);
   }
 
   function deleteConfirmDialogAttr(): DeleteConfirmDialogProps {
@@ -123,7 +116,7 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
                     </span>
                     <ul>
                       {facilityNames().map((facilityName) => (
-                        <li key={facilityName}>{facilitiesDisplay(facilityName)}</li>
+                        <li key={facilityName}>{t(`venue.facility.${facilityName}`)}</li>
                       ))}
                     </ul>
                   </>
@@ -178,7 +171,7 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
             </div>
           </div>
         </div>
-        {mayEdit() && (
+        {venue.editableBy(user) && (
           <>
             <div className="actions">
               <ButtonEdit

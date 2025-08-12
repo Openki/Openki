@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import { useTranslation } from "react-i18next";
 import React, { useState } from "react";
 import { useUser } from "/imports/utils/react-meteor-data";
@@ -82,23 +81,27 @@ export function RegisterPanel({ event, busy, onRegister }: Props) {
             )}
           </p>
           {PublicSettings.feature.rsvpWithCompanions &&
-          (!event.maxParticipants || event.maxParticipants - event.numberOfParticipants() > 1) ? (
-            <div className="form-check form-switch mb-2">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                role="switch"
-                id="registerWithCompanions"
-                onChange={(e) => {
-                  setRegisterWithCompanions(e.target.checked);
-                }}
-                checked={registerWithCompanions}
-              />
-              <label className="form-check-label" htmlFor="registerWithCompanions">
-                {t("event.details.register-with-companions", "I want to reserve for two persons.")}
-              </label>
-            </div>
-          ) : null}
+            (!event.maxParticipants ||
+              event.maxParticipants - event.numberOfParticipants() > 1) && (
+              <div className="form-check form-switch mb-2">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="registerWithCompanions"
+                  onChange={(e) => {
+                    setRegisterWithCompanions(e.target.checked);
+                  }}
+                  checked={registerWithCompanions}
+                />
+                <label className="form-check-label" htmlFor="registerWithCompanions">
+                  {t(
+                    "event.details.register-with-companions",
+                    "I want to reserve for two persons.",
+                  )}
+                </label>
+              </div>
+            )}
 
           <div className="row justify-content-between align-items-center gap-3">
             <div className="col-lg-4 d-grid">

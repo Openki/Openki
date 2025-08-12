@@ -2,7 +2,7 @@ import { Router } from "meteor/iron:router";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { AvatarForm } from "../../components/avatarForm";
-import { Props as EditableProps, Editable } from "../../components/editable/index.react";
+import { Props as EditableProps, Editable } from "/imports/ui/components/editable";
 import * as Alert from "/imports/api/alerts/alert";
 import * as usersMethods from "/imports/api/users/methods";
 import { NotAllowedCharacter } from "/imports/startup/both/NotAllowedCharacter";
@@ -30,7 +30,7 @@ export function ProfileSection() {
         {
           type: "notAllowedCharacter",
           message: () =>
-            t("register.warning.notAllowedCharacter", undefined, {
+            t("register.warning.notAllowedCharacter", {
               CHARACTERS: NotAllowedCharacter.join(", "),
             }),
         },
@@ -83,7 +83,7 @@ export function ProfileSection() {
           <p>
             <Editable {...editableDescriptionAttr} />
           </p>
-          <a className="btn btn-primary" href={Router.path("userprofile", { _id: user._id })}>
+          <a className="btn btn-primary" href={Router.path("userprofile", user)}>
             <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>{" "}
             {t("login.frame.profile", "Public profile")}
           </a>

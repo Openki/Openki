@@ -184,7 +184,6 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
             // due to a mongo limitation we can't { $pull { 'members.roles': type } }
             // so we keep removing one by one until there are none left
             while (
-              // eslint-disable-next-line no-await-in-loop
               await Courses.updateAsync(
                 { _id: courseId, "members.roles": type },
                 { $pull: { "members.$.roles": type } },
@@ -266,7 +265,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     set.createdby = user._id;
     set.time_created = new Date();
     const enrichedSet = timeLastEditDenormalizer.beforeInsert(set);
-    /* eslint-disable-next-line no-param-reassign */
+
     courseId = await Courses.insertAsync(enrichedSet);
 
     await Notification.Course.record(courseId);

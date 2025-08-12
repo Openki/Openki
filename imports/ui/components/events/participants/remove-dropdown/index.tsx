@@ -4,23 +4,23 @@ import { useTranslation } from "react-i18next";
 import * as Tooltips from "/imports/utils/Tooltips";
 
 import "./styles.scss";
+import { getUserName } from "/imports/ui/lib/getUserName";
+import { useTracker } from "meteor/react-meteor-data";
 
 export interface Props {
+  userId: string;
   onClick: () => void;
 }
 
-export function RemoveDropdown({ onClick }: Props) {
+export function RemoveDropdown({ userId, onClick }: Props) {
   const { t } = useTranslation();
+  const userName = useTracker(() => getUserName(userId));
 
   return (
-    <span
-      className="dropdown ms-3"
-      data-bs-toggle="tooltip"
-      data-bs-title={t("eventParticipant.remove", "Withdraw registration")}
-    >
+    <span className="dropdown ms-3">
       <button
         type="button"
-        className="btn-close"
+        className="btn btn-link"
         aria-expanded="false"
         data-bs-toggle="dropdown"
         onClick={() => {
@@ -28,11 +28,15 @@ export function RemoveDropdown({ onClick }: Props) {
             Tooltips.hide();
           }, 0);
         }}
-      ></button>
-      <ul className="dropdown-menu dialog-dropdown right">
+        data-bs-toggle2="tooltip"
+        data-bs-title={t("eventParticipant.remove", "Remove user")}
+      >
+        <i className="fa-solid fa-ellipsis-vertical"></i>
+      </button>
+      <ul className="dropdown-menu dropdown-menu-end dialog-dropdown">
         <li className="dropdown-header">
-          {t("eventParticipant.remove.header", "Withdraw registration")}
-          <button type="button" className="btn-close btn-close-white"></button>
+          {t("eventParticipant.remove.header", "Cancel registration?")}
+          <button type="button" className="btn-close"></button>
         </li>
         <li>
           <hr className="dropdown-divider" />
@@ -40,7 +44,7 @@ export function RemoveDropdown({ onClick }: Props) {
         <li className="dialog-dropdown-text">
           {t(
             "eventParticipant.remove.details",
-            "Withdraw the registration of this user? (The user will not be notified about this.)",
+            "Remove this user from this event? (The user will not be notified about this.)",
           )}
         </li>
         <li className="dialog-dropdown-btn">
@@ -54,7 +58,7 @@ export function RemoveDropdown({ onClick }: Props) {
               onClick();
             }}
           >
-            {t("eventParticipant.remove.confirm", "Withdraw")}
+            {t("eventParticipant.remove.confirm", "Remove {USER}", { USER: userName })}
           </button>
         </li>
       </ul>

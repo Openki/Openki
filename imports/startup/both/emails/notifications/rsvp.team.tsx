@@ -20,15 +20,13 @@ interface Body {
   eventId: string;
   courseId: string;
   participantId: string;
-  companions: number;
   recipients: string[];
   model: string;
 }
 
-export async function record(eventId: string, participantId: string, companions: number) {
+export async function record(eventId: string, participantId: string) {
   check(eventId, String);
   check(participantId, String);
-  check(companions, Number);
 
   const event = await Events.findOneAsync(eventId);
   if (!event) {
@@ -53,7 +51,6 @@ export async function record(eventId: string, participantId: string, companions:
     eventId: event._id,
     courseId: course._id,
     participantId: participant._id,
-    companions,
 
     // Don't send to new member, they know
     recipients: course
@@ -137,7 +134,8 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         course: course.name,
         event: eventTitle,
         newParticipant: <strong>{newParticipant.getDisplayName()}</strong>,
-        companionsOfNewParticipant: body.companions,
+        companionsOfNewParticipant:
+          event.participants?.find((p) => p.user === newParticipant._id)?.companions || 0,
         subject,
         participantsCount: event.numberOfParticipants(),
         email: <span style={{ color: "blue" }}>{PrivateSettings.siteEmail}</span>,

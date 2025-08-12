@@ -20,7 +20,7 @@ export function TenantSection({ tenants }: { tenants: TenantModel[] }) {
         {tenants.map((tenant) => (
           <li key={tenant._id} className="mb-3">
             <div className="tag tag-link tenant-tag">
-              <a href={Router.path("tenantDetails", { _id: tenant._id })}>{tenant.name}</a>
+              <a href={Router.path("tenantDetails", tenant)}>{tenant.name}</a>
             </div>
           </li>
         ))}

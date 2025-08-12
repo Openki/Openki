@@ -7,7 +7,7 @@ export async function update() {
   for (const orginalEvent of await Events.find({ sendReminder: { $exists: false } }).fetchAsync()) {
     const event = { ...orginalEvent };
     event.sendReminder = PublicSettings.sendReminderPreset;
-    // eslint-disable-next-line no-await-in-loop
+
     updated += await Events.updateAsync(event._id, event);
   }
 

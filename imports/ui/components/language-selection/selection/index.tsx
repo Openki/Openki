@@ -169,14 +169,14 @@ export function Selection(data: { inNavbar: boolean; onClose: () => void }) {
                       title={language.english}
                       onClick={() => changeLanguage(language)}
                     >
-                      {isCurrentLanguage(language) ? (
+                      {isCurrentLanguage(language) && (
                         <>
                           <span className="checkmark fa-solid fa-check"></span>{" "}
                         </>
-                      ) : null}
-                      {language.translatedPercent ? (
+                      )}
+                      {!!language.translatedPercent && (
                         <div className="dropdown-addon-right">{language.translatedPercent} %</div>
-                      ) : null}
+                      )}
                       <div className="language-name">
                         <MarkedName search={search} name={language.name} />
                       </div>
@@ -191,7 +191,7 @@ export function Selection(data: { inNavbar: boolean; onClose: () => void }) {
                 </a>
               </li>
             )}
-            {helpLink() ? (
+            {!!helpLink() && (
               <>
                 <li>
                   <hr className="dropdown-divider" />
@@ -202,7 +202,7 @@ export function Selection(data: { inNavbar: boolean; onClose: () => void }) {
                   </a>
                 </li>
               </>
-            ) : null}
+            )}
           </ul>
         </div>
       </form>

@@ -1,4 +1,5 @@
 import { Meteor } from "meteor/meteor";
+import { Router } from "meteor/iron:router";
 import { Session } from "meteor/session";
 import { _ } from "meteor/underscore";
 import moment from "moment";
@@ -42,9 +43,8 @@ import { CssFromQuery } from "/imports/ui/lib/css-from-query";
 import type { Data as GroupDetailsData } from "/imports/ui/pages/group-details";
 import type { Data as VenuesMapData } from "/imports/ui/pages/venues-map";
 import type { Data as EventsMapData } from "/imports/ui/pages/events-map";
-import type { Props as FrameEventsMapProps } from "/imports/ui/pages/frames/events-map";
 import type { Data as AdminTenantsData } from "/imports/ui/pages/admin/tenants";
-import { Router } from "meteor/iron:router";
+import { RelStartEnd } from "/imports/ui/pages/kiosk/timetable";
 
 const makeFilterQuery = function (
   params: Record<string, string | undefined>,
@@ -307,11 +307,11 @@ RouterAsync.route("createEvent", {
 
     const propose = LocalTime.now().startOf("hour");
     const event = _.extend(new OEvent(), {
-      new: true,
       startLocal: LocalTime.toString(propose),
       endLocal: LocalTime.toString(moment(propose).add(2, "hour")),
       sendReminder: PublicSettings.sendReminderPreset,
-    }) as EventModel & { new: true };
+    }) as EventModel;
+
     const course = await subs?.course?.();
     if (course) {
       event.title = course.name;
@@ -321,7 +321,7 @@ RouterAsync.route("createEvent", {
       event.internal = course.internal;
     }
 
-    return event;
+    return { event, isNew: true };
   },
 });
 
@@ -340,7 +340,7 @@ RouterAsync.route("showEvent", {
   async data() {
     const subs = this.subscriptions();
 
-    return subs?.event();
+    return { event: subs?.event() };
   },
 });
 
@@ -412,7 +412,7 @@ RouterAsync.route("tenantCreate", {
 });
 
 RouterAsync.route("tenantDetails", {
-  path: "tenant/:_id/:short?",
+  path: "tenant/:_id",
   template: "tenantDetailsPage",
   async onRun() {
     await import("/imports/ui/pages/tenant-details");
@@ -549,20 +549,6 @@ RouterAsync.route("frame/eventsMap", {
   async onRun() {
     await import("/imports/ui/pages/frames/events-map");
   },
-  subscriptions() {
-    const filter = new Filtering(EventParamPredicates);
-    filter.read(this.params.query);
-    const query = filter.toQuery();
-    query.after = moment().startOf("day").toDate();
-    return {
-      events: Events.findFilter.subscribe({ ...{ canceled: false }, ...query }),
-    };
-  },
-  async data(): Promise<FrameEventsMapProps> {
-    return {
-      events: await this.subscriptions()?.events(),
-    };
-  },
 });
 
 RouterAsync.route("frameCalendar", {
@@ -673,6 +659,18 @@ RouterAsync.route("frameWeek", {
   layoutTemplate: "frameLayout",
   async onRun() {
     await import("/imports/ui/pages/frames/week");
+  },
+  data() {
+    return this.params.query;
+  },
+});
+
+RouterAsync.route("frameProgramme", {
+  path: "/frame/programme",
+  template: "frameProgrammePage",
+  layoutTemplate: "frameLayout",
+  async onRun() {
+    await import("/imports/ui/pages/frames/programme");
   },
   data() {
     return this.params.query;
@@ -802,8 +800,8 @@ RouterAsync.route("timetable", {
 
     const span = timestampEnd - timestampStart;
 
-    const days: Record<string, { moment: moment.Moment; relStart: number; relEnd: number }> = {};
-    const hours: Record<string, { moment: moment.Moment; relStart: number; relEnd: number }> = {};
+    const days: Record<string, { moment: moment.Moment } & RelStartEnd> = {};
+    const hours: Record<string, { moment: moment.Moment } & RelStartEnd> = {};
     const cursor = moment(start);
     do {
       const month = cursor.month();
@@ -843,10 +841,7 @@ RouterAsync.route("timetable", {
           {
             room: string;
             venue: VenueModel;
-            rows: (EventEntity & {
-              relStart: number;
-              relEnd: number;
-            })[];
+            rows: (EventEntity & RelStartEnd)[];
           }
         >;
       }
@@ -875,20 +870,14 @@ RouterAsync.route("timetable", {
     };
 
     events.forEach((originalEvent: EventModel) => {
-      const event = originalEvent as EventModel & {
-        relStart: number;
-        relEnd: number;
-      };
+      const event = originalEvent as EventModel & RelStartEnd;
       event.relStart = (originalEvent.start.getTime() - timestampStart) / span;
       event.relEnd = (timestampEnd - originalEvent.end.getTime()) / span;
 
       let placed = false;
 
       const room = event.room || null;
-      const roomRows = useVenue(event.venue, room) as unknown as (EventModel & {
-        relStart: number;
-        relEnd: number;
-      })[][];
+      const roomRows = useVenue(event.venue, room) as unknown as (EventModel & RelStartEnd)[][];
       roomRows.forEach((roomRow) => {
         if (placed) {
           return;

@@ -14,7 +14,7 @@ export interface Props {
 export function EditCustomFields(props: Props) {
   const { getLocalizedValue } = useLocalizedSetting();
   function value(name: string) {
-    return props.values?.filter((a) => a.name === name)[0]?.value;
+    return props.values?.find((a) => a.name === name)?.value;
   }
 
   return (
