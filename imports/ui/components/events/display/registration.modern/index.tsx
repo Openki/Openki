@@ -172,6 +172,7 @@ function Registration({ event }: { event: EventModel }) {
 
 export function RegistrationParticipants({ event }: Props) {
   const { t } = useTranslation();
+  const user = useUser();
 
   const [groupsIsLoading, groups] = useGroupsFindFilter({
     ids: event.allGroupOrganizers(),
@@ -210,7 +211,7 @@ export function RegistrationParticipants({ event }: Props) {
           )}
         </>
       )}
-      {!event.noRsvp &&
+      {!event.noRsvp && event.attendedBy(user?._id) &&
         // when registration closed, only show participant list when more than 0 participants
         (!registrationClosed || !!event.participants?.length) && (
           <EventParticipants event={event} />
