@@ -78,7 +78,7 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
     <div className="card">
       {event?.publicUrlForDetailsImage() ? (
         <div
-          className="position-relative card-header card-header-img border-bottom"
+          className="position-relative card-header card-header-img bg-img-cover border-bottom"
           style={{
             backgroundImage: `url('${event.publicUrlForDetailsImage()}'), url('${event.publicUrlForCompactImage()}')`,
           }}

@@ -58,6 +58,19 @@ export function Panel({
     }
   }, [close]);
 
+  useEffect(() => {
+    function escape(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        location.hash = "";
+      }
+    }
+
+    document.addEventListener("keyup", escape);
+    return () => {
+      document.removeEventListener("keyup", escape);
+    };
+  });
+
   return (
     <div className="panel">
       <div className="panel-thumb" ref={thumbRef}>
