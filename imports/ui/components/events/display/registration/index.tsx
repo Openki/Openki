@@ -134,7 +134,7 @@ export function EventRegistration({ event }: Props) {
                       )
                     : t(
                         "event.details.i-participate-yes",
-                        "You are now registered. Your registration is binding.",
+                        "You are now registered.\nYour registration is binding.",
                       )}
                 </b>
               </div>

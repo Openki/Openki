@@ -20,8 +20,6 @@ import { useDetails } from "/imports/api/courses/publications";
 import { StatePanel } from "./StatePanel";
 import { CustomFieldDisplay } from "../../courses/CustomFieldDisplay";
 import { ReactJoin } from "/imports/utils/ReactJoin";
-import { Sharing } from "../../sharing";
-import moment from "moment";
 import { ImagePlaceholder } from "./ImagePlaceholder";
 
 function DisplayDiscussion({ eventId, courseId }: { eventId: string; courseId: string }) {
@@ -70,10 +68,6 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
   const organizedByGroups = visibleGroups?.filter((group) => event.editors.includes(group));
   const locationPreview = [event.venue?.name, event.venue?.address].filter((v) => v)[0];
 
-  function isFuture() {
-    return moment().isBefore(event.end);
-  }
-
   return (
     <div className="card">
       {event?.publicUrlForDetailsImage() ? (
@@ -91,7 +85,7 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
         </ImagePlaceholder>
       )}
       <div className="card-body">
-        <h3 className="card-title">{event.title}</h3>
+        <h3 className="card-title min-h-2l fw-bold">{event.title}</h3>
         <p className="card-text">
           <i className="fa-regular fa-fw fa-clock"></i> {timeFormat(event.startLocal)} -{" "}
           {timeFormat(event.endLocal)}
@@ -118,11 +112,11 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
         <div className="collapse" ref={collapseElementRef}>
           <p className="card-text" dangerouslySetInnerHTML={{ __html: event.description }}></p>
           {!!event.courseId && (
-            <CustomFieldDisplay courseId={event.courseId} customClassName="card-text" />
+            <CustomFieldDisplay courseId={event.courseId} customClassName="card-text mb-1" />
           )}
 
           {event.editableBy(user) && (
-            <h4 className="card-title">
+            <h4 className="card-title mt-3">
               {t("event.details.yourAreOrganizer", "You are organizer")}{" "}
               <a
                 className="btn btn-sm btn-secondary"
@@ -140,12 +134,7 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
 
           <hr className="hr-flush border-dark" />
 
-          <p className="card-text">
-            <RegistrationParticipants event={event} />
-          </p>
-          <p className="card-text">
-            {isFuture() && !event.isPrivate() && event.attendedBy(user?._id) && <Sharing />}
-          </p>
+          <RegistrationParticipants event={event} />
 
           {!!event.venue && !isEmpty(omitBy(event.venue, isNil)) && (
             <>

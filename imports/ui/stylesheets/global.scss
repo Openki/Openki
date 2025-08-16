@@ -125,3 +125,27 @@ a:focus,
   border-radius: 50%;
   padding: 0.7em;
 }
+
+.text-truncate-2l {
+  @include ellipsis-multiline(2);
+}
+
+.text-truncate-3l {
+  @include ellipsis-multiline(3);
+}
+
+.text-truncate-4l {
+  @include ellipsis-multiline(4);
+}
+
+.text-truncate-5l {
+  @include ellipsis-multiline(5);
+}
+
+.text-truncate-6l {
+  @include ellipsis-multiline(6);
+}
+
+.min-h-2l {
+  min-height: calc(1.2em * 2);
+}

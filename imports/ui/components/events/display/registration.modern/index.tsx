@@ -12,6 +12,7 @@ import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/public
 import { EventParticipants } from "/imports/ui/components/events/participants.modern";
 import { RegisterPanel } from "./register-panel";
 import { UnregisterPanel } from "./unregister-panel";
+import { Sharing } from "../../../sharing";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
@@ -56,6 +57,10 @@ function Registration({ event }: { event: EventModel }) {
     return event.maxParticipants - occupied;
   }
 
+  function isFuture() {
+    return moment().isBefore(event.end);
+  }
+
   async function addParticipant(companions = 0) {
     setIsBusy("registering");
     try {
@@ -63,7 +68,11 @@ function Registration({ event }: { event: EventModel }) {
 
       // Todo: show feedback
       Alert.success(t("event.details.registration.alert.title", "Your seat is reserved."));
-      Analytics.trackEvent("RSVPs", "RSVPs as participant from program view", Regions.findOne(event.region)?.nameEn);
+      Analytics.trackEvent(
+        "RSVPs",
+        "RSVPs as participant from program view",
+        Regions.findOne(event.region)?.nameEn,
+      );
     } catch (err) {
       Alert.serverError(err);
     } finally {
@@ -115,15 +124,24 @@ function Registration({ event }: { event: EventModel }) {
             </>
           ))
         ) : (
-          <strong>
-            {t(
-              "event.details.i-participate-yes",
-              "You are now registered. Your registration is binding.",
-            )}{" "}
-            <i className="fa-solid fa-check fa-fw text-success" aria-hidden="true"></i>
-          </strong>
+          <>
+            <i className="fa-solid fa-check fa-fw text-success" aria-hidden="true"></i>{" "}
+            <strong className="pre-line">
+              {t(
+                "event.details.i-participate-yes",
+                "You are now registered.\nYour registration is binding.",
+              )}
+            </strong>
+          </>
         )}
       </p>
+
+      {isFuture() && !event.isPrivate() && event.attendedBy(user?._id) && (
+        <p className="card-text">
+          <Sharing />
+        </p>
+      )}
+
       <p className="card-text">
         {!event.attendedBy(user?._id) ? (
           !event.canceled &&
