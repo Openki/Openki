@@ -170,6 +170,7 @@ export function ProgrammePage(data: Record<string, string>) {
               };
             })}
           limit={count}
+          fluid
         />
       </div>
     </>
