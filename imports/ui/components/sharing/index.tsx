@@ -41,7 +41,7 @@ export function Sharing({ align }: { align?: "start" | "end" }) {
 
   return (
     <div className={`shariff-wrapper${align === "end" ? " text-end" : ""}`}>
-      <p>{t("sharing.title", "Share it with your friends")}</p>
+      <h4>{t("sharing.title", "Invite your friends")}</h4>
       <div
         ref={shariffElementRef}
         className="shariff"
