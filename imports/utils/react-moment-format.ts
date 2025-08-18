@@ -52,11 +52,23 @@ export function useDateTimeFormat() {
       }
       return toMomentWithTimeLocale(date).fromNow();
     },
-    weekdayFormat(date?: moment.MomentInput) {
+    dayOfWeekShort(date?: moment.MomentInput) {
+      if (!date) {
+        return "";
+      }
+      return toMomentWithTimeLocale(date).format("dd");
+    },
+    dayOfWeek(date?: moment.MomentInput) {
       if (!date) {
         return "";
       }
       return toMomentWithTimeLocale(date).format("ddd");
+    },
+    dayOfWeekLong(date?: moment.MomentInput) {
+      if (!date) {
+        return "";
+      }
+      return toMomentWithTimeLocale(date).format("dddd");
     },
     weekNr(date?: moment.MomentInput) {
       if (!date) {

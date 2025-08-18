@@ -71,7 +71,7 @@ export interface Props {
 
 export function EventReplication({ event, afterSave, onCancel }: Props) {
   const { t } = useTranslation();
-  const { weekdayFormat, dateTimeLong, dateShort } = useDateTimeFormat();
+  const { dayOfWeek, dateTimeLong, dateShort } = useDateTimeFormat();
   const elementRef = useRef<HTMLDivElement>(null);
 
   const [usingPicker, setUsingPicker] = useState(false);
@@ -314,7 +314,7 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
                   >
                     <div className="event-caption-header-wrap">
                       <div className="event-caption-header">
-                        {weekdayFormat(date)}
+                        {dayOfWeek(date)}
                         <div className="event-caption-pseudoborder"></div>
                       </div>
                     </div>

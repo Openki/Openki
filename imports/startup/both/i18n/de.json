@@ -302,7 +302,7 @@
   "createAccount.email.accountCreateButton": "Konto erstellen",
   "createAccount.email.accountCreation": "Du kannst diesen Link klicken um ein Passwort zu wählen und ein Konto zu erstellen.",
   "createAccount.email.introduction": "Du hast uns gebeten, einen Konto auf {SITE} zu erstellen.",
-  "createAccount.subject": "[{SITE}] Erstelle deinen Konto",
+  "createAccount.subject": "[{SITE}] Login oder erstelle dein Konto",
   "customField.boolean.no": "Nein",
   "customField.boolean.yes": "Ja",
   "dashboard.activeGroups.title": "Aktive Gruppen",

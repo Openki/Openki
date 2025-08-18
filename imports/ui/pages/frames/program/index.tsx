@@ -14,15 +14,12 @@ import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import * as Metatags from "/imports/utils/metatags";
 
-import { Dashboard } from "/imports/ui/components/dashboard";
+import { ComponentSettings, Dashboard } from "/imports/ui/components/dashboard";
 import { AccountTasks } from "/imports/ui/components/account-tasks";
 import {
-  CalendarNavProgramme,
+  CalendarNavProgram,
   Props as CalendarNavData,
-} from "/imports/ui/components/calendar-nav/programme";
-
-import "./template.html";
-import "./styles.scss";
+} from "/imports/ui/components/calendar-nav/program";
 
 function getDays(start: moment.Moment, end: moment.Moment) {
   const days = [];
@@ -35,9 +32,9 @@ function getDays(start: moment.Moment, end: moment.Moment) {
   return days;
 }
 
-export function ProgrammePage(data: Record<string, string>) {
+export function ProgramPage(data: Record<string, string>) {
   const { t } = useTranslation();
-  const { calendarDayFormat } = useDateTimeFormat();
+  const { dayOfWeekLong } = useDateTimeFormat();
   const userId = useUserId();
   const [isAttendeeFilterOn, setIsAttendeeFilterOn] = useState(false);
 
@@ -56,7 +53,7 @@ export function ProgrammePage(data: Record<string, string>) {
     return data.control === "1";
   }
 
-  function calendarNavAttr() {
+  function calendarNavAttr(): CalendarNavData {
     return {
       hideSwitches: data.hideSwitches === "1",
       search: filter.get("search"),
@@ -98,7 +95,7 @@ export function ProgrammePage(data: Record<string, string>) {
       onChangeAttendingEventsOnly: (state) => {
         setIsAttendeeFilterOn(state);
       },
-    } as CalendarNavData;
+    };
   }
 
   function days() {
@@ -148,28 +145,57 @@ export function ProgrammePage(data: Record<string, string>) {
   return (
     <>
       <AccountTasks />
-      {control() && <CalendarNavProgramme {...calendarNavAttr()} />}
+      {control() && <CalendarNavProgram {...calendarNavAttr()} />}
       <div className="py-4">
         <Dashboard
-          list={days()
-            .filter((day) => selectedDays.find((s) => s.isSame(day)))
-            .map((day) => {
-              const f = Events.Filtering().read(data);
+          list={
+            days()
+              .filter((day) => selectedDays.find((s) => s.isSame(day)))
+              .flatMap((day) => {
+                let afternoon;
+                {
+                  const f = Events.Filtering().read(data);
 
-              f.add("after", day);
-              f.add("end", moment(day).add(1, "day"));
+                  f.add("after", day);
+                  f.add("end", moment(day).add(17.75, "hour"));
 
-              // filter isAttendeeFilterOn in addition to filtering that get's passed in via url
-              if (userId && isAttendeeFilterOn) {
-                f.add("participant", userId);
-              }
-              return {
-                title: calendarDayFormat(day),
-                entity: "eventModern",
-                query: UrlTools.paramsToQueryString(f.toParams()),
-              };
-            })}
+                  // filter isAttendeeFilterOn in addition to filtering that get's passed in via url
+                  if (userId && isAttendeeFilterOn) {
+                    f.add("participant", userId);
+                  }
+                  afternoon = {
+                    title: t("program.morningAfternoon", "{DAYOFWEEK}, morning & afternoon", {
+                      DAYOFWEEK: dayOfWeekLong(day),
+                    }),
+                    entity: "eventModern",
+                    query: UrlTools.paramsToQueryString(f.toParams()),
+                  };
+                }
+                let evening;
+                {
+                  const f = Events.Filtering().read(data);
+
+                  f.add("after", moment(day).add(17.75, "hour"));
+                  f.add("end", moment(day).add(1, "day"));
+
+                  // filter isAttendeeFilterOn in addition to filtering that get's passed in via url
+                  if (userId && isAttendeeFilterOn) {
+                    f.add("participant", userId);
+                  }
+                  evening = {
+                    title: t("program.evening", "{DAYOFWEEK}, evening", {
+                      DAYOFWEEK: dayOfWeekLong(day),
+                    }),
+                    entity: "eventModern",
+                    query: UrlTools.paramsToQueryString(f.toParams()),
+                  };
+                }
+
+                return [afternoon, evening];
+              }) as ComponentSettings[]
+          }
           limit={count}
+          fluid
         />
       </div>
     </>
@@ -180,4 +206,4 @@ export function ProgrammePage(data: Record<string, string>) {
 
 import "./template.html";
 
-Template.registerHelper("FrameProgrammePage", () => ProgrammePage);
+Template.registerHelper("FrameProgramPage", () => ProgramPage);

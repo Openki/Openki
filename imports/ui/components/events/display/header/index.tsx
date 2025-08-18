@@ -15,14 +15,14 @@ export interface Props {
 }
 
 export function EventHeader(props: Props) {
-  const { weekdayFormat, calendarDayShort, timeFormat } = useDateTimeFormat();
+  const { dayOfWeek, calendarDayShort, timeFormat } = useDateTimeFormat();
   return (
     <div className="details-header event-details-header">
       {props.regionId ? <RegionTag region={props.regionId} /> : undefined}
 
       <p className="h3">
         <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>{" "}
-        {weekdayFormat(props.start)} {calendarDayShort(props.start)}
+        {dayOfWeek(props.start)} {calendarDayShort(props.start)}
         <br />
         <small>
           <span className="fa-regular fa-clock fa-fw" aria-hidden="true"></span>{" "}

@@ -46,7 +46,7 @@ export function EventParticipants({ event }: Props) {
   const { t } = useTranslation();
   const modalRef = useRef(null);
   const user = useUser();
-  const IncreaseBy = 15;
+  const IncreaseBy = 5;
   const [participantsDisplayLimit, setParticipantsDisplayLimit] = useState(IncreaseBy);
   const [showModal, setShowModal] = useState(false);
 
@@ -91,7 +91,7 @@ export function EventParticipants({ event }: Props) {
         )}
       </h4>
       {!!event.participants && (
-        <>
+        <p className="card-text">
           {ReactJoin(
             sortedParticipants()?.map((participant) => (
               <EventParticipant key={participant.user} participant={participant} />
@@ -111,7 +111,7 @@ export function EventParticipants({ event }: Props) {
               </button>
             </>
           )}
-        </>
+        </p>
       )}
     </>
   );

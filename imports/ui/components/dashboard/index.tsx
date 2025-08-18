@@ -11,7 +11,7 @@ import { mapping, ListOfEntities, ComponentWithEntities } from "./mapping";
 
 import "./styles.scss";
 
-interface ComponentSettings {
+export interface ComponentSettings {
   entity: keyof typeof mapping;
   title?: string;
   query?: string;
@@ -23,6 +23,7 @@ export interface Props {
   defaultRegion?: string | undefined;
   defaultGroup?: string | undefined;
   limit?: number | undefined;
+  fluid?: boolean | undefined;
 }
 
 function EntitiesComponent<T>({
@@ -31,12 +32,14 @@ function EntitiesComponent<T>({
   showAll,
   title,
   limit = 10,
+  fluid,
 }: {
   params: Record<string, string>;
   handler: ListOfEntities<T> | ComponentWithEntities<T>;
   showAll: { link: string | undefined; text: string | undefined } | false;
   title?: string | undefined;
   limit?: number | undefined;
+  fluid?: boolean | undefined;
 }) {
   const { getLocalizedValue } = useLocalizedSetting();
   const filter = handler.filter();
@@ -57,7 +60,7 @@ function EntitiesComponent<T>({
   }
 
   return (
-    <div className="container position-relative mb-4">
+    <div className={`${fluid ? "container-fluid" : "container"} position-relative mb-4`}>
       {showAll !== false && !!showAll?.link && data.length > limit && (
         <a className="btn btn-sm btn-success float-end" href={showAll.link}>
           {showAll.text}
@@ -126,11 +129,13 @@ function DashboardComponent({
   defaultRegion,
   defaultGroup,
   limit,
+  fluid,
 }: {
   settings: ComponentSettings;
   defaultRegion?: string | undefined;
   defaultGroup?: string | undefined;
   limit?: number | undefined;
+  fluid?: boolean | undefined;
 }) {
   const { t } = useTranslation();
   const { getLocalizedValue } = useLocalizedSetting();
@@ -195,11 +200,12 @@ function DashboardComponent({
       showAll={generateShowAll(handler, urlParams)}
       title={settings.title}
       limit={limit}
+      fluid={fluid}
     />
   );
 }
 
-export function Dashboard({ list, defaultRegion, defaultGroup, limit }: Props) {
+export function Dashboard({ list, defaultRegion, defaultGroup, limit, fluid }: Props) {
   return (
     <>
       {list.map((h, i) => (
@@ -209,6 +215,7 @@ export function Dashboard({ list, defaultRegion, defaultGroup, limit }: Props) {
           defaultRegion={defaultRegion}
           defaultGroup={defaultGroup}
           limit={limit}
+          fluid={fluid}
         />
       ))}
     </>

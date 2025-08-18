@@ -58,7 +58,7 @@ export function UnregisterPanel({ event, busy, onUnregister }: Props) {
       {!unregisterDropdown ? (
         <button
           type="button"
-          className="btn btn-add btn-event"
+          className="btn btn-add mt-4"
           onClick={() => {
             setUnregisterDropdown(true);
           }}
