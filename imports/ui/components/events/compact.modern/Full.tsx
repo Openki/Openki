@@ -137,6 +137,8 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
 
           <RegistrationParticipants event={event} />
 
+          <hr className="hr-flush border-dark" />
+          
           {!!event.venue && !isEmpty(omitBy(event.venue, isNil)) && (
             <>
               <h4 id={`show=${event._id}&place`} className="card-title">
