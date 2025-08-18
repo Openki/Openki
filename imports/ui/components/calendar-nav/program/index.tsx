@@ -67,7 +67,7 @@ export function CalendarNavProgram(props: Props) {
       <div className="container py-1">
         <div className="row align-items-center px-1">
           <div className="col-md-8 col-lg-6 p-1">
-            <SearchField {...searchFieldAttr()} />
+            <SearchField {...searchFieldAttr()} color="primary" />
           </div>
         </div>
         <div className="row align-items-center px-1">
@@ -109,25 +109,21 @@ export function CalendarNavProgram(props: Props) {
                   {props.selectedDays.find((s) => s.isSame(d)) ? (
                     <button
                       type="button"
-                      className={`btn ${isMobileScreen ? "p-1" : "btn-lg"} bg-white d-block active`}
+                      className={`btn ${isMobileScreen ? "p-1" : ""} btn-lg btn-primary text-white border-dark d-block active`}
                       data-bs-toggle="button"
                       aria-pressed="true"
                       onClick={() => props.onRemoveDay(d)}
                     >
                       {weekdayFormat(d)}
-                      {isMobileScreen ? <br /> : " "}
-                      <i className="fa-solid fa-check fa-fw text-success" aria-hidden="true"></i>
                     </button>
                   ) : (
                     <button
                       type="button"
-                      className={`btn ${isMobileScreen ? "p-1" : "btn-lg"} bg-white d-block`}
+                      className={`btn ${isMobileScreen ? "p-1" : ""} btn-lg bg-white d-block`}
                       data-bs-toggle="button"
                       onClick={() => props.onAddDay(d)}
                     >
                       {weekdayFormat(d)}
-                      {isMobileScreen ? <br /> : " "}
-                      <i className="fa fa-fw" aria-hidden="true"></i>
                     </button>
                   )}
                 </div>

@@ -9,9 +9,10 @@ export interface Props {
   search: string | undefined;
   onChange: (newValue: string) => void;
   onFocusOut?: () => void;
+  color?: string | undefined;
 }
 
-export function SearchField({ search, onChange, onFocusOut }: Props) {
+export function SearchField({ search, color, onChange, onFocusOut }: Props) {
   const [value, setValue] = useState(search ?? "");
 
   const { t } = useTranslation();
@@ -53,7 +54,7 @@ export function SearchField({ search, onChange, onFocusOut }: Props) {
         />
         <button
           type="button"
-          className="btn btn-success"
+          className={"btn btn-" + (color || "success")}
           onClick={(event) => {
             event.preventDefault();
             onChange(value);
