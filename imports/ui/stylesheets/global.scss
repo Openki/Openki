@@ -149,3 +149,8 @@ a:focus,
 .min-h-2l {
   min-height: calc(1.2em * 2);
 }
+
+/* Avoid double lines; sometimes they occur for programming reasons. */
+hr + hr {
+  display: none;
+}

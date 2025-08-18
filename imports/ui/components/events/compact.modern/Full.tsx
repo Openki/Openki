@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { isEmpty, isNil, omitBy } from "lodash";
-import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import { EventModel } from "/imports/api/events/events";
 import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
@@ -33,7 +32,15 @@ function DisplayDiscussion({ eventId, courseId }: { eventId: string; courseId: s
   return <Discussion courseId={course._id} eventId={eventId} />;
 }
 
-export function Full({ event, animation }: { event: EventModel; animation: "show" | "hide" }) {
+export function Full({
+  event,
+  animation,
+  hideCategories,
+}: {
+  event: EventModel;
+  animation: "show" | "hide";
+  hideCategories?: boolean | undefined;
+}) {
   const { timeFormat } = useDateTimeFormat();
   const { t } = useTranslation();
   const siteName = useSiteName();
@@ -138,7 +145,7 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
           <RegistrationParticipants event={event} />
 
           <hr className="hr-flush border-dark" />
-          
+
           {!!event.venue && !isEmpty(omitBy(event.venue, isNil)) && (
             <>
               <h4 id={`show=${event._id}&place`} className="card-title">
@@ -171,7 +178,7 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
 
           {!!event.courseId && <DisplayDiscussion courseId={event.courseId} eventId={event._id} />}
 
-          {!!PublicSettings.feature.hideCategories && !!event.categories?.length && (
+          {!hideCategories && !!event.categories?.length && (
             <p className="card-text">
               <small className="text-body-secondary">
                 <strong>{t("event.details.categories", "Categories:")}</strong>{" "}
