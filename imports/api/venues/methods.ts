@@ -46,92 +46,96 @@ export const SaveFieldPattern = {
 };
 export type SaveFields = Type<typeof SaveFieldPattern>;
 
-export const save = ServerMethod("venue.save", async (venueId: string, changes: SaveFields) => {
-  check(venueId, String);
-  check(changes, SaveFieldPattern);
+export const save = ServerMethod(
+  "venue.save",
+  async (venueId: string, changes: SaveFields) => {
+    check(venueId, String);
+    check(changes, SaveFieldPattern);
 
-  const user = await Meteor.userAsync();
-  if (!user) {
-    throw new Meteor.Error(401, "please log in");
-  }
-
-  const isNew = venueId.length === 0;
-  if (!isNew) {
-    await checkEditAllowed(venueId);
-  }
-
-  /* Changes we want to perform */
-  const set = { updated: new Date() } as Mongo.OptionalId<VenueEntity>;
-
-  if (changes.description) {
-    set.description = HtmlTools.sanitizeHtml(changes.description);
-  }
-  if (changes.name) {
-    set.name = changes.name.trim().substring(0, 1000);
-    set.slug = StringTools.slug(set.name);
-  }
-
-  if (changes.address !== undefined) {
-    set.address = changes.address.trim().substring(0, 40 * 1024);
-  }
-  if (changes.route !== undefined) {
-    set.route = changes.route.trim().substring(0, 40 * 1024);
-  }
-  if (changes.short !== undefined) {
-    set.short = changes.short.trim().substring(0, 40);
-  }
-  if (changes.loc !== undefined && changes.loc !== null) {
-    set.loc = changes.loc;
-    set.loc.type = "Point";
-  }
-
-  if (changes.maxPeople !== undefined) {
-    set.maxPeople = Math.min(1e10, Math.max(0, changes.maxPeople));
-  }
-  if (changes.maxWorkplaces !== undefined) {
-    set.maxWorkplaces = Math.min(1e10, Math.max(0, changes.maxWorkplaces));
-  }
-  if (changes.facilities !== undefined) {
-    set.facilities = changes.facilities.reduce((originalFs: Record<string, boolean>, f) => {
-      const fs = { ...originalFs };
-      if (Venues.facilityOptions.includes(f)) {
-        fs[f] = true;
-      }
-      return fs;
-    }, {});
-  }
-
-  if (changes.otherFacilities !== undefined) {
-    set.otherFacilities = changes.otherFacilities.substring(0, 40 * 1024);
-  }
-
-  if (changes.restrictedUse !== undefined) {
-    set.restrictedUse = changes.restrictedUse;
-  }
-
-  if (isNew) {
-    /* region cannot be changed */
-    const region = await Regions.findOneAsync(changes.region);
-    if (!region) {
-      throw new Meteor.Error(404, "region missing");
+    const user = await Meteor.userAsync();
+    if (!user) {
+      throw new Meteor.Error(401, "please log in");
     }
 
-    set.region = region._id;
+    const isNew = venueId.length === 0;
+    if (!isNew) {
+      await checkEditAllowed(venueId);
+    }
 
-    venueId = await Venues.insertAsync({
-      ...set,
-      editor: user._id,
-      createdby: user._id,
-      created: new Date(),
-    });
+    /* Changes we want to perform */
+    const set = { updated: new Date() } as Mongo.OptionalId<VenueEntity>;
 
-    userVenuesDenormalizer.afterVenueCreate(venueId, user._id);
-  } else {
-    await Venues.updateAsync({ _id: venueId }, { $set: set });
-  }
+    if (changes.description) {
+      set.description = HtmlTools.sanitizeHtml(changes.description);
+    }
+    if (changes.name) {
+      set.name = changes.name.trim().substring(0, 1000);
+      set.slug = StringTools.slug(set.name);
+    }
 
-  return venueId;
-});
+    if (changes.address !== undefined) {
+      set.address = changes.address.trim().substring(0, 40 * 1024);
+    }
+    if (changes.route !== undefined) {
+      set.route = changes.route.trim().substring(0, 40 * 1024);
+    }
+    if (changes.short !== undefined) {
+      set.short = changes.short.trim().substring(0, 40);
+    }
+    if (changes.loc !== undefined && changes.loc !== null) {
+      set.loc = changes.loc;
+      set.loc.type = "Point";
+    }
+
+    if (changes.maxPeople !== undefined) {
+      set.maxPeople = Math.min(1e10, Math.max(0, changes.maxPeople));
+    }
+    if (changes.maxWorkplaces !== undefined) {
+      set.maxWorkplaces = Math.min(1e10, Math.max(0, changes.maxWorkplaces));
+    }
+    if (changes.facilities !== undefined) {
+      set.facilities = changes.facilities.reduce((originalFs: Record<string, boolean>, f) => {
+        const fs = { ...originalFs };
+        if (Venues.facilityOptions.includes(f)) {
+          fs[f] = true;
+        }
+        return fs;
+      }, {});
+    }
+
+    if (changes.otherFacilities !== undefined) {
+      set.otherFacilities = changes.otherFacilities.substring(0, 40 * 1024);
+    }
+
+    if (changes.restrictedUse !== undefined) {
+      set.restrictedUse = changes.restrictedUse;
+    }
+
+    if (isNew) {
+      /* region cannot be changed */
+      const region = await Regions.findOneAsync(changes.region);
+      if (!region) {
+        throw new Meteor.Error(404, "region missing");
+      }
+
+      set.region = region._id;
+
+      venueId = await Venues.insertAsync({
+        ...set,
+        editor: user._id,
+        createdby: user._id,
+        created: new Date(),
+      });
+
+      userVenuesDenormalizer.afterVenueCreate(venueId, user._id);
+    } else {
+      await Venues.updateAsync({ _id: venueId }, { $set: set });
+    }
+
+    return venueId;
+  },
+  { simulation: false },
+);
 
 export const remove = ServerMethod("venue.remove", async (venueId: string) => {
   check(venueId, String);
