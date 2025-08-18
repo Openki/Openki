@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import { Courses } from "/imports/api/courses/courses";
 import { EventModel } from "/imports/api/events/events";
@@ -15,6 +16,8 @@ import { CustomFieldDisplay } from "../../../courses/CustomFieldDisplay";
 import "./styles.scss";
 
 export function Content({ event }: { event: EventModel }) {
+  const { t } = useTranslation();
+
   function singleEvent() {
     return Courses.findOne(event.courseId)?.singleEvent;
   }
@@ -69,8 +72,9 @@ export function Content({ event }: { event: EventModel }) {
         {!event.isPrivate() && (
           <>
             <PricePolicy dismissable wrap="event-details-price-policy" />
-            <div className="p-3" id="share">
-              <Sharing align="end" />
+            <div className="p-3 text-end" id="share">
+              <h4>{t("sharing.title", "Invite your friends")}</h4>
+              <Sharing />
             </div>
           </>
         )}
