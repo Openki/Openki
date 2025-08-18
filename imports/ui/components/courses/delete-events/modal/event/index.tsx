@@ -10,7 +10,7 @@ export interface Props {
 }
 
 export function Event({ event }: Props) {
-  const { dateFormat, weekdayFormat, timeFormat } = useDateTimeFormat();
+  const { dateFormat, dayOfWeek, timeFormat } = useDateTimeFormat();
 
   return (
     <>
@@ -18,7 +18,7 @@ export function Event({ event }: Props) {
       <span className="delete-events-details">
         <span className="d-inline-block">
           <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>{" "}
-          {weekdayFormat(event.start)}
+          {dayOfWeek(event.start)}
           {dateFormat(event.start)}
         </span>{" "}
         <span className="d-inline-block">

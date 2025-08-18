@@ -656,7 +656,7 @@ export function Edit(data: Data) {
               href: "#files-tab",
             },
             course && mayShare(course)
-              ? { text: t("message.courseCreated.share", "Share it"), href: "#share" }
+              ? { text: t("message.courseCreated.share", "Invite your friends"), href: "#share" }
               : undefined,
           );
           Analytics.trackEvent(

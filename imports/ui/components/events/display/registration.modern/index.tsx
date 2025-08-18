@@ -1,5 +1,6 @@
-import { useTranslation } from "react-i18next";
 import React, { useState } from "react";
+import { Router } from "meteor/iron:router";
+import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 import moment from "moment";
 
@@ -12,7 +13,9 @@ import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/public
 import { EventParticipants } from "/imports/ui/components/events/participants.modern";
 import { RegisterPanel } from "./register-panel";
 import { UnregisterPanel } from "./unregister-panel";
+import { Sharing } from "../../../sharing";
 
+import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import * as Analytics from "/imports/ui/lib/analytics";
 
 import "./styles.scss";
@@ -49,11 +52,16 @@ export interface Props {
 function Registration({ event }: { event: EventModel }) {
   const user = useUser();
   const { t } = useTranslation();
+  const { dateFormat } = useDateTimeFormat();
   const [isBusy, setIsBusy] = useState("");
 
   function howManyFreePlaces() {
     const occupied = event.numberOfParticipants();
     return event.maxParticipants - occupied;
+  }
+
+  function isFuture() {
+    return moment().isBefore(event.end);
   }
 
   async function addParticipant(companions = 0) {
@@ -63,7 +71,11 @@ function Registration({ event }: { event: EventModel }) {
 
       // Todo: show feedback
       Alert.success(t("event.details.registration.alert.title", "Your seat is reserved."));
-      Analytics.trackEvent("RSVPs", "RSVPs as participant from program view", Regions.findOne(event.region)?.nameEn);
+      Analytics.trackEvent(
+        "RSVPs",
+        "RSVPs as participant from program view",
+        Regions.findOne(event.region)?.nameEn,
+      );
     } catch (err) {
       Alert.serverError(err);
     } finally {
@@ -115,15 +127,35 @@ function Registration({ event }: { event: EventModel }) {
             </>
           ))
         ) : (
-          <strong>
-            {t(
-              "event.details.i-participate-yes",
-              "You are now registered. Your registration is binding.",
-            )}{" "}
-            <i className="fa-solid fa-check fa-fw text-success" aria-hidden="true"></i>
-          </strong>
+          <>
+            <i className="fa-solid fa-check fa-fw text-success" aria-hidden="true"></i>{" "}
+            <strong className="pre-line">
+              {t(
+                "event.details.i-participate-yes",
+                "You are now registered.\nYour registration is binding.",
+              )}
+            </strong>
+          </>
         )}
       </p>
+
+      {isFuture() && !event.isPrivate() && event.attendedBy(user?._id) && (
+        <p className="card-text">
+          <Sharing
+            title={t("event.details.sharing.title", "Invitation to {EVENTTITLE} on the {DATE}", {
+              EVENTTITLE: event.title,
+              DATE: dateFormat(event.startLocal),
+            })}
+            text={t(
+              "event.details.sharing.text",
+              "Hi!\nI wanted to let you know that I participate on {EVENTTITLE} on the {DATE}.\nDo you want to join me?",
+              { EVENTTITLE: event.title, DATE: dateFormat(event.startLocal) },
+            )}
+            url={Router.url("showEvent", event)}
+          />
+        </p>
+      )}
+
       <p className="card-text">
         {!event.attendedBy(user?._id) ? (
           !event.canceled &&
@@ -154,6 +186,7 @@ function Registration({ event }: { event: EventModel }) {
 
 export function RegistrationParticipants({ event }: Props) {
   const { t } = useTranslation();
+  const user = useUser();
 
   const [groupsIsLoading, groups] = useGroupsFindFilter({
     ids: event.allGroupOrganizers(),
@@ -193,6 +226,7 @@ export function RegistrationParticipants({ event }: Props) {
         </>
       )}
       {!event.noRsvp &&
+        event.attendedBy(user?._id) &&
         // when registration closed, only show participant list when more than 0 participants
         (!registrationClosed || !!event.participants?.length) && (
           <EventParticipants event={event} />

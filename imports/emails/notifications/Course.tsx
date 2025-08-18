@@ -63,7 +63,7 @@ export function Course({
           <p className="pre">
             {t(
               "notification.course.mail.next",
-              "We will inform you if people join your proposal.\nHere is the link if you want to change something or add an image... Or share it with friends",
+              "We will inform you if people join your proposal.\nHere is the link if you want to change something or add an image... Or invite your friends",
             )}
           </p>
           <p className="text-center">
