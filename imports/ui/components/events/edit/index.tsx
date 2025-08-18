@@ -376,7 +376,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               1000 /
               60 /
               60 /
-              24 /* Umrechnung in Tage */,
+              24 /* Converted into days */,
           ),
         );
       } else {

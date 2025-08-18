@@ -1,10 +1,6 @@
 @use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
-.shariff-wrapper > p {
-  font-size: 1.2em;
-}
-
 /* stylelint-disable-next-line selector-class-pattern */
 .shariff .share_text {
   display: none;

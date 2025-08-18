@@ -86,24 +86,29 @@ function Alert({
               <a
                 className="btn btn-success"
                 href={l.href}
-                onClick={(event) => {
-                  event.preventDefault();
+                onClick={async (event) => {
+                  const parts = l.href.split("#");
 
-                  const elementId = l.href.split("#")[1];
+                  if (parts[0].length > 1) {
+                    await MeteorAsync.setTimeout(400);
+                  } else {
+                    event.preventDefault();
+                  }
+
+                  const elementId = parts[1];
                   const element = elementId && document.getElementById(elementId);
                   if (element) {
                     scrollIntoViewIfNotVisible(element, $(".navbar")?.height() || 0);
 
                     element.classList.remove("action-focus");
-                    Meteor.setTimeout(() => {
-                      element.classList.add("action-focus");
-                      if (timeoutActionFocus) {
-                        clearTimeout(timeoutActionFocus);
-                      }
-                      timeoutActionFocus = Meteor.setTimeout(() => {
-                        element.classList.remove("action-focus");
-                      }, 5000);
-                    }, 0);
+                    await MeteorAsync.defer();
+                    element.classList.add("action-focus");
+                    if (timeoutActionFocus) {
+                      clearTimeout(timeoutActionFocus);
+                    }
+                    timeoutActionFocus = Meteor.setTimeout(() => {
+                      element.classList.remove("action-focus");
+                    }, 5000);
                   }
                 }}
               >
@@ -153,5 +158,6 @@ export function Alerts() {
 // for Blaze
 
 import "./template.html";
+import { MeteorAsync } from "/imports/utils/promisify";
 
 Template.registerHelper("Alerts", () => Alerts);
