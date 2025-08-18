@@ -10,9 +10,10 @@ import "./styles.scss";
 
 export interface Props {
   event: EventModel;
+  hideCategories?: boolean | undefined;
 }
 
-export function EventCompact({ event }: Props) {
+export function EventCompact({ event, hideCategories }: Props) {
   const [view, setView] = useState("");
 
   return (
@@ -22,7 +23,13 @@ export function EventCompact({ event }: Props) {
         setView(view);
       }}
       thumb={<Thumb event={event} />}
-      full={<Full event={event} animation={view === "full" ? "show" : "hide"} />}
+      full={
+        <Full
+          event={event}
+          animation={view === "full" ? "show" : "hide"}
+          hideCategories={hideCategories}
+        />
+      }
     />
   );
 }

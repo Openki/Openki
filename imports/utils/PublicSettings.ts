@@ -67,8 +67,6 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
     /** show a "empty" course box to propose a new course */
     proposeCourseBox: Boolean,
     resizeImagesOnServer: Boolean,
-    /** hide categories in program frame */
-    hideCategories: Boolean,
   },
   nav: {
     /** target link when clicking on the logo Default: "/" */
