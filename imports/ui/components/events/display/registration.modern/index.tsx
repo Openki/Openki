@@ -129,18 +129,14 @@ function Registration({ event }: { event: EventModel }) {
         ) : (
           <>
             <i className="fa-solid fa-check fa-fw text-success" aria-hidden="true"></i>{" "}
-            <strong className="pre-line">
-              {t(
-                "event.details.i-participate-yes",
-                "You are now registered.\nYour registration is binding.",
-              )}
-            </strong>
+            <strong>{t("event.details.youAreRegistered", "You are now registered.")}</strong>
           </>
         )}
       </p>
 
       {isFuture() && !event.isPrivate() && event.attendedBy(user?._id) && (
         <p className="card-text">
+          {t("sharing.title", "Invite your friends")}
           <Sharing
             title={t("event.details.sharing.title", "Invitation to {EVENTTITLE} on the {DATE}", {
               EVENTTITLE: event.title,
@@ -156,21 +152,23 @@ function Registration({ event }: { event: EventModel }) {
         </p>
       )}
 
-      <p className="card-text">
-        {!event.attendedBy(user?._id) ? (
-          !event.canceled &&
-          (!event.isFullyBooked() ? (
-            <RegisterPanel
-              event={event}
-              busy={isBusy === "registering"}
-              onRegister={async (companions) => {
-                await addParticipant(companions);
-              }}
-            />
-          ) : (
-            <ButtonRegistrationClosed busy={isBusy === "registering"} />
-          ))
-        ) : (
+      {!event.attendedBy(user?._id) ? (
+        <p className="card-text">
+          {!event.canceled &&
+            (!event.isFullyBooked() ? (
+              <RegisterPanel
+                event={event}
+                busy={isBusy === "registering"}
+                onRegister={async (companions) => {
+                  await addParticipant(companions);
+                }}
+              />
+            ) : (
+              <ButtonRegistrationClosed busy={isBusy === "registering"} />
+            ))}
+        </p>
+      ) : (
+        <p className="card-text mt-5">
           <UnregisterPanel
             busy={isBusy === "unregistering"}
             event={event}
@@ -178,8 +176,8 @@ function Registration({ event }: { event: EventModel }) {
               await removeParticipant();
             }}
           />
-        )}
-      </p>
+        </p>
+      )}
     </>
   );
 }
