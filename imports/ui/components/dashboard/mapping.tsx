@@ -106,6 +106,14 @@ const eventModern: ListOfEntities<EventModel> = {
   element: ({ entity }) => <EventCompactModern event={entity} />,
 };
 
+const eventModernWithoutCategories: ListOfEntities<EventModel> = {
+  route: "calendar",
+  showAll: { text: "dashboard.calendar.showAll" },
+  filter: EventCollection.Filtering,
+  find: Events.useFindFilter,
+  element: ({ entity }) => <EventCompactModern event={entity} hideCategories />,
+};
+
 function bodyStyle(imageUrl: string) {
   const src = imageUrl;
   if (!src) {
@@ -163,6 +171,7 @@ export const mapping = {
   courseWithoutPropose,
   event,
   eventModern,
+  eventModernWithoutCategories,
   group,
   eventsMap,
   propose,
