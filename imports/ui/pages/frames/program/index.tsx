@@ -56,6 +56,7 @@ export function ProgramPage(data: Record<string, string>) {
   function calendarNavAttr(): CalendarNavData {
     return {
       hideSwitches: data.hideSwitches === "1",
+      hideCategories: data.hideCategories === "1",
       search: filter.get("search"),
       onChangeSearch: (newValue: string) => {
         filter.add("search", newValue);
@@ -167,7 +168,8 @@ export function ProgramPage(data: Record<string, string>) {
                     title: t("program.morningAfternoon", "{DAYOFWEEK}, morning & afternoon", {
                       DAYOFWEEK: dayOfWeekLong(day),
                     }),
-                    entity: "eventModern",
+                    entity:
+                      data.hideCategories !== "1" ? "eventModern" : "eventModernWithoutCategories",
                     query: UrlTools.paramsToQueryString(f.toParams()),
                   };
                 }
@@ -186,7 +188,8 @@ export function ProgramPage(data: Record<string, string>) {
                     title: t("program.evening", "{DAYOFWEEK}, evening", {
                       DAYOFWEEK: dayOfWeekLong(day),
                     }),
-                    entity: "eventModern",
+                    entity:
+                      data.hideCategories !== "1" ? "eventModern" : "eventModernWithoutCategories",
                     query: UrlTools.paramsToQueryString(f.toParams()),
                   };
                 }
