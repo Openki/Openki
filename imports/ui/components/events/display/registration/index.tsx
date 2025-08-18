@@ -1,3 +1,4 @@
+import { Router } from "meteor/iron:router";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 import { useTranslation } from "react-i18next";
 import React, { useState } from "react";
@@ -63,7 +64,24 @@ export function EventRegistration({ event }: Props) {
     try {
       await EventsMethods.addParticipant(event._id, companions);
 
-      Alert.success(t("event.details.registration.alert.title", "Your seat is reserved."));
+      Alert.successNextActions(
+        t("event.details.registration.alertNextActions.title", "You registered successfully.?"),
+        t("event.details.registration.alertNextActions.message", "What do you wannt to do next?"),
+        !event.isFullyBooked()
+          ? {
+              text: t("event.details.registration.alertNextActions.share", "Invite your friends"),
+              href: "#share",
+            }
+          : undefined,
+        {
+          text: t(
+            "event.details.registration.alertNextActions.calendar",
+            "Add events to my calendar",
+          ),
+          href: Router.path("profile", undefined, { hash: "#my-events" }),
+        },
+      );
+
       Analytics.trackEvent("RSVPs", "RSVPs as participant", Regions.findOne(event.region)?.nameEn);
     } catch (err) {
       Alert.serverError(err);
