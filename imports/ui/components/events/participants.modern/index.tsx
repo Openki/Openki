@@ -91,7 +91,7 @@ export function EventParticipants({ event }: Props) {
         )}
       </h4>
       {!!event.participants && (
-        <>
+        <p className="card-text">
           {ReactJoin(
             sortedParticipants()?.map((participant) => (
               <EventParticipant key={participant.user} participant={participant} />
@@ -111,7 +111,7 @@ export function EventParticipants({ event }: Props) {
               </button>
             </>
           )}
-        </>
+        </p>
       )}
     </>
   );
