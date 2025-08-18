@@ -65,7 +65,7 @@ export function EventRegistration({ event }: Props) {
       await EventsMethods.addParticipant(event._id, companions);
 
       Alert.successNextActions(
-        t("event.details.registration.alertNextActions.title", "You registered successfully.?"),
+        t("event.details.registration.alertNextActions.title", "You registered successfully."),
         t("event.details.registration.alertNextActions.message", "What do you wannt to do next?"),
         !event.isFullyBooked()
           ? {
