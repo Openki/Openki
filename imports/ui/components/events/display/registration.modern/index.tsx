@@ -69,8 +69,6 @@ function Registration({ event }: { event: EventModel }) {
     try {
       await EventsMethods.addParticipant(event._id, companions);
 
-      // Todo: show feedback
-      Alert.success(t("event.details.registration.alert.title", "Your seat is reserved."));
       Analytics.trackEvent(
         "RSVPs",
         "RSVPs as participant from program view",
