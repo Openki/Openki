@@ -58,7 +58,7 @@ export function EventCompact({
   openInNewTab,
 }: Props) {
   const { t } = useTranslation();
-  const { weekdayFormat, calendarDayShort, timeFormat } = useDateTimeFormat();
+  const { dayOfWeek, calendarDayShort, timeFormat } = useDateTimeFormat();
   const userId = useUserId();
 
   return (
@@ -76,7 +76,7 @@ export function EventCompact({
         {!!withDate && (
           <>
             <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>{" "}
-            {weekdayFormat(event.startLocal)} {calendarDayShort(event.startLocal)}
+            {dayOfWeek(event.startLocal)} {calendarDayShort(event.startLocal)}
             <br />
           </>
         )}

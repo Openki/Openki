@@ -11,7 +11,7 @@ import { mapping, ListOfEntities, ComponentWithEntities } from "./mapping";
 
 import "./styles.scss";
 
-interface ComponentSettings {
+export interface ComponentSettings {
   entity: keyof typeof mapping;
   title?: string;
   query?: string;
