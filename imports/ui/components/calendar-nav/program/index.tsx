@@ -36,10 +36,10 @@ export function CalendarNavProgram(props: Props) {
   const { hideSwitches, days, availableGroups } = props;
   const currentUser = useUser();
   const { t } = useTranslation();
-  const { weekdayFormat } = useDateTimeFormat();
+  const { dayOfWeekShort, dayOfWeekLong } = useDateTimeFormat();
 
   const viewport = useViewportSize();
-  const isMobileScreen = viewport.width <= ScssVars.screenXS;
+  const isMobileScreen = viewport.width <= ScssVars.screenSM;
 
   const elementRef = useRef(null);
 
@@ -114,7 +114,7 @@ export function CalendarNavProgram(props: Props) {
                       aria-pressed="true"
                       onClick={() => props.onRemoveDay(d)}
                     >
-                      {weekdayFormat(d)}
+                      {isMobileScreen ? dayOfWeekShort(d) : dayOfWeekLong(d)}
                     </button>
                   ) : (
                     <button
@@ -123,7 +123,7 @@ export function CalendarNavProgram(props: Props) {
                       data-bs-toggle="button"
                       onClick={() => props.onAddDay(d)}
                     >
-                      {weekdayFormat(d)}
+                      {isMobileScreen ? dayOfWeekShort(d) : dayOfWeekLong(d)}
                     </button>
                   )}
                 </div>
