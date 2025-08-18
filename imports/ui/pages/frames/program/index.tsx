@@ -53,7 +53,7 @@ export function ProgramPage(data: Record<string, string>) {
     return data.control === "1";
   }
 
-  function calendarNavAttr() {
+  function calendarNavAttr(): CalendarNavData {
     return {
       hideSwitches: data.hideSwitches === "1",
       search: filter.get("search"),
@@ -95,7 +95,7 @@ export function ProgramPage(data: Record<string, string>) {
       onChangeAttendingEventsOnly: (state) => {
         setIsAttendeeFilterOn(state);
       },
-    } as CalendarNavData;
+    };
   }
 
   function days() {
