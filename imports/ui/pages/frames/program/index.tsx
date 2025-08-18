@@ -157,7 +157,7 @@ export function ProgramPage(data: Record<string, string>) {
                   const f = Events.Filtering().read(data);
 
                   f.add("after", day);
-                  f.add("end", moment(day).add(18, "hour"));
+                  f.add("end", moment(day).add(17.75, "hour"));
 
                   // filter isAttendeeFilterOn in addition to filtering that get's passed in via url
                   if (userId && isAttendeeFilterOn) {
@@ -175,7 +175,7 @@ export function ProgramPage(data: Record<string, string>) {
                 {
                   const f = Events.Filtering().read(data);
 
-                  f.add("after", moment(day).add(18, "hour"));
+                  f.add("after", moment(day).add(17.75, "hour"));
                   f.add("end", moment(day).add(1, "day"));
 
                   // filter isAttendeeFilterOn in addition to filtering that get's passed in via url
