@@ -13,12 +13,10 @@ export function Sharing({
   title,
   text,
   url,
-  align,
 }: {
   title?: string | undefined;
   text?: string | undefined;
   url?: string | undefined;
-  align?: "start" | "end";
 }) {
   const { t } = useTranslation();
   const shariffElementRef = useRef<HTMLDivElement>(null);
@@ -61,12 +59,7 @@ export function Sharing({
     });
   });
 
-  return (
-    <div className={`shariff-wrapper${align === "end" ? " text-end" : ""}`}>
-      <h4>{t("sharing.title", "Invite your friends")}</h4>
-      <div ref={shariffElementRef} className="shariff"></div>
-    </div>
-  );
+  return <div ref={shariffElementRef} className="shariff mt-1"></div>;
 }
 
 // for Blaze

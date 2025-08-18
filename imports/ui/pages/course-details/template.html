@@ -16,8 +16,9 @@
               {{> courseDetailsSubmenu course=course}}
             </div>
             {{#if mayShare course}}
-              <div class="p-3 shariff-wrapper-wrapper" id="share">
-                {{> sharing align="end"}}
+              <div class="p-3 shariff-wrapper text-end" id="share">
+                <h4>{{ i18n 'sharing.title' 'Invite your friends'}}</h4>
+                {{> sharing}}
               </div>
             {{/if}}
             {{#if (mayEdit course)}}
