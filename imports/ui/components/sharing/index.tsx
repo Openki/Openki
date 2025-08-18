@@ -1,6 +1,7 @@
+import React, { useEffect, useRef } from "react";
+import { isEmpty, omitBy } from "lodash";
 import Shariff from "shariff";
 import { useTranslation } from "react-i18next";
-import React, { useEffect, useRef } from "react";
 import { Template } from "meteor/templating";
 import { Session } from "meteor/session";
 
@@ -8,9 +9,21 @@ import * as Analytics from "/imports/ui/lib/analytics";
 
 import "./styles.scss";
 
-export function Sharing({ align }: { align?: "start" | "end" }) {
+export function Sharing({
+  title,
+  text,
+  url,
+  align,
+}: {
+  title?: string | undefined;
+  text?: string | undefined;
+  url?: string | undefined;
+  align?: "start" | "end";
+}) {
   const { t } = useTranslation();
   const shariffElementRef = useRef<HTMLDivElement>(null);
+
+  text = text || t("sharing.mailbody.quote", "Hi!\nLook what I found, are you interested?");
 
   useEffect(() => {
     if (!shariffElementRef.current) {
@@ -19,11 +32,20 @@ export function Sharing({ align }: { align?: "start" | "end" }) {
 
     const $shariff = $(shariffElementRef.current);
 
-    new Shariff($shariff, {
-      lang: Session.get("locale"),
-      mailUrl: "mailto:",
-      services: ["linkedin", "twitter", "facebook", "telegram", "whatsapp", "mail"],
-    });
+    new Shariff(
+      $shariff,
+      omitBy(
+        {
+          lang: Session.get("locale"),
+          mailUrl: "mailto:",
+          services: ["linkedin", "twitter", "facebook", "telegram", "whatsapp", "mail"],
+          title,
+          mailBody: [text, "{url}"].join("\n\n"),
+          url,
+        },
+        isEmpty,
+      ),
+    );
 
     $shariff.find(".fab, .fas").addClass("fa fa-fw");
 
@@ -41,15 +63,8 @@ export function Sharing({ align }: { align?: "start" | "end" }) {
 
   return (
     <div className={`shariff-wrapper${align === "end" ? " text-end" : ""}`}>
-      <p>{t("sharing.title", "Share it with your friends")}</p>
-      <div
-        ref={shariffElementRef}
-        className="shariff"
-        data-mail-body={`${t(
-          "sharing.mailbody.quote",
-          "look what I found, are you interested?",
-        )} {url}`}
-      ></div>
+      <h4>{t("sharing.title", "Invite your friends")}</h4>
+      <div ref={shariffElementRef} className="shariff"></div>
     </div>
   );
 }

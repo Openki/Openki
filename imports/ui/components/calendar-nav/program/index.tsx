@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import moment from "moment";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useTranslation } from "react-i18next";
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import { FilterGroups } from "/imports/ui/components/filter-groups";
 
@@ -15,30 +16,30 @@ import "../styles.scss";
 
 export interface Props {
   hideSwitches: boolean;
-  search: string;
+  search: string | undefined;
   onChangeSearch: (newValue: string) => void;
   days: moment.Moment[];
   selectedDays: moment.Moment[];
   onAddDay: (day: moment.Moment) => void;
   onRemoveDay: (day: moment.Moment) => void;
-  availableGroups: string[];
-  selectedGroups: string[];
+  availableGroups?: string[] | undefined;
+  selectedGroups: string[] | undefined;
   onAddGroup: (group: string) => void;
   onRemoveGroup: (group: string) => void;
-  categories: string[];
+  categories: string[] | undefined;
   onAddCategory: (category: string) => void;
   onRemoveCategory: (category: string) => void;
   onChangeAttendingEventsOnly: (state: boolean) => void;
 }
 
-export function CalendarNavProgramme(props: Props) {
+export function CalendarNavProgram(props: Props) {
   const { hideSwitches, days, availableGroups } = props;
   const currentUser = useUser();
   const { t } = useTranslation();
-  const { weekdayFormat } = useDateTimeFormat();
+  const { dayOfWeekShort, dayOfWeekLong } = useDateTimeFormat();
 
   const viewport = useViewportSize();
-  const isMobileScreen = viewport.width <= ScssVars.screenXS;
+  const isMobileScreen = viewport.width <= ScssVars.screenSM;
 
   const elementRef = useRef(null);
 
@@ -66,20 +67,16 @@ export function CalendarNavProgramme(props: Props) {
       <div className="container py-1">
         <div className="row align-items-center px-1">
           <div className="col-md-8 col-lg-6 p-1">
-            <SearchField {...searchFieldAttr()} />
+            <SearchField {...searchFieldAttr()} color="primary" />
           </div>
         </div>
         <div className="row align-items-center px-1">
-          {availableGroups ? (
-            <>
-              <div className="col-md-4 col-lg-3 p-1">
-                <FilterGroups {...filterGroupsAttr()} />
-              </div>
-              <div className="col-md-4 col-lg-3 p-1">
-                <FilterCategories {...filterCategoriesAttr()} />
-              </div>
-            </>
-          ) : (
+          {!!availableGroups?.length && (
+            <div className="col-md-4 col-lg-3 p-1">
+              <FilterGroups {...filterGroupsAttr()} />
+            </div>
+          )}
+          {!PublicSettings.feature.hideCategories && (
             <div className="col-md-4 col-lg-3 p-1">
               <FilterCategories {...filterCategoriesAttr()} />
             </div>
@@ -112,25 +109,21 @@ export function CalendarNavProgramme(props: Props) {
                   {props.selectedDays.find((s) => s.isSame(d)) ? (
                     <button
                       type="button"
-                      className={`btn ${isMobileScreen ? "p-1" : "btn-lg"} bg-white d-block active`}
+                      className={`btn ${isMobileScreen ? "p-1" : ""} btn-lg btn-primary text-white border-dark d-block active`}
                       data-bs-toggle="button"
                       aria-pressed="true"
                       onClick={() => props.onRemoveDay(d)}
                     >
-                      {weekdayFormat(d)}
-                      {isMobileScreen ? <br /> : " "}
-                      <i className="fa-solid fa-check fa-fw text-success" aria-hidden="true"></i>
+                      {isMobileScreen ? dayOfWeekShort(d) : dayOfWeekLong(d)}
                     </button>
                   ) : (
                     <button
                       type="button"
-                      className={`btn ${isMobileScreen ? "p-1" : "btn-lg"} bg-white d-block`}
+                      className={`btn ${isMobileScreen ? "p-1" : ""} btn-lg bg-white d-block`}
                       data-bs-toggle="button"
                       onClick={() => props.onAddDay(d)}
                     >
-                      {weekdayFormat(d)}
-                      {isMobileScreen ? <br /> : " "}
-                      <i className="fa fa-fw" aria-hidden="true"></i>
+                      {isMobileScreen ? dayOfWeekShort(d) : dayOfWeekLong(d)}
                     </button>
                   )}
                 </div>

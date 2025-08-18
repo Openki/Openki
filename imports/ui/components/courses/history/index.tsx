@@ -136,7 +136,7 @@ export function EventInsertedHistoryEntry({
   createdBy: string;
 }) {
   const { t } = useTranslation();
-  const { weekdayFormat, calendarDayShort } = useDateTimeFormat();
+  const { dayOfWeek, calendarDayShort } = useDateTimeFormat();
 
   return (
     <>
@@ -144,7 +144,7 @@ export function EventInsertedHistoryEntry({
       {t("course.history.eventInserted", "{EVENT} created by {USER}", {
         EVENT: (
           <a href={Router.path("showEvent", { _id, slug })}>
-            {weekdayFormat(startLocal)} {calendarDayShort(startLocal)} {title}
+            {dayOfWeek(startLocal)} {calendarDayShort(startLocal)} {title}
           </a>
         ),
         USER: (
@@ -174,11 +174,11 @@ export function EventUpdatedHistoryEntry({
   replicasUpdated: boolean;
 }) {
   const { t } = useTranslation();
-  const { weekdayFormat, calendarDayShort } = useDateTimeFormat();
+  const { dayOfWeek, calendarDayShort } = useDateTimeFormat();
   const tOptions = {
     EVENT: (
       <a href={Router.path("showEvent", { _id, slug })}>
-        {weekdayFormat(startLocal)} {calendarDayShort(startLocal)} {title}
+        {dayOfWeek(startLocal)} {calendarDayShort(startLocal)} {title}
       </a>
     ),
     USER: (
@@ -212,14 +212,14 @@ export function EventRemovedHistoryEntry({
   startLocal: string;
 }) {
   const { t } = useTranslation();
-  const { weekdayFormat, calendarDayShort } = useDateTimeFormat();
+  const { dayOfWeek, calendarDayShort } = useDateTimeFormat();
   return (
     <>
       <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>{" "}
       {t("course.history.eventRemoved", "{EVENT} removed by {USER}", {
         EVENT: (
           <>
-            {weekdayFormat(startLocal)} {calendarDayShort(startLocal)} {title}
+            {dayOfWeek(startLocal)} {calendarDayShort(startLocal)} {title}
           </>
         ),
         USER: (
