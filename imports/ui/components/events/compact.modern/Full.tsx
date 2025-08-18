@@ -124,7 +124,7 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
                 target="_blank"
                 rel="noreferrer"
               >
-                {t("frame.programme.editMode", "Edit mode", {
+                {t("frame.program.editMode", "Edit mode", {
                   SITENAME: siteName,
                 })}{" "}
                 <i className="fa-fw fa-solid fa-arrow-up-right-from-square"></i>

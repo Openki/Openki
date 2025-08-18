@@ -31,7 +31,7 @@ export interface Props {
   onChangeAttendingEventsOnly: (state: boolean) => void;
 }
 
-export function CalendarNavProgramme(props: Props) {
+export function CalendarNavProgram(props: Props) {
   const { hideSwitches, days, availableGroups } = props;
   const currentUser = useUser();
   const { t } = useTranslation();
