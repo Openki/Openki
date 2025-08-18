@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import moment from "moment";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useTranslation } from "react-i18next";
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import { FilterGroups } from "/imports/ui/components/filter-groups";
 
@@ -15,17 +16,17 @@ import "../styles.scss";
 
 export interface Props {
   hideSwitches: boolean;
-  search: string;
+  search: string | undefined;
   onChangeSearch: (newValue: string) => void;
   days: moment.Moment[];
   selectedDays: moment.Moment[];
   onAddDay: (day: moment.Moment) => void;
   onRemoveDay: (day: moment.Moment) => void;
-  availableGroups: string[];
-  selectedGroups: string[];
+  availableGroups?: string[] | undefined;
+  selectedGroups: string[] | undefined;
   onAddGroup: (group: string) => void;
   onRemoveGroup: (group: string) => void;
-  categories: string[];
+  categories: string[] | undefined;
   onAddCategory: (category: string) => void;
   onRemoveCategory: (category: string) => void;
   onChangeAttendingEventsOnly: (state: boolean) => void;
@@ -70,16 +71,12 @@ export function CalendarNavProgram(props: Props) {
           </div>
         </div>
         <div className="row align-items-center px-1">
-          {availableGroups ? (
-            <>
-              <div className="col-md-4 col-lg-3 p-1">
-                <FilterGroups {...filterGroupsAttr()} />
-              </div>
-              <div className="col-md-4 col-lg-3 p-1">
-                <FilterCategories {...filterCategoriesAttr()} />
-              </div>
-            </>
-          ) : (
+          {!!availableGroups?.length && (
+            <div className="col-md-4 col-lg-3 p-1">
+              <FilterGroups {...filterGroupsAttr()} />
+            </div>
+          )}
+          {!PublicSettings.feature.hideCategories && (
             <div className="col-md-4 col-lg-3 p-1">
               <FilterCategories {...filterCategoriesAttr()} />
             </div>

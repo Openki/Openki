@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { isEmpty, isNil, omitBy } from "lodash";
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import { EventModel } from "/imports/api/events/events";
 import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
@@ -168,7 +169,7 @@ export function Full({ event, animation }: { event: EventModel; animation: "show
 
           {!!event.courseId && <DisplayDiscussion courseId={event.courseId} eventId={event._id} />}
 
-          {!!event.categories?.length && (
+          {!!PublicSettings.feature.hideCategories && !!event.categories?.length && (
             <p className="card-text">
               <small className="text-body-secondary">
                 <strong>{t("event.details.categories", "Categories:")}</strong>{" "}
