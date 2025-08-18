@@ -13,7 +13,6 @@ const languages = { ...LanguagesRaw };
 if (Meteor.isServer) {
   /** Enrich Languages with stats from weblate */
   (async function enrichLanguages() {
-    const fetch = (await import("node-fetch")).default;
     try {
       // See: https://docs.weblate.org/en/latest/api.html#exports
       const response = await fetch(
