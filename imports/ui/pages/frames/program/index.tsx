@@ -17,12 +17,9 @@ import * as Metatags from "/imports/utils/metatags";
 import { Dashboard } from "/imports/ui/components/dashboard";
 import { AccountTasks } from "/imports/ui/components/account-tasks";
 import {
-  CalendarNavProgramme,
+  CalendarNavProgram,
   Props as CalendarNavData,
-} from "/imports/ui/components/calendar-nav/programme";
-
-import "./template.html";
-import "./styles.scss";
+} from "/imports/ui/components/calendar-nav/program";
 
 function getDays(start: moment.Moment, end: moment.Moment) {
   const days = [];
@@ -35,7 +32,7 @@ function getDays(start: moment.Moment, end: moment.Moment) {
   return days;
 }
 
-export function ProgrammePage(data: Record<string, string>) {
+export function ProgramPage(data: Record<string, string>) {
   const { t } = useTranslation();
   const { calendarDayFormat } = useDateTimeFormat();
   const userId = useUserId();
@@ -148,7 +145,7 @@ export function ProgrammePage(data: Record<string, string>) {
   return (
     <>
       <AccountTasks />
-      {control() && <CalendarNavProgramme {...calendarNavAttr()} />}
+      {control() && <CalendarNavProgram {...calendarNavAttr()} />}
       <div className="py-4">
         <Dashboard
           list={days()
@@ -181,4 +178,4 @@ export function ProgrammePage(data: Record<string, string>) {
 
 import "./template.html";
 
-Template.registerHelper("FrameProgrammePage", () => ProgrammePage);
+Template.registerHelper("FrameProgramPage", () => ProgramPage);

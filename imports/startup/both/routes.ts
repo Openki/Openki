@@ -654,12 +654,12 @@ RouterAsync.route("frameWeek", {
   },
 });
 
-RouterAsync.route("frameProgramme", {
-  path: "/frame/programme",
-  template: "frameProgrammePage",
+RouterAsync.route("frameProgram", {
+  path: "/frame/program",
+  template: "frameProgramPage",
   layoutTemplate: "frameLayout",
   async onRun() {
-    await import("/imports/ui/pages/frames/programme");
+    await import("/imports/ui/pages/frames/program");
   },
   data() {
     return this.params.query;
