@@ -14,7 +14,9 @@ export function ImagePlaceholder({
 
   if (isLoading() || !region || !region.custom?.courseBackgroundImages) {
     return (
-      <div className="position-relative card-header card-header-img bg-img-cover border-bottom">{children}</div>
+      <div className="position-relative card-header card-header-img bg-img-cover border-bottom">
+        {children}
+      </div>
     );
   }
 
