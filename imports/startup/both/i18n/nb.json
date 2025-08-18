@@ -423,6 +423,7 @@
   "profile.toggle.allowPrivateMessages": "Motta private meldinger fra brukere via e-post",
   "profile.toggle.notifications": "Motta automatiserte merknader via e-post",
   "profile.users_profile_page": "{NAME} sin profil",
+  "profile.verifyEmail.success": "E-posten din har blitt bekreftet.",
   "profile.windowtitle": "Profil for {USER}",
   "region.detail.remove": "Fjern denne regionen",
   "region.detail.remove.busy": "Sletter region …",
@@ -516,6 +517,5 @@
   "venue.map.windowtitle": "Kart over lokaler",
   "venueDetails.coordinates": "Koordinater:",
   "venues.list.title": "Lokaler",
-  "verifyEmail.email.verifyButton": "Bekreft e-postadresse",
-  "profile.verifyEmail.success": "E-posten din har blitt bekreftet."
+  "verifyEmail.email.verifyButton": "Bekreft e-postadresse"
 }
