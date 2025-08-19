@@ -41,7 +41,7 @@ export function Full({
   animation: "show" | "hide";
   hideCategories?: boolean | undefined;
 }) {
-  const { timeFormat } = useDateTimeFormat();
+  const { timeFormat, dateFormat } = useDateTimeFormat();
   const { t } = useTranslation();
   const siteName = useSiteName();
   const user = useUser();
@@ -95,6 +95,9 @@ export function Full({
       <div className="card-body">
         <h3 className="card-title min-h-2l fw-bold">{event.title}</h3>
         <p className="card-text">
+          <div className="panel-calendar">
+            <i className="fa-regular fa-fw fa-calendar"></i> {dateFormat(event.startLocal)}
+          </div>
           <i className="fa-regular fa-fw fa-clock"></i> {timeFormat(event.startLocal)} -{" "}
           {timeFormat(event.endLocal)}
           <br />
