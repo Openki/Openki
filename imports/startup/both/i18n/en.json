@@ -378,7 +378,7 @@
   "event.details.message.eventHasBeenUncanceled": "{EVENT} has been uncaneled. No notifications have been sent.",
   "event.details.message.eventHasBeenUncanceled.error": "Uncancelling went wrong",
   "event.details.noRsvp": "Registration not required.",
-  "event.details.organziedBy": "Organized by",
+  "event.details.organziedBy": "Organized by:",
   "event.details.participants.free.places": "{NUM, plural, =0{No free seats} one{one free seat} other{# free seats} }",
   "event.details.paticipants.title": "{NUM, plural, =0{No participants yet} one{1 Participant} other{# Participants} }",
   "event.details.register-register": "Register",
