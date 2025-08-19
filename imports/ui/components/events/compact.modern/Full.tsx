@@ -101,12 +101,13 @@ export function Full({
           {!!locationPreview && (
             <>
               <a
-                href={`#show=${event._id}&place`}
-                onClick={() => {
-                  // Fix: Remove this entry from browser history. Otherwise, nothing will happen on history back.
-                  setTimeout(() => {
-                    history.back();
-                  }, 0);
+                href="#"
+                onClick={(ev) => {
+                  ev.preventDefault();
+
+                  document
+                    .querySelector(`#place`)
+                    ?.scrollIntoView({ block: "center", behavior: "smooth" });
                 }}
               >
                 <i className="fa-solid fa-fw fa-location-dot"></i>
@@ -147,10 +148,8 @@ export function Full({
           <hr className="hr-flush border-dark" />
 
           {!!event.venue && !isEmpty(omitBy(event.venue, isNil)) && (
-            <>
-              <h4 id={`show=${event._id}&place`} className="card-title">
-                {t("event.details.location", "Location")}
-              </h4>
+            <div id="place">
+              <h4 className="card-title">{t("event.details.location", "Location")}</h4>
               <p className="card-text">
                 <i className="fa-solid fa-fw fa-location-dot"></i>
                 {[event.venue.name, event.venue.address].filter((v) => v).join(", ")}
@@ -164,7 +163,7 @@ export function Full({
                   <Display coordinates={event.venue?.loc?.coordinates} />
                 )}
               </p>
-            </>
+            </div>
           )}
 
           {!isRegionLoading() && !!organizedByGroups?.length && (
