@@ -168,22 +168,18 @@ export function Full({
           )}
 
           {!isRegionLoading() && !!organizedByGroups?.length && (
-            <>
-              <h4 className="card-title">{t("event.details.organziedBy", "Organized by")}</h4>
-              <p className="card-text">
-                {ReactJoin(organizedByGroups.map((group) => <GroupName key={group} id={group} />))}
-              </p>
-            </>
+            <p className="card-text">
+              <strong>{t("event.details.organziedBy", "Organized by:")}</strong>{" "}
+              {ReactJoin(organizedByGroups.map((group) => <GroupName key={group} id={group} />))}
+            </p>
           )}
 
           {!!event.courseId && <DisplayDiscussion courseId={event.courseId} eventId={event._id} />}
 
           {!hideCategories && !!event.categories?.length && (
             <p className="card-text">
-              <small className="text-body-secondary">
-                <strong>{t("event.details.categories", "Categories:")}</strong>{" "}
-                {event.categories.map((category) => t(`category.${category}`)).join(", ")}
-              </small>
+              <strong>{t("event.details.categories", "Categories:")}</strong>{" "}
+              {event.categories.map((category) => t(`category.${category}`)).join(", ")}
             </p>
           )}
 
