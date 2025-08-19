@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Modal from "bootstrap/js/dist/modal";
 import { Router } from "meteor/iron:router";
-import { useSessionEquals } from "/imports/utils/react-meteor-data";
+import { useSession, useSessionEquals } from "/imports/utils/react-meteor-data";
 
 import { isEmail } from "/imports/utils/email-tools";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
@@ -166,6 +166,7 @@ function Task({
 
 export function AccountTasks() {
   const pleaseLogin = useSessionEquals("pleaseLogin", true);
+  const top = useSession("top");
   const viewport = useViewportSize();
   const [activeTask, setActiveTask] = useState("login");
   const [show, setShow] = useState(false);
@@ -181,6 +182,7 @@ export function AccountTasks() {
       setActiveTask("login");
       Session.set("pleaseLogin", false);
       Session.set("visitorUserAllowed", false);
+      Session.set("top", 0);
       setShow(false);
     };
     const shown = () => {
@@ -205,7 +207,15 @@ export function AccountTasks() {
       role="dialog"
       ref={elementRef}
     >
-      <div className="modal-dialog modal-sm" role="document">
+      <div
+        className="modal-dialog modal-sm"
+        role="document"
+        style={
+          top
+            ? { top: top - 280 /* half modal height, todo: make this better */ + "px" }
+            : undefined
+        }
+      >
         {show && (
           <div className="modal-content">
             <div className="modal-header">
