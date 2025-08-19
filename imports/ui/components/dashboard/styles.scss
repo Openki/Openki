@@ -47,6 +47,15 @@
   left: 0 !important;
 }
 
+.scroll-container {
+  scroll-snap-type: x mandatory;
+}
+
+.scroll-container > * {
+  scroll-snap-align: start;
+  scroll-margin-inline-start: 1px;
+}
+
 .scroll-container:hover .btn-scroll {
   opacity: 0.6;
 }
