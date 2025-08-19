@@ -186,7 +186,12 @@ function DashboardComponent({
   if (defaultGroup) {
     urlParams.append("group", defaultGroup);
   }
-  const params = Object.fromEntries(urlParams);
+
+  // Convert to params, can not use Object.fromEntries because it breaks on safari on ios.
+  const params: Record<string, string> = {};
+  urlParams.forEach((value, key) => {
+    params[key] = value;
+  });
 
   if (!("filter" in handler)) {
     // StaticComponent
