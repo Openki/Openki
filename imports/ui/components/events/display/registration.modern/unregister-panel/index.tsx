@@ -58,6 +58,7 @@ export function UnregisterPanel({ event, busy, onUnregister }: Props) {
       {!unregisterDropdown ? (
         <>
           {t("event.details.registrationIsBinding", "Your registration is binding.")}
+          <br />
           <button
             type="button"
             className="btn btn-add"
