@@ -30,7 +30,16 @@ template.onRendered(() => {
     let heightSecond = 0;
 
     observeSize(frame, (element: Element) => {
-      if (!element.scrollHeight) {
+      let scrollHeight = element.scrollHeight;
+
+      // also check children scrollHeight, works only if the right class is set
+      element
+        .querySelectorAll(".overflow-auto,.overflow-y-auto,.overflow-scroll,.overflow-y-scroll")
+        .forEach((e) => {
+          scrollHeight = Math.max(scrollHeight, e.scrollHeight);
+        });
+
+      if (!scrollHeight) {
         return;
       }
 
@@ -42,24 +51,24 @@ template.onRendered(() => {
         heightSecond = 0;
       } else {
         if (!heightFirst) {
-          heightFirst = element.scrollHeight;
+          heightFirst = scrollHeight;
         } else if (!heightSecond) {
-          heightSecond = element.scrollHeight;
-        } else if (heightFirst === element.scrollHeight) {
+          heightSecond = scrollHeight;
+        } else if (heightFirst === scrollHeight) {
           if (heightFirst < heightSecond) {
             // it is flackering do not send a update
             return;
           } else {
             // it is flackering, but the current size is smaller send a update, and then do not send a update.
             heightSecond = heightFirst;
-            heightFirst = element.scrollHeight;
+            heightFirst = scrollHeight;
           }
         }
       }
 
       const message = {
         type: "onFrameHeightChange",
-        height: element.scrollHeight,
+        height: scrollHeight,
         src: initialHref,
       };
       window.parent.postMessage(message, "*");
