@@ -68,9 +68,15 @@ export function PleaseLogin(props: Props & (AutoProps | FormProps | ButtonProps)
     }
   }, [actionActive, userId, openedLogin, notPleaseLogin, props]);
 
-  async function handleEvent(event: { preventDefault: () => void }) {
+  async function handleEvent(event: { preventDefault: () => void; target: EventTarget }) {
     event.preventDefault();
     setActionActive(true);
+
+    /* in a frame (eg. /frame/program, with the height plugin we need to set the position of the login modal) */
+    if (document.querySelector(".frame")) {
+      Session.set("top", (event.target as HTMLElement).getBoundingClientRect().top);
+    }
+
     setIsBusy(true);
   }
 
