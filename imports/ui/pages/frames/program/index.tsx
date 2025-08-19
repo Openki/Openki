@@ -3,10 +3,11 @@ import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useUserId } from "/imports/utils/react-meteor-data";
+import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 
 import moment from "moment";
 
-import { Events } from "/imports/api/events/events";
+import { Events, FindParams } from "/imports/api/events/events";
 
 import * as UrlTools from "/imports/utils/url-tools";
 import { reactiveNow } from "/imports/utils/reactive-now";
@@ -38,8 +39,14 @@ export function ProgramPage(data: Record<string, string>) {
   const userId = useUserId();
   const [isAttendeeFilterOn, setIsAttendeeFilterOn] = useState(false);
 
-  const count = Number.parseInt(data.count || "", 10) || 10;
-  const filter = Events.Filtering().read(data);
+  const filter = new Filtering({
+    ...FindParams,
+    count: Predicates.integer,
+    control: Predicates.flag,
+    hideSwitches: Predicates.flag,
+    hideCategories: Predicates.flag,
+    filterGroups: Predicates.ids,
+  }).read(data);
 
   const date = moment(reactiveNow.get());
   const start = filter.get("start") || moment(date).startOf("week");
@@ -49,14 +56,10 @@ export function ProgramPage(data: Record<string, string>) {
     getDays(start, end).filter((d) => !d.isBefore(date, "day")),
   );
 
-  function control() {
-    return data.control === "1";
-  }
-
   function calendarNavAttr(): CalendarNavData {
     return {
-      hideSwitches: data.hideSwitches === "1",
-      hideCategories: data.hideCategories === "1",
+      hideSwitches: filter.get("hideSwitches"),
+      hideCategories: filter.get("hideCategories"),
       search: filter.get("search"),
       onChangeSearch: (newValue: string) => {
         filter.add("search", newValue);
@@ -70,11 +73,7 @@ export function ProgramPage(data: Record<string, string>) {
       onRemoveDay: (day) => {
         setSelectedDays(selectedDays.filter((d) => !d.isSame(day)));
       },
-      availableGroups: new Filtering({
-        filterGroups: Predicates.ids,
-      })
-        .read(data)
-        .get("filterGroups"),
+      availableGroups: filter.get("filterGroups"),
       selectedGroups: filter.get("groups"),
       onAddGroup: (group) => {
         filter.add("groups", group);
@@ -115,23 +114,11 @@ export function ProgramPage(data: Record<string, string>) {
     Metatags.setCommonTags(t("calendar.windowtitle", "Calendar"));
   });
 
+  const routeName = useCurrentRouteName();
+
   function update() {
     const filterParams = filter.toParams() as Record<string, string>;
-    if (data.control) {
-      filterParams.control = data.control;
-    } else {
-      delete filterParams.control;
-    }
-    if (data.hideSwitches) {
-      filterParams.hideSwitches = data.hideSwitches;
-    } else {
-      delete filterParams.hideSwitches;
-    }
-    if (data.filterGroups) {
-      filterParams.filterGroups = data.filterGroups;
-    } else {
-      delete filterParams.filterGroups;
-    }
+
     delete filterParams.region; // HACK region is kept in the session (for bad reasons)
     const queryString = UrlTools.paramsToQueryString(filterParams);
 
@@ -140,13 +127,13 @@ export function ProgramPage(data: Record<string, string>) {
       options.query = queryString;
     }
 
-    Router.go(Router.current().route.getName(), {}, options);
+    Router.go(routeName, {}, options);
   }
 
   return (
     <>
       <AccountTasks />
-      {control() && <CalendarNavProgram {...calendarNavAttr()} />}
+      {!!filter.get("control") && <CalendarNavProgram {...calendarNavAttr()} />}
       <div className="py-4">
         <Dashboard
           list={
@@ -197,7 +184,7 @@ export function ProgramPage(data: Record<string, string>) {
                 return [afternoon, evening];
               }) as ComponentSettings[]
           }
-          limit={count}
+          limit={filter.get("count") || 10}
           fluid
         />
       </div>
