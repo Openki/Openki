@@ -101,7 +101,7 @@ export function Panel({
       {expanded && (
         <div ref={fullRef}>
           <div
-            className="panel-full-bg smooth-scroll"
+            className="panel-full-bg overflow-auto smooth-scroll"
             onClick={() => {
               handleClose();
             }}
