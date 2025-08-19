@@ -13,6 +13,8 @@ import { ForgotPwdFrame, Props as ForgotPwdFrameProps } from "./forgot-pwd-frame
 import { VistiorFrame, Props as VisitorFrameProps } from "./visitor-frame";
 import { RegisterFrame, Props as RegisterFrameProps } from "./register-frame";
 
+import "./styles.scss";
+
 function Title({ activeTask }: { activeTask: string }) {
   const { t } = useTranslation();
   const pleaseLogin = useSessionEquals("pleaseLogin", true);
