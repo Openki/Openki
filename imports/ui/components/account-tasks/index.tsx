@@ -170,12 +170,18 @@ export function AccountTasks() {
   const viewport = useViewportSize();
   const [activeTask, setActiveTask] = useState("login");
   const [show, setShow] = useState(false);
-  const elementRef = useRef<HTMLDivElement>(null);
+  const elementModalRef = useRef<HTMLDivElement>(null);
+  const elementModalDialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (pleaseLogin && elementRef.current) {
+    if (pleaseLogin && elementModalRef.current) {
       setShow(true);
-      Modal.getOrCreateInstance(elementRef.current).show();
+      Modal.getOrCreateInstance(elementModalRef.current).show();
+
+      if (top) {
+        // this is needed in frames with the iframeHeightAdjust plugin eg. when /frame/program is used
+        elementModalDialogRef.current?.scrollIntoView({ behavior: "smooth" });
+      }
     }
 
     const hidden = () => {
@@ -189,7 +195,7 @@ export function AccountTasks() {
       setShow(true);
     };
 
-    const element = elementRef.current;
+    const element = elementModalRef.current;
     element?.addEventListener("hidden.bs.modal", hidden);
     element?.addEventListener("shown.bs.modal", shown);
 
@@ -205,7 +211,7 @@ export function AccountTasks() {
       id="accountTaskModal"
       tabIndex={-1}
       role="dialog"
-      ref={elementRef}
+      ref={elementModalRef}
     >
       <div
         className="modal-dialog modal-sm"
@@ -215,6 +221,7 @@ export function AccountTasks() {
             ? { top: top - 280 /* half modal height, todo: make this better */ + "px" }
             : undefined
         }
+        ref={elementModalDialogRef}
       >
         {show && (
           <div className="modal-content">
@@ -240,13 +247,13 @@ export function AccountTasks() {
                     $("#bs-navbar-collapse").collapse("hide");
                   }
 
-                  if (elementRef.current) {
-                    Modal.getOrCreateInstance(elementRef.current).hide();
+                  if (elementModalRef.current) {
+                    Modal.getOrCreateInstance(elementModalRef.current).hide();
                   }
                 }}
                 onResetPasswort={() => {
-                  if (elementRef.current) {
-                    Modal.getOrCreateInstance(elementRef.current).hide();
+                  if (elementModalRef.current) {
+                    Modal.getOrCreateInstance(elementModalRef.current).hide();
                   }
                 }}
               />
