@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import { Courses } from "/imports/api/courses/courses";
 import { CourseDiscussionEntity } from "/imports/api/course-discussions/course-discussions";
 import * as CourseDiscussionsMethods from "/imports/api/course-discussions/methods";
-import * as Alert from "/imports/api/alerts/alert";
 
 import * as CourseDiscussionUtils from "/imports/utils/course-discussion-utils";
 import * as Tooltips from "/imports/utils/Tooltips";
@@ -44,12 +43,7 @@ export function Show({ post, onEdit }: Props) {
       async onRemove() {
         Tooltips.hide();
 
-        try {
-          await CourseDiscussionsMethods.deleteComment(post._id);
-          Alert.success(t("discussionPost.deleted", "Comment deleted."));
-        } catch (err) {
-          Alert.serverError(err, t("discussionPost.deleted.error", "Could not delete comment"));
-        }
+        await CourseDiscussionsMethods.deleteComment(post._id);
       },
     };
   }
