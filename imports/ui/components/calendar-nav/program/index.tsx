@@ -40,6 +40,7 @@ export function CalendarNavProgram(props: Props) {
 
   const viewport = useViewportSize();
   const isMobileScreen = viewport.width <= ScssVars.screenSM;
+  const isDesktopScreen = viewport.width > ScssVars.screenMD;
 
   const elementRef = useRef(null);
 
@@ -101,7 +102,7 @@ export function CalendarNavProgram(props: Props) {
             </div>
           )}
         </div>
-        <div className="row align-items-center px-1">
+        <div className={"row align-items-center px-1 " + (isDesktopScreen ? "gap-4" : "")}>
           {!hideSwitches &&
             days.map((d) => (
               <div key={d.toISOString()} className="col p-1">
@@ -119,7 +120,7 @@ export function CalendarNavProgram(props: Props) {
                   ) : (
                     <button
                       type="button"
-                      className={`btn ${isMobileScreen ? "p-1" : ""} btn-lg bg-white d-block`}
+                      className={`btn ${isMobileScreen ? "p-1" : ""} btn-lg bg-white text-body-secondary d-block`}
                       data-bs-toggle="button"
                       onClick={() => props.onAddDay(d)}
                     >

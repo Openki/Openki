@@ -41,7 +41,7 @@ export function Full({
   animation: "show" | "hide";
   hideCategories?: boolean | undefined;
 }) {
-  const { timeFormat } = useDateTimeFormat();
+  const { timeFormat, dateFormat } = useDateTimeFormat();
   const { t } = useTranslation();
   const siteName = useSiteName();
   const user = useUser();
@@ -95,18 +95,22 @@ export function Full({
       <div className="card-body">
         <h3 className="card-title min-h-2l fw-bold">{event.title}</h3>
         <p className="card-text">
+          <div className="panel-calendar">
+            <i className="fa-regular fa-fw fa-calendar"></i> {dateFormat(event.startLocal)}
+          </div>
           <i className="fa-regular fa-fw fa-clock"></i> {timeFormat(event.startLocal)} -{" "}
           {timeFormat(event.endLocal)}
           <br />
           {!!locationPreview && (
             <>
               <a
-                href={`#show=${event._id}&place`}
-                onClick={() => {
-                  // Fix: Remove this entry from browser history. Otherwise, nothing will happen on history back.
-                  setTimeout(() => {
-                    history.back();
-                  }, 0);
+                href="#"
+                onClick={(ev) => {
+                  ev.preventDefault();
+
+                  document
+                    .querySelector(`#place`)
+                    ?.scrollIntoView({ block: "center", behavior: "smooth" });
                 }}
               >
                 <i className="fa-solid fa-fw fa-location-dot"></i>
@@ -147,10 +151,8 @@ export function Full({
           <hr className="hr-flush border-dark" />
 
           {!!event.venue && !isEmpty(omitBy(event.venue, isNil)) && (
-            <>
-              <h4 id={`show=${event._id}&place`} className="card-title">
-                {t("event.details.location", "Location")}
-              </h4>
+            <div id="place">
+              <h4 className="card-title">{t("event.details.location", "Location")}</h4>
               <p className="card-text">
                 <i className="fa-solid fa-fw fa-location-dot"></i>
                 {[event.venue.name, event.venue.address].filter((v) => v).join(", ")}
@@ -164,26 +166,22 @@ export function Full({
                   <Display coordinates={event.venue?.loc?.coordinates} />
                 )}
               </p>
-            </>
+            </div>
           )}
 
           {!isRegionLoading() && !!organizedByGroups?.length && (
-            <>
-              <h4 className="card-title">{t("event.details.organziedBy", "Organized by")}</h4>
-              <p className="card-text">
-                {ReactJoin(organizedByGroups.map((group) => <GroupName key={group} id={group} />))}
-              </p>
-            </>
+            <p className="card-text">
+              <strong>{t("event.details.organziedBy", "Organized by:")}</strong>{" "}
+              {ReactJoin(organizedByGroups.map((group) => <GroupName key={group} id={group} />))}
+            </p>
           )}
 
           {!!event.courseId && <DisplayDiscussion courseId={event.courseId} eventId={event._id} />}
 
           {!hideCategories && !!event.categories?.length && (
             <p className="card-text">
-              <small className="text-body-secondary">
-                <strong>{t("event.details.categories", "Categories:")}</strong>{" "}
-                {event.categories.map((category) => t(`category.${category}`)).join(", ")}
-              </small>
+              <strong>{t("event.details.categories", "Categories:")}</strong>{" "}
+              {event.categories.map((category) => t(`category.${category}`)).join(", ")}
             </p>
           )}
 

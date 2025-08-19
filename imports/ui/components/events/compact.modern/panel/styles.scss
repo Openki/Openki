@@ -17,7 +17,7 @@
   inset: 0;
   overflow: auto;
   backdrop-filter: blur(0);
-  transition: backdrop-filter 0.35s ease-in-out;
+  transition: backdrop-filter 0.35s;
 }
 
 .panel-animation .panel-full-bg {
@@ -26,7 +26,7 @@
 
 .panel-full {
   position: absolute;
-  transition: all 0.35s ease-in-out;
+  transition: all 0.35s;
 }
 
 .panel-animation .panel-full {
@@ -75,6 +75,16 @@
 
 .panel .panel-animation .panel-minimize {
   opacity: 1;
+}
+
+.panel-calendar {
+  transition: height 0.35s;
+  height: 0;
+  overflow: hidden;
+}
+
+.panel-animation .panel-calendar {
+  height: calc(var(--bs-body-font-size) * var(--bs-body-line-height));
 }
 
 .panel .card-header {
