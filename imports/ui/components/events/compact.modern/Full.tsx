@@ -151,9 +151,9 @@ export function Full({
           <hr className="hr-flush border-dark" />
 
           {!!event.venue && !isEmpty(omitBy(event.venue, isNil)) && (
-            <div id="place">
+            <>
               <h4 className="card-title">{t("event.details.location", "Location")}</h4>
-              <p className="card-text">
+              <p id="place" className="card-text">
                 <i className="fa-solid fa-fw fa-location-dot"></i>
                 {[event.venue.name, event.venue.address].filter((v) => v).join(", ")}
                 {!!event.room && (
@@ -166,7 +166,7 @@ export function Full({
                   <Display coordinates={event.venue?.loc?.coordinates} />
                 )}
               </p>
-            </div>
+            </>
           )}
 
           {!isRegionLoading() && !!organizedByGroups?.length && (
