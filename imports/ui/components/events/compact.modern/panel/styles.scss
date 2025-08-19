@@ -16,6 +16,12 @@
   position: fixed;
   inset: 0;
   overflow: auto;
+  backdrop-filter: blur(0);
+  transition: backdrop-filter 0.35s ease-in-out;
+}
+
+.panel-animation .panel-full-bg {
+  backdrop-filter: blur(10px);
 }
 
 .panel-full {
