@@ -146,8 +146,16 @@ a:focus,
   @include ellipsis-multiline(6);
 }
 
-.min-h-2l {
-  min-height: calc(1.2em * 2);
+h3.min-h-2l {
+  /* font-size + line-height */
+  min-height: calc((1.3rem + 0.6vw) * 1.2 * 2);
+}
+
+@media (width >= 1200px) {
+  h3.min-h-2l {
+    /* font-size + line-height */
+    min-height: calc(1.75rem * 1.2 * 2);
+  }
 }
 
 /* Avoid double lines; sometimes they occur for programming reasons. */

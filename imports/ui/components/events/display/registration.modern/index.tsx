@@ -200,7 +200,7 @@ export function RegistrationParticipants({ event }: Props) {
 
   return (
     <>
-      {isFuture() && (
+      {isFuture() && !event.canceled && (
         <>
           <h4 className="card-title">{t("event.details.registration", "Registration")}</h4>
           {event.noRsvp ? (
@@ -221,12 +221,7 @@ export function RegistrationParticipants({ event }: Props) {
           )}
         </>
       )}
-      {!event.noRsvp &&
-        event.attendedBy(user?._id) &&
-        // when registration closed, only show participant list when more than 0 participants
-        (!registrationClosed || !!event.participants?.length) && (
-          <EventParticipants event={event} />
-        )}
+      {!event.noRsvp && event.attendedBy(user?._id) && <EventParticipants event={event} />}
     </>
   );
 }
