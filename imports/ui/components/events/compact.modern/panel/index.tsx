@@ -24,12 +24,27 @@ export function Panel({
   const hash = (useHash() as string).slice(1);
   const hashParams = new URLSearchParams(hash);
   const isShowed = id === hashParams.get("show");
+
+  function handleClose() {
+    location.hash = "";
+
+    if (thumbRef.current) {
+      thumbRef.current.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  }
+
   useEffect(() => {
     onChange(isShowed ? "full" : "thumb");
     if (isShowed) {
       if (thumbRef.current) {
+        // vertical, supported in iframes
+        thumbRef.current.scrollIntoView({
+          behavior: "smooth",
+        });
+        // horizontal
         scrollIntoView(thumbRef.current, {
-          block: "nearest",
           inline: "nearest",
           scrollMode: "if-needed",
           behavior: "smooth" as ScrollBehavior,
@@ -61,7 +76,7 @@ export function Panel({
   useEffect(() => {
     function escape(e: KeyboardEvent) {
       if (e.key === "Escape") {
-        location.hash = "";
+        handleClose();
       }
     }
 
@@ -88,7 +103,7 @@ export function Panel({
           <div
             className="panel-full-bg smooth-scroll"
             onClick={() => {
-              location.hash = "";
+              handleClose();
             }}
           >
             <div
