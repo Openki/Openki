@@ -7,6 +7,8 @@ import { take } from "lodash";
 import { SortSpec } from "/imports/utils/sort-spec";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
+import { ScrollContainer } from "./ScrollContainer";
+
 import { mapping, ListOfEntities, ComponentWithEntities } from "./mapping";
 
 import "./styles.scss";
@@ -184,6 +186,5 @@ export function Dashboard({ list, defaultRegion, defaultGroup, limit, fluid }: P
 // for Blaze
 
 import "./template.html";
-import { ScrollContainer } from "./ScrollContainer";
 
 Template.registerHelper("Dashboard", () => Dashboard);
