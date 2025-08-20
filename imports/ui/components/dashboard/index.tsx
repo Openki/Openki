@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 import { useUserId } from "/imports/utils/react-meteor-data";
@@ -51,10 +51,6 @@ function EntitiesComponent<T>({
 
   const [isLoading, data] = handler.find(query, limit + 1, 0, sort.spec());
 
-  const elementRef = useRef<HTMLDivElement>(null);
-  const [scrollLeft, setScrollLeft] = useState(elementRef.current?.scrollLeft || 0);
-  const [scrollLeftMax, setScrollLeftMax] = useState(0);
-
   if (isLoading() || (Array.isArray(data) && data.length === 0)) {
     return null;
   }
@@ -69,53 +65,11 @@ function EntitiesComponent<T>({
       {!!title && <h2>{getLocalizedValue(title)}</h2>}
       {"element" in handler ? (
         // ListOfEntities
-        <div
-          className="scroll-container d-flex flex-row flex-nowrap pb-3 overflow-x-auto"
-          style={{ scrollBehavior: "smooth" }}
-          ref={elementRef}
-          onScroll={() => {
-            setScrollLeft(elementRef.current?.scrollLeft || 0);
-          }}
-          onMouseOver={() => {
-            const element = elementRef.current;
-            if (element) {
-              if (element.scrollWidth - element.clientWidth !== scrollLeftMax) {
-                setScrollLeftMax(element.scrollWidth - element.clientWidth);
-              }
-            }
-          }}
-        >
+        <ScrollContainer>
           {take(data, limit).map((d, i) => (
             <handler.element key={i} entity={d} index={i} params={params} />
           ))}
-          {scrollLeft !== 0 && (
-            <a
-              className="btn-scroll btn-scroll-left text-primary"
-              onClick={() => {
-                const element = elementRef.current;
-                if (element) {
-                  element.scrollLeft = element.scrollLeft - element.clientWidth * 0.9;
-                }
-              }}
-            >
-              <i className="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
-            </a>
-          )}
-          {elementRef.current &&
-            scrollLeft !== elementRef.current.scrollWidth - elementRef.current.clientWidth && (
-              <a
-                className="btn-scroll btn-scroll-right text-primary"
-                onClick={() => {
-                  const element = elementRef.current;
-                  if (element) {
-                    element.scrollLeft = element.scrollLeft + element.clientWidth * 0.9;
-                  }
-                }}
-              >
-                <i className="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i>
-              </a>
-            )}
-        </div>
+        </ScrollContainer>
       ) : (
         // ComponentWithEntities
         <handler.component entities={take(data, limit)} params={params} />
@@ -230,5 +184,6 @@ export function Dashboard({ list, defaultRegion, defaultGroup, limit, fluid }: P
 // for Blaze
 
 import "./template.html";
+import { ScrollContainer } from "./ScrollContainer";
 
 Template.registerHelper("Dashboard", () => Dashboard);
