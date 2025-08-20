@@ -3,13 +3,21 @@ import { StatePanel } from "./StatePanel";
 import { EventModel } from "/imports/api/events/events";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { ImagePlaceholder } from "./ImagePlaceholder";
+import { ScssVars } from "/imports/ui/lib/scss-vars";
+import { useViewportSize } from "/imports/ui/lib/useViewportSize";
 
 export function Thumb({ event }: { event: EventModel }) {
   const { timeFormat } = useDateTimeFormat();
   const locationPreview = [event.venue?.name, event.venue?.address].filter((v) => v)[0];
 
+  const viewport = useViewportSize();
+  const isMobileScreen = viewport.width <= ScssVars.screenSM;
+
   return (
-    <div className="card me-1" style={{ width: 320, minWidth: 320 }}>
+    <div
+      className="card me-1"
+      style={isMobileScreen ? { width: 270, minWidth: 270 } : { width: 320, minWidth: 320 }}
+    >
       {event?.publicUrlForCompactImage() ? (
         <div
           className="position-relative card-header card-header-img bg-img-cover border-bottom"
