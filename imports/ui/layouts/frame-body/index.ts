@@ -29,7 +29,7 @@ template.onRendered(() => {
     let heightFirst = 0;
     let heightSecond = 0;
 
-    observeSize(frame, (element: Element) => {
+    function handleResize(element: Element) {
       let scrollHeight = element.scrollHeight;
 
       // also check children scrollHeight, works only if the right class is set
@@ -75,6 +75,15 @@ template.onRendered(() => {
       if (Meteor.isDevelopment) {
         console.debug(`window.parent.postMessage(${JSON.stringify(message)})`);
       }
+    }
+
+    observeSize(frame, (element) => {
+      handleResize(element);
+
+      // maybe a animation has changed the height, so recheck after > 350ms
+      setTimeout(() => {
+        handleResize(element);
+      }, 400);
     });
   }
 
