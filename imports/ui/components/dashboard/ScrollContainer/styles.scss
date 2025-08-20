@@ -1,48 +1,54 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
-.btn-scroll {
-  position: absolute;
-  z-index: 2;
-  font-size: 49px;
-  top: 50%;
-  margin-top: -29px;
-  opacity: 0;
-  transition:
-    opacity 0.35s,
-    left 0.35s,
-    right 0.35s;
-  cursor: pointer;
-}
-
-.btn-scroll-right {
-  right: 5px;
-}
-
-.btn-scroll-right:hover {
-  right: 0 !important;
-}
-
-.btn-scroll-left {
-  left: 5px;
-}
-
-.btn-scroll-left:hover {
-  left: 0 !important;
-}
-
 .scroll-container {
   scroll-snap-type: x mandatory;
-}
 
-.scroll-container > * {
-  scroll-snap-align: start;
-  scroll-margin-inline-start: 1px;
-}
+  & > * {
+    scroll-snap-align: start;
+    scroll-margin-inline-start: 1px;
+  }
 
-.scroll-container:hover .btn-scroll {
-  opacity: 0.6;
-}
+  .btn-scroll {
+    position: absolute;
+    z-index: 2;
+    font-size: 49px;
+    top: 50%;
+    margin-top: -29px;
+    opacity: 0.6;
+    transition:
+      opacity 0.35s,
+      left 0.35s,
+      right 0.35s;
+    cursor: pointer;
+  }
 
-.scroll-container .btn-scroll:hover {
-  opacity: 1 !important;
+  @media (hover: hover) {
+    .btn-scroll {
+      opacity: 0;
+    }
+
+    &:hover .btn-scroll {
+      opacity: 0.6;
+    }
+  }
+
+  .btn-scroll:hover {
+    opacity: 1 !important;
+  }
+
+  .btn-scroll-right {
+    right: 5px;
+
+    &:hover {
+      right: 0 !important;
+    }
+  }
+
+  .btn-scroll-left {
+    left: 5px;
+
+    &:hover {
+      left: 0 !important;
+    }
+  }
 }
