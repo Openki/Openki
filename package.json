@@ -86,6 +86,7 @@
     "@types/tinycolor2": "1.4.6",
     "@types/uuid": "10.0.0",
     "autoprefixer": "10.4.21",
+    "babel-loader": "^10.0.0",
     "chai": "5.2.0",
     "chromedriver": "135.0.1",
     "eslint": "9.32.0",
@@ -100,7 +101,8 @@
     "stylelint": "16.23.0",
     "stylelint-config-standard-scss": "15.0.1",
     "typescript": "5.6.3",
-    "typescript-eslint": "8.38.0"
+    "typescript-eslint": "8.38.0",
+    "webpack": "5.101.3"
   },
   "scripts": {
     "debug": "npm run extract-translations && npm run type-check && meteor --extra-packages hot-module-replacement,blaze-hot --inspect --settings settings/dev.json",
@@ -123,6 +125,10 @@
     "type": "git",
     "url": "git+https://gitlab.com/Openki/Openki.git"
   },
+  "browserslist": [
+    ">0.25%",
+    "not dead"
+  ],
   "keywords": [
     "education",
     "self-organization",
