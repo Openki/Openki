@@ -46,6 +46,7 @@
     "react-i18next": "12.3.1",
     "react-leaflet": "4.2.1",
     "react-markdown": "8.0.7",
+    "regenerator-runtime": "^0.14.1",
     "sanitize-html": "2.17.0",
     "seedrandom": "3.0.5",
     "select2": "4.0.13",
@@ -113,11 +114,6 @@
     "reset": "meteor reset && meteor reset --db && rm -rf node_modules package-lock.json && meteor npm install --verbose",
     "type-check": "meteor lint && tsc",
     "extract-translations": "rm -f imports/startup/both/i18n/en.json && npx i18next"
-  },
-  "meteor": {
-    "modern": {
-      "transpiler": false
-    }
   },
   "repository": {
     "type": "git",
