@@ -59,8 +59,6 @@
     "xmlbuilder2": "3.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.3",
-    "@babel/preset-env": "^7.28.3",
     "@eslint/js": "9.32.0",
     "@types/bootstrap": "5.2.10",
     "@types/bootstrap-datepicker": "1.10.0",
@@ -101,8 +99,7 @@
     "stylelint": "16.23.0",
     "stylelint-config-standard-scss": "15.0.1",
     "typescript": "5.6.3",
-    "typescript-eslint": "8.38.0",
-    "webpack": "5.101.3"
+    "typescript-eslint": "8.38.0"
   },
   "scripts": {
     "debug": "npm run extract-translations && npm run type-check && meteor --extra-packages hot-module-replacement,blaze-hot --inspect --settings settings/dev.json",
