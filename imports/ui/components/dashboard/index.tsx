@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 import { useUserId } from "/imports/utils/react-meteor-data";
 import { take } from "lodash";
+import "core-js/stable/object/from-entries";
 
 import { SortSpec } from "/imports/utils/sort-spec";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
