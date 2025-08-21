@@ -59,6 +59,7 @@
     "xmlbuilder2": "3.1.1"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.28.3",
     "@eslint/js": "9.32.0",
     "@types/bootstrap": "5.2.10",
     "@types/bootstrap-datepicker": "1.10.0",
@@ -115,7 +116,7 @@
   },
   "meteor": {
     "modern": {
-      "transpiler": true
+      "transpiler": false
     }
   },
   "repository": {
@@ -123,7 +124,7 @@
     "url": "git+https://gitlab.com/Openki/Openki.git"
   },
   "browserslist": [
-    ">0.25%",
+    "> 0.2%",
     "not dead"
   ],
   "keywords": [
