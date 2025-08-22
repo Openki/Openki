@@ -35,9 +35,12 @@ function getDays(start: moment.Moment, end: moment.Moment) {
 
 export function ProgramPage(data: Record<string, string>) {
   const { t } = useTranslation();
-  const { dayOfWeekAndYear } = useDateTimeFormat();
+  const { dayOfWeekAndMonthShort, dayOfWeekAndMonthLong } = useDateTimeFormat();
   const userId = useUserId();
   const [isAttendeeFilterOn, setIsAttendeeFilterOn] = useState(false);
+
+  const viewport = useViewportSize();
+  const isMobileScreen = viewport.width <= ScssVars.screenXS;
 
   const filter = new Filtering({
     ...FindParams,
@@ -153,7 +156,9 @@ export function ProgramPage(data: Record<string, string>) {
                   }
                   afternoon = {
                     title: t("program.morningAfternoon", "{DAYOFWEEK}, morning & afternoon", {
-                      DAYOFWEEK: dayOfWeekAndYear(day),
+                      DAYOFWEEK: isMobileScreen
+                        ? dayOfWeekAndMonthShort(day)
+                        : dayOfWeekAndMonthLong(day),
                     }),
                     entity:
                       data.hideCategories !== "1" ? "eventModern" : "eventModernWithoutCategories",
@@ -173,7 +178,9 @@ export function ProgramPage(data: Record<string, string>) {
                   }
                   evening = {
                     title: t("program.evening", "{DAYOFWEEK}, evening", {
-                      DAYOFWEEK: dayOfWeekAndYear(day),
+                      DAYOFWEEK: isMobileScreen
+                        ? dayOfWeekAndMonthShort(day)
+                        : dayOfWeekAndMonthLong(day),
                     }),
                     entity:
                       data.hideCategories !== "1" ? "eventModern" : "eventModernWithoutCategories",
@@ -195,5 +202,7 @@ export function ProgramPage(data: Record<string, string>) {
 // for Blaze
 
 import "./template.html";
+import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import { ScssVars } from "/imports/ui/lib/scss-vars";
 
 Template.registerHelper("FrameProgramPage", () => ProgramPage);
