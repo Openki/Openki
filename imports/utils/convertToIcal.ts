@@ -2,7 +2,7 @@ import { Router } from "meteor/iron:router";
 import { EventModel } from "../api/events/events";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { ICalEventData, ICalEventStatus } from "ical-generator";
-import { isEmpty, omitBy } from "lodash";
+import {  omitBy } from "lodash";
 
 export function convertToIcal(dbevent: EventModel): ICalEventData {
   const end = dbevent.end || dbevent.start;
@@ -29,13 +29,13 @@ export function convertToIcal(dbevent: EventModel): ICalEventData {
                 ? { lat: dbevent.venue.loc.coordinates[1], lon: dbevent.venue.loc.coordinates[0] }
                 : undefined,
             },
-            isEmpty,
+            (v) => !v,
           )
         : undefined,
       description: plainDescription,
       url: Router.url("showEvent", dbevent),
       status: !dbevent.canceled ? ICalEventStatus.CONFIRMED : ICalEventStatus.CANCELLED,
     },
-    isEmpty,
+    (v) => !v,
   ) as unknown as ICalEventData;
 }

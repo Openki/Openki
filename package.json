@@ -12,6 +12,7 @@
     "@babel/runtime": "7.28.2",
     "@fortawesome/fontawesome-free": "6.5.2",
     "@popperjs/core": "2.11.8",
+    "@swc/helpers": "0.5.17",
     "bootstrap": "5.3.7",
     "bootstrap-datepicker": "1.10.0",
     "core-js": "3.45.0",
@@ -59,6 +60,7 @@
     "xmlbuilder2": "3.1.1"
   },
   "devDependencies": {
+    "@babel/preset-env": "7.28.3",
     "@eslint/js": "9.32.0",
     "@types/bootstrap": "5.2.10",
     "@types/bootstrap-datepicker": "1.10.0",
@@ -121,6 +123,10 @@
     "type": "git",
     "url": "git+https://gitlab.com/Openki/Openki.git"
   },
+  "browserslist": [
+    "> 0.2%",
+    "not dead"
+  ],
   "keywords": [
     "education",
     "self-organization",
