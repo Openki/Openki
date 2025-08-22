@@ -73,7 +73,7 @@ export function RegisterPanel({ event, busy, onRegister }: Props) {
                   {
                     USERNAME: user.getDisplayName(),
                     EVENTTITLE: event.title,
-                    DATE: dateFormat(event.startLocal),
+                    DATE: <strong>{dateFormat(event.startLocal)}</strong>,
                   },
                 )
               : t(
@@ -81,7 +81,7 @@ export function RegisterPanel({ event, busy, onRegister }: Props) {
                   'Do you want to reserve a seat for the event "{EVENTTITLE}" on the {DATE}? Your reservation is binding.',
                   {
                     EVENTTITLE: event.title,
-                    DATE: dateFormat(event.startLocal),
+                    DATE: <strong>{dateFormat(event.startLocal)}</strong>,
                   },
                 )}
           </p>
