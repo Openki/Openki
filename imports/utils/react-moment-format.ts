@@ -70,6 +70,20 @@ export function useDateTimeFormat() {
       }
       return toMomentWithTimeLocale(date).format("dddd");
     },
+    dayOfWeekAndYear(date?: moment.MomentInput) {
+      if (!date) {
+        return "";
+      }
+
+      // from moment.js
+      switch (moment.locale()) {
+        case "de":
+          return toMomentWithTimeLocale(date).format("dddd, D.");
+
+        default:
+          return toMomentWithTimeLocale(date).format("dddd, D");
+      }
+    },
     weekNr(date?: moment.MomentInput) {
       if (!date) {
         return "";

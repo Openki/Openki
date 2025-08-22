@@ -76,7 +76,7 @@ export function RegisterPanel({ event, busy, onRegister }: Props) {
               {
                 USERNAME: userName(),
                 EVENTTITLE: event.title,
-                DATE: dateFormat(event.startLocal),
+                DATE: <strong>{dateFormat(event.startLocal)}</strong>,
               },
             )}
           </p>
