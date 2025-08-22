@@ -35,7 +35,7 @@ function getDays(start: moment.Moment, end: moment.Moment) {
 
 export function ProgramPage(data: Record<string, string>) {
   const { t } = useTranslation();
-  const { dayOfWeekLong } = useDateTimeFormat();
+  const { dayOfWeekAndYear } = useDateTimeFormat();
   const userId = useUserId();
   const [isAttendeeFilterOn, setIsAttendeeFilterOn] = useState(false);
 
@@ -153,7 +153,7 @@ export function ProgramPage(data: Record<string, string>) {
                   }
                   afternoon = {
                     title: t("program.morningAfternoon", "{DAYOFWEEK}, morning & afternoon", {
-                      DAYOFWEEK: dayOfWeekLong(day),
+                      DAYOFWEEK: dayOfWeekAndYear(day),
                     }),
                     entity:
                       data.hideCategories !== "1" ? "eventModern" : "eventModernWithoutCategories",
@@ -173,7 +173,7 @@ export function ProgramPage(data: Record<string, string>) {
                   }
                   evening = {
                     title: t("program.evening", "{DAYOFWEEK}, evening", {
-                      DAYOFWEEK: dayOfWeekLong(day),
+                      DAYOFWEEK: dayOfWeekAndYear(day),
                     }),
                     entity:
                       data.hideCategories !== "1" ? "eventModern" : "eventModernWithoutCategories",
