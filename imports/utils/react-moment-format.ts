@@ -70,18 +70,32 @@ export function useDateTimeFormat() {
       }
       return toMomentWithTimeLocale(date).format("dddd");
     },
-    dayOfWeekAndYear(date?: moment.MomentInput) {
+    dayOfWeekAndMonthShort(date?: moment.MomentInput) {
       if (!date) {
         return "";
       }
 
       // from moment.js
       switch (moment.locale()) {
-        case "de":
-          return toMomentWithTimeLocale(date).format("dddd, D.");
+        case "de" /* copy of de-ch */:
+          return toMomentWithTimeLocale(date).format("ddd, D. MMM");
 
         default:
-          return toMomentWithTimeLocale(date).format("dddd, D");
+          return toMomentWithTimeLocale(date).format("ddd, MMM D");
+      }
+    },
+    dayOfWeekAndMonthLong(date?: moment.MomentInput) {
+      if (!date) {
+        return "";
+      }
+
+      // from moment.js
+      switch (moment.locale()) {
+        case "de" /* copy of de-ch */:
+          return toMomentWithTimeLocale(date).format("dddd, D. MMMM");
+
+        default:
+          return toMomentWithTimeLocale(date).format("dddd, MMMM D");
       }
     },
     weekNr(date?: moment.MomentInput) {
