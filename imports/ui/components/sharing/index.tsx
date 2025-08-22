@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { isEmpty, omitBy } from "lodash";
+import {  omitBy } from "lodash";
 import Shariff from "shariff";
 import { useTranslation } from "react-i18next";
 import { Template } from "meteor/templating";
@@ -41,7 +41,7 @@ export function Sharing({
           mailBody: [text, "{url}"].join("\n\n"),
           url,
         },
-        isEmpty,
+        (v) => !v,
       ),
     );
 
