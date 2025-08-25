@@ -1,6 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { _ } from "meteor/underscore";
+import * as StringTools from "/imports/utils/string-tools";
 
 export type Role = "admin" | "visitor";
 
@@ -118,6 +119,10 @@ export type UserModel = User & UserEntity;
 export class User {
   getDisplayName(this: Pick<UserEntity, "username">) {
     return this.username;
+  }
+
+  get slug() {
+    return StringTools.slug((this as unknown as Pick<UserEntity, "username">).username);
   }
 
   /**

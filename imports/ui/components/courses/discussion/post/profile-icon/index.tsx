@@ -1,6 +1,7 @@
 import React from "react";
 import { Router } from "meteor/iron:router";
 import { useTracker } from "meteor/react-meteor-data";
+import * as StringTools from "/imports/utils/string-tools";
 
 import { getUserName } from "/imports/ui/lib/getUserName";
 
@@ -23,7 +24,7 @@ export function DiscussionProfileIcon({ userId }: Props) {
   return (
     <div className="discussion-thumb">
       {userId ? (
-        <a href={Router.path("userprofile", { _id: userId, username: userName })}>
+        <a href={Router.path("userprofile", { _id: userId, slug: StringTools.slug(userName) })}>
           <Avatar className="discussion-profile-icon" userId={userId} />
         </a>
       ) : (
