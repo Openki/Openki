@@ -17,6 +17,7 @@ import { textPlain } from "/imports/utils/html-tools";
 import * as Analytics from "/imports/ui/lib/analytics";
 
 import { Event } from "./event";
+import { ActionResult } from "../../components/action-result";
 
 function Unregister({
   event,
@@ -135,6 +136,5 @@ export function EventPage(data: { event: EventModel; isNew: boolean }) {
 // for Blaze
 
 import "./template.html";
-import { ActionResult } from "../../components/action-result";
 
 Template.registerHelper("EventPage", () => EventPage);
