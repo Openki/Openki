@@ -8,7 +8,7 @@ as interface between people who are interested in similar subjects,
 and as an instrument which simplifies the organization of “peer-to-peer” sharing of knowledge.
 
 <img src="https://cloud.githubusercontent.com/assets/9354955/8768227/87a178c6-2e78-11e5-8ba8-a35c834ecda3.png" width="590" alt="arrow diagram showing connection between individuals, comunities, event-locations and calendars" />
-<br />
+<br /><br />
 Beside the longterm public installations, Openki can be used for unconferences, BarCamps as well as in democratic schools and participatory festivals.
 
 [ read on...](https://about.openki.net "our blog")
