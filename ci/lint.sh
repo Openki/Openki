@@ -9,6 +9,7 @@ set -xe
 
 meteor update --patch
 meteor npm i
+node -v && npm version
 meteor node -v && meteor npm version
 
 meteor npm run lint
