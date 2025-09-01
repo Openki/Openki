@@ -71,6 +71,8 @@ Openki has multiple features that are not visible at first sight in the frontend
 _Please upvote new features you would like to see or propose new ones._
 </details>
 
+---
+
 ## Contribution
 Code submissions are welcome. To submit a change, [fork this repo](https://gitlab.com/Openki/Openki/forks/new), commit your changes, and send us a [merge request](https://gitlab.com/Openki/Openki/merge_requests/new).<br />
 In the interest of having an open and welcoming environment for everyone, we agreed on our [Code of Conduct](https://gitlab.com/Openki/Openki/wikis/Code-of-Conduct). By participating in this project you agree to abide by its terms.
