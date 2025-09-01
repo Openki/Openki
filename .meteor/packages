@@ -42,14 +42,14 @@ mdg:seo
 
 # Build
 es5-shim@4.8.1                  # ECMAScript 5 compatibility for older browsers
-ecmascript@0.16.11               # Enable ECMAScript2015+ syntax in app code
+ecmascript@0.16.12               # Enable ECMAScript2015+ syntax in app code
 zodern:standard-minifier-js     # JS minifier run for production mode
 standard-minifier-css@1.9.3     # CSS minifier run for production mode
 mys:fonts
 
 # DEV
 zodern:types                    # Pull in type declarations from other Meteor packages
-typescript@5.6.4                # Enable TypeScript syntax in .ts and .tsx modules
+typescript@5.6.5                # Enable TypeScript syntax in .ts and .tsx modules
 
 # Test
 meteortesting:mocha@3.2.0            # A package for writing and running your meteor app and package tests with mocha
