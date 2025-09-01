@@ -97,15 +97,14 @@ function Unregister({
   return null;
 }
 
-export function EventPage(data: { event: EventModel; isNew: boolean }) {
-  const { event } = data;
+export function EventPage({ event, isNew }: { event: EventModel; isNew: boolean }) {
   const { t } = useTranslation();
   const searchParams = useSearchParams();
 
   useEffect(() => {
     let title;
     let description = "";
-    if (event) {
+    if (!isNew && event) {
       title = t("event.windowtitle", "{DATE} – {EVENT}", {
         EVENT: event.title,
         DATE: moment(event.startLocal)
@@ -126,9 +125,13 @@ export function EventPage(data: { event: EventModel; isNew: boolean }) {
     );
   }
 
+  if (!event) {
+    return null;
+  }
+
   return (
     <div className="container">
-      <Event event={event} isNew={data.isNew} />
+      <Event event={event} isNew={isNew} />
     </div>
   );
 }
