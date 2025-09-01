@@ -346,7 +346,6 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       eventId = result;
 
       if (isNew) {
-        Router.go("showEvent", { _id: eventId });
         Alert.success(
           t("message.eventCreated", 'The event "{TITLE}" has been created!', {
             TITLE: editevent.title,
@@ -404,6 +403,11 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       Alert.serverError(err, t("eventEdit.replicatesUpdated.error", "Saving the event went wrong"));
     } finally {
       setIsBusy(false);
+    }
+
+    if (isNew) {
+      await MeteorAsync.defer();
+      Router.go("showEvent", { _id: eventId });
     }
   }
 
@@ -688,5 +692,6 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 // for Blaze
 
 import "./template.html";
+import { MeteorAsync } from "/imports/utils/promisify";
 
 Template.registerHelper("EventEdit", () => Edit);
