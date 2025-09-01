@@ -25,46 +25,58 @@ import { SendMessage, Data as SendMessageData } from "/imports/ui/components/sen
 import { Courselist } from "../../components/profiles/course-list";
 import { Button, ButtonCancel, ButtonDelete } from "../../components/buttons";
 
-export interface UserProfilePageProps {
+export interface Props {
   user: UserModel;
 }
 
-export function UserprofilePage(data: UserProfilePageProps) {
+export function UserprofilePage({ user }: Props) {
   const { t } = useTranslation();
   const [reason, setReason] = useState("");
   const [verifyUserDelete, setVerifyUserDelete] = useState(false);
-  const user = useUser();
+  const currentUser = useUser();
+
+  const [isLoadingGroups, inviteGroups] = Groups.useFindFilter({ own: true });
+  const [isLoading, coursesCreatedBy] = Courses.useFindFilter({ createdby: user._id });
+
+  useEffect(() => {
+    const title = t("profile.windowtitle", "Profile of {USER}", {
+      USER: user?.getDisplayName() || "...",
+    });
+    Metatags.setCommonTags(title);
+  });
+
+  if (!user) {
+    // should not happen, but does, maybe some problem with iron-router and react
+    return null;
+  }
 
   // What privileges the user has
   const privileges = (["admin"] as const).reduce<Record<string, boolean>>((originalPs, p) => {
     const ps = { ...originalPs };
-    ps[p] = data.user.privileged(p);
+    ps[p] = user.privileged(p);
     return ps;
   }, {});
 
-  const alterPrivileges = user?.privileged("admin") || false;
-  const [isLoadingGroups, inviteGroups] = Groups.useFindFilter({ own: true });
-  const showPrivileges = alterPrivileges || !!data.user.privileges?.length;
-
-  const [isLoading, coursesCreatedBy] = Courses.useFindFilter({ createdby: data.user._id });
+  const alterPrivileges = currentUser?.privileged("admin") || false;
+  const showPrivileges = alterPrivileges || !!user.privileges?.length;
 
   /**
    * whether userprofile is for the logged-in user
    */
   function ownuser() {
-    return data.user._id === user?._id;
+    return user._id === currentUser?._id;
   }
   function hasContributed() {
-    return checkContribution(data.user.contribution);
+    return checkContribution(user.contribution);
   }
   function allowPrivateMessages() {
-    return data.user.allowPrivateMessages || !!user?.privileged("admin");
+    return user.allowPrivateMessages || !!currentUser?.privileged("admin");
   }
   function groupMember(group: GroupEntity, user: UserModel) {
     return !!(user && group?.members?.some((m) => m.user === user._id));
   }
   function showInviteGroups() {
-    if (data.user._id === user?._id) {
+    if (user._id === currentUser?._id) {
       return false;
     }
     return inviteGroups.length > 0;
@@ -74,7 +86,7 @@ export function UserprofilePage(data: UserProfilePageProps) {
       return true;
     }
 
-    if (data.user._id === user?._id) {
+    if (user._id === currentUser?._id) {
       return false;
     }
 
@@ -83,10 +95,10 @@ export function UserprofilePage(data: UserProfilePageProps) {
   function sendMessageAttr(): SendMessageData {
     return {
       placeholder: t("profile.mail.placeholder", "Hi {USER}. I wanted to tell you…", {
-        USER: data.user.username,
+        USER: user.username,
       }),
       onSend: async (message, options) => {
-        await emailMethods.sendPrivateMessage(data.user._id, message, options);
+        await emailMethods.sendPrivateMessage(user._id, message, options);
       },
     };
   }
@@ -108,7 +120,7 @@ export function UserprofilePage(data: UserProfilePageProps) {
 
   async function handleSetHasContributed() {
     try {
-      await usersMethods.setHasContributed(data.user._id);
+      await usersMethods.setHasContributed(user._id);
       Alert.success(t("profile.setHasContributed.alert", "User has contributed"));
     } catch (err) {
       Alert.serverError(
@@ -120,7 +132,7 @@ export function UserprofilePage(data: UserProfilePageProps) {
 
   async function handleUnsetHasContributed() {
     try {
-      await usersMethods.unsetHasContributed(data.user._id);
+      await usersMethods.unsetHasContributed(user._id);
       Alert.success(t("profile.unsetHasContributed.alert", "Unset user has contributed"));
     } catch (err) {
       Alert.serverError(
@@ -132,7 +144,7 @@ export function UserprofilePage(data: UserProfilePageProps) {
 
   async function handleGiveAdmin() {
     try {
-      await usersMethods.addPrivilege(data.user._id, "admin");
+      await usersMethods.addPrivilege(user._id, "admin");
       Alert.success(t("privilege.addedAdmin", "Granted admin privilege"));
     } catch (err) {
       Alert.serverError(err, t("privilege.addedAdmin.error", "Unable to add privilege"));
@@ -141,7 +153,7 @@ export function UserprofilePage(data: UserProfilePageProps) {
 
   async function handleRemovePrivilege(privilege: "admin") {
     try {
-      await usersMethods.removePrivilege(data.user._id, privilege);
+      await usersMethods.removePrivilege(user._id, privilege);
       Alert.success(t("privilege.removed", "Removed privilege"));
     } catch (err) {
       Alert.serverError(err, t("privilege.removed.error", "Unable to remove privilege"));
@@ -150,7 +162,7 @@ export function UserprofilePage(data: UserProfilePageProps) {
 
   async function handleDraftIntoGroup(group: GroupEntity) {
     const { _id: groupId, name } = group;
-    const userId = data.user._id;
+    const userId = user._id;
     try {
       await GroupsMethods.updateMembership(userId, groupId, true);
       Alert.success(t("profile.group.drafted", "Added to group {NAME}", { NAME: name }));
@@ -163,7 +175,7 @@ export function UserprofilePage(data: UserProfilePageProps) {
     Tooltips.hide();
 
     const { _id: groupId, name } = group;
-    const userId = data.user._id;
+    const userId = user._id;
     try {
       await GroupsMethods.updateMembership(userId, groupId, false);
       Alert.success(t("profile.group.expelled", "Expelled from group {NAME}", { NAME: name }));
@@ -182,7 +194,7 @@ export function UserprofilePage(data: UserProfilePageProps) {
       return;
     }
 
-    const userId = data.user._id;
+    const userId = user._id;
 
     try {
       await usersMethods.adminRemove(userId, reason, { courses: true });
@@ -193,13 +205,6 @@ export function UserprofilePage(data: UserProfilePageProps) {
     }
   }
 
-  useEffect(() => {
-    const title = t("profile.windowtitle", "Profile of {USER}", {
-      USER: data.user.getDisplayName(),
-    });
-    Metatags.setCommonTags(title);
-  });
-
   if (isLoading()) {
     return null;
   }
@@ -209,15 +214,15 @@ export function UserprofilePage(data: UserProfilePageProps) {
       <div className="page-component">
         <div className="row g-3">
           <div className="col-3">
-            <Avatar userId={data.user._id} className="profile-avatar" />
+            <Avatar userId={user._id} className="profile-avatar" />
           </div>
 
           <div className="col-9">
             <h1 className="mt-4">
               {t("profile.users_profile_page", "{NAME}'s Profile", {
-                NAME: data.user.getDisplayName(),
+                NAME: user.getDisplayName(),
               })}
-              <Contribution userId={data.user._id} />
+              <Contribution userId={user._id} />
             </h1>
 
             {ownuser() ? (
@@ -247,7 +252,7 @@ export function UserprofilePage(data: UserProfilePageProps) {
 
             <p
               className="profile-description"
-              dangerouslySetInnerHTML={{ __html: data.user.description }}
+              dangerouslySetInnerHTML={{ __html: user.description }}
             ></p>
 
             {ownuser() ? (
@@ -307,7 +312,7 @@ export function UserprofilePage(data: UserProfilePageProps) {
                 </h3>
                 <div className="list-group">
                   {inviteGroups.map((group) =>
-                    groupMember(group, data.user) ? (
+                    groupMember(group, user) ? (
                       <li key={group._id} className="list-group-item list-group-item-success">
                         <button
                           type="button"
@@ -338,7 +343,7 @@ export function UserprofilePage(data: UserProfilePageProps) {
         </div>
       )}
 
-      <Courselist user={data.user} ownProfile={false} />
+      <Courselist user={user} ownProfile={false} />
 
       {alterPrivileges && (
         <>
@@ -354,7 +359,7 @@ export function UserprofilePage(data: UserProfilePageProps) {
                   "profile.account.reallydelete",
                   'Remove the user profile "{NAME}" permanently? {COURSES, number} Courses created by this user (with {INTERESTED, number} Participants and {EVENTS, number} upcoming events) will also be removed.',
                   {
-                    NAME: data.user.getDisplayName(),
+                    NAME: user.getDisplayName(),
                     COURSES: numberOfCoursesAffectedByDelete,
                     INTERESTED: numberOfInterestedAffectedByDelete,
                     EVENTS: numberOfFutureEventsAffectedByDelete,
