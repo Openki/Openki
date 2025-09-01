@@ -69,6 +69,11 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
 
   const user = useUser();
 
+  if (!group) {
+    // should not happen, but does, maybe some problem with iron-router and react
+    return null; 
+  }
+
   const mayEdit = group.editableBy(user);
 
   function isFeatured() {
