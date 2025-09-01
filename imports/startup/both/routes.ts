@@ -344,7 +344,7 @@ RouterAsync.route("showEvent", {
 });
 
 RouterAsync.route("userprofile", {
-  path: "user/:_id/:username?",
+  path: "user/:_id/:slug?",
   template: "userprofilePage",
   async onRun() {
     await import("/imports/ui/pages/userprofile");

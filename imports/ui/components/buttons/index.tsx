@@ -58,7 +58,7 @@ export function ButtonSave(props: {
   return (
     <PleaseLogin
       type="button"
-      className={`btn btn-save text-nowrap ${props.className}`}
+      className={`btn btn-save text-nowrap ${props.className || ""}`}
       onClick={props.onClick}
       disabled={props.disabled}
       busyText={t("_button.saving", "Saving…")}

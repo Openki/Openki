@@ -224,6 +224,7 @@ export function EditVenue({
             {t("course.event.edit.location", "Venue")} <small>{t("_inputField.optional")}</small>
           </label>
           <AsyncTypeahead
+            id="edit-venue-typeahead"
             defaultSelected={value ? [value as any] : ([{}] as any)}
             filterBy={() => true}
             isLoading={isLoading}
