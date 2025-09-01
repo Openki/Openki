@@ -78,27 +78,26 @@ function DisplayDiscussion({ eventId, courseId }: { eventId: string; courseId: s
   return <Discussion courseId={course._id} eventId={eventId} select={select()} />;
 }
 
-export function Event(data: { event: EventModel; isNew: boolean }) {
-  const { event } = data;
+export function Event({ event, isNew }: { event: EventModel; isNew: boolean }) {
   const { t } = useTranslation();
   const param = useSearchParams();
-  const [editing, setEditing] = useState(!event._id || param.edit === "1");
+  const [editing, setEditing] = useState(isNew || param.edit === "1");
 
   function mobileViewport() {
     return Viewport.get().width <= ScssVars.screenMD;
   }
   function isEditing() {
-    return data.isNew || editing;
+    return isNew || editing;
   }
   function eventEditAttr() {
     return {
       event,
-      isNew: data.isNew,
+      isNew: isNew,
       afterSave: () => {
         setEditing(false);
       },
       onCancel: () => {
-        if (data.isNew) {
+        if (isNew) {
           history.back();
         } else {
           setEditing(false);

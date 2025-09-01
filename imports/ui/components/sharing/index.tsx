@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import {  omitBy } from "lodash";
+import { omitBy } from "lodash";
 import Shariff from "shariff";
 import { useTranslation } from "react-i18next";
 import { Template } from "meteor/templating";

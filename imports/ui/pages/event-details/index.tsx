@@ -17,6 +17,7 @@ import { textPlain } from "/imports/utils/html-tools";
 import * as Analytics from "/imports/ui/lib/analytics";
 
 import { Event } from "./event";
+import { ActionResult } from "../../components/action-result";
 
 function Unregister({
   event,
@@ -96,15 +97,14 @@ function Unregister({
   return null;
 }
 
-export function EventPage(data: { event: EventModel; isNew: boolean }) {
-  const { event } = data;
+export function EventPage({ event, isNew }: { event: EventModel; isNew: boolean }) {
   const { t } = useTranslation();
   const searchParams = useSearchParams();
 
   useEffect(() => {
     let title;
     let description = "";
-    if (event) {
+    if (!isNew && event) {
       title = t("event.windowtitle", "{DATE} – {EVENT}", {
         EVENT: event.title,
         DATE: moment(event.startLocal)
@@ -125,9 +125,14 @@ export function EventPage(data: { event: EventModel; isNew: boolean }) {
     );
   }
 
+  if (!event) {
+    // should not happen, but does, maybe some problem with iron-router and react
+    return null;
+  }
+
   return (
     <div className="container">
-      <Event event={event} isNew={data.isNew} />
+      <Event event={event} isNew={isNew} />
     </div>
   );
 }
@@ -135,6 +140,5 @@ export function EventPage(data: { event: EventModel; isNew: boolean }) {
 // for Blaze
 
 import "./template.html";
-import { ActionResult } from "../../components/action-result";
 
 Template.registerHelper("EventPage", () => EventPage);
