@@ -13,4 +13,6 @@ meteor node -v && meteor npm version
 
 meteor npm run lint
 
+echo -e "\e[1;33mIf you have random errors and problems inside the gitlab runner, try to click "Clear runner caches" button in https://gitlab.com/Openki/Openki/-/pipelines.\e[0m"
+
 meteor npm run type-check
