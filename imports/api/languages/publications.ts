@@ -13,19 +13,20 @@ const languages = { ...LanguagesRaw };
 if (Meteor.isServer) {
   /** Enrich Languages with stats from weblate */
   (async function enrichLanguages() {
-    const fetch = (await import("node-fetch")).default;
     try {
       // See: https://docs.weblate.org/en/latest/api.html#exports
       const response = await fetch(
-        "https://hosted.weblate.org/exports/stats/openki/openki/?format=json",
+        "https://hosted.weblate.org/api/components/openki/openki/statistics/?format=json",
       );
       const stats = (await response.json()) as {
-        code: string;
-        translated_percent: number;
-      }[];
+        results: {
+          code: string;
+          translated_percent: number;
+        }[];
+      };
 
       Object.entries(languages).forEach(([code, value]) => {
-        const translatedPercent = stats.filter(
+        const translatedPercent = stats.results.filter(
           (s) => (weblateMapping[s.code] || s.code) === code,
         )[0]?.translated_percent;
 
@@ -33,8 +34,9 @@ if (Meteor.isServer) {
           value.translatedPercent = Math.round(translatedPercent);
         }
       });
-    } catch {
+    } catch (ex) {
       // ignore it
+      console.info("Could not load weblate statistics: " + JSON.stringify(ex));
     }
   })();
 }

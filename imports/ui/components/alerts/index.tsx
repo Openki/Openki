@@ -80,42 +80,44 @@ function Alert({
       {!!actions && (
         <>
           <hr className="border border-black" />
-          {actions.map((l) => (
-            <React.Fragment key={l.href}>
-              {" "}
-              <a
-                className="btn btn-success"
-                href={l.href}
-                onClick={async (event) => {
-                  const parts = l.href.split("#");
+          <div className="d-flex flex-wrap gap-1">
+            {actions.map((l) => (
+              <React.Fragment key={l.href}>
+                {" "}
+                <a
+                  className="btn btn-success"
+                  href={l.href}
+                  onClick={async (event) => {
+                    const parts = l.href.split("#");
 
-                  if (parts[0].length > 1) {
-                    await MeteorAsync.setTimeout(400);
-                  } else {
-                    event.preventDefault();
-                  }
-
-                  const elementId = parts[1];
-                  const element = elementId && document.getElementById(elementId);
-                  if (element) {
-                    scrollIntoViewIfNotVisible(element, $(".navbar")?.height() || 0);
-
-                    element.classList.remove("action-focus");
-                    await MeteorAsync.defer();
-                    element.classList.add("action-focus");
-                    if (timeoutActionFocus) {
-                      clearTimeout(timeoutActionFocus);
+                    if (parts[0].length > 1) {
+                      await MeteorAsync.setTimeout(400);
+                    } else {
+                      event.preventDefault();
                     }
-                    timeoutActionFocus = Meteor.setTimeout(() => {
+
+                    const elementId = parts[1];
+                    const element = elementId && document.getElementById(elementId);
+                    if (element) {
+                      scrollIntoViewIfNotVisible(element, $(".navbar")?.height() || 0);
+
                       element.classList.remove("action-focus");
-                    }, 5000);
-                  }
-                }}
-              >
-                {l.text}
-              </a>
-            </React.Fragment>
-          ))}
+                      await MeteorAsync.defer();
+                      element.classList.add("action-focus");
+                      if (timeoutActionFocus) {
+                        clearTimeout(timeoutActionFocus);
+                      }
+                      timeoutActionFocus = Meteor.setTimeout(() => {
+                        element.classList.remove("action-focus");
+                      }, 5000);
+                    }
+                  }}
+                >
+                  {l.text}
+                </a>
+              </React.Fragment>
+            ))}
+          </div>
         </>
       )}
       <button

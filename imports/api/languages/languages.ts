@@ -94,6 +94,13 @@ export const LanguagesRaw: Record<string, Omit<LanguageEntity, "_id">> = {
     english: "Portuguese",
     visible: true,
   },
+  ru: {
+    lg: "ru",
+    name: "русский",
+    short: "ru",
+    english: "Russian",
+    visible: true,
+  },
   sv: {
     lg: "sv",
     name: "Svenska",

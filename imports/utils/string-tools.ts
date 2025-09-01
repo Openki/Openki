@@ -30,11 +30,8 @@ export function slug(text: string) {
       .replace(/[ĥ]/g, "h")
       .replace(/[ĵ]/g, "j")
 
-      // remove anything that is not letters, numbers, dash, or space
-      .replace(/[^a-z0-9-\s]/g, "")
-
-      // replace spaces
-      .replace(/\s+/g, "-")
+      // replace anything that is not letters or numbers with dashes
+      .replace(/[^a-z0-9]/g, "-")
 
       // collapse dashes
       .replace(/-+/g, "-")
