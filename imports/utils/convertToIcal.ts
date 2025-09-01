@@ -2,7 +2,7 @@ import { Router } from "meteor/iron:router";
 import { EventModel } from "../api/events/events";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { ICalEventData, ICalEventStatus } from "ical-generator";
-import {  omitBy } from "lodash";
+import { omitBy } from "lodash";
 
 export function convertToIcal(dbevent: EventModel): ICalEventData {
   const end = dbevent.end || dbevent.start;

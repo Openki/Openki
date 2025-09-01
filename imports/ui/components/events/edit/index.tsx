@@ -12,6 +12,7 @@ import { useSession, useUser } from "/imports/utils/react-meteor-data";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { LocalTime } from "/imports/utils/local-time";
 import * as Analytics from "/imports/ui/lib/analytics";
+import { MeteorAsync } from "/imports/utils/promisify";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { EventModel, EventVenueEntity, OEvent } from "/imports/api/events/events";
@@ -346,7 +347,6 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       eventId = result;
 
       if (isNew) {
-        Router.go("showEvent", { _id: eventId });
         Alert.success(
           t("message.eventCreated", 'The event "{TITLE}" has been created!', {
             TITLE: editevent.title,
@@ -404,6 +404,11 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       Alert.serverError(err, t("eventEdit.replicatesUpdated.error", "Saving the event went wrong"));
     } finally {
       setIsBusy(false);
+    }
+
+    if (isNew) {
+      await MeteorAsync.defer();
+      Router.go("showEvent", { _id: eventId });
     }
   }
 
