@@ -15,8 +15,8 @@ Beside the longterm public installations, Openki can be used for unconferences, 
 
 <div align="right"> (★ Star us if you like the idea)</div>
 
-### Try it:
-Live: [openki.net](https://openki.net)  
+### Try it!
+Live version: [openki.net](https://openki.net)  
 Demo and playground: [sandbox.openki.net](https://sandbox.openki.net/?region=Englistan "running here")  
 Pre-release: [dev.openki.net](https://dev.openki.net)
 
