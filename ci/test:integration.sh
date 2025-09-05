@@ -17,6 +17,8 @@ echo -e "${MAINTEXT}Run integration tests with:${TEXT}
 echo -e "${YELLOW}=============================================================${NC}"
 echo ""
 
+curl https://install.meteor.com | /bin/sh
+
 set -xe
 
 Xvfb "${DISPLAY}" -screen 0 1024x768x24 > /dev/null 2>&1 &
