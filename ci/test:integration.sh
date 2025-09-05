@@ -24,7 +24,7 @@ Xvfb "${DISPLAY}" -screen 0 1024x768x24 > /dev/null 2>&1 &
 which chromium
 dpkg -l
 meteor update --patch
-meteor npm i
+meteor npm ci
 meteor node -v && meteor npm version
 
 meteor npm run test:dev:headless
