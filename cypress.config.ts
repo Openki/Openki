@@ -1,7 +1,7 @@
 import { defineConfig } from "cypress";
 
 export default defineConfig({
-  projectId: 'openki',
+  projectId: '4icmbi',
   e2e: {
     baseUrl: "http://localhost:4000",
     specPattern: "tests/cypress/e2e/**/*.spec.{ts,tsx}",

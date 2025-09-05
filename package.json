@@ -104,6 +104,7 @@
     "debug": "npm run extract-translations && npm run type-check && meteor --extra-packages hot-module-replacement,blaze-hot --inspect --settings settings/dev.json",
     "test:ui": "start-test 'npm run test:env' :4000 'cypress open'",
     "test": "start-test 'npm run test:env' :4000 'cypress run'",
+    "test:record": "start-test 'npm run test:env' :4000 'cypress run --record'",
     "test:env": "METEOR_LOCAL_DIR=.meteor/test BABEL_ENV=test DISABLE_REACT_FAST_REFRESH=1 meteor --once --settings settings/ci.json --port 4000",
     "lint": "eslint . && stylelint '**/*.scss' && prettier --check '**/*.{ts,tsx,scss}'",
     "lint:fix": "eslint . --fix && stylelint '**/*.scss' --fix && prettier --write '**/*.{ts,tsx,scss}' && html-beautify '{client,imports,private,public,server}/**/*.html' -r",
