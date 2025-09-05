@@ -5,7 +5,7 @@ export default defineConfig({
   e2e: {
     baseUrl: "http://localhost:4000",
     // we use cypress e2e environment for all kinds of test
-    specPattern: "tests/cypress/{unit,e2e}/**/*.spec.{ts,tsx}",
+    specPattern: "tests/cypress/{unit,e2e}/**/*.spec.ts",
     supportFile: "tests/cypress/support/index.ts",
     experimentalStudio: true,
     screenshotsFolder: "tests/cypress/screenshots",
