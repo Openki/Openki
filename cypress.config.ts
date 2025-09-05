@@ -12,7 +12,7 @@ export default defineConfig({
       runMode: 2,
       openMode: 1,
     },
-    setupNodeEvents(on, config) {
+    setupNodeEvents() {
       // implement node event listeners here
       // Plugins hier registrieren, falls nötig
       // Beispiel: Code Coverage oder Reporting
