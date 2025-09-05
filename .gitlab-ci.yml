@@ -43,7 +43,6 @@ test:unit:
 
 # integration/e2e tests
 test:integration:
-  image: cypress/browsers:22.15.0
   stage: test
   tags:
     - gitlab-org-docker
