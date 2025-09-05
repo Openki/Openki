@@ -114,3 +114,8 @@ export function Fields({ region, onChange }: Props) {
     </>
   );
 }
+
+// for Blaze
+import "./template.html";
+
+Template.registerHelper("RegionEditFields", () => Fields);
