@@ -219,9 +219,7 @@ template.onCreated(function () {
 
     // Build list of most used titles (first few chars)
     const mostUsedKinds = sortBy(Object.entries(kinds), (kv) => -kv[1]);
-    const kindRank = fromPairs(
-      mostUsedKinds.slice(0, 15).map((kv, rank) => [kv[0], rank + 1]),
-    ) ;
+    const kindRank = fromPairs(mostUsedKinds.slice(0, 15).map((kv, rank) => [kv[0], rank + 1]));
     instance.kindMap = function (title: string) {
       const kindId = title.substring(0, 5);
       if (kindRank[kindId]) {
