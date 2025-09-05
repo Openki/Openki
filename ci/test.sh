@@ -11,7 +11,7 @@ echo ""
 echo -e "${YELLOW}=============================================================${NC}"
 echo -e "${MAINTEXT}Run tests with:${TEXT}
     meteor npm run test
-    or meteor npm run test:ui ${NC}
+    or meteor npm run test:ui ${NC}"
 echo -e "${YELLOW}=============================================================${NC}"
 echo ""
 
