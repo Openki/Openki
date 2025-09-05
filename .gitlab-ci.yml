@@ -34,19 +34,12 @@ lint:
     - gitlab-org
   script: ./ci/lint.sh
 
-# Unit tests
-test:unit:
-  stage: test
-  tags:
-    - gitlab-org
-  script: ./ci/test:unit.sh
-
-# integration/e2e tests
-test:integration:
+# tests unit, e2e, ...
+test:
   stage: test
   tags:
     - gitlab-org-docker
-  script: ./ci/test:integration.sh
+  script: ./ci/test.sh
   allow_failure: true
   timeout: 20m
 
