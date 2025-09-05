@@ -18,7 +18,7 @@ import "/imports/ui/components/editable";
 import "/imports/ui/components/map";
 
 import "/imports/ui/components/regions/display";
-import "/imports/ui/components/regions/edit";
+import "/imports/ui/components/regions/edit/fields";
 
 import "./template.html";
 
