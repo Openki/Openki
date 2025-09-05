@@ -16,6 +16,7 @@ import { renderToEmail } from "/imports/utils/renderToEmail";
 import { Root } from "/imports/emails/Root";
 import { toEmailLogo } from "/imports/utils/toEmailLogo";
 import { PublicSettings } from "/imports/utils/PublicSettings";
+import { fromPairs } from "lodash";
 
 /**
  * Record the result of a notification delivery attempt
@@ -54,10 +55,6 @@ export async function record(
   await Log.record("Notification.SendResult", rel, entry);
 }
 
-function mapToObject<T>(map: [string, T][]) {
-  return Object.fromEntries(new Map(map).entries());
-}
-
 /**
  * Handle event notification
  * @param entry Notification.Event log entry to process
@@ -68,7 +65,7 @@ async function send(
   },
 ) {
   // Find out for which recipients sending has already been attempted.
-  const concluded = mapToObject(
+  const concluded = fromPairs(
     await Log.find({
       tr: "Notification.SendResult",
       ts: { $gte: entry.ts },
