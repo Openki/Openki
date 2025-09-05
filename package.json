@@ -108,7 +108,7 @@
     "test": "npm run test:unit && npm run test:integration",
     "test:unit": "npm run type-check && MOCHA_GREP=$npm_config_grep TEST_BROWSER_DRIVER=chrome TEST_CHROME_ARGS=--user-data-dir=$(mktemp -u -p $HOME -t tmp4meteor_tests.XXXXXXXXXX) meteor test --once --driver-package meteortesting:mocha --inspect --settings settings/ci.json",
     "test:integration": "start-test 'npm run test:env:e2e' :4000 'cypress run'",
-    "test:env:e2e": "METEOR_LOCAL_DIR=.meteor/test BABEL_ENV=test DISABLE_REACT_FAST_REFRESH=1 meteor run --settings settings/ci.json --port 4000",
+    "test:env:e2e": "METEOR_LOCAL_DIR=.meteor/test BABEL_ENV=test DISABLE_REACT_FAST_REFRESH=1 meteor --settings settings/dev.json --port 4000",
     "lint": "eslint . && stylelint '**/*.scss' && prettier --check '**/*.{ts,tsx,scss}'",
     "lint:fix": "eslint . --fix && stylelint '**/*.scss' --fix && prettier --write '**/*.{ts,tsx,scss}' && html-beautify '{client,imports,private,public,server}/**/*.html' -r",
     "reset": "meteor reset && meteor reset --db && rm -rf node_modules package-lock.json && meteor npm install --verbose",
