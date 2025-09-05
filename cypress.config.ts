@@ -3,8 +3,8 @@ import { defineConfig } from "cypress";
 export default defineConfig({
   e2e: {
     baseUrl: "http://localhost:4000",
-    specPattern: "tests/cypress/integration/tests/**/*.cy.{js,jsx,ts,tsx}",
-    supportFile: "tests/cypress/support/index.js",
+    specPattern: "tests/cypress/e2e/**/*.spec.{ts,tsx}",
+    supportFile: "tests/cypress/support/e2e.ts",
     screenshotsFolder: "tests/cypress/screenshots",
     videosFolder: "tests/cypress/videos",
     video: false,
@@ -14,8 +14,9 @@ export default defineConfig({
     },
     setupNodeEvents(on, config) {
       // implement node event listeners here
-      // falls Plugins benötigt werden:
-      return require("./tests/cypress/plugins/index.js")(on, config);
+      // Plugins hier registrieren, falls nötig
+      // Beispiel: Code Coverage oder Reporting
+      // return require("./tests/cypress/plugins/index.ts")(on, config);
     },
     env: {
       baseUrl: "http://localhost:4000",
