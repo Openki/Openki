@@ -66,9 +66,6 @@ mdg:seo@3.5.2
 mdg:validation-error@0.5.1
 meteor@2.1.1
 meteor-base@1.5.2
-meteortesting:browser-tests@1.8.0
-meteortesting:mocha@3.3.0
-meteortesting:mocha-core@8.2.0
 minifier-css@2.0.1
 minimongo@2.0.4
 modern-browsers@0.2.3
