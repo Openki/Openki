@@ -1,8 +1,8 @@
 // Custom Cypress Commands für Meteor from https://blog.meteor.com/testing-a-meteor-app-with-cypress-bfb3d3c6ed6f
 
-// Get DOM elements by id. this command adds the prefix "data-test-id".
+// Get DOM elements by id. this command adds the prefix "data-test".
 Cypress.Commands.add("getById", (selector, ...args) => {
-  cy.get(`[data-test-id=${selector}]`, ...args);
+  cy.get(`[data-test=${selector}]`, ...args);
 });
 
 // Returns a Meteor instance from the browser.
@@ -102,6 +102,7 @@ Cypress.Commands.add("login", (username = "user", password = "password") => {
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     interface Chainable<Subject = any, T = any> {
       getById(
         selector: string,
@@ -113,8 +114,6 @@ declare global {
       logout(): Chainable<void>;
       login(username?: string, password?: string): Chainable<void>;
       visitAndWaitForSubscriptions(url: string): Chainable<void>;
-
-      dummy(a: Subject, b: T): unknown;
     }
   }
 }

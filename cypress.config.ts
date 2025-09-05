@@ -4,8 +4,9 @@ export default defineConfig({
   projectId: "4icmbi",
   e2e: {
     baseUrl: "http://localhost:4000",
-    specPattern: "tests/cypress/e2e/**/*.spec.{ts,tsx}",
-    supportFile: "tests/cypress/support/e2e.ts",
+    // we use cypress e2e environment for all kinds of test
+    specPattern: "tests/cypress/{unit,e2e}/**/*.spec.{ts,tsx}",
+    supportFile: "tests/cypress/support/index.ts",
     experimentalStudio: true,
     screenshotsFolder: "tests/cypress/screenshots",
     videosFolder: "tests/cypress/videos",
@@ -25,5 +26,4 @@ export default defineConfig({
       codeCoverage: { url: "http://localhost:4000/__coverage__" },
     },
   },
-  fixturesFolder: "tests/cypress/fixtures",
 });
