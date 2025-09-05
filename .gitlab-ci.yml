@@ -39,6 +39,8 @@ test:
   stage: test
   tags:
     - gitlab-org-docker
+  variables:
+    CYPRESS_RECORD_KEY: $CYPRESS_RECORD_KEY
   script: ./ci/test.sh
   allow_failure: true
   timeout: 20m
