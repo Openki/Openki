@@ -109,7 +109,7 @@
     "test:integration": "npm run type-check && MOCHA_GREP=$npm_config_grep TEST_BROWSER_DRIVER=chrome TEST_CHROME_ARGS=--user-data-dir=$(mktemp -u -p $HOME -t tmp4meteor_tests.XXXXXXXXXX) meteor test --full-app --once --driver-package meteortesting:mocha --inspect --settings settings/ci.json",
     "test:integration:watch": "npm run type-check && MOCHA_GREP=$npm_config_grep meteor test --full-app --driver-package meteortesting:mocha --inspect --settings settings/ci.json",
     "cypress:ui": "cypress open",
-    "cypress:headless": "cypress run",
+    "cypress:headless": "cypress run --browser chromium",
     "e2e": "METEOR_LOCAL_DIR=.meteor/test BABEL_ENV=test DISABLE_REACT_FAST_REFRESH=1 meteor run --settings settings/ci.json --port 4000",
     "test:dev:ui": "start-test 'npm run e2e' :4000 'npm run cypress:ui'",
     "test:dev:headless": "start-test 'npm run e2e' :4000 'npm run cypress:headless'",
