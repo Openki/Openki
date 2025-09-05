@@ -24,4 +24,4 @@ meteor update --patch
 meteor npm ci
 meteor node -v && meteor npm version
 
-meteor npm run test:record
+meteor npm run test:ci
