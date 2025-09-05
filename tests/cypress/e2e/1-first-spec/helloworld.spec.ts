@@ -1,5 +1,9 @@
+beforeEach(function () {
+  cy.visit("/");
+});
+
 describe("Login", function () {
   it("Should login successfully", function () {
-    // Future test logic here…
+    cy.get(".site-stage").contains("DEV");
   });
 });
