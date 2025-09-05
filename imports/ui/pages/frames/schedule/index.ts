@@ -1,4 +1,4 @@
-import { chain } from "lodash";
+import { chain, Dictionary, fromPairs, sortBy } from "lodash";
 import { ReactiveVar } from "meteor/reactive-var";
 import { Router } from "meteor/iron:router";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
@@ -163,7 +163,7 @@ template.onCreated(function () {
     }, {});
 
     // List of days where events where found
-    const days: _.Dictionary<number> = {};
+    const days: Dictionary<number> = {};
 
     // Map of slots where events were found. Each slot holds a list of events.
     const slots: Record<string, Record<string, EventViewModel[]>> = {};
@@ -218,10 +218,10 @@ template.onCreated(function () {
     instance.intervals.set(Object.values(intervals).sort(numCmp));
 
     // Build list of most used titles (first few chars)
-    const mostUsedKinds = _.sortBy(Object.entries(kinds), (kv) => -kv[1]);
-    const kindRank = _.object(
+    const mostUsedKinds = sortBy(Object.entries(kinds), (kv) => -kv[1]);
+    const kindRank = fromPairs(
       mostUsedKinds.slice(0, 15).map((kv, rank) => [kv[0], rank + 1]),
-    ) as _.Dictionary<number>;
+    ) ;
     instance.kindMap = function (title: string) {
       const kindId = title.substring(0, 5);
       if (kindRank[kindId]) {
@@ -232,7 +232,7 @@ template.onCreated(function () {
 
     Object.entries(slots).forEach(([min, dayslots]) => {
       Object.entries(dayslots).forEach(([day, slot]) => {
-        slots[min][day] = _.sortBy(slot, (event) => {
+        slots[min][day] = sortBy(slot, (event) => {
           const dayslotKindRank = (instance.kindMap(event.title) || 100) + 100;
           const countRank = 10000 - repetitionCount[event.repKey];
           // We add repetitionCount to the sort criteria so that the
