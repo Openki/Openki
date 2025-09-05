@@ -27,4 +27,4 @@ meteor update --patch
 meteor npm i
 meteor node -v && meteor npm version
 
-meteor npm run test:integration
+meteor npm run test:dev:headless
