@@ -1,4 +1,3 @@
-import { assert, expect } from "chai";
 import * as StringTools from "/imports/utils/string-tools";
 
 describe("String tools", () => {
