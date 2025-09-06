@@ -1,5 +1,3 @@
-import { expect } from "chai";
-
 import { CourseMemberEntity } from "/imports/api/courses/courses";
 
 import { hasRole, hasRoleUser } from "/imports/utils/course-role-utils";
