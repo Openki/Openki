@@ -4,7 +4,10 @@ import { assert } from "chai";
 import { Session } from "meteor/session";
 import { MeteorAsync } from "/imports/utils/promisify";
 
-import { waitForSubscriptions, waitFor } from "/imports/ClientUtils.app-test";
+import {
+  waitForSubscriptions,
+  waitFor,
+} from "../../../../../tests/_to-do-migrate/utils/ClientUtils.app-test";
 
 if (Meteor.isClient) {
   describe("Course list component", function () {

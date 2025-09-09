@@ -2,7 +2,7 @@ import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import { MeteorAsync } from "/imports/utils/promisify";
 
-import { expectText } from "/imports/ClientUtils.app-test";
+import { expectText } from "../../../../tests/_to-do-migrate/utils/ClientUtils.app-test";
 
 if (Meteor.isClient) {
   describe("profile page", function () {

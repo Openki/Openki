@@ -4,7 +4,10 @@ import $ from "jquery";
 import { Meteor } from "meteor/meteor";
 import { Session } from "meteor/session";
 
-import { waitForSubscriptions, waitFor } from "/imports/ClientUtils.app-test";
+import {
+  waitForSubscriptions,
+  waitFor,
+} from "../../../../tests/_to-do-migrate/utils/ClientUtils.app-test";
 
 if (Meteor.isClient) {
   describe("tenant create page", function () {

@@ -9,7 +9,7 @@ import {
   waitFor,
   setInputValue,
   setSelectValue,
-} from "/imports/ClientUtils.app-test";
+} from "../../../../../tests/_to-do-migrate/utils/ClientUtils.app-test";
 
 if (Meteor.isClient) {
   describe("Propose course via frame", function () {
