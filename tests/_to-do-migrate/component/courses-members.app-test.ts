@@ -8,7 +8,7 @@ import {
   expectElement,
   setTextAreaValue,
   waitFor,
-} from "/imports/ClientUtils.app-test";
+} from "../../../../../tests/_to-do-migrate/utils/ClientUtils.app-test";
 import { expect } from "chai";
 
 if (Meteor.isClient) {

@@ -7,7 +7,7 @@ import {
   expectElement,
   expectNoneElement,
   expectHtmlButton,
-} from "/imports/ClientUtils.app-test";
+} from "../../../../tests/_to-do-migrate/utils/ClientUtils.app-test";
 
 import { Users } from "/imports/api/users/users";
 

@@ -11,7 +11,7 @@ import {
   expectElement,
   expectHtmlButton,
   expectText,
-} from "/imports/ClientUtils.app-test";
+} from "../../../../tests/_to-do-migrate/utils/ClientUtils.app-test";
 import { MeteorAsync } from "/imports/utils/promisify";
 
 if (Meteor.isClient) {

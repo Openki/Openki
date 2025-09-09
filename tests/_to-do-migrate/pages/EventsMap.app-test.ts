@@ -2,28 +2,33 @@ import { assert } from "chai";
 import { Router } from "meteor/iron:router";
 import $ from "jquery";
 import { Meteor } from "meteor/meteor";
+import { MeteorAsync } from "/imports/utils/promisify";
 import { Session } from "meteor/session";
 
-import { waitForSubscriptions, waitFor } from "/imports/ClientUtils.app-test";
+import {
+  waitForSubscriptions,
+  waitFor,
+} from "../../../../tests/_to-do-migrate/utils/ClientUtils.app-test";
 
 if (Meteor.isClient) {
-  describe("Calendar frame page", function () {
+  describe("Events map", function () {
     this.timeout(30000);
     before(async function () {
       this.timeout(8000);
 
+      await MeteorAsync.loginWithPassword("greg", "greg");
       Session.set("locale", "en");
       Session.set("region", "all");
     });
 
     it("should be navigable", async () => {
-      const haveElements = () => {
-        assert($(".frame-list-item-event").length > 0, "Events are present.");
+      const haveTitle = () => {
+        assert($("h1").text().includes("Events"), "Title is present");
       };
 
-      Router.go("frameCalendar");
+      Router.go("eventsMap");
       await waitForSubscriptions();
-      await waitFor(haveElements);
+      await waitFor(haveTitle);
     });
   });
 }
