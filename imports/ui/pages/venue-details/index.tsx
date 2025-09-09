@@ -66,7 +66,7 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
     <>
       <div className="page-component">
         <div className="details-header location-details-header">
-          <h3>
+          <h3 data-test="venue-details-header">
             {venue.name} {!!venue.short && <small>{venue.short}</small>}
           </h3>
           <p dangerouslySetInnerHTML={{ __html: venue.description }}></p>
