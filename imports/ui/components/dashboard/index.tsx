@@ -51,7 +51,13 @@ function EntitiesComponent<T>({
   const sortParam = params.sort;
   const sort = sortParam ? SortSpec.fromString(sortParam) : SortSpec.unordered();
 
-  const [isLoading, data] = handler.find(query, limit + 1, 0, sort.spec());
+  const [isLoading, data] = handler.find(
+    query,
+    // only have a limit for ListOfEntities but not for ComponentWithEntities 
+    "element" in handler ? limit + 1 : 900,
+    0,
+    sort.spec(),
+  );
 
   if (isLoading() || (Array.isArray(data) && data.length === 0)) {
     return null;
@@ -74,7 +80,7 @@ function EntitiesComponent<T>({
         </ScrollContainer>
       ) : (
         // ComponentWithEntities
-        <handler.component entities={take(data, limit)} params={params} />
+        <handler.component entities={data} params={params} />
       )}
     </div>
   );
