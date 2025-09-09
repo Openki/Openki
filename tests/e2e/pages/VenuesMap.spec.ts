@@ -1,6 +1,7 @@
 beforeEach(function () {
   localStorage.setItem("locale", "de");
   localStorage.setItem("region", "all");
+
   cy.visit("/venues");
 });
 
