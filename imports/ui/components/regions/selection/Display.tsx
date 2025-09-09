@@ -20,7 +20,7 @@ export function Display({
   }
 
   return (
-    <li className={inNavbarClasses()}>
+    <li data-test="region-selection-display" className={inNavbarClasses()}>
       <a
         className="nav-link text-white"
         onClick={(e) => {
