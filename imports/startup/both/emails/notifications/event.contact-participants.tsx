@@ -92,8 +92,8 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
   return {
     accepted(actualRecipient: UserModel) {
-      if (!actualRecipient.allowPrivateMessages) {
-        throw new Error("User wishes to not receive direct messages from users");
+      if (!actualRecipient.notifications) {
+        throw new Error("User wishes to not receive automated notifications");
       }
     },
 
@@ -143,7 +143,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         customEmailLogo: emailLogo,
         fromAddress: "",
         eventTitle: undefined as React.JSX.Element | undefined,
-        unsubscribe: { type: "privateMessage" as const, token: unsubToken },
+        unsubscribe: { type: "automatedNotifications" as const, token: unsubToken },
         campaign,
       };
 
