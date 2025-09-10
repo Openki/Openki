@@ -25,7 +25,7 @@ export function UnsubscribeLink({ token, type, lng }: Props) {
         <a href={Router.url("profilePrivateMessagesUnsubscribe", { token })}>
           {t(
             "email.base.unsubscribeLink.privateMessage",
-            "Unsubscribe from all private messages from users.",
+            "Unsubscribe from all direct messages from users.",
             { SITENAME: siteName },
           )}
         </a>
