@@ -954,7 +954,7 @@
   "regionsSplash.plsChooseRegion": "Bitte wähle eine Region",
   "regionsSplash.welcome": "Willkommen auf {SITE}!",
   "register.warning.emailExists": "⚠️ Diese E-Mail wird bereits verwendet.\n→ Wir können dir eine E-Mail zum Anmelden senden.",
-  "register.warning.emailExists.sendEmail": "Sende mir eine E-Mail",
+  "register.warning.emailExists.sendEmail": "→ Ok, sende mir eine E-Mail. (hier klicken)",
   "register.warning.emailNotValid": "Deine E-Mail Adresse scheint einen Fehler zu haben.",
   "register.warning.noEmailProvided": "Bitte E-Mail Adresse eingeben zum registrieren.",
   "register.warning.noPasswordProvided": "Bitte gib ein Passwort ein um deine_n Benutzer_in zu registrieren.",
