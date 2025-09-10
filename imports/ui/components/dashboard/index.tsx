@@ -53,7 +53,7 @@ function EntitiesComponent<T>({
 
   const [isLoading, data] = handler.find(
     query,
-    // only have a limit for ListOfEntities but not for ComponentWithEntities 
+    // only have a limit for ListOfEntities but not for ComponentWithEntities
     "element" in handler ? limit + 1 : 900,
     0,
     sort.spec(),
