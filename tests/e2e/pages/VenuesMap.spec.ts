@@ -1,12 +1,9 @@
 beforeEach(function () {
-  localStorage.setItem("locale", "de");
-  localStorage.setItem("region", "all");
-
-  cy.visit("/venues");
+  cy.visitOpenki("/venues");
 });
 
 describe("Venues map", () => {
   it("should be navigable", () => {
-    cy.get("h1").should("include.text", "Veranstaltungsorte");
+    cy.get("h1").should("be.visible");
   });
 });

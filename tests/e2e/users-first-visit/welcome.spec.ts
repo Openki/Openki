@@ -1,10 +1,9 @@
-beforeEach(function () {
-  localStorage.setItem("locale", "de");
-  cy.visit("/");
+beforeEach(() => {
+  cy.visitOpenki("/", { region: "" });
 });
 
-describe("Users first visit", function () {
-  it("should be able to select region ", function () {
+describe("Users first visit", () => {
+  it("should be able to select region ", () => {
     cy.get(".modal-title").should("have.text", "Willkommen auf Hmmm!");
     cy.get(".dropdown-toggle").click();
     cy.get('[title="Spilistan"]').click();

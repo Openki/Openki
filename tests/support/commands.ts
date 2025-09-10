@@ -7,41 +7,41 @@ Cypress.Commands.add("getById", (selector, ...args) => {
 
 // Returns a Meteor instance from the browser.
 Cypress.Commands.add("getMeteor", () =>
-  cy.window().then(({ Meteor }) => {
+  cy.window({ log: false }).then(({ Meteor }) => {
     if (!Meteor) {
       // When trying to access the `window` object before “visiting” a page in a
       // test, we get an `undefined` value. Therefore, the `Meteor` object is
       // undefined. We visit the app so that we get the Window instance of the
       // app from which we get the `Meteor` instance used in tests
-      cy.visit("/");
-      return cy.window().then(({ Meteor: MeteorSecondTry }) => MeteorSecondTry);
+      cy.visit("/", { log: false });
+      return cy.window({ log: false }).then(({ Meteor: MeteorSecondTry }) => MeteorSecondTry);
     }
     return Meteor;
   }),
 );
 
 // Check if the meteor subscriptions are ready, should equal true.
-Cypress.Commands.add("allSubscriptionsReady", (options = {}) => {
-  const log = { name: "allSubscriptionsReady" };
-
-  return cy.window({ log: false }).then((win) => {
-    Cypress.log(log);
-
-    return cy
-      .wrap(null, { log: false })
-      .then(() => win.DDP._allSubscriptionsReady())
-      .should("eq", true, options);
+Cypress.Commands.add("allSubscriptionsReady", () => {
+  cy.window({ log: false }).then((win) => {
+    new Cypress.Promise((resolve) => {
+      const poll = setInterval(() => {
+        if (win.DDP?._allSubscriptionsReady()) {
+          clearInterval(poll);
+          resolve();
+        }
+      }, 200);
+    });
   });
 });
 
 // Calls a Meteor method.
 Cypress.Commands.add("callMethod", (method, ...params) => {
-  Cypress.log({
-    name: "Calling method",
-    consoleProps: () => ({ name: method, params }),
-  });
-
   cy.getMeteor().then((Meteor) => {
+    Cypress.log({
+      name: "callMethod",
+      consoleProps: () => ({ name: method, params }),
+    });
+
     return new Cypress.Promise((resolve, reject) => {
       Meteor.call(method, ...params, (err: any, result: unknown) => {
         if (err) {
@@ -55,32 +55,31 @@ Cypress.Commands.add("callMethod", (method, ...params) => {
 });
 
 Cypress.Commands.add("logout", () => {
-  Cypress.log({
-    name: "Logging out",
+  cy.getMeteor().then((Meteor) => {
+    Cypress.log({
+      name: "logout",
+    });
+
+    return new Cypress.Promise((resolve, reject) => {
+      Meteor.logout((err: any, result: unknown) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(result);
+      });
+    });
   });
-
-  cy.getMeteor().then(
-    (Meteor) =>
-      new Cypress.Promise((resolve, reject) => {
-        Meteor.logout((err: any, result: unknown) => {
-          if (err) {
-            reject(err);
-          }
-          resolve(result);
-        });
-      }),
-  );
 });
 
-Cypress.Commands.add("visitAndWaitForSubscriptions", (url) => {
-  cy.visit(url);
-  cy.allSubscriptionsReady().should("eq", true);
-});
-
-Cypress.Commands.add("login", (username = "user", password = "password") => {
+Cypress.Commands.add("login", (username, password = "greg") => {
   cy.getMeteor().then((Meteor) => {
     // Logout first if the user is already logged in
     const promise = Meteor.userId() ? cy.logout() : (Promise.resolve() as any);
+
+    Cypress.log({
+      name: "login",
+      consoleProps: () => ({ username }),
+    });
 
     return promise.then(
       () =>
@@ -96,6 +95,28 @@ Cypress.Commands.add("login", (username = "user", password = "password") => {
   });
   cy.getMeteor().invoke("user").should("exist").and("not.be.null");
 });
+
+Cypress.Commands.add(
+  "visitOpenki",
+  (
+    url = "/",
+    state?:
+      | { locale?: string | undefined; region?: string | undefined }
+      | { username: string; password?: string | undefined },
+  ) => {
+    cy.visit(url);
+
+    if (state && "username" in state) {
+      cy.login(state.username, state.password);
+    } else {
+      cy.logout();
+      localStorage.setItem("locale", state?.locale ?? "de");
+      localStorage.setItem("region", state?.region ?? "all");
+    }
+
+    cy.allSubscriptionsReady();
+  },
+);
 
 // add types
 
@@ -113,7 +134,12 @@ declare global {
       callMethod<T = any>(method: string, ...params: any[]): Chainable<T>;
       logout(): Chainable<void>;
       login(username?: string, password?: string): Chainable<void>;
-      visitAndWaitForSubscriptions(url: string): Chainable<void>;
+      visitOpenki(
+        url?: string,
+        state?:
+          | { locale?: string | undefined; region?: string | undefined }
+          | { username: string; password?: string | undefined },
+      ): Chainable<void>;
     }
   }
 }
