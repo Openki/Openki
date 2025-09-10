@@ -112,7 +112,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       };
       const subject = t(
         "notification.privateMessage.mail.subject",
-        "Private message from {SENDER}",
+        "Direct message from {SENDER}",
         subjectvars,
       );
       const htmlizedMessage = HtmlTools.plainToHtml(entry.body.message);

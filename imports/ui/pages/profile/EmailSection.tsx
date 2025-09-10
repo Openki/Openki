@@ -89,7 +89,7 @@ export function EmailSection() {
     } catch (err) {
       Alert.serverError(
         err,
-        t("profile.toggle.allowPrivateMessages.error", "Failed to change allow private messages"),
+        t("profile.toggle.allowPrivateMessages.error", "Failed to change allow direct messages"),
       );
     }
   }
@@ -132,7 +132,7 @@ export function EmailSection() {
               onChange={handelNofitifcationsChange}
             />
             <label className="form-check-label" htmlFor="notificationsCheck">
-              {t("profile.toggle.notifications", "Receive automated notifications via e-mail")}
+              {t("profile.toggle.notifications", "Receive automated notifications via email")}
             </label>
           </div>
           <div className="form-check form-switch">
@@ -147,7 +147,7 @@ export function EmailSection() {
             <label className="form-check-label" htmlFor="allowPrivateMessagesCheck">
               {t(
                 "profile.toggle.allowPrivateMessages",
-                "Receive private messages from users via e-mail",
+                "Receive messages from other users (your email address will not be revealed)",
               )}
             </label>
           </div>
