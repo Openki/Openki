@@ -93,7 +93,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
   return {
     accepted(actualRecipient: UserModel) {
       if (!actualRecipient.allowPrivateMessages) {
-        throw new Error("User wishes to not receive private messages from users");
+        throw new Error("User wishes to not receive direct messages from users");
       }
     },
 

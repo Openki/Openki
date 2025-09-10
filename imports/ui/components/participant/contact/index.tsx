@@ -91,7 +91,7 @@ export function ParticipantContact(props: Props) {
                     className="fa-solid fa-envelope fa-fw"
                     title={t(
                       "user.acceptsPrivateMessages.false",
-                      "User does not accept private messages from users",
+                      "User does not accept direct messages from users",
                     )}
                   ></i>
                 </button>
