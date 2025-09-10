@@ -79,6 +79,7 @@ deploy_staging:
     TARGET_HOST: staging
   only:
     - staging
+  when: always
   trigger: Openki/sysadmin/deploy-config
 
 deploy_sandbox:
@@ -88,7 +89,9 @@ deploy_sandbox:
     TARGET_HOST: sandbox
   only:
     - main
+  when: always
   trigger: Openki/sysadmin/deploy-config
+
 ## Not possible yet: https://gitlab.com/gitlab-org/gitlab-ce/issues/27818
 #deploy_prod:
 #  stage: deploy
