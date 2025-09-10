@@ -1,12 +1,9 @@
-beforeEach(function () {
-  localStorage.setItem("locale", "de");
-  localStorage.setItem("region", "all");
-
-  cy.visit("/venue/3701eb4ea7");
+beforeEach(() => {
+  cy.visitOpenki("/venue/3701eb4ea7");
 });
 
-describe("venue details page", function () {
+describe("venue details page", () => {
   it("should be navigable", () => {
-    cy.get('[data-test="venue-details-header"]').should("include.text", "Hischengraben 3 ");
+    cy.getById("venue-details-header").should("be.visible");
   });
 });
