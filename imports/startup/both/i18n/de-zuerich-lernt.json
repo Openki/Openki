@@ -793,7 +793,7 @@
   "notifications.unsubscribeError": "Konnte nicht abmelden. Bitte versuche es erneut.",
   "notifications.unsubscribeSuccess": "Du hast dich erfolgreich von allen automatischen Benachrichtigungen abgemeldet.",
   "notifications.unsubscribeSuccess.action": "Wenn du dich von einem bestimmten Kurs abmelden möchten, kannst du dies dort tun. Verwalte deine Benachrichtigungseinstellungen:",
-  "notifications.unsubscribeSuccess.description": "Bist du sicher? Dies könnte zu Problemen führen. Du erhälst dann keinerlei Benachrichtigungen mehr über Aktualisierungen von Kursen, Veranstaltungen usw.",
+  "notifications.unsubscribeSuccess.description": "Bist du sicher? Dies könnte zu Problemen führen. Du erhälst dann z.B. keinerlei Benachrichtigungen mehr über Aktualisierungen von Kursen, Absagen von Veranstaltungen usw.",
   "participantContact.sendMessage.placeholder": "Hallo {USER}. Ich wollte dir sagen, dass…",
   "participantContactModal.writeMessageTo": "Sende eine Nachricht an {USER}",
   "participantContactModal.writeMessageToAllAttendees": "Benachrichtige alle Teilnehmenden",
