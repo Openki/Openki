@@ -365,6 +365,7 @@
   "event.description.placeholder": "Describe your event as accurately as possible. This helps people know how to prepare and what to expect from this meeting (e.g. level, prerequisites, activities, teaching methods, what to bring, etc.)",
   "event.detail.download_cal": "Download event to my calendar",
   "event.details.cancel": "Cancel this event",
+  "event.details.canceled": "The event has been canceled. Registration is therefore closed.",
   "event.details.categories": "Categories:",
   "event.details.close": "Close",
   "event.details.download": "Download",

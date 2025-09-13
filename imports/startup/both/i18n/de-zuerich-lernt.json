@@ -367,6 +367,7 @@
   "event.description.placeholder": "Beschreibe deine Lektion so ausführlich wie möglich. Das hilft anderen Leuten sich darauf vorzubereiten und zu wissen, was sie von diesem Treffen erwarten können (z.B. Niveau, Voraussetzungen, Aktivitäten, Lernmethoden, was mensch mitnehmen muss etc.)",
   "event.detail.download_cal": "Veranstaltung in meinen Kalender eintragen",
   "event.details.cancel": "Lektion Absagen",
+  "event.details.canceled": "Die Lektion wurde abgesagt. Die Anmeldung ist somit geschlossen.",
   "event.details.categories": "Kategorien:",
   "event.details.close": "Schliessen",
   "event.details.download": "Herunterladen",
