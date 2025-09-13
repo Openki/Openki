@@ -149,7 +149,7 @@ export function Display({
     return {
       confirmText: t(
         "event.reallydelete",
-        "Please confirm that you would like to delete this event. This might confuse other users and cannot be undone. The event will be permanently deleted and not visible any more.",
+        "Please confirm that you would like to delete this event. This cannot be undone, the event will be permanently deleted and not visible any more. If the event is allready shared or published somewhere we strongly recomend to instead only canceling it.",
       ),
       confirmButton: t("event.delete.confirm.button", "Delete event without notifying anyone"),
       cancelButton: t("event.delete.confirm.cancel.button", "Rather mark as canceled"),
