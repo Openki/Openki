@@ -54,6 +54,7 @@ export function SendMessage(props: Data) {
         } finally {
           setIsBusy(false);
         }
+        setMessage("");
       }}
     >
       <div className="mb-3">
