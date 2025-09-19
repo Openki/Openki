@@ -47,6 +47,7 @@
 		, "visitorUser": true
 		, "rsvpWithCompanions": true
 		, "sendReminderIsEditable": true
+		, "resizeImagesOnServer": true
     , "proposeCourseBox": true 
 		}
 	, "nav":
