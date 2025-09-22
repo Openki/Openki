@@ -198,10 +198,10 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
   );
 }
 
-export function VenueDetailsPage({ venue }: { venue: VenueModel }) {
+export function VenueDetailsPage({ venue, isNew }: { venue: VenueModel; isNew: boolean }) {
   const { t } = useTranslation();
 
-  const [editing, setEditing] = useState(!venue?._id);
+  const [editing, setEditing] = useState(isNew);
 
   function editAttr() {
     return {
@@ -224,6 +224,11 @@ export function VenueDetailsPage({ venue }: { venue: VenueModel }) {
     }
     Metatags.setCommonTags(title, truncate(textPlain(venue?.description || ""), { length: 160 }));
   });
+
+  if (!venue) {
+    // should not happen, but does, maybe some problem with iron-router and react
+    return null;
+  }
 
   return (
     <div className="container mw-md">

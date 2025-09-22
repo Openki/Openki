@@ -6,6 +6,9 @@ import { Events } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { MeteorAsync } from "/imports/utils/promisify";
 import { CourseModel, Courses } from "/imports/api/courses/courses";
+import { UserModel } from "/imports/api/users/users";
+import { PublicSettings } from "/imports/utils/PublicSettings";
+import { Default as RegionDefault } from "/imports/ui/lib/cleaned-region";
 
 if (Meteor.isClient) {
   describe("Event", () => {

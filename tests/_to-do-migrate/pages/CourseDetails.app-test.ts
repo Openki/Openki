@@ -3,16 +3,16 @@ import { Router } from "meteor/iron:router";
 import $ from "jquery";
 import { Meteor } from "meteor/meteor";
 
+import { MeteorAsync } from "/imports/utils/promisify";
 import {
-  waitForSubscriptions,
-  waitFor,
-  setInputValue,
-  setSelectValue,
   expectElement,
   expectHtmlButton,
   expectText,
-} from "../../../../tests/_to-do-migrate/utils/ClientUtils.app-test";
-import { MeteorAsync } from "/imports/utils/promisify";
+  setInputValue,
+  setSelectValue,
+  waitFor,
+  waitForSubscriptions,
+} from "../utils/ClientUtils.app-test";
 
 if (Meteor.isClient) {
   describe("Course details", () => {

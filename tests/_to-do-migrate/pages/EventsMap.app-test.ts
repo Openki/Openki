@@ -4,11 +4,8 @@ import $ from "jquery";
 import { Meteor } from "meteor/meteor";
 import { MeteorAsync } from "/imports/utils/promisify";
 import { Session } from "meteor/session";
+import { waitFor, waitForSubscriptions } from "../utils/ClientUtils.app-test";
 
-import {
-  waitForSubscriptions,
-  waitFor,
-} from "../../../../tests/_to-do-migrate/utils/ClientUtils.app-test";
 
 if (Meteor.isClient) {
   describe("Events map", function () {

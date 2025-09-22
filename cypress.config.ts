@@ -3,7 +3,7 @@ import { defineConfig } from "cypress";
 export default defineConfig({
   projectId: "4icmbi",
   e2e: {
-    baseUrl: "http://localhost:4000",
+    baseUrl: "http://localhost:3000",
     // we use cypress e2e environment for all kinds of test
     specPattern: "tests/{unit,e2e}/**/*.spec.ts",
     supportFile: "tests/support/index.ts",
@@ -22,8 +22,8 @@ export default defineConfig({
       // return require("./tests/cypress/plugins/index.ts")(on, config);
     },
     env: {
-      baseUrl: "http://localhost:4000",
-      codeCoverage: { url: "http://localhost:4000/__coverage__" },
+      baseUrl: "http://localhost:3000",
+      codeCoverage: { url: "http://localhost:3000/__coverage__" },
     },
   },
 });

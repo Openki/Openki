@@ -262,7 +262,7 @@ export function ProfilePage() {
     <div className="container mw-md">
       {!isVisitor() && (
         <div className="page-component">
-          <h1>
+          <h1 data-test="profile-header">
             <span className="fa-solid fa-gears fa-fw" aria-hidden="true"></span>{" "}
             {t("login.frame.settings")}
           </h1>

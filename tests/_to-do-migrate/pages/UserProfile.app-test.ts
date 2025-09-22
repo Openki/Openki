@@ -2,14 +2,14 @@ import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import { MeteorAsync } from "/imports/utils/promisify";
 import { Session } from "meteor/session";
-import {
-  expectText,
-  expectElement,
-  expectNoneElement,
-  expectHtmlButton,
-} from "../../../../tests/_to-do-migrate/utils/ClientUtils.app-test";
 
 import { Users } from "/imports/api/users/users";
+import {
+  expectText,
+  expectNoneElement,
+  expectHtmlButton,
+  expectElement,
+} from "../utils/ClientUtils.app-test";
 
 if (Meteor.isClient) {
   describe("userprofile page", function () {
