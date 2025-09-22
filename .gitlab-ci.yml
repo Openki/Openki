@@ -50,11 +50,11 @@ test:integration:
   allow_failure: true
   timeout: 20m
 
-
-# Code Quality by "Code Climate" and Browser Perfomance
+# Code Quality by "Code Climate" and SAST
 include:
-  template: Code-Quality.gitlab-ci.yml
-  template: Jobs/SAST.gitlab-ci.yml
+  - template: Code-Quality.gitlab-ci.yml
+  - template: Jobs/SAST.gitlab-ci.yml
+
 #   Verify/Browser-Performance.gitlab-ci.yml
 
 #browser_performance:
