@@ -4,8 +4,14 @@ import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 
 import { MeteorAsync } from "/imports/utils/promisify";
-import { expectElement, expectHtmlButton, setInputValue, setSelectValue, waitFor, waitForSubscriptions } from "../utils/ClientUtils.app-test";
-
+import {
+  expectElement,
+  expectHtmlButton,
+  setInputValue,
+  setSelectValue,
+  waitFor,
+  waitForSubscriptions,
+} from "../utils/ClientUtils.app-test";
 
 if (Meteor.isClient) {
   describe("Course history", function () {

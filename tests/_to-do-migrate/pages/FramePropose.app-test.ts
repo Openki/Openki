@@ -4,8 +4,12 @@ import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 
 import { MeteorAsync } from "/imports/utils/promisify";
-import { waitForSubscriptions, waitFor, setInputValue, setSelectValue } from "../utils/ClientUtils.app-test";
-
+import {
+  waitForSubscriptions,
+  waitFor,
+  setInputValue,
+  setSelectValue,
+} from "../utils/ClientUtils.app-test";
 
 if (Meteor.isClient) {
   describe("Propose course via frame", function () {

@@ -5,7 +5,6 @@ import { Meteor } from "meteor/meteor";
 import { Session } from "meteor/session";
 import { waitForSubscriptions, waitFor } from "../utils/ClientUtils.app-test";
 
-
 if (Meteor.isClient) {
   describe("Calendar frame page", function () {
     this.timeout(30000);

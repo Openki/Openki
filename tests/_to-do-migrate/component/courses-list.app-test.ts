@@ -5,7 +5,6 @@ import { Session } from "meteor/session";
 import { MeteorAsync } from "/imports/utils/promisify";
 import { waitForSubscriptions, waitFor } from "../utils/ClientUtils.app-test";
 
-
 if (Meteor.isClient) {
   describe("Course list component", function () {
     this.timeout(120000);
