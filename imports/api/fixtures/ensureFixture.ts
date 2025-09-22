@@ -82,7 +82,7 @@ export const ensure = {
     });
   },
 
-  async user(name: string, region?: string | undefined, verified = false) {
+  async user(name: string, region?: string | undefined, verified = true) {
     const prng = Prng("ensureUser");
 
     if (!name) {
@@ -90,15 +90,7 @@ export const ensure = {
     }
     const email = `${name.split(" ").join("")}@openki.example`.toLowerCase();
 
-    let user = await Users.findOneAsync({ "emails.address": email });
-    if (user) {
-      if (region) {
-        await ensure.userInTenant(user, region);
-      }
-      return user;
-    }
-
-    user = await Users.findOneAsync({ username: name });
+    let user = await Users.findOneAsync({ $or: [{ "emails.address": email }, { username: name }] });
     if (user) {
       if (region) {
         await ensure.userInTenant(user, region);
@@ -130,20 +122,14 @@ export const ensure = {
           services: {
             password: { bcrypt: "$2a$10$pMiVQDN4hfJNUk6ToyFXQugg2vJnsMTd0c.E0hrRoqYqnq70mi4Jq" },
           },
+
           createdAt: new Date(time - age),
           lastLogin: new Date(time - age / 30),
+
+          "emails.0.verified": verified,
         } as any,
       },
     );
-
-    if (verified) {
-      await Users.updateAsync(
-        { _id: id },
-        {
-          $set: { "emails.0.verified": true },
-        },
-      );
-    }
 
     user = await Users.findOneAsync(id);
 

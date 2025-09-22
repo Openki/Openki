@@ -16,28 +16,30 @@ export async function updateDbCacheFieldsServerOnly() {
   Log.record("DbCacheFields.Update.Start", [], {});
 
   try {
-    await eventsCourseImageDenormalizer.onStartUp();
-    // Resync location cache in events
-    await eventsVenueDenormalizer.updateVenue({});
+    await Promise.all([
+      eventsCourseImageDenormalizer.onStartUp(),
+      // Resync location cache in events
+      eventsVenueDenormalizer.updateVenue({}),
 
-    // Update list of organizers per course, triggers updateGroups from events
-    await courseGroupsDenormalizer.updateGroups({});
+      // Update list of organizers per course, triggers updateGroups from events
+      courseGroupsDenormalizer.updateGroups({}),
 
-    await eventsCategoriesDenormalizer.onStartUp();
+      eventsCategoriesDenormalizer.onStartUp(),
 
-    // Update List of badges per user
-    await userBadgesDenormalizer.updateBadges({});
+      // Update List of badges per user
+      userBadgesDenormalizer.updateBadges({}),
 
-    await coursesTenantDenormalizer.onStartUp();
-    await eventsTenantDenormalizer.onStartUp();
-    await usersTenantsDenormalizer.onStartUp();
+      coursesTenantDenormalizer.onStartUp(),
+      eventsTenantDenormalizer.onStartUp(),
+      usersTenantsDenormalizer.onStartUp(),
 
-    await usersVenuesDenormalizer.onStartUp();
+      usersVenuesDenormalizer.onStartUp(),
 
-    // Keep the nextEvent entry updated
-    // On startup do a full scan to catch stragglers
-    await courseNextEventDenormalizer.updateNextEvent({});
-    await regionsCountDenormalizer.updateCounters({});
+      // Keep the nextEvent entry updated
+      // On startup do a full scan to catch stragglers
+      courseNextEventDenormalizer.updateNextEvent({}),
+      regionsCountDenormalizer.updateCounters({}),
+    ]);
   } catch (error) {
     serverError(error);
   }

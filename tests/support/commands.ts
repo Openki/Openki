@@ -35,8 +35,8 @@ Cypress.Commands.add("allSubscriptionsReady", () => {
 });
 
 // Calls a Meteor method.
-Cypress.Commands.add("callMethod", (method, ...params) => {
-  cy.getMeteor().then((Meteor) => {
+Cypress.Commands.add("callMethod", (method: string, ...params: any[]) => {
+  return cy.getMeteor().then((Meteor) => {
     Cypress.log({
       name: "callMethod",
       consoleProps: () => ({ name: method, params }),

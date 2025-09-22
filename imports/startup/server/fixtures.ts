@@ -8,10 +8,10 @@ import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
 if (runBackgroundTasks && Meteor.isServer && PrivateSettings.testdata) {
-  Meteor.startup(() => {
+  Meteor.startup(async () => {
     // Remove the rate-limiting to allow the tests repeated logins
     Accounts.removeDefaultRateLimit();
 
-    fixturesCreate();
+    await fixturesCreate();
   });
 }
