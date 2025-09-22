@@ -4,7 +4,12 @@ import { Meteor } from "meteor/meteor";
 import { MeteorAsync } from "/imports/utils/promisify";
 
 import { expect } from "chai";
-import { waitForSubscriptions, expectElement, setTextAreaValue, waitFor } from "../utils/ClientUtils.app-test";
+import {
+  waitForSubscriptions,
+  expectElement,
+  setTextAreaValue,
+  waitFor,
+} from "../utils/ClientUtils.app-test";
 
 if (Meteor.isClient) {
   describe("Course members component", function () {

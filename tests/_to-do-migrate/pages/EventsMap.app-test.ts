@@ -6,7 +6,6 @@ import { MeteorAsync } from "/imports/utils/promisify";
 import { Session } from "meteor/session";
 import { waitFor, waitForSubscriptions } from "../utils/ClientUtils.app-test";
 
-
 if (Meteor.isClient) {
   describe("Events map", function () {
     this.timeout(30000);
