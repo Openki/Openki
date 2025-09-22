@@ -1,3 +1,6 @@
+include:
+  - component: gitlab.com/components/sast/sast@main
+
 image: registry.gitlab.com/openki/sysadmin/docker-ci-container:latest
 
 stages:
