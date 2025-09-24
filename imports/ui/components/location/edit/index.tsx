@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { FullscreenControl } from "../../FullscreenControl";
 import "leaflet/dist/leaflet.css";
 import { TileLayers } from "../../TileLayer";
+import { RegionMapContainer } from "../display/RegionMapContainer";
 
 import "./styles.scss";
 
@@ -50,6 +51,7 @@ function IconControl({
 export type Coordinates = [long: number, lat: number];
 
 export function Edit(props: {
+  region?: string | undefined;
   coordinates?: Coordinates | undefined;
   center?: Coordinates | undefined;
   maxZoom?: number;
@@ -72,53 +74,78 @@ export function Edit(props: {
     html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
     className: "leaflet-marker-icon-pin",
   });
-  return (
-    <div className="location-map">
-      <MapContainer
-        ref={mapRef}
-        {...(!props.coordinates && !props.center
-          ? {}
-          : {
-              center: [
-                props.coordinates?.[1] || props.center?.[1],
-                props.coordinates?.[0] || props.center?.[0],
-              ] as [number, number],
-            })}
-        zoom={props.maxZoom ? props.maxZoom : props.coordinates ? 19 : 13}
-      >
-        {TileLayers[locale] || TileLayers.default}
-        {props.coordinates ? (
-          <>
-            <Marker
-              ref={markerRef}
-              position={[props.coordinates[1], props.coordinates[0]]}
-              icon={markerIcon}
-              draggable={true}
-              eventHandlers={{ dragend: handleDragend }}
-            ></Marker>
-            <IconControl
-              icons={["fa-solid fa-minus", "fa-solid fa-location-dot"]}
-              title={t("map.removeMarker", "Remove marker")}
-              onClick={() => {
-                props.onChange(undefined);
-              }}
-            />
-          </>
-        ) : (
+
+  const children = (
+    <>
+      {props.coordinates ? (
+        <>
+          <Marker
+            ref={markerRef}
+            position={[props.coordinates[1], props.coordinates[0]]}
+            icon={markerIcon}
+            draggable={true}
+            eventHandlers={{ dragend: handleDragend }}
+          ></Marker>
           <IconControl
-            icons={["fa-solid fa-plus", "fa-solid fa-location-dot"]}
-            title={t("map.addMarker", "Set marker")}
+            icons={["fa-solid fa-minus", "fa-solid fa-location-dot"]}
+            title={t("map.removeMarker", "Remove marker")}
             onClick={() => {
-              const map = mapRef.current;
-              if (map != null) {
-                const latLng = map.getCenter();
-                props.onChange([latLng.lng, latLng.lat]);
-              }
+              props.onChange(undefined);
             }}
           />
-        )}
-        <FullscreenControl />
-      </MapContainer>
+        </>
+      ) : (
+        <IconControl
+          icons={["fa-solid fa-plus", "fa-solid fa-location-dot"]}
+          title={t("map.addMarker", "Set marker")}
+          onClick={() => {
+            const map = mapRef.current;
+            if (map != null) {
+              const latLng = map.getCenter();
+              props.onChange([latLng.lng, latLng.lat]);
+            }
+          }}
+        />
+      )}
+      <FullscreenControl />
+    </>
+  );
+
+  return (
+    <div className="location-map">
+      {props.region ? (
+        <RegionMapContainer
+          region={props.region}
+          ref={mapRef}
+          {...(!props.coordinates && !props.center
+            ? {}
+            : {
+                center: [
+                  props.coordinates?.[1] || props.center?.[1],
+                  props.coordinates?.[0] || props.center?.[0],
+                ] as [number, number],
+              })}
+          zoom={props.maxZoom ? props.maxZoom : props.coordinates ? 19 : 13}
+        >
+          {children}
+        </RegionMapContainer>
+      ) : (
+        <MapContainer
+          ref={mapRef}
+          {...(!props.coordinates && !props.center
+            ? {}
+            : {
+                center: [
+                  props.coordinates?.[1] || props.center?.[1],
+                  props.coordinates?.[0] || props.center?.[0],
+                ] as [number, number],
+              })}
+          zoom={props.maxZoom ? props.maxZoom : props.coordinates ? 19 : 13}
+        >
+          {TileLayers[locale] || TileLayers.default}
+          {children}
+        </MapContainer>
+      )}
     </div>
   );
 }

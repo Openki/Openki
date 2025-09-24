@@ -1,16 +1,23 @@
 import React, { useRef } from "react";
-import { MapContainer, Marker } from "react-leaflet";
-import { useSession } from "/imports/utils/react-meteor-data";
+import { Marker } from "react-leaflet";
 
 import { Geodata } from "/imports/api/regions/regions";
 
 import { DivIcon } from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { TileLayers } from "/imports/ui/components/TileLayer";
+import { RegionMapContainer } from "../../../location/display/RegionMapContainer";
 
 import "./styles.scss";
 
-export function Map({ value, onChange }: { value: Geodata; onChange: (value: Geodata) => void }) {
+export function Map({
+  region,
+  value,
+  onChange,
+}: {
+  region: string;
+  value: Geodata;
+  onChange: (value: Geodata) => void;
+}) {
   const mapRef = useRef<any>(null);
   const markerRef = useRef<any>(null);
 
@@ -24,7 +31,6 @@ export function Map({ value, onChange }: { value: Geodata; onChange: (value: Geo
       } as Geodata);
     }
   };
-  const locale = useSession("locale");
 
   const markerIcon = new DivIcon({
     html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
@@ -32,16 +38,20 @@ export function Map({ value, onChange }: { value: Geodata; onChange: (value: Geo
   });
   return (
     <div className="edit-venue-map">
-      <MapContainer ref={mapRef} center={[value.coordinates[1], value.coordinates[0]]} zoom={19}>
-        {TileLayers[locale] || TileLayers.default}
+      <RegionMapContainer
+        region={region}
+        ref={mapRef}
+        center={[value.coordinates[1], value.coordinates[0]]}
+        zoom={19}
+      >
         <Marker
           ref={markerRef}
           position={[value.coordinates[1], value.coordinates[0]]}
           icon={markerIcon}
           draggable={true}
           eventHandlers={{ dragend: handleDragend }}
-        ></Marker>
-      </MapContainer>
+        />
+      </RegionMapContainer>
     </div>
   );
 }

@@ -92,10 +92,7 @@ export function Edit({
   function showMapSelection() {
     return regionSelectable() || !!changes.selectedRegion;
   }
-  function regionSelected() {
-    return !!changes.selectedRegion;
-  }
-
+  
   const handleSave = async () => {
     const changes1: VenuesMethods.SaveFields = {
       name: changes.name,
@@ -145,7 +142,7 @@ export function Edit({
       return;
     }
 
-    const venueId = venue._id || "";
+    const venueId = venue?._id || "";
     try {
       const res = await VenuesMethods.save(venueId, changes1);
 
@@ -245,7 +242,7 @@ export function Edit({
                 </div>
               </div>
             )}
-            {!!(regionSelected() && regionCoordinates) && (
+            {!!(changes.selectedRegion && regionCoordinates) && (
               <div className="col-md">
                 <label className="form-label">
                   {t(
@@ -254,6 +251,7 @@ export function Edit({
                   )}
                 </label>
                 <LocationEdit
+                  region={changes.selectedRegion}
                   center={regionCoordinates}
                   coordinates={changes.loc?.coordinates}
                   onChange={(coordinates) => {

@@ -349,6 +349,7 @@ export function EditVenue({
               {!value._id ? (
                 <>
                   <Map
+                    region={regionId}
                     value={value.loc}
                     onChange={(newLoc) => {
                       onChange({ ...value, loc: newLoc });
