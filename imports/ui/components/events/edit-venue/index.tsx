@@ -30,6 +30,7 @@ function toEventVenue(v: EventVenueEntity) {
     _id: v._id,
     name: v.name,
     loc: v.loc,
+    level: v.level,
     address: v.address,
     editor: v.editor,
     restrictedUse: v.restrictedUse,
@@ -350,9 +351,9 @@ export function EditVenue({
                 <>
                   <Map
                     region={regionId}
-                    value={value.loc}
-                    onChange={(newLoc) => {
-                      onChange({ ...value, loc: newLoc });
+                    value={{ location: value.loc, level: value.level }}
+                    onChange={(newValue) => {
+                      onChange({ ...value, loc: newValue.location, level: newValue.level });
                     }}
                   />
                   <div className="form-text text-end">
@@ -363,7 +364,11 @@ export function EditVenue({
                   </div>
                 </>
               ) : (
-                <Display region={regionId} coordinates={value.loc.coordinates} />
+                <Display
+                  region={regionId}
+                  coordinates={value.loc.coordinates}
+                  level={value.level}
+                />
               )}
             </div>
           )}

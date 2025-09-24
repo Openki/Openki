@@ -48,6 +48,7 @@ export function Edit({
     restrictedUse: venue.restrictedUse,
     selectedRegion: isNew ? sessionRegion : venue.region,
     loc: venue.loc as Geodata | undefined,
+    level: venue.level,
   });
 
   const [isLoading, regions] = useFindFilter();
@@ -92,7 +93,7 @@ export function Edit({
   function showMapSelection() {
     return regionSelectable() || !!changes.selectedRegion;
   }
-  
+
   const handleSave = async () => {
     const changes1: VenuesMethods.SaveFields = {
       name: changes.name,
@@ -254,15 +255,17 @@ export function Edit({
                   region={changes.selectedRegion}
                   center={regionCoordinates}
                   coordinates={changes.loc?.coordinates}
-                  onChange={(coordinates) => {
+                  level={changes.level}
+                  onChange={(newValue) => {
                     setChanges((prevState) => ({
                       ...prevState,
-                      loc: coordinates
+                      loc: newValue?.coordinates
                         ? {
-                            coordinates,
+                            coordinates: newValue.coordinates,
                             type: "Point",
                           }
                         : undefined,
+                      level: newValue?.level,
                     }));
                   }}
                 />

@@ -51,6 +51,7 @@ export interface ApiEvent {
     name: string | undefined;
     address: string | undefined;
     loc: Geodata | undefined;
+    level: number | undefined;
     link: string | undefined;
   };
   course?: {
@@ -142,6 +143,7 @@ export const Api = {
           name: ev.venue.name,
           address: ev.venue.address,
           loc: ev.venue.loc,
+          level: ev.venue.level,
           link: maybeUrl("venueDetails", ev.venue),
         };
       }

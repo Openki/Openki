@@ -53,7 +53,11 @@ export function Content({ event }: { event: EventModel }) {
             <div className="col-md-5">
               <div className="details-map">
                 {!!event.venue?.loc?.coordinates && (
-                  <Display region={event.region} coordinates={event.venue?.loc?.coordinates} />
+                  <Display
+                    region={event.region}
+                    level={event.venue.level}
+                    coordinates={event.venue.loc.coordinates}
+                  />
                 )}
 
                 <div className="tag-group multiline mt-1">
