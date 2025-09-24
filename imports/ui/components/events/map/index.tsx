@@ -16,8 +16,8 @@ import "./styles.scss";
 
 export interface Props {
   events: EventModel[];
-  fullscreenControl?: boolean;
-  openLinksInNewTab?: boolean;
+  fullscreenControl?: boolean | undefined;
+  openLinksInNewTab?: boolean | undefined;
 }
 
 function groupBy<T>(array: T[], predicate: (value: T, index: number, array: T[]) => string) {
@@ -30,7 +30,7 @@ function groupBy<T>(array: T[], predicate: (value: T, index: number, array: T[])
   );
 }
 
-export function EventsMap({ events, fullscreenControl = false, openLinksInNewTab = false }: Props) {
+export function EventsMap({ events, fullscreenControl, openLinksInNewTab }: Props) {
   const locale = useSession("locale");
 
   const eventMarkerIcon = new DivIcon({
@@ -111,7 +111,7 @@ export function EventsMap({ events, fullscreenControl = false, openLinksInNewTab
             ></Marker>
           </React.Fragment>
         ))}
-        {fullscreenControl && <FullscreenControl />}
+        {!!fullscreenControl && <FullscreenControl />}
       </MapContainer>
     </div>
   );
