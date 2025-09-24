@@ -4,6 +4,7 @@ import { EventModel } from "/imports/api/events/events";
 import { Geodata } from "/imports/api/Geodata";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
+import { isOnCustomMap } from "./isOnCustomMap";
 
 function getSiteDefaultImage() {
   const ogLogo = PublicSettings.ogLogo.src;
@@ -91,7 +92,7 @@ function createJsonLd(data: EventModel) {
             addressLocality: data.venue.name,
           },
           name: data.venue.name,
-          geo: addGeoToJsonLd(data.venue.loc),
+          geo: !isOnCustomMap(data.venue) ? addGeoToJsonLd(data.venue.loc) : undefined,
         }
       : undefined,
     description: data.description || data.title,
