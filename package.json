@@ -32,7 +32,7 @@
     "leaflet.fullscreen": "4.0.0",
     "lodash": "4.17.21",
     "medium-editor": "5.23.3",
-    "meteor-node-stubs": "1.2.22",
+    "meteor-node-stubs": "1.2.24",
     "mime-db": "1.54.0",
     "mime-types": "3.0.1",
     "moment": "2.30.1",
