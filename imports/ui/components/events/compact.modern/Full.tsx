@@ -163,7 +163,7 @@ export function Full({
                   </>
                 )}
                 {!!event.venue?.loc?.coordinates && (
-                  <Display coordinates={event.venue?.loc?.coordinates} />
+                  <Display region={event.region} coordinates={event.venue?.loc?.coordinates} />
                 )}
               </p>
             </>

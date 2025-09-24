@@ -156,10 +156,10 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
                     "This venue can only be chosen by its hosts to publish an event.",
                   )}
               </div>
-              {!!venue.loc && (
+              {!!venue.loc && !!venue.region && (
                 <div className="col-md-5">
                   <div className="details-map">
-                    <LocationDisplay coordinates={venue.loc.coordinates} />
+                    <LocationDisplay region={venue.region} coordinates={venue.loc.coordinates} />
                     <div className="coordinates">
                       <a href={geoLocationLink(venue.loc)}>
                         {t("venueDetails.coordinates", "Coordinates:")} {format(t, venue.loc)}
