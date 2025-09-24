@@ -94,6 +94,7 @@ export async function create() {
       _id: event.venue?._id,
       name: event.venue?.name,
       loc: event.venue?.loc,
+      level: event.venue?.level,
       address: event.venue?.address,
       editor: event.venue?.editor,
     } as any;

@@ -180,7 +180,7 @@ export function EventParticipants({ event }: Props) {
             ></i>
           )}
           <br />
-          {!!event.maxParticipants && (
+          {!!event.maxParticipants && !event.canceled && (
             <span className="free-places">
               {t(
                 "event.details.participants.free.places",

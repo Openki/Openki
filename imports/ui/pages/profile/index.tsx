@@ -135,7 +135,7 @@ function UnsubscribeResultAlerts() {
         }
         title={t(
           "privateMessages.unsubscribeSuccess",
-          "You will not get private messages from users anymore.",
+          "You will not get direct messages from users anymore.",
         )}
         actions={[
           <>

@@ -57,12 +57,12 @@ export function Fields({ region, onChange }: Props) {
         <LocationEdit
           maxZoom={16}
           coordinates={region.loc?.coordinates}
-          onChange={(coordinates) => {
+          onChange={(newValue) => {
             onChange({
               ...region,
-              loc: coordinates
+              loc: newValue?.coordinates
                 ? {
-                    coordinates,
+                    coordinates: newValue.coordinates,
                     type: "Point",
                   }
                 : undefined,

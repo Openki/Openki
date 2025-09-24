@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Geodata, RegionEntity } from "/imports/api/regions/regions";
+import { RegionEntity } from "/imports/api/regions/regions";
+import { Geodata } from "/imports/api/Geodata";
 import * as Alert from "/imports/api/alerts/alert";
 
 import { Fields } from "./fields";

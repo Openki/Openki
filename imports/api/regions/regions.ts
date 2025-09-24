@@ -12,11 +12,15 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { Type } from "/imports/utils/CustomChecks";
 import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
+import { Geodata } from "/imports/api/Geodata";
 
-export interface Geodata {
-  type: "Point";
-  /** (not lat-long !) */
-  coordinates: [long: number, lat: number];
+export interface CustomMapConfig {
+  crs?: "Simple";
+  layers: { name: string; level: number; tileUrl: string }[];
+  defaultLevel: number;
+  center: Geodata;
+  maxZoom: number;
+  attribution: string;
 }
 
 export interface RegionEntity {
@@ -95,6 +99,9 @@ export interface RegionEntity {
     query?: string;
     showAll?: { link?: string; text?: string };
   }[];
+
+  map?: CustomMapConfig;
+
   createdby?: string;
   created?: Date;
   updated?: Date;

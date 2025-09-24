@@ -50,6 +50,7 @@
 		, "visitorUser": true // allow user without name and password, Default: false
 		, "rsvpWithCompanions": true // allow rsvp with +1 / for two seats, Default: false
 		, "sendReminderIsEditable": true // allow to edit whether to remind or not, Default: true
+		, "resizeImagesOnServer": true // needs sharp npm module on server which needs a CPU with v2 microarchitecture level, Default: true
     , "proposeCourseBox": true // show a "empty" course box to propose a new course
 		}
 	, "nav":

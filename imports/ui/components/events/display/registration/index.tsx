@@ -137,11 +137,29 @@ export function EventRegistration({ event }: Props) {
               <h4>{t("event.details.registration", "Registration")}</h4>
             </div>
           </div>
-          {event.noRsvp ? (
+          {event.canceled ? (
+            <div className="page-component">
+              <strong>
+                {t(
+                  "event.details.canceled",
+                  "The event has been canceled. Registration is therefore closed.",
+                )}
+              </strong>
+            </div>
+          ) : event.noRsvp ? (
             <div className="page-component">
               <strong>{t("event.details.noRsvp", "Registration not required.")}</strong>
             </div>
-          ) : !registrationClosed ? (
+          ) : registrationClosed ? (
+            <div className="page-component pre-line">
+              <strong>
+                {t(
+                  "event.details.registrationClosed",
+                  "The registration for this event is closed.",
+                )}
+              </strong>
+            </div>
+          ) : (
             <>
               <div className="page-component">
                 <b>
@@ -158,8 +176,7 @@ export function EventRegistration({ event }: Props) {
               </div>
               <div className="page-component">
                 {!event.attendedBy(user?._id) ? (
-                  !event.canceled &&
-                  (!event.isFullyBooked() ? (
+                  !event.isFullyBooked() ? (
                     <RegisterPanel
                       event={event}
                       busy={isBusy === "registering"}
@@ -169,7 +186,7 @@ export function EventRegistration({ event }: Props) {
                     />
                   ) : (
                     <ButtonRegistrationClosed busy={isBusy === "registering"} />
-                  ))
+                  )
                 ) : (
                   <UnregisterPanel
                     busy={isBusy === "unregistering"}
@@ -181,15 +198,6 @@ export function EventRegistration({ event }: Props) {
                 )}
               </div>
             </>
-          ) : (
-            <div className="page-component pre-line">
-              <strong>
-                {t(
-                  "event.details.registrationClosed",
-                  "The registration for this event is closed.",
-                )}
-              </strong>
-            </div>
           )}
         </>
       )}

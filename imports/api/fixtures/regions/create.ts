@@ -1,6 +1,6 @@
 import { clone } from "lodash";
 import { Log } from "../../log/log";
-import { Geodata, RegionEntity, Regions } from "../../regions/regions";
+import { RegionEntity, Regions } from "../../regions/regions";
 import { ensure } from "../ensureFixture";
 import { Prng } from "../Prng";
 import { regions } from "./data";
@@ -20,8 +20,8 @@ export async function create() {
       defaultTeamGroups: template.defaultTeamGroups,
     } as unknown as RegionEntity;
     if (template.loc) {
-      const coordinates = clone(template.loc).reverse(); // GeoJSON takes latitude first
-      region.loc = { type: "Point", coordinates } as Geodata;
+      const coordinates = clone(template.loc).reverse() as [long: number, lat: number]; // GeoJSON takes latitude first
+      region.loc = { type: "Point", coordinates };
     }
     if (template.calendarStartDate) {
       const startDate = new Date();
