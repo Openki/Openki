@@ -33,7 +33,8 @@ export interface EventVenueEntity {
   name: string;
   /** Event location in GeoJSON format */
   loc?: Geodata;
-  level?: number | undefined;
+  /** Floor level for custom maps as integer */
+  level?: number;
   /** Address string where the event will take place */
   address?: string;
   editor?: string;

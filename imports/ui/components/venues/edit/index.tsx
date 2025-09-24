@@ -104,6 +104,9 @@ export function Edit({
       maxWorkplaces: changes.maxWorkplaces,
       facilities: changes.facilities,
     };
+    if (changes.level !== undefined) {
+      changes1.level = changes.level;
+    }
     if (changes.restrictedUse !== undefined) {
       changes1.restrictedUse = changes.restrictedUse;
     }

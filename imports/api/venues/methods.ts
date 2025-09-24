@@ -35,7 +35,7 @@ export const SaveFieldPattern = {
       coordinates: Tuple<[long: NumberConstructor, lat: NumberConstructor]>(Number, Number),
     }),
   ),
-  level: Match.Optional(Number),
+  level: Match.Optional(Match.Integer),
   address: Match.Optional(String),
   route: Match.Optional(String),
   short: Match.Optional(String),

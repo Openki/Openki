@@ -353,7 +353,9 @@ export function EditVenue({
                     region={regionId}
                     value={{ location: value.loc, level: value.level }}
                     onChange={(newValue) => {
-                      onChange({ ...value, loc: newValue.location, level: newValue.level });
+                      if (newValue.level === undefined)
+                        onChange({ ...value, loc: newValue.location });
+                      else onChange({ ...value, loc: newValue.location, level: newValue.level });
                     }}
                   />
                   <div className="form-text text-end">
