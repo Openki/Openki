@@ -55,6 +55,13 @@ include:
   - template: Code-Quality.gitlab-ci.yml
   - template: Jobs/SAST.gitlab-ci.yml
 
+semgrep-sast:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_COMMIT_BRANCH == "staging"
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"
+
+
 #   Verify/Browser-Performance.gitlab-ci.yml
 
 #browser_performance:
