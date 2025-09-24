@@ -12,12 +12,8 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { Type } from "/imports/utils/CustomChecks";
 import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
+import { Geodata } from "/imports/api/Geodata";
 
-export interface Geodata {
-  type: "Point";
-  /** (not lat-long !) */
-  coordinates: [long: number, lat: number];
-}
 
 export interface CustomMapConfig {
   crs?: "Simple";

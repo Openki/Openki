@@ -5,12 +5,12 @@ import { Match, check } from "meteor/check";
 
 import { EventEntity, Events } from "/imports/api/events/events";
 import { UserModel } from "/imports/api/users/users";
-import { Geodata } from "/imports/api/regions/regions";
 
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { Type } from "/imports/utils/CustomChecks";
+import { Geodata } from "/imports/api/Geodata";
 
 export type FacilityOption = (typeof Venues.facilityOptions)[number];
 

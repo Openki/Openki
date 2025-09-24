@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Marker } from "react-leaflet";
 
-import { Geodata } from "/imports/api/regions/regions";
+import { Geodata } from "/imports/api/Geodata";
 
 import { DivIcon } from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -34,7 +34,7 @@ export function Map({
       coordinates: [latLng.lng, latLng.lat],
     };
   }
-  
+
   const handleDragend = () => {
     if (!markerRef.current) return;
     onChange({
