@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { Regions } from "/imports/api/regions/regions";
 import { Geodata } from "/imports/api/Geodata";
 import { FacilityOption, VenueModel } from "/imports/api/venues/venues";
 import * as VenuesMethods from "/imports/api/venues/methods";
@@ -161,7 +160,7 @@ export function Edit({
         Analytics.trackEvent(
           "Venue creations",
           "Venue creations",
-          Regions.findOne(changes1.region)?.nameEn,
+          regions.find((r) => r._id === changes1.region)?.nameEn,
         );
 
         Router.go("venueDetails", { _id: res });
@@ -181,7 +180,8 @@ export function Edit({
     }
   };
 
-  const regionCoordinates = Regions.findOne(changes.selectedRegion)?.loc?.coordinates;
+  const selectedRegion = regions.find((r) => r._id === changes.selectedRegion);
+  const mapCenter = selectedRegion?.map?.center.coordinates || selectedRegion?.loc?.coordinates;
 
   return (
     <div className="edit-page venue-edit">
@@ -247,7 +247,7 @@ export function Edit({
                 </div>
               </div>
             )}
-            {!!(changes.selectedRegion && regionCoordinates) && (
+            {!!(changes.selectedRegion && mapCenter) && (
               <div className="col-md">
                 <label className="form-label">
                   {t(
@@ -257,7 +257,7 @@ export function Edit({
                 </label>
                 <LocationEdit
                   region={changes.selectedRegion}
-                  center={regionCoordinates}
+                  center={mapCenter}
                   coordinates={changes.loc?.coordinates}
                   level={changes.level}
                   onChange={(newValue) => {
