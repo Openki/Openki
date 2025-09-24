@@ -2,12 +2,15 @@ import React from "react";
 import { useSession } from "/imports/utils/react-meteor-data";
 import { MapContainer, Marker, Popup } from "react-leaflet";
 import { DivIcon } from "leaflet";
+import { isOnCustomMap } from "/imports/utils/isOnCustomMap";
+import { chain } from "lodash";
 
 import { EventModel, EventVenueEntity } from "/imports/api/events/events";
 
 import { FullscreenControl } from "../../FullscreenControl";
 import "leaflet/dist/leaflet.css";
 import { TileLayers } from "../../TileLayer";
+import { RegionMapContainer } from "../../location/display/RegionMapContainer";
 
 import { EventList } from "/imports/ui/components/events/list";
 import { VenueTag } from "../../venues/link";
@@ -51,6 +54,14 @@ export function EventsMap({ events, fullscreenControl, openLinksInNewTab }: Prop
   });
 
   events = events.filter((e) => e.venue?.loc);
+
+  const regions = chain(events)
+    .map((e) => e.region)
+    .uniq()
+    .value();
+
+  events = events.filter((e) => !(regions.length > 1 && e.venue && isOnCustomMap(e.venue)));
+
   const markers = Object.entries(
     groupBy(
       events.filter((e) => e.venue?._id),
@@ -75,44 +86,56 @@ export function EventsMap({ events, fullscreenControl, openLinksInNewTab }: Prop
       }),
   );
 
+  const children = (
+    <>
+      {markers.map((mark) => (
+        <React.Fragment key={mark._id}>
+          <Marker
+            position={mark.loc as any}
+            icon={mark.venue?._id ? venueMarkerIcon : eventMarkerIcon}
+          >
+            <Popup>
+              <h4>
+                <VenueTag venue={mark.venue as EventVenueEntity} openInNewTab={openLinksInNewTab} />
+              </h4>
+              <div className="course-event-list">
+                <EventList
+                  dataEvents={mark.events}
+                  withDate={true}
+                  withImage={true}
+                  withVenue={false}
+                  openInNewTab={openLinksInNewTab}
+                />
+              </div>
+            </Popup>
+          </Marker>
+          <Marker
+            position={mark.loc as any}
+            icon={mark.venue?._id ? venueMarkerShadowIcon : eventMarkerShadowIcon}
+          ></Marker>
+        </React.Fragment>
+      ))}
+      {!!fullscreenControl && <FullscreenControl />}
+    </>
+  );
+
   return (
     <div className="events-map-location-map">
-      <MapContainer
-        bounds={markers.length > 0 ? (markers.map((mark) => mark.loc) as any) : undefined}
-      >
-        {TileLayers[locale] || TileLayers.default}
-        {markers.map((mark) => (
-          <React.Fragment key={mark._id}>
-            <Marker
-              position={mark.loc as any}
-              icon={mark.venue?._id ? venueMarkerIcon : eventMarkerIcon}
-            >
-              <Popup>
-                <h4>
-                  <VenueTag
-                    venue={mark.venue as EventVenueEntity}
-                    openInNewTab={openLinksInNewTab}
-                  />
-                </h4>
-                <div className="course-event-list">
-                  <EventList
-                    dataEvents={mark.events}
-                    withDate={true}
-                    withImage={true}
-                    withVenue={false}
-                    openInNewTab={openLinksInNewTab}
-                  />
-                </div>
-              </Popup>
-            </Marker>
-            <Marker
-              position={mark.loc as any}
-              icon={mark.venue?._id ? venueMarkerShadowIcon : eventMarkerShadowIcon}
-            ></Marker>
-          </React.Fragment>
-        ))}
-        {!!fullscreenControl && <FullscreenControl />}
-      </MapContainer>
+      {regions.length > 1 || regions.length !== 1 ? (
+        <MapContainer
+          bounds={markers.length > 0 ? (markers.map((mark) => mark.loc) as any) : undefined}
+        >
+          {TileLayers[locale] || TileLayers.default}
+          {children}
+        </MapContainer>
+      ) : (
+        <RegionMapContainer
+          region={regions[0]}
+          bounds={markers.length > 0 ? (markers.map((mark) => mark.loc) as any) : undefined}
+        >
+          {children}
+        </RegionMapContainer>
+      )}
     </div>
   );
 }
