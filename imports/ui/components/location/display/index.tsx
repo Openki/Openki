@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { MapContainer, Marker } from "react-leaflet";
 import { DivIcon } from "leaflet";
 
@@ -22,6 +22,8 @@ export function Display(
         fullscreen?: boolean | undefined;
       },
 ) {
+  const [level, setLevel] = useState("region" in props && props.level);
+
   const markerIcon = new DivIcon({
     html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
     className: "leaflet-marker-icon-pin",
@@ -29,8 +31,10 @@ export function Display(
 
   const children = (
     <>
-      <Marker position={[props.coordinates[1], props.coordinates[0]]} icon={markerIcon} />
-      {props.fullscreen && <FullscreenControl />}
+      {(!("region" in props) || level === props.level) && (
+        <Marker position={[props.coordinates[1], props.coordinates[0]]} icon={markerIcon} />
+      )}
+      {!!props.fullscreen && <FullscreenControl />}
       <AutoInvalidateSize />
     </>
   );
@@ -42,6 +46,9 @@ export function Display(
           region={props.region}
           bounds={[[props.coordinates[1], props.coordinates[0]]]}
           level={props.level}
+          onLevelChange={(newValue) => {
+            setLevel(newValue);
+          }}
         >
           {children}
         </RegionMapContainer>
