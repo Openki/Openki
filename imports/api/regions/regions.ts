@@ -14,11 +14,11 @@ import { Type } from "/imports/utils/CustomChecks";
 import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
 import { Geodata } from "/imports/api/Geodata";
 
-
 export interface CustomMapConfig {
   crs?: "Simple";
   layers: { name: string; level: number; tileUrl: string }[];
   defaultLevel: number;
+  center: Geodata;
   maxZoom: number;
   attribution: string;
 }
