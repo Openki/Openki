@@ -55,6 +55,16 @@ include:
   - template: Code-Quality.gitlab-ci.yml
   - template: Jobs/SAST.gitlab-ci.yml
 
+code_quality:
+  rules:
+    - if: $CODE_QUALITY_DISABLED
+      when: never
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" # Run on merge request pipelines
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH      # Run on default branch
+    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_COMMIT_TAG                               # Run when the pipeline is triggered by a tag push
+
+
 semgrep-sast:
   rules:
     - if: $CI_COMMIT_BRANCH == "main"
