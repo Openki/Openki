@@ -1,9 +1,17 @@
 import { LatLngBoundsExpression, LatLngExpression, CRS } from "leaflet";
 import React from "react";
-import { MapContainer, LayersControl, TileLayer } from "react-leaflet";
+import { MapContainer, LayersControl, TileLayer, useMapEvent } from "react-leaflet";
 import { TileLayers } from "../../TileLayer";
 import { useDetails } from "/imports/api/regions/publications";
 import { useSession } from "/imports/utils/react-meteor-data";
+
+function LayerEventListener({ onChange }: { onChange: (newValue: string) => void }) {
+  useMapEvent("baselayerchange", (e) => {
+    onChange((e as any).name);
+  });
+
+  return null; // hidden Element
+}
 
 export function RegionMapContainer({
   region: regionId,
@@ -11,6 +19,8 @@ export function RegionMapContainer({
   bounds,
   center,
   zoom,
+  level,
+  onLevelChange,
   children,
 }: {
   region: string;
@@ -18,6 +28,8 @@ export function RegionMapContainer({
   bounds?: LatLngBoundsExpression | undefined;
   center?: LatLngExpression | undefined;
   zoom?: number | undefined;
+  level?: number | undefined;
+  onLevelChange?: (newValue: number) => void;
   children: any;
 }) {
   const locale = useSession("locale");
@@ -46,17 +58,28 @@ export function RegionMapContainer({
       maxZoom={map.maxZoom as any}
       crs={region.map.crs === "Simple" ? CRS.Simple : (undefined as any)}
     >
-      <LayersControl position="topright" collapsed={false}>
+      <LayersControl position="topright" collapsed={false} hideSingleBase>
         {region.map.layers.map((l) => (
           <LayersControl.BaseLayer
             key={l.level}
-            checked={map.defaultLevel === l.level}
+            checked={level !== undefined ? level === l.level : map.defaultLevel === l.level}
             name={l.name}
           >
             <TileLayer attribution={map.attribution} url={l.tileUrl} />
           </LayersControl.BaseLayer>
         ))}
       </LayersControl>
+      <LayerEventListener
+        onChange={(name) => {
+          const layer = map.layers.find((l) => l.name === name);
+
+          if (!layer) {
+            throw new Error("Unexpected falsy: layer");
+          }
+
+          if (onLevelChange) onLevelChange(layer.level);
+        }}
+      />
       {children}
     </MapContainer>
   );

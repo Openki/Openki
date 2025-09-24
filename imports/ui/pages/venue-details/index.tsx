@@ -159,7 +159,11 @@ function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => void }) {
               {!!venue.loc && !!venue.region && (
                 <div className="col-md-5">
                   <div className="details-map">
-                    <LocationDisplay region={venue.region} coordinates={venue.loc.coordinates} />
+                    <LocationDisplay
+                      region={venue.region}
+                      coordinates={venue.loc.coordinates}
+                      level={venue.level}
+                    />
                     <div className="coordinates">
                       <a href={geoLocationLink(venue.loc)}>
                         {t("venueDetails.coordinates", "Coordinates:")} {format(t, venue.loc)}

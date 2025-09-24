@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { MapContainer, Marker } from "react-leaflet";
 import { useSession } from "/imports/utils/react-meteor-data";
 import { DivIcon } from "leaflet";
@@ -53,19 +53,23 @@ export type Coordinates = [long: number, lat: number];
 export function Edit(props: {
   region?: string | undefined;
   coordinates?: Coordinates | undefined;
+  level?: number | undefined;
   center?: Coordinates | undefined;
   maxZoom?: number;
-  onChange: (coordinates: Coordinates | undefined) => void;
+  onChange: (
+    newValue: { coordinates: Coordinates | undefined; level?: number | undefined } | undefined,
+  ) => void;
 }) {
   const { t } = useTranslation();
   const mapRef = useRef<any>(null);
   const markerRef = useRef<any>(null);
+  const [level, setLevel] = useState(props.level);
 
   const handleDragend = () => {
     const marker = markerRef.current;
     if (marker != null) {
       const latLng = marker.getLatLng();
-      props.onChange([latLng.lng, latLng.lat]);
+      props.onChange({ coordinates: [latLng.lng, latLng.lat], level });
     }
   };
   const locale = useSession("locale");
@@ -102,7 +106,7 @@ export function Edit(props: {
             const map = mapRef.current;
             if (map != null) {
               const latLng = map.getCenter();
-              props.onChange([latLng.lng, latLng.lat]);
+              props.onChange({ coordinates: [latLng.lng, latLng.lat], level });
             }
           }}
         />
@@ -125,6 +129,10 @@ export function Edit(props: {
                   props.coordinates?.[0] || props.center?.[0],
                 ] as [number, number],
               })}
+          level={props.level}
+          onLevelChange={(newValue) => {
+            setLevel(newValue);
+          }}
           zoom={props.maxZoom ? props.maxZoom : props.coordinates ? 19 : 13}
         >
           {children}
