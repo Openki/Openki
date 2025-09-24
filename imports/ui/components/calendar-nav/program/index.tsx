@@ -102,11 +102,15 @@ export function CalendarNavProgram(props: Props) {
             </div>
           )}
         </div>
-        <div className={"row align-items-center px-1 " + (isDesktopScreen ? "gap-4" : "")}>
+        <div
+          className={
+            "row align-items-center px-1 align-items-stretch " + (isDesktopScreen ? "gap-4" : "")
+          }
+        >
           {!hideSwitches &&
             days.map((d) => (
               <div key={d.toISOString()} className="col p-1">
-                <div className="d-grid">
+                <div className="d-grid h-100">
                   {props.selectedDays.find((s) => s.isSame(d)) ? (
                     <button
                       type="button"
@@ -115,7 +119,8 @@ export function CalendarNavProgram(props: Props) {
                       aria-pressed="true"
                       onClick={() => props.onRemoveDay(d)}
                     >
-                      {isMobileScreen ? dayOfWeekShort(d) : dayOfWeekLong(d)}
+                      {isMobileScreen ? dayOfWeekShort(d) : dayOfWeekLong(d)}{" "}
+                      <span className="checkmark fa-solid fa-check"></span>
                     </button>
                   ) : (
                     <button

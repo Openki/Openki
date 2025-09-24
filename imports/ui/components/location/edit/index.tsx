@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { MapContainer, Marker } from "react-leaflet";
 import { useSession } from "/imports/utils/react-meteor-data";
 import { DivIcon } from "leaflet";
@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { FullscreenControl } from "../../FullscreenControl";
 import "leaflet/dist/leaflet.css";
 import { TileLayers } from "../../TileLayer";
+import { RegionMapContainer } from "../display/RegionMapContainer";
 
 import "./styles.scss";
 
@@ -50,75 +51,120 @@ function IconControl({
 export type Coordinates = [long: number, lat: number];
 
 export function Edit(props: {
+  region?: string | undefined;
   coordinates?: Coordinates | undefined;
+  level?: number | undefined;
   center?: Coordinates | undefined;
   maxZoom?: number;
-  onChange: (coordinates: Coordinates | undefined) => void;
+  onChange: (
+    newValue: { coordinates: Coordinates | undefined; level?: number | undefined } | undefined,
+  ) => void;
 }) {
   const { t } = useTranslation();
   const mapRef = useRef<any>(null);
-  const markerRef = useRef<any>(null);
+  const markerRef = useRef<L.Marker<any>>(null);
+  const [level, setLevel] = useState(props.level);
+
+  function toGeoJson(marker: L.Marker<any>): Coordinates {
+    const latLng = marker.getLatLng();
+    return [latLng.lng, latLng.lat];
+  }
 
   const handleDragend = () => {
-    const marker = markerRef.current;
-    if (marker != null) {
-      const latLng = marker.getLatLng();
-      props.onChange([latLng.lng, latLng.lat]);
-    }
+    if (!markerRef.current) return;
+    props.onChange({
+      coordinates: toGeoJson(markerRef.current),
+      level: level,
+    });
   };
+
   const locale = useSession("locale");
 
   const markerIcon = new DivIcon({
     html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
     className: "leaflet-marker-icon-pin",
   });
-  return (
-    <div className="location-map">
-      <MapContainer
-        ref={mapRef}
-        {...(!props.coordinates && !props.center
-          ? {}
-          : {
-              center: [
-                props.coordinates?.[1] || props.center?.[1],
-                props.coordinates?.[0] || props.center?.[0],
-              ] as [number, number],
-            })}
-        zoom={props.maxZoom ? props.maxZoom : props.coordinates ? 19 : 13}
-      >
-        {TileLayers[locale] || TileLayers.default}
-        {props.coordinates ? (
-          <>
-            <Marker
-              ref={markerRef}
-              position={[props.coordinates[1], props.coordinates[0]]}
-              icon={markerIcon}
-              draggable={true}
-              eventHandlers={{ dragend: handleDragend }}
-            ></Marker>
-            <IconControl
-              icons={["fa-solid fa-minus", "fa-solid fa-location-dot"]}
-              title={t("map.removeMarker", "Remove marker")}
-              onClick={() => {
-                props.onChange(undefined);
-              }}
-            />
-          </>
-        ) : (
+
+  const children = (
+    <>
+      {props.coordinates ? (
+        <>
+          <Marker
+            ref={markerRef}
+            position={[props.coordinates[1], props.coordinates[0]]}
+            icon={markerIcon}
+            draggable={true}
+            eventHandlers={{ dragend: handleDragend }}
+          ></Marker>
           <IconControl
-            icons={["fa-solid fa-plus", "fa-solid fa-location-dot"]}
-            title={t("map.addMarker", "Set marker")}
+            icons={["fa-solid fa-minus", "fa-solid fa-location-dot"]}
+            title={t("map.removeMarker", "Remove marker")}
             onClick={() => {
-              const map = mapRef.current;
-              if (map != null) {
-                const latLng = map.getCenter();
-                props.onChange([latLng.lng, latLng.lat]);
-              }
+              props.onChange(undefined);
             }}
           />
-        )}
-        <FullscreenControl />
-      </MapContainer>
+        </>
+      ) : (
+        <IconControl
+          icons={["fa-solid fa-plus", "fa-solid fa-location-dot"]}
+          title={t("map.addMarker", "Set marker")}
+          onClick={() => {
+            const map = mapRef.current;
+            if (!map) return;
+            const latLng = map.getCenter();
+            props.onChange({ coordinates: [latLng.lng, latLng.lat], level });
+          }}
+        />
+      )}
+      <FullscreenControl />
+    </>
+  );
+
+  return (
+    <div className="location-map">
+      {props.region ? (
+        <RegionMapContainer
+          region={props.region}
+          ref={mapRef}
+          {...(!props.coordinates && !props.center
+            ? {}
+            : {
+                center: [
+                  props.coordinates?.[1] || props.center?.[1],
+                  props.coordinates?.[0] || props.center?.[0],
+                ] as [number, number],
+              })}
+          level={props.level}
+          onLevelChange={(newValue) => {
+            setLevel(newValue);
+
+            if (!markerRef.current) return;
+            props.onChange({
+              coordinates: toGeoJson(markerRef.current),
+              level: newValue,
+            });
+          }}
+          zoom={props.maxZoom ? props.maxZoom : props.coordinates ? 19 : 13}
+        >
+          {children}
+        </RegionMapContainer>
+      ) : (
+        <MapContainer
+          ref={mapRef}
+          {...(!props.coordinates && !props.center
+            ? {}
+            : {
+                center: [
+                  props.coordinates?.[1] || props.center?.[1],
+                  props.coordinates?.[0] || props.center?.[0],
+                ] as [number, number],
+              })}
+          zoom={props.maxZoom ? props.maxZoom : props.coordinates ? 19 : 13}
+        >
+          {TileLayers[locale] || TileLayers.default}
+          {children}
+        </MapContainer>
+      )}
     </div>
   );
 }

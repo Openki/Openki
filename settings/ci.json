@@ -1,41 +1,38 @@
 {
-	"admins": ["greg", "FeeLing", "IvanZ"],
-	"testdata": true,
-	"prng": "static",
-	"public": {
-		"siteName": "Hmmm",
-		"siteStage": "DEV",
-		"headerLogo": { "src": "openki-logo-web-2020.svg", "alt": "Openki Logo" },
-		"headerLogoKiosk": { "src": "openki-logo-kiosk-2020.svg", "alt": "Openki Logo" },
-		"avatarLogo": { "src": "openki-logo-web-avatar-2020.svg", "alt": "User Avatar" },
-		"ogLogo": { "src": "openki_logo_2018.png" },
-		"emailLogo": "emails/openki.png",
-		"publicTenants": ["8410c099a7", "6815333b85"],
-		"regionSelection": { "minNumber": 5 },
-		"contribution": 
-		    { "icon": "fa-solid fa-heart"
-			, "forbiddenChars": ["🖤", "💖", "💔", "💚", "💜", "❤️", "🧡", "💕", "💛", "💝"]
-			, "link": 
-				{ "en": "https://about.openki.net/en/ueber-uns/spenden/"
-				, "de": "https://about.openki.net/ueber-uns/spenden/"
-				}
-			},
-		"categories": {
-			"misc":
-			[
-				"♥undefined♥"
-			]
-		},
-		"s3": {
-			"publicUrlBase": "https://cz42.objects.nineapis.ch/bucket-openkitest2"
-		}
-	},
-	"siteEmail": "HMMM@legit.example",
-	"s3": {
-		"region": "us-east-1",
-		"bucketEndpoint": "https://cz42.objects.nineapis.ch/bucket-openkitest2",
-		"accessKeyId": "63551d5ecx68qL2XqU7eQX-9hxxKs5CK",
-		"secretAccessKey": "srnyHWbj9ZhDFlTQyY40vxBIBs8MVYgp"
-	},
-	"startup": { "buildDbCacheAsync": false }
+  "admins": ["greg", "FeeLing", "IvanZ"],
+  "testdata": true,
+  "prng": "static",
+  "public": {
+    "siteName": "Hmmm",
+    "siteStage": "DEV",
+    "headerLogo": { "src": "openki-logo-web-2020.svg", "alt": "Openki Logo" },
+    "headerLogoKiosk": { "src": "openki-logo-kiosk-2020.svg", "alt": "Openki Logo" },
+    "avatarLogo": { "src": "openki-logo-web-avatar-2020.svg", "alt": "User Avatar" },
+    "ogLogo": { "src": "openki_logo_2018.png" },
+    "emailLogo": "emails/openki.png",
+    "publicTenants": ["8410c099a7", "6815333b85", "defb99e69a"],
+    "regionSelection": { "minNumber": 5 },
+    "contribution": {
+      "icon": "fa-solid fa-heart",
+      "forbiddenChars": ["🖤", "💖", "💔", "💚", "💜", "❤️", "🧡", "💕", "💛", "💝"],
+      "link": {
+        "en": "https://about.openki.net/en/ueber-uns/spenden/",
+        "de": "https://about.openki.net/ueber-uns/spenden/"
+      }
+    },
+    "categories": {
+      "misc": ["♥undefined♥"]
+    },
+    "s3": {
+      "publicUrlBase": "https://cz42.objects.nineapis.ch/bucket-openkitest2"
+    }
+  },
+  "siteEmail": "HMMM@legit.example",
+  "s3": {
+    "region": "us-east-1",
+    "bucketEndpoint": "https://cz42.objects.nineapis.ch/bucket-openkitest2",
+    "accessKeyId": "63551d5ecx68qL2XqU7eQX-9hxxKs5CK",
+    "secretAccessKey": "srnyHWbj9ZhDFlTQyY40vxBIBs8MVYgp"
+  },
+  "startup": { "buildDbCacheAsync": false }
 }

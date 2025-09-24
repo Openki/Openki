@@ -1,30 +1,47 @@
-import React, { useRef } from "react";
-import { MapContainer, Marker } from "react-leaflet";
-import { useSession } from "/imports/utils/react-meteor-data";
+import React, { useRef, useState } from "react";
+import { Marker } from "react-leaflet";
 
-import { Geodata } from "/imports/api/regions/regions";
+import { Geodata } from "/imports/api/Geodata";
 
 import { DivIcon } from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { TileLayers } from "/imports/ui/components/TileLayer";
+import { RegionMapContainer } from "../../../location/display/RegionMapContainer";
 
 import "./styles.scss";
 
-export function Map({ value, onChange }: { value: Geodata; onChange: (value: Geodata) => void }) {
+interface Value {
+  location: Geodata;
+  level?: number | undefined;
+}
+
+export function Map({
+  region,
+  value,
+  onChange,
+}: {
+  region: string;
+  value: Value;
+  onChange: (value: Value) => void;
+}) {
   const mapRef = useRef<any>(null);
-  const markerRef = useRef<any>(null);
+  const markerRef = useRef<L.Marker<any>>(null);
+  const [level, setLevel] = useState(value.level);
+
+  function toGeoJson(marker: L.Marker<any>): Geodata {
+    const latLng = marker.getLatLng();
+    return {
+      type: "Point",
+      coordinates: [latLng.lng, latLng.lat],
+    };
+  }
 
   const handleDragend = () => {
-    const marker = markerRef.current;
-    if (marker != null) {
-      const latLng = marker.getLatLng();
-      onChange({
-        type: "Point",
-        coordinates: [latLng.lng, latLng.lat],
-      } as Geodata);
-    }
+    if (!markerRef.current) return;
+    onChange({
+      location: toGeoJson(markerRef.current),
+      level: level,
+    });
   };
-  const locale = useSession("locale");
 
   const markerIcon = new DivIcon({
     html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
@@ -32,16 +49,29 @@ export function Map({ value, onChange }: { value: Geodata; onChange: (value: Geo
   });
   return (
     <div className="edit-venue-map">
-      <MapContainer ref={mapRef} center={[value.coordinates[1], value.coordinates[0]]} zoom={19}>
-        {TileLayers[locale] || TileLayers.default}
+      <RegionMapContainer
+        region={region}
+        ref={mapRef}
+        center={[value.location.coordinates[1], value.location.coordinates[0]]}
+        level={value.level}
+        onLevelChange={(newValue) => {
+          setLevel(newValue);
+          if (!markerRef.current) return;
+          onChange({
+            location: toGeoJson(markerRef.current),
+            level: newValue,
+          });
+        }}
+        zoom={19}
+      >
         <Marker
           ref={markerRef}
-          position={[value.coordinates[1], value.coordinates[0]]}
+          position={[value.location.coordinates[1], value.location.coordinates[0]]}
           icon={markerIcon}
           draggable={true}
           eventHandlers={{ dragend: handleDragend }}
-        ></Marker>
-      </MapContainer>
+        />
+      </RegionMapContainer>
     </div>
   );
 }

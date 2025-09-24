@@ -6,7 +6,8 @@ import { Courses } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
 import { Groups } from "/imports/api/groups/groups";
 import { Venues } from "/imports/api/venues/venues";
-import { Geodata, Regions } from "/imports/api/regions/regions";
+import { Regions } from "/imports/api/regions/regions";
+import { Geodata } from "/imports/api/Geodata";
 
 import { visibleTenantsAsync } from "/imports/utils/visible-tenants";
 import { Filtering } from "/imports/utils/filtering";
@@ -51,6 +52,7 @@ export interface ApiEvent {
     name: string | undefined;
     address: string | undefined;
     loc: Geodata | undefined;
+    level: number | undefined;
     link: string | undefined;
   };
   course?: {
@@ -142,6 +144,7 @@ export const Api = {
           name: ev.venue.name,
           address: ev.venue.address,
           loc: ev.venue.loc,
+          level: ev.venue.level,
           link: maybeUrl("venueDetails", ev.venue),
         };
       }
