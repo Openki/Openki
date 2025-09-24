@@ -362,7 +362,7 @@ export function EditVenue({
                   </div>
                 </>
               ) : (
-                <Display coordinates={value.loc.coordinates} fullscreen={false} />
+                <Display region={regionId} coordinates={value.loc.coordinates} />
               )}
             </div>
           )}

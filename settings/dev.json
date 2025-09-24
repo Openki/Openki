@@ -21,7 +21,7 @@
 	, "theme":
 		{ "brand": "#9c3838"
 		}
-	, "publicTenants": ["8410c099a7", "6815333b85"]
+	, "publicTenants": ["8410c099a7", "6815333b85", "defb99e69a"]
 	, "regionSelection":
 		{ "minNumber": 5
 		, "aboutLink":
