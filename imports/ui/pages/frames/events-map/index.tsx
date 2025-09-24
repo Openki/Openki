@@ -21,7 +21,7 @@ export function FrameEventsMapPage() {
   const filter = new Filtering(FindParams);
   filter.read(searchParams);
   const query = filter.toQuery();
-  query.after = moment().startOf("day").toDate();
+  query.after = query.after || moment().startOf("day").toDate();
 
   const [isLoading, events] = useFindFilter(query);
 
