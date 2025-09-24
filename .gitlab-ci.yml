@@ -65,7 +65,7 @@ code_quality:
     - if: $CI_COMMIT_TAG                               # Run when the pipeline is triggered by a tag push
 
 
-semgrep-sast:
+semgrep-sast:                                          # More settings here: https://gitlab.com/Openki/Openki/-/security/configuration/sast
   rules:
     - if: $CI_COMMIT_BRANCH == "main"
     - if: $CI_COMMIT_BRANCH == "staging"
