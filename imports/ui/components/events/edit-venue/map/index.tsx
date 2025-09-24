@@ -24,21 +24,23 @@ export function Map({
   onChange: (value: Value) => void;
 }) {
   const mapRef = useRef<any>(null);
-  const markerRef = useRef<any>(null);
+  const markerRef = useRef<L.Marker<any>>(null);
   const [level, setLevel] = useState(value.level);
 
+  function toGeoJson(marker: L.Marker<any>): Geodata {
+    const latLng = marker.getLatLng();
+    return {
+      type: "Point",
+      coordinates: [latLng.lng, latLng.lat],
+    };
+  }
+  
   const handleDragend = () => {
-    const marker = markerRef.current;
-    if (marker != null) {
-      const latLng = marker.getLatLng();
-      onChange({
-        location: {
-          type: "Point" as const,
-          coordinates: [latLng.lng, latLng.lat],
-        },
-        level,
-      });
-    }
+    if (!markerRef.current) return;
+    onChange({
+      location: toGeoJson(markerRef.current),
+      level: level,
+    });
   };
 
   const markerIcon = new DivIcon({
@@ -54,6 +56,11 @@ export function Map({
         level={value.level}
         onLevelChange={(newValue) => {
           setLevel(newValue);
+          if (!markerRef.current) return;
+          onChange({
+            location: toGeoJson(markerRef.current),
+            level: newValue,
+          });
         }}
         zoom={19}
       >

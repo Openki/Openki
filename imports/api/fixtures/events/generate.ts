@@ -81,10 +81,13 @@ export async function generate() {
         _id: venue._id,
         name: venue.name,
         loc: venue.loc,
-        level: venue.level,
         address: venue.address,
         editor: venue.editor,
       };
+
+      if (venue.level !== undefined) {
+        event.venue.level = venue.level;
+      }
 
       if (venue.restrictedUse !== undefined) {
         event.venue.restrictedUse = venue.restrictedUse;

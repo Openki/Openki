@@ -62,16 +62,22 @@ export function Edit(props: {
 }) {
   const { t } = useTranslation();
   const mapRef = useRef<any>(null);
-  const markerRef = useRef<any>(null);
+  const markerRef = useRef<L.Marker<any>>(null);
   const [level, setLevel] = useState(props.level);
 
+  function toGeoJson(marker: L.Marker<any>): Coordinates {
+    const latLng = marker.getLatLng();
+    return [latLng.lng, latLng.lat];
+  }
+
   const handleDragend = () => {
-    const marker = markerRef.current;
-    if (marker != null) {
-      const latLng = marker.getLatLng();
-      props.onChange({ coordinates: [latLng.lng, latLng.lat], level });
-    }
+    if (!markerRef.current) return;
+    props.onChange({
+      coordinates: toGeoJson(markerRef.current),
+      level: level,
+    });
   };
+
   const locale = useSession("locale");
 
   const markerIcon = new DivIcon({
@@ -104,10 +110,9 @@ export function Edit(props: {
           title={t("map.addMarker", "Set marker")}
           onClick={() => {
             const map = mapRef.current;
-            if (map != null) {
-              const latLng = map.getCenter();
-              props.onChange({ coordinates: [latLng.lng, latLng.lat], level });
-            }
+            if (!map) return;
+            const latLng = map.getCenter();
+            props.onChange({ coordinates: [latLng.lng, latLng.lat], level });
           }}
         />
       )}
@@ -132,6 +137,12 @@ export function Edit(props: {
           level={props.level}
           onLevelChange={(newValue) => {
             setLevel(newValue);
+
+            if (!markerRef.current) return;
+            props.onChange({
+              coordinates: toGeoJson(markerRef.current),
+              level: newValue,
+            });
           }}
           zoom={props.maxZoom ? props.maxZoom : props.coordinates ? 19 : 13}
         >

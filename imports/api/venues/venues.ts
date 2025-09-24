@@ -30,7 +30,7 @@ export interface VenueEntity {
   region?: string;
   /** Venue location in GeoJSON format */
   loc: Geodata;
-  /** Floor level for custom-maps as integer */
+  /** Floor level for custom maps as integer */
   level?: number;
   address: string;
   route: string;
