@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { Geodata, Regions } from "/imports/api/regions/regions";
+import { Regions } from "/imports/api/regions/regions";
+import { Geodata } from "/imports/api/Geodata";
 import { FacilityOption, VenueModel } from "/imports/api/venues/venues";
 import * as VenuesMethods from "/imports/api/venues/methods";
 import { useFindFilter } from "/imports/api/regions/publications";

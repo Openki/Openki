@@ -5,7 +5,7 @@ import { Match, check } from "meteor/check";
 
 import * as tenantDenormalizer from "./tenantDenormalizer";
 
-import { Geodata } from "/imports/api/regions/regions";
+import { Geodata } from "/imports/api/Geodata";
 import { UserModel } from "/imports/api/users/users";
 
 import { Filtering } from "/imports/utils/filtering";
