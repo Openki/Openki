@@ -1,20 +1,9 @@
 import moment from "moment";
 import { Mongo } from "meteor/mongo";
-import { Match, check } from "meteor/check";
 
 import { LogCollection, LogEntity } from "/imports/api/log/factory";
 
 export class ScrubRule {
-  name: string;
-
-  grace: number;
-
-  select: Mongo.Selector<LogEntity>;
-
-  remove: boolean;
-
-  unset: string[] | undefined;
-
   static read(d: {
     name: string;
     grace: number;
@@ -26,27 +15,12 @@ export class ScrubRule {
   }
 
   constructor(
-    name: string,
-    grace: number,
-    select: Mongo.Selector<LogEntity>,
-    remove = false,
-    unset: string[] | undefined = undefined,
-  ) {
-    check(name, String);
-    this.name = name;
-
-    check(grace, Number);
-    this.grace = grace;
-
-    check(select, Object);
-    this.select = select;
-
-    check(remove, Boolean);
-    this.remove = remove;
-
-    check(unset, Match.Optional([String]));
-    this.unset = unset;
-  }
+    public name: string,
+    public grace: number,
+    public select: Mongo.Selector<LogEntity>,
+    public remove = false,
+    public unset: string[] | undefined = undefined,
+  ) {}
 
   async scrub(log: LogCollection, now: moment.Moment) {
     const today = moment(now).startOf("day");
@@ -104,8 +78,6 @@ export class ScrubRule {
 }
 
 export class Scrubber {
-  rules: ScrubRule[];
-
   static read(
     d: {
       name: string;
@@ -115,14 +87,10 @@ export class Scrubber {
       unset?: string[];
     }[],
   ) {
-    check(d, [Object]);
     return new Scrubber(d.map(ScrubRule.read));
   }
 
-  constructor(rules: ScrubRule[]) {
-    check(rules, [ScrubRule]);
-    this.rules = rules;
-  }
+  constructor(public rules: ScrubRule[]) {}
 
   async scrub(log: LogCollection, now: moment.Moment) {
     for (const rule of this.rules) {

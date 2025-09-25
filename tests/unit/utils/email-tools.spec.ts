@@ -1,5 +1,4 @@
-import { expect } from "chai";
-import { isEmail } from "./email-tools";
+import { isEmail } from "/imports/utils/email-tools";
 
 describe("Email validation", () => {
   const expectEmail = (str: string) => expect(isEmail(str)).to.be.true;

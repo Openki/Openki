@@ -1,4 +1,3 @@
-import { assert } from "chai";
 import * as HtmlTools from "/imports/utils/html-tools";
 import sanitizeHtml from "sanitize-html";
 

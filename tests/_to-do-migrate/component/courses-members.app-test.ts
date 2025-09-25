@@ -3,13 +3,13 @@ import $ from "jquery";
 import { Meteor } from "meteor/meteor";
 import { MeteorAsync } from "/imports/utils/promisify";
 
+import { expect } from "chai";
 import {
   waitForSubscriptions,
   expectElement,
   setTextAreaValue,
   waitFor,
-} from "/imports/ClientUtils.app-test";
-import { expect } from "chai";
+} from "../utils/ClientUtils.app-test";
 
 if (Meteor.isClient) {
   describe("Course members component", function () {

@@ -26,3 +26,5 @@ tsconfig.tsbuildinfo
 jsconfig.json
 
 .qlty/
+
+tests/screenshots

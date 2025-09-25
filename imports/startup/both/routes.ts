@@ -367,6 +367,17 @@ RouterAsync.route("userprofile", {
   },
 });
 
+RouterAsync.route("venueCreate", {
+  path: "venue/create",
+  template: "venueDetailsPage",
+  async onRun() {
+    await import("/imports/ui/pages/venue-details");
+  },
+  async data() {
+    return { venue: new Venue() as VenueModel, isNew: true };
+  },
+});
+
 RouterAsync.route("venueDetails", {
   path: "venue/:_id/:slug?",
   template: "venueDetailsPage",
@@ -377,16 +388,9 @@ RouterAsync.route("venueDetails", {
     return { details: Venues.details.subscribe(this.params._id as string) };
   },
   async data() {
-    const id = this.params._id;
-
-    let venue: VenueModel | undefined;
-    if (id === "create") {
-      venue = new Venue() as VenueModel;
-    } else {
-      venue = await this.subscriptions()?.details();
-      if (!venue) {
-        return undefined; // Not found
-      }
+    const venue = await this.subscriptions()?.details();
+    if (!venue) {
+      return undefined; // Not found
     }
 
     return { venue };

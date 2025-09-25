@@ -3,19 +3,19 @@ import { Router } from "meteor/iron:router";
 import $ from "jquery";
 import { Meteor } from "meteor/meteor";
 
+import { MeteorAsync } from "/imports/utils/promisify";
 import {
+  setContent,
   waitForSubscriptions,
   waitFor,
+  expectElement,
   setInputValue,
   setSelectValue,
-  setContent,
-  setChecked,
-  expectElement,
   expectText,
   expectNoneElement,
+  setChecked,
   expectHtmlButton,
-} from "/imports/ClientUtils.app-test";
-import { MeteorAsync } from "/imports/utils/promisify";
+} from "../utils/ClientUtils.app-test";
 
 if (Meteor.isClient) {
   describe("Group details", () => {
