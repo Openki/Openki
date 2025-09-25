@@ -1,5 +1,4 @@
-import { expect } from "chai";
-
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { CourseMemberEntity } from "/imports/api/courses/courses";
 
 import { hasRole, hasRoleUser } from "/imports/utils/course-role-utils";

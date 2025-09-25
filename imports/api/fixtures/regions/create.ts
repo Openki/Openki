@@ -6,7 +6,7 @@ import { Prng } from "../Prng";
 import { regions } from "./data";
 
 export async function create() {
-  const userKopf = (await ensure.user("Kopf", undefined, true))._id;
+  const userKopf = (await ensure.user("Kopf"))._id;
 
   const prng = Prng("createRegions");
   for (const template of regions) {

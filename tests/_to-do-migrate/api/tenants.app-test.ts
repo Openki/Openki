@@ -2,8 +2,8 @@ import { Meteor } from "meteor/meteor";
 import { MeteorAsync } from "/imports/utils/promisify";
 import { assert } from "chai";
 
-import { Tenants } from "./tenants";
-import * as TenantsMethods from "./methods";
+import { Tenants } from "/imports/api/tenants/tenants";
+import * as TenantsMethods from "/imports/api/tenants/methods";
 import { Users } from "/imports/api/users/users";
 
 if (Meteor.isClient) {

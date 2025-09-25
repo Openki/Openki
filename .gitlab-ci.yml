@@ -34,21 +34,16 @@ lint:
     - gitlab-org
   script: ./ci/lint.sh
 
-# Unit tests
-test:unit:
-  stage: test
-  tags:
-    - gitlab-org
-  script: ./ci/test:unit.sh
-
-# integration/e2e tests
-test:integration:
+# tests unit, e2e, ...
+test:
   stage: test
   tags:
     - gitlab-org-docker
-  script: ./ci/test:integration.sh
+  variables:
+    CYPRESS_RECORD_KEY: $CYPRESS_RECORD_KEY
+  script: ./ci/test.sh
   allow_failure: true
-  timeout: 20m
+  timeout: 30m
 
 # Code Quality by "Code Climate" and SAST
 include:

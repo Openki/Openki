@@ -22,6 +22,8 @@ import { usersCreate as usersDataCreate } from "./usersCreate";
 import { serverError } from "../log/methods";
 import { Invitations } from "../invitations/invitations";
 import { JoinLinks } from "../joinLinks/joinLinks";
+import { Users } from "../users/users";
+import { updateDbCacheFieldsServerOnly } from "../db-utilities/updateDbCacheFieldsServerOnly";
 
 export const clean = ServerMethod(
   "fixtures.clean",
@@ -31,10 +33,10 @@ export const clean = ServerMethod(
     }
     try {
       await Promise.all([
-        Venues.removeAsync({}),
-        Events.removeAsync({}),
         CourseDiscussions.removeAsync({}),
+        Events.removeAsync({}),
         Courses.removeAsync({}),
+        Venues.removeAsync({}),
         Regions.removeAsync({}),
         Invitations.removeAsync({}),
         JoinLinks.removeAsync({}),
@@ -96,36 +98,34 @@ export const create = ServerMethod(
   { simulation: false },
 );
 
-export const cleanForAppTest = ServerMethod(
-  "fixtures.clean.forAppTest",
-  () => {
-    if (!PrivateSettings.testdata) {
-      return;
-    }
-    Groups.removeAsync({});
-    Events.removeAsync({});
-    Venues.removeAsync({});
-    Courses.removeAsync({});
-  },
-  { simulation: false },
-);
-
-export const createForAppTest = ServerMethod(
-  "fixtures.create.forAppTest",
+export const reset = ServerMethod(
+  "fixtures.reset",
   async () => {
     if (!PrivateSettings.testdata) {
       return;
     }
+    await Promise.all([
+      CourseDiscussions.removeAsync({}),
+      Events.removeAsync({}),
+      Courses.removeAsync({}),
+      Venues.removeAsync({}),
+      Groups.removeAsync({}),
+      Regions.removeAsync({}),
+      Invitations.removeAsync({}),
+      JoinLinks.removeAsync({}),
+      Tenants.removeAsync({}),
+      Users.removeAsync({}),
+      InfoPages.removeAsync({}),
+    ]);
 
-    await infoPagesDataCreate();
-    if ((await Regions.countDocuments()) === 0) {
-      await regionsDataCreate();
-    }
-    await usersDataCreate();
+    await Promise.all([infoPagesDataCreate(), usersDataCreate()]);
+    await regionsDataCreate();
     await groupsDataCreate();
     await venuesDataCreate();
     await coursesDataCreate();
-    await eventsDataGenerate();
+    await Promise.all([eventsDataCreate(), eventsDataGenerate(), commentsDataGenerate]);
+
+    await updateDbCacheFieldsServerOnly();
   },
   { simulation: false },
 );

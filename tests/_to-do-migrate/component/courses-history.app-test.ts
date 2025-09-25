@@ -5,13 +5,13 @@ import { Meteor } from "meteor/meteor";
 
 import { MeteorAsync } from "/imports/utils/promisify";
 import {
-  waitForSubscriptions,
-  waitFor,
-  setInputValue,
-  setSelectValue,
   expectElement,
   expectHtmlButton,
-} from "/imports/ClientUtils.app-test";
+  setInputValue,
+  setSelectValue,
+  waitFor,
+  waitForSubscriptions,
+} from "../utils/ClientUtils.app-test";
 
 if (Meteor.isClient) {
   describe("Course history", function () {
