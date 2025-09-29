@@ -39,6 +39,7 @@ export function Contribution({ userId }: Props) {
 
   return (
     <a
+      data-test="contribution"
       href={getLocalizedValue(contribution.link)}
       data-bs-title={t(
         "user.hasContributed",
