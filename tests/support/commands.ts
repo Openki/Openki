@@ -62,32 +62,7 @@ Cypress.Commands.add("logout", () => {
     });
 
     return new Cypress.Promise((resolve, reject) => {
-      Meteor.logout((err: any, result: unknown) => {
-        if (err) {
-          reject(err);
-          return;
-        }
-        resolve(result);
-      });
-    });
-  });
-});
-
-Cypress.Commands.add("login", (username, password = "greg") => {
-  cy.getMeteor().then((Meteor) => {
-    // Logout first if the user is already logged in
-
-    if (Meteor.userId()) {
-      cy.logout();
-    }
-
-    Cypress.log({
-      name: "login",
-      consoleProps: () => ({ username }),
-    });
-
-    return new Cypress.Promise((resolve, reject) => {
-      Meteor.loginWithPassword(username, password, (err: any) => {
+      Meteor.logout((err: any) => {
         if (err) {
           reject(err);
           return;
@@ -96,7 +71,39 @@ Cypress.Commands.add("login", (username, password = "greg") => {
       });
     });
   });
-  cy.getMeteor().invoke("user").should("exist").and("not.be.null");
+});
+
+Cypress.Commands.add("login", (username: string, password = "greg") => {
+  cy.getMeteor()
+    .then((Meteor) => {
+      const doLogin = () => {
+        Cypress.log({
+          name: "login",
+          consoleProps: () => ({ username }),
+        });
+
+        return new Cypress.Promise((resolve, reject) => {
+          Meteor.loginWithPassword(username, password, (err: any) => {
+            if (err) {
+              reject(err);
+              return;
+            }
+            resolve();
+          });
+        });
+      };
+
+      // Logout first if user is already logged in
+      if (Meteor.userId()) {
+        return cy.logout().then(() => doLogin());
+      } else {
+        return doLogin();
+      }
+    })
+    .then(() => {
+      // Ensure user is logged in
+      cy.getMeteor().invoke("user").should("exist").and("not.be.null");
+    });
 });
 
 Cypress.Commands.add(
