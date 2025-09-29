@@ -36,7 +36,7 @@ export function UserprofilePage({ user }: Props) {
   const currentUser = useUser();
 
   const [isLoadingGroups, inviteGroups] = Groups.useFindFilter({ own: true });
-  const [isLoading, coursesCreatedBy] = Courses.useFindFilter({ createdby: user._id });
+  const [isLoading, coursesCreatedBy] = Courses.useFindFilter({ createdby: user?._id });
 
   useEffect(() => {
     const title = t("profile.windowtitle", "Profile of {USER}", {
@@ -205,7 +205,12 @@ export function UserprofilePage({ user }: Props) {
     }
   }
 
-  if (isLoading()) {
+  // should not happen, but does, maybe some problem with iron-router and react
+  if (!user._id) {
+    return null;
+  }
+
+  if (isLoading() || !user._id) {
     return null;
   }
 
