@@ -8,6 +8,7 @@ export default defineConfig({
     specPattern: "tests/{unit,e2e}/**/*.spec.ts",
     supportFile: "tests/support/index.ts",
     experimentalStudio: true,
+    experimentalRunAllSpecs: true,
     screenshotsFolder: "tests/screenshots",
     videosFolder: "tests/videos",
     video: false,

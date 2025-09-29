@@ -82,7 +82,7 @@
     "@types/tinycolor2": "1.4.6",
     "@types/uuid": "10.0.0",
     "autoprefixer": "10.4.21",
-    "cypress": "15.1.0",
+    "cypress": "15.3.0",
     "eslint": "9.32.0",
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "5.2.0",
@@ -99,7 +99,7 @@
   },
   "scripts": {
     "debug": "npm run extract-translations && npm run type-check && meteor --extra-packages hot-module-replacement,blaze-hot --inspect --settings settings/dev.json",
-    "test:ui": "start-test 'npm run test:env' :3000 'cypress open'",
+    "test:ui": "start-test 'npm run test:env' :3000 'cypress open --e2e --browser electron'",
     "test": "start-test 'npm run test:env' :3000 'cypress run'",
     "test:ci": "WAIT_ON_TIMEOUT=600000 start-test 'npm run test:env -- --once' :3000 'cypress run --record'",
     "test:env": "BABEL_ENV=test DISABLE_REACT_FAST_REFRESH=1 meteor --settings settings/ci.json --port 3000",

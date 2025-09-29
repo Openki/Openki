@@ -232,8 +232,9 @@ export function UserprofilePage({ user }: Props) {
               PublicSettings.contribution &&
               (!hasContributed() ? (
                 <button
+                  data-test="user-has-contributed-button"
                   type="button"
-                  className="btn btn-primary js-has-contributed"
+                  className="btn btn-primary"
                   onClick={handleSetHasContributed}
                 >
                   <i className={PublicSettings.contribution.icon} aria-hidden="true"></i>{" "}
@@ -241,8 +242,9 @@ export function UserprofilePage({ user }: Props) {
                 </button>
               ) : (
                 <button
+                  data-test="user-has-contributed-button"
                   type="button"
-                  className="btn btn-secondary js-has-contributed"
+                  className="btn btn-secondary"
                   onClick={handleUnsetHasContributed}
                 >
                   {t("profile.unsetHasContributed.button", "Remove this user has contributed")}
