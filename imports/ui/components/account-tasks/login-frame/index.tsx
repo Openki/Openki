@@ -130,6 +130,7 @@ export function LoginFrame({
               <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
             </span>
             <input
+              data-test="account-tasks-login-frame-username"
               className={`form-control ${errors.username ? "is-invalid" : ""}`}
               placeholder={t("frame.login.usernameOrEmail", "Username or e-mail address")}
               type="text"
@@ -151,6 +152,7 @@ export function LoginFrame({
               <span className="fa-solid fa-lock fa-fw" aria-hidden="true"></span>
             </span>
             <input
+              data-test="account-tasks-login-frame-password"
               className={`form-control ${errors.password ? "is-invalid" : ""}`}
               placeholder={t("_inputField.password")}
               type="password"
@@ -178,6 +180,7 @@ export function LoginFrame({
         </div>
         <div className="mb-3">
           <button
+            data-test="account-tasks-login-frame-submit"
             type="submit"
             className="btn btn-secondary js-login form-control"
             disabled={!!isBusy}

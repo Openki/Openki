@@ -45,7 +45,8 @@ Cypress.Commands.add("callMethod", (method: string, ...params: any[]) => {
     return new Cypress.Promise((resolve, reject) => {
       Meteor.call(method, ...params, (err: any, result: unknown) => {
         if (err) {
-          return reject(err);
+          reject(err);
+          return;
         }
         console.log(`%c${method}`, "color: red; font-style: italic;", result);
         resolve(result);
@@ -64,6 +65,7 @@ Cypress.Commands.add("logout", () => {
       Meteor.logout((err: any, result: unknown) => {
         if (err) {
           reject(err);
+          return;
         }
         resolve(result);
       });
@@ -74,24 +76,25 @@ Cypress.Commands.add("logout", () => {
 Cypress.Commands.add("login", (username, password = "greg") => {
   cy.getMeteor().then((Meteor) => {
     // Logout first if the user is already logged in
-    const promise = Meteor.userId() ? cy.logout() : (Promise.resolve() as any);
+
+    if (Meteor.userId()) {
+      cy.logout();
+    }
 
     Cypress.log({
       name: "login",
       consoleProps: () => ({ username }),
     });
 
-    return promise.then(
-      () =>
-        new Cypress.Promise((resolve, reject) => {
-          Meteor.loginWithPassword(username, password, (err: any) => {
-            if (err) {
-              return reject(err);
-            }
-            resolve();
-          });
-        }),
-    );
+    return new Cypress.Promise((resolve, reject) => {
+      Meteor.loginWithPassword(username, password, (err: any) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve();
+      });
+    });
   });
   cy.getMeteor().invoke("user").should("exist").and("not.be.null");
 });
@@ -133,7 +136,7 @@ declare global {
       allSubscriptionsReady(options?: Partial<Loggable & Timeoutable>): Chainable<boolean>;
       callMethod<T = any>(method: string, ...params: any[]): Chainable<T>;
       logout(): Chainable<void>;
-      login(username?: string, password?: string): Chainable<void>;
+      login(username: string, password?: string): Chainable<void>;
       visitOpenki(
         url?: string,
         state?:
