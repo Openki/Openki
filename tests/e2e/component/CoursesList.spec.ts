@@ -1,40 +1,19 @@
-import { Meteor } from "meteor/meteor";
-import { Router } from "meteor/iron:router";
-import { assert } from "chai";
-import { Session } from "meteor/session";
-import { MeteorAsync } from "/imports/utils/promisify";
-import { waitForSubscriptions, waitFor } from "../../_to-do-migrate/utils/ClientUtils.app-test";
+beforeEach(() => {
+  cy.visitOpenki("/search", { region: "9JyFCoKWkxnf8LWPh" /* Testistan */ });
+});
 
-if (Meteor.isClient) {
-  describe("Course list component", function () {
-    this.timeout(120000);
-    before(async () => {
-      // A previous test might have logged us in.
-      if (Meteor.userId()) {
-        await MeteorAsync.logout();
-      }
-      await Meteor.callAsync("fixtures.clean.forAppTest");
-      await Meteor.callAsync("fixtures.create.forAppTest");
-    });
-
-    it("should list 5 courses for unauthenticated user (Testistan)", async () => {
-      Router.go("search");
-
-      Session.set("region", "9JyFCoKWkxnf8LWPh"); // Testistan
-
-      await waitForSubscriptions();
-      const titles = await waitFor(() => {
-        const t = document.getElementsByClassName("course-compact-title");
-        assert.equal(t.length, 5, "expect to see test course titles");
-        return t;
-      }, 6000);
-      await waitFor(() => {
-        assert.equal(titles[0].textContent, "Jodeln");
-        assert.equal(titles[1].textContent, "Aikido");
-        assert.equal(titles[2].textContent, "Verschlafen");
-        assert.equal(titles[3].textContent, "Lerne Russisch in 2 Stunden");
-        assert.equal(titles[4].textContent, "Deutschkurs");
-      });
-    });
+describe("Course list component", function () {
+  it("should list 5 courses for unauthenticated user (Testistan)", async () => {
+    cy.get('.course-compact-title [href="/course/c294d35055/deutschkurs"]').should("be.visible");
+    cy.get('.course-compact-title [href="/course/26daa40373/schweissen"]').should("be.visible");
+    cy.get('.course-compact-title [href="/course/f59a1e7855/lerne-russisch-in-2-stunden"]').should(
+      "be.visible",
+    );
+    cy.get('.course-compact-title [href="/course/e78854c387/aikido"]').should("be.visible");
+    cy.get('.course-compact-title [href="/course/5dbf3bec62/elektronik"]').should("be.visible");
+    cy.get('.course-compact-title [href="/course/4f1f51d8b4/first-aid-course"]').should(
+      "be.visible",
+    );
+    cy.get('.course-compact-title [href="/course/13cb1df8d5/velo-flicken"]').should("be.visible");
   });
-}
+});
