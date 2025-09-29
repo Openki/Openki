@@ -817,6 +817,7 @@ export function Edit(data: Data) {
                         <span className="fa-solid fa-location-dot" aria-hidden="true"></span>
                       </div>
                       <select
+                        data-test="courses-edit-region-selection"
                         className="form-select"
                         name="region"
                         onChange={(event) => {

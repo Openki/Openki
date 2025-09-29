@@ -89,7 +89,12 @@ export function PleaseLogin(props: Props & (AutoProps | FormProps | ButtonProps)
       );
     case "button":
       return (
-        <button className={props.className} disabled={props.disabled} onClick={handleEvent}>
+        <button
+          data-test="please-login-button"
+          className={props.className}
+          disabled={props.disabled}
+          onClick={handleEvent}
+        >
           {!isBusy ? (
             props.children
           ) : (
