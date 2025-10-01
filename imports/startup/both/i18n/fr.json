@@ -335,7 +335,7 @@
   "event.list.windowtitle": "Evénements",
   "event.not_exists": "Cet événement n'a pu être trouvé. Peut-être qu'il a été supprimé, ou n'a jamais existé.",
   "event.not_exists.unlogged": "Se connecter/s'enregistrer",
-  "event.reallydelete": "Veuillez confirmer que vous souhaitez supprimer cet événement. Cette demande ne peut pas être annulée.",
+  "event.realydelete": "Veuillez confirmer que vous souhaitez supprimer cet événement. Cette demande ne peut pas être annulée.",
   "event.replicate.successCondensed": "L'événement \"{TITLE}\" cloné {NUM, plural, one{pour} other{# fois jusqu'à} } {DATE}",
   "event.replication.changeToPattern": "Sélectionner la fréquence",
   "event.replication.changeToPicker": "Choisissez des dates",

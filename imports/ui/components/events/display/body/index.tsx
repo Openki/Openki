@@ -148,7 +148,7 @@ export function Display({
   function deleteConfirmDialogAttr(): DeleteConfirmDialogProps {
     return {
       confirmText: t(
-        "event.reallydelete",
+        "event.realydelete",
         "Please confirm that you would like to delete this event. This cannot be undone, the event will be permanently deleted and not visible any more. If the event is allready shared or published somewhere we strongly recomend to instead only canceling it.",
       ),
       confirmButton: t("event.delete.confirm.button", "Delete event without notifying anyone"),
