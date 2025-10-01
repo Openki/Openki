@@ -1,4 +1,5 @@
 beforeEach(() => {
+  // file://./../../../imports/ui/pages/userprofile/index.tsx
   cy.visitOpenki("/user/BNwqJW939Jo9d7HLN");
 });
 
@@ -21,7 +22,7 @@ describe("userprofile page", () => {
     cy.getById("contribution").should("not.exist");
   });
 
-  it("should allow to send a direct message", function () {
+  it("should allow to send a direct message", () => {
     cy.get('[data-test="send-message-textarea"]').type(
       "Hallo Sandro, es freut mich dich am Freitag zu sehen. Gruss Seee",
     );

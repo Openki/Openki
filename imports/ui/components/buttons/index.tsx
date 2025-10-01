@@ -74,7 +74,12 @@ export function ButtonSubmit(props: {
 }) {
   const { t } = useTranslation();
   return (
-    <button type="submit" className="btn btn-cancel text-nowrap" disabled={props.disabled}>
+    <button
+      data-test="button-submit"
+      type="submit"
+      className="btn btn-cancel text-nowrap"
+      disabled={props.disabled}
+    >
       {!props.isBusy ? (
         t("_button.save")
       ) : (
