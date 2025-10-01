@@ -4,11 +4,11 @@ beforeEach(() => {
 });
 
 describe("profile page", () => {
-  it("should be navigable", async () => {
+  it("should be navigable",  () => {
     cy.getById("profile-header").should("be.visible");
   });
 
-  it('should show "My organizations" section if user is admin of one', async function () {
+  it('should show "My organizations" section if user is admin of one',  function () {
     cy.getById("profile-tenant-section-header").should("be.visible");
   });
 

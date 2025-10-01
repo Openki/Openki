@@ -121,7 +121,7 @@ export function Event({ event, isNew }: { event: EventModel; isNew: boolean }) {
     <div className="row">
       <div className="col-lg-8 mb-3">
         {!!event.canceled && (
-          <div className="alert alert-canceled text-center" role="alert">
+          <div data-test="event-details-canceled" className="alert alert-canceled text-center" role="alert">
             <strong>
               {t("event.canceled.alert", "{EVENT} got canceled.", { EVENT: event.title })}
             </strong>

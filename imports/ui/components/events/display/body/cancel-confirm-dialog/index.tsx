@@ -24,7 +24,7 @@ export function CancelConfirmDialog({ event, onCancel, onClose }: Props) {
         {t(
           "event.realycancel",
           'Please confirm the cancellation of this event. It will be displayed as "canceled" and registration will not be possible anymore. {NUM, plural, one{If the attending user has automated notifications enabled} other{those of the attending # users that have automated notifications enabled} } will be automatically informed by email about the cancellation of this event.',
-          { NUM: event.participants?.length },
+          { NUM: event.participants?.length || 0 },
         )}
       </p>
       {!!event.participants?.length && (
