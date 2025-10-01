@@ -15,6 +15,6 @@ describe("event details page", () => {
     cy.get('[data-test="please-login-button"]').click();
     cy.getById("event-details-canceled").should("be.visible");
     cy.get('[data-test="events-display-body-uncancel-button"]').click();
-    cy.get('.alert-success').should('be.visible');
+    cy.get(".alert-success").should("be.visible");
   });
 });
