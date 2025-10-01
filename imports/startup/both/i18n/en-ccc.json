@@ -377,7 +377,7 @@
   "event.not_exists": "Could not find this event. Maybe it was deleted, or never existed in the first place.",
   "event.not_exists.unlogged": "Log in/register",
   "event.realycancel": "Please confirm the cancellation of this event. It will be displayed as \"canceled\" and {NUM, plural, one{one attending user} other{all attending # users} } will be automatically informed by email about the cancellation of this event.",
-  "event.reallydelete": "Please confirm that you would like to delete this event. This might confuse other users and cannot be undone. The event will be permanently deleted and not visible any more.",
+  "event.realydelete": "Please confirm that you would like to delete this event. This might confuse other users and cannot be undone. The event will be permanently deleted and not visible any more.",
   "event.replicate.successCondensed": "Cloned event \"{TITLE}\" {NUM, plural, one{for} other{# times until} } {DATE}",
   "event.replication.changeToPattern": "Select frequency",
   "event.replication.changeToPicker": "Pick dates",
