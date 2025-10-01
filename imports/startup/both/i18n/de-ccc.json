@@ -363,7 +363,7 @@
   "event.details.participants.free.places": "{NUM, plural, =0{Keine freien Plätze} one{Ein freier Platz} other{# freie Plätze} }",
   "event.details.paticipants.title": "{NUM, plural, =0{Noch keine Teilnehmer_innen} one{1 Teilnehmer_in} other{# Teilnehmer_innen} }",
   "event.details.register-register": "Anmelden",
-  "event.details.register-registerForTwo": "2 Plätze reservieren",
+  "event.realycancelster-registerForTwo": "2 Plätze reservieren",
   "event.details.register-with-companions": "Ich reserviere für zwei Personen.",
   "event.details.registration": "Anmeldung",
   "event.details.repl_menu_btn": "Wiederholen",
