@@ -2,6 +2,7 @@ import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { chain, escapeRegExp } from "lodash";
 import { Match, check } from "meteor/check";
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import { EventEntity, Events } from "/imports/api/events/events";
 import { UserModel } from "/imports/api/users/users";
@@ -123,7 +124,9 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
 
     if (Meteor.isServer) {
       this.createIndex({ region: 1 });
-      this.createIndex({ loc: "2dsphere" });
+      if (!PublicSettings.feature.disable2dSphereForLocations) {
+        this.createIndex({ loc: "2dsphere" });
+      }
     }
   }
 

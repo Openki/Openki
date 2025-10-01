@@ -48,7 +48,8 @@
 		, "rsvpWithCompanions": true
 		, "sendReminderIsEditable": true
 		, "resizeImagesOnServer": true
-    , "proposeCourseBox": true 
+    , "proposeCourseBox": true
+    , "disable2dSphereForLocations": false
 		}
 	, "nav":
 		{ "brandLink": "/"

@@ -64,9 +64,12 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
     rsvpWithCompanions: Boolean,
     /** allow to edit whether to remind or not, Default: true */
     sendReminderIsEditable: Boolean,
-    /** show a "empty" course box to propose a new course */
+    /** show a "empty" course box to propose a new course, Default: true */
     proposeCourseBox: Boolean,
+    /** needs sharp npm module on server which needs a CPU with v2 microarchitecture level, Default: true */
     resizeImagesOnServer: Boolean,
+    /** disable the creation of 2dSphere indexes for db entites, this allow to save non geo location in db, used for CustomMapConfig, Default: false */
+    disable2dSphereForLocations: Boolean,
   },
   nav: {
     /** target link when clicking on the logo Default: "/" */
@@ -200,6 +203,7 @@ const defaults = {
     sendReminderIsEditable: true,
     proposeCourseBox: true,
     resizeImagesOnServer: true,
+    disable2dSphereForLocations: false,
   },
   nav: {
     brandLink: "/",
