@@ -36,7 +36,7 @@ export function UserprofilePage({ user }: Props) {
   const currentUser = useUser();
 
   const [isLoadingGroups, inviteGroups] = Groups.useFindFilter({ own: true });
-  const [isLoading, coursesCreatedBy] = Courses.useFindFilter({ createdby: user?._id });
+  const [isLoading, coursesCreatedBy] = Courses.useFindFilter({ createdby: user?._id || "-1" });
 
   useEffect(() => {
     const title = t("profile.windowtitle", "Profile of {USER}", {

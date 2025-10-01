@@ -95,7 +95,7 @@ export function EmailSection() {
   }
 
   return (
-    <div className="page-component page-component-seperated">
+    <div data-test="email-section" className="page-component page-component-seperated">
       <h3>{t("profile.email_settings", "E-mail settings")}</h3>
       <div className="row g-4 mb-2">
         <div className="col-sm-6">
