@@ -145,7 +145,9 @@ export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionMode
 
     if (Meteor.isServer) {
       this.createIndex({ tenant: 1 });
-      this.createIndex({ loc: "2dsphere" });
+      if (!PublicSettings.feature.disable2dSphereForLocations) {
+        this.createIndex({ loc: "2dsphere" });
+      }
     }
   }
 
