@@ -201,7 +201,7 @@
   "event.edit.plzSelectRegion": "Por favor, selecione a região para esse evento",
   "event.editVenue.pleaseContactHost": "Entre em contato com o host deste local para verificar a disponibilidade e outros detalhes:",
   "event.group.confirmOrgNotes": "Todos os membros deste grupos estarão habilitados a editar este evento.",
-  "event.reallydelete": "Confirme que você deseja excluir este evento. Isto não pode ser desfeito.",
+  "event.realydelete": "Confirme que você deseja excluir este evento. Isto não pode ser desfeito.",
   "event.replication.repeat": "Repetir",
   "event.windowtitle.create": "Criar evento",
   "filter.showAllFilters": "Mostrar todos os filtros",
