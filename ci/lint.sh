@@ -28,3 +28,4 @@ echo -e "${YELLOW}${BOLD}If you have random errors and problems inside the gitla
 meteor npm run type-check
 
 echo -e "${HINT}"
+
