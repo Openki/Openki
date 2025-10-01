@@ -8,7 +8,7 @@ describe("userprofile page", () => {
     cy.get("h1").should("be.visible");
   });
 
-  it('should allow admins to set and unset "User has contributed"', async () => {
+  it('should allow admins to set and unset "User has contributed"', () => {
     cy.getById("user-has-contributed-button").should("not.exist");
 
     cy.login("greg");

@@ -11,6 +11,7 @@ interface FormProps {
   onSubmit: () => Promise<void>;
 }
 interface ButtonProps {
+  "data-test"?: string;
   type: "button";
   onClick: () => Promise<void>;
   disabled?: boolean | undefined;
@@ -90,7 +91,7 @@ export function PleaseLogin(props: Props & (AutoProps | FormProps | ButtonProps)
     case "button":
       return (
         <button
-          data-test="please-login-button"
+          data-test={props["data-test"] || "please-login-button"}
           className={props.className}
           disabled={props.disabled}
           onClick={handleEvent}

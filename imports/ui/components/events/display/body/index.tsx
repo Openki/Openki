@@ -273,11 +273,21 @@ export function Display({
                     {t("event.details.download", "Download")}
                   </a>
                   {!event.canceled ? (
-                    <button type="button" className="btn btn-remove" onClick={handelCancel}>
+                    <button
+                      data-test="events-display-body-cancel-button"
+                      type="button"
+                      className="btn btn-remove"
+                      onClick={handelCancel}
+                    >
                       {t("event.details.cancel", "Cancel this event")}
                     </button>
                   ) : (
-                    <PleaseLogin type="button" className="btn btn-edit" onClick={handelUncancel}>
+                    <PleaseLogin
+                      data-test="events-display-body-uncancel-button"
+                      type="button"
+                      className="btn btn-edit"
+                      onClick={handelUncancel}
+                    >
                       {t("event.details.uncancel", "Uncancel this event")}
                     </PleaseLogin>
                   )}

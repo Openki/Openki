@@ -136,7 +136,7 @@ export function EventParticipants({ event }: Props) {
 
   return (
     <>
-      <div className="page-component-header">
+      <div data-test="events-participants" className="page-component-header">
         {showModal && (
           <div className="modal" tabIndex={-1} role="dialog" ref={modalRef}>
             <div className="modal-dialog modal-sm" role="document">
@@ -163,7 +163,7 @@ export function EventParticipants({ event }: Props) {
             </div>
           </div>
         )}
-        <h4>
+        <h4 data-test="events-participants-header">
           <span className="fa-solid fa-users fa-fw" aria-hidden="true"></span>&nbsp;
           {t(
             "event.details.paticipants.title",
