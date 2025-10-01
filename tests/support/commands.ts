@@ -128,6 +128,11 @@ Cypress.Commands.add(
   },
 );
 
+Cypress.Commands.add("mount", (component: string, props: Record<string, any> = {}) => {
+  cy.visit("/component/" + component, { qs: { args: JSON.stringify(props) } });
+  cy.allSubscriptionsReady();
+});
+
 // add types
 
 declare global {
@@ -150,6 +155,7 @@ declare global {
           | { locale?: string | undefined; region?: string | undefined }
           | { username: string; password?: string | undefined },
       ): Chainable<void>;
+      mount(component: string, props?: Record<string, any>): Chainable<void>;
     }
   }
 }

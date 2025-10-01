@@ -1048,3 +1048,16 @@ RouterAsync.route("resetPasswortEmail", {
   },
   where: "server",
 });
+
+if (Meteor.isDevelopment) {
+  // only needed for test
+
+  RouterAsync.route("componentTest", {
+    path: "/component/:name",
+    template: "componentTest",
+    layoutTemplate: "componentTestLayout",
+    async onRun() {
+      await import("/imports/ui/components/component-test");
+    },
+  });
+}
