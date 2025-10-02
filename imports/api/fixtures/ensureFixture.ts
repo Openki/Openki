@@ -143,7 +143,9 @@ export const ensure = {
       return region._id;
     }
 
-    const id = await Regions.insertAsync({
+    const id = ensure.fixedId([name]);
+    await Regions.insertAsync({
+      _id: id,
       name,
       loc: { type: "Point", coordinates: [8.3, 47.05] },
     } as Mongo.OptionalId<RegionEntity>);

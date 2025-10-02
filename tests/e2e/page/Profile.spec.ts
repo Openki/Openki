@@ -12,6 +12,4 @@ describe("profile page", () => {
   it('should show "My organizations" section if user is admin of one', function () {
     cy.getById("profile-tenant-section-header").should("be.visible");
   });
-
-  
 });
