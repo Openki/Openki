@@ -258,7 +258,7 @@ RouterAsync.route("showCourse", {
   path: "course/:_id/:slug?",
   template: "courseDetailsPage",
   async action() {
-    const { course } = await this.data();
+    const course = await this.data()?.course;
     if (course?.singleEvent && course.nextEvent && this.params.query.force !== "1") {
       this.redirect("showEvent", course.nextEvent, { replaceState: true });
     } else {
@@ -279,12 +279,11 @@ RouterAsync.route("showCourse", {
       return undefined;
     }
 
-    const data = {
+    return {
       edit: !!this.params.query.edit,
       course,
       select: this.params.query.select,
     };
-    return data;
   },
 });
 
@@ -337,9 +336,13 @@ RouterAsync.route("showEvent", {
     };
   },
   async data() {
-    const subs = this.subscriptions();
+    const event = this.subscriptions()?.event();
 
-    return { event: subs?.event() };
+    if (!event) {
+      return undefined;
+    }
+
+    return { event };
   },
 });
 

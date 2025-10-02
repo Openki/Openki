@@ -125,11 +125,6 @@ export function EventPage({ event, isNew }: { event: EventModel; isNew: boolean 
     );
   }
 
-  if (!event) {
-    // should not happen, but does, maybe some problem with iron-router and react
-    return null;
-  }
-
   return (
     <div className="container">
       <Event event={event} isNew={isNew} />

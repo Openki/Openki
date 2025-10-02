@@ -45,11 +45,6 @@ export function UserprofilePage({ user }: Props) {
     Metatags.setCommonTags(title);
   });
 
-  if (!user) {
-    // should not happen, but does, maybe some problem with iron-router and react
-    return null;
-  }
-
   // What privileges the user has
   const privileges = (["admin"] as const).reduce<Record<string, boolean>>((originalPs, p) => {
     const ps = { ...originalPs };
@@ -203,11 +198,6 @@ export function UserprofilePage({ user }: Props) {
     } catch (err) {
       Alert.serverError(err);
     }
-  }
-
-  // should not happen, but does, maybe some problem with iron-router and react
-  if (!user._id) {
-    return null;
   }
 
   if (isLoading() || !user._id) {

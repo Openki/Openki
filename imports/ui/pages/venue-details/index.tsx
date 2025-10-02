@@ -229,11 +229,6 @@ export function VenueDetailsPage({ venue, isNew }: { venue: VenueModel; isNew: b
     Metatags.setCommonTags(title, truncate(textPlain(venue?.description || ""), { length: 160 }));
   });
 
-  if (!venue) {
-    // should not happen, but does, maybe some problem with iron-router and react
-    return null;
-  }
-
   return (
     <div className="container mw-md">
       {editing ? (

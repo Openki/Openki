@@ -82,7 +82,7 @@ async function createZuerichLernt(prng: PRNG) {
     const age = Math.floor(prng() * 80000000000);
 
     const course = {
-      _id: template._id,
+      _id: template._id || ensure.fixedId([template.name, template.description || ""]),
       name: template.name,
       categories: template.categories || [],
       groups: template.groups,
