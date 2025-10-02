@@ -12,6 +12,7 @@ import * as join from "./notifications/join";
 import * as course from "./notifications/course";
 import * as groupCourse from "./notifications/group.course";
 import * as privateMessage from "./notifications/private-message";
+import { JSX } from "react";
 
 export interface Model<T> {
   accepted(user: UserModel): void;
@@ -35,7 +36,7 @@ export interface Model<T> {
       lng: string;
     } & Omit<RootProps, "logo"> &
       T,
-  ) => React.JSX.Element;
+  ) => JSX.Element;
 }
 
 export const Notification = {

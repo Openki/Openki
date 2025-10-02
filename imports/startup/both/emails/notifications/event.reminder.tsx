@@ -1,4 +1,4 @@
-import React from "react";
+import React, { JSX } from "react";
 import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
@@ -107,7 +107,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         customSiteUrl: Router.url("home", {}, { query: { campaign } }),
         customSiteName: siteName,
         customEmailLogo: emailLogo,
-        eventTitle: undefined as React.JSX.Element | undefined,
+        eventTitle: undefined as JSX.Element | undefined,
         eventCalendar: startMoment.calendar(),
         unsubscribe: { type: "automatedNotifications" as const, token: unsubToken },
         campaign,

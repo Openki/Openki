@@ -1,4 +1,4 @@
-import React from "react";
+import React, { JSX } from "react";
 
 import { Report } from "/imports/ui/components/report";
 

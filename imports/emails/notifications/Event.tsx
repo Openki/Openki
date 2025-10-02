@@ -1,4 +1,4 @@
-import React from "react";
+import React, { JSX } from "react";
 import { useTranslation } from "react-i18next";
 import { EventModel } from "/imports/api/events/events";
 import { EventBox } from "./components/EventBox";
@@ -10,7 +10,7 @@ export interface Props {
   tz: string;
   recipientTakePart: boolean | undefined;
   registerToEventLink: string;
-  course: React.JSX.Element;
+  course: JSX.Element;
   courseName: string;
   unsubscribeFromCourseLink: string;
   isNew: boolean;

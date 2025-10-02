@@ -1,7 +1,7 @@
-import React from "react";
+import React, { JSX } from "react";
 import { TileLayer } from "react-leaflet";
 
-export const TileLayers: Record<string, React.JSX.Element> = {
+export const TileLayers: Record<string, JSX.Element> = {
   de: (
     <TileLayer
       url={"//{s}.tile.openstreetmap.de/{z}/{x}/{y}.png"}
