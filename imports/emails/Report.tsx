@@ -1,4 +1,4 @@
-import React from "react";
+import React, { JSX } from "react";
 import { Accounts } from "meteor/accounts-base";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
@@ -22,7 +22,7 @@ export function Report({
 }) {
   const { siteName } = Accounts.emailTemplates;
 
-  let reporter: string | React.JSX.Element = "A fellow visitor";
+  let reporter: string | JSX.Element = "A fellow visitor";
   if (user) {
     reporter = <a href={Router.url("userprofile", user)}>{user.getDisplayName()}</a>;
   }

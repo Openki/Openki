@@ -1,11 +1,11 @@
-import React from "react";
+import React, { JSX } from "react";
 import { useTranslation } from "react-i18next";
 import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 
 export interface Props {
-  course: React.JSX.Element;
-  newParticipant: React.JSX.Element;
+  course: JSX.Element;
+  newParticipant: JSX.Element;
   roleTitle: string;
   roleType: string;
   message: string | undefined;

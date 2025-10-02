@@ -1,4 +1,4 @@
-import React from "react";
+import React, { JSX } from "react";
 import { Match, check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
@@ -131,8 +131,8 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         customSiteName: undefined as string | undefined,
         customEmailLogo: undefined as string | undefined,
         fromAddress: "",
-        course: undefined as React.JSX.Element | undefined,
-        event: undefined as React.JSX.Element | undefined,
+        course: undefined as JSX.Element | undefined,
+        event: undefined as JSX.Element | undefined,
         unsubscribe: { type: "privateMessage" as const, token: unsubToken },
         campaign,
       };

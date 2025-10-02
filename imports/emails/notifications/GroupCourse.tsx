@@ -1,13 +1,13 @@
-import React from "react";
+import React, { JSX } from "react";
 import { useTranslation } from "react-i18next";
 import { UserModel } from "/imports/api/users/users";
 import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 
 export interface Props {
-  course: React.JSX.Element;
+  course: JSX.Element;
   courseDescription: string;
-  groups: React.JSX.Element;
+  groups: JSX.Element;
   creater: UserModel;
   username: string;
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
