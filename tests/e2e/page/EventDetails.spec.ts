@@ -1,7 +1,7 @@
 // file://./../../../imports/ui/pages/event-details/index.tsx
 
 beforeEach(() => {
-  cy.visitOpenki("/event/32d746c056", { username: "Support" });
+  cy.visitOpenki("/event/eb386e8309/Schweissen", { username: "Support" });
 });
 
 describe("event details page", () => {
@@ -17,5 +17,12 @@ describe("event details page", () => {
     cy.getById("event-details-canceled").should("be.visible");
     cy.get('[data-test="events-display-body-uncancel-button"]').click();
     cy.get(".alert-success").should("be.visible");
+  });
+
+  // https://gitlab.com/Openki/Openki/-/issues/2228
+  it("should display not found page for not existing events", () => {
+    cy.visitOpenki("/event/not-exists", { username: "Seee" });
+
+    cy.get("h3").contains("Diese Veranstaltung konnte nicht gefunden werden.");
   });
 });

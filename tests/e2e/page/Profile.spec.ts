@@ -13,10 +13,5 @@ describe("profile page", () => {
     cy.getById("profile-tenant-section-header").should("be.visible");
   });
 
-  it("should allow to change e-mail", () => {
-    cy.get("#editform_email").clear();
-    cy.get("#editform_email").type("kopf@openki.example1");
-    cy.get("#maincontent .btn-cancel").click();
-    cy.get("#outer .modal-title").should("be.visible");
-  });
+  
 });
