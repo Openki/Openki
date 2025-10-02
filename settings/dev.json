@@ -1,5 +1,6 @@
-{ "admins": ["greg", "FeeLing", "IvanZ"]
+{ "admins": ["greg", "Support", "FeeLing"]
 , "testdata": true
+, "prng": "static"
 , "public":
 	{ "siteName": "Hmmm"
 	, "siteStage": "DEV"

@@ -27,7 +27,6 @@ if (Meteor.isClient) {
         await Accounts.createUserAsync({
           username: oldDummy,
           email: `${oldDummy}@openki.example`,
-          profile: { name: oldDummy },
           password: "hunter2",
         });
         MeteorAsync.loginWithPassword(oldDummy, "hunter2")
@@ -79,9 +78,7 @@ if (Meteor.isClient) {
             username: "Seee",
             password: "greg",
             email: "seee@openki.example",
-            allowNews: false,
-            locale: "en",
-          } as any);
+          });
         } catch (err) {
           if (err) {
             hasFailed = true;
