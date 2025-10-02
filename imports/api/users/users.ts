@@ -77,6 +77,9 @@ export interface UserEntity extends Meteor.User {
     address: string;
     verified: boolean;
   }[];
+
+  /** By default the server publishes `username`, `emails`, and `profile` (writable by user).
+   * See: https://docs.meteor.com/api/accounts#Meteor-user*/
   profile: UserProfile;
   /** [admin] */
   privileges: Role[];

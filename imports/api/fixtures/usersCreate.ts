@@ -2,10 +2,14 @@ import { Log } from "../log/log";
 import { ensure } from "./ensureFixture";
 
 export async function usersCreate() {
+  // Admins
   await ensure.user("greg");
+  await ensure.user("Support", undefined, true, "de"); // used for Zürich Lernt data
+  await ensure.user("FeeLing");
+
+  // Users
   await ensure.user("Seee");
-  await ensure.user("1u");
-  await ensure.user("Support"); // used for Zürich Lernt data
-  await ensure.user("validated_mail");
+  await ensure.user("1u", undefined, true, "de");
+
   Log.record("testdata", ["Users"], { message: "Inserted user fixtures." });
 }

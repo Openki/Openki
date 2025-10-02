@@ -82,7 +82,7 @@ export const ensure = {
     });
   },
 
-  async user(name: string, region?: string | undefined, verified = true) {
+  async user(name: string, region?: string | undefined, verified = true, locale = "en") {
     const prng = Prng("ensureUser");
 
     if (!name) {
@@ -101,13 +101,7 @@ export const ensure = {
     const id = await Accounts.createUserAsync({
       username: name,
       email,
-      profile: { name },
-      notifications: true,
-      allowPrivateMessages: true,
-      tenants: [],
-      groups: [],
-      badges: [],
-      venues: [],
+      locale,
     } as any);
 
     const age = Math.floor(prng() * 100000000000);

@@ -1,6 +1,7 @@
+// file://./../../../imports/ui/pages/event-details/index.tsx
+
 beforeEach(() => {
-  // file://./../../../imports/ui/pages/event-details/index.tsx
-  cy.visitOpenki("/event/32d746c056", { username: "greg" });
+  cy.visitOpenki("/event/32d746c056", { username: "Support" });
 });
 
 describe("event details page", () => {

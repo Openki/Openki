@@ -1,6 +1,9 @@
+// file://./../../../imports/ui/pages/userprofile/index.tsx
+
 beforeEach(() => {
-  // file://./../../../imports/ui/pages/userprofile/index.tsx
-  cy.visitOpenki("/user/BNwqJW939Jo9d7HLN");
+  // User ids are not static, so we need a little trick to find a user profile page
+  cy.visitOpenki("/course/e49ed1ce5d/walliserduetsch-lernen");
+  cy.get(".profilelink").contains("Sandro").click();
 });
 
 describe("userprofile page", () => {

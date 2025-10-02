@@ -1,5 +1,6 @@
+// file://./../../../imports/ui/pages/profile/index.tsx
+
 beforeEach(() => {
-  // file://./../../../imports/ui/pages/profile/index.tsx
   cy.visitOpenki("/profile", { username: "Kopf" });
 });
 
