@@ -60,6 +60,10 @@ semgrep-sast:                                          # More settings here: htt
   rules:
     - if: $CI_COMMIT_BRANCH == "dev"
 
+sast:
+  variables:
+    SAST_EXCLUDED_PATHS: "$DEFAULT_SAST_EXCLUDED_PATHS,.meteor/*,packages/*"
+
 #   Verify/Browser-Performance.gitlab-ci.yml
 
 #browser_performance:
