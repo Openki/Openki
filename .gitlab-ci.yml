@@ -23,10 +23,6 @@ cleanup:
   stage: cleanup
   script:
     - rm -rf .meteor/ .npm/ node_modules/
-  only:
-    - dev
-    - staging
-    - main
 
 lint:
   stage: lint
