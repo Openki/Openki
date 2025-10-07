@@ -16,16 +16,18 @@ import { SelectionItem } from "./SelectionItem";
 
 import "./styles.scss";
 
-export function RegionSelection(data: {
+export interface Props {
   isSplash?: boolean | undefined;
   inNavbar?: boolean | undefined;
-  onSelect?: () => void;
-  onClose?: () => void;
-}) {
+  onSelect?: (() => void) | undefined;
+  onClose?: (() => void) | undefined;
+}
+
+export function RegionSelection(props: Props) {
   const { t } = useTranslation();
   const minNumberOfRegionInSelection = PublicSettings.regionSelection.minNumber;
   const [search, setSearch] = useState("");
-  const [searchHasFocus, setSearchHasFocus] = useState(!data.isSplash);
+  const [searchHasFocus, setSearchHasFocus] = useState(!props.isSplash);
   const [showAllRegions, setShowAllRegions] = useState(false);
   const searchElementRef = useRef<HTMLInputElement>(null);
   const dropdownToggleElementRef = useRef<HTMLButtonElement>(null);
@@ -103,11 +105,13 @@ export function RegionSelection(data: {
         Router.go("home");
       }
     }
-    data.onClose?.();
+
+    props.onSelect?.();
+    props.onClose?.();
   }
 
   function inNavbarClasses() {
-    if (data.inNavbar) {
+    if (props.inNavbar) {
       return "nav-item text-center col col-lg-auto";
     }
     return "";
@@ -159,7 +163,7 @@ export function RegionSelection(data: {
 
     function handleHide(event: Event) {
       if (!searchHasFocus) {
-        data.onClose?.();
+        props.onClose?.();
         return true;
       }
 
@@ -176,7 +180,6 @@ export function RegionSelection(data: {
   function handelItemClick(region?: RegionModel) {
     const regionId = region?._id || "all";
     changeRegion(regionId);
-    data.onSelect?.();
     return false;
   }
 
@@ -198,7 +201,7 @@ export function RegionSelection(data: {
   function handelShowAllClick(event: React.MouseEvent<HTMLButtonElement>) {
     // prevent menu close
     event.stopPropagation();
-    
+
     setShowAllRegions(true);
     setSearchHasFocus(true);
   }
@@ -221,7 +224,7 @@ export function RegionSelection(data: {
       <form className="d-flex region-search-form" tabIndex={0} onSubmit={handelSubmit}>
         <div
           className={`input-group input-group-outline ${
-            data.isSplash ? "is-splash" : "input-group-sm p-2"
+            props.isSplash ? "is-splash" : "input-group-sm p-2"
           }`}
         >
           <span className="input-group-text">
@@ -269,7 +272,7 @@ export function RegionSelection(data: {
             <li>
               <a
                 href="#"
-                className="dropdown-item js-region-link js-nav-dropdown-close"
+                className="dropdown-item"
                 title={t("menue.All regions")}
                 onClick={() => handelItemClick()}
               >

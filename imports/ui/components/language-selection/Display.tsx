@@ -4,7 +4,7 @@ import { useSession } from "/imports/utils/react-meteor-data";
 import { LanguagesRaw } from "/imports/api/languages/languages";
 
 export interface Props {
-  inNavbar: boolean;
+  inNavbar?: boolean | undefined;
   onClick: () => void;
 }
 
