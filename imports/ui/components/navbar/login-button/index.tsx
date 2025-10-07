@@ -20,8 +20,7 @@ export function LoginButton() {
         data-bs-toggle="dropdown"
         role="button"
       >
-        <span className="fa-solid fa-user fa-fw" aria-hidden="true" />
-        {user.getDisplayName()}
+        <span className="fa-solid fa-user fa-fw" aria-hidden="true" /> {user.getDisplayName()}
       </a>
     );
   }
@@ -35,7 +34,7 @@ export function LoginButton() {
         Session.set("pleaseLogin", true);
       }}
     >
-      <span className="fa-solid fa-right-to-bracket fa-fw" aria-hidden="true" />
+      <span className="fa-solid fa-right-to-bracket fa-fw" aria-hidden="true" />{" "}
       {t("login.navig.unlogged", "Log in/register")}
     </a>
   );

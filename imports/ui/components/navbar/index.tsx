@@ -163,7 +163,7 @@ export function Navbar() {
                 <span
                   className="fa-solid fa-circle-notch fa-spin fa-fw connecting"
                   title={t("status.connecting", "Connecting to server")}
-                ></span>
+                />
                 <span className="sr-only">{t("status.connecting")}</span>
               </>
             ) : (
@@ -172,7 +172,7 @@ export function Navbar() {
                 <span
                   className="fa-solid fa-circle-notch fa-fw no-connection"
                   title={t("status.notConnected", "No connection to server")}
-                ></span>
+                />
                 <span className="sr-only">{t("status.notConnected")}</span>
               </>
             )}
@@ -201,7 +201,7 @@ export function Navbar() {
                     className={`${currentRouteIs("search", "showCourse") ? "active" : ""} nav-link`}
                     onClick={() => close()}
                   >
-                    <span className="fa-regular fa-lightbulb fa-fw" aria-hidden="true" />
+                    <span className="fa-regular fa-lightbulb fa-fw" aria-hidden="true" />{" "}
                     {t("menue.Courses", "Find")}
                     <div className="nav-marker-caret"></div>
                   </a>
@@ -214,7 +214,7 @@ export function Navbar() {
                     className={`${currentRouteIs("proposeCourse", "createEvent") ? "active" : ""} nav-link `}
                     onClick={() => close()}
                   >
-                    <span className="fa-solid fa-pencil fa-fw" aria-hidden="true" />
+                    <span className="fa-solid fa-pencil fa-fw" aria-hidden="true" />{" "}
                     {t("menue.Create", "Create")}
                     <div className="nav-marker-caret"></div>
                   </a>
@@ -227,7 +227,7 @@ export function Navbar() {
                     className={`${currentRouteIs("calendar") ? "active" : ""} nav-link calendar-link`}
                     onClick={() => close()}
                   >
-                    <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true" />
+                    <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true" />{" "}
                     {t("menue.Calendar", "Calendar")}
                     <div className="nav-marker-caret"></div>
                     <div className="nav-marker-bar"></div>
@@ -237,8 +237,7 @@ export function Navbar() {
               {links().map((link) => (
                 <li key={link.link} className="nav-item text-center col col-lg-auto">
                   <a href={link.link} className="nav-link" onClick={() => close()}>
-                    <span className={`${link.icon} fa-fw`} aria-hidden="true"></span>
-                    {link.text}
+                    <span className={`${link.icon} fa-fw`} aria-hidden="true" /> {link.text}
                   </a>
                 </li>
               ))}
