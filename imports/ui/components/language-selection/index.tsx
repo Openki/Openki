@@ -36,9 +36,3 @@ export function LanguageSelection(props: {
   }
   return <Display {...displayAttr()} />;
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("LanguageSelectionWrap", () => LanguageSelection);

@@ -369,9 +369,3 @@ export function RegionSelection(props: Props) {
     </li>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("RegionSelection", () => RegionSelection);
