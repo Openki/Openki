@@ -5,7 +5,7 @@ describe("Navbar", () => {
     });
 
     it("should support login & logout", function () {
-      cy.get(".loginButton").click();
+      cy.get('[data-test="navbar-login-button"]').click();
       cy.get('[data-test="account-tasks-login-frame-username"]').clear();
       cy.get('[data-test="account-tasks-login-frame-username"]').type("Seee");
       cy.get('[data-test="account-tasks-login-frame-password"]').clear();
@@ -13,12 +13,12 @@ describe("Navbar", () => {
       cy.get('[data-test="account-tasks-login-frame-password"]').clear();
       cy.get('[data-test="account-tasks-login-frame-submit"]').click();
       cy.get('[data-test="account-tasks-login-frame-password"]').type("greg{enter}");
-      cy.get(".loginButton").should("contain.text", "Seee");
+      cy.get('[data-test="navbar-login-button"]').should("contain.text", "Seee");
 
       //logout
-      cy.get("#bs-navbar-collapse .loginButton").click();
+      cy.get('[data-test="navbar-login-button"]').click();
       cy.get("#bs-navbar-collapse button.btn").click();
-      cy.get("#bs-navbar-collapse .loginButton").should("contains.text", "Log in/register");
+      cy.get('[data-test="navbar-login-button"]').should("contains.text", "Log in/register");
     });
 
     it("should support show more region", function () {
@@ -46,7 +46,7 @@ describe("Navbar", () => {
 
     it("should support login & logout", function () {
       cy.get("#topBar .fa-bars").click();
-      cy.get(".loginButton").click();
+      cy.get('[data-test="navbar-login-button"]').click();
       cy.get('[data-test="account-tasks-login-frame-username"]').clear();
       cy.get('[data-test="account-tasks-login-frame-username"]').type("Seee");
       cy.get('[data-test="account-tasks-login-frame-password"]').clear();
@@ -54,13 +54,13 @@ describe("Navbar", () => {
       cy.get('[data-test="account-tasks-login-frame-password"]').clear();
       cy.get('[data-test="account-tasks-login-frame-submit"]').click();
       cy.get('[data-test="account-tasks-login-frame-password"]').type("greg{enter}");
-      cy.get(".loginButton").should("contain.text", "Seee");
+      cy.get('[data-test="navbar-login-button"]').should("contain.text", "Seee");
 
       //logout
       cy.get("#topBar .fa-bars").click();
-      cy.get("#bs-navbar-collapse .loginButton").click();
+      cy.get('[data-test="navbar-login-button"]').click();
       cy.get("#bs-navbar-collapse button.btn").click();
-      cy.get("#bs-navbar-collapse .loginButton").should("contains.text", "Log in/register");
+      cy.get('[data-test="navbar-login-button"]').should("contains.text", "Log in/register");
     });
 
     it("should support show more region", function () {

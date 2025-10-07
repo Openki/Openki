@@ -24,7 +24,7 @@ describe("Course history", function () {
 
     cy.get("#description-tab .tab-label").click();
     cy.get('#subscribe [name="participant"]').click();
-    cy.get("#bs-navbar-collapse .loginButton").click();
+    cy.get('[data-test="navbar-login-button"]').click();
     cy.get('[data-test="please-login-button"]').click();
 
     cy.get("#history-tab .tab-label").click();
