@@ -13,7 +13,7 @@ import { useMeteorStatus } from "/imports/utils/react-meteor-data";
 import { useSiteName } from "/imports/utils/getSiteName";
 
 import { Collapse } from "/imports/startup/client/bootstrap";
-import { RegionSelectionWrap } from "../regions/selection/Wrap";
+import { RegionSelectionWrap } from "/imports/ui/components/regions/selection";
 import { LanguageSelection } from "/imports/ui/components/language-selection";
 import { TestWarningTicker } from "./test-warning-ticker";
 import { UserFrame } from "./user-frame";
