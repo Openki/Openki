@@ -195,7 +195,10 @@ export function RegionSelection(data: {
     setSearchHasFocus(false);
   }
 
-  function handelShowAllClick() {
+  function handelShowAllClick(event: React.MouseEvent<HTMLButtonElement>) {
+    // prevent menu close
+    event.stopPropagation();
+    
     setShowAllRegions(true);
     setSearchHasFocus(true);
   }
@@ -344,7 +347,12 @@ export function RegionSelection(data: {
                       <hr className="dropdown-divider" />
                     </li>
                     <li>
-                      <button className="btn btn-link" type="button" onClick={handelShowAllClick}>
+                      <button
+                        data-test="regions-selection-show-more"
+                        className="btn btn-link"
+                        type="button"
+                        onClick={handelShowAllClick}
+                      >
                         {t("regionSelection.showAll", "Show more regions")}
                       </button>
                     </li>
