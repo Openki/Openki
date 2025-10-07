@@ -15,9 +15,9 @@ import { useSiteName } from "/imports/utils/getSiteName";
 import { Collapse } from "/imports/startup/client/bootstrap";
 import { RegionSelectionWrap } from "/imports/ui/components/regions/selection";
 import { LanguageSelection } from "/imports/ui/components/language-selection";
-import { TestWarningTicker } from "./test-warning-ticker";
+import { TestWarningTicker } from "./TestWarningTicker";
 import { UserFrame } from "./user-frame";
-import { LoginButton } from "./login-button";
+import { LoginButton } from "./LoginButton";
 
 import "./styles.scss";
 
