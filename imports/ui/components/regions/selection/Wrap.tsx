@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { useFindFilter } from "/imports/api/regions/publications";
 
-import { RegionSelection, Props as RegionSelectionProps } from ".";
+import { RegionSelection, Props as RegionSelectionProps } from "./selection";
 import { Display } from "./Display";
 
 export function RegionSelectionWrap({
