@@ -1,3 +1,5 @@
+// file://./../../imports/ui/components/navbar/index.ts
+
 describe("Navbar", () => {
   context("default resolution", () => {
     beforeEach(() => {
