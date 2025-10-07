@@ -35,7 +35,10 @@ export function SelectionItem({
   }
 
   return (
-    <li className={region.isPrivate() ? "region-link-private" : ""}>
+    <li
+      data-test="region-selection-item"
+      className={region.isPrivate() ? "region-link-private" : ""}
+    >
       <a
         href="#"
         className={`dropdown-item js-nav-dropdown-close ${isCurrentRegion ? "fw-bold" : ""}`}
