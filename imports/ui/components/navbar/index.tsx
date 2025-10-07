@@ -21,41 +21,6 @@ import { LoginButton } from "./login-button";
 
 import "./styles.scss";
 
-// template.events({
-
-//   "show.bs.dropdown, hide.bs.dropdown .dropdown"(event, instance) {
-//     const { gridFloatBreakpoint } = ScssVars;
-
-//     if (Viewport.get().width <= gridFloatBreakpoint) {
-//       const container = instance.$("#bs-navbar-collapse");
-
-//       // make menu item scroll up when opening the dropdown menu
-//       if (event.type === "show") {
-//         const scrollTo = $(event.currentTarget);
-//         if (scrollTo && container) {
-//           const scrollToOffset = scrollTo.offset();
-//           const containerOffset = container.offset();
-//           const containerScrollTop = container.scrollTop();
-
-//           if (
-//             scrollToOffset === undefined ||
-//             containerOffset === undefined ||
-//             containerScrollTop === undefined
-//           ) {
-//             throw new Error("Unexpected undefined");
-//           }
-
-//           container.animate({
-//             scrollTop: scrollToOffset.top - containerOffset.top + containerScrollTop,
-//           });
-//         }
-//       } else {
-//         container.scrollTop(0);
-//       }
-//     }
-//   },
-// });
-
 export function Navbar() {
   const { t } = useTranslation();
   const status = useMeteorStatus();
