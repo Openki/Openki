@@ -39,9 +39,3 @@ export function LoginButton() {
     </a>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("LoginButton", () => LoginButton);

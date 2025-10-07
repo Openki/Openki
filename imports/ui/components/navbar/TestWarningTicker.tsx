@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Template } from "meteor/templating";
 
 export function TestWarningTicker() {
   const { t } = useTranslation();
@@ -28,9 +27,3 @@ export function TestWarningTicker() {
     </>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("TestWarningTicker", () => TestWarningTicker);

@@ -72,9 +72,3 @@ export function UserFrame() {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("UserFrame", () => UserFrame);
