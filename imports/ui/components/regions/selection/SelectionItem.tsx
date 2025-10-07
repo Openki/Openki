@@ -41,7 +41,7 @@ export function SelectionItem({
     >
       <a
         href="#"
-        className={`dropdown-item js-nav-dropdown-close ${isCurrentRegion ? "fw-bold" : ""}`}
+        className={`dropdown-item ${isCurrentRegion ? "fw-bold" : ""}`}
         title={region.nameEn}
         onClick={onClick}
         onMouseOver={() => handelFocus(true)}

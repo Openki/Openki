@@ -22,9 +22,6 @@ import { LoginButton } from "./login-button";
 import "./styles.scss";
 
 // template.events({
-//   "click .js-nav-dropdown-close"() {
-//     Template.instance().$(".navbar-collapse").collapse("hide");
-//   },
 
 //   "show.bs.dropdown, hide.bs.dropdown .dropdown"(event, instance) {
 //     const { gridFloatBreakpoint } = ScssVars;
@@ -155,6 +152,9 @@ export function Navbar() {
           <a
             className="navbar-brand js-toggle-introduction me-4"
             href={PublicSettings.nav.brandLink}
+            onClick={() => {
+              close();
+            }}
           >
             {status === "connected" ? (
               <img src={headerLogo()} alt={headerAlt()} />
@@ -244,8 +244,18 @@ export function Navbar() {
               ))}
             </ul>
             <ul className="navbar-nav flex-row" data-bs-theme="light">
-              <RegionSelectionWrap inNavbar />
-              <LanguageSelection inNavbar />
+              <RegionSelectionWrap
+                inNavbar
+                onSelect={() => {
+                  close();
+                }}
+              />
+              <LanguageSelection
+                inNavbar
+                onSelect={() => {
+                  close();
+                }}
+              />
             </ul>
             <ul className="navbar-nav text-center" data-bs-theme="light">
               <li className="dropdown login-link">

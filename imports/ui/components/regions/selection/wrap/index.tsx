@@ -2,15 +2,17 @@ import React, { useState } from "react";
 
 import { useFindFilter } from "/imports/api/regions/publications";
 
-import { RegionSelection } from "..";
+import { RegionSelection, Props as RegionSelectionProps } from "..";
 import { Display } from "../Display";
 
 export function RegionSelectionWrap({
   inNavbar,
   isSplash,
+  onSelect,
 }: {
   inNavbar?: boolean | undefined;
   isSplash?: boolean | undefined;
+  onSelect?: (() => void) | undefined;
 }) {
   const [isLoading, regions] = useFindFilter({}, 2);
 
@@ -29,10 +31,11 @@ export function RegionSelectionWrap({
     };
   }
 
-  function regionSelectionAttr() {
+  function regionSelectionAttr(): RegionSelectionProps {
     return {
       inNavbar,
       isSplash,
+      onSelect,
       onClose: () => {
         if (searchingRegions) {
           setSearchingRegions(false);
