@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 import { useFindFilter } from "/imports/api/regions/publications";
 
-import { RegionSelection, Props as RegionSelectionProps } from "..";
-import { Display } from "../Display";
+import { RegionSelection, Props as RegionSelectionProps } from ".";
+import { Display } from "./Display";
 
 export function RegionSelectionWrap({
   inNavbar,
@@ -54,9 +54,3 @@ export function RegionSelectionWrap({
 
   return <Display {...regionSelectionDisplayAttr()} />;
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("RegionSelectionWrap", () => RegionSelectionWrap);
