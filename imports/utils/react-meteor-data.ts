@@ -19,3 +19,7 @@ export function useSession(key: string) {
 export function useSessionEquals(key: string, value: any) {
   return useTracker(() => Session.equals(key, value));
 }
+
+export function useMeteorStatus() {
+  return useTracker(() => Meteor.status().status);
+}
