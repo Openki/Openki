@@ -1,91 +1,81 @@
-import { Meteor } from "meteor/meteor";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import { Router } from "meteor/iron:router";
-import { ReactiveDict } from "meteor/reactive-dict";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import $ from "jquery";
+import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
-import { Regions } from "/imports/api/regions/regions";
-
+import { useEventListener } from "/imports/utils/useEventListener";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
-import * as Viewport from "/imports/ui/lib/viewport";
+import { useViewportSize } from "../../lib/useViewportSize";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { i18n } from "/imports/startup/both/i18next";
-import { getSiteName } from "/imports/utils/getSiteName";
+import { useTranslation } from "react-i18next";
+import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
+import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
+import { useMeteorStatus } from "/imports/utils/react-meteor-data";
+import { useSiteName } from "/imports/utils/getSiteName";
 
-import "/imports/ui/components/regions/selection/wrap";
-import "/imports/ui/components/language-selection";
-import "./test-warning-ticker";
-import "./user-frame";
-import "./login-button";
+import { Collapse } from "/imports/startup/client/bootstrap";
+import { RegionSelectionWrap } from "/imports/ui/components/regions/selection/wrap";
+import { LanguageSelection } from "/imports/ui/components/language-selection";
+import { TestWarningTicker } from "./test-warning-ticker";
+import { UserFrame } from "./user-frame";
+import { LoginButton } from "./login-button";
 
-import "./template.html";
 import "./styles.scss";
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "navbar",
-  unknown,
-  {
-    state: ReactiveDict<{
-      navbarIsCollapsed: boolean;
-    }>;
-  }
->;
+// template.events({
+//   "click .js-nav-dropdown-close"() {
+//     Template.instance().$(".navbar-collapse").collapse("hide");
+//   },
 
-const template = Template.navbar;
+//   "show.bs.dropdown, hide.bs.dropdown .dropdown"(event, instance) {
+//     const { gridFloatBreakpoint } = ScssVars;
 
-template.onCreated(function () {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const instance = this;
-  instance.state = new ReactiveDict();
-  instance.state.setDefault({
-    navbarIsCollapsed: true,
-  });
-});
+//     if (Viewport.get().width <= gridFloatBreakpoint) {
+//       const container = instance.$("#bs-navbar-collapse");
 
-template.onRendered(function () {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const instance = this;
-  const { gridFloatBreakpoint } = ScssVars;
+//       // make menu item scroll up when opening the dropdown menu
+//       if (event.type === "show") {
+//         const scrollTo = $(event.currentTarget);
+//         if (scrollTo && container) {
+//           const scrollToOffset = scrollTo.offset();
+//           const containerOffset = container.offset();
+//           const containerScrollTop = container.scrollTop();
 
-  // if not collapsed give the navbar and active menu item a
-  // class for when not at top
-  if (Viewport.get().width > gridFloatBreakpoint) {
-    const navbar = instance.$(".navbar");
-    const activeNavLink = instance.$(".navbar-link.active");
+//           if (
+//             scrollToOffset === undefined ||
+//             containerOffset === undefined ||
+//             containerScrollTop === undefined
+//           ) {
+//             throw new Error("Unexpected undefined");
+//           }
 
-    navbar.addClass("navbar-covering");
-    activeNavLink.addClass("navbar-link-covering");
-  } else {
-    $(document).on("click", (event) => {
-      if (instance.$(event.target as any).parents(".navbar-collapse").length === 0) {
-        instance.$(".navbar-collapse").collapse("hide");
-      }
-    });
-  }
+//           container.animate({
+//             scrollTop: scrollToOffset.top - containerOffset.top + containerScrollTop,
+//           });
+//         }
+//       } else {
+//         container.scrollTop(0);
+//       }
+//     }
+//   },
+// });
 
-  // closing the navbar when screen is made larger
-  $(window).on("resize", () => {
-    if (Viewport.get().width > ScssVars.gridFloatBreakpoint) {
-      // this closes the navbar via jquery, which triggers an event that will
-      // change the (blaze) state and close the modal as well
-      instance.$(".navbar-collapse").collapse("hide");
-    }
-  });
-});
+export function Navbar() {
+  const { t } = useTranslation();
+  const status = useMeteorStatus();
+  const currentRegion = useCurrentRegion();
+  const siteName = useSiteName();
+  const viewport = useViewportSize();
+  const currentRouteName = useCurrentRouteName();
+  const collapseRef = useRef<HTMLDivElement>(null);
+  const { getLocalizedValue } = useLocalizedSetting();
 
-template.helpers({
-  connected() {
-    return Meteor.status().status === "connected";
-  },
+  const isMobileScreen = viewport.width <= ScssVars.gridFloatBreakpoint;
 
-  connecting() {
-    return Meteor.status().status === "connecting";
-  },
+  const [navbarIsCollapsed, setNavbarIsCollapsed] = useState(true);
 
-  headerLogo() {
+  function headerLogo() {
     let headerLogo;
 
-    const currentRegion = Regions.currentRegion();
     if (currentRegion?.custom?.headerLogo?.src) {
       // the region has a custom logo
       headerLogo = currentRegion.custom.headerLogo.src;
@@ -106,193 +96,178 @@ template.helpers({
 
     // in the openki repository folder "public/logo/"
     return `/logo/${headerLogo}`;
-  },
-
-  headerAlt() {
-    const currentRegion = Regions.currentRegion();
+  }
+  function headerAlt() {
     if (currentRegion?.custom?.headerLogo?.alt) {
       return currentRegion.custom.headerLogo.alt;
     }
 
     return PublicSettings.headerLogo.alt;
-  },
-
-  notConnected() {
-    return Meteor.status().status !== "connecting" && Meteor.status().status !== "connected";
-  },
-
-  siteStage() {
-    const currentRegion = Regions.currentRegion();
+  }
+  function siteStage() {
     if (currentRegion?.custom?.siteStage) {
       return currentRegion.custom.siteStage;
     }
 
     return PublicSettings.siteStage;
-  },
-
-  links() {
-    const siteName = getSiteName(Regions.currentRegion());
-
+  }
+  function links() {
     return PublicSettings.nav.customEntries.map((entry) => ({
       link: entry.link,
       icon: entry.icon,
-      text: entry.key ? i18n(entry.key, { SITENAME: siteName }) : entry.text,
+      text: entry.key ? t(entry.key, { SITENAME: siteName }) : getLocalizedValue(entry.text),
     }));
-  },
+  }
+  function currentRouteIs(...routeNames: string[]) {
+    return routeNames.includes(currentRouteName);
+  }
 
-  activeClass(linkRoute: string, id: string) {
-    const router = Router.current();
-    if (router.route?.getName() === linkRoute) {
-      if (typeof id === "string" && router.params._id !== id) {
-        return "";
-      }
-      return "active";
+  function close() {
+    const collapseElement = collapseRef.current;
+    if (!collapseElement) {
+      throw new Error("Unexpected falsy: collapseElement");
     }
-    return "";
-  },
 
-  navbarIsCollapsed() {
-    return Template.instance().state.get("navbarIsCollapsed");
-  },
-});
+    Collapse.getInstance(collapseElement)?.hide();
+  }
 
-template.events({
-  "show.bs.collapse .navbar"() {
-    Template.instance().state.set("navbarIsCollapsed", false);
-  },
+  useEventListener(collapseRef, "show.bs.collapse", () => {
+    setNavbarIsCollapsed(false);
+  });
 
-  "hide.bs.collapse .navbar"() {
-    Template.instance().state.set("navbarIsCollapsed", true);
-  },
+  useEventListener(collapseRef, "hide.bs.collapse", () => {
+    setNavbarIsCollapsed(true);
+  });
 
-  "click .js-nav-dropdown-close"() {
-    Template.instance().$(".navbar-collapse").collapse("hide");
-  },
-
-  "show.bs.dropdown, hide.bs.dropdown .dropdown"(event, instance) {
-    const { gridFloatBreakpoint } = ScssVars;
-
-    if (Viewport.get().width <= gridFloatBreakpoint) {
-      const container = instance.$("#bs-navbar-collapse");
-
-      // make menu item scroll up when opening the dropdown menu
-      if (event.type === "show") {
-        const scrollTo = $(event.currentTarget);
-        if (scrollTo && container) {
-          const scrollToOffset = scrollTo.offset();
-          const containerOffset = container.offset();
-          const containerScrollTop = container.scrollTop();
-
-          if (
-            scrollToOffset === undefined ||
-            containerOffset === undefined ||
-            containerScrollTop === undefined
-          ) {
-            throw new Error("Unexpected undefined");
-          }
-
-          container.animate({
-            scrollTop: scrollToOffset.top - containerOffset.top + containerScrollTop,
-          });
-        }
-      } else {
-        container.scrollTop(0);
-      }
+  // closing the navbar when screen is made larger
+  useLayoutEffect(() => {
+    if (!isMobileScreen) {
+      close();
     }
-  },
-});
+  }, [isMobileScreen]);
 
+  return (
+    <>
+      <nav className={`navbar navbar-expand-lg fixed-top bg-brand`} data-bs-theme="dark">
+        {PublicSettings.testWarning && <TestWarningTicker />}
+        {/* Brand and toggle get grouped for better mobile display  */}
+        <div className="navbar-container container-fluid">
+          <a
+            className="navbar-brand js-toggle-introduction me-4"
+            href={PublicSettings.nav.brandLink}
+          >
+            {status === "connected" ? (
+              <img src={headerLogo()} alt={headerAlt()} />
+            ) : status === "connecting" ? (
+              <>
+                <span
+                  className="fa-solid fa-circle-notch fa-spin fa-fw connecting"
+                  title={t("status.connecting", "Connecting to server")}
+                ></span>
+                <span className="sr-only">{t("status.connecting")}</span>
+              </>
+            ) : (
+              <>
+                {/* not connected */}
+                <span
+                  className="fa-solid fa-circle-notch fa-fw no-connection"
+                  title={t("status.notConnected", "No connection to server")}
+                ></span>
+                <span className="sr-only">{t("status.notConnected")}</span>
+              </>
+            )}
 
-export function Navbar(){
-  return <nav class="navbar navbar-expand-lg fixed-top bg-brand" data-bs-theme="dark">
-    {{#if PublicSettings.testWarning}}
-      {{> testWarningTicker}}
-    {{/if}}
-    {{! Brand and toggle get grouped for better mobile display }}
-    <div class="navbar-container container-fluid">
-      <a class="navbar-brand js-toggle-introduction me-4" href="{{PublicSettings.nav.brandLink}}">
-        {{#if connecting}}
-          <span class="fa-solid fa-circle-notch fa-spin fa-fw connecting"
-                title="{{i18n 'status.connecting' 'Connecting to server' attr=true}}">
-          </span>
-          <span class="sr-only">{{i18n 'status.connecting'}}</span>
-        {{/if}}
-        {{#if notConnected}}
-          <span class="fa-solid fa-circle-notch fa-fw no-connection"
-                title="{{i18n 'status.notConnected' 'No connection to server' attr=true}}">
-          </span>
-          <span class="sr-only">{{i18n 'status.notConnected'}}</span>
-        {{/if}}
-        {{#if connected}}
-          <img src="{{headerLogo}}" alt="{{headerAlt}}">
-        {{/if}}
-        <span class="site-name">{{siteName}}</span>
-        <span class="site-stage">{{siteStage}}</span>
-      </a>
-      <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
-              data-bs-target="#bs-navbar-collapse" aria-controls="bs-navbar-collapse"
-              aria-expanded="false" aria-label="Toggle navigation">
-        <i class="fa-solid fa-bars text-white"></i>
-        <i class="fa-solid fa-x text-white"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="bs-navbar-collapse">
-        <ul class="navbar-nav flex-row me-auto mb-lg-0">
-          {{#if PublicSettings.nav.search}}
-            <li class="nav-item text-center col col-lg-auto">
-              <a href="{{pathFor 'search'}}"
-                 class="{{activeClass 'search'}} {{activeClass 'showCourse'}} nav-link js-nav-dropdown-close"
-                 id="nav_courses">
-                <span class="fa-regular fa-lightbulb fa-fw" aria-hidden="true"></span>
-                {{i18n 'menue.Courses' 'Find'}}
-                <div class="nav-marker-caret"></div>
-              </a>
-            </li>
-          {{/if}}
-          {{#if PublicSettings.nav.proposeCourse}}
-            <li class="nav-item text-center col col-lg-auto">
-              <a href="{{pathFor 'proposeCourse'}}"
-                 class="{{activeClass 'proposeCourse'}} {{activeClass 'showEvent' 'create'}} nav-link js-nav-dropdown-close">
-                <span class="fa-solid fa-pencil fa-fw" aria-hidden="true"></span>
-                {{i18n 'menue.Create' 'Create'}}
-                <div class="nav-marker-caret"></div>
-              </a>
-            </li>
-          {{/if}}
-          {{#if PublicSettings.nav.calendar}}
-            <li class="nav-item text-center col col-lg-auto">
-              <a href="{{pathFor 'calendar'}}"
-                 class="{{activeClass 'calendar'}} nav-link calendar-link js-nav-dropdown-close">
-                <span class="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
-                {{i18n 'menue.Calendar' 'Calendar'}}
-                <div class="nav-marker-caret"></div>
-                <div class="nav-marker-bar"></div>
-              </a>
-            </li>
-          {{/if}}
-          {{#each links}}
-            <li class="nav-item text-center col col-lg-auto">
-              <a href="{{link}}" class="nav-link js-nav-dropdown-close">
-                <span class="{{icon}} fa-fw" aria-hidden="true"></span>
-                {{text}}
-              </a>
-            </li>
-          {{/each}}
-        </ul>
-        <ul class="navbar-nav flex-row" data-bs-theme="light">
-          {{> regionSelectionWrap inNavbar=true}}
-          {{> languageSelectionWrap inNavbar=true}}
-        </ul>
-        <ul class="navbar-nav text-center" data-bs-theme="light">
-          <li class="dropdown login-link">
-            {{> loginButton}}
-            <div class="dropdown-menu dropdown-menu-end login-dropdown">
-              {{> userFrame}}
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <div class="navbar-custom-modal {{#if navbarIsCollapsed}}d-none{{/if}} js-nav-dropdown-close">
-  </div>
+            <span className="site-name">{siteName}</span>
+            <span className="site-stage">{siteStage()}</span>
+          </a>
+          <button
+            className="navbar-toggler collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#bs-navbar-collapse"
+            aria-controls="bs-navbar-collapse"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <i className="fa-solid fa-bars text-white"></i>
+            <i className="fa-solid fa-x text-white"></i>
+          </button>
+          <div ref={collapseRef} className="collapse navbar-collapse" id="bs-navbar-collapse">
+            <ul className="navbar-nav flex-row me-auto mb-lg-0">
+              {PublicSettings.nav.search && (
+                <li className="nav-item text-center col col-lg-auto">
+                  <a
+                    href={Router.path("search")}
+                    className={`${currentRouteIs("search", "showCourse") ? "active" : ""} nav-link`}
+                    onClick={() => close()}
+                  >
+                    <span className="fa-regular fa-lightbulb fa-fw" aria-hidden="true" />
+                    {t("menue.Courses", "Find")}
+                    <div className="nav-marker-caret"></div>
+                  </a>
+                </li>
+              )}
+              {PublicSettings.nav.proposeCourse && (
+                <li className="nav-item text-center col col-lg-auto">
+                  <a
+                    href={Router.path("proposeCourse")}
+                    className={`${currentRouteIs("proposeCourse", "createEvent") ? "active" : ""} nav-link `}
+                    onClick={() => close()}
+                  >
+                    <span className="fa-solid fa-pencil fa-fw" aria-hidden="true" />
+                    {t("menue.Create", "Create")}
+                    <div className="nav-marker-caret"></div>
+                  </a>
+                </li>
+              )}
+              {PublicSettings.nav.calendar && (
+                <li className="nav-item text-center col col-lg-auto">
+                  <a
+                    href={Router.path("calendar")}
+                    className={`${currentRouteIs("calendar") ? "active" : ""} nav-link calendar-link`}
+                    onClick={() => close()}
+                  >
+                    <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true" />
+                    {t("menue.Calendar", "Calendar")}
+                    <div className="nav-marker-caret"></div>
+                    <div className="nav-marker-bar"></div>
+                  </a>
+                </li>
+              )}
+              {links().map((link) => (
+                <li key={link.link} className="nav-item text-center col col-lg-auto">
+                  <a href={link.link} className="nav-link" onClick={() => close()}>
+                    <span className={`${link.icon} fa-fw`} aria-hidden="true"></span>
+                    {link.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <ul className="navbar-nav flex-row" data-bs-theme="light">
+              <RegionSelectionWrap inNavbar />
+              <LanguageSelection inNavbar />
+            </ul>
+            <ul className="navbar-nav text-center" data-bs-theme="light">
+              <li className="dropdown login-link">
+                <LoginButton />
+                <div className="dropdown-menu dropdown-menu-end login-dropdown">
+                  <UserFrame />
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div
+        className={`navbar-custom-modal ${navbarIsCollapsed ? "d-none" : ""}`}
+        onClick={() => close()}
+      ></div>
+    </>
+  );
 }
+
+// for Blaze
+
+import "./template.html";
+
+Template.registerHelper("Navbar", () => Navbar);
