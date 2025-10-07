@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import Modal from "bootstrap/js/dist/modal";
+import { Modal } from "/imports/startup/client/bootstrap";
 import { useUserId } from "/imports/utils/react-meteor-data";
 
 import * as emailMethods from "/imports/api/emails/methods";

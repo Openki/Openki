@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import Collapse from "bootstrap/js/dist/collapse";
+import { Collapse } from "/imports/startup/client/bootstrap";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 import { useSiteName } from "/imports/utils/getSiteName";

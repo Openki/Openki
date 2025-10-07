@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { RegionSelection } from "../selection";
 
-import Modal from "bootstrap/js/dist/modal";
+import { Modal } from "/imports/startup/client/bootstrap";
 
 import { useSiteName } from "/imports/utils/getSiteName";
 

@@ -1,4 +1,4 @@
-import Tooltip from "bootstrap/js/dist/tooltip";
+import { Tooltip } from "/imports/startup/client/bootstrap";
 
 export function create(target: ParentNode = document) {
   const tooltipTriggerList = target.querySelectorAll("[data-bs-title]");
