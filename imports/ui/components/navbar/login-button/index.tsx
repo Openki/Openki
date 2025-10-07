@@ -1,43 +1,48 @@
+import React from "react";
 import { Accounts } from "meteor/accounts-base";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import { useUser } from "/imports/utils/react-meteor-data";
+import { useTranslation } from "react-i18next";
 
-import "/imports/ui/components/regions/selection/wrap";
-import "/imports/ui/components/language-selection";
+export function LoginButton() {
+  const { t } = useTranslation();
+  const user = useUser();
 
+  if (!Accounts.loginServicesConfigured()) {
+    return null;
+  }
 
+  if (user) {
+    return (
+      <a
+        data-test="navbar-login-button"
+        className="nav-link text-white"
+        aria-expanded="false"
+        data-bs-toggle="dropdown"
+        role="button"
+      >
+        <span className="fa-solid fa-user fa-fw" aria-hidden="true" />
+        {user.getDisplayName()}
+      </a>
+    );
+  }
+
+  return (
+    <a
+      data-test="navbar-login-button"
+      className="nav-link text-white"
+      role="button"
+      onClick={() => {
+        Session.set("pleaseLogin", true);
+      }}
+    >
+      <span className="fa-solid fa-right-to-bracket fa-fw" aria-hidden="true" />
+      {t("login.navig.unlogged", "Log in/register")}
+    </a>
+  );
+}
+
+// for Blaze
 
 import "./template.html";
 
-const Template = TemplateAny as TemplateStaticTyped<"loginButton">;
-
-const template = Template.loginButton;
-
-template.helpers({
-  loginServicesConfigured() {
-    return Accounts.loginServicesConfigured();
-  },
-});
-
-template.events({
-  "click .js-loginButton"() {
-    Session.set("pleaseLogin", true);
-  },
-});
-
-export function LoginButton(){
-
-  return {{#if loginServicesConfigured}}
-    {{#if currentUser}}
-      <a className="loginButton nav-link text-white" aria-expanded="false" data-bs-toggle="dropdown"
-         role="button">
-        <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
-        {{currentUser.getDisplayName}}
-      </a>
-    {{else}}
-      <a className="loginButton nav-link text-white js-loginButton" role="button">
-        <span className="fa-solid fa-right-to-bracket fa-fw" aria-hidden="true"></span>
-        {{i18n 'login.navig.unlogged' 'Log in/register'}}
-      </a>
-    {{/if}}
-  {{/if}}
-}
+Template.registerHelper("LoginButton", () => LoginButton);
