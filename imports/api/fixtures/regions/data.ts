@@ -10,6 +10,7 @@ export const regions: {
   country?: string;
   region?: string;
   tenant?: string;
+  admin?: string;
   custom?: {
     siteName?: string;
     siteStage?: string;
@@ -113,6 +114,7 @@ export const regions: {
     defaultTeamGroups: ["Hx7iiRX5Fg3Pf2xne"],
     singleEvents: true,
     tenant: "Zuerich Lernt",
+    admin: "Support",
     custom: {
       siteName: "Zürich Lernt",
       siteStage: "Platform",
@@ -140,6 +142,7 @@ export const regions: {
     loc: [47.3784, 8.5257],
     tz: "Europe/Zurich",
     tenant: "CCC",
+    admin: "Hacker1",
     custom: {
       siteName: "CCC",
       siteStage: "Hack",

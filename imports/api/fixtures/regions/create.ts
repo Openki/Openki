@@ -6,17 +6,18 @@ import { Prng } from "../Prng";
 import { regions } from "./data";
 
 export async function create() {
-  const userKopf = (await ensure.user("Kopf"))._id;
-
   const prng = Prng("createRegions");
   for (const template of regions) {
     const region = {
       ...template,
       tenant: template.tenant
-        ? await ensure.tenant(template.tenant)
+        ? await ensure.tenant(
+            template.tenant,
+            template.admin ? (await ensure.user(template.admin))._id : undefined,
+          )
         : prng() > 0.3
           ? await ensure.tenant("Hmmm")
-          : await ensure.tenant("Kopf", userKopf),
+          : await ensure.tenant("Kopf", (await ensure.user("Kopf"))._id),
       defaultTeamGroups: template.defaultTeamGroups,
     } as unknown as RegionEntity;
     if (template.loc) {
