@@ -1,4 +1,4 @@
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
 
 import * as Alert from "/imports/api/alerts/alert";
@@ -7,54 +7,17 @@ import { RegionModel } from "/imports/api/regions/regions";
 import * as TenantsMethods from "/imports/api/tenants/methods";
 import * as RegionsMethods from "/imports/api/regions/methods";
 
-import { LocationTracker } from "/imports/ui/lib/location-tracker";
-import { PleaseLogin } from "/imports/ui/lib/please-login";
 import * as Analytics from "/imports/ui/lib/analytics";
-import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
+import { useTranslation } from "react-i18next";
 
-import "/imports/ui/components/buttons";
-import "/imports/ui/components/editable";
-import "/imports/ui/components/map";
-
-import "/imports/ui/components/regions/display";
-import "/imports/ui/components/regions/edit/fields";
-
-import "./template.html";
+import { Fields } from "../../components/regions/edit/fields";
+import { PleaseLogin } from "../../components/please-login";
 
 export interface Data {
   tenant: TenantModel;
-  retion: RegionModel;
+  region: RegionModel;
 }
-
-const Template = TemplateAny as TemplateStaticTyped<
-  "tenantCreatePage",
-  Data,
-  {
-    locationTracker: LocationTracker;
-  }
->;
-
-const template = Template.tenantCreatePage;
-
-template.onCreated(function () {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const instance = this;
-
-  instance.autorun(() => {
-    Metatags.setCommonTags(i18n("tenant.edit.siteTitle.create", "Create private region"));
-  });
-
-  instance.busy(false);
-
-  instance.locationTracker = new LocationTracker();
-});
-
-template.helpers({
-  locationTracker() {
-    return Template.instance().locationTracker;
-  },
-});
 
 template.events({
   submit(event, instance) {
@@ -121,24 +84,49 @@ template.events({
   },
 });
 
+export function TenantCreatePage(data: Data) {
+  const { t } = useTranslation();
 
-export function TenantCreatePage(){
-  return   <div class="container mw-md">
-    <div class="edit-page region-edit">
-      <h2>{{i18n 'tenant.create.title' 'Create your private region'}}</h2>
-      <form>
-        <div class="mb-3">
-          <label class="form-label">{{i18n 'tenant.edit.name' 'Name of your organization:'}}</label>
-          <input type="text" class="form-control js-tenant-name"
-                 placeholder="{{i18n 'tenant.edit.namePlaceholder' 'Full name of your organization' attr=true}}">
-        </div>
-        {{> regionEditFields region=region locationTracker=locationTracker}}
+  const [changes, setChanges] = useState({
+    tenantName: data.tenant.name,
+    name: data.region.name,
+    description: data.region.description,
+    tz: data.region.tz,
+    loc: data.region.loc,
+  });
 
-        <div class="form-actions">
-          {{> buttonSave saving=saving}}
-          {{> buttonCancel event="js-edit-cancel"}}
-        </div>
-      </form>
+  useEffect(() => {
+    Metatags.setCommonTags(t("tenant.edit.siteTitle.create", "Create private region"));
+  });
+
+  return (
+    <div className="container mw-md">
+      <div className="edit-page region-edit">
+        <h2>{t("tenant.create.title", "Create your private region")}</h2>
+
+        <PleaseLogin type="form" onSubmit={handleSave}>
+          <div className="mb-3">
+            <label className="form-label">
+              {t("tenant.edit.name", "Name of your organization:")}
+            </label>
+            <input
+              type="text"
+              className="form-control js-tenant-name"
+              placeholder={t("tenant.edit.namePlaceholder", "Full name of your organization")}
+            />
+          </div>
+          <Fields
+            region={changes}
+            onChange={(newChanges) => {
+              setChanges(newChanges);
+            }}
+          />
+          <div className="form-actions">
+            <ButtonSave onClick={handleSave} />
+            <ButtonCancel onClick={() => data.onCancel()} />
+          </div>
+        </PleaseLogin>
+      </div>
     </div>
-  </div>
+  );
 }
