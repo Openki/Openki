@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment-timezone";
 import { useTranslation } from "react-i18next";
 
@@ -28,11 +28,26 @@ export function Fields({ region, onChange }: Props) {
     return moment.tz.names();
   }
 
+  const [center, setCenter] = useState(region.loc?.coordinates);
+
+  useEffect(() => {
+    if (!center) {
+      (async () => {
+        try {
+          setCenter((await getLocation()).coordinates);
+        } catch {
+          setCenter([47.384881, 8.53341]);
+        }
+      })();
+    }
+  }, [center]);
+
   return (
     <>
       <div className="mb-3">
         <label className="form-label">{t("region.edit.name", "Name:")}</label>
         <input
+          data-test="region-edit-name"
           type="text"
           className="form-control form-control-lg"
           placeholder={t("region.edit.namePlaceholder", "Full name of region")}
@@ -54,21 +69,24 @@ export function Fields({ region, onChange }: Props) {
           )}
         </label>
 
-        <LocationEdit
-          maxZoom={16}
-          coordinates={region.loc?.coordinates}
-          onChange={(newValue) => {
-            onChange({
-              ...region,
-              loc: newValue?.coordinates
-                ? {
-                    coordinates: newValue.coordinates,
-                    type: "Point",
-                  }
-                : undefined,
-            });
-          }}
-        />
+        {(!!region.loc?.coordinates || !!center) && (
+          // We need a location or a cente point to render the map
+          <LocationEdit
+            coordinates={region.loc?.coordinates}
+            center={!region.loc?.coordinates ? center : (undefined as any)}
+            onChange={(newValue) => {
+              onChange({
+                ...region,
+                loc: newValue?.coordinates
+                  ? {
+                      coordinates: newValue.coordinates,
+                      type: "Point",
+                    }
+                  : undefined,
+              });
+            }}
+          />
+        )}
       </div>
 
       <div className="mb-3">
@@ -99,6 +117,7 @@ export function Fields({ region, onChange }: Props) {
           {t("region.edit.descriptionLabel", "Description:")}
         </label>
         <textarea
+          data-test="region-edit-description"
           id="region-description-id"
           className="form-control"
           placeholder={t("region.edit.descriptionPlaceholder", "An optional description")}
@@ -117,5 +136,6 @@ export function Fields({ region, onChange }: Props) {
 
 // for Blaze
 import "./template.html";
+import { getLocation } from "/imports/utils/user-location";
 
 Template.registerHelper("RegionEditFields", () => Fields);

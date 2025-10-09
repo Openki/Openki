@@ -19,11 +19,13 @@ const PositionClasses = {
 } as const;
 
 function IconControl({
+  "data-test": dataTest,
   position,
   icons,
   title,
   onClick,
 }: {
+  "data-test"?: string;
   position?: keyof typeof PositionClasses;
   icons: [op: string, ic: string];
   title: string;
@@ -31,7 +33,7 @@ function IconControl({
 }) {
   const positionClass = (position && PositionClasses[position]) || PositionClasses.bottomright;
   return (
-    <div className={positionClass}>
+    <div data-test={dataTest} className={positionClass}>
       <span className="fa comp-icon leaflet-control" onClick={onClick} title={title}>
         <i className={icons[0]}></i>
         <i
@@ -50,16 +52,24 @@ function IconControl({
 
 export type Coordinates = [long: number, lat: number];
 
-export function Edit(props: {
-  region?: string | undefined;
-  coordinates?: Coordinates | undefined;
-  level?: number | undefined;
-  center?: Coordinates | undefined;
-  maxZoom?: number;
-  onChange: (
-    newValue: { coordinates: Coordinates | undefined; level?: number | undefined } | undefined,
-  ) => void;
-}) {
+export function Edit(
+  props: {
+    region?: string | undefined;
+    level?: number | undefined;
+    onChange: (
+      newValue: { coordinates: Coordinates | undefined; level?: number | undefined } | undefined,
+    ) => void;
+  } & (
+    | {
+        coordinates?: Coordinates | undefined;
+        center: Coordinates;
+      }
+    | {
+        coordinates?: Coordinates | undefined;
+        center: Coordinates;
+      }
+  ),
+) {
   const { t } = useTranslation();
   const mapRef = useRef<any>(null);
   const markerRef = useRef<L.Marker<any>>(null);
@@ -97,6 +107,7 @@ export function Edit(props: {
             eventHandlers={{ dragend: handleDragend }}
           ></Marker>
           <IconControl
+            data-test="location-edit-remove-marker"
             icons={["fa-solid fa-minus", "fa-solid fa-location-dot"]}
             title={t("map.removeMarker", "Remove marker")}
             onClick={() => {
@@ -106,6 +117,7 @@ export function Edit(props: {
         </>
       ) : (
         <IconControl
+          data-test="location-edit-add-marker"
           icons={["fa-solid fa-plus", "fa-solid fa-location-dot"]}
           title={t("map.addMarker", "Set marker")}
           onClick={() => {
@@ -144,7 +156,7 @@ export function Edit(props: {
               level: newValue,
             });
           }}
-          zoom={props.maxZoom ? props.maxZoom : props.coordinates ? 19 : 13}
+          zoom={props.coordinates ? 19 : 13}
         >
           {children}
         </RegionMapContainer>
@@ -159,7 +171,7 @@ export function Edit(props: {
                   props.coordinates?.[0] || props.center?.[0],
                 ] as [number, number],
               })}
-          zoom={props.maxZoom ? props.maxZoom : props.coordinates ? 19 : 13}
+          zoom={props.coordinates ? 19 : 13}
         >
           {TileLayers[locale] || TileLayers.default}
           {children}

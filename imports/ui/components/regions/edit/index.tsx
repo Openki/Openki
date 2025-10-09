@@ -32,7 +32,7 @@ export function Edit(data: Data) {
     name: data.region.name,
     description: data.region.description,
     tz: data.region.tz,
-    loc: data.region.loc as Geodata | undefined,
+    loc: data.region.loc,
   });
 
   async function handleSave() {
