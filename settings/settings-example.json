@@ -1,7 +1,7 @@
 //This file descripts all configurations and customization options. Remove the comment at the end of the line to make it work or start from a copy of the file "dev.json in the same folder
 
 { "admins": ["greg"] // User administrator accounts that are created with the test data
-, "prng": "" // Pseudo-Random Number Generator, use the "static" value to define that a static seed should be used for test data
+, "prng": "" // Pseudo-Random Number Generator. Use "static" as value to use static seed for test data. Result: After test data generation, entity ids, amount of events, comment content, region assignment of courses, etc will stay identical. Except ids from users. Default: "" (random seed)
 , "testdata": true // Generates test data, is not needed for the productive system
 , "public":
 	{ "siteName": "Openki-clone"
