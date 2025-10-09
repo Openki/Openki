@@ -22,8 +22,6 @@ import { usersCreate as usersDataCreate } from "./usersCreate";
 import { serverError } from "../log/methods";
 import { Invitations } from "../invitations/invitations";
 import { JoinLinks } from "../joinLinks/joinLinks";
-import { Users } from "../users/users";
-import { updateDbCacheFieldsServerOnly } from "../db-utilities/updateDbCacheFieldsServerOnly";
 
 export const clean = ServerMethod(
   "fixtures.clean",
@@ -94,38 +92,6 @@ export const create = ServerMethod(
       serverError(e);
       throw e;
     }
-  },
-  { simulation: false },
-);
-
-export const reset = ServerMethod(
-  "fixtures.reset",
-  async () => {
-    if (!PrivateSettings.testdata) {
-      return;
-    }
-    await Promise.all([
-      CourseDiscussions.removeAsync({}),
-      Events.removeAsync({}),
-      Courses.removeAsync({}),
-      Venues.removeAsync({}),
-      Groups.removeAsync({}),
-      Regions.removeAsync({}),
-      Invitations.removeAsync({}),
-      JoinLinks.removeAsync({}),
-      Tenants.removeAsync({}),
-      Users.removeAsync({}),
-      InfoPages.removeAsync({}),
-    ]);
-
-    await Promise.all([infoPagesDataCreate(), usersDataCreate()]);
-    await regionsDataCreate();
-    await groupsDataCreate();
-    await venuesDataCreate();
-    await coursesDataCreate();
-    await Promise.all([eventsDataCreate(), eventsDataGenerate(), commentsDataGenerate]);
-
-    await updateDbCacheFieldsServerOnly();
   },
   { simulation: false },
 );
