@@ -52,6 +52,7 @@ export function UserFrame() {
         </div>
         <div className="mb-3">
           <button
+            data-test="navbar-user-frame-logout-button"
             type="button"
             className="btn btn-secondary form-control"
             onClick={(event) => {
