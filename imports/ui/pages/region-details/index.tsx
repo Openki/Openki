@@ -1,71 +1,29 @@
-import { check } from "meteor/check";
-import { ReactiveDict } from "meteor/reactive-dict";
+import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import { useTranslation } from "react-i18next";
 
 import { RegionModel } from "/imports/api/regions/regions";
 import * as RegionsMethods from "/imports/api/regions/methods";
 
 import * as Analytics from "/imports/ui/lib/analytics";
-import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
 
-import  { Props as DisplayData } from "/imports/ui/components/regions/display";
-import  { Data as EditData } from "/imports/ui/components/regions/edit";
+import { Display, Props as DisplayData } from "/imports/ui/components/regions/display";
+import { Edit, Data as EditData } from "/imports/ui/components/regions/edit";
 
-import "./template.html";
+export interface Props {
+  isNew: boolean;
+  region: RegionModel;
+}
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "regionDetailsPage",
-  {
-    isNew: boolean;
-    region: RegionModel;
-  },
-  { state: ReactiveDict<{ editing: boolean }> }
->;
+export function RegionDetailsPage({ isNew, region }: Props) {
+  const { t } = useTranslation();
+  const [editing, setEditing] = useState(false);
 
-const template = Template.regionDetailsPage;
-
-template.onCreated(function () {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const instance = this;
-
-  instance.autorun(() => {
-    const { isNew, region } = Template.currentData();
-    check(region.tenant, String);
-
-    if (!isNew) {
-      check(region._id, String);
-    }
-  });
-
-  instance.autorun(() => {
-    const { isNew, region } = Template.currentData();
-
-    let title;
-    if (isNew) {
-      title = i18n("region.edit.siteTitle.create", "Create region");
-    } else {
-      title = region.name;
-    }
-
-    Metatags.setCommonTags(title);
-  });
-
-  instance.state = new ReactiveDict(undefined, { editing: false });
-});
-
-template.helpers({
-  editing() {
-    return Template.instance().state.get("editing");
-  },
-
-  createArgs() {
-    const instance = Template.instance();
-    const { region } = instance.data;
+  function createArgs() {
     return {
       region,
-      title: i18n("region.edit.titleCreate", "Create new region"),
+      title: t("region.edit.titleCreate", "Create new region"),
       async onSave(changes) {
         const regionId = await RegionsMethods.create({ tenant: region.tenant, ...changes });
 
@@ -77,52 +35,63 @@ template.helpers({
         Router.go("tenantDetails", { _id: region.tenant });
       },
     } as EditData;
-  },
-
-  editArgs() {
-    const instance = Template.instance();
-    const { region } = instance.data;
+  }
+  function editArgs() {
     return {
       region,
-      title: i18n("region.edit.titleEdit", "Edit region"),
+      title: t("region.edit.titleEdit", "Edit region"),
       async onSave(changes) {
         await RegionsMethods.update(region._id, changes);
-        instance.state.set("editing", false);
+        setEditing(false);
       },
       onCancel() {
-        instance.state.set("editing", false);
+        setEditing(false);
       },
     } as EditData;
-  },
-
-  displayArgs() {
-    const instance = Template.instance();
-    const { region } = instance.data;
+  }
+  function displayArgs() {
     return {
       region,
       onEdit() {
-        instance.state.set("editing", true);
+        setEditing(true);
       },
       async onDelete() {
         await RegionsMethods.remove(region._id);
         Router.go("tenantDetails", { _id: region.tenant });
       },
     } as DisplayData;
-  },
-});
+  }
 
+  useEffect(() => {
+    let title;
+    if (isNew) {
+      title = t("region.edit.siteTitle.create", "Create region");
+    } else {
+      title = region.name;
+    }
 
-export function RegionDetails(){
-  return <div class="container mw-md">
-    <a href="{{pathFor 'tenantDetails' _id=region.tenant}}"><span
-            class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></span>
-      {{i18n 'regionDetails.goToOverview' 'Go to all regions'}}</a>
-    {{#if isNew}}
-      {{> regionEdit createArgs}}
-    {{else if editing}}
-      {{> regionEdit editArgs}}
-    {{else}}
-      {{> regionDisplay displayArgs}}
-    {{/if}}
-  </div>
+    Metatags.setCommonTags(title);
+  });
+
+  return (
+    <div className="container mw-md">
+      <a href={Router.path("tenantDetails", { _id: region.tenant })}>
+        <span className="fa-solid fa-angle-left fa-fw" aria-hidden="true" />
+        {t("regionDetails.goToOverview", "Go to all regions")}
+      </a>
+      {isNew ? (
+        <Edit {...createArgs()} />
+      ) : editing ? (
+        <Edit {...editArgs()} />
+      ) : (
+        <Display {...displayArgs()} />
+      )}
+    </div>
+  );
 }
+
+// for Blaze
+
+import "./template.html";
+
+Template.registerHelper("RegionDetailsPage", () => RegionDetailsPage);
