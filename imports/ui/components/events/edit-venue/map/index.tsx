@@ -52,7 +52,7 @@ export function Map({
       <RegionMapContainer
         region={region}
         ref={mapRef}
-        center={[value.location.coordinates[1], value.location.coordinates[0]]}
+        bounds={[[value.location.coordinates[1], value.location.coordinates[0]]]}
         level={value.level}
         onLevelChange={(newValue) => {
           setLevel(newValue);
@@ -62,7 +62,6 @@ export function Map({
             level: newValue,
           });
         }}
-        zoom={19}
       >
         <Marker
           ref={markerRef}
