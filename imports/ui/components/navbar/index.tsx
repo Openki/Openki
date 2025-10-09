@@ -146,6 +146,7 @@ export function Navbar() {
             <span className="site-stage">{siteStage()}</span>
           </a>
           <button
+            data-test="navbar-toggler"
             className="navbar-toggler collapsed"
             type="button"
             data-bs-toggle="collapse"
