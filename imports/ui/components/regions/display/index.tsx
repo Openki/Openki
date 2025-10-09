@@ -82,7 +82,7 @@ export function Display({ region, onEdit, onDelete }: Props) {
             {!!region.loc && (
               <div className="col-md-5">
                 <div className="details-map">
-                  <LocationDisplay coordinates={region.loc.coordinates} />
+                  <LocationDisplay coordinates={region.loc.coordinates} zoom={13} />
                   <div className="coordinates">
                     <a href={geoLocationLink(region.loc)}>
                       {t("regionDetails.coordinates", "Coordinates:")}{" "}

@@ -25,13 +25,21 @@ export function RegionMapContainer({
 }: {
   region: string;
   ref?: any | undefined;
-  bounds?: LatLngBoundsExpression | undefined;
-  center?: LatLngExpression | undefined;
-  zoom?: number | undefined;
   level?: number | undefined;
   onLevelChange?: (newValue: number) => void;
   children: any;
-}) {
+} & (
+  | {
+      center: LatLngExpression;
+      zoom: number;
+      bounds?: undefined;
+    }
+  | {
+      center?: undefined;
+      zoom?: undefined;
+      bounds: LatLngBoundsExpression;
+    }
+)) {
   const locale = useSession("locale");
   const [isLoading, region] = useDetails(regionId);
 
