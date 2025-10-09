@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 
 import { useSessionEquals, useUserId } from "/imports/utils/react-meteor-data";
 
@@ -31,7 +31,7 @@ export function PleaseLogin(props: Props & (AutoProps | FormProps | ButtonProps)
   const userId = useUserId();
   const notPleaseLogin = useSessionEquals("pleaseLogin", false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (actionActive) {
       if (userId) {
         setActionActive(false);

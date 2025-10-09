@@ -55,9 +55,17 @@ export function ProgramPage(data: Record<string, string>) {
   const start = filter.get("start") || moment(date).startOf("week");
   const end = filter.get("end") || moment(start).add(1, "week");
 
-  const [selectedDays, setSelectedDays] = useState(
-    getDays(start, end).filter((d) => !d.isBefore(date, "day")),
-  );
+  function calcSelectedDays() {
+    const days = getDays(start, end);
+    if (date.isSameOrBefore(end)) {
+      // auto hide days that are passed
+      return days.filter((d) => !d.isBefore(date, "day"));
+    }
+    // if all passed show all days as default
+    return days;
+  }
+
+  const [selectedDays, setSelectedDays] = useState(calcSelectedDays());
 
   function calendarNavAttr(): CalendarNavData {
     return {
