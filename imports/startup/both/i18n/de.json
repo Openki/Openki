@@ -354,7 +354,7 @@
   "email.base.spamPrevention": "Um sicher zu gehen, dass unsere E-Mails nicht in den SPAM Ordner gelangen, füge {MAIL} zu deinen Kontakten hinzu.",
   "email.base.unexpected": "Wenn du nicht weisst, warum du diese E-Mail erhältst, dann ignoriere sie oder sende uns eine Mitteilung an: {REPORTEMAIL}",
   "email.base.unsubscribeLink.automatedNotifications": "Von allen automatisierten Benachrichtigungen abmelden.",
-  "email.base.unsubscribeLink.privateMessage": "Direktnachrichten von allen Benutzern blockieren.",
+  "email.base.unsubscribeLink.privateMessage": "Direktnachrichten von allen Benutzer_innen blockieren.",
   "event.cancel.confirm.button": "{EVENT} absagen",
   "event.cancel.reason": "Grund",
   "event.cancel.reason.placeholder": "Bitte gib hier einen Grund ein. (Diese Nachricht wird an alle registrierten Benutzer_innen gesendet und ist anschließend hier nicht sichtbar)",
