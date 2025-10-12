@@ -1,16 +1,17 @@
+import React, { useEffect, useState } from "react";
 import { chain, Dictionary, fromPairs, sortBy } from "lodash";
-import { ReactiveVar } from "meteor/reactive-var";
 import { Router } from "meteor/iron:router";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import moment from "moment";
 import { Session } from "meteor/session";
+import { useSearchParams } from "/imports/utils/react-meteor-router";
+import { useReactiveNow } from "/imports/utils/reactive-now";
+import { LocalTime } from "/imports/utils/local-time";
+import { useTranslation } from "react-i18next";
+import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
+import {  useFindFilter } from "/imports/api/events/publications";
 import { EventEntity, Events } from "/imports/api/events/events";
 
-import { LocalTime } from "/imports/utils/local-time";
-import { reactiveNow } from "/imports/utils/reactive-now";
-
-import "./template.html";
 import "./styles.scss";
 
 type EventViewModel = EventEntity & {
@@ -19,95 +20,76 @@ type EventViewModel = EventEntity & {
   repCount: number;
 };
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "frameSchedulePage",
-  unknown,
-  {
-    interval: ReactiveVar<number>;
-    scheduleStart: ReactiveVar<moment.Moment>;
-    separators: ReactiveVar<number[]>;
-    repeatingOnly: ReactiveVar<boolean>;
-    days: ReactiveVar<number[]>;
-    intervals: ReactiveVar<number[]>;
-    slots: ReactiveVar<any>;
-    kindMap: (title: string) => number | false;
-  }
->;
+export function Schedule() {
+  const { t } = useTranslation();
+  const { dateFormat } = useDateTimeFormat();
 
-const template = Template.frameSchedulePage;
-
-template.onCreated(function () {
+  const reactiveNow = useReactiveNow();
+  const searchParams = useSearchParams();
   const filter = Events.Filtering();
 
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const instance = this;
-  instance.interval = new ReactiveVar(60);
-  instance.scheduleStart = new ReactiveVar(moment());
-  instance.separators = new ReactiveVar([]);
-  instance.repeatingOnly = new ReactiveVar(false);
+  const [interval, setInterval] = useState(60);
+  const [separators, setSeparators] = useState<number[]>([]);
+  const [repeatingOnly, setRepeatingOnly] = useState(false);
 
   // Read query params
-  instance.autorun(() => {
-    const query = Router.current().params.query as Record<string, string>;
 
-    instance.repeatingOnly.set(Object.prototype.hasOwnProperty.call(query, "repeating"));
+  const query = searchParams;
 
-    let scheduleStart;
-    if (query.start) {
-      scheduleStart = moment(query.start);
-    }
-    if (!scheduleStart || !scheduleStart.isValid()) {
-      scheduleStart = moment(reactiveNow.get()).startOf("week");
-    }
-    instance.scheduleStart.set(scheduleStart);
+  setRepeatingOnly(Object.prototype.hasOwnProperty.call(query, "repeating"));
 
-    const seps = chain(query.sep || "")
-      .split(",")
-      .filter((sep) => sep.length === 0) // get rid of 0-length
-      .map((sep) => {
-        if (sep.length < 3) {
-          return Number.parseInt(`${sep}00`, 10);
-        }
-        return Number.parseInt(sep, 10);
-      }) // standardize format
-      .filter((hm) => !Number.isNaN(hm)) // filter NaN's
-      .map((hm) => {
-        const h = Math.floor(hm / 100);
-        const m = hm % 100;
-        return h * 60 + m;
-      }) /* convert to minutes */
-      .uniq()
-      .value();
-    instance.separators.set(seps);
+  let scheduleStart = moment();
+  if (query.start) {
+    scheduleStart = moment(query.start);
+  }
+  if (!scheduleStart || !scheduleStart.isValid()) {
+    scheduleStart = moment(reactiveNow).startOf("week");
+  }
 
-    const readInterval = Number.parseInt(query.interval, 10);
-    if (!Number.isNaN(readInterval) && readInterval > 0) {
-      instance.interval.set(readInterval);
-    } else if (seps.length > 0) {
-      instance.interval.set(24 * 60);
-    } else {
-      instance.interval.set(60);
-    }
+  const seps = chain(query.sep || "")
+    .split(",")
+    .filter((sep) => sep.length === 0) // get rid of 0-length
+    .map((sep) => {
+      if (sep.length < 3) {
+        return Number.parseInt(`${sep}00`, 10);
+      }
+      return Number.parseInt(sep, 10);
+    }) // standardize format
+    .filter((hm) => !Number.isNaN(hm)) // filter NaN's
+    .map((hm) => {
+      const h = Math.floor(hm / 100);
+      const m = hm % 100;
+      return h * 60 + m;
+    }) /* convert to minutes */
+    .uniq()
+    .value();
+  setSeparators(seps);
 
-    filter.clear().read(query);
-    filter.add("after", scheduleStart.toISOString());
-    filter.add("end", moment(scheduleStart).add(4, "week").toISOString());
-  });
+  const readInterval = Number.parseInt(query.interval || "", 10);
+  if (!Number.isNaN(readInterval) && readInterval > 0) {
+    setInterval(readInterval);
+  } else if (seps.length > 0) {
+    setInterval(24 * 60);
+  } else {
+    setInterval(60);
+  }
 
-  instance.autorun(() => {
-    instance.subscribe("Events.findFilter", filter.toQuery(), 500);
-  });
+  filter.clear().read(query);
+  filter.add("after", scheduleStart.toISOString());
+  filter.add("end", moment(scheduleStart).add(4, "week").toISOString());
 
-  instance.days = new ReactiveVar([]);
-  instance.intervals = new ReactiveVar([]);
-  instance.slots = new ReactiveVar({});
-  instance.kindMap = function () {
+  const [isLoading, events] = useFindFilter(filter.toQuery(), 500);
+
+  const [days, setDays] = useState<number[]>([]);
+  const [intervals, setIntervals] = useState<number[]>([]);
+  const [slots, setSlots] = useState<Record<string, Record<string, EventViewModel[]>>>({});
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  let kindMap = function (_title: string): number | false {
     return 0;
   };
 
-  instance.autorun(() => {
+  useEffect(() => {
     const scheduleStart = moment(filter.get("after"));
-    const interval = instance.interval.get();
 
     // Track repeating events so we know how often they occur.
     // The key to this dict is a combination of courseId, weekday and start time.
@@ -117,7 +99,7 @@ template.onCreated(function () {
     // Load events but keep only the first when they repeat on the same
     // weekday at the same time.
     const dedupedEvents: EventViewModel[] = [];
-    Events.findFilter(filter.toQuery()).forEach((originalEvent) => {
+    events.forEach((originalEvent) => {
       const event = { ...originalEvent } as EventViewModel;
       const eventStart = LocalTime.fromString(event.startLocal);
 
@@ -154,7 +136,6 @@ template.onCreated(function () {
 
     // Because we need to find the closest separator later on we create a
     // reversed copy which is easier to search.
-    const separators = instance.separators.get().slice().reverse();
 
     // List of intervals where events or separators are placed
     const intervals = separators.reduce((rIntervals: Record<number, number>, separator) => {
@@ -178,7 +159,7 @@ template.onCreated(function () {
       const eventStart = LocalTime.fromString(event.startLocal);
 
       event.repCount = repetitionCountDay[event.repKeyDay as string];
-      if (event.repCount < 2 && instance.repeatingOnly.get()) {
+      if (event.repCount < 2 && repeatingOnly) {
         // Skip
         return;
       }
@@ -214,13 +195,13 @@ template.onCreated(function () {
     const numCmp = function (a: number, b: number) {
       return a - b;
     };
-    instance.days.set(Object.values(days).sort(numCmp));
-    instance.intervals.set(Object.values(intervals).sort(numCmp));
+    setDays(Object.values(days).sort(numCmp));
+    setIntervals(Object.values(intervals).sort(numCmp));
 
     // Build list of most used titles (first few chars)
     const mostUsedKinds = sortBy(Object.entries(kinds), (kv) => -kv[1]);
     const kindRank = fromPairs(mostUsedKinds.slice(0, 15).map((kv, rank) => [kv[0], rank + 1]));
-    instance.kindMap = function (title: string) {
+    kindMap = function (title: string) {
       const kindId = title.substring(0, 5);
       if (kindRank[kindId]) {
         return kindRank[kindId];
@@ -231,7 +212,7 @@ template.onCreated(function () {
     Object.entries(slots).forEach(([min, dayslots]) => {
       Object.entries(dayslots).forEach(([day, slot]) => {
         slots[min][day] = sortBy(slot, (event) => {
-          const dayslotKindRank = (instance.kindMap(event.title) || 100) + 100;
+          const dayslotKindRank = (kindMap(event.title) || 100) + 100;
           const countRank = 10000 - repetitionCount[event.repKey];
           // We add repetitionCount to the sort criteria so that the
           // output hopefully looks more stable through the weekdays
@@ -243,34 +224,24 @@ template.onCreated(function () {
         });
       });
     });
-    instance.slots.set(slots);
+    setSlots(slots);
   });
-});
 
-template.helpers({
-  month() {
-    const instance = Template.instance();
-    return moment(instance.scheduleStart.get())
+  function displayMonth() {
+    return moment(scheduleStart)
       .locale(Session.get("timeLocale") || "en")
       .format("MMMM");
-  },
-
-  days() {
-    const instance = Template.instance();
-    const scheduleStart = instance.scheduleStart.get();
-    return instance.days.get().map((day) =>
+  }
+  function displayDays() {
+    return days.map((day) =>
       moment(scheduleStart)
         .add(day, "days")
         .locale(Session.get("timeLocale") || "en")
         .format("dddd"),
     );
-  },
-
-  intervals() {
-    const instance = Template.instance();
-    const slots = instance.slots.get();
-
-    return instance.intervals.get().map((mins) => {
+  }
+  function displayIntervals() {
+    return intervals.map((mins) => {
       const intervalStart = moment()
         .locale(Session.get("timeLocale") || "en")
         .hour(0)
@@ -278,92 +249,91 @@ template.helpers({
       return {
         intervalStart,
         intervalLabel: intervalStart.format("LT"),
-        slots: instance.days.get().map((day) => (slots[mins] && slots[mins][day]) || []),
+        slots: days.map((day) => (slots[mins] && slots[mins][day]) || []),
       };
     });
-  },
-
-  type(this: EventViewModel) {
-    return Template.instance().kindMap(this.title) || "other";
-  },
-
-  customStartTime(this: EventViewModel, intervalStart: moment.Moment) {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const event = this;
+  }
+  function type(event: EventViewModel) {
+    return kindMap(event.title) || "other";
+  }
+  function customStartTime(event: EventViewModel, intervalStart: moment.Moment) {
     const startTime = moment(LocalTime.fromString(event.startLocal));
     startTime.locale(intervalStart.locale());
     const isSame =
       startTime.hours() === intervalStart.hours() &&
       startTime.minutes() === intervalStart.minutes();
     return isSame ? false : startTime.format("LT");
-  },
-
-  single(this: EventViewModel) {
-    return this.repCount < 2;
-  },
-
-  showDate(this: EventViewModel) {
+  }
+  function single(event: EventViewModel) {
+    return event.repCount < 2;
+  }
+  function showDate(event: EventViewModel) {
     // The date is shown if an event has no repetitions...
-    if (this.repCount < 2) {
+    if (event.repCount < 2) {
       return true;
     }
 
     // ... or if it doesn't occur this week.
-    const instance = Template.instance();
-    const oneWeekAfterScheduleStart = moment(instance.scheduleStart.get()).add(1, "week");
-    return moment.utc(this.start).isAfter(oneWeekAfterScheduleStart);
-  },
-});
+    const oneWeekAfterScheduleStart = moment(scheduleStart).add(1, "week");
+    return moment.utc(event.start).isAfter(oneWeekAfterScheduleStart);
+  }
 
-
-export function Schedule(){
-  return <table class="schedule">
-    <thead>
-      <tr>
-        <th class="schedule-header-time" scope="col">
-          {{month}}
-        </th>
-        {{#each days}}
-          <th class="schedule-header-day" scope="col">
-            {{this}}
-          </th>
-        {{/each}}
-      </tr>
-    </thead>
-    <tbody>
-      {{#each intervals}}
+  return (
+    <table className="schedule">
+      <thead>
         <tr>
-          <td class="schedule-time" scope="row">
-            <div class="schedule-time-interval">
-              {{intervalLabel}}
-            </div>
-          </td>
-          {{#each slots}}
-            <td class="schedule-slot">
-              {{#each this}}
-                <a href="{{pathFor  'showEvent'}}" target="_blank">
-                  <div class="schedule-event schedule-event-type-{{type}}">
-                    {{title}}
-                    {{#if showDate}}
-                      <br>
-                      <span class="schedule-event-time">
-                        {{#unless single}}{{i18n 'schedule.startDateLabel' "start:"}}{{/unless}}
-                        {{dateFormat start}}
-                      </span>
-                    {{/if}}
-                    {{#if customStartTime ../../intervalStart}}
-                      <br>
-                      <span class="schedule-event-time">
-                        {{customStartTime ../../intervalStart}}
-                      </span>
-                    {{/if}}
-                  </div>
-                </a>
-              {{/each}}
-            </td>
-          {{/each}}
+          <th className="schedule-header-time" scope="col">
+            {displayMonth()}
+          </th>
+          {displayDays().map((day) => (
+            <th key={day} className="schedule-header-day" scope="col">
+              {day}
+            </th>
+          ))}
         </tr>
-      {{/each}}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {displayIntervals().map((inverval) => (
+          <tr key={inverval.intervalStart.valueOf()}>
+            <td className="schedule-time" scope="row">
+              <div className="schedule-time-interval">{inverval.intervalLabel}</div>
+            </td>
+            {inverval.slots.map((slot, index) => (
+              <td key={index} className="schedule-slot">
+                {slot.map((event) => (
+                  <a
+                    key={event._id}
+                    href={Router.path("showEvent", event)}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <div className={`schedule-event schedule-event-type-${type(event)}`}>
+                      {event.title}
+                      {showDate(event) && (
+                        <>
+                          <br />
+                          <span className="schedule-event-time">
+                            {!single(event) && <>{t("schedule.startDateLabel", "start:")}</>}
+                            {dateFormat(event.start)}
+                          </span>
+                        </>
+                      )}
+                      {!!customStartTime(event, inverval.intervalStart) && (
+                        <>
+                          <br />
+                          <span className="schedule-event-time">
+                            {customStartTime(event, inverval.intervalStart)}
+                          </span>
+                        </>
+                      )}
+                    </div>
+                  </a>
+                ))}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
 }
