@@ -1,167 +1,20 @@
 import React, { useState } from "react";
-import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { useParams } from "/imports/utils/react-meteor-router";
 
-import * as Alert from "/imports/api/alerts/alert";
-import { TenantModel, Tenants } from "/imports/api/tenants/tenants";
-import { UserModel, Users } from "/imports/api/users/users";
-import * as TenantsMethods from "/imports/api/tenants/methods";
 import * as TenantsPublications from "/imports/api/tenants/publications";
-import * as UsersPublications from "/imports/api/users/publications";
 
-import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import { useSiteName } from "/imports/utils/getSiteName";
 
 import { JoinLink } from "../../joinLink";
 import { Invitations } from "../../invitations";
 import { NotFound } from "/imports/ui/pages/not-found";
-import { UserName } from "/imports/ui/components/UserName";
+import { Members } from "./Members";
+import { FoundAdmins } from "./FoundAdmins";
+import { FoundMembers } from "./FoundMembers";
 
 import "./styles.scss";
-import { Members } from "./Members";
-
-template.events({
-  async "click .js-admin-remove-btn"(this: UserModel) {
-    routerAutoscroll.cancelNext();
-
-    const adminId = `${this}`;
-    const tenantId = Router.current().params._id as string;
-    try {
-      await TenantsMethods.removeAdmin(adminId, tenantId);
-
-      const adminName = Users.findOne(adminId)?.getDisplayName();
-      const tenantName = Tenants.findOne(tenantId)?.name;
-      Alert.success(
-        i18n(
-          "tenantSettings.adminRemoved",
-          '"{ADMIN}" has been removed as admin of the "{TENANT}" organization',
-          { ADMIN: adminName, TENANT: tenantName },
-        ),
-      );
-    } catch (err) {
-      Alert.serverError(err, i18n("tenantSettings.adminRemoved.error", "Could not remove admin"));
-    }
-  },
-});
-
-function FoundMembers({ tenant, userSearch }: { tenant: TenantModel; userSearch: string }) {
-  const { t } = useTranslation();
-
-  const [isLoading, foundMembers] = UsersPublications.useFindFilter(userSearch, {
-    exclude: tenant?.members,
-  });
-
-  async function handleOnClick(user: UserModel) {
-    routerAutoscroll.cancelNext();
-
-    const memberId = user._id;
-    try {
-      await TenantsMethods.addMember(memberId, tenant._id);
-      const memberName = user.getDisplayName();
-      const tenantName = tenant.name;
-      Alert.success(
-        t(
-          "tenantSettings.memberAdded",
-          '"{MEMBER}" has been added to the "{TENANT}" organization',
-          { MEMBER: memberName, TENANT: tenantName },
-        ),
-      );
-    } catch (err) {
-      Alert.serverError(err, t("tenantSettings.memberAdded.error", "Could not add member"));
-    }
-  }
-
-  if (isLoading() || !foundMembers) {
-    return null;
-  }
-
-  return (
-    <div className="tag-group multiline">
-      {foundMembers.map((member) => (
-        <>
-          <div className="tag tag-btn tenant-member-tag-btn-add">
-            <button
-              title={t("tenant.settings.addMember", "add as member")}
-              type="button"
-              onClick={() => {
-                handleOnClick(member);
-              }}
-            >
-              <i className="fa-solid fa-plus fa-fw" aria-hidden="true" /> {member.getDisplayName()}
-            </button>
-          </div>
-          <div className="tag tag-link tenant-member-tag-profile addon">
-            <a
-              href={Router.path("userprofile", member)}
-              title={t("tenant.settings.member.profile")}
-            >
-              <i className="fa-solid fa-user fa-fw" aria-hidden="true" />
-            </a>
-          </div>
-        </>
-      ))}
-    </div>
-  );
-}
-
-function FoundAdmins({ tenant, userSearch }: { tenant: TenantModel; userSearch: string }) {
-  const { t } = useTranslation();
-
-  const [isLoading, foundAdmins] = UsersPublications.useFindFilter(userSearch, {
-    exclude: tenant?.members,
-  });
-
-  async function handleOnClick(user: UserModel) {
-    routerAutoscroll.cancelNext();
-
-    const adminId = user._id;
-    try {
-      await TenantsMethods.addAdmin(adminId, tenant._id);
-      const adminName = user.getDisplayName();
-      const tenantName = tenant.name;
-      Alert.success(
-        t(
-          "tenantSettings.adminAdded",
-          '"{ADMIN}" has been added as admin of the "{TENANT}" organization',
-          { ADMIN: adminName, TENANT: tenantName },
-        ),
-      );
-    } catch (err) {
-      Alert.serverError(err, t("tenantSettings.adminAdded.error", "Could not add admin"));
-    }
-  }
-
-  if (isLoading() || !foundAdmins) {
-    return null;
-  }
-
-  return (
-    <div className="tag-group multiline">
-      {foundAdmins.map((admin) => (
-        <>
-          <div className="tag tag-btn tenant-admin-tag-btn-add">
-            <button
-              className="js-admin-add-btn"
-              title={t("tenant.settings.addMember", "add as member")}
-              type="button"
-              onClick={() => {
-                handleOnClick(admin);
-              }}
-            >
-              <i className="fa-solid fa-plus fa-fw" aria-hidden="true" /> {admin.getDisplayName()}
-            </button>
-          </div>
-          <div className="tag tag-link tenant-admin-tag-profile addon">
-            <a href={Router.path("userprofile", admin)} title={t("tenant.settings.admin.profile")}>
-              <i className="fa-solid fa-user fa-fw" aria-hidden="true" />
-            </a>
-          </div>
-        </>
-      ))}
-    </div>
-  );
-}
+import { Admins } from "./Admins";
 
 export function Settings() {
   const { t } = useTranslation();
@@ -175,9 +28,8 @@ export function Settings() {
 
   const [isLoading, tenant] = TenantsPublications.useDetails(tenantId);
 
-  function tenantName() {
-    const tenant = Tenants.findOne(Router.current().params._id);
-    return tenant?.name;
+  function members() {
+    return tenant?.members.filter((m) => !tenant.admins.includes(m)) || [];
   }
 
   if (isLoading()) {
@@ -193,14 +45,14 @@ export function Settings() {
       <div className="col-md">
         <h3>
           <span className="fa-solid fa-users fa-fw" aria-hidden="true" />{" "}
-          {t("tenant.settings.title.Members", "Members")} ({members.length})
+          {t("tenant.settings.title.Members", "Members")} ({members().length})
         </h3>
         <div className="icon-text-icon">
           <div className="icon-text-text">
             {t(
               "tenant.settings.members.description",
               "Members can see and use the above regions in the organisation {TENANT}.",
-              { TENANT: tenantName },
+              { TENANT: tenant.name },
             )}
           </div>
         </div>
@@ -211,7 +63,7 @@ export function Settings() {
             {t(
               "tenant.settings.field.addMembers",
               'Add existing {SITENAME} members to your "{TENANTNAME}" organization.',
-              { SITENAME: siteName, TENANTNAME: tenantName },
+              { SITENAME: siteName, TENANTNAME: tenant.name },
             )}
           </label>
           <div className="input-group">
@@ -248,37 +100,13 @@ export function Settings() {
           )}
         </div>
         <br />
-        <div className="tag-group multiline">
-          {tenant.admins.map((admin) => (
-            <>
-              <div className="tag tag-btn tenant-admin-tag-btn-remove">
-                <button
-                  className="js-admin-remove-btn"
-                  title={t("tenant.settings.removeAdminFromTenant", "remove admin")}
-                  type="button"
-                >
-                  <i className="fa-solid fa-xmark fa-fw" aria-hidden="true" />
-                  <UserName userId={admin} />
-                </button>
-              </div>
-              <div className="tag tag-link tenant-admin-tag-profile addon">
-                <a
-                  href={Router.path("userprofile", { _id: admin })}
-                  title={t("tenant.settings.admin.profile", "Visit profile")}
-                >
-                  <i className="fa-solid fa-user fa-fw" aria-hidden="true" />
-                </a>
-              </div>
-            </>
-          ))}
-        </div>
-
+        <Admins tenant={tenant} />
         <div className="mb-3">
           <label className="form-label">
             {t(
               "tenant.settings.field.addAdmins",
               'Add an existing {SITENAME} user as a new admin to your "{TENANTNAME}" organization.',
-              { SITENAME: siteName, TENANTNAME: tenantName },
+              { SITENAME: siteName, TENANTNAME: tenant.name },
             )}
           </label>
           <div className="input-group">
