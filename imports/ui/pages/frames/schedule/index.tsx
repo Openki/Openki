@@ -139,12 +139,14 @@ export function Schedule() {
 
   // Because we need to find the closest separator later on we create a
   // reversed copy which is easier to search.
-
   // List of intervals where events or separators are placed
-  const intervalsDic = separators.reduce((rIntervals: Record<number, number>, separator) => {
-    rIntervals[separator] = separator;
-    return rIntervals;
-  }, {});
+  const intervalsDic = separators
+    .slice()
+    .reverse()
+    .reduce((rIntervals: Record<number, number>, separator) => {
+      rIntervals[separator] = separator;
+      return rIntervals;
+    }, {});
 
   // List of days where events where found
   const daysDic: Dictionary<number> = {};
