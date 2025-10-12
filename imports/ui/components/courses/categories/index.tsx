@@ -81,10 +81,3 @@ export function CourseCategories({
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("CategoryLabel", () => CategoryLabel);
-Template.registerHelper("CourseCategories", () => CourseCategories);

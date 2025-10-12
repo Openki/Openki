@@ -27,7 +27,7 @@ import { RegionTag } from "../../regions/tag";
 import { Richtext } from "../../richtext";
 import { PricePolicy } from "../../price-policy";
 import { EditVenue } from "../edit-venue";
-import { EditCustomFields } from "../../edit-custom-fields";
+import { EditCustomFields } from "../../EditCustomFields";
 import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
 import { ButtonCancel, ButtonSave } from "/imports/ui/components/buttons";
 import { Notify } from "../Notify";
@@ -689,9 +689,3 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     </form>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("EventEdit", () => Edit);

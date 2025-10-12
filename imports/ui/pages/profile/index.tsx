@@ -23,7 +23,7 @@ import { TenantSection } from "./TenantSection";
 import { AdminSection } from "./AdminSection";
 import { CalendarSection } from "./CalendarSection";
 import { Report } from "/imports/ui/components/report";
-import { ActionResult } from "../../components/action-result";
+import { ActionResult } from "../../components/ActionResult";
 
 import "./styles.scss";
 

@@ -6,7 +6,7 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { TenantModel } from "/imports/api/tenants/tenants";
 
 import { Settings } from "../../components/tenants/settings";
-import { Regions } from "../../components/tenants/regions";
+import { Regions } from "../../components/tenants/Regions";
 
 import "./styles.scss";
 

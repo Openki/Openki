@@ -383,9 +383,3 @@ export function Find({ query }: Props) {
     </>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("Find", () => Find);

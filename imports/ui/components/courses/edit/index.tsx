@@ -34,7 +34,7 @@ import { useSiteName } from "/imports/utils/getSiteName";
 import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 import { SelectCategories } from "../select-categories";
 import { CourseCategories } from "../categories";
-import { EditCustomFields } from "../../edit-custom-fields";
+import { EditCustomFields } from "../../EditCustomFields";
 import { mayShare } from "./mayShare";
 import { PleaseLogin } from "../../please-login";
 import "./styles.scss";

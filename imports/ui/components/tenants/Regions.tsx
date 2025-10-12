@@ -66,9 +66,3 @@ export function Regions({ tenant }: Props) {
     </>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("TenantRegions", () => Regions);
