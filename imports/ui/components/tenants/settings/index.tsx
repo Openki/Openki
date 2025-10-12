@@ -19,30 +19,9 @@ import { NotFound } from "/imports/ui/pages/not-found";
 import { UserName } from "/imports/ui/components/UserName";
 
 import "./styles.scss";
+import { Members } from "./Members";
 
 template.events({
-  async "click .js-member-remove-btn"(this: UserModel) {
-    routerAutoscroll.cancelNext();
-
-    const memberId = `${this}`;
-    const tenantId = Router.current().params._id as string;
-    try {
-      await TenantsMethods.removeMember(memberId, tenantId);
-
-      const memberName = Users.findOne(memberId)?.getDisplayName();
-      const tenantName = Tenants.findOne(tenantId)?.name;
-      Alert.success(
-        i18n(
-          "tenantSettings.memberRemoved",
-          '"{MEMBER}" has been removed from the "{TENANT}" organization',
-          { MEMBER: memberName, TENANT: tenantName },
-        ),
-      );
-    } catch (err) {
-      Alert.serverError(err, i18n("tenantSettings.memberRemoved.error", "Could not remove member"));
-    }
-  },
-
   async "click .js-admin-remove-btn"(this: UserModel) {
     routerAutoscroll.cancelNext();
 
@@ -200,9 +179,6 @@ export function Settings() {
     const tenant = Tenants.findOne(Router.current().params._id);
     return tenant?.name;
   }
-  function members() {
-    return tenant?.members.filter((m) => !tenant?.admins?.includes(m)) || [];
-  }
 
   if (isLoading()) {
     return null;
@@ -229,30 +205,7 @@ export function Settings() {
           </div>
         </div>
         <br />
-        <div className="tag-group multiline">
-          {members().map((member) => (
-            <>
-              <div className="tag tag-btn tenant-member-tag-btn-remove">
-                <button
-                  className="js-member-remove-btn"
-                  title={t("tenant.settings.removeFromTenant", "remove member")}
-                  type="button"
-                >
-                  <i className="fa-solid fa-xmark fa-fw" aria-hidden="true" />{" "}
-                  <UserName userId={member} />
-                </button>
-              </div>
-              <div className="tag tag-link tenant-member-tag-profile addon">
-                <a
-                  href={Router.path("userprofile", { _id: member })}
-                  title={t("tenant.settings.member.profile", "Visit profile")}
-                >
-                  <i className="fa-solid fa-user fa-fw" aria-hidden="true" />
-                </a>
-              </div>
-            </>
-          ))}
-        </div>
+        <Members tenant={tenant} />
         <div className="mb-3">
           <label className="form-label">
             {t(
