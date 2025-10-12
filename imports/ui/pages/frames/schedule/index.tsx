@@ -1,4 +1,5 @@
 import React from "react";
+import { useSession } from "/imports/utils/react-meteor-data";
 import { chain, Dictionary, fromPairs, sortBy } from "lodash";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
@@ -19,12 +20,8 @@ type EventViewModel = EventEntity & {
   repCount: number;
 };
 
-export function Schedule() {
-  const { t } = useTranslation();
-  const { dateFormat } = useDateTimeFormat();
-
+function useOptions() {
   const now = useReactiveNow();
-  const timeLocale = useSession("timeLocale") || "en";
   const searchParams = useSearchParams();
   const filter = Events.Filtering();
 
@@ -35,7 +32,7 @@ export function Schedule() {
 
   const repeatingOnly = Object.prototype.hasOwnProperty.call(query, "repeating");
 
-  let scheduleStart = moment(now);
+  let scheduleStart: moment.Moment | undefined = undefined;
   if (query.start) {
     scheduleStart = moment(query.start);
   }
@@ -72,10 +69,26 @@ export function Schedule() {
   }
 
   filter.read(query);
-  filter.add("after", scheduleStart.toISOString());
-  filter.add("end", moment(scheduleStart).add(4, "week").toISOString());
+  filter.add("after", scheduleStart);
+  filter.add("end", moment(scheduleStart).add(4, "week"));
 
-  const [isLoading, events] = useFindFilter(filter.toQuery(), 500);
+  return {
+    scheduleStart,
+    separators,
+    interval,
+    repeatingOnly,
+    filter: filter.toQuery(),
+  };
+}
+
+export function Schedule() {
+  const { t } = useTranslation();
+  const { dateFormat } = useDateTimeFormat();
+  const timeLocale = useSession("timeLocale") || "en";
+
+  const { scheduleStart, separators, interval, repeatingOnly, filter } = useOptions();
+
+  const [isLoading, events] = useFindFilter(filter, 500);
 
   // Track repeating events so we know how often they occur.
   // The key to this dict is a combination of courseId, weekday and start time.
@@ -208,8 +221,8 @@ export function Schedule() {
         // output hopefully looks more stable through the weekdays
         // with events occurring every weekday listed first in
         // each slot
-        return `${100 + event.start.getHours()}-${
-          100 + event.start.getMinutes()
+        return `${100 + LocalTime.fromString(event.startLocal).toDate().getHours()}-${
+          100 + LocalTime.fromString(event.startLocal).toDate().getMinutes()
         }-${dayslotKindRank}-${countRank}-${event.title}`;
       });
     });
@@ -237,7 +250,7 @@ export function Schedule() {
     return kindMap(event.title) || "other";
   }
   function customStartTime(event: EventViewModel, intervalStart: moment.Moment) {
-    const startTime = moment(LocalTime.fromString(event.startLocal));
+    const startTime = LocalTime.fromString(event.startLocal);
     startTime.locale(intervalStart.locale());
     const isSame =
       startTime.hours() === intervalStart.hours() &&
@@ -255,7 +268,7 @@ export function Schedule() {
 
     // ... or if it doesn't occur this week.
     const oneWeekAfterScheduleStart = moment(scheduleStart).add(1, "week");
-    return moment.utc(event.start).isAfter(oneWeekAfterScheduleStart);
+    return moment(event.startLocal).isAfter(oneWeekAfterScheduleStart);
   }
 
   return (
@@ -293,8 +306,8 @@ export function Schedule() {
                         <>
                           <br />
                           <span className="schedule-event-time">
-                            {!single(event) && <>{t("schedule.startDateLabel", "start:")}</>}
-                            {dateFormat(event.start)}
+                            {!single(event) && <>{t("schedule.startDateLabel", "start:")} </>}
+                            {dateFormat(event.startLocal)}
                           </span>
                         </>
                       )}
@@ -321,6 +334,5 @@ export function Schedule() {
 // for Blaze
 
 import "./template.html";
-import { useSession } from "/imports/utils/react-meteor-data";
 
 Template.registerHelper("FrameSchedulePage", () => Schedule);
