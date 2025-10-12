@@ -306,6 +306,7 @@ export function Role(data: Data) {
           ) : (
             maySubscribe() && (
               <button
+                data-test={`course-role-enroll-${data.role.type}`}
                 type="button"
                 className="btn btn-add text-start page-component-btn"
                 name={data.role.type}
