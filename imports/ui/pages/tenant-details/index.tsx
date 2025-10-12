@@ -1,65 +1,49 @@
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import { Meteor } from "meteor/meteor";
+import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import * as Metatags from "/imports/utils/metatags";
+import { useUser } from "/imports/utils/react-meteor-data";
 
 import { TenantModel } from "/imports/api/tenants/tenants";
 
-import * as Metatags from "/imports/utils/metatags";
+import { Settings } from "../../components/tenants/settings";
+import { Regions } from "../../components/tenants/regions";
 
-import "/imports/ui/components/buttons";
-import "/imports/ui/components/editable";
-import "/imports/ui/components/tenants/settings";
-import "/imports/ui/components/tenants/regions";
-
-import "./template.html";
 import "./styles.scss";
 
 export interface Data {
   tenant: TenantModel;
 }
 
-const Template = TemplateAny as TemplateStaticTyped<"tenantDetailsPage", Data>;
+export function TenantDetailsPage({ tenant }: Data) {
+  const { t } = useTranslation();
+  const user = useUser();
 
-const template = Template.tenantDetailsPage;
-
-template.onCreated(function () {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const instance = this;
-
-  instance.autorun(() => {
-    const { tenant } = Template.currentData();
+  useEffect(() => {
     Metatags.setCommonTags(tenant.name);
   });
-});
 
-template.helpers({
-  editingSettings() {
-    const { tenant } = Template.instance().data;
-    return tenant.editableBy(Meteor.user());
-  },
-});
-
-
-export function TenantDetailsPage(){
-  return   <div class="container">
-    <div class="page-component tenant-details">
-      <div class="tenant-details-titlebar">
-        {{i18n 'tenant.details.tenant' 'Organization'}}
-      </div>
-      <div class="details-header tenant-details-header clearfix">
-        <div class="tenant-details-name">
-          {{tenant.name}}
+  return (
+    <div className="container">
+      <div className="page-component tenant-details">
+        <div className="tenant-details-titlebar">{t("tenant.details.tenant", "Organization")}</div>
+        <div className="details-header tenant-details-header clearfix">
+          <div className="tenant-details-name">{tenant.name}</div>
         </div>
-      </div>
-      <div class="details-form tenant-settings">
-        {{> tenantRegions tenant=tenant}}
-      </div>
-
-      {{#if editingSettings}}
-        <div class="details-addition clearfix">
-          {{> tenantSettings tenant=tenant}}
+        <div className="details-form tenant-settings">
+          <Regions tenant={tenant} />
         </div>
-      {{/if}}
 
+        {tenant.editableBy(user) && (
+          <div className="details-addition clearfix">
+            <Settings tenant={tenant} />
+          </div>
+        )}
+      </div>
     </div>
-  </div>
+  );
 }
+
+// for Blaze
+import "./template.html";
+
+Template.registerHelper("TenantDetailsPage", () => TenantDetailsPage);
