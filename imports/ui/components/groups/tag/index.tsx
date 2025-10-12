@@ -1,6 +1,5 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Template } from "meteor/templating";
 import { Router } from "meteor/iron:router";
 
 import { GroupModel } from "/imports/api/groups/groups";

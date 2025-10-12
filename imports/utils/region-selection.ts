@@ -8,7 +8,6 @@ import { RegionModel } from "/imports/api/regions/regions";
 
 import * as UserLocation from "/imports/utils/user-location";
 import * as UrlTools from "/imports/utils/url-tools";
-import { Subscriber } from "/imports/utils/ServerPublishBlaze";
 
 /**
  * List of routes that show different results when the region changes.
@@ -76,12 +75,8 @@ function useAsRegion(regions: RegionModel[], regionIdOrName: string, tenantId?: 
  * @param preferredTenant On set: Prefer a particular tenant when detection.
  * @param confirmAutodectionByUser On true: Let the user approve the automatic region selection/detection.
  */
-export async function subscribe(
-  instance: Subscriber,
-  preferredTenant?: string,
-  confirmAutodectionByUser = true,
-) {
-  const findFilter = Regions.findFilter.subscribe(instance, async () => {
+export async function subscribe(preferredTenant?: string, confirmAutodectionByUser = true) {
+  const findFilter = Regions.findFilter.subscribe(async () => {
     const selectors = [
       Session.get("region"),
       UrlTools.queryParam("region"),
@@ -170,7 +165,7 @@ export function init() {
     }
   });
 
-  subscribe(Meteor);
+  subscribe();
 }
 
 export async function change(regionId: string) {
