@@ -32,9 +32,3 @@ export function EventHeader(props: Props) {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("EventHeader", () => EventHeader);
