@@ -1,84 +1,66 @@
-import { ReactiveVar } from "meteor/reactive-var";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React, { useEffect, useState } from "react";
+import { Router } from "meteor/iron:router";
 
-import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
-import { userSearchPrefix } from "/imports/utils/user-search-prefix";
 
-import "/imports/ui/components/buttons";
+import { useTranslation } from "react-i18next";
+import { useFindFilter } from "/imports/api/users/publications";
+
+function FoundUsers({ userSearch }: { userSearch: string }) {
+  const [isLoading, foundUsers] = useFindFilter(userSearch);
+  if (isLoading()) {
+    return null;
+  }
+  return (
+    <div className="list-group">
+      {foundUsers.map((user) => (
+        <a
+          key={user._id}
+          href={Router.path("userprofile", user)}
+          className="list-group-item list-group-item-action"
+        >
+          <span className="fa-solid fa-user fa-fw" aria-hidden="true" /> {user.getDisplayName()}
+        </a>
+      ))}
+    </div>
+  );
+}
+
+export function AdminUsersPage() {
+  const { t } = useTranslation();
+
+  const [userSearch, setUserSearch] = useState("");
+
+  useEffect(() => {
+    Metatags.setCommonTags(t("admin.users.windowtitle", "Users"));
+  });
+
+  return (
+    <>
+      <h3>{t("users.title", "Users")}</h3>
+      <div className="mb-3">
+        <label className="form-label">{t("users.field.find.label", "Find a user")}</label>
+        <div className="input-group">
+          <span className="input-group-text">
+            <span className="fa-solid fa-user fa-fw" aria-hidden="true" />
+          </span>
+          <input
+            className="form-control"
+            placeholder={t("users.field.find.placeholder", "Type name of user")}
+            type="text"
+            onChange={(event) => {
+              setUserSearch(event.currentTarget.value);
+            }}
+            value={userSearch}
+          />
+        </div>
+      </div>
+      {userSearch.length > 0 && <FoundUsers userSearch={userSearch} />}
+    </>
+  );
+}
+// for Blaze
 
 import "./template.html";
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "adminUsersPage",
-  Record<string, unknown>,
-  { userSearch: ReactiveVar<string> }
->;
-
-const template = Template.adminUsersPage;
-
-template.onCreated(function () {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const instance = this;
-
-  instance.autorun(() => {
-    Metatags.setCommonTags(i18n("admin.users.windowtitle", "Users"));
-  });
-
-  instance.busy(false);
-
-  instance.userSearch = new ReactiveVar("");
-
-  instance.autorun(() => {
-    const search = instance.userSearch.get();
-    if (search.length > 0) {
-      instance.subscribe("userSearch", search);
-    }
-  });
-});
-
-template.helpers({
-  foundUsers() {
-    const instance = Template.instance();
-
-    const search = instance.userSearch.get();
-    if (search === "") {
-      return false;
-    }
-
-    return userSearchPrefix(search, { limit: 30 });
-  },
-});
-
-template.events({
-  "keyup .js-search-users"(_event, instance) {
-    instance.userSearch.set(instance.$(".js-search-users").val() as string);
-  },
-});
-
-export function AdminUsersPage(){
-  return   <><h3>
-    {{i18n 'users.title' 'Users'}}
-  </h3>
-  <div class="mb-3">
-    <label class="form-label">{{i18n 'users.field.find.label' 'Find a user'}}</label>
-    <div class="input-group">
-      <span class="input-group-text">
-        <span class="fa-solid fa-user fa-fw" aria-hidden="true"></span>
-      </span>
-      <input class="js-search-users form-control"
-             placeholder="{{i18n 'users.field.find.placeholder' 'Type name of user' attr=true}}"
-             size="40" type="text" />
-    </div>
-  </div>
-
-  <div class="list-group">
-    {{#each foundUsers}}
-      <a href="{{pathFor 'userprofile' _id=this._id}}"
-         class="list-group-item list-group-item-action">
-        <span class="fa-solid fa-user fa-fw" aria-hidden="true"></span>
-        {{username this._id}}
-      </a>
-    {{/each}}
-  </div></>
-}
+Template.registerHelper("AdminUsersPage", () => AdminUsersPage);
