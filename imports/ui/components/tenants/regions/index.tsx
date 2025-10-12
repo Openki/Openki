@@ -10,7 +10,7 @@ export interface Props {
   tenant: TenantModel;
 }
 
-export function TenantRegions({ tenant }: Props) {
+export function Regions({ tenant }: Props) {
   const { t } = useTranslation();
   const user = useUser();
   const [isLoading, regions] = useFindFilter({ tenants: [tenant._id] });
@@ -71,4 +71,4 @@ export function TenantRegions({ tenant }: Props) {
 
 import "./template.html";
 
-Template.registerHelper("TenantRegions", () => TenantRegions);
+Template.registerHelper("TenantRegions", () => Regions);

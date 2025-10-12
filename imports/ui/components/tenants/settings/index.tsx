@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useParams } from "/imports/utils/react-meteor-router";
-
-import * as TenantsPublications from "/imports/api/tenants/publications";
 
 import { useSiteName } from "/imports/utils/getSiteName";
 
 import { JoinLink } from "../../joinLink";
 import { Invitations } from "../../invitations";
-import { NotFound } from "/imports/ui/pages/not-found";
 import { Members } from "./Members";
 import { FoundAdmins } from "./FoundAdmins";
 import { FoundMembers } from "./FoundMembers";
@@ -16,28 +12,19 @@ import { Admins } from "./Admins";
 
 import "./styles.scss";
 
-export function Settings() {
+export interface Props {
+  tenant: TenantModel;
+}
+
+export function Settings({ tenant }: Props) {
   const { t } = useTranslation();
   const siteName = useSiteName();
 
-  const params = useParams();
-
   const [memberSearch, setMemberSearch] = useState("");
   const [adminSearch, setAdminSearch] = useState("");
-  const tenantId = params._id || "-1";
-
-  const [isLoading, tenant] = TenantsPublications.useDetails(tenantId);
 
   function members() {
-    return tenant?.members.filter((m) => !tenant.admins.includes(m)) || [];
-  }
-
-  if (isLoading()) {
-    return null;
-  }
-
-  if (!tenant) {
-    return <NotFound />;
+    return tenant.members.filter((m) => !tenant.admins.includes(m)) || [];
   }
 
   return (
@@ -136,5 +123,6 @@ export function Settings() {
 // for Blaze
 
 import "./template.html";
+import { TenantModel } from "/imports/api/tenants/tenants";
 
 Template.registerHelper("TenantSettings", () => Settings);
