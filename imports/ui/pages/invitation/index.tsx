@@ -66,3 +66,29 @@ template.events({
     });
   },
 });
+
+export function InvitationPage(){
+  return   <div className="container">
+    <div className="p-2 p-md-5 bg-light rounded-3">
+      <div className="container-fluid py-2 py-md-5">
+        <h1 className="display-5">
+          {{i18n 'invitation.join.welcome' "Welcome to {SITENAME}!" SITENAME=siteName}}
+        </h1>
+        <p className="fs-4">
+          {{i18n 'invitation.join.text' "Become part of the organization {TENANT} and propose, discuss, develop, organize and publish courses with {INVITER} and other nice people in the organization {TENANT}." TENANT=tenant.name INVITER=(username invitation.createdBy)}}
+        </p>
+        <button className="btn btn-lg btn-save js-join" {{disabledIfBusy}}>
+          {{#unless currentUser}}
+            {{i18n "invitation.join.newUser" "Join {TENANT}" TENANT=tenant.name}}
+          {{else}}
+            {{i18n "invitation.join.existingUser" "Join {TENANT} with user {USER}" TENANT=tenant.name USER=currentUser.getDisplayName}}
+          {{/unless}}
+        </button>
+        <a className="btn btn-lg btn-secondary" href="{{pathFor 'home'}}">
+          {{i18n 'invitation.join.no' 'No thanks'}}
+        </a>
+      </div>
+    </div>
+
+  </div>
+}
