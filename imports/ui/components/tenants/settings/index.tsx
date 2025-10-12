@@ -1,6 +1,6 @@
+import React from "react";
 import { ReactiveVar } from "meteor/reactive-var";
 import { Router } from "meteor/iron:router";
-import { i18n } from "/imports/startup/both/i18next";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 
 import * as Alert from "/imports/api/alerts/alert";
@@ -12,12 +12,9 @@ import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import * as TenantsMethods from "/imports/api/tenants/methods";
 import { userSearchPrefix } from "/imports/utils/user-search-prefix";
 
-import "/imports/ui/components/buttons";
-import "/imports/ui/components/invitations";
-import "/imports/ui/components/joinLink";
 
-import "./template.html";
 import "./styles.scss";
+import { useTranslation } from "react-i18next";
 
 const Template = TemplateAny as TemplateStaticTyped<
   "tenantSettings",
@@ -181,62 +178,64 @@ template.events({
 
 
 export function Settings(){
-  return  <div class="row">
-    <div class="col-md">
+   const { t } = useTranslation();
+ 
+ return  <div className="row">
+    <div className="col-md">
       <h3>
-        <span class="fa-solid fa-users fa-fw" aria-hidden="true"></span>
-        {{i18n 'tenant.settings.title.Members' 'Members'}} ({{members.length}})
+        <span className="fa-solid fa-users fa-fw" aria-hidden="true"/>{" "}
+        {t('tenant.settings.title.Members', 'Members')} ({members.length})
       </h3>
-      <div class="icon-text-icon">
-        <div class="icon-text-text">
-          {{i18n 'tenant.settings.members.description' 'Members can see and use the above regions in the organisation {TENANT}.' TENANT=tenantName}}
+      <div className="icon-text-icon">
+        <div className="icon-text-text">
+          {t('tenant.settings.members.description', 'Members can see and use the above regions in the organisation {TENANT}.' ,{TENANT:tenantName})}
         </div>
       </div>
       <br />
-      <div class="tag-group multiline">
+      <div className="tag-group multiline">
         {{#each members}}
-          <div class="tag tag-btn tenant-member-tag-btn-remove">
-            <button class="js-member-remove-btn"
-                    title="{{i18n 'tenant.settings.removeFromTenant' 'remove member' attr=true}}"
+          <div className="tag tag-btn tenant-member-tag-btn-remove">
+            <button className="js-member-remove-btn"
+                    title={t('tenant.settings.removeFromTenant', 'remove member')}
                     type="button">
-              <i class="fa-solid fa-xmark fa-fw" aria-hidden="true"></i>
+              <i className="fa-solid fa-xmark fa-fw" aria-hidden="true"/>
               {{username this}}
             </button>
           </div>
-          <div class="tag tag-link tenant-member-tag-profile addon">
+          <div className="tag tag-link tenant-member-tag-profile addon">
             <a href="{{pathFor 'userprofile' _id=this}}"
-               title="{{i18n 'tenant.settings.member.profile' 'Visit profile' attr=true}}">
-              <i class="fa-solid fa-user fa-fw" aria-hidden="true"></i>
+               title={t('tenant.settings.member.profile', 'Visit profile')}>
+              <i className="fa-solid fa-user fa-fw" aria-hidden="true"/>
             </a>
           </div>
         {{/each}}
       </div>
-      <div class="mb-3">
+      <div className="mb-3">
         <label
-               class="form-label">{{i18n 'tenant.settings.field.addMembers' 'Add existing {SITENAME} members to your "{TENANTNAME}" organization.' SITENAME=siteName TENANTNAME=tenantName}}</label>
-        <div class="input-group">
-          <span class="input-group-text">
-            <span class="fa-solid fa-user fa-fw" aria-hidden="true"></span>
+               className="form-label">{t('tenant.settings.field.addMembers', 'Add existing {SITENAME} members to your "{TENANTNAME}" organization.' ,{SITENAME:siteName ,TENANTNAME:tenantName})}</label>
+        <div className="input-group">
+          <span className="input-group-text">
+            <span className="fa-solid fa-user fa-fw" aria-hidden="true"/>
           </span>
-          <input class="js-search-members form-control" id="AddTenantMember"
-                 placeholder="{{i18n 'tenant.settings.field.addMember.placeholder' 'Type name of buddy' attr=true}}"
-                 size="40" type="text" />
+          <input className="js-search-members form-control" id="AddTenantMember"
+                 placeholder={t('tenant.settings.field.addMember.placeholder' ,'Type name of buddy' )}
+                  type="text" />
         </div>
       </div>
-      <div class="tag-group multiline">
+      <div className="tag-group multiline">
         {{#each foundMembers}}
-          <div class="tag tag-btn tenant-member-tag-btn-add">
-            <button class="js-member-add-btn"
-                    title="{{i18n 'tenant.settings.addMember' 'add as member' attr=true}}"
+          <div className="tag tag-btn tenant-member-tag-btn-add">
+            <button className="js-member-add-btn"
+                    title={t('tenant.settings.addMember', 'add as member')}
                     type="button">
-              <i class="fa-solid fa-plus fa-fw" aria-hidden="true"></i>
+              <i className="fa-solid fa-plus fa-fw" aria-hidden="true"/>
               {{username this._id}}
             </button>
           </div>
-          <div class="tag tag-link tenant-member-tag-profile addon">
+          <div className="tag tag-link tenant-member-tag-profile addon">
             <a href="{{pathFor 'userprofile' _id=this._id}}"
-               title="{{i18n 'tenant.settings.member.profile' attr=true}}">
-              <i class="fa-solid fa-user fa-fw" aria-hidden="true"></i>
+               title={t('tenant.settings.member.profile')}>
+              <i className="fa-solid fa-user fa-fw" aria-hidden="true"/>
             </a>
           </div>
         {{/each}}
@@ -246,59 +245,59 @@ export function Settings(){
       <hr />
       {{> invitations tenant=tenant}}
     </div>
-    <div class="col-md">
+    <div className="col-md">
       <h3>
-        <span class="fa-solid fa-users fa-fw" aria-hidden="true"></span>
-        {{i18n 'tenant.settings.title.admin' 'Admins'}} ({{tenant.admins.length}})
+        <span className="fa-solid fa-users fa-fw" aria-hidden="true"/>
+        {t('tenant.settings.title.admin', 'Admins')} ({tenant.admins.length})
       </h3>
-      <div class="icon-text-text">
-        {{i18n 'tenant.settings.admin.description' 'Admins are empowered to see and manage this panel here, like you.'}}
+      <div className="icon-text-text">
+        {t('tenant.settings.admin.description' ,'Admins are empowered to see and manage this panel here, like you.')}
       </div>
       <br />
-      <div class="tag-group multiline">
+      <div className="tag-group multiline">
         {{#each tenant.admins}}
-          <div class="tag tag-btn tenant-admin-tag-btn-remove">
-            <button class="js-admin-remove-btn"
-                    title="{{i18n 'tenant.settings.removeAdminFromTenant' 'remove admin' attr=true}}"
+          <div className="tag tag-btn tenant-admin-tag-btn-remove">
+            <button className="js-admin-remove-btn"
+                    title={t('tenant.settings.removeAdminFromTenant' ,'remove admin')}
                     type="button">
-              <i class="fa-solid fa-xmark fa-fw" aria-hidden="true"></i>
+              <i className="fa-solid fa-xmark fa-fw" aria-hidden="true"/>
               {{username this}}
             </button>
           </div>
-          <div class="tag tag-link tenant-admin-tag-profile addon">
+          <div className="tag tag-link tenant-admin-tag-profile addon">
             <a href="{{pathFor 'userprofile' _id=this}}"
-               title="{{i18n 'tenant.settings.admin.profile' 'Visit profile' attr=true}}">
-              <i class="fa-solid fa-user fa-fw" aria-hidden="true"></i>
+               title={t('tenant.settings.admin.profile' ,'Visit profile')}>
+              <i className="fa-solid fa-user fa-fw" aria-hidden="true"/>
             </a>
           </div>
         {{/each}}
       </div>
-      <div class="mb-3">
+      <div className="mb-3">
         <label
-               class="form-label">{{i18n 'tenant.settings.field.addAdmins' 'Add an existing {SITENAME} user as a new admin to your "{TENANTNAME}" organization.' SITENAME=siteName TENANTNAME=tenantName}}</label>
-        <div class="input-group">
-          <span class="input-group-text">
-            <span class="fa-solid fa-user fa-fw" aria-hidden="true"></span>
+               className="form-label">{t('tenant.settings.field.addAdmins', 'Add an existing {SITENAME} user as a new admin to your "{TENANTNAME}" organization.',{ SITENAME:siteName, TENANTNAME:tenantName})}</label>
+        <div className="input-group">
+          <span className="input-group-text">
+            <span className="fa-solid fa-user fa-fw" aria-hidden="true"/>
           </span>
-          <input class="js-search-admins form-control" id="AddTenantAdmin"
-                 placeholder="{{i18n 'tenant.settings.field.addAdmin.placeholder' 'Type name of buddy' attr=true}}"
-                 size="40" type="text" />
+          <input className="js-search-admins form-control" id="AddTenantAdmin"
+                 placeholder={t('tenant.settings.field.addAdmin.placeholder' ,'Type name of buddy')}
+                 type="text" />
         </div>
       </div>
-      <div class="tag-group multiline">
+      <div className="tag-group multiline">
         {{#each foundAdmins}}
-          <div class="tag tag-btn tenant-admin-tag-btn-add">
-            <button class="js-admin-add-btn"
-                    title="{{i18n 'tenant.settings.addAdmin' 'add as admin' attr=true}}"
+          <div className="tag tag-btn tenant-admin-tag-btn-add">
+            <button className="js-admin-add-btn"
+                    title={t('tenant.settings.addAdmin', 'add as admin')}
                     type="button">
-              <i class="fa-solid fa-plus fa-fw" aria-hidden="true"></i>
+              <i className="fa-solid fa-plus fa-fw" aria-hidden="true"/>
               {{username this._id}}
             </button>
           </div>
-          <div class="tag tag-link tenant-admin-tag-profile addon">
+          <div className="tag tag-link tenant-admin-tag-profile addon">
             <a href="{{pathFor 'userprofile' _id=this._id}}"
-               title="{{i18n 'tenant.settings.admin.profile' attr=true}}">
-              <i class="fa-solid fa-user fa-fw" aria-hidden="true"></i>
+               title={t('tenant.settings.admin.profile')}>
+              <i className="fa-solid fa-user fa-fw" aria-hidden="true"/>
             </a>
           </div>
         {{/each}}
