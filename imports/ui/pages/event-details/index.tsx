@@ -17,7 +17,7 @@ import { textPlain } from "/imports/utils/html-tools";
 import * as Analytics from "/imports/ui/lib/analytics";
 
 import { Event } from "./event";
-import { ActionResult } from "../../components/action-result";
+import { ActionResult } from "../../components/ActionResult";
 
 function Unregister({
   event,

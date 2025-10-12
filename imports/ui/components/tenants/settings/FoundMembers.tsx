@@ -12,7 +12,7 @@ export function FoundMembers({ tenant, userSearch }: { tenant: TenantModel; user
   const { t } = useTranslation();
 
   const [isLoading, foundMembers] = UsersPublications.useFindFilter(userSearch, {
-    exclude: tenant?.members,
+    exclude: tenant.members,
   });
 
   async function handleOnClick(user: UserModel) {

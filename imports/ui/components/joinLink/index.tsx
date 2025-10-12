@@ -8,10 +8,7 @@ import * as JoinLinksMethods from "/imports/api/joinLinks/methods";
 
 import { JoinLinkCreate } from "./create";
 import { JoinLinkRebuild } from "./rebuild";
-import {
-  DeleteConfirm,
-  type Props as DeleteConfirmProps,
-} from "/imports/ui/components/delete-confirm";
+import { DeleteConfirm, type Props as DeleteConfirmProps } from "../DeleteConfirm";
 
 export interface Props {
   tenant: TenantModel;

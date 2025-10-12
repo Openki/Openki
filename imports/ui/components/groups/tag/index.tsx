@@ -47,9 +47,3 @@ export function GroupTag({ groupId, full, isOrganizer, onMouseOver, onMouseOut, 
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("GroupTag", () => GroupTag);

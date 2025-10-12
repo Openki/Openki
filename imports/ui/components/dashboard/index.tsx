@@ -188,9 +188,3 @@ export function Dashboard({ list, defaultRegion, defaultGroup, limit, fluid }: P
     </>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("Dashboard", () => Dashboard);

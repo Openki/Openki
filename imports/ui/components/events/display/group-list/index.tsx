@@ -110,9 +110,3 @@ export function GroupList({ event }: Props) {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("EventGroupList", () => GroupList);

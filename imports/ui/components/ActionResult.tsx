@@ -70,9 +70,3 @@ export function ActionResult({ type, icon, title, children, actions, report }: P
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("ActionResult", () => ActionResult);

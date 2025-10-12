@@ -67,9 +67,3 @@ export function EditCustomFields(props: Props) {
     </>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("EditCustomFields", () => EditCustomFields);
