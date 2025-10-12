@@ -1,4 +1,3 @@
-import { Template } from "meteor/templating";
 import { MomentInput } from "moment";
 import React from "react";
 

@@ -52,8 +52,7 @@ export function JoinLink({ tenant }: Props) {
       ) : (
         <>
           <input
-            className="form-control js-join-link mb-3"
-            id="joinLink"
+            className="form-control mb-3"
             type="text"
             value={Router.url(
               "join",

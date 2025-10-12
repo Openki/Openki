@@ -5,7 +5,6 @@ import { useSiteName } from "/imports/utils/getSiteName";
 
 import { TenantModel } from "/imports/api/tenants/tenants";
 
-
 import { JoinLink } from "../../joinLink";
 import { Invitations } from "../../invitations";
 import { Members } from "./Members";

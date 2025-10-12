@@ -1,4 +1,3 @@
-import { Template } from "meteor/templating";
 import React from "react";
 
 import { EventModel } from "/imports/api/events/events";

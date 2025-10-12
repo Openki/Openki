@@ -1,4 +1,3 @@
-import { Template } from "meteor/templating";
 import React from "react";
 import { useTranslation } from "react-i18next";
 

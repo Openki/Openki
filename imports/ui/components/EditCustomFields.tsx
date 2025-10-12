@@ -1,4 +1,3 @@
-import { Template } from "meteor/templating";
 import React from "react";
 
 import { CourseCustomField } from "/imports/api/courses/courses";
