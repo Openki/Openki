@@ -12,9 +12,9 @@ import { NotFound } from "/imports/ui/pages/not-found";
 import { Members } from "./Members";
 import { FoundAdmins } from "./FoundAdmins";
 import { FoundMembers } from "./FoundMembers";
+import { Admins } from "./Admins";
 
 import "./styles.scss";
-import { Admins } from "./Admins";
 
 export function Settings() {
   const { t } = useTranslation();
@@ -59,7 +59,7 @@ export function Settings() {
         <br />
         <Members tenant={tenant} />
         <div className="mb-3">
-          <label className="form-label">
+          <label className="form-label" htmlFor="AddTenantMember">
             {t(
               "tenant.settings.field.addMembers",
               'Add existing {SITENAME} members to your "{TENANTNAME}" organization.',
@@ -71,6 +71,7 @@ export function Settings() {
               <span className="fa-solid fa-user fa-fw" aria-hidden="true" />
             </span>
             <input
+              data-test="tenant-setting-member-search"
               className="form-control"
               id="AddTenantMember"
               placeholder={t("tenant.settings.field.addMember.placeholder", "Type name of buddy")}
@@ -102,7 +103,7 @@ export function Settings() {
         <br />
         <Admins tenant={tenant} />
         <div className="mb-3">
-          <label className="form-label">
+          <label className="form-label" htmlFor="AddTenantAdmin">
             {t(
               "tenant.settings.field.addAdmins",
               'Add an existing {SITENAME} user as a new admin to your "{TENANTNAME}" organization.',
@@ -114,6 +115,7 @@ export function Settings() {
               <span className="fa-solid fa-user fa-fw" aria-hidden="true" />
             </span>
             <input
+              data-test="tenant-setting-admin-search"
               className="form-control"
               id="AddTenantAdmin"
               placeholder={t("tenant.settings.field.addAdmin.placeholder", "Type name of buddy")}
@@ -130,3 +132,9 @@ export function Settings() {
     </div>
   );
 }
+
+// for Blaze
+
+import "./template.html";
+
+Template.registerHelper("TenantSettings", () => Settings);

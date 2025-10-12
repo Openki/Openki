@@ -37,6 +37,7 @@ function Admin({ tenant, adminId }: { tenant: TenantModel; adminId: string }) {
     <>
       <div className="tag tag-btn tenant-admin-tag-btn-remove">
         <button
+          data-test={`tenant-setting-admin-remove-button-${userName}`}
           title={t("tenant.settings.removeAdminFromTenant", "remove admin")}
           type="button"
           onClick={() => {

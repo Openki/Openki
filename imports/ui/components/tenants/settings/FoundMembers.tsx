@@ -45,6 +45,7 @@ export function FoundMembers({ tenant, userSearch }: { tenant: TenantModel; user
         <>
           <div className="tag tag-btn tenant-member-tag-btn-add">
             <button
+              data-test={`tenant-setting-member-add-button-${member.getDisplayName()}`}
               title={t("tenant.settings.addMember", "add as member")}
               type="button"
               onClick={() => {
