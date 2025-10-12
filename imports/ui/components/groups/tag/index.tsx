@@ -27,7 +27,10 @@ export function GroupTag({ groupId, full, isOrganizer, onMouseOver, onMouseOut, 
   const [isLoading, group] = useDetails(groupId);
 
   return (
-    <div className={`tag tag-link group-tag ${isOrganizer ? "group-tag-is-organizer" : ""}`}>
+    <div
+      data-test={`group-tag-${groupId}`}
+      className={`tag tag-link group-tag ${isOrganizer ? "group-tag-is-organizer" : ""}`}
+    >
       {isLoading() ? (
         <span className="placeholder" style={{ width: full ? "100px" : "40px" }}></span>
       ) : (
