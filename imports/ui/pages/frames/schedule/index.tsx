@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { chain, Dictionary, fromPairs, sortBy } from "lodash";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
-import { Session } from "meteor/session";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 import { useReactiveNow } from "/imports/utils/reactive-now";
 import { LocalTime } from "/imports/utils/local-time";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
-import {  useFindFilter } from "/imports/api/events/publications";
+import { useFindFilter } from "/imports/api/events/publications";
 import { EventEntity, Events } from "/imports/api/events/events";
 
 import "./styles.scss";
@@ -24,26 +23,24 @@ export function Schedule() {
   const { t } = useTranslation();
   const { dateFormat } = useDateTimeFormat();
 
-  const reactiveNow = useReactiveNow();
+  const now = useReactiveNow();
+  const timeLocale = useSession("timeLocale") || "en";
   const searchParams = useSearchParams();
   const filter = Events.Filtering();
 
-  const [interval, setInterval] = useState(60);
-  const [separators, setSeparators] = useState<number[]>([]);
-  const [repeatingOnly, setRepeatingOnly] = useState(false);
+  let interval: number;
 
   // Read query params
-
   const query = searchParams;
 
-  setRepeatingOnly(Object.prototype.hasOwnProperty.call(query, "repeating"));
+  const repeatingOnly = Object.prototype.hasOwnProperty.call(query, "repeating");
 
-  let scheduleStart = moment();
+  let scheduleStart = moment(now);
   if (query.start) {
     scheduleStart = moment(query.start);
   }
   if (!scheduleStart || !scheduleStart.isValid()) {
-    scheduleStart = moment(reactiveNow).startOf("week");
+    scheduleStart = moment(now).startOf("week");
   }
 
   const seps = chain(query.sep || "")
@@ -63,189 +60,172 @@ export function Schedule() {
     }) /* convert to minutes */
     .uniq()
     .value();
-  setSeparators(seps);
+  const separators = seps;
 
   const readInterval = Number.parseInt(query.interval || "", 10);
   if (!Number.isNaN(readInterval) && readInterval > 0) {
-    setInterval(readInterval);
+    interval = readInterval;
   } else if (seps.length > 0) {
-    setInterval(24 * 60);
+    interval = 24 * 60;
   } else {
-    setInterval(60);
+    interval = 60;
   }
 
-  filter.clear().read(query);
+  filter.read(query);
   filter.add("after", scheduleStart.toISOString());
   filter.add("end", moment(scheduleStart).add(4, "week").toISOString());
 
   const [isLoading, events] = useFindFilter(filter.toQuery(), 500);
 
-  const [days, setDays] = useState<number[]>([]);
-  const [intervals, setIntervals] = useState<number[]>([]);
-  const [slots, setSlots] = useState<Record<string, Record<string, EventViewModel[]>>>({});
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let kindMap = function (_title: string): number | false {
-    return 0;
+  // Track repeating events so we know how often they occur.
+  // The key to this dict is a combination of courseId, weekday and start time.
+  const repetitionCount: Record<string, number> = {};
+  const repetitionCountDay: Record<string, number> = {};
+
+  if (isLoading()) {
+    return null;
+  }
+
+  // Load events but keep only the first when they repeat on the same
+  // weekday at the same time.
+  const dedupedEvents: EventViewModel[] = [];
+  events.forEach((originalEvent) => {
+    const event = { ...originalEvent } as EventViewModel;
+    const eventStart = LocalTime.fromString(event.startLocal);
+
+    // Build key that is the same for events of the same course that
+    // start on the same time.
+    let repKey = `${eventStart.hour()}-${eventStart.minute()}-`;
+
+    // If there is no courseId, we fall back to replicationId, then _id.
+    if (event.courseId) {
+      repKey += event.courseId;
+    } else if (event.replicaOf) {
+      repKey += event.replicaOf;
+    } else {
+      repKey += event._id;
+    }
+
+    if (repetitionCount[repKey] >= 1) {
+      repetitionCount[repKey] += 1;
+    } else {
+      repetitionCount[repKey] = 1;
+    }
+
+    const repKeyDay = `${eventStart.day()}-${repKey}`;
+    if (repetitionCountDay[repKeyDay] >= 1) {
+      repetitionCountDay[repKeyDay] += 1;
+    } else {
+      repetitionCountDay[repKeyDay] = 1;
+
+      event.repKey = repKey;
+      event.repKeyDay = repKeyDay;
+      dedupedEvents.push(event);
+    }
+  });
+
+  // Because we need to find the closest separator later on we create a
+  // reversed copy which is easier to search.
+
+  // List of intervals where events or separators are placed
+  const intervalsDic = separators.reduce((rIntervals: Record<number, number>, separator) => {
+    rIntervals[separator] = separator;
+    return rIntervals;
+  }, {});
+
+  // List of days where events where found
+  const daysDic: Dictionary<number> = {};
+
+  // Map of slots where events were found. Each slot holds a list of events.
+  const slots: Record<string, Record<string, EventViewModel[]>> = {};
+
+  // Count occurences of first few chars in event titles
+  // This helps coloring the events so they're easier to scan.
+  const kinds: Record<string, number> = {};
+
+  // Place found events into the slots
+  dedupedEvents.forEach((originalEvent) => {
+    const event = { ...originalEvent };
+    const eventStart = LocalTime.fromString(event.startLocal);
+
+    event.repCount = repetitionCountDay[event.repKeyDay as string];
+    if (event.repCount < 2 && repeatingOnly) {
+      // Skip
+      return;
+    }
+
+    const dayStart = moment(eventStart).startOf("day");
+
+    const day = dayStart.diff(scheduleStart, "days") % 7;
+    daysDic[day] = day;
+
+    const minuteDiff = eventStart.diff(dayStart, "minutes");
+    const intervalStart = Math.floor(minuteDiff / interval) * interval;
+    const closestSeparator = separators.find((sep) => sep <= minuteDiff);
+
+    const mins = Math.max(intervalStart, closestSeparator || 0);
+    intervalsDic[mins] = mins;
+
+    if (!slots[`${mins}`]) {
+      slots[`${mins}`] = {};
+    }
+    if (!slots[`${mins}`][`${day}`]) {
+      slots[`${mins}`][`${day}`] = [];
+    }
+
+    slots[`${mins}`][`${day}`].push(event);
+
+    const kindId = event.title.substring(0, 5);
+    if (!kinds[kindId]) {
+      kinds[kindId] = 1;
+    }
+    kinds[kindId] += 1;
+  });
+
+  const numCmp = function (a: number, b: number) {
+    return a - b;
+  };
+  const days = Object.values(daysDic).sort(numCmp);
+  const intervals = Object.values(intervalsDic).sort(numCmp);
+
+  // Build list of most used titles (first few chars)
+  const mostUsedKinds = sortBy(Object.entries(kinds), (kv) => -kv[1]);
+  const kindRank = fromPairs(mostUsedKinds.slice(0, 15).map((kv, rank) => [kv[0], rank + 1]));
+  const kindMap = function (title: string) {
+    const kindId = title.substring(0, 5);
+    if (kindRank[kindId]) {
+      return kindRank[kindId];
+    }
+    return false;
   };
 
-  useEffect(() => {
-    const scheduleStart = moment(filter.get("after"));
-
-    // Track repeating events so we know how often they occur.
-    // The key to this dict is a combination of courseId, weekday and start time.
-    const repetitionCount: Record<string, number> = {};
-    const repetitionCountDay: Record<string, number> = {};
-
-    // Load events but keep only the first when they repeat on the same
-    // weekday at the same time.
-    const dedupedEvents: EventViewModel[] = [];
-    events.forEach((originalEvent) => {
-      const event = { ...originalEvent } as EventViewModel;
-      const eventStart = LocalTime.fromString(event.startLocal);
-
-      // Build key that is the same for events of the same course that
-      // start on the same time.
-      let repKey = `${eventStart.hour()}-${eventStart.minute()}-`;
-
-      // If there is no courseId, we fall back to replicationId, then _id.
-      if (event.courseId) {
-        repKey += event.courseId;
-      } else if (event.replicaOf) {
-        repKey += event.replicaOf;
-      } else {
-        repKey += event._id;
-      }
-
-      if (repetitionCount[repKey] >= 1) {
-        repetitionCount[repKey] += 1;
-      } else {
-        repetitionCount[repKey] = 1;
-      }
-
-      const repKeyDay = `${eventStart.day()}-${repKey}`;
-      if (repetitionCountDay[repKeyDay] >= 1) {
-        repetitionCountDay[repKeyDay] += 1;
-      } else {
-        repetitionCountDay[repKeyDay] = 1;
-
-        event.repKey = repKey;
-        event.repKeyDay = repKeyDay;
-        dedupedEvents.push(event);
-      }
-    });
-
-    // Because we need to find the closest separator later on we create a
-    // reversed copy which is easier to search.
-
-    // List of intervals where events or separators are placed
-    const intervals = separators.reduce((rIntervals: Record<number, number>, separator) => {
-      rIntervals[separator] = separator;
-      return rIntervals;
-    }, {});
-
-    // List of days where events where found
-    const days: Dictionary<number> = {};
-
-    // Map of slots where events were found. Each slot holds a list of events.
-    const slots: Record<string, Record<string, EventViewModel[]>> = {};
-
-    // Count occurences of first few chars in event titles
-    // This helps coloring the events so they're easier to scan.
-    const kinds: Record<string, number> = {};
-
-    // Place found events into the slots
-    dedupedEvents.forEach((originalEvent) => {
-      const event = { ...originalEvent };
-      const eventStart = LocalTime.fromString(event.startLocal);
-
-      event.repCount = repetitionCountDay[event.repKeyDay as string];
-      if (event.repCount < 2 && repeatingOnly) {
-        // Skip
-        return;
-      }
-
-      const dayStart = moment(eventStart).startOf("day");
-
-      const day = dayStart.diff(scheduleStart, "days") % 7;
-      days[day] = day;
-
-      const minuteDiff = eventStart.diff(dayStart, "minutes");
-      const intervalStart = Math.floor(minuteDiff / interval) * interval;
-      const closestSeparator = separators.find((sep) => sep <= minuteDiff);
-
-      const mins = Math.max(intervalStart, closestSeparator || 0);
-      intervals[mins] = mins;
-
-      if (!slots[`${mins}`]) {
-        slots[`${mins}`] = {};
-      }
-      if (!slots[`${mins}`][`${day}`]) {
-        slots[`${mins}`][`${day}`] = [];
-      }
-
-      slots[`${mins}`][`${day}`].push(event);
-
-      const kindId = event.title.substring(0, 5);
-      if (!kinds[kindId]) {
-        kinds[kindId] = 1;
-      }
-      kinds[kindId] += 1;
-    });
-
-    const numCmp = function (a: number, b: number) {
-      return a - b;
-    };
-    setDays(Object.values(days).sort(numCmp));
-    setIntervals(Object.values(intervals).sort(numCmp));
-
-    // Build list of most used titles (first few chars)
-    const mostUsedKinds = sortBy(Object.entries(kinds), (kv) => -kv[1]);
-    const kindRank = fromPairs(mostUsedKinds.slice(0, 15).map((kv, rank) => [kv[0], rank + 1]));
-    kindMap = function (title: string) {
-      const kindId = title.substring(0, 5);
-      if (kindRank[kindId]) {
-        return kindRank[kindId];
-      }
-      return false;
-    };
-
-    Object.entries(slots).forEach(([min, dayslots]) => {
-      Object.entries(dayslots).forEach(([day, slot]) => {
-        slots[min][day] = sortBy(slot, (event) => {
-          const dayslotKindRank = (kindMap(event.title) || 100) + 100;
-          const countRank = 10000 - repetitionCount[event.repKey];
-          // We add repetitionCount to the sort criteria so that the
-          // output hopefully looks more stable through the weekdays
-          // with events occurring every weekday listed first in
-          // each slot
-          return `${100 + event.start.getHours()}-${
-            100 + event.start.getMinutes()
-          }-${dayslotKindRank}-${countRank}-${event.title}`;
-        });
+  Object.entries(slots).forEach(([min, dayslots]) => {
+    Object.entries(dayslots).forEach(([day, slot]) => {
+      slots[min][day] = sortBy(slot, (event) => {
+        const dayslotKindRank = (kindMap(event.title) || 100) + 100;
+        const countRank = 10000 - repetitionCount[event.repKey];
+        // We add repetitionCount to the sort criteria so that the
+        // output hopefully looks more stable through the weekdays
+        // with events occurring every weekday listed first in
+        // each slot
+        return `${100 + event.start.getHours()}-${
+          100 + event.start.getMinutes()
+        }-${dayslotKindRank}-${countRank}-${event.title}`;
       });
     });
-    setSlots(slots);
   });
 
   function displayMonth() {
-    return moment(scheduleStart)
-      .locale(Session.get("timeLocale") || "en")
-      .format("MMMM");
+    return moment(scheduleStart).locale(timeLocale).format("MMMM");
   }
   function displayDays() {
     return days.map((day) =>
-      moment(scheduleStart)
-        .add(day, "days")
-        .locale(Session.get("timeLocale") || "en")
-        .format("dddd"),
+      moment(scheduleStart).add(day, "days").locale(timeLocale).format("dddd"),
     );
   }
   function displayIntervals() {
     return intervals.map((mins) => {
-      const intervalStart = moment()
-        .locale(Session.get("timeLocale") || "en")
-        .hour(0)
-        .minute(mins);
+      const intervalStart = moment().locale(timeLocale).hour(0).minute(mins);
       return {
         intervalStart,
         intervalLabel: intervalStart.format("LT"),
@@ -337,3 +317,10 @@ export function Schedule() {
     </table>
   );
 }
+
+// for Blaze
+
+import "./template.html";
+import { useSession } from "/imports/utils/react-meteor-data";
+
+Template.registerHelper("FrameSchedulePage", () => Schedule);
