@@ -37,6 +37,7 @@ function Member({ tenant, memberId }: { tenant: TenantModel; memberId: string })
     <>
       <div className="tag tag-btn tenant-member-tag-btn-remove">
         <button
+          data-test={`tenant-setting-member-remove-button-${userName}`}
           title={t("tenant.settings.removeFromTenant", "remove member")}
           type="button"
           onClick={() => {

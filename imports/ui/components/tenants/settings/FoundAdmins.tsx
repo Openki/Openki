@@ -12,7 +12,7 @@ export function FoundAdmins({ tenant, userSearch }: { tenant: TenantModel; userS
   const { t } = useTranslation();
 
   const [isLoading, foundAdmins] = UsersPublications.useFindFilter(userSearch, {
-    exclude: tenant?.members,
+    exclude: tenant?.admins,
   });
 
   async function handleOnClick(user: UserModel) {
@@ -45,8 +45,8 @@ export function FoundAdmins({ tenant, userSearch }: { tenant: TenantModel; userS
         <>
           <div className="tag tag-btn tenant-admin-tag-btn-add">
             <button
-              className="js-admin-add-btn"
-              title={t("tenant.settings.addMember", "add as member")}
+              data-test={`tenant-setting-admin-add-button-${admin.getDisplayName()}`}
+              title={t("tenant.settings.addAdmin", "add as admin")}
               type="button"
               onClick={() => {
                 handleOnClick(admin);
