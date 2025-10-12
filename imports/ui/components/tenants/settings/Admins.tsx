@@ -8,36 +8,36 @@ import { TenantModel } from "/imports/api/tenants/tenants";
 import { getUserName } from "/imports/ui/lib/getUserName";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 
-function Member({ tenant, memberId }: { tenant: TenantModel; memberId: string }) {
+function Admin({ tenant, adminId }: { tenant: TenantModel; adminId: string }) {
   const { t } = useTranslation();
 
-  const userName = useTracker(() => getUserName(memberId));
+  const userName = useTracker(() => getUserName(adminId));
 
   async function handleOnClick() {
     routerAutoscroll.cancelNext();
 
     try {
-      await TenantsMethods.removeMember(memberId, tenant._id);
+      await TenantsMethods.removeAdmin(adminId, tenant._id);
 
-      const memberName = userName;
+      const adminName = userName;
       const tenantName = tenant.name;
       Alert.success(
         t(
-          "tenantSettings.memberRemoved",
-          '"{MEMBER}" has been removed from the "{TENANT}" organization',
-          { MEMBER: memberName, TENANT: tenantName },
+          "tenantSettings.adminRemoved",
+          '"{ADMIN}" has been removed as admin of the "{TENANT}" organization',
+          { ADMIN: adminName, TENANT: tenantName },
         ),
       );
     } catch (err) {
-      Alert.serverError(err, t("tenantSettings.memberRemoved.error", "Could not remove member"));
+      Alert.serverError(err, t("tenantSettings.adminRemoved.error", "Could not remove admin"));
     }
   }
 
   return (
     <>
-      <div className="tag tag-btn tenant-member-tag-btn-remove">
+      <div className="tag tag-btn tenant-admin-tag-btn-remove">
         <button
-          title={t("tenant.settings.removeFromTenant", "remove member")}
+          title={t("tenant.settings.removeAdminFromTenant", "remove admin")}
           type="button"
           onClick={() => {
             handleOnClick();
@@ -46,10 +46,10 @@ function Member({ tenant, memberId }: { tenant: TenantModel; memberId: string })
           <i className="fa-solid fa-xmark fa-fw" aria-hidden="true" /> {userName}
         </button>
       </div>
-      <div className="tag tag-link tenant-member-tag-profile addon">
+      <div className="tag tag-link tenant-admin-tag-profile addon">
         <a
-          href={Router.path("userprofile", { _id: memberId })}
-          title={t("tenant.settings.member.profile", "Visit profile")}
+          href={Router.path("userprofile", { _id: adminId })}
+          title={t("tenant.settings.admin.profile", "Visit profile")}
         >
           <i className="fa-solid fa-user fa-fw" aria-hidden="true" />
         </a>
@@ -58,15 +58,11 @@ function Member({ tenant, memberId }: { tenant: TenantModel; memberId: string })
   );
 }
 
-export function Members({ tenant }: { tenant: TenantModel }) {
-  function members() {
-    return tenant.members.filter((m) => !tenant.admins.includes(m)) || [];
-  }
-
+export function Admins({ tenant }: { tenant: TenantModel }) {
   return (
     <div className="tag-group multiline">
-      {members().map((member) => (
-        <Member key={member} tenant={tenant} memberId={member} />
+      {tenant.admins.map((admin) => (
+        <Admin key={admin} tenant={tenant} adminId={admin} />
       ))}
     </div>
   );
