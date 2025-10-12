@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { ReactiveVar } from "meteor/reactive-var";
 import { Router } from "meteor/iron:router";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { Tenants } from "/imports/api/tenants/tenants";
+import { TenantModel, Tenants } from "/imports/api/tenants/tenants";
 import { UserModel, Users } from "/imports/api/users/users";
 
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
@@ -15,6 +15,14 @@ import { userSearchPrefix } from "/imports/utils/user-search-prefix";
 
 import "./styles.scss";
 import { useTranslation } from "react-i18next";
+import { JoinLink } from "../../joinLink";
+import { Invitations } from "../../invitations";
+import * as TenantsPublications from "/imports/api/tenants/publications";
+import * as UsersPublications from "/imports/api/users/publications";
+
+import { useParams } from "/imports/utils/react-meteor-router";
+import { NotFound } from "/imports/ui/pages/not-found";
+import { UserName } from "/imports/ui/components/UserName";
 
 const Template = TemplateAny as TemplateStaticTyped<
   "tenantSettings",
@@ -47,38 +55,7 @@ template.onCreated(function () {
   });
 });
 
-template.helpers({
-  tenantName() {
-    const tenant = Tenants.findOne(Router.current().params._id);
-    return tenant?.name;
-  },
-  members() {
-    const tenant = Tenants.findOne(Router.current().params._id);
-    return tenant?.members.filter((m) => !tenant?.admins?.includes(m));
-  },
-  foundMembers() {
-    const instance = Template.instance();
 
-    const search = instance.memberSearch.get();
-    if (search === "") {
-      return false;
-    }
-
-    const tenant = Tenants.findOne(Router.current().params._id);
-    return userSearchPrefix(search, { exclude: tenant?.members, limit: 30 });
-  },
-  foundAdmins() {
-    const instance = Template.instance();
-
-    const search = instance.adminSearch.get();
-    if (search === "") {
-      return false;
-    }
-
-    const tenant = Tenants.findOne(Router.current().params._id);
-    return userSearchPrefix(search, { exclude: tenant?.admins, limit: 30 });
-  },
-});
 
 template.events({
   "keyup .js-search-members"(_event, instance) {
@@ -177,9 +154,112 @@ template.events({
 });
 
 
+function FoundMembers({tenant, userSearch}:{tenant:TenantModel,userSearch:string}){
+
+const [isLoading, foundMembers] = UsersPublications.useDetails(userSearch,{ exclude: tenant?.members, limit: 30 })
+
+  if (isLoading()) {
+    return null;
+  }
+
+return    <div className="tag-group multiline">
+  {foundMembers.map((member)=><>
+  <div className="tag tag-btn tenant-member-tag-btn-add">
+            <button className="js-member-add-btn"
+                    title={t('tenant.settings.addMember', 'add as member')}
+                    type="button">
+              <i className="fa-solid fa-plus fa-fw" aria-hidden="true"/> {member.getDisplayName()}
+            </button>
+          </div>
+          <div className="tag tag-link tenant-member-tag-profile addon">
+            <a href={Router.path('userprofile', member)}
+               title={t('tenant.settings.member.profile')}>
+              <i className="fa-solid fa-user fa-fw" aria-hidden="true"/>
+            </a>
+          </div>
+  </>)}
+      
+      </div>
+}
+
+function FoundAdmins({tenant, userSearch}:{tenant:TenantModel,userSearch:string}){
+const [isLoading, foundAdmins] = UsersPublications.useDetails(userSearch,{ exclude: tenant?.members, limit: 30 })
+
+  if (isLoading()) {
+    return null;
+  }
+
+
+return    <div className="tag-group multiline">
+        {{#each foundAdmins}}
+          <div className="tag tag-btn tenant-admin-tag-btn-add">
+            <button className="js-admin-add-btn"
+                    title={t('tenant.settings.addAdmin', 'add as admin')}
+                    type="button">
+              <i className="fa-solid fa-plus fa-fw" aria-hidden="true"/>
+              {{username this._id}}
+            </button>
+          </div>
+          <div className="tag tag-link tenant-admin-tag-profile addon">
+            <a href={Router.path('userprofile', {_id=this._id})}
+               title={t('tenant.settings.admin.profile')}>
+              <i className="fa-solid fa-user fa-fw" aria-hidden="true"/>
+            </a>
+          </div>
+        {{/each}}
+      </div>
+
+}
+
 export function Settings(){
    const { t } = useTranslation();
+
+   const params = useParams()
+
+const [memberSearch,setMemberSearch]=useState("") 
+const [adminSearch,setAdminSearch]=useState("") 
+ const tenantId = params._id || "-1"
+
+
+const [isLoading, tenant] = useDetails(tenantId)
  
+ function tenantName() {
+    const tenant = Tenants.findOne(Router.current().params._id);
+    return tenant?.name;
+  }
+ function  members() {
+    return tenant?.members.filter((m) => !tenant?.admins?.includes(m)) || [];
+  }
+ function foundMembers() {
+    const instance = Template.instance();
+
+    const search = instance.memberSearch.get();
+    if (search === "") {
+      return false;
+    }
+
+    return userSearchPrefix(search, { exclude: tenant?.members, limit: 30 });
+  }
+ function foundAdmins() {
+    const instance = Template.instance();
+
+    const search = instance.adminSearch.get();
+    if (search === "") {
+      return false;
+    }
+
+    const tenant = Tenants.findOne(Router.current().params._id);
+    return userSearchPrefix(search, { exclude: tenant?.admins, limit: 30 });
+  }
+
+  if(isLoading() ){
+    return null
+  }
+
+  if(!tenant){
+    return <NotFound/>
+  }
+
  return  <div className="row">
     <div className="col-md">
       <h3>
@@ -193,22 +273,21 @@ export function Settings(){
       </div>
       <br />
       <div className="tag-group multiline">
-        {{#each members}}
-          <div className="tag tag-btn tenant-member-tag-btn-remove">
+        {members().map(member=><>
+        <div className="tag tag-btn tenant-member-tag-btn-remove">
             <button className="js-member-remove-btn"
                     title={t('tenant.settings.removeFromTenant', 'remove member')}
                     type="button">
-              <i className="fa-solid fa-xmark fa-fw" aria-hidden="true"/>
-              {{username this}}
+              <i className="fa-solid fa-xmark fa-fw" aria-hidden="true"/>{" "}
+              <UserName userId={member} />
             </button>
           </div>
           <div className="tag tag-link tenant-member-tag-profile addon">
-            <a href="{{pathFor 'userprofile' _id=this}}"
+            <a href={Router.path('userprofile', {_id:member})}
                title={t('tenant.settings.member.profile', 'Visit profile')}>
               <i className="fa-solid fa-user fa-fw" aria-hidden="true"/>
             </a>
-          </div>
-        {{/each}}
+          </div></>)}
       </div>
       <div className="mb-3">
         <label
@@ -222,28 +301,13 @@ export function Settings(){
                   type="text" />
         </div>
       </div>
-      <div className="tag-group multiline">
-        {{#each foundMembers}}
-          <div className="tag tag-btn tenant-member-tag-btn-add">
-            <button className="js-member-add-btn"
-                    title={t('tenant.settings.addMember', 'add as member')}
-                    type="button">
-              <i className="fa-solid fa-plus fa-fw" aria-hidden="true"/>
-              {{username this._id}}
-            </button>
-          </div>
-          <div className="tag tag-link tenant-member-tag-profile addon">
-            <a href="{{pathFor 'userprofile' _id=this._id}}"
-               title={t('tenant.settings.member.profile')}>
-              <i className="fa-solid fa-user fa-fw" aria-hidden="true"/>
-            </a>
-          </div>
-        {{/each}}
-      </div>
+      {memberSearch.length > 0 &&
+   <FoundMembers tenantId={tenantId} userSearch={memberSearch} />
+      }
       <hr />
-      {{> joinLink tenant=tenant}}
+      <JoinLink tenant={tenant}/>
       <hr />
-      {{> invitations tenant=tenant}}
+      <Invitations tenant={tenant}/>
     </div>
     <div className="col-md">
       <h3>
@@ -254,24 +318,26 @@ export function Settings(){
         {t('tenant.settings.admin.description' ,'Admins are empowered to see and manage this panel here, like you.')}
       </div>
       <br />
-      <div className="tag-group multiline">
-        {{#each tenant.admins}}
-          <div className="tag tag-btn tenant-admin-tag-btn-remove">
+           <div className="tag-group multiline">
+            {tenant.admins.map(admin =>
+<><div className="tag tag-btn tenant-admin-tag-btn-remove">
             <button className="js-admin-remove-btn"
                     title={t('tenant.settings.removeAdminFromTenant' ,'remove admin')}
                     type="button">
               <i className="fa-solid fa-xmark fa-fw" aria-hidden="true"/>
-              {{username this}}
+            <UserName userId={admin} />
             </button>
           </div>
           <div className="tag tag-link tenant-admin-tag-profile addon">
-            <a href="{{pathFor 'userprofile' _id=this}}"
+           <a href={Router.path('userprofile', {_id:admin})}
                title={t('tenant.settings.admin.profile' ,'Visit profile')}>
               <i className="fa-solid fa-user fa-fw" aria-hidden="true"/>
             </a>
-          </div>
-        {{/each}}
+          </div></>
+            )}
+
       </div>
+ 
       <div className="mb-3">
         <label
                className="form-label">{t('tenant.settings.field.addAdmins', 'Add an existing {SITENAME} user as a new admin to your "{TENANTNAME}" organization.',{ SITENAME:siteName, TENANTNAME:tenantName})}</label>
@@ -284,24 +350,9 @@ export function Settings(){
                  type="text" />
         </div>
       </div>
-      <div className="tag-group multiline">
-        {{#each foundAdmins}}
-          <div className="tag tag-btn tenant-admin-tag-btn-add">
-            <button className="js-admin-add-btn"
-                    title={t('tenant.settings.addAdmin', 'add as admin')}
-                    type="button">
-              <i className="fa-solid fa-plus fa-fw" aria-hidden="true"/>
-              {{username this._id}}
-            </button>
-          </div>
-          <div className="tag tag-link tenant-admin-tag-profile addon">
-            <a href="{{pathFor 'userprofile' _id=this._id}}"
-               title={t('tenant.settings.admin.profile')}>
-              <i className="fa-solid fa-user fa-fw" aria-hidden="true"/>
-            </a>
-          </div>
-        {{/each}}
-      </div>
+         {adminSearch.length > 0&&
+     <FoundAdmins tenantId={tenantId} userSearch={adminSearch}/>
+      }
     </div>
   </div>
 }
