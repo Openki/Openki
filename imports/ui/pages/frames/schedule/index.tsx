@@ -42,7 +42,7 @@ function useOptions() {
 
   const seps = chain(query.sep || "")
     .split(",")
-    .filter((sep) => sep.length === 0) // get rid of 0-length
+    .filter((sep) => sep.length > 0) // get rid of 0-length
     .map((sep) => {
       if (sep.length < 3) {
         return Number.parseInt(`${sep}00`, 10);
@@ -137,11 +137,9 @@ export function Schedule() {
     }
   });
 
-  // Because we need to find the closest separator later on we create a
-  // reversed copy which is easier to search.
+  // Because we need to find the closest separator later on we use reverse which is easier to search.
   // List of intervals where events or separators are placed
   const intervalsDic = separators
-    .slice()
     .reverse()
     .reduce((rIntervals: Record<number, number>, separator) => {
       rIntervals[separator] = separator;
