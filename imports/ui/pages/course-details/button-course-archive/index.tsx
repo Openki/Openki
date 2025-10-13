@@ -1,19 +1,12 @@
-import "/imports/ui/components/buttons";
-import "/imports/ui/components/courses/display/group-list";
-import "/imports/ui/components/courses/categories";
-import "/imports/ui/components/courses/discussion";
-import "/imports/ui/components/courses/edit";
-import "/imports/ui/components/courses/events";
-import "/imports/ui/components/courses/history";
-import "/imports/ui/components/courses/Files";
-import "/imports/ui/components/courses/members";
-import "/imports/ui/components/courses/roles";
-import "/imports/ui/components/editable";
-import "/imports/ui/components/groups/tag";
-import "/imports/ui/components/price-policy";
-import "/imports/ui/components/regions/tag";
-import "/imports/ui/components/sharing";
-import "/imports/ui/components/report";
-import "/imports/ui/components/internal-indicator";
 
-import "./template.html";
+export function ButtonCourseArchive(){
+
+  return  <button type="submit" className="btn {{buttonClass}} js-course-archive" {{disabledIfBusy}}>
+    {{#if busy 'archive'}}
+      <span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
+      {{i18n 'course.archive.archiveButton.archiving' 'Archiving…'}}
+    {{else}}
+      {{textIdle}}
+    {{/if}}
+  </button>
+}
