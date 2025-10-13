@@ -1,6 +1,6 @@
+import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import { intersection, truncate } from "lodash";
 import { textPlain } from "/imports/utils/html-tools";
 
@@ -18,35 +18,12 @@ import * as Analytics from "/imports/ui/lib/analytics";
 import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
 
-import "/imports/ui/components/buttons";
-import "/imports/ui/components/courses/display/group-list";
-import "/imports/ui/components/courses/categories";
-import "/imports/ui/components/courses/discussion";
-import "/imports/ui/components/courses/edit";
-import "/imports/ui/components/courses/events";
-import "/imports/ui/components/courses/history";
-import "/imports/ui/components/courses/Files";
-import "/imports/ui/components/courses/members";
-import "/imports/ui/components/courses/roles";
-import "/imports/ui/components/editable";
-import "/imports/ui/components/groups/tag";
-import "/imports/ui/components/price-policy";
-import "/imports/ui/components/regions/tag";
-import "/imports/ui/components/sharing";
-import "/imports/ui/components/report";
-import "/imports/ui/components/internal-indicator";
-import "/imports/ui/components/single-event-indicator";
 
-import "./button-course-archive";
-import "./confirm-dialog";
-import "./description";
-import "./submenu";
-import "./button-course-unarchive";
-import "./header";
 
 import "./template.html";
 import "./styles.scss";
 import { mayShare } from "../../components/courses/edit/mayShare";
+import { useTranslation } from "react-i18next";
 
 const Template = TemplateMixins.Expandible(
   TemplateAny as TemplateStaticTyped<
@@ -60,6 +37,13 @@ const Template = TemplateMixins.Expandible(
   >,
   "courseDetailsPage",
 );
+
+export interface  Props {
+      edit: boolean;
+      course: CourseModel;
+      member: boolean;
+      select: string;
+    }
 
 const template = Template.courseDetailsPage;
 
@@ -218,31 +202,44 @@ template.events({
   },
 });
 
-export function CourseDetailsPage() {
-  return   <div data-test="course-details" class="container">
-    <div class="row course-page g-3">
-      <div class="col-lg-8">
-        <div class="page-component">
+export function CourseDetailsPage(data:Props) {
+  const { course } = data;
+  const { t } = useTranslation();
+
+  useEffect(()=>{
+
+    Metatags.setCommonTags(
+      course.name,
+      truncate(textPlain(course.description || ""), { length: 160 }),
+      course.publicUrlForDetailsImage(),
+    );
+  })
+
+  
+  return   <div data-test="course-details" className="container">
+    <div className="row course-page g-3">
+      <div className="col-lg-8">
+        <div className="page-component">
           {{#if course.archived}}
-            <div class="alert alert-archived text-center" role="alert">
-              <strong>{{i18n 'course.archive.alert' '{COURSE} is archived and not active anymore.' COURSE=course.name}}</strong>
+            <div className="alert alert-archived text-center" role="alert">
+              <strong>{t('course.archive.alert', '{COURSE} is archived and not active anymore.', {COURSE:course.name})}</strong>
             </div>
           {{/if}}
           {{#if edit}}
             {{> courseEdit course}}
           {{else}}
-            <div class="course-details {{courseStateClasses course}}">
+            <div className="course-details {{courseStateClasses course}}">
               {{> courseDetailsHeader course=course}}
               {{> courseDetailsSubmenu course=course}}
             </div>
             {{#if mayShare course}}
-              <div class="p-3 shariff-wrapper text-end" id="share">
-                <h4>{{ i18n 'sharing.title' 'Invite your friends'}}</h4>
+              <div className="p-3 shariff-wrapper text-end" id="share">
+                <h4>{t('sharing.title', 'Invite your friends')}</h4>
                 {{> sharing}}
               </div>
             {{/if}}
             {{#if (mayEdit course)}}
-              <div class="actions">
+              <div className="actions">
                 {{> buttonEdit event="js-course-edit"}}
                 {{#if course.archived}}
                   {{> buttonCourseUnarchive}}
@@ -250,7 +247,7 @@ export function CourseDetailsPage() {
                 {{#unless expanded}}
                   {{#unless course.archived}}
                     {{> buttonCourseArchive 
-										buttonClass="btn-archive"
+										buttonclassName="btn-archive"
 										textIdle=(i18n 'course.archive.archiveButton.archive' 'Archive')
 									}}
                   {{/unless}}
@@ -270,17 +267,17 @@ export function CourseDetailsPage() {
           {{> discussion courseId=course._id select=select}}
         {{/if}}
       </div>
-      <div class="col-lg-4">
+      <div className="col-lg-4">
         {{#unless mobileViewport}}
           {{> courseEvents}}
         {{/unless}}
-        <div class="page-component">
+        <div className="page-component">
           {{> courseMembers course=course}}
         </div>
         {{#if mobileViewport}}
           {{> discussion courseId=course._id select=select}}
         {{/if}}
-        <div class="page-component mt-3">
+        <div className="page-component mt-3">
           {{> report}}
         </div>
       </div>
