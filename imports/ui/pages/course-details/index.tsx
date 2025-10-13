@@ -1,77 +1,58 @@
 import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
-import { Meteor } from "meteor/meteor";
+import { useTranslation } from "react-i18next";
 import { intersection, truncate } from "lodash";
 import { textPlain } from "/imports/utils/html-tools";
+import { useSearchParams } from "/imports/utils/react-meteor-router";
+import { useUser } from "/imports/utils/react-meteor-data";
+import { useViewportSize } from "../../lib/useViewportSize";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { Regions } from "/imports/api/regions/regions";
 import * as CoursesMethods from "/imports/api/courses/methods";
 import { CourseModel } from "/imports/api/courses/courses";
 
-import { PleaseLogin } from "/imports/ui/lib/please-login";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
-import * as TemplateMixins from "/imports/ui/lib/template-mixins";
-import * as Viewport from "/imports/ui/lib/viewport";
-
 import * as Analytics from "/imports/ui/lib/analytics";
-import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
 
-
-
-import "./template.html";
-import "./styles.scss";
+import { Report } from "/imports/ui/components/report";
 import { mayShare } from "../../components/courses/edit/mayShare";
-import { useTranslation } from "react-i18next";
+import { Edit } from "../../components/courses/edit";
+import { Sharing } from "../../components/sharing";
+import { Events } from "../../components/courses/events";
+import { Discussion } from "../../components/courses/discussion";
+import { Members } from "../../components/courses/members";
+import { ButtonDelete, ButtonEdit } from "../../components/buttons";
+import { Roles } from "../../components/courses/roles";
+import { Submenu } from "./submenu";
+import { Header } from "./header";
+import { ConfirmDialog } from "./confirm-dialog";
+import { ButtonCourseArchive } from "./button-course-archive";
+import { ButtonCourseUnarchive } from "./button-course-unarchive";
 
-const Template = TemplateMixins.Expandible(
-  TemplateAny as TemplateStaticTyped<
-    "courseDetailsPage",
-    {
-      edit: boolean;
-      course: CourseModel;
-      member: boolean;
-      select: string;
-    }
-  >,
-  "courseDetailsPage",
-);
+import "./styles.scss";
 
-export interface  Props {
-      edit: boolean;
-      course: CourseModel;
-      member: boolean;
-      select: string;
-    }
+export interface Props {
+  edit: boolean;
+  course: CourseModel;
+  select: string;
+}
 
-const template = Template.courseDetailsPage;
+export function CourseDetailsPage({ edit, course, select }: Props) {
+  const { t } = useTranslation();
+  const user = useUser();
+  const viewport = useViewportSize();
+  const searchParams = useSearchParams();
+  const [isBusy, setIsBusy] = useState(false);
 
-template.onCreated(function () {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const instance = this;
+  const [expanded, setExpanded] = useState(false);
 
-  instance.autorun(() => {
-    const { course } = Template.currentData();
-    Metatags.setCommonTags(
-      course.name,
-      truncate(textPlain(course.description || ""), { length: 160 }),
-      course.publicUrlForDetailsImage(),
-    );
-  });
+  function mayEdit(course: CourseModel) {
+    return course?.editableBy(user);
+  }
 
-  instance.busy(false);
-});
-
-template.helpers({
-  // more helpers in course.roles.js
-
-  mayEdit(course: CourseModel) {
-    return course?.editableBy(Meteor.user());
-  },
-
-  mayShare,
-  courseStateClasses(course: CourseModel) {
+  function courseStateClasses(course: CourseModel) {
     const classes = [];
 
     if (course?.nextEvent) {
@@ -87,219 +68,225 @@ template.helpers({
     }
 
     return classes.join(" ");
-  },
-  mobileViewport() {
-    return Viewport.get().width <= ScssVars.screenMD;
-  },
-});
+  }
+  function mobileViewport() {
+    return viewport.width <= ScssVars.screenMD;
+  }
 
-template.events({
-  async "click .js-delete-course-confirm"(_event, instance) {
-    instance.busy("deleting");
-    PleaseLogin(instance, async () => {
-      const { course } = instance.data;
+  async function handleOnDelete() {
+    setIsBusy(true);
 
-      try {
-        await CoursesMethods.remove(course._id);
+    try {
+      await CoursesMethods.remove(course._id);
 
-        Alert.success(
-          i18n("courseDetailsPage.message.courseHasBeenDeleted", "{COURSE} was deleted.", {
-            COURSE: course.name,
-          }),
-        );
+      Alert.success(
+        t("courseDetailsPage.message.courseHasBeenDeleted", "{COURSE} was deleted.", {
+          COURSE: course.name,
+        }),
+      );
 
-        const user = await Meteor.userAsync();
-        let role;
-        if (intersection(user?.badges || [], course.editors).length > 0) {
-          role = "team";
-        } else if (user?.privileged("admin")) {
-          role = "admin";
-        } else {
-          role = "unknown";
-        }
-
-        Analytics.trackEvent(
-          "Course deletions",
-          `Course deletions as ${role}`,
-          Regions.findOne(course.region)?.nameEn,
-        );
-
-        Router.go("home");
-      } catch (err) {
-        Alert.serverError(
-          err,
-          i18n("courseDetailsPage.message.courseHasBeenDeleted.error", "Removing went wrong"),
-        );
-      } finally {
-        instance.busy(false);
+      let role;
+      if (intersection(user?.badges || [], course.editors).length > 0) {
+        role = "team";
+      } else if (user?.privileged("admin")) {
+        role = "admin";
+      } else {
+        role = "unknown";
       }
-    });
-  },
 
-  async "click .js-course-archive"(_event, instance) {
-    instance.busy("archive");
-    PleaseLogin(instance, async () => {
-      const { course } = instance.data;
-      try {
-        await CoursesMethods.archive(course._id);
-        instance.collapse();
+      Analytics.trackEvent(
+        "Course deletions",
+        `Course deletions as ${role}`,
+        Regions.findOne(course.region)?.nameEn,
+      );
 
-        Alert.success(
-          i18n("courseDetailsPage.message.courseHasBeenArchived", "{COURSE} was archived.", {
-            COURSE: course.name,
-          }),
-        );
-      } catch (err) {
-        Alert.serverError(
-          err,
-          i18n("courseDetailsPage.message.courseHasBeenArchived.error", "Archiving went wrong"),
-        );
-      } finally {
-        instance.busy(false);
-      }
-    });
-  },
+      Router.go("home");
+    } catch (err) {
+      Alert.serverError(
+        err,
+        t("courseDetailsPage.message.courseHasBeenDeleted.error", "Removing went wrong"),
+      );
+    } finally {
+      setIsBusy(false);
+    }
+  }
 
-  async "click .js-course-unarchive"(_event, instance) {
-    instance.busy("unarchive");
-    PleaseLogin(instance, async () => {
-      const { course } = instance.data;
-      try {
-        await CoursesMethods.unarchive(course._id);
+  async function handelOnArchive() {
+    setIsBusy(true);
+    try {
+      await CoursesMethods.archive(course._id);
+      setExpanded(false);
 
-        Alert.success(
-          i18n(
-            "courseDetailsPage.message.courseHasBeenUnarchived",
-            "{COURSE} has been unarchived.",
-            { COURSE: course.name },
-          ),
-        );
-      } catch (err) {
-        Alert.serverError(
-          err,
-          i18n("courseDetailsPage.message.courseHasBeenUnarchived.error", "Unarchiving went wrong"),
-        );
-      } finally {
-        instance.busy(false);
-      }
-    });
-  },
+      Alert.success(
+        t("courseDetailsPage.message.courseHasBeenArchived", "{COURSE} was archived.", {
+          COURSE: course.name,
+        }),
+      );
+    } catch (err) {
+      Alert.serverError(
+        err,
+        t("courseDetailsPage.message.courseHasBeenArchived.error", "Archiving went wrong"),
+      );
+    } finally {
+      setIsBusy(false);
+    }
+  }
 
-  "click .js-course-edit"(_event, instance) {
-    instance.collapse();
+  async function handelUnarchive() {
+    setIsBusy(true);
+    try {
+      await CoursesMethods.unarchive(course._id);
 
-    const { course } = instance.data;
+      Alert.success(
+        t("courseDetailsPage.message.courseHasBeenUnarchived", "{COURSE} has been unarchived.", {
+          COURSE: course.name,
+        }),
+      );
+    } catch (err) {
+      Alert.serverError(
+        err,
+        t("courseDetailsPage.message.courseHasBeenUnarchived.error", "Unarchiving went wrong"),
+      );
+    } finally {
+      setIsBusy(false);
+    }
+  }
+
+  function handelOnEdit() {
+    setExpanded(false);
 
     const query: {
       edit: string;
       force?: string;
     } = { edit: "course" };
-    const force = Router.current().params.query.force;
+    const force = searchParams.force;
     if (force) {
       query.force = force;
     }
     Router.go("showCourse", course, { query });
-  },
-});
+  }
 
-export function CourseDetailsPage(data:Props) {
-  const { course } = data;
-  const { t } = useTranslation();
-
-  useEffect(()=>{
-
+  useEffect(() => {
     Metatags.setCommonTags(
       course.name,
       truncate(textPlain(course.description || ""), { length: 160 }),
       course.publicUrlForDetailsImage(),
     );
-  })
+  });
 
-
-  return   <div data-test="course-details" className="container">
-    <div className="row course-page g-3">
-      <div className="col-lg-8">
-        <div className="page-component">
-          {course.archived && (
-            <div
-              className="alert alert-archived text-center"
-              role="alert"
-            >
-              <strong>
-                {t("course.archive.alert", "{COURSE} is archived and not active anymore.", {
-                  COURSE: course.name,
-                })}
-              </strong>
-            </div>
-          )}
-
-          {edit ? (
-            <CourseEdit course={course} />
-          ) : (
-            <>
-              <div className={`course-details ${courseStateClasses(course)}`}>
-                <CourseDetailsHeader course={course} />
-                <CourseDetailsSubmenu course={course} />
+  return (
+    <div data-test="course-details" className="container">
+      <div className="row course-page g-3">
+        <div className="col-lg-8">
+          <div className="page-component">
+            {course.archived && (
+              <div className="alert alert-archived text-center" role="alert">
+                <strong>
+                  {t("course.archive.alert", "{COURSE} is archived and not active anymore.", {
+                    COURSE: course.name,
+                  })}
+                </strong>
               </div>
+            )}
 
-              {mayShare(course) && (
-                <div className="p-3 shariff-wrapper text-end" id="share">
-                  <h4>{t("sharing.title", "Invite your friends")}</h4>
-                  <Sharing />
-                </div>
-              )}
-
-              {mayEdit(course) && (
-                <div className="actions">
-                  <ButtonEdit event="js-course-edit" />
-
-                  {course.archived && <ButtonCourseUnarchive />}
-
-                  {!expanded && !course.archived && (
-                    <ButtonCourseArchive
-                      buttonClassName="btn-archive"
-                      textIdle={t("course.archive.archiveButton.archive", "Archive")}
-                    />
-                  )}
-
-                  {!expanded && <ButtonDelete event="js-expand" />}
+            {edit ? (
+              <Edit {...course} />
+            ) : (
+              <>
+                <div className={`course-details ${courseStateClasses(course)}`}>
+                  <Header course={course} />
+                  <Submenu course={course} />
                 </div>
 
-                  {expanded && (
-                    <ConfirmDialog
-                      hasArchiveButton={course.archived}
-                      course={course}
-                    />
-                  )}
-              )}
+                {mayShare(course) && (
+                  <div className="p-3 shariff-wrapper text-end" id="share">
+                    <h4>{t("sharing.title", "Invite your friends")}</h4>
+                    <Sharing />
+                  </div>
+                )}
 
-              <CourseRoles course={course} />
-            </>
+                {mayEdit(course) && (
+                  <>
+                    <div className="actions">
+                      {!expanded && <ButtonEdit disabled={isBusy} onClick={handelOnEdit} />}
+
+                      {course.archived && (
+                        <ButtonCourseUnarchive
+                          disabled={isBusy}
+                          onUnarchive={async () => {
+                            handelUnarchive();
+                          }}
+                        />
+                      )}
+
+                      {!expanded && !course.archived && (
+                        <ButtonCourseArchive
+                          disabled={isBusy}
+                          className="btn-archive"
+                          onArchive={async () => {
+                            handelOnArchive();
+                          }}
+                        >
+                          {t("course.archive.archiveButton.archive", "Archive")}
+                        </ButtonCourseArchive>
+                      )}
+
+                      {!expanded && (
+                        <ButtonDelete
+                          onClick={async () => {
+                            setExpanded(true);
+                          }}
+                        />
+                      )}
+                    </div>
+
+                    {expanded && (
+                      <ConfirmDialog
+                        archiveButton={!course.archived}
+                        disabled={isBusy}
+                        course={course}
+                        onArchive={async () => {
+                          handelOnArchive();
+                        }}
+                        onDelete={handleOnDelete}
+                        onCancel={() => {
+                          setExpanded(false);
+                        }}
+                      />
+                    )}
+                  </>
+                )}
+
+                <Roles course={course} />
+              </>
+            )}
+          </div>
+
+          {mobileViewport() ? (
+            <Events course={course} />
+          ) : (
+            <Discussion courseId={course._id} select={select} />
           )}
         </div>
 
-        {mobileViewport ? (
-          <CourseEvents />
-        ) : (
-          <Discussion courseId={course._id} select={select} />
-        )}
-      </div>
+        <div className="col-lg-4">
+          {!mobileViewport && <Events course={course} />}
 
-      <div className="col-lg-4">
-        {!mobileViewport && <CourseEvents />}
+          <div className="page-component">
+            <Members course={course} />
+          </div>
 
-        <div className="page-component">
-          <CourseMembers course={course} />
-        </div>
+          {mobileViewport() && <Discussion courseId={course._id} select={select} />}
 
-        {mobileViewport && (
-          <Discussion courseId={course._id} select={select} />
-        )}
-
-        <div className="page-component mt-3">
-          <Report />
+          <div className="page-component mt-3">
+            <Report />
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  );
 }
+
+// for Blaze
+import "./template.html";
+Template.registerHelper("CourseDetailsPage", () => CourseDetailsPage);
