@@ -1,4 +1,4 @@
-// file://./../../../imports/ui/pages/course-details/index.ts
+// file://./../../../imports/ui/pages/course-details/index.tsx
 
 describe("course details page", () => {
   // https://gitlab.com/Openki/Openki/-/issues/2228
