@@ -12,15 +12,14 @@ import { CustomFieldDisplay } from "/imports/ui/components/courses/CustomFieldDi
 
 import "./styles.scss";
 
-export function Submenu(data: { edit: boolean; course: CourseModel; select: string }) {
+export function Submenu({ course }: { course: CourseModel }) {
   const { t } = useTranslation();
   const user = useUser();
   const [descriptionTruncated, setDescriptionTruncated] = useState(true);
   const elementRef = useRef<HTMLDivElement>(null);
 
   function mayEdit() {
-    const { course } = data;
-    return course?.editableBy(user);
+    return course.editableBy(user);
   }
 
   useEffect(() => {
@@ -97,13 +96,13 @@ export function Submenu(data: { edit: boolean; course: CourseModel; select: stri
               ref={elementRef}
             >
               <Description
-                course={data.course}
+                course={course}
                 onStartEditing={() => {
                   // sets the state when the user starts editing
                   setDescriptionTruncated(false);
                 }}
               />
-              <CustomFieldDisplay courseId={data.course._id} />
+              <CustomFieldDisplay courseId={course._id} />
             </div>
             {descriptionTruncated && <div className="course-description-fade-bottom"></div>}
           </div>
@@ -126,7 +125,7 @@ export function Submenu(data: { edit: boolean; course: CourseModel; select: stri
           aria-labelledby="history-tab"
           tabIndex={0}
         >
-          <History course={data.course} />
+          <History course={course} />
         </div>
         {mayEdit() && (
           <div
@@ -136,10 +135,10 @@ export function Submenu(data: { edit: boolean; course: CourseModel; select: stri
             aria-labelledby="files-tab"
             tabIndex={0}
           >
-            <Files course={data.course} />
+            <Files course={course} />
           </div>
         )}
-        {!data.course.isPrivate() && <PricePolicy dismissable wrap="course-details-price-policy" />}
+        {!course.isPrivate() && <PricePolicy dismissable wrap="course-details-price-policy" />}
       </div>
     </>
   );
