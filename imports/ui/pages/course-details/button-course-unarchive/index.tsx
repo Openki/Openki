@@ -1,3 +1,6 @@
+import React from "react";
+import { useTranslation } from "react-i18next";
+
 export function ButtonCourseUnarchive(){
   return <button type="submit" className="btn btn-go js-course-unarchive" {{disabledIfBusy}}>
     {{#if busy 'unarchive'}}

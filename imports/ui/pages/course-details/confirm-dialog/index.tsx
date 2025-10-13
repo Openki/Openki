@@ -1,20 +1,27 @@
-import "/imports/ui/components/buttons";
-import "/imports/ui/components/courses/display/group-list";
-import "/imports/ui/components/courses/categories";
-import "/imports/ui/components/courses/discussion";
-import "/imports/ui/components/courses/edit";
-import "/imports/ui/components/courses/events";
-import "/imports/ui/components/courses/history";
-import "/imports/ui/components/courses/Files";
-import "/imports/ui/components/courses/members";
-import "/imports/ui/components/courses/roles";
-import "/imports/ui/components/editable";
-import "/imports/ui/components/groups/tag";
-import "/imports/ui/components/price-policy";
-import "/imports/ui/components/regions/tag";
-import "/imports/ui/components/sharing";
-import "/imports/ui/components/report";
-import "/imports/ui/components/internal-indicator";
+import React from "react";
+import { useTranslation } from "react-i18next";
 
-import "./template.html";
+
 import "./styles.scss";
+
+
+export function ConfirmDialog(){
+  return <div className="course-delete-confirm">
+    <p>{{i18n 'course.reallydelete' 'Please confirm that you would like to delete {COURSE}. This cannot be undone.' COURSE=course.name}}
+    </p>
+    <div className="form-actions">
+      {{#unless hasArchiveButton}}
+        {{> buttonCourseArchive 
+					buttonClass="btn-warning"
+					textIdle=(i18n 'course.delete.confirm.archiveButton' 'Rather archive')
+				}}
+      {{/unless}}
+      {{> buttonDeleteConfirm
+				event="js-delete-course-confirm"
+				textIdle=(i18n 'course.delete.confirm.button' 'Delete {COURSE} and its events' COURSE=course.name)
+				textBusy=(i18n '_button.deleting')
+			}}
+      {{> buttonCancel event="js-collapse"}}
+    </div>
+  </div>
+}
