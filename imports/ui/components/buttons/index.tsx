@@ -5,15 +5,64 @@ import { PleaseLogin } from "../please-login";
 
 import "/imports/ui/components/buttons";
 
+export function ActionButton({
+  className,
+  disabled,
+  needsLogin,
+  onClick,
+  children,
+  busyText,
+}: {
+  className?: string | undefined;
+  disabled?: boolean | undefined;
+  /** Login the user before triggering onClick. */
+  needsLogin?: boolean | undefined;
+  onClick: () => Promise<void>;
+  children: any;
+  busyText?: string | undefined;
+}) {
+  const [isBusy, setIsBusy] = useState(false);
+
+  const attributes = {
+    type: "button" as const,
+    className: `${className} text-nowrap`,
+    disabled: isBusy || disabled,
+    onClick: async () => {
+      setIsBusy(true);
+      try {
+        await onClick();
+      } finally {
+        setIsBusy(false);
+      }
+    },
+  };
+
+  const content = (
+    <>
+      {!isBusy ? (
+        children
+      ) : (
+        <>
+          <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
+          {busyText}
+        </>
+      )}
+    </>
+  );
+
+  if (needsLogin) {
+    return <PleaseLogin {...attributes}>{content}</PleaseLogin>;
+  }
+  return <button {...attributes}>{content}</button>;
+}
+
 export function Button({
-  type,
   className,
   disabled,
   onClick,
   children,
   busyText,
 }: {
-  type?: "reset" | "button" | "submit" | undefined;
   className?: string | undefined;
   disabled?: boolean | undefined;
   onClick: (event: { preventDefault: () => void }) => Promise<void>;
@@ -24,7 +73,7 @@ export function Button({
 
   return (
     <button
-      type={type || "button"}
+      type="button"
       className={`${className} text-nowrap`}
       disabled={isBusy || disabled}
       onClick={async (event) => {
@@ -120,19 +169,44 @@ export function ButtonCancel(props: { onClick: () => void; disabled?: boolean | 
   );
 }
 
-export function ButtonDelete(props: {
+export function ButtonDelete({
+  onClick,
+  disabled,
+  children,
+  busyText,
+}: {
   onClick: () => Promise<void>;
   disabled?: boolean | undefined;
+  children?: any;
+  busyText?: string | undefined;
 }) {
   const { t } = useTranslation();
+  const [isBusy, setIsBusy] = useState(false);
+
+  busyText = busyText || t("_button.deleting");
+
   return (
     <PleaseLogin
       type="button"
       className="btn btn-delete text-nowrap text-danger"
-      onClick={props.onClick}
-      disabled={props.disabled}
+      disabled={isBusy || disabled}
+      onClick={async () => {
+        setIsBusy(true);
+        try {
+          await onClick();
+        } finally {
+          setIsBusy(false);
+        }
+      }}
     >
-      {t("_button.delete")}
+      {!isBusy ? (
+        children || t("_button.delete")
+      ) : (
+        <>
+          <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
+          {busyText}
+        </>
+      )}
     </PleaseLogin>
   );
 }

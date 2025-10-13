@@ -1,13 +1,25 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { ActionButton } from "/imports/ui/components/buttons";
 
-export function ButtonCourseUnarchive(){
-  return <button type="submit" className="btn btn-go js-course-unarchive" {{disabledIfBusy}}>
-    {{#if busy 'unarchive'}}
-      <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
-      {{i18n 'course.archive.unarchiveButton.unarchiving' 'Unarchiving…'}}
-    {{else}}
-      {{i18n 'course.archive.unarchiveButton' 'Unarchive'}}
-    {{/if}}
-  </button>
+export function ButtonCourseUnarchive({
+  disabled,
+  onUnarchive,
+}: {
+  disabled?: boolean | undefined;
+  onUnarchive: () => Promise<void>;
+}) {
+  const { t } = useTranslation();
+
+  return (
+    <ActionButton
+      disabled={disabled}
+      className="btn btn-go"
+      needsLogin
+      onClick={onUnarchive}
+      busyText={t("course.archive.unarchiveButton.unarchiving", "Unarchiving…")}
+    >
+      {t("course.archive.unarchiveButton", "Unarchive")}
+    </ActionButton>
+  );
 }
