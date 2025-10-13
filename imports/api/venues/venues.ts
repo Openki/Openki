@@ -147,7 +147,7 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
     check(skip, Match.Maybe(Match.Integer));
     check(sort, Match.Maybe([FieldSortPattern]));
 
-    const find: any = {};
+    const find: Mongo.Selector<VenueEntity> = {};
 
     const options: Mongo.Options<VenueEntity> = { sort };
 
@@ -199,7 +199,7 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
       find._id = { $in: recentLocations as string[] };
     }
 
-    return this.find(find, options) as Mongo.Cursor<VenueEntity, VenueModel>;
+    return this.find(find, options) satisfies Mongo.Cursor<VenueEntity, VenueModel>;
   }
 }
 

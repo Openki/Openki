@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { ReactNode, useLayoutEffect, useState } from "react";
 
 import { useSessionEquals, useUserId } from "/imports/utils/react-meteor-data";
 
@@ -21,7 +21,7 @@ interface Props {
   type: "auto" | "form" | "button";
   visitorUserAllowed?: boolean;
   className?: string | undefined;
-  children?: any;
+  children?: ReactNode;
 }
 
 export function PleaseLogin(props: Props & (AutoProps | FormProps | ButtonProps)) {

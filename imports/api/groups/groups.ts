@@ -178,7 +178,7 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
     check(skip, Match.Maybe(Match.Integer));
     check(sort, Match.Maybe([FieldSortPattern]));
 
-    const find: any = {};
+    const find: Mongo.Selector<GroupEntity> = {};
 
     const options: Mongo.Options<GroupEntity> = { sort };
 
@@ -204,7 +204,7 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
       find._id = { $in: filter.ids };
     }
 
-    return this.find(find, options);
+    return this.find(find, options) satisfies Mongo.Cursor<GroupEntity, GroupModel>;
   }
 }
 

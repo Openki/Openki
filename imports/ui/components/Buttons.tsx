@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PleaseLogin } from "./please-login";
 
@@ -15,7 +15,7 @@ export function ActionButton({
   /** Login the user before triggering onClick. */
   needsLogin?: boolean | undefined;
   onClick: () => Promise<void>;
-  children: any;
+  children: ReactNode;
   busyText?: string | undefined;
 }) {
   const [isBusy, setIsBusy] = useState(false);
@@ -63,7 +63,7 @@ export function Button({
   className?: string | undefined;
   disabled?: boolean | undefined;
   onClick: (event: { preventDefault: () => void }) => Promise<void>;
-  children: any;
+  children: ReactNode;
   busyText?: string | undefined;
 }) {
   const [isBusy, setIsBusy] = useState(false);
@@ -97,7 +97,7 @@ export function Button({
 export function ButtonSave(props: {
   className?: string;
   disabled?: boolean | undefined;
-  children?: any;
+  children?: ReactNode;
   onClick: () => Promise<void>;
 }) {
   const { t } = useTranslation();
@@ -174,7 +174,7 @@ export function ButtonDelete({
 }: {
   onClick: () => Promise<void>;
   disabled?: boolean | undefined;
-  children?: any;
+  children?: ReactNode;
   busyText?: string | undefined;
 }) {
   const { t } = useTranslation();

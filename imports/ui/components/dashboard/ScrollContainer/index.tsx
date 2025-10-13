@@ -1,9 +1,9 @@
-import React, { useRef, useState, useLayoutEffect } from "react";
+import React, { useRef, useState, useLayoutEffect, ReactNode } from "react";
 import { observeSize } from "../../../lib/observeHeight";
 
 import "./styles.scss";
 
-export function ScrollContainer({ children }: { children: any }) {
+export function ScrollContainer({ children }: { children: ReactNode }) {
   const elementRef = useRef<HTMLDivElement>(null);
   const [scrollLeft, setScrollLeft] = useState(elementRef.current?.scrollLeft || 0);
   const [scrollLeftMax, setScrollLeftMax] = useState(0);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { ICalCalendarMethod } from "ical-generator";
 
@@ -20,7 +20,7 @@ export function Root({
   customSiteUrl,
   customSiteName,
   children,
-}: Props & { children: any }) {
+}: Props & { children: ReactNode }) {
   const brand = PublicSettings.theme.brand;
   const url = customSiteUrl || Meteor.absoluteUrl();
   const name = customSiteName || Accounts.emailTemplates.siteName;

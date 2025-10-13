@@ -161,7 +161,7 @@ export function Schedule() {
     const event = { ...originalEvent };
     const eventStart = LocalTime.fromString(event.startLocal);
 
-    event.repCount = repetitionCountDay[event.repKeyDay as string];
+    event.repCount = repetitionCountDay[event.repKeyDay];
     if (event.repCount < 2 && repeatingOnly) {
       // Skip
       return;

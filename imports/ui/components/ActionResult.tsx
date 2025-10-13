@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import React, { JSX, ReactNode } from "react";
 
 import { Report } from "/imports/ui/components/report";
 
@@ -6,7 +6,7 @@ export interface Props {
   type: "success" | "failed";
   icon?: JSX.Element | undefined;
   title: string;
-  children?: string | undefined;
+  children?: ReactNode | undefined;
   actions?: (
     | {
         description?: string | undefined;

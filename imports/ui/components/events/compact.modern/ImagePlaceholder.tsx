@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { useDetails } from "/imports/api/regions/publications";
 
 export function ImagePlaceholder({
@@ -8,7 +8,7 @@ export function ImagePlaceholder({
 }: {
   seed: string;
   regionId: string;
-  children: any;
+  children: ReactNode;
 }) {
   const [isLoading, region] = useDetails(regionId);
 
