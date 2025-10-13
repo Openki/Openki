@@ -1,14 +1,29 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { ActionButton } from "/imports/ui/components/buttons";
 
-export function ButtonCourseArchive(){
+export function ButtonCourseArchive({
+  className,
+  disabled,
+  onArchive,
+  children,
+}: {
+  className: string;
+  disabled?: boolean | undefined;
+  onArchive: () => Promise<void>;
+  children: any;
+}) {
+  const { t } = useTranslation();
 
-  return  <button type="submit" className="btn {{buttonClass}} js-course-archive" {{disabledIfBusy}}>
-    {{#if busy 'archive'}}
-      <span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
-      {{i18n 'course.archive.archiveButton.archiving' 'Archiving…'}}
-    {{else}}
-      {{textIdle}}
-    {{/if}}
-  </button>
+  return (
+    <ActionButton
+      className={`btn ${className}`}
+      disabled={disabled}
+      needsLogin
+      onClick={onArchive}
+      busyText={t("course.archive.archiveButton.archiving", "Archiving…")}
+    >
+      {children}
+    </ActionButton>
+  );
 }
