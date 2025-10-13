@@ -20,7 +20,10 @@ describe("Navbar", () => {
       //logout
       cy.get('[data-test="navbar-login-button"]').click();
       cy.get("#bs-navbar-collapse button.btn").click();
-      cy.get('[data-test="navbar-login-button"]').should("contains.text", "Log in/register");
+      cy.get('[data-test="navbar-login-button"] span.fa-solid').should(
+        "have.class",
+        "fa-right-to-bracket",
+      );
     });
 
     it("should support show more region", function () {
@@ -64,7 +67,10 @@ describe("Navbar", () => {
         .should("not.have.class", "show")
         .should("not.have.class", "collapsing");
       cy.get('[data-test="navbar-toggler"] i.fa-bars').should("be.visible").click();
-      cy.get('[data-test="navbar-login-button"]').should("be.visible");
+      cy.get('[data-test="navbar-login-button"] span.fa-solid').should(
+        "have.class",
+        "fa-right-to-bracket",
+      );
     });
 
     it("should support show more region", function () {
