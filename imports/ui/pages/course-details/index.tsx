@@ -270,7 +270,7 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
         </div>
 
         <div className="col-lg-4">
-          {!mobileViewport && <Events course={course} />}
+          {!mobileViewport() && <Events course={course} />}
 
           <div className="page-component">
             <Members course={course} />
