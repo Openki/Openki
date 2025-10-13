@@ -1,31 +1,5 @@
 <template name="venuesMapPage">
 
-  <div class="container-fluid">
-    <h1>
-      {{#if regionName}}
-        {{i18n 'venues.list.titleForRegion' 'Venues in region {REGION}' REGION=regionName}}
-      {{else}}
-        {{i18n 'venues.list.title' 'Venues'}}
-      {{/if}}
-    </h1>
-    <div class="row">
-      <div class="col-2 d-none d-md-block">
-        {{#if haveVenues}}
-          <ul class="list-group">
-            {{#each venue in venues}}
-              {{> locationCandidate marker=venue handles=handles}}
-            {{/each}}
-          </ul>
-        {{else}}
-          {{i18n 'venues.list.noneFound' "No venues found"}}
-        {{/if}}
-        <a class="btn btn-secondary mt-3"
-           href="{{pathFor 'venueDetails' _id='create'}}">{{i18n 'profile.createNewVenue.button'}}</a>
-      </div>
-      <div class="col-12 col-md-10 venues-map-location-map">
-        {{> map markers=venueMarkers}}
-      </div>
-    </div>
-  </div>
+
 
 </template>
