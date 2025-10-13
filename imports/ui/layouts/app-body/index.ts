@@ -81,19 +81,8 @@ template.onRendered(() => {
   window.addEventListener("resize", () => {
     Viewport.update();
   });
-  Session.set("isRetina", window.devicePixelRatio === 2);
   Tooltips.enable();
   FormsValidation.enable();
-});
-
-template.events({
-  /* Workaround to prevent iron-router from messing with server-side downloads
-   *
-   * Class 'js-download' must be added to those links.
-   */
-  "click .js-download"(event) {
-    event.stopPropagation();
-  },
 });
 
 routerAutoscroll.marginTop = ScssVars.navbarHeight;
