@@ -151,9 +151,3 @@ export function Discussion({ select, courseId, eventId }: Props) {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("Discussion", () => Discussion);
