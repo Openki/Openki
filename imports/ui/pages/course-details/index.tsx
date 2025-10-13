@@ -215,70 +215,89 @@ export function CourseDetailsPage(data:Props) {
     );
   })
 
-  
+
   return   <div data-test="course-details" className="container">
     <div className="row course-page g-3">
       <div className="col-lg-8">
         <div className="page-component">
-          {{#if course.archived}}
-            <div className="alert alert-archived text-center" role="alert">
-              <strong>{t('course.archive.alert', '{COURSE} is archived and not active anymore.', {COURSE:course.name})}</strong>
+          {course.archived && (
+            <div
+              className="alert alert-archived text-center"
+              role="alert"
+            >
+              <strong>
+                {t("course.archive.alert", "{COURSE} is archived and not active anymore.", {
+                  COURSE: course.name,
+                })}
+              </strong>
             </div>
-          {{/if}}
-          {{#if edit}}
-            {{> courseEdit course}}
-          {{else}}
-            <div className="course-details {{courseStateClasses course}}">
-              {{> courseDetailsHeader course=course}}
-              {{> courseDetailsSubmenu course=course}}
-            </div>
-            {{#if mayShare course}}
-              <div className="p-3 shariff-wrapper text-end" id="share">
-                <h4>{t('sharing.title', 'Invite your friends')}</h4>
-                {{> sharing}}
+          )}
+
+          {edit ? (
+            <CourseEdit course={course} />
+          ) : (
+            <>
+              <div className={`course-details ${courseStateClasses(course)}`}>
+                <CourseDetailsHeader course={course} />
+                <CourseDetailsSubmenu course={course} />
               </div>
-            {{/if}}
-            {{#if (mayEdit course)}}
-              <div className="actions">
-                {{> buttonEdit event="js-course-edit"}}
-                {{#if course.archived}}
-                  {{> buttonCourseUnarchive}}
-                {{/if}}
-                {{#unless expanded}}
-                  {{#unless course.archived}}
-                    {{> buttonCourseArchive 
-										buttonclassName="btn-archive"
-										textIdle=(i18n 'course.archive.archiveButton.archive' 'Archive')
-									}}
-                  {{/unless}}
-                  {{> buttonDelete event="js-expand"}}
-                {{/unless}}
-              </div>
-              {{#if expanded}}
-                {{> confirmDialog hasArchiveButton=course.archived course=course}}
-              {{/if}}
-            {{/if}}
-            {{> courseRoles course=course}}
-          {{/if}}
+
+              {mayShare(course) && (
+                <div className="p-3 shariff-wrapper text-end" id="share">
+                  <h4>{t("sharing.title", "Invite your friends")}</h4>
+                  <Sharing />
+                </div>
+              )}
+
+              {mayEdit(course) && (
+                <div className="actions">
+                  <ButtonEdit event="js-course-edit" />
+
+                  {course.archived && <ButtonCourseUnarchive />}
+
+                  {!expanded && !course.archived && (
+                    <ButtonCourseArchive
+                      buttonClassName="btn-archive"
+                      textIdle={t("course.archive.archiveButton.archive", "Archive")}
+                    />
+                  )}
+
+                  {!expanded && <ButtonDelete event="js-expand" />}
+                </div>
+
+                  {expanded && (
+                    <ConfirmDialog
+                      hasArchiveButton={course.archived}
+                      course={course}
+                    />
+                  )}
+              )}
+
+              <CourseRoles course={course} />
+            </>
+          )}
         </div>
-        {{#if mobileViewport}}
-          {{> courseEvents}}
-        {{else}}
-          {{> discussion courseId=course._id select=select}}
-        {{/if}}
+
+        {mobileViewport ? (
+          <CourseEvents />
+        ) : (
+          <Discussion courseId={course._id} select={select} />
+        )}
       </div>
+
       <div className="col-lg-4">
-        {{#unless mobileViewport}}
-          {{> courseEvents}}
-        {{/unless}}
+        {!mobileViewport && <CourseEvents />}
+
         <div className="page-component">
-          {{> courseMembers course=course}}
+          <CourseMembers course={course} />
         </div>
-        {{#if mobileViewport}}
-          {{> discussion courseId=course._id select=select}}
-        {{/if}}
+
+        {mobileViewport && (
+          <Discussion courseId={course._id} select={select} />
+        )}
+
         <div className="page-component mt-3">
-          {{> report}}
+          <Report />
         </div>
       </div>
     </div>
