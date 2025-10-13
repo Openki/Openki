@@ -84,7 +84,7 @@ export class InvitationsCollection extends Mongo.Collection<InvitationEntity> {
 
     options.sort = order;
 
-    return this.find(find, options) as Mongo.Cursor<InvitationEntity>;
+    return this.find(find, options) satisfies Mongo.Cursor<InvitationEntity>;
   }
 }
 

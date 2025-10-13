@@ -242,7 +242,7 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
     check(skip, Match.Maybe(Match.Integer));
     check(sort, Match.Maybe([FieldSortPattern]));
 
-    const find: any = {};
+    const find: Mongo.Selector<CourseEntity> = {};
     const options: Mongo.Options<CourseEntity> = {};
     const order = sort;
 
@@ -363,7 +363,13 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
       history: 0,
     };
 
-    return this.find(find, options) as Mongo.Cursor<CourseEntity, CourseModel>;
+    return this.find(find, options) satisfies Mongo.Cursor<
+      CourseEntity,
+      // Remove props excluded by projection from the type
+      {
+        members: Omit<CourseModel["members"][number], "comment">[];
+      } & Omit<CourseModel, "members" | "history">
+    >;
   }
 }
 

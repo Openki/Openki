@@ -1,5 +1,5 @@
 import { LatLngBoundsExpression, LatLngExpression, CRS } from "leaflet";
-import React from "react";
+import React, { ReactNode } from "react";
 import { MapContainer, LayersControl, TileLayer, useMapEvent } from "react-leaflet";
 import { TileLayers } from "../../TileLayer";
 import { useDetails } from "/imports/api/regions/publications";
@@ -27,7 +27,7 @@ export function RegionMapContainer({
   ref?: any | undefined;
   level?: number | undefined;
   onLevelChange?: (newValue: number) => void;
-  children: any;
+  children: ReactNode;
 } & (
   | {
       center: LatLngExpression;

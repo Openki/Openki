@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
@@ -6,7 +6,7 @@ import { UnsubscribeLink, Props as UnsubscribeLinkProps } from "./UnsubscribeLin
 
 export interface Props {
   receiveNote?: string | undefined;
-  children?: any | undefined;
+  children?: ReactNode | undefined;
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   spamPrevention?: boolean | undefined;
   campaign: string;

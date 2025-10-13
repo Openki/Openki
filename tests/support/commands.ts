@@ -43,7 +43,7 @@ Cypress.Commands.add("callMethod", (method: string, ...params: any[]) => {
     });
 
     return new Cypress.Promise((resolve, reject) => {
-      Meteor.call(method, ...params, (err: any, result: unknown) => {
+      Meteor.call(method, ...params, (err: unknown, result: unknown) => {
         if (err) {
           reject(err);
           return;
@@ -62,7 +62,7 @@ Cypress.Commands.add("logout", () => {
     });
 
     return new Cypress.Promise((resolve, reject) => {
-      Meteor.logout((err: any) => {
+      Meteor.logout((err: unknown) => {
         if (err) {
           reject(err);
           return;
@@ -83,7 +83,7 @@ Cypress.Commands.add("login", (username: string, password = "greg") => {
         });
 
         return new Cypress.Promise((resolve, reject) => {
-          Meteor.loginWithPassword(username, password, (err: any) => {
+          Meteor.loginWithPassword(username, password, (err: unknown) => {
             if (err) {
               reject(err);
               return;
