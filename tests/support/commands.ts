@@ -119,9 +119,10 @@ Cypress.Commands.add(
     if (state && "username" in state) {
       cy.login(state.username, state.password);
     } else {
-      cy.logout();
-      localStorage.setItem("locale", state?.locale ?? "de");
-      localStorage.setItem("region", state?.region ?? "all");
+      cy.logout().then(() => {
+        localStorage.setItem("locale", state?.locale ?? "en");
+        localStorage.setItem("region", state?.region ?? "all");
+      });
     }
 
     cy.allSubscriptionsReady();
