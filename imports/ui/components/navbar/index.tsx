@@ -11,6 +11,7 @@ import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 import { useMeteorStatus } from "/imports/utils/react-meteor-data";
 import { useSiteName } from "/imports/utils/getSiteName";
+import { Introduction } from "../../lib/introduction";
 
 import { Collapse } from "/imports/startup/client/bootstrap";
 import { RegionSelectionWrap } from "/imports/ui/components/regions/selection";
@@ -115,9 +116,14 @@ export function Navbar() {
         {/* Brand and toggle get grouped for better mobile display  */}
         <div className="navbar-container container-fluid">
           <a
-            className="navbar-brand js-toggle-introduction me-4"
+            className="navbar-brand me-4"
             href={PublicSettings.nav.brandLink}
             onClick={() => {
+              // Clicks on the logo toggle the intro blurb, but only when already on home
+              if (currentRouteName === "home") {
+                Introduction.showIntro();
+              }
+
               close();
             }}
           >
