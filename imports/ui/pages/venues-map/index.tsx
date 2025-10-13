@@ -1,14 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Mongo } from "meteor/mongo";
 import { Router } from "meteor/iron:router";
+import { useSession } from "/imports/utils/react-meteor-data";
 
 import { VenueEntity, VenueModel } from "/imports/api/venues/venues";
 import { useDetails } from "/imports/api/regions/publications";
 
 import * as Metatags from "/imports/utils/metatags";
 
-import { LocationCandidate } from "./location-candidate";
+import { MapContainer, Marker } from "react-leaflet";
+import { RegionMapContainer } from "../../components/location/display/RegionMapContainer";
+import { TileLayers } from "../../components/TileLayer";
+import { FullscreenControl } from "../../components/FullscreenControl";
+import { DivIcon } from "leaflet";
+import { isOnCustomMap } from "/imports/utils/isOnCustomMap";
 
 import "./styles.scss";
 
@@ -17,13 +23,11 @@ export interface Data {
   venues: Mongo.Cursor<VenueEntity, VenueModel>;
 }
 
-export interface Data {
-  region: string | undefined;
-  venues: Mongo.Cursor<VenueEntity, VenueModel>;
-}
-
 export function VenuesMap({ region: regionId, venues }: Data) {
   const { t } = useTranslation();
+  const locale = useSession("locale");
+  const [selectedVenue, setSelectedVenue] = useState("");
+
   const [isLoading, region] = useDetails(regionId || "-1");
 
   useEffect(() => {
@@ -34,26 +38,100 @@ export function VenuesMap({ region: regionId, venues }: Data) {
     return null;
   }
 
+  const venueMarkerIcon = new DivIcon({
+    html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
+    className: "leaflet-marker-icon-pin",
+  });
+  const venueMarkerShadowIcon = new DivIcon({
+    html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
+    className: "leaflet-marker-icon-shadow",
+  });
+
+  const venueMarkerIconActive = new DivIcon({
+    html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
+    className: "leaflet-marker-icon-pin active",
+  });
+  const venueMarkerShadowIconActive = new DivIcon({
+    html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
+    className: "leaflet-marker-icon-shadow active",
+  });
+
+  const markers = venues
+    .fetch()
+    .filter((v) => !(!region && isOnCustomMap(v)))
+    .map((v) => ({
+      _id: v._id,
+      loc: { lat: v.loc.coordinates[1], lng: v.loc.coordinates[0] },
+      venue: v,
+    }));
+
+  const children = (
+    <>
+      {markers.map((mark) => (
+        <React.Fragment key={mark._id}>
+          <Marker
+            position={mark.loc as any}
+            icon={selectedVenue === mark.venue._id ? venueMarkerIconActive : venueMarkerIcon}
+            eventHandlers={{
+              click: () => {
+                Router.go("venueDetails", mark.venue);
+              },
+              mouseover: () => {
+                setSelectedVenue(mark.venue._id);
+              },
+              mouseout: () => {
+                setSelectedVenue("");
+              },
+            }}
+          ></Marker>
+          <Marker
+            position={mark.loc as any}
+            icon={
+              selectedVenue === mark.venue._id ? venueMarkerShadowIconActive : venueMarkerShadowIcon
+            }
+          ></Marker>
+        </React.Fragment>
+      ))}
+      <FullscreenControl />
+    </>
+  );
+
   return (
     <div className="container-fluid">
       <h1>
-        {!!region
+        {region
           ? t("venues.list.titleForRegion", "Venues in region {REGION}", { REGION: region.name })
           : t("venues.list.title", "Venues")}
       </h1>
       <div className="row">
         <div className="col-2 d-none d-md-block">
           {venues.count() > 0 ? (
-            <ul className="list-group">
-              {/* {venues.map(venue=>
-              <LocationCandidate marker={venue} handles={handles}/>
-
-              )} */}
-            </ul>
+            <div className="list-group">
+              {venues.map((venue) => (
+                <a
+                  key={venue._id}
+                  href={Router.path("venueDetails", venue)}
+                  className={`list-group-item list-group-item-action list-group-item-primary ${
+                    selectedVenue === venue._id ? "active" : ""
+                  }`}
+                  onMouseEnter={() => {
+                    setSelectedVenue(venue._id);
+                  }}
+                  onMouseLeave={() => {
+                    setSelectedVenue("");
+                  }}
+                >
+                  {venue.name}
+                  <div className="address">
+                    <small>{venue.address}</small>
+                  </div>
+                </a>
+              ))}
+            </div>
           ) : (
             t("venues.list.noneFound", "No venues found")
           )}
-          
+
           <a
             className="btn btn-secondary mt-3"
             href={Router.path("venueDetails", { _id: "create" })}
@@ -62,9 +140,29 @@ export function VenuesMap({ region: regionId, venues }: Data) {
           </a>
         </div>
         <div className="col-12 col-md-10 venues-map-location-map">
-          {/* {{> map markers=venueMarkers}} */}
+          {!region ? (
+            <MapContainer
+              bounds={markers.length > 0 ? (markers.map((mark) => mark.loc) as any) : undefined}
+            >
+              {TileLayers[locale] || TileLayers.default}
+              {children}
+            </MapContainer>
+          ) : (
+            <RegionMapContainer
+              region={region._id}
+              bounds={markers.length > 0 ? (markers.map((mark) => mark.loc) as any) : undefined}
+            >
+              {children}
+            </RegionMapContainer>
+          )}
         </div>
       </div>
     </div>
   );
 }
+
+// for Blaze
+
+import "./template.html";
+
+Template.registerHelper("VenuesMapPage", () => VenuesMap);

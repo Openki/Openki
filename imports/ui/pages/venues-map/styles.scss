@@ -1,4 +1,79 @@
-.venues-map-location-map > .map-box {
+@import "{}/imports/ui/stylesheets/variables/index";
+
+.venues-map-location-map .leaflet-attribution-flag {
+  display: none !important;
+}
+
+.venues-map-location-map .leaflet-marker-icon {
+  background: none;
+  border: 0;
+  color: $blue;
+  -webkit-text-stroke: 1px #0000003d;
+
+  .fa-regular,
+  .fa-brands,
+  .fa-solid {
+    font-size: 40px;
+  }
+}
+
+.venues-map-location-map,
+.venues-map-location-map > .leaflet-container {
   height: 600px;
-  width: 100%;
+}
+
+.venues-map-location-map .leaflet-marker-icon-shadow {
+  pointer-events: none;
+  text-shadow:
+    -5px -5px 10px #ffffffab,
+    5px -10px 10px #ffffffba,
+    5px 5px 10px #0009,
+    2px 3px 4px #000000bf;
+  z-index: 0 !important;
+}
+
+.venues-map-location-map .leaflet-marker-icon-pin:hover {
+  animation: 0.4s ease-in-out 0s 2 alternate pin-top;
+}
+
+.venues-map-location-map .leaflet-marker-icon-pin.active {
+  animation: 0.4s ease-in-out 0s infinite alternate pin-top;
+}
+
+@keyframes pin-top {
+  0% {
+    top: 0;
+  }
+
+  100% {
+    top: -5px;
+  }
+}
+
+.venues-map-location-map .leaflet-marker-icon-pin:hover + .leaflet-marker-icon-shadow {
+  animation: 0.4s ease-in-out 0s 2 alternate shadow-top;
+}
+
+.venues-map-location-map .leaflet-marker-icon-pin.active + .leaflet-marker-icon-shadow {
+  animation: 0.4s ease-in-out 0s infinite alternate shadow-top;
+}
+
+@keyframes shadow-top {
+  0% {
+    text-shadow:
+      -5px -5px 10px #ffffffab,
+      5px -10px 10px #ffffffba,
+      5px 5px 10px #0009,
+      2px 3px 4px #000000bf;
+    top: 0;
+  }
+
+  100% {
+    text-shadow:
+      -3px -3px 15px #ffffffab,
+      7px -8px 15px #ffffffba,
+      7px 7px 15px #0009,
+      3px 4px 9px #000000bf;
+    top: -5px;
+  }
 }
