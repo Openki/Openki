@@ -8,7 +8,7 @@ import { ScssVars } from "/imports/ui/lib/scss-vars";
 
 import { useFindFilter } from "/imports/api/courses/publications";
 import { LoadingPage } from "/imports/ui/pages/loading";
-import { CourseList } from "/imports/ui/components/courses/list";
+import { CourseList } from "../../courses/List";
 import { useRoleDisplay } from "../../../lib/useRoleDisplay";
 
 import "./styles.scss";
@@ -142,9 +142,3 @@ export function Courselist(data: { user: UserModel; ownProfile: boolean }) {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("UsersCourselist", () => CourseList);

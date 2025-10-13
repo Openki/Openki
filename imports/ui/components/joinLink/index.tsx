@@ -6,7 +6,7 @@ import { TenantModel } from "/imports/api/tenants/tenants";
 import * as JoinLinks from "/imports/api/joinLinks/publications";
 import * as JoinLinksMethods from "/imports/api/joinLinks/methods";
 
-import { JoinLinkCreate } from "./create";
+import { JoinLinkCreate } from "./Create";
 import { JoinLinkRebuild } from "./rebuild";
 import { DeleteConfirm, type Props as DeleteConfirmProps } from "../DeleteConfirm";
 
@@ -75,8 +75,3 @@ export function JoinLink({ tenant }: Props) {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-Template.registerHelper("JoinLink", () => JoinLink);

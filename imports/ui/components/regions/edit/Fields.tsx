@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment-timezone";
 import { useTranslation } from "react-i18next";
+import { getLocation } from "/imports/utils/user-location";
 
 import { Coordinates, Edit as LocationEdit } from "/imports/ui/components/location/edit";
 
@@ -133,9 +134,3 @@ export function Fields({ region, onChange }: Props) {
     </>
   );
 }
-
-// for Blaze
-import "./template.html";
-import { getLocation } from "/imports/utils/user-location";
-
-Template.registerHelper("RegionEditFields", () => Fields);

@@ -12,9 +12,9 @@ import * as Analytics from "/imports/ui/lib/analytics";
 import * as Metatags from "/imports/utils/metatags";
 import { useTranslation } from "react-i18next";
 
-import { Fields } from "../../components/regions/edit/fields";
+import { Fields } from "../../components/regions/edit/Fields";
 import { PleaseLogin } from "../../components/please-login";
-import { ButtonCancel, ButtonSubmit } from "../../components/buttons";
+import { ButtonCancel, ButtonSubmit } from "../../components/Buttons";
 
 export interface Data {
   tenant: TenantModel;

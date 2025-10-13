@@ -1,6 +1,5 @@
 import { useTranslation } from "react-i18next";
 import React from "react";
-import { Template } from "meteor/templating";
 
 import * as JoinLinks from "/imports/api/joinLinks/methods";
 
@@ -19,9 +18,3 @@ export function JoinLinkCreate(props: { tenantId: string }) {
     </button>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("JoinLinkCreate", () => JoinLinkCreate);

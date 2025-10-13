@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Template } from "meteor/templating";
 
 import * as JoinLinks from "/imports/api/joinLinks/methods";
 
-import { ButtonCancel } from "/imports/ui/components/buttons";
+import { ButtonCancel } from "../../Buttons";
 
 import "./styles.scss";
 
@@ -58,9 +57,3 @@ export function JoinLinkRebuild({ tenantId }: Props) {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("JoinLinkRebuild", () => JoinLinkRebuild);

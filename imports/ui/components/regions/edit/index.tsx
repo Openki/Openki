@@ -5,8 +5,8 @@ import { RegionEntity } from "/imports/api/regions/regions";
 import { Geodata } from "/imports/api/Geodata";
 import * as Alert from "/imports/api/alerts/alert";
 
-import { Fields } from "./fields";
-import { ButtonCancel, ButtonSave } from "../../buttons";
+import { Fields } from "./Fields";
+import { ButtonCancel, ButtonSave } from "../../Buttons";
 import { PleaseLogin } from "../../please-login";
 
 import "./styles.scss";
@@ -82,8 +82,3 @@ export function Edit(data: Data) {
     </div>
   );
 }
-
-// for Blaze
-import "./template.html";
-
-Template.registerHelper("RegionEdit", () => Edit);

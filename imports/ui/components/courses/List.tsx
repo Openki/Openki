@@ -61,9 +61,3 @@ export function CourseList({
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("CourseList", () => CourseList);

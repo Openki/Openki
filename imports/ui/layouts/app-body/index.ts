@@ -65,8 +65,6 @@ template.helpers({
   },
 });
 
-
-
 template.onRendered(() => {
   Viewport.update();
   window.addEventListener("resize", () => {

@@ -23,7 +23,7 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { SendMessage, Data as SendMessageData } from "/imports/ui/components/send-message";
 
 import { Courselist } from "../../components/profiles/course-list";
-import { Button, ButtonCancel, ButtonDelete } from "../../components/buttons";
+import { Button, ButtonCancel, ButtonDelete } from "../../components/Buttons";
 
 export interface Props {
   user: UserModel;

@@ -1,12 +1,11 @@
 import React from "react";
-import { Template } from "meteor/templating";
 import { useTranslation } from "react-i18next";
 
 import { useAll } from "/imports/api/regions/publications";
 
 import "./styles.scss";
 
-export function RegionTag(props: { region: string }) {
+export function Tag(props: { region: string }) {
   const { t } = useTranslation();
   const [isLoading, regions] = useAll();
 
@@ -26,9 +25,3 @@ export function RegionTag(props: { region: string }) {
 
   return null;
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("RegionTag", () => RegionTag);

@@ -105,9 +105,3 @@ export function GroupList({ course }: Props) {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("CourseGroupList", () => GroupList);

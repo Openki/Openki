@@ -5,7 +5,7 @@ import React from "react";
 import { CourseModel } from "/imports/api/courses/courses";
 
 import { CourseCategories } from "/imports/ui/components/courses/categories";
-import { RegionTag } from "/imports/ui/components/regions/tag";
+import { Tag } from "/imports/ui/components/regions/tag";
 import { GroupList } from "/imports/ui/components/courses/display/group-list";
 
 import "./styles.scss";
@@ -59,7 +59,7 @@ export function EventCourseHeader(props: Props) {
       <h2>{props.title}</h2>
       {!!props.categories && <CourseCategories categories={props.categories} />}
       {!!props.course && <GroupList course={props.course} />}
-      <RegionTag region={props.regionId} />
+      <Tag region={props.regionId} />
     </div>
   );
 }

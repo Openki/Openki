@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import React, { useState } from "react";
 
-import { ButtonSave, ButtonCancel } from "../buttons";
+import { ButtonSave, ButtonCancel } from "../Buttons";
 
 import "./styles.scss";
 
@@ -136,9 +136,3 @@ export function FileUpload({ accept, onUpload, onCancel }: Props) {
     </>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("FileUpload", () => FileUpload);

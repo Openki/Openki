@@ -1,7 +1,6 @@
 import { debounce } from "lodash";
 import { useTranslation } from "react-i18next";
 import React, { useCallback, useState } from "react";
-import { Template } from "meteor/templating";
 
 import "./styles.scss";
 
@@ -67,9 +66,3 @@ export function SearchField({ search, color, onChange, onFocusOut }: Props) {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("SearchField", () => SearchField);

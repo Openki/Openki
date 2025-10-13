@@ -19,7 +19,7 @@ import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 
 import { Dashboard, Props as DashboardProps } from "../../components/dashboard";
-import { ButtonCancel, ButtonSave } from "/imports/ui/components/buttons";
+import { ButtonCancel, ButtonSave } from "../../components/Buttons";
 import { GroupSettings } from "/imports/ui/components/groups/settings";
 import { Find } from "../../components/courses/find";
 import { VenueTag } from "../../components/venues/link";

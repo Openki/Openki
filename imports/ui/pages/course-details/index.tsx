@@ -23,7 +23,7 @@ import { Sharing } from "../../components/sharing";
 import { Events } from "../../components/courses/events";
 import { Discussion } from "../../components/courses/discussion";
 import { Members } from "../../components/courses/members";
-import { ButtonDelete, ButtonEdit } from "../../components/buttons";
+import { ButtonDelete, ButtonEdit } from "../../components/Buttons";
 import { Roles } from "../../components/courses/roles";
 import { Submenu } from "./submenu";
 import { Header } from "./header";

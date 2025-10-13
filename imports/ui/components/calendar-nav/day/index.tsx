@@ -6,7 +6,7 @@ import { useUser } from "/imports/utils/react-meteor-data";
 
 import { SearchField } from "../../search-field";
 import { Control } from "./Control";
-import { FilterGroups } from "../../filter-groups";
+import { FilterGroups } from "../../FilterGroups";
 import { FilterCategories } from "../../filter-categories";
 import { Direction } from "../Arrow";
 
