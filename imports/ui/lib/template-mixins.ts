@@ -29,7 +29,7 @@ export function Expandible<N extends string, D, T extends Record<string, unknown
   const Template = TemplateBase as TemplateStaticTyped<
     N,
     D,
-    T & { _expander: string; expanded: () => void; collapse: () => void }
+    T & { _expander: string; expanded: () => boolean; collapse: () => void }
   >;
 
   const template = Template[templateName];
