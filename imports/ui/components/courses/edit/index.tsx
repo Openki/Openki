@@ -16,11 +16,11 @@ import { hasRoleUser } from "/imports/utils/course-role-utils";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 
-import { RegionTag } from "../../regions/tag";
+import { Tag } from "../../regions/tag";
 import { Title } from "./title";
 import { PricePolicy } from "../../price-policy";
-import { Role, Props as CourseEditRoleProps } from "./role";
-import { ButtonCancel, ButtonSave } from "../../buttons";
+import { Role, Props as CourseEditRoleProps } from "./Role";
+import { ButtonCancel, ButtonSave } from "../../Buttons";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useAll as useRegionsAll } from "/imports/api/regions/publications";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
@@ -32,7 +32,7 @@ import { useDetails, useFindFilter as useGroupsFindFilter } from "/imports/api/g
 
 import { useSiteName } from "/imports/utils/getSiteName";
 import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
-import { SelectCategories } from "../select-categories";
+import { SelectCategories } from "../SelectCategories";
 import { CourseCategories } from "../categories";
 import { EditCustomFields } from "../../EditCustomFields";
 import { mayShare } from "./mayShare";
@@ -703,7 +703,7 @@ export function Edit(data: Data) {
       <PleaseLogin type="form" onSubmit={handleSave}>
         {data.filter ? <FindHeader {...{ ...data, filter: data.filter }} /> : <Header {...data} />}
         <div className={`edit-page-body course-edit-body ${editBodyClasses()}`}>
-          {!!data._id && !!data.region && <RegionTag region={data.region} />}
+          {!!data._id && !!data.region && <Tag region={data.region} />}
           {showSavedMessage() && !!savedCourseId && (
             <AlertMessage
               isFrame={data.isFrame}
@@ -877,9 +877,3 @@ export function Edit(data: Data) {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("CourseEdit", () => Edit);

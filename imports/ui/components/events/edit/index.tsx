@@ -23,13 +23,13 @@ import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/public
 import { useAll } from "/imports/api/regions/publications";
 
 import { useTranslation } from "react-i18next";
-import { RegionTag } from "../../regions/tag";
+import { Tag } from "../../regions/tag";
 import { Richtext } from "../../richtext";
 import { PricePolicy } from "../../price-policy";
 import { EditVenue } from "../edit-venue";
 import { EditCustomFields } from "../../EditCustomFields";
 import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
-import { ButtonCancel, ButtonSave } from "/imports/ui/components/buttons";
+import { ButtonCancel, ButtonSave } from "../../Buttons";
 import { Notify } from "../Notify";
 import { EditStartEnd } from "./EditStartEnd";
 import { UpdateAffectedReplica } from "./UpdateAffectedReplica";
@@ -437,7 +437,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
         )}
 
         <div className="edit-page-header event-edit">
-          {!isNew && !event.courseId && <RegionTag region={event.region} />}
+          {!isNew && !event.courseId && <Tag region={event.region} />}
 
           <div className="mb-3">
             <label className="form-label">{t("course.event.edit.title", "Event title")}</label>

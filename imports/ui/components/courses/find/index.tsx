@@ -21,7 +21,7 @@ import {
 
 import { useTranslation } from "react-i18next";
 import { SearchField } from "/imports/ui/components/search-field";
-import { CourseList } from "/imports/ui/components/courses/list";
+import { CourseList } from "../List";
 import { Edit } from "/imports/ui/components/courses/edit";
 import { useFindFilter } from "/imports/api/courses/publications";
 import { LoadingPage } from "/imports/ui/pages/loading";

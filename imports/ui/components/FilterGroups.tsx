@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import { Template } from "meteor/templating";
 import React from "react";
 
 import { useDetails } from "/imports/api/groups/publications";
@@ -52,9 +51,3 @@ export function FilterGroups({ availableGroups, selectedGroups, onAdd, onRemove 
     </ReactSelect2>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("FilterGroups", () => FilterGroups);

@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { ActionButton } from "/imports/ui/components/buttons";
+import { ActionButton } from "../../../components/Buttons";
 
 export function ButtonCourseArchive({
   className,

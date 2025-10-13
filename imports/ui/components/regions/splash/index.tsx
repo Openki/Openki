@@ -9,7 +9,7 @@ import { useSiteName } from "/imports/utils/getSiteName";
 
 import "./styles.scss";
 
-export function RegionSplash() {
+export function Splash() {
   const { t } = useTranslation();
   const elementRef = useRef<HTMLDivElement>(null);
   const siteName = useSiteName();
@@ -101,4 +101,4 @@ export function RegionSplash() {
 
 import "./template.html";
 
-Template.registerHelper("RegionSplash", () => RegionSplash);
+Template.registerHelper("RegionSplash", () => Splash);

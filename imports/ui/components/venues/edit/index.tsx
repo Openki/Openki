@@ -14,7 +14,7 @@ import { Edit as LocationEdit } from "../../location/edit";
 
 import { AdditionalInfo, type Data as AdditionalInfoData } from "./additional-info";
 import { Richtext } from "/imports/ui/components/richtext";
-import { ButtonCancel, ButtonSave } from "/imports/ui/components/buttons";
+import { ButtonCancel, ButtonSave } from "../../Buttons";
 
 import "./styles.scss";
 

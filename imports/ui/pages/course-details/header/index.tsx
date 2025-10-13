@@ -9,7 +9,7 @@ import { CourseModel } from "/imports/api/courses/courses";
 import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 import { InternalIndicator } from "/imports/ui/components/internal-indicator";
 import { SingleEventIndicator } from "/imports/ui/components/single-event-indicator";
-import { RegionTag } from "/imports/ui/components/regions/tag";
+import { Tag } from "/imports/ui/components/regions/tag";
 import { CourseCategories } from "/imports/ui/components/courses/categories";
 import { GroupList } from "/imports/ui/components/courses/display/group-list";
 
@@ -71,7 +71,7 @@ export function Header({ course }: { course: CourseModel }) {
             {t("course.details.is-proposalTag", "Proposal")}
           </div>
         )}
-        <RegionTag region={course.region} />
+        <Tag region={course.region} />
       </div>
       <div className="course-details-title">
         {course?.editableBy(user) ? <Editable {...editableNameAttr} /> : <h2>{course.name}</h2>}

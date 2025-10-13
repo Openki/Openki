@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import { useTranslation } from "react-i18next";
-import { PleaseLogin } from "../please-login";
-
-import "/imports/ui/components/buttons";
+import { PleaseLogin } from "./please-login";
 
 export function ActionButton({
   className,
@@ -210,21 +207,3 @@ export function ButtonDelete({
     </PleaseLogin>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-const Template = TemplateAny as TemplateStaticTyped<"button", Record<string, string>>;
-
-const template = Template.button;
-
-template.helpers({
-  attributes() {
-    const instance = Template.instance();
-
-    const attributes = { ...instance.data };
-
-    return { ...attributes };
-  },
-});

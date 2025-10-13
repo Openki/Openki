@@ -100,9 +100,3 @@ export function SelectCategories(props: Props) {
     </>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("SelectCategories", () => SelectCategories);

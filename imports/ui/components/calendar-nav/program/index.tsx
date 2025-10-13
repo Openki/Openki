@@ -3,7 +3,7 @@ import moment from "moment";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useTranslation } from "react-i18next";
 
-import { FilterGroups } from "/imports/ui/components/filter-groups";
+import { FilterGroups } from "../../FilterGroups";
 
 import { SearchField } from "../../search-field";
 import { FilterCategories } from "../../filter-categories";

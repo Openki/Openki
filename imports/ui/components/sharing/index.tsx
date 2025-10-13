@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react";
 import { omitBy } from "lodash";
 import Shariff from "shariff";
 import { useTranslation } from "react-i18next";
-import { Template } from "meteor/templating";
 import { Session } from "meteor/session";
 
 import * as Analytics from "/imports/ui/lib/analytics";
@@ -61,9 +60,3 @@ export function Sharing({
 
   return <div ref={shariffElementRef} className="shariff mt-1"></div>;
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("Sharing", () => Sharing);

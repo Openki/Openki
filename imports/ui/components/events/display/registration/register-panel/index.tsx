@@ -6,7 +6,7 @@ import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { EventModel } from "/imports/api/events/events";
 
 import { PleaseLogin } from "/imports/ui/components/please-login";
-import { ButtonCancel } from "/imports/ui/components/buttons";
+import { ButtonCancel } from "../../../../Buttons";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
 function ButtonRegister(props: {
