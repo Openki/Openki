@@ -204,7 +204,7 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
       find._id = { $in: filter.ids };
     }
 
-    return this.find(find, options) satisfies Mongo.Cursor<GroupEntity, GroupModel>;
+    return this.find(find, options) as Mongo.Cursor<GroupEntity, GroupModel>;
   }
 }
 

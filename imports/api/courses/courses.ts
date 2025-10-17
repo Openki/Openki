@@ -363,13 +363,7 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
       history: 0,
     };
 
-    return this.find(find, options) satisfies Mongo.Cursor<
-      CourseEntity,
-      // Remove props excluded by projection from the type
-      {
-        members: Omit<CourseModel["members"][number], "comment">[];
-      } & Omit<CourseModel, "members" | "history">
-    >;
+    return this.find(find, options) as Mongo.Cursor<CourseEntity, CourseModel>;
   }
 }
 

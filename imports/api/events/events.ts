@@ -451,7 +451,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 
     options.sort = sort;
 
-    return this.find(find, options) satisfies Mongo.Cursor<EventEntity, EventModel>;
+    return this.find(find, options) as Mongo.Cursor<EventEntity, EventModel>;
   }
 }
 
