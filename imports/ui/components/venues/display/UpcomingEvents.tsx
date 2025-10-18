@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { EventList } from "../../components/events/list";
+import { EventList } from "../../events/list";
 import * as Events from "/imports/api/events/publications";
 import { useReactiveNow } from "/imports/utils/reactive-now";
 

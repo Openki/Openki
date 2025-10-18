@@ -1,18 +1,5 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
-.venue {
-  margin-bottom: 10px;
-}
-
-.venue .name {
-  font-size: medium;
-}
-
-.venue .description {
-  color: $gray-800;
-  font-size: small;
-}
-
 .location-details-header {
   background-color: $venue-bg;
   color: $venue-color;
