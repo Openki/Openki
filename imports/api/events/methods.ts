@@ -292,9 +292,10 @@ export const save = ServerMethod(
           await Events.findFilter(
             {
               venue: venue._id,
-              period: [event.start, event.end],
+              period: [editFields.start || event.start, editFields.end || event.end],
             },
-            1,
+            /* take two to check for parallel events, maybe one is the current event */
+            2,
           ).fetchAsync()
         ).find((e) => e._id !== event._id);
 
