@@ -7,8 +7,8 @@ import { UserModel } from "/imports/api/users/users";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { EventVenueEntity } from "/imports/api/events/events";
-import { useDetails } from "/imports/api/regions/publications";
-import { useFindFilter } from "/imports/api/venues/publications";
+import * as Regions from "/imports/api/regions/publications";
+import * as Venues from "/imports/api/venues/publications";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 import {
@@ -142,8 +142,8 @@ export function EditVenue({
   const user = useUser();
   const [isLoading, setIsLoading] = useState(false);
 
-  const [isLoadingVenues, venues] = useFindFilter({ region: regionId });
-  const [isLoadingRegion, region] = useDetails(regionId);
+  const [isLoadingVenues, venues] = Venues.useFindFilter({ region: regionId });
+  const [isLoadingRegion, region] = Regions.useDetails(regionId);
   const [options, setOptions] = useState<EventVenueEntity[]>(filterUserVenues(user, venues));
 
   useEffect(() => {
@@ -286,7 +286,7 @@ export function EditVenue({
                     {t("course.event.edit.selectedVenue", "Selected venue")}
                   </label>
                   <div className="form-control d-flex align-items-center">
-                    <VenueTag className="flex-fill" venue={value} />
+                    <VenueTag className="flex-fill" venue={value} openInNewTab />
                     <button
                       type="button"
                       className="btn-close btn-close-black ms-2"
