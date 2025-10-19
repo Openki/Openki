@@ -67,7 +67,7 @@ const ReplicaSync = function (
           end: newStartMoment.add(timeDelta).toDate(),
         });
 
-        const regionZone = await LocalTime.zone(replica.region);
+        const regionZone = await LocalTime.zoneAsync(replica.region);
         Object.assign(replicaChanges, {
           startLocal: regionZone.toString(replicaChanges.start as Date),
           endLocal: regionZone.toString(replicaChanges.end as Date),
@@ -244,7 +244,7 @@ export const save = ServerMethod(
       throw new Meteor.Error(400, "Region not found");
     }
 
-    const regionZone = await LocalTime.zone(region._id);
+    const regionZone = await LocalTime.zoneAsync(region._id);
 
     // Don't allow moving past events or moving events into the past
     // This section needs a rewrite even more than the rest of this method

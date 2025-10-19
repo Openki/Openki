@@ -1,3 +1,4 @@
+import { useTracker } from "meteor/react-meteor-data";
 import { Regions } from "/imports/api/regions/regions";
 import moment from "moment-timezone";
 
@@ -27,6 +28,10 @@ import moment from "moment-timezone";
  * users). This is infeasible. Thus future dates must be stored as local time.
  */
 
+export function useLocalTimeZone(regionId: string) {
+  return useTracker(() => LocalTime.zone(regionId));
+}
+
 export class Zone {
   constructor(public readonly tz: string) {}
 
@@ -44,7 +49,18 @@ export class Zone {
 }
 
 export const LocalTime = {
-  async zone(regionId: string) {
+  zone(regionId: string) {
+    const region = Regions.findOne(regionId);
+    if (!region) {
+      throw new Error(`Unable to load region ${regionId}`);
+    }
+
+    const { tz } = region;
+
+    return new Zone(tz);
+  },
+
+  async zoneAsync(regionId: string) {
     const region = await Regions.findOneAsync(regionId);
     if (!region) {
       throw new Error(`Unable to load region ${regionId}`);

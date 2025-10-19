@@ -65,7 +65,7 @@ export async function create() {
 
     const startLocal = LocalTime.toString(new Date(template.start.$date + dateOffset));
     const endLocal = LocalTime.toString(new Date(template.end.$date + dateOffset));
-    const regionZone = await LocalTime.zone(template.region);
+    const regionZone = await LocalTime.zoneAsync(template.region);
 
     const event = {
       _id: template._id,
@@ -130,7 +130,7 @@ export async function create() {
     const endLocal = LocalTime.toString(
       new Date(new Date(template.end.$date).getTime() + dateOffset),
     );
-    const regionZone = await LocalTime.zone(template.region);
+    const regionZone = await LocalTime.zoneAsync(template.region);
 
     const event = {
       _id: template._id,
