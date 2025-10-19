@@ -46,6 +46,7 @@ export function Edit({
       .map((f) => f[0] as FacilityOption),
     otherFacilities: venue.otherFacilities,
     restrictedUse: venue.restrictedUse,
+    allowParallelEvents: venue.allowParallelEvents,
     selectedRegion: isNew ? sessionRegion : venue.region,
     loc: venue.loc as Geodata | undefined,
     level: venue.level,
@@ -109,6 +110,9 @@ export function Edit({
     }
     if (changes.restrictedUse !== undefined) {
       changes1.restrictedUse = changes.restrictedUse;
+    }
+    if (changes.allowParallelEvents !== undefined) {
+      changes1.allowParallelEvents= changes.allowParallelEvents;
     }
     if (changes.otherFacilities) {
       changes1.otherFacilities = changes.otherFacilities;
@@ -341,6 +345,28 @@ export function Edit({
               {t(
                 "venue.edit.restrictedUse.label",
                 "This venue can only be chosen by its hosts to publish an event.",
+              )}
+            </label>
+          </div>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              value=""
+              id="eventAllowParallelEvents"
+              checked={changes.allowParallelEvents}
+              onChange={(ev) => {
+                const allowParallelEvents = ev.currentTarget.checked;
+                setChanges((prevState) => ({
+                  ...prevState,
+                  allowParallelEvents
+                }));
+              }}
+            />
+            <label className="form-check-label" htmlFor="eventAllowParallelEvents">
+              {t(
+                "venue.edit.allowParallelEvents.label",
+                "Allow overlapping events in this venue",
               )}
             </label>
           </div>

@@ -284,6 +284,26 @@ export const save = ServerMethod(
       }
     }
 
+    if (editFields.venue?._id || event.venue?._id) {
+      const venue = await Venues.findOneAsync(editFields.venue?._id || event.venue?._id);
+
+      if (venue && !venue.allowParallelEvents) {
+        const hasParallelEvents = !!(
+          await Events.findFilter(
+            {
+              venue: venue._id,
+              period: [event.start, event.end],
+            },
+            1,
+          ).fetchAsync()
+        ).find((e) => e._id !== event._id);
+
+        if (hasParallelEvents) {
+          throw new Meteor.Error(400, `This venue not allows to have two parallel events.`);
+        }
+      }
+    }
+
     // prevent to choose a value which is lower than actual registered participants
     if (editFields.maxParticipants) {
       // if maxParticipants is 0 or no participants registered yet,
