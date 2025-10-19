@@ -400,15 +400,15 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       }
 
       afterSave();
+
+      if (isNew) {
+        await MeteorAsync.defer();
+        Router.go("showEvent", { _id: eventId });
+      }
     } catch (err) {
       Alert.serverError(err, t("eventEdit.replicatesUpdated.error", "Saving the event went wrong"));
     } finally {
       setIsBusy(false);
-    }
-
-    if (isNew) {
-      await MeteorAsync.defer();
-      Router.go("showEvent", { _id: eventId });
     }
   }
 
