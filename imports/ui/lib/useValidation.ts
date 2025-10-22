@@ -1,23 +1,22 @@
+import { omit } from "lodash";
 import { JSX, useState } from "react";
 
-export type Mapping = Record<
+export type Mapping<T extends string> = Record<
   string,
   {
+    field: T;
     onCheckValidity?: () => boolean;
     text: () => string | JSX.Element | undefined | null;
-    field: string;
   }
 >;
 
-export function useValidation(mapping: Mapping, initialCheck = false) {
-  const initialState: Record<string, string | JSX.Element | undefined | null> = {};
+export function useValidation<T extends string>(mapping: Mapping<T>, initialCheck = false) {
+  const initialState: Partial<Record<T, string | JSX.Element | undefined | null>> = {};
 
   if (initialCheck) {
-    Object.keys(mapping).forEach((key) => {
-      const m = mapping[key];
+    Object.values(mapping).forEach((m) => {
       if (m.onCheckValidity && !m.onCheckValidity()) {
-        const field = mapping[key].field;
-        initialState[field] = mapping[key].text();
+        initialState[m.field] = m.text();
       }
     });
   }
@@ -25,22 +24,45 @@ export function useValidation(mapping: Mapping, initialCheck = false) {
   const [errors, setErrors] = useState(initialState);
 
   const add = (key: string) => {
-    const field = mapping[key].field;
+    const m = mapping[key];
+    if (!m) {
+      // unknown error, you should handle it differently
+      return false;
+    }
+
+    const field = m.field;
     setErrors((e) => ({
       ...e,
-      [field]: mapping[key].text(),
+      [field]: m.text() || key,
     }));
+
+    return true;
   };
 
-  const resetErrors = () => {
+  const resetErrors = (field?: T) => {
+    if (field) {
+      setErrors((e) => omit(e, field) as typeof e);
+      return;
+    }
+
     setErrors(() => ({}));
   };
 
-  const checkValidity = () => {
+  const checkValidity = (field?: T) => {
+    if (field) {
+      resetErrors(field);
+      let validity = true;
+      Object.entries(mapping).forEach(([key, m]) => {
+        if (m.field === field && m.onCheckValidity && !m.onCheckValidity()) {
+          add(key);
+          validity = false;
+        }
+      });
+      return validity;
+    }
     resetErrors();
     let validity = true;
-    Object.keys(mapping).forEach((key) => {
-      const m = mapping[key];
+    Object.entries(mapping).forEach(([key, m]) => {
       if (m.onCheckValidity && !m.onCheckValidity()) {
         add(key);
         validity = false;
@@ -49,10 +71,5 @@ export function useValidation(mapping: Mapping, initialCheck = false) {
     return validity;
   };
 
-  return [errors, checkValidity, add, resetErrors] as readonly [
-    errors: Record<string, string>,
-    checkValidity: () => boolean,
-    addError: (key: string) => void,
-    resetErrors: () => void,
-  ];
+  return [errors, checkValidity, add, resetErrors] as const;
 }
