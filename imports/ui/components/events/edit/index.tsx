@@ -10,7 +10,7 @@ import { intersection, uniq } from "lodash";
 import moment from "moment";
 import { useSession, useUser } from "/imports/utils/react-meteor-data";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { LocalTime } from "/imports/utils/local-time";
+import { LocalTime, useLocalTimeZone } from "/imports/utils/local-time";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { MeteorAsync } from "/imports/utils/promisify";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
@@ -23,7 +23,9 @@ import * as EventsMethods from "/imports/api/events/methods";
 import { SaveFields } from "/imports/api/events/methods";
 import * as CoursesMethods from "/imports/api/courses/methods";
 import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
+import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 import { useAll } from "/imports/api/regions/publications";
+import * as Events from "/imports/api/events/publications";
 
 import { Tag } from "../../regions/tag";
 import { Richtext } from "../../richtext";
@@ -35,8 +37,66 @@ import { ButtonCancel, ButtonSave } from "../../Buttons";
 import { Notify } from "../Notify";
 import { EditStartEnd } from "./EditStartEnd";
 import { UpdateAffectedReplica } from "./UpdateAffectedReplica";
+import { ReactJoin } from "/imports/utils/ReactJoin";
 
 import "./styles.scss";
+
+function useFindParallelEvents(
+  venueId: string | undefined,
+  regionId: string,
+  event: {
+    _id?: string | undefined;
+    startLocal: string;
+    endLocal: string;
+  },
+) {
+  const regionZone = useLocalTimeZone(regionId);
+
+  const start = regionZone.fromString(event.startLocal).toDate();
+  const end = regionZone.fromString(event.endLocal).toDate();
+
+  const [isLoading, events] = Events.useFindFilter({
+    venue: venueId || "-1",
+    period: [start, end],
+  });
+
+  if (isLoading()) {
+    return [];
+  }
+
+  /* ignore current event */
+  return events.filter((e) => e._id !== event._id);
+}
+
+function OtherEventsMessage({ events }: { events: EventModel[] }) {
+  const { t } = useTranslation();
+
+  return ReactJoin(
+    events.map((e) =>
+      e.room
+        ? t(
+            "event.edit.venue.parallelEvents.otherEventInRoom",
+            `There is the event "{TITLE}" in room "{ROOM}".`,
+            {
+              TITLE: (
+                <a href={Router.path("showEvent", e)} target="_blank" rel="noreferrer">
+                  {e.title}
+                </a>
+              ),
+              ROOM: e.room,
+            },
+          )
+        : t("event.edit.venue.parallelEvents.otherEvent", `There is the event "{TITLE}".`, {
+            TITLE: (
+              <a href={Router.path("showEvent", e)} target="_blank" rel="noreferrer">
+                {e.title}
+              </a>
+            ),
+          }),
+    ),
+    <> </>,
+  );
+}
 
 interface NewEventModel {
   startLocal: string;
@@ -148,6 +208,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   }
 
   const [groupsIsLoading, groups] = useGroupsFindFilter({ ids: getGroups() });
+  const [venueIsLoading, venue] = useVenueDetails(selectedVenue?._id || "-1");
 
   const [updateReplicas, setUpdateReplicas] = useState({
     infos: false,
@@ -173,6 +234,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     room: event.room,
     maxParticipants: event.maxParticipants,
   });
+  const parallelEvents = useFindParallelEvents(selectedVenue?._id, selectedRegion, changes);
 
   const [errors, checkValidity, addError] = useValidation({
     noTitle: {
@@ -238,6 +300,20 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       onCheckValidity: () => !!selectedRegion && selectedRegion !== "all",
       text: () => t("event.edit.plzSelectRegion", "Please select the region for this event"),
     },
+    parallelEvents: {
+      field: "startEndVenue",
+      onCheckValidity: () =>
+        venueIsLoading() || !venue || venue.allowParallelEvents || parallelEvents.length === 0,
+      text: () => (
+        <>
+          {t(
+            "event.edit.venue.parallelEvents.disallowed",
+            "Parallel events in this venue are not allowed.",
+          )}{" "}
+          <OtherEventsMessage events={parallelEvents} />
+        </>
+      ),
+    },
     venueRestricedUse: {
       field: "venue",
       onCheckValidity: () => {
@@ -263,6 +339,9 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     Object.keys(errors).forEach((key) => {
       checkValidity(key as any);
     });
+
+    // loads some resources, so calling checkValidity onChange make unexpected things
+    checkValidity("startEndVenue");
   });
 
   function showRegionSelection() {
@@ -595,6 +674,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                       value={changes.room}
                       onChange={(ev) => {
                         setChanges({ ...changes, room: ev.currentTarget.value });
+                        checkValidity("venue");
                       }}
                     />
                   </div>
