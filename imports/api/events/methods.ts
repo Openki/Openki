@@ -323,7 +323,7 @@ export const save = ServerMethod(
 
     if (editFields.venue?._id && editFields.venue._id !== event.venue?._id) {
       const venue = await Venues.findOneAsync(editFields.venue._id);
-      if (venue?.restrictedUse && venue.editableBy(user))
+      if (venue?.restrictedUse && !venue.editableBy(user))
         throw new Meteor.Error(
           400,
           `this venue can only be chosen by its hosts to publish an event.`,
