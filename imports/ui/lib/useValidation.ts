@@ -31,17 +31,31 @@ export function useValidation<T extends string>(mapping: Mapping<T>, initialChec
     }
 
     const field = m.field;
-    setErrors((e) => ({
-      ...e,
-      [field]: m.text() || key,
-    }));
+    setErrors((e) => {
+      const value = m.text() || key;
+      if (e[field] === value) {
+        // Only update when necessary to avoid too many e.g. `useEffect` calls.
+        // The check do not work if the values are `JSX.Element`
+        return e;
+      }
+      return {
+        ...e,
+        [field]: m.text() || key,
+      };
+    });
 
     return true;
   };
 
   const resetErrors = (field?: T) => {
     if (field) {
-      setErrors((e) => omit(e, field) as typeof e);
+      setErrors((e) => {
+        if (!e[field]) {
+          // Only update when necessary to avoid too many e.g. `useEffect` calls.
+          return e;
+        }
+        return omit(e, field) as typeof e;
+      });
       return;
     }
 
@@ -50,7 +64,6 @@ export function useValidation<T extends string>(mapping: Mapping<T>, initialChec
 
   const checkValidity = (field?: T) => {
     if (field) {
-      resetErrors(field);
       let validity = true;
       Object.entries(mapping).forEach(([key, m]) => {
         if (m.field === field && m.onCheckValidity && !m.onCheckValidity()) {
@@ -58,6 +71,9 @@ export function useValidation<T extends string>(mapping: Mapping<T>, initialChec
           validity = false;
         }
       });
+      if (validity) {
+        resetErrors(field);
+      }
       return validity;
     }
     resetErrors();
