@@ -7,7 +7,6 @@ import { UserModel } from "/imports/api/users/users";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { EventVenueEntity } from "/imports/api/events/events";
-import * as Events from "/imports/api/events/publications";
 import * as Regions from "/imports/api/regions/publications";
 import * as Venues from "/imports/api/venues/publications";
 import { useUser } from "/imports/utils/react-meteor-data";
@@ -25,94 +24,73 @@ import { Display } from "../../location/display";
 import { ReactJoin } from "../../../../utils/ReactJoin";
 import { VenueTag } from "../../venues/link";
 import { Icon as VenueIcon } from "../../venues/Icon";
-import { useLocalTimeZone } from "/imports/utils/local-time";
 
-function CheckParallelEvents({
-  venueId,
-  regionId,
-  event,
-}: {
-  venueId: string;
-  regionId: string;
-  event: {
-    _id?: string | undefined;
-    room?: string | undefined;
-    startLocal: string;
-    endLocal: string;
-  };
-}) {
-  const { t } = useTranslation();
+// function CheckParallelEvents({
+//   venueId,
+//   regionId,
+//   event,
+// }: {
+//   venueId: string;
+//   regionId: string;
+//   event: {
+//     _id?: string | undefined;
+//     room?: string | undefined;
+//     startLocal: string;
+//     endLocal: string;
+//   };
+// }) {
+//   const { t } = useTranslation();
 
-  const regionZone = useLocalTimeZone(regionId);
-  const [isLoadingVenue, venue] = Venues.useDetails(venueId);
+//   const regionZone = useLocalTimeZone(regionId);
+//   const [isLoadingVenue, venue] = Venues.useDetails(venueId);
 
-  const start = regionZone.fromString(event.startLocal).toDate();
-  const end = regionZone.fromString(event.endLocal).toDate();
+//   const start = regionZone.fromString(event.startLocal).toDate();
+//   const end = regionZone.fromString(event.endLocal).toDate();
 
-  // eslint-disable-next-line prefer-const
-  let [isLoadingEvents, events] = Events.useFindFilter({ venue: venueId, period: [start, end] });
+//   // eslint-disable-next-line prefer-const
+//   let [isLoadingEvents, events] = Events.useFindFilter({ venue: venueId, period: [start, end] });
 
-  if (isLoadingVenue() || isLoadingEvents()) {
-    return null;
-  }
+//   if (isLoadingVenue() || isLoadingEvents()) {
+//     return null;
+//   }
 
-  if (!venue) {
-    throw new Error("Unexpected falsy: venue");
-  }
+//   if (!venue) {
+//     throw new Error("Unexpected falsy: venue");
+//   }
 
-  /* ignore current event */
-  events = events.filter((e) => e._id !== event._id);
+//   /* ignore current event */
+//   events = events.filter((e) => e._id !== event._id);
 
-  const hasParallelEvents = events.length > 0;
-  if (!hasParallelEvents) {
-    return null;
-  }
+//   const hasParallelEvents = events.length > 0;
+//   if (!hasParallelEvents) {
+//     return null;
+//   }
 
-  const otherEventsMessage = ReactJoin(
-    events.map((e) =>
-      e.room
-        ? t(
-            "event.edit.venue.parallelEvents.otherEventInRoom",
-            `There is the event "{TITLE}" in room "{ROOM}".`,
-            {
-              TITLE: (
-                <a href={Router.path("showEvent", e)} target="_blank" rel="noreferrer">
-                  {e.title}
-                </a>
-              ),
-              ROOM: e.room,
-            },
-          )
-        : t("event.edit.venue.parallelEvents.otherEvent", `There is the event "{TITLE}".`, {
-            TITLE: (
-              <a href={Router.path("showEvent", e)} target="_blank" rel="noreferrer">
-                {e.title}
-              </a>
-            ),
-          }),
-    ),
-    <> </>,
-  );
+//   // const otherEventsMessage = OtherEventsMessage({ events });
 
-  if (venue.allowParallelEvents) {
-    return (
-      <p className="text-warning">
-        {t("event.edit.venue.parallelEvents.allowed", "⚠️ Event is overlapping.")}{" "}
-        {otherEventsMessage}
-      </p>
-    );
-  }
+//   // const inSameRoom = events.find(
+//   //   (e) => e.room && event.room && e.room.toUpperCase() === event.room.toUpperCase(),
+//   // );
 
-  return (
-    <p className="text-danger">
-      {t(
-        "event.edit.venue.parallelEvents.disallowed",
-        "Parallel events in this venue are not allowed.",
-      )}{" "}
-      {otherEventsMessage}
-    </p>
-  );
-}
+//   if (venue.allowParallelEvents) {
+//     return (
+//       <p className="text-warning">
+//         {t("event.edit.venue.parallelEvents.allowed", "⚠️ Event is overlapping.")}{" "}
+//         {otherEventsMessage}
+//       </p>
+//     );
+//   }
+
+//   return (
+//     <p className="text-danger">
+//       {t(
+//         "event.edit.venue.parallelEvents.disallowed",
+//         "Parallel events in this venue are not allowed.",
+//       )}{" "}
+//       {otherEventsMessage}
+//     </p>
+//   );
+// }
 
 function toEventVenue(v: EventVenueEntity) {
   return {
@@ -220,21 +198,14 @@ function CustomMenu({ results, menuProps }: { results: any[]; menuProps: RenderM
 
 export function EditVenue({
   region: regionId,
-  event,
   value,
   onChange,
   errors,
 }: {
   region: string;
-  event: {
-    _id?: string | undefined;
-    room?: string | undefined;
-    startLocal: string;
-    endLocal: string;
-  };
   value?: EventVenueEntity | undefined;
   onChange: (newValue: EventVenueEntity | undefined) => void;
-  errors: Partial<Record<"venue", string | React.JSX.Element | null | undefined>>;
+  errors: Partial<Record<"venue" | "startEndVenue", string | React.JSX.Element | null | undefined>>;
 }) {
   const { t } = useTranslation();
   const user = useUser();
@@ -384,7 +355,7 @@ export function EditVenue({
                     {t("course.event.edit.selectedVenue", "Selected venue")}
                   </label>
                   <div
-                    className={`form-control d-flex align-items-center ${errors.venue ? "is-invalid" : ""}`}
+                    className={`form-control d-flex align-items-center ${errors.venue || errors.startEndVenue ? "is-invalid" : ""}`}
                   >
                     <VenueTag className="flex-fill" venue={value} openInNewTab />
                     <button
@@ -427,7 +398,9 @@ export function EditVenue({
               </div>
             </div>
           </div>
-          {errors.venue ? (
+          {errors.startEndVenue ? (
+            <div className="text-danger mb-3">{errors.startEndVenue}</div>
+          ) : errors.venue ? (
             <div className="text-danger mb-3">{errors.venue}</div>
           ) : (
             /* Not show hint if user is editor of venue */
@@ -448,9 +421,6 @@ export function EditVenue({
                 )}
               </div>
             ))
-          )}
-          {value._id && (
-            <CheckParallelEvents venueId={value._id} regionId={regionId} event={event} />
           )}
           {!!value.loc && (
             <div className="mb-3">
