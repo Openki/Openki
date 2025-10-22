@@ -280,13 +280,27 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       field: "startEndVenue",
       onCheckValidity: () =>
         venueIsLoading() || !venue || !venue.allowParallelEvents || parallelEvents.length === 0,
-      text: () => (
-        <div className="alert alert-warning p-2">
-          <span className="fa-solid fa-triangle-exclamation fa-fw" aria-hidden="true"></span>{" "}
-          {t("event.edit.venue.parallelEvents.allowed", "Event is overlapping.")}{" "}
-          <OtherEventsMessage events={parallelEvents} />
-        </div>
-      ),
+      text: function () {
+        const inSameRoom = parallelEvents.find(
+          (e) => e.room && changes.room && e.room.toUpperCase() === changes.room.toUpperCase(),
+        );
+
+        return (
+          <div className="alert alert-warning p-2">
+            <span className="fa-solid fa-triangle-exclamation fa-fw" aria-hidden="true"></span>{" "}
+            {t("event.edit.venue.parallelEvents.allowed", "Event is overlapping.")}{" "}
+            {inSameRoom && (
+              <>
+                {t(
+                  "event.edit.venue.parallelEvents.sameRoom",
+                  "Your event seem to be in same room as an other event.",
+                )}{" "}
+              </>
+            )}
+            <OtherEventsMessage events={parallelEvents} />
+          </div>
+        );
+      },
     },
     contactHost: {
       field: "venue",
@@ -438,7 +452,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
         setSelectedVenue(newValue);
       },
       errors,
-      warnings
+      warnings,
     };
   }
   const customFields = (type?: "singleLine" | "multiLine") => {
