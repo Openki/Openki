@@ -112,7 +112,7 @@ export function Edit({
       changes1.restrictedUse = changes.restrictedUse;
     }
     if (changes.allowParallelEvents !== undefined) {
-      changes1.allowParallelEvents= changes.allowParallelEvents;
+      changes1.allowParallelEvents = changes.allowParallelEvents;
     }
     if (changes.otherFacilities) {
       changes1.otherFacilities = changes.otherFacilities;
@@ -359,15 +359,12 @@ export function Edit({
                 const allowParallelEvents = ev.currentTarget.checked;
                 setChanges((prevState) => ({
                   ...prevState,
-                  allowParallelEvents
+                  allowParallelEvents,
                 }));
               }}
             />
             <label className="form-check-label" htmlFor="eventAllowParallelEvents">
-              {t(
-                "venue.edit.allowParallelEvents.label",
-                "Allow overlapping events in this venue",
-              )}
+              {t("venue.edit.allowParallelEvents.label", "Allow overlapping events in this venue")}
             </label>
           </div>
         </div>
