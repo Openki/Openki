@@ -34,7 +34,12 @@ function CheckParallelEvents({
 }: {
   venueId: string;
   regionId: string;
-  event: { _id?: string | undefined; startLocal: string; endLocal: string };
+  event: {
+    _id?: string | undefined;
+    room?: string | undefined;
+    startLocal: string;
+    endLocal: string;
+  };
 }) {
   const { t } = useTranslation();
 
@@ -218,11 +223,18 @@ export function EditVenue({
   event,
   value,
   onChange,
+  errors,
 }: {
   region: string;
-  event: { _id?: string | undefined; startLocal: string; endLocal: string };
+  event: {
+    _id?: string | undefined;
+    room?: string | undefined;
+    startLocal: string;
+    endLocal: string;
+  };
   value?: EventVenueEntity | undefined;
   onChange: (newValue: EventVenueEntity | undefined) => void;
+  errors: Partial<Record<"venue", string | React.JSX.Element | null | undefined>>;
 }) {
   const { t } = useTranslation();
   const user = useUser();
@@ -371,7 +383,9 @@ export function EditVenue({
                   <label className="form-label">
                     {t("course.event.edit.selectedVenue", "Selected venue")}
                   </label>
-                  <div className="form-control d-flex align-items-center">
+                  <div
+                    className={`form-control d-flex align-items-center ${errors.venue ? "is-invalid" : ""}`}
+                  >
                     <VenueTag className="flex-fill" venue={value} openInNewTab />
                     <button
                       type="button"
@@ -413,8 +427,11 @@ export function EditVenue({
               </div>
             </div>
           </div>
-          {/* Not show hint if user is editor of venue */}
-          {filterUserVenues(user, [value]).length === 0 &&
+          {errors.venue ? (
+            <div className="text-danger mb-3">{errors.venue}</div>
+          ) : (
+            /* Not show hint if user is editor of venue */
+            filterUserVenues(user, [value]).length === 0 &&
             (value.restrictedUse ? (
               <div className="alert alert-warning p-2">
                 <span className="fa-solid fa-triangle-exclamation fa-fw" aria-hidden="true"></span>{" "}
@@ -430,7 +447,8 @@ export function EditVenue({
                   "Make sure you have contacted the host of this venue for availability.",
                 )}
               </div>
-            ))}
+            ))
+          )}
           {value._id && (
             <CheckParallelEvents venueId={value._id} regionId={regionId} event={event} />
           )}
