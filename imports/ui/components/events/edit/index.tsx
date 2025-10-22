@@ -186,6 +186,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   function venueEditAttr() {
     return {
       region: selectedRegion,
+      event: { _id: event._id, startLocal: changes.startLocal, endLocal: changes.endLocal },
       value: selectedVenue,
       onChange: (newValue: EventVenueEntity | undefined) => {
         setSelectedVenue(newValue);
