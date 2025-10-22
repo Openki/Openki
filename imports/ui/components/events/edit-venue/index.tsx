@@ -201,11 +201,15 @@ export function EditVenue({
   value,
   onChange,
   errors,
+  warnings,
 }: {
   region: string;
   value?: EventVenueEntity | undefined;
   onChange: (newValue: EventVenueEntity | undefined) => void;
   errors: Partial<Record<"venue" | "startEndVenue", string | React.JSX.Element | null | undefined>>;
+  warnings: Partial<
+    Record<"venue" | "startEndVenue", string | React.JSX.Element | null | undefined>
+  >;
 }) {
   const { t } = useTranslation();
   const user = useUser();
@@ -403,24 +407,7 @@ export function EditVenue({
           ) : errors.venue ? (
             <div className="text-danger mb-3">{errors.venue}</div>
           ) : (
-            /* Not show hint if user is editor of venue */
-            filterUserVenues(user, [value]).length === 0 &&
-            (value.restrictedUse ? (
-              <div className="alert alert-warning p-2">
-                <span className="fa-solid fa-triangle-exclamation fa-fw" aria-hidden="true"></span>{" "}
-                {t(
-                  "event.editVenue.restrictedUse",
-                  "This venue can only be chosen by its hosts to publish an event.",
-                )}
-              </div>
-            ) : (
-              <div className="alert alert-success p-2">
-                {t(
-                  "event.editVenue.pleaseContactHost",
-                  "Make sure you have contacted the host of this venue for availability.",
-                )}
-              </div>
-            ))
+            warnings.venue || warnings.startEndVenue
           )}
           {!!value.loc && (
             <div className="mb-3">

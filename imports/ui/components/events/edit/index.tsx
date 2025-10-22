@@ -26,6 +26,7 @@ import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/public
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 import { useAll } from "/imports/api/regions/publications";
 import * as Events from "/imports/api/events/publications";
+import { UserModel } from "/imports/api/users/users";
 
 import { Tag } from "../../regions/tag";
 import { Richtext } from "../../richtext";
@@ -236,6 +237,76 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   });
   const parallelEvents = useFindParallelEvents(selectedVenue?._id, selectedRegion, changes);
 
+  function toEventVenue(v: EventVenueEntity) {
+    return {
+      _id: v._id,
+      name: v.name,
+      loc: v.loc,
+      level: v.level,
+      address: v.address,
+      editor: v.editor,
+      restrictedUse: v.restrictedUse,
+    } as EventVenueEntity;
+  }
+
+  function filterUserVenues(user: UserModel | null, venues: EventVenueEntity[]) {
+    let userVenues: EventVenueEntity[] = [];
+    if (user?.venues?.length) {
+      userVenues = venues.filter((v) => v._id && user.venues.includes(v._id)).map(toEventVenue);
+    }
+    return userVenues;
+  }
+
+  const [warnings, checkForWarnings] = useValidation({
+    restricedUse: {
+      field: "venue",
+      onCheckValidity: () =>
+        venueIsLoading() ||
+        !venue ||
+        /* Not show hint if user is editor of venue */
+        filterUserVenues(user, [venue]).length > 0 ||
+        !!venue.restrictedUse,
+      text: () => (
+        <div className="alert alert-warning p-2">
+          <span className="fa-solid fa-triangle-exclamation fa-fw" aria-hidden="true"></span>{" "}
+          {t(
+            "event.editVenue.restrictedUse",
+            "This venue can only be chosen by its hosts to publish an event.",
+          )}
+        </div>
+      ),
+    },
+    parallelEvents: {
+      field: "startEndVenue",
+      onCheckValidity: () =>
+        venueIsLoading() || !venue || !venue.allowParallelEvents || parallelEvents.length === 0,
+      text: () => (
+        <div className="alert alert-warning p-2">
+          <span className="fa-solid fa-triangle-exclamation fa-fw" aria-hidden="true"></span>{" "}
+          {t("event.edit.venue.parallelEvents.allowed", "Event is overlapping.")}{" "}
+          <OtherEventsMessage events={parallelEvents} />
+        </div>
+      ),
+    },
+    contactHost: {
+      field: "venue",
+      onCheckValidity: () =>
+        venueIsLoading() ||
+        !venue ||
+        /* Not show hint if user is editor of venue */
+        filterUserVenues(user, [venue]).length > 0 ||
+        !venue.restrictedUse,
+      text: () => (
+        <div className="alert alert-success p-2">
+          {t(
+            "event.editVenue.pleaseContactHost",
+            "Make sure you have contacted the host of this venue for availability.",
+          )}
+        </div>
+      ),
+    },
+  });
+
   const [errors, checkValidity, addError] = useValidation({
     noTitle: {
       field: "title",
@@ -342,6 +413,8 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
     // loads some resources, so calling checkValidity onChange make unexpected things
     checkValidity("startEndVenue");
+    checkForWarnings("venue");
+    checkForWarnings("startEndVenue");
   });
 
   function showRegionSelection() {
@@ -365,6 +438,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
         setSelectedVenue(newValue);
       },
       errors,
+      warnings
     };
   }
   const customFields = (type?: "singleLine" | "multiLine") => {
