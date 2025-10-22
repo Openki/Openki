@@ -4,7 +4,7 @@
 // the timezone might actually change when a different region is selected. We
 // wouldn't want the time or even date field to change because of this switch.
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Router } from "meteor/iron:router";
 import { intersection, uniq } from "lodash";
 import moment from "moment";
@@ -26,7 +26,6 @@ import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/public
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 import { useAll } from "/imports/api/regions/publications";
 import * as Events from "/imports/api/events/publications";
-import { UserModel } from "/imports/api/users/users";
 
 import { Tag } from "../../regions/tag";
 import { Richtext } from "../../richtext";
@@ -39,6 +38,7 @@ import { Notify } from "../Notify";
 import { EditStartEnd } from "./EditStartEnd";
 import { UpdateAffectedReplica } from "./UpdateAffectedReplica";
 import { ReactJoin } from "/imports/utils/ReactJoin";
+import { filterUserVenues } from "../edit-venue/search";
 
 import "./styles.scss";
 
@@ -61,40 +61,45 @@ function useFindParallelEvents(
     period: [start, end],
   });
 
-  if (isLoading()) {
-    return [];
-  }
+  // cache to prevent endless recalls
+  return useMemo(() => {
+    if (isLoading()) {
+      return [];
+    }
 
-  /* ignore current event */
-  return events.filter((e) => e._id !== event._id);
+    /* ignore current event */
+    return events.filter((e) => e._id !== event._id);
+  }, [venueId, regionId, event._id, event.startLocal, event.endLocal, isLoading()]);
 }
 
 function OtherEventsMessage({ events }: { events: EventModel[] }) {
   const { t } = useTranslation();
 
   return ReactJoin(
-    events.map((e) =>
-      e.room
-        ? t(
-            "event.edit.venue.parallelEvents.otherEventInRoom",
-            `There is the event "{TITLE}" in room "{ROOM}".`,
-            {
+    events.map((e) => (
+      <React.Fragment key={e._id}>
+        {e.room
+          ? t(
+              "event.edit.venue.parallelEvents.otherEventInRoom",
+              `There is the event "{TITLE}" in room "{ROOM}".`,
+              {
+                TITLE: (
+                  <a href={Router.path("showEvent", e)} target="_blank" rel="noreferrer">
+                    {e.title}
+                  </a>
+                ),
+                ROOM: e.room,
+              },
+            )
+          : t("event.edit.venue.parallelEvents.otherEvent", `There is the event "{TITLE}".`, {
               TITLE: (
                 <a href={Router.path("showEvent", e)} target="_blank" rel="noreferrer">
                   {e.title}
                 </a>
               ),
-              ROOM: e.room,
-            },
-          )
-        : t("event.edit.venue.parallelEvents.otherEvent", `There is the event "{TITLE}".`, {
-            TITLE: (
-              <a href={Router.path("showEvent", e)} target="_blank" rel="noreferrer">
-                {e.title}
-              </a>
-            ),
-          }),
-    ),
+            })}
+      </React.Fragment>
+    )),
     <> </>,
   );
 }
@@ -236,26 +241,6 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     maxParticipants: event.maxParticipants,
   });
   const parallelEvents = useFindParallelEvents(selectedVenue?._id, selectedRegion, changes);
-
-  function toEventVenue(v: EventVenueEntity) {
-    return {
-      _id: v._id,
-      name: v.name,
-      loc: v.loc,
-      level: v.level,
-      address: v.address,
-      editor: v.editor,
-      restrictedUse: v.restrictedUse,
-    } as EventVenueEntity;
-  }
-
-  function filterUserVenues(user: UserModel | null, venues: EventVenueEntity[]) {
-    let userVenues: EventVenueEntity[] = [];
-    if (user?.venues?.length) {
-      userVenues = venues.filter((v) => v._id && user.venues.includes(v._id)).map(toEventVenue);
-    }
-    return userVenues;
-  }
 
   const [warnings, checkForWarnings] = useValidation({
     restricedUse: {
@@ -424,12 +409,15 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     Object.keys(errors).forEach((key) => {
       checkValidity(key as any);
     });
+  });
 
+  useEffect(() => {
     // loads some resources, so calling checkValidity onChange make unexpected things
     checkValidity("startEndVenue");
     checkForWarnings("venue");
     checkForWarnings("startEndVenue");
-  });
+    // only run when values that get checked are changed
+  }, [venue, parallelEvents, changes]);
 
   function showRegionSelection() {
     // You can select the region for events that are new and not associated
