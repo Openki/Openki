@@ -1,16 +1,22 @@
 import React, { useState } from "react";
-import { useFindFilter } from "/imports/api/languages/publications";
-import { Display } from "./Display";
-import { Selection } from "./selection";
 
-export function LanguageSelection(props: { inNavbar?: boolean }) {
+import { useFindFilter } from "/imports/api/languages/publications";
+
+import { Display, Props as DisplayProps } from "./Display";
+import { Selection, Props as SelectionProps } from "./selection";
+
+export function LanguageSelection(props: {
+  inNavbar?: boolean;
+  onSelect?: (() => void) | undefined;
+}) {
   const [searchingLanguages, setSearchingLanguages] = useState(false);
 
   useFindFilter({});
 
-  function selectionAttr() {
+  function selectionAttr(): SelectionProps {
     return {
-      inNavbar: props.inNavbar || false,
+      inNavbar: props.inNavbar,
+      onSelect: props.onSelect,
       onClose: () => {
         if (searchingLanguages) {
           setSearchingLanguages(false);
@@ -18,9 +24,9 @@ export function LanguageSelection(props: { inNavbar?: boolean }) {
       },
     };
   }
-  function displayAttr() {
+  function displayAttr(): DisplayProps {
     return {
-      inNavbar: props.inNavbar || false,
+      inNavbar: props.inNavbar,
       onClick: () => {
         setSearchingLanguages(true);
       },
@@ -32,9 +38,3 @@ export function LanguageSelection(props: { inNavbar?: boolean }) {
   }
   return <Display {...displayAttr()} />;
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("LanguageSelectionWrap", () => LanguageSelection);

@@ -8,7 +8,7 @@ export function TenantSection({ tenants }: { tenants: TenantModel[] }) {
 
   return (
     <div className="page-component page-component-seperated">
-      <h3>{t("profile.tenants", "My organizations")}</h3>
+      <h3 data-test="profile-tenant-section-header">{t("profile.tenants", "My organizations")}</h3>
       <h5>
         {t(
           "profile.tenantMembership",

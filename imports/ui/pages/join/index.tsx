@@ -12,7 +12,7 @@ import * as Tenants from "/imports/api/tenants/publications";
 import * as Metatags from "/imports/utils/metatags";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { ButtonSave } from "../../components/buttons";
+import { ButtonSave } from "../../components/Buttons";
 
 interface Props {
   joinLink: JoinLinkEntity;

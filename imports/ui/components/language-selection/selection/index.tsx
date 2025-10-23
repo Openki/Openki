@@ -12,7 +12,13 @@ import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 
 import "./styles.scss";
 
-export function Selection(data: { inNavbar: boolean; onClose: () => void }) {
+export interface Props {
+  inNavbar?: boolean | undefined;
+  onSelect?: (() => void) | undefined;
+  onClose?: (() => void) | undefined;
+}
+
+export function Selection(props: Props) {
   const { t } = useTranslation();
   const locale = useSession("locale");
   const [search, setSearch] = useState("");
@@ -56,11 +62,12 @@ export function Selection(data: { inNavbar: boolean; onClose: () => void }) {
     // The db user update happens in the /imports/startup/client/locale.ts in Tracker.autorun(() => { ...
     Session.set("locale", lg);
 
-    data.onClose();
+    props.onSelect?.();
+    props.onClose?.();
   }
 
   function inNavbarClasses() {
-    if (data.inNavbar) {
+    if (props.inNavbar) {
       return "nav-item text-center col col-lg-auto";
     }
     return "";
@@ -91,7 +98,7 @@ export function Selection(data: { inNavbar: boolean; onClose: () => void }) {
       throw new Error("Unexpected falsy: dropdownToggleElementRef.current");
     dropdownToggleElementRef.current.addEventListener("hide.bs.dropdown", (event) => {
       if (!searchHasFocus) {
-        data.onClose();
+        props.onClose?.();
         return true;
       }
 
@@ -163,9 +170,7 @@ export function Selection(data: { inNavbar: boolean; onClose: () => void }) {
                   <li key={language.lg}>
                     <a
                       href="#"
-                      className={`dropdown-item js-nav-dropdown-close ${
-                        isCurrentLanguage(language) ? "fw-bold" : ""
-                      }`}
+                      className={`dropdown-item ${isCurrentLanguage(language) ? "fw-bold" : ""}`}
                       title={language.english}
                       onClick={() => changeLanguage(language)}
                     >

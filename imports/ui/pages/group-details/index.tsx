@@ -1,28 +1,28 @@
-import React, { useState } from "react";
-import { Router } from "meteor/iron:router";
 import { truncate } from "lodash";
-import { textPlain } from "/imports/utils/html-tools";
-import { useTranslation } from "react-i18next";
+import { Router } from "meteor/iron:router";
 import { useUser } from "meteor/react-meteor-accounts";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useValidation } from "../../lib/useValidation";
+import { textPlain } from "/imports/utils/html-tools";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
+import * as Alert from "/imports/api/alerts/alert";
 import { GroupModel } from "/imports/api/groups/groups";
 import * as GroupsMethods from "/imports/api/groups/methods";
-import * as Alert from "/imports/api/alerts/alert";
 
-import { Store } from "/imports/ui/lib/editable";
 import * as Analytics from "/imports/ui/lib/analytics";
+import { Store } from "/imports/ui/lib/editable";
 import * as Metatags from "/imports/utils/metatags";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
 import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 
-import { Dashboard, Props as DashboardProps } from "../../components/dashboard";
-import { ButtonCancel, ButtonSave } from "/imports/ui/components/buttons";
-import { GroupSettings } from "/imports/ui/components/groups/settings";
+import { ButtonCancel, ButtonSave } from "../../components/Buttons";
 import { Find } from "../../components/courses/find";
+import { Dashboard, Props as DashboardProps } from "../../components/dashboard";
 import { VenueTag } from "../../components/venues/link";
+import { GroupSettings } from "/imports/ui/components/groups/settings";
 
 import "./styles.scss";
 
@@ -68,11 +68,6 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
   }>({ name: undefined, short: undefined, claim: undefined, description: undefined });
 
   const user = useUser();
-
-  if (!group) {
-    // should not happen, but does, maybe some problem with iron-router and react
-    return null;
-  }
 
   const mayEdit = group.editableBy(user);
 

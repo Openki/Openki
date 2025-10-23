@@ -1,5 +1,4 @@
 import SanitizeHtml from "sanitize-html";
-import { check } from "meteor/check";
 import { UnsafeString } from "./CustomChecks";
 
 /**
@@ -10,7 +9,6 @@ import { UnsafeString } from "./CustomChecks";
  * @return HTMLized version of text
  */
 export function plainToHtml(text: string) {
-  check(text, String);
   return text
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { JSX } from "react";
 
 export function ReactJoin(
   elements: (string | false | JSX.Element | undefined)[],

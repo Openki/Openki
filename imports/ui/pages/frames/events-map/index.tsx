@@ -15,13 +15,12 @@ import "./styles.scss";
 
 export function FrameEventsMapPage() {
   const { t } = useTranslation();
-  const now = new Date();
   const searchParams = useSearchParams();
 
   const filter = new Filtering(FindParams);
   filter.read(searchParams);
   const query = filter.toQuery();
-  query.after = moment().startOf("day").toDate();
+  query.after = query.after || moment().toDate();
 
   const [isLoading, events] = useFindFilter(query);
 
@@ -33,7 +32,7 @@ export function FrameEventsMapPage() {
 
   return (
     <div className="vh-100">
-      <EventsMap events={events.filter((e) => e.start > now)} openLinksInNewTab />
+      <EventsMap events={events} openLinksInNewTab />
     </div>
   );
 }

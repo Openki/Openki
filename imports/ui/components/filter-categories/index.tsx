@@ -1,4 +1,3 @@
-import { Template } from "meteor/templating";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
@@ -48,9 +47,3 @@ export function FilterCategories({ categories, onAdd, onRemove }: Props) {
     </ReactSelect2>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("FilterCategories", () => FilterCategories);

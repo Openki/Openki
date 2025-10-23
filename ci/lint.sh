@@ -2,8 +2,18 @@
 
 # Hint: in order to have permission to run this script inside gitlab CI/CD, you have to mark this file as executable "git add --chmod=+x ci/test\:unit.sh"
 
-echo -e "\e[1;33mFormat files and automatically fix fixable problems with these commands:\e[21m
-    meteor npm run lint:fix\e[0m"
+YELLOW='\e[33m'
+BOLD='\e[1m'
+RESET='\e[0m'
+
+HINT="
+${YELLOW}=============================================================
+${BOLD}Format files and automatically fix fixable problems with these commands:${RESET}
+    ${YELLOW}meteor npm run lint:fix
+=============================================================${RESET}
+"
+
+echo -e "${HINT}"
 
 set -xe
 
@@ -13,6 +23,9 @@ meteor node -v && meteor npm version
 
 meteor npm run lint
 
-echo -e "\e[1;33mIf you have random errors and problems inside the gitlab runner, try to click "Clear runner caches" button in https://gitlab.com/Openki/Openki/-/pipelines.\e[0m"
+echo -e "${YELLOW}${BOLD}If you have random errors and problems inside the gitlab runner, try to click "Clear runner caches" button in https://gitlab.com/Openki/Openki/-/pipelines.${RESET}"
 
 meteor npm run type-check
+
+echo -e "${HINT}"
+

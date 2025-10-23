@@ -1,20 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import Modal from "bootstrap/js/dist/modal";
+import { Modal } from "/imports/startup/client/bootstrap";
 import { useUser } from "/imports/utils/react-meteor-data";
-import { useTracker } from "meteor/react-meteor-data";
 
 import { EventModel, EventParticipantEntity } from "/imports/api/events/events";
 
 import { ReactJoin } from "/imports/utils/ReactJoin";
-import { getUserName } from "/imports/ui/lib/getUserName";
+
+import { UserName } from "/imports/ui/components/UserName";
 
 import "./styles.scss";
-
-export function UserName({ userId }: { userId: string }) {
-  const userName = useTracker(() => getUserName(userId));
-  return <>{userName}</>;
-}
 
 function EventParticipant({ participant }: { participant: EventParticipantEntity }) {
   const { t } = useTranslation();

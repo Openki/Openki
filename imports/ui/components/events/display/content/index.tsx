@@ -4,14 +4,14 @@ import { useTranslation } from "react-i18next";
 import { Courses } from "/imports/api/courses/courses";
 import { EventModel } from "/imports/api/events/events";
 
-import { EventHeader } from "../header";
+import { CustomFieldDisplay } from "../../../courses/CustomFieldDisplay";
 import { InternalIndicator } from "../../../internal-indicator";
-import { GroupList } from "../group-list";
 import { Display } from "../../../location/display";
-import { VenueLink } from "../../../venues/link";
 import { PricePolicy } from "../../../price-policy";
 import { Sharing } from "../../../sharing";
-import { CustomFieldDisplay } from "../../../courses/CustomFieldDisplay";
+import { VenueLink } from "../../../venues/link";
+import { GroupList } from "../group-list";
+import { EventHeader } from "../header";
 
 import "./styles.scss";
 
@@ -53,7 +53,11 @@ export function Content({ event }: { event: EventModel }) {
             <div className="col-md-5">
               <div className="details-map">
                 {!!event.venue?.loc?.coordinates && (
-                  <Display coordinates={event.venue?.loc?.coordinates} />
+                  <Display
+                    region={event.region}
+                    level={event.venue.level}
+                    coordinates={event.venue.loc.coordinates}
+                  />
                 )}
 
                 <div className="tag-group multiline mt-1">

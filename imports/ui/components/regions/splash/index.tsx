@@ -1,15 +1,15 @@
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import { RegionSelection } from "../selection";
+import { RegionSelection } from "../selection/selection";
 
-import Modal from "bootstrap/js/dist/modal";
+import { Modal } from "/imports/startup/client/bootstrap";
 
 import { useSiteName } from "/imports/utils/getSiteName";
 
 import "./styles.scss";
 
-export function RegionSplash() {
+export function Splash() {
   const { t } = useTranslation();
   const elementRef = useRef<HTMLDivElement>(null);
   const siteName = useSiteName();
@@ -101,4 +101,4 @@ export function RegionSplash() {
 
 import "./template.html";
 
-Template.registerHelper("RegionSplash", () => RegionSplash);
+Template.registerHelper("RegionSplash", () => Splash);

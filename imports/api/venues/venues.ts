@@ -2,15 +2,16 @@ import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { chain, escapeRegExp } from "lodash";
 import { Match, check } from "meteor/check";
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import { EventEntity, Events } from "/imports/api/events/events";
 import { UserModel } from "/imports/api/users/users";
-import { Geodata } from "/imports/api/regions/regions";
 
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { Type } from "/imports/utils/CustomChecks";
+import { Geodata } from "/imports/api/Geodata";
 
 export type FacilityOption = (typeof Venues.facilityOptions)[number];
 
@@ -28,7 +29,10 @@ export interface VenueEntity {
   description: string;
   /** ID */
   region?: string;
+  /** Venue location in GeoJSON format */
   loc: Geodata;
+  /** Floor level for custom maps as integer */
+  level?: number;
   address: string;
   route: string;
   /** ID */
@@ -120,7 +124,9 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
 
     if (Meteor.isServer) {
       this.createIndex({ region: 1 });
-      this.createIndex({ loc: "2dsphere" });
+      if (!PublicSettings.feature.disable2dSphereForLocations) {
+        this.createIndex({ loc: "2dsphere" });
+      }
     }
   }
 
@@ -141,7 +147,7 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
     check(skip, Match.Maybe(Match.Integer));
     check(sort, Match.Maybe([FieldSortPattern]));
 
-    const find: any = {};
+    const find: Mongo.Selector<VenueEntity> = {};
 
     const options: Mongo.Options<VenueEntity> = { sort };
 

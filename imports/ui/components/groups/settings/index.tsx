@@ -18,7 +18,7 @@ import {
   EditableImage,
 } from "/imports/ui/components/editable-image";
 import { getUserName } from "/imports/ui/lib/getUserName";
-import { DeleteConfirm } from "/imports/ui/components/delete-confirm";
+import { DeleteConfirm } from "../../DeleteConfirm";
 import { ProfileLink } from "/imports/ui/components/profile-link";
 
 import "./styles.scss";

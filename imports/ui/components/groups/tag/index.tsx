@@ -1,6 +1,5 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Template } from "meteor/templating";
 import { Router } from "meteor/iron:router";
 
 import { GroupModel } from "/imports/api/groups/groups";
@@ -28,7 +27,10 @@ export function GroupTag({ groupId, full, isOrganizer, onMouseOver, onMouseOut, 
   const [isLoading, group] = useDetails(groupId);
 
   return (
-    <div className={`tag tag-link group-tag ${isOrganizer ? "group-tag-is-organizer" : ""}`}>
+    <div
+      data-test={`group-tag-${groupId}`}
+      className={`tag tag-link group-tag ${isOrganizer ? "group-tag-is-organizer" : ""}`}
+    >
       {isLoading() ? (
         <span className="placeholder" style={{ width: full ? "100px" : "40px" }}></span>
       ) : (
@@ -47,9 +49,3 @@ export function GroupTag({ groupId, full, isOrganizer, onMouseOver, onMouseOut, 
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("GroupTag", () => GroupTag);

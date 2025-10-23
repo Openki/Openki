@@ -85,6 +85,10 @@ export async function generate() {
         editor: venue.editor,
       };
 
+      if (venue.level !== undefined) {
+        event.venue.level = venue.level;
+      }
+
       if (venue.restrictedUse !== undefined) {
         event.venue.restrictedUse = venue.restrictedUse;
       }

@@ -5,17 +5,19 @@ import { useSessionEquals } from "/imports/utils/react-meteor-data";
 
 type Direction = "previous" | "next";
 
-export function Control(data: {
+export interface Props {
   direction: Direction;
   date: moment.Moment;
   onChangeDate: (newDate: moment.Moment) => void;
-}) {
+}
+
+export function Control(props: Props) {
   const { t } = useTranslation();
   const isRTL = useSessionEquals("textDirectionality", "rtl");
 
   function arrow() {
     let arrowIsRTL = isRTL;
-    if (data.direction === "previous") {
+    if (props.direction === "previous") {
       arrowIsRTL = !arrowIsRTL;
     }
 
@@ -24,18 +26,18 @@ export function Control(data: {
   }
 
   function text() {
-    if (data.direction === "previous") {
+    if (props.direction === "previous") {
       return t("calendar.previous.day.short", "previous day");
     }
     return t("calendar.next.day.short", "next day");
   }
 
   function handleChangeDateClick() {
-    const amount = data.direction === "previous" ? -1 : 1;
+    const amount = props.direction === "previous" ? -1 : 1;
 
-    const newDate = data.date.add(amount, "day");
+    const newDate = props.date.add(amount, "day");
 
-    data.onChangeDate(newDate);
+    props.onChangeDate(newDate);
   }
 
   return (

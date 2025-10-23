@@ -196,9 +196,3 @@ export function Filter(props: Props) {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("Filter", () => Filter);

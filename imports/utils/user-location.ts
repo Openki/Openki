@@ -1,9 +1,10 @@
+import { Geodata } from "../api/Geodata";
 import { Regions } from "/imports/api/regions/regions";
 
 /**
  * Pull location-data from ipinfo.io
  */
-export async function getLocation() {
+export async function getLocation(): Promise<Geodata> {
   const response = await fetch("https://ipinfo.io/geo");
   const location = await response.json();
 

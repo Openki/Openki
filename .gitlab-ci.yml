@@ -23,10 +23,6 @@ cleanup:
   stage: cleanup
   script:
     - rm -rf .meteor/ .npm/ node_modules/
-  only:
-    - dev
-    - staging
-    - main
 
 lint:
   stage: lint
@@ -34,25 +30,36 @@ lint:
     - gitlab-org
   script: ./ci/lint.sh
 
-# Unit tests
-test:unit:
-  stage: test
-  tags:
-    - gitlab-org
-  script: ./ci/test:unit.sh
-
-# integration/e2e tests
-test:integration:
+# tests unit, e2e, ...
+test:
   stage: test
   tags:
     - gitlab-org-docker
-  script: ./ci/test:integration.sh
+  variables:
+    CYPRESS_RECORD_KEY: $CYPRESS_RECORD_KEY
+  script: ./ci/test.sh
   allow_failure: true
-  timeout: 20m
+  timeout: 50m
 
-# Code Quality by "Code Climate" and Browser Perfomance
+# Code Quality by "Code Climate" and SAST
 include:
-  template: Code-Quality.gitlab-ci.yml
+  - template: Code-Quality.gitlab-ci.yml
+  - template: Jobs/SAST.gitlab-ci.yml
+
+code_quality:
+  rules:
+    - if: $CODE_QUALITY_DISABLED
+      when: never
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"
+
+semgrep-sast:                                          # More settings here: https://gitlab.com/Openki/Openki/-/security/configuration/sast
+  rules:
+    - if: $CI_COMMIT_BRANCH == "dev"
+
+sast:
+  variables:
+    SAST_EXCLUDED_PATHS: "$DEFAULT_SAST_EXCLUDED_PATHS,.meteor/*,packages/*"
+
 #   Verify/Browser-Performance.gitlab-ci.yml
 
 #browser_performance:

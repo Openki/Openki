@@ -17,7 +17,7 @@ import { textPlain } from "/imports/utils/html-tools";
 import * as Analytics from "/imports/ui/lib/analytics";
 
 import { Event } from "./event";
-import { ActionResult } from "../../components/action-result";
+import { ActionResult } from "../../components/ActionResult";
 
 function Unregister({
   event,
@@ -123,11 +123,6 @@ export function EventPage({ event, isNew }: { event: EventModel; isNew: boolean 
     return (
       <Unregister event={event} participant={searchParams.participant} token={searchParams.token} />
     );
-  }
-
-  if (!event) {
-    // should not happen, but does, maybe some problem with iron-router and react
-    return null;
   }
 
   return (

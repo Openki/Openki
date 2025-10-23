@@ -147,43 +147,39 @@
   width: 0;
 }
 
-.navbar-covering {
-  box-shadow: 0 0 5px rgb(0 0 0 / 30%);
-}
-
-.navbar-covering .nav-marker-caret {
-  opacity: 0;
-}
-
 .nav-link.active {
   @include media-breakpoint-down(lg) {
     background-color: css-lighten("openki-brand", 10%);
   }
 }
 
-.navbar-covering .nav-link.active,
-.navbar-covering .nav-link.active:hover,
-.navbar-covering .nav-link.active:focus {
-  @include media-breakpoint-up(lg) {
-    background-color: css-lighten("openki-brand", 10%);
+@include media-breakpoint-up(lg) {
+  .navbar {
     box-shadow: 0 0 5px rgb(0 0 0 / 30%);
   }
-}
 
-.nav-link.active .nav-marker-caret {
-  @include media-breakpoint-up(lg) {
+  .navbar .nav-marker-caret {
+    opacity: 0;
+  }
+
+  .nav-link.active {
+    &,
+    &:hover,
+    &:focus {
+      background-color: css-lighten("openki-brand", 10%);
+      box-shadow: 0 0 5px rgb(0 0 0 / 30%);
+    }
+  }
+
+  .nav-link.active .nav-marker-caret {
     opacity: 1;
   }
-}
 
-.nav-link.active.calendar-link > .nav-marker-caret {
-  @include media-breakpoint-up(lg) {
+  .nav-link.active.calendar-link > .nav-marker-caret {
     border-bottom-color: $calendar-nav-bg;
   }
-}
 
-.nav-link.active.calendar-link.navbar-link-covering > .nav-marker-bar {
-  @include media-breakpoint-up(lg) {
+  .nav-link.active.calendar-link > .nav-marker-bar {
     background-color: $calendar-nav-bg;
     opacity: 1;
   }

@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { ActionResult } from "../action-result";
+import { ActionResult } from "../ActionResult";
 
 export function ResetPasswortEmailSended() {
   const { t } = useTranslation();

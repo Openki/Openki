@@ -35,6 +35,7 @@ export const SaveFieldPattern = {
       coordinates: Tuple<[long: NumberConstructor, lat: NumberConstructor]>(Number, Number),
     }),
   ),
+  level: Match.Optional(Match.Integer),
   address: Match.Optional(String),
   route: Match.Optional(String),
   short: Match.Optional(String),
@@ -85,6 +86,9 @@ export const save = ServerMethod(
     if (changes.loc !== undefined && changes.loc !== null) {
       set.loc = changes.loc;
       set.loc.type = "Point";
+    }
+    if (changes.level !== undefined) {
+      set.level = changes.level;
     }
 
     if (changes.maxPeople !== undefined) {

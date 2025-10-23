@@ -59,6 +59,7 @@ export function SendMessage(props: Data) {
     >
       <div className="mb-3">
         <textarea
+          data-test="send-message-textarea"
           className="form-control send-message-textarea"
           placeholder={props.placeholder}
           autoFocus={true}
@@ -122,7 +123,12 @@ export function SendMessage(props: Data) {
       )}
 
       <div className="form-actions">
-        <button type="submit" className="btn btn-save" disabled={isBusy}>
+        <button
+          data-test="send-message-submit"
+          type="submit"
+          className="btn btn-save"
+          disabled={isBusy}
+        >
           {isBusy ? (
             <>
               <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>

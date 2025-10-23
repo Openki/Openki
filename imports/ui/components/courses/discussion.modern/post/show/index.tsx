@@ -13,7 +13,7 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { DiscussionProfileIcon } from "../profile-icon";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { RemoveDropdown } from "./remove-dropdown";
-import { UserName } from "/imports/ui/components/events/participants.modern";
+import { UserName } from "/imports/ui/components/UserName";
 
 export interface Props {
   post: CourseDiscussionEntity & { new?: true } & { saving?: boolean };

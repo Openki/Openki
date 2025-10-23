@@ -10,6 +10,7 @@ export const regions: {
   country?: string;
   region?: string;
   tenant?: string;
+  admin?: string;
   custom?: {
     siteName?: string;
     siteStage?: string;
@@ -22,6 +23,13 @@ export const regions: {
     query?: string;
     showAll?: { link?: string; text?: string };
   }[];
+  map?: {
+    crs?: "Simple";
+    layers: { name: string; level: number; tileUrl: string }[];
+    defaultLevel: number;
+    maxZoom: number;
+    attribution: string;
+  };
 }[] = [
   {
     _id: "9JyFCoKWkxnf8LWPh",
@@ -106,6 +114,7 @@ export const regions: {
     defaultTeamGroups: ["Hx7iiRX5Fg3Pf2xne"],
     singleEvents: true,
     tenant: "Zuerich Lernt",
+    admin: "Support",
     custom: {
       siteName: "Zürich Lernt",
       siteStage: "Platform",
@@ -123,5 +132,38 @@ export const regions: {
         query: "after=now&sort=start&internal=0&canceled=0",
       },
     ],
+  },
+  {
+    _id: "h4MnI3psRddhSljk2",
+    name: "CCC",
+    nameEn: "CCC",
+    country: "CH",
+    region: "ZH",
+    loc: [47.3784, 8.5257],
+    tz: "Europe/Zurich",
+    tenant: "CCC",
+    admin: "Hacker1",
+    custom: {
+      siteName: "CCC",
+      siteStage: "Hack",
+    },
+    map: {
+      crs: "Simple",
+      layers: [
+        {
+          name: "Erdgeschoss",
+          level: 1,
+          tileUrl: "https://tiles.hack-mas24.c3nav.de/1/{z}/{x}/{y}/0.png",
+        },
+        {
+          name: "Obergeschoss",
+          level: 88,
+          tileUrl: "https://tiles.hack-mas24.c3nav.de/88/{z}/{x}/{y}/0.png",
+        },
+      ],
+      maxZoom: 5,
+      defaultLevel: 1,
+      attribution: "&copy; <a href='https://github.com/c3nav'>c3nav</a>",
+    },
   },
 ];

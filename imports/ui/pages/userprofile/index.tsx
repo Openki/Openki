@@ -23,7 +23,7 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { SendMessage, Data as SendMessageData } from "/imports/ui/components/send-message";
 
 import { Courselist } from "../../components/profiles/course-list";
-import { Button, ButtonCancel, ButtonDelete } from "../../components/buttons";
+import { Button, ButtonCancel, ButtonDelete } from "../../components/Buttons";
 
 export interface Props {
   user: UserModel;
@@ -36,7 +36,7 @@ export function UserprofilePage({ user }: Props) {
   const currentUser = useUser();
 
   const [isLoadingGroups, inviteGroups] = Groups.useFindFilter({ own: true });
-  const [isLoading, coursesCreatedBy] = Courses.useFindFilter({ createdby: user._id });
+  const [isLoading, coursesCreatedBy] = Courses.useFindFilter({ createdby: user?._id || "-1" });
 
   useEffect(() => {
     const title = t("profile.windowtitle", "Profile of {USER}", {
@@ -44,11 +44,6 @@ export function UserprofilePage({ user }: Props) {
     });
     Metatags.setCommonTags(title);
   });
-
-  if (!user) {
-    // should not happen, but does, maybe some problem with iron-router and react
-    return null;
-  }
 
   // What privileges the user has
   const privileges = (["admin"] as const).reduce<Record<string, boolean>>((originalPs, p) => {
@@ -205,7 +200,7 @@ export function UserprofilePage({ user }: Props) {
     }
   }
 
-  if (isLoading()) {
+  if (isLoading() || !user._id) {
     return null;
   }
 
@@ -232,8 +227,9 @@ export function UserprofilePage({ user }: Props) {
               PublicSettings.contribution &&
               (!hasContributed() ? (
                 <button
+                  data-test="user-has-contributed-button"
                   type="button"
-                  className="btn btn-primary js-has-contributed"
+                  className="btn btn-primary"
                   onClick={handleSetHasContributed}
                 >
                   <i className={PublicSettings.contribution.icon} aria-hidden="true"></i>{" "}
@@ -241,8 +237,9 @@ export function UserprofilePage({ user }: Props) {
                 </button>
               ) : (
                 <button
+                  data-test="user-has-contributed-button"
                   type="button"
-                  className="btn btn-secondary js-has-contributed"
+                  className="btn btn-secondary"
                   onClick={handleUnsetHasContributed}
                 >
                   {t("profile.unsetHasContributed.button", "Remove this user has contributed")}

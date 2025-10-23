@@ -68,7 +68,7 @@ export function CalendarPage() {
   const { t } = useTranslation();
   const options = useOptions();
   const [limit, setLimit] = useState(options.count);
-  const timeLocale = useSession("timeLocale");
+  const timeLocale = useSession("timeLocale") || "en";
 
   const [isLoading, events] = useFindFilter(options.filter, limit + 1, undefined, [
     ["start", "asc"],
@@ -76,11 +76,7 @@ export function CalendarPage() {
 
   const groupedEvents = chain(events)
     .take(limit)
-    .groupBy((event) =>
-      moment(event.start)
-        .locale(timeLocale || "en")
-        .format("LL"),
-    )
+    .groupBy((event) => moment(event.start).locale(timeLocale).format("LL"))
     .value();
 
   Metatags.setCommonTags(t("calendar.windowtitle", "Calendar"));

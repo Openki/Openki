@@ -10,7 +10,7 @@ import {
   DeleteConfirmDialog,
   type Props as DeleteConfirmDialogProps,
 } from "/imports/ui/components/delete-confirm-dialog";
-import { ButtonEdit, ButtonDelete } from "/imports/ui/components/buttons";
+import { ButtonEdit, ButtonDelete } from "../../Buttons";
 import { Display as LocationDisplay } from "/imports/ui/components/location/display";
 
 import "./styles.scss";
@@ -82,7 +82,7 @@ export function Display({ region, onEdit, onDelete }: Props) {
             {!!region.loc && (
               <div className="col-md-5">
                 <div className="details-map">
-                  <LocationDisplay coordinates={region.loc.coordinates} />
+                  <LocationDisplay coordinates={region.loc.coordinates} zoom={13} />
                   <div className="coordinates">
                     <a href={geoLocationLink(region.loc)}>
                       {t("regionDetails.coordinates", "Coordinates:")}{" "}
@@ -119,8 +119,3 @@ export function Display({ region, onEdit, onDelete }: Props) {
     </div>
   );
 }
-
-// for Blaze
-import "./template.html";
-
-Template.registerHelper("RegionDisplay", () => Display);

@@ -12,8 +12,8 @@ import * as Courses from "/imports/api/courses/publications";
 
 import { DiscussionProfileIcon } from "../profile-icon";
 import { Richtext } from "/imports/ui/components/richtext";
-import { ButtonCancel } from "/imports/ui/components/buttons";
-import { UserName } from "/imports/ui/components/events/participants.modern";
+import { ButtonCancel } from "../../../../Buttons";
+import { UserName } from "/imports/ui/components/UserName";
 
 export interface Props {
   post: CourseDiscussionEntity & { new?: true };
