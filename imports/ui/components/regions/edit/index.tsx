@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Geodata, RegionEntity } from "/imports/api/regions/regions";
+import { RegionEntity } from "/imports/api/regions/regions";
+import { Geodata } from "/imports/api/Geodata";
 import * as Alert from "/imports/api/alerts/alert";
 
-import { Fields } from "./fields";
-import { ButtonCancel, ButtonSave } from "../../buttons";
+import { Fields } from "./Fields";
+import { ButtonCancel, ButtonSave } from "../../Buttons";
 import { PleaseLogin } from "../../please-login";
 
 import "./styles.scss";
@@ -31,7 +32,7 @@ export function Edit(data: Data) {
     name: data.region.name,
     description: data.region.description,
     tz: data.region.tz,
-    loc: data.region.loc as Geodata | undefined,
+    loc: data.region.loc,
   });
 
   async function handleSave() {
@@ -81,8 +82,3 @@ export function Edit(data: Data) {
     </div>
   );
 }
-
-// for Blaze
-import "./template.html";
-
-Template.registerHelper("RegionEdit", () => Edit);

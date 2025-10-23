@@ -1,4 +1,4 @@
-import React from "react";
+import React, { JSX } from "react";
 import { useTranslation } from "react-i18next";
 import { EventModel } from "/imports/api/events/events";
 import { EventBox } from "./components/EventBox";
@@ -9,7 +9,7 @@ export interface Props {
   username: string;
   event: EventModel;
   tz: string;
-  eventTitle: React.JSX.Element | undefined;
+  eventTitle: JSX.Element | undefined;
   message: string;
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   campaign: string;

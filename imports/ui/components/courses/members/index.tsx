@@ -101,9 +101,3 @@ export function Members({ course }: { course: CourseModel }) {
     </>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("CourseMembers", () => Members);

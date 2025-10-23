@@ -1,4 +1,4 @@
-import React from "react";
+import React, { JSX } from "react";
 import { useTranslation } from "react-i18next";
 import { UserModel } from "/imports/api/users/users";
 import { Footer } from "./components/Footer";
@@ -13,7 +13,7 @@ export interface Props {
   senderCopy: boolean;
   siteName: string;
   fromAddress: string;
-  eventTitle: React.JSX.Element | undefined;
+  eventTitle: JSX.Element | undefined;
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   campaign: string;
   lng: string;

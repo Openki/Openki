@@ -3,6 +3,7 @@ import { EventModel } from "../api/events/events";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { ICalEventData, ICalEventStatus } from "ical-generator";
 import { omitBy } from "lodash";
+import { isOnCustomMap } from "./isOnCustomMap";
 
 export function convertToIcal(dbevent: EventModel): ICalEventData {
   const end = dbevent.end || dbevent.start;
@@ -25,9 +26,10 @@ export function convertToIcal(dbevent: EventModel): ICalEventData {
             {
               title: (dbevent.venue.name || "") + (dbevent.room ? " (" + dbevent.room + ")" : ""),
               address: dbevent.venue.address,
-              geo: dbevent.venue.loc
-                ? { lat: dbevent.venue.loc.coordinates[1], lon: dbevent.venue.loc.coordinates[0] }
-                : undefined,
+              geo:
+                dbevent.venue.loc && !isOnCustomMap(dbevent.venue)
+                  ? { lat: dbevent.venue.loc.coordinates[1], lon: dbevent.venue.loc.coordinates[0] }
+                  : undefined,
             },
             (v) => !v,
           )

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useLayoutEffect, useState } from "react";
 
 import { useSessionEquals, useUserId } from "/imports/utils/react-meteor-data";
 
@@ -11,6 +11,7 @@ interface FormProps {
   onSubmit: () => Promise<void>;
 }
 interface ButtonProps {
+  "data-test"?: string;
   type: "button";
   onClick: () => Promise<void>;
   disabled?: boolean | undefined;
@@ -20,7 +21,7 @@ interface Props {
   type: "auto" | "form" | "button";
   visitorUserAllowed?: boolean;
   className?: string | undefined;
-  children?: any;
+  children?: ReactNode;
 }
 
 export function PleaseLogin(props: Props & (AutoProps | FormProps | ButtonProps)) {
@@ -30,7 +31,7 @@ export function PleaseLogin(props: Props & (AutoProps | FormProps | ButtonProps)
   const userId = useUserId();
   const notPleaseLogin = useSessionEquals("pleaseLogin", false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (actionActive) {
       if (userId) {
         setActionActive(false);
@@ -89,7 +90,12 @@ export function PleaseLogin(props: Props & (AutoProps | FormProps | ButtonProps)
       );
     case "button":
       return (
-        <button className={props.className} disabled={props.disabled} onClick={handleEvent}>
+        <button
+          data-test={props["data-test"] || "please-login-button"}
+          className={props.className}
+          disabled={props.disabled}
+          onClick={handleEvent}
+        >
           {!isBusy ? (
             props.children
           ) : (

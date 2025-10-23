@@ -258,7 +258,7 @@ RouterAsync.route("showCourse", {
   path: "course/:_id/:slug?",
   template: "courseDetailsPage",
   async action() {
-    const { course } = await this.data();
+    const course = await this.data()?.course;
     if (course?.singleEvent && course.nextEvent && this.params.query.force !== "1") {
       this.redirect("showEvent", course.nextEvent, { replaceState: true });
     } else {
@@ -279,12 +279,11 @@ RouterAsync.route("showCourse", {
       return undefined;
     }
 
-    const data = {
+    return {
       edit: !!this.params.query.edit,
       course,
       select: this.params.query.select,
     };
-    return data;
   },
 });
 
@@ -337,9 +336,13 @@ RouterAsync.route("showEvent", {
     };
   },
   async data() {
-    const subs = this.subscriptions();
+    const event = this.subscriptions()?.event();
 
-    return { event: subs?.event() };
+    if (!event) {
+      return undefined;
+    }
+
+    return { event };
   },
 });
 
@@ -367,6 +370,17 @@ RouterAsync.route("userprofile", {
   },
 });
 
+RouterAsync.route("venueCreate", {
+  path: "venue/create",
+  template: "venueDetailsPage",
+  async onRun() {
+    await import("/imports/ui/pages/venue-details");
+  },
+  async data() {
+    return { venue: new Venue() as VenueModel, isNew: true };
+  },
+});
+
 RouterAsync.route("venueDetails", {
   path: "venue/:_id/:slug?",
   template: "venueDetailsPage",
@@ -377,16 +391,9 @@ RouterAsync.route("venueDetails", {
     return { details: Venues.details.subscribe(this.params._id as string) };
   },
   async data() {
-    const id = this.params._id;
-
-    let venue: VenueModel | undefined;
-    if (id === "create") {
-      venue = new Venue() as VenueModel;
-    } else {
-      venue = await this.subscriptions()?.details();
-      if (!venue) {
-        return undefined; // Not found
-      }
+    const venue = await this.subscriptions()?.details();
+    if (!venue) {
+      return undefined; // Not found
     }
 
     return { venue };
@@ -916,7 +923,7 @@ RouterAsync.route("timetable", {
 });
 
 RouterAsync.route("adminPanel", {
-  path: "admin",
+  path: "admin/panel",
   template: "adminPanelPage",
   async onRun() {
     await import("/imports/ui/pages/admin/panel");
@@ -1044,3 +1051,16 @@ RouterAsync.route("resetPasswortEmail", {
   },
   where: "server",
 });
+
+if (Meteor.isDevelopment) {
+  // only needed for test
+
+  RouterAsync.route("componentTest", {
+    path: "/component/:name",
+    template: "componentTest",
+    layoutTemplate: "componentTestLayout",
+    async onRun() {
+      await import("/imports/ui/components/component-test");
+    },
+  });
+}

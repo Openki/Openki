@@ -5,7 +5,7 @@ import mimeDb from "mime-db";
 
 import * as Alert from "/imports/api/alerts/alert";
 
-import { ButtonCancel, ButtonSave, ButtonDelete } from "../buttons";
+import { ButtonCancel, ButtonSave, ButtonDelete } from "../Buttons";
 
 import "./styles.scss";
 

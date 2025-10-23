@@ -1,6 +1,7 @@
 import { Meteor } from "meteor/meteor";
+import { ReactNode } from "react";
 
-export function renderToEmail(element: React.ReactNode) {
+export function renderToEmail(element: ReactNode) {
   if (Meteor.isServer) {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { renderToStaticMarkup } = require("react-dom/server");

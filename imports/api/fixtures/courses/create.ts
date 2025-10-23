@@ -6,6 +6,7 @@ import * as StringTools from "/imports/utils/string-tools";
 import { courses as coursesBase } from "./data";
 import { courses as coursesZuerichLernt } from "./zuerichlernt";
 import { Log } from "../../log/log";
+import { PRNG } from "seedrandom";
 
 async function mapSync<T, U>(
   array: T[],
@@ -24,6 +25,14 @@ async function mapSync<T, U>(
 export async function create() {
   const prng = Prng("createCourses");
 
+  await Promise.all([createBase(prng), createZuerichLernt(prng)]);
+
+  Log.record("testdata", ["Courses"], {
+    message: `Inserted ${coursesBase.length + coursesZuerichLernt.length} course fixtures.`,
+  });
+}
+
+async function createBase(prng: PRNG) {
   for (const template of coursesBase) {
     let region: string;
     if (template.region) {
@@ -66,12 +75,14 @@ export async function create() {
 
     await Courses.insertAsync(course);
   }
+}
 
+async function createZuerichLernt(prng: PRNG) {
   for (const template of coursesZuerichLernt) {
     const age = Math.floor(prng() * 80000000000);
 
     const course = {
-      _id: template._id,
+      _id: template._id || ensure.fixedId([template.name, template.description || ""]),
       name: template.name,
       categories: template.categories || [],
       groups: template.groups,
@@ -108,8 +119,4 @@ export async function create() {
 
     await Courses.insertAsync(course);
   }
-
-  Log.record("testdata", ["Courses"], {
-    message: `Inserted ${coursesBase.length + coursesZuerichLernt.length} course fixtures.`,
-  });
 }

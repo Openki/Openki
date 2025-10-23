@@ -1,0 +1,136 @@
+import React, { useEffect, useState } from "react";
+import moment from "moment-timezone";
+import { useTranslation } from "react-i18next";
+import { getLocation } from "/imports/utils/user-location";
+
+import { Coordinates, Edit as LocationEdit } from "/imports/ui/components/location/edit";
+
+export interface Change {
+  name: string;
+  description: string;
+  tz: string;
+  loc:
+    | {
+        coordinates: Coordinates;
+        type: "Point";
+      }
+    | undefined;
+}
+
+export interface Props {
+  region: Change;
+  onChange: (change: Change) => void;
+}
+
+export function Fields({ region, onChange }: Props) {
+  const { t } = useTranslation();
+
+  function timezones() {
+    return moment.tz.names();
+  }
+
+  const [center, setCenter] = useState(region.loc?.coordinates);
+
+  useEffect(() => {
+    if (!center) {
+      (async () => {
+        try {
+          setCenter((await getLocation()).coordinates);
+        } catch {
+          setCenter([47.384881, 8.53341]);
+        }
+      })();
+    }
+  }, [center]);
+
+  return (
+    <>
+      <div className="mb-3">
+        <label className="form-label">{t("region.edit.name", "Name:")}</label>
+        <input
+          data-test="region-edit-name"
+          type="text"
+          className="form-control form-control-lg"
+          placeholder={t("region.edit.namePlaceholder", "Full name of region")}
+          value={region.name}
+          onChange={(event) => {
+            onChange({
+              ...region,
+              name: event.currentTarget.value,
+            });
+          }}
+        />
+      </div>
+
+      <div className="mb-3 clearfix">
+        <label className="form-label">
+          {t(
+            "region.edit.map",
+            'Please add the center of the region by clicking "+" (on the right inside the map)',
+          )}
+        </label>
+
+        {(!!region.loc?.coordinates || !!center) && (
+          // We need a location or a cente point to render the map
+          <LocationEdit
+            coordinates={region.loc?.coordinates}
+            center={!region.loc?.coordinates ? center : (undefined as any)}
+            onChange={(newValue) => {
+              onChange({
+                ...region,
+                loc: newValue?.coordinates
+                  ? {
+                      coordinates: newValue.coordinates,
+                      type: "Point",
+                    }
+                  : undefined,
+              });
+            }}
+          />
+        )}
+      </div>
+
+      <div className="mb-3">
+        <label className="form-label">{t("region.edit.timezone", "Timezone:")}</label>
+        <select
+          className="form-select"
+          value={region.tz}
+          onChange={(event) => {
+            onChange({
+              ...region,
+              tz: event.currentTarget.value,
+            });
+          }}
+        >
+          <option value="" disabled className="select-placeholder">
+            {t("_selection.pleaseSelect")}
+          </option>
+          {timezones().map((tz) => (
+            <option key={tz} value={tz}>
+              {tz}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="mb-3">
+        <label htmlFor="region-description-id" className="form-label">
+          {t("region.edit.descriptionLabel", "Description:")}
+        </label>
+        <textarea
+          data-test="region-edit-description"
+          id="region-description-id"
+          className="form-control"
+          placeholder={t("region.edit.descriptionPlaceholder", "An optional description")}
+          value={region.description}
+          onChange={(event) => {
+            onChange({
+              ...region,
+              description: event.currentTarget.value,
+            });
+          }}
+        />
+      </div>
+    </>
+  );
+}

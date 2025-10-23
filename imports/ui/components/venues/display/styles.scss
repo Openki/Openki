@@ -1,0 +1,14 @@
+@import "{}/imports/ui/stylesheets/variables/index";
+
+.location-details-header {
+  background-color: $venue-bg;
+  color: $venue-color;
+}
+
+.location-details-body {
+  background-color: $blue-lighter;
+}
+
+.venue-property-title {
+  font-weight: bold;
+}

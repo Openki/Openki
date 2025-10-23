@@ -1,366 +1,56 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Router } from "meteor/iron:router";
-import { Mongo } from "meteor/mongo";
+import React, { useState } from "react";
 
-import { RegionEntity, RegionModel, Regions } from "/imports/api/regions/regions";
+import { useFindFilter } from "/imports/api/regions/publications";
 
-import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
-import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
-import * as RegionSelectionUtils from "/imports/utils/region-selection";
-import { PublicSettings } from "/imports/utils/PublicSettings";
-import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
-import { useSiteName } from "/imports/utils/getSiteName";
+import { RegionSelection, Props as RegionSelectionProps } from "./selection";
+import { Display } from "./Display";
 
-import { SelectionItem } from "./SelectionItem";
-
-import "./styles.scss";
-
-export function RegionSelection(data: {
-  isSplash?: boolean | undefined;
+export function RegionSelectionWrap({
+  inNavbar,
+  isSplash,
+  onSelect,
+}: {
   inNavbar?: boolean | undefined;
-  onSelect?: () => void;
-  onClose?: () => void;
+  isSplash?: boolean | undefined;
+  onSelect?: (() => void) | undefined;
 }) {
-  const { t } = useTranslation();
-  const minNumberOfRegionInSelection = PublicSettings.regionSelection.minNumber;
-  const [search, setSearch] = useState("");
-  const [searchHasFocus, setSearchHasFocus] = useState(!data.isSplash);
-  const [showAllRegions, setShowAllRegions] = useState(false);
-  const searchElementRef = useRef<HTMLInputElement>(null);
-  const dropdownToggleElementRef = useRef<HTMLButtonElement>(null);
-  const currentRouteName = useCurrentRouteName();
+  const [isLoading, regions] = useFindFilter({}, 2);
 
-  const currentRegion = useCurrentRegion();
-  const siteName = useSiteName();
+  const [searchingRegions, setSearchingRegions] = useState(false);
 
-  function regions(options: { active?: boolean; limit?: number } = {}) {
-    // read the current region
-    const currentId: string = currentRegion?._id || "";
-
-    // prepare for query
-    const query: Mongo.Selector<RegionEntity> = {};
-    if (search && search !== "") {
-      query.name = new RegExp(search, "i");
-    }
-    // first get all available regions from minimongo (that are not excluded by search)
-    let regionsArray = Regions.find(query).fetch();
-
-    // sort in the order we want
-    regionsArray.sort((a, b) => {
-      // first priority has the current region
-      if (a._id === currentId) return -1;
-      if (b._id === currentId) return 1;
-
-      // second priority have private regions
-      const pa = a.isPrivate();
-      const pb = b.isPrivate();
-      if (pa && !pb) return -1;
-      if (pb && !pa) return 1;
-
-      // then regions with more future events first
-      if (a.futureEventCount > b.futureEventCount) return -1;
-      if (b.futureEventCount > a.futureEventCount) return 1;
-
-      // finally regions with more future courses
-      if (a.courseCount > b.courseCount) return -1;
-      if (b.courseCount > a.courseCount) return 1;
-
-      // if no return happened yet, regions are equivalent
-      return 0;
-    });
-
-    // filter active option
-    if (typeof options.active === "boolean") {
-      if (options.active === true) {
-        regionsArray = [...regionsArray.filter((e) => e.futureEventCount > 0)];
-      } else {
-        regionsArray = [...regionsArray.filter((e) => e.futureEventCount === 0)];
-      }
-    }
-
-    // filter limit option
-    if (options.limit) {
-      regionsArray = [...regionsArray.slice(0, options.limit)];
-    }
-
-    return regionsArray;
+  function hasMultipleRegions() {
+    return regions.length > 1;
   }
 
-  function changeRegion(regionId: string) {
-    setSearchHasFocus(false);
-
-    const changed = currentRegion?._id !== regionId;
-
-    RegionSelectionUtils.change(regionId);
-
-    // When the region changes, we want the content of the page to update
-    // Many pages do not change when the region changed, so we go to
-    // the homepage for those
-    if (changed) {
-      const routeName = currentRouteName;
-      if (!RegionSelectionUtils.regionDependentRoutes.includes(routeName)) {
-        Router.go("home");
-      }
-    }
-    data.onClose?.();
-  }
-
-  function inNavbarClasses() {
-    if (data.inNavbar) {
-      return "nav-item text-center col col-lg-auto";
-    }
-    return "";
-  }
-  function allCourses() {
-    return Regions.find()
-      .fetch()
-      .reduce((acc, region) => acc + region.courseCount, 0);
-  }
-  function allUpcomingEvents() {
-    return Regions.find()
-      .fetch()
-      .reduce((acc, region) => acc + region.futureEventCount, 0);
-  }
-  function hasMore() {
-    const minNumber = minNumberOfRegionInSelection;
-
-    const numberOfRegions = regions().length;
-
-    return numberOfRegions > minNumber;
-  }
-  function allRegions() {
-    return regions();
-  }
-  function notAllRegions() {
-    const minNumber = minNumberOfRegionInSelection;
-    return regions({ limit: minNumber });
-  }
-  function aboutLink() {
-    return getLocalizedValue(PublicSettings.regionSelection.aboutLink);
-  }
-
-  useEffect(() => {
-    setShowAllRegions(search !== "");
-  }, [search]);
-
-  useEffect(() => {
-    const element = dropdownToggleElementRef.current;
-    if (!element) {
-      return undefined;
-    }
-
-    if (searchHasFocus) {
-      $(element).dropdown("show");
-
-      if (!searchElementRef.current) throw new Error("Unexpected falsy: searchElementRef.current");
-      searchElementRef.current?.select();
-    }
-
-    function handleHide(event: Event) {
-      if (!searchHasFocus) {
-        data.onClose?.();
-        return true;
-      }
-
-      // Stop closing
-      event.preventDefault();
-      return false;
-    }
-    element.addEventListener("hide.bs.dropdown", handleHide);
-    return () => {
-      element.removeEventListener("hide.bs.dropdown", handleHide);
+  function regionSelectionDisplayAttr() {
+    return {
+      inNavbar,
+      onClick: () => {
+        setSearchingRegions(true);
+      },
     };
-  }, [searchHasFocus]);
-
-  function handelItemClick(region?: RegionModel) {
-    const regionId = region?._id || "all";
-    changeRegion(regionId);
-    data.onSelect?.();
-    return false;
   }
 
-  function handelSearchKeyUp(event: React.KeyboardEvent<HTMLInputElement>) {
-    const newSearch = event.currentTarget.value.trim();
-    if (newSearch !== search) {
-      setSearch(newSearch);
-    }
+  function regionSelectionAttr(): RegionSelectionProps {
+    return {
+      inNavbar,
+      isSplash,
+      onSelect,
+      onClose: () => {
+        if (searchingRegions) {
+          setSearchingRegions(false);
+        }
+      },
+    };
   }
 
-  function handelSearchFocus() {
-    setSearchHasFocus(true);
+  if (isLoading() || !hasMultipleRegions()) {
+    return null;
   }
 
-  function handelSearchBlur() {
-    setSearchHasFocus(false);
+  if (searchingRegions) {
+    return <RegionSelection {...regionSelectionAttr()} />;
   }
 
-  function handelShowAllClick() {
-    setShowAllRegions(true);
-    setSearchHasFocus(true);
-  }
-
-  function handelSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    if (search !== "") {
-      const selectedRegion = regions()[0];
-      if (selectedRegion) {
-        changeRegion(selectedRegion._id);
-      } else {
-        changeRegion("all");
-      }
-    }
-  }
-
-  return (
-    <li className={`region-selection ${inNavbarClasses()}`}>
-      <form className="d-flex region-search-form" tabIndex={0} onSubmit={handelSubmit}>
-        <div
-          className={`input-group input-group-outline ${
-            data.isSplash ? "is-splash" : "input-group-sm p-2"
-          }`}
-        >
-          <span className="input-group-text">
-            <span className="fa-solid fa-location-dot fa-fw" aria-hidden="true"></span>
-          </span>
-          <input
-            ref={searchElementRef}
-            className="form-control"
-            type="text"
-            defaultValue={
-              currentRegion ? currentRegion.name : t("menue.All regions", "All regions") || ""
-            }
-            onKeyUp={handelSearchKeyUp}
-            onFocus={handelSearchFocus}
-            onBlur={handelSearchBlur}
-          />
-          <input className="d-none" type="submit" />
-          <button
-            className="btn dropdown-toggle"
-            data-bs-toggle="dropdown"
-            role="button"
-            aria-expanded="false"
-            data-bs-auto-close="outside"
-            tabIndex={-1}
-            ref={dropdownToggleElementRef}
-          ></button>
-          <ul className="dropdown-menu dropdown-menu-end mx-2" role="menu">
-            <li className="dropdown-header dropdown-legend">
-              <div className="dropdown-addon-right">
-                <span
-                  className="badge bg-primary rounded-pill"
-                  title={t("regionSelection.legend.numCoursesTitle", "Number of courses")}
-                >
-                  # <i className="fa-solid fa-circle"></i>
-                </span>{" "}
-                <span
-                  className="badge bg-success text-dark rounded-pill"
-                  title={t("regionSelection.legend.numEventsTitle", "Number of upcoming events")}
-                >
-                  # <i className="fa-solid fa-calendar"></i>
-                </span>
-              </div>
-              {t("regionSelection.legend.region", "Region")}
-            </li>
-            <li>
-              <a
-                href="#"
-                className="dropdown-item js-region-link js-nav-dropdown-close"
-                title={t("menue.All regions")}
-                onClick={() => handelItemClick()}
-              >
-                <div className="dropdown-addon-right">
-                  <span
-                    className="badge bg-primary rounded-pill"
-                    title={t(
-                      "regions.allCourses.title",
-                      "{COUNT, plural, =0{no courses} one{one course} other{# courses} } on {SITENAME}",
-                      { COUNT: allCourses(), SITENAME: siteName },
-                    )}
-                  >
-                    {allCourses()}
-                  </span>{" "}
-                  <span
-                    className="badge bg-success text-dark rounded-pill"
-                    title={t(
-                      "regions.allUpcomingEvents.title",
-                      "{COUNT, plural, =0{no upcoming events} one{one upcoming event} other{# upcoming events} } on {SITENAME}",
-                      { COUNT: allUpcomingEvents(), SITENAME: siteName },
-                    )}
-                  >
-                    {allUpcomingEvents()}
-                  </span>
-                </div>
-                {!currentRegion ? (
-                  <>
-                    <span className="checkmark fa-solid fa-check"></span>{" "}
-                    <span className="fw-bold">{t("menue.All regions", "All regions")}</span>
-                  </>
-                ) : (
-                  t("menue.All regions", "All regions")
-                )}
-              </a>
-            </li>
-            {showAllRegions ? (
-              //  here follows the "long" version, all regions that the user has access to
-              <>
-                {allRegions().map((region) => (
-                  <SelectionItem
-                    key={region._id}
-                    region={region}
-                    search={search}
-                    onClick={() => handelItemClick(region)}
-                  />
-                ))}
-                {!!aboutLink() && (
-                  <>
-                    <li>
-                      <hr className="dropdown-divider" />
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href={aboutLink()}>
-                        <span className="fa-solid fa-circle-info" aria-hidden="true"></span>{" "}
-                        {t("regionSelection.aboutLink", "About regions")}
-                      </a>
-                    </li>
-                  </>
-                )}
-              </>
-            ) : (
-              // here follows the "short" version, only some regions are shown
-              <>
-                {notAllRegions().map((region) => (
-                  <SelectionItem
-                    key={region._id}
-                    region={region}
-                    search={search}
-                    onClick={() => handelItemClick(region)}
-                  />
-                ))}
-                {hasMore() && (
-                  <>
-                    <li>
-                      <hr className="dropdown-divider" />
-                    </li>
-                    <li>
-                      <button className="btn btn-link" type="button" onClick={handelShowAllClick}>
-                        {t("regionSelection.showAll", "Show more regions")}
-                      </button>
-                    </li>
-                  </>
-                )}
-              </>
-            )}
-          </ul>
-        </div>
-      </form>
-    </li>
-  );
+  return <Display {...regionSelectionDisplayAttr()} />;
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("RegionSelection", () => RegionSelection);

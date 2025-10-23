@@ -1,4 +1,3 @@
-import { Template } from "meteor/templating";
 import React from "react";
 
 import { EventModel } from "/imports/api/events/events";
@@ -34,9 +33,3 @@ export function EventList({ dataEvents, withDate, withImage, withVenue, openInNe
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("EventList", () => EventList);

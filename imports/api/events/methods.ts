@@ -25,11 +25,12 @@ import { LocalTime } from "/imports/utils/local-time";
 import * as StringTools from "/imports/utils/string-tools";
 import * as UpdateMethods from "/imports/utils/update-methods";
 import { ServerMethod } from "/imports/utils/ServerMethod";
-import { HtmlString, StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";
+import { HtmlString, Type } from "/imports/utils/CustomChecks";
 import { GroupPromoters } from "/imports/utils/update-methods";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { Venues } from "../venues/venues";
 import { UserModel } from "../users/users";
+import { GeodataPattern } from "/imports/api/Geodata";
 
 /**
  * @param updateOptions What should be updated
@@ -96,18 +97,11 @@ const ReplicaSync = function (
   };
 };
 
-export const GeodataPattern = {
-  type: StringEnum("Point"),
-  /** (not lat-long !) */
-  coordinates: Tuple<[long: NumberConstructor, lat: NumberConstructor]>(Number, Number),
-};
-
-export type Geodata = Type<typeof GeodataPattern>;
-
 export const EventVenuePattern = {
   _id: Match.Optional(String),
   name: Match.Optional(String),
   loc: Match.Optional(GeodataPattern),
+  level: Match.Optional(Match.Integer),
   address: Match.Optional(String),
   editor: Match.Optional(String),
   restrictedUse: Match.Optional(Boolean),

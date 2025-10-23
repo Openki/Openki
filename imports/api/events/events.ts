@@ -5,7 +5,7 @@ import { Match, check } from "meteor/check";
 
 import * as tenantDenormalizer from "./tenantDenormalizer";
 
-import { Geodata } from "/imports/api/regions/regions";
+import { Geodata } from "/imports/api/Geodata";
 import { UserModel } from "/imports/api/users/users";
 
 import { Filtering } from "/imports/utils/filtering";
@@ -33,6 +33,8 @@ export interface EventVenueEntity {
   name: string;
   /** Event location in GeoJSON format */
   loc?: Geodata;
+  /** Floor level for custom maps as integer */
+  level?: number;
   /** Address string where the event will take place */
   address?: string;
   editor?: string;
@@ -306,7 +308,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
     check(skip, Match.Maybe(Match.Integer));
     check(sort, Match.Maybe([FieldSortPattern]));
 
-    const find: any = {};
+    const find: Mongo.Selector<EventEntity> = {};
     const and = [];
 
     const options: Mongo.Options<EventEntity> = {};

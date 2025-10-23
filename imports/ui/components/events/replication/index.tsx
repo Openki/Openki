@@ -9,7 +9,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import { LocalTime } from "/imports/utils/local-time";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
-import { ButtonCancel, ButtonSave } from "/imports/ui/components/buttons";
+import { ButtonCancel, ButtonSave } from "../../Buttons";
 import { DateSelect } from "../../date-select";
 import { Notify } from "../Notify";
 

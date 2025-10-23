@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { ReactNode, useEffect, useRef } from "react";
 import $ from "jquery";
 
 import { useWindowSize } from "/imports/ui/lib/useWindowSize";
@@ -15,7 +15,7 @@ export function ReactSelect2(props: {
   value?: string | number | readonly string[] | undefined;
   placeholder: string;
   noResults: string;
-  children: any;
+  children: ReactNode;
   onSelect: (value: string) => void;
   onUnselect: (value: string) => void;
 }) {

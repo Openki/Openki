@@ -281,9 +281,3 @@ export function Modal(props: {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("DeleteEventsModal", () => Modal);

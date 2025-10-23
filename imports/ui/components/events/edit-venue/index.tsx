@@ -1,15 +1,15 @@
-import { EJSON } from "meteor/ejson";
-import React, { useEffect, useState } from "react";
-import { Router } from "meteor/iron:router";
 import { differenceBy, intersectionBy, map } from "lodash";
+import { EJSON } from "meteor/ejson";
+import { Router } from "meteor/iron:router";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { UserModel } from "/imports/api/users/users";
+import { useUser } from "/imports/utils/react-meteor-data";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { EventVenueEntity } from "/imports/api/events/events";
 import { useDetails } from "/imports/api/regions/publications";
+import { UserModel } from "/imports/api/users/users";
 import { useFindFilter } from "/imports/api/venues/publications";
-import { useUser } from "/imports/utils/react-meteor-data";
 
 import {
   AsyncTypeahead,
@@ -19,17 +19,18 @@ import {
   RenderMenuProps,
   TypeaheadInputSingle,
 } from "react-bootstrap-typeahead";
-import { Map } from "./map";
 import { Display } from "../../location/display";
-import { ReactJoin } from "../../../../utils/ReactJoin";
-import { VenueTag } from "../../venues/link";
 import { Icon as VenueIcon } from "../../venues/Icon";
+import { Map } from "./map";
+import { VenueTag } from "/imports/ui/components/venues/link";
+import { ReactJoin } from "/imports/utils/ReactJoin";
 
 function toEventVenue(v: EventVenueEntity) {
   return {
     _id: v._id,
     name: v.name,
     loc: v.loc,
+    level: v.level,
     address: v.address,
     editor: v.editor,
     restrictedUse: v.restrictedUse,
@@ -349,9 +350,12 @@ export function EditVenue({
               {!value._id ? (
                 <>
                   <Map
-                    value={value.loc}
-                    onChange={(newLoc) => {
-                      onChange({ ...value, loc: newLoc });
+                    region={regionId}
+                    value={{ location: value.loc, level: value.level }}
+                    onChange={(newValue) => {
+                      if (newValue.level === undefined)
+                        onChange({ ...value, loc: newValue.location });
+                      else onChange({ ...value, loc: newValue.location, level: newValue.level });
                     }}
                   />
                   <div className="form-text text-end">
@@ -362,7 +366,11 @@ export function EditVenue({
                   </div>
                 </>
               ) : (
-                <Display coordinates={value.loc.coordinates} fullscreen={false} />
+                <Display
+                  region={regionId}
+                  coordinates={value.loc.coordinates}
+                  level={value.level}
+                />
               )}
             </div>
           )}

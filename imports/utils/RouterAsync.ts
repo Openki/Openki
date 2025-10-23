@@ -88,6 +88,24 @@ export function route<D, S extends Record<string, SubscriptionHandle<any>> | und
         return !s.isLoading() && dataLoaded.get();
       });
     };
+
+    const action = options.action;
+    options.action = async function () {
+      const data = await this.data();
+      if (!data) {
+        this.render(
+          options.notFoundTemplate || (Router as any).configure().lookupNotFoundTemplate(),
+        );
+        return;
+      }
+
+      if (action) {
+        action.call(this);
+        return;
+      }
+
+      this.render();
+    };
   }
 
   if (!options.onRun) {

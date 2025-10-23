@@ -1,5 +1,4 @@
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import { Session } from "meteor/session";
 
 import * as Tooltips from "/imports/utils/Tooltips";
 
@@ -19,16 +18,5 @@ template.onRendered(() => {
   $(window).on("resize", () => {
     Viewport.update();
   });
-  Session.set("isRetina", window.devicePixelRatio === 2);
   Tooltips.enable();
-});
-
-template.events({
-  /* Workaround to prevent iron-router from messing with server-side downloads
-   *
-   * Class 'js-download' must be added to those links.
-   */
-  "click .js-download"(event) {
-    event.stopPropagation();
-  },
 });

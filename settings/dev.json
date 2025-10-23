@@ -1,5 +1,6 @@
-{ "admins": ["greg", "FeeLing", "IvanZ"]
+{ "admins": ["greg", "Support", "FeeLing"]
 , "testdata": true
+, "prng": "static"
 , "public":
 	{ "siteName": "Hmmm"
 	, "siteStage": "DEV"
@@ -21,7 +22,7 @@
 	, "theme":
 		{ "brand": "#9c3838"
 		}
-	, "publicTenants": ["8410c099a7", "6815333b85"]
+	, "publicTenants": ["8410c099a7", "6815333b85", "defb99e69a"]
 	, "regionSelection":
 		{ "minNumber": 5
 		, "aboutLink":
@@ -47,7 +48,9 @@
 		, "visitorUser": true
 		, "rsvpWithCompanions": true
 		, "sendReminderIsEditable": true
-    , "proposeCourseBox": true 
+		, "resizeImagesOnServer": true
+    , "proposeCourseBox": true
+    , "disable2dSphereForLocations": false
 		}
 	, "nav":
 		{ "brandLink": "/"

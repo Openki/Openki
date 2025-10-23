@@ -31,10 +31,10 @@ export const clean = ServerMethod(
     }
     try {
       await Promise.all([
-        Venues.removeAsync({}),
-        Events.removeAsync({}),
         CourseDiscussions.removeAsync({}),
+        Events.removeAsync({}),
         Courses.removeAsync({}),
+        Venues.removeAsync({}),
         Regions.removeAsync({}),
         Invitations.removeAsync({}),
         JoinLinks.removeAsync({}),
@@ -92,40 +92,6 @@ export const create = ServerMethod(
       serverError(e);
       throw e;
     }
-  },
-  { simulation: false },
-);
-
-export const cleanForAppTest = ServerMethod(
-  "fixtures.clean.forAppTest",
-  () => {
-    if (!PrivateSettings.testdata) {
-      return;
-    }
-    Groups.removeAsync({});
-    Events.removeAsync({});
-    Venues.removeAsync({});
-    Courses.removeAsync({});
-  },
-  { simulation: false },
-);
-
-export const createForAppTest = ServerMethod(
-  "fixtures.create.forAppTest",
-  async () => {
-    if (!PrivateSettings.testdata) {
-      return;
-    }
-
-    await infoPagesDataCreate();
-    if ((await Regions.countDocuments()) === 0) {
-      await regionsDataCreate();
-    }
-    await usersDataCreate();
-    await groupsDataCreate();
-    await venuesDataCreate();
-    await coursesDataCreate();
-    await eventsDataGenerate();
   },
   { simulation: false },
 );

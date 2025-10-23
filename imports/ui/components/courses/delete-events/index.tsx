@@ -31,9 +31,3 @@ export function DeleteEvents(props: { onShowEventsDeleteModal: () => void }) {
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("DeleteCourseEvents", () => DeleteEvents);

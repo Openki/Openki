@@ -16,7 +16,7 @@ import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { useRoleDisplay } from "../../../../lib/useRoleDisplay";
 
-import { ButtonCancel } from "/imports/ui/components/buttons";
+import { ButtonCancel } from "../../../Buttons";
 import { Guide } from "./guide";
 
 import "./styles.scss";
@@ -306,6 +306,7 @@ export function Role(data: Data) {
           ) : (
             maySubscribe() && (
               <button
+                data-test={`course-role-enroll-${data.role.type}`}
                 type="button"
                 className="btn btn-add text-start page-component-btn"
                 name={data.role.type}

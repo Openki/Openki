@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Template } from "meteor/templating";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
 import * as emailMethods from "/imports/api/emails/methods";
 
-import { ButtonCancel } from "../buttons";
+import { ButtonCancel } from "../Buttons";
 
 import "./styles.scss";
 
@@ -105,9 +104,3 @@ export function Report() {
     </>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("Report", () => Report);

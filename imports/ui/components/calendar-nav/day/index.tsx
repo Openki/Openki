@@ -1,18 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
 import moment from "moment";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
+import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
-import { SearchField } from "../../search-field";
-import { Control } from "./Control";
-import { FilterGroups } from "../../filter-groups";
-import { FilterCategories } from "../../filter-categories";
+import { FilterGroups, Props as FilterGroupsProps } from "../../FilterGroups";
+import { FilterCategories, Props as FilterCategoriesProps } from "../../filter-categories";
+import { SearchField, Props as SearchFieldProps } from "../../search-field";
 import { Direction } from "../Arrow";
+import { Control, Props as ControlProps } from "./Control";
 
 import "../styles.scss";
 
-export interface Data {
+export interface Props {
   hideSwitches: boolean;
   search: string;
   onChangeSearch: (newValue: string) => void;
@@ -28,32 +28,32 @@ export interface Data {
   onChangeAttendingEventsOnly: (state: boolean) => void;
 }
 
-export function Day(data: Data) {
+export function Day(props: Props) {
   const { t } = useTranslation();
   const { weekNr, dateLong, dateShort } = useDateTimeFormat();
   const [covering, setCovering] = useState(false);
   const currentUser = useUser();
   const navRef = useRef<HTMLDivElement>(null);
 
-  function controlAttr(direction: Direction) {
-    return { direction, date: data.date, onChangeDate: data.onChangeDate };
+  function controlAttr(direction: Direction): ControlProps {
+    return { direction, date: props.date, onChangeDate: props.onChangeDate };
   }
-  function searchFieldAttr() {
-    return { search: data.search, onChange: data.onChangeSearch };
+  function searchFieldAttr(): SearchFieldProps {
+    return { search: props.search, onChange: props.onChangeSearch };
   }
-  function filterGroupsAttr() {
+  function filterGroupsAttr(): FilterGroupsProps {
     return {
-      availableGroups: data.availableGroups,
-      selectedGroups: data.selectedGroups,
-      onAdd: data.onAddGroup,
-      onRemove: data.onRemoveGroup,
+      availableGroups: props.availableGroups,
+      selectedGroups: props.selectedGroups,
+      onAdd: props.onAddGroup,
+      onRemove: props.onRemoveGroup,
     };
   }
-  function filterCategoriesAttr() {
+  function filterCategoriesAttr(): FilterCategoriesProps {
     return {
-      categories: data.categories,
-      onAdd: data.onAddCategory,
-      onRemove: data.onRemoveCategory,
+      categories: props.categories,
+      onAdd: props.onAddCategory,
+      onRemove: props.onRemoveCategory,
     };
   }
 
@@ -82,21 +82,21 @@ export function Day(data: Data) {
         </div>
         <div className="col-md-6 col-lg-4 p-1">
           <div className="row justify-content-center align-items-center">
-            {!data.hideSwitches && <Control {...controlAttr("previous")} />}
+            {!props.hideSwitches && <Control {...controlAttr("previous")} />}
             <div className="col-auto">
               <div className="lead">
-                <span className="d-none d-md-inline-block">{dateLong(data.date)}</span>
-                <span className="d-md-none">{dateShort(data.date)}</span>
+                <span className="d-none d-md-inline-block">{dateLong(props.date)}</span>
+                <span className="d-md-none">{dateShort(props.date)}</span>
               </div>
               <div>
-                {t("calendar.weekNumber", "Week")} {weekNr(data.date)}
+                {t("calendar.weekNumber", "Week")} {weekNr(props.date)}
               </div>
             </div>
-            {!data.hideSwitches && <Control {...controlAttr("next")} />}
+            {!props.hideSwitches && <Control {...controlAttr("next")} />}
           </div>
         </div>
         <div className="row align-items-center p-1">
-          {!!data.availableGroups && (
+          {!!props.availableGroups && (
             <div className="col-md-4 col-lg-2 p-1">
               <FilterGroups {...filterGroupsAttr()} />
             </div>
@@ -106,7 +106,7 @@ export function Day(data: Data) {
           </div>
           {!!currentUser && (
             <div
-              className={`${data.availableGroups ? "offset-md-4 offset-lg-2 " : ""}col-md-8 col-lg-4 p-1`}
+              className={`${props.availableGroups ? "offset-md-4 offset-lg-2 " : ""}col-md-8 col-lg-4 p-1`}
             >
               <div className="form-check form-switch">
                 <input
@@ -116,7 +116,7 @@ export function Day(data: Data) {
                   name="filter-own-events"
                   onChange={(event) => {
                     const radioSwitch = event.currentTarget;
-                    data.onChangeAttendingEventsOnly(radioSwitch.checked);
+                    props.onChangeAttendingEventsOnly(radioSwitch.checked);
                   }}
                 />{" "}
                 <label htmlFor="filter-own-events">

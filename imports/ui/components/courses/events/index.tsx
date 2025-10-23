@@ -207,9 +207,3 @@ export function Events({ course }: Props) {
     </>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("CourseEvents", () => Events);

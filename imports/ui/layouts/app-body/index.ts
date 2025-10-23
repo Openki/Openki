@@ -6,7 +6,6 @@ import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating"
 import { Regions } from "/imports/api/regions/regions";
 
 import * as RegionSelection from "/imports/utils/region-selection";
-import { Introduction } from "/imports/ui/lib/introduction";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import * as Viewport from "/imports/ui/lib/viewport";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
@@ -53,7 +52,7 @@ template.helpers({
   },
 
   isAdminPage() {
-    return Router.current().url.includes("admin");
+    return Router.current().url.includes("/admin/");
   },
 
   isAdmin() {
@@ -66,34 +65,13 @@ template.helpers({
   },
 });
 
-template.events({
-  // Clicks on the logo toggle the intro blurb, but only when already on home
-  "click .js-toggle-introduction"() {
-    const { route } = Router.current();
-    if (route?.getName() === "home") {
-      Introduction.showIntro();
-    }
-  },
-});
-
 template.onRendered(() => {
   Viewport.update();
   window.addEventListener("resize", () => {
     Viewport.update();
   });
-  Session.set("isRetina", window.devicePixelRatio === 2);
   Tooltips.enable();
   FormsValidation.enable();
-});
-
-template.events({
-  /* Workaround to prevent iron-router from messing with server-side downloads
-   *
-   * Class 'js-download' must be added to those links.
-   */
-  "click .js-download"(event) {
-    event.stopPropagation();
-  },
 });
 
 routerAutoscroll.marginTop = ScssVars.navbarHeight;

@@ -80,81 +80,95 @@ Accounts.validateNewUser((user) => {
   return true;
 });
 
-Accounts.onCreateUser((options: any, originalUser) => {
-  const user = { ...originalUser } as UserModel;
-  if (options.profile) {
-    user.profile = options.profile as UserProfile;
-  } else {
-    user.profile = {} as UserProfile;
-  }
-  // Collect info where a username could possibly be found
-  let nameProviders = [user, user.profile];
-  if (user.services) {
-    nameProviders = nameProviders.concat(toArray(originalUser.services));
-  }
-
-  // Try to glean a username
-  let name;
-  let username;
-  let provider: { name?: string; username?: string } | undefined;
-
-  while ((provider = nameProviders.pop()) !== undefined) {
-    if (!name && provider.name) {
-      name = provider.name;
+Accounts.onCreateUser(
+  /**
+  @param {{
+      allowNews?: boolean | undefined;
+      locale?: string | undefined;
+      visitor?: boolean | undefined;
+      profile?: UserProfile | undefined;
+    }} options
+  */
+  (options: any, proposedUser) => {
+    const user = { ...proposedUser } as UserModel;
+    if (options.profile) {
+      user.profile = options.profile as UserProfile;
+    } else {
+      user.profile = {} as UserProfile;
     }
-    if (!username && provider.username) {
-      username = provider.username;
+    // Collect info where a username could possibly be found
+    let nameProviders = [user, user.profile];
+    if (user.services) {
+      nameProviders = nameProviders.concat(toArray(proposedUser.services));
     }
-  }
 
-  // We're not picky and try assigning a name no questions asked
-  user.username = (username || name) as string;
-  user.profile.name = (name || username) as string;
+    // Try to glean a username
+    let name;
+    let username;
+    let provider: { name?: string; username?: string } | undefined;
 
-  if (!user.privileges) {
-    user.privileges = [];
-  }
-
-  if (options.visitor) {
-    user.privileges.push("visitor");
-  }
-
-  // Read email-address if provided
-  let providedEmail;
-  let verified = true; // Assume verified unless there is a flag that says it's not
-  const services = user.services;
-  if (services) {
-    ["facebook", "google", "github"].forEach((loginProvider) => {
-      const provided = (services as any)[loginProvider] as {
-        email?: string;
-        verified_email?: boolean;
-      };
-      if (provided?.email) {
-        providedEmail = provided.email;
-        if (typeof provided.verified_email === "boolean") {
-          verified = provided.verified_email;
-        }
+    while ((provider = nameProviders.pop()) !== undefined) {
+      if (!name && provider.name) {
+        name = provider.name;
       }
-    });
-  }
+      if (!username && provider.username) {
+        username = provider.username;
+      }
+    }
 
-  if (providedEmail) {
-    user.emails = [{ address: providedEmail, verified }];
-  }
+    // We're not picky and try assigning a name no questions asked
+    user.username = (username || name) as string;
+    user.profile.name = (name || username) as string;
 
-  user.locale = options.locale;
+    if (!user.privileges) {
+      user.privileges = [];
+    }
 
-  user.tenants = [];
+    if (options.visitor) {
+      user.privileges.push("visitor");
+    }
 
-  user.groups = [];
-  user.badges = [user._id];
-  user.venues = [];
+    // Read email-address if provided
+    let providedEmail;
+    let verified = true; // Assume verified unless there is a flag that says it's not
+    const services = user.services;
+    if (services) {
+      ["facebook", "google", "github"].forEach((loginProvider) => {
+        const provided = (services as any)[loginProvider] as {
+          email?: string;
+          verified_email?: boolean;
+        };
+        if (provided?.email) {
+          providedEmail = provided.email;
+          if (typeof provided.verified_email === "boolean") {
+            verified = provided.verified_email;
+          }
+        }
+      });
+    }
 
-  user.notifications = true;
-  user.allowPrivateMessages = true;
-  user.allowNews = options.allowNews;
-  return user;
-});
+    if (providedEmail) {
+      user.emails = [{ address: providedEmail, verified }];
+    }
+
+    if (options.locale) {
+      user.locale = options.locale;
+    }
+
+    user.allowNews = options.allowNews || false;
+
+    user.tenants = [];
+
+    user.groups = [];
+    user.badges = [user._id];
+    user.venues = [];
+
+    user.notifications = true;
+    user.allowPrivateMessages = true;
+
+    return user;
+  },
+);
 
 Accounts.onLogin(async () => {
   await UsersMethods.updateLastLogin();

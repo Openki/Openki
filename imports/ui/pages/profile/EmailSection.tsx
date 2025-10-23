@@ -1,7 +1,7 @@
 import { ValidationError } from "meteor/mdg:validation-error";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ButtonSubmit } from "../../components/buttons";
+import { ButtonSubmit } from "../../components/Buttons";
 import { VerifyEmail } from "../../components/profiles/VerifyEmail";
 import * as Analytics from "../../lib/analytics";
 import { routerAutoscroll } from "../../lib/router-autoscroll";
@@ -95,7 +95,7 @@ export function EmailSection() {
   }
 
   return (
-    <div className="page-component page-component-seperated">
+    <div data-test="email-section" className="page-component page-component-seperated">
       <h3>{t("profile.email_settings", "E-mail settings")}</h3>
       <div className="row g-4 mb-2">
         <div className="col-sm-6">
