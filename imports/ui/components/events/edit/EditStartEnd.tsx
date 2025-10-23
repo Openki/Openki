@@ -105,6 +105,7 @@ export function EditStartEnd({
               <span className="fa-solid fa-hourglass-start fa-fw" aria-hidden="true"></span>
             </span>
             <input
+              data-test="events-edit-start-end-startTime"
               type="time"
               className={`form-control ${errors.start ? "is-invalid" : ""}`}
               step={300}
@@ -146,6 +147,7 @@ export function EditStartEnd({
                   <span className="fa-solid fa-hourglass-end fa-fw" aria-hidden="true"></span>
                 </span>
                 <input
+                  data-test="events-edit-start-end-endTime"
                   type="time"
                   className="form-control"
                   value={timeFormat(endLocal)}

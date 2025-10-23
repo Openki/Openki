@@ -45,7 +45,10 @@ function Hints({
       {!errors.venue && !errors.startEndVenue && !venueIsLoading() && !!venue && (
         <>
           {venue.allowParallelEvents && parallelEvents.length > 0 && (
-            <div className="alert alert-warning p-2">
+            <div
+              data-test="events-edit-venue-hint-parallel-events"
+              className="alert alert-warning p-2"
+            >
               <span className="fa-solid fa-triangle-exclamation fa-fw" aria-hidden="true"></span>{" "}
               {t("event.edit.venue.parallelEvents.allowed", "Event is overlapping.")}{" "}
               {inSameRoom && (
@@ -64,7 +67,10 @@ function Hints({
             /* Not show hint if user is editor of venue */
             filterUserVenues(user, [venue]).length === 0 &&
               (venue.restrictedUse ? (
-                <div className="alert alert-warning p-2">
+                <div
+                  data-test="events-edit-venue-hint-restricted-use"
+                  className="alert alert-warning p-2"
+                >
                   <span
                     className="fa-solid fa-triangle-exclamation fa-fw"
                     aria-hidden="true"
@@ -75,7 +81,10 @@ function Hints({
                   )}
                 </div>
               ) : (
-                <div className="alert alert-success p-2">
+                <div
+                  data-test="events-edit-venue-hint-contact-host"
+                  className="alert alert-success p-2"
+                >
                   {t(
                     "event.editVenue.pleaseContactHost",
                     "Make sure you have contacted the host of this venue for availability.",
