@@ -17,10 +17,10 @@ export default defineConfig({
       openMode: 1,
     },
     setupNodeEvents() {
-      // implement node event listeners here
-      // Plugins hier registrieren, falls nötig
-      // Beispiel: Code Coverage oder Reporting
-      // return require("./tests/cypress/plugins/index.ts")(on, config);
+      // Implement node event listeners here
+      // Register plugins here, if necessary
+      // Example: Code coverage or reporting
+      // return require(“./tests/cypress/plugins/index.ts”)(on, config);
     },
     env: {
       baseUrl: "http://localhost:3000",

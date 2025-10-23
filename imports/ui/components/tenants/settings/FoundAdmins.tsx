@@ -42,7 +42,7 @@ export function FoundAdmins({ tenant, userSearch }: { tenant: TenantModel; userS
   return (
     <div className="tag-group multiline">
       {foundAdmins.map((admin) => (
-        <>
+        <React.Fragment key={admin._id}>
           <div className="tag tag-btn tenant-admin-tag-btn-add">
             <button
               data-test={`tenant-setting-admin-add-button-${admin.getDisplayName()}`}
@@ -60,7 +60,7 @@ export function FoundAdmins({ tenant, userSearch }: { tenant: TenantModel; userS
               <i className="fa-solid fa-user fa-fw" aria-hidden="true" />
             </a>
           </div>
-        </>
+        </React.Fragment>
       ))}
     </div>
   );

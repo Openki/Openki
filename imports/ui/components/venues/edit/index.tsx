@@ -1,32 +1,30 @@
-import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { Geodata } from "/imports/api/Geodata";
-import { FacilityOption, VenueModel } from "/imports/api/venues/venues";
-import * as VenuesMethods from "/imports/api/venues/methods";
 import { useFindFilter } from "/imports/api/regions/publications";
+import * as VenuesMethods from "/imports/api/venues/methods";
+import { FacilityOption, VenueModel } from "/imports/api/venues/venues";
 
 import * as Analytics from "/imports/ui/lib/analytics";
-import { Edit as LocationEdit } from "../../location/edit";
 
+import { ButtonCancel, ButtonSave } from "../../Buttons";
+import { Edit as LocationEdit } from "../../location/edit";
 import { AdditionalInfo, type Data as AdditionalInfoData } from "./additional-info";
 import { Richtext } from "/imports/ui/components/richtext";
-import { ButtonCancel, ButtonSave } from "../../Buttons";
 
 import "./styles.scss";
 
-export function Edit({
-  venue,
-  onSaved,
-  onCanceled,
-}: {
+export interface Props {
   venue: VenueModel;
   onSaved: () => void;
   onCanceled: () => void;
-}) {
+}
+
+export function Edit({ venue, onSaved, onCanceled }: Props) {
   const { t } = useTranslation();
 
   const sessionRegion = useCurrentRegionId();
