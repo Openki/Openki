@@ -1,15 +1,14 @@
-import React, { useRef } from "react";
 import moment from "moment";
-import { useUser } from "/imports/utils/react-meteor-data";
+import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { useUser } from "/imports/utils/react-meteor-data";
 
-import { FilterGroups } from "../../FilterGroups";
-
-import { SearchField } from "../../search-field";
-import { FilterCategories } from "../../filter-categories";
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
-import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import { FilterGroups, Props as FilterGroupsProps } from "../../FilterGroups";
+import { FilterCategories, Props as FilterCategoriesProps } from "../../filter-categories";
+import { SearchField, Props as SearchFieldProps } from "../../search-field";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
+import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
 import "../styles.scss";
 
@@ -44,10 +43,10 @@ export function CalendarNavProgram(props: Props) {
 
   const elementRef = useRef(null);
 
-  function searchFieldAttr() {
+  function searchFieldAttr(): SearchFieldProps {
     return { search: props.search, onChange: props.onChangeSearch };
   }
-  function filterGroupsAttr() {
+  function filterGroupsAttr(): FilterGroupsProps {
     return {
       availableGroups: props.availableGroups,
       selectedGroups: props.selectedGroups,
@@ -55,7 +54,7 @@ export function CalendarNavProgram(props: Props) {
       onRemove: props.onRemoveGroup,
     };
   }
-  function filterCategoriesAttr() {
+  function filterCategoriesAttr(): FilterCategoriesProps {
     return {
       categories: props.categories,
       onAdd: props.onAddCategory,
