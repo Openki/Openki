@@ -1,13 +1,11 @@
+import { chain, sumBy } from "lodash";
+import { Router } from "meteor/iron:router";
 import moment, { max, min } from "moment";
 import React, { useEffect, useMemo, useRef } from "react";
-// import { useTranslation } from "react-i18next";
-// import { EventModel } from "/imports/api/events/events";
 import * as Events from "/imports/api/events/publications";
-// import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
-import { chain, sumBy } from "lodash";
+import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
+import { useFindParallelEvents } from "/imports/ui/components/events/edit/useFindParallelEvents";
 import { useLocalTimeZone } from "/imports/utils/local-time";
-// import { useUser } from "/imports/utils/react-meteor-data";
-import { Router } from "meteor/iron:router";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
 function ScrollIntoView({ children }: { children: React.ReactNode }) {
@@ -53,7 +51,7 @@ export function useFindNearEvents(
 
     /* replace with current event state */
     return [...events.filter((e) => e._id !== event._id), event];
-  }, [venueId, regionId, event.startLocal, event.endLocal, isLoading()]);
+  }, [venueId, regionId, event.room, event.startLocal, event.endLocal, isLoading()]);
 }
 
 function getDaysBetween(startDate: moment.MomentInput, endDate: moment.MomentInput) {
@@ -105,8 +103,9 @@ export function Timetable({
 
   const regionZone = useLocalTimeZone(regionId);
 
-  // const [venueIsLoading, venue] = useVenueDetails(venueId || "-1");
+  const [venueIsLoading, venue] = useVenueDetails(venueId || "-1");
   const events = useFindNearEvents(venueId, regionId, currentEvent);
+  const parallelEvents = useFindParallelEvents(venueId, regionId, currentEvent);
 
   const startLocal = chain(events)
     .map((e) => e.startLocal)
@@ -125,7 +124,10 @@ export function Timetable({
     const startHour = max(start, day.clone().startOf("day"));
     const endHour = min(day.clone().endOf("day"), end);
 
-    const hours = getHoursBetween(startHour, endHour);
+    const hours = getHoursBetween(
+      startHour.clone().startOf("hour"),
+      endHour.clone().startOf("hour"),
+    );
 
     const startPos = pos;
     const endPos = pos + hours.length;
@@ -133,7 +135,7 @@ export function Timetable({
 
     return {
       day,
-      hours: getHoursBetween(startHour, endHour),
+      hours,
       start: startPos,
       end: endPos,
     };
@@ -146,12 +148,36 @@ export function Timetable({
 
   const totalCols = sumBy(viewModel, (v) => v.hours.length) + 1; // +1 for first empty/room column
 
+  if (events.length <= 1) {
+    // only show if more then 1 event found
+    return null;
+  }
+
+  const inSameRoom = parallelEvents.find(
+    (e) => e.room && currentEvent.room && e.room.toUpperCase() === currentEvent.room.toUpperCase(),
+  );
+
+  if (venueIsLoading()) {
+    return null;
+  }
+
+  let state;
+  if (parallelEvents.length > 0) {
+    if (inSameRoom || !venue?.allowParallelEvents) {
+      state = "danger";
+    } else {
+      state = "warning";
+    }
+  } else {
+    state = "success";
+  }
+
   return (
     <div
       className="overflow-x-auto bg-white"
       style={{
         display: "grid",
-        gridTemplateColumns: `25% repeat(${totalCols - 1}, ${hourSize}px)`,
+        gridTemplateColumns: `max-content repeat(${totalCols - 1}, ${hourSize}px)`,
         gap: "0",
       }}
     >
@@ -162,14 +188,20 @@ export function Timetable({
           className="text-center"
           style={{ gridColumn: `${start} / ${end}` }}
         >
-          {dateLong(day)}
+          <span className="px-1" style={{ position: "sticky", left: 0, right: 0 }}>
+            {dateLong(day)}
+          </span>
         </div>
       ))}
 
       {/* Hours Row */}
       {viewModel.map(({ hours, start }) =>
         hours.map((hour, index) => (
-          <div key={hour.valueOf()} style={{ gridColumn: `${start + index}` }}>
+          <div
+            key={hour.valueOf()}
+            className="border-start px-1"
+            style={{ gridColumn: `${start + index}` }}
+          >
             {timeFormat(hour)}
           </div>
         )),
@@ -179,10 +211,12 @@ export function Timetable({
       {Object.values(rooms).map((r, id) => (
         <React.Fragment key={id}>
           <div
-            className="position-sticky bg-white text-truncate"
+            className="position-sticky bg-white text-truncate px-1"
+            data-bs-title={r[0].room}
             style={{
               zIndex: 2,
               insetInlineStart: 0,
+              maxWidth: `${hourSize * 2}px`,
             }}
           >
             {r[0].room || <>&nbsp;</>}
@@ -191,17 +225,16 @@ export function Timetable({
             hours.map((hour, index) => (
               <div
                 key={hour.valueOf()}
-                className="position-relative overflow-visible"
+                className="position-relative overflow-visible border-start"
                 style={{ gridColumn: `${start + index}` }}
               >
                 {r
                   .filter((event) => regionZone.fromString(event.startLocal).isSame(hour, "hour"))
                   .map((event) => {
                     return event._id === currentEvent._id ? (
-                      <ScrollIntoView>
+                      <ScrollIntoView key={event._id}>
                         <div
-                          key={event._id}
-                          className={"position-absolute bg-success opacity-75"}
+                          className={`position-absolute bg-${state} opacity-75`}
                           style={{
                             marginLeft: `${(regionZone.fromString(event.startLocal).minutes() / 60) * hourSize}px`,
                             minWidth:
