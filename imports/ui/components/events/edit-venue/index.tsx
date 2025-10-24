@@ -197,7 +197,9 @@ export function EditVenue({
             </div>
           </div>
           <Hints regionId={regionId} event={event} venueId={value._id} errors={errors} />
-          <Timetable regionId={regionId} event={event} venueId={value._id} />
+          <div className="mb-3">
+            <Timetable regionId={regionId} event={event} venueId={value._id} />
+          </div>
           {!!value.loc && (
             <div className="mb-3">
               {!value._id ? (
