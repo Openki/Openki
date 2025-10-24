@@ -5,12 +5,13 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { EventVenueEntity } from "/imports/api/events/events";
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 
-import { Map } from "./map";
-import { filterUserVenues, Search } from "./search";
 import { Display } from "../../location/display";
 import { VenueTag } from "../../venues/link";
-import { useFindParallelEvents } from "../edit/useFindParallelEvents";
 import { OtherEventsMessage } from "../edit/OtherEventsMessage";
+import { useFindParallelEvents } from "../edit/useFindParallelEvents";
+import { Map } from "./map";
+import { filterUserVenues, Search } from "./search";
+import { Timetable } from "./Timetable";
 
 function Hints({
   venueId,
@@ -196,6 +197,7 @@ export function EditVenue({
             </div>
           </div>
           <Hints regionId={regionId} event={event} venueId={value._id} errors={errors} />
+          <Timetable regionId={regionId} event={event} venueId={value._id} />
           {!!value.loc && (
             <div className="mb-3">
               {!value._id ? (
