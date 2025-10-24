@@ -1,14 +1,29 @@
 import moment, { max, min } from "moment";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 // import { useTranslation } from "react-i18next";
 // import { EventModel } from "/imports/api/events/events";
 import * as Events from "/imports/api/events/publications";
 // import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
-import { chain, groupBy, sumBy } from "lodash";
+import { chain, sumBy } from "lodash";
 import { useLocalTimeZone } from "/imports/utils/local-time";
 // import { useUser } from "/imports/utils/react-meteor-data";
 import { Router } from "meteor/iron:router";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+
+function ScrollIntoView({ children }: { children: React.ReactNode }) {
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    elementRef.current?.scrollIntoView({
+      block: "nearest",
+      inline: "center",
+      behavior: "instant",
+      container: "nearest",
+    } as any);
+  }, [elementRef?.current]);
+
+  return <div ref={elementRef}>{children}</div>;
+}
 
 export function useFindNearEvents(
   venueId: string | undefined,
@@ -83,7 +98,7 @@ export function Timetable({
     endLocal: string;
   };
 }) {
-  // const hourSize = 60;
+  const hourSize = 60;
 
   // const { t } = useTranslation();
   const { dateLong, timeFormat } = useDateTimeFormat();
@@ -136,7 +151,7 @@ export function Timetable({
       className="overflow-x-auto bg-white"
       style={{
         display: "grid",
-        gridTemplateColumns: `25% repeat(${totalCols - 1}, 60px)`,
+        gridTemplateColumns: `25% repeat(${totalCols - 1}, ${hourSize}px)`,
         gap: "0",
       }}
     >
@@ -166,7 +181,7 @@ export function Timetable({
           <div
             className="position-sticky bg-white text-truncate"
             style={{
-              zIndex: 1,
+              zIndex: 2,
               insetInlineStart: 0,
             }}
           >
@@ -181,25 +196,49 @@ export function Timetable({
               >
                 {r
                   .filter((event) => regionZone.fromString(event.startLocal).isSame(hour, "hour"))
-                  .map((event) => (
-                    <div
-                      key={event._id}
-                      className={
-                        "position-absolute " +
-                        (event._id === currentEvent._id ? "bg-success" : "bg-secondary")
-                      }
-                      style={{
-                        marginLeft: regionZone.fromString(event.startLocal).minutes() + "px",
-                        minWidth:
-                          (regionZone.fromString(event.endLocal).valueOf() -
-                            regionZone.fromString(event.startLocal).valueOf()) /
-                          1000 /
-                          60,
-                      }}
-                    >
-                      <a href={Router.path("showEvent", event)}>&nbsp;</a>
-                    </div>
-                  ))}
+                  .map((event) => {
+                    return event._id === currentEvent._id ? (
+                      <ScrollIntoView>
+                        <div
+                          key={event._id}
+                          className={"position-absolute bg-success opacity-75"}
+                          style={{
+                            marginLeft: `${(regionZone.fromString(event.startLocal).minutes() / 60) * hourSize}px`,
+                            minWidth:
+                              (regionZone.fromString(event.endLocal).valueOf() -
+                                regionZone.fromString(event.startLocal).valueOf()) /
+                              1000 /
+                              60,
+                          }}
+                        >
+                          &nbsp;
+                        </div>
+                      </ScrollIntoView>
+                    ) : (
+                      <div
+                        key={event._id}
+                        className={"position-absolute bg-dark opacity-25"}
+                        style={{
+                          marginLeft: `${(regionZone.fromString(event.startLocal).minutes() / 60) * hourSize}px`,
+                          minWidth:
+                            (regionZone.fromString(event.endLocal).valueOf() -
+                              regionZone.fromString(event.startLocal).valueOf()) /
+                            1000 /
+                            60,
+                          zIndex: 1,
+                        }}
+                      >
+                        <a
+                          className="stretched-link"
+                          href={Router.path("showEvent", event)}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          &nbsp;
+                        </a>
+                      </div>
+                    );
+                  })}
               </div>
             )),
           )}
