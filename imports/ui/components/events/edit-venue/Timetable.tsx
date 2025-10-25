@@ -32,7 +32,13 @@ export function useFindNearEvents(
     startLocal: string;
     endLocal: string;
   },
-) {
+): {
+  _id?: string | undefined;
+  title?: string | undefined;
+  room?: string | undefined;
+  startLocal: string;
+  endLocal: string;
+}[] {
   const regionZone = useLocalTimeZone(regionId);
 
   const start = regionZone.fromString(event.startLocal);
@@ -98,7 +104,6 @@ export function Timetable({
 }) {
   const hourSize = 60;
 
-  // const { t } = useTranslation();
   const { dateLong, timeFormat } = useDateTimeFormat();
 
   const regionZone = useLocalTimeZone(regionId);
@@ -157,13 +162,9 @@ export function Timetable({
     (e) => e.room && currentEvent.room && e.room.toUpperCase() === currentEvent.room.toUpperCase(),
   );
 
-  if (venueIsLoading()) {
-    return null;
-  }
-
   let state;
   if (parallelEvents.length > 0) {
-    if (inSameRoom || !venue?.allowParallelEvents) {
+    if (inSameRoom || !(!venueIsLoading() && venue?.allowParallelEvents)) {
       state = "danger";
     } else {
       state = "warning";
@@ -266,6 +267,7 @@ export function Timetable({
                           href={Router.path("showEvent", event)}
                           target="_blank"
                           rel="noreferrer"
+                          title={event.title}
                         >
                           &nbsp;
                         </a>
