@@ -1,21 +1,21 @@
+import { truncate } from "lodash";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { truncate } from "lodash";
 
 import { VenueModel } from "/imports/api/venues/venues";
 
-import * as Metatags from "/imports/utils/metatags";
 import { textPlain } from "/imports/utils/html-tools";
+import * as Metatags from "/imports/utils/metatags";
 
 import { Display } from "../../components/venues/display";
-import { Edit } from "../../components/venues/edit";
+import { Edit, Props as EditProps } from "../../components/venues/edit";
 
 export function VenueDetailsPage({ venue, isNew }: { venue: VenueModel; isNew: boolean }) {
   const { t } = useTranslation();
 
   const [editing, setEditing] = useState(isNew);
 
-  function editAttr() {
+  function editAttr(): EditProps {
     return {
       venue,
       onSaved: () => {
