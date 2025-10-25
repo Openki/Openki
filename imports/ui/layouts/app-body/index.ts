@@ -52,7 +52,7 @@ template.helpers({
   },
 
   isAdminPage() {
-    return Router.current().url.includes("/admin");
+    return Router.current().url.includes("/admin/");
   },
 
   isAdmin() {

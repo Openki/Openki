@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+
 import { useFindFilter } from "/imports/api/languages/publications";
-import { Display } from "./Display";
+
+import { Display, Props as DisplayProps } from "./Display";
 import { Selection, Props as SelectionProps } from "./selection";
 
 export function LanguageSelection(props: {
@@ -22,7 +24,7 @@ export function LanguageSelection(props: {
       },
     };
   }
-  function displayAttr() {
+  function displayAttr(): DisplayProps {
     return {
       inNavbar: props.inNavbar,
       onClick: () => {
