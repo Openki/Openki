@@ -923,7 +923,7 @@ RouterAsync.route("timetable", {
 });
 
 RouterAsync.route("adminPanel", {
-  path: "admin",
+  path: "admin/panel",
   template: "adminPanelPage",
   async onRun() {
     await import("/imports/ui/pages/admin/panel");
