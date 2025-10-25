@@ -7,7 +7,7 @@ import { useDetails as useVenueDetails } from "/imports/api/venues/publications"
 
 import { Display } from "../../location/display";
 import { VenueTag } from "../../venues/link";
-import { OtherEventsMessage, OtherEventsMessage } from "../edit/OtherEventsMessage";
+import { OtherEventsMessage } from "../edit/OtherEventsMessage";
 import { useFindParallelEvents } from "../edit/useFindParallelEvents";
 import { Map } from "./map";
 import { filterUserVenues, Search } from "./search";
