@@ -4,14 +4,14 @@ import { useTranslation } from "react-i18next";
 import { Courses } from "/imports/api/courses/courses";
 import { EventModel } from "/imports/api/events/events";
 
-import { EventHeader } from "../header";
+import { CustomFieldDisplay } from "../../../courses/CustomFieldDisplay";
 import { InternalIndicator } from "../../../internal-indicator";
-import { GroupList } from "../group-list";
 import { Display } from "../../../location/display";
-import { VenueLink } from "../../../venues/link";
 import { PricePolicy } from "../../../price-policy";
 import { Sharing } from "../../../sharing";
-import { CustomFieldDisplay } from "../../../courses/CustomFieldDisplay";
+import { VenueLink } from "../../../venues/link";
+import { GroupList } from "../group-list";
+import { EventHeader } from "../header";
 
 import "./styles.scss";
 
