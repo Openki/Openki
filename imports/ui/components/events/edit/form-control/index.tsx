@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
 import { AutoGrowTextArea } from "./AutoGrowTextArea";
@@ -7,7 +7,7 @@ type Size = "large" | "medium" | "small";
 
 interface CommonProps {
   id: string;
-  label: string;
+  label: ReactNode;
   size?: Size;
   addon?: string | undefined;
   optional?: boolean | undefined;
@@ -21,7 +21,7 @@ interface TextInputProps {
   placeholder?: string | undefined;
   value: string;
   maxLength?: number | undefined;
-  onChange?: ((newValue: string) => void) | undefined;
+  onChange?: ((value: string) => void) | undefined;
 }
 
 interface TextareaProps {
@@ -30,7 +30,7 @@ interface TextareaProps {
   placeholder?: string | undefined;
   value: string;
   maxLength?: number | undefined;
-  onChange?: ((newValue: string) => void) | undefined;
+  onChange?: ((value: string) => void) | undefined;
 }
 
 interface NumberInputProps {
@@ -40,7 +40,7 @@ interface NumberInputProps {
   step?: number | undefined;
   min?: number | undefined;
   max?: number | undefined;
-  onChange?: ((newValue: number) => void) | undefined;
+  onChange?: ((value: number) => void) | undefined;
 }
 
 interface SelectProps {
@@ -48,14 +48,14 @@ interface SelectProps {
   placeholder?: string | undefined;
   value: string;
   options: Record<string, string>;
-  onChange?: ((newValue: string) => void) | undefined;
+  onChange?: ((value: string) => void) | undefined;
 }
 
 interface TimeInputProps {
   type: "time";
   value: string;
   step?: number | undefined;
-  onChange?: ((newValue: string) => void) | undefined;
+  onChange?: ((value: string) => void) | undefined;
 }
 
 export type Props = CommonProps &
@@ -141,7 +141,7 @@ function createInputElement(props: Props) {
           placeholder={props.placeholder}
           value={props.value}
           maxLength={props.maxLength}
-          onChange={(ev) => props.onChange?.(ev.currentTarget.value)}
+          onChange={(ev) => props.onChange?.(ev.target.value)}
         />
       );
 
@@ -153,7 +153,7 @@ function createInputElement(props: Props) {
           placeholder={props.placeholder}
           value={props.value}
           maxLength={props.maxLength}
-          onChange={(ev) => props.onChange?.(ev.currentTarget.value)}
+          onChange={(ev) => props.onChange?.(ev.target.value)}
         />
       );
 
@@ -171,25 +171,25 @@ function createInputElement(props: Props) {
           // show empty input instead of 0
           value={optional ? props.value || "" : props.value}
           onChange={(ev) => {
-            let newValue = ev.currentTarget.valueAsNumber;
+            let value = ev.target.valueAsNumber;
 
-            if (Number.isNaN(newValue) && ev.currentTarget.value === "") {
+            if (Number.isNaN(value) && ev.target.value === "") {
               // give back 0 in case of NaN because of ""
-              newValue = 0;
+              value = 0;
             }
 
             if (type === "integer") {
-              newValue = Math.round(newValue);
+              value = Math.round(value);
             }
 
             // prevent inputs get out of min max
-            if (props.min !== undefined && newValue < props.min) {
-              newValue = props.min;
-            } else if (props.max !== undefined && newValue > props.max) {
-              newValue = props.max;
+            if (props.min !== undefined && value < props.min) {
+              value = props.min;
+            } else if (props.max !== undefined && value > props.max) {
+              value = props.max;
             }
 
-            props.onChange?.(newValue);
+            props.onChange?.(value);
           }}
         />
       );
@@ -199,7 +199,7 @@ function createInputElement(props: Props) {
         <select
           {...commonProps}
           value={props.value}
-          onChange={(ev) => props.onChange?.(ev.currentTarget.value)}
+          onChange={(ev) => props.onChange?.(ev.target.value)}
         >
           {!!props.placeholder && (
             <option disabled value="">
@@ -221,7 +221,7 @@ function createInputElement(props: Props) {
           {...commonProps}
           step={props.step}
           value={props.value}
-          onChange={(ev) => props.onChange?.(ev.currentTarget.value)}
+          onChange={(ev) => props.onChange?.(ev.target.value)}
         />
       );
 
