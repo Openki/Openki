@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { AutoGrowTextArea } from "/imports/ui/components/events/edit/form-control/AutoGrowTextArea";
+
+import { AutoGrowTextArea } from "./AutoGrowTextArea";
 
 type Size = "large" | "medium" | "small";
 
@@ -29,7 +30,6 @@ interface TextareaProps {
   placeholder?: string | undefined;
   value: string;
   maxLength?: number | undefined;
-  minLength?: number | undefined;
   onChange?: ((newValue: string) => void) | undefined;
 }
 
@@ -53,21 +53,29 @@ interface TimeInputProps {
 export type Props = CommonProps &
   (TextInputProps | TextareaProps | NumberInputProps | TimeInputProps);
 
-function getSizeClass(size: Size = "medium") {
-  switch (size) {
-    case "large":
-      return "form-control-lg";
-    case "medium":
-      return "";
-    case "small":
-      return "form-control-sm";
-    default:
-      throw new Error(`Unexpected value for prop "size": ${size}`);
-  }
-}
+function getControlClassNames(
+  size: Size | undefined,
+  addon: string | undefined,
+  error: string | undefined,
+) {
+  const className = ["form-control"];
 
-function getClassNames(size: Size | undefined, error: string | undefined) {
-  const className = ["form-control", getSizeClass(size)];
+  if (!addon) {
+    // when a addon is given then the sizing comes from input-group
+    switch (size) {
+      case "large":
+        className.push("form-control-lg");
+        break;
+      case "medium":
+        break;
+      case "small":
+        className.push("form-control-sm");
+        break;
+      default:
+        throw new Error(`Unexpected value for prop "size": ${size}`);
+    }
+  }
+
   if (error) {
     className.push("is-invalid");
   }
@@ -91,16 +99,12 @@ function getDescribedby(id: string, addon: string | undefined, error: string | u
 function createInputElement(props: Props) {
   const { id, type, size, addon, optional, disabled, onBlur, error } = props;
 
-  const className = getClassNames(size, error);
-
-  const describedby = getDescribedby(id, addon, error);
-
   const commonProps = {
     id,
-    className: className.join(" "),
+    className: getControlClassNames(size, addon, error).join(" "),
     disabled,
     onBlur: () => onBlur?.(),
-    "aria-describedby": describedby.join(" ") || undefined,
+    "aria-describedby": getDescribedby(id, addon, error).join(" ") || undefined,
     "aria-invalid": !!error,
   };
 
@@ -185,9 +189,31 @@ function createInputElement(props: Props) {
   }
 }
 
+function getGroupClassNames(size: Size | undefined, error: string | undefined) {
+  const className = ["input-group"];
+
+  switch (size) {
+    case "large":
+      className.push("input-group-lg");
+      break;
+    case "medium":
+      break;
+    case "small":
+      className.push("input-group-sm");
+      break;
+    default:
+      throw new Error(`Unexpected value for prop "size": ${size}`);
+  }
+
+  if (error) {
+    className.push("has-validation");
+  }
+  return className;
+}
+
 export function FormControl(props: Props) {
   const { t } = useTranslation();
-  const { id, label, addon, optional, error } = props;
+  const { id, size, label, addon, optional, error } = props;
 
   // Create input using a factory
   let inputElement = (
@@ -203,7 +229,7 @@ export function FormControl(props: Props) {
 
   if (addon) {
     inputElement = (
-      <div className={`input-group ${error ? "has-validation" : ""}`}>
+      <div className={getGroupClassNames(size, error).join(" ")}>
         <span className="input-group-text" id={`${id}-addon`}>
           {addon.startsWith("fa-") ? <i className={addon} /> : addon}
         </span>
