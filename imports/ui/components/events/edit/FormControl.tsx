@@ -1,5 +1,34 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
+
+function AutoGrowTextArea(
+  props: Omit<
+    React.DetailedHTMLProps<React.TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>,
+    "style" | "onInput"
+  >,
+) {
+  // inspired from here: https://stackoverflow.com/questions/454202/creating-a-textarea-with-auto-resize/25621277#25621277
+
+  const elementRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (elementRef.current) {
+      elementRef.current.style.height = elementRef.current.scrollHeight + "px";
+    }
+  });
+
+  return (
+    <textarea
+      ref={elementRef}
+      {...props}
+      style={{ overflowY: "hidden", resize: "none" }}
+      onInput={(ev) => {
+        ev.currentTarget.style.height = "auto";
+        ev.currentTarget.style.height = ev.currentTarget.scrollHeight + "px";
+      }}
+    />
+  );
+}
 
 type Size = "large" | "medium" | "small";
 
@@ -16,6 +45,15 @@ interface CommonProps {
 
 interface TextInputProps {
   type: "text" | "tel" | "email" | "password";
+  placeholder?: string | undefined;
+  value: string;
+  maxLength?: number | undefined;
+  onChange?: ((newValue: string) => void) | undefined;
+}
+
+interface TextareaProps {
+  type: "textarea";
+  rows?: number | undefined;
   placeholder?: string | undefined;
   value: string;
   maxLength?: number | undefined;
@@ -40,7 +78,8 @@ interface TimeInputProps {
   onChange?: ((newValue: string) => void) | undefined;
 }
 
-export type Props = CommonProps & (TextInputProps | NumberInputProps | TimeInputProps);
+export type Props = CommonProps &
+  (TextInputProps | TextareaProps | NumberInputProps | TimeInputProps);
 
 function getSizeClass(size: Size = "medium") {
   switch (size) {
@@ -105,7 +144,18 @@ function createInputElement(props: Props) {
           placeholder={props.placeholder}
           value={props.value}
           maxLength={props.maxLength}
-          minLength={props.minLength}
+          onChange={(ev) => props.onChange?.(ev.currentTarget.value)}
+        />
+      );
+
+    case "textarea":
+      return (
+        <AutoGrowTextArea
+          {...commonProps}
+          rows={props.rows}
+          placeholder={props.placeholder}
+          value={props.value}
+          maxLength={props.maxLength}
           onChange={(ev) => props.onChange?.(ev.currentTarget.value)}
         />
       );
