@@ -15,9 +15,11 @@ interface CommonProps {
 }
 
 interface TextInputProps {
-  type: "text" | "email" | "password";
+  type: "text" | "tel" | "email" | "password";
   placeholder?: string | undefined;
   value: string;
+  maxLength?: number | undefined;
+  minLength?: number | undefined;
   onChange?: ((newValue: string) => void) | undefined;
 }
 
@@ -85,7 +87,6 @@ function createInputElement(props: Props) {
   const commonProps = {
     id,
     className: className.join(" "),
-    placeholder: "placeholder" in props ? props.placeholder : undefined,
     disabled,
     onBlur: () => onBlur?.(),
     "aria-describedby": describedby.join(" ") || undefined,
@@ -94,13 +95,17 @@ function createInputElement(props: Props) {
 
   switch (type) {
     case "text":
+    case "tel":
     case "email":
     case "password":
       return (
         <input
           type={type}
           {...commonProps}
+          placeholder={props.placeholder}
           value={props.value}
+          maxLength={props.maxLength}
+          minLength={props.minLength}
           onChange={(ev) => props.onChange?.(ev.currentTarget.value)}
         />
       );
@@ -111,10 +116,12 @@ function createInputElement(props: Props) {
         <input
           type="number"
           {...commonProps}
+          placeholder={props.placeholder}
           step={props.step}
           min={props.min}
           max={props.max}
           inputMode={type === "integer" ? "numeric" : "decimal"}
+          // show empty input instead of 0
           value={optional ? props.value || "" : props.value}
           onChange={(ev) => {
             let newValue = ev.currentTarget.valueAsNumber;
@@ -126,6 +133,13 @@ function createInputElement(props: Props) {
 
             if (type === "integer") {
               newValue = Math.round(newValue);
+            }
+
+            // prevent inputs get out of min max
+            if (props.min !== undefined && newValue < props.min) {
+              newValue = props.min;
+            } else if (props.max !== undefined && newValue > props.max) {
+              newValue = props.max;
             }
 
             props.onChange?.(newValue);
