@@ -4,10 +4,10 @@ import { useTranslation } from "react-i18next";
 type Size = "large" | "medium" | "small";
 
 interface CommonProps {
+  id: string;
   label: string;
   size?: Size;
   addon?: string | undefined;
-  placeholder?: string | undefined;
   optional?: boolean | undefined;
   disabled?: boolean | undefined;
   onBlur?: (() => void) | undefined;
@@ -16,12 +16,14 @@ interface CommonProps {
 
 interface TextInputProps {
   type: "text" | "email" | "password";
+  placeholder?: string | undefined;
   value: string;
   onChange?: ((newValue: string) => void) | undefined;
 }
 
 interface NumberInputProps {
   type: "number" | "integer";
+  placeholder?: string | undefined;
   value: number;
   step?: number | undefined;
   min?: number | undefined;
@@ -51,22 +53,43 @@ function getSizeClass(size: Size = "medium") {
   }
 }
 
-/**
- * Factory to create input elements based on `type`
- */
-function createInputElement(props: Props) {
-  const { type, size, placeholder, optional, disabled, onBlur, error } = props;
-
+function getClassNames(size: Size | undefined, error: string | undefined) {
   const className = ["form-control", getSizeClass(size)];
   if (error) {
     className.push("is-invalid");
   }
+  return className;
+}
+
+function getDescribedby(id: string, addon: string | undefined, error: string | undefined) {
+  const describedby = [];
+  if (addon && !addon.startsWith("fa-")) {
+    describedby.push(id + "-addon");
+  }
+  if (error) {
+    describedby.push(id + "-error");
+  }
+  return describedby;
+}
+
+/**
+ * Factory to create input elements based on `type`
+ */
+function createInputElement(props: Props) {
+  const { id, type, size, addon, optional, disabled, onBlur, error } = props;
+
+  const className = getClassNames(size, error);
+
+  const describedby = getDescribedby(id, addon, error);
 
   const commonProps = {
+    id,
     className: className.join(" "),
-    placeholder,
+    placeholder: "placeholder" in props ? props.placeholder : undefined,
     disabled,
     onBlur: () => onBlur?.(),
+    "aria-describedby": describedby.join(" ") || undefined,
+    "aria-invalid": !!error,
   };
 
   switch (type) {
@@ -91,6 +114,7 @@ function createInputElement(props: Props) {
           step={props.step}
           min={props.min}
           max={props.max}
+          inputMode={type === "integer" ? "numeric" : "decimal"}
           value={optional ? props.value || "" : props.value}
           onChange={(ev) => {
             let newValue = ev.currentTarget.valueAsNumber;
@@ -127,22 +151,26 @@ function createInputElement(props: Props) {
 
 export function FormControl(props: Props) {
   const { t } = useTranslation();
-  const { label, addon, optional, error } = props;
+  const { id, label, addon, optional, error } = props;
 
-  // Create input using the factory
+  // Create input using a factory
   let inputElement = (
     <>
       {createInputElement(props)}
-      {!!error && <div className="invalid-feedback">{error}</div>}
+      {!!error && (
+        <div id={`${id}-error`} className="invalid-feedback" role="alert">
+          {error}
+        </div>
+      )}
     </>
   );
 
   if (addon) {
     inputElement = (
       <div className={`input-group ${error ? "has-validation" : ""}`}>
-        <div className="input-group-text">
+        <span className="input-group-text" id={`${id}-addon`}>
           {addon.startsWith("fa-") ? <i className={addon} /> : addon}
-        </div>
+        </span>
         {inputElement}
       </div>
     );
@@ -150,7 +178,7 @@ export function FormControl(props: Props) {
 
   return (
     <>
-      <label className="form-label">
+      <label className="form-label" htmlFor={id}>
         {label} {!!optional && <small> {t("_inputField.optional")}</small>}
       </label>
       {inputElement}
