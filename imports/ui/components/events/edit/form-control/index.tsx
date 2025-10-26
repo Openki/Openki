@@ -1,34 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
-
-function AutoGrowTextArea(
-  props: Omit<
-    React.DetailedHTMLProps<React.TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>,
-    "style" | "onInput"
-  >,
-) {
-  // inspired from here: https://stackoverflow.com/questions/454202/creating-a-textarea-with-auto-resize/25621277#25621277
-
-  const elementRef = useRef<HTMLTextAreaElement>(null);
-
-  useEffect(() => {
-    if (elementRef.current) {
-      elementRef.current.style.height = elementRef.current.scrollHeight + "px";
-    }
-  });
-
-  return (
-    <textarea
-      ref={elementRef}
-      {...props}
-      style={{ overflowY: "hidden", resize: "none" }}
-      onInput={(ev) => {
-        ev.currentTarget.style.height = "auto";
-        ev.currentTarget.style.height = ev.currentTarget.scrollHeight + "px";
-      }}
-    />
-  );
-}
+import { AutoGrowTextArea } from "/imports/ui/components/events/edit/form-control/AutoGrowTextArea";
 
 type Size = "large" | "medium" | "small";
 
