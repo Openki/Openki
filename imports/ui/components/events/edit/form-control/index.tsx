@@ -43,6 +43,14 @@ interface NumberInputProps {
   onChange?: ((newValue: number) => void) | undefined;
 }
 
+interface SelectProps {
+  type: "select";
+  placeholder?: string | undefined;
+  value: string;
+  options: Record<string, string>;
+  onChange?: ((newValue: string) => void) | undefined;
+}
+
 interface TimeInputProps {
   type: "time";
   value: string;
@@ -51,25 +59,36 @@ interface TimeInputProps {
 }
 
 export type Props = CommonProps &
-  (TextInputProps | TextareaProps | NumberInputProps | TimeInputProps);
+  (TextInputProps | TextareaProps | NumberInputProps | SelectProps | TimeInputProps);
 
 function getControlClassNames(
+  type: string,
   size: Size | undefined,
   addon: string | undefined,
   error: string | undefined,
 ) {
-  const className = ["form-control"];
+  let baseClass;
+  switch (type) {
+    case "select":
+      baseClass = "form-select";
+      break;
+    default:
+      baseClass = "form-control";
+      break;
+  }
+
+  const className = [baseClass];
 
   if (!addon) {
     // when a addon is given then the sizing comes from input-group
     switch (size) {
       case "large":
-        className.push("form-control-lg");
+        className.push(baseClass + "-lg");
         break;
       case "medium":
         break;
       case "small":
-        className.push("form-control-sm");
+        className.push(baseClass + "-sm");
         break;
       default:
         throw new Error(`Unexpected value for prop "size": ${size}`);
@@ -97,11 +116,11 @@ function getDescribedby(id: string, addon: string | undefined, error: string | u
  * Factory to create input elements based on `type`
  */
 function createInputElement(props: Props) {
-  const { id, type, size, addon, optional, disabled, onBlur, error } = props;
+  const { id, type, size = "medium", addon, optional, disabled, onBlur, error } = props;
 
   const commonProps = {
     id,
-    className: getControlClassNames(size, addon, error).join(" "),
+    className: getControlClassNames(type, size, addon, error).join(" "),
     disabled,
     onBlur: () => onBlur?.(),
     "aria-describedby": getDescribedby(id, addon, error).join(" ") || undefined,
@@ -173,6 +192,26 @@ function createInputElement(props: Props) {
         />
       );
 
+    case "select":
+      return (
+        <select
+          {...commonProps}
+          value={props.value}
+          onChange={(ev) => props.onChange?.(ev.currentTarget.value)}
+        >
+          {!!props.placeholder && (
+            <option disabled value="">
+              {props.placeholder}
+            </option>
+          )}
+          {Object.entries(props.options).map(([key, value]) => (
+            <option key={key} value={key}>
+              {value}
+            </option>
+          ))}
+        </select>
+      );
+
     case "time":
       return (
         <input
@@ -185,7 +224,7 @@ function createInputElement(props: Props) {
       );
 
     default:
-      throw new Error(`Unexpected value for prop "type": ${type}`);
+      throw new Error(`Unexpected value for prop type: ${type}`);
   }
 }
 
@@ -213,7 +252,7 @@ function getGroupClassNames(size: Size | undefined, error: string | undefined) {
 
 export function FormControl(props: Props) {
   const { t } = useTranslation();
-  const { id, size, label, addon, optional, error } = props;
+  const { id, size = "medium", label, addon, optional, error } = props;
 
   // Create input using a factory
   let inputElement = (
