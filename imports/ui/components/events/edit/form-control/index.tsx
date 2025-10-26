@@ -61,6 +61,19 @@ interface TimeInputProps {
 export type Props = CommonProps &
   (TextInputProps | TextareaProps | NumberInputProps | SelectProps | TimeInputProps);
 
+function buildSizeClass(baseClass: string, size: Size = "medium") {
+  switch (size) {
+    case "large":
+      return baseClass + "-lg";
+    case "medium":
+      return "";
+    case "small":
+      return baseClass + "-sm";
+    default:
+      throw new Error(`Unexpected value for prop "size": ${size}`);
+  }
+}
+
 function getControlClassNames(
   type: string,
   size: Size | undefined,
@@ -81,18 +94,7 @@ function getControlClassNames(
 
   if (!addon) {
     // when a addon is given then the sizing comes from input-group
-    switch (size) {
-      case "large":
-        className.push(baseClass + "-lg");
-        break;
-      case "medium":
-        break;
-      case "small":
-        className.push(baseClass + "-sm");
-        break;
-      default:
-        throw new Error(`Unexpected value for prop "size": ${size}`);
-    }
+    className.push(buildSizeClass(baseClass, size));
   }
 
   if (error) {
@@ -116,7 +118,7 @@ function getDescribedby(id: string, addon: string | undefined, error: string | u
  * Factory to create input elements based on `type`
  */
 function createInputElement(props: Props) {
-  const { id, type, size = "medium", addon, optional, disabled, onBlur, error } = props;
+  const { id, type, size, addon, optional, disabled, onBlur, error } = props;
 
   const commonProps = {
     id,
@@ -229,20 +231,9 @@ function createInputElement(props: Props) {
 }
 
 function getGroupClassNames(size: Size | undefined, error: string | undefined) {
-  const className = ["input-group"];
+  const className = ["input-group", buildSizeClass("input-group", size)];
 
-  switch (size) {
-    case "large":
-      className.push("input-group-lg");
-      break;
-    case "medium":
-      break;
-    case "small":
-      className.push("input-group-sm");
-      break;
-    default:
-      throw new Error(`Unexpected value for prop "size": ${size}`);
-  }
+  className.push(buildSizeClass("input-group", size));
 
   if (error) {
     className.push("has-validation");
@@ -252,7 +243,7 @@ function getGroupClassNames(size: Size | undefined, error: string | undefined) {
 
 export function FormControl(props: Props) {
   const { t } = useTranslation();
-  const { id, size = "medium", label, addon, optional, error } = props;
+  const { id, size, label, addon, optional, error } = props;
 
   // Create input using a factory
   let inputElement = (
