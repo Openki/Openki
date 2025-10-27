@@ -70,6 +70,8 @@ export async function create() {
       venue.name += " (only Hosts)";
     }
 
+    venue.allowParallelEvents = true;
+
     await Venues.updateAsync(venue._id, venue);
   }
 

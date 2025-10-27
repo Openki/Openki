@@ -21,6 +21,7 @@ import { update as update20240224refactorGroupMembers } from "./updates/2024.02.
 import { update as update20241014enrichCourseCompactImage } from "./updates/2024.10.14 enrichCourseCompactImage";
 import { update as update20250407enrichUserVenues } from "./updates/2025.04.07 enrichUserVenues";
 import { update as update20250723extendEventParticipants } from "./updates/2025.07.23 extendEventParticipants";
+import { update as update20251018ensureVenueAllowParallelEvents } from "./updates/2025.10.18 ensureVenueAllowParallelEventsField";
 
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
@@ -42,6 +43,7 @@ const UpdatesAvailable: Record<string, () => Promise<number>> = {
   "2024.10.14 enrichCourseCompactImage": update20241014enrichCourseCompactImage,
   "2025.04.07 enrichUserVenues": update20250407enrichUserVenues,
   "2025.07.23 extendEventParticipants": update20250723extendEventParticipants,
+  "2025.10.18 ensureVenueAllowParallelEventsField": update20251018ensureVenueAllowParallelEvents,
 };
 
 interface UpdatesAppliedEntity {

@@ -46,6 +46,8 @@ export interface VenueEntity {
   otherFacilities?: string;
   /** Only hosts and admins can create a event with this venue. */
   restrictedUse?: boolean;
+  /** This venue allow overlapping events. */
+  allowParallelEvents: boolean;
   createdby: string;
   created: Date;
   updated: Date;
@@ -72,6 +74,8 @@ export class Venue {
   public maxWorkplaces = 0;
 
   public facilities = {};
+
+  public allowParallelEvents = true;
 
   /**
    * Check whether a user may edit the venue.

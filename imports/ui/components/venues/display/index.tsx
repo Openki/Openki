@@ -145,11 +145,28 @@ export function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => vo
                     </ul>
                   </>
                 )}
-                {venue.restrictedUse &&
-                  t(
-                    "venue.details.restrictedUse.description",
-                    "This venue can only be chosen by its hosts to publish an event.",
-                  )}
+                <p>
+                  {venue.restrictedUse
+                    ? t(
+                        "venue.details.restrictedUse.description",
+                        "This venue can only be chosen by its hosts to publish an event.",
+                      )
+                    : t(
+                        "venue.details.notRestrictedUse.description",
+                        "This venue can chosen by every one to publish an event. But consider contacting its hosts about an available time slot.",
+                      )}
+                </p>
+                <p>
+                  {venue.allowParallelEvents
+                    ? t(
+                        "venue.details.allowParallelEvents.description",
+                        "This venue allow overlapping events.",
+                      )
+                    : t(
+                        "venue.details.notAllowParallelEvents.description",
+                        "This venue not allow overlapping events.",
+                      )}
+                </p>
               </div>
               {!!venue.loc && !!venue.region && (
                 <div className="col-md-5">

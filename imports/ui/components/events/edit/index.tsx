@@ -4,35 +4,41 @@
 // the timezone might actually change when a different region is selected. We
 // wouldn't want the time or even date field to change because of this switch.
 
-import React, { useState } from "react";
-import { Router } from "meteor/iron:router";
 import { intersection, uniq } from "lodash";
+import { Router } from "meteor/iron:router";
 import moment from "moment";
-import { useSession, useUser } from "/imports/utils/react-meteor-data";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import * as Analytics from "/imports/ui/lib/analytics";
+import { useValidation } from "/imports/ui/lib/useValidation";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { LocalTime } from "/imports/utils/local-time";
-import * as Analytics from "/imports/ui/lib/analytics";
 import { MeteorAsync } from "/imports/utils/promisify";
+import { useSession, useUser } from "/imports/utils/react-meteor-data";
+import { useSearchParams } from "/imports/utils/react-meteor-router";
 
 import * as Alert from "/imports/api/alerts/alert";
+import * as CoursesMethods from "/imports/api/courses/methods";
 import { EventModel, EventVenueEntity, OEvent } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { SaveFields } from "/imports/api/events/methods";
-import * as CoursesMethods from "/imports/api/courses/methods";
 import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
 import { useAll } from "/imports/api/regions/publications";
+import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 
-import { useTranslation } from "react-i18next";
+import { ButtonCancel, ButtonSave } from "../../Buttons";
+import { EditCustomFields } from "../../EditCustomFields";
+import { PricePolicy } from "../../price-policy";
 import { Tag } from "../../regions/tag";
 import { Richtext } from "../../richtext";
-import { PricePolicy } from "../../price-policy";
-import { EditVenue } from "../edit-venue";
-import { EditCustomFields } from "../../EditCustomFields";
-import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
-import { ButtonCancel, ButtonSave } from "../../Buttons";
 import { Notify } from "../Notify";
+import { EditVenue } from "../edit-venue";
 import { EditStartEnd } from "./EditStartEnd";
+import { OtherEventsMessage } from "./OtherEventsMessage";
 import { UpdateAffectedReplica } from "./UpdateAffectedReplica";
+import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
+
+import { useFindParallelEvents } from "./useFindParallelEvents";
 
 import "./styles.scss";
 
@@ -60,6 +66,8 @@ export type Props =
 
 export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   const { t } = useTranslation();
+
+  const searchParams = useSearchParams();
 
   const currentRegion = useSession("region");
   const [isRegionsLoading, regions] = useAll();
@@ -111,8 +119,8 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
     // We have this 'secret' feature where you can set a group ID
     // in the URL to assign a group to the event on creation
-    if (Router.current().params.query.group) {
-      groups.push(Router.current().params.query.group as string);
+    if (searchParams.group) {
+      groups.push(searchParams.group);
     }
 
     const defaultTeamGroups = getRegion()?.defaultTeamGroups;
@@ -144,6 +152,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   }
 
   const [groupsIsLoading, groups] = useGroupsFindFilter({ ids: getGroups() });
+  const [venueIsLoading, venue] = useVenueDetails(selectedVenue?._id || "-1");
 
   const [updateReplicas, setUpdateReplicas] = useState({
     infos: false,
@@ -161,7 +170,6 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   const [changes, setChanges] = useState({
     title: event.title,
     description: event.description,
-    descriptionError: false,
     descriptionNumberOfCharacters: 0,
     startLocal: event.startLocal,
     endLocal: event.endLocal,
@@ -170,6 +178,121 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     room: event.room,
     maxParticipants: event.maxParticipants,
   });
+  const parallelEvents = useFindParallelEvents(selectedVenue?._id, selectedRegion, {
+    _id: event._id,
+    ...changes,
+  });
+
+  const [errors, checkValidity, addError] = useValidation({
+    noTitle: {
+      field: "title",
+      onCheckValidity: () => !!changes.title,
+      text: () => t("event.edit.plzProvideTitle", "Please provide a title"),
+    },
+    startWrongFormat: {
+      field: "start",
+      onCheckValidity: () => {
+        const start = LocalTime.fromString(changes.startLocal);
+        return start.isValid();
+      },
+      text: () => {
+        const exampleDate = moment().format("L");
+        return t(
+          "event.edit.dateFormatWarning",
+          "The date format must be of the {EXAMPLEDATE} format.",
+          {
+            EXAMPLEDATE: exampleDate,
+          },
+        );
+      },
+    },
+    startInPast: {
+      field: "start",
+      onCheckValidity: () => {
+        if (isNew) {
+          const start = LocalTime.fromString(changes.startLocal);
+          if (!start.isValid()) {
+            // checked with a other validation
+            return true;
+          }
+          return start.isAfter(LocalTime.now());
+        } else {
+          return true;
+        }
+      },
+      text: () =>
+        t(
+          "event.edit.startInPast",
+          "The event starts in the past. Have you selected a start date and time?",
+        ),
+    },
+    noDescription: {
+      field: "description",
+      onCheckValidity: () => !!changes.description,
+      text: () => t("event.edit.plzProvideDescr", "Please provide a description"),
+    },
+    descriptionToLong: {
+      field: "description",
+      onCheckValidity: () =>
+        !PublicSettings.eventDescriptionMax ||
+        changes.descriptionNumberOfCharacters <= PublicSettings.eventDescriptionMax,
+      text: () =>
+        t("_inputField.maxlength", {
+          MAXNUMBER: PublicSettings.eventDescriptionMax,
+          NUMBER: changes.descriptionNumberOfCharacters - (PublicSettings.eventDescriptionMax || 0),
+        }),
+    },
+    noRegion: {
+      field: "region",
+      onCheckValidity: () => !!selectedRegion && selectedRegion !== "all",
+      text: () => t("event.edit.plzSelectRegion", "Please select the region for this event"),
+    },
+    parallelEvents: {
+      field: "startEndVenue",
+      onCheckValidity: () =>
+        venueIsLoading() || !venue || venue.allowParallelEvents || parallelEvents.length === 0,
+      text: () => (
+        <>
+          {t(
+            "event.edit.venue.parallelEvents.disallowed",
+            "Parallel events in this venue are not allowed.",
+          )}{" "}
+          <OtherEventsMessage events={parallelEvents} />
+        </>
+      ),
+    },
+    venueRestricedUse: {
+      field: "venue",
+      onCheckValidity: () => {
+        return (
+          !selectedVenue?._id ||
+          !selectedVenue.restrictedUse ||
+          // on event creation or venue change for venues with restricted use can only selected by the host
+          (!isNew && selectedVenue._id === event.venue?._id) ||
+          !!user?.venues?.includes(selectedVenue._id)
+        );
+      },
+      text: () =>
+        t(
+          "event.edit.venueRestricedUse",
+          "Please use a other venue than {VENUE} or ask its hosts to create your event.",
+          { VENUE: selectedVenue?.name },
+        ),
+    },
+  });
+
+  useEffect(() => {
+    // after every change, check errors are fixed
+    Object.keys(errors).forEach((key) => {
+      checkValidity(key as any);
+    });
+  });
+
+  useEffect(() => {
+    // loads some resources, so calling checkValidity onChange make unexpected things
+    checkValidity("startEndVenue");
+    // only run when values that get checked are changed
+  }, [venue, parallelEvents]);
 
   function showRegionSelection() {
     // You can select the region for events that are new and not associated
@@ -186,10 +309,17 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   function venueEditAttr() {
     return {
       region: selectedRegion,
+      event: {
+        _id: event._id,
+        room: changes.room,
+        startLocal: changes.startLocal,
+        endLocal: changes.endLocal,
+      },
       value: selectedVenue,
       onChange: (newValue: EventVenueEntity | undefined) => {
         setSelectedVenue(newValue);
       },
+      errors,
     };
   }
   const customFields = (type?: "singleLine" | "multiLine") => {
@@ -202,56 +332,14 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   };
 
   async function handleSubmit() {
-    const start = LocalTime.fromString(changes.startLocal);
-    if (!start.isValid()) {
-      const exampleDate = moment().format("L");
-      Alert.error(
-        t("event.edit.dateFormatWarning", "The date format must be of the {EXAMPLEDATE} format.", {
-          EXAMPLEDATE: exampleDate,
-        }),
-      );
+    if (!checkValidity()) {
+      setTimeout(() => {
+        document.querySelector<HTMLElement>(".is-invalid")?.focus();
+      }, 0);
       return;
     }
 
     const title = changes.title;
-    if (!title || title.length === 0) {
-      Alert.error(t("event.edit.plzProvideTitle", "Please provide a title"));
-      return;
-    }
-
-    if (!changes.description) {
-      Alert.error(t("event.edit.plzProvideDescr", "Please provide a description"));
-      return;
-    }
-
-    if (PublicSettings.eventDescriptionMax) {
-      if (changes.descriptionError) {
-        Alert.error(
-          t("_inputField.maxlength", {
-            MAXNUMBER: PublicSettings.eventDescriptionMax,
-            NUMBER: changes.descriptionNumberOfCharacters - PublicSettings.eventDescriptionMax,
-          }),
-        );
-        return;
-      }
-    }
-
-    // on event creation or venue change for venues with restricted use can only selected by the host
-    if (
-      selectedVenue?._id &&
-      selectedVenue.restrictedUse &&
-      selectedVenue._id !== event._id &&
-      !user?.venues?.includes(selectedVenue._id)
-    ) {
-      Alert.error(
-        t(
-          "event.edit.venueRestricedUse",
-          "Please use a other venue than {VENUE} or ask its hosts to create your event.",
-          { VENUE: selectedVenue.name },
-        ),
-      );
-      return;
-    }
 
     const noRsvp = noRsvpChecked;
 
@@ -277,18 +365,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     } as SaveFields;
 
     let eventId = event._id || "";
-    const isNew = eventId === "";
     if (isNew) {
-      if (start.isBefore(LocalTime.now())) {
-        Alert.error(
-          t(
-            "event.edit.startInPast",
-            "The event starts in the past. Have you selected a start date and time?",
-          ),
-        );
-        return;
-      }
-
       if (event.courseId) {
         if (!course) {
           if (isCourseLoading()) {
@@ -302,16 +379,12 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
         editevent.courseId = event.courseId;
       } else {
         editevent.region = selectedRegion;
-        if (!editevent.region || editevent.region === "all") {
-          Alert.error(t("event.edit.plzSelectRegion", "Please select the region for this event"));
-          return;
-        }
 
         // We have this 'secret' feature where you can set a group ID
         // in the URL to assign a group to the event on creation
         const gs = [];
-        if (Router.current().params.query.group) {
-          gs.push(Router.current().params.query.group as string);
+        if (searchParams.group) {
+          gs.push(searchParams.group);
         }
         editevent.groups = gs;
       }
@@ -353,32 +426,36 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           }),
         );
 
-        if (!course) {
-          throw new Error("Unexpected undefined: course");
-        }
-        if (!user) {
-          throw new Error("Unexpected undefined: user");
-        }
-        let role;
-        if (intersection(user.badges, course.editors).length > 0) {
-          role = "team";
-        } else if (user.privileged("admin")) {
-          role = "admin";
+        if (event.courseId) {
+          if (!course) {
+            throw new Error("Unexpected undefined: course");
+          }
+          if (!user) {
+            throw new Error("Unexpected undefined: user");
+          }
+          let role;
+          if (intersection(user.badges, course.editors).length > 0) {
+            role = "team";
+          } else if (user.privileged("admin")) {
+            role = "admin";
+          } else {
+            role = "unknown";
+          }
+          Analytics.trackEvent(
+            "Event creations",
+            `Event creations as ${role}`,
+            regions.find((r) => r._id === course.region)?.nameEn,
+            Math.round(
+              (new Date().getTime() - course.time_created.getTime()) /
+                1000 /
+                60 /
+                60 /
+                24 /* Converted into days */,
+            ),
+          );
         } else {
-          role = "unknown";
+          Analytics.trackEvent("Event creations", `Event creations without course`);
         }
-        Analytics.trackEvent(
-          "Event creations",
-          `Event creations as ${role}`,
-          regions.find((r) => r._id === course.region)?.nameEn,
-          Math.round(
-            (new Date().getTime() - course.time_created.getTime()) /
-              1000 /
-              60 /
-              60 /
-              24 /* Converted into days */,
-          ),
-        );
       } else {
         Alert.success(
           t("message.eventChangesSaved", 'Your changes to the event "{TITLE}" have been saved.', {
@@ -400,15 +477,20 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       }
 
       afterSave();
+
+      if (isNew) {
+        await MeteorAsync.defer();
+        Router.go("showEvent", { _id: eventId });
+      }
     } catch (err) {
-      Alert.serverError(err, t("eventEdit.replicatesUpdated.error", "Saving the event went wrong"));
+      if (!addError(err.reason)) {
+        Alert.serverError(
+          err,
+          t("eventEdit.replicatesUpdated.error", "Saving the event went wrong"),
+        );
+      }
     } finally {
       setIsBusy(false);
-    }
-
-    if (isNew) {
-      await MeteorAsync.defer();
-      Router.go("showEvent", { _id: eventId });
     }
   }
 
@@ -443,14 +525,17 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             <label className="form-label">{t("course.event.edit.title", "Event title")}</label>
             <input
               type="text"
-              className="form-control form-control-lg"
+              className={`form-control form-control-lg ${errors.title ? "is-invalid" : ""}`}
               placeholder={t("event.title.placeholder", "Write a catchy title here")}
-              size={30}
               value={changes.title}
               onChange={(ev) => {
                 setChanges({ ...changes, title: ev.currentTarget.value });
               }}
+              onBlur={() => {
+                checkValidity("title");
+              }}
             />
+            {!!errors.title && <div className="invalid-feedback">{errors.title}</div>}
           </div>
           {/* Disabled for past */}
           <EditStartEnd
@@ -466,41 +551,41 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               );
             }}
             disabled={!!event.start && event.start < new Date()}
+            errors={errors}
           />
         </div>
         <div className="edit-page-body event-edit">
           <div className="mb-3">
             <label className="form-label">{t("course.event.edit.desc", "Description")}</label>
             <Richtext
+              className={errors.description ? "is-invalid" : ""}
               text={changes.description}
               placeholder={t(
                 "event.description.placeholder",
                 "Describe your event as accurately as possible. This helps people know how to prepare and what to expect from this meeting (e.g. level, prerequisites, activities, teaching methods, what to bring, etc.)",
               )}
-              maxlength={PublicSettings.eventDescriptionMax}
+              maxLength={PublicSettings.eventDescriptionMax}
               onChange={(newValue, numberOfCharacters) => {
                 setChanges({
                   ...changes,
                   description: newValue,
-                  descriptionError:
-                    !!PublicSettings.eventDescriptionMax &&
-                    numberOfCharacters > PublicSettings.eventDescriptionMax,
                   descriptionNumberOfCharacters: numberOfCharacters,
                 });
               }}
             />
+            {!!errors.description && <div className="invalid-feedback">{errors.description}</div>}
           </div>
           {!(!isNew && event.isPrivate()) && <PricePolicy dismissable wrap="mb-3" />}
 
           {showRegionSelection() && (
             <div className="mb-3">
               <label className="form-label">{t("course.edit.region", "Region")}</label>
-              <div className="input-group">
+              <div className={`input-group ${errors.region ? "has-validation" : ""}`}>
                 <div className="input-group-text">
                   <span className="fa-solid fa-location-dot" aria-hidden="true"></span>
                 </div>
                 <select
-                  className="form-select"
+                  className={`form-select ${errors.region ? "is-invalid" : ""}`}
                   name="region"
                   onChange={(ev) => {
                     setSelectedRegion(ev.currentTarget.value);
@@ -509,17 +594,18 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                   <option
                     className="select-placeholder"
                     disabled
-                    selected={currentRegion === "all"}
+                    selected={selectedRegion === "all"}
                     value=""
                   >
                     {t("_selection.pleaseSelect")}
                   </option>
                   {regions.map((r) => (
-                    <option key={r._id} selected={currentRegion === r._id} value={r._id}>
+                    <option key={r._id} selected={selectedRegion === r._id} value={r._id}>
                       {r.name}
                     </option>
                   ))}
                 </select>
+                {!!errors.region && <div className="invalid-feedback">{errors.region}</div>}
               </div>
             </div>
           )}
@@ -543,6 +629,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                       value={changes.room}
                       onChange={(ev) => {
                         setChanges({ ...changes, room: ev.currentTarget.value });
+                        checkValidity("venue");
                       }}
                     />
                   </div>
@@ -597,7 +684,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                     step={1}
                     value={changes.maxParticipants || ""}
                     onChange={(ev) => {
-                      const newValue = ev.currentTarget.valueAsNumber;
+                      const newValue = ev.currentTarget.valueAsNumber || 0; // give back 0 in case of NaN
                       if (Number.isNaN(newValue)) {
                         return;
                       }

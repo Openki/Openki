@@ -156,7 +156,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
 
       // Show dates in local time and in users locale
-      const regionZone = await LocalTime.zone(event.region);
+      const regionZone = await LocalTime.zoneAsync(event.region);
       const startMoment = regionZone.at(event.start);
       startMoment.locale(locale);
 

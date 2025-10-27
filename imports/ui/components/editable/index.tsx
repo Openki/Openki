@@ -43,20 +43,20 @@ export function Editable({
   const elementRef = useRef<HTMLDivElement>(null);
 
   // Add error mapping for the FormfieldErrors
-  const errorMapping: Mapping = {};
+  const errorMapping: Mapping<"input"> = {};
   const clientValidations = store?.clientValidations;
   if (clientValidations) {
     Object.entries(clientValidations).forEach(([key, validation]) => {
       errorMapping[key] = {
-        text: validation.errorMessage,
         field: "input",
+        text: validation.errorMessage,
       };
     });
   }
   store?.serverValidationErrors?.forEach((e) => {
     errorMapping[e.type] = {
-      text: e.message,
       field: "input",
+      text: e.message,
     };
   });
 
