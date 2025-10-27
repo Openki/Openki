@@ -44,6 +44,7 @@ export const SaveFieldPattern = {
   facilities: Match.Optional([StringEnum(...Venues.facilityOptions)]),
   otherFacilities: Match.Optional(String),
   restrictedUse: Match.Optional(Boolean),
+  allowParallelEvents: Match.Optional(Boolean),
 };
 export type SaveFields = Type<typeof SaveFieldPattern>;
 
@@ -113,6 +114,10 @@ export const save = ServerMethod(
 
     if (changes.restrictedUse !== undefined) {
       set.restrictedUse = changes.restrictedUse;
+    }
+
+    if (changes.allowParallelEvents !== undefined) {
+      set.allowParallelEvents = changes.allowParallelEvents;
     }
 
     if (isNew) {
