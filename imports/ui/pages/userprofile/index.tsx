@@ -1,29 +1,27 @@
-import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-
-import * as Alert from "/imports/api/alerts/alert";
-import { GroupEntity } from "/imports/api/groups/groups";
-import * as GroupsMethods from "/imports/api/groups/methods";
-import { UserModel } from "/imports/api/users/users";
-import * as usersMethods from "/imports/api/users/methods";
-import * as emailMethods from "/imports/api/emails/methods";
-import * as Courses from "/imports/api/courses/publications";
-import * as Groups from "/imports/api/groups/publications";
+import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import * as Metatags from "/imports/utils/metatags";
+import * as Alert from "/imports/api/alerts/alert";
+import * as Courses from "/imports/api/courses/publications";
+import * as emailMethods from "/imports/api/emails/methods";
+import { GroupEntity } from "/imports/api/groups/groups";
+import * as GroupsMethods from "/imports/api/groups/methods";
+import * as Groups from "/imports/api/groups/publications";
+import * as usersMethods from "/imports/api/users/methods";
+import { UserModel } from "/imports/api/users/users";
+
 import { checkContribution } from "/imports/utils/checkContribution";
+import * as Metatags from "/imports/utils/metatags";
 import * as Tooltips from "/imports/utils/Tooltips";
 
-import "./template.html";
 import { Avatar } from "../../components/avatar";
-import { Contribution } from "../../components/Contribution";
-import { PublicSettings } from "/imports/utils/PublicSettings";
-import { SendMessage, Data as SendMessageData } from "/imports/ui/components/send-message";
-
-import { Courselist } from "../../components/profiles/course-list";
 import { Button, ButtonCancel, ButtonDelete } from "../../components/Buttons";
+import { Contribution } from "../../components/Contribution";
+import { Courselist } from "../../components/profiles/course-list";
+import { SendMessage, Data as SendMessageData } from "../../components/SendMessage";
 
 export interface Props {
   user: UserModel;
