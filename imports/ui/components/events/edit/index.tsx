@@ -37,8 +37,8 @@ import { EditStartEnd } from "./EditStartEnd";
 import { OtherEventsMessage } from "./OtherEventsMessage";
 import { UpdateAffectedReplica } from "./UpdateAffectedReplica";
 import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
-import { FormControl } from "/imports/ui/components/FormControl";
 import { CheckControl } from "/imports/ui/components/CheckControl";
+import { FormControl } from "/imports/ui/components/FormControl";
 
 import { useFindParallelEvents } from "./useFindParallelEvents";
 
@@ -590,9 +590,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                 placeholder={t("_selection.pleaseSelect")}
                 options={Object.fromEntries(regions.map((region) => [region._id, region.name]))}
                 value={selectedRegion === "all" ? "" : selectedRegion}
-                onChange={(value) => {
-                  setSelectedRegion(value);
-                }}
+                onChange={(value) => setSelectedRegion(value)}
               />
             </div>
           )}
@@ -638,9 +636,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                   : undefined
               }
               checked={noRsvpChecked}
-              onChange={(checked) => {
-                setNoRsvpChecked(checked);
-              }}
+              onChange={(checked) => setNoRsvpChecked(checked)}
             />
 
             {!noRsvpChecked && (
@@ -654,9 +650,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                   min={0}
                   step={1}
                   value={changes.maxParticipants || 0}
-                  onChange={(value) => {
-                    setChanges({ ...changes, maxParticipants: value });
-                  }}
+                  onChange={(value) => setChanges({ ...changes, maxParticipants: value })}
                 />
               </>
             )}
@@ -669,9 +663,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               label={t("event.edit.internal", "Hide on front page")}
               hint={t("event.edit.internal.description", "Show it only on group and venue pages")}
               checked={changes.internal}
-              onChange={(checked) => {
-                setChanges({ ...changes, internal: checked });
-              }}
+              onChange={(checked) => setChanges({ ...changes, internal: checked })}
             />
 
             {!isNew && (
@@ -680,9 +672,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                 event={event}
                 startDayChanged={startDayChanged}
                 timeChanged={timeChanged}
-                onChange={(newValues) => {
-                  setUpdateReplicas(newValues);
-                }}
+                onChange={(newValues) => setUpdateReplicas(newValues)}
               />
             )}
 
@@ -692,9 +682,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               checked={notifyChecked}
               message={addNotificationMessage}
               onToggle={(v) => setNotifyChecked(v)}
-              onMessageChange={(v) => {
-                setAddNotificationMessage(v);
-              }}
+              onMessageChange={(v) => setAddNotificationMessage(v)}
             />
             {!noRsvpChecked && PublicSettings.feature.sendReminderIsEditable && (
               <CheckControl
@@ -705,20 +693,14 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                   "Send a reminder e-mail to all participants 24 hours before the event starts.",
                 )}
                 checked={changes.sendReminder}
-                onChange={(checked) => {
-                  setChanges({ ...changes, sendReminder: checked });
-                }}
+                onChange={(checked) => setChanges({ ...changes, sendReminder: checked })}
               />
             )}
           </div>
 
           <div className="form-actions">
             <ButtonSave onClick={handleSubmit} disabled={isBusy} />
-            <ButtonCancel
-              onClick={() => {
-                onCancel();
-              }}
-            />
+            <ButtonCancel onClick={onCancel} />
           </div>
         </div>
       </div>
