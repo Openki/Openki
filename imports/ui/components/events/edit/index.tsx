@@ -4,39 +4,39 @@
 // the timezone might actually change when a different region is selected. We
 // wouldn't want the time or even date field to change because of this switch.
 
-import React, { useEffect, useState } from "react";
-import { Router } from "meteor/iron:router";
 import { intersection, uniq } from "lodash";
+import { Router } from "meteor/iron:router";
 import moment from "moment";
-import { useSession, useUser } from "/imports/utils/react-meteor-data";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import * as Analytics from "/imports/ui/lib/analytics";
+import { useValidation } from "/imports/ui/lib/useValidation";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { LocalTime } from "/imports/utils/local-time";
-import * as Analytics from "/imports/ui/lib/analytics";
 import { MeteorAsync } from "/imports/utils/promisify";
+import { useSession, useUser } from "/imports/utils/react-meteor-data";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
-import { useTranslation } from "react-i18next";
-import { useValidation } from "/imports/ui/lib/useValidation";
 
 import * as Alert from "/imports/api/alerts/alert";
+import * as CoursesMethods from "/imports/api/courses/methods";
 import { EventModel, EventVenueEntity, OEvent } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { SaveFields } from "/imports/api/events/methods";
-import * as CoursesMethods from "/imports/api/courses/methods";
 import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
-import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 import { useAll } from "/imports/api/regions/publications";
+import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 
+import { ButtonCancel, ButtonSave } from "../../Buttons";
+import { EditCustomFields } from "../../EditCustomFields";
+import { PricePolicy } from "../../price-policy";
 import { Tag } from "../../regions/tag";
 import { Richtext } from "../../richtext";
-import { PricePolicy } from "../../price-policy";
-import { EditVenue } from "../edit-venue";
-import { EditCustomFields } from "../../EditCustomFields";
-import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
-import { ButtonCancel, ButtonSave } from "../../Buttons";
 import { Notify } from "../Notify";
+import { EditVenue } from "../edit-venue";
 import { EditStartEnd } from "./EditStartEnd";
-import { UpdateAffectedReplica } from "./UpdateAffectedReplica";
 import { OtherEventsMessage } from "./OtherEventsMessage";
+import { UpdateAffectedReplica } from "./UpdateAffectedReplica";
+import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
 
 import { useFindParallelEvents } from "./useFindParallelEvents";
 
@@ -564,7 +564,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                 "event.description.placeholder",
                 "Describe your event as accurately as possible. This helps people know how to prepare and what to expect from this meeting (e.g. level, prerequisites, activities, teaching methods, what to bring, etc.)",
               )}
-              maxlength={PublicSettings.eventDescriptionMax}
+              maxLength={PublicSettings.eventDescriptionMax}
               onChange={(newValue, numberOfCharacters) => {
                 setChanges({
                   ...changes,
@@ -580,7 +580,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           {showRegionSelection() && (
             <div className="mb-3">
               <label className="form-label">{t("course.edit.region", "Region")}</label>
-              <div className="input-group has-validation">
+              <div className={`input-group ${errors.region ? "has-validation" : ""}`}>
                 <div className="input-group-text">
                   <span className="fa-solid fa-location-dot" aria-hidden="true"></span>
                 </div>
@@ -684,7 +684,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                     step={1}
                     value={changes.maxParticipants || ""}
                     onChange={(ev) => {
-                      const newValue = ev.currentTarget.valueAsNumber;
+                      const newValue = ev.currentTarget.valueAsNumber || 0; // give back 0 in case of NaN
                       if (Number.isNaN(newValue)) {
                         return;
                       }
