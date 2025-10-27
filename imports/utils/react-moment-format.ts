@@ -40,6 +40,12 @@ export function useDateTimeFormat() {
       }
       return toMomentWithTimeLocale(date).format("llll");
     },
+    timeShort(date?: moment.MomentInput) {
+      if (!date) {
+        return "";
+      }
+      return toMomentWithTimeLocale(date).format("H");
+    },
     timeFormat(date?: moment.MomentInput) {
       if (!date) {
         return "";
