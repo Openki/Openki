@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { LocalTime } from "/imports/utils/local-time";
 import * as Tooltips from "/imports/utils/Tooltips";
@@ -84,7 +84,7 @@ export function EditStartEnd({
       <div className="row">
         <div className="col-md mb-3 mb-md-0">
           <label className="form-label">{t("course.event.edit.date_start", "Date")}</label>
-          <div className="input-group has-validation">
+          <div className="input-group">
             <label className="input-group-text" htmlFor="eventStartDate">
               <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
             </label>
@@ -100,7 +100,7 @@ export function EditStartEnd({
         </div>
         <div className="col-md mb-3 mb-md-0">
           <label className="form-label">{t("course.event.edit.time_start", "Time start")}</label>
-          <div className="input-group has-validation">
+          <div className="input-group">
             <span className="input-group-text">
               <span className="fa-solid fa-hourglass-start fa-fw" aria-hidden="true"></span>
             </span>

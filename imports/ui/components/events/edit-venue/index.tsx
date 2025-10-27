@@ -11,6 +11,7 @@ import { OtherEventsMessage } from "../edit/OtherEventsMessage";
 import { useFindParallelEvents } from "../edit/useFindParallelEvents";
 import { Map } from "./map";
 import { filterUserVenues, Search } from "./search";
+import { Timetable } from "./Timetable";
 
 function Hints({
   venueId,
@@ -196,6 +197,9 @@ export function EditVenue({
             </div>
           </div>
           <Hints regionId={regionId} event={event} venueId={value._id} errors={errors} />
+          <div className="mb-3">
+            <Timetable regionId={regionId} event={event} venueId={value._id} />
+          </div>
           {!!value.loc && (
             <div className="mb-3">
               {!value._id ? (
