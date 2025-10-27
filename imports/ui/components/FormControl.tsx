@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+import { useSessionEquals } from "/imports/utils/react-meteor-data";
 
 import { AutoGrowTextArea } from "./AutoGrowTextArea";
 
@@ -9,11 +10,11 @@ interface CommonProps {
   id: string;
   label: ReactNode;
   size?: Size;
-  addon?: string | undefined;
+  prepend?: string | undefined;
   optional?: boolean | undefined;
   disabled?: boolean | undefined;
   onBlur?: (() => void) | undefined;
-  error?: string | undefined;
+  error?: ReactNode;
 }
 
 interface TextInputProps {
@@ -78,8 +79,8 @@ function buildSizeClass(baseClass: string, size: Size = "medium") {
 function getControlClassNames(
   type: string,
   size: Size | undefined,
-  addon: string | undefined,
-  error: string | undefined,
+  prepend: string | undefined,
+  error: ReactNode,
 ) {
   let baseClass;
   switch (type) {
@@ -93,8 +94,8 @@ function getControlClassNames(
 
   const className = [baseClass];
 
-  if (!addon) {
-    // when a addon is given then the sizing comes from input-group
+  if (!prepend) {
+    // when a prepend is given then the sizing comes from input-group
     className.push(buildSizeClass(baseClass, size));
   }
 
@@ -104,10 +105,10 @@ function getControlClassNames(
   return className;
 }
 
-function getDescribedby(id: string, addon: string | undefined, error: string | undefined) {
+function getDescribedby(id: string, prepend: string | undefined, error: ReactNode) {
   const describedby = [];
-  if (addon && !addon.startsWith("fa-")) {
-    describedby.push(id + "-addon");
+  if (prepend && !prepend.startsWith("fa-")) {
+    describedby.push(id + "-prepend");
   }
   if (error) {
     describedby.push(id + "-error");
@@ -119,14 +120,14 @@ function getDescribedby(id: string, addon: string | undefined, error: string | u
  * Factory to create input elements based on `type`
  */
 function createInputElement<K extends string>(props: Props<K>) {
-  const { id, type, size, addon, optional, disabled, onBlur, error } = props;
+  const { id, type, size, prepend, optional, disabled, onBlur, error } = props;
 
   const commonProps = {
     id,
-    className: getControlClassNames(type, size, addon, error).join(" "),
+    className: getControlClassNames(type, size, prepend, error).join(" "),
     disabled,
     onBlur: () => onBlur?.(),
-    "aria-describedby": getDescribedby(id, addon, error).join(" ") || undefined,
+    "aria-describedby": getDescribedby(id, prepend, error).join(" ") || undefined,
     "aria-invalid": !!error,
   };
 
@@ -231,7 +232,7 @@ function createInputElement<K extends string>(props: Props<K>) {
   }
 }
 
-function getGroupClassNames(size: Size | undefined, error: string | undefined) {
+function getGroupClassNames(size: Size | undefined, error: ReactNode) {
   const className = ["input-group", buildSizeClass("input-group", size)];
 
   className.push(buildSizeClass("input-group", size));
@@ -244,7 +245,9 @@ function getGroupClassNames(size: Size | undefined, error: string | undefined) {
 
 export function FormControl<K extends string>(props: Props<K>) {
   const { t } = useTranslation();
-  const { id, size, label, addon, optional, error } = props;
+  const isRTL = useSessionEquals("textDirectionality", "rtl");
+
+  const { id, size, label, prepend, optional, error } = props;
 
   // Create input using a factory
   let inputElement = (
@@ -258,13 +261,17 @@ export function FormControl<K extends string>(props: Props<K>) {
     </>
   );
 
-  if (addon) {
+  if (prepend) {
+    const prependElement = (
+      <span className="input-group-text" id={`${id}-prepend`}>
+        {prepend.startsWith("fa-") ? <i className={prepend} /> : prepend}
+      </span>
+    );
     inputElement = (
       <div className={getGroupClassNames(size, error).join(" ")}>
-        <span className="input-group-text" id={`${id}-addon`}>
-          {addon.startsWith("fa-") ? <i className={addon} /> : addon}
-        </span>
+        {!isRTL && prependElement}
         {inputElement}
+        {isRTL && prependElement}
       </div>
     );
   }

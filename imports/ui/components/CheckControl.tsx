@@ -3,6 +3,7 @@ import React, { ReactNode } from "react";
 interface CommonProps {
   id: string;
   label: ReactNode;
+  hint?: ReactNode;
   checked?: boolean | undefined;
   disabled?: boolean | undefined;
   onChange?: ((checked: boolean) => void) | undefined;
@@ -20,7 +21,7 @@ interface RadioProps {
 export type Props = CommonProps & (CheckBoxProps | RadioProps);
 
 export function CheckControl(props: Props) {
-  const { id, type, label, disabled, checked, onChange } = props;
+  const { id, type, label, hint, disabled, checked, onChange } = props;
   return (
     <div className={`form-check${type === "switch" ? " form-switch" : ""}`}>
       <input
@@ -34,10 +35,16 @@ export function CheckControl(props: Props) {
           onChange?.(ev.target.checked);
         }}
         role={type === "switch" ? "switch" : undefined}
+        aria-describedby={hint ? `${id}-hint` : undefined}
       />
       <label className="form-check-label" htmlFor={id}>
         {label}
       </label>
+      {!!hint && (
+        <div id={`${id}-hint`} className="form-text">
+          {hint}
+        </div>
+      )}
     </div>
   );
 }

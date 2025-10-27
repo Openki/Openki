@@ -305,7 +305,7 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
             type="textarea"
             rows={3}
             label={t("venue.details.route")}
-            addon="fa-solid fa-signs-post"
+            prepend="fa-solid fa-signs-post"
             placeholder={t(
               "venue.route.placeholder",
               "near busstop, cross fence, then backyard, enter the black door… 23rd floor, then left.",

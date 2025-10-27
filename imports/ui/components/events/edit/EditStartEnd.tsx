@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useEffect, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { LocalTime } from "/imports/utils/local-time";
 import * as Tooltips from "/imports/utils/Tooltips";
@@ -15,7 +15,7 @@ export function EditStartEnd({
   endLocal: string;
   disabled?: boolean | undefined;
   onChange: (newValue: { startLocal: string; endLocal: string }) => void;
-  errors: Partial<Record<"start", string | React.JSX.Element | null | undefined>>;
+  errors: Partial<Record<"start", ReactNode>>;
 }) {
   const { t } = useTranslation();
   const [durationEdit, setDurationEdit] = useState(false);
