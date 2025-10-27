@@ -6,11 +6,11 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { EventModel, EventParticipantEntity } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 
+import { Contribution } from "../../Contribution";
+import { SendMessage, Data as SendMessageData } from "../../SendMessage";
+import { RemoveDropdown } from "./remove-dropdown";
 import { ParticipantContact } from "/imports/ui/components/participant/contact";
 import { ProfileLink } from "/imports/ui/components/profile-link";
-import { SendMessage, Data as SendMessageData } from "/imports/ui/components/send-message";
-import { Contribution } from "../../Contribution";
-import { RemoveDropdown } from "./remove-dropdown";
 
 import "./styles.scss";
 

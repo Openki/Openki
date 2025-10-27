@@ -3,13 +3,13 @@ import { useTranslation } from "react-i18next";
 import { Modal } from "/imports/startup/client/bootstrap";
 import { useUserId } from "/imports/utils/react-meteor-data";
 
-import * as emailMethods from "/imports/api/emails/methods";
-import { EventModel } from "/imports/api/events/events";
 import { CourseModel } from "/imports/api/courses/courses";
+import * as emailMethods from "/imports/api/emails/methods";
 import { SendPrivateMessageOptions } from "/imports/api/emails/methods";
+import { EventModel } from "/imports/api/events/events";
 import * as Users from "/imports/api/users/publications";
 
-import { SendMessage, Data as SendMessageData } from "/imports/ui/components/send-message";
+import { SendMessage, Data as SendMessageData } from "../../SendMessage";
 
 export interface Props {
   participant: string;

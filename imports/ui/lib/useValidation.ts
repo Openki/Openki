@@ -1,17 +1,17 @@
 import { omit } from "lodash";
-import { JSX, useState } from "react";
+import { ReactNode, useState } from "react";
 
 export type Mapping<T extends string> = Record<
   string,
   {
     field: T;
     onCheckValidity?: () => boolean;
-    text: () => string | JSX.Element | undefined | null;
+    text: () => ReactNode;
   }
 >;
 
 export function useValidation<T extends string>(mapping: Mapping<T>, initialCheck = false) {
-  const initialState: Partial<Record<T, string | JSX.Element | undefined | null>> = {};
+  const initialState: Partial<Record<T, ReactNode>> = {};
 
   if (initialCheck) {
     Object.values(mapping).forEach((m) => {

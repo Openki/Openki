@@ -1,12 +1,12 @@
-import { useTranslation } from "react-i18next";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
 
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { VerifyEmail } from "/imports/ui/components/profiles/VerifyEmail";
 import { PleaseLogin } from "/imports/ui/components/please-login";
+import { VerifyEmail } from "/imports/ui/components/profiles/VerifyEmail";
 
 import "./styles.scss";
 
@@ -60,13 +60,14 @@ export function SendMessage(props: Data) {
       <div className="mb-3">
         <textarea
           data-test="send-message-textarea"
-          className="form-control send-message-textarea"
+          className="form-control"
           placeholder={props.placeholder}
           autoFocus={true}
           value={message}
           onChange={(event) => {
             setMessage(event.target.value);
           }}
+          rows={7}
         ></textarea>
       </div>
       {user?.hasVerifiedEmail() ? (
