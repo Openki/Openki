@@ -1,7 +1,7 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { Router } from "meteor/iron:router";
-import { useTranslation } from "react-i18next";
 import { chain, fromPairs, union, uniq } from "lodash";
+import { Router } from "meteor/iron:router";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { CourseMemberEntity, CourseModel, Courses, isPrivate } from "/imports/api/courses/courses";
@@ -10,33 +10,34 @@ import { Regions } from "/imports/api/regions/regions";
 import { Roles } from "/imports/api/roles/roles";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import * as StringTools from "/imports/utils/string-tools";
+import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
+import { useSiteName } from "/imports/utils/getSiteName";
 import { hasRoleUser } from "/imports/utils/course-role-utils";
+import * as StringTools from "/imports/utils/string-tools";
 
-import * as Analytics from "/imports/ui/lib/analytics";
 import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
+import * as Analytics from "/imports/ui/lib/analytics";
 
-import { Tag } from "../../regions/tag";
-import { Title } from "./title";
-import { PricePolicy } from "../../price-policy";
-import { Role, Props as CourseEditRoleProps } from "./Role";
 import { ButtonCancel, ButtonSave } from "../../Buttons";
-import { useUser } from "/imports/utils/react-meteor-data";
-import { useAll as useRegionsAll } from "/imports/api/regions/publications";
-import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
+import { PricePolicy } from "../../price-policy";
+import { Tag } from "../../regions/tag";
+import { Props as CourseEditRoleProps, Role } from "./Role";
+import { Title } from "./title";
 import {
   useDetails as useCoursesDetails,
   useFindFilter as useCoursesFindFilter,
 } from "/imports/api/courses/publications";
 import { useDetails, useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
+import { useAll as useRegionsAll } from "/imports/api/regions/publications";
+import { useUser } from "/imports/utils/react-meteor-data";
+import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
-import { useSiteName } from "/imports/utils/getSiteName";
-import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
+import { EditCustomFields } from "../../EditCustomFields";
+import { PleaseLogin } from "../../please-login";
 import { SelectCategories } from "../SelectCategories";
 import { CourseCategories } from "../categories";
-import { EditCustomFields } from "../../EditCustomFields";
+import { FormControl } from "/imports/ui/components/events/edit/form-control";
 import { mayShare } from "./mayShare";
-import { PleaseLogin } from "../../please-login";
 import "./styles.scss";
 
 function GroupHeader({ groupId }: { groupId: string }) {
@@ -811,30 +812,20 @@ export function Edit(data: Data) {
               <div className="col-md">
                 {showRegionSelection() && (
                   <div className="mb-3">
-                    <label className="form-label">{t("course.edit.region", "Region")}</label>
-                    <div className="input-group">
-                      <div className="input-group-text">
-                        <span className="fa-solid fa-location-dot" aria-hidden="true"></span>
-                      </div>
-                      <select
-                        data-test="courses-edit-region-selection"
-                        className="form-select"
-                        name="region"
-                        onChange={(event) => {
-                          setSelectedRegion(event.target.value);
-                        }}
-                        defaultValue={selectedRegion}
-                      >
-                        <option value="" disabled className="select-placeholder">
-                          {t("_selection.pleaseSelect")}
-                        </option>
-                        {allRegions.map((region) => (
-                          <option key={region._id} value={region._id}>
-                            {region.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                    <FormControl
+                      id="courses-edit-region-selection"
+                      type="select"
+                      label={t("course.edit.region", "Region")}
+                      addon="fa-solid fa-location-dot"
+                      placeholder={t("_selection.pleaseSelect")}
+                      options={Object.fromEntries(
+                        allRegions.map((region) => [region._id, region.name]),
+                      )}
+                      value={selectedRegion}
+                      onChange={(value) => {
+                        setSelectedRegion(value);
+                      }}
+                    />
                   </div>
                 )}
 

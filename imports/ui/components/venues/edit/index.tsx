@@ -12,6 +12,7 @@ import { FacilityOption, VenueModel } from "/imports/api/venues/venues";
 import * as Analytics from "/imports/ui/lib/analytics";
 
 import { ButtonCancel, ButtonSave } from "../../Buttons";
+import { FormControl } from "../../events/edit/form-control";
 import { Edit as LocationEdit } from "../../location/edit";
 import { AdditionalInfo, type Data as AdditionalInfoData } from "./additional-info";
 import { Richtext } from "/imports/ui/components/richtext";
@@ -299,27 +300,21 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
         </div>
 
         <div className="mb-3">
-          <label className="form-label" htmlFor="editform-address">
-            {t("venue.details.route")}
-          </label>
-          <div className="input-group">
-            <span className="input-group-text">
-              <span className="fa-solid fa-signs-post"></span>
-            </span>
-            <textarea
-              className="form-control"
-              id="editform-address"
-              placeholder={t(
-                "venue.route.placeholder",
-                "near busstop, cross fence, then backyard, enter the black door… 23rd floor, then left.",
-              )}
-              value={changes.route}
-              onChange={(event) => {
-                const value = event.currentTarget.value;
-                setChanges((prevState) => ({ ...prevState, route: value }));
-              }}
-            ></textarea>
-          </div>
+          <FormControl
+            id="editform-address"
+            type="textarea"
+            rows={3}
+            label={t("venue.details.route")}
+            addon="fa-solid fa-signs-post"
+            placeholder={t(
+              "venue.route.placeholder",
+              "near busstop, cross fence, then backyard, enter the black door… 23rd floor, then left.",
+            )}
+            value={changes.route}
+            onChange={(value) => {
+              setChanges((prevState) => ({ ...prevState, route: value }));
+            }}
+          />
         </div>
 
         <div className="mb-3">
