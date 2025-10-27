@@ -1,9 +1,10 @@
 import React from "react";
-import { uniq } from "lodash";
 import { useTranslation } from "react-i18next";
 
-import { FacilityOption, Venues } from "/imports/api/venues/venues";
 import { SaveFields } from "/imports/api/venues/methods";
+import { FacilityOption, Venues } from "/imports/api/venues/venues";
+
+import { CheckGroup } from "/imports/ui/components/events/edit/form-control/CheckGroup";
 
 import "./styles.scss";
 
@@ -27,37 +28,6 @@ export function AdditionalInfo({
   onOtherFacilitiesChange,
 }: Data) {
   const { t } = useTranslation();
-
-  function facilityOptions() {
-    return Venues.facilityOptions;
-  }
-  function facilitiesCheck(name: FacilityOption) {
-    const attrs: {
-      className: string;
-      type: string;
-      value: string;
-      checked?: boolean;
-      onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    } = {
-      className: `form-check-input`,
-      type: "checkbox",
-      value: "",
-      onChange: (event) => {
-        let facilities = [...(data.facilities || [])];
-        if (event.currentTarget.checked) {
-          facilities = uniq([...facilities, name]);
-        } else {
-          facilities = facilities.filter((f) => f !== name);
-        }
-        onFacilitiesChange(facilities);
-      },
-    };
-    attrs.checked = !!data.facilities?.includes(name);
-    return attrs;
-  }
-  function facilitiesDisplay(name: string) {
-    return `venue.facility.${name}`;
-  }
 
   return (
     <div className="venue-edit-additional-info">
@@ -111,15 +81,20 @@ export function AdditionalInfo({
       </div>
       <div className="row gap-3 mb-3">
         <div className="col-md">
-          <label className="form-label">{t("venue.edit.infra", "Infrastructure")}</label>
-          {facilityOptions().map((facility) => (
-            <div className="form-check" key={facility}>
-              <input {...facilitiesCheck(facility)} id={`venueEdit${facility}Check`} />
-              <label className="form-check-label" htmlFor={`venueEdit${facility}Check`}>
-                {t(facilitiesDisplay(facility))}
-              </label>
-            </div>
-          ))}
+          <CheckGroup
+            type="switch"
+            id="venue-edit-infra"
+            label={t("venue.edit.infra", "Infrastructure")}
+            options={
+              Object.fromEntries(
+                Venues.facilityOptions.map((option) => [option, t(`venue.facility.${option}`)]),
+              ) as Record<(typeof Venues.facilityOptions)[number], React.ReactNode>
+            }
+            value={data.facilities || []}
+            onChange={(values) => {
+              onFacilitiesChange(values);
+            }}
+          />
         </div>
         <div className="col-md">
           <label className="form-label">
