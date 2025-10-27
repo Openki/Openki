@@ -43,12 +43,13 @@ interface NumberInputProps {
   onChange?: ((value: number) => void) | undefined;
 }
 
-interface SelectProps {
+// Generic over the keys of options
+interface SelectProps<K extends string> {
   type: "select";
   placeholder?: string | undefined;
   value: string;
-  options: Record<string, string>;
-  onChange?: ((value: string) => void) | undefined;
+  options: Record<K, string>;
+  onChange?: ((value: K) => void) | undefined;
 }
 
 interface TimeInputProps {
@@ -58,8 +59,8 @@ interface TimeInputProps {
   onChange?: ((value: string) => void) | undefined;
 }
 
-export type Props = CommonProps &
-  (TextInputProps | TextareaProps | NumberInputProps | SelectProps | TimeInputProps);
+export type Props<K extends string> = CommonProps &
+  (TextInputProps | TextareaProps | NumberInputProps | SelectProps<K> | TimeInputProps);
 
 function buildSizeClass(baseClass: string, size: Size = "medium") {
   switch (size) {
@@ -117,7 +118,7 @@ function getDescribedby(id: string, addon: string | undefined, error: string | u
 /**
  * Factory to create input elements based on `type`
  */
-function createInputElement(props: Props) {
+function createInputElement<K extends string>(props: Props<K>) {
   const { id, type, size, addon, optional, disabled, onBlur, error } = props;
 
   const commonProps = {
@@ -199,16 +200,16 @@ function createInputElement(props: Props) {
         <select
           {...commonProps}
           value={props.value}
-          onChange={(ev) => props.onChange?.(ev.target.value)}
+          onChange={(ev) => props.onChange?.(ev.target.value as K)}
         >
           {!!props.placeholder && (
             <option disabled value="">
               {props.placeholder}
             </option>
           )}
-          {Object.entries(props.options).map(([key, value]) => (
-            <option key={key} value={key}>
-              {value}
+          {Object.entries<ReactNode>(props.options).map(([value, label]) => (
+            <option key={value} value={value}>
+              {label}
             </option>
           ))}
         </select>
@@ -241,7 +242,7 @@ function getGroupClassNames(size: Size | undefined, error: string | undefined) {
   return className;
 }
 
-export function FormControl(props: Props) {
+export function FormControl<K extends string>(props: Props<K>) {
   const { t } = useTranslation();
   const { id, size, label, addon, optional, error } = props;
 
