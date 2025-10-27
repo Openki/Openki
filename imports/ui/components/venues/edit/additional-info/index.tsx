@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { SaveFields } from "/imports/api/venues/methods";
 import { FacilityOption, Venues } from "/imports/api/venues/venues";
 
-import { CheckGroup } from "/imports/ui/components/events/edit/form-control/CheckGroup";
+import { CheckGroup } from "../../../CheckGroup";
 
 import "./styles.scss";
 

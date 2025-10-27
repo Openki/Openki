@@ -10,9 +10,9 @@ import { LocalTime } from "/imports/utils/local-time";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
 import { ButtonCancel, ButtonSave } from "../../Buttons";
+import { CheckGroup } from "../../CheckGroup";
 import { DateSelect } from "../../date-select";
 import { Notify } from "../Notify";
-import { CheckGroup } from "/imports/ui/components/events/edit/form-control/CheckGroup";
 
 import { todayOrAfter } from "../../../lib/todayOrAfter";
 

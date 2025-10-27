@@ -10,9 +10,9 @@ import { Regions } from "/imports/api/regions/regions";
 import { Roles } from "/imports/api/roles/roles";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
+import { hasRoleUser } from "/imports/utils/course-role-utils";
 import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 import { useSiteName } from "/imports/utils/getSiteName";
-import { hasRoleUser } from "/imports/utils/course-role-utils";
 import * as StringTools from "/imports/utils/string-tools";
 
 import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
@@ -33,10 +33,10 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
 import { EditCustomFields } from "../../EditCustomFields";
+import { FormControl } from "../../FormControl";
 import { PleaseLogin } from "../../please-login";
 import { SelectCategories } from "../SelectCategories";
 import { CourseCategories } from "../categories";
-import { FormControl } from "/imports/ui/components/events/edit/form-control";
 import { mayShare } from "./mayShare";
 import "./styles.scss";
 
