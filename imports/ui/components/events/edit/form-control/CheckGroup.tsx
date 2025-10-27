@@ -24,47 +24,67 @@ interface RadioProps<K extends string> {
 
 export type Props<K extends string> = CommonProps<K> & (CheckBoxProps<K> | RadioProps<K>);
 
-export function CheckGroup<K extends string>({
-  id,
-  type,
-  label,
-  options,
-  value,
-  disabled,
-  onChange,
-}: Props<K>) {
-  return (
-    <>
-      <label className="form-label">{label}</label>
-      {Object.entries<ReactNode>(options).map(([optionValue, optionLabel]) => {
-        const key = optionValue as K;
-        const checked = type === "radio" ? key === value : value.includes(key);
+/**
+ * Factory to create input elements based on `type`
+ */
+function createCheckGroupElements<K extends string>(props: Props<K>) {
+  const { id, type, options, value, disabled, onChange } = props;
 
+  return Object.entries(options).map((e) => {
+    const [optionValue, optionLabel] = e as [K, ReactNode];
+    const commonProps = {
+      key: optionValue,
+      id: id + optionValue,
+      label: optionLabel,
+      disabled,
+    };
+
+    switch (type) {
+      case "box":
+      case "switch":
         return (
           <CheckControl
-            key={optionValue}
-            id={id + optionValue}
             type={type}
-            name={type === "radio" ? id : undefined}
-            label={optionLabel}
-            checked={checked}
-            disabled={disabled}
+            {...commonProps}
+            checked={value.includes(optionValue)}
             onChange={(checked) => {
-              if (type === "radio") {
-                if (checked) {
-                  onChange?.(key);
-                }
+              if (checked) {
+                onChange?.([...value, optionValue]);
               } else {
-                if (checked) {
-                  onChange?.([...value, key]);
-                } else {
-                  onChange?.(value.filter((v1) => v1 !== key));
-                }
+                onChange?.(value.filter((v1) => v1 !== optionValue));
               }
             }}
           />
         );
-      })}
+
+      case "radio":
+        return (
+          <CheckControl
+            type="radio"
+            {...commonProps}
+            name={id}
+            checked={optionValue === value}
+            onChange={(checked) => {
+              if (checked) {
+                onChange?.(optionValue);
+              }
+            }}
+          />
+        );
+
+      default:
+        throw new Error(`Unexpected value for prop type: ${type}`);
+    }
+  });
+}
+
+export function CheckGroup<K extends string>(props: Props<K>) {
+  const { label } = props;
+
+  return (
+    <>
+      <label className="form-label">{label}</label>
+      {createCheckGroupElements(props)}
     </>
   );
 }
