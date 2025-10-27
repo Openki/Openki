@@ -10,27 +10,27 @@ export interface Props {
   className?: string | undefined;
   text?: string | undefined;
   placeholder?: string | undefined;
-  maxlength?: number | undefined;
+  maxLength?: number | undefined;
   onChange?: ((value: string, numberOfCharacters: number) => void) | undefined;
 }
 
-export function Richtext({ className, text, placeholder, maxlength, onChange }: Props) {
+export function Richtext({ className, text, placeholder, maxLength, onChange }: Props) {
   const { t } = useTranslation();
   const elementRef = useRef<HTMLDivElement>(null);
   const [numberOfCharacters, setNumberOfCharacters] = useState(0);
   const isRTL = useSessionEquals("textDirectionality", "rtl");
 
   function characterLimitReached() {
-    if (!maxlength) {
+    if (!maxLength) {
       return false;
     }
-    return numberOfCharacters > maxlength;
+    return numberOfCharacters > maxLength;
   }
   function removeNumberOfCharacters() {
-    if (!maxlength) {
+    if (!maxLength) {
       return 0;
     }
-    return numberOfCharacters - maxlength;
+    return numberOfCharacters - maxLength;
   }
 
   function handleChange(event: React.KeyboardEvent<HTMLDivElement>) {
@@ -112,7 +112,7 @@ export function Richtext({ className, text, placeholder, maxlength, onChange }: 
       ></div>
       {characterLimitReached() && (
         <div className="invalid-feedback">
-          {t("_inputField.maxlength", { NUMBER: removeNumberOfCharacters(), MAXNUMBER: maxlength })}
+          {t("_inputField.maxlength", { NUMBER: removeNumberOfCharacters(), MAXNUMBER: maxLength })}
         </div>
       )}
     </>
