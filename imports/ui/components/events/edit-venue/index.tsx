@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
@@ -27,7 +27,7 @@ function Hints({
     startLocal: string;
     endLocal: string;
   };
-  errors: Partial<Record<"venue" | "startEndVenue", string | React.JSX.Element | null | undefined>>;
+  errors: Partial<Record<"venue" | "startEndVenue", ReactNode>>;
 }) {
   const { t } = useTranslation();
   const user = useUser();
@@ -115,7 +115,7 @@ export function EditVenue({
     endLocal: string;
   };
   onChange: (newValue: EventVenueEntity | undefined) => void;
-  errors: Partial<Record<"venue" | "startEndVenue", string | React.JSX.Element | null | undefined>>;
+  errors: Partial<Record<"venue" | "startEndVenue", ReactNode>>;
 }) {
   const { t } = useTranslation();
 

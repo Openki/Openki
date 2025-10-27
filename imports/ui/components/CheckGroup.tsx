@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 
-import { CheckControl } from "./form-control/CheckControl";
+import { CheckControl } from "/imports/ui/components/CheckControl";
 
 // Generic over the keys of options
 interface CommonProps<K extends string> {

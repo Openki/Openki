@@ -37,6 +37,8 @@ import { EditStartEnd } from "./EditStartEnd";
 import { OtherEventsMessage } from "./OtherEventsMessage";
 import { UpdateAffectedReplica } from "./UpdateAffectedReplica";
 import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
+import { FormControl } from "/imports/ui/components/FormControl";
+import { CheckControl } from "/imports/ui/components/CheckControl";
 
 import { useFindParallelEvents } from "./useFindParallelEvents";
 
@@ -522,20 +524,21 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           {!isNew && !event.courseId && <Tag region={event.region} />}
 
           <div className="mb-3">
-            <label className="form-label">{t("course.event.edit.title", "Event title")}</label>
-            <input
+            <FormControl
+              id="event-edit-title"
               type="text"
-              className={`form-control form-control-lg ${errors.title ? "is-invalid" : ""}`}
+              size="large"
+              label={t("course.event.edit.title", "Event title")}
               placeholder={t("event.title.placeholder", "Write a catchy title here")}
-              value={changes.title}
-              onChange={(ev) => {
-                setChanges({ ...changes, title: ev.currentTarget.value });
+              value={changes.title || ""}
+              onChange={(value) => {
+                setChanges({ ...changes, title: value });
               }}
               onBlur={() => {
                 checkValidity("title");
               }}
+              error={errors.title}
             />
-            {!!errors.title && <div className="invalid-feedback">{errors.title}</div>}
           </div>
           {/* Disabled for past */}
           <EditStartEnd
@@ -579,34 +582,18 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
           {showRegionSelection() && (
             <div className="mb-3">
-              <label className="form-label">{t("course.edit.region", "Region")}</label>
-              <div className={`input-group ${errors.region ? "has-validation" : ""}`}>
-                <div className="input-group-text">
-                  <span className="fa-solid fa-location-dot" aria-hidden="true"></span>
-                </div>
-                <select
-                  className={`form-select ${errors.region ? "is-invalid" : ""}`}
-                  name="region"
-                  onChange={(ev) => {
-                    setSelectedRegion(ev.currentTarget.value);
-                  }}
-                >
-                  <option
-                    className="select-placeholder"
-                    disabled
-                    selected={selectedRegion === "all"}
-                    value=""
-                  >
-                    {t("_selection.pleaseSelect")}
-                  </option>
-                  {regions.map((r) => (
-                    <option key={r._id} selected={selectedRegion === r._id} value={r._id}>
-                      {r.name}
-                    </option>
-                  ))}
-                </select>
-                {!!errors.region && <div className="invalid-feedback">{errors.region}</div>}
-              </div>
+              <FormControl
+                id="event-edit-region"
+                type="select"
+                label={t("course.edit.region", "Region")}
+                prepend="fa-solid fa-location-dot"
+                placeholder={t("_selection.pleaseSelect")}
+                options={Object.fromEntries(regions.map((region) => [region._id, region.name]))}
+                value={selectedRegion === "all" ? "" : selectedRegion}
+                onChange={(value) => {
+                  setSelectedRegion(value);
+                }}
+              />
             </div>
           )}
 
@@ -615,24 +602,18 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               <EditVenue {...venueEditAttr()} />
               {!!selectedVenue && (
                 <div className="mb-3">
-                  <label className="form-label">
-                    {t("course.event.edit.room", "Room")}
-                    <small> {t("_inputField.optional")}</small>
-                  </label>
-                  <div className="input-group">
-                    <span className="input-group-text">
-                      <span className="fa-solid fa-signs-post fa-fw" aria-hidden="true"></span>
-                    </span>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={changes.room}
-                      onChange={(ev) => {
-                        setChanges({ ...changes, room: ev.currentTarget.value });
-                        checkValidity("venue");
-                      }}
-                    />
-                  </div>
+                  <FormControl
+                    id="event-edit-room"
+                    type="text"
+                    label={t("course.event.edit.room", "Room")}
+                    optional
+                    prepend="fa-solid fa-signs-post fa-fw"
+                    value={changes.room || ""}
+                    onChange={(value) => {
+                      setChanges({ ...changes, room: value });
+                      checkValidity("venue");
+                    }}
+                  />
                 </div>
               )}
             </>
@@ -644,79 +625,55 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             </div>
           )}
           <div className="mb-3">
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="eventEditNoRsvpCheck"
-                checked={noRsvpChecked}
-                onChange={(ev) => {
-                  setNoRsvpChecked(ev.currentTarget.checked);
-                }}
-              />
-              <label className="form-check-label" htmlFor="eventEditNoRsvpCheck">
-                {t("event.edit.noRsvp", "No reservation required")}
-                {noRsvpChecked && (
-                  <span className="form-text d-block">
-                    {t(
+            <CheckControl
+              id="event-edit-no-rsvp"
+              type="box"
+              label={t("event.edit.noRsvp", "No reservation required")}
+              hint={
+                noRsvpChecked
+                  ? t(
                       "event.edit.noRsvp.description",
                       "Registration for this event is disabled. You might want to explain why in the description.",
-                    )}
-                  </span>
-                )}
-              </label>
-            </div>
+                    )
+                  : undefined
+              }
+              checked={noRsvpChecked}
+              onChange={(checked) => {
+                setNoRsvpChecked(checked);
+              }}
+            />
+
             {!noRsvpChecked && (
               <>
-                <label className="form-label">
-                  {t("course.event.edit.maxParticipants", "maximal number of participants")}
-                  <small> {t("_inputField.optional")}</small>
-                </label>
-                <div className="input-group">
-                  <span className="input-group-text">
-                    <span className="fa-solid fa-users fa-fw" aria-hidden="true"></span>
-                  </span>
-                  {/* show empty input instead of 0 */}
-                  <input
-                    type="number"
-                    className="form-control"
-                    min={0}
-                    step={1}
-                    value={changes.maxParticipants || ""}
-                    onChange={(ev) => {
-                      const newValue = ev.currentTarget.valueAsNumber || 0; // give back 0 in case of NaN
-                      if (Number.isNaN(newValue)) {
-                        return;
-                      }
-                      setChanges({
-                        ...changes,
-                        maxParticipants: Math.round(newValue),
-                      });
-                    }}
-                  />
-                </div>
+                <FormControl
+                  id="event-edit-max-participants"
+                  type="integer"
+                  label={t("course.event.edit.maxParticipants", "maximal number of participants")}
+                  optional
+                  prepend="fa-solid fa-users fa-fw"
+                  min={0}
+                  step={1}
+                  value={changes.maxParticipants || 0}
+                  onChange={(value) => {
+                    setChanges({ ...changes, maxParticipants: value });
+                  }}
+                />
               </>
             )}
           </div>
 
           <div className="mb-3">
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="eventEditInternalCheck"
-                checked={changes.internal}
-                onChange={(ev) => {
-                  setChanges({ ...changes, internal: ev.currentTarget.checked });
-                }}
-              />
-              <label className="form-check-label" htmlFor="eventEditInternalCheck">
-                {t("event.edit.internal", "Hide on front page")}
-                <span className="form-text d-block">
-                  {t("event.edit.internal.description", "Show it only on group and venue pages")}
-                </span>
-              </label>
-            </div>
+            <CheckControl
+              id="event-edit-internal"
+              type="box"
+              label={t("event.edit.internal", "Hide on front page")}
+              hint={t("event.edit.internal.description", "Show it only on group and venue pages")}
+              checked={changes.internal}
+              onChange={(checked) => {
+                setChanges({ ...changes, internal: checked });
+              }}
+            />
+
             {!isNew && (
               <UpdateAffectedReplica
                 values={updateReplicas}
@@ -740,26 +697,18 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               }}
             />
             {!noRsvpChecked && PublicSettings.feature.sendReminderIsEditable && (
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="eventEditSendReminderCheck"
-                  checked={changes.sendReminder}
-                  onChange={(ev) => {
-                    setChanges({
-                      ...changes,
-                      sendReminder: ev.currentTarget.checked,
-                    });
-                  }}
-                />
-                <label className="form-check-label" htmlFor="eventEditSendReminderCheck">
-                  {t(
-                    "event.edit.sendReminder",
-                    "Send a reminder e-mail to all participants 24 hours before the event starts.",
-                  )}
-                </label>
-              </div>
+              <CheckControl
+                id="event-edit-send-reminder"
+                type="box"
+                label={t(
+                  "event.edit.sendReminder",
+                  "Send a reminder e-mail to all participants 24 hours before the event starts.",
+                )}
+                checked={changes.sendReminder}
+                onChange={(checked) => {
+                  setChanges({ ...changes, sendReminder: checked });
+                }}
+              />
             )}
           </div>
 

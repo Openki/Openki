@@ -816,7 +816,7 @@ export function Edit(data: Data) {
                       id="courses-edit-region-selection"
                       type="select"
                       label={t("course.edit.region", "Region")}
-                      addon="fa-solid fa-location-dot"
+                      prepend="fa-solid fa-location-dot"
                       placeholder={t("_selection.pleaseSelect")}
                       options={Object.fromEntries(
                         allRegions.map((region) => [region._id, region.name]),

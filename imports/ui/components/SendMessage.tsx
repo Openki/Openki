@@ -8,8 +8,6 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { PleaseLogin } from "/imports/ui/components/please-login";
 import { VerifyEmail } from "/imports/ui/components/profiles/VerifyEmail";
 
-import "./styles.scss";
-
 export interface Data {
   placeholder: string;
   onSend: (
