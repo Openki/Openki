@@ -84,7 +84,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   const [noRsvpChecked, setNoRsvpChecked] = useState(!!event.noRsvp);
   const [isBusy, setIsBusy] = useState(false);
 
-  const [isCourseLoading, course] = useCourseDetails(event.courseId || "");
+  const [isCourseLoading, course] = useCourseDetails(event.courseId || "-1");
 
   function getRegion() {
     let result: string;
@@ -324,13 +324,8 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       errors,
     };
   }
-  const customFields = (type?: "singleLine" | "multiLine") => {
-    return (
-      groups
-        .flatMap((g) => g.customCourseFields || [])
-        // when type is undefined all will get back
-        .filter((g) => !type || (g.type || "singleLine") === type)
-    );
+  const customFields = () => {
+    return groups.flatMap((g) => g.customCourseFields || []);
   };
 
   async function handleSubmit() {
@@ -393,10 +388,18 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     }
 
     const newCustomFields = customFields().map((i) => {
+      if (i.type !== "boolean")
+        return {
+          name: i.name,
+          displayText: i.displayText,
+          value: $(`.js-custom-field-${i.name}`).val() as string,
+          visibleFor: i.visibleFor,
+        };
+
       return {
         name: i.name,
         displayText: i.displayText,
-        value: $(`.js-custom-field-${i.name}`).val() as string,
+        value: $(`.js-custom-field-${i.name}`).prop("checked") as boolean,
         visibleFor: i.visibleFor,
       };
     });
