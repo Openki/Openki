@@ -540,7 +540,6 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               error={errors.title}
             />
           </div>
-          {/* Disabled for past */}
           <EditStartEnd
             {...changes}
             onChange={(newValue) => {
@@ -553,6 +552,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                 ),
               );
             }}
+            /* Disabled for past */
             disabled={!!event.start && event.start < new Date()}
             errors={errors}
           />
