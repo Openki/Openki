@@ -640,7 +640,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             />
 
             {!noRsvpChecked && (
-              <>
+              <div className="ms-4">
                 <FormControl
                   id="event-edit-max-participants"
                   type="integer"
@@ -652,7 +652,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                   value={changes.maxParticipants || 0}
                   onChange={(value) => setChanges({ ...changes, maxParticipants: value })}
                 />
-              </>
+              </div>
             )}
           </div>
 
@@ -665,8 +665,10 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               checked={changes.internal}
               onChange={(checked) => setChanges({ ...changes, internal: checked })}
             />
+          </div>
 
-            {!isNew && (
+          {!isNew && (
+            <div className="mb-3">
               <UpdateAffectedReplica
                 values={updateReplicas}
                 event={event}
@@ -674,17 +676,24 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                 timeChanged={timeChanged}
                 onChange={(newValues) => setUpdateReplicas(newValues)}
               />
-            )}
+            </div>
+          )}
 
-            <Notify
-              event={event}
-              isNew={isNew}
-              checked={notifyChecked}
-              message={addNotificationMessage}
-              onToggle={(v) => setNotifyChecked(v)}
-              onMessageChange={(v) => setAddNotificationMessage(v)}
-            />
-            {!noRsvpChecked && PublicSettings.feature.sendReminderIsEditable && (
+          {!!event.courseId && (
+            <div className="mb-3">
+              <Notify
+                event={event}
+                isNew={isNew}
+                checked={notifyChecked}
+                message={addNotificationMessage}
+                onToggle={(v) => setNotifyChecked(v)}
+                onMessageChange={(v) => setAddNotificationMessage(v)}
+              />
+            </div>
+          )}
+
+          {!noRsvpChecked && PublicSettings.feature.sendReminderIsEditable && (
+            <div className="mb-3">
               <CheckControl
                 id="event-edit-send-reminder"
                 type="box"
@@ -695,8 +704,8 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                 checked={changes.sendReminder}
                 onChange={(checked) => setChanges({ ...changes, sendReminder: checked })}
               />
-            )}
-          </div>
+            </div>
+          )}
 
           <div className="form-actions">
             <ButtonSave onClick={handleSubmit} disabled={isBusy} />

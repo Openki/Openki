@@ -101,35 +101,38 @@ export function Notify({
           onChange={onToggle}
         />
       )}
-      {checked &&
-        (!onlyYouReceive() ? (
-          <FormControl
-            id="event-edit-notify-message"
-            type="textarea"
-            rows={3}
-            label={t("course.event.edit.AddMessage", "Add message")}
-            optional
-            prepend="fa-solid fa-pencil fa-fw"
-            placeholder={
-              isNew
-                ? t(
-                    "event.create.additionalMessage",
-                    "e.g. doodle result is Thursday next week. Looking forward to see you all there. Don't forget to register if you join. (This message is only sent to the involved users and will not be visible in the event description afterwards.)",
-                  )
-                : t(
-                    "event.edit.additionalMessage",
-                    "e.g. I had to change the time to 5pm because of room availabilities. I added bringing your own laptop is mandatory in the description. Lookin forward to see you all there. (This message is only sent to the involved users and will not be visible in the event description afterwards.)",
-                  )
-            }
-            value={message}
-            maxLength={2000}
-            onChange={onMessageChange}
-          />
-        ) : (
-          <div className="form-text ms-4">
-            {t("course.event.edit.onlyYouReceive", "Only you will receive this notification.")}
-          </div>
-        ))}
+      {checked && (
+        <div className="ms-4">
+          {!onlyYouReceive() ? (
+            <FormControl
+              id="event-edit-notify-message"
+              type="textarea"
+              rows={3}
+              label={t("course.event.edit.AddMessage", "Add message")}
+              optional
+              prepend="fa-solid fa-pencil fa-fw"
+              placeholder={
+                isNew
+                  ? t(
+                      "event.create.additionalMessage",
+                      "e.g. doodle result is Thursday next week. Looking forward to see you all there. Don't forget to register if you join. (This message is only sent to the involved users and will not be visible in the event description afterwards.)",
+                    )
+                  : t(
+                      "event.edit.additionalMessage",
+                      "e.g. I had to change the time to 5pm because of room availabilities. I added bringing your own laptop is mandatory in the description. Lookin forward to see you all there. (This message is only sent to the involved users and will not be visible in the event description afterwards.)",
+                    )
+              }
+              value={message}
+              maxLength={2000}
+              onChange={onMessageChange}
+            />
+          ) : (
+            <div className="form-text">
+              {t("course.event.edit.onlyYouReceive", "Only you will receive this notification.")}
+            </div>
+          )}
+        </div>
+      )}
     </>
   );
 }
