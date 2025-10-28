@@ -5,9 +5,9 @@ import { useUser } from "/imports/utils/react-meteor-data";
 
 import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
 
+import { FormControl } from "../form-control";
 import { EventEditData } from "./edit";
 import { CheckControl } from "/imports/ui/components/CheckControl";
-import { FormControl } from "/imports/ui/components/FormControl";
 
 function CourseMembers({
   courseId,

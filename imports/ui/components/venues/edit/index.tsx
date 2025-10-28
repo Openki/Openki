@@ -12,7 +12,7 @@ import { FacilityOption, VenueModel } from "/imports/api/venues/venues";
 import * as Analytics from "/imports/ui/lib/analytics";
 
 import { ButtonCancel, ButtonSave } from "../../Buttons";
-import { FormControl } from "../../FormControl";
+import { FormControl } from "../../form-control";
 import { Edit as LocationEdit } from "../../location/edit";
 import { AdditionalInfo, type Data as AdditionalInfoData } from "./additional-info";
 import { Richtext } from "/imports/ui/components/richtext";

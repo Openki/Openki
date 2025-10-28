@@ -28,6 +28,7 @@ import { useDetails as useVenueDetails } from "/imports/api/venues/publications"
 
 import { ButtonCancel, ButtonSave } from "../../Buttons";
 import { EditCustomFields } from "../../EditCustomFields";
+import { FormControl } from "../../form-control";
 import { PricePolicy } from "../../price-policy";
 import { Tag } from "../../regions/tag";
 import { Richtext } from "../../richtext";
@@ -38,7 +39,6 @@ import { OtherEventsMessage } from "./OtherEventsMessage";
 import { UpdateAffectedReplica } from "./UpdateAffectedReplica";
 import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
 import { CheckControl } from "/imports/ui/components/CheckControl";
-import { FormControl } from "/imports/ui/components/FormControl";
 
 import { useFindParallelEvents } from "./useFindParallelEvents";
 
