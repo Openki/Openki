@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
 import { AutoGrowTextArea } from "./AutoGrowTextArea";
+import { Richtext } from "./Richtext";
 
 type Size = "large" | "medium" | "small";
 
@@ -38,6 +39,18 @@ interface TextareaProps {
   onChange?: ((value: string) => void) | undefined;
 }
 
+interface RichtextProps {
+  type: "richtext";
+  placeholder?: string | undefined;
+  value: string;
+  onChange?:
+    | ((
+        /** string with html content */ value: string,
+        /** number of visible characters */ numberOfCharacters: number,
+      ) => void)
+    | undefined;
+}
+
 interface NumberInputProps {
   type: "number" | "integer";
   placeholder?: string | undefined;
@@ -65,7 +78,14 @@ interface TimeInputProps {
 }
 
 export type Props<K extends string> = CommonProps &
-  (TextInputProps | TextareaProps | NumberInputProps | SelectProps<K> | TimeInputProps);
+  (
+    | TextInputProps
+    | TextareaProps
+    | RichtextProps
+    | NumberInputProps
+    | SelectProps<K>
+    | TimeInputProps
+  );
 
 function buildSizeClass(baseClass: string, size: Size = "medium") {
   switch (size) {
@@ -162,6 +182,16 @@ function createInputElement<K extends string>(props: Props<K>) {
           value={props.value}
           maxLength={props.maxLength}
           onChange={(ev) => props.onChange?.(ev.target.value)}
+        />
+      );
+
+    case "richtext":
+      return (
+        <Richtext
+          {...commonProps}
+          placeholder={props.placeholder}
+          value={props.value}
+          onChange={(value, numberOfCharacters) => props.onChange?.(value, numberOfCharacters)}
         />
       );
 

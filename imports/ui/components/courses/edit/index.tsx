@@ -33,7 +33,7 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
 import { EditCustomFields } from "../../EditCustomFields";
-import { FormControl } from "../../FormControl";
+import { FormControl } from "../../form-control";
 import { PleaseLogin } from "../../please-login";
 import { SelectCategories } from "../SelectCategories";
 import { CourseCategories } from "../categories";

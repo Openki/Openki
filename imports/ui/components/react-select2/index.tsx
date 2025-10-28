@@ -1,5 +1,5 @@
-import React, { ReactNode, useEffect, useRef } from "react";
 import $ from "jquery";
+import React, { ReactNode, useEffect, useRef } from "react";
 
 import { useWindowSize } from "/imports/ui/lib/useWindowSize";
 

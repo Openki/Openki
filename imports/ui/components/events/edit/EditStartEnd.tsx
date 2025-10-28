@@ -1,7 +1,7 @@
 import moment from "moment";
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FormControl } from "/imports/ui/components/FormControl";
+import { FormControl } from "../../form-control";
 import { LocalTime } from "/imports/utils/local-time";
 
 export function EditStartEnd({
