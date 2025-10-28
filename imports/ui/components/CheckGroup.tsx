@@ -83,7 +83,7 @@ export function CheckGroup<K extends string>(props: Props<K>) {
 
   return (
     <>
-      <label className="form-label">{label}</label>
+      <div className="form-label">{label}</div>
       {createCheckGroupElements(props)}
     </>
   );

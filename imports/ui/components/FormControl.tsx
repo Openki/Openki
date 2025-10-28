@@ -1,6 +1,5 @@
 import React, { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
-import { useSessionEquals } from "/imports/utils/react-meteor-data";
 
 import { AutoGrowTextArea } from "./AutoGrowTextArea";
 
@@ -11,9 +10,14 @@ interface CommonProps {
   label: ReactNode;
   size?: Size;
   prepend?: string | undefined;
+  /** shows "(optional)" in the label and allow return values to be empty */
   optional?: boolean | undefined;
   disabled?: boolean | undefined;
   onBlur?: (() => void) | undefined;
+  /**
+   * shows a error message or
+   * when only a boolean is given; by true: displays the control as invalid
+   */
   error?: ReactNode;
 }
 
@@ -80,7 +84,7 @@ function getControlClassNames(
   type: string,
   size: Size | undefined,
   prepend: string | undefined,
-  error: ReactNode,
+  isInvalid: boolean,
 ) {
   let baseClass;
   switch (type) {
@@ -99,18 +103,18 @@ function getControlClassNames(
     className.push(buildSizeClass(baseClass, size));
   }
 
-  if (error) {
+  if (isInvalid) {
     className.push("is-invalid");
   }
   return className;
 }
 
-function getDescribedby(id: string, prepend: string | undefined, error: ReactNode) {
+function getDescribedby(id: string, prepend: string | undefined, hasErrorMessage: boolean) {
   const describedby = [];
   if (prepend && !prepend.startsWith("fa-")) {
     describedby.push(id + "-prepend");
   }
-  if (error) {
+  if (hasErrorMessage) {
     describedby.push(id + "-error");
   }
   return describedby;
@@ -122,13 +126,15 @@ function getDescribedby(id: string, prepend: string | undefined, error: ReactNod
 function createInputElement<K extends string>(props: Props<K>) {
   const { id, type, size, prepend, optional, disabled, onBlur, error } = props;
 
+  const isInvalid = !!error;
   const commonProps = {
     id,
-    className: getControlClassNames(type, size, prepend, error).join(" "),
+    className: getControlClassNames(type, size, prepend, isInvalid).join(" "),
     disabled,
     onBlur: () => onBlur?.(),
-    "aria-describedby": getDescribedby(id, prepend, error).join(" ") || undefined,
-    "aria-invalid": !!error,
+    "aria-describedby":
+      getDescribedby(id, prepend, typeof error !== "boolean" && !!error).join(" ") || undefined,
+    "aria-invalid": isInvalid,
   };
 
   switch (type) {
@@ -204,7 +210,8 @@ function createInputElement<K extends string>(props: Props<K>) {
           onChange={(ev) => props.onChange?.(ev.target.value as K)}
         >
           {!!props.placeholder && (
-            <option disabled value="">
+            // when optional is set then it is allow to choose empty value
+            <option disabled={!props.optional} value="">
               {props.placeholder}
             </option>
           )}
@@ -232,12 +239,12 @@ function createInputElement<K extends string>(props: Props<K>) {
   }
 }
 
-function getGroupClassNames(size: Size | undefined, error: ReactNode) {
+function getGroupClassNames(size: Size | undefined, hasErrorMessage: boolean) {
   const className = ["input-group", buildSizeClass("input-group", size)];
 
   className.push(buildSizeClass("input-group", size));
 
-  if (error) {
+  if (hasErrorMessage) {
     className.push("has-validation");
   }
   return className;
@@ -245,15 +252,16 @@ function getGroupClassNames(size: Size | undefined, error: ReactNode) {
 
 export function FormControl<K extends string>(props: Props<K>) {
   const { t } = useTranslation();
-  const isRTL = useSessionEquals("textDirectionality", "rtl");
 
   const { id, size, label, prepend, optional, error } = props;
+
+  const hasErrorMessage = typeof error !== "boolean" && !!error;
 
   // Create input using a factory
   let inputElement = (
     <>
       {createInputElement(props)}
-      {!!error && (
+      {hasErrorMessage && (
         <div id={`${id}-error`} className="invalid-feedback" role="alert">
           {error}
         </div>
@@ -262,16 +270,16 @@ export function FormControl<K extends string>(props: Props<K>) {
   );
 
   if (prepend) {
-    const prependElement = (
-      <span className="input-group-text" id={`${id}-prepend`}>
-        {prepend.startsWith("fa-") ? <i className={prepend} /> : prepend}
-      </span>
-    );
     inputElement = (
-      <div className={getGroupClassNames(size, error).join(" ")}>
-        {!isRTL && prependElement}
+      <div className={getGroupClassNames(size, hasErrorMessage).join(" ")}>
+        <span
+          className="input-group-text"
+          id={`${id}-prepend`}
+          onClick={() => document.getElementById(id)?.focus()}
+        >
+          {prepend.startsWith("fa-") ? <i className={prepend} /> : prepend}
+        </span>
         {inputElement}
-        {isRTL && prependElement}
       </div>
     );
   }
