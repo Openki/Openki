@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
 import { AutoGrowTextArea } from "./AutoGrowTextArea";
+import { DateInput } from "./DateInput";
 import { Richtext } from "./Richtext";
 
 type Size = "large" | "medium" | "small";
@@ -77,6 +78,22 @@ interface TimeInputProps {
   onChange?: ((value: string) => void) | undefined;
 }
 
+interface DateInputProps {
+  type: "date";
+  /** expected format is "YYYY-MM-DD" */
+  value: string;
+  /** min/start date, the expected format is "YYYY-MM-DD" */
+  min?: string | undefined;
+  /** max/end date, the expected format is "YYYY-MM-DD" */
+  max?: string | undefined;
+  onChange?:
+    | ((
+        /** in format "YYYY-MM-DD" */
+        value: string,
+      ) => void)
+    | undefined;
+}
+
 export type Props<K extends string> = CommonProps &
   (
     | TextInputProps
@@ -85,6 +102,7 @@ export type Props<K extends string> = CommonProps &
     | NumberInputProps
     | SelectProps<K>
     | TimeInputProps
+    | DateInputProps
   );
 
 function buildSizeClass(baseClass: string, size: Size = "medium") {
@@ -261,6 +279,17 @@ function createInputElement<K extends string>(props: Props<K>) {
           step={props.step}
           value={props.value}
           onChange={(ev) => props.onChange?.(ev.target.value)}
+        />
+      );
+
+    case "date":
+      return (
+        <DateInput
+          {...commonProps}
+          min={props.min}
+          max={props.max}
+          value={props.value}
+          onChange={props.onChange}
         />
       );
 

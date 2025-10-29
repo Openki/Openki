@@ -1,6 +1,6 @@
 import { useTracker } from "meteor/react-meteor-data";
-import { Regions } from "/imports/api/regions/regions";
 import moment from "moment-timezone";
+import { Regions } from "/imports/api/regions/regions";
 
 /**
  * Serialize local time for mongo
@@ -40,7 +40,7 @@ export class Zone {
   }
 
   toString(date: Date | moment.Moment) {
-    return moment.tz(date, this.tz).format("YYYY-MM-DD[T]HH:mm");
+    return moment.tz(date, this.tz).format(LocalTime.DateTimeFormat);
   }
 
   at(date: Date) {
@@ -48,8 +48,35 @@ export class Zone {
   }
 }
 
-export const LocalTime = {
-  zone(regionId: string) {
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace LocalTime {
+  export const DateFormat = "YYYY-MM-DD";
+  export const TimeFormat = "HH:mm";
+  export const DateTimeFormat = DateFormat + "[T]" + TimeFormat;
+
+  /**
+   * Turn a moment object into a local date string without time offset in the format "YYYY-MM-DDTHH:mm"
+   */
+  export function toString(date: Date | moment.Moment) {
+    return moment(date).format(DateTimeFormat);
+  }
+
+  /**
+   * Read local date from string
+   *
+   * Note that the returned date will be faux UTC.
+   *
+   * @param dateStr the expected format is "YYYY-MM-DDTHH:mm"
+   */
+  export function fromString(dateStr: string) {
+    return moment.utc(dateStr);
+  }
+
+  export function now() {
+    return moment.utc().add(moment().utcOffset(), "minutes");
+  }
+
+  export function zone(regionId: string) {
     const region = Regions.findOne(regionId);
     if (!region) {
       throw new Error(`Unable to load region ${regionId}`);
@@ -58,9 +85,9 @@ export const LocalTime = {
     const { tz } = region;
 
     return new Zone(tz);
-  },
+  }
 
-  async zoneAsync(regionId: string) {
+  export async function zoneAsync(regionId: string) {
     const region = await Regions.findOneAsync(regionId);
     if (!region) {
       throw new Error(`Unable to load region ${regionId}`);
@@ -69,29 +96,5 @@ export const LocalTime = {
     const { tz } = region;
 
     return new Zone(tz);
-  },
-
-  /**
-   * Turn a moment object into a local date string without time offset
-   */
-  toString(date: Date | moment.Moment) {
-    return moment(date).format("YYYY-MM-DD[T]HH:mm");
-  },
-
-  /**
-   * Read local date from string
-   *
-   * Note that the returned date will be faux UTC.
-   */
-  fromString(dateStr: string, timeStr?: string) {
-    if (timeStr) {
-      return moment.utc(`${dateStr} ${timeStr}`, "L LT");
-    }
-
-    return moment.utc(dateStr);
-  },
-
-  now() {
-    return moment.utc().add(moment().utcOffset(), "minutes");
-  },
-};
+  }
+}
