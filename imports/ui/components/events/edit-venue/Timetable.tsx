@@ -47,6 +47,7 @@ export function useFindNearEvents(
   const [isLoading, events] = Events.useFindFilter({
     venue: venueId || "-1",
     period: [start.subtract(18, "hours").toDate(), end.add(18, "hours").toDate()],
+    canceled: false,
   });
 
   // cache to prevent endless recalls
@@ -121,8 +122,14 @@ export function Timetable({
     .max()
     .value();
 
-  const start = regionZone.fromString(startLocal);
-  const end = regionZone.fromString(endLocal);
+  let start = regionZone.fromString(startLocal);
+  // show in min +/- 5 hours free time space before and after event
+  const maxStart = regionZone.fromString(currentEvent.startLocal).subtract(5, "hour");
+  start = min(start, maxStart);
+
+  let end = regionZone.fromString(endLocal);
+  const minEnd = regionZone.fromString(currentEvent.endLocal).add(5, "hour");
+  end = max(minEnd, end);
 
   let pos = 2;
   const viewModel = getDaysBetween(start, end).map((day) => {

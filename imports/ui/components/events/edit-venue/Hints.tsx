@@ -10,7 +10,6 @@ export function Hints({
   venueId,
   regionId,
   event,
-  errors,
 }: {
   venueId: string | undefined;
   regionId: string;
@@ -20,7 +19,6 @@ export function Hints({
     startLocal: string;
     endLocal: string;
   };
-  errors: Partial<Record<"venue" | "startEndVenue", ReactNode>>;
 }) {
   const { t } = useTranslation();
   const user = useUser();
@@ -33,10 +31,7 @@ export function Hints({
   );
   return (
     <>
-      {!!errors.venue && <div className="text-danger mb-3">{errors.venue}</div>}
-      {!!errors.startEndVenue && <div className="text-danger mb-3">{errors.startEndVenue}</div>}
-
-      {!errors.venue && !errors.startEndVenue && !venueIsLoading() && !!venue && (
+      {!venueIsLoading() && !!venue && (
         <>
           {venue.allowParallelEvents && parallelEvents.length > 0 && (
             <div
