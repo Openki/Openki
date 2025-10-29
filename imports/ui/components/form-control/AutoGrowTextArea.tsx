@@ -10,20 +10,13 @@ export function AutoGrowTextArea(
   const elementRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    if (elementRef.current) {
-      elementRef.current.style.height = elementRef.current.scrollHeight + "px";
+    if (!elementRef.current) {
+      return;
     }
+
+    elementRef.current.style.height = "auto";
+    elementRef.current.style.height = elementRef.current.scrollHeight + "px";
   });
 
-  return (
-    <textarea
-      ref={elementRef}
-      {...props}
-      style={{ overflowY: "hidden", resize: "none" }}
-      onInput={(ev) => {
-        ev.currentTarget.style.height = "auto";
-        ev.currentTarget.style.height = ev.currentTarget.scrollHeight + "px";
-      }}
-    />
-  );
+  return <textarea ref={elementRef} {...props} style={{ overflowY: "hidden", resize: "none" }} />;
 }

@@ -12,7 +12,10 @@ interface CommonProps {
   label: ReactNode;
   size?: Size;
   prepend?: string | undefined;
-  /** shows "(optional)" in the label and allow return values to be empty */
+  /** 
+   * shows "(optional)" in the label and 
+   * allow return values for number and integer to be empty
+   */
   optional?: boolean | undefined;
   disabled?: boolean | undefined;
   onBlur?: (() => void) | undefined;
@@ -207,6 +210,7 @@ function createInputElement<K extends string>(props: Props<K>) {
       return (
         <Richtext
           {...commonProps}
+          aria-labelledby={`${id}-label`}
           placeholder={props.placeholder}
           value={props.value}
           onChange={(value, numberOfCharacters) => props.onChange?.(value, numberOfCharacters)}
@@ -343,11 +347,28 @@ export function FormControl<K extends string>(props: Props<K>) {
     );
   }
 
+  const labelChild = (
+    <>
+      {label} {!!optional && <small> {t("_inputField.optional")}</small>}
+    </>
+  );
   return (
     <>
-      <label className="form-label" htmlFor={id}>
-        {label} {!!optional && <small> {t("_inputField.optional")}</small>}
-      </label>
+      {props.type === "richtext" ? (
+        /* special case for richtext, we have to simulate label & textarea element */
+        <div
+          id={`${id}-label`}
+          className="form-label"
+          style={{ cursor: "default" }}
+          onClick={() => document.getElementById(id)?.focus()}
+        >
+          {labelChild}
+        </div>
+      ) : (
+        <label className="form-label" htmlFor={id}>
+          {labelChild}
+        </label>
+      )}
       {inputElement}
     </>
   );

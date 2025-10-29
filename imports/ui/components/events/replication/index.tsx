@@ -10,7 +10,7 @@ import { LocalTime } from "/imports/utils/local-time";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
 import { ButtonCancel, ButtonSave } from "../../Buttons";
-import { CheckGroup } from "../../CheckGroup";
+import { FormCheckGroup } from "../../FormCheckGroup";
 import { DateSelect } from "../../date-select";
 import { Notify } from "../Notify";
 
@@ -230,7 +230,7 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
                   setReplicateEndDate(endDate);
                 }}
               />
-              <CheckGroup
+              <FormCheckGroup
                 id="replicateFrequency"
                 type="radio"
                 label={t("event.replication.repeat", "Repeat")}

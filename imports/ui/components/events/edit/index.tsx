@@ -19,7 +19,7 @@ import { useSearchParams } from "/imports/utils/react-meteor-router";
 
 import * as Alert from "/imports/api/alerts/alert";
 import * as CoursesMethods from "/imports/api/courses/methods";
-import { EventModel, EventVenueEntity, OEvent } from "/imports/api/events/events";
+import { EventModel, OEvent } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { SaveFields } from "/imports/api/events/methods";
 import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
@@ -28,16 +28,17 @@ import { useDetails as useVenueDetails } from "/imports/api/venues/publications"
 
 import { ButtonCancel, ButtonSave } from "../../Buttons";
 import { EditCustomFields } from "../../EditCustomFields";
+import { FormCheck } from "../../FormCheck";
+import { RegionSelect } from "../../RegionSelect";
 import { FormControl } from "../../form-control";
 import { PricePolicy } from "../../price-policy";
 import { Tag } from "../../regions/tag";
 import { Notify } from "../Notify";
-import { EditVenue } from "../edit-venue";
+import { EditVenue, Props as EditVenueProps } from "../edit-venue";
 import { EditStartEnd } from "./EditStartEnd";
 import { OtherEventsMessage } from "./OtherEventsMessage";
 import { UpdateAffectedReplica } from "./UpdateAffectedReplica";
 import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
-import { CheckControl } from "/imports/ui/components/CheckControl";
 
 import { useFindParallelEvents } from "./useFindParallelEvents";
 
@@ -307,7 +308,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     return !!selectedRegion && selectedRegion !== "all";
   }
 
-  function venueEditAttr() {
+  function venueEditAttr(): EditVenueProps {
     return {
       region: selectedRegion,
       event: {
@@ -317,9 +318,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
         endLocal: changes.endLocal,
       },
       value: selectedVenue,
-      onChange: (newValue: EventVenueEntity | undefined) => {
-        setSelectedVenue(newValue);
-      },
+      onChange: (newValue) => setSelectedVenue(newValue),
       errors,
     };
   }
@@ -587,14 +586,9 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
           {showRegionSelection() && (
             <div className="mb-3">
-              <FormControl
+              <RegionSelect
                 id="event-edit-region"
-                type="select"
-                label={t("course.edit.region", "Region")}
-                prepend="fa-solid fa-location-dot"
-                placeholder={t("_selection.pleaseSelect")}
-                options={Object.fromEntries(regions.map((region) => [region._id, region.name]))}
-                value={selectedRegion === "all" ? "" : selectedRegion}
+                value={selectedRegion}
                 onChange={(value) => setSelectedRegion(value)}
               />
             </div>
@@ -628,7 +622,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             </div>
           )}
           <div className="mb-3">
-            <CheckControl
+            <FormCheck
               id="event-edit-no-rsvp"
               type="box"
               label={t("event.edit.noRsvp", "No reservation required")}
@@ -662,7 +656,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           </div>
 
           <div className="mb-3">
-            <CheckControl
+            <FormCheck
               id="event-edit-internal"
               type="box"
               label={t("event.edit.internal", "Hide on front page")}
@@ -699,7 +693,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
           {!noRsvpChecked && PublicSettings.feature.sendReminderIsEditable && (
             <div className="mb-3">
-              <CheckControl
+              <FormCheck
                 id="event-edit-send-reminder"
                 type="box"
                 label={t(

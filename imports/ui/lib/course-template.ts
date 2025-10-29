@@ -1,8 +1,8 @@
 import { Session } from "meteor/session";
 
-import type { Data as CourseEditData } from "/imports/ui/components/courses/edit";
+import type { Props as CourseEditProps } from "/imports/ui/components/courses/edit";
 
-export function CourseTemplate(): Partial<CourseEditData> {
+export function CourseTemplate(): Partial<CourseEditProps> {
   return {
     roles: ["host", "mentor"],
     region: Session.get("region"),
