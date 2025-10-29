@@ -20,7 +20,7 @@ interface RadioProps {
 
 export type Props = CommonProps & (CheckBoxProps | RadioProps);
 
-export function CheckControl(props: Props) {
+export function FormCheck(props: Props) {
   const { id, type, label, hint, disabled, checked, onChange } = props;
   return (
     <div className={`form-check${type === "switch" ? " form-switch" : ""}`}>

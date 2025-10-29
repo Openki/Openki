@@ -1,11 +1,14 @@
 import React, { ReactNode } from "react";
 
-import { CheckControl } from "./CheckControl";
+import { useTranslation } from "react-i18next";
+import { FormCheck } from "./FormCheck";
 
 // Generic over the keys of options
 interface CommonProps<K extends string> {
   id: string;
   label: ReactNode;
+  /** shows "(optional)" in the label */
+  optional?: boolean | undefined;
   options: Record<K, ReactNode>;
   disabled?: boolean | undefined;
 }
@@ -27,7 +30,7 @@ export type Props<K extends string> = CommonProps<K> & (CheckBoxProps<K> | Radio
 /**
  * Factory to create input elements based on `type`
  */
-function createCheckGroupElements<K extends string>(props: Props<K>) {
+function createElements<K extends string>(props: Props<K>) {
   const { id, type, options, value, disabled, onChange } = props;
 
   return Object.entries(options).map((e) => {
@@ -43,7 +46,7 @@ function createCheckGroupElements<K extends string>(props: Props<K>) {
       case "box":
       case "switch":
         return (
-          <CheckControl
+          <FormCheck
             type={type}
             {...commonProps}
             checked={value.includes(optionValue)}
@@ -59,7 +62,7 @@ function createCheckGroupElements<K extends string>(props: Props<K>) {
 
       case "radio":
         return (
-          <CheckControl
+          <FormCheck
             type="radio"
             {...commonProps}
             name={id}
@@ -78,13 +81,16 @@ function createCheckGroupElements<K extends string>(props: Props<K>) {
   });
 }
 
-export function CheckGroup<K extends string>(props: Props<K>) {
-  const { label } = props;
+export function FormCheckGroup<K extends string>(props: Props<K>) {
+  const { label, optional } = props;
+  const { t } = useTranslation();
 
   return (
     <>
-      <div className="form-label">{label}</div>
-      {createCheckGroupElements(props)}
+      <div className="form-label">
+        {label} {!!optional && <small> {t("_inputField.optional")}</small>}
+      </div>
+      {createElements(props)}
     </>
   );
 }

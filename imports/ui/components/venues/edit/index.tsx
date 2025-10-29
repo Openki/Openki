@@ -13,9 +13,10 @@ import * as Analytics from "/imports/ui/lib/analytics";
 
 import { ButtonCancel, ButtonSave } from "../../Buttons";
 import { FormControl } from "../../form-control";
+import { FormCheck } from "../../FormCheck";
 import { Edit as LocationEdit } from "../../location/edit";
-import { AdditionalInfo, type Data as AdditionalInfoData } from "./additional-info";
-import { Richtext } from "/imports/ui/components/richtext";
+import { AdditionalInfo, type Props as AdditionalInfoData } from "./additional-info";
+import { RegionSelect } from "/imports/ui/components/RegionSelect";
 
 import "./styles.scss";
 
@@ -97,6 +98,7 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
   const handleSave = async () => {
     const changes1: VenuesMethods.SaveFields = {
       name: changes.name,
+      description: changes.description,
       address: changes.address,
       route: changes.route,
       short: changes.short,
@@ -122,15 +124,12 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
       return;
     }
 
-    const $description = $(".js-description");
-    if (!$description.text()) {
+    if (!changes1.description) {
       Alert.error(
         t("venue.create.plsProvideDescription", "Please provide a description for your venue"),
       );
       return;
     }
-
-    changes1.description = $description.html();
 
     if (isNew) {
       const region = changes.selectedRegion;
@@ -186,6 +185,10 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
   const selectedRegion = regions.find((r) => r._id === changes.selectedRegion);
   const mapCenter = selectedRegion?.map?.center.coordinates || selectedRegion?.loc?.coordinates;
 
+  if (isLoading()) {
+    return null;
+  }
+
   return (
     <div className="edit-page venue-edit">
       {venue._id ? (
@@ -195,59 +198,36 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
       )}
       <form>
         <div className="mb-3">
-          <label className="form-label">{t("venue.edit.name", "Name")}</label>
-          <input
+          <FormControl
+            id="venue-edit-name"
             type="text"
-            className="form-control form-control-lg"
+            label={t("venue.edit.name", "Name")}
             placeholder={t("venue.edit.namePlaceholder", "Full name of venue")}
-            size={60}
             value={changes.name}
-            onChange={(event) => {
-              const value = event.currentTarget.value;
-              setChanges((prevState) => ({ ...prevState, name: value }));
-            }}
+            onChange={(value) => setChanges((prevState) => ({ ...prevState, name: value }))}
           />
         </div>
         <div className="mb-3">
-          <label className="form-label">{t("venue.edit.description", "Description")}</label>
-          <Richtext
-            className="js-description"
-            text={changes.description}
+          <FormControl
+            id="venue-edit-description"
+            type="richtext"
+            label={t("venue.edit.description", "Description")}
+            value={changes.description}
             placeholder={t("venue.edit.description.placeholder", "Some words about this venue")}
-            onChange={(value) => {
-              setChanges((prevState) => ({ ...prevState, description: value }));
-            }}
+            onChange={(value) => setChanges((prevState) => ({ ...prevState, description: value }))}
           />
         </div>
         {showMapSelection() && (
           <div className="row gap-3 mb-3">
             {regionSelectable() && (
               <div className="col-md">
-                <label className="form-label">{t("venue.edit.region", "Region")}</label>
-                <div className="input-group">
-                  <span className="input-group-text">
-                    <span className="fa-solid fa-location-dot" aria-hidden="true"></span>
-                  </span>
-                  {!isLoading() ? (
-                    <select
-                      name="region"
-                      className="form-select"
-                      onChange={(event) => {
-                        const value = event.currentTarget.value;
-                        setChanges((prevState) => ({ ...prevState, selectedRegion: value }));
-                      }}
-                    >
-                      <option value="">{t("venue.edit.pls_select", "Please select")}</option>
-                      {regions.map((region) => (
-                        <option key={region._id} value={region._id}>
-                          {region.name}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    <select className="form-select placeholder-glow" />
-                  )}
-                </div>
+                <RegionSelect
+                  id="venue-edit-region"
+                  value={changes.selectedRegion || ""}
+                  onChange={(value) =>
+                    setChanges((prevState) => ({ ...prevState, selectedRegion: value }))
+                  }
+                />
               </div>
             )}
             {!!(changes.selectedRegion && mapCenter) && (
@@ -282,21 +262,16 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
         )}
 
         <div className="mb-3">
-          <label className="form-label">{t("venue.edit.address", "Address")}</label>
-          <div className="input-group">
-            <span className="input-group-text">
-              <span className="fa-solid fa-location-dot fa-fw" aria-hidden="true"></span>
-            </span>
-            <input
-              className="form-control"
-              placeholder={t("venue.edit.address.placeholder", "Street, City, State")}
-              value={changes.address}
-              onChange={(event) => {
-                const value = event.currentTarget.value;
-                setChanges((prevState) => ({ ...prevState, address: value }));
-              }}
-            />
-          </div>
+          <FormControl
+            id="venue-edit-address"
+            type="text"
+            label={t("venue.edit.address", "Address")}
+            optional
+            prepend="fa-solid fa-location-dot fa-fw"
+            placeholder={t("venue.edit.address.placeholder", "Street, City, State")}
+            value={changes.address}
+            onChange={(value) => setChanges((prevState) => ({ ...prevState, address: value }))}
+          />
         </div>
 
         <div className="mb-3">
@@ -305,77 +280,59 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
             type="textarea"
             rows={3}
             label={t("venue.details.route")}
+            optional
             prepend="fa-solid fa-signs-post"
             placeholder={t(
               "venue.route.placeholder",
               "near busstop, cross fence, then backyard, enter the black door… 23rd floor, then left.",
             )}
             value={changes.route}
-            onChange={(value) => {
-              setChanges((prevState) => ({ ...prevState, route: value }));
-            }}
+            onChange={(value) => setChanges((prevState) => ({ ...prevState, route: value }))}
           />
         </div>
 
         <div className="mb-3">
-          <label className="form-label">{t("venue.edit.restrictedUse", "Restricted use")}</label>
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              value=""
-              id="eventRestrictedUseCheck"
-              checked={changes.restrictedUse}
-              onChange={(ev) => {
-                const restrictedUse = ev.currentTarget.checked;
-                setChanges((prevState) => ({
-                  ...prevState,
-                  restrictedUse,
-                }));
-              }}
-            />
-            <label className="form-check-label" htmlFor="eventRestrictedUseCheck">
-              {t(
-                "venue.edit.restrictedUse.label",
-                "This venue can only be chosen by its hosts to publish an event.",
-              )}
-            </label>
-          </div>
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              value=""
-              id="eventAllowParallelEvents"
-              checked={changes.allowParallelEvents}
-              onChange={(ev) => {
-                const allowParallelEvents = ev.currentTarget.checked;
-                setChanges((prevState) => ({
-                  ...prevState,
-                  allowParallelEvents,
-                }));
-              }}
-            />
-            <label className="form-check-label" htmlFor="eventAllowParallelEvents">
-              {t("venue.edit.allowParallelEvents.label", "Allow overlapping events in this venue")}
-            </label>
-          </div>
+          <div className="form-label">{t("venue.edit.restrictedUse", "Restricted use")}</div>
+          <FormCheck
+            id="venue-edit-restrictedUse"
+            type="box"
+            label={t(
+              "venue.edit.restrictedUse.label",
+              "This venue can only be chosen by its hosts to publish an event.",
+            )}
+            checked={changes.restrictedUse}
+            onChange={(checked) =>
+              setChanges((prevState) => ({
+                ...prevState,
+                restrictedUse: checked,
+              }))
+            }
+          />
+          <FormCheck
+            id="venue-edit-allowParallelEvents"
+            type="box"
+            label={t(
+              "venue.edit.allowParallelEvents.label",
+              "Allow overlapping events in this venue",
+            )}
+            checked={changes.allowParallelEvents}
+            onChange={(checked) =>
+              setChanges((prevState) => ({ ...prevState, allowParallelEvents: checked }))
+            }
+          />
         </div>
         <div className="mb-3">
-          <label className="form-label">
+          <div className="form-label">
             {t(
               "venue.edit.additionalInfo",
               "Additional info (optional, but helps others find the venue)",
             )}
-          </label>
-          <br />
+          </div>
           {showAdditionalInfo ? (
             <button
               type="button"
               className="btn btn-cancel btn-block"
-              onClick={() => {
-                setShowAdditionalInfo(!showAdditionalInfo);
-              }}
+              onClick={() => setShowAdditionalInfo(!showAdditionalInfo)}
             >
               {t("venue.edit.hideAdditionalInfo", "Hide additional info")}
             </button>
@@ -383,9 +340,7 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
             <button
               type="button"
               className="btn btn-secondary btn-block"
-              onClick={() => {
-                setShowAdditionalInfo(!showAdditionalInfo);
-              }}
+              onClick={() => setShowAdditionalInfo(!showAdditionalInfo)}
             >
               {t("venue.edit.provideAdditionalInfo", "Fill out additional info")}
             </button>

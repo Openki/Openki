@@ -1,8 +1,8 @@
 import { Router } from "meteor/iron:router";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { FormCheck } from "../../FormCheck";
 import { useAffectedReplica } from "/imports/api/events/publications";
-import { CheckControl } from "/imports/ui/components/CheckControl";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
 export function UpdateAffectedReplica({
@@ -37,7 +37,7 @@ export function UpdateAffectedReplica({
 
   return (
     <>
-      <CheckControl
+      <FormCheck
         id="event-edit-update-replicas-info"
         type="box"
         label={t(
@@ -50,7 +50,7 @@ export function UpdateAffectedReplica({
       />
       {timeChanged && (
         <>
-          <CheckControl
+          <FormCheck
             id="event-edit-update-replicas-time"
             type="box"
             label={t(
@@ -108,7 +108,7 @@ export function UpdateAffectedReplica({
                       </li>
                     ))}
                   </ul>
-                  <CheckControl
+                  <FormCheck
                     id="event-edit-update-changed-replicas-time"
                     type="box"
                     label={t(

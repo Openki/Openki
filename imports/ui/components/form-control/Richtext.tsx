@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { useSessionEquals } from "/imports/utils/react-meteor-data";
+import { useSession, useSessionEquals } from "/imports/utils/react-meteor-data";
 
 import MediumEditor from "medium-editor";
 
@@ -17,6 +17,7 @@ export interface Props {
       ) => void)
     | undefined;
   onBlur: (() => void) | undefined;
+  "aria-labelledby": string | undefined;
   "aria-describedby": string | undefined;
   "aria-invalid": boolean;
 }
@@ -26,6 +27,7 @@ export function Richtext(props: Props) {
   const { t } = useTranslation();
   const elementRef = useRef<HTMLDivElement>(null);
   const isRTL = useSessionEquals("textDirectionality", "rtl");
+  const locale = useSession("locale");
 
   function handleChange(event: React.KeyboardEvent<HTMLDivElement>) {
     const element = event.currentTarget;
@@ -47,6 +49,12 @@ export function Richtext(props: Props) {
     }
     if (elementRef.current.innerHTML !== value) {
       elementRef.current.innerHTML = value || "";
+    }
+  }, [value]);
+
+  useEffect(() => {
+    if (!elementRef.current) {
+      return;
     }
 
     if (disabled) {
@@ -90,8 +98,12 @@ export function Richtext(props: Props) {
     meExtensions.anchor.prototype.aria = t("richtext.button.anchor.title", "link");
 
     // Initialize the editor interface
-    new MediumEditor(elementRef.current, meOptions);
-  }, [value, placeholder, t, isRTL, disabled]);
+    const mediumEditor = new MediumEditor(elementRef.current, meOptions);
+
+    return () => {
+      mediumEditor.destroy();
+    };
+  }, [placeholder, locale, isRTL, disabled]);
 
   return (
     <div
@@ -103,6 +115,7 @@ export function Richtext(props: Props) {
       onChange={!disabled ? handleChange : undefined}
       onInput={!disabled ? handleChange : undefined}
       onBlur={!disabled ? () => onBlur?.() : undefined}
+      aria-labelledby={props["aria-labelledby"]}
       aria-describedby={props["aria-describedby"]}
       aria-invalid={props["aria-invalid"]}
     />

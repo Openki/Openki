@@ -33,11 +33,12 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
 import { EditCustomFields } from "../../EditCustomFields";
-import { FormControl } from "../../form-control";
 import { PleaseLogin } from "../../please-login";
 import { SelectCategories } from "../SelectCategories";
 import { CourseCategories } from "../categories";
 import { mayShare } from "./mayShare";
+import { RegionSelect } from "/imports/ui/components/RegionSelect";
+
 import "./styles.scss";
 
 function GroupHeader({ groupId }: { groupId: string }) {
@@ -202,7 +203,7 @@ function AlertMessage(data: {
   );
 }
 
-export type Data = {
+export type Props = {
   _id?: string;
   categories?: string[];
   isFrame?: boolean;
@@ -218,40 +219,40 @@ export type Data = {
   filter?: ReturnType<(typeof Courses)["Filtering"]>;
 } & Partial<CourseModel>;
 
-export function Edit(data: Data) {
+export function Edit(props: Props) {
   const { t } = useTranslation();
   const user = useUser();
   const [allRegionsIsLoading, allRegions] = useRegionsAll();
   const currentRegion = useCurrentRegion();
   const [isBusy, setIsBusy] = useState(false);
-  const [title, setTitle] = useState(data.name);
+  const [title, setTitle] = useState(props.name);
 
   const showInternalCheckbox = () => {
     let internalOption;
 
-    if (!data.isFrame && data.group && user?.groups) {
+    if (!props.isFrame && props.group && user?.groups) {
       // Visible in group detail page (for creation) if user is in group
-      internalOption = user.groups.includes(data.group);
+      internalOption = user.groups.includes(props.group);
     } else {
       // and visible on edit if course is in a group
       // For devs: This behaviour is not consistent. But we want the creation to be as simple
       // as possible.
-      internalOption = (data.groups?.length || 0) > 0;
+      internalOption = (props.groups?.length || 0) > 0;
     }
     return internalOption;
   };
 
-  const hasTeamGroups = !!(data.teamGroups && data.teamGroups?.length > 0);
+  const hasTeamGroups = !!(props.teamGroups && props.teamGroups?.length > 0);
 
   let internalInitalState;
   if (showInternalCheckbox()) {
     // Usually an "internal" checkbox is displayed so that the users of a group can choose
     // whether the course is internal or not.
-    internalInitalState = data.internal;
-  } else if (data.isFrame && hasTeamGroups) {
+    internalInitalState = props.internal;
+  } else if (props.isFrame && hasTeamGroups) {
     // When in a frame for a group, the `internal` query-param can be set to control whether
     // the group wants the entered courses to be internal.
-    internalInitalState = data.internal;
+    internalInitalState = props.internal;
   }
   // Default is not internal
   internalInitalState = internalInitalState || false;
@@ -259,16 +260,16 @@ export function Edit(data: Data) {
   const [internal, setInternal] = useState(internalInitalState);
 
   useEffect(() => {
-    setTitle(data.name);
-  }, [data.name]);
+    setTitle(props.name);
+  }, [props.name]);
 
   function getRegion() {
-    const courseId = data._id || "";
+    const courseId = props._id || "";
     const isNew = courseId === "";
     if (isNew) {
-      if (data.isFrame && data.region) {
+      if (props.isFrame && props.region) {
         // The region was preset for the frame
-        return allRegions.find((r) => r._id === data.region);
+        return allRegions.find((r) => r._id === props.region);
       }
       if (allRegions.length === 1) {
         // There is only one region
@@ -286,14 +287,14 @@ export function Edit(data: Data) {
       groups.push(...defaultTeamGroups);
     }
 
-    if (data && data._id /* is not new */) {
-      groups.push(...(data.groupOrganizers || []));
-    } else if (!data.isFrame) {
-      if (data.group) {
-        groups.push(data.group);
+    if (props && props._id /* is not new */) {
+      groups.push(...(props.groupOrganizers || []));
+    } else if (!props.isFrame) {
+      if (props.group) {
+        groups.push(props.group);
       }
-    } else if (data.teamGroups && data.teamGroups?.length > 0) {
-      groups.push(...data.teamGroups);
+    } else if (props.teamGroups && props.teamGroups?.length > 0) {
+      groups.push(...props.teamGroups);
     }
     // remove double groups
     return uniq(groups);
@@ -304,7 +305,7 @@ export function Edit(data: Data) {
 
   const [selectedRegion, setSelectedRegion] = useState(currentRegion?._id || "");
 
-  const [description, setDescription] = useState(data.description);
+  const [description, setDescription] = useState(props.description);
   const [numberOfCharacters, setNumberOfCharacters] = useState(0);
   const [totalFocusTimeInSeconds, setTotalFocusTimeInSeconds] = useState(0);
   const editableDescription: EditableProps = {
@@ -344,7 +345,7 @@ export function Edit(data: Data) {
         return false;
       }
 
-      if (data && !data._id /* is new */)
+      if (props && !props._id /* is new */)
         if (disableCreateRoles.includes(role.type)) {
           return false;
         }
@@ -370,8 +371,8 @@ export function Edit(data: Data) {
           r.type,
           {
             icon: r.icon,
-            enabled: data.roles?.includes(r.type) || false,
-            enroll: hasRole(data.members, r.type) || false,
+            enabled: props.roles?.includes(r.type) || false,
+            enroll: hasRole(props.members, r.type) || false,
           },
         ]),
       ),
@@ -381,10 +382,10 @@ export function Edit(data: Data) {
   const showRegionSelection = () => {
     return (
       // Region can be set for new courses only.
-      !data._id &&
+      !props._id &&
       // For the proposal frame we hide the region selection when a region
       // is set.
-      !(data.region && data.isFrame) &&
+      !(props.region && props.isFrame) &&
       // If there is only one region on this instance or it is visible to this user, it
       // will be set automatically.
       !(allRegions.length === 1)
@@ -409,15 +410,15 @@ export function Edit(data: Data) {
 
   useEffect(() => {
     // Show category selection right away for new courses
-    setEditingCategories(!data._id);
-    setSelectedCategories(data.categories || []);
+    setEditingCategories(!props._id);
+    setSelectedCategories(props.categories || []);
 
-    if (data.isFrame) {
+    if (props.isFrame) {
       // When we're in the propose frame, show a simplified role selection
-      setSimpleRoleSelection(!data.hideRoleSelection && !!data.roles?.includes("mentor"));
+      setSimpleRoleSelection(!props.hideRoleSelection && !!props.roles?.includes("mentor"));
       setFullRoleSelection(false);
     }
-  }, [data._id, data.categories, data.isFrame, data.hideRoleSelection, data.roles]);
+  }, [props._id, props.categories, props.isFrame, props.hideRoleSelection, props.roles]);
 
   function simpleRoleActiveClass(role: string) {
     // HACK using btn-add and btn-edit to show activation state
@@ -431,7 +432,7 @@ export function Edit(data: Data) {
     return showRegionSelection() || customFields().length > 0;
   }
   function hideCategories() {
-    return data.isFrame && data.hideCategories;
+    return props.isFrame && props.hideCategories;
   }
   function selectCategoriesAttr() {
     return {
@@ -442,7 +443,7 @@ export function Edit(data: Data) {
     };
   }
   function showSavedMessage() {
-    if (data.isFrame) {
+    if (props.isFrame) {
       return savedMessage;
     }
     return false;
@@ -450,7 +451,7 @@ export function Edit(data: Data) {
   function editBodyClasses() {
     const classes: string[] = [];
 
-    if (data.isFrame) {
+    if (props.isFrame) {
       classes.push("is-frame");
     }
 
@@ -482,19 +483,19 @@ export function Edit(data: Data) {
     });
   }
   function hasPricePolicy() {
-    const { hidePricePolicy } = data;
+    const { hidePricePolicy } = props;
 
     if (hidePricePolicy) {
       return false;
     }
 
-    if (data && data._id /* is not new */) {
-      return !(data.tenant && isPrivate(data as { tenant: string }));
+    if (props && props._id /* is not new */) {
+      return !(props.tenant && isPrivate(props as { tenant: string }));
     }
 
-    if (data.isFrame && data.region) {
+    if (props.isFrame && props.region) {
       // The region was preset for the frame
-      const region = allRegions.find((r) => r._id === data.region);
+      const region = allRegions.find((r) => r._id === props.region);
       if (region) {
         return !region.isPrivate();
       }
@@ -540,12 +541,12 @@ export function Edit(data: Data) {
       }
     }
 
-    let courseId = data._id || "";
+    let courseId = props._id || "";
     const isNew = courseId === "";
     if (isNew) {
-      if (data.isFrame && data.region) {
+      if (props.isFrame && props.region) {
         // The region was preset for the frame
-        changes.region = data.region;
+        changes.region = props.region;
       } else if (Regions.findFilter({}, 2).count() === 1) {
         // There is only one region
         changes.region = Regions.findOne({})?._id as string;
@@ -557,8 +558,8 @@ export function Edit(data: Data) {
         return;
       }
 
-      if (data.singleEvent !== undefined) {
-        changes.singleEvent = data.singleEvent;
+      if (props.singleEvent !== undefined) {
+        changes.singleEvent = props.singleEvent;
       } else {
         const singleEvent = Regions.findOne({ _id: changes.region })?.singleEvents;
 
@@ -574,8 +575,8 @@ export function Edit(data: Data) {
     changes.subs = [];
     changes.unsubs = [];
 
-    if (data.isFrame) {
-      data.roles?.forEach((role) => {
+    if (props.isFrame) {
+      props.roles?.forEach((role) => {
         changes.roles[role] = true;
       });
 
@@ -583,7 +584,7 @@ export function Edit(data: Data) {
         changes.subs.push("mentor");
       }
 
-      changes.subs = union(changes.subs, data.creatorsRoles || []);
+      changes.subs = union(changes.subs, props.creatorsRoles || []);
     }
 
     if (fullRoleSelection) {
@@ -626,7 +627,7 @@ export function Edit(data: Data) {
 
       const course = Courses.findOne(courseId);
 
-      if (data.isFrame) {
+      if (props.isFrame) {
         setSavedCourseId(courseId);
         setSavedMessage(true);
         resetFields();
@@ -686,7 +687,7 @@ export function Edit(data: Data) {
   };
 
   const handleCancel = () => {
-    const course = data;
+    const course = props;
 
     if (course._id) {
       Router.go("showCourse", course);
@@ -702,12 +703,16 @@ export function Edit(data: Data) {
   return (
     <div className="edit-page">
       <PleaseLogin type="form" onSubmit={handleSave}>
-        {data.filter ? <FindHeader {...{ ...data, filter: data.filter }} /> : <Header {...data} />}
+        {props.filter ? (
+          <FindHeader {...{ ...props, filter: props.filter }} />
+        ) : (
+          <Header {...props} />
+        )}
         <div className={`edit-page-body course-edit-body ${editBodyClasses()}`}>
-          {!!data._id && !!data.region && <Tag region={data.region} />}
+          {!!props._id && !!props.region && <Tag region={props.region} />}
           {showSavedMessage() && !!savedCourseId && (
             <AlertMessage
-              isFrame={data.isFrame}
+              isFrame={props.isFrame}
               savedCourseId={savedCourseId}
               onClose={() => {
                 setSavedMessage(false);
@@ -762,7 +767,7 @@ export function Edit(data: Data) {
             onChange={(newTitle) => {
               setTitle(newTitle);
             }}
-            showOtherProposals={!data._id}
+            showOtherProposals={!props._id}
           />
           <div className="mb-3">
             <label className="form-label">{t("course.edit.description", "Description")}</label>
@@ -779,8 +784,8 @@ export function Edit(data: Data) {
                     <label className="form-label">
                       {t("course.edit.categories", "Categories")}
                     </label>
-                    {data.categories ? (
-                      <CourseCategories categories={data.categories} />
+                    {props.categories ? (
+                      <CourseCategories categories={props.categories} />
                     ) : (
                       <div>{t("course.edit.no.categories", "No categories")}</div>
                     )}{" "}
@@ -812,30 +817,21 @@ export function Edit(data: Data) {
               <div className="col-md">
                 {showRegionSelection() && (
                   <div className="mb-3">
-                    <FormControl
+                    <RegionSelect
                       id="courses-edit-region-selection"
-                      type="select"
-                      label={t("course.edit.region", "Region")}
-                      prepend="fa-solid fa-location-dot"
-                      placeholder={t("_selection.pleaseSelect")}
-                      options={Object.fromEntries(
-                        allRegions.map((region) => [region._id, region.name]),
-                      )}
                       value={selectedRegion}
-                      onChange={(value) => {
-                        setSelectedRegion(value);
-                      }}
+                      onChange={(value) => setSelectedRegion(value)}
                     />
                   </div>
                 )}
 
-                <EditCustomFields fields={customFields("boolean")} values={data.customFields} />
+                <EditCustomFields fields={customFields("boolean")} values={props.customFields} />
 
-                <EditCustomFields fields={customFields("singleLine")} values={data.customFields} />
+                <EditCustomFields fields={customFields("singleLine")} values={props.customFields} />
               </div>
             )}
           </div>
-          <EditCustomFields fields={customFields("multiLine")} values={data.customFields} />
+          <EditCustomFields fields={customFields("multiLine")} values={props.customFields} />
 
           {showInternalCheckbox() && (
             <div className="mb-3">
@@ -861,7 +857,7 @@ export function Edit(data: Data) {
 
           <div className="form-actions">
             <ButtonSave onClick={handleSave} disabled={isBusy} />
-            {!data.isFrame && <ButtonCancel onClick={handleCancel} />}
+            {!props.isFrame && <ButtonCancel onClick={handleCancel} />}
           </div>
         </div>
       </PleaseLogin>

@@ -4,9 +4,9 @@ import { useTranslation } from "react-i18next";
 import * as Metatags from "/imports/utils/metatags";
 
 import { AccountTasks } from "/imports/ui/components/account-tasks";
-import { Data, Edit } from "/imports/ui/components/courses/edit";
+import { Edit, Props } from "/imports/ui/components/courses/edit";
 
-export function Propose(data: Data) {
+export function Propose(data: Props) {
   const { t } = useTranslation();
 
   useEffect(() => {

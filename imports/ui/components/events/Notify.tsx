@@ -6,8 +6,8 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
 
 import { FormControl } from "../form-control";
+import { FormCheck } from "../FormCheck";
 import { EventEditData } from "./edit";
-import { CheckControl } from "/imports/ui/components/CheckControl";
 
 function CourseMembers({
   courseId,
@@ -29,7 +29,7 @@ function CourseMembers({
   }
 
   return (
-    <CheckControl
+    <FormCheck
       id="event-edit-notify-check"
       type="box"
       checked={notifyChecked}
