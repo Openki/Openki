@@ -13,12 +13,17 @@ export function useFindParallelEvents(
 ) {
   const regionZone = useLocalTimeZone(regionId);
 
-  const start = regionZone.fromString(event.startLocal).toDate();
+  const start = regionZone
+    .fromString(event.startLocal)
+    /** fix that events that end and start a the same time detect as a collision  */
+    .add(1, "minute")
+    .toDate();
   const end = regionZone.fromString(event.endLocal).toDate();
 
   const [isLoading, events] = Events.useFindFilter({
     venue: venueId || "-1",
     period: [start, end],
+    canceled: false,
   });
 
   // cache to prevent endless recalls

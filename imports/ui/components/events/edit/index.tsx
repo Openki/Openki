@@ -259,7 +259,8 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             "event.edit.venue.parallelEvents.disallowed",
             "Parallel events in this venue are not allowed.",
           )}{" "}
-          <OtherEventsMessage events={parallelEvents} />
+          <OtherEventsMessage events={parallelEvents} />{" "}
+          {t("event.edit.venue.parallelEvents.pleaseChange", "Please change venue or time.")}
         </>
       ),
     },

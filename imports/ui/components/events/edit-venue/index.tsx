@@ -38,8 +38,8 @@ export function EditVenue({ region: regionId, event, value, onChange, errors }: 
         </div>
       ) : (
         <>
-          <div className="row">
-            <div className="col-md-4 mb-3">
+          <div className={`row ${!errors.venue && !errors.startEndVenue ? "mb-md-3" : ""}`}>
+            <div className="col-md-4 mb-3 mb-md-0">
               {!value._id ? (
                 <FormControl
                   id="event-edit-venue-displayVenueAs"
@@ -66,7 +66,7 @@ export function EditVenue({ region: regionId, event, value, onChange, errors }: 
                 </>
               )}
             </div>
-            <div className="col-md-5 mb-3">
+            <div className="col-md-5 mb-3 mb-md-0">
               <FormControl
                 id="event-edit-venue-locationAddress"
                 type="text"
@@ -76,8 +76,8 @@ export function EditVenue({ region: regionId, event, value, onChange, errors }: 
                 disabled={!!value._id}
               />
             </div>
-            <div className="col-md-3 mb-3">
-              <label className="form-label d-none d-md-block">&nbsp;</label>
+            <div className="col-md-3 mb-3 mb-md-0">
+              <div className="form-label d-none d-md-block">&nbsp;</div>
               <div className="d-grid">
                 <button
                   className="btn btn-secondary"
@@ -89,7 +89,11 @@ export function EditVenue({ region: regionId, event, value, onChange, errors }: 
               </div>
             </div>
           </div>
-          <Hints regionId={regionId} event={event} venueId={value._id} errors={errors} />
+          {!!errors.venue && <div className="text-danger mb-3">{errors.venue}</div>}
+          {!!errors.startEndVenue && <div className="text-danger mb-3">{errors.startEndVenue}</div>}
+          {!errors.venue && !errors.startEndVenue && (
+            <Hints regionId={regionId} event={event} venueId={value._id} />
+          )}
           <div className="mb-3">
             <Timetable regionId={regionId} event={event} venueId={value._id} />
           </div>
