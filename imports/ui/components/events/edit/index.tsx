@@ -31,7 +31,6 @@ import { EditCustomFields } from "../../EditCustomFields";
 import { FormControl } from "../../form-control";
 import { PricePolicy } from "../../price-policy";
 import { Tag } from "../../regions/tag";
-import { Richtext } from "../../richtext";
 import { Notify } from "../Notify";
 import { EditVenue } from "../edit-venue";
 import { EditStartEnd } from "./EditStartEnd";
@@ -560,27 +559,30 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             errors={errors}
           />
         </div>
+
         <div className="edit-page-body event-edit">
           <div className="mb-3">
-            <label className="form-label">{t("course.event.edit.desc", "Description")}</label>
-            <Richtext
-              className={errors.description ? "is-invalid" : ""}
-              text={changes.description}
+            <FormControl
+              id="event-edit-description"
+              type="richtext"
+              label={t("course.event.edit.desc", "Description")}
               placeholder={t(
                 "event.description.placeholder",
                 "Describe your event as accurately as possible. This helps people know how to prepare and what to expect from this meeting (e.g. level, prerequisites, activities, teaching methods, what to bring, etc.)",
               )}
-              maxLength={PublicSettings.eventDescriptionMax}
+              value={changes.description || ""}
               onChange={(newValue, numberOfCharacters) => {
                 setChanges({
                   ...changes,
                   description: newValue,
                   descriptionNumberOfCharacters: numberOfCharacters,
                 });
+                checkValidity("description");
               }}
+              error={errors.description}
             />
-            {!!errors.description && <div className="invalid-feedback">{errors.description}</div>}
           </div>
+
           {!(!isNew && event.isPrivate()) && <PricePolicy dismissable wrap="mb-3" />}
 
           {showRegionSelection() && (

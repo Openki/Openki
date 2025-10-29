@@ -12,6 +12,7 @@ import { useFindParallelEvents } from "../edit/useFindParallelEvents";
 import { Map } from "./map";
 import { filterUserVenues, Search } from "./search";
 import { Timetable } from "./Timetable";
+import { FormControl } from "/imports/ui/components/form-control";
 
 function Hints({
   venueId,
@@ -133,20 +134,13 @@ export function EditVenue({
           <div className="row">
             <div className="col-md-4 mb-3">
               {!value._id ? (
-                <>
-                  <label className="form-label" id="displayVenueAs">
-                    {t("course.event.edit.locationName", "Display venue as")}
-                  </label>
-                  <input
-                    name="displayVenueAs"
-                    type="text"
-                    className="form-control"
-                    value={value.name}
-                    onChange={(e) => {
-                      onChange({ ...value, name: e.currentTarget.value });
-                    }}
-                  />
-                </>
+                <FormControl
+                  id="event-edit-venue-displayVenueAs"
+                  type="text"
+                  label={t("course.event.edit.locationName", "Display venue as")}
+                  value={value.name}
+                  onChange={(name) => onChange({ ...value, name })}
+                />
               ) : (
                 <>
                   <label className="form-label">
@@ -166,20 +160,12 @@ export function EditVenue({
               )}
             </div>
             <div className="col-md-5 mb-3">
-              <label className="form-label">
-                {t("course.event.edit.locationAddress", "Address")}
-              </label>
-              <input
+              <FormControl
+                id="event-edit-venue-locationAddress"
                 type="text"
-                className="form-control"
-                value={value.address}
-                onChange={
-                  !value._id
-                    ? (e) => {
-                        onChange({ ...value, address: e.currentTarget.value });
-                      }
-                    : undefined
-                }
+                label={t("course.event.edit.locationAddress", "Address")}
+                value={value.address || ""}
+                onChange={!value._id ? (address) => onChange({ ...value, address }) : undefined}
                 disabled={!!value._id}
               />
             </div>

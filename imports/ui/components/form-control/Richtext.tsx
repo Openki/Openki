@@ -91,7 +91,7 @@ export function Richtext(props: Props) {
 
     // Initialize the editor interface
     new MediumEditor(elementRef.current, meOptions);
-  }, [value, placeholder, t, isRTL]);
+  }, [value, placeholder, t, isRTL, disabled]);
 
   return (
     <div
