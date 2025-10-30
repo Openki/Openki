@@ -304,7 +304,7 @@ export function LoginFrame({
                   onVisitorOpen(loginData);
                 }}
               >
-                {t("login.visitor.submit", "Continue as visitor")}
+                {t("login.visitor.submit", "Continue as guest")}
               </button>
             </div>
           </div>

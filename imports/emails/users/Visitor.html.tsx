@@ -27,7 +27,7 @@ export function Visitor({
           <p>
             {t(
               "visitorEmail.email.instructions",
-              "You just interacted as a Guest. To create a user account you can click here and choose a password. This will allow you to log in again later, log in from an other device and change your content on the platform.",
+              "You just interacted as a guest. To create a user account you can click here and choose a password. This will allow you to log in again later, log in from an other device and change your content on the platform.",
               { SITE: siteName },
             )}
           </p>
