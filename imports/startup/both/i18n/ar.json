@@ -160,7 +160,6 @@
   "course.edit.image.removed.error": "تعذر حذف الصورة.",
   "course.edit.image.updated": "تم حفظ الصورة.",
   "course.edit.image.updated.error": "تعذر حفظ الصورة.",
-  "course.edit.intern": "اخفاء من الصفحة الامامية",
   "course.edit.internDescription": "إظهار هذه الدورة التدريبية فقط ضمن المجموعات المنتسبة لهذه الدورة",
   "course.edit.learnOrTeach": "تعلم أم علم؟",
   "course.edit.linkToCourse": "انقر هنا لعرض دورة \"{NAME}\" الجديدة على {SITENAME}",

@@ -181,7 +181,6 @@
   "course.edit.image.removed.error": "Could not remove image.",
   "course.edit.image.updated": "Image have been saved.",
   "course.edit.image.updated.error": "Could not save image.",
-  "course.edit.intern": "Hide on front page",
   "course.edit.internDescription": "Only show when looking at a tag's sessions",
   "course.edit.learnOrTeach": "Learn or teach?",
   "course.edit.linkToCourse": "Click here to see your new \"{NAME}\" session on {SITENAME}",

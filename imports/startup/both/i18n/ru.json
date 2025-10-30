@@ -181,7 +181,6 @@
   "course.edit.image.removed.error": "Не удалось удалить изображение.",
   "course.edit.image.updated": "Изображение сохранено.",
   "course.edit.image.updated.error": "Не удалось сохранить изображение.",
-  "course.edit.intern": "Скрыть на главной странице",
   "course.edit.internDescription": "Показывать только при просмотре курсов группы",
   "course.edit.learnOrTeach": "Учиться или преподавать?",
   "course.edit.linkToCourse": "Вы можете увидеть своё новое предложение «{NAME}» на сайте {SITENAME}",
