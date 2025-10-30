@@ -8,7 +8,7 @@ export function ResetPasswortEmailSended() {
   return (
     <ActionResult
       type="success"
-      icon={<i className="fa-regular fa-envelope fa-fw"></i>}
+      icon="fa-regular fa-envelope"
       title={t("resetPasswort.sendEmail.title", "Check your e-mail inbox.")}
       report={true}
     >

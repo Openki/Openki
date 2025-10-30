@@ -146,14 +146,14 @@ if (Meteor.isClient) {
         // assert group name is mentioned in course creation form title
         await expectText("form h2", "Autonome Schule Zürich", "Form title must mention group");
         // on creation the internal checkbox should not be present for none group members
-        await expectNoneElement("#internalCheckbox", "Internal checkbox is not present");
+        await expectNoneElement("#course-edit-internal", "Internal checkbox is not present");
         await MeteorAsync.loginWithPassword("greg", "greg");
-        await expectElement("#internalCheckbox", "Internal checkbox is present");
+        await expectElement("#course-edit-internal", "Internal checkbox is present");
 
         // Create the course
         setInputValue(".js-title", randomTitle);
         setSelectValue("[name='region']", "9JyFCoKWkxnf8LWPh"); // Testistan
-        setChecked("#internalCheckbox", true);
+        setChecked("#course-edit-internal", true);
         (await expectHtmlButton(".course-edit-body .btn-save")).click();
 
         // We should be redirected to the created course

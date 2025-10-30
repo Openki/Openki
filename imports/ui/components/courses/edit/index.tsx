@@ -36,8 +36,8 @@ import { EditCustomFields } from "../../EditCustomFields";
 import { PleaseLogin } from "../../please-login";
 import { SelectCategories } from "../SelectCategories";
 import { CourseCategories } from "../categories";
-import { mayShare } from "./mayShare";
 import { RegionSelect } from "/imports/ui/components/RegionSelect";
+import { FormCheck } from "/imports/ui/components/FormCheck";
 
 import "./styles.scss";
 
@@ -227,7 +227,7 @@ export function Edit(props: Props) {
   const [isBusy, setIsBusy] = useState(false);
   const [title, setTitle] = useState(props.name);
 
-  const showInternalCheckbox = () => {
+  function showInternalCheckbox() {
     let internalOption;
 
     if (!props.isFrame && props.group && user?.groups) {
@@ -240,7 +240,7 @@ export function Edit(props: Props) {
       internalOption = (props.groups?.length || 0) > 0;
     }
     return internalOption;
-  };
+  }
 
   const hasTeamGroups = !!(props.teamGroups && props.teamGroups?.length > 0);
 
@@ -625,59 +625,30 @@ export function Edit(props: Props) {
     try {
       courseId = await CoursesMethods.save(courseId, changes);
 
-      const course = Courses.findOne(courseId);
+      Analytics.trackEvent(
+        "Course creations",
+        `Course creations as ${
+          changes.subs.length > 0 ? changes.subs.sort().join(" and ") : "participant"
+        }`,
+        Regions.findOne(changes.region)?.nameEn,
+        totalFocusTimeInSeconds,
+      );
 
       if (props.isFrame) {
         setSavedCourseId(courseId);
         setSavedMessage(true);
         resetFields();
-
-        Analytics.trackEvent(
-          "Course creations",
-          `Course creations as ${
-            changes.subs.length > 0 ? changes.subs.sort().join(" and ") : "participant"
-          }`,
-          Regions.findOne(changes.region)?.nameEn,
-          totalFocusTimeInSeconds,
-        );
       } else {
         if (isNew) {
-          Alert.successNextActions(
-            t("message.courseCreated", "{NAME} has been created!", {
-              NAME: changes.name,
-            }),
-            t("message.courseCreated.description", "What do you wannt to do next?"),
-            numberOfCharacters === 0
-              ? {
-                  text: t("message.courseCreated.addDescription", "Add a description"),
-                  href: "#course-description",
-                }
-              : undefined,
-            {
-              text: t("message.courseCreated.addImage", "Add an image"),
-              href: "#files-tab",
-            },
-            course && mayShare(course)
-              ? { text: t("message.courseCreated.share", "Invite your friends"), href: "#share" }
-              : undefined,
-          );
-          Analytics.trackEvent(
-            "Course creations",
-            `Course creations as ${
-              changes.subs.length > 0 ? changes.subs.sort().join(" and ") : "participant"
-            }`,
-            Regions.findOne(changes.region)?.nameEn,
-            totalFocusTimeInSeconds,
-          );
+          Router.go("showCourse", { _id: courseId }, { query: { showNextActions: "1" } });
         } else {
           Alert.success(
             t("message.courseChangesSaved", "Your changes to {NAME} have been saved.", {
               NAME: changes.name,
             }),
           );
+          Router.go("showCourse", { _id: courseId });
         }
-
-        Router.go("showCourse", { _id: courseId });
       }
     } catch (err) {
       Alert.serverError(err, t("message.courseChangesSaved.error", "Saving went wrong"));
@@ -781,9 +752,7 @@ export function Edit(props: Props) {
                   <SelectCategories {...selectCategoriesAttr()} />
                 ) : (
                   <>
-                    <label className="form-label">
-                      {t("course.edit.categories", "Categories")}
-                    </label>
+                    <div className="form-label">{t("course.edit.categories", "Categories")}</div>
                     {props.categories ? (
                       <CourseCategories categories={props.categories} />
                     ) : (
@@ -835,23 +804,16 @@ export function Edit(props: Props) {
 
           {showInternalCheckbox() && (
             <div className="mb-3">
-              <label className="form-label">{t("course.edit.intern", "Hide on front page")}</label>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="internalCheckbox"
-                  defaultChecked={internal}
-                  onChange={(event) => setInternal(event.currentTarget.checked)}
-                />
-                <label className="form-check-label" htmlFor="internalCheckbox">
-                  {t(
-                    "course.edit.internDescription",
-                    "Only show when looking at a group's courses",
-                  )}
-                </label>
-              </div>
+              <FormCheck
+                id="course-edit-internal"
+                type="box"
+                label={t(
+                  "course.edit.internDescription",
+                  "Only show when looking at a group's courses",
+                )}
+                checked={internal}
+                onChange={(checked) => setInternal(checked)}
+              />
             </div>
           )}
 
