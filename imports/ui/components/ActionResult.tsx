@@ -18,6 +18,7 @@ type Action =
 
 export interface Props {
   type: "success" | "failed";
+  dismissible?: boolean | undefined;
   icon?: ReactNode | undefined;
   title: string;
   children?: ReactNode | undefined;
@@ -25,7 +26,7 @@ export interface Props {
   report?: boolean | undefined;
 }
 
-export function ActionResult({ type, icon, title, children, actions, report }: Props) {
+export function ActionResult({ type, dismissible, icon, title, children, actions, report }: Props) {
   if (type === "success") {
     icon = icon || "fa-solid fa-check";
 
@@ -86,7 +87,14 @@ export function ActionResult({ type, icon, title, children, actions, report }: P
 
   return (
     <div className="container mt-3">
-      <div className={"alert alert-" + (type === "success" ? "success" : "danger")} role="alert">
+      <div
+        className={`alert alert-${type === "success" ? "success" : "danger"} ${dismissible ? "alert-dismissible fade show" : ""}`}
+        role="alert"
+      >
+        {!!dismissible && (
+          <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close" />
+        )}
+
         <h1 className="alert-heading d-flex align-items-center">
           <span className="flex-shrink-0 me-2">{icon}</span> {title}
         </h1>
