@@ -1,35 +1,36 @@
-import React, { useEffect, useState } from "react";
-import { Router } from "meteor/iron:router";
-import { useTranslation } from "react-i18next";
 import { intersection, truncate } from "lodash";
-import { textPlain } from "/imports/utils/html-tools";
-import { useSearchParams } from "/imports/utils/react-meteor-router";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { Router } from "meteor/iron:router";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useViewportSize } from "../../lib/useViewportSize";
+import { textPlain } from "/imports/utils/html-tools";
+import { useUser } from "/imports/utils/react-meteor-data";
+import { useSearchParams } from "/imports/utils/react-meteor-router";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { Regions } from "/imports/api/regions/regions";
-import * as CoursesMethods from "/imports/api/courses/methods";
 import { CourseModel } from "/imports/api/courses/courses";
+import * as CoursesMethods from "/imports/api/courses/methods";
+import { Regions } from "/imports/api/regions/regions";
 
-import { ScssVars } from "/imports/ui/lib/scss-vars";
 import * as Analytics from "/imports/ui/lib/analytics";
+import { ScssVars } from "/imports/ui/lib/scss-vars";
 import * as Metatags from "/imports/utils/metatags";
 
-import { Report } from "/imports/ui/components/report";
-import { mayShare } from "../../components/courses/edit/mayShare";
-import { Edit } from "../../components/courses/edit";
-import { Sharing } from "../../components/sharing";
-import { Events } from "../../components/courses/events";
-import { Discussion } from "../../components/courses/discussion";
-import { Members } from "../../components/courses/members";
 import { ButtonDelete, ButtonEdit } from "../../components/Buttons";
+import { Discussion } from "../../components/courses/discussion";
+import { Edit } from "../../components/courses/edit";
+import { mayShare } from "../../components/courses/edit/mayShare";
+import { Events } from "../../components/courses/events";
+import { Members } from "../../components/courses/members";
 import { Roles } from "../../components/courses/roles";
-import { Submenu } from "./submenu";
-import { Header } from "./header";
-import { ConfirmDialog } from "./confirm-dialog";
+import { Sharing } from "../../components/sharing";
 import { ButtonCourseArchive } from "./button-course-archive";
 import { ButtonCourseUnarchive } from "./button-course-unarchive";
+import { ConfirmDialog } from "./confirm-dialog";
+import { Header } from "./header";
+import { Submenu } from "./submenu";
+import { ActionResult } from "/imports/ui/components/ActionResult";
+import { Report } from "/imports/ui/components/report";
 
 import "./styles.scss";
 
@@ -175,115 +176,148 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
   });
 
   return (
-    <div data-test="course-details" className="container">
-      <div className="row course-page g-3">
-        <div className="col-lg-8">
-          <div className="page-component">
-            {course.archived && (
-              <div className="alert alert-archived text-center" role="alert">
-                <strong>
-                  {t("course.archive.alert", "{COURSE} is archived and not active anymore.", {
-                    COURSE: course.name,
-                  })}
-                </strong>
-              </div>
-            )}
-
-            {edit ? (
-              <Edit {...course} />
-            ) : (
-              <>
-                <div className={`course-details ${courseStateClasses(course)}`}>
-                  <Header course={course} />
-                  <Submenu course={course} />
+    <>
+      {searchParams.showNextActions === "1" && (
+        <div className="mb-5">
+          <ActionResult
+            type="success"
+            title={t("message.courseCreated", "{NAME} has been created!", {
+              NAME: course.name,
+            })}
+            actions={[
+              course.description
+                ? {
+                    text: t("message.courseCreated.addDescription", "Add a description"),
+                    href: "#course-description",
+                  }
+                : undefined,
+              {
+                text: t("message.courseCreated.addImage", "Add an image"),
+                href: "#files-tab",
+              },
+              mayShare(course)
+                ? { text: t("message.courseCreated.share", "Invite your friends"), href: "#share" }
+                : undefined,
+              {
+                text: t("message.courseCreated.addEvent", "Create event"),
+                href: "#course-event-add",
+              },
+            ]}
+          >
+            {t("message.courseCreated.description", "What do you wannt to do next?")}
+          </ActionResult>
+        </div>
+      )}
+      <div data-test="course-details" className="container">
+        <div className="row course-page g-3">
+          <div className="col-lg-8">
+            <div className="page-component">
+              {course.archived && (
+                <div className="alert alert-archived text-center" role="alert">
+                  <strong>
+                    {t("course.archive.alert", "{COURSE} is archived and not active anymore.", {
+                      COURSE: course.name,
+                    })}
+                  </strong>
                 </div>
+              )}
 
-                {mayShare(course) && (
-                  <div className="p-3 shariff-wrapper text-end" id="share">
-                    <h4>{t("sharing.title", "Invite your friends")}</h4>
-                    <Sharing />
+              {edit ? (
+                <Edit {...course} />
+              ) : (
+                <>
+                  <div className={`course-details ${courseStateClasses(course)}`}>
+                    <Header course={course} />
+                    <Submenu course={course} />
                   </div>
-                )}
 
-                {mayEdit(course) && (
-                  <>
-                    <div className="actions">
-                      {!expanded && <ButtonEdit disabled={isBusy} onClick={handelOnEdit} />}
+                  {mayShare(course) && (
+                    <div className="p-3 shariff-wrapper text-end" id="share">
+                      <h4>{t("sharing.title", "Invite your friends")}</h4>
+                      <Sharing />
+                    </div>
+                  )}
 
-                      {course.archived && (
-                        <ButtonCourseUnarchive
+                  {mayEdit(course) && (
+                    <>
+                      <div className="actions">
+                        {!expanded && <ButtonEdit disabled={isBusy} onClick={handelOnEdit} />}
+
+                        {course.archived && (
+                          <ButtonCourseUnarchive
+                            disabled={isBusy}
+                            onUnarchive={async () => {
+                              handelUnarchive();
+                            }}
+                          />
+                        )}
+
+                        {!expanded && !course.archived && (
+                          <ButtonCourseArchive
+                            disabled={isBusy}
+                            className="btn-archive"
+                            onArchive={async () => {
+                              handelOnArchive();
+                            }}
+                          >
+                            {t("course.archive.archiveButton.archive", "Archive")}
+                          </ButtonCourseArchive>
+                        )}
+
+                        {!expanded && (
+                          <ButtonDelete
+                            onClick={async () => {
+                              setExpanded(true);
+                            }}
+                          />
+                        )}
+                      </div>
+
+                      {expanded && (
+                        <ConfirmDialog
+                          archiveButton={!course.archived}
                           disabled={isBusy}
-                          onUnarchive={async () => {
-                            handelUnarchive();
-                          }}
-                        />
-                      )}
-
-                      {!expanded && !course.archived && (
-                        <ButtonCourseArchive
-                          disabled={isBusy}
-                          className="btn-archive"
+                          course={course}
                           onArchive={async () => {
                             handelOnArchive();
                           }}
-                        >
-                          {t("course.archive.archiveButton.archive", "Archive")}
-                        </ButtonCourseArchive>
-                      )}
-
-                      {!expanded && (
-                        <ButtonDelete
-                          onClick={async () => {
-                            setExpanded(true);
+                          onDelete={handleOnDelete}
+                          onCancel={() => {
+                            setExpanded(false);
                           }}
                         />
                       )}
-                    </div>
+                    </>
+                  )}
 
-                    {expanded && (
-                      <ConfirmDialog
-                        archiveButton={!course.archived}
-                        disabled={isBusy}
-                        course={course}
-                        onArchive={async () => {
-                          handelOnArchive();
-                        }}
-                        onDelete={handleOnDelete}
-                        onCancel={() => {
-                          setExpanded(false);
-                        }}
-                      />
-                    )}
-                  </>
-                )}
+                  <Roles course={course} />
+                </>
+              )}
+            </div>
 
-                <Roles course={course} />
-              </>
+            {mobileViewport() ? (
+              <Events course={course} />
+            ) : (
+              <Discussion courseId={course._id} select={select} />
             )}
           </div>
 
-          {mobileViewport() ? (
-            <Events course={course} />
-          ) : (
-            <Discussion courseId={course._id} select={select} />
-          )}
-        </div>
+          <div className="col-lg-4">
+            {!mobileViewport() && <Events course={course} />}
 
-        <div className="col-lg-4">
-          {!mobileViewport() && <Events course={course} />}
+            <div className="page-component">
+              <Members course={course} />
+            </div>
 
-          <div className="page-component">
-            <Members course={course} />
-          </div>
+            {mobileViewport() && <Discussion courseId={course._id} select={select} />}
 
-          {mobileViewport() && <Discussion courseId={course._id} select={select} />}
-
-          <div className="page-component mt-3">
-            <Report />
+            <div className="page-component mt-3">
+              <Report />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
