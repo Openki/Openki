@@ -1,7 +1,7 @@
-import { MeteorAsync } from "/imports/utils/promisify";
-import { useTranslation } from "react-i18next";
-import { useSession, useSessionEquals } from "/imports/utils/react-meteor-data";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { MeteorAsync } from "/imports/utils/promisify";
+import { useSession, useSessionEquals } from "/imports/utils/react-meteor-data";
 
 import * as Alert from "/imports/api/alerts/alert";
 import * as UsersMethods from "/imports/api/users/methods";
@@ -224,7 +224,7 @@ export function LoginFrame({
 
                           Analytics.trackEvent(
                             "Logins",
-                            `Logins with ${service}`,
+                            `Logins with ${service.serviceName}`,
                             currentRegion?.nameEn,
                           );
                         } else {

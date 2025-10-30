@@ -1,11 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import { debounce } from "lodash";
+import { Router } from "meteor/iron:router";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 import { useFindFilter } from "/imports/api/courses/publications";
+import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
+
+import { FormControl } from "/imports/ui/components/form-control";
 
 import "./styles.scss";
-import { Router } from "meteor/iron:router";
-import { debounce } from "lodash";
 
 function Courses({ search }: { search: string }) {
   const { t } = useTranslation();
@@ -78,8 +80,6 @@ export function Title(data: {
   const [proposedSearch, setProposedSearch] = useState(data?.value || "");
   const [value, setValue] = useState(data?.value || "");
 
-  const titleElement = useRef<HTMLInputElement>(null);
-
   useEffect(() => {
     setProposedSearch(data?.value || "");
     setValue(data?.value || "");
@@ -87,23 +87,21 @@ export function Title(data: {
 
   return (
     <div className="mb-3">
-      <label className="form-label">{t("course.edit.title", "Title")}</label>
-      <input
-        className="form-control form-control-lg js-title"
-        ref={titleElement}
-        id="editform_name"
-        placeholder={t("course.title.placeholder", "What are you interested in?")}
-        size={40}
+      <FormControl
+        id="course-edit-title"
         type="text"
+        size="large"
+        label={t("course.edit.title", "Title")}
+        placeholder={t("course.title.placeholder", "What are you interested in?")}
         value={value}
-        onChange={(event) => {
-          setValue(event.target.value);
-          data.onChange(event.target.value);
-        }}
-        onInput={debounce((event: any) => {
-          setProposedSearch(event.target.value);
-        }, 220)}
         autoComplete="off"
+        onChange={(value) => {
+          setValue(value);
+          data.onChange(value);
+          debounce((value: string) => {
+            setProposedSearch(value);
+          }, 220)(value);
+        }}
       />
       {data.showOtherProposals && proposedSearch.length > 3 && <Courses search={proposedSearch} />}
     </div>
