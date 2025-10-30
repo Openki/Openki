@@ -1,6 +1,6 @@
 import { intersection, truncate } from "lodash";
 import { Router } from "meteor/iron:router";
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useViewportSize } from "../../lib/useViewportSize";
 import { textPlain } from "/imports/utils/html-tools";
@@ -181,7 +181,8 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
         <div className="mb-5">
           <ActionResult
             type="success"
-            title={t("message.courseCreated", "{NAME} has been created!", {
+            dismissible
+            title={t("message.courseCreated", "{NAME} has been created", {
               NAME: course.name,
             })}
             actions={[
