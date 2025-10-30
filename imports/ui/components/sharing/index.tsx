@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from "react";
 import { omitBy } from "lodash";
-import Shariff from "shariff";
-import { useTranslation } from "react-i18next";
 import { Session } from "meteor/session";
+import React, { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
+import Shariff from "shariff";
+import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
@@ -18,6 +19,7 @@ export function Sharing({
   url?: string | undefined;
 }) {
   const { t } = useTranslation();
+  const currentRegion = useCurrentRegion();
   const shariffElementRef = useRef<HTMLDivElement>(null);
 
   text = text || t("sharing.mailbody.quote", "Hi!\nLook what I found, are you interested?");
@@ -54,7 +56,7 @@ export function Sharing({
         ?.replace("shariff-button", "")
         .trim();
 
-      Analytics.trackEvent("social", `${source} clicked`);
+      Analytics.trackEvent("social", `${source} clicked`, currentRegion?.nameEn);
     });
   });
 

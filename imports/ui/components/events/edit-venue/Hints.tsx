@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 import { filterUserVenues } from "/imports/ui/components/events/edit-venue/search";

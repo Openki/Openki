@@ -11,9 +11,13 @@ interface CommonProps {
   id: string;
   label: ReactNode;
   size?: Size;
+  /**
+   * A string prefixed as part of the control,
+   * strings beginning with "fa-" are treated as icons
+   */
   prepend?: string | undefined;
-  /** 
-   * shows "(optional)" in the label and 
+  /**
+   * shows "(optional)" in the label and
    * allow return values for number and integer to be empty
    */
   optional?: boolean | undefined;
@@ -30,6 +34,7 @@ interface TextInputProps {
   type: "text" | "tel" | "email" | "password";
   placeholder?: string | undefined;
   value: string;
+  autoComplete?: HTMLInputElement["autocomplete"] | undefined;
   maxLength?: number | undefined;
   onChange?: ((value: string) => void) | undefined;
 }
@@ -39,6 +44,7 @@ interface TextareaProps {
   rows?: number | undefined;
   placeholder?: string | undefined;
   value: string;
+  autoComplete?: HTMLTextAreaElement["autocomplete"] | undefined;
   maxLength?: number | undefined;
   onChange?: ((value: string) => void) | undefined;
 }
@@ -59,6 +65,7 @@ interface NumberInputProps {
   type: "number" | "integer";
   placeholder?: string | undefined;
   value: number;
+  autoComplete?: HTMLInputElement["autocomplete"] | undefined;
   step?: number | undefined;
   min?: number | undefined;
   max?: number | undefined;
@@ -71,12 +78,14 @@ interface SelectProps<K extends string> {
   placeholder?: string | undefined;
   value: string;
   options: Record<K, string>;
+  autoComplete?: HTMLSelectElement["autocomplete"] | undefined;
   onChange?: ((value: K) => void) | undefined;
 }
 
 interface TimeInputProps {
   type: "time";
   value: string;
+  autoComplete?: HTMLInputElement["autocomplete"] | undefined;
   step?: number | undefined;
   onChange?: ((value: string) => void) | undefined;
 }
@@ -172,6 +181,7 @@ function createInputElement<K extends string>(props: Props<K>) {
     id,
     className: getControlClassNames(type, size, prepend, isInvalid).join(" "),
     disabled,
+    autoComplete: "autoComplete" in props ? props.autoComplete : undefined,
     onBlur: () => onBlur?.(),
     "aria-describedby":
       getDescribedby(id, prepend, typeof error !== "boolean" && !!error).join(" ") || undefined,

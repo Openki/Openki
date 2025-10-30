@@ -5,7 +5,7 @@ describe("Propose course via frame", function () {
     cy.visitOpenki("/frame/propose");
 
     cy.get("label.btn-edit").click();
-    cy.get("#editform_name").type("Permakultur im Hausgarten");
+    cy.get("#course-edit-title").type("Permakultur im Hausgarten");
     cy.get("#courses-edit-region-selection").select("9JyFCoKWkxnf8LWPh");
     cy.get('[data-test="please-login-button"]').click();
     cy.get('[data-test="account-tasks-login-frame-username"]').type("Seee");
@@ -22,8 +22,8 @@ describe("Propose course via frame", function () {
   it("allows to add multiple groups", () => {
     cy.visitOpenki("/frame/propose?addTeamGroups=cc89c5e476,573edec5d6");
 
-    cy.get("#editform_name").click();
-    cy.get("#editform_name").type("OpenStreetMap für Anfänger");
+    cy.get("#course-edit-title").click();
+    cy.get("#course-edit-title").type("OpenStreetMap für Anfänger");
     cy.get("#courses-edit-region-selection").select("9JyFCoKWkxnf8LWPh");
     cy.get('[data-test="please-login-button"]').click();
     cy.get('[data-test="account-tasks-login-frame-username"]').type("Seee");
@@ -36,8 +36,8 @@ describe("Propose course via frame", function () {
   it("allows to set creators role via url", () => {
     cy.visitOpenki("/frame/propose?setCreatorsRoles=mentor");
 
-    cy.get("#editform_name").click();
-    cy.get("#editform_name").type("How to Openki");
+    cy.get("#course-edit-title").click();
+    cy.get("#course-edit-title").type("How to Openki");
     cy.get("#courses-edit-region-selection").select("9JyFCoKWkxnf8LWPh");
     cy.get('[data-test="please-login-button"]').click();
     cy.get('[data-test="account-tasks-login-frame-username"]').type("Seee");

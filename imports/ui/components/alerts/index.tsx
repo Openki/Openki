@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTracker } from "meteor/react-meteor-data";
 import { useTranslation } from "react-i18next";
+import { MeteorAsync } from "/imports/utils/promisify";
 
 import { Action, Alerts as AlertsCollection } from "/imports/api/alerts/alerts";
 
@@ -160,6 +161,5 @@ export function Alerts() {
 // for Blaze
 
 import "./template.html";
-import { MeteorAsync } from "/imports/utils/promisify";
 
 Template.registerHelper("Alerts", () => Alerts);

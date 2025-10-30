@@ -4,12 +4,12 @@ describe("Course history", function () {
 
     const randomTitle = `COURSEHISTORY${1000 + Math.floor(Math.random() * 9000)}`;
 
-    cy.get(".js-title");
+    cy.get("#course-edit-title");
 
     cy.login("Seee");
 
     // Create the course
-    cy.get(".js-title").type(randomTitle);
+    cy.get("#course-edit-title").type(randomTitle);
     cy.get("#courses-edit-region-selection").select("9JyFCoKWkxnf8LWPh");
     cy.get('[data-test="please-login-button"]').click();
 
