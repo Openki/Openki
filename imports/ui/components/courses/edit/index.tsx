@@ -36,8 +36,8 @@ import { EditCustomFields } from "../../EditCustomFields";
 import { PleaseLogin } from "../../please-login";
 import { SelectCategories } from "../SelectCategories";
 import { CourseCategories } from "../categories";
-import { RegionSelect } from "/imports/ui/components/RegionSelect";
 import { FormCheck } from "/imports/ui/components/FormCheck";
+import { RegionSelect } from "/imports/ui/components/RegionSelect";
 
 import "./styles.scss";
 
@@ -804,6 +804,7 @@ export function Edit(props: Props) {
 
           {showInternalCheckbox() && (
             <div className="mb-3">
+              <div className="form-label">{t("course.edit.intern", "Hide on front page")}</div>
               <FormCheck
                 id="course-edit-internal"
                 type="box"

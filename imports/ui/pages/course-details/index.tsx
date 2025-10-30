@@ -1,6 +1,6 @@
 import { intersection, truncate } from "lodash";
 import { Router } from "meteor/iron:router";
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useViewportSize } from "../../lib/useViewportSize";
 import { textPlain } from "/imports/utils/html-tools";
