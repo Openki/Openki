@@ -181,7 +181,6 @@
   "course.edit.image.removed.error": "Bild konnte nicht gelöscht werden.",
   "course.edit.image.updated": "Bild wurde gespeichert.",
   "course.edit.image.updated.error": "Bild konnte nicht gespeichert werden.",
-  "course.edit.intern": "Nicht auf Startseite zeigen",
   "course.edit.internDescription": "Zeige diesen Kurs nur innerhalb zugeortneter Gruppen",
   "course.edit.learnOrTeach": "Lernen oder unterrichten?",
   "course.edit.linkToCourse": "Du kannst deinen neuen Vorschlag \"{NAME}\" auf {SITENAME} anzuschauen",

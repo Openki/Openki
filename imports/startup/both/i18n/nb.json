@@ -141,7 +141,6 @@
   "course.edit.image.removed.error": "Kunne ikke fjerne bilde.",
   "course.edit.image.updated": "Bilde lagret.",
   "course.edit.image.updated.error": "Kunne ikke lagre bilde.",
-  "course.edit.intern": "Skjul på forsiden",
   "course.edit.internDescription": "Kun vis ved utforskning av en gruppes fag",
   "course.edit.learnOrTeach": "Lær eller lær bort?",
   "course.edit.needs.role": "Dette faget trenger kanskje …",

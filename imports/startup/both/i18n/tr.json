@@ -143,7 +143,6 @@
   "course.edit.error.title": "Lütfen bir başlık belirtin",
   "course.edit.iCanTeach": "Öğretebilirim",
   "course.edit.iWantToLearn": "Öğrenmek istiyorum",
-  "course.edit.intern": "Ana sayfada gizle",
   "course.edit.internDescription": "Sadece bir grubun kurslarına bakarken göster",
   "course.edit.learnOrTeach": "Öğren ya da öğret?",
   "course.edit.linkToCourse": "\"{NAME}\" isimli yeni kursunuzun adını {SITENAME} üzerinde görmek için buraya tıklayın",
