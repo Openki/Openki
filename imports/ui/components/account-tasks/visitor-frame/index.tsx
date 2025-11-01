@@ -1,19 +1,20 @@
-import React, { useState } from "react";
+import { Router } from "meteor/iron:router";
 import { Random } from "meteor/random";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
-import { useSession } from "/imports/utils/react-meteor-data";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { Router } from "meteor/iron:router";
+import { useSession } from "/imports/utils/react-meteor-data";
+import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
 import * as UsersMethods from "/imports/api/users/methods";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 import { useValidation } from "/imports/ui/lib/useValidation";
 
-import { DataProtectionLaw } from "../data-protection-law";
 import { NotAllowedCharacter } from "../../../../startup/both/NotAllowedCharacter";
+import { DataProtectionLaw } from "../data-protection-law";
+import { FormCheck } from "/imports/ui/components/FormCheck";
 
 export interface Props {
   username: string;
@@ -110,7 +111,7 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
       }}
     >
       <div className="mb-3">
-        <div className="input-group has-validation">
+        <div className={`input-group ${errors.username ? "has-validation" : ""}`}>
           <span className="input-group-text">
             <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
           </span>
@@ -120,18 +121,13 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
             placeholder={t("frame.login.username", "Username")}
             autoFocus={true}
             value={registerData.username}
-            onChange={(event) => {
-              setRegisterData({
-                ...registerData,
-                username: event.target.value,
-              });
-            }}
+            onChange={(event) => setRegisterData({ ...registerData, username: event.target.value })}
           />
           {!!errors.username && <div className="invalid-feedback">{errors.username}</div>}
         </div>
       </div>
       <div className="mb-3">
-        <div className="input-group has-validation">
+        <div className={`input-group ${errors.email ? "has-validation" : ""}`}>
           <span className="input-group-text">
             <span className="fa-solid fa-envelope fa-fw" aria-hidden="true"></span>
           </span>
@@ -140,12 +136,7 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
             placeholder={t("frame.visitor.email", "E-Mail")}
             type="email"
             value={registerData.email}
-            onChange={(event) => {
-              setRegisterData({
-                ...registerData,
-                email: event.target.value,
-              });
-            }}
+            onChange={(event) => setRegisterData({ ...registerData, email: event.target.value })}
           />
           {!!errors.email && <div className="invalid-feedback">{errors.email}</div>}
         </div>
@@ -159,27 +150,17 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
       <DataProtectionLaw />
       {PublicSettings.askNewsletterConsent && (
         <div className="mb-3">
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              checked={registerData.allowNews}
-              onChange={(event) => {
-                setRegisterData({
-                  ...registerData,
-                  allowNews: event.target.checked,
-                });
-              }}
-              id="registerFrameAllowNewsCheck"
-            />
-            <label className="form-check-label" htmlFor="registerFrameAllowNewsCheck">
-              {t(
-                "login.register.agreeEmails",
-                "I agree on receiving occasional emails about {SITENAME}.",
-                { SITENAME: sitename },
-              )}
-            </label>
-          </div>
+          <FormCheck
+            id="visitor-frame-allowNews"
+            type="box"
+            label={t(
+              "login.register.agreeEmails",
+              "I agree on receiving occasional emails about {SITENAME}.",
+              { SITENAME: sitename },
+            )}
+            checked={registerData.allowNews}
+            onChange={(checked) => setRegisterData({ ...registerData, allowNews: checked })}
+          />
         </div>
       )}
       <div className="mb-3">
@@ -196,13 +177,7 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
       </div>
       <hr />
       <div className="mb-3">
-        <button
-          className="btn btn-secondary form-control"
-          type="button"
-          onClick={() => {
-            onBack();
-          }}
-        >
+        <button className="btn btn-secondary form-control" type="button" onClick={() => onBack()}>
           {t("login.visitor.backToLogin", "Go back to login")}
         </button>
       </div>

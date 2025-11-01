@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { AccountsAsync } from "/imports/utils/promisify";
 import { useSiteName } from "/imports/utils/getSiteName";
 import * as Metatags from "/imports/utils/metatags";
+import { AccountsAsync } from "/imports/utils/promisify";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { useAccount } from "/imports/api/users/publications";
 import * as UsersMethods from "/imports/api/users/methods";
+import { useAccount } from "/imports/api/users/publications";
 
 import { useValidation } from "/imports/ui/lib/useValidation";
 
@@ -82,7 +82,7 @@ export function VisitorToUserPage({ token, email }: Props) {
         }}
       >
         <div className="mb-3">
-          <div className="input-group has-validation">
+          <div className="input-group">
             <span className="input-group-text">
               <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
             </span>
@@ -99,7 +99,7 @@ export function VisitorToUserPage({ token, email }: Props) {
         <div className="mb-3">
           <div className="row g-2 align-items-center">
             <div className="col">
-              <div className="input-group has-validation">
+              <div className="input-group">
                 <span className="input-group-text">
                   <span className="fa-solid fa-envelope fa-fw" aria-hidden="true"></span>
                 </span>
@@ -122,7 +122,7 @@ export function VisitorToUserPage({ token, email }: Props) {
           </div>
         </div>
         <div className="mb-3">
-          <div className="input-group has-validation">
+          <div className={`input-group ${errors.password ? "has-validation" : ""}`}>
             <span className="input-group-text">
               <span className="fa-solid fa-lock fa-fw" aria-hidden="true"></span>
             </span>
@@ -132,9 +132,7 @@ export function VisitorToUserPage({ token, email }: Props) {
               type="password"
               autoFocus
               value={password}
-              onChange={(event) => {
-                setPassword(event.target.value);
-              }}
+              onChange={(event) => setPassword(event.target.value)}
             />
             {!!errors.password && <div className="invalid-feedback">{errors.password}</div>}
           </div>
@@ -150,13 +148,7 @@ export function VisitorToUserPage({ token, email }: Props) {
               t("login.register.submit")
             )}
           </button>
-          <button
-            className="btn btn-secondary"
-            type="button"
-            onClick={() => {
-              Router.go("home");
-            }}
-          >
+          <button className="btn btn-secondary" type="button" onClick={() => Router.go("home")}>
             {t("_button.cancel")}
           </button>
         </div>

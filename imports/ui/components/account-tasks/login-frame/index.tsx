@@ -125,7 +125,7 @@ export function LoginFrame({
     >
       <div className="login">
         <div className="mb-3">
-          <div className="input-group has-validation">
+          <div className={`input-group ${errors.username ? "has-validation" : ""}`}>
             <span className="input-group-text">
               <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
             </span>
@@ -136,18 +136,13 @@ export function LoginFrame({
               type="text"
               autoFocus={true}
               value={loginData.username}
-              onChange={(event) => {
-                setLoginData({
-                  ...loginData,
-                  username: event.target.value,
-                });
-              }}
+              onChange={(event) => setLoginData({ ...loginData, username: event.target.value })}
             />
             {!!errors.username && <div className="invalid-feedback">{errors.username}</div>}
           </div>
         </div>
         <div className="mb-3">
-          <div className="input-group has-validation">
+          <div className={`input-group ${errors.password ? "has-validation" : ""}`}>
             <span className="input-group-text">
               <span className="fa-solid fa-lock fa-fw" aria-hidden="true"></span>
             </span>
@@ -157,12 +152,7 @@ export function LoginFrame({
               placeholder={t("_inputField.password")}
               type="password"
               value={loginData.password}
-              onChange={(event) => {
-                setLoginData({
-                  ...loginData,
-                  password: event.target.value,
-                });
-              }}
+              onChange={(event) => setLoginData({ ...loginData, password: event.target.value })}
             />
             {!!errors.password && <div className="invalid-feedback">{errors.password}</div>}
           </div>
@@ -171,9 +161,7 @@ export function LoginFrame({
           <button
             type="button"
             className="btn btn-link p-0 js-forgot-pwd-btn forgot-pwd-mail-info"
-            onClick={() => {
-              onForgotPassword(loginData);
-            }}
+            onClick={() => onForgotPassword(loginData)}
           >
             {t("forgot", "I forgot my password")}
           </button>
@@ -286,9 +274,7 @@ export function LoginFrame({
             <button
               className="btn btn-add form-control js-register-open my-2"
               type="button"
-              onClick={() => {
-                onRegisterOpen(loginData);
-              }}
+              onClick={() => onRegisterOpen(loginData)}
             >
               {t("login.register.submit", "Create account")}
             </button>
@@ -300,9 +286,7 @@ export function LoginFrame({
               <button
                 className="btn btn-add form-control js-visitor-open my-2"
                 type="button"
-                onClick={() => {
-                  onVisitorOpen(loginData);
-                }}
+                onClick={() => onVisitorOpen(loginData)}
               >
                 {t("login.visitor.submit", "Continue as guest")}
               </button>
