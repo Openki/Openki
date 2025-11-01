@@ -5,6 +5,7 @@ import { useSession } from "/imports/utils/react-meteor-data";
 export function DateInput(props: {
   id?: string | undefined;
   className?: string | undefined;
+  required?: boolean | undefined;
   /** min/start date, the expected format is "YYYY-MM-DD" */
   min?: string | undefined;
   /** max/end date, the expected format is "YYYY-MM-DD" */
@@ -22,7 +23,7 @@ export function DateInput(props: {
   "aria-describedby"?: string | undefined;
   "aria-invalid"?: boolean | undefined;
 }) {
-  const { id, className, min, max, value, disabled, onChange, onBlur } = props;
+  const { id, className, min, max, value, required, disabled, onChange, onBlur } = props;
   const locale = useSession("locale");
   const elementRef = useRef(null);
 
@@ -68,6 +69,7 @@ export function DateInput(props: {
       type="text"
       className={`form-control ${className}`}
       value={toDisplay(value)}
+      required={required}
       disabled={disabled}
       onBlur={() => onBlur?.()}
       aria-describedby={props["aria-describedby"]}
