@@ -83,6 +83,7 @@
   "course.edit.description": "描述",
   "course.edit.edit_categories": "编辑分类",
   "course.edit.edit_course": "编辑课程",
+  "course.edit.intern": "不在首页显示",
   "course.edit.needs.role": "这个课程也许需要……",
   "course.edit.no.categories": "无分类",
   "course.edit.propose": "发起新的课程倡议",
