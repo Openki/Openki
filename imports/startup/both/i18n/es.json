@@ -168,6 +168,7 @@
   "course.edit.image.removed.error": "No se ha podido eliminar la imagen.",
   "course.edit.image.updated": "La imagen ha sido guardada.",
   "course.edit.image.updated.error": "No se ha podido guardar la imagen.",
+  "course.edit.intern": "Ocultar en la página principal",
   "course.edit.internDescription": "Mostrar solo al mirar los cursos de un grupo",
   "course.edit.learnOrTeach": "¿Aprender o enseñar?",
   "course.edit.linkToCourse": "Haz clic aquí para ver tu nuevo curso \"{NAME}\" en {SITENAME}",
