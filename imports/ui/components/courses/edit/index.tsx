@@ -640,7 +640,7 @@ export function Edit(props: Props) {
         resetFields();
       } else {
         if (isNew) {
-          Router.go("showCourse", { _id: courseId }, { query: { showNextActions: "1" } });
+          Router.go("showCourse", { _id: courseId }, { query: { nextActions: "1" } });
         } else {
           Alert.success(
             t("message.courseChangesSaved", "Your changes to {NAME} have been saved.", {

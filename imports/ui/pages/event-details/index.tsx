@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
+import { Router } from "meteor/iron:router";
 import { Session } from "meteor/session";
 import moment from "moment";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Router } from "meteor/iron:router";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 
 import { EventModel } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { Regions } from "/imports/api/regions/regions";
 
-import * as Metatags from "/imports/utils/metatags";
-import { appendAsJsonLdToBody } from "/imports/utils/event-to-json-ld";
 import { truncate } from "lodash";
+import { appendAsJsonLdToBody } from "/imports/utils/event-to-json-ld";
 import { textPlain } from "/imports/utils/html-tools";
+import * as Metatags from "/imports/utils/metatags";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
-import { Event } from "./event";
 import { ActionResult } from "../../components/ActionResult";
+import { Event } from "./event";
 
 function Unregister({
   event,
@@ -126,9 +126,44 @@ export function EventPage({ event, isNew }: { event: EventModel; isNew: boolean 
   }
 
   return (
-    <div className="container">
-      <Event event={event} isNew={isNew} />
-    </div>
+    <>
+      {searchParams.nextActions === "1" && (
+        <ActionResult
+          type="success"
+          dismissible
+          title={t(
+            "event.details.registration.alertNextActions.title",
+            "You registered successfully.",
+          )}
+          actions={[
+            !event.isFullyBooked()
+              ? {
+                  text: t(
+                    "event.details.registration.alertNextActions.share",
+                    "Invite your friends",
+                  ),
+                  href: "#share",
+                }
+              : undefined,
+            {
+              text: t(
+                "event.details.registration.alertNextActions.calendar",
+                "Add events to my calendar",
+              ),
+              href: Router.path("profile", undefined, { hash: "#my-events" }),
+            },
+          ]}
+        >
+          {t(
+            "event.details.registration.alertNextActions.message",
+            "What do you wannt to do next?",
+          )}
+        </ActionResult>
+      )}
+      <div className="container">
+        <Event event={event} isNew={isNew} />
+      </div>
+    </>
   );
 }
 
