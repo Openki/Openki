@@ -160,6 +160,7 @@
   "course.edit.image.removed.error": "이미지를 삭제할 수 없습니다.",
   "course.edit.image.updated": "이미지가 저장되었습니다.",
   "course.edit.image.updated.error": "이미지를 저장할 수 없습니다.",
+  "course.edit.intern": "코스 페이지 밖에서 숨기기",
   "course.edit.internDescription": "그룹의 코스들을 볼 때에만 보여주기",
   "course.edit.learnOrTeach": "배우기 또는 가르치기?",
   "course.edit.linkToCourse": "{SITENAME}의 당신의 새로운 \"{NAME}\" 코스를 보려면 클릭하세요",
