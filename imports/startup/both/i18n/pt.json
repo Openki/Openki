@@ -107,6 +107,7 @@
   "course.edit.description": "Descrição",
   "course.edit.edit_categories": "Editar categorias",
   "course.edit.edit_course": "Editar curso",
+  "course.edit.intern": "Esconder na página da frente",
   "course.edit.internDescription": "Mostrar apenas quando estiver buscando os cursos de um grupo",
   "course.edit.needs.role": "Esse curso pode precisar…",
   "course.edit.no.categories": "Nenhuma categoria",
