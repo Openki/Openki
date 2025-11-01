@@ -10,6 +10,7 @@ export interface Props {
   placeholder?: string | undefined;
   value?: string | undefined;
   disabled?: boolean | undefined;
+  required?: boolean | undefined;
   onChange?:
     | ((
         /** string with html content */ value: string,
@@ -23,7 +24,7 @@ export interface Props {
 }
 
 export function Richtext(props: Props) {
-  const { id, className, placeholder, disabled, value, onChange, onBlur } = props;
+  const { id, className, placeholder, disabled, value, required, onChange, onBlur } = props;
   const { t } = useTranslation();
   const elementRef = useRef<HTMLDivElement>(null);
   const isRTL = useSessionEquals("textDirectionality", "rtl");
@@ -115,9 +116,14 @@ export function Richtext(props: Props) {
       onChange={!disabled ? handleChange : undefined}
       onInput={!disabled ? handleChange : undefined}
       onBlur={!disabled ? () => onBlur?.() : undefined}
+      // for accessibility
       aria-labelledby={props["aria-labelledby"]}
       aria-describedby={props["aria-describedby"]}
+      role="textbox"
+      aria-multiline="true"
+      aria-disabled={disabled}
       aria-invalid={props["aria-invalid"]}
+      aria-required={required}
     />
   );
 }
