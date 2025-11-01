@@ -1,11 +1,11 @@
-import React, { useState, DragEvent, ChangeEvent } from "react";
 import ImageBlobReduce from "image-blob-reduce";
-import { useTranslation } from "react-i18next";
 import mimeDb from "mime-db";
+import React, { ChangeEvent, DragEvent, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
 
-import { ButtonCancel, ButtonSave, ButtonDelete } from "../Buttons";
+import { ButtonCancel, ButtonDelete, ButtonSave } from "../Buttons";
 
 import "./styles.scss";
 
@@ -340,7 +340,7 @@ export function EditableImage(data: Data) {
                     type="button"
                     className="btn-close"
                     data-bs-dismiss="modal"
-                    aria-label="Close"
+                    aria-label={t("_button.close")}
                   ></button>
                 </div>
                 <div className="modal-body text-center">

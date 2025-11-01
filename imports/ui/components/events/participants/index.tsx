@@ -153,7 +153,7 @@ export function EventParticipants({ event }: Props) {
                     type="button"
                     className="btn-close"
                     data-bs-dismiss="modal"
-                    aria-label="Close"
+                    aria-label={t("_button.close")}
                   ></button>
                 </div>
                 <div className="modal-body text-dark">
