@@ -1,17 +1,17 @@
+import { Router } from "meteor/iron:router";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Modal } from "/imports/startup/client/bootstrap";
-import { Router } from "meteor/iron:router";
 import { useSession, useSessionEquals } from "/imports/utils/react-meteor-data";
 
-import { isEmail } from "/imports/utils/email-tools";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import { isEmail } from "/imports/utils/email-tools";
 
-import { LoginFrame, Props as LoginFrameProps } from "./login-frame";
 import { ForgotPwdFrame, Props as ForgotPwdFrameProps } from "./forgot-pwd-frame";
-import { VistiorFrame, Props as VisitorFrameProps } from "./visitor-frame";
+import { LoginFrame, Props as LoginFrameProps } from "./login-frame";
 import { RegisterFrame, Props as RegisterFrameProps } from "./register-frame";
+import { Props as VisitorFrameProps, VistiorFrame } from "./visitor-frame";
 
 import "./styles.scss";
 
