@@ -160,6 +160,7 @@
   "course.edit.image.removed.error": "L'image n'a pu être supprimée.",
   "course.edit.image.updated": "L'image a été enregistrée.",
   "course.edit.image.updated.error": "L'image n'a pu être enregistrée.",
+  "course.edit.intern": "Ne pas montrer sur la page d'accueil",
   "course.edit.internDescription": "Ne s'affiche que lorsque l'on regarde les cours d'un groupe",
   "course.edit.learnOrTeach": "Apprendre ou enseigner ?",
   "course.edit.linkToCourse": "Cliquez ici pour voir le nouveau cours \"{NAME}\" sur {SITENAME}",
