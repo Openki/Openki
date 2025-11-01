@@ -196,7 +196,7 @@ function AlertMessage(data: {
         type="button"
         className="btn-close btn-close-black"
         data-bs-dismiss="alert"
-        aria-label="Close"
+        aria-label={t("_button.close")}
         onClick={data.onClose}
       ></button>
     </div>

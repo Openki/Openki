@@ -178,36 +178,34 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
   return (
     <>
       {searchParams.showNextActions === "1" && (
-        <div className="mb-5">
-          <ActionResult
-            type="success"
-            dismissible
-            title={t("message.courseCreated", "{NAME} has been created", {
-              NAME: course.name,
-            })}
-            actions={[
-              course.description
-                ? {
-                    text: t("message.courseCreated.addDescription", "Add a description"),
-                    href: "#course-description",
-                  }
-                : undefined,
-              {
-                text: t("message.courseCreated.addImage", "Add an image"),
-                href: "#files-tab",
-              },
-              mayShare(course)
-                ? { text: t("message.courseCreated.share", "Invite your friends"), href: "#share" }
-                : undefined,
-              {
-                text: t("message.courseCreated.addEvent", "Create event"),
-                href: "#course-event-add",
-              },
-            ]}
-          >
-            {t("message.courseCreated.description", "What do you wannt to do next?")}
-          </ActionResult>
-        </div>
+        <ActionResult
+          type="success"
+          dismissible
+          title={t("message.courseCreated", "{NAME} has been created", {
+            NAME: course.name,
+          })}
+          actions={[
+            course.description
+              ? {
+                  text: t("message.courseCreated.addDescription", "Add a description"),
+                  href: "#course-description",
+                }
+              : undefined,
+            {
+              text: t("message.courseCreated.addImage", "Add an image"),
+              href: "#files-tab",
+            },
+            mayShare(course)
+              ? { text: t("message.courseCreated.share", "Invite your friends"), href: "#share" }
+              : undefined,
+            {
+              text: t("message.courseCreated.addEvent", "Create event"),
+              href: "#course-event-add",
+            },
+          ]}
+        >
+          {t("message.courseCreated.description", "What do you wannt to do next?")}
+        </ActionResult>
       )}
       <div data-test="course-details" className="container">
         <div className="row course-page g-3">

@@ -167,6 +167,7 @@ function Task({
 }
 
 export function AccountTasks() {
+  const { t } = useTranslation();
   const pleaseLogin = useSessionEquals("pleaseLogin", true);
   const top = useSession("top");
   const viewport = useViewportSize();
@@ -235,7 +236,7 @@ export function AccountTasks() {
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
-                aria-label="Close"
+                aria-label={t("_button.close")}
               ></button>
             </div>
             <div className="modal-body">
