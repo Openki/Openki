@@ -167,6 +167,7 @@
   "course.edit.image.removed.error": "Impossibile rimuovere l'immagine.",
   "course.edit.image.updated": "Immagine salvata.",
   "course.edit.image.updated.error": "Impossibile salvare l'immagine.",
+  "course.edit.intern": "Nascondi nella pagina principale",
   "course.edit.internDescription": "Mostra solo quando si guarda ai corsi di un gruppo",
   "course.edit.learnOrTeach": "Imparare o insegnare?",
   "course.edit.linkToCourse": "Clicca qui per vedere il tuo nuovo corso \"{NAME}\" su {SITENAME}",
