@@ -12,7 +12,7 @@ interface CommonProps {
   label: ReactNode;
   size?: Size;
   /**
-   * A string prefixed as part of the control,
+   * A string or icon prefixed as part of the control,
    * strings beginning with "fa-" are treated as icons
    */
   prepend?: string | undefined;
@@ -32,6 +32,7 @@ interface CommonProps {
 
 interface TextInputProps {
   type: "text" | "tel" | "email" | "password";
+  /** Used for instructions or an example of the required data format. */
   placeholder?: string | undefined;
   value: string;
   autoComplete?: HTMLInputElement["autocomplete"] | undefined;
@@ -42,6 +43,7 @@ interface TextInputProps {
 interface TextareaProps {
   type: "textarea";
   rows?: number | undefined;
+  /** Used for instructions or an example of the required data format. */
   placeholder?: string | undefined;
   value: string;
   autoComplete?: HTMLTextAreaElement["autocomplete"] | undefined;
@@ -51,6 +53,7 @@ interface TextareaProps {
 
 interface RichtextProps {
   type: "richtext";
+  /** Used for instructions or an example of the required data format. */
   placeholder?: string | undefined;
   value: string;
   onChange?:
@@ -63,6 +66,7 @@ interface RichtextProps {
 
 interface NumberInputProps {
   type: "number" | "integer";
+  /** Used for instructions or an example of the required data format. */
   placeholder?: string | undefined;
   value: number;
   autoComplete?: HTMLInputElement["autocomplete"] | undefined;
@@ -182,6 +186,7 @@ function createInputElement<K extends string>(props: Props<K>) {
     className: getControlClassNames(type, size, prepend, isInvalid).join(" "),
     disabled,
     autoComplete: "autoComplete" in props ? props.autoComplete : undefined,
+    reqired: !optional,
     onBlur: () => onBlur?.(),
     "aria-describedby":
       getDescribedby(id, prepend, typeof error !== "boolean" && !!error).join(" ") || undefined,
@@ -323,6 +328,7 @@ function getGroupClassNames(size: Size | undefined, hasErrorMessage: boolean) {
   return className;
 }
 
+/** Form control with label, validation message, etc. it makes it easy to follow standards for accessibility */
 export function FormControl<K extends string>(props: Props<K>) {
   const { t } = useTranslation();
 
