@@ -186,7 +186,7 @@ function createInputElement<K extends string>(props: Props<K>) {
     className: getControlClassNames(type, size, prepend, isInvalid).join(" "),
     disabled,
     autoComplete: "autoComplete" in props ? props.autoComplete : undefined,
-    reqired: !optional,
+    required: !optional,
     onBlur: () => onBlur?.(),
     "aria-describedby":
       getDescribedby(id, prepend, typeof error !== "boolean" && !!error).join(" ") || undefined,
