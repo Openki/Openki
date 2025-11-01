@@ -177,7 +177,7 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
 
   return (
     <>
-      {searchParams.showNextActions === "1" && (
+      {searchParams.nextActions === "1" && (
         <ActionResult
           type="success"
           dismissible

@@ -86,8 +86,7 @@ export function Button({
         children
       ) : (
         <>
-          <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
-          {busyText}
+          <i className="fa-solid fa-circle-notch fa-spin fa-fw" /> {busyText}
         </>
       )}
     </button>

@@ -1,20 +1,20 @@
 import { Router } from "meteor/iron:router";
-import { useSearchParams } from "/imports/utils/react-meteor-router";
-import { useTranslation } from "react-i18next";
-import React, { useState } from "react";
-import { useUser } from "/imports/utils/react-meteor-data";
 import moment from "moment";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useUser } from "/imports/utils/react-meteor-data";
+import { useSearchParams } from "/imports/utils/react-meteor-router";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { EventModel } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
-import { Regions } from "/imports/api/regions/regions";
 import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
+import { Regions } from "/imports/api/regions/regions";
 
-import { PleaseLogin } from "/imports/ui/components/please-login";
-import { EventParticipants } from "/imports/ui/components/events/participants";
 import { RegisterPanel } from "./register-panel";
 import { UnregisterPanel } from "./unregister-panel";
+import { EventParticipants } from "/imports/ui/components/events/participants";
+import { PleaseLogin } from "/imports/ui/components/please-login";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
@@ -64,23 +64,7 @@ export function EventRegistration({ event }: Props) {
     try {
       await EventsMethods.addParticipant(event._id, companions);
 
-      Alert.successNextActions(
-        t("event.details.registration.alertNextActions.title", "You registered successfully."),
-        t("event.details.registration.alertNextActions.message", "What do you wannt to do next?"),
-        !event.isFullyBooked()
-          ? {
-              text: t("event.details.registration.alertNextActions.share", "Invite your friends"),
-              href: "#share",
-            }
-          : undefined,
-        {
-          text: t(
-            "event.details.registration.alertNextActions.calendar",
-            "Add events to my calendar",
-          ),
-          href: Router.path("profile", undefined, { hash: "#my-events" }),
-        },
-      );
+      Router.go("showEvent", event, { query: { nextActions: "1" } });
 
       Analytics.trackEvent("RSVPs", "RSVPs as participant", Regions.findOne(event.region)?.nameEn);
     } catch (err) {
