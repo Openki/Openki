@@ -13,7 +13,7 @@ export function ButtonCourseUnarchive({
 
   return (
     <Button
-      id="course-details-co"
+      id="course-details-course-unarchive"
       disabled={disabled}
       className="btn-primary"
       needsLogin

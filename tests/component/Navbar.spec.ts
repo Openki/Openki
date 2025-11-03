@@ -13,7 +13,7 @@ describe("Navbar", () => {
       cy.get('[data-test="account-tasks-login-frame-password"]').clear();
       cy.get('[data-test="account-tasks-login-frame-password"]').type("greg");
       cy.get('[data-test="account-tasks-login-frame-password"]').clear();
-      cy.get('[data-test="account-tasks-login-frame-submit"]').click();
+      cy.get("#account-tasks-login-frame-submit").click();
       cy.get('[data-test="account-tasks-login-frame-password"]').type("greg{enter}");
       cy.get('[data-test="navbar-login-button"]').should("contain.text", "Seee");
 
@@ -55,7 +55,7 @@ describe("Navbar", () => {
       cy.get('[data-test="account-tasks-login-frame-username"]').type("Seee");
       cy.get('[data-test="account-tasks-login-frame-password"]').click();
       cy.get('[data-test="account-tasks-login-frame-password"]').type("greg");
-      cy.get('[data-test="account-tasks-login-frame-submit"]').click();
+      cy.get("#account-tasks-login-frame-submit").click();
       cy.get(".navbar-collapse")
         .should("not.have.class", "show")
         .should("not.have.class", "collapsing");

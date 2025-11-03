@@ -7,11 +7,11 @@ describe("Propose course via frame", function () {
     cy.get("label.btn-edit").click();
     cy.get("#course-edit-title").type("Permakultur im Hausgarten");
     cy.get("#courses-edit-region-selection").select("9JyFCoKWkxnf8LWPh");
-    cy.get('[data-test="please-login-button"]').click();
+    cy.get("#courses-edit-save").click();
     cy.get('[data-test="account-tasks-login-frame-username"]').type("Seee");
     cy.get('[data-test="account-tasks-login-frame-password"]').type("greg");
     cy.get("#accountTaskModal div.modal-body").click();
-    cy.get('[data-test="account-tasks-login-frame-submit"]').click();
+    cy.get("#account-tasks-login-frame-submit").click();
     cy.get("a.alert-link").invoke("removeAttr", "target").click();
     cy.get('[data-test="course-details"] .course-member-role span.fa-solid').should(
       "have.class",
@@ -25,7 +25,7 @@ describe("Propose course via frame", function () {
     cy.get("#course-edit-title").click();
     cy.get("#course-edit-title").type("OpenStreetMap für Anfänger");
     cy.get("#courses-edit-region-selection").select("9JyFCoKWkxnf8LWPh");
-    cy.get('[data-test="please-login-button"]').click();
+    cy.get("#courses-edit-save").click();
     cy.get('[data-test="account-tasks-login-frame-username"]').type("Seee");
     cy.get('[data-test="account-tasks-login-frame-password"]').type("greg{enter}");
     cy.get("a.alert-link").invoke("removeAttr", "target").click();
@@ -39,7 +39,7 @@ describe("Propose course via frame", function () {
     cy.get("#course-edit-title").click();
     cy.get("#course-edit-title").type("How to Openki");
     cy.get("#courses-edit-region-selection").select("9JyFCoKWkxnf8LWPh");
-    cy.get('[data-test="please-login-button"]').click();
+    cy.get("#courses-edit-save").click();
     cy.get('[data-test="account-tasks-login-frame-username"]').type("Seee");
     cy.get('[data-test="account-tasks-login-frame-password"]').type("greg{enter}");
     cy.get("a.alert-link").invoke("removeAttr", "target").click();

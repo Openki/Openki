@@ -17,7 +17,7 @@ describe("Events Venue Edit", () => {
     cy.get("#maincontent input.focus").type("asz");
     cy.get("#edit-venue-typeahead-item-1 strong").click();
     cy.get('[data-test="events-edit-venue-hint-contact-host"]').should("be.visible");
-    cy.get('[data-test="please-login-button"]').click();
+    cy.get("#events-edit-save").click();
 
     cy.visit("/event/create?courseId=cbda598713");
     cy.get("#events-edit-start-end-startTime").type("22:00");
