@@ -44,7 +44,7 @@ describe("course details page", () => {
     it("should allow to archive and unarchive a course", () => {
       cy.get("button.btn-archive").click();
       cy.get('[data-test="course-details"] div.alert').should("have.class", "alert-archived");
-      cy.get("button.btn-go").click();
+      cy.get("#course-details-course-unarchive").click();
     });
   });
 });
