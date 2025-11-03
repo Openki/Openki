@@ -18,12 +18,8 @@ export function VenueDetailsPage({ venue, isNew }: { venue: VenueModel; isNew: b
   function editAttr(): EditProps {
     return {
       venue,
-      onSaved: () => {
-        setEditing(false);
-      },
-      onCanceled: () => {
-        setEditing(false);
-      },
+      onSaved: () => setEditing(false),
+      onCanceled: () => setEditing(false),
     };
   }
 
@@ -42,12 +38,7 @@ export function VenueDetailsPage({ venue, isNew }: { venue: VenueModel; isNew: b
       {editing ? (
         <Edit {...editAttr()} />
       ) : (
-        <Display
-          venue={venue}
-          onEdit={() => {
-            setEditing(true);
-          }}
-        />
+        <Display venue={venue} onEdit={() => setEditing(true)} />
       )}
     </div>
   );

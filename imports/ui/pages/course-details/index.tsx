@@ -261,7 +261,12 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
                           </ButtonCourseArchive>
                         )}
 
-                        {!expanded && <ButtonDelete onClick={async () => setExpanded(true)} />}
+                        {!expanded && (
+                          <ButtonDelete
+                            id="course-details-confirm-delete"
+                            onClick={async () => setExpanded(true)}
+                          />
+                        )}
                       </div>
 
                       {expanded && (
@@ -269,13 +274,9 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
                           archiveButton={!course.archived}
                           disabled={isBusy}
                           course={course}
-                          onArchive={async () => {
-                            handelOnArchive();
-                          }}
+                          onArchive={async () => handelOnArchive()}
                           onDelete={handleOnDelete}
-                          onCancel={() => {
-                            setExpanded(false);
-                          }}
+                          onCancel={() => setExpanded(false)}
                         />
                       )}
                     </>

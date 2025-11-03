@@ -314,6 +314,7 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
       <div className="replicate-actions">
         {!!replicaDateCount() && (
           <ButtonSave
+            id="events-replication-save"
             onClick={async () => {
               const startLocal = LocalTime.fromString(event.startLocal);
               const endLocal = LocalTime.fromString(event.endLocal);

@@ -351,7 +351,7 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
           </div>
         </div>
         <div className="form-actions">
-          <ButtonSave onClick={handleSave} />
+          <ButtonSave id="venues-edit-save" onClick={handleSave} />
           <ButtonCancel onClick={handleCancel} />
         </div>
       </form>

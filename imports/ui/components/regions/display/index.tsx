@@ -107,9 +107,8 @@ export function Display({ region, onEdit, onDelete }: Props) {
             />
             {!verifyDelete && (
               <ButtonDelete
-                onClick={async () => {
-                  setVerifyDelete(true);
-                }}
+                id="regions-display-verifyDelete"
+                onClick={async () => setVerifyDelete(true)}
               />
             )}
           </div>

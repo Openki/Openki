@@ -15,11 +15,7 @@ export function DeleteConfirm({ confirmText, confirmButton, onRemove, busyButton
 
   if (!isConfirm) {
     return (
-      <ButtonDelete
-        onClick={async () => {
-          setIsConfirm(true);
-        }}
-      />
+      <ButtonDelete id="delete-confirm-confirmDelete" onClick={async () => setIsConfirm(true)} />
     );
   }
   return (
@@ -27,9 +23,7 @@ export function DeleteConfirm({ confirmText, confirmButton, onRemove, busyButton
       confirmText={confirmText}
       confirmButton={confirmButton}
       onRemove={onRemove}
-      onCancel={async () => {
-        setIsConfirm(false);
-      }}
+      onCancel={async () => setIsConfirm(false)}
       busyButton={busyButton}
     />
   );

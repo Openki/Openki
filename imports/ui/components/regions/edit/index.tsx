@@ -75,7 +75,7 @@ export function Edit(data: Data) {
           }}
         />
         <div className="form-actions">
-          <ButtonSave onClick={handleSave} />
+          <ButtonSave id="regions-edit-save" onClick={handleSave} />
           <ButtonCancel onClick={() => data.onCancel()} />
         </div>
       </PleaseLogin>

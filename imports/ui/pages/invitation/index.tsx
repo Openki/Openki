@@ -70,6 +70,7 @@ export function InvitationPage({
             )}
           </p>
           <PleaseLogin
+            id="invitation-save"
             type="button"
             onClick={handleClick}
             className="btn btn-lg btn-save "

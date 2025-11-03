@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { ActionButton } from "../../../components/Buttons";
+import { Button } from "../../../components/Buttons";
 
 export function ButtonCourseUnarchive({
   disabled,
@@ -12,7 +12,8 @@ export function ButtonCourseUnarchive({
   const { t } = useTranslation();
 
   return (
-    <ActionButton
+    <Button
+      id="course-details-co"
       disabled={disabled}
       className="btn-primary"
       needsLogin
@@ -20,6 +21,6 @@ export function ButtonCourseUnarchive({
       busyText={t("course.archive.unarchiveButton.unarchiving", "Unarchiving…")}
     >
       {t("course.archive.unarchiveButton", "Unarchive")}
-    </ActionButton>
+    </Button>
   );
 }

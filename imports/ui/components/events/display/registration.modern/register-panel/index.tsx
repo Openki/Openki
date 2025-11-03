@@ -18,8 +18,9 @@ function ButtonRegister(props: {
 
   return (
     <PleaseLogin
+      id="events-display-registration"
       type="button"
-      visitorUserAllowed={true}
+      visitorUserAllowed
       className="btn btn-add btn-event text-center"
       onClick={props.onClick}
       disabled={props.busy}

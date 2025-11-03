@@ -18,15 +18,16 @@ function ButtonRegister(props: {
 
   return (
     <PleaseLogin
+      id="events-display-registration"
       type="button"
-      visitorUserAllowed={true}
-      className="btn btn-add btn-event text-center"
+      visitorUserAllowed
+      className="btn-add btn-event text-center"
       onClick={props.onClick}
       disabled={props.busy}
     >
       {props.busy ? (
         <>
-          <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
+          <i className="fa-solid fa-circle-notch fa-spin fa-fw" />{" "}
           {t("_button.registering", "Registering…")}
         </>
       ) : !props.forTwo ? (
@@ -61,9 +62,7 @@ export function RegisterPanel({ event, busy, onRegister }: Props) {
         <button
           type="button"
           className="btn btn-add btn-event"
-          onClick={() => {
-            setRegisterDropdown(true);
-          }}
+          onClick={() => setRegisterDropdown(true)}
         >
           {t("event.details.reserve-a-seat", "Reserve a seat")}
         </button>

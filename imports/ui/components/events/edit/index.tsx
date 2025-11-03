@@ -708,7 +708,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           )}
 
           <div className="form-actions">
-            <ButtonSave onClick={handleSubmit} disabled={isBusy} />
+            <ButtonSave id="events-edit-save" onClick={handleSubmit} disabled={isBusy} />
             <ButtonCancel onClick={onCancel} />
           </div>
         </div>

@@ -35,7 +35,7 @@ export function CancelConfirmDialog({ event, onCancel, onClose }: Props) {
           <div className="mb-3">
             <div className="input-group">
               <span className="input-group-text">
-                <span className="fa-solid fa-pencil fa-fw" aria-hidden="true"></span>
+                <i className="fa-solid fa-pencil fa-fw" />
               </span>
               <textarea
                 rows={3}
@@ -47,9 +47,7 @@ export function CancelConfirmDialog({ event, onCancel, onClose }: Props) {
                   "Please add a reason here. (This message will be sent to all the registered users and not be visible here afterwards)",
                 )}
                 value={reason}
-                onChange={(e) => {
-                  setReason(e.target.value);
-                }}
+                onChange={(e) => setReason(e.target.value)}
               ></textarea>
             </div>
           </div>
@@ -58,22 +56,15 @@ export function CancelConfirmDialog({ event, onCancel, onClose }: Props) {
 
       <div className="form-actions">
         <PleaseLogin
+          id="events-cancel-confirm-dialog-cancel"
           type="button"
           className="btn btn-danger text-nowrap"
-          onClick={async () => {
-            await onCancel(reason);
-          }}
+          onClick={async () => await onCancel(reason)}
           busyText={t("event.canceling", "Canceling...")}
         >
           {t("event.cancel.confirm.button", "Cancel {EVENT}", { EVENT: event.title })}
         </PleaseLogin>
-        <button
-          type="button"
-          className="btn btn-edit"
-          onClick={() => {
-            onClose();
-          }}
-        >
+        <button type="button" className="btn btn-edit" onClick={() => onClose()}>
           {t("event.details.close", "Close")}
         </button>
       </div>

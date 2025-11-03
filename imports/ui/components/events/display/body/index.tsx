@@ -283,7 +283,7 @@ export function Display({
                     </button>
                   ) : (
                     <PleaseLogin
-                      data-test="events-display-body-uncancel-button"
+                      id="events-display-body-uncancel-button"
                       type="button"
                       className="btn btn-edit"
                       onClick={handelUncancel}
@@ -291,7 +291,7 @@ export function Display({
                       {t("event.details.uncancel", "Uncancel this event")}
                     </PleaseLogin>
                   )}
-                  <ButtonDelete onClick={handelExpand} />
+                  <ButtonDelete id="events-display-confirmDelete" onClick={handelExpand} />
                 </>
               )}
             </div>
