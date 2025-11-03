@@ -17,7 +17,7 @@ export function ButtonCourseArchive({
 
   return (
     <ActionButton
-      className={`btn ${className}`}
+      className={`${className}`}
       disabled={disabled}
       needsLogin
       onClick={onArchive}

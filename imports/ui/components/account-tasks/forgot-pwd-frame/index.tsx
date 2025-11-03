@@ -8,8 +8,6 @@ import * as Alert from "/imports/api/alerts/alert";
 
 import { isEmail } from "/imports/utils/email-tools";
 
-import "./styles.scss";
-
 export interface Props {
   email: string;
   onForgotPwd: () => void;

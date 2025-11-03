@@ -141,7 +141,6 @@ export function LoginFrame({
             {!!errors.username && <div className="invalid-feedback">{errors.username}</div>}
           </div>
         </div>
-        <div className="mb-3">
           <div className={`input-group ${errors.password ? "has-validation" : ""}`}>
             <span className="input-group-text">
               <span className="fa-solid fa-lock fa-fw" aria-hidden="true"></span>
@@ -156,11 +155,10 @@ export function LoginFrame({
             />
             {!!errors.password && <div className="invalid-feedback">{errors.password}</div>}
           </div>
-        </div>
         <div className="mb-3 text-end">
           <button
             type="button"
-            className="btn btn-link p-0 js-forgot-pwd-btn forgot-pwd-mail-info"
+            className="btn btn-link p-0"
             onClick={() => onForgotPassword(loginData)}
           >
             {t("forgot", "I forgot my password")}
@@ -170,7 +168,7 @@ export function LoginFrame({
           <button
             data-test="account-tasks-login-frame-submit"
             type="submit"
-            className="btn btn-secondary js-login form-control"
+            className="btn btn-secondary form-control"
             disabled={!!isBusy}
           >
             {isBusy === "Password" ? (

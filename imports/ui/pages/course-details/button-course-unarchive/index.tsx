@@ -14,7 +14,7 @@ export function ButtonCourseUnarchive({
   return (
     <ActionButton
       disabled={disabled}
-      className="btn btn-go"
+      className="btn-primary"
       needsLogin
       onClick={onUnarchive}
       busyText={t("course.archive.unarchiveButton.unarchiving", "Unarchiving…")}

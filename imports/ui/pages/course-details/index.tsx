@@ -255,21 +255,13 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
                           <ButtonCourseArchive
                             disabled={isBusy}
                             className="btn-archive"
-                            onArchive={async () => {
-                              handelOnArchive();
-                            }}
+                            onArchive={async () => handelOnArchive()}
                           >
                             {t("course.archive.archiveButton.archive", "Archive")}
                           </ButtonCourseArchive>
                         )}
 
-                        {!expanded && (
-                          <ButtonDelete
-                            onClick={async () => {
-                              setExpanded(true);
-                            }}
-                          />
-                        )}
+                        {!expanded && <ButtonDelete onClick={async () => setExpanded(true)} />}
                       </div>
 
                       {expanded && (

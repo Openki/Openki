@@ -18,7 +18,7 @@ import * as Metatags from "/imports/utils/metatags";
 import * as Tooltips from "/imports/utils/Tooltips";
 
 import { Avatar } from "../../components/avatar";
-import { Button, ButtonCancel, ButtonDelete } from "../../components/Buttons";
+import { ActionButton, ButtonCancel, ButtonDelete } from "../../components/Buttons";
 import { Contribution } from "../../components/Contribution";
 import { Courselist } from "../../components/profiles/course-list";
 import { SendMessage, Data as SendMessageData } from "../../components/SendMessage";
@@ -375,13 +375,13 @@ export function UserprofilePage({ user }: Props) {
               </div>
 
               <div className="form-actions">
-                <Button
-                  className="btn btn-danger"
+                <ActionButton
+                  className="btn-danger"
                   onClick={() => handleConfirmDeleteUser()}
                   busyText={t("profile.account.delete.confirm.button.busy", "Deleting profile…")}
                 >
                   {t("profile.account.delete.confirm.button", "Delete user and all his traces")}
-                </Button>{" "}
+                </ActionButton>{" "}
                 <ButtonCancel onClick={toggleVerifyUserDelete} />
               </div>
             </div>
