@@ -48,7 +48,7 @@ export function ConfirmDialog({
         )}
 
         <ActionButton
-          className="btn btn-danger"
+          className="btn-danger"
           disabled={disabled}
           needsLogin
           onClick={async () => {

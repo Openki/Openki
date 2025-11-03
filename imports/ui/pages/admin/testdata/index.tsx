@@ -5,7 +5,7 @@ import { clean, create } from "/imports/api/fixtures/methods";
 import * as Alert from "/imports/api/alerts/alert";
 import { updateDbCacheFields } from "/imports/api/db-utilities/updateDbCacheFields";
 
-import { Button } from "../../../components/Buttons";
+import { ActionButton } from "../../../components/Buttons";
 
 export function TestdataPage() {
   const { t } = useTranslation();
@@ -18,8 +18,8 @@ export function TestdataPage() {
         <br />
         {t("testdata.hint", "This only works if testdata flag is set in the settings.")}
       </div>
-      <Button
-        className="btn btn-lg btn-danger"
+      <ActionButton
+        className="btn-danger"
         onClick={async () => {
           if (
             !window.confirm(
@@ -41,8 +41,8 @@ export function TestdataPage() {
           }
         }}
       >
-        <i className="fa-solid fa-fw fa-database"></i> {t("testdata.resetAll", "Reset all data")}
-      </Button>
+        <i className="fa-solid fa-fw fa-database" /> {t("testdata.resetAll", "Reset all data")}
+      </ActionButton>
     </>
   );
 }

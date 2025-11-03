@@ -2,27 +2,83 @@ import React, { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PleaseLogin } from "./please-login";
 
-export function ActionButton({
+type Size = "large" | "medium" | "small";
+
+function buildSizeClass(baseClass: string, size: Size = "medium") {
+  switch (size) {
+    case "large":
+      return baseClass + "-lg";
+    case "medium":
+      return "";
+    case "small":
+      return baseClass + "-sm";
+    default:
+      throw new Error(`Unexpected value for prop "size": ${size}`);
+  }
+}
+
+interface CommonProps {
+  className?: string | undefined;
+  size?: Size;
+  block?: boolean | undefined;
+  disabled?: boolean | undefined;
+  children: ReactNode;
+  busyText?: string | undefined;
+}
+
+type LoginProps = CommonProps & {
+  /**
+   * Login the user before triggering onClick.
+   *
+   * If this button is part of a form, consider using “submit” for reasons of semantic
+   * correctness for accessibility and the full use of the browser default behavior.
+   */
+  needsLogin?: boolean | undefined;
+  onClick: () => Promise<void>;
+};
+
+type SubmitProps = CommonProps & {
+  submit: true;
+  isBusy: boolean;
+};
+
+type Props = LoginProps | SubmitProps;
+
+function Content({
+  isBusy,
+  busyText,
+  children,
+}: {
+  isBusy?: boolean | undefined;
+  busyText?: string | undefined;
+  children: ReactNode;
+}) {
+  return (
+    <>
+      {!isBusy ? (
+        children
+      ) : (
+        <>
+          <i className="fa-solid fa-circle-notch fa-spin fa-fw" /> {busyText}
+        </>
+      )}
+    </>
+  );
+}
+
+function ControlledButton({
   className,
   disabled,
   needsLogin,
   onClick,
   children,
   busyText,
-}: {
-  className?: string | undefined;
-  disabled?: boolean | undefined;
-  /** Login the user before triggering onClick. */
-  needsLogin?: boolean | undefined;
-  onClick: () => Promise<void>;
-  children: ReactNode;
-  busyText?: string | undefined;
-}) {
+}: LoginProps) {
   const [isBusy, setIsBusy] = useState(false);
 
-  const attributes = {
+  const commonProps = {
     type: "button" as const,
-    className: `${className} text-nowrap`,
+    className,
     disabled: isBusy || disabled,
     onClick: async () => {
       setIsBusy(true);
@@ -35,62 +91,39 @@ export function ActionButton({
   };
 
   const content = (
-    <>
-      {!isBusy ? (
-        children
-      ) : (
-        <>
-          <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
-          {busyText}
-        </>
-      )}
-    </>
+    <Content isBusy={isBusy} busyText={busyText}>
+      {children}
+    </Content>
   );
 
-  if (needsLogin) {
-    return <PleaseLogin {...attributes}>{content}</PleaseLogin>;
-  }
-  return <button {...attributes}>{content}</button>;
+  return needsLogin ? (
+    <PleaseLogin {...commonProps}>{content}</PleaseLogin>
+  ) : (
+    <button {...commonProps}>{content}</button>
+  );
 }
 
-export function Button({
-  className,
-  disabled,
-  onClick,
-  children,
-  busyText,
-}: {
-  className?: string | undefined;
-  disabled?: boolean | undefined;
-  onClick: (event: { preventDefault: () => void }) => Promise<void>;
-  children: ReactNode;
-  busyText?: string | undefined;
-}) {
-  const [isBusy, setIsBusy] = useState(false);
+export function ActionButton(props: Props) {
+  const { className, size, block, disabled, children, busyText } = props;
 
-  return (
-    <button
-      type="button"
-      className={`${className} text-nowrap`}
-      disabled={isBusy || disabled}
-      onClick={async (event) => {
-        setIsBusy(true);
-        try {
-          await onClick(event);
-        } finally {
-          setIsBusy(false);
-        }
-      }}
-    >
-      {!isBusy ? (
-        children
-      ) : (
-        <>
-          <i className="fa-solid fa-circle-notch fa-spin fa-fw" /> {busyText}
-        </>
-      )}
-    </button>
-  );
+  const fullClassName = `btn ${buildSizeClass("btn", size)} text-nowrap ${className}`;
+
+  const button =
+    "onClick" in props ? (
+      <ControlledButton {...props} className={fullClassName} />
+    ) : (
+      <button type="submit" className={fullClassName} disabled={props.isBusy || disabled}>
+        <Content isBusy={props.isBusy} busyText={busyText}>
+          {children}
+        </Content>
+      </button>
+    );
+
+  if (block) {
+    <div className="d-grid">{button}</div>;
+  }
+
+  return button;
 }
 
 export function ButtonSave(props: {
@@ -101,15 +134,15 @@ export function ButtonSave(props: {
 }) {
   const { t } = useTranslation();
   return (
-    <PleaseLogin
-      type="button"
-      className={`btn btn-save text-nowrap ${props.className || ""}`}
+    <ActionButton
+      className={`btn-save ${props.className || ""}`}
+      needsLogin
       onClick={props.onClick}
       disabled={props.disabled}
       busyText={t("_button.saving", "Saving…")}
     >
       {props.children || t("_button.save")}
-    </PleaseLogin>
+    </ActionButton>
   );
 }
 
@@ -129,8 +162,7 @@ export function ButtonSubmit(props: {
         t("_button.save")
       ) : (
         <>
-          <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
-          {t("_button.saving", "Saving…")}
+          <i className="fa-solid fa-circle-notch fa-spin fa-fw" /> {t("_button.saving", "Saving…")}
         </>
       )}
     </button>
@@ -199,8 +231,7 @@ export function ButtonDelete({
         children || t("_button.delete")
       ) : (
         <>
-          <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
-          {busyText}
+          <i className="fa-solid fa-circle-notch fa-spin fa-fw" /> {busyText}
         </>
       )}
     </PleaseLogin>

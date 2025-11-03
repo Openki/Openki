@@ -320,8 +320,6 @@ function createInputElement<K extends string>(props: Props<K>) {
 function getGroupClassNames(size: Size | undefined, hasErrorMessage: boolean) {
   const className = ["input-group", buildSizeClass("input-group", size)];
 
-  className.push(buildSizeClass("input-group", size));
-
   if (hasErrorMessage) {
     className.push("has-validation");
   }
