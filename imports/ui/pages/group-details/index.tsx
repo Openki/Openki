@@ -322,7 +322,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
           </div>
           {group.isNew() && (
             <div className="actions">
-              <ButtonSave onClick={handleSave} disabled={isBusy} />
+              <ButtonSave id="group-details-save" onClick={handleSave} disabled={isBusy} />
               <ButtonCancel onClick={handleCancel} disabled={isBusy} />
             </div>
           )}

@@ -73,7 +73,7 @@ export function JoinPage({ joinLink }: Props) {
               },
             )}
           </p>
-          <ButtonSave className="btn-lg" onClick={handleClick}>
+          <ButtonSave id="join" className="btn-lg" onClick={handleClick}>
             {!user
               ? t("joinPage.newUser", "Join {TENANT}", { TENANT: tenant?.name })
               : t("joinPage.existingUser", "Join {TENANT} with my user {USER}", {

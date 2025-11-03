@@ -1,23 +1,13 @@
 import React, { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
+
 import { PleaseLogin } from "./please-login";
 
-type Size = "large" | "medium" | "small";
-
-function buildSizeClass(baseClass: string, size: Size = "medium") {
-  switch (size) {
-    case "large":
-      return baseClass + "-lg";
-    case "medium":
-      return "";
-    case "small":
-      return baseClass + "-sm";
-    default:
-      throw new Error(`Unexpected value for prop "size": ${size}`);
-  }
-}
+import { buildSizeClass, Size } from "../lib/buildSizeClass";
 
 interface CommonProps {
+  /** needed to identify for testing */
+  id: string;
   className?: string | undefined;
   size?: Size;
   block?: boolean | undefined;
@@ -67,6 +57,7 @@ function Content({
 }
 
 function ControlledButton({
+  id,
   className,
   disabled,
   needsLogin,
@@ -77,6 +68,7 @@ function ControlledButton({
   const [isBusy, setIsBusy] = useState(false);
 
   const commonProps = {
+    id,
     type: "button" as const,
     className,
     disabled: isBusy || disabled,
@@ -103,16 +95,16 @@ function ControlledButton({
   );
 }
 
-export function ActionButton(props: Props) {
-  const { className, size, block, disabled, children, busyText } = props;
+export function Button(props: Props) {
+  const { id, className, size, block, disabled, children, busyText } = props;
 
-  const fullClassName = `btn ${buildSizeClass("btn", size)} text-nowrap ${className}`;
+  const fullClassName = ["btn", buildSizeClass("btn", size), "text-nowrap", className].join(" ");
 
   const button =
     "onClick" in props ? (
       <ControlledButton {...props} className={fullClassName} />
     ) : (
-      <button type="submit" className={fullClassName} disabled={props.isBusy || disabled}>
+      <button id={id} type="submit" className={fullClassName} disabled={props.isBusy || disabled}>
         <Content isBusy={props.isBusy} busyText={busyText}>
           {children}
         </Content>
@@ -127,6 +119,7 @@ export function ActionButton(props: Props) {
 }
 
 export function ButtonSave(props: {
+  id: string;
   className?: string;
   disabled?: boolean | undefined;
   children?: ReactNode;
@@ -134,7 +127,8 @@ export function ButtonSave(props: {
 }) {
   const { t } = useTranslation();
   return (
-    <ActionButton
+    <Button
+      id={props.id}
       className={`btn-save ${props.className || ""}`}
       needsLogin
       onClick={props.onClick}
@@ -142,30 +136,29 @@ export function ButtonSave(props: {
       busyText={t("_button.saving", "Saving…")}
     >
       {props.children || t("_button.save")}
-    </ActionButton>
+    </Button>
   );
 }
 
-export function ButtonSubmit(props: {
+export function ButtonSubmit({
+  disabled,
+  isBusy,
+}: {
   disabled?: boolean | undefined;
-  isBusy?: boolean | undefined;
+  isBusy: boolean;
 }) {
   const { t } = useTranslation();
   return (
-    <button
-      data-test="button-submit"
-      type="submit"
-      className="btn btn-cancel text-nowrap"
-      disabled={props.disabled}
+    <Button
+      id="button-submit"
+      submit
+      className="btn-cancel"
+      disabled={disabled}
+      busyText={t("_button.saving", "Saving…")}
+      isBusy={isBusy}
     >
-      {!props.isBusy ? (
-        t("_button.save")
-      ) : (
-        <>
-          <i className="fa-solid fa-circle-notch fa-spin fa-fw" /> {t("_button.saving", "Saving…")}
-        </>
-      )}
-    </button>
+      {t("_button.save")}
+    </Button>
   );
 }
 
@@ -198,11 +191,13 @@ export function ButtonCancel(props: { onClick: () => void; disabled?: boolean | 
 }
 
 export function ButtonDelete({
+  id,
   onClick,
   disabled,
   children,
   busyText,
 }: {
+  id: string;
   onClick: () => Promise<void>;
   disabled?: boolean | undefined;
   children?: ReactNode;
@@ -215,6 +210,7 @@ export function ButtonDelete({
 
   return (
     <PleaseLogin
+      id={id}
       type="button"
       className="btn btn-delete text-nowrap text-danger"
       disabled={isBusy || disabled}

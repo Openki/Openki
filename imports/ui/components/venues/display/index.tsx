@@ -226,9 +226,8 @@ export function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => vo
               />
               {!verifyDelete && (
                 <ButtonDelete
-                  onClick={async () => {
-                    setVerifyDelete(true);
-                  }}
+                  id="venues-display-confirmDelete"
+                  onClick={async () => setVerifyDelete(true)}
                 />
               )}
             </div>

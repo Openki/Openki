@@ -297,9 +297,9 @@ export function EditableImage(data: Data) {
       </form>
       <div className="editable-image-controls">
         {progress === "ready" ? (
-          <ButtonSave {...uploadButtonAttributes()} />
+          <ButtonSave id="editable-image-save" {...uploadButtonAttributes()} />
         ) : (
-          deleteAllowed() && <ButtonDelete onClick={onDelete} />
+          deleteAllowed() && <ButtonDelete id="editable-image-delete" onClick={onDelete} />
         )}{" "}
         <ButtonCancel onClick={onCancel} />
       </div>

@@ -281,6 +281,7 @@ export function Role(data: Data) {
                 </div>
                 <div className="form-actions">
                   <PleaseLogin
+                    id="course-roles-join"
                     type="button"
                     className="btn btn-save"
                     disabled={isBusy}

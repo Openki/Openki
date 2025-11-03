@@ -217,11 +217,12 @@
 .navbar-custom-modal {
   background-color: rgb(0 0 0); /* Fallback color */
   background-color: rgb(0 0 0 / 40%); /* Black w/ opacity */
-  height: 100%; /* Full height */
+  backdrop-filter: blur(10px);
+  height: 100%;
   left: 0;
-  overflow: auto; /* Enable scroll if needed */
+  overflow: auto;
   position: fixed;
   top: 0;
-  width: 100%; /* Full width */
+  width: 100%;
   z-index: 1001;
 }

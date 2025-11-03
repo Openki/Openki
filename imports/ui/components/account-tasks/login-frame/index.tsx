@@ -141,20 +141,20 @@ export function LoginFrame({
             {!!errors.username && <div className="invalid-feedback">{errors.username}</div>}
           </div>
         </div>
-          <div className={`input-group ${errors.password ? "has-validation" : ""}`}>
-            <span className="input-group-text">
-              <span className="fa-solid fa-lock fa-fw" aria-hidden="true"></span>
-            </span>
-            <input
-              data-test="account-tasks-login-frame-password"
-              className={`form-control ${errors.password ? "is-invalid" : ""}`}
-              placeholder={t("_inputField.password")}
-              type="password"
-              value={loginData.password}
-              onChange={(event) => setLoginData({ ...loginData, password: event.target.value })}
-            />
-            {!!errors.password && <div className="invalid-feedback">{errors.password}</div>}
-          </div>
+        <div className={`input-group ${errors.password ? "has-validation" : ""}`}>
+          <span className="input-group-text">
+            <span className="fa-solid fa-lock fa-fw" aria-hidden="true"></span>
+          </span>
+          <input
+            data-test="account-tasks-login-frame-password"
+            className={`form-control ${errors.password ? "is-invalid" : ""}`}
+            placeholder={t("_inputField.password")}
+            type="password"
+            value={loginData.password}
+            onChange={(event) => setLoginData({ ...loginData, password: event.target.value })}
+          />
+          {!!errors.password && <div className="invalid-feedback">{errors.password}</div>}
+        </div>
         <div className="mb-3 text-end">
           <button
             type="button"
