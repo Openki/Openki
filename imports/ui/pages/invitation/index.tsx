@@ -73,7 +73,7 @@ export function InvitationPage({
             id="invitation-save"
             type="button"
             onClick={handleClick}
-            className="btn btn-lg btn-save "
+            className="btn btn-lg btn-save"
             disabled={isBusy}
           >
             {!user
