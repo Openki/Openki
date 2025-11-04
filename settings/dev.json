@@ -41,7 +41,8 @@
 	, "sendReminderPreset": true
 	, "feature":
 		{ "login":
-			{ "google": true
+			{ "email": true
+      , "google": true
 			, "facebook": true
 			, "github": true
 			}

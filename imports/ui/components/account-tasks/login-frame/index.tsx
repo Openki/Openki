@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { MeteorAsync } from "/imports/utils/promisify";
 import { useSession, useSessionEquals } from "/imports/utils/react-meteor-data";
+import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
+import { useSiteName } from "/imports/utils/getSiteName";
+import { PublicSettings } from "/imports/utils/PublicSettings";
+import { useValidation } from "../../../lib/useValidation";
 
 import * as Alert from "/imports/api/alerts/alert";
 import * as UsersMethods from "/imports/api/users/methods";
-import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
-
-import { useSiteName } from "/imports/utils/getSiteName";
-import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
-import { useValidation } from "../../../lib/useValidation";
+import { Button } from "/imports/ui/components/Buttons";
 
 import "./styles.scss";
 
@@ -124,64 +124,64 @@ export function LoginFrame({
       }}
     >
       <div className="login">
-        <div className="mb-3">
-          <div className={`input-group ${errors.username ? "has-validation" : ""}`}>
-            <span className="input-group-text">
-              <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
-            </span>
-            <input
-              data-test="account-tasks-login-frame-username"
-              className={`form-control ${errors.username ? "is-invalid" : ""}`}
-              placeholder={t("frame.login.usernameOrEmail", "Username or e-mail address")}
-              type="text"
-              autoFocus={true}
-              value={loginData.username}
-              onChange={(event) => setLoginData({ ...loginData, username: event.target.value })}
-            />
-            {!!errors.username && <div className="invalid-feedback">{errors.username}</div>}
-          </div>
-        </div>
-        <div className={`input-group ${errors.password ? "has-validation" : ""}`}>
-          <span className="input-group-text">
-            <span className="fa-solid fa-lock fa-fw" aria-hidden="true"></span>
-          </span>
-          <input
-            data-test="account-tasks-login-frame-password"
-            className={`form-control ${errors.password ? "is-invalid" : ""}`}
-            placeholder={t("_inputField.password")}
-            type="password"
-            value={loginData.password}
-            onChange={(event) => setLoginData({ ...loginData, password: event.target.value })}
-          />
-          {!!errors.password && <div className="invalid-feedback">{errors.password}</div>}
-        </div>
-        <div className="mb-3 text-end">
-          <button
-            type="button"
-            className="btn btn-link p-0"
-            onClick={() => onForgotPassword(loginData)}
-          >
-            {t("forgot", "I forgot my password")}
-          </button>
-        </div>
-        <div className="mb-3">
-          <button
-            data-test="account-tasks-login-frame-submit"
-            type="submit"
-            className="btn btn-secondary form-control"
-            disabled={!!isBusy}
-          >
-            {isBusy === "Password" ? (
-              <>
-                <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
-                {t("login.login.submit.busy", "Logging in…")}
-              </>
-            ) : (
-              t("login.login.submit", "Log in")
-            )}
-          </button>
-        </div>
-        <hr />
+        {PublicSettings.feature.login.email && (
+          <>
+            <div className="mb-3">
+              <div className={`input-group ${errors.username ? "has-validation" : ""}`}>
+                <span className="input-group-text">
+                  <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
+                </span>
+                <input
+                  data-test="account-tasks-login-frame-username"
+                  className={`form-control ${errors.username ? "is-invalid" : ""}`}
+                  placeholder={t("frame.login.usernameOrEmail", "Username or e-mail address")}
+                  type="text"
+                  autoFocus={true}
+                  value={loginData.username}
+                  onChange={(event) => setLoginData({ ...loginData, username: event.target.value })}
+                />
+                {!!errors.username && <div className="invalid-feedback">{errors.username}</div>}
+              </div>
+            </div>
+            <div className={`input-group ${errors.password ? "has-validation" : ""}`}>
+              <span className="input-group-text">
+                <span className="fa-solid fa-lock fa-fw" aria-hidden="true"></span>
+              </span>
+              <input
+                data-test="account-tasks-login-frame-password"
+                className={`form-control ${errors.password ? "is-invalid" : ""}`}
+                placeholder={t("_inputField.password")}
+                type="password"
+                value={loginData.password}
+                onChange={(event) => setLoginData({ ...loginData, password: event.target.value })}
+              />
+              {!!errors.password && <div className="invalid-feedback">{errors.password}</div>}
+            </div>
+            <div className="mb-3 text-end">
+              <button
+                type="button"
+                className="btn btn-link p-0"
+                onClick={() => onForgotPassword(loginData)}
+              >
+                {t("forgot", "I forgot my password")}
+              </button>
+            </div>
+            <div className="mb-3">
+              <Button
+                id="account-tasks-login-frame-submit"
+                block
+                submit
+                className="btn-secondary"
+                disabled={!!isBusy}
+                isBusy={isBusy === "Password"}
+                busyText={t("login.login.submit.busy", "Logging in…")}
+              >
+                {t("login.login.submit", "Log in")}
+              </Button>
+            </div>
+            <hr />
+          </>
+        )}
         {oAuthServices.map((service) => (
           <React.Fragment key={service.key}>
             <div className="row g-2 align-items-center">
@@ -232,10 +232,7 @@ export function LoginFrame({
                     </>
                   ) : (
                     <>
-                      <span
-                        className={`fa-brands fa-${service.key} fa-fw`}
-                        aria-hidden="true"
-                      ></span>{" "}
+                      <i className={`fa-brands fa-${service.key} fa-fw`} />{" "}
                       {t("login.OAuth.loginWith", "Login with")}
                     </>
                   )}{" "}
@@ -251,7 +248,7 @@ export function LoginFrame({
                   aria-expanded="false"
                   aria-controls={`${service.key}-info`}
                 >
-                  <i className="fa-solid fa-circle-info fa-lg" aria-hidden="true"></i>
+                  <i className="fa-solid fa-circle-info fa-lg" />
                 </a>
               </div>
             </div>
@@ -266,23 +263,26 @@ export function LoginFrame({
             </div>
           </React.Fragment>
         ))}
-        <hr />
-        <div className="row g-2 align-items-center">
-          <div className="col">
-            <button
-              className="btn btn-add form-control js-register-open my-2"
-              type="button"
-              onClick={() => onRegisterOpen(loginData)}
-            >
-              {t("login.register.submit", "Create account")}
-            </button>
+        {(PublicSettings.feature.login.email ||
+          (PublicSettings.feature.visitorUser && visitorUserAllowed)) && <hr />}
+        {PublicSettings.feature.login.email && (
+          <div className="row g-2 align-items-center">
+            <div className="col">
+              <button
+                className="btn btn-add form-control my-2"
+                type="button"
+                onClick={() => onRegisterOpen(loginData)}
+              >
+                {t("login.register.submit", "Create account")}
+              </button>
+            </div>
           </div>
-        </div>
+        )}
         {PublicSettings.feature.visitorUser && visitorUserAllowed && (
           <div className="row g-2 align-items-center">
             <div className="col">
               <button
-                className="btn btn-add form-control js-visitor-open my-2"
+                className="btn btn-add form-control my-2"
                 type="button"
                 onClick={() => onVisitorOpen(loginData)}
               >
