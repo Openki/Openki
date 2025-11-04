@@ -57,7 +57,7 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
   sendReminderPreset: Boolean,
   feature: {
     /** toggle visibility of login services */
-    login: { google: Boolean, facebook: Boolean, github: Boolean },
+    login: { email: Boolean, google: Boolean, facebook: Boolean, github: Boolean },
     /** allow user without password */
     visitorUser: Boolean,
     /** allow rsvp with +1 / for two seats */
@@ -197,7 +197,7 @@ const defaults = {
   askNewsletterConsent: true,
   sendReminderPreset: true,
   feature: {
-    login: { google: false, facebook: false, github: false },
+    login: { google: false, facebook: false, github: false, email: true },
     visitorUser: false,
     rsvpWithCompanions: false,
     sendReminderIsEditable: true,

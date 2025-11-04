@@ -112,7 +112,7 @@ export function Button(props: Props) {
     );
 
   if (block) {
-    <div className="d-grid">{button}</div>;
+    return <div className="d-grid">{button}</div>;
   }
 
   return button;
