@@ -166,7 +166,7 @@ export function LoginFrame({
                 {t("forgot", "I forgot my password")}
               </button>
             </div>
-            <div className="mb-3">
+            <div>
               <Button
                 id="account-tasks-login-frame-submit"
                 block
@@ -179,117 +179,114 @@ export function LoginFrame({
                 {t("login.login.submit", "Log in")}
               </Button>
             </div>
-            <hr />
+            {oAuthServices.length > 0 && <hr />}
           </>
         )}
-        {oAuthServices.map((service) => (
-          <React.Fragment key={service.key}>
-            <div className="row g-2 align-items-center">
-              <div className="col">
-                <button
-                  className={`btn btn-${service.key} form-control js-oauth-btn my-2`}
-                  type="button"
-                  disabled={!!isBusy}
-                  onClick={() => {
-                    const loginMethod = Meteor[`loginWith${service.serviceName}`];
-                    if (!loginMethod) {
-                      throw new Error(`don't have login method for ${service.serviceName}`);
-                    }
-                    setIsBusy(service.serviceName);
 
-                    loginMethod({}, async (err) => {
-                      try {
-                        if (!err) {
-                          onLogin();
-
-                          if (currentRegion) {
-                            await UsersMethods.regionChange(currentRegion._id);
-                          }
-
-                          await UsersMethods.updateLocale(locale);
-
-                          Analytics.trackEvent(
-                            "Logins",
-                            `Logins with ${service.serviceName}`,
-                            currentRegion?.nameEn,
-                          );
-                        } else {
-                          Alert.serverError(err);
+        {oAuthServices.length > 0 && (
+          <div className="d-grid gap-3">
+            {oAuthServices.map((service) => (
+              <React.Fragment key={service.key}>
+                <div className="row g-2 align-items-center">
+                  <div className="col">
+                    <Button
+                      block
+                      id={"acctount-tasks-login-frame-login-with-" + service.name}
+                      className={`btn-${service.key}`}
+                      disabled={!!isBusy}
+                      onClick={() => {
+                        const loginMethod = Meteor[`loginWith${service.serviceName}`];
+                        if (!loginMethod) {
+                          throw new Error(`don't have login method for ${service.serviceName}`);
                         }
-                      } finally {
-                        setIsBusy(false);
-                      }
-                    });
-                  }}
-                >
-                  {isBusy === service.serviceName ? (
-                    <>
-                      <span
-                        className="fa-solid fa-circle-notch fa-spin fa-fw"
-                        aria-hidden="true"
-                      ></span>{" "}
-                      {t("login.OAuth.busy", "Logging in with")}
-                    </>
-                  ) : (
-                    <>
+                        setIsBusy(service.serviceName);
+
+                        loginMethod({}, async (err) => {
+                          try {
+                            if (!err) {
+                              onLogin();
+
+                              if (currentRegion) {
+                                await UsersMethods.regionChange(currentRegion._id);
+                              }
+
+                              await UsersMethods.updateLocale(locale);
+
+                              Analytics.trackEvent(
+                                "Logins",
+                                `Logins with ${service.serviceName}`,
+                                currentRegion?.nameEn,
+                              );
+                            } else {
+                              Alert.serverError(err);
+                            }
+                          } finally {
+                            setIsBusy(false);
+                          }
+                        });
+                      }}
+                      busyText={t("login.OAuth.busy", "Logging in with {SERVICE}", {
+                        SERVICE: service.name,
+                      })}
+                    >
                       <i className={`fa-brands fa-${service.key} fa-fw`} />{" "}
-                      {t("login.OAuth.loginWith", "Login with")}
-                    </>
-                  )}{" "}
-                  {service.name}
-                </button>
-              </div>
-              <div className="col-auto">
-                <a
-                  className="text-body-secondary"
-                  data-bs-toggle="collapse"
-                  href={`#${service.key}-info`}
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls={`${service.key}-info`}
-                >
-                  <i className="fa-solid fa-circle-info fa-lg" />
-                </a>
-              </div>
-            </div>
-            <div className="collapse" id={`${service.key}-info`}>
-              <div className="text-body-secondary">
-                {t(
-                  "login.OAuth.info",
-                  "{SITENAME} is getting your user-information (username, e-mail address, …) from that service. It will not grant access to data or info about your activity here, except the fact that you logged in.",
-                  { SITENAME: siteName },
-                )}
-              </div>
-            </div>
-          </React.Fragment>
-        ))}
-        {(PublicSettings.feature.login.email ||
-          (PublicSettings.feature.visitorUser && visitorUserAllowed)) && <hr />}
-        {PublicSettings.feature.login.email && (
-          <div className="row g-2 align-items-center">
-            <div className="col">
-              <button
-                className="btn btn-add form-control my-2"
-                type="button"
-                onClick={() => onRegisterOpen(loginData)}
-              >
-                {t("login.register.submit", "Create account")}
-              </button>
-            </div>
+                      {t("login.OAuth.loginWith", "Login with {SERVICE}", {
+                        SERVICE: service.name,
+                      })}
+                    </Button>
+                  </div>
+                  <div className="col-auto">
+                    <a
+                      className="text-body-secondary"
+                      data-bs-toggle="collapse"
+                      href={`#${service.key}-info`}
+                      role="button"
+                      aria-expanded="false"
+                      aria-controls={`${service.key}-info`}
+                    >
+                      <i className="fa-solid fa-circle-info fa-lg" />
+                    </a>
+                  </div>
+                </div>
+                <div className="collapse" id={`${service.key}-info`}>
+                  <div className="text-body-secondary">
+                    {t(
+                      "login.OAuth.info",
+                      "{SITENAME} is getting your user-information (username, e-mail address, …) from that service. It will not grant access to data or info about your activity here, except the fact that you logged in.",
+                      { SITENAME: siteName },
+                    )}
+                  </div>
+                </div>
+              </React.Fragment>
+            ))}
           </div>
         )}
-        {PublicSettings.feature.visitorUser && visitorUserAllowed && (
-          <div className="row g-2 align-items-center">
-            <div className="col">
-              <button
-                className="btn btn-add form-control my-2"
-                type="button"
-                onClick={() => onVisitorOpen(loginData)}
-              >
-                {t("login.visitor.submit", "Continue as guest")}
-              </button>
+
+        {(PublicSettings.feature.login.email ||
+          (PublicSettings.feature.visitorUser && visitorUserAllowed)) && (
+          <>
+            <hr />
+            <div className="d-grid gap-3">
+              {PublicSettings.feature.login.email && (
+                <Button
+                  id="acctount-tasks-login-frame-register"
+                  className="btn-add"
+                  onClick={() => onRegisterOpen(loginData)}
+                >
+                  {t("login.register.submit", "Create account")}
+                </Button>
+              )}
+              {PublicSettings.feature.visitorUser && visitorUserAllowed && (
+                <Button
+                  id="acctount-tasks-login-frame-visitor"
+                  className="btn-add"
+                  onClick={() => onVisitorOpen(loginData)}
+                >
+                  {t("login.visitor.submit", "Continue as guest")}
+                </Button>
+              )}
             </div>
-          </div>
+          </>
         )}
       </div>
     </form>
