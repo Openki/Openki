@@ -83,7 +83,7 @@ export const ensure = {
   },
 
   async user(name: string, region?: string | undefined, verified = true, locale = "en") {
-    const prng = Prng("ensureUser");
+    const prng = Prng(`ensureUser${name}`);
 
     if (!name) {
       name = "Ed Dillinger";
@@ -180,7 +180,7 @@ export const ensure = {
   },
 
   async venue(name: string, regionId: string, id?: string) {
-    const prng = Prng("ensureVenue");
+    const prng = Prng(`ensureVenue${name}`);
 
     let venue = await Venues.findOneAsync({ name, region: regionId });
     if (venue) {

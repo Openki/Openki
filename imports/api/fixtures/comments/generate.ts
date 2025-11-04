@@ -1,5 +1,6 @@
 import { Mongo } from "meteor/mongo";
 import { _ } from "meteor/underscore";
+import { PRNG } from "seedrandom";
 
 import { Courses } from "/imports/api/courses/courses";
 import {
@@ -19,9 +20,7 @@ import { Log } from "../../log/log";
  * For future dates, a date between the original date and double the time between now and then
  * is chosen.
  */
-function sometimesAfter(date: Date) {
-  const prng = Prng("sometimesAfter");
-
+function sometimesAfter(prng: PRNG, date: Date) {
   // Seconds between then and now
   const spread = new Date(Math.abs(new Date().getTime() - date.getTime())).getTime();
 
@@ -52,9 +51,9 @@ export async function generate() {
         _.sample(words, 5).join(" ") + _.sample(words, Math.floor(prng() * 30)).join(" "),
       );
 
-      comment.time_created = sometimesAfter(course.time_created);
+      comment.time_created = sometimesAfter(prng, course.time_created);
       comment.time_updated =
-        prng() < 0.9 ? comment.time_created : sometimesAfter(comment.time_created);
+        prng() < 0.9 ? comment.time_created : sometimesAfter(prng, comment.time_created);
 
       if (!courseMembers || prng() < 0.2) {
         // Leave some anonymous comments
