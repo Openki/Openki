@@ -24,7 +24,7 @@ type LoginProps = CommonProps & {
    * correctness for accessibility and the full use of the browser default behavior.
    */
   needsLogin?: boolean | undefined;
-  onClick: () => Promise<void>;
+  onClick: () => Promise<void> | void;
 };
 
 type SubmitProps = CommonProps & {
