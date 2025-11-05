@@ -9,6 +9,7 @@ export async function usersCreate() {
 
   // Users
   await ensure.user("Seee");
+  await ensure.user("Normalo");
   await ensure.user("1u", undefined, true, "de");
   await ensure.user("unverified_email_user", undefined, false);
 
