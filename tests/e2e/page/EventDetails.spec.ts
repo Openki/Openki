@@ -13,7 +13,7 @@ describe("event details page", () => {
       "have.text",
       'Bitte bestätige das Absagen von dieser Veranstaltung. Sie wird dann als "Abgesagt" dargestellt und die Anmeldefunktion wird deaktiviert.\nDa niemand angemeldet ist, wird niemand benachrichtigt.',
     );
-    cy.get("#events-edit-save").click();
+    cy.get("#events-cancel-confirm-dialog-cancel").click();
     cy.getById("event-details-canceled").should("be.visible");
     cy.get("#events-display-body-uncancel-button").click();
     cy.get(".alert-success").should("be.visible");
