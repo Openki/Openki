@@ -156,7 +156,7 @@ export function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => vo
                         </span>
                         {t(
                           "venue.details.notRestrictedUse.description",
-                          "This venue can chosen by everyone to publish an event. But consider contacting its hosts about an available time slot.",
+                          "This venue can chosen by everyone to publish an event. Still users are reminded to first contact its hosts to check for available time slot.",
                         )}
                       </>
                     ) : (
@@ -179,7 +179,7 @@ export function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => vo
                         </span>
                         {t(
                           "venue.details.allowParallelEvents.description",
-                          "This venue allow overlapping events.",
+                          "Overlapping events are allowed in this venue.",
                         )}
                       </>
                     ) : (
@@ -189,7 +189,7 @@ export function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => vo
                         </span>
                         {t(
                           "venue.details.notAllowParallelEvents.description",
-                          "This venue not allow overlapping events.",
+                          "This venue does not allow overlapping events.",
                         )}
                       </>
                     )}
