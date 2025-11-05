@@ -9,7 +9,7 @@ import {
   expectElement,
   setTextAreaValue,
   waitFor,
-} from "../utils/ClientUtils.app-test";
+} from "../_to-do-migrate/utils/ClientUtils.app-test";
 
 if (Meteor.isClient) {
   describe("Course members component", function () {
