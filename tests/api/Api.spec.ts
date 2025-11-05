@@ -1,191 +1,155 @@
-import { assert, AssertionError } from "chai";
-
-import "/imports/api/fixtures/methods";
-
-// Checks response status and content-type
-function assertGoodHeaders(result: Response) {
-  assert.equal(result.status, 200);
-  assert.equal(result.headers.get("Content-Type"), "application/json; charset=utf-8");
+function assertGoodHeaders(response: Cypress.Response<any>) {
+  expect(response.status).to.eq(200);
+  expect(response.headers['content-type']).to.include('application/json');
 }
 
-// Construct a function that fails if it's ever called with a lesser value than the one before
-function AssertAscending(base: Date, message: string | undefined) {
+function assertAscending(base: Date, message?: string) {
   let current = base.valueOf();
-  return function (next: number) {
-    assert.isAtLeast(next, current, message);
+  return (next: number) => {
+    expect(next, message).to.be.at.least(current);
     current = next;
   };
 }
 
-const AssertDescending = function (base: Date, message: string | undefined) {
+function assertDescending(base: Date, message?: string) {
   let current = base.valueOf();
-  return function (next: number) {
-    assert.isAtMost(next, current, message);
+  return (next: number) => {
+    expect(next, message).to.be.at.most(current);
     current = next;
   };
-};
+}
 
-const AssertAscendingString = function (base: string, message: string) {
+function assertAscendingString(base: string, message: string) {
   let current = base.toLowerCase();
-  return function (next: string) {
+  return (next: string) => {
     const lowerNext = next.toLowerCase();
     const side = current.localeCompare(lowerNext);
     if (side > 0) {
-      throw new AssertionError(
-        `${message}. But the string '${current}' orders after '${lowerNext}'`,
+      throw new Error(
+        `${message}. But the string '${current}' orders after '${lowerNext}'`
       );
     }
     current = lowerNext;
   };
-};
+}
 
-if (Meteor.isClient) {
-  describe("Api", function () {
-    this.timeout(6000);
-    describe("GroupApi", () => {
-      describe("Get all groups", () => {
-        it("should return JSON response", async () => {
-          const groups = Meteor.absoluteUrl("/api/0/json/groups");
-          const result = await fetch(groups);
-          assertGoodHeaders(result);
-        });
+describe('API', () => {
+  const baseUrl = Cypress.env('API_BASE') || 'http://localhost:3000/api/0/json';
+
+  describe('GroupApi', () => {
+    it('should return JSON response', () => {
+      cy.request(`${baseUrl}/groups`).then((response) => {
+        assertGoodHeaders(response);
       });
     });
-    describe("EventApi", () => {
-      describe("Get all events", () => {
-        it("returns JSON response", async () => {
-          const events = Meteor.absoluteUrl("/api/0/json/events");
+  });
 
-          const result = await fetch(events);
-          assertGoodHeaders(result);
-
-          const json = await result.json();
-          const { data } = json;
-          assert.isNotEmpty(data);
-        });
-      });
-
-      describe("Get events from the future", () => {
-        it("returns nonempty JSON response", async () => {
-          const events = Meteor.absoluteUrl("/api/0/json/events?after=now");
-
-          const result = await fetch(events);
-          assertGoodHeaders(result);
-
-          const json = await result.json();
-          const { data } = json;
-          assert.isNotEmpty(data);
-
-          const starts = data.map((d: any) => new Date(d.start).valueOf());
-
-          // Because we start at the current time, this test will also detect events
-          // in the past as order violation
-          starts.forEach(
-            AssertAscending(new Date(), "event are sorted next first when no order specified"),
-          );
-        });
-        it("sorts by start-date", async () => {
-          const events = Meteor.absoluteUrl("/api/0/json/events?after=now&sort=start");
-
-          const result = await fetch(events);
-          assertGoodHeaders(result);
-          const json = await result.json();
-          const starts = json.data.map((e: any) => new Date(e.start).valueOf());
-          starts.forEach(
-            AssertAscending(new Date(), "ascending ordering of start-dates was requested"),
-          );
-        });
-
-        it("sorts by title, descending", async () => {
-          const events = Meteor.absoluteUrl("/api/0/json/events?after=now&sort=-title");
-
-          const result = await fetch(events);
-          assertGoodHeaders(result);
-          const json = await result.json();
-          const titles = json.data.map((e: any) => e.title);
-          titles.reverse();
-          titles.forEach(AssertAscendingString("", "descending ordering of titles was requested"));
-        });
-      });
-
-      describe.skip("Filtering API ", () => {
-        it("finds events for group", async () => {
-          const groupId = "43df1efc02"; // "DIY-BE" group
-          const events = Meteor.absoluteUrl(`/api/0/json/events?group=${groupId}`);
-          const result = await fetch(events);
-          assertGoodHeaders(result);
-          const json = await result.json();
-          const { data } = json;
-          assert.isNotEmpty(data);
-          data.forEach((event: { groups: string }) => {
-            assert.include(event.groups, groupId, "only events for selected group");
-          });
-        });
-      });
-
-      describe("Get events from the past", () => {
-        it("should return JSON response", async () => {
-          const events = Meteor.absoluteUrl("/api/0/json/events?before=now");
-          const result = await fetch(events);
-          assertGoodHeaders(result);
-          const json = await result.json();
-          const { data } = json;
-          assert.isNotEmpty(data);
-
-          const starts = json.data.map((e: any) => new Date(e.start).valueOf());
-
-          // Because we start at the current time, this test will also detect if events from the
-          // future as order violation
-          starts.forEach(
-            AssertDescending(
-              new Date(),
-              "when filtering for past dates events are sorted newest-first when no order is specified",
-            ),
-          );
-        });
+  describe('EventApi', () => {
+    it('returns JSON response', () => {
+      cy.request(`${baseUrl}/events`).then((response) => {
+        assertGoodHeaders(response);
+        expect(response.body.data).to.not.be.empty;
       });
     });
 
-    describe("VenueApi", () => {
-      describe("Get all venues", () => {
-        it("should return JSON response", async () => {
-          const venues = Meteor.absoluteUrl("/api/0/json/venues");
-          const result = await fetch(venues);
-          assertGoodHeaders(result);
-        });
+    it('returns future events sorted ascending by default', () => {
+      cy.request(`${baseUrl}/events?after=now`).then((response) => {
+        assertGoodHeaders(response);
+        const starts = response.body.data.map((d: any) =>
+          new Date(d.start).valueOf()
+        );
+        starts.forEach(
+          assertAscending(
+            new Date(),
+            'events should be sorted ascending by default'
+          )
+        );
       });
+    });
 
-      describe("region filtering", () => {
-        it("should only return a certain region", async () => {
-          const testistan = "9JyFCoKWkxnf8LWPh";
-          const venues = Meteor.absoluteUrl(`/api/0/json/venues?region=${testistan}`);
-          const result = await fetch(venues);
-          const json = await result.json();
-          const { data } = json;
-          assert.isNotEmpty(data);
-          data.forEach((element: { region: string }) => {
-            assert.equal(element.region, testistan, "region must be testistan");
-          });
-        });
+    it('sorts by start-date ascending', () => {
+      cy.request(`${baseUrl}/events?after=now&sort=start`).then((response) => {
+        assertGoodHeaders(response);
+        const starts = response.body.data.map((d: any) =>
+          new Date(d.start).valueOf()
+        );
+        starts.forEach(
+          assertAscending(
+            new Date(),
+            'ascending ordering of start-dates was requested'
+          )
+        );
       });
+    });
 
-      // This test is skipped until it's fixed upstream
-      // See #1143
-      describe.skip("percent in query parameter", () => {
-        it("should return JSON response", async () => {
-          const venues = Meteor.absoluteUrl("/api/0/json/venues?%");
-          const result = await fetch(venues);
-          assertGoodHeaders(result);
-        });
+    it('sorts by title descending', () => {
+      cy.request(`${baseUrl}/events?after=now&sort=-title`).then((response) => {
+        assertGoodHeaders(response);
+        const titles = response.body.data.map((e: any) => e.title);
+        titles.reverse();
+        titles.forEach(
+          assertAscendingString('', 'descending ordering of titles was requested')
+        );
       });
+    });
 
-      describe("unicode query parameter", () => {
-        it("should return JSON response", async () => {
-          const venues = Meteor.absoluteUrl("/api/0/json/venues?region=💩");
-          const result = await fetch(venues);
-          assertGoodHeaders(result);
+    it('returns past events sorted descending by default', () => {
+      cy.request(`${baseUrl}/events?before=now`).then((response) => {
+        assertGoodHeaders(response);
+        const starts = response.body.data.map((d: any) =>
+          new Date(d.start).valueOf()
+        );
+        starts.forEach(
+          assertDescending(
+            new Date(),
+            'past events should be sorted newest-first by default'
+          )
+        );
+      });
+    });
+
+    it.skip('filters events by group', () => {
+      const groupId = '43df1efc02';
+      cy.request(`${baseUrl}/events?group=${groupId}`).then((response) => {
+        assertGoodHeaders(response);
+        const { data } = response.body;
+        expect(data).to.not.be.empty;
+        data.forEach((event: any) => {
+          expect(event.groups).to.include(groupId);
         });
       });
     });
   });
-}
+
+  describe('VenueApi', () => {
+    it('should return JSON response', () => {
+      cy.request(`${baseUrl}/venues`).then((response) => {
+        assertGoodHeaders(response);
+      });
+    });
+
+    it('filters by region', () => {
+      const testistan = '9JyFCoKWkxnf8LWPh';
+      cy.request(`${baseUrl}/venues?region=${testistan}`).then((response) => {
+        assertGoodHeaders(response);
+        const { data } = response.body;
+        expect(data).to.not.be.empty;
+        data.forEach((v: any) => {
+          expect(v.region).to.eq(testistan);
+        });
+      });
+    });
+
+    it.skip('handles percent in query', () => {
+      cy.request(`${baseUrl}/venues?%`).then((response) => {
+        assertGoodHeaders(response);
+      });
+    });
+
+    it('handles unicode query parameter', () => {
+      cy.request(`${baseUrl}/venues?region=💩`).then((response) => {
+        assertGoodHeaders(response);
+      });
+    });
+  });
+});
