@@ -1,6 +1,5 @@
 describe("Group edit", () => {
   describe("Edit course", function () {
-    this.timeout(30000);
     it("should allow to save a course in the group & member of group must be able to edit course", () => {
       cy.visitOpenki("/group/fd3a8d98d4", { username: "Seee" });
 
@@ -11,7 +10,7 @@ describe("Group edit", () => {
       cy.get('[data-test="group-tag-fd3a8d98d4"] a').should("be.visible");
 
       // Members of the group the course was created in must be able to
-      // edit the course.
+      // edit / delete the course.
       // See ticket #1331 group members can not edit all courses despite their
       // group being in the orga-team.
       // So we login as a member of "SKG" then check whether the edit button shows up.
@@ -21,6 +20,9 @@ describe("Group edit", () => {
       cy.visitOpenki("/group/fd3a8d98d4", { username: "Normalo" });
       cy.get('a[href*="gewaltfreihe-kommunikation-lernen"]').click();
       cy.get('[data-test="course-details"] button.btn-edit').should("be.enabled");
+      cy.get("#course-details-confirm-delete").click();
+      cy.get("#coures-details-confirm-dialog-delete").click();
+      cy.get(".alert-success").should("be.visible");
     });
 
     it("should allow to save a course internal in the group", () => {
