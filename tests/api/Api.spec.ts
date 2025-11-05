@@ -1,4 +1,3 @@
-import { Meteor } from "meteor/meteor";
 import { assert, AssertionError } from "chai";
 
 import "/imports/api/fixtures/methods";
