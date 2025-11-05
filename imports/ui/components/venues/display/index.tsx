@@ -156,7 +156,7 @@ export function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => vo
                         </span>
                         {t(
                           "venue.details.notRestrictedUse.description",
-                          "This venue can chosen by every one to publish an event. But consider contacting its hosts about an available time slot.",
+                          "This venue can chosen by everyone to publish an event. But consider contacting its hosts about an available time slot.",
                         )}
                       </>
                     ) : (
