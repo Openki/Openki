@@ -8,6 +8,9 @@ import * as Alert from "/imports/api/alerts/alert";
 
 import { isEmail } from "/imports/utils/email-tools";
 
+import { FormControl } from "/imports/ui/components/form-control";
+import { Button, ButtonCancel } from "/imports/ui/components/Buttons";
+
 export interface Props {
   email: string;
   onForgotPwd: () => void;
@@ -63,54 +66,32 @@ export function ForgotPwdFrame(props: Props) {
           )}
         </p>
         <div className="mb-3">
-          <div className="input-group">
-            <span className="input-group-text">
-              <span className="fa-solid fa-envelope"></span>
-            </span>
-            <input
-              className="form-control"
-              aria-describedby="forgotPwdMailHelp"
-              placeholder={t("frame.login.email", "E-Mail")}
-              type="email"
-              autoFocus={true}
-              value={email}
-              onChange={(event) => {
-                setEmail(event.currentTarget.value);
-              }}
-            />
-          </div>
-          {!!errors.email && (
-            <div id="forgotPwdMailHelp" className="form-text">
-              {errors.email}
-            </div>
-          )}
+          <FormControl
+            id="forogt-pwd-mail"
+            type="email"
+            prepend="fa-solid fa-envelope"
+            label={t("frame.login.email", "E-Mail")}
+            autoFocus
+            value={email}
+            onChange={(value) => setEmail(value)}
+            error={errors.email}
+          />
         </div>
         <div className="mb-3">
-          <button
-            className="btn btn-save js-reset-pwd-btn form-control"
-            disabled={!!errors.email || isBusy}
-            type="submit"
+          <Button
+            id="reset-pdw-btn"
+            block
+            submit
+            className="btn-save"
+            disabled={!!errors.email}
+            isBusy={isBusy}
+            busyText={t("forgot.send.busy", "Resetting password…")}
           >
-            {isBusy ? (
-              <>
-                <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
-                {t("forgot.send.busy", "Resetting password…")}
-              </>
-            ) : (
-              t("forgot.send", "Reset my password")
-            )}
-          </button>
+            {t("forgot.send", "Reset my password")}
+          </Button>
         </div>
         <div className="mb-3">
-          <button
-            type="button"
-            className="btn btn-cancel form-control"
-            onClick={() => {
-              onClose();
-            }}
-          >
-            {t("_button.cancel")}
-          </button>
+          <ButtonCancel block onClick={() => onClose()} disabled={isBusy} />
         </div>
       </div>
     </form>

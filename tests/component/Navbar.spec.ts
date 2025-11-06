@@ -8,13 +8,13 @@ describe("Navbar", () => {
 
     it("should support login & logout", function () {
       cy.get('[data-test="navbar-login-button"]').click();
-      cy.get('[data-test="account-tasks-login-frame-username"]').clear();
-      cy.get('[data-test="account-tasks-login-frame-username"]').type("Seee");
-      cy.get('[data-test="account-tasks-login-frame-password"]').clear();
-      cy.get('[data-test="account-tasks-login-frame-password"]').type("greg");
-      cy.get('[data-test="account-tasks-login-frame-password"]').clear();
+      cy.get("#account-tasks-login-frame-username").clear();
+      cy.get("#account-tasks-login-frame-username").type("Seee");
+      cy.get("#account-tasks-login-frame-password").clear();
+      cy.get("#account-tasks-login-frame-password").type("greg");
+      cy.get("#account-tasks-login-frame-password").clear();
       cy.get("#account-tasks-login-frame-submit").click();
-      cy.get('[data-test="account-tasks-login-frame-password"]').type("greg{enter}");
+      cy.get("#account-tasks-login-frame-password").type("greg{enter}");
       cy.get('[data-test="navbar-login-button"]').should("contain.text", "Seee");
 
       //logout
@@ -52,9 +52,9 @@ describe("Navbar", () => {
     it("should support login & logout", function () {
       cy.get('[data-test="navbar-toggler"] i.fa-bars').click();
       cy.get('[data-test="navbar-login-button"]').click();
-      cy.get('[data-test="account-tasks-login-frame-username"]').type("Seee");
-      cy.get('[data-test="account-tasks-login-frame-password"]').click();
-      cy.get('[data-test="account-tasks-login-frame-password"]').type("greg");
+      cy.get("#account-tasks-login-frame-username").type("Seee");
+      cy.get("#account-tasks-login-frame-password").click();
+      cy.get("#account-tasks-login-frame-password").type("greg");
       cy.get("#account-tasks-login-frame-submit").click();
       cy.get(".navbar-collapse")
         .should("not.have.class", "show")

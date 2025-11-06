@@ -31,9 +31,9 @@ describe("userprofile page", () => {
     );
     cy.get('[data-test="send-message-submit"]').click();
 
-    cy.get('[data-test="account-tasks-login-frame-username"]').type("Seee");
-    cy.get('[data-test="account-tasks-login-frame-password"]').click();
-    cy.get('[data-test="account-tasks-login-frame-password"]').type("greg");
+    cy.get("#account-tasks-login-frame-username").type("Seee");
+    cy.get("#account-tasks-login-frame-password").click();
+    cy.get("#account-tasks-login-frame-password").type("greg");
     cy.get("#account-tasks-login-frame-submit").click();
 
     cy.get(".alert-success").should("be.visible");

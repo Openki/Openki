@@ -5,8 +5,8 @@ describe("Course members component", function () {
       cy.get('[data-test="course-role-enroll-participant"]').click();
       cy.get("#subscribe textarea.js-comment").type("I want to program an open see world.");
       cy.get("#course-roles-join").click();
-      cy.get('[data-test="account-tasks-login-frame-username"]').type("Normalo");
-      cy.get('[data-test="account-tasks-login-frame-password"]').type("greg{enter}");
+      cy.get("#account-tasks-login-frame-username").type("Normalo");
+      cy.get("#account-tasks-login-frame-password").type("greg{enter}");
       cy.get('[data-test="course-details"] div.editable').should(
         "have.text",
         "I want to program an open see world.",

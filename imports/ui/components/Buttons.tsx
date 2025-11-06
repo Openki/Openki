@@ -9,7 +9,7 @@ interface CommonProps {
   /** needed to identify for testing */
   id: string;
   className?: string | undefined;
-  size?: Size;
+  size?: Size | undefined;
   block?: boolean | undefined;
   disabled?: boolean | undefined;
   children: ReactNode;
@@ -176,17 +176,31 @@ export function ButtonEdit(props: { onClick: () => void; disabled?: boolean | un
   );
 }
 
-export function ButtonCancel(props: { onClick: () => void; disabled?: boolean | undefined }) {
+export function ButtonCancel({
+  id,
+  size,
+  block,
+  onClick,
+  disabled,
+}: {
+  id: string;
+  size?: Size | undefined;
+  block?: boolean | undefined;
+  onClick: () => void;
+  disabled?: boolean | undefined;
+}) {
   const { t } = useTranslation();
   return (
-    <button
-      type="button"
-      className="btn btn-cancel text-nowrap"
-      onClick={props.onClick}
-      disabled={props.disabled}
+    <Button
+      id={id}
+      block={block}
+      size={size}
+      className="btn-cancel"
+      onClick={onClick}
+      disabled={disabled}
     >
       {t("_button.cancel")}
-    </button>
+    </Button>
   );
 }
 
