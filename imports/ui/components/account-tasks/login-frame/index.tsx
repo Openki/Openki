@@ -13,6 +13,7 @@ import * as UsersMethods from "/imports/api/users/methods";
 import * as Analytics from "/imports/ui/lib/analytics";
 
 import { Button } from "/imports/ui/components/Buttons";
+import { FormControl } from "/imports/ui/components/form-control";
 
 import "./styles.scss";
 
@@ -127,36 +128,26 @@ export function LoginFrame({
         {PublicSettings.feature.login.email && (
           <>
             <div className="mb-3">
-              <div className={`input-group ${errors.username ? "has-validation" : ""}`}>
-                <span className="input-group-text">
-                  <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
-                </span>
-                <input
-                  data-test="account-tasks-login-frame-username"
-                  className={`form-control ${errors.username ? "is-invalid" : ""}`}
-                  placeholder={t("frame.login.usernameOrEmail", "Username or e-mail address")}
-                  type="text"
-                  autoFocus={true}
-                  value={loginData.username}
-                  onChange={(event) => setLoginData({ ...loginData, username: event.target.value })}
-                />
-                {!!errors.username && <div className="invalid-feedback">{errors.username}</div>}
-              </div>
-            </div>
-            <div className={`input-group ${errors.password ? "has-validation" : ""}`}>
-              <span className="input-group-text">
-                <span className="fa-solid fa-lock fa-fw" aria-hidden="true"></span>
-              </span>
-              <input
-                data-test="account-tasks-login-frame-password"
-                className={`form-control ${errors.password ? "is-invalid" : ""}`}
-                placeholder={t("_inputField.password")}
-                type="password"
-                value={loginData.password}
-                onChange={(event) => setLoginData({ ...loginData, password: event.target.value })}
+              <FormControl
+                id="account-tasks-login-frame-username"
+                type="text"
+                autoFocus
+                prepend="fa-solid fa-user fa-fw"
+                label={t("frame.login.usernameOrEmail", "Username or e-mail address")}
+                value={loginData.username}
+                onChange={(value) => setLoginData({ ...loginData, username: value })}
+                error={errors.username}
               />
-              {!!errors.password && <div className="invalid-feedback">{errors.password}</div>}
             </div>
+            <FormControl
+              id="account-tasks-login-frame-password"
+              type="password"
+              prepend="fa-solid fa-lock fa-fw"
+              label={t("_inputField.password")}
+              value={loginData.password}
+              onChange={(value) => setLoginData({ ...loginData, password: value })}
+              error={errors.password}
+            />
             <div className="mb-3 text-end">
               <button
                 type="button"
