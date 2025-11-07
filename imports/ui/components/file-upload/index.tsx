@@ -104,7 +104,7 @@ export function FileUpload({ accept, onUpload, onCancel }: Props) {
       {progress === "ready" && (
         <div className="file-upload-controls">
           <ButtonSave
-            id="file-upload"
+            id="file-upload-save"
             onClick={async () => {
               if (!droppedFile) {
                 throw new Error(`Unexpected undefined: file`);
@@ -127,7 +127,7 @@ export function FileUpload({ accept, onUpload, onCancel }: Props) {
               reader.readAsBinaryString(droppedFile);
             }}
           />
-          <ButtonCancel onClick={() => onCancel()} />
+          <ButtonCancel id="file-upload-cancel" onClick={() => onCancel()} />
         </div>
       )}
     </>

@@ -90,9 +90,7 @@ export function ForgotPwdFrame(props: Props) {
             {t("forgot.send", "Reset my password")}
           </Button>
         </div>
-        <div className="mb-3">
-          <ButtonCancel block onClick={() => onClose()} disabled={isBusy} />
-        </div>
+        <ButtonCancel id="reset-pdw-cancel-btn" block onClick={() => onClose()} disabled={isBusy} />
       </div>
     </form>
   );

@@ -820,7 +820,9 @@ export function Edit(props: Props) {
 
           <div className="form-actions">
             <ButtonSave id="courses-edit-save" onClick={handleSave} disabled={isBusy} />
-            {!props.isFrame && <ButtonCancel onClick={handleCancel} />}
+            {!props.isFrame && (
+              <ButtonCancel id="courses-edit-cancel" onClick={handleCancel} disabled={isBusy} />
+            )}
           </div>
         </div>
       </PleaseLogin>

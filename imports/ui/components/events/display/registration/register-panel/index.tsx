@@ -104,11 +104,7 @@ export function RegisterPanel({ event, busy, onRegister }: Props) {
 
           <div className="row justify-content-between align-items-center gap-3">
             <div className="col-lg-4 d-grid">
-              <ButtonCancel
-                onClick={() => {
-                  setRegisterDropdown(false);
-                }}
-              />
+              <ButtonCancel id="register-panel-cancel" onClick={() => setRegisterDropdown(false)} />
             </div>
             <div className="col-lg-7 d-grid">
               <ButtonRegister

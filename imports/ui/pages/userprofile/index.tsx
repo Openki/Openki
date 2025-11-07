@@ -383,7 +383,10 @@ export function UserprofilePage({ user }: Props) {
                 >
                   {t("profile.account.delete.confirm.button", "Delete user and all his traces")}
                 </Button>{" "}
-                <ButtonCancel onClick={toggleVerifyUserDelete} />
+                <ButtonCancel
+                  id="userprofile-confirm-delete-user-cancel"
+                  onClick={toggleVerifyUserDelete}
+                />
               </div>
             </div>
           )}

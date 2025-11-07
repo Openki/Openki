@@ -116,10 +116,9 @@ export function TenantCreatePage(data: Data) {
           <div className="form-actions">
             <ButtonSubmit isBusy={isBusy} />
             <ButtonCancel
+              id="tenant-create-cancel"
               disabled={isBusy}
-              onClick={() => {
-                Router.go("profile");
-              }}
+              onClick={() => Router.go("profile")}
             />
           </div>
         </PleaseLogin>

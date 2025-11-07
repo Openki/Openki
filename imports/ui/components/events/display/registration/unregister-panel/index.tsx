@@ -77,9 +77,8 @@ export function UnregisterPanel({ event, busy, onUnregister }: Props) {
           <div className="row justify-content-between align-items-center gap-3">
             <div className="col-lg-4 d-grid">
               <ButtonCancel
-                onClick={() => {
-                  setUnregisterDropdown(false);
-                }}
+                id="unregister-panel-cancel"
+                onClick={() => setUnregisterDropdown(false)}
               />
             </div>
             <div className="col-lg-7 d-grid">
