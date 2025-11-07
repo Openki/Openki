@@ -258,11 +258,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
                   : t("course.discussion.comment_btn.write", "Write")
                 : t("course.discussion.comment_btn.update", "Update my comment")}
             </button>{" "}
-            <ButtonCancel
-              onClick={() => {
-                onCancel();
-              }}
-            />
+            <ButtonCancel id="post-edit-cancel" onClick={() => onCancel()} />
           </div>
         </div>
       </form>

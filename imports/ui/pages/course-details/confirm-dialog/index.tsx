@@ -57,7 +57,11 @@ export function ConfirmDialog({
             COURSE: course.name,
           })}
         </Button>
-        <ButtonCancel disabled={disabled} onClick={onCancel} />
+        <ButtonCancel
+          id="coures-details-confirm-dialog-cancel"
+          disabled={disabled}
+          onClick={onCancel}
+        />
       </div>
     </div>
   );

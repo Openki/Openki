@@ -149,7 +149,7 @@ export function ResetPasswordPage({ token, email }: Props) {
           >
             {t("resetPassword.confirm", "Set my password")}
           </button>
-          <ButtonCancel onClick={handelCancel} />
+          <ButtonCancel id="reset-pwd-cancel" disabled={!!isBusy} onClick={handelCancel} />
         </div>
       </form>
     </div>

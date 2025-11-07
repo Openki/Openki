@@ -82,11 +82,7 @@ export function Report() {
                 <span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>{" "}
                 {t("report.report", "Send report")}
               </button>
-              <ButtonCancel
-                onClick={() => {
-                  setState("");
-                }}
-              />
+              <ButtonCancel id="report-cancel" onClick={() => setState("")} />
             </div>
           </form>
         </div>

@@ -393,7 +393,7 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
             }}
           />
         )}
-        <ButtonCancel onClick={onCancel} />
+        <ButtonCancel id="events-replication-cancel" onClick={onCancel} />
       </div>
     </div>
   );

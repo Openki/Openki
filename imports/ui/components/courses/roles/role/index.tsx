@@ -300,7 +300,10 @@ export function Role(data: Data) {
                       t("course.roles.join", "Join", { COURSE: data.course.name })
                     )}
                   </PleaseLogin>
-                  <ButtonCancel onClick={handelRoleEnrollCancelClick} />
+                  <ButtonCancel
+                    id="course-roles-join-cancel"
+                    onClick={handelRoleEnrollCancelClick}
+                  />
                 </div>
               </div>
             </>

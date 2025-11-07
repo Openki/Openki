@@ -124,18 +124,15 @@ export function DangerZoneSection() {
                       className="form-control"
                       id="newpassword_confirm"
                       value={newPasswordConfirm}
-                      onChange={(event) => {
-                        setNewPasswordConfirm(event.currentTarget.value);
-                      }}
+                      onChange={(event) => setNewPasswordConfirm(event.currentTarget.value)}
                     />
                   </div>
                 </div>
                 <div className="d-flex gap-2 justify-content-end">
                   <ButtonSubmit isBusy={isBusy} />
                   <ButtonCancel
-                    onClick={() => {
-                      setChangingPassword(false);
-                    }}
+                    id="profile-dangerZone-changingPasswort-cancel"
+                    onClick={() => setChangingPassword(false)}
                     disabled={isBusy}
                   />
                 </div>

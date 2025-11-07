@@ -48,11 +48,7 @@ export function JoinLinkRebuild({ tenantId }: Props) {
         >
           {t("joinLink.rebuild", "Create a new link")}
         </button>
-        <ButtonCancel
-          onClick={() => {
-            setConfirm(false);
-          }}
-        />
+        <ButtonCancel id="joinLink-rebuild-cancel" onClick={() => setConfirm(false)} />
       </div>
     </div>
   );

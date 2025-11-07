@@ -141,9 +141,13 @@ export function ButtonSave(props: {
 }
 
 export function ButtonSubmit({
+  size,
+  block,
   disabled,
   isBusy,
 }: {
+  size?: Size | undefined;
+  block?: boolean | undefined;
   disabled?: boolean | undefined;
   isBusy: boolean;
 }) {
@@ -152,6 +156,8 @@ export function ButtonSubmit({
     <Button
       id="button-submit"
       submit
+      size={size}
+      block={block}
       className="btn-cancel"
       disabled={disabled}
       busyText={t("_button.saving", "Saving…")}

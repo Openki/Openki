@@ -323,7 +323,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
           {group.isNew() && (
             <div className="actions">
               <ButtonSave id="group-details-save" onClick={handleSave} disabled={isBusy} />
-              <ButtonCancel onClick={handleCancel} disabled={isBusy} />
+              <ButtonCancel id="group-details-cancel" onClick={handleCancel} disabled={isBusy} />
             </div>
           )}
           {allowEditingSettings() && <GroupSettings group={group} />}

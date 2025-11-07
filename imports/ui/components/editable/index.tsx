@@ -335,7 +335,7 @@ export function Editable({
       {showControls() && (
         <div className="editable-controls">
           {!characterLimitReached() && <ButtonSave id="editaible-save" onClick={handleSave} />}
-          <ButtonCancel onClick={handleCancel} />
+          <ButtonCancel id="editaible-cancel" onClick={handleCancel} />
         </div>
       )}
     </>

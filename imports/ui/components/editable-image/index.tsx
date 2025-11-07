@@ -301,7 +301,7 @@ export function EditableImage(data: Data) {
         ) : (
           deleteAllowed() && <ButtonDelete id="editable-image-delete" onClick={onDelete} />
         )}{" "}
-        <ButtonCancel onClick={onCancel} />
+        <ButtonCancel id="editable-image-cancel" onClick={onCancel} />
       </div>
     </>
   ) : (
