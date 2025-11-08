@@ -11,7 +11,7 @@ import { FacilityOption, VenueModel } from "/imports/api/venues/venues";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
-import { ButtonCancel, ButtonSave } from "../../Buttons";
+import { ButtonCancel, ButtonSave } from "../../Buttons.old";
 import { FormControl } from "../../form-control";
 import { FormCheck } from "../../FormCheck";
 import { Edit as LocationEdit } from "../../location/edit";

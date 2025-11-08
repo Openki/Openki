@@ -8,7 +8,7 @@ import { useAccount } from "/imports/api/users/publications";
 import { AccountsAsync } from "/imports/utils/promisify";
 import * as Metatags from "/imports/utils/metatags";
 
-import { ButtonCancel } from "../../components/Buttons";
+import { ButtonCancel } from "../../components/Buttons.old";
 import { TokenExpired } from "../../components/TokenExpired";
 
 export interface Props {

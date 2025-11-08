@@ -26,7 +26,7 @@ import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/public
 import { useAll } from "/imports/api/regions/publications";
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 
-import { ButtonCancel, ButtonSave } from "../../Buttons";
+import { ButtonCancel, ButtonSave } from "../../Buttons.old";
 import { EditCustomFields } from "../../EditCustomFields";
 import { FormCheck } from "../../FormCheck";
 import { RegionSelect } from "../../RegionSelect";

@@ -1,7 +1,7 @@
 import { ValidationError } from "meteor/mdg:validation-error";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ButtonSubmit } from "../../components/Buttons";
+import { ButtonSubmit } from "../../components/Buttons.old";
 import { VerifyEmail } from "../../components/profiles/VerifyEmail";
 import * as Analytics from "../../lib/analytics";
 import { routerAutoscroll } from "../../lib/router-autoscroll";
@@ -9,6 +9,8 @@ import { useValidation } from "../../lib/useValidation";
 import * as Alert from "/imports/api/alerts/alert";
 import * as usersMethods from "/imports/api/users/methods";
 import { useUser } from "/imports/utils/react-meteor-data";
+import { FormControl } from "/imports/ui/components/form-control";
+import { FormCheck } from "/imports/ui/components/FormCheck";
 
 export function EmailSection() {
   const { t } = useTranslation();
@@ -51,10 +53,8 @@ export function EmailSection() {
     setIsBusy(false);
   }
 
-  async function handelNofitifcationsChange(event: React.ChangeEvent<HTMLInputElement>) {
+  async function handelNofitifcationsChange(allow: boolean) {
     routerAutoscroll.cancelNext();
-
-    const allow = event.currentTarget.checked;
 
     try {
       await usersMethods.updateAutomatedNotification(allow);
@@ -72,10 +72,8 @@ export function EmailSection() {
       );
     }
   }
-  async function handelAllowPrivateMessagesChange(event: React.ChangeEvent<HTMLInputElement>) {
+  async function handelAllowPrivateMessagesChange(allow: boolean) {
     routerAutoscroll.cancelNext();
-
-    const allow = event.currentTarget.checked;
 
     try {
       await usersMethods.updatePrivateMessages(allow);
@@ -100,20 +98,15 @@ export function EmailSection() {
       <div className="row g-4 mb-2">
         <div className="col-sm-6">
           <form className="row g-2 mb-2" onSubmit={handelEmailChange}>
-            <div className={`col ${errors.email ? "has-error" : ""}`}>
-              <label htmlFor="editform_email" className="sr-only">
-                {t("profile.email", "E-mail")}
-              </label>
-              <input
-                className="form-control"
-                id="editform_email"
+            <div className="col">
+              <FormControl
+                id="profile-email-address"
                 type="text"
                 value={newEmail}
-                onChange={(event) => {
-                  setNewEmail(event.currentTarget.value);
-                }}
+                onChange={(value) => setNewEmail(value)}
+                label={t("profile.email", "E-mail")}
+                error={errors.email}
               />
-              {!!errors.email && <span className="form-text d-block">{errors.email}</span>}
             </div>
             <div className="col-auto">
               <ButtonSubmit isBusy={isBusy} />
@@ -122,35 +115,25 @@ export function EmailSection() {
           {!user.verifiedEmailAddress() && !isBusy && <VerifyEmail />}
         </div>
         <div className="col-sm-6">
-          <div className="form-check form-switch mb-2">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              value=""
-              id="notificationsCheck"
+          <div className="mb-2">
+            <FormCheck
+              id="profile-email-notifications"
+              type="switch"
+              label={t("profile.toggle.notifications", "Receive automated notifications via email")}
               checked={user.notifications}
               onChange={handelNofitifcationsChange}
             />
-            <label className="form-check-label" htmlFor="notificationsCheck">
-              {t("profile.toggle.notifications", "Receive automated notifications via email")}
-            </label>
           </div>
-          <div className="form-check form-switch">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              value=""
-              id="allowPrivateMessagesCheck"
-              checked={user.allowPrivateMessages}
-              onChange={handelAllowPrivateMessagesChange}
-            />
-            <label className="form-check-label" htmlFor="allowPrivateMessagesCheck">
-              {t(
-                "profile.toggle.allowPrivateMessages",
-                "Receive messages from other users (your email address will not be revealed)",
-              )}
-            </label>
-          </div>
+          <FormCheck
+            id="profile-email-allowPrivateMessage"
+            type="switch"
+            label={t(
+              "profile.toggle.allowPrivateMessages",
+              "Receive messages from other users (your email address will not be revealed)",
+            )}
+            checked={user.allowPrivateMessages}
+            onChange={handelAllowPrivateMessagesChange}
+          />
         </div>
       </div>
     </div>

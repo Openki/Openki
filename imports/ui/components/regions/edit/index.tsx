@@ -6,7 +6,7 @@ import { Geodata } from "/imports/api/Geodata";
 import * as Alert from "/imports/api/alerts/alert";
 
 import { Fields } from "./Fields";
-import { ButtonCancel, ButtonSave } from "../../Buttons";
+import { ButtonCancel, ButtonSave } from "../../Buttons.old";
 import { PleaseLogin } from "../../please-login";
 
 import "./styles.scss";

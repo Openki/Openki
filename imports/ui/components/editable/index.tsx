@@ -4,7 +4,7 @@ import { ValidationError, ValidationErrorDetail } from "meteor/mdg:validation-er
 import MediumEditor from "medium-editor";
 import { Mapping, useValidation } from "../../lib/useValidation";
 import { useSessionEquals } from "../../../utils/react-meteor-data";
-import { ButtonSave, ButtonCancel } from "../Buttons";
+import { ButtonSave, ButtonCancel } from "../Buttons.old";
 import { Store } from "../../lib/editable";
 
 import "./styles.scss";

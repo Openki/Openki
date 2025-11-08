@@ -14,7 +14,7 @@ import { useTranslation } from "react-i18next";
 
 import { Fields } from "../../components/regions/edit/Fields";
 import { PleaseLogin } from "../../components/please-login";
-import { ButtonCancel, ButtonSubmit } from "../../components/Buttons";
+import { ButtonCancel, ButtonSubmit } from "../../components/Buttons.old";
 
 export interface Data {
   tenant: TenantModel;

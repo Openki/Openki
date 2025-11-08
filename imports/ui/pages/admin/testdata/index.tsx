@@ -5,7 +5,7 @@ import { clean, create } from "/imports/api/fixtures/methods";
 import * as Alert from "/imports/api/alerts/alert";
 import { updateDbCacheFields } from "/imports/api/db-utilities/updateDbCacheFields";
 
-import { Button } from "../../../components/Buttons";
+import { Button } from "../../../components/Buttons.old";
 
 export function TestdataPage() {
   const { t } = useTranslation();

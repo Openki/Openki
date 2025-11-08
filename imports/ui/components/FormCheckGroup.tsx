@@ -14,7 +14,7 @@ interface CommonProps<K extends string> {
 }
 
 interface CheckBoxProps<K extends string> {
-  type: "box" | "switch";
+  type: "box";
   value: K[];
   onChange?: ((value: K[]) => void) | undefined;
 }
@@ -44,7 +44,6 @@ function createElements<K extends string>(props: Props<K>) {
 
     switch (type) {
       case "box":
-      case "switch":
         return (
           <FormCheck
             type={type}

@@ -16,7 +16,7 @@ import { NotAllowedCharacter } from "../../../../startup/both/NotAllowedCharacte
 import { DataProtectionLaw } from "../data-protection-law";
 import { FormCheck } from "/imports/ui/components/FormCheck";
 import { FormControl } from "/imports/ui/components/form-control";
-import { Button } from "/imports/ui/components/Buttons";
+import { Button } from "../../Buttons.old";
 
 export interface Props {
   username: string;

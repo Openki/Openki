@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import React, { useState } from "react";
 
-import { ButtonSave, ButtonCancel } from "../Buttons";
+import { ButtonSave, ButtonCancel } from "../Buttons.old";
 
 import "./styles.scss";
 

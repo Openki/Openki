@@ -9,7 +9,7 @@ import * as EventsMethods from "/imports/api/events/methods";
 import { LocalTime } from "/imports/utils/local-time";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
-import { ButtonCancel, ButtonSave } from "../../Buttons";
+import { ButtonCancel, ButtonSave } from "../../Buttons.old";
 import { FormCheckGroup } from "../../FormCheckGroup";
 import { DateSelect } from "../../date-select";
 import { Notify } from "../Notify";

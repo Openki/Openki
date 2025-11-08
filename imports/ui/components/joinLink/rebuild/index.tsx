@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import * as JoinLinks from "/imports/api/joinLinks/methods";
 
-import { ButtonCancel } from "../../Buttons";
+import { ButtonCancel } from "../../Buttons.old";
 
 import "./styles.scss";
 
