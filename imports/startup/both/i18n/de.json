@@ -342,7 +342,6 @@
   "editGroup.remove.groupRemoved": "{GROUP} wurde von {VENUE} entfernt.",
   "editGroup.remove.groupRemoved.error": "Entfernen fehlgeschlagen",
   "editGroup.remove.header": "Gruppe entfernen",
-  "editable.add_text": "Füge deinen Text hier hinzu",
   "editableImage.accept.error": "Nur Bilder sind erlaubt.",
   "email.base.farewell": "Bei Fragen oder Anregungen zögere nicht, uns zu kontaktieren.",
   "email.base.greeting": "Hallo {USERNAME}",

@@ -342,7 +342,6 @@
   "editGroup.remove.groupRemoved": "Группа \"{GROUP}\" удалена из места проведения мероприятия \"{VENUE}\".",
   "editGroup.remove.groupRemoved.error": "Удаление не удалось",
   "editGroup.remove.header": "Удалить группу",
-  "editable.add_text": "Добавить текст",
   "editableImage.accept.error": "Разрешены только изображения.",
   "email.base.farewell": "Если у вас есть вопросы или предложения, пожалуйста, свяжитесь с нами.",
   "email.base.greeting": "Здравствуйте, {USERNAME}",

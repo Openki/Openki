@@ -183,7 +183,6 @@
   "deleteEventsModal.sucess": "{NUM, plural, ett {Event var} övriga {# events var}} nu raderade. ",
   "deleteEventsModal.title": "Radera kursens event ",
   "discussion.anonymous": "Anonym",
-  "editable.add_text": "Lägg till text här",
   "email.base.greeting": "Hej {USERNAME}",
   "email.base.profileLink": "Besök din profil",
   "email.base.receiveNote.courseTeam": "Du får detta meddelandet eftersom du är med i teamet till denna kursen.",

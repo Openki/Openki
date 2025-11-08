@@ -281,7 +281,6 @@
   "discussion.anonymous": "مجهول",
   "discussionPost.deleted": "تم حذف التعليق.",
   "discussionPost.deleted.error": "تعذر حذف التعليق",
-  "editable.add_text": "إضافة نص هنا",
   "editableImage.accept.error": "يسمح بالصور فقط.",
   "email.base.farewell": "إذا كان لديك أي أسئلة أو اقتراحات، لا تتردد في الاتصال بنا.",
   "email.base.greeting": "مرحبا {USERNAME}",

@@ -283,7 +283,6 @@
   "discussion.anonymous": "Anonyme",
   "discussionPost.deleted": "Commentaire supprimé.",
   "discussionPost.deleted.error": "Le commentaire n'a pu être supprimé",
-  "editable.add_text": "Ajouter du texte ici",
   "editableImage.accept.error": "Seules les images sont autorisées.",
   "email.base.farewell": "Si vous avez des questions ou des suggestions, n'hésitez pas à nous contacter.",
   "email.base.greeting": "Salut {USERNAME}",
