@@ -330,7 +330,6 @@
   "discussion.anonymous": "Anonymous",
   "discussionPost.deleted": "Comment deleted.",
   "discussionPost.deleted.error": "Could not delete comment",
-  "editable.add_text": "Add text here",
   "editableImage.accept.error": "Only images are allowed.",
   "editGroup.add.btn": "Add a group as hosts",
   "editGroup.add.desc": "All members of that group will be able to mange this venue.",
