@@ -8,6 +8,7 @@
   .editable {
     padding: 8px;
 
+    &:not(.readonly),
     &:focus,
     &.editable-changed {
       border: 1px solid $brand-primary;
@@ -33,6 +34,7 @@
       margin: -1px;
     }
 
+    &:not(.readonly),
     &:focus,
     &.editable-changed {
       border: 1px solid #ccc;
@@ -55,11 +57,13 @@
     margin: -1px;
   }
 
+  &:not(.readonly),
   &:focus,
   &.editable-changed {
     background: $body-bg;
   }
 
+  &:not(.readonly) + .editable-icon,
   &:focus + .editable-icon,
   &.editable-changed + .editable-icon {
     display: none;
@@ -75,6 +79,7 @@
   min-width: 8em;
   width: auto;
 
+  &:not(.readonly),
   &:focus,
   &.editable-changed {
     min-width: 10em;

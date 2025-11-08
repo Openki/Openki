@@ -125,6 +125,9 @@ Cypress.Commands.add(
       });
     }
 
+    // fix showing unexpected region select
+    cy.reload();
+
     cy.allSubscriptionsReady();
   },
 );

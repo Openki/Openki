@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import { ValidationError, ValidationErrorDetail } from "meteor/mdg:validation-error";
 import MediumEditor from "medium-editor";
 import { Mapping, useValidation } from "../../lib/useValidation";
-import { useSessionEquals } from "../../../utils/react-meteor-data";
-import { ButtonSave, ButtonCancel } from "../Buttons.old";
+import { useSession, useSessionEquals } from "../../../utils/react-meteor-data";
+import { ButtonSave, ButtonCancel } from "../Buttons";
 import { Store } from "../../lib/editable";
 
 import "./styles.scss";
@@ -35,10 +35,12 @@ export function Editable({
   const { t } = useTranslation();
   const [numberOfCharacters, setNumberOfCharacters] = useState(0);
   const [changed, setChanged] = useState(!store);
+  const [readonly, setReadonly] = useState(!!store);
 
   const [totalFocusTimeInSeconds, setTotalFocusTimeInSeconds] = useState(0);
   const [startGettingFocus, setStartGettingFocus] = useState<number | undefined>(undefined);
   const isRTL = useSessionEquals("textDirectionality", "rtl");
+  const locale = useSession("locale");
 
   const elementRef = useRef<HTMLDivElement>(null);
 
@@ -95,6 +97,10 @@ export function Editable({
   }
   function editableClasses() {
     const classes: string[] = [];
+
+    if (readonly) {
+      classes.push("readonly");
+    }
 
     if (changed) {
       classes.push("editable-changed");
@@ -180,7 +186,7 @@ export function Editable({
       disableDoubleReturn: true,
       placeholder: {
         hideOnClick: false,
-        text: placeholder || t("editable.add_text", "Add text here"),
+        text: placeholder || t("richtext.placeholder.default", "Type your text"),
       },
       anchor: {
         linkValidation: true,
@@ -209,30 +215,66 @@ export function Editable({
       meOptions.toolbar = false;
     }
 
+    if (readonly) {
+      meOptions.toolbar = false;
+      meOptions.disableEditing = true;
+    }
+
     // Initialize the editor interface
-    new MediumEditor(element, meOptions);
+    const mediumEditor = new MediumEditor(element, meOptions);
+
+    mediumEditor.subscribe("editableInput", () => {
+      // Register when the field is being edited
+
+      // Fix placeholder position on empty after change
+      if (element.innerText.length === 0) {
+        element.innerHTML = "";
+      }
+
+      // Get the number of visible characters
+      setNumberOfCharacters(element.innerText.trim().length);
+
+      setChanged(true);
+
+      onChange?.(
+        getEdited(),
+        numberOfCharacters,
+        // send current total time in seconds
+        totalFocusTimeInSeconds +
+          Math.round((Date.now() - (startGettingFocus || Date.now())) / 1000),
+      );
+    });
 
     setNumberOfCharacters(element.innerText.trim().length);
-  }, [placeholder, multiline, t, isRTL]);
+
+    return () => {
+      mediumEditor.destroy();
+    };
+  }, [placeholder, multiline, locale, isRTL, readonly]);
 
   const handleEdit = () => {
     const element = elementRef.current;
     if (!element) {
       return;
     }
-    element.focus();
 
-    // Moving the cursor to the end of the editable element?
-    // http://stackoverflow.com/questions/1125292/how-to-move-cursor-to-end-of-contenteditable-entity
-    const selectEnd = function (el: Node) {
-      const range = document.createRange();
-      range.selectNodeContents(el);
-      range.collapse(false);
-      const selection = window.getSelection();
-      selection?.removeAllRanges();
-      selection?.addRange(range);
-    };
-    selectEnd(element);
+    setReadonly(false);
+
+    setTimeout(() => {
+      element.focus();
+
+      // Moving the cursor to the end of the editable element?
+      // http://stackoverflow.com/questions/1125292/how-to-move-cursor-to-end-of-contenteditable-entity
+      const selectEnd = function (el: Node) {
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        range.collapse(false);
+        const selection = window.getSelection();
+        selection?.removeAllRanges();
+        selection?.addRange(range);
+      };
+      selectEnd(element);
+    }, 0);
   };
 
   const handleSave = async () => {
@@ -252,6 +294,8 @@ export function Editable({
     }
 
     save();
+
+    setReadonly(true);
   };
 
   const handleCancel = () => {
@@ -265,6 +309,8 @@ export function Editable({
 
     // Get the number of visible characters
     setNumberOfCharacters(element.innerText.trim().length);
+
+    setReadonly(true);
   };
   return (
     <>
@@ -279,37 +325,24 @@ export function Editable({
           className={`editable ${editableClasses()} ${
             characterLimitReached() || errors.input ? "is-invalid" : ""
           }`}
-          onKeyUp={(event) => {
-            // Register when the field is being edited
-
-            // Fix placeholder position on empty after change
-            if (event.currentTarget.innerText.length === 0) {
-              event.currentTarget.innerHTML = "";
-            }
-
-            // Get the number of visible characters
-            setNumberOfCharacters(event.currentTarget.innerText.trim().length);
-
-            setChanged(true);
-
-            onChange?.(
-              getEdited(),
-              numberOfCharacters,
-              // send current total time in seconds
-              totalFocusTimeInSeconds +
-                Math.round((Date.now() - (startGettingFocus || Date.now())) / 1000),
-            );
-          }}
           onFocus={() => {
-            setStartGettingFocus(Date.now());
+            if (!readonly) {
+              setStartGettingFocus(Date.now());
+            }
           }}
-          onBlur={() => {
+          onBlur={(event) => {
             // persists current total time in seconds
             setTotalFocusTimeInSeconds(
               totalFocusTimeInSeconds +
                 Math.round((Date.now() - (startGettingFocus || Date.now())) / 1000),
             );
+
+            if (!changed && !event.relatedTarget?.className.includes("medium-editor")) {
+              setReadonly(true);
+            }
           }}
+          role="textbox"
+          aria-multiline={multiline}
         ></div>
 
         {characterLimitReached() ? (
