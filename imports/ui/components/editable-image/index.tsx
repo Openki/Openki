@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
 
-import { ButtonCancel, ButtonDelete, ButtonSave } from "../Buttons";
+import { ButtonCancel, ButtonDelete, ButtonSave } from "../Buttons.old";
 
 import "./styles.scss";
 

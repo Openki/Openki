@@ -5,7 +5,7 @@ import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { EventModel } from "/imports/api/events/events";
 import { useDetails } from "/imports/api/courses/publications";
 
-import { ButtonCancel } from "../../../../Buttons";
+import { ButtonCancel } from "../../../../Buttons.old";
 
 function ButtonUnregister(props: {
   onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;

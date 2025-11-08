@@ -16,7 +16,7 @@ import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { useRoleDisplay } from "../../../../lib/useRoleDisplay";
 
-import { ButtonCancel } from "../../../Buttons";
+import { ButtonCancel } from "../../../Buttons.old";
 import { Guide } from "./guide";
 
 import "./styles.scss";

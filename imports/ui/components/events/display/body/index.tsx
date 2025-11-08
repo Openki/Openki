@@ -17,7 +17,7 @@ import { EventReplication, Props as EventReplicationProps } from "../../replicat
 import { Content } from "../content";
 import { Files } from "../../../courses/Files";
 import { DeleteConfirmDialog } from "../../../delete-confirm-dialog";
-import { ButtonDelete, ButtonEdit } from "../../../Buttons";
+import { ButtonDelete, ButtonEdit } from "../../../Buttons.old";
 import { PleaseLogin } from "../../../please-login";
 
 import "./styles.scss";

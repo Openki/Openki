@@ -9,7 +9,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import * as VenuesMethods from "/imports/api/venues/methods";
 import { VenueModel } from "/imports/api/venues/venues";
 
-import { ButtonDelete, ButtonEdit } from "../../Buttons";
+import { ButtonDelete, ButtonEdit } from "../../Buttons.old";
 import { Contribution } from "../../Contribution";
 import {
   type Props as DeleteConfirmDialogProps,

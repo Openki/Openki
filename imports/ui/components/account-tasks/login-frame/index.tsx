@@ -12,7 +12,7 @@ import * as UsersMethods from "/imports/api/users/methods";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
-import { Button } from "/imports/ui/components/Buttons";
+import { Button } from "../../Buttons.old";
 import { FormControl } from "/imports/ui/components/form-control";
 
 import "./styles.scss";

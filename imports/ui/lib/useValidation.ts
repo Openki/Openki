@@ -87,5 +87,10 @@ export function useValidation<T extends string>(mapping: Mapping<T>, initialChec
     return validity;
   };
 
-  return [errors, checkValidity, add, resetErrors] as const;
+  return [errors, checkValidity, add, resetErrors] as [
+    errors: Partial<Record<T, ReactNode>>,
+    checkValidity: (field?: T) => boolean,
+    addError: (key: string) => boolean,
+    resetErrors: (field?: T) => void,
+  ];
 }

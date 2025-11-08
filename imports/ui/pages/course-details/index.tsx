@@ -16,7 +16,7 @@ import * as Analytics from "/imports/ui/lib/analytics";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import * as Metatags from "/imports/utils/metatags";
 
-import { ButtonDelete, ButtonEdit } from "../../components/Buttons";
+import { ButtonDelete, ButtonEdit } from "../../components/Buttons.old";
 import { Discussion } from "../../components/courses/discussion";
 import { Edit } from "../../components/courses/edit";
 import { mayShare } from "../../components/courses/edit/mayShare";

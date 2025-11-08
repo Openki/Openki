@@ -10,7 +10,7 @@ import {
   DeleteConfirmDialog,
   type Props as DeleteConfirmDialogProps,
 } from "/imports/ui/components/delete-confirm-dialog";
-import { ButtonEdit, ButtonDelete } from "../../Buttons";
+import { ButtonEdit, ButtonDelete } from "../../Buttons.old";
 import { Display as LocationDisplay } from "/imports/ui/components/location/display";
 
 import "./styles.scss";

@@ -13,7 +13,7 @@ import * as Courses from "/imports/api/courses/publications";
 import { DiscussionProfileIcon } from "../profile-icon";
 import { DiscussionProfileLink } from "../profile-link";
 import { Richtext } from "/imports/ui/components/richtext";
-import { ButtonCancel } from "../../../../Buttons";
+import { ButtonCancel } from "../../../../Buttons.old";
 
 export interface Props {
   post: CourseDiscussionEntity & { new?: true };

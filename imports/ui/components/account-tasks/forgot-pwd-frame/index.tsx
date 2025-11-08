@@ -9,7 +9,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import { isEmail } from "/imports/utils/email-tools";
 
 import { FormControl } from "/imports/ui/components/form-control";
-import { Button, ButtonCancel } from "/imports/ui/components/Buttons";
+import { Button, ButtonCancel } from "../../Buttons.old";
 
 export interface Props {
   email: string;
