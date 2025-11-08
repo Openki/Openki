@@ -97,7 +97,7 @@ export function EmailSection() {
       <h3>{t("profile.email_settings", "E-mail settings")}</h3>
       <div className="row g-4 mb-2">
         <div className="col-sm-6">
-          <form className="row g-2 mb-2" onSubmit={handelEmailChange}>
+          <form className="row g-2 mb-2" noValidate onSubmit={handelEmailChange}>
             <div className="col">
               <FormControl
                 id="profile-email-address"
@@ -109,6 +109,8 @@ export function EmailSection() {
               />
             </div>
             <div className="col-auto">
+              {/* only for spacing */}
+              <div className="form-label">&nbsp;</div>
               <ButtonSubmit isBusy={isBusy} />
             </div>
           </form>

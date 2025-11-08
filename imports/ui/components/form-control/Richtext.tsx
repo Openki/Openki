@@ -101,6 +101,8 @@ export function Richtext(props: Props) {
     // Initialize the editor interface
     const mediumEditor = new MediumEditor(elementRef.current, meOptions);
 
+    mediumEditor.subscribe("editableInput", handleChange);
+
     return () => {
       mediumEditor.destroy();
     };
@@ -112,9 +114,6 @@ export function Richtext(props: Props) {
       className={`form-control ${className} ${disabled ? "bg-secondary" : ""}`}
       style={{ minHeight: "100px" }}
       ref={elementRef}
-      onKeyUp={!disabled ? handleChange : undefined}
-      onChange={!disabled ? handleChange : undefined}
-      onInput={!disabled ? handleChange : undefined}
       onBlur={!disabled ? () => onBlur?.() : undefined}
       // for accessibility
       aria-labelledby={props["aria-labelledby"]}

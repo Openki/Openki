@@ -170,7 +170,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
         }
       : undefined,
     onChange: (newName) => {
-      setNewGroup({ ...newGroup, name: newName });
+      setNewGroup((state) => ({ ...state, name: newName }));
     },
   };
 
@@ -187,7 +187,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
         }
       : undefined,
     onChange: (newText) => {
-      setNewGroup({ ...newGroup, short: newText });
+      setNewGroup((state) => ({ ...state, short: newText }));
     },
   };
 
@@ -204,7 +204,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
         }
       : undefined,
     onChange: (newClaim) => {
-      setNewGroup({ ...newGroup, claim: newClaim });
+      setNewGroup((state) => ({ ...state, claim: newClaim }));
     },
   };
 
@@ -224,7 +224,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
         }
       : undefined,
     onChange: (newDescription) => {
-      setNewGroup({ ...newGroup, description: newDescription });
+      setNewGroup((state) => ({ ...state, description: newDescription }));
     },
   };
 
