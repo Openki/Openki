@@ -15,6 +15,8 @@ import { useValidation } from "/imports/ui/lib/useValidation";
 import { NotAllowedCharacter } from "../../../../startup/both/NotAllowedCharacter";
 import { DataProtectionLaw } from "../data-protection-law";
 import { FormCheck } from "/imports/ui/components/FormCheck";
+import { FormControl } from "/imports/ui/components/form-control";
+import { Button } from "/imports/ui/components/Buttons";
 
 export interface Props {
   username: string;
@@ -126,54 +128,40 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
       }}
     >
       <div className="mb-3">
-        <div className={`input-group ${errors.username ? "has-validation" : ""}`}>
-          <span className="input-group-text">
-            <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
-          </span>
-          <input
-            className={`form-control ${errors.username ? "is-invalid" : ""}`}
-            type="text"
-            placeholder={t("frame.login.username", "Username")}
-            autoFocus={true}
-            value={registerData.username}
-            onChange={(event) => setRegisterData({ ...registerData, username: event.target.value })}
-          />
-          {!!errors.username && <div className="invalid-feedback">{errors.username}</div>}
-        </div>
+        <FormControl
+          id="register-frame-username"
+          type="text"
+          autoFocus
+          label={t("frame.login.username", "Username")}
+          prepend="fa-solid fa-user fa-fw"
+          value={registerData.username}
+          onChange={(value) => setRegisterData({ ...registerData, username: value })}
+          error={errors.username}
+        />
       </div>
       <div className="mb-3">
-        <div className={`input-group ${errors.password ? "has-validation" : ""}`}>
-          <span className="input-group-text">
-            <span className="fa-solid fa-lock fa-fw" aria-hidden="true"></span>
-          </span>
-          <input
-            className={`form-control ${errors.password ? "is-invalid" : ""}`}
-            placeholder={t("_inputField.password")}
-            type="password"
-            value={registerData.password}
-            onChange={(event) => setRegisterData({ ...registerData, password: event.target.value })}
-          />
-          {!!errors.password && <div className="invalid-feedback">{errors.password}</div>}
-        </div>
+        <FormControl
+          id="register-frame-password"
+          type="password"
+          label={t("_inputField.password")}
+          prepend="fa-solid fa-lock fa-fw"
+          value={registerData.password}
+          onChange={(value) => setRegisterData({ ...registerData, password: value })}
+          error={errors.password}
+        />
       </div>
       <div className="mb-3">
         <div className="row g-2">
           <div className="col">
-            <div className={`input-group ${errors.email ? "has-validation" : ""}`}>
-              <span className="input-group-text">
-                <span className="fa-solid fa-envelope fa-fw" aria-hidden="true"></span>
-              </span>
-              <input
-                className={`form-control ${errors.email ? "is-invalid" : ""}`}
-                placeholder={t("frame.login.email", "E-Mail")}
-                type="email"
-                value={registerData.email}
-                onChange={(event) =>
-                  setRegisterData({ ...registerData, email: event.target.value })
-                }
-              />
-              {!!errors.email && <div className="invalid-feedback">{errors.email}</div>}
-            </div>
+            <FormControl
+              id="register-frame-email"
+              type="email"
+              label={t("frame.login.email", "E-Mail")}
+              prepend="fa-solid fa-envelope fa-fw"
+              value={registerData.email}
+              onChange={(value) => setRegisterData({ ...registerData, email: value })}
+              error={errors.email}
+            />
           </div>
           <div className="col-auto">
             <a
@@ -214,23 +202,27 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
         </div>
       )}
       <div className="mb-3">
-        <button type="submit" className="btn btn-add form-control" disabled={isBusy}>
-          {isBusy ? (
-            <>
-              <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
-              {t("login.register.submit.busy", "Registering…")}
-            </>
-          ) : (
-            t("login.register.submit")
-          )}
-        </button>
+        <Button
+          id="register-frame-submit"
+          submit
+          block
+          className="btn-add"
+          busyText={t("login.register.submit.busy", "Registering…")}
+          isBusy={isBusy}
+        >
+          {t("login.register.submit")}
+        </Button>
       </div>
       <hr />
-      <div className="mb-3">
-        <button className="btn btn-secondary form-control" type="button" onClick={() => onBack()}>
-          {t("login.register.backToLogin", "Go back to login")}
-        </button>
-      </div>
+      <Button
+        id="register-frame-back"
+        block
+        className="btn-secondary"
+        onClick={() => onBack()}
+        disabled={isBusy}
+      >
+        {t("login.register.backToLogin", "Go back to login")}
+      </Button>
     </form>
   );
 }
