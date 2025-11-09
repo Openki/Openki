@@ -625,7 +625,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           <div className="mb-3">
             <FormCheck
               id="event-edit-no-rsvp"
-              type="box"
+              type="switch"
               label={t("event.edit.noRsvp", "No reservation required")}
               hint={
                 noRsvpChecked
@@ -638,9 +638,9 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               checked={noRsvpChecked}
               onChange={(checked) => setNoRsvpChecked(checked)}
             />
-
+            
             {!noRsvpChecked && (
-              <div className="ms-4">
+              <div className="form-switch-text-indent">
                 <FormControl
                   id="event-edit-max-participants"
                   type="integer"
@@ -659,7 +659,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           <div className="mb-3">
             <FormCheck
               id="event-edit-internal"
-              type="box"
+              type="switch"
               label={t("event.edit.internal", "Hide on front page")}
               hint={t("event.edit.internal.description", "Show it only on group and venue pages")}
               checked={changes.internal}
@@ -696,7 +696,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             <div className="mb-3">
               <FormCheck
                 id="event-edit-send-reminder"
-                type="box"
+                type="switch"
                 label={t(
                   "event.edit.sendReminder",
                   "Send a reminder e-mail to all participants 24 hours before the event starts.",
