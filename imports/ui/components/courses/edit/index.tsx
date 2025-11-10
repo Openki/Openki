@@ -14,6 +14,7 @@ import { hasRoleUser } from "/imports/utils/course-role-utils";
 import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 import { useSiteName } from "/imports/utils/getSiteName";
 import * as StringTools from "/imports/utils/string-tools";
+import { useAccountTasks } from "/imports/utils/useAccountTasks";
 
 import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 import * as Analytics from "/imports/ui/lib/analytics";
@@ -33,7 +34,6 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
 import { EditCustomFields } from "../../EditCustomFields";
-import { PleaseLogin } from "../../please-login";
 import { SelectCategories } from "../SelectCategories";
 import { CourseCategories } from "../categories";
 import { FormCheck } from "/imports/ui/components/FormCheck";
@@ -226,6 +226,8 @@ export function Edit(props: Props) {
   const currentRegion = useCurrentRegion();
   const [isBusy, setIsBusy] = useState(false);
   const [title, setTitle] = useState(props.name);
+
+  const { adjustLoginModalPosition, promptToLogin } = useAccountTasks();
 
   function showInternalCheckbox() {
     let internalOption;
@@ -512,7 +514,9 @@ export function Edit(props: Props) {
     setSimpleSelectedRole(event.target.value);
   };
 
-  const handleSave = async () => {
+  const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     const changes = {
       internal,
       name: StringTools.sanitizeSingleline(title),
@@ -623,6 +627,11 @@ export function Edit(props: Props) {
 
     setIsBusy(true);
     try {
+      adjustLoginModalPosition(event.nativeEvent);
+      if (!(await promptToLogin())) {
+        return;
+      }
+
       courseId = await CoursesMethods.save(courseId, changes);
 
       Analytics.trackEvent(
@@ -673,7 +682,7 @@ export function Edit(props: Props) {
 
   return (
     <div className="edit-page">
-      <PleaseLogin type="form" onSubmit={handleSave}>
+      <form noValidate onSubmit={handleSave}>
         {props.filter ? (
           <FindHeader {...{ ...props, filter: props.filter }} />
         ) : (
@@ -735,9 +744,7 @@ export function Edit(props: Props) {
 
           <Title
             value={title}
-            onChange={(newTitle) => {
-              setTitle(newTitle);
-            }}
+            onChange={(newTitle) => setTitle(newTitle)}
             showOtherProposals={!props._id}
           />
           <div className="mb-3">
@@ -819,13 +826,13 @@ export function Edit(props: Props) {
           )}
 
           <div className="form-actions">
-            <ButtonSave id="courses-edit-save" onClick={handleSave} disabled={isBusy} />
+            <ButtonSave submit id="courses-edit-save" isBusy={isBusy} />
             {!props.isFrame && (
               <ButtonCancel id="courses-edit-cancel" onClick={handleCancel} disabled={isBusy} />
             )}
           </div>
         </div>
-      </PleaseLogin>
+      </form>
     </div>
   );
 }

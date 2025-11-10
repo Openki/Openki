@@ -168,7 +168,6 @@ export function ButtonSave(
     id: string;
     size?: Size | undefined;
     block?: boolean | undefined;
-    emphasised?: boolean | undefined;
     disabled?: boolean | undefined;
   } & (LoginProps | SubmitProps),
 ) {

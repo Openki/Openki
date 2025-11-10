@@ -97,6 +97,7 @@ export function LoginFrame({
 
   return (
     <form
+      noValidate
       onSubmit={async (event) => {
         event.preventDefault();
 

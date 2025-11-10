@@ -40,6 +40,16 @@ export function useAccountTasks() {
 
   return {
     /**
+     * in a frame (eg. /frame/program, with the height plugin) we need to set the
+     * position of the login modal
+     * @param event the event triggered by the user
+     */
+    adjustLoginModalPosition: (event: Event) => {
+      const rect = ((event as any).submitter || event.currentTarget).getBoundingClientRect();
+      Session.set("top", rect.top + rect.height / 2);
+    },
+
+    /**
      * Shows login modal if user is not logged in.
      * @returns `true` if the user is logged in; `false` it the user canceled the login
      */
