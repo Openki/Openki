@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AccountsAsync } from "/imports/utils/promisify";
 import { useValidation } from "/imports/ui/lib/useValidation";
 import { useTranslation } from "react-i18next";
@@ -9,7 +9,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import { isEmail } from "/imports/utils/email-tools";
 
 import { FormControl } from "/imports/ui/components/form-control";
-import { Button, ButtonCancel } from "../../Buttons.old";
+import { Button, ButtonCancel } from "../../Buttons";
 
 export interface Props {
   email: string;
@@ -30,17 +30,19 @@ export function ForgotPwdFrame(props: Props) {
         onCheckValidity: () => isEmail(email),
       },
     },
-    true,
+    !!props.email,
   );
-
-  useEffect(() => {
-    checkValidity();
-  }, [email]);
 
   return (
     <form
+      noValidate
       onSubmit={async (event) => {
         event.preventDefault();
+
+        if (!checkValidity()) {
+          return;
+        }
+
         setIsBusy(true);
         try {
           await AccountsAsync.forgotPassword({ email });
@@ -73,7 +75,13 @@ export function ForgotPwdFrame(props: Props) {
             label={t("frame.login.email", "E-Mail")}
             autoFocus
             value={email}
-            onChange={(value) => setEmail(value)}
+            onChange={(value) => {
+              setEmail(value);
+              if (errors.email) {
+                checkValidity("email");
+              }
+            }}
+            onBlur={() => checkValidity("email")}
             error={errors.email}
           />
         </div>

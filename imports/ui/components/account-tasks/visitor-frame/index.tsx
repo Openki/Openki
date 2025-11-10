@@ -79,6 +79,7 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
   });
   return (
     <form
+      noValidate
       onSubmit={async (event) => {
         event.preventDefault();
 

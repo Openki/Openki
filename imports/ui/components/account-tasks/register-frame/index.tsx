@@ -88,6 +88,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
   });
   return (
     <form
+      noValidate
       onSubmit={async (event) => {
         event.preventDefault();
 
