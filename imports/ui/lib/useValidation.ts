@@ -14,11 +14,11 @@ export function useValidation<T extends string>(mapping: Mapping<T>, initialChec
   const initialState: Partial<Record<T, ReactNode>> = {};
 
   if (initialCheck) {
-    Object.values(mapping).forEach((m) => {
-      if (m.onCheckValidity && !m.onCheckValidity()) {
+    Object.values(mapping)
+      .filter((m) => m.onCheckValidity && !m.onCheckValidity())
+      .forEach((m) => {
         initialState[m.field] = m.text();
-      }
-    });
+      });
   }
 
   const [errors, setErrors] = useState(initialState);

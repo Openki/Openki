@@ -533,12 +533,8 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               label={t("course.event.edit.title", "Event title")}
               placeholder={t("event.title.placeholder", "Write a catchy title here")}
               value={changes.title || ""}
-              onChange={(value) => {
-                setChanges({ ...changes, title: value });
-              }}
-              onBlur={() => {
-                checkValidity("title");
-              }}
+              onChange={(value) => setChanges({ ...changes, title: value })}
+              onBlur={() => checkValidity("title")}
               error={errors.title}
             />
           </div>
@@ -638,7 +634,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               checked={noRsvpChecked}
               onChange={(checked) => setNoRsvpChecked(checked)}
             />
-            
+
             {!noRsvpChecked && (
               <div className="form-switch-text-indent">
                 <FormControl

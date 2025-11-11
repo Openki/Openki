@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AccountsAsync } from "/imports/utils/promisify";
 import { useValidation } from "/imports/ui/lib/useValidation";
 import { useTranslation } from "react-i18next";
@@ -32,6 +32,13 @@ export function ForgotPwdFrame(props: Props) {
     },
     !!props.email,
   );
+
+  useEffect(() => {
+    // after every change, check errors are fixed
+    Object.keys(errors).forEach((key) => {
+      checkValidity(key as any);
+    });
+  }, [email]);
 
   return (
     <form
@@ -75,12 +82,7 @@ export function ForgotPwdFrame(props: Props) {
             label={t("frame.login.email", "E-Mail")}
             autoFocus
             value={email}
-            onChange={(value) => {
-              setEmail(value);
-              if (errors.email) {
-                checkValidity("email");
-              }
-            }}
+            onChange={(value) => setEmail(value)}
             onBlur={() => checkValidity("email")}
             error={errors.email}
           />

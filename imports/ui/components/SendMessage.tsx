@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
 
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { PleaseLogin } from "/imports/ui/components/please-login";
 import { VerifyEmail } from "/imports/ui/components/profiles/VerifyEmail";
+import { FormCheck } from "/imports/ui/components/FormCheck";
+import { Button } from "/imports/ui/components/Buttons";
+import { FormControl } from "/imports/ui/components/form-control";
+import { useValidation } from "/imports/ui/lib/useValidation";
+import { useAccountTasks } from "/imports/utils/useAccountTasks";
 
-export interface Data {
+export interface Props {
   placeholder: string;
   onSend: (
     message: string,
@@ -19,7 +23,7 @@ export interface Data {
   ) => Promise<void>;
 }
 
-export function SendMessage(props: Data) {
+export function SendMessage(props: Props) {
   const { t } = useTranslation();
   const user = useUser();
   const [isBusy, setIsBusy] = useState(false);
@@ -27,25 +31,40 @@ export function SendMessage(props: Data) {
   const [revealAddress, setRevealAddress] = useState(false);
   const [sendCopy, setSendCopy] = useState(false);
 
-  return (
-    <PleaseLogin
-      type="form"
-      onSubmit={async () => {
-        setIsBusy(true);
+  const [errors, checkValidity] = useValidation({
+    messageToShort: {
+      text: () => t("profile.mail.longertext", "longer text please"),
+      field: "message",
+      onCheckValidity: () => message.length >= 2,
+    },
+  });
 
-        if (message.length < 2) {
-          Alert.error(t("profile.mail.longertext", "longer text please"));
-          setIsBusy(false);
+  const { promptToLogin } = useAccountTasks();
+
+  useEffect(() => {
+    // after every change, check errors are fixed
+    Object.keys(errors).forEach((key) => {
+      checkValidity(key as any);
+    });
+  }, [message]);
+
+  return (
+    <form
+      noValidate
+      onSubmit={async (event) => {
+        event.preventDefault();
+
+        if (!checkValidity()) {
           return;
         }
 
-        const options = {
-          revealAddress,
-          sendCopy,
-        };
-
+        setIsBusy(true);
         try {
-          await props.onSend(message, options);
+          if (!(await promptToLogin())) {
+            return;
+          }
+
+          await props.onSend(message, { revealAddress, sendCopy });
           Alert.success(t("profile.mail.sent", "Your message was sent"));
         } catch (err) {
           Alert.serverError(err, t("profile.mail.sendFailed", "Your message was not sent"));
@@ -56,56 +75,39 @@ export function SendMessage(props: Data) {
       }}
     >
       <div className="mb-3">
-        <textarea
-          data-test="send-message-textarea"
-          className="form-control"
-          placeholder={props.placeholder}
-          autoFocus={true}
-          value={message}
-          onChange={(event) => {
-            setMessage(event.target.value);
-          }}
+        <FormControl
+          id="send-message-textarea"
+          type="textarea"
           rows={7}
-        ></textarea>
+          autoFocus
+          label={t("profile.mail.message", "Message")}
+          placeholder={props.placeholder}
+          value={message}
+          onChange={(value) => setMessage(value)}
+          onBlur={() => checkValidity("message")}
+          error={errors.message}
+        />
       </div>
       {user?.hasVerifiedEmail() ? (
         <>
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              name="sendCopy"
-              type="checkbox"
-              value=""
-              id="sendMessageSendCopyCheck"
-              onChange={(event) => {
-                setSendCopy(event.target.checked);
-              }}
-            />
-            <label className="form-check-label" htmlFor="sendMessageSendCopyCheck">
-              {t("profile.mail.copy", "Send me a copy of this message")}
-            </label>
-          </div>
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              name="revealAddress"
-              type="checkbox"
-              value=""
-              id="sendMessageRevealAddressCheck"
-              onChange={(event) => {
-                setRevealAddress(event.target.checked);
-              }}
-            />
-            <label className="form-check-label" htmlFor="sendMessageRevealAddressCheck">
-              {t("profile.mail.attachmail", "Attach my e-mail address")}
-            </label>
-          </div>
+          <FormCheck
+            type="switch"
+            id="send-message-send-copy"
+            label={t("profile.mail.copy", "Send me a copy of this message")}
+            onChange={(checked) => setSendCopy(checked)}
+          />
+          <FormCheck
+            type="switch"
+            id="send-message-reveal-address"
+            label={t("profile.mail.attachmail", "Attach my e-mail address")}
+            onChange={(checked) => setRevealAddress(checked)}
+          />
         </>
       ) : (
         !!user && (
           <div className="card mb-3">
             <div className="card-header bg-warning">
-              <span className="fa-regular fa-circle-check" aria-hidden="true"></span>{" "}
+              <i className="fa-regular fa-circle-check" />{" "}
               {t("sendMessage.plsVerifyEmail", "Please verify your e-mail address")}
             </div>
             <div className="card-body p-3">
@@ -122,26 +124,18 @@ export function SendMessage(props: Data) {
       )}
 
       <div className="form-actions">
-        <button
-          data-test="send-message-submit"
-          type="submit"
-          className="btn btn-save"
-          disabled={isBusy}
+        <Button
+          submit
+          id="send-message-submit"
+          className="btn-save"
+          busyText={t("userprofile.sendmail-btn.busy", "Sending e-mail…")}
+          isBusy={isBusy}
         >
-          {isBusy ? (
-            <>
-              <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
-              &nbsp;
-              {t("userprofile.sendmail-btn.busy", "Sending e-mail…")}
-            </>
-          ) : (
-            <>
-              <span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>&nbsp;
-              {t("userprofile.sendmail-btn", "Send e-mail")}
-            </>
-          )}
-        </button>
+          <i className="fa-solid fa-paper-plane fa-fw" />
+          &nbsp;
+          {t("userprofile.sendmail-btn", "Send e-mail")}
+        </Button>
       </div>
-    </PleaseLogin>
+    </form>
   );
 }

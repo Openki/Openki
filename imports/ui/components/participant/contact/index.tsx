@@ -9,7 +9,7 @@ import { SendPrivateMessageOptions } from "/imports/api/emails/methods";
 import { EventModel } from "/imports/api/events/events";
 import * as Users from "/imports/api/users/publications";
 
-import { SendMessage, Data as SendMessageData } from "../../SendMessage";
+import { SendMessage, Props as SendMessageProps } from "../../SendMessage";
 
 export interface Props {
   participant: string;
@@ -43,7 +43,7 @@ export function ParticipantContact(props: Props) {
     return userId !== props.participant;
   }
 
-  function sendMessageAttr(): SendMessageData {
+  function sendMessageAttr(): SendMessageProps {
     return {
       placeholder: t(
         "participantContact.sendMessage.placeholder",

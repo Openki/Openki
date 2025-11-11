@@ -875,6 +875,7 @@
   "profile.mail.attachmail": "Attach my e-mail address",
   "profile.mail.copy": "Send me a copy of this message",
   "profile.mail.longertext": "longer text please",
+  "profile.mail.message": "Message",
   "profile.mail.placeholder": "Hi {USER}. I wanted to tell you…",
   "profile.mail.sendFailed": "Your message was not sent",
   "profile.mail.sent": "Your message was sent",

@@ -29,7 +29,7 @@ describe("userprofile page", () => {
     cy.get('[data-test="send-message-textarea"]').type(
       "Hallo Sandro, es freut mich dich am Freitag zu sehen. Gruss Seee",
     );
-    cy.get('[data-test="send-message-submit"]').click();
+    cy.get("#send-message-submit").click();
 
     cy.get("#account-tasks-login-frame-username").type("Seee");
     cy.get("#account-tasks-login-frame-password").click();
