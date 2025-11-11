@@ -8,7 +8,7 @@ describe("Events Participants", () => {
     cy.get('[data-test="send-message-textarea"]').type(
       "Hallo Zusammen, viel Spass bei euren eigenen Erkundungen. Alles Gute",
     );
-    cy.get('[data-test="send-message-submit"]').click();
+    cy.get("#send-message-submit").click();
     cy.get(".alert-success").should("be.visible");
   });
 });

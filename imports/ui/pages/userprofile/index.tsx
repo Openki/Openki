@@ -21,7 +21,7 @@ import { Avatar } from "../../components/avatar";
 import { Button, ButtonCancel, ButtonDelete } from "../../components/Buttons.old";
 import { Contribution } from "../../components/Contribution";
 import { Courselist } from "../../components/profiles/course-list";
-import { SendMessage, Data as SendMessageData } from "../../components/SendMessage";
+import { SendMessage, Props as SendMessageProps } from "../../components/SendMessage";
 
 export interface Props {
   user: UserModel;
@@ -85,7 +85,7 @@ export function UserprofilePage({ user }: Props) {
 
     return inviteGroups.length > 0;
   }
-  function sendMessageAttr(): SendMessageData {
+  function sendMessageAttr(): SendMessageProps {
     return {
       placeholder: t("profile.mail.placeholder", "Hi {USER}. I wanted to tell you…", {
         USER: user.username,

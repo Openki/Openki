@@ -45,8 +45,10 @@ export function useAccountTasks() {
      * @param event the event triggered by the user
      */
     adjustLoginModalPosition: (event: Event) => {
-      const rect = ((event as any).submitter || event.currentTarget).getBoundingClientRect();
-      Session.set("top", rect.top + rect.height / 2);
+      if (document.querySelector(".frame")) {
+        const rect = ((event as any).submitter || event.currentTarget).getBoundingClientRect();
+        Session.set("top", rect.top + rect.height / 2);
+      }
     },
 
     /**

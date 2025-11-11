@@ -31,7 +31,7 @@ describe("course details page", () => {
       cy.get("#discussion div.richtext").type(
         "Postet mal wenn ihr Zeit habt für ein nächstes Treffen.",
       );
-      cy.get('#discussion label[for="canNotifyAllCheck"]').should("be.visible");
+      cy.get('#discussion label[for="discussion-post-edit-notify-all"]').should("be.visible");
       cy.get("#discussion button.discussion-save-btn").click();
       cy.get("div.discussion-post-header i.fa-bell").should("be.visible");
     });

@@ -44,6 +44,7 @@ interface TextInputProps {
 interface TextareaProps {
   type: "textarea";
   rows?: number | undefined;
+  autoFocus?: boolean | undefined;
   /** Used for instructions or an example of the required data format. */
   placeholder?: string | undefined;
   value: string;
@@ -203,6 +204,7 @@ function createInputElement<K extends string>(props: Props<K>) {
         <AutoGrowTextArea
           {...commonProps}
           rows={props.rows}
+          autoFocus={props.autoFocus}
           placeholder={props.placeholder}
           value={props.value}
           maxLength={props.maxLength}

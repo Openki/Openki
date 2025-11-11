@@ -694,9 +694,7 @@ export function Edit(props: Props) {
             <AlertMessage
               isFrame={props.isFrame}
               savedCourseId={savedCourseId}
-              onClose={() => {
-                setSavedMessage(false);
-              }}
+              onClose={() => setSavedMessage(false)}
             />
           )}
 
@@ -734,7 +732,7 @@ export function Edit(props: Props) {
                       checked={simpleSelectedRole === "mentor"}
                       onChange={handleRoleChange}
                     />
-                    <i className="fa-solid fa-graduation-cap fa-lg fa-fw"></i>{" "}
+                    <i className="fa-solid fa-graduation-cap fa-lg fa-fw" />{" "}
                     {t("course.edit.iCanTeach", "I can teach")}
                   </label>
                 </div>

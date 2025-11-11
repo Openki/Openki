@@ -7,7 +7,7 @@ import { EventModel, EventParticipantEntity } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 
 import { Contribution } from "../../Contribution";
-import { SendMessage, Data as SendMessageData } from "../../SendMessage";
+import { SendMessage, Props as SendMessageProps } from "../../SendMessage";
 import { RemoveDropdown } from "./remove-dropdown";
 import { ParticipantContact } from "/imports/ui/components/participant/contact";
 import { ProfileLink } from "/imports/ui/components/profile-link";
@@ -100,7 +100,7 @@ export function EventParticipants({ event }: Props) {
     return !!(user && event.editableBy(user));
   }
 
-  function sendMessageAttr(): SendMessageData {
+  function sendMessageAttr(): SendMessageProps {
     return {
       placeholder: t(
         "eventParticipants.sendMessage.placeholder",
