@@ -1,12 +1,10 @@
 // file://./../../../imports/ui/pages/event-details/index.tsx
 
-beforeEach(() => {
-  cy.visitOpenki("/event/eb386e8309/Schweissen", { username: "Support" });
-});
-
 describe("event details page", () => {
   //  https://gitlab.com/Openki/Openki/-/issues/2269
   it("should allow to cancel a event", () => {
+    cy.visitOpenki("/event/eb386e8309/Schweissen", { username: "Support" });
+
     cy.getById("events-participants-header").should("contains.text", "Noch keine Teilnehmer_innen");
     cy.get("#maincontent .btn-remove").click();
     cy.get("#maincontent .event-cancel-confirm p").should(
