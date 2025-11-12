@@ -31,7 +31,7 @@ function CourseMembers({
   return (
     <FormCheck
       id="event-edit-notify-check"
-      type="box"
+      type="switch"
       checked={notifyChecked}
       onChange={onChange}
       label={
@@ -102,7 +102,7 @@ export function Notify({
         />
       )}
       {checked && (
-        <div className="ms-4">
+        <div className="form-switch-text-indent">
           {!onlyYouReceive() ? (
             <FormControl
               id="event-edit-notify-message"

@@ -5,13 +5,27 @@ import { filterUserVenues } from "/imports/ui/components/events/edit-venue/searc
 import { OtherEventsMessage } from "/imports/ui/components/events/edit/OtherEventsMessage";
 import { useFindParallelEvents } from "/imports/ui/components/events/edit/useFindParallelEvents";
 import { useUser } from "/imports/utils/react-meteor-data";
+import { EventVenueEntity } from "/imports/api/events/events";
+
+function ContactHostHint() {
+  const { t } = useTranslation();
+
+  return (
+    <div data-test="events-edit-venue-hint-contact-host" className="alert alert-success p-2">
+      {t(
+        "event.editVenue.pleaseContactHost",
+        "Make sure you have contacted the host of this venue for availability.",
+      )}
+    </div>
+  );
+}
 
 export function Hints({
-  venueId,
+  venue: eventVenue,
   regionId,
   event,
 }: {
-  venueId: string | undefined;
+  venue: EventVenueEntity | undefined;
   regionId: string;
   event: {
     _id?: string | undefined;
@@ -23,66 +37,64 @@ export function Hints({
   const { t } = useTranslation();
   const user = useUser();
 
-  const [venueIsLoading, venue] = useVenueDetails(venueId || "-1");
-  const parallelEvents = useFindParallelEvents(venueId, regionId, event);
+  const [venueIsLoading, venue] = useVenueDetails(eventVenue?._id || "-1");
+  const parallelEvents = useFindParallelEvents(eventVenue?._id, regionId, event);
 
   const inSameRoom = parallelEvents.find(
     (e) => e.room && event.room && e.room.toUpperCase() === event.room.toUpperCase(),
   );
-  return (
-    <>
-      {!venueIsLoading() && !!venue && (
-        <>
-          {venue.allowParallelEvents && parallelEvents.length > 0 && (
-            <div
-              data-test="events-edit-venue-hint-parallel-events"
-              className="alert alert-warning p-2"
-            >
-              <span className="fa-solid fa-triangle-exclamation fa-fw" aria-hidden="true"></span>{" "}
-              {t("event.edit.venue.parallelEvents.allowed", "Event is overlapping.")}{" "}
-              {inSameRoom && (
-                <>
-                  {t(
-                    "event.edit.venue.parallelEvents.sameRoom",
-                    "Your event seem to be in same room as an other event.",
-                  )}{" "}
-                </>
-              )}
-              <OtherEventsMessage events={parallelEvents} />
-            </div>
-          )}
 
-          {
-            /* Not show hint if user is editor of venue */
-            filterUserVenues(user, [venue]).length === 0 &&
-              (venue.restrictedUse ? (
-                <div
-                  data-test="events-edit-venue-hint-restricted-use"
-                  className="alert alert-warning p-2"
-                >
-                  <span
-                    className="fa-solid fa-triangle-exclamation fa-fw"
-                    aria-hidden="true"
-                  ></span>{" "}
-                  {t(
-                    "event.editVenue.restrictedUse",
-                    "This venue can only be chosen by its hosts to publish an event.",
-                  )}
-                </div>
-              ) : (
-                <div
-                  data-test="events-edit-venue-hint-contact-host"
-                  className="alert alert-success p-2"
-                >
-                  {t(
-                    "event.editVenue.pleaseContactHost",
-                    "Make sure you have contacted the host of this venue for availability.",
-                  )}
-                </div>
-              ))
-          }
-        </>
-      )}
-    </>
-  );
+  if (eventVenue && !eventVenue._id) {
+    return <ContactHostHint />;
+  }
+
+  if (venueIsLoading()) {
+    return null;
+  }
+
+  if (venue) {
+    return (
+      <>
+        {venue.allowParallelEvents && parallelEvents.length > 0 && (
+          <div
+            data-test="events-edit-venue-hint-parallel-events"
+            className="alert alert-warning p-2"
+          >
+            <i className="fa-solid fa-triangle-exclamation fa-fw" />{" "}
+            {t("event.edit.venue.parallelEvents.allowed", "Event is overlapping.")}{" "}
+            {inSameRoom && (
+              <>
+                {t(
+                  "event.edit.venue.parallelEvents.sameRoom",
+                  "Your event seem to be in same room as an other event.",
+                )}{" "}
+              </>
+            )}
+            <OtherEventsMessage events={parallelEvents} />
+          </div>
+        )}
+
+        {
+          /* Not show hint if user is editor of venue */
+          filterUserVenues(user, [venue]).length === 0 &&
+            (venue.restrictedUse ? (
+              <div
+                data-test="events-edit-venue-hint-restricted-use"
+                className="alert alert-warning p-2"
+              >
+                <i className="fa-solid fa-triangle-exclamation fa-fw" />{" "}
+                {t(
+                  "event.editVenue.restrictedUse",
+                  "This venue can only be chosen by its hosts to publish an event.",
+                )}
+              </div>
+            ) : (
+              <ContactHostHint />
+            ))
+        }
+      </>
+    );
+  }
+
+  return null;
 }

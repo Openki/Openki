@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { EventVenueEntity } from "/imports/api/events/events";
@@ -10,6 +10,7 @@ import { Map } from "./map";
 import { Search } from "./search";
 import { Timetable } from "./Timetable";
 import { FormControl } from "/imports/ui/components/form-control";
+import { Button } from "/imports/ui/components/Buttons";
 
 export interface Props {
   region: string;
@@ -27,14 +28,22 @@ export interface Props {
 export function EditVenue({ region: regionId, event, value, onChange, errors }: Props) {
   const { t } = useTranslation();
 
+  const [autofocusOnSearch, setAutoFocusOnSearch] = useState(false);
+
   return (
     <>
       {!value ? (
         <div className="mb-3">
-          <label className="form-label">
+          <label className="form-label" htmlFor="event-edit-venue-search">
             {t("course.event.edit.location", "Venue")} <small>{t("_inputField.optional")}</small>
           </label>
-          <Search regionId={regionId} value={value} onChange={onChange} />
+          <Search
+            id="event-edit-venue-search"
+            autofocus={autofocusOnSearch}
+            regionId={regionId}
+            value={value}
+            onChange={onChange}
+          />
         </div>
       ) : (
         <>
@@ -79,20 +88,23 @@ export function EditVenue({ region: regionId, event, value, onChange, errors }: 
             <div className="col-md-3 mb-3 mb-md-0">
               <div className="form-label d-none d-md-block">&nbsp;</div>
               <div className="d-grid">
-                <button
-                  className="btn btn-secondary"
-                  type="button"
-                  onClick={() => onChange(undefined)}
+                <Button
+                  id="event-edit-venue-reset"
+                  className="btn-secondary"
+                  onClick={() => {
+                    onChange(undefined);
+                    setAutoFocusOnSearch(true);
+                  }}
                 >
                   {t("course.event.edit.locationResetButton", "Search other place")}
-                </button>
+                </Button>
               </div>
             </div>
           </div>
           {!!errors.venue && <div className="text-danger mb-3">{errors.venue}</div>}
           {!!errors.startEndVenue && <div className="text-danger mb-3">{errors.startEndVenue}</div>}
           {!errors.venue && !errors.startEndVenue && (
-            <Hints regionId={regionId} event={event} venueId={value._id} />
+            <Hints regionId={regionId} event={event} venue={value} />
           )}
           <div className="mb-3">
             <Timetable regionId={regionId} event={event} venueId={value._id} />

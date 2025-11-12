@@ -21,6 +21,8 @@ describe("event details page", () => {
   it("should display not found page for not existing events", () => {
     cy.visitOpenki("/event/not-exists", { username: "Seee" });
 
-    cy.get("h3").contains("Diese Veranstaltung konnte nicht gefunden werden.");
+    cy.get("h3").contains(
+      "Could not find this event. Maybe it was deleted, or never existed in the first place.",
+    );
   });
 });
