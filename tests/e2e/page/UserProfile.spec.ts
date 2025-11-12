@@ -26,7 +26,7 @@ describe("userprofile page", () => {
   });
 
   it("should allow to send a direct message", () => {
-    cy.get('[data-test="send-message-textarea"]').type(
+    cy.get("#send-message-textarea").type(
       "Hallo Sandro, es freut mich dich am Freitag zu sehen. Gruss Seee",
     );
     cy.get("#send-message-submit").click();
