@@ -22,5 +22,5 @@ export function Icon({
     return "fa-house";
   }
 
-  return <span className={`fa-solid ${icon()} fa-fw`} aria-hidden="true"></span>;
+  return <i className={`fa-solid ${icon()} fa-fw`} />;
 }

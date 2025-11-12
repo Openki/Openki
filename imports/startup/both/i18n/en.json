@@ -660,6 +660,7 @@
   "location.format": "{LAT} {LON}",
   "location.link.restrictedUse": "(only restricted use)",
   "location.link.tooltip": "Show details of {VENUE}",
+  "location.setMeetingPoint": "Set meeting point on map without searching",
   "log.list.windowtitle": "Log",
   "login.frame.profile": "Public profile",
   "login.frame.register.mailDisclaimer": "Providing an e-mail address allows other users to contact you and is needed to recover your password in case you forget it.",

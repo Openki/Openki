@@ -42,13 +42,26 @@ export function filterUserVenues(user: UserModel | null, venues: EventVenueEntit
   return userVenues;
 }
 
-function CustomMenu({ results, menuProps }: { results: any[]; menuProps: RenderMenuProps }) {
+function CustomMenu({
+  region: regionId,
+  text,
+  results,
+  menuProps,
+}: {
+  region: string;
+  text: string;
+  results: any[];
+  menuProps: RenderMenuProps;
+}) {
   const { t } = useTranslation();
   const user = useUser();
+  const [isLoading, region] = Regions.useDetails(regionId);
+
   let vs = results as EventVenueEntity[];
   const userVenues = filterUserVenues(user, vs);
   const uvs = intersectionBy(vs, userVenues, (v) => v._id);
   vs = differenceBy(vs, uvs, (v) => v._id);
+
   return (
     <Menu {...menuProps} id="event-venue">
       {vs.length === 0 && (
@@ -68,7 +81,7 @@ function CustomMenu({ results, menuProps }: { results: any[]; menuProps: RenderM
               position={index}
               className="bg-venue text-truncate"
             >
-              <span className="fa-solid fa-house-user fa-fw" aria-hidden="true"></span>{" "}
+              <i className="fa-solid fa-house-user fa-fw" />{" "}
               {ReactJoin([!!venue.name && <strong>{venue.name}</strong>, venue.address])}
             </MenuItem>
           ))}
@@ -111,11 +124,19 @@ function CustomMenu({ results, menuProps }: { results: any[]; menuProps: RenderM
           <Menu.Divider />
         </>
       )}
+      <MenuItem
+        option={isLoading() ? {} : ({ loc: region?.loc, name: text } as EventVenueEntity)}
+        position={uvs.length + uvs.length + 1}
+      >
+        <i className="fa-solid fa-location-pin fa-fw" />{" "}
+        {t("location.setMeetingPoint", "Set meeting point on map without searching")}
+      </MenuItem>
+      <Menu.Divider />
       <div className="px-3">
         {t("profile.createNewVenue.question", "Are you responsible for a venue?")}
         <br />
         <a href={Router.path("venueDetails", { _id: "create" })} target="_blank" rel="noreferrer">
-          <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>{" "}
+          <i className="fa-solid fa-house fa-fw" />{" "}
           {t(
             "profile.createNewVenue.linkText",
             "Set up a venue that is visible to others and can be reused.",
@@ -127,10 +148,14 @@ function CustomMenu({ results, menuProps }: { results: any[]; menuProps: RenderM
 }
 
 export function Search({
+  id,
+  autofocus,
   regionId,
   value,
   onChange,
 }: {
+  id: string;
+  autofocus?: boolean | undefined;
   regionId: string;
   value: EventVenueEntity | undefined;
   onChange: (newValue: EventVenueEntity) => void;
@@ -238,14 +263,15 @@ export function Search({
         // From https://github.com/ericgio/react-bootstrap-typeahead/blob/924627376275c78988718230c0438748ff673a6d/src/components/Typeahead/Typeahead.tsx#L229
         // eslint-disable-next-line react/prop-types
         const { isInvalid, isValid, size } = props as any;
-        const commonProps = { ...inputProps, isInvalid, isValid, size }; // Add type="search" to have a clear button
+        const commonProps = { ...inputProps, id, isInvalid, isValid, size };
 
-        return <TypeaheadInputSingle {...commonProps} type="search" />;
+        // Add type="search" to have a clear button
+        return <TypeaheadInputSingle {...commonProps} type="search" autoFocus={autofocus} />;
       }}
-      renderMenu={(results, menuProps) => <CustomMenu results={results} menuProps={menuProps} />}
-      onChange={(newValue) => {
-        onChange(newValue[0] as EventVenueEntity);
-      }}
+      renderMenu={(results, menuProps, state) => (
+        <CustomMenu region={regionId} results={results} menuProps={menuProps} text={state.text} />
+      )}
+      onChange={(newValue) => onChange(newValue[0] as EventVenueEntity)}
     />
   );
 }
