@@ -33,7 +33,7 @@ template.onRendered(() => {
 
       // also check children scrollHeight, works only if the right class is set
       element
-        .querySelectorAll(".overflow-auto,.overflow-y-auto,.overflow-scroll,.overflow-y-scroll")
+        .querySelectorAll(".modal,.overflow-auto,.overflow-y-auto,.overflow-scroll,.overflow-y-scroll")
         .forEach((e) => {
           scrollHeight = Math.max(scrollHeight, e.scrollHeight);
         });
