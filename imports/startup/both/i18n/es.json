@@ -235,7 +235,6 @@
   "discussion.anonymous": "Anónimo",
   "discussionPost.deleted": "Comentario eliminado.",
   "discussionPost.deleted.error": "No se pudo eliminar el comentario",
-  "editable.add_text": "Agregar texto aquí",
   "editableImage.accept.error": "Solo se permiten imágenes.",
   "email.base.farewell": "Si tiene alguna pregunta o sugerencia, no dude en ponerse en contacto con nosotros.",
   "email.base.greeting": "Hola {USERNAME}",

@@ -299,7 +299,6 @@
   "discussion.anonymous": "Anonimo",
   "discussionPost.deleted": "Commento eliminato.",
   "discussionPost.deleted.error": "Impossibile eliminare il commento",
-  "editable.add_text": "Aggiungi testo qui",
   "editableImage.accept.error": "Sono consentite solo immagini.",
   "email.base.farewell": "Se hai domande o suggerimenti, non esitare a contattarci.",
   "email.base.greeting": "Ciao {USERNAME}",
