@@ -1,6 +1,6 @@
 import { Match, check } from "meteor/check";
 import { Meteor } from "meteor/meteor";
-import assignIn from "lodash/assignIn";
+import { assignIn } from "lodash-es";
 import moment from "moment";
 import { Random } from "meteor/random";
 

@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { Match, check } from "meteor/check";
-import assignIn from "lodash/assignIn";
+import { assignIn } from "lodash-es";
 
 import { UserModel } from "/imports/api/users/users";
 

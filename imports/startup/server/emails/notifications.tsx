@@ -6,7 +6,7 @@ import { Random } from "meteor/random";
 import { Match, check } from "meteor/check";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 import { Model, Notification } from "/imports/startup/both/emails/notification";
-import fromPairs from "lodash/fromPairs";
+import { fromPairs } from "lodash-es";
 
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { Log } from "/imports/api/log/log";

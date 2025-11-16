@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
-import omit from "lodash/omit";
+import { omit } from "lodash-es";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { TenantModel } from "/imports/api/tenants/tenants";

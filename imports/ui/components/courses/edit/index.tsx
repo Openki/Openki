@@ -1,10 +1,7 @@
 import { Router } from "meteor/iron:router";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import chain from "lodash/chain";
-import uniq from "lodash/uniq";
-import fromPairs from "lodash/fromPairs";
-import union from "lodash/union";
+import { uniq, chain, fromPairs, union } from "lodash-es";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { CourseMemberEntity, CourseModel, Courses, isPrivate } from "/imports/api/courses/courses";

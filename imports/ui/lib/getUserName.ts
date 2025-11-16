@@ -1,5 +1,5 @@
 import { Meteor } from "meteor/meteor";
-import assignIn from "lodash/assignIn";
+import { assignIn } from "lodash-es";
 import { i18n } from "/imports/startup/both/i18next";
 import { Tracker } from "meteor/tracker";
 

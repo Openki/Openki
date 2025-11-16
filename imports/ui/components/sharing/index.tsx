@@ -1,4 +1,4 @@
-import omitBy from "lodash/omitBy";
+import { omitBy } from "lodash-es";
 import { Session } from "meteor/session";
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";

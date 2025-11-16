@@ -1,5 +1,5 @@
 import { Mongo } from "meteor/mongo";
-import uniq from "lodash/uniq";
+import { uniq } from "lodash-es";
 
 import { CourseEntity, CourseModel, Courses } from "/imports/api/courses/courses";
 import { EventEntity, EventModel, Events } from "/imports/api/events/events";

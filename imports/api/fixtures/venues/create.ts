@@ -1,4 +1,4 @@
-import assignIn from "lodash/assignIn";
+import { assignIn } from "lodash-es";
 
 import { ensure } from "/imports/api/fixtures/ensureFixture";
 import { Prng } from "/imports/api/fixtures/Prng";

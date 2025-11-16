@@ -1,4 +1,4 @@
-import debounce from "lodash/debounce";
+import { debounce } from "lodash-es";
 import { useTranslation } from "react-i18next";
 import React, { useCallback, useState } from "react";
 

@@ -1,6 +1,5 @@
 import { Mongo } from "meteor/mongo";
-import sample from "lodash/sample";
-import shuffle from "lodash/shuffle";
+import { shuffle, sample } from "lodash-es";
 
 import { Courses } from "/imports/api/courses/courses";
 import { EventEntity, Events } from "/imports/api/events/events";
