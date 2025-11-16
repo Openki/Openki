@@ -1,4 +1,4 @@
-import { _ } from "meteor/underscore";
+import assignIn from "lodash/assignIn";
 
 import { ensure } from "/imports/api/fixtures/ensureFixture";
 import { Prng } from "/imports/api/fixtures/Prng";
@@ -59,7 +59,7 @@ export async function create() {
 
     const venue = await ensure.venue(venueData.name, venueData.region, venueData._id);
 
-    _.extend(venue, venueData);
+    assignIn(venue, venueData);
 
     venue.createdby = (await ensure.user(venue.createdby, venueData.region))._id;
     venue.editor = venue.editor

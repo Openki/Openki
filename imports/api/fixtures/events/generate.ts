@@ -1,5 +1,6 @@
 import { Mongo } from "meteor/mongo";
-import { _ } from "meteor/underscore";
+import sample from "lodash/sample";
+import shuffle from "lodash/shuffle";
 
 import { Courses } from "/imports/api/courses/courses";
 import { EventEntity, Events } from "/imports/api/events/events";
@@ -10,6 +11,7 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { LocalTime } from "/imports/utils/local-time";
 import { Log } from "../../log/log";
+
 /**
  * Make a number that looks like a human chose it, favouring 2 and 5
  */
@@ -66,7 +68,7 @@ export async function generate() {
       const event = {} as Mongo.OptionalId<EventEntity>;
       let { description } = course;
       if (!description) description = "No description"; // :-(
-      const words = _.shuffle(description.split(" "));
+      const words = shuffle(description.split(" "));
       event.tenant = course.tenant;
       event.region = course.region;
       event.groups = course.groups;
@@ -102,7 +104,7 @@ export async function generate() {
 
       event.courseId = course._id;
       event._id = ensure.fixedId([course._id, `${n}`]);
-      event.title = `${course.name} ${_.sample(words)}`;
+      event.title = `${course.name} ${sample(words)}`;
       event.description = HtmlTools.sanitizeHtml(
         words.slice(0, 10 + Math.floor(prng() * 30)).join(" "),
       );

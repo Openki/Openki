@@ -1,6 +1,8 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import { chain, escapeRegExp } from "lodash";
+import assignIn from "lodash/assignIn";
+import escapeRegExp from "lodash/escapeRegExp";
+import chain from "lodash/chain";
 import { Match, check } from "meteor/check";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
@@ -122,7 +124,7 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
   constructor() {
     super("Venues", {
       transform(venue) {
-        return _.extend(new Venue(), venue);
+        return assignIn(new Venue(), venue);
       },
     });
 

@@ -1,6 +1,6 @@
 import { Match, check } from "meteor/check";
 import { Meteor } from "meteor/meteor";
-import { _ } from "meteor/underscore";
+import assignIn from "lodash/assignIn";
 import moment from "moment";
 import { Random } from "meteor/random";
 
@@ -221,11 +221,11 @@ export const save = ServerMethod(
         : PublicSettings.sendReminderPreset;
 
       // Synthesize event document because the code below relies on it
-      event = _.extend(new OEvent(), {
+      event = assignIn(new OEvent(), {
         region: editFields.region,
         courseId: editFields.courseId,
         editors: [user._id],
-      });
+      }) as EventModel;
     } else {
       const result = await Events.findOneAsync(eventId);
       if (!result) {

@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { Match, check } from "meteor/check";
-import { _ } from "meteor/underscore";
+import assignIn from "lodash/assignIn";
 
 import { Users } from "/imports/api/users/users";
 import * as timeLastEditDenormalizer from "/imports/api/groups/timeLastEditDenormalizer";
@@ -90,7 +90,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
   }
 
   if (group.isNew()) {
-    groupId = await Groups.insertAsync(_.extend(group, updates));
+    groupId = await Groups.insertAsync(assignIn(group, updates));
     await userBadgesDenormalizer.updateBadges(user._id);
   } else {
     updates = timeLastEditDenormalizer.beforeUpdate(updates);
