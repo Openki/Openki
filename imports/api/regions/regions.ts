@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import { _ } from "meteor/underscore";
+import assignIn from "lodash/assignIn";
 import { Match, check } from "meteor/check";
 import { Session } from "meteor/session";
 
@@ -139,7 +139,7 @@ export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionMode
   constructor() {
     super("Regions", {
       transform(region) {
-        return _.extend(new Region(), region);
+        return assignIn(new Region(), region);
       },
     });
 

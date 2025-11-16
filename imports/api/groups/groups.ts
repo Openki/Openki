@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { Match, check } from "meteor/check";
-import { _ } from "meteor/underscore";
+import assignIn from "lodash/assignIn";
 
 import { UserModel } from "/imports/api/users/users";
 
@@ -136,7 +136,7 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
   constructor() {
     super("Groups", {
       transform(tenant) {
-        return _.extend(new Group(), tenant);
+        return assignIn(new Group(), tenant);
       },
     });
 

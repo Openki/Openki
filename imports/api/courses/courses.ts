@@ -1,6 +1,8 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import { _ } from "meteor/underscore";
+import assignIn from "lodash/assignIn";
+import intersection from "lodash/intersection";
+import escapeRegExp from "lodash/escapeRegExp";
 import { Match, check } from "meteor/check";
 
 import { UserModel } from "/imports/api/users/users";
@@ -13,7 +15,6 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import * as FileStorage from "/imports/utils/FileStorage";
-import { escapeRegExp, intersection } from "lodash";
 import { GroupEntityCustomCourseFields } from "/imports/api/groups/groups";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { StringEnum, Type } from "/imports/utils/CustomChecks";
@@ -188,14 +189,14 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
   constructor() {
     super("Courses", {
       transform(course) {
-        const courseModel = _.extend(new Course(), course);
+        const courseModel = assignIn(new Course(), course);
 
         if (courseModel.nextEvent) {
-          courseModel.nextEvent = _.extend(new OEvent(), courseModel.nextEvent);
+          courseModel.nextEvent = assignIn(new OEvent(), courseModel.nextEvent);
         }
 
         if (courseModel.lastEvent) {
-          courseModel.lastEvent = _.extend(new OEvent(), courseModel.lastEvent);
+          courseModel.lastEvent = assignIn(new OEvent(), courseModel.lastEvent);
         }
 
         return courseModel;

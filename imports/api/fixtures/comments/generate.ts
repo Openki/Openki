@@ -1,5 +1,5 @@
 import { Mongo } from "meteor/mongo";
-import { _ } from "meteor/underscore";
+import sampleSize from "lodash/sampleSize";
 import { PRNG } from "seedrandom";
 
 import { Courses } from "/imports/api/courses/courses";
@@ -46,9 +46,9 @@ export async function generate() {
     for (let n = 0; n < createCount; n += 1) {
       const comment = {} as Mongo.OptionalId<CourseDiscussionEntity>;
       comment.courseId = course._id;
-      comment.title = _.sample(words, 1 + Math.floor(prng() * 3)).join(" ");
+      comment.title = sampleSize(words, 1 + Math.floor(prng() * 3)).join(" ");
       comment.text = HtmlTools.sanitizeHtml(
-        _.sample(words, 5).join(" ") + _.sample(words, Math.floor(prng() * 30)).join(" "),
+        sampleSize(words, 5).join(" ") + sampleSize(words, Math.floor(prng() * 30)).join(" "),
       );
 
       comment.time_created = sometimesAfter(prng, course.time_created);
