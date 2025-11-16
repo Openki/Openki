@@ -1,5 +1,5 @@
 import { Meteor } from "meteor/meteor";
-import assignIn from "lodash/assignIn";
+import { assignIn } from "lodash-es";
 
 import { Version } from "/imports/api/version/version";
 

@@ -1,6 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import assignIn from "lodash/assignIn";
+import { assignIn } from "lodash-es";
+
 import * as StringTools from "/imports/utils/string-tools";
 
 export type Role = "admin" | "visitor";

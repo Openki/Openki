@@ -1,5 +1,5 @@
 import { Mongo } from "meteor/mongo";
-import sampleSize from "lodash/sampleSize";
+import { sampleSize } from "lodash-es";
 import { PRNG } from "seedrandom";
 
 import { Courses } from "/imports/api/courses/courses";

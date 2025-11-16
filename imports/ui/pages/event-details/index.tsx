@@ -4,12 +4,12 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
+import { truncate } from "lodash-es";
 
 import { EventModel } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { Regions } from "/imports/api/regions/regions";
 
-import truncate from "lodash/truncate";
 import { appendAsJsonLdToBody } from "/imports/utils/event-to-json-ld";
 import { textPlain } from "/imports/utils/html-tools";
 import * as Metatags from "/imports/utils/metatags";

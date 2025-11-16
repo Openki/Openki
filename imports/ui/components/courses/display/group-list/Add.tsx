@@ -1,5 +1,5 @@
 import React from "react";
-import difference from "lodash/difference";
+import { difference } from "lodash-es";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";

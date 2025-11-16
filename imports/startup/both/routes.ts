@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { Router } from "meteor/iron:router";
 import { Session } from "meteor/session";
-import assignIn from "lodash/assignIn";
+import { assignIn } from "lodash-es";
 import moment from "moment";
 import momentTz from "moment-timezone";
 

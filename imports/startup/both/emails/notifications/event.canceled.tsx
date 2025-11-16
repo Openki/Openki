@@ -3,7 +3,7 @@ import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
-import truncate from "lodash/truncate";
+import { truncate } from "lodash-es";
 
 import { Log } from "/imports/api/log/log";
 import { UserModel } from "/imports/api/users/users";

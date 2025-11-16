@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import chain from "lodash/chain";
+import { chain } from "lodash-es";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";

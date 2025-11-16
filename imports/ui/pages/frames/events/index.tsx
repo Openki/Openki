@@ -1,7 +1,7 @@
-import take from "lodash/take";
+import React, { useEffect, useState } from "react";
+import { take } from "lodash-es";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useUserId } from "/imports/utils/react-meteor-data";
 

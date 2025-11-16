@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { EJSON } from "meteor/ejson";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
-import differenceBy from "lodash/differenceBy";
-import intersectionBy from "lodash/intersectionBy";
-import map from "lodash/map";
+import { intersectionBy, differenceBy, map } from "lodash-es";
 
 import { UserModel } from "/imports/api/users/users";
 import * as Alert from "/imports/api/alerts/alert";

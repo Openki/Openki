@@ -1,7 +1,7 @@
-import truncate from "lodash/truncate";
+import React, { useState } from "react";
+import { truncate } from "lodash-es";
 import { Router } from "meteor/iron:router";
 import { useUser } from "meteor/react-meteor-accounts";
-import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useValidation } from "../../lib/useValidation";
 import { textPlain } from "/imports/utils/html-tools";

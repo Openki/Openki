@@ -3,8 +3,7 @@ import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
-import chain from "lodash/chain";
-import truncate from "lodash/truncate";
+import { chain, truncate } from "lodash-es";
 
 import { Courses } from "/imports/api/courses/courses";
 import { Groups } from "/imports/api/groups/groups";

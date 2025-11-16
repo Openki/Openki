@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
-import take from "lodash/take";
+import { take } from "lodash-es";
 
 import { Courses, FindFilter } from "/imports/api/courses/courses";
 

@@ -1,8 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import assignIn from "lodash/assignIn";
-import intersection from "lodash/intersection";
-import escapeRegExp from "lodash/escapeRegExp";
+import { intersection, assignIn, escapeRegExp } from "lodash-es";
 import { Match, check } from "meteor/check";
 
 import { UserModel } from "/imports/api/users/users";

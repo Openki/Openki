@@ -1,8 +1,6 @@
 import { Mongo } from "meteor/mongo";
 import { Meteor } from "meteor/meteor";
-import intersection from "lodash/intersection";
-import assignIn from "lodash/assignIn";
-import escapeRegExp from "lodash/escapeRegExp";
+import { intersection, assignIn, escapeRegExp } from "lodash-es";
 import { Match, check } from "meteor/check";
 
 import * as tenantDenormalizer from "./tenantDenormalizer";

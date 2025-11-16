@@ -1,4 +1,4 @@
-import random from "lodash/random";
+import { random } from "lodash-es";
 import { Users } from "/imports/api/users/users";
 
 export async function update() {

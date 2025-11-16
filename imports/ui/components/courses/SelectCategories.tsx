@@ -1,7 +1,6 @@
 import React, { ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
-import uniq from "lodash/uniq";
-import difference from "lodash/difference";
+import { uniq, difference } from "lodash-es";
 
 import { Categories } from "/imports/api/categories/categories";
 

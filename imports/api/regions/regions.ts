@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import assignIn from "lodash/assignIn";
+import { assignIn } from "lodash-es";
 import { Match, check } from "meteor/check";
 import { Session } from "meteor/session";
 
