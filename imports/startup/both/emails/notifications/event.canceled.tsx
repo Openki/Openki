@@ -3,13 +3,13 @@ import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
+import truncate from "lodash/truncate";
 
 import { Log } from "/imports/api/log/log";
 import { UserModel } from "/imports/api/users/users";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { Events } from "/imports/api/events/events";
 
-import { truncate } from "lodash";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { Model as NotificationModel } from "../notification";
 import { EventCanceled, Props } from "/imports/emails/notifications/EventCanceled";

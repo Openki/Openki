@@ -1,4 +1,4 @@
-import { omit } from "lodash";
+import omit from "lodash/omit";
 import { ReactNode, useState } from "react";
 
 export type Mapping<T extends string> = Record<

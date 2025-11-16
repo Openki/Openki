@@ -3,7 +3,9 @@ import { Collapse } from "/imports/startup/client/bootstrap";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 import { useSiteName } from "/imports/utils/getSiteName";
-import { isEmpty, isNil, omitBy } from "lodash";
+import isEmpty from "lodash/isEmpty";
+import omitBy from "lodash/omitBy";
+import isNil from "lodash/isNil";
 
 import { EventModel } from "/imports/api/events/events";
 import { useDetails as useRegionDetails } from "/imports/api/regions/publications";

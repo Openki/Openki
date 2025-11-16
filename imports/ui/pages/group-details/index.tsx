@@ -1,4 +1,4 @@
-import { truncate } from "lodash";
+import truncate from "lodash/truncate";
 import { Router } from "meteor/iron:router";
 import { useUser } from "meteor/react-meteor-accounts";
 import React, { useState } from "react";

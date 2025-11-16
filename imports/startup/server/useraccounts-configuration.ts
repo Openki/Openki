@@ -1,5 +1,5 @@
 import { Meteor } from "meteor/meteor";
-import { toArray } from "lodash";
+import toArray from "lodash/toArray";
 import { ServiceConfiguration } from "meteor/service-configuration";
 import { Accounts } from "meteor/accounts-base";
 

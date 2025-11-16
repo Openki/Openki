@@ -1,4 +1,4 @@
-import { truncate } from "lodash";
+import truncate from "lodash/truncate";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
