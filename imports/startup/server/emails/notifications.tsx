@@ -6,6 +6,7 @@ import { Random } from "meteor/random";
 import { Match, check } from "meteor/check";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 import { Model, Notification } from "/imports/startup/both/emails/notification";
+import fromPairs from "lodash/fromPairs";
 
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { Log } from "/imports/api/log/log";
@@ -16,7 +17,6 @@ import { renderToEmail } from "/imports/utils/renderToEmail";
 import { Root } from "/imports/emails/Root";
 import { toEmailLogo } from "/imports/utils/toEmailLogo";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { fromPairs } from "lodash";
 
 /**
  * Record the result of a notification delivery attempt

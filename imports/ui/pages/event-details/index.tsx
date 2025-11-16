@@ -9,7 +9,7 @@ import { EventModel } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { Regions } from "/imports/api/regions/regions";
 
-import { truncate } from "lodash";
+import truncate from "lodash/truncate";
 import { appendAsJsonLdToBody } from "/imports/utils/event-to-json-ld";
 import { textPlain } from "/imports/utils/html-tools";
 import * as Metatags from "/imports/utils/metatags";

@@ -1,5 +1,9 @@
-import { union, difference, intersection, uniq } from "lodash";
 import moment from "moment";
+import union from "lodash/union";
+import difference from "lodash/difference";
+import intersection from "lodash/intersection";
+import uniq from "lodash/uniq";
+
 import { FilteringReadError } from "./filtering";
 
 export interface ParamWrapper<G = any, Q = G> {

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { EJSON } from "meteor/ejson";
 import { Router } from "meteor/iron:router";
-import { differenceBy, intersectionBy, map } from "lodash";
 import { useTranslation } from "react-i18next";
-import { UserModel } from "/imports/api/users/users";
+import differenceBy from "lodash/differenceBy";
+import intersectionBy from "lodash/intersectionBy";
+import map from "lodash/map";
 
+import { UserModel } from "/imports/api/users/users";
 import * as Alert from "/imports/api/alerts/alert";
 import { EventVenueEntity } from "/imports/api/events/events";
 import * as Regions from "/imports/api/regions/publications";

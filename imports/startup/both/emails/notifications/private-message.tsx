@@ -3,6 +3,7 @@ import { Match, check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
+import truncate from "lodash/truncate";
 
 import { Courses } from "/imports/api/courses/courses";
 import { Log } from "/imports/api/log/log";
@@ -11,7 +12,6 @@ import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { Events } from "/imports/api/events/events";
 
 import * as HtmlTools from "/imports/utils/html-tools";
-import { truncate } from "lodash";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { Model as NotificationModel } from "../notification";
 import { PrivateMessage, Props } from "/imports/emails/notifications/PrivateMessage";

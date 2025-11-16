@@ -1,4 +1,4 @@
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
 import { Router } from "meteor/iron:router";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";

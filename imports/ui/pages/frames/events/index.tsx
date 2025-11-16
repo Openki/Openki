@@ -1,4 +1,4 @@
-import { take } from "lodash";
+import take from "lodash/take";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
 import React, { useEffect, useState } from "react";

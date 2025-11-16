@@ -4,7 +4,8 @@
 // the timezone might actually change when a different region is selected. We
 // wouldn't want the time or even date field to change because of this switch.
 
-import { intersection, uniq } from "lodash";
+import intersection from "lodash/intersection";
+import uniq from "lodash/uniq";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
 import React, { useEffect, useState } from "react";

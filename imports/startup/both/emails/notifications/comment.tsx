@@ -2,7 +2,8 @@ import React from "react";
 import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
-import { truncate, uniq } from "lodash";
+import truncate from "lodash/truncate";
+import uniq from "lodash/uniq";
 import i18next from "i18next";
 
 import { CourseDiscussions } from "/imports/api/course-discussions/course-discussions";
