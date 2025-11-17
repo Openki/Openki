@@ -333,6 +333,8 @@ export function Edit(props: Props) {
   // For iframes: Keep state of simple role selection
   const [simpleSelectedRole, setSimpleSelectedRole] = useState("participant");
 
+  const [customFieldValues, setCustomFieldValues] = useState(props.customFields);
+
   const [savedMessage, setSavedMessage] = useState(false);
 
   function availableRoles() {
@@ -394,13 +396,8 @@ export function Edit(props: Props) {
     );
   };
 
-  const customFields = (type?: "singleLine" | "multiLine" | "boolean") => {
-    return (
-      groups
-        .flatMap((g) => g.customCourseFields || [])
-        // when type is undefined all will get back
-        .filter((g) => !type || (g.type || "singleLine") === type)
-    );
+  const customFields = () => {
+    return groups.flatMap((g) => g.customCourseFields || []);
   };
 
   const resetFields = () => {
@@ -608,22 +605,9 @@ export function Edit(props: Props) {
         });
     }
 
-    changes.customFields = customFields().map((i) => {
-      if (i.type !== "boolean")
-        return {
-          name: i.name,
-          displayText: i.displayText,
-          value: $(`.js-custom-field-${i.name}`).val() as string,
-          visibleFor: i.visibleFor,
-        };
-
-      return {
-        name: i.name,
-        displayText: i.displayText,
-        value: $(`.js-custom-field-${i.name}`).prop("checked") as boolean,
-        visibleFor: i.visibleFor,
-      };
-    });
+    if (customFieldValues) {
+      changes.customFields = customFieldValues;
+    }
 
     setIsBusy(true);
     try {
@@ -799,13 +783,28 @@ export function Edit(props: Props) {
                   </div>
                 )}
 
-                <EditCustomFields fields={customFields("boolean")} values={props.customFields} />
+                <EditCustomFields
+                  type="boolean"
+                  fields={customFields()}
+                  values={customFieldValues}
+                  onChange={(values) => setCustomFieldValues(values)}
+                />
 
-                <EditCustomFields fields={customFields("singleLine")} values={props.customFields} />
+                <EditCustomFields
+                  type="singleLine"
+                  fields={customFields()}
+                  values={customFieldValues}
+                  onChange={(values) => setCustomFieldValues(values)}
+                />
               </div>
             )}
           </div>
-          <EditCustomFields fields={customFields("multiLine")} values={props.customFields} />
+          <EditCustomFields
+            type="multiLine"
+            fields={customFields()}
+            values={customFieldValues}
+            onChange={(values) => setCustomFieldValues(values)}
+          />
 
           {showInternalCheckbox() && (
             <div className="mb-3">

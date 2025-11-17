@@ -82,6 +82,17 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   const [selectedRegion, setSelectedRegion] = useState<string>(region || currentRegion);
   const [selectedVenue, setSelectedVenue] = useState(event.venue);
   const [noRsvpChecked, setNoRsvpChecked] = useState(!!event.noRsvp);
+
+  function initCustomFieldValues() {
+    const courseId = event.courseId;
+    if (courseId) {
+      return course?.customFields;
+    }
+    return undefined;
+  }
+
+  const [customFieldValues, setCustomFieldValues] = useState(initCustomFieldValues());
+
   const [isBusy, setIsBusy] = useState(false);
 
   const [isCourseLoading, course] = useCourseDetails(event.courseId || "-1");
@@ -143,14 +154,6 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
     // remove double groups
     return uniq(groups);
-  }
-
-  function customFieldValues() {
-    const courseId = event.courseId;
-    if (courseId) {
-      return course?.customFields;
-    }
-    return undefined;
   }
 
   const [groupsIsLoading, groups] = useGroupsFindFilter({ ids: getGroups() });
@@ -386,23 +389,6 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       }
     }
 
-    const newCustomFields = customFields().map((i) => {
-      if (i.type !== "boolean")
-        return {
-          name: i.name,
-          displayText: i.displayText,
-          value: $(`.js-custom-field-${i.name}`).val() as string,
-          visibleFor: i.visibleFor,
-        };
-
-      return {
-        name: i.name,
-        displayText: i.displayText,
-        value: $(`.js-custom-field-${i.name}`).prop("checked") as boolean,
-        visibleFor: i.visibleFor,
-      };
-    });
-
     const newUpdateReplicasTime = !startDayChanged && timeChanged && updateReplicas.time;
 
     const sendNotifications = notifyChecked;
@@ -476,8 +462,8 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
         );
       }
 
-      if (event.courseId) {
-        await CoursesMethods.save(event.courseId, { customFields: newCustomFields });
+      if (event.courseId && customFieldValues) {
+        await CoursesMethods.save(event.courseId, { customFields: customFieldValues });
       }
 
       afterSave();
@@ -615,7 +601,11 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
           {!!customFields()?.length && (
             <div className="mb-3">
-              <EditCustomFields fields={customFields()} values={customFieldValues()} />
+              <EditCustomFields
+                fields={customFields()}
+                values={customFieldValues}
+                onChange={(values) => setCustomFieldValues(values)}
+              />
             </div>
           )}
           <div className="mb-3">
