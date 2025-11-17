@@ -6,6 +6,7 @@ import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useValidation } from "../../../lib/useValidation";
+import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 import { promisify } from "es6-promisify";
 
@@ -42,9 +43,9 @@ export function LoginFrame({
   const currentRegion = useCurrentRegion();
   const locale = useSession("locale");
 
-  const [isBusy, setIsBusy] = useState<false | "Password" | "Google" | "Facebook" | "Github">(
-    false,
-  );
+  const [isBusy, setIsBusy] = useState<
+    false | "Password" | "Google" | "Facebook" | "Github" | "C3"
+  >(false);
   const [loginData, setLoginData] = useState({ username, password });
 
   const [errors, checkValidity, addError] = useValidation({
@@ -72,7 +73,7 @@ export function LoginFrame({
   const oAuthServices: {
     key: string;
     name: string;
-    serviceName: "Google" | "Facebook" | "Github";
+    serviceName: "Google" | "Facebook" | "Github" | "C3";
   }[] = [];
   const login = PublicSettings.feature.login;
   if (login.google) {
@@ -94,6 +95,13 @@ export function LoginFrame({
       key: "github",
       name: "GitHub",
       serviceName: "Github",
+    });
+  }
+  if (login.c3) {
+    oAuthServices.push({
+      key: "c3",
+      name: "C3",
+      serviceName: "C3",
     });
   }
 
@@ -225,7 +233,9 @@ export function LoginFrame({
                         SERVICE: service.name,
                       })}
                     >
-                      <i className={`fa-brands fa-${service.key} fa-fw`} />{" "}
+                      <i
+                        className={`${service.key === "c3" ? "fa-solid fa-rocket" : "fa-brands fa-" + service.key} fa-fw`}
+                      />{" "}
                       {t("login.OAuth.loginWith", "Login with {SERVICE}", {
                         SERVICE: service.name,
                       })}
