@@ -62,6 +62,20 @@ Meteor.startup(async () => {
       },
     );
   }
+  if (serviceConf.c3) {
+    await ServiceConfiguration.configurations.upsertAsync(
+      {
+        service: "c3",
+      },
+      {
+        $set: {
+          loginStyle: "popup",
+          clientId: serviceConf.c3.clientId,
+          secret: serviceConf.c3.secret,
+        },
+      },
+    );
+  }
 });
 
 Accounts.validateNewUser((user) => {
@@ -133,7 +147,7 @@ Accounts.onCreateUser(
     let verified = true; // Assume verified unless there is a flag that says it's not
     const services = user.services;
     if (services) {
-      ["facebook", "google", "github"].forEach((loginProvider) => {
+      ["facebook", "google", "github", "c3"].forEach((loginProvider) => {
         const provided = (services as any)[loginProvider] as {
           email?: string;
           verified_email?: boolean;

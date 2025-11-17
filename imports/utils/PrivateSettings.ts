@@ -41,6 +41,10 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
       clientId: String,
       secret: String,
     },
+    c3: {
+      clientId: String,
+      secret: String,
+    },
   }),
   /** Delete entries from the log or remove critical information */
   scrub: Match.Maybe([
