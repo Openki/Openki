@@ -5,6 +5,9 @@ import { GroupEntityCustomCourseFields } from "/imports/api/groups/groups";
 
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
+import { FormControl } from "/imports/ui/components/form-control";
+import { FormCheck } from "/imports/ui/components/FormCheck";
+
 export interface Props {
   /** Filter / Edit only specific field types. Default: all */
   type?: "boolean" | "singleLine" | "multiLine" | undefined;
@@ -19,51 +22,22 @@ export function EditCustomFields({ type, fields, values, onChange }: Props) {
     return values?.find((a) => a.name === name)?.value;
   }
 
-  function handleTextChange(
-    fieldName: string,
-  ): React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement> | undefined {
-    return (event) => {
+  function handleChange(fieldName: string) {
+    return (newValue: string | boolean) => {
       onChange(
         fields.map((i) => {
           if (i.type !== "boolean")
             return {
               name: i.name,
               displayText: i.displayText,
-              value: (fieldName === i.name ? event.target.value : value(i.name)) || "",
+              value: (fieldName === i.name ? newValue : value(i.name)) || "",
               visibleFor: i.visibleFor,
             };
 
           return {
             name: i.name,
             displayText: i.displayText,
-            value: ((value(i.name) as boolean | undefined) ?? i.defaultValue) || false,
-            visibleFor: i.visibleFor,
-          };
-        }),
-      );
-    };
-  }
-
-  function handleBooleanChange(
-    fieldName: string,
-  ): React.ChangeEventHandler<HTMLInputElement> | undefined {
-    return (event) => {
-      onChange(
-        fields.map((i) => {
-          if (i.type !== "boolean")
-            return {
-              name: i.name,
-              displayText: i.displayText,
-              value: value(i.name) || "",
-              visibleFor: i.visibleFor,
-            };
-
-          return {
-            name: i.name,
-            displayText: i.displayText,
-            value:
-              (fieldName === i.name ? event.target.value : (value(i.name) ?? i.defaultValue)) ||
-              false,
+            value: (fieldName === i.name ? newValue : (value(i.name) ?? i.defaultValue)) || false,
             visibleFor: i.visibleFor,
           };
         }),
@@ -79,46 +53,39 @@ export function EditCustomFields({ type, fields, values, onChange }: Props) {
           if (field.type !== "boolean")
             return (
               <div key={field.name} className="mb-3">
-                <label className="form-label" htmlFor={`course-custom-field-${field.name}`}>
-                  {getLocalizedValue(field.editText)}
-                </label>
                 {!field.type || field.type === "singleLine" ? (
-                  <input
-                    type="text"
-                    className={`form-control`}
+                  <FormControl
                     id={`course-custom-field-${field.name}`}
+                    type="text"
+                    label={getLocalizedValue(field.editText)}
                     placeholder={getLocalizedValue(field.editPlaceholder)}
                     value={value(field.name) as string}
-                    onChange={handleTextChange(field.name)}
+                    onChange={handleChange(field.name)}
                   />
                 ) : (
-                  <textarea
-                    className={`form-control`}
+                  <FormControl
                     id={`course-custom-field-${field.name}`}
-                    placeholder={getLocalizedValue(field.editPlaceholder)}
+                    type="textarea"
                     rows={3}
+                    label={getLocalizedValue(field.editText)}
+                    placeholder={getLocalizedValue(field.editPlaceholder)}
                     value={value(field.name) as string}
-                    onChange={handleTextChange(field.name)}
-                  ></textarea>
+                    onChange={handleChange(field.name)}
+                  />
                 )}
               </div>
             );
 
           return (
             <div key={field.name} className="mb-3">
-              <label className="form-label">{getLocalizedValue(field.editText)}</label>
-              <div key={field.name} className="form-check">
-                <input
-                  className={`form-check-input`}
-                  type="checkbox"
-                  id={`course-custom-field-${field.name}`}
-                  checked={(value(field.name) as boolean | undefined) ?? field.defaultValue}
-                  onChange={handleBooleanChange(field.name)}
-                />
-                <label className="form-check-label" htmlFor={`course-custom-field-${field.name}`}>
-                  {getLocalizedValue(field.editDescription)}
-                </label>
-              </div>
+              <div className="form-label">{getLocalizedValue(field.editText)}</div>
+              <FormCheck
+                id={`course-custom-field-${field.name}`}
+                type="switch"
+                label={getLocalizedValue(field.editDescription)}
+                checked={(value(field.name) as boolean | undefined) ?? field.defaultValue}
+                onChange={handleChange(field.name)}
+              />
             </div>
           );
         })}
