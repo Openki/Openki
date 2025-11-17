@@ -6,13 +6,15 @@ import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useValidation } from "../../../lib/useValidation";
+import { Accounts } from "meteor/accounts-base";
+import { promisify } from "es6-promisify";
 
 import * as Alert from "/imports/api/alerts/alert";
 import * as UsersMethods from "/imports/api/users/methods";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
-import { Button } from "../../Buttons.old";
+import { Button } from "../../Buttons";
 import { FormControl } from "/imports/ui/components/form-control";
 
 import "./styles.scss";
@@ -186,36 +188,38 @@ export function LoginFrame({
                       id={"acctount-tasks-login-frame-login-with-" + service.name}
                       className={`btn-${service.key}`}
                       disabled={!!isBusy}
-                      onClick={() => {
+                      onClick={async () => {
                         const loginMethod = Meteor[`loginWith${service.serviceName}`];
                         if (!loginMethod) {
                           throw new Error(`don't have login method for ${service.serviceName}`);
                         }
                         setIsBusy(service.serviceName);
 
-                        loginMethod({}, async (err) => {
-                          try {
-                            if (!err) {
-                              onLogin();
+                        try {
+                          await promisify(loginMethod)({});
 
-                              if (currentRegion) {
-                                await UsersMethods.regionChange(currentRegion._id);
-                              }
+                          onLogin();
 
-                              await UsersMethods.updateLocale(locale);
-
-                              Analytics.trackEvent(
-                                "Logins",
-                                `Logins with ${service.serviceName}`,
-                                currentRegion?.nameEn,
-                              );
-                            } else {
-                              Alert.serverError(err);
-                            }
-                          } finally {
-                            setIsBusy(false);
+                          if (currentRegion) {
+                            await UsersMethods.regionChange(currentRegion._id);
                           }
-                        });
+
+                          await UsersMethods.updateLocale(locale);
+
+                          Analytics.trackEvent(
+                            "Logins",
+                            `Logins with ${service.serviceName}`,
+                            currentRegion?.nameEn,
+                          );
+                        } catch (err) {
+                          if (err instanceof Accounts.LoginCancelledError) {
+                            // do not show error if user cancelled the process
+                            return;
+                          }
+                          Alert.serverError(err);
+                        } finally {
+                          setIsBusy(false);
+                        }
                       }}
                       busyText={t("login.OAuth.busy", "Logging in with {SERVICE}", {
                         SERVICE: service.name,
