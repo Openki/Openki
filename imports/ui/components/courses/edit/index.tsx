@@ -23,7 +23,7 @@ import { Tag } from "../../regions/tag";
 import { Props as CourseEditRoleProps, Role } from "./Role";
 import { Title } from "./title";
 import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
-import { useAll as useRegionsAll } from "/imports/api/regions/publications";
+import { useAll as useRegions } from "/imports/api/regions/publications";
 import { useSession, useUser } from "/imports/utils/react-meteor-data";
 
 import { EditCustomFields } from "../../EditCustomFields";
@@ -31,11 +31,11 @@ import { SelectCategories } from "../SelectCategories";
 import { CourseCategories } from "../categories";
 import { FormCheck } from "/imports/ui/components/FormCheck";
 import { RegionSelect } from "/imports/ui/components/RegionSelect";
+import { Header } from "./Header";
+import { FindHeader } from "./FindHeader";
+import { AlertMessage } from "./AlertMessage";
 
 import "./styles.scss";
-import { FindHeader } from "/imports/ui/components/courses/edit/FindHeader";
-import { AlertMessage } from "/imports/ui/components/courses/edit/AlertMessage";
-import { Header } from "/imports/ui/components/courses/edit/Header";
 
 export type Props = {
   _id?: string;
@@ -56,8 +56,8 @@ export type Props = {
 export function Edit(props: Props) {
   const { t } = useTranslation();
   const user = useUser();
-  const [allRegionsIsLoading, allRegions] = useRegionsAll();
-  const currentRegion = useCurrentRegion();
+  const [regionsIsLoading, regions] = useRegions();
+  const currentRegion = useSession("region") as string;
   const [isBusy, setIsBusy] = useState(false);
   const [title, setTitle] = useState(props.name);
 
@@ -99,23 +99,35 @@ export function Edit(props: Props) {
     setTitle(props.name);
   }, [props.name]);
 
+  const [savedCourseId, setSavedCourseId] = useState<string | undefined>(undefined);
+
+  const [selectedRegion, setSelectedRegion] = useState<string>(currentRegion);
+
   function getRegion() {
-    const courseId = props._id || "";
-    const isNew = courseId === "";
-    if (isNew) {
-      if (props.isFrame && props.region) {
-        // The region was preset for the frame
-        return allRegions.find((r) => r._id === props.region);
-      }
-      if (allRegions.length === 1) {
-        // There is only one region
-        return allRegions[0];
-      }
-      return currentRegion;
+    const isNew = !props._id;
+    if (!isNew) {
+      // only needed for new courses
+      return undefined;
     }
-    return undefined;
+
+    let regionId: string;
+    if (props.isFrame && props.region) {
+      // The region was preset for the frame
+      regionId = props.region;
+    } else if (regions.length === 1) {
+      // There is only one region
+      regionId = regions[0]._id;
+    } else if (selectedRegion && selectedRegion !== "all") {
+      // The one selected by the user.
+      regionId = selectedRegion;
+    } else {
+      return undefined;
+    }
+
+    return regions.find((r) => r._id === regionId);
   }
-  const getGroups = () => {
+
+  function getGroups() {
     const groups = [];
 
     const defaultTeamGroups = getRegion()?.defaultTeamGroups;
@@ -129,17 +141,14 @@ export function Edit(props: Props) {
       if (props.group) {
         groups.push(props.group);
       }
-    } else if (props.teamGroups && props.teamGroups?.length > 0) {
+    } else if (props.teamGroups && props.teamGroups.length > 0) {
       groups.push(...props.teamGroups);
     }
     // remove double groups
     return uniq(groups);
-  };
-  const [savedCourseId, setSavedCourseId] = useState<string | undefined>(undefined);
+  }
 
   const [groupsIsLoading, groups] = useGroupsFindFilter({ ids: getGroups() });
-
-  const [selectedRegion, setSelectedRegion] = useState(currentRegion?._id || "");
 
   const [description, setDescription] = useState(props.description);
   const [numberOfCharacters, setNumberOfCharacters] = useState(0);
@@ -200,8 +209,6 @@ export function Edit(props: Props) {
     Record<string, { icon: string; enabled: boolean; enroll: boolean }>
   >({});
 
-  const groupsAreLoaded = groupsIsLoading();
-
   useEffect(() => {
     setRoles(
       fromPairs(
@@ -215,20 +222,20 @@ export function Edit(props: Props) {
         ]),
       ),
     );
-  }, [groupsAreLoaded]);
+  }, [groups]);
 
-  const showRegionSelection = () => {
+  function showRegionSelection() {
     return (
       // Region can be set for new courses only.
       !props._id &&
-      // For the proposal frame we hide the region selection when a region
-      // is set.
+      // For the proposal frame we hide the region selection when a region is
+      // set.
       !(props.region && props.isFrame) &&
-      // If there is only one region on this instance or it is visible to this user, it
-      // will be set automatically.
-      !(allRegions.length === 1)
+      // If there is only one region on this instance or it is visible to this
+      // user, it will be set automatically.
+      !(regions.length === 1)
     );
-  };
+  }
 
   const customFields = () => {
     return groups.flatMap((g) => g.customCourseFields || []);
@@ -326,19 +333,22 @@ export function Edit(props: Props) {
       return !(props.tenant && isPrivate(props as { tenant: string }));
     }
 
+    let regionId;
     if (props.isFrame && props.region) {
       // The region was preset for the frame
-      const region = allRegions.find((r) => r._id === props.region);
-      if (region) {
-        return !region.isPrivate();
-      }
+      regionId = props.region;
+    } else if (regions.length === 1) {
+      // There is only one region
+      regionId = regions[0]._id;
+    } else if (selectedRegion && selectedRegion !== "all") {
+      // The one selected by the user.
+      regionId = selectedRegion;
+    } else {
+      return true;
     }
 
-    return !currentRegion?.isPrivate();
-  }
-
-  if (allRegionsIsLoading()) {
-    return null;
+    const region = regions.find((r) => r._id === regionId);
+    return !region?.isPrivate();
   }
 
   const handleRoleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -382,9 +392,9 @@ export function Edit(props: Props) {
       if (props.isFrame && props.region) {
         // The region was preset for the frame
         changes.region = props.region;
-      } else if (Regions.findFilter({}, 2).count() === 1) {
+      } else if (regions.length === 1) {
         // There is only one region
-        changes.region = Regions.findOne({})?._id as string;
+        changes.region = regions[0]._id;
       } else {
         changes.region = selectedRegion;
       }
@@ -494,7 +504,7 @@ export function Edit(props: Props) {
     }
   };
 
-  if (groupsAreLoaded) {
+  if (regionsIsLoading() || groupsIsLoading()) {
     return null;
   }
 
