@@ -19,10 +19,13 @@ describe("EditCustomFields", () => {
     cy.visitOpenki("/event/fZcwCD5CJvuLdrHg2/singen-fuer-klein-gross", {
       username: "Tara",
     });
-    cy.get('#maincontent button.btn-edit.text-nowrap').click();
-    cy.get('#course-custom-field-target').clear();
-    cy.get('#course-custom-field-target').type('Kinder, mit Begleitperson');
-    cy.get('#events-edit-save').click();
-    cy.get('#description div.col-md-7 > p:nth-child(3)').should('have.text', 'For: Kinder, mit Begleitperson');
+    cy.get("#maincontent button.btn-edit.text-nowrap").click();
+    cy.get("#course-custom-field-target").clear();
+    cy.get("#course-custom-field-target").type("Kinder, mit Begleitperson");
+    cy.get("#events-edit-save").click();
+    cy.get("#description div.col-md-7 > p:nth-child(3)").should(
+      "have.text",
+      "For: Kinder, mit Begleitperson",
+    );
   });
 });

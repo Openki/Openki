@@ -35,6 +35,8 @@ import { Header } from "./Header";
 import { FindHeader } from "./FindHeader";
 import { AlertMessage } from "./AlertMessage";
 
+import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
+
 import "./styles.scss";
 
 export type Props = {
@@ -57,7 +59,7 @@ export function Edit(props: Props) {
   const { t } = useTranslation();
   const user = useUser();
   const [regionsIsLoading, regions] = useRegions();
-  const currentRegion = useSession("region") as string;
+  const currentRegion = CleanedRegion(useSession("region"));
   const [isBusy, setIsBusy] = useState(false);
   const [title, setTitle] = useState(props.name);
 
@@ -101,7 +103,7 @@ export function Edit(props: Props) {
 
   const [savedCourseId, setSavedCourseId] = useState<string | undefined>(undefined);
 
-  const [selectedRegion, setSelectedRegion] = useState<string>(currentRegion);
+  const [selectedRegion, setSelectedRegion] = useState<string | undefined>(currentRegion);
 
   function getRegion() {
     const isNew = !props._id;
@@ -117,7 +119,7 @@ export function Edit(props: Props) {
     } else if (regions.length === 1) {
       // There is only one region
       regionId = regions[0]._id;
-    } else if (selectedRegion && selectedRegion !== "all") {
+    } else if (selectedRegion) {
       // The one selected by the user.
       regionId = selectedRegion;
     } else {
@@ -340,7 +342,7 @@ export function Edit(props: Props) {
     } else if (regions.length === 1) {
       // There is only one region
       regionId = regions[0]._id;
-    } else if (selectedRegion && selectedRegion !== "all") {
+    } else if (selectedRegion) {
       // The one selected by the user.
       regionId = selectedRegion;
     } else {
@@ -396,7 +398,7 @@ export function Edit(props: Props) {
         // There is only one region
         changes.region = regions[0]._id;
       } else {
-        changes.region = selectedRegion;
+        changes.region = selectedRegion || "";
       }
       if (!changes.region) {
         Alert.serverError(t("course.edit.error.region", "Please select a region") as string);
