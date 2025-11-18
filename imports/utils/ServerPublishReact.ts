@@ -6,6 +6,12 @@ import { publish, QueryBuilder } from "./ServerPublishUtils";
 import { useUserId } from "./react-meteor-data";
 import { isObject, slice } from "lodash-es";
 
+type DeepPartial<T> = T extends object
+  ? {
+      [P in keyof T]?: DeepPartial<T[P]> | undefined | null;
+    }
+  : T;
+
 /**
  * Subscribe to the record set.
  */
@@ -17,7 +23,7 @@ declare function publication<A extends any[], T>(...args: A): [isLoading: () => 
  */
 declare function publication<A extends any[], T>(
   condition: { when: boolean },
-  ...args: Partial<A>
+  ...args: DeepPartial<A>
 ): [isLoading: () => boolean, data: T | undefined];
 
 export type Publication<A extends any[], T> = typeof publication<A, T>;
@@ -29,7 +35,7 @@ export function createPublicationMany<A extends any[], T>(
   return function (...args: any[]) {
     const hasCondition = isObject(args[0]) && "when" in args[0];
     const isLoading = useSubscribe(
-      // support conditionally subscribe: 
+      // support conditionally subscribe:
       // https://docs.meteor.com/packages/react-meteor-data#usesubscribe-subname-args
       hasCondition && !args[0].when ? "" : name,
       ...(hasCondition ? slice(args, 1) : args),

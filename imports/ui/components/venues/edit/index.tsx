@@ -223,7 +223,7 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
               <div className="col-md">
                 <RegionSelect
                   id="venue-edit-region"
-                  value={changes.selectedRegion || ""}
+                  value={changes.selectedRegion}
                   onChange={(value) =>
                     setChanges((prevState) => ({ ...prevState, selectedRegion: value }))
                   }

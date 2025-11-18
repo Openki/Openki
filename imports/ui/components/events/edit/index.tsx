@@ -43,6 +43,8 @@ import { useDetails as useCourseDetails } from "/imports/api/courses/publication
 
 import { useFindParallelEvents } from "./useFindParallelEvents";
 
+import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
+
 import "./styles.scss";
 
 interface NewEventModel {
@@ -72,11 +74,11 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
   const searchParams = useSearchParams();
 
-  const currentRegion = useSession("region");
+  const currentRegion = CleanedRegion(useSession("region"));
   const [isRegionsLoading, regions] = useAll();
   const user = useUser();
 
-  const [selectedRegion, setSelectedRegion] = useState<string>(currentRegion);
+  const [selectedRegion, setSelectedRegion] = useState<string | undefined>(currentRegion);
   const [selectedVenue, setSelectedVenue] = useState(event.venue);
   const [noRsvpChecked, setNoRsvpChecked] = useState(!!event.noRsvp);
 
@@ -120,7 +122,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     } else if (regions.length === 1) {
       // There is only one region
       regionId = regions[0]._id;
-    } else if (selectedRegion && selectedRegion !== "all") {
+    } else if (selectedRegion) {
       // The one selected by the user.
       regionId = selectedRegion;
     } else {
@@ -314,12 +316,12 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     );
   }
   function showVenueSelection() {
-    return !!selectedRegion && selectedRegion !== "all";
+    return !!selectedRegion;
   }
 
   function venueEditAttr(): EditVenueProps {
     return {
-      region: selectedRegion,
+      region: selectedRegion as string,
       event: {
         _id: event._id,
         room: changes.room,
@@ -382,7 +384,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
         editevent.region = course.region;
         editevent.courseId = event.courseId;
       } else {
-        editevent.region = selectedRegion;
+        editevent.region = selectedRegion as string;
 
         // We have this 'secret' feature where you can set a group ID
         // in the URL to assign a group to the event on creation
