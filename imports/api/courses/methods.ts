@@ -211,13 +211,20 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     set.slug = StringTools.slug(set.name);
   }
   if (changes.customFields) {
-    set.customFields = changes.customFields.map((i) => ({
-      name: i.name.substring(0, 50),
-      displayText: i.displayText,
-      displayValue: i.displayValue,
-      value: typeof i.value === "string" ? i.value.substring(0, 2000) : i.value,
-      visibleFor: i.visibleFor,
-    }));
+    set.customFields = changes.customFields.map((i) => {
+      const result = {
+        name: i.name.substring(0, 50),
+        displayText: i.displayText,
+        value: typeof i.value === "string" ? i.value.substring(0, 2000) : i.value,
+        visibleFor: i.visibleFor,
+      };
+
+      if (!i.displayValue) {
+        return result;
+      }
+
+      return { ...result, displayValue: i.displayValue };
+    });
   }
   if (changes.internal !== undefined) {
     set.internal = changes.internal;
