@@ -21,7 +21,7 @@ import { LocalizedValue } from "/imports/utils/getLocalizedValue";
 export interface CourseMemberEntity {
   user: string;
   roles: string[];
-  comment?: string | undefined;
+  comment?: string;
 }
 
 export type CourseCustomField = Pick<
@@ -29,7 +29,7 @@ export type CourseCustomField = Pick<
   "name" | "displayText" | "visibleFor"
 > & {
   value: string | boolean;
-  displayValue?: LocalizedValue | undefined;
+  displayValue?: LocalizedValue;
 };
 
 export type CourseNextEventEntity = Pick<
