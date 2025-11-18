@@ -10,7 +10,7 @@ import { FormCheck } from "/imports/ui/components/FormCheck";
 
 export interface Props {
   /** Filter / Edit only specific field types. Default: all */
-  type?: "boolean" | "singleLine" | "multiLine" | undefined;
+  type?: "singleLine" | "multiLine" | "option" | "boolean" | undefined;
   fields: GroupEntityCustomCourseFields[];
   values: CourseCustomField[] | undefined;
   onChange: (values: CourseCustomField[]) => void;
@@ -26,7 +26,7 @@ export function EditCustomFields({ type, fields, values, onChange }: Props) {
     return (newValue: string | boolean) => {
       onChange(
         fields.map((i) => {
-          if (i.type !== "boolean")
+          if (!i.type || i.type === "singleLine" || i.type === "multiLine")
             return {
               name: i.name,
               displayText: i.displayText,
@@ -34,12 +34,28 @@ export function EditCustomFields({ type, fields, values, onChange }: Props) {
               visibleFor: i.visibleFor,
             };
 
-          return {
-            name: i.name,
-            displayText: i.displayText,
-            value: (fieldName === i.name ? newValue : (value(i.name) ?? i.defaultValue)) || false,
-            visibleFor: i.visibleFor,
-          };
+          if (i.type === "option") {
+            const v =
+              ((fieldName === i.name ? newValue : (value(i.name) ?? i.defaultValue)) as string) ||
+              "";
+            return {
+              name: i.name,
+              displayText: i.displayText,
+              value: v,
+              displayValue: i.options[v],
+              visibleFor: i.visibleFor,
+            };
+          }
+
+          if (i.type === "boolean")
+            return {
+              name: i.name,
+              displayText: i.displayText,
+              value: (fieldName === i.name ? newValue : (value(i.name) ?? i.defaultValue)) || false,
+              visibleFor: i.visibleFor,
+            };
+
+          throw new Error("Unexpected value for type: " + type);
         }),
       );
     };
@@ -50,42 +66,55 @@ export function EditCustomFields({ type, fields, values, onChange }: Props) {
       {fields
         .filter((g) => !type || (g.type || "singleLine") === type)
         .map((field) => {
-          if (field.type !== "boolean")
-            return (
-              <div key={field.name} className="mb-3">
-                {!field.type || field.type === "singleLine" ? (
-                  <FormControl
-                    id={`course-custom-field-${field.name}`}
-                    type="text"
-                    label={getLocalizedValue(field.editText)}
-                    placeholder={getLocalizedValue(field.editPlaceholder)}
-                    value={value(field.name) as string}
-                    onChange={handleChange(field.name)}
-                  />
-                ) : (
-                  <FormControl
-                    id={`course-custom-field-${field.name}`}
-                    type="textarea"
-                    rows={3}
-                    label={getLocalizedValue(field.editText)}
-                    placeholder={getLocalizedValue(field.editPlaceholder)}
-                    value={value(field.name) as string}
-                    onChange={handleChange(field.name)}
-                  />
-                )}
-              </div>
-            );
-
           return (
             <div key={field.name} className="mb-3">
-              <div className="form-label">{getLocalizedValue(field.editText)}</div>
-              <FormCheck
-                id={`course-custom-field-${field.name}`}
-                type="switch"
-                label={getLocalizedValue(field.editDescription)}
-                checked={(value(field.name) as boolean | undefined) ?? field.defaultValue}
-                onChange={handleChange(field.name)}
-              />
+              {!field.type || field.type === "singleLine" ? (
+                <FormControl
+                  id={`course-custom-field-${field.name}`}
+                  type="text"
+                  label={getLocalizedValue(field.editText)}
+                  placeholder={getLocalizedValue(field.editPlaceholder)}
+                  value={value(field.name) as string}
+                  onChange={handleChange(field.name)}
+                />
+              ) : field.type === "multiLine" ? (
+                <FormControl
+                  id={`course-custom-field-${field.name}`}
+                  type="textarea"
+                  rows={3}
+                  label={getLocalizedValue(field.editText)}
+                  placeholder={getLocalizedValue(field.editPlaceholder)}
+                  value={value(field.name) as string}
+                  onChange={handleChange(field.name)}
+                />
+              ) : field.type === "option" ? (
+                <FormControl
+                  id={`course-custom-field-${field.name}`}
+                  type="select"
+                  label={getLocalizedValue(field.editText)}
+                  options={Object.fromEntries(
+                    Object.entries(field.options).map((option) => [
+                      option[0],
+                      getLocalizedValue(option[1]) || "",
+                    ]),
+                  )}
+                  value={value(field.name) as string}
+                  onChange={handleChange(field.name)}
+                />
+              ) : field.type === "boolean" ? (
+                <>
+                  <div className="form-label">{getLocalizedValue(field.editText)}</div>
+                  <FormCheck
+                    id={`course-custom-field-${field.name}`}
+                    type="switch"
+                    label={getLocalizedValue(field.editDescription)}
+                    checked={(value(field.name) as boolean | undefined) ?? field.defaultValue}
+                    onChange={handleChange(field.name)}
+                  />
+                </>
+              ) : (
+                <></>
+              )}
             </div>
           );
         })}

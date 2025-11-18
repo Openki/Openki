@@ -24,24 +24,30 @@ export function CustomFieldDisplay({
   const customFields =
     course.customFields
       ?.filter((i) => i.visibleFor === "all" || (i.visibleFor === "editors" && isEditor))
-      .map((i) => ({
-        displayText: getLocalizedValue(i.displayText),
-        isboolean: typeof i.value === "boolean",
-        value: i.value,
-      })) || [];
+      .map((i) => {
+        const isboolean = typeof i.value === "boolean";
+
+        let displayValue;
+
+        if (isboolean) {
+          displayValue = i.value
+            ? t("customField.boolean.yes", "Yes")
+            : t("customField.boolean.no", "No");
+        } else {
+          displayValue = getLocalizedValue(i.displayValue) || i.value;
+        }
+
+        return {
+          displayText: getLocalizedValue(i.displayText),
+          displayValue,
+        };
+      }) || [];
 
   return (
     <>
       {customFields.map((info, index) => (
         <p className={customClassName} key={index}>
-          <strong>{info.displayText}</strong>:{" "}
-          {!info.isboolean ? (
-            <span className="pre-line">{info.value}</span>
-          ) : info.value ? (
-            t("customField.boolean.yes", "Yes")
-          ) : (
-            t("customField.boolean.no", "No")
-          )}
+          <strong>{info.displayText}</strong>: <span className="pre-line">{info.displayValue}</span>
         </p>
       ))}
     </>

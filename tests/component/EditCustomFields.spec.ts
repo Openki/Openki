@@ -28,4 +28,25 @@ describe("EditCustomFields", () => {
       "For: Kinder, mit Begleitperson",
     );
   });
+
+  it("should allow to edit option custom field", function () {
+    cy.visitOpenki("/course/40ccd81ccf/notebooks-auf-ubuntu-linux-umruesten", {
+      username: "Tonya",
+    });
+    cy.get('[data-test="course-details"] button.btn-edit').click();
+    cy.get("#course-custom-field-lang").select("de");
+    cy.get("#courses-edit-save").click();
+    cy.get("#description p:nth-child(4)").should("have.text", "Language: de");
+  });
+
+  it("should allow to edit boolean custom field", function () {
+    cy.visitOpenki("/course/40ccd81ccf/notebooks-auf-ubuntu-linux-umruesten", {
+      username: "Tonya",
+    });
+    cy.get('[data-test="course-details"] button.btn-edit').click();
+    cy.get('[data-test="course-details"] label[for="course-custom-field-record"]').click();
+    cy.get("#course-custom-field-record").check();
+    cy.get("#courses-edit-save").click();
+    cy.get("#description p:nth-child(4)").should("have.text", "Language: German");
+  });
 });

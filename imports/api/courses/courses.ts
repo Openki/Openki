@@ -16,6 +16,7 @@ import * as FileStorage from "/imports/utils/FileStorage";
 import { GroupEntityCustomCourseFields } from "/imports/api/groups/groups";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { StringEnum, Type } from "/imports/utils/CustomChecks";
+import { LocalizedValue } from "/imports/utils/getLocalizedValue";
 
 export interface CourseMemberEntity {
   user: string;
@@ -28,6 +29,7 @@ export type CourseCustomField = Pick<
   "name" | "displayText" | "visibleFor"
 > & {
   value: string | boolean;
+  displayValue?: LocalizedValue | undefined;
 };
 
 export type CourseNextEventEntity = Pick<
