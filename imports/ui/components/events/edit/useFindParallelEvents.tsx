@@ -3,8 +3,8 @@ import * as Events from "/imports/api/events/publications";
 import { useLocalTimeZone } from "/imports/utils/local-time";
 
 export function useFindParallelEvents(
-  venueId: string | undefined,
   regionId: string | undefined,
+  venueId: string | undefined,
   event: {
     _id?: string | undefined;
     startLocal: string;
