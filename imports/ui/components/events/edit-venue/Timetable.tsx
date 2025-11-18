@@ -111,7 +111,7 @@ export function Timetable({
 
   const [venueIsLoading, venue] = useVenueDetails(venueId || "-1");
   const events = useFindNearEvents(venueId, regionId, currentEvent);
-  const parallelEvents = useFindParallelEvents(venueId, regionId, currentEvent);
+  const parallelEvents = useFindParallelEvents(regionId, venueId, currentEvent);
 
   const startLocal = chain(events)
     .map((e) => e.startLocal)
