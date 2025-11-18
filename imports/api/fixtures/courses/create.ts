@@ -86,7 +86,7 @@ async function createZuerichLernt(prng: PRNG) {
       name: template.name,
       categories: template.categories || [],
       groups: template.groups,
-      groupOrganizers: [],
+      groupOrganizers: template.groups,
       description: template.description,
       compactImage: template.image,
       image: template.image,
