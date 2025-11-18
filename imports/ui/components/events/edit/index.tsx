@@ -25,6 +25,7 @@ import { SaveFields } from "/imports/api/events/methods";
 import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
 import { useAll } from "/imports/api/regions/publications";
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
+import { CourseCustomField } from "/imports/api/courses/courses";
 
 import { ButtonCancel, ButtonSave } from "../../Buttons.old";
 import { EditCustomFields } from "../../EditCustomFields";
@@ -75,13 +76,13 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   const [isRegionsLoading, regions] = useAll();
   const user = useUser();
 
-  let region = event.region;
-  if (regions?.length === 1) {
-    region = region || regions[0]?._id;
-  }
-  const [selectedRegion, setSelectedRegion] = useState<string>(region || currentRegion);
+  const [selectedRegion, setSelectedRegion] = useState<string>(currentRegion);
   const [selectedVenue, setSelectedVenue] = useState(event.venue);
   const [noRsvpChecked, setNoRsvpChecked] = useState(!!event.noRsvp);
+
+  const [isBusy, setIsBusy] = useState(false);
+
+  const [isCourseLoading, course] = useCourseDetails(event.courseId || "-1");
 
   function initCustomFieldValues() {
     const courseId = event.courseId;
@@ -91,14 +92,21 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     return undefined;
   }
 
-  const [customFieldValues, setCustomFieldValues] = useState(initCustomFieldValues());
+  const [customFieldValues, setCustomFieldValues] = useState<CourseCustomField[] | undefined>(
+    undefined,
+  );
 
-  const [isBusy, setIsBusy] = useState(false);
-
-  const [isCourseLoading, course] = useCourseDetails(event.courseId || "-1");
+  useEffect(() => {
+    setCustomFieldValues(initCustomFieldValues());
+  }, [course]);
 
   function getRegion() {
-    let result: string;
+    if (!isNew) {
+      // only needed for new events
+      return undefined;
+    }
+
+    let regionId: string;
     if (event.courseId) {
       if (!course) {
         if (isCourseLoading()) {
@@ -107,23 +115,19 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
         throw new Error("Unexpected undefined: course");
       }
 
-      result = course.region;
+      // The region is the same as in course
+      regionId = course.region;
+    } else if (regions.length === 1) {
+      // There is only one region
+      regionId = regions[0]._id;
+    } else if (selectedRegion && selectedRegion !== "all") {
+      // The one selected by the user.
+      regionId = selectedRegion;
     } else {
-      if (!selectedRegion || selectedRegion === "all") {
-        return undefined;
-      }
-      result = selectedRegion;
+      return undefined;
     }
 
-    if (result) {
-      // The region was preset for the frame
-      return regions.find((r) => r._id === result);
-    }
-    if (regions.length === 1) {
-      // There is only one region
-      return regions[0];
-    }
-    return currentRegion;
+    return regions.find((r) => r._id === regionId);
   }
 
   function getGroups() {
@@ -149,6 +153,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       if (!course) {
         throw new Error("Unexpected undefined: course");
       }
+
       groups.push(...course.groupOrganizers);
     }
 
@@ -301,12 +306,12 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   }, [venue, parallelEvents]);
 
   function showRegionSelection() {
-    // You can select the region for events that are new and not associated
-    // with a course
-    if (event._id || event.courseId) {
-      return false;
-    }
-    return true;
+    return (
+      // You can select the region for events that are new
+      isNew &&
+      // and not associated with a course
+      !event.courseId
+    );
   }
   function showVenueSelection() {
     return !!selectedRegion && selectedRegion !== "all";
@@ -501,7 +506,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             {t(
               "course.createEventInfo",
               "Use this form to publish a singular, one-off, already organized event. Otherwise create or propose a course here:",
-            )}
+            )}{" "}
             <a href={Router.path("proposeCourse")}>
               {t("menue.ProposeCourse", "Propose a course")}
             </a>
