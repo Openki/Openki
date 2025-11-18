@@ -11,8 +11,6 @@ import { Roles } from "/imports/api/roles/roles";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { hasRoleUser } from "/imports/utils/course-role-utils";
-import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
-import { useSiteName } from "/imports/utils/getSiteName";
 import * as StringTools from "/imports/utils/string-tools";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
 
@@ -24,14 +22,9 @@ import { PricePolicy } from "../../price-policy";
 import { Tag } from "../../regions/tag";
 import { Props as CourseEditRoleProps, Role } from "./Role";
 import { Title } from "./title";
-import {
-  useDetails as useCoursesDetails,
-  useFindFilter as useCoursesFindFilter,
-} from "/imports/api/courses/publications";
-import { useDetails, useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
+import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
 import { useAll as useRegionsAll } from "/imports/api/regions/publications";
-import { useUser } from "/imports/utils/react-meteor-data";
-import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
+import { useSession, useUser } from "/imports/utils/react-meteor-data";
 
 import { EditCustomFields } from "../../EditCustomFields";
 import { SelectCategories } from "../SelectCategories";
@@ -40,168 +33,9 @@ import { FormCheck } from "/imports/ui/components/FormCheck";
 import { RegionSelect } from "/imports/ui/components/RegionSelect";
 
 import "./styles.scss";
-
-function GroupHeader({ groupId }: { groupId: string }) {
-  const { t } = useTranslation();
-  const [groupIsLoading, group] = useDetails(groupId);
-
-  if (groupIsLoading()) {
-    return null;
-  }
-
-  return (
-    <>
-      {t("course.edit.proposeInGroup", "Propose new course in group {GROUP}", {
-        GROUP: group?.name,
-      })}
-    </>
-  );
-}
-
-function Header(data: { _id?: string; isFrame?: boolean; group?: string }) {
-  const { t } = useTranslation();
-  const siteName = useSiteName();
-
-  return data._id ? (
-    <h2>{t("course.edit.edit_course", "Edit course")}</h2>
-  ) : !data.isFrame ? (
-    <>
-      <h2>
-        {data.group ? (
-          <GroupHeader groupId={data.group} />
-        ) : (
-          t("course.edit.propose", "Propose new course")
-        )}
-      </h2>
-      <div className="icon-text">
-        <div className="icon-text-icon">
-          <i className="fa-solid fa-info fa-fw" aria-hidden="true"></i>
-        </div>
-        <div className="icon-text-text">
-          {t(
-            "course.propose.CourseInfo",
-            "Start your own {SITENAME} course here. Whether as a mentor or participant, you decide what and how you want to learn. More info here:",
-            { SITENAME: siteName },
-          )}{" "}
-          <a
-            href={getLocalizedValue(PublicSettings.courseGuideLink)}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {t("course.propose.guideLink", "How to organize my first {SITENAME} course?", {
-              SITENAME: siteName,
-            })}
-          </a>
-          {", "}
-          <a href={getLocalizedValue(PublicSettings.faqLink)} target="_blank" rel="noreferrer">
-            {t("course.propose.faq", "FAQ")}
-          </a>
-        </div>
-      </div>
-    </>
-  ) : null;
-}
-
-function FindHeader(data: {
-  _id?: string;
-  isFrame?: boolean;
-  group?: string;
-  filter: ReturnType<(typeof Courses)["Filtering"]>;
-}) {
-  const { t } = useTranslation();
-
-  const { filter } = data;
-
-  const filterQuery = filter.toQuery();
-  const [coursesIsLoading, courses] = useCoursesFindFilter(filterQuery);
-
-  function proposeFromQuery() {
-    const { search } = filterQuery;
-    if (!search) {
-      return false;
-    }
-
-    return courses.length === 0 && search;
-  }
-  function courseSearch() {
-    const filterParams = filter.toParams();
-
-    return filterParams.search;
-  }
-
-  if (coursesIsLoading()) {
-    return null;
-  }
-
-  return proposeFromQuery() ? (
-    <h2>
-      {t("find.propose_new_course?", 'Why not propose a new course for "{TERM}"?', {
-        TERM: courseSearch(),
-      })}
-    </h2>
-  ) : (
-    <Header {...data} />
-  );
-}
-
-function AlertMessage(data: {
-  isFrame?: boolean | undefined;
-  savedCourseId: string;
-  onClose: () => void;
-}) {
-  const { t } = useTranslation();
-  const siteName = useSiteName();
-  const [savedCourseIsLoading, savedCourse] = useCoursesDetails(data.savedCourseId);
-
-  function savedCourseLink() {
-    if (data.isFrame) {
-      const course = savedCourse;
-      if (course) {
-        return Router.url("showCourse", course);
-      }
-    }
-    return "";
-  }
-  function savedCourseName() {
-    if (data.isFrame) {
-      const course = savedCourse;
-      if (course) {
-        return course.name;
-      }
-    }
-    return false;
-  }
-
-  if (savedCourseIsLoading()) {
-    return null;
-  }
-
-  return (
-    <div className="alert alert-success alert-dismissible fade show" role="alert">
-      <h4>
-        <i className="fa-solid fa-check" aria-hidden="true"></i>{" "}
-        {t("course.edit.savedMessage", "Your proposal has been saved!")}
-      </h4>
-      <span className="pre-line">
-        {t("course.edit.linkToCourse", 'You can see your new proposal "{NAME}" on {SITENAME}', {
-          NAME: (
-            <a className="alert-link" href={savedCourseLink()} target="_blank" rel="noreferrer">
-              {savedCourseName()}
-            </a>
-          ),
-          SITENAME: siteName,
-        })}
-      </span>
-      <button
-        type="button"
-        className="btn-close btn-close-black"
-        data-bs-dismiss="alert"
-        aria-label={t("_button.close")}
-        onClick={data.onClose}
-      ></button>
-    </div>
-  );
-}
+import { FindHeader } from "/imports/ui/components/courses/edit/FindHeader";
+import { AlertMessage } from "/imports/ui/components/courses/edit/AlertMessage";
+import { Header } from "/imports/ui/components/courses/edit/Header";
 
 export type Props = {
   _id?: string;
