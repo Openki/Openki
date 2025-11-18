@@ -642,6 +642,13 @@ export function Edit(props: Props) {
                   values={customFieldValues}
                   onChange={(values) => setCustomFieldValues(values)}
                 />
+
+                <EditCustomFields
+                  type="option"
+                  fields={customFields()}
+                  values={customFieldValues}
+                  onChange={(values) => setCustomFieldValues(values)}
+                />
               </div>
             )}
           </div>

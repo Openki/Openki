@@ -50,7 +50,7 @@ async function createBase(prng: PRNG) {
       categories: template.categories || [],
       tags: template.tags || [],
       groups: await Promise.all(template.groups?.map((g) => ensure.group(g)) || []),
-      groupOrganizers: [],
+      groupOrganizers: await Promise.all(template.groupOrganizers?.map((g) => ensure.group(g)) || []),
       description: template.description,
       compactImage: "",
       image: "",
