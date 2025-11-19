@@ -1,5 +1,7 @@
 import { useTracker } from "meteor/react-meteor-data";
 import moment from "moment-timezone";
+import { isObject } from "lodash-es";
+
 import { Regions } from "/imports/api/regions/regions";
 
 /**
@@ -28,8 +30,28 @@ import { Regions } from "/imports/api/regions/regions";
  * users). This is infeasible. Thus future dates must be stored as local time.
  */
 
-export function useLocalTimeZone(regionId: string) {
-  return useTracker(() => LocalTime.zone(regionId));
+export function useLocalTimeZone(regionId: string): Zone;
+export function useLocalTimeZone(
+  conditon: { when: boolean },
+  regionId: string | undefined,
+): Zone | undefined;
+export function useLocalTimeZone(
+  conditionOrRegionId: { when: boolean } | string,
+  regionId?: string | undefined,
+) {
+  return useTracker(() => {
+    const hasCondition = isObject(conditionOrRegionId) && "when" in conditionOrRegionId;
+    if (hasCondition) {
+      if (!conditionOrRegionId.when) {
+        // return undefined when condition is false
+        return undefined;
+      } else {
+        return LocalTime.zone(regionId as string);
+      }
+    }
+
+    return LocalTime.zone(conditionOrRegionId);
+  });
 }
 
 export class Zone {

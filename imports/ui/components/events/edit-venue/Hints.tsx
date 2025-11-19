@@ -38,7 +38,7 @@ export function Hints({
   const user = useUser();
 
   const [venueIsLoading, venue] = useVenueDetails(eventVenue?._id || "-1");
-  const parallelEvents = useFindParallelEvents(eventVenue?._id, regionId, event);
+  const parallelEvents = useFindParallelEvents(regionId, eventVenue?._id, event);
 
   const inSameRoom = parallelEvents.find(
     (e) => e.room && event.room && e.room.toUpperCase() === event.room.toUpperCase(),
