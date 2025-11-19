@@ -1,11 +1,11 @@
 import { Router } from "meteor/iron:router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { Geodata } from "/imports/api/Geodata";
-import { useFindFilter } from "/imports/api/regions/publications";
+import { useAll } from "/imports/api/regions/publications";
 import * as VenuesMethods from "/imports/api/venues/methods";
 import { FacilityOption, VenueModel } from "/imports/api/venues/venues";
 
@@ -27,12 +27,14 @@ export interface Props {
 }
 
 export function Edit({ venue, onSaved, onCanceled }: Props) {
+  const isNew = !venue._id;
   const { t } = useTranslation();
 
-  const sessionRegion = useCurrentRegionId();
+  const currentRegion = useCurrentRegionId();
+  const [isRegionsLoading, regions] = useAll();
+
   const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
   const [isBusy, setIsBusy] = useState(false);
-  const isNew = !venue._id;
 
   const [changes, setChanges] = useState({
     name: venue.name,
@@ -48,12 +50,25 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
     otherFacilities: venue.otherFacilities,
     restrictedUse: venue.restrictedUse,
     allowParallelEvents: venue.allowParallelEvents,
-    selectedRegion: isNew ? sessionRegion : venue.region,
+    selectedRegion: venue.region,
     loc: venue.loc as Geodata | undefined,
     level: venue.level,
   });
+  // init selected region
+  useEffect(() => {
+    if (!isNew) {
+      // only needed for new venues
+      return;
+    }
 
-  const [isLoading, regions] = useFindFilter();
+    if (currentRegion) {
+      //  If the session sets the region, we use it.
+      setChanges((prevState) => ({ ...prevState, selectedRegion: currentRegion }));
+    } else if (regions.length === 1) {
+      // There is only one region
+      setChanges((prevState) => ({ ...prevState, selectedRegion: regions[0]._id }));
+    }
+  }, [currentRegion, regions]);
 
   function displayAdditionalInfo() {
     return {
@@ -81,19 +96,18 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
       },
     };
   }
-  function regionSelectable() {
-    if (isNew) {
-      // If the session sets the region, we use it.
-      // If the session does not give us a region, we let the user select it
-      return !sessionRegion;
-    }
-
-    // For existing venues the region is already selected and cannot
-    // be changed
-    return false;
+  function showRegionSelection() {
+    return (
+      // You can select the region for venues that are new
+      isNew &&
+      // when the the session not sets the region
+      !currentRegion &&
+      // and when more then one region exists
+      regions.length > 1
+    );
   }
   function showMapSelection() {
-    return regionSelectable() || !!changes.selectedRegion;
+    return showRegionSelection() || !!changes.selectedRegion;
   }
 
   const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -190,7 +204,7 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
   const selectedRegion = regions.find((r) => r._id === changes.selectedRegion);
   const mapCenter = selectedRegion?.map?.center.coordinates || selectedRegion?.loc?.coordinates;
 
-  if (isLoading()) {
+  if (isRegionsLoading()) {
     return null;
   }
 
@@ -224,7 +238,7 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
         </div>
         {showMapSelection() && (
           <div className="row gap-3 mb-3">
-            {regionSelectable() && (
+            {showRegionSelection() && (
               <div className="col-md">
                 <RegionSelect
                   id="venue-edit-region"
