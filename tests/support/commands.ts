@@ -54,6 +54,25 @@ Cypress.Commands.add("callMethod", (method: string, ...params: any[]) => {
     });
   });
 });
+Cypress.Commands.add("expectCallMethodThrowsError", (method: string, ...params: any[]) => {
+  return cy.getMeteor().then((Meteor) => {
+    Cypress.log({
+      name: "expectCallMethodThrowsError",
+      consoleProps: () => ({ name: method, params }),
+    });
+
+    return new Cypress.Promise((resolve, reject) => {
+      Meteor.call(method, ...params, (err: unknown) => {
+        console.log(`%c${method}`, "color: red; font-style: italic;", err);
+        if (err) {
+          resolve(err);
+          return;
+        }
+        reject(new Error(`Expected ${method} to fail`));
+      });
+    });
+  });
+});
 
 Cypress.Commands.add("logout", () => {
   cy.getMeteor().then((Meteor) => {
@@ -151,6 +170,7 @@ declare global {
       getMeteor(): Chainable<any>;
       allSubscriptionsReady(options?: Partial<Loggable & Timeoutable>): Chainable<boolean>;
       callMethod<T = any>(method: string, ...params: any[]): Chainable<T>;
+      expectCallMethodThrowsError<T = any>(method: string, ...params: any[]): Chainable<T>;
       logout(): Chainable<void>;
       login(username: string, password?: string): Chainable<void>;
       visitOpenki(
