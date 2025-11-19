@@ -11,8 +11,6 @@ import { Roles } from "/imports/api/roles/roles";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { hasRoleUser } from "/imports/utils/course-role-utils";
-import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
-import { useSiteName } from "/imports/utils/getSiteName";
 import * as StringTools from "/imports/utils/string-tools";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
 
@@ -24,184 +22,22 @@ import { PricePolicy } from "../../price-policy";
 import { Tag } from "../../regions/tag";
 import { Props as CourseEditRoleProps, Role } from "./Role";
 import { Title } from "./title";
-import {
-  useDetails as useCoursesDetails,
-  useFindFilter as useCoursesFindFilter,
-} from "/imports/api/courses/publications";
-import { useDetails, useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
-import { useAll as useRegionsAll } from "/imports/api/regions/publications";
-import { useUser } from "/imports/utils/react-meteor-data";
-import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
+import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
+import { useAll as useRegions } from "/imports/api/regions/publications";
+import { useSession, useUser } from "/imports/utils/react-meteor-data";
 
 import { EditCustomFields } from "../../EditCustomFields";
 import { SelectCategories } from "../SelectCategories";
 import { CourseCategories } from "../categories";
 import { FormCheck } from "/imports/ui/components/FormCheck";
 import { RegionSelect } from "/imports/ui/components/RegionSelect";
+import { Header } from "./Header";
+import { FindHeader } from "./FindHeader";
+import { AlertMessage } from "./AlertMessage";
+
+import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
 
 import "./styles.scss";
-
-function GroupHeader({ groupId }: { groupId: string }) {
-  const { t } = useTranslation();
-  const [groupIsLoading, group] = useDetails(groupId);
-
-  if (groupIsLoading()) {
-    return null;
-  }
-
-  return (
-    <>
-      {t("course.edit.proposeInGroup", "Propose new course in group {GROUP}", {
-        GROUP: group?.name,
-      })}
-    </>
-  );
-}
-
-function Header(data: { _id?: string; isFrame?: boolean; group?: string }) {
-  const { t } = useTranslation();
-  const siteName = useSiteName();
-
-  return data._id ? (
-    <h2>{t("course.edit.edit_course", "Edit course")}</h2>
-  ) : !data.isFrame ? (
-    <>
-      <h2>
-        {data.group ? (
-          <GroupHeader groupId={data.group} />
-        ) : (
-          t("course.edit.propose", "Propose new course")
-        )}
-      </h2>
-      <div className="icon-text">
-        <div className="icon-text-icon">
-          <i className="fa-solid fa-info fa-fw" aria-hidden="true"></i>
-        </div>
-        <div className="icon-text-text">
-          {t(
-            "course.propose.CourseInfo",
-            "Start your own {SITENAME} course here. Whether as a mentor or participant, you decide what and how you want to learn. More info here:",
-            { SITENAME: siteName },
-          )}{" "}
-          <a
-            href={getLocalizedValue(PublicSettings.courseGuideLink)}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {t("course.propose.guideLink", "How to organize my first {SITENAME} course?", {
-              SITENAME: siteName,
-            })}
-          </a>
-          {", "}
-          <a href={getLocalizedValue(PublicSettings.faqLink)} target="_blank" rel="noreferrer">
-            {t("course.propose.faq", "FAQ")}
-          </a>
-        </div>
-      </div>
-    </>
-  ) : null;
-}
-
-function FindHeader(data: {
-  _id?: string;
-  isFrame?: boolean;
-  group?: string;
-  filter: ReturnType<(typeof Courses)["Filtering"]>;
-}) {
-  const { t } = useTranslation();
-
-  const { filter } = data;
-
-  const filterQuery = filter.toQuery();
-  const [coursesIsLoading, courses] = useCoursesFindFilter(filterQuery);
-
-  function proposeFromQuery() {
-    const { search } = filterQuery;
-    if (!search) {
-      return false;
-    }
-
-    return courses.length === 0 && search;
-  }
-  function courseSearch() {
-    const filterParams = filter.toParams();
-
-    return filterParams.search;
-  }
-
-  if (coursesIsLoading()) {
-    return null;
-  }
-
-  return proposeFromQuery() ? (
-    <h2>
-      {t("find.propose_new_course?", 'Why not propose a new course for "{TERM}"?', {
-        TERM: courseSearch(),
-      })}
-    </h2>
-  ) : (
-    <Header {...data} />
-  );
-}
-
-function AlertMessage(data: {
-  isFrame?: boolean | undefined;
-  savedCourseId: string;
-  onClose: () => void;
-}) {
-  const { t } = useTranslation();
-  const siteName = useSiteName();
-  const [savedCourseIsLoading, savedCourse] = useCoursesDetails(data.savedCourseId);
-
-  function savedCourseLink() {
-    if (data.isFrame) {
-      const course = savedCourse;
-      if (course) {
-        return Router.url("showCourse", course);
-      }
-    }
-    return "";
-  }
-  function savedCourseName() {
-    if (data.isFrame) {
-      const course = savedCourse;
-      if (course) {
-        return course.name;
-      }
-    }
-    return false;
-  }
-
-  if (savedCourseIsLoading()) {
-    return null;
-  }
-
-  return (
-    <div className="alert alert-success alert-dismissible fade show" role="alert">
-      <h4>
-        <i className="fa-solid fa-check" aria-hidden="true"></i>{" "}
-        {t("course.edit.savedMessage", "Your proposal has been saved!")}
-      </h4>
-      <span className="pre-line">
-        {t("course.edit.linkToCourse", 'You can see your new proposal "{NAME}" on {SITENAME}', {
-          NAME: (
-            <a className="alert-link" href={savedCourseLink()} target="_blank" rel="noreferrer">
-              {savedCourseName()}
-            </a>
-          ),
-          SITENAME: siteName,
-        })}
-      </span>
-      <button
-        type="button"
-        className="btn-close btn-close-black"
-        data-bs-dismiss="alert"
-        aria-label={t("_button.close")}
-        onClick={data.onClose}
-      ></button>
-    </div>
-  );
-}
 
 export type Props = {
   _id?: string;
@@ -222,8 +58,8 @@ export type Props = {
 export function Edit(props: Props) {
   const { t } = useTranslation();
   const user = useUser();
-  const [allRegionsIsLoading, allRegions] = useRegionsAll();
-  const currentRegion = useCurrentRegion();
+  const [regionsIsLoading, regions] = useRegions();
+  const currentRegion = CleanedRegion(useSession("region"));
   const [isBusy, setIsBusy] = useState(false);
   const [title, setTitle] = useState(props.name);
 
@@ -265,23 +101,35 @@ export function Edit(props: Props) {
     setTitle(props.name);
   }, [props.name]);
 
+  const [savedCourseId, setSavedCourseId] = useState<string | undefined>(undefined);
+
+  const [selectedRegion, setSelectedRegion] = useState<string | undefined>(currentRegion);
+
   function getRegion() {
-    const courseId = props._id || "";
-    const isNew = courseId === "";
-    if (isNew) {
-      if (props.isFrame && props.region) {
-        // The region was preset for the frame
-        return allRegions.find((r) => r._id === props.region);
-      }
-      if (allRegions.length === 1) {
-        // There is only one region
-        return allRegions[0];
-      }
-      return currentRegion;
+    const isNew = !props._id;
+    if (!isNew) {
+      // only needed for new courses
+      return undefined;
     }
-    return undefined;
+
+    let regionId: string;
+    if (props.isFrame && props.region) {
+      // The region was preset for the frame
+      regionId = props.region;
+    } else if (regions.length === 1) {
+      // There is only one region
+      regionId = regions[0]._id;
+    } else if (selectedRegion) {
+      // The one selected by the user.
+      regionId = selectedRegion;
+    } else {
+      return undefined;
+    }
+
+    return regions.find((r) => r._id === regionId);
   }
-  const getGroups = () => {
+
+  function getGroups() {
     const groups = [];
 
     const defaultTeamGroups = getRegion()?.defaultTeamGroups;
@@ -295,17 +143,14 @@ export function Edit(props: Props) {
       if (props.group) {
         groups.push(props.group);
       }
-    } else if (props.teamGroups && props.teamGroups?.length > 0) {
+    } else if (props.teamGroups && props.teamGroups.length > 0) {
       groups.push(...props.teamGroups);
     }
     // remove double groups
     return uniq(groups);
-  };
-  const [savedCourseId, setSavedCourseId] = useState<string | undefined>(undefined);
+  }
 
   const [groupsIsLoading, groups] = useGroupsFindFilter({ ids: getGroups() });
-
-  const [selectedRegion, setSelectedRegion] = useState(currentRegion?._id || "");
 
   const [description, setDescription] = useState(props.description);
   const [numberOfCharacters, setNumberOfCharacters] = useState(0);
@@ -332,6 +177,8 @@ export function Edit(props: Props) {
   const [simpleRoleSelection, setSimpleRoleSelection] = useState(false);
   // For iframes: Keep state of simple role selection
   const [simpleSelectedRole, setSimpleSelectedRole] = useState("participant");
+
+  const [customFieldValues, setCustomFieldValues] = useState(props.customFields);
 
   const [savedMessage, setSavedMessage] = useState(false);
 
@@ -364,8 +211,6 @@ export function Edit(props: Props) {
     Record<string, { icon: string; enabled: boolean; enroll: boolean }>
   >({});
 
-  const groupsAreLoaded = groupsIsLoading();
-
   useEffect(() => {
     setRoles(
       fromPairs(
@@ -379,28 +224,23 @@ export function Edit(props: Props) {
         ]),
       ),
     );
-  }, [groupsAreLoaded]);
+  }, [groups]);
 
-  const showRegionSelection = () => {
+  function showRegionSelection() {
     return (
       // Region can be set for new courses only.
       !props._id &&
-      // For the proposal frame we hide the region selection when a region
-      // is set.
+      // For the proposal frame we hide the region selection when a region is
+      // set.
       !(props.region && props.isFrame) &&
-      // If there is only one region on this instance or it is visible to this user, it
-      // will be set automatically.
-      !(allRegions.length === 1)
+      // If there is only one region on this instance or it is visible to this
+      // user, it will be set automatically.
+      !(regions.length === 1)
     );
-  };
+  }
 
-  const customFields = (type?: "singleLine" | "multiLine" | "boolean") => {
-    return (
-      groups
-        .flatMap((g) => g.customCourseFields || [])
-        // when type is undefined all will get back
-        .filter((g) => !type || (g.type || "singleLine") === type)
-    );
+  const customFields = () => {
+    return groups.flatMap((g) => g.customCourseFields || []);
   };
 
   const resetFields = () => {
@@ -495,19 +335,22 @@ export function Edit(props: Props) {
       return !(props.tenant && isPrivate(props as { tenant: string }));
     }
 
+    let regionId;
     if (props.isFrame && props.region) {
       // The region was preset for the frame
-      const region = allRegions.find((r) => r._id === props.region);
-      if (region) {
-        return !region.isPrivate();
-      }
+      regionId = props.region;
+    } else if (regions.length === 1) {
+      // There is only one region
+      regionId = regions[0]._id;
+    } else if (selectedRegion) {
+      // The one selected by the user.
+      regionId = selectedRegion;
+    } else {
+      return true;
     }
 
-    return !currentRegion?.isPrivate();
-  }
-
-  if (allRegionsIsLoading()) {
-    return null;
+    const region = regions.find((r) => r._id === regionId);
+    return !region?.isPrivate();
   }
 
   const handleRoleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -551,11 +394,11 @@ export function Edit(props: Props) {
       if (props.isFrame && props.region) {
         // The region was preset for the frame
         changes.region = props.region;
-      } else if (Regions.findFilter({}, 2).count() === 1) {
+      } else if (regions.length === 1) {
         // There is only one region
-        changes.region = Regions.findOne({})?._id as string;
+        changes.region = regions[0]._id;
       } else {
-        changes.region = selectedRegion;
+        changes.region = selectedRegion || "";
       }
       if (!changes.region) {
         Alert.serverError(t("course.edit.error.region", "Please select a region") as string);
@@ -608,22 +451,9 @@ export function Edit(props: Props) {
         });
     }
 
-    changes.customFields = customFields().map((i) => {
-      if (i.type !== "boolean")
-        return {
-          name: i.name,
-          displayText: i.displayText,
-          value: $(`.js-custom-field-${i.name}`).val() as string,
-          visibleFor: i.visibleFor,
-        };
-
-      return {
-        name: i.name,
-        displayText: i.displayText,
-        value: $(`.js-custom-field-${i.name}`).prop("checked") as boolean,
-        visibleFor: i.visibleFor,
-      };
-    });
+    if (customFieldValues) {
+      changes.customFields = customFieldValues;
+    }
 
     setIsBusy(true);
     try {
@@ -676,7 +506,7 @@ export function Edit(props: Props) {
     }
   };
 
-  if (groupsAreLoaded) {
+  if (regionsIsLoading() || groupsIsLoading()) {
     return null;
   }
 
@@ -799,13 +629,35 @@ export function Edit(props: Props) {
                   </div>
                 )}
 
-                <EditCustomFields fields={customFields("boolean")} values={props.customFields} />
+                <EditCustomFields
+                  type="boolean"
+                  fields={customFields()}
+                  values={customFieldValues}
+                  onChange={(values) => setCustomFieldValues(values)}
+                />
 
-                <EditCustomFields fields={customFields("singleLine")} values={props.customFields} />
+                <EditCustomFields
+                  type="singleLine"
+                  fields={customFields()}
+                  values={customFieldValues}
+                  onChange={(values) => setCustomFieldValues(values)}
+                />
+
+                <EditCustomFields
+                  type="option"
+                  fields={customFields()}
+                  values={customFieldValues}
+                  onChange={(values) => setCustomFieldValues(values)}
+                />
               </div>
             )}
           </div>
-          <EditCustomFields fields={customFields("multiLine")} values={props.customFields} />
+          <EditCustomFields
+            type="multiLine"
+            fields={customFields()}
+            values={customFieldValues}
+            onChange={(values) => setCustomFieldValues(values)}
+          />
 
           {showInternalCheckbox() && (
             <div className="mb-3">

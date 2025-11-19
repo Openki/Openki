@@ -9,7 +9,7 @@ export function RegionSelect({
   onChange,
 }: {
   id: string;
-  value: string;
+  value: string | undefined;
   onChange?: ((value: string) => void) | undefined;
 }) {
   const { t } = useTranslation();
@@ -28,7 +28,7 @@ export function RegionSelect({
           ? Object.fromEntries(regions.map((region) => [region._id, region.name]))
           : ({} as any)
       }
-      value={value === "all" ? "" : value}
+      value={value || ""}
       onChange={onChange}
     />
   );

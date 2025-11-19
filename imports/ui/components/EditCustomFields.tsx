@@ -5,64 +5,119 @@ import { GroupEntityCustomCourseFields } from "/imports/api/groups/groups";
 
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
+import { FormControl } from "/imports/ui/components/form-control";
+import { FormCheck } from "/imports/ui/components/FormCheck";
+
 export interface Props {
+  /** Filter / Edit only specific field types. Default: all */
+  type?: "singleLine" | "multiLine" | "option" | "boolean" | undefined;
   fields: GroupEntityCustomCourseFields[];
   values: CourseCustomField[] | undefined;
+  onChange: (values: CourseCustomField[]) => void;
 }
 
-export function EditCustomFields(props: Props) {
+export function EditCustomFields({ type, fields, values, onChange }: Props) {
   const { getLocalizedValue } = useLocalizedSetting();
   function value(name: string) {
-    return props.values?.find((a) => a.name === name)?.value;
+    return values?.find((a) => a.name === name)?.value;
+  }
+
+  function handleChange(fieldName: string) {
+    return (newValue: string | boolean) => {
+      onChange(
+        fields.map((i) => {
+          if (!i.type || i.type === "singleLine" || i.type === "multiLine")
+            return {
+              name: i.name,
+              displayText: i.displayText,
+              value: (fieldName === i.name ? newValue : value(i.name)) || "",
+              visibleFor: i.visibleFor,
+            };
+
+          if (i.type === "option") {
+            const v =
+              ((fieldName === i.name ? newValue : (value(i.name) ?? i.defaultValue)) as string) ||
+              "";
+            return {
+              name: i.name,
+              displayText: i.displayText,
+              value: v,
+              displayValue: i.options[v],
+              visibleFor: i.visibleFor,
+            };
+          }
+
+          if (i.type === "boolean")
+            return {
+              name: i.name,
+              displayText: i.displayText,
+              value: (fieldName === i.name ? newValue : (value(i.name) ?? i.defaultValue)) || false,
+              visibleFor: i.visibleFor,
+            };
+
+          throw new Error("Unexpected value for type: " + type);
+        }),
+      );
+    };
   }
 
   return (
     <>
-      {props.fields.map((field) => {
-        if (field.type !== "boolean")
+      {fields
+        .filter((g) => !type || (g.type || "singleLine") === type)
+        .map((field) => {
           return (
             <div key={field.name} className="mb-3">
-              <label className="form-label" htmlFor={`course-custom-field-${field.name}`}>
-                {getLocalizedValue(field.editText)}
-              </label>
               {!field.type || field.type === "singleLine" ? (
-                <input
+                <FormControl
+                  id={`course-custom-field-${field.name}`}
                   type="text"
-                  className={`form-control js-custom-field-${field.name}`}
-                  id={`course-custom-field-${field.name}`}
+                  label={getLocalizedValue(field.editText)}
                   placeholder={getLocalizedValue(field.editPlaceholder)}
-                  defaultValue={value(field.name) as string}
+                  value={value(field.name) as string}
+                  onChange={handleChange(field.name)}
                 />
-              ) : (
-                <textarea
-                  className={`form-control js-custom-field-${field.name}`}
+              ) : field.type === "multiLine" ? (
+                <FormControl
                   id={`course-custom-field-${field.name}`}
-                  placeholder={getLocalizedValue(field.editPlaceholder)}
+                  type="textarea"
                   rows={3}
-                  defaultValue={value(field.name) as string}
-                ></textarea>
+                  label={getLocalizedValue(field.editText)}
+                  placeholder={getLocalizedValue(field.editPlaceholder)}
+                  value={value(field.name) as string}
+                  onChange={handleChange(field.name)}
+                />
+              ) : field.type === "option" ? (
+                <FormControl
+                  id={`course-custom-field-${field.name}`}
+                  type="select"
+                  label={getLocalizedValue(field.editText)}
+                  options={Object.fromEntries(
+                    Object.entries(field.options).map((option) => [
+                      option[0],
+                      getLocalizedValue(option[1]) || "",
+                    ]),
+                  )}
+                  value={value(field.name) as string}
+                  onChange={handleChange(field.name)}
+                />
+              ) : field.type === "boolean" ? (
+                <>
+                  <div className="form-label">{getLocalizedValue(field.editText)}</div>
+                  <FormCheck
+                    id={`course-custom-field-${field.name}`}
+                    type="switch"
+                    label={getLocalizedValue(field.editDescription)}
+                    checked={(value(field.name) as boolean | undefined) ?? field.defaultValue}
+                    onChange={handleChange(field.name)}
+                  />
+                </>
+              ) : (
+                <></>
               )}
             </div>
           );
-
-        return (
-          <div key={field.name} className="mb-3">
-            <label className="form-label">{getLocalizedValue(field.editText)}</label>
-            <div key={field.name} className="form-check">
-              <input
-                className={`form-check-input js-custom-field-${field.name}`}
-                type="checkbox"
-                value=""
-                id={`course-custom-field-${field.name}`}
-                defaultChecked={(value(field.name) as boolean | undefined) ?? field.defaultValue}
-              />
-              <label className="form-check-label" htmlFor={`course-custom-field-${field.name}`}>
-                {getLocalizedValue(field.editDescription)}
-              </label>
-            </div>
-          </div>
-        );
-      })}
+        })}
     </>
   );
 }

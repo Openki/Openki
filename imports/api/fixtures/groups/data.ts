@@ -69,6 +69,34 @@ export const groups: Template[] = [
       },
       { entity: "propose" },
     ],
+    customCourseFields: [
+      {
+        name: "speaker",
+        displayText: { en: "Speaker", de: "Sprecher:in" },
+        editText: { en: "Speaker", de: "Sprecher:in" },
+        editPlaceholder: { en: "Sophia Sand", de: "Maria Muster" },
+        visibleFor: "all",
+      },
+      {
+        type: "boolean",
+        name: "record",
+        displayText: { en: "Recording", de: "Aufzeichung" },
+        editText: { en: "Recording", de: "Aufzeichung" },
+        editDescription: {
+          en: "The presentation get recorded",
+          de: "Die Präsentation wird aufgezeichnet",
+        },
+        visibleFor: "all",
+      },
+      {
+        type: "option",
+        name: "lang",
+        displayText: { en: "Language", de: "Sprache" },
+        editText: { en: "Language", de: "Sprache" },
+        options: { en: { en: "English", de: "Englisch" }, de: { en: "German", de: "Deutsch" } },
+        visibleFor: "all",
+      },
+    ],
   },
   {
     name: "MAXIM Theater",
