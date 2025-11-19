@@ -11,7 +11,7 @@ import { FacilityOption, VenueModel } from "/imports/api/venues/venues";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
-import { ButtonCancel, ButtonSave } from "../../Buttons.old";
+import { ButtonCancel, ButtonSave } from "../../Buttons";
 import { FormControl } from "../../form-control";
 import { FormCheck } from "../../FormCheck";
 import { Edit as LocationEdit } from "../../location/edit";
@@ -31,6 +31,7 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
 
   const sessionRegion = useCurrentRegionId();
   const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
+  const [isBusy, setIsBusy] = useState(false);
   const isNew = !venue._id;
 
   const [changes, setChanges] = useState({
@@ -95,7 +96,9 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
     return regionSelectable() || !!changes.selectedRegion;
   }
 
-  const handleSave = async () => {
+  const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     const changes1: VenuesMethods.SaveFields = {
       name: changes.name,
       description: changes.description,
@@ -148,9 +151,9 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
       return;
     }
 
-    const venueId = venue?._id || "";
+    setIsBusy(true);
     try {
-      const res = await VenuesMethods.save(venueId, changes1);
+      const res = await VenuesMethods.save(venue?._id || "", changes1);
 
       Alert.success(
         t("venue.saving.success", 'Saved changes to venue "{NAME}".', {
@@ -171,6 +174,8 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
       }
     } catch (err) {
       Alert.serverError(err, t("venue.saving.error", "Could not save the venue"));
+    } finally {
+      setIsBusy(false);
     }
   };
 
@@ -196,7 +201,7 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
       ) : (
         <h2>{t("venue.edit.titleCreate", "Create new venue")}</h2>
       )}
-      <form>
+      <form noValidate onSubmit={handleSave}>
         <div className="mb-3">
           <FormControl
             id="venue-edit-name"
@@ -351,8 +356,8 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
           </div>
         </div>
         <div className="form-actions">
-          <ButtonSave id="venues-edit-save" onClick={handleSave} />
-          <ButtonCancel id="venues-edit-cancel" onClick={handleCancel} />
+          <ButtonSave submit id="venues-edit-save" isBusy={isBusy} />
+          <ButtonCancel id="venues-edit-cancel" onClick={handleCancel} disabled={isBusy} />
         </div>
       </form>
     </div>
