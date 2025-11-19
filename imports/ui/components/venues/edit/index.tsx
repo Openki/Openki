@@ -5,7 +5,7 @@ import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { Geodata } from "/imports/api/Geodata";
-import { useAll } from "/imports/api/regions/publications";
+import { useAll as useRegions } from "/imports/api/regions/publications";
 import * as VenuesMethods from "/imports/api/venues/methods";
 import { FacilityOption, VenueModel } from "/imports/api/venues/venues";
 
@@ -31,7 +31,7 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
   const { t } = useTranslation();
 
   const currentRegion = useCurrentRegionId();
-  const [isRegionsLoading, regions] = useAll();
+  const [isRegionsLoading, regions] = useRegions();
 
   const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
   const [isBusy, setIsBusy] = useState(false);
@@ -100,7 +100,7 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
     return (
       // You can select the region for venues that are new
       isNew &&
-      // when the the session not sets the region
+      // and the session not sets the region
       !currentRegion &&
       // and when more then one region exists
       regions.length > 1
