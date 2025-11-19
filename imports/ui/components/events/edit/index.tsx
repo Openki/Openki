@@ -14,7 +14,7 @@ import { useValidation } from "/imports/ui/lib/useValidation";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { LocalTime } from "/imports/utils/local-time";
 import { MeteorAsync } from "/imports/utils/promisify";
-import { useSession, useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/utils/react-meteor-data";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 
 import * as Alert from "/imports/api/alerts/alert";
@@ -23,7 +23,7 @@ import { EventModel, OEvent } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { SaveFields } from "/imports/api/events/methods";
 import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
-import { useAll } from "/imports/api/regions/publications";
+import { useAll as useRegions } from "/imports/api/regions/publications";
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 import { CourseCustomField } from "/imports/api/courses/courses";
 
@@ -43,7 +43,7 @@ import { useDetails as useCourseDetails } from "/imports/api/courses/publication
 
 import { useFindParallelEvents } from "./useFindParallelEvents";
 
-import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
+import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 
 import "./styles.scss";
 
@@ -106,10 +106,10 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
   const searchParams = useSearchParams();
 
-  const currentRegion = CleanedRegion(useSession("region"));
   const user = useUser();
 
-  const [isRegionsLoading, regions] = useAll();
+  const currentRegion = useCurrentRegionId();
+  const [isRegionsLoading, regions] = useRegions();
   const [isCourseLoading, course] = useCourseDetails({ when: !!event.courseId }, event.courseId);
   const [selectedRegion, setSelectedRegion] = useState<string | undefined>(event.region);
   // init selected region
@@ -126,13 +126,14 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       }
       // The region is the same as in course
       setSelectedRegion(course.region);
+    } else if (currentRegion) {
+      //  If the session sets the region, we use it.
+      setSelectedRegion(currentRegion);
     } else if (regions.length === 1) {
       // There is only one region
       setSelectedRegion(regions[0]._id);
-    } else if (currentRegion) {
-      setSelectedRegion(currentRegion);
     }
-  }, [course, regions]);
+  }, [course, currentRegion, regions]);
 
   const [selectedVenue, setSelectedVenue] = useState(event.venue);
   const [noRsvpChecked, setNoRsvpChecked] = useState(!!event.noRsvp);
@@ -302,6 +303,8 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       isNew &&
       // and not associated with a course
       !event.courseId &&
+      // and the session not sets the region
+      !currentRegion &&
       // and when more then one region exists
       regions.length > 1
     );
