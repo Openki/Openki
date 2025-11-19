@@ -56,10 +56,14 @@ export type Props = {
 } & Partial<CourseModel>;
 
 export function Edit(props: Props) {
+  const isNew = !props._id;
   const { t } = useTranslation();
+
   const user = useUser();
-  const [regionsIsLoading, regions] = useRegions();
+
   const currentRegion = useCurrentRegionId();
+  const [regionsIsLoading, regions] = useRegions();
+
   const [isBusy, setIsBusy] = useState(false);
   const [title, setTitle] = useState(props.name);
 
@@ -103,41 +107,35 @@ export function Edit(props: Props) {
 
   const [savedCourseId, setSavedCourseId] = useState<string | undefined>(undefined);
 
-  const [selectedRegion, setSelectedRegion] = useState<string | undefined>(currentRegion);
-
-  function getRegion() {
-    const isNew = !props._id;
+  const [selectedRegion, setSelectedRegion] = useState<string | undefined>(props.region);
+  // init selected region
+  useEffect(() => {
     if (!isNew) {
       // only needed for new courses
-      return undefined;
+      return;
     }
 
-    let regionId: string;
     if (props.isFrame && props.region) {
       // The region was preset for the frame
-      regionId = props.region;
+      setSelectedRegion(props.region);
+    } else if (currentRegion) {
+      //  If the session sets the region, we use it.
+      setSelectedRegion(currentRegion);
     } else if (regions.length === 1) {
       // There is only one region
-      regionId = regions[0]._id;
-    } else if (selectedRegion) {
-      // The one selected by the user.
-      regionId = selectedRegion;
-    } else {
-      return undefined;
+      setSelectedRegion(regions[0]._id);
     }
-
-    return regions.find((r) => r._id === regionId);
-  }
+  }, [props, currentRegion, regions]);
 
   function getGroups() {
     const groups = [];
 
-    const defaultTeamGroups = getRegion()?.defaultTeamGroups;
+    const defaultTeamGroups = regions.find((r) => r._id === selectedRegion)?.defaultTeamGroups;
     if (defaultTeamGroups) {
       groups.push(...defaultTeamGroups);
     }
 
-    if (props && props._id /* is not new */) {
+    if (!isNew) {
       groups.push(...(props.groupOrganizers || []));
     } else if (!props.isFrame) {
       if (props.group) {
@@ -194,7 +192,7 @@ export function Edit(props: Props) {
         return false;
       }
 
-      if (props && !props._id /* is new */)
+      if (isNew)
         if (disableCreateRoles.includes(role.type)) {
           return false;
         }
@@ -229,13 +227,15 @@ export function Edit(props: Props) {
   function showRegionSelection() {
     return (
       // Region can be set for new courses only.
-      !props._id &&
+      isNew &&
       // For the proposal frame we hide the region selection when a region is
       // set.
-      !(props.region && props.isFrame) &&
+      !(props.isFrame && props.region) &&
+      // if the session sets the region we hide the region selection
+      !currentRegion &&
       // If there is only one region on this instance or it is visible to this
       // user, it will be set automatically.
-      !(regions.length === 1)
+      regions.length > 1
     );
   }
 
@@ -252,7 +252,7 @@ export function Edit(props: Props) {
 
   useEffect(() => {
     // Show category selection right away for new courses
-    setEditingCategories(!props._id);
+    setEditingCategories(isNew);
     setSelectedCategories(props.categories || []);
 
     if (props.isFrame) {
@@ -260,7 +260,7 @@ export function Edit(props: Props) {
       setSimpleRoleSelection(!props.hideRoleSelection && !!props.roles?.includes("mentor"));
       setFullRoleSelection(false);
     }
-  }, [props._id, props.categories, props.isFrame, props.hideRoleSelection, props.roles]);
+  }, [isNew, props.categories, props.isFrame, props.hideRoleSelection, props.roles]);
 
   function simpleRoleActiveClass(role: string) {
     // HACK using btn-add and btn-edit to show activation state
@@ -388,20 +388,11 @@ export function Edit(props: Props) {
       }
     }
 
-    let courseId = props._id || "";
-    const isNew = courseId === "";
     if (isNew) {
-      if (props.isFrame && props.region) {
-        // The region was preset for the frame
-        changes.region = props.region;
-      } else if (regions.length === 1) {
-        // There is only one region
-        changes.region = regions[0]._id;
-      } else {
-        changes.region = selectedRegion || "";
-      }
+      changes.region = selectedRegion || "";
+
       if (!changes.region) {
-        Alert.serverError(t("course.edit.error.region", "Please select a region") as string);
+        Alert.serverError(t("course.edit.error.region", "Please select a region"));
         return;
       }
 
@@ -462,7 +453,7 @@ export function Edit(props: Props) {
         return;
       }
 
-      courseId = await CoursesMethods.save(courseId, changes);
+      const courseId = await CoursesMethods.save(props._id || "", changes);
 
       Analytics.trackEvent(
         "Course creations",
@@ -519,7 +510,7 @@ export function Edit(props: Props) {
           <Header {...props} />
         )}
         <div className={`edit-page-body course-edit-body ${editBodyClasses()}`}>
-          {!!props._id && !!props.region && <Tag region={props.region} />}
+          {!isNew && !!props.region && <Tag region={props.region} />}
           {showSavedMessage() && !!savedCourseId && (
             <AlertMessage
               isFrame={props.isFrame}
@@ -573,7 +564,7 @@ export function Edit(props: Props) {
           <Title
             value={title}
             onChange={(newTitle) => setTitle(newTitle)}
-            showOtherProposals={!props._id}
+            showOtherProposals={isNew}
           />
           <div className="mb-3">
             <label className="form-label">{t("course.edit.description", "Description")}</label>
