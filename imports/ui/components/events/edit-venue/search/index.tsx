@@ -129,7 +129,7 @@ function CustomMenu({
         position={uvs.length + uvs.length + 1}
       >
         <i className="fa-solid fa-location-pin fa-fw" />{" "}
-        {t("location.setMeetingPoint", "Set meeting point on map without searching")}
+        {t("location.setMeetingPoint", "Just set a point on the map")}
       </MenuItem>
       <Menu.Divider />
       <div className="px-3">
