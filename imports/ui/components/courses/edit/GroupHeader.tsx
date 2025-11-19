@@ -6,14 +6,10 @@ export function GroupHeader({ groupId }: { groupId: string }) {
   const { t } = useTranslation();
   const [groupIsLoading, group] = useDetails(groupId);
 
-  if (groupIsLoading()) {
-    return null;
-  }
-
   return (
     <>
       {t("course.edit.proposeInGroup", "Propose new course in group {GROUP}", {
-        GROUP: group?.name,
+        GROUP: groupIsLoading() ? "..." : group?.name,
       })}
     </>
   );
