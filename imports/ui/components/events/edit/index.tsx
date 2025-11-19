@@ -14,7 +14,7 @@ import { useValidation } from "/imports/ui/lib/useValidation";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { LocalTime } from "/imports/utils/local-time";
 import { MeteorAsync } from "/imports/utils/promisify";
-import { useSession, useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/utils/react-meteor-data";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 
 import * as Alert from "/imports/api/alerts/alert";
@@ -43,7 +43,7 @@ import { useDetails as useCourseDetails } from "/imports/api/courses/publication
 
 import { useFindParallelEvents } from "./useFindParallelEvents";
 
-import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
+import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 
 import "./styles.scss";
 
@@ -106,7 +106,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
   const searchParams = useSearchParams();
 
-  const currentRegion = CleanedRegion(useSession("region"));
+  const currentRegion = useCurrentRegionId();
   const user = useUser();
 
   const [isRegionsLoading, regions] = useAll();

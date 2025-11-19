@@ -24,7 +24,7 @@ import { Props as CourseEditRoleProps, Role } from "./Role";
 import { Title } from "./title";
 import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
 import { useAll as useRegions } from "/imports/api/regions/publications";
-import { useSession, useUser } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/utils/react-meteor-data";
 
 import { EditCustomFields } from "../../EditCustomFields";
 import { SelectCategories } from "../SelectCategories";
@@ -35,7 +35,7 @@ import { Header } from "./Header";
 import { FindHeader } from "./FindHeader";
 import { AlertMessage } from "./AlertMessage";
 
-import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
+import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 
 import "./styles.scss";
 
@@ -59,7 +59,7 @@ export function Edit(props: Props) {
   const { t } = useTranslation();
   const user = useUser();
   const [regionsIsLoading, regions] = useRegions();
-  const currentRegion = CleanedRegion(useSession("region"));
+  const currentRegion = useCurrentRegionId();
   const [isBusy, setIsBusy] = useState(false);
   const [title, setTitle] = useState(props.name);
 
