@@ -14,7 +14,6 @@ import { hasRoleUser } from "/imports/utils/course-role-utils";
 import * as StringTools from "/imports/utils/string-tools";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
 
-import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 import * as Analytics from "/imports/ui/lib/analytics";
 
 import { ButtonCancel, ButtonSave } from "../../Buttons";
@@ -25,6 +24,9 @@ import { Title } from "./title";
 import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
 import { useAll as useRegions } from "/imports/api/regions/publications";
 import { useUser } from "/imports/utils/react-meteor-data";
+import { useValidation } from "/imports/ui/lib/useValidation";
+import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
+import { useMeasureTime } from "/imports/ui/lib/useMeasureTime";
 
 import { EditCustomFields } from "../../EditCustomFields";
 import { SelectCategories } from "../SelectCategories";
@@ -34,8 +36,7 @@ import { RegionSelect } from "/imports/ui/components/RegionSelect";
 import { Header } from "./Header";
 import { FindHeader } from "./FindHeader";
 import { AlertMessage } from "./AlertMessage";
-
-import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
+import { FormControl } from "/imports/ui/components/form-control";
 
 import "./styles.scss";
 
@@ -152,21 +153,12 @@ export function Edit(props: Props) {
 
   const [description, setDescription] = useState(props.description);
   const [numberOfCharacters, setNumberOfCharacters] = useState(0);
-  const [totalFocusTimeInSeconds, setTotalFocusTimeInSeconds] = useState(0);
-  const editableDescription: EditableProps = {
-    text: description,
-    multiline: true,
-    placeholder: t(
-      "course.description.placeholder",
-      "Describe your idea, so more people find it and know what to expect.",
-    ),
-    maxlength: PublicSettings.courseDescriptionMax,
-    onChange: (newDescription, newNumberOfCharacters, newTotalFocusTimeInSeconds) => {
-      setDescription(newDescription);
-      setNumberOfCharacters(newNumberOfCharacters);
-      setTotalFocusTimeInSeconds(newTotalFocusTimeInSeconds);
-    },
-  };
+  const {
+    start: startMeasureFocusTime,
+    pause: pauseMesureFocusTime,
+    reset: resetFocusTime,
+    time: totalFocusTime,
+  } = useMeasureTime();
 
   const [editingCategories, setEditingCategories] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -224,6 +216,37 @@ export function Edit(props: Props) {
     );
   }, [groups]);
 
+  const [errors, checkValidity, addError] = useValidation({
+    noTitle: {
+      field: "title",
+      onCheckValidity: () => StringTools.sanitizeSingleline(title).length > 0,
+      text: () => t("course.edit.error.title", "Please provide a title"),
+    },
+    descriptionToLong: {
+      field: "description",
+      onCheckValidity: () =>
+        !PublicSettings.courseDescriptionMax ||
+        numberOfCharacters <= PublicSettings.courseDescriptionMax,
+      text: () =>
+        t("_inputField.maxlength", {
+          MAXNUMBER: PublicSettings.courseDescriptionMax,
+          NUMBER: numberOfCharacters - (PublicSettings.courseDescriptionMax || 0),
+        }),
+    },
+    noRegion: {
+      field: "region",
+      onCheckValidity: () => !!selectedRegion,
+      text: () => t("course.edit.error.region", "Please select a region"),
+    },
+  });
+
+  useEffect(() => {
+    // after every change, check errors are fixed
+    Object.keys(errors).forEach((key) => {
+      checkValidity(key as any);
+    });
+  });
+
   function showRegionSelection() {
     return (
       // Region can be set for new courses only.
@@ -248,6 +271,7 @@ export function Edit(props: Props) {
     setDescription("");
     setSelectedCategories([]);
     setSimpleSelectedRole("participant");
+    resetFocusTime();
   };
 
   useEffect(() => {
@@ -360,41 +384,25 @@ export function Edit(props: Props) {
   const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (!checkValidity()) {
+      setTimeout(() => {
+        document.querySelector<HTMLElement>(".is-invalid")?.focus();
+      }, 0);
+      return;
+    }
+
     const changes = {
       internal,
       name: StringTools.sanitizeSingleline(title),
       categories: selectedCategories || [],
     } as unknown as Required<CoursesMethods.SaveFields>;
 
-    if (changes.name.length === 0) {
-      Alert.serverError(t("course.edit.error.title", "Please provide a title") as string);
-      return;
-    }
-
-    const newDescription = description;
-    if (newDescription) {
-      changes.description = newDescription;
-    }
-
-    if (PublicSettings.courseDescriptionMax && numberOfCharacters) {
-      if (numberOfCharacters > PublicSettings.courseDescriptionMax) {
-        Alert.error(
-          t("_inputField.maxlength", {
-            MAXNUMBER: PublicSettings.courseDescriptionMax,
-            NUMBER: numberOfCharacters - PublicSettings.courseDescriptionMax,
-          }),
-        );
-        return;
-      }
+    if (description) {
+      changes.description = description;
     }
 
     if (isNew) {
       changes.region = selectedRegion || "";
-
-      if (!changes.region) {
-        Alert.serverError(t("course.edit.error.region", "Please select a region"));
-        return;
-      }
 
       if (props.singleEvent !== undefined) {
         changes.singleEvent = props.singleEvent;
@@ -461,7 +469,7 @@ export function Edit(props: Props) {
           changes.subs.length > 0 ? changes.subs.sort().join(" and ") : "participant"
         }`,
         Regions.findOne(changes.region)?.nameEn,
-        totalFocusTimeInSeconds,
+        totalFocusTime(),
       );
 
       if (props.isFrame) {
@@ -481,7 +489,10 @@ export function Edit(props: Props) {
         }
       }
     } catch (err) {
-      Alert.serverError(err, t("message.courseChangesSaved.error", "Saving went wrong"));
+      if (!addError(err.reason)) {
+        // unknown error
+        Alert.serverError(err, t("message.courseChangesSaved.error", "Saving went wrong"));
+      }
     } finally {
       setIsBusy(false);
     }
@@ -565,10 +576,28 @@ export function Edit(props: Props) {
             value={title}
             onChange={(newTitle) => setTitle(newTitle)}
             showOtherProposals={isNew}
+            onBlur={() => checkValidity("title")}
+            error={errors.title}
           />
           <div className="mb-3">
-            <label className="form-label">{t("course.edit.description", "Description")}</label>
-            <Editable {...editableDescription} />
+            <FormControl
+              id="course-edit-description"
+              type="richtext"
+              label={t("course.edit.description", "Description")}
+              placeholder={t(
+                "course.description.placeholder",
+                "Describe your idea, so more people find it and know what to expect.",
+              )}
+              value={description || ""}
+              onChange={(newValue, numberOfCharacters) => {
+                setDescription(newValue);
+                setNumberOfCharacters(numberOfCharacters);
+                checkValidity("description");
+              }}
+              onFocus={() => startMeasureFocusTime()}
+              onBlur={() => pauseMesureFocusTime()}
+              error={errors.description}
+            />
           </div>
           {hasPricePolicy() && <PricePolicy dismissable={true} wrap="mb-3" />}
           <div className="row gap-3 mb-3">
@@ -600,9 +629,9 @@ export function Edit(props: Props) {
 
             {fullRoleSelection && availableRoles().length > 0 && (
               <div className="col-md">
-                <label className="form-label">
+                <div className="form-label">
                   {t("course.edit.needs.role", "This course might need…")}
-                </label>
+                </div>
                 {courseEditRolesAttr().map((courseEditRoleAttr) => (
                   <Role key={courseEditRoleAttr.type} {...courseEditRoleAttr} />
                 ))}
@@ -616,6 +645,8 @@ export function Edit(props: Props) {
                       id="courses-edit-region-selection"
                       value={selectedRegion}
                       onChange={(value) => setSelectedRegion(value)}
+                      onBlur={() => checkValidity("region")}
+                      error={errors.region}
                     />
                   </div>
                 )}

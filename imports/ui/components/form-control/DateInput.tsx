@@ -19,11 +19,12 @@ export function DateInput(props: {
         value: string,
       ) => void)
     | undefined;
+  onFocus?: (() => void) | undefined;
   onBlur?: (() => void) | undefined;
   "aria-describedby"?: string | undefined;
   "aria-invalid"?: boolean | undefined;
 }) {
-  const { id, className, min, max, value, required, disabled, onChange, onBlur } = props;
+  const { id, className, min, max, value, required, disabled, onChange, onFocus, onBlur } = props;
   const locale = useSession("locale");
   const elementRef = useRef(null);
 
@@ -71,6 +72,7 @@ export function DateInput(props: {
       value={toDisplay(value)}
       required={required}
       disabled={disabled}
+      onFocus={() => onFocus?.()}
       onBlur={() => onBlur?.()}
       aria-describedby={props["aria-describedby"]}
       aria-invalid={props["aria-invalid"]}

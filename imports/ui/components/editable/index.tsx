@@ -15,11 +15,7 @@ export interface Props {
   placeholder?: string | undefined;
   maxlength?: number | undefined;
   onStartEditing?: (() => void) | undefined;
-  onChange?: (
-    newText: string | undefined,
-    numberOfCharacters: number,
-    totalFocusTimeInSeconds: number,
-  ) => void;
+  onChange?: (newText: string | undefined, numberOfCharacters: number) => void;
   store?: Store | undefined;
 }
 
@@ -37,8 +33,6 @@ export function Editable({
   const [changed, setChanged] = useState(!store);
   const [readonly, setReadonly] = useState(!!store);
 
-  const [totalFocusTimeInSeconds, setTotalFocusTimeInSeconds] = useState(0);
-  const [startGettingFocus, setStartGettingFocus] = useState<number | undefined>(undefined);
   const isRTL = useSessionEquals("textDirectionality", "rtl");
   const locale = useSession("locale");
 
@@ -151,9 +145,6 @@ export function Editable({
 
       setChanged(false);
 
-      setStartGettingFocus(undefined);
-      setTotalFocusTimeInSeconds(0);
-
       store?.onSuccess?.(newText);
     } catch (err: unknown) {
       if (ValidationError.is(err)) {
@@ -236,13 +227,7 @@ export function Editable({
 
       setChanged(true);
 
-      onChange?.(
-        getEdited(),
-        numberOfCharacters,
-        // send current total time in seconds
-        totalFocusTimeInSeconds +
-          Math.round((Date.now() - (startGettingFocus || Date.now())) / 1000),
-      );
+      onChange?.(getEdited(), numberOfCharacters);
     });
 
     setNumberOfCharacters(element.innerText.trim().length);
@@ -325,18 +310,7 @@ export function Editable({
           className={`editable ${editableClasses()} ${
             characterLimitReached() || errors.input ? "is-invalid" : ""
           }`}
-          onFocus={() => {
-            if (!readonly) {
-              setStartGettingFocus(Date.now());
-            }
-          }}
           onBlur={(event) => {
-            // persists current total time in seconds
-            setTotalFocusTimeInSeconds(
-              totalFocusTimeInSeconds +
-                Math.round((Date.now() - (startGettingFocus || Date.now())) / 1000),
-            );
-
             if (!changed && !event.relatedTarget?.className.includes("medium-editor")) {
               setReadonly(true);
             }

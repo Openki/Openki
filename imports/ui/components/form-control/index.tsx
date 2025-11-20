@@ -22,6 +22,7 @@ interface CommonProps {
    */
   optional?: boolean | undefined;
   disabled?: boolean | undefined;
+  onFocus?: (() => void) | undefined;
   onBlur?: (() => void) | undefined;
   /**
    * shows a error message or
@@ -167,7 +168,7 @@ function getDescribedby(id: string, prepend: string | undefined, hasErrorMessage
  * Factory to create input elements based on `type`
  */
 function createInputElement<K extends string>(props: Props<K>) {
-  const { id, type, size, prepend, optional, disabled, onBlur, error } = props;
+  const { id, type, size, prepend, optional, disabled, onFocus, onBlur, error } = props;
 
   const isInvalid = !!error;
   const commonProps = {
@@ -176,6 +177,7 @@ function createInputElement<K extends string>(props: Props<K>) {
     disabled,
     autoComplete: "autoComplete" in props ? props.autoComplete : undefined,
     required: !optional,
+    onFocus: () => onFocus?.(),
     onBlur: () => onBlur?.(),
     "aria-describedby":
       getDescribedby(id, prepend, typeof error !== "boolean" && !!error).join(" ") || undefined,
