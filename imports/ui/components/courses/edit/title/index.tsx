@@ -1,6 +1,6 @@
 import { debounce } from "lodash-es";
 import { Router } from "meteor/iron:router";
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useFindFilter } from "/imports/api/courses/publications";
 import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
@@ -70,20 +70,22 @@ function Courses({ search }: { search: string }) {
   ) : null;
 }
 
-export function Title(data: {
+export function Title(props: {
   value?: string | undefined;
   showOtherProposals?: boolean | undefined;
   onChange: (newValue: string) => void;
+  onBlur?: (() => void) | undefined;
+  error?: ReactNode;
 }) {
   const { t } = useTranslation();
 
-  const [proposedSearch, setProposedSearch] = useState(data?.value || "");
-  const [value, setValue] = useState(data?.value || "");
+  const [proposedSearch, setProposedSearch] = useState(props?.value || "");
+  const [value, setValue] = useState(props?.value || "");
 
   useEffect(() => {
-    setProposedSearch(data?.value || "");
-    setValue(data?.value || "");
-  }, [data.value]);
+    setProposedSearch(props?.value || "");
+    setValue(props?.value || "");
+  }, [props.value]);
 
   return (
     <div className="mb-3">
@@ -97,13 +99,15 @@ export function Title(data: {
         autoComplete="off"
         onChange={(value) => {
           setValue(value);
-          data.onChange(value);
+          props.onChange(value);
           debounce((value: string) => {
             setProposedSearch(value);
           }, 220)(value);
         }}
+        onBlur={props.onBlur}
+        error={props.error}
       />
-      {data.showOtherProposals && proposedSearch.length > 3 && <Courses search={proposedSearch} />}
+      {props.showOtherProposals && proposedSearch.length > 3 && <Courses search={proposedSearch} />}
     </div>
   );
 }

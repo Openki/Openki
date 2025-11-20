@@ -17,6 +17,7 @@ export interface Props {
         /** number of visible characters */ numberOfCharacters: number,
       ) => void)
     | undefined;
+  onFocus: (() => void) | undefined;
   onBlur: (() => void) | undefined;
   "aria-labelledby": string | undefined;
   "aria-describedby": string | undefined;
@@ -24,7 +25,8 @@ export interface Props {
 }
 
 export function Richtext(props: Props) {
-  const { id, className, placeholder, disabled, value, required, onChange, onBlur } = props;
+  const { id, className, placeholder, disabled, value, required, onChange, onFocus, onBlur } =
+    props;
   const { t } = useTranslation();
   const elementRef = useRef<HTMLDivElement>(null);
   const isRTL = useSessionEquals("textDirectionality", "rtl");
@@ -114,6 +116,7 @@ export function Richtext(props: Props) {
       className={`form-control ${className} ${disabled ? "bg-secondary" : ""}`}
       style={{ minHeight: "100px" }}
       ref={elementRef}
+      onFocus={!disabled ? () => onFocus?.() : undefined}
       onBlur={!disabled ? () => onBlur?.() : undefined}
       // for accessibility
       aria-labelledby={props["aria-labelledby"]}

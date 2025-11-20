@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { useAll } from "/imports/api/regions/publications";
 import { FormControl } from "/imports/ui/components/form-control";
@@ -7,10 +7,14 @@ export function RegionSelect({
   id,
   value,
   onChange,
+  onBlur,
+  error,
 }: {
   id: string;
   value: string | undefined;
   onChange?: ((value: string) => void) | undefined;
+  onBlur?: (() => void) | undefined;
+  error?: ReactNode;
 }) {
   const { t } = useTranslation();
 
@@ -30,6 +34,8 @@ export function RegionSelect({
       }
       value={value || ""}
       onChange={onChange}
+      onBlur={onBlur}
+      error={error}
     />
   );
 }
