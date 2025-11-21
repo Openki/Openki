@@ -546,7 +546,9 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                   description: newValue,
                   descriptionNumberOfCharacters: numberOfCharacters,
                 }));
-                checkValidity("description");
+                setTimeout(() => {
+                  checkValidity("description");
+                }, 2);
               }}
               error={errors.description}
             />

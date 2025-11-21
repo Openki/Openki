@@ -8,6 +8,8 @@ import { FullscreenControl } from "../../FullscreenControl";
 import "leaflet/dist/leaflet.css";
 import { TileLayers } from "../../TileLayer";
 import { RegionMapContainer } from "../display/RegionMapContainer";
+import { ClassName } from "./ClassName";
+import { Props } from "./Props";
 
 import "./styles.scss";
 
@@ -33,8 +35,14 @@ function IconControl({
 }) {
   const positionClass = (position && PositionClasses[position]) || PositionClasses.bottomright;
   return (
-    <div data-test={dataTest} className={positionClass}>
-      <span className="fa comp-icon leaflet-control" onClick={onClick} title={title}>
+    <div className={positionClass}>
+      <a
+        data-test={dataTest}
+        className="fa comp-icon leaflet-control text-body"
+        title={title}
+        href="#"
+        onClick={onClick}
+      >
         <i className={icons[0]}></i>
         <i
           className={`${icons[1]} fa-lg`}
@@ -45,7 +53,7 @@ function IconControl({
             opacity: 0.5,
           }}
         ></i>
-      </span>
+      </a>
     </div>
   );
 }
@@ -54,8 +62,14 @@ export type Coordinates = [long: number, lat: number];
 
 export function Edit(
   props: {
+    id?: string | undefined;
+    className?: string | undefined;
     region?: string | undefined;
     level?: number | undefined;
+    required?: boolean | undefined;
+    "aria-labelledby"?: string | undefined;
+    "aria-describedby"?: string | undefined;
+    "aria-invalid"?: boolean | undefined;
     onChange: (
       newValue: { coordinates: Coordinates | undefined; level?: number | undefined } | undefined,
     ) => void;
@@ -128,55 +142,59 @@ export function Edit(
           }}
         />
       )}
+      <ClassName value={`location-map focus-ring ${props.className}`} />
+      <Props
+        id={props.id}
+        aria-labelledby={props["aria-labelledby"]}
+        aria-describedby={props["aria-describedby"]}
+        aria-invalid={props["aria-invalid"]}
+        aria-required={props.required}
+      />
       <FullscreenControl />
     </>
   );
 
-  return (
-    <div className="location-map">
-      {props.region ? (
-        <RegionMapContainer
-          region={props.region}
-          ref={mapRef}
-          {...(!props.coordinates && !props.center
-            ? {}
-            : {
-                center: [
-                  props.coordinates?.[1] || props.center?.[1],
-                  props.coordinates?.[0] || props.center?.[0],
-                ] as [number, number],
-              })}
-          level={props.level}
-          onLevelChange={(newValue) => {
-            setLevel(newValue);
+  return props.region ? (
+    <RegionMapContainer
+      region={props.region}
+      ref={mapRef}
+      {...(!props.coordinates && !props.center
+        ? {}
+        : {
+            center: [
+              props.coordinates?.[1] || props.center?.[1],
+              props.coordinates?.[0] || props.center?.[0],
+            ] as [number, number],
+          })}
+      level={props.level}
+      onLevelChange={(newValue) => {
+        setLevel(newValue);
 
-            if (!markerRef.current) return;
-            props.onChange({
-              coordinates: toGeoJson(markerRef.current),
-              level: newValue,
-            });
-          }}
-          zoom={props.coordinates ? 19 : 13}
-        >
-          {children}
-        </RegionMapContainer>
-      ) : (
-        <MapContainer
-          ref={mapRef}
-          {...(!props.coordinates && !props.center
-            ? {}
-            : {
-                center: [
-                  props.coordinates?.[1] || props.center?.[1],
-                  props.coordinates?.[0] || props.center?.[0],
-                ] as [number, number],
-              })}
-          zoom={props.coordinates ? 19 : 13}
-        >
-          {TileLayers[locale] || TileLayers.default}
-          {children}
-        </MapContainer>
-      )}
-    </div>
+        if (!markerRef.current) return;
+        props.onChange({
+          coordinates: toGeoJson(markerRef.current),
+          level: newValue,
+        });
+      }}
+      zoom={props.coordinates ? 19 : 13}
+    >
+      {children}
+    </RegionMapContainer>
+  ) : (
+    <MapContainer
+      ref={mapRef}
+      {...(!props.coordinates && !props.center
+        ? {}
+        : {
+            center: [
+              props.coordinates?.[1] || props.center?.[1],
+              props.coordinates?.[0] || props.center?.[0],
+            ] as [number, number],
+          })}
+      zoom={props.coordinates ? 19 : 13}
+    >
+      {TileLayers[locale] || TileLayers.default}
+      {children}
+    </MapContainer>
   );
 }

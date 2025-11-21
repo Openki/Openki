@@ -63,15 +63,15 @@ export function Fields({ region, onChange }: Props) {
       </div>
 
       <div className="mb-3 clearfix">
-        <label className="form-label">
+        <div className="form-label">
           {t(
             "region.edit.map",
             'Please add the center of the region by clicking "+" (on the right inside the map)',
           )}
-        </label>
+        </div>
 
         {(!!region.loc?.coordinates || !!center) && (
-          // We need a location or a cente point to render the map
+          // We need a location or a center point to render the map
           <LocationEdit
             coordinates={region.loc?.coordinates}
             center={!region.loc?.coordinates ? center : (undefined as any)}

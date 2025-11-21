@@ -14,13 +14,13 @@ import * as Analytics from "/imports/ui/lib/analytics";
 import { ButtonCancel, ButtonSave } from "../../Buttons";
 import { FormControl } from "../../form-control";
 import { FormCheck } from "../../FormCheck";
-import { Edit as LocationEdit } from "../../location/edit";
 import { AdditionalInfo, type Props as AdditionalInfoData } from "./additional-info";
 import { RegionSelect } from "/imports/ui/components/RegionSelect";
 
 import "./styles.scss";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
 import { useValidation } from "/imports/ui/lib/useValidation";
+import { FormMap } from "/imports/ui/components/location/FormMap";
 
 export interface Props {
   venue: VenueModel;
@@ -128,7 +128,8 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
       // You can select the region for venues that are new
       isNew &&
       // and the session not sets the region
-      !currentRegion && // and when more then one region exists
+      !currentRegion &&
+      // and when more then one region exists
       regions.length > 1
     );
   }
@@ -285,16 +286,15 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
             )}
             {!!(changes.selectedRegion && mapCenter) && (
               <div className="col-md">
-                <div className="form-label">
-                  {t(
+                <FormMap
+                  id="venue-edit-location"
+                  label={t(
                     "venue.edit.map",
                     'Please add location by clicking "+" (on the right inside the map)',
                   )}
-                </div>
-                <LocationEdit
                   region={changes.selectedRegion}
                   center={mapCenter}
-                  coordinates={changes.loc?.coordinates}
+                  value={changes.loc?.coordinates}
                   level={changes.level}
                   onChange={(newValue) => {
                     setChanges((prevState) => ({
