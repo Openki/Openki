@@ -16,6 +16,7 @@ export interface UserEntity extends Meteor.User {
   createdAt: Date;
   services: {
     password: {
+      reset: { when: number };
       bcrypt: string;
     };
     github: {
