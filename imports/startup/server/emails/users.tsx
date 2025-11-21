@@ -102,7 +102,7 @@ Accounts.emailTemplates.resetPassword = {
     if (userModel.privileged("visitor")) {
       return createAccount(
         userModel.getDisplayName(),
-        `${url}?reason=create-account&email=${userModel.emailAddress()}`,
+        `${url.replace("reset-password", "visitor-to-user")}?email=${userModel.emailAddress()}`,
         userModel.locale,
       );
     }
@@ -122,7 +122,10 @@ Accounts.emailTemplates.resetPassword = {
         <Root subject={Accounts.emailTemplates.resetPassword.subject?.(userModel)}>
           <CreateAccount
             username={userModel.getDisplayName()}
-            url={`${url}?reason=create-account&email=${userModel.emailAddress()}`}
+            url={`${url.replace(
+              "reset-password",
+              "visitor-to-user",
+            )}?email=${userModel.emailAddress()}`}
             lng={userModel.locale}
           />
         </Root>,

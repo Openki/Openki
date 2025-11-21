@@ -9,11 +9,10 @@ import { UserModel, UserProfile, Users } from "/imports/api/users/users";
 import { isEmail } from "/imports/utils/email-tools";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { NotAllowedCharacter } from "../both/NotAllowedCharacter";
-
-/** The number of days the user (and visitor) remains logged in.  */
-export const LoginExpirationInDays = 90;
-/** The number of days that the ‘Reset password’ (and ‘Create visitor to user’) token remains valid.  */
-export const PasswordResetTokenExpirationInDays = 3;
+import {
+  LoginExpirationInDays,
+  PasswordResetTokenExpirationInDays,
+} from "../both/UseraccountsConfiguration";
 
 Meteor.startup(() => {
   const serviceConf = PrivateSettings.service;
