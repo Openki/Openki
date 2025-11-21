@@ -19,6 +19,8 @@ import { AdditionalInfo, type Props as AdditionalInfoData } from "./additional-i
 import { RegionSelect } from "/imports/ui/components/RegionSelect";
 
 import "./styles.scss";
+import { useAccountTasks } from "/imports/utils/useAccountTasks";
+import { useValidation } from "/imports/ui/lib/useValidation";
 
 export interface Props {
   venue: VenueModel;
@@ -35,6 +37,7 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
 
   const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
   const [isBusy, setIsBusy] = useState(false);
+  const { promptToLogin } = useAccountTasks();
 
   const [changes, setChanges] = useState({
     name: venue.name,
@@ -70,6 +73,30 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
     }
   }, [currentRegion, regions]);
 
+  const [errors, checkValidity, addError] = useValidation({
+    noName: {
+      field: "name",
+      onCheckValidity: () => !!changes.name,
+      text: () => t("venue.create.plsGiveVenueName", "Please give your venue a name"),
+    },
+    noDescription: {
+      field: "description",
+      onCheckValidity: () => !!changes.description,
+      text: () =>
+        t("venue.create.plsProvideDescription", "Please provide a description for your venue"),
+    },
+    noRegion: {
+      field: "region",
+      onCheckValidity: () => !!changes.selectedRegion,
+      text: () => t("venue.create.plsSelectRegion", "Please select a region"),
+    },
+    noLocation: {
+      field: "location",
+      onCheckValidity: () => !!changes.loc,
+      text: () => t("venue.create.plsSelectPointOnMap", "Please select a point on the map"),
+    },
+  });
+
   function displayAdditionalInfo() {
     return {
       style: { display: showAdditionalInfo ? "block" : "none" },
@@ -101,8 +128,7 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
       // You can select the region for venues that are new
       isNew &&
       // and the session not sets the region
-      !currentRegion &&
-      // and when more then one region exists
+      !currentRegion && // and when more then one region exists
       regions.length > 1
     );
   }
@@ -110,8 +136,21 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
     return showRegionSelection() || !!changes.selectedRegion;
   }
 
-  const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    // after every change, check errors are fixed
+    Object.keys(errors).forEach((key) => {
+      checkValidity(key as any);
+    });
+  });
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!checkValidity()) {
+      setTimeout(() => {
+        document.querySelector<HTMLElement>(".is-invalid")?.focus();
+      }, 0);
+      return;
+    }
 
     const changes1: VenuesMethods.SaveFields = {
       name: changes.name,
@@ -136,38 +175,24 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
       changes1.otherFacilities = changes.otherFacilities;
     }
 
-    if (!changes1.name) {
-      Alert.error(t("venue.create.plsGiveVenueName", "Please give your venue a name"));
-      return;
-    }
-
-    if (!changes1.description) {
-      Alert.error(
-        t("venue.create.plsProvideDescription", "Please provide a description for your venue"),
-      );
-      return;
-    }
-
     if (isNew) {
-      const region = changes.selectedRegion;
-      if (!region) {
-        Alert.error(t("venue.create.plsSelectRegion", "Please select a region"));
-        return;
+      if (!changes.selectedRegion) {
+        throw new Error("Unexpected falsy: changes.selectedRegion");
       }
-      changes1.region = region;
+      changes1.region = changes.selectedRegion;
     }
 
-    const loc = changes.loc;
-    if (loc) {
-      changes1.loc = loc;
-    } else {
-      Alert.error(t("venue.create.plsSelectPointOnMap", "Please select a point on the map"));
-      return;
+    if (!changes.loc) {
+      throw new Error("Unexpected falsy: changes.loc");
     }
+    changes1.loc = changes.loc;
 
     setIsBusy(true);
     try {
-      const res = await VenuesMethods.save(venue?._id || "", changes1);
+      if (!(await promptToLogin())) {
+        return;
+      }
+      const venueId = await VenuesMethods.save(venue?._id || "", changes1);
 
       Alert.success(
         t("venue.saving.success", 'Saved changes to venue "{NAME}".', {
@@ -182,12 +207,15 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
           regions.find((r) => r._id === changes1.region)?.nameEn,
         );
 
-        Router.go("venueDetails", { _id: res });
+        Router.go("venueDetails", { _id: venueId });
       } else {
         onSaved();
       }
     } catch (err) {
-      Alert.serverError(err, t("venue.saving.error", "Could not save the venue"));
+      if (!addError(err.reason)) {
+        // unknown error
+        Alert.serverError(err, t("venue.saving.error", "Could not save the venue"));
+      }
     } finally {
       setIsBusy(false);
     }
@@ -215,7 +243,7 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
       ) : (
         <h2>{t("venue.edit.titleCreate", "Create new venue")}</h2>
       )}
-      <form noValidate onSubmit={handleSave}>
+      <form noValidate onSubmit={handleSubmit}>
         <div className="mb-3">
           <FormControl
             id="venue-edit-name"
@@ -224,6 +252,8 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
             placeholder={t("venue.edit.namePlaceholder", "Full name of venue")}
             value={changes.name}
             onChange={(value) => setChanges((prevState) => ({ ...prevState, name: value }))}
+            onBlur={() => checkValidity("name")}
+            error={errors.name}
           />
         </div>
         <div className="mb-3">
@@ -234,6 +264,8 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
             value={changes.description}
             placeholder={t("venue.edit.description.placeholder", "Some words about this venue")}
             onChange={(value) => setChanges((prevState) => ({ ...prevState, description: value }))}
+            onBlur={() => checkValidity("description")}
+            error={errors.description}
           />
         </div>
         {showMapSelection() && (
@@ -246,17 +278,19 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
                   onChange={(value) =>
                     setChanges((prevState) => ({ ...prevState, selectedRegion: value }))
                   }
+                  onBlur={() => checkValidity("region")}
+                  error={errors.region}
                 />
               </div>
             )}
             {!!(changes.selectedRegion && mapCenter) && (
               <div className="col-md">
-                <label className="form-label">
+                <div className="form-label">
                   {t(
                     "venue.edit.map",
                     'Please add location by clicking "+" (on the right inside the map)',
                   )}
-                </label>
+                </div>
                 <LocationEdit
                   region={changes.selectedRegion}
                   center={mapCenter}
@@ -273,7 +307,9 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
                         : undefined,
                       level: newValue?.level,
                     }));
+                    checkValidity("location");
                   }}
+                  error={errors.location}
                 />
               </div>
             )}
