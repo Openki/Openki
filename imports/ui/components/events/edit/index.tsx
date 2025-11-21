@@ -16,6 +16,8 @@ import { LocalTime } from "/imports/utils/local-time";
 import { MeteorAsync } from "/imports/utils/promisify";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
+import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
+import { useAccountTasks } from "/imports/utils/useAccountTasks";
 
 import * as Alert from "/imports/api/alerts/alert";
 import * as CoursesMethods from "/imports/api/courses/methods";
@@ -27,7 +29,7 @@ import { useAll as useRegions } from "/imports/api/regions/publications";
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 import { CourseCustomField } from "/imports/api/courses/courses";
 
-import { ButtonCancel, ButtonSave } from "../../Buttons.old";
+import { ButtonCancel, ButtonSave } from "../../Buttons";
 import { EditCustomFields } from "../../EditCustomFields";
 import { FormCheck } from "../../FormCheck";
 import { RegionSelect } from "../../RegionSelect";
@@ -42,8 +44,6 @@ import { UpdateAffectedReplica } from "./UpdateAffectedReplica";
 import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
 
 import { useFindParallelEvents } from "./useFindParallelEvents";
-
-import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 
 import "./styles.scss";
 
@@ -139,6 +139,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   const [noRsvpChecked, setNoRsvpChecked] = useState(!!event.noRsvp);
 
   const [isBusy, setIsBusy] = useState(false);
+  const { promptToLogin } = useAccountTasks();
 
   const [customFieldValues, setCustomFieldValues] = useState<CourseCustomField[] | undefined>(
     undefined,
@@ -380,6 +381,10 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
     setIsBusy(true);
     try {
+      if (!(await promptToLogin())) {
+        return;
+      }
+
       const eventId = await EventsMethods.save(
         event._id || "",
         editevent,
@@ -455,6 +460,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       }
     } catch (err) {
       if (!addError(err.reason)) {
+        // unknown error
         Alert.serverError(
           err,
           t("eventEdit.replicatesUpdated.error", "Saving the event went wrong"),
@@ -470,7 +476,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   }
 
   return (
-    <form>
+    <form noValidate onSubmit={handleSubmit}>
       <div className="edit-page">
         <h3>
           {isNew
@@ -500,7 +506,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               label={t("course.event.edit.title", "Event title")}
               placeholder={t("event.title.placeholder", "Write a catchy title here")}
               value={changes.title || ""}
-              onChange={(value) => setChanges({ ...changes, title: value })}
+              onChange={(value) => setChanges((changes) => ({ ...changes, title: value }))}
               onBlur={() => checkValidity("title")}
               error={errors.title}
             />
@@ -508,7 +514,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           <EditStartEnd
             {...changes}
             onChange={(newValue) => {
-              setChanges({ ...changes, ...newValue });
+              setChanges((changes) => ({ ...changes, ...newValue }));
               setStartDayChanged(!moment.utc(newValue.startLocal).isSame(event.startLocal, "day"));
               setTimeChanged(
                 !(
@@ -535,11 +541,11 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               )}
               value={changes.description || ""}
               onChange={(newValue, numberOfCharacters) => {
-                setChanges({
+                setChanges((changes) => ({
                   ...changes,
                   description: newValue,
                   descriptionNumberOfCharacters: numberOfCharacters,
-                });
+                }));
                 checkValidity("description");
               }}
               error={errors.description}
@@ -554,6 +560,8 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                 id="event-edit-region"
                 value={selectedRegion}
                 onChange={(value) => setSelectedRegion(value)}
+                onBlur={() => checkValidity("region")}
+                error={errors.region}
               />
             </div>
           )}
@@ -571,7 +579,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                     prepend="fa-solid fa-signs-post fa-fw"
                     value={changes.room || ""}
                     onChange={(value) => {
-                      setChanges({ ...changes, room: value });
+                      setChanges((changes) => ({ ...changes, room: value }));
                       checkValidity("venue");
                     }}
                   />
@@ -615,7 +623,9 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                   min={0}
                   step={1}
                   value={changes.maxParticipants || 0}
-                  onChange={(value) => setChanges({ ...changes, maxParticipants: value })}
+                  onChange={(value) =>
+                    setChanges((changes) => ({ ...changes, maxParticipants: value }))
+                  }
                 />
               </div>
             )}
@@ -628,7 +638,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               label={t("event.edit.internal", "Hide on front page")}
               hint={t("event.edit.internal.description", "Show it only on group and venue pages")}
               checked={changes.internal}
-              onChange={(checked) => setChanges({ ...changes, internal: checked })}
+              onChange={(checked) => setChanges((changes) => ({ ...changes, internal: checked }))}
             />
           </div>
 
@@ -667,13 +677,15 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                   "Send a reminder e-mail to all participants 24 hours before the event starts.",
                 )}
                 checked={changes.sendReminder}
-                onChange={(checked) => setChanges({ ...changes, sendReminder: checked })}
+                onChange={(checked) =>
+                  setChanges((changes) => ({ ...changes, sendReminder: checked }))
+                }
               />
             </div>
           )}
 
           <div className="form-actions">
-            <ButtonSave id="events-edit-save" onClick={handleSubmit} disabled={isBusy} />
+            <ButtonSave submit id="events-edit-save" onClick={handleSubmit} isBusy={isBusy} />
             <ButtonCancel id="events-edit-cancel" onClick={onCancel} disabled={isBusy} />
           </div>
         </div>
