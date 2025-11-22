@@ -30,15 +30,8 @@ export function ForgotPwdFrame(props: Props) {
         onCheckValidity: () => isEmail(email),
       },
     },
-    !!props.email,
+    { initialCheck: !!props.email, autoCheckFixed: true },
   );
-
-  useEffect(() => {
-    // after every change, check errors are fixed
-    Object.keys(errors).forEach((key) => {
-      checkValidity(key as any);
-    });
-  }, [email]);
 
   return (
     <form

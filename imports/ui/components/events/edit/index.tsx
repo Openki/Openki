@@ -186,111 +186,108 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     ...changes,
   });
 
-  const [errors, checkValidity, addError] = useValidation({
-    noTitle: {
-      field: "title",
-      onCheckValidity: () => !!changes.title,
-      text: () => t("event.edit.plzProvideTitle", "Please provide a title"),
-    },
-    startWrongFormat: {
-      field: "start",
-      onCheckValidity: () => {
-        const start = LocalTime.fromString(changes.startLocal);
-        return start.isValid();
+  const [errors, checkValidity, addError] = useValidation(
+    {
+      noTitle: {
+        field: "title",
+        onCheckValidity: () => !!changes.title,
+        text: () => t("event.edit.plzProvideTitle", "Please provide a title"),
       },
-      text: () => {
-        const exampleDate = moment().format("L");
-        return t(
-          "event.edit.dateFormatWarning",
-          "The date format must be of the {EXAMPLEDATE} format.",
-          {
-            EXAMPLEDATE: exampleDate,
-          },
-        );
-      },
-    },
-    startInPast: {
-      field: "start",
-      onCheckValidity: () => {
-        if (isNew) {
+      startWrongFormat: {
+        field: "start",
+        onCheckValidity: () => {
           const start = LocalTime.fromString(changes.startLocal);
-          if (!start.isValid()) {
-            // checked with a other validation
+          return start.isValid();
+        },
+        text: () => {
+          const exampleDate = moment().format("L");
+          return t(
+            "event.edit.dateFormatWarning",
+            "The date format must be of the {EXAMPLEDATE} format.",
+            {
+              EXAMPLEDATE: exampleDate,
+            },
+          );
+        },
+      },
+      startInPast: {
+        field: "start",
+        onCheckValidity: () => {
+          if (isNew) {
+            const start = LocalTime.fromString(changes.startLocal);
+            if (!start.isValid()) {
+              // checked with a other validation
+              return true;
+            }
+            return start.isAfter(LocalTime.now());
+          } else {
             return true;
           }
-          return start.isAfter(LocalTime.now());
-        } else {
-          return true;
-        }
+        },
+        text: () =>
+          t(
+            "event.edit.startInPast",
+            "The event starts in the past. Have you selected a start date and time?",
+          ),
       },
-      text: () =>
-        t(
-          "event.edit.startInPast",
-          "The event starts in the past. Have you selected a start date and time?",
-        ),
-    },
-    noDescription: {
-      field: "description",
-      onCheckValidity: () => !!changes.description,
-      text: () => t("event.edit.plzProvideDescr", "Please provide a description"),
-    },
-    descriptionToLong: {
-      field: "description",
-      onCheckValidity: () =>
-        !PublicSettings.eventDescriptionMax ||
-        changes.descriptionNumberOfCharacters <= PublicSettings.eventDescriptionMax,
-      text: () =>
-        t("_inputField.maxlength", {
-          MAXNUMBER: PublicSettings.eventDescriptionMax,
-          NUMBER: changes.descriptionNumberOfCharacters - (PublicSettings.eventDescriptionMax || 0),
-        }),
-    },
-    noRegion: {
-      field: "region",
-      onCheckValidity: () => !!selectedRegion,
-      text: () => t("event.edit.plzSelectRegion", "Please select the region for this event"),
-    },
-    parallelEvents: {
-      field: "startEndVenue",
-      onCheckValidity: () =>
-        venueIsLoading() || !venue || venue.allowParallelEvents || parallelEvents.length === 0,
-      text: () => (
-        <>
-          {t(
-            "event.edit.venue.parallelEvents.disallowed",
-            "Parallel events in this venue are not allowed.",
-          )}{" "}
-          <OtherEventsMessage events={parallelEvents} />{" "}
-          {t("event.edit.venue.parallelEvents.pleaseChange", "Please change venue or time.")}
-        </>
-      ),
-    },
-    venueRestricedUse: {
-      field: "venue",
-      onCheckValidity: () => {
-        return (
-          !selectedVenue?._id ||
-          !selectedVenue.restrictedUse ||
-          // on event creation or venue change for venues with restricted use can only selected by the host
-          (!isNew && selectedVenue._id === event.venue?._id) ||
-          !!user?.venues?.includes(selectedVenue._id)
-        );
+      noDescription: {
+        field: "description",
+        onCheckValidity: () => !!changes.description,
+        text: () => t("event.edit.plzProvideDescr", "Please provide a description"),
       },
-      text: () =>
-        t(
-          "event.edit.venueRestricedUse",
-          "Please use a other venue than {VENUE} or ask its hosts to create your event.",
-          { VENUE: selectedVenue?.name },
+      descriptionToLong: {
+        field: "description",
+        onCheckValidity: () =>
+          !PublicSettings.eventDescriptionMax ||
+          changes.descriptionNumberOfCharacters <= PublicSettings.eventDescriptionMax,
+        text: () =>
+          t("_inputField.maxlength", {
+            MAXNUMBER: PublicSettings.eventDescriptionMax,
+            NUMBER:
+              changes.descriptionNumberOfCharacters - (PublicSettings.eventDescriptionMax || 0),
+          }),
+      },
+      noRegion: {
+        field: "region",
+        onCheckValidity: () => !!selectedRegion,
+        text: () => t("event.edit.plzSelectRegion", "Please select the region for this event"),
+      },
+      parallelEvents: {
+        field: "startEndVenue",
+        onCheckValidity: () =>
+          venueIsLoading() || !venue || venue.allowParallelEvents || parallelEvents.length === 0,
+        text: () => (
+          <>
+            {t(
+              "event.edit.venue.parallelEvents.disallowed",
+              "Parallel events in this venue are not allowed.",
+            )}{" "}
+            <OtherEventsMessage events={parallelEvents} />{" "}
+            {t("event.edit.venue.parallelEvents.pleaseChange", "Please change venue or time.")}
+          </>
         ),
+      },
+      venueRestricedUse: {
+        field: "venue",
+        onCheckValidity: () => {
+          return (
+            !selectedVenue?._id ||
+            !selectedVenue.restrictedUse ||
+            // on event creation or venue change for venues with restricted use can only selected by the host
+            (!isNew && selectedVenue._id === event.venue?._id) ||
+            !!user?.venues?.includes(selectedVenue._id)
+          );
+        },
+        text: () =>
+          t(
+            "event.edit.venueRestricedUse",
+            "Please use a other venue than {VENUE} or ask its hosts to create your event.",
+            { VENUE: selectedVenue?.name },
+          ),
+      },
     },
-  });
-
-  useEffect(() => {
-    // after every change, check errors are fixed
-    Object.keys(errors).forEach((key) => {
-      checkValidity(key as any);
-    });
-  });
+    { autoCheckFixed: true },
+  );
 
   useEffect(() => {
     // loads some resources, so calling checkValidity onChange make unexpected things

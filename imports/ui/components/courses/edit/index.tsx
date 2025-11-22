@@ -216,36 +216,32 @@ export function Edit(props: Props) {
     );
   }, [groups]);
 
-  const [errors, checkValidity, addError] = useValidation({
-    noTitle: {
-      field: "title",
-      onCheckValidity: () => StringTools.sanitizeSingleline(title).length > 0,
-      text: () => t("course.edit.error.title", "Please provide a title"),
+  const [errors, checkValidity, addError] = useValidation(
+    {
+      noTitle: {
+        field: "title",
+        onCheckValidity: () => StringTools.sanitizeSingleline(title).length > 0,
+        text: () => t("course.edit.error.title", "Please provide a title"),
+      },
+      descriptionToLong: {
+        field: "description",
+        onCheckValidity: () =>
+          !PublicSettings.courseDescriptionMax ||
+          numberOfCharacters <= PublicSettings.courseDescriptionMax,
+        text: () =>
+          t("_inputField.maxlength", {
+            MAXNUMBER: PublicSettings.courseDescriptionMax,
+            NUMBER: numberOfCharacters - (PublicSettings.courseDescriptionMax || 0),
+          }),
+      },
+      noRegion: {
+        field: "region",
+        onCheckValidity: () => !!selectedRegion,
+        text: () => t("course.edit.error.region", "Please select a region"),
+      },
     },
-    descriptionToLong: {
-      field: "description",
-      onCheckValidity: () =>
-        !PublicSettings.courseDescriptionMax ||
-        numberOfCharacters <= PublicSettings.courseDescriptionMax,
-      text: () =>
-        t("_inputField.maxlength", {
-          MAXNUMBER: PublicSettings.courseDescriptionMax,
-          NUMBER: numberOfCharacters - (PublicSettings.courseDescriptionMax || 0),
-        }),
-    },
-    noRegion: {
-      field: "region",
-      onCheckValidity: () => !!selectedRegion,
-      text: () => t("course.edit.error.region", "Please select a region"),
-    },
-  });
-
-  useEffect(() => {
-    // after every change, check errors are fixed
-    Object.keys(errors).forEach((key) => {
-      checkValidity(key as any);
-    });
-  });
+    { autoCheckFixed: true },
+  );
 
   function showRegionSelection() {
     return (

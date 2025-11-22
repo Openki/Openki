@@ -31,22 +31,18 @@ export function SendMessage(props: Props) {
   const [revealAddress, setRevealAddress] = useState(false);
   const [sendCopy, setSendCopy] = useState(false);
 
-  const [errors, checkValidity] = useValidation({
-    messageToShort: {
-      text: () => t("profile.mail.longertext", "longer text please"),
-      field: "message",
-      onCheckValidity: () => message.length >= 2,
+  const [errors, checkValidity] = useValidation(
+    {
+      messageToShort: {
+        text: () => t("profile.mail.longertext", "longer text please"),
+        field: "message",
+        onCheckValidity: () => message.length >= 2,
+      },
     },
-  });
+    { autoCheckFixed: true },
+  );
 
   const { promptToLogin } = useAccountTasks();
-
-  useEffect(() => {
-    // after every change, check errors are fixed
-    Object.keys(errors).forEach((key) => {
-      checkValidity(key as any);
-    });
-  }, [message]);
 
   return (
     <form

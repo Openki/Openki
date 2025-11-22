@@ -1,5 +1,5 @@
 import { omit } from "lodash-es";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 export type Mapping<T extends string> = Record<
   string,
@@ -10,16 +10,29 @@ export type Mapping<T extends string> = Record<
   }
 >;
 
-export function useValidation<T extends string>(mapping: Mapping<T>, initialCheck = false) {
+export function useValidation<T extends string>(
+  mapping: Mapping<T>,
+  options?: { initialCheck?: boolean | undefined; 
+    /** after every change, check errors are fixed */
+    autoCheckFixed?: boolean | undefined },
+) {
   const initialState: Partial<Record<T, ReactNode>> = {};
 
-  if (initialCheck) {
+  if (options?.initialCheck) {
     Object.values(mapping)
       .filter((m) => m.onCheckValidity && !m.onCheckValidity())
       .forEach((m) => {
         initialState[m.field] = m.text();
       });
   }
+
+  useEffect(() => {
+    if (options?.autoCheckFixed) {
+      Object.keys(errors).forEach((key) => {
+        checkValidity(key as any);
+      });
+    }
+  });
 
   const [errors, setErrors] = useState(initialState);
 
