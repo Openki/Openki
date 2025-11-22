@@ -297,10 +297,6 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   }, [changes.description]);
 
   useEffect(() => {
-    checkValidity("venue");
-  }, [selectedVenue]);
-
-  useEffect(() => {
     // loads some resources, so calling checkValidity onChange make unexpected things
     checkValidity("startEndVenue");
     // only run when values that get checked are changed
