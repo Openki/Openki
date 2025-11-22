@@ -12,9 +12,11 @@ export type Mapping<T extends string> = Record<
 
 export function useValidation<T extends string>(
   mapping: Mapping<T>,
-  options?: { initialCheck?: boolean | undefined; 
+  options?: {
+    initialCheck?: boolean | undefined;
     /** after every change, check errors are fixed */
-    autoCheckFixed?: boolean | undefined },
+    autoCheckFixed?: boolean | undefined;
+  },
 ) {
   const initialState: Partial<Record<T, ReactNode>> = {};
 
@@ -29,7 +31,7 @@ export function useValidation<T extends string>(
   useEffect(() => {
     if (options?.autoCheckFixed) {
       Object.keys(errors).forEach((key) => {
-        checkValidity(key as any);
+        checkValidity(key as T);
       });
     }
   });

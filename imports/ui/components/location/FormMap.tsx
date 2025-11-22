@@ -10,6 +10,8 @@ export function FormMap({
   region,
   level,
   onChange,
+  onFocus,
+  onBlur,
   value,
   center,
 }: {
@@ -33,6 +35,8 @@ export function FormMap({
   onChange: (
     newValue: { coordinates: Coordinates | undefined; level?: number | undefined } | undefined,
   ) => void;
+  onFocus?: (() => void) | undefined;
+  onBlur?: (() => void) | undefined;
 } & (
   | {
       value?: Coordinates | undefined;
@@ -58,12 +62,14 @@ export function FormMap({
       </div>
       <Edit
         id={id}
+        className={error ? "focus-ring-danger is-invalid" : ""}
         region={region}
         center={center}
         coordinates={value}
         level={level}
         onChange={onChange}
-        className={error ? "focus-ring-danger is-invalid" : ""}
+        onFocus={onFocus}
+        onBlur={onBlur}
         required={!optional}
         aria-describedby={error ? `${id}-error` : ""}
         aria-invalid={!!error}
