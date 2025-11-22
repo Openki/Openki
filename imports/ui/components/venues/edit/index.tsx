@@ -73,29 +73,32 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
     }
   }, [currentRegion, regions]);
 
-  const [errors, checkValidity, addError] = useValidation({
-    noName: {
-      field: "name",
-      onCheckValidity: () => !!changes.name,
-      text: () => t("venue.create.plsGiveVenueName", "Please give your venue a name"),
+  const [errors, checkValidity, addError] = useValidation(
+    {
+      noName: {
+        field: "name",
+        onCheckValidity: () => !!changes.name,
+        text: () => t("venue.create.plsGiveVenueName", "Please give your venue a name"),
+      },
+      noDescription: {
+        field: "description",
+        onCheckValidity: () => !!changes.description,
+        text: () =>
+          t("venue.create.plsProvideDescription", "Please provide a description for your venue"),
+      },
+      noRegion: {
+        field: "region",
+        onCheckValidity: () => !!changes.selectedRegion,
+        text: () => t("venue.create.plsSelectRegion", "Please select a region"),
+      },
+      noLocation: {
+        field: "location",
+        onCheckValidity: () => !!changes.loc,
+        text: () => t("venue.create.plsSelectPointOnMap", "Please select a point on the map"),
+      },
     },
-    noDescription: {
-      field: "description",
-      onCheckValidity: () => !!changes.description,
-      text: () =>
-        t("venue.create.plsProvideDescription", "Please provide a description for your venue"),
-    },
-    noRegion: {
-      field: "region",
-      onCheckValidity: () => !!changes.selectedRegion,
-      text: () => t("venue.create.plsSelectRegion", "Please select a region"),
-    },
-    noLocation: {
-      field: "location",
-      onCheckValidity: () => !!changes.loc,
-      text: () => t("venue.create.plsSelectPointOnMap", "Please select a point on the map"),
-    },
-  });
+    { autoCheckFixed: true },
+  );
 
   function displayAdditionalInfo() {
     return {
@@ -136,13 +139,6 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
   function showMapSelection() {
     return showRegionSelection() || !!changes.selectedRegion;
   }
-
-  useEffect(() => {
-    // after every change, check errors are fixed
-    Object.keys(errors).forEach((key) => {
-      checkValidity(key as any);
-    });
-  });
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
