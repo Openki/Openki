@@ -43,7 +43,7 @@ describe("EditCustomFields", () => {
     cy.visitOpenki("/course/40ccd81ccf/notebooks-auf-ubuntu-linux-umruesten", {
       username: "Tonya",
     });
-    
+
     cy.get("#description p:nth-child(3)").should("have.text", "Recording: No");
     cy.get('[data-test="course-details"] button.btn-edit').click();
     cy.get('[data-test="course-details"] label[for="course-custom-field-record"]').click();
@@ -51,8 +51,8 @@ describe("EditCustomFields", () => {
     cy.get("#courses-edit-save").click();
     cy.get("#description p:nth-child(3)").should("have.text", "Recording: Yes");
     cy.get('[data-test="course-details"] button.btn-edit').click();
-    cy.get('#course-custom-field-record').uncheck();
-    cy.get('#courses-edit-save').click();
-    cy.get('#description p:nth-child(3)').should('have.text', 'Recording: No');
+    cy.get("#course-custom-field-record").uncheck();
+    cy.get("#courses-edit-save").click();
+    cy.get("#description p:nth-child(3)").should("have.text", "Recording: No");
   });
 });
