@@ -303,8 +303,8 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
                         : undefined,
                       level: newValue?.level,
                     }));
-                    checkValidity("location");
                   }}
+                  onBlur={() => checkValidity("location")}
                   error={errors.location}
                 />
               </div>

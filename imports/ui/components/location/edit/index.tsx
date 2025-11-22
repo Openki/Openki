@@ -10,6 +10,8 @@ import { TileLayers } from "../../TileLayer";
 import { RegionMapContainer } from "../display/RegionMapContainer";
 import { ClassName } from "./ClassName";
 import { Props } from "./Props";
+import { Events } from "./Events";
+import { AutoInvalidateSize } from "../display/AutoInvalidateSize";
 
 import "./styles.scss";
 
@@ -73,6 +75,8 @@ export function Edit(
     onChange: (
       newValue: { coordinates: Coordinates | undefined; level?: number | undefined } | undefined,
     ) => void;
+    onFocus?: (() => void) | undefined;
+    onBlur?: (() => void) | undefined;
   } & (
     | {
         coordinates?: Coordinates | undefined;
@@ -85,7 +89,7 @@ export function Edit(
   ),
 ) {
   const { t } = useTranslation();
-  const mapRef = useRef<any>(null);
+  const mapRef = useRef<L.Map>(null);
   const markerRef = useRef<L.Marker<any>>(null);
   const [level, setLevel] = useState(props.level);
 
@@ -150,6 +154,8 @@ export function Edit(
         aria-invalid={props["aria-invalid"]}
         aria-required={props.required}
       />
+      <Events onFocus={props.onFocus} onBlur={props.onBlur} />
+      <AutoInvalidateSize />
       <FullscreenControl />
     </>
   );

@@ -172,7 +172,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
   const [changes, setChanges] = useState({
     title: event.title,
-    description: event.description,
+    description: event.description || "",
     descriptionNumberOfCharacters: 0,
     startLocal: event.startLocal,
     endLocal: event.endLocal,
@@ -288,6 +288,17 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     },
     { autoCheckFixed: true },
   );
+
+  useEffect(() => {
+    // only auto check for description to long
+    if (changes.descriptionNumberOfCharacters > 0) {
+      checkValidity("description");
+    }
+  }, [changes.description]);
+
+  useEffect(() => {
+    checkValidity("venue");
+  }, [selectedVenue]);
 
   useEffect(() => {
     // loads some resources, so calling checkValidity onChange make unexpected things
@@ -536,17 +547,15 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                 "event.description.placeholder",
                 "Describe your event as accurately as possible. This helps people know how to prepare and what to expect from this meeting (e.g. level, prerequisites, activities, teaching methods, what to bring, etc.)",
               )}
-              value={changes.description || ""}
-              onChange={(newValue, numberOfCharacters) => {
+              value={changes.description}
+              onChange={(newValue, numberOfCharacters) =>
                 setChanges((changes) => ({
                   ...changes,
                   description: newValue,
                   descriptionNumberOfCharacters: numberOfCharacters,
-                }));
-                setTimeout(() => {
-                  checkValidity("description");
-                }, 2);
-              }}
+                }))
+              }
+              onBlur={() => checkValidity("description")}
               error={errors.description}
             />
           </div>
@@ -577,10 +586,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                     optional
                     prepend="fa-solid fa-signs-post fa-fw"
                     value={changes.room || ""}
-                    onChange={(value) => {
-                      setChanges((changes) => ({ ...changes, room: value }));
-                      checkValidity("venue");
-                    }}
+                    onChange={(value) => setChanges((changes) => ({ ...changes, room: value }))}
                   />
                 </div>
               )}

@@ -155,7 +155,7 @@ export function Edit(props: Props) {
   const [numberOfCharacters, setNumberOfCharacters] = useState(0);
   const {
     start: startMeasureFocusTime,
-    pause: pauseMesureFocusTime,
+    pause: pauseMeasureFocusTime,
     reset: resetFocusTime,
     time: totalFocusTime,
   } = useMeasureTime();
@@ -242,6 +242,10 @@ export function Edit(props: Props) {
     },
     { autoCheckFixed: true },
   );
+
+  useEffect(() => {
+    checkValidity("description");
+  }, [description]);
 
   function showRegionSelection() {
     return (
@@ -588,10 +592,12 @@ export function Edit(props: Props) {
               onChange={(newValue, numberOfCharacters) => {
                 setDescription(newValue);
                 setNumberOfCharacters(numberOfCharacters);
-                checkValidity("description");
               }}
               onFocus={() => startMeasureFocusTime()}
-              onBlur={() => pauseMesureFocusTime()}
+              onBlur={() => {
+                pauseMeasureFocusTime();
+                checkValidity("description");
+              }}
               error={errors.description}
             />
           </div>
