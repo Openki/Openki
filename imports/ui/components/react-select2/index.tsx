@@ -56,6 +56,7 @@ export function ReactSelect2(props: {
           },
         },
         disabled: props.disabled,
+        width: "auto",
       })
       .on("select2:select", (event) => {
         props.onSelect(event.params.data.id);

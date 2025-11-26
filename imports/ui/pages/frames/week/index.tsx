@@ -107,6 +107,7 @@ export function WeekPage(data: Record<string, string>) {
         filter.remove("categories", category);
         update();
       },
+      attendingEventsOnly: isAttendeeFilterOn,
       onChangeAttendingEventsOnly: (state) => {
         setIsAttendeeFilterOn(state);
       },

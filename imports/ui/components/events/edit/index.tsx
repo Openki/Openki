@@ -178,7 +178,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     endLocal: event.endLocal,
     internal: event.internal,
     sendReminder: event.sendReminder,
-    room: event.room,
+    room: event.room || "",
     maxParticipants: event.maxParticipants,
   });
   const parallelEvents = useFindParallelEvents(selectedRegion, selectedVenue?._id, {
@@ -581,7 +581,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                     label={t("course.event.edit.room", "Room")}
                     optional
                     prepend="fa-solid fa-signs-post fa-fw"
-                    value={changes.room || ""}
+                    value={changes.room}
                     onChange={(value) => setChanges((changes) => ({ ...changes, room: value }))}
                   />
                 </div>
@@ -686,7 +686,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           )}
 
           <div className="form-actions">
-            <ButtonSave submit id="events-edit-save" onClick={handleSubmit} isBusy={isBusy} />
+            <ButtonSave submit id="events-edit-save" isBusy={isBusy} />
             <ButtonCancel id="events-edit-cancel" onClick={onCancel} disabled={isBusy} />
           </div>
         </div>

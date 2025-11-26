@@ -6,8 +6,9 @@ import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { EventModel } from "/imports/api/events/events";
 
 import { PleaseLogin } from "/imports/ui/components/please-login";
-import { ButtonCancel } from "../../../../Buttons.old";
+import { ButtonCancel } from "../../../../Buttons";
 import { PublicSettings } from "/imports/utils/PublicSettings";
+import { FormCheck } from "/imports/ui/components/FormCheck";
 
 function ButtonRegister(props: {
   forTwo: boolean;
@@ -82,23 +83,17 @@ export function RegisterPanel({ event, busy, onRegister }: Props) {
           {PublicSettings.feature.rsvpWithCompanions &&
             (!event.maxParticipants ||
               event.maxParticipants - event.numberOfParticipants() > 1) && (
-              <div className="form-check form-switch mb-2">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  role="switch"
-                  id="registerWithCompanions"
-                  onChange={(e) => {
-                    setRegisterWithCompanions(e.target.checked);
-                  }}
-                  checked={registerWithCompanions}
-                />
-                <label className="form-check-label" htmlFor="registerWithCompanions">
-                  {t(
+              <div className="mb-2">
+                <FormCheck
+                  id="register-with-companions"
+                  type="switch"
+                  label={t(
                     "event.details.register-with-companions",
                     "I want to reserve for two persons.",
                   )}
-                </label>
+                  checked={registerWithCompanions}
+                  onChange={(checked) => setRegisterWithCompanions(checked)}
+                />
               </div>
             )}
 
