@@ -98,7 +98,7 @@ export function PrivateMessage({
               <p className="text-center">
                 {t(
                   "notification.privateMessage.mail.direct.answerText",
-                  "You can also send {SENDERNAME} an email directly  by clicking reply in your email client.",
+                  "You can also send {SENDERNAME} an email directly by clicking reply in your email client.",
                   { SENDERNAME: sender.getDisplayName() },
                 )}
               </p>
