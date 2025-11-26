@@ -1,5 +1,5 @@
 import React from "react";
-import { map} from "lodash-es";
+import { map } from "lodash-es";
 
 import { EventVenueEntity } from "/imports/api/events/events";
 import * as Regions from "/imports/api/regions/publications";
@@ -56,7 +56,6 @@ async function requestVenuesFromNominatim(
     };
   });
 }
-
 
 export function NominatimSearch({
   id,
