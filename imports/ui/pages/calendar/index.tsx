@@ -81,6 +81,7 @@ export function CalendarPage(data: Record<string, string>) {
       <Multi
         date={startDate()}
         filter={filter}
+        isAttendeeFilterOn={isAttendeeFilterOn}
         setIsAttendeeFilterOn={(newValue) => {
           setIsAttendeeFilterOn(newValue);
         }}

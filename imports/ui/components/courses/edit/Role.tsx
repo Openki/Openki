@@ -10,50 +10,46 @@ export interface Props {
   onEnroll: (checked: boolean) => void;
 }
 
-export function Role(data: Props) {
+export function Role(props: Props) {
   const { t } = useTranslation();
 
   function roleDescription() {
-    return `roles.${data.type}.description`;
+    return `roles.${props.type}.description`;
   }
   function roleSubscription() {
-    return `roles.${data.type}.subscribe`;
+    return `roles.${props.type}.subscribe`;
   }
 
   return (
     <>
       <div className="form-check">
         <input
-          className={`form-check-input js-check-role ${data.type}`}
-          name={data.type}
+          className={`form-check-input ${props.type}`}
+          name={props.type}
           type="checkbox"
           value=""
-          id={`courseEditRole${data.type}Check`}
-          checked={data.enabled}
-          onChange={(event) => {
-            data.onRole(event.currentTarget.checked);
-          }}
+          id={`courseEditRole${props.type}Check`}
+          checked={props.enabled}
+          onChange={(event) => props.onRole(event.currentTarget.checked)}
         />
         <label
-          className={`form-check-label ${data.type}`}
-          htmlFor={`courseEditRole${data.type}Check`}
+          className={`form-check-label ${props.type}`}
+          htmlFor={`courseEditRole${props.type}Check`}
         >
-          <span className={`${data.icon} fa-fw`} aria-hidden="true"></span> {t(roleDescription())}
+          <i className={`${props.icon} fa-fw`} /> {t(roleDescription())}
         </label>
       </div>
-      {data.enabled && (
+      {props.enabled && (
         <div className="form-check ms-4">
           <input
-            className={`form-check-input js-check-enroll ${data.type}`}
-            name={data.type}
+            className={`form-check-input ${props.type}`}
+            name={props.type}
             type="checkbox"
-            id={`courseEditRole${data.type}EnrollCheck`}
-            checked={data.enroll}
-            onChange={(event) => {
-              data.onEnroll(event.currentTarget.checked);
-            }}
+            id={`courseEditRole${props.type}EnrollCheck`}
+            checked={props.enroll}
+            onChange={(event) => props.onEnroll(event.currentTarget.checked)}
           />
-          <label className="form-check-label" htmlFor={`courseEditRole${data.type}EnrollCheck`}>
+          <label className="form-check-label" htmlFor={`courseEditRole${props.type}EnrollCheck`}>
             {t(roleSubscription())}
           </label>
         </div>

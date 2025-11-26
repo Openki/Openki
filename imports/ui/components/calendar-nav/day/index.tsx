@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
@@ -9,6 +9,7 @@ import { FilterCategories, Props as FilterCategoriesProps } from "../../filter-c
 import { SearchField, Props as SearchFieldProps } from "../../search-field";
 import { Direction } from "../Arrow";
 import { Control, Props as ControlProps } from "./Control";
+import { FormCheck } from "/imports/ui/components/FormCheck";
 
 import "../styles.scss";
 
@@ -25,15 +26,15 @@ export interface Props {
   categories: string[];
   onAddCategory: (category: string) => void;
   onRemoveCategory: (category: string) => void;
+  isAttendeeFilterOn: boolean;
   onChangeAttendingEventsOnly: (state: boolean) => void;
 }
 
 export function Day(props: Props) {
   const { t } = useTranslation();
+  const currentUser = useUser();
   const { weekNr, dateLong, dateShort } = useDateTimeFormat();
   const [covering, setCovering] = useState(false);
-  const currentUser = useUser();
-  const navRef = useRef<HTMLDivElement>(null);
 
   function controlAttr(direction: Direction): ControlProps {
     return { direction, date: props.date, onChangeDate: props.onChangeDate };
@@ -58,10 +59,6 @@ export function Day(props: Props) {
   }
 
   useEffect(() => {
-    if (navRef.current) {
-      $(navRef.current).slideDown();
-    }
-
     const handleScroll = () => {
       const atTop = window.scrollY < 5;
       setCovering(!atTop);
@@ -74,7 +71,7 @@ export function Day(props: Props) {
   return (
     <div
       className={`calendar-nav-container${covering ? " calendar-nav-container-covering" : ""}`}
-      ref={navRef}
+      style={{ display: "block" }}
     >
       <div className="row align-items-center p-1">
         <div className="col-md-3 col-lg-4 p-1">
@@ -95,37 +92,29 @@ export function Day(props: Props) {
             {!props.hideSwitches && <Control {...controlAttr("next")} />}
           </div>
         </div>
-        <div className="row align-items-center p-1">
-          {!!props.availableGroups && (
-            <div className="col-md-4 col-lg-2 p-1">
-              <FilterGroups {...filterGroupsAttr()} />
-            </div>
-          )}
+      </div>
+      <div className="row align-items-center p-1">
+        {!!props.availableGroups && (
           <div className="col-md-4 col-lg-2 p-1">
-            <FilterCategories {...filterCategoriesAttr()} />
+            <FilterGroups {...filterGroupsAttr()} />
           </div>
-          {!!currentUser && (
-            <div
-              className={`${props.availableGroups ? "offset-md-4 offset-lg-2 " : ""}col-md-8 col-lg-4 p-1`}
-            >
-              <div className="form-check form-switch">
-                <input
-                  type="checkbox"
-                  id="filter-own-events"
-                  className="form-check-input float-none "
-                  name="filter-own-events"
-                  onChange={(event) => {
-                    const radioSwitch = event.currentTarget;
-                    props.onChangeAttendingEventsOnly(radioSwitch.checked);
-                  }}
-                />{" "}
-                <label htmlFor="filter-own-events">
-                  {t("calendar.filter-own-events", "Show my events only")}
-                </label>
-              </div>
-            </div>
-          )}
+        )}
+        <div className="col-md-4 col-lg-2 p-1">
+          <FilterCategories {...filterCategoriesAttr()} />
         </div>
+        {!!currentUser && (
+          <div
+            className={`${props.availableGroups ? "offset-md-4 offset-lg-2 " : ""}col-md-8 col-lg-4 p-1`}
+          >
+            <FormCheck
+              id="filter-own-events"
+              type="switch"
+              label={t("calendar.filter-own-events", "Show my events only")}
+              onChange={(checked) => props.onChangeAttendingEventsOnly(checked)}
+              checked={props.isAttendeeFilterOn}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

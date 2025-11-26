@@ -128,6 +128,7 @@ export function EventsPage(data: Record<string, string>) {
         filter.remove("categories", category);
         update();
       },
+      isAttendeeFilterOn,
       onChangeAttendingEventsOnly: (state) => {
         setIsAttendeeFilterOn(state);
       },
