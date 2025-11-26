@@ -16,6 +16,8 @@ import { Geodata } from "/imports/api/Geodata";
 
 export interface CustomMapConfig {
   crs?: "Simple";
+  api?: "c3nav";
+  apiUrl?: string;
   layers: { name: string; level: number; tileUrl: string }[];
   defaultLevel: number;
   center: Geodata;

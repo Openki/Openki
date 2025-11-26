@@ -1,11 +1,13 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { useUser } from "/imports/utils/react-meteor-data";
+
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
-import { filterUserVenues } from "/imports/ui/components/events/edit-venue/search";
+import { EventVenueEntity } from "/imports/api/events/events";
+
 import { OtherEventsMessage } from "/imports/ui/components/events/edit/OtherEventsMessage";
 import { useFindParallelEvents } from "/imports/ui/components/events/edit/useFindParallelEvents";
-import { useUser } from "/imports/utils/react-meteor-data";
-import { EventVenueEntity } from "/imports/api/events/events";
+import { filterUserVenues } from "/imports/ui/components/events/edit-venue/search/SearchBase";
 
 function ContactHostHint() {
   const { t } = useTranslation();
