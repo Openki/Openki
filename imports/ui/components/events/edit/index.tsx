@@ -333,7 +333,9 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     };
   }
 
-  async function handleSubmit() {
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+
     if (!checkValidity()) {
       setTimeout(() => {
         document.querySelector<HTMLElement>(".is-invalid")?.focus();

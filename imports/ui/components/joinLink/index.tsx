@@ -62,7 +62,7 @@ export function JoinLink({ tenant }: Props) {
             readOnly
           />
 
-          <form className="row g-2 mb-2 js-email-form">
+          <form className="row g-2 mb-2">
             <div className="col-auto">
               <JoinLinkRebuild tenantId={tenant._id} />
             </div>
