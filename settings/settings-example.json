@@ -54,7 +54,28 @@
     , "proposeCourseBox": true // show a "empty" course box to propose a new course, Default: true
 		, "resizeImagesOnServer": true // needs sharp npm module on server which needs a CPU with v2 microarchitecture level, Default: true
     , "disable2dSphereForLocations": false // disable the creation of 2dSphere indexes for db entites, this allow to save non geo location in db, used for CustomMapConfig, Default: false
-		}
+		, "socialMediaButtons": [ // which social media buttons should be displayed, when web share api is not supported from the browser
+        "bluesky",
+        "facebook",
+        "fediverse",
+        "hackernews",
+        "linkedin",
+        "mastodon",
+        "odnoklassniki",
+        "pinterest",
+        "pocket",
+        "reddit",
+        "teams",
+        "telegram",
+        "tumblr",
+        "twitter",
+        "viber",
+        "vkontakte",
+        "whatsapp",
+        "copy-url",
+        "email"
+    ]
+    }
 	, "nav":
 		{ "brandLink": "/" // target link when clicking on the logo Default: "/"
 		, "search": true // show/hide find/search item in navbar Default: true

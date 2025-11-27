@@ -151,7 +151,7 @@ If you are unsure, contact the person in advance and handle according to common 
 ### How does Openki protect the privacy of its users?
 Openki is keen to meet a wide variety of privacy requirements. These include modern encryption techniques as well as personalized privacy settings.
 
-Openki does not sell user data to companies, it does not track your behavior and it does not let other companies track your behavior and interests. For example, we use the share buttons of [Shariff](https://www.heise.de/ct/artikel/Shariff-Social-Media-Buttons-mit-Datenschutz-2467514.html).
+Openki does not sell user data to companies, it does not track your behavior and it does not let other companies track your behavior and interests.
 
 ### How safe is the Openki webpage?
 Openki.net is SSL encrypted by default. This is the same technology that your online banking uses. But your course participation, for example, is visible to other users. So you can choose not to use your real name in Openki if you want to avoid that.

@@ -231,9 +231,10 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
                   </div>
 
                   {mayShare(course) && (
-                    <div className="p-3 shariff-wrapper text-end" id="share">
-                      <h4>{t("sharing.title", "Invite your friends")}</h4>
-                      <Sharing />
+                    <div className="p-3 sharing-wrapper text-end" id="share">
+                      <h4>
+                        {t("sharing.title", "Invite your friends")} <Sharing />
+                      </h4>
                     </div>
                   )}
 
