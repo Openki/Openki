@@ -171,7 +171,7 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
         </Button>
       </div>
       <hr />
-      <Button id="visitor-frame-back" className="btn-secondary" onClick={() => onBack()}>
+      <Button id="visitor-frame-back" block className="btn-secondary" onClick={() => onBack()}>
         {t("login.visitor.backToLogin", "Go back to login")}
       </Button>
     </form>
