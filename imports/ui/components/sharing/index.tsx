@@ -10,9 +10,9 @@ import "./styles.scss";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
 export function Sharing({
-  title = "",
+  title = document.title,
   text = "",
-  url = "",
+  url = location.href,
 }: {
   title?: string | undefined;
   text?: string | undefined;
