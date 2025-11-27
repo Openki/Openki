@@ -50,7 +50,7 @@ export function GroupCourse({
           <p>
             {t(
               "notification.group.course.mail.next",
-              "You can contact {CREATER} in order to support and help organizing {COURSE}. You have the possibility to edit the  description and announce events.",
+              "You can contact {CREATER} in order to support and help organizing {COURSE}. You have the possibility to edit the description and announce events.",
               { CREATER: creater.getDisplayName(), COURSE: course },
             )}
           </p>
