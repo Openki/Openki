@@ -101,7 +101,7 @@ export function Filter(props: Props) {
     <div className={`filter ${filterClasses()}`}>
       {showingFilters && (
         <h4 className="filter-heading">
-          <i className="fa-solid fa-filter fa-fw" aria-hidden="true"></i>
+          <i className="fa-solid fa-filter fa-fw" />
           {t("find.search_filter.title", "Filter search")}
           <span className="filter-active-tag">{t("find.filter.isActive", "active")}</span>
           <div className="filter-captions-header-buttons">
@@ -141,7 +141,7 @@ export function Filter(props: Props) {
                   >
                     <span className="filter-caption-text">
                       {stateFilter.label}
-                      <i className="fa-solid fa-check fa-fw" aria-hidden="true"></i>
+                      <i className="fa-solid fa-check fa-fw" />
                     </span>
                   </div>
                 </div>
@@ -170,7 +170,7 @@ export function Filter(props: Props) {
                   >
                     <span className="filter-caption-text">
                       {t("filterCaptions.archived.label", "Archived")}
-                      <i className="fa-solid fa-check fa-fw" aria-hidden="true"></i>
+                      <i className="fa-solid fa-check fa-fw" />
                     </span>
                   </div>
                 </div>

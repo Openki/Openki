@@ -50,7 +50,7 @@ export function ScrollContainer({ children }: { children: ReactNode }) {
             }
           }}
         >
-          <i className="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
+          <i className="fa-solid fa-angle-left fa-fw" />
         </a>
       )}
       {elementRef.current &&
@@ -64,7 +64,7 @@ export function ScrollContainer({ children }: { children: ReactNode }) {
               }
             }}
           >
-            <i className="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i>
+            <i className="fa-solid fa-angle-right fa-fw" />
           </a>
         )}
     </div>

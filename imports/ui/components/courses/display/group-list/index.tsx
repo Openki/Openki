@@ -66,13 +66,12 @@ export function GroupList({ course }: Props) {
             <GroupTag groupId={groupId} isOrganizer={isOrganizer} />
             {isOrganizer && (
               <div className="tag group-tag addon">
-                <span
+                <i
                   className="fa-solid fa-bullhorn fa-fw"
-                  aria-hidden="true"
                   title={t("grouplist.organizer.title", "{COURSE} is co-organized by this group", {
                     COURSE: course.name,
                   })}
-                ></span>
+                />
               </div>
             )}
 

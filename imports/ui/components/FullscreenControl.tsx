@@ -15,18 +15,18 @@ export function FullscreenControl() {
       title: t("fullscreen.show", "Full screen"),
       titleCancel: t("fullscreen.exit", "Exit full screen"),
       forcePseudoFullscreen: true,
-      content: '<i class="fa-solid fa-expand" style="font-size: 18px;vertical-align: middle;"></i>',
+      content: '<i class="fa-solid fa-expand" style="font-size: 18px;vertical-align: middle;" />',
     });
 
     const handleEnterFullscreen = function () {
       (map as any).fullscreenControl.link.innerHTML =
-        '<i class="fa-solid fa-compress" style="font-size: 18px;vertical-align: middle;"></i>';
+        '<i class="fa-solid fa-compress" style="font-size: 18px;vertical-align: middle;" />';
     };
     map.on("enterFullscreen", handleEnterFullscreen);
 
     const handleExitFullscreen = function () {
       (map as any).fullscreenControl.link.innerHTML =
-        '<i class="fa-solid fa-expand" style="font-size: 18px;vertical-align: middle;"></i>';
+        '<i class="fa-solid fa-expand" style="font-size: 18px;vertical-align: middle;" />';
     };
     map.on("exitFullscreen", handleExitFullscreen);
 

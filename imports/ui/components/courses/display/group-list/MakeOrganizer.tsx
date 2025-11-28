@@ -32,7 +32,7 @@ export function MakeOrganizer({ course, groupId }: Props) {
           setIsExpanded(true);
         }}
       >
-        <span className="fa-solid fa-bullhorn fa-fw" aria-hidden="true"></span>{" "}
+        <i className="fa-solid fa-bullhorn fa-fw" />{" "}
         {t("course.group.addOrgText", "Give editing rights")}
       </a>
     );

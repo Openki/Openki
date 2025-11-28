@@ -136,7 +136,7 @@ export function Selection(props: Props) {
       <form className="d-flex language-selection-form" tabIndex={0} onSubmit={handleSubmit}>
         <div className="input-group input-group-outline input-group-sm p-2">
           <span className="input-group-text">
-            <span className="fa-solid fa-globe fa-fw" aria-hidden="true"></span>
+            <i className="fa-solid fa-globe fa-fw" />
           </span>
           <input
             ref={searchElementRef}

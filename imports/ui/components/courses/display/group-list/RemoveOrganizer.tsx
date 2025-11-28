@@ -32,7 +32,7 @@ export function RemoveOrganizer({ course, groupId }: Props) {
           setIsExpanded(true);
         }}
       >
-        <span className="fa-solid fa-xmark fa-fw" aria-hidden="true"></span>
+        <i className="fa-solid fa-xmark fa-fw" />
         {t("course.group.removeOrgText", "Remove editing rights")}
       </a>
     );

@@ -20,12 +20,12 @@ export function EventHeader(props: Props) {
       {props.regionId ? <Tag region={props.regionId} /> : undefined}
 
       <p className="h3">
-        <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>{" "}
-        {dayOfWeek(props.start)} {calendarDayShort(props.start)}
+        <i className="fa-regular fa-calendar-days fa-fw" /> {dayOfWeek(props.start)}{" "}
+        {calendarDayShort(props.start)}
         <br />
         <small>
-          <span className="fa-regular fa-clock fa-fw" aria-hidden="true"></span>{" "}
-          {timeFormat(props.start)} - {timeFormat(props.end)}
+          <i className="fa-regular fa-clock fa-fw" /> {timeFormat(props.start)} -{" "}
+          {timeFormat(props.end)}
         </small>
       </p>
     </div>

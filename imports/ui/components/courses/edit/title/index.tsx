@@ -31,9 +31,9 @@ function Courses({ search }: { search: string }) {
             }}
           >
             {collapsed ? (
-              <span className="fa-solid fa-angle-down fa-fw" aria-hidden="true"></span>
+              <i className="fa-solid fa-angle-down fa-fw" />
             ) : (
-              <span className="fa-solid fa-angle-up fa-fw" aria-hidden="true"></span>
+              <i className="fa-solid fa-angle-up fa-fw" />
             )}
           </button>
           {t(

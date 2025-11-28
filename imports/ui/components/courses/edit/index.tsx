@@ -550,7 +550,7 @@ export function Edit(props: Props) {
                       checked={simpleSelectedRole === "participant"}
                       onChange={handleRoleChange}
                     />
-                    <i className="fa-solid fa-user fa-lg fa-fw"></i>{" "}
+                    <i className="fa-solid fa-user fa-lg fa-fw" />{" "}
                     {t("course.edit.iWantToLearn", "I want to learn")}
                   </label>
                 </div>

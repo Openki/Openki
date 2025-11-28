@@ -161,8 +161,8 @@ export function Navbar() {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <i className="fa-solid fa-bars text-white"></i>
-            <i className="fa-solid fa-x text-white"></i>
+            <i className="fa-solid fa-bars text-white" />
+            <i className="fa-solid fa-x text-white" />
           </button>
           <div ref={collapseRef} className="collapse navbar-collapse" id="bs-navbar-collapse">
             <ul className="navbar-nav flex-row me-auto mb-lg-0">
@@ -173,8 +173,7 @@ export function Navbar() {
                     className={`${currentRouteIs("search", "showCourse") ? "active" : ""} nav-link`}
                     onClick={() => close()}
                   >
-                    <span className="fa-regular fa-lightbulb fa-fw" aria-hidden="true" />{" "}
-                    {t("menue.Courses", "Find")}
+                    <i className="fa-regular fa-lightbulb fa-fw" /> {t("menue.Courses", "Find")}
                     <div className="nav-marker-caret"></div>
                   </a>
                 </li>
@@ -186,8 +185,7 @@ export function Navbar() {
                     className={`${currentRouteIs("proposeCourse", "createEvent") ? "active" : ""} nav-link `}
                     onClick={() => close()}
                   >
-                    <span className="fa-solid fa-pencil fa-fw" aria-hidden="true" />{" "}
-                    {t("menue.Create", "Create")}
+                    <i className="fa-solid fa-pencil fa-fw" /> {t("menue.Create", "Create")}
                     <div className="nav-marker-caret"></div>
                   </a>
                 </li>
@@ -199,7 +197,7 @@ export function Navbar() {
                     className={`${currentRouteIs("calendar") ? "active" : ""} nav-link calendar-link`}
                     onClick={() => close()}
                   >
-                    <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true" />{" "}
+                    <i className="fa-regular fa-calendar-days fa-fw" />{" "}
                     {t("menue.Calendar", "Calendar")}
                     <div className="nav-marker-caret"></div>
                     <div className="nav-marker-bar"></div>
@@ -209,7 +207,7 @@ export function Navbar() {
               {links().map((link) => (
                 <li key={link.link} className="nav-item text-center col col-lg-auto">
                   <a href={link.link} className="nav-link" onClick={() => close()}>
-                    <span className={`${link.icon} fa-fw`} aria-hidden="true" /> {link.text}
+                    <i className={`${link.icon} fa-fw`} /> {link.text}
                   </a>
                 </li>
               ))}

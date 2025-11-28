@@ -41,12 +41,12 @@ function RemoveMember({
           onRemove(user, userName);
         }}
       >
-        <i className="fa-solid fa-xmark fa-fw" aria-hidden="true"></i> {userName}
+        <i className="fa-solid fa-xmark fa-fw" /> {userName}
         {currentUserId !== user &&
           (notify ? (
-            <i className="fa-solid fa-bell fa-fw" aria-hidden="true"></i>
+            <i className="fa-solid fa-bell fa-fw" />
           ) : (
-            <i className="fa-solid fa-bell-slash fa-fw" aria-hidden="true"></i>
+            <i className="fa-solid fa-bell-slash fa-fw" />
           ))}
       </button>
     </div>
@@ -82,12 +82,12 @@ function FoundUsers({
               type="button"
               onClick={() => onAdd(user._id)}
             >
-              <i className="fa-solid fa-plus fa-fw" aria-hidden="true"></i> {user.username}
+              <i className="fa-solid fa-plus fa-fw" /> {user.username}
             </button>
           </div>
           <div className="tag tag-link group-member-tag-profile addon">
             <a href={Router.path("userprofile", user)} title={t("group.settings.member.profile")}>
-              <i className="fa-solid fa-user fa-fw" aria-hidden="true"></i>
+              <i className="fa-solid fa-user fa-fw" />
             </a>
           </div>
         </React.Fragment>
@@ -238,8 +238,7 @@ export function GroupSettings({ group }: Props) {
         <div className="row">
           <div className="col-md">
             <h3>
-              <span className="fa-solid fa-gear fa-fw" aria-hidden="true"></span>{" "}
-              {t("group.settings.title", "Settings")}
+              <i className="fa-solid fa-gear fa-fw" /> {t("group.settings.title", "Settings")}
             </h3>
             <div className="mb-3">
               <label className="form-label">{t("group.settings.field.logo", "Logo")}</label>
@@ -249,7 +248,7 @@ export function GroupSettings({ group }: Props) {
 
           <div className="col-md">
             <h3>
-              <span className="fa-solid fa-users fa-fw" aria-hidden="true"></span>{" "}
+              <i className="fa-solid fa-users fa-fw" />{" "}
               {t("group.settings.title.Members", "Members")}
             </h3>
             <div className="tag-group multiline">
@@ -268,7 +267,7 @@ export function GroupSettings({ group }: Props) {
                           )}
                           onClick={handleMemberToggleNotify}
                         >
-                          <i className="fa-solid fa-bell fa-fw" aria-hidden="true"></i>
+                          <i className="fa-solid fa-bell fa-fw" />
                         </button>
                       </div>
                     ) : (
@@ -281,7 +280,7 @@ export function GroupSettings({ group }: Props) {
                           )}
                           onClick={handleMemberToggleNotify}
                         >
-                          <i className="fa-solid fa-bell-slash fa-fw" aria-hidden="true"></i>
+                          <i className="fa-solid fa-bell-slash fa-fw" />
                         </button>
                       </div>
                     ))}
@@ -291,7 +290,7 @@ export function GroupSettings({ group }: Props) {
                       href={Router.path("userprofile", { _id: member.user })}
                       title={t("group.settings.member.profile", "Visit profile")}
                     >
-                      <i className="fa-solid fa-user fa-fw" aria-hidden="true"></i>
+                      <i className="fa-solid fa-user fa-fw" />
                     </a>
                   </div>
                 </React.Fragment>
@@ -303,7 +302,7 @@ export function GroupSettings({ group }: Props) {
               </label>
               <div className="input-group">
                 <span className="input-group-text">
-                  <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
+                  <i className="fa-solid fa-user fa-fw" />
                 </span>
                 <input
                   className="form-control"
@@ -331,7 +330,7 @@ export function GroupSettings({ group }: Props) {
       </div>
       <div className="details-addition">
         <h3>
-          <span className="fa-solid fa-link fa-fw" aria-hidden="true"></span>{" "}
+          <i className="fa-solid fa-link fa-fw" />{" "}
           {t("group.linksCollection.title", "{NAME}-views", { NAME: PublicSettings.siteName })}
         </h3>
         <ul className="list-unstyled">

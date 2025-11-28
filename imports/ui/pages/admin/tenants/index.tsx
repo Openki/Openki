@@ -27,7 +27,7 @@ export function Tenants({ tenants }: Data) {
             href={Router.path("tenantDetails", tenant)}
             className="list-group-item list-group-item-action"
           >
-            <span className="fa-solid fa-user fa-fw" aria-hidden="true" /> {tenant.name}
+            <i className="fa-solid fa-user fa-fw" /> {tenant.name}
           </a>
         ))}
       </div>

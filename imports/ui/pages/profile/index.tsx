@@ -98,8 +98,8 @@ function UnsubscribeResultAlerts() {
         type="success"
         icon={
           <span className="fa-stack fa-2xs">
-            <i className="fa-regular fa-envelope fa-stack-1x"></i>
-            <i className="fa-solid fa-ban fa-stack-2x"></i>
+            <i className="fa-regular fa-envelope fa-stack-1x" />
+            <i className="fa-solid fa-ban fa-stack-2x" />
           </span>
         }
         title={t(
@@ -129,8 +129,8 @@ function UnsubscribeResultAlerts() {
         type="success"
         icon={
           <span className="fa-stack fa-2xs">
-            <i className="fa-regular fa-envelope fa-stack-1x"></i>
-            <i className="fa-solid fa-ban fa-stack-2x"></i>
+            <i className="fa-regular fa-envelope fa-stack-1x" />
+            <i className="fa-solid fa-ban fa-stack-2x" />
           </span>
         }
         title={t(
@@ -260,8 +260,7 @@ export function ProfilePage() {
         {!isVisitor() && (
           <div className="page-component">
             <h1 data-test="profile-header">
-              <span className="fa-solid fa-gears fa-fw" aria-hidden="true"></span>{" "}
-              {t("login.frame.settings")}
+              <i className="fa-solid fa-gears fa-fw" /> {t("login.frame.settings")}
             </h1>
           </div>
         )}

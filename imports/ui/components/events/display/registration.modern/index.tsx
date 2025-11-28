@@ -103,7 +103,7 @@ function Registration({ event }: { event: EventModel }) {
           ))
         ) : (
           <>
-            <i className="fa-solid fa-check fa-fw text-success" aria-hidden="true"></i>{" "}
+            <i className="fa-solid fa-check fa-fw text-success" />{" "}
             <strong>{t("event.details.youAreRegistered", "You are now registered.")}</strong>
           </>
         )}

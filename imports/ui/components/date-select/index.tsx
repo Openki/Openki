@@ -24,7 +24,7 @@ export function DateSelect({
       onChange?: (newValues: number[]) => void;
     }) {
   const locale = useSession("locale");
-  const elementRef = useRef(null);
+  const elementRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const element = elementRef.current;
@@ -49,7 +49,7 @@ export function DateSelect({
           },
         })
         .on("change keyup", function () {
-          const newValue = moment($(element).val(), "L");
+          const newValue = moment(element.value, "L");
           onChange?.(newValue);
         });
     } else {
@@ -77,7 +77,7 @@ export function DateSelect({
     return (
       <div className="input-group">
         <span className="input-group-text">
-          <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
+          <i className="fa-regular fa-calendar-days fa-fw" />
         </span>
         <input
           ref={elementRef}

@@ -86,7 +86,6 @@ export function Show({ post, onEdit }: Props) {
                 {" "}
                 <i
                   className="fa-solid fa-bell"
-                  aria-hidden="true"
                   data-bs-title={
                     !post.eventId
                       ? t("course.discussion.allNotified", "All interested notified")
@@ -95,7 +94,7 @@ export function Show({ post, onEdit }: Props) {
                           "All interested and participants notified",
                         )
                   }
-                ></i>
+                />
               </>
             )}
             {hasBeenEdited() && (
@@ -111,7 +110,7 @@ export function Show({ post, onEdit }: Props) {
           <span>
             {mayEdit() && (
               <button type="button" className="discussion-edit-btn" onClick={handleEditClick}>
-                <span className="fa-solid fa-pen-to-square" aria-hidden="true"></span>
+                <i className="fa-solid fa-pen-to-square" />
               </button>
             )}
             {mayDelete() && <RemoveDropdown {...removeDropdownAttr()} />}

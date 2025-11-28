@@ -36,7 +36,7 @@ export function Course({ course, hideInterested }: Props) {
         }}
       >
         <span className="frame-list-item-toggle-indicator">
-          <i className="fa-solid fa-angle-down"></i>
+          <i className="fa-solid fa-angle-down" />
         </span>
         {!hideInterested && course.roles.includes("participant") && (
           <span

@@ -31,7 +31,7 @@ export function RemoveDropdown({ userId, onClick }: Props) {
         data-bs-toggle2="tooltip"
         data-bs-title={t("eventParticipant.remove", "Remove user")}
       >
-        <i className="fa-solid fa-ellipsis-vertical"></i>
+        <i className="fa-solid fa-ellipsis-vertical" />
       </button>
       <ul className="dropdown-menu dropdown-menu-end dialog-dropdown">
         <li className="dropdown-header">

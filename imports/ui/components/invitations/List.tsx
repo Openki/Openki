@@ -107,7 +107,7 @@ function Table({ tenantId, invitations }: { tenantId: string; invitations: Invit
                   }
                 }}
               >
-                <span className="fa-solid fa-trash-can" aria-hidden="true"></span>
+                <i className="fa-solid fa-trash-can" />
               </button>
             </div>
           </div>

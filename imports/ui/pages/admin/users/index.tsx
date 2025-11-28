@@ -19,7 +19,7 @@ function FoundUsers({ userSearch }: { userSearch: string }) {
           href={Router.path("userprofile", user)}
           className="list-group-item list-group-item-action"
         >
-          <span className="fa-solid fa-user fa-fw" aria-hidden="true" /> {user.getDisplayName()}
+          <i className="fa-solid fa-user fa-fw" /> {user.getDisplayName()}
         </a>
       ))}
     </div>
@@ -40,7 +40,7 @@ export function AdminUsersPage() {
         <label className="form-label">{t("users.field.find.label", "Find a user")}</label>
         <div className="input-group">
           <span className="input-group-text">
-            <span className="fa-solid fa-user fa-fw" aria-hidden="true" />
+            <i className="fa-solid fa-user fa-fw" />
           </span>
           <input
             className="form-control"

@@ -46,8 +46,7 @@ function EventParticipant({
             className="p-1 bg-primary text-light"
             data-bs-title={t("eventParticipant.iBringCompanions", "Brings companion.")}
           >
-            +{participant.companions}{" "}
-            <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
+            +{participant.companions} <i className="fa-solid fa-user fa-fw" />
           </strong>
         )}
 
@@ -143,7 +142,7 @@ export function EventParticipants({ event }: Props) {
               <div className="modal-content">
                 <div className="modal-header">
                   <h4 className="modal-title">
-                    <span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>
+                    <i className="fa-solid fa-paper-plane fa-fw" />
                     {t(
                       "participantContactModal.writeMessageToAllAttendees",
                       "Write a message to all participants",
@@ -164,7 +163,8 @@ export function EventParticipants({ event }: Props) {
           </div>
         )}
         <h4 data-test="events-participants-header">
-          <span className="fa-solid fa-users fa-fw" aria-hidden="true"></span>&nbsp;
+          <i className="fa-solid fa-users fa-fw" />
+          &nbsp;
           {t(
             "event.details.paticipants.title",
             "{NUM, plural, =0{No participants yet} one{1 Participant} other{# Participants} }",
@@ -174,10 +174,8 @@ export function EventParticipants({ event }: Props) {
             <i
               data-test="events-participants-notify-all"
               className="fa-solid fa-envelope event-participants-contact float-end"
-              onClick={() => {
-                setShowModal(!showModal);
-              }}
-            ></i>
+              onClick={() => setShowModal(!showModal)}
+            />
           )}
           <br />
           {!!event.maxParticipants && !event.canceled && (

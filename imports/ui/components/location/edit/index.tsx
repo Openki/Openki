@@ -45,7 +45,7 @@ function IconControl({
         href="#"
         onClick={onClick}
       >
-        <i className={icons[0]}></i>
+        <i className={icons[0]} />
         <i
           className={`${icons[1]} fa-lg`}
           style={{
@@ -54,7 +54,7 @@ function IconControl({
             top: "0.7ex",
             opacity: 0.5,
           }}
-        ></i>
+        />
       </a>
     </div>
   );

@@ -19,7 +19,7 @@ export function TokenExpired({ email }: { email: string }) {
             {t("resetPassword.tokenExpired.button", "Send me a new one")}
           </a>{" "}
           <small>
-            <i className="fa-solid fa-circle-info fa-fw"></i>{" "}
+            <i className="fa-solid fa-circle-info fa-fw" />{" "}
             {t(
               "resetPassword.tokenExpired.info",
               "It can take some minutes for the email to arrive in your inbox.",

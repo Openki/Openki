@@ -52,12 +52,12 @@ export function FoundAdmins({ tenant, userSearch }: { tenant: TenantModel; userS
                 handleOnClick(admin);
               }}
             >
-              <i className="fa-solid fa-plus fa-fw" aria-hidden="true" /> {admin.getDisplayName()}
+              <i className="fa-solid fa-plus fa-fw" /> {admin.getDisplayName()}
             </button>
           </div>
           <div className="tag tag-link tenant-admin-tag-profile addon">
             <a href={Router.path("userprofile", admin)} title={t("tenant.settings.admin.profile")}>
-              <i className="fa-solid fa-user fa-fw" aria-hidden="true" />
+              <i className="fa-solid fa-user fa-fw" />
             </a>
           </div>
         </React.Fragment>

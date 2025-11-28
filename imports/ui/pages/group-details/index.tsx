@@ -243,9 +243,8 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
                 {" "}
                 <i
                   title={t("group.details.isFeatured", "This group is featured")}
-                  aria-hidden="true"
                   className="fa-solid fa-star fa-fw"
-                ></i>
+                />
               </>
             )}
 
@@ -256,7 +255,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
                 Router.go("home"); // Got a better idea?
               }}
             >
-              <i className="fa-solid fa-xmark fa-lg" aria-hidden="true"></i>
+              <i className="fa-solid fa-xmark fa-lg" />
             </button>
             {!group.isNew() && mayEdit && (
               <button
@@ -266,7 +265,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
                   setEditingSettings(!editingSettings);
                 }}
               >
-                <i className="fa-solid fa-gear fa-lg" aria-hidden="true"></i>
+                <i className="fa-solid fa-gear fa-lg" />
               </button>
             )}
           </div>

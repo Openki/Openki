@@ -17,13 +17,12 @@ export function Event({ event }: Props) {
       <span className="delete-events-events-title">{event.title}</span>{" "}
       <span className="delete-events-details">
         <span className="d-inline-block">
-          <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>{" "}
-          {dayOfWeek(event.start)}
+          <i className="fa-regular fa-calendar-days fa-fw" /> {dayOfWeek(event.start)}
           {dateFormat(event.start)}
         </span>{" "}
         <span className="d-inline-block">
-          <span className="fa-regular fa-clock fa-fw" aria-hidden="true"></span>{" "}
-          {timeFormat(event.start)} - {timeFormat(event.end)}
+          <i className="fa-regular fa-clock fa-fw" /> {timeFormat(event.start)} -{" "}
+          {timeFormat(event.end)}
         </span>
       </span>
     </>

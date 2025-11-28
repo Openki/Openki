@@ -33,8 +33,8 @@ export function Settings({ tenant }: Props) {
     <div className="row">
       <div className="col-md">
         <h3>
-          <span className="fa-solid fa-users fa-fw" aria-hidden="true" />{" "}
-          {t("tenant.settings.title.Members", "Members")} ({members().length})
+          <i className="fa-solid fa-users fa-fw" /> {t("tenant.settings.title.Members", "Members")}{" "}
+          ({members().length})
         </h3>
         <div className="icon-text-icon">
           <div className="icon-text-text">
@@ -57,7 +57,7 @@ export function Settings({ tenant }: Props) {
           </label>
           <div className="input-group">
             <span className="input-group-text">
-              <span className="fa-solid fa-user fa-fw" aria-hidden="true" />
+              <i className="fa-solid fa-user fa-fw" />
             </span>
             <input
               data-test="tenant-setting-member-search"
@@ -80,7 +80,7 @@ export function Settings({ tenant }: Props) {
       </div>
       <div className="col-md">
         <h3>
-          <span className="fa-solid fa-users fa-fw" aria-hidden="true" />
+          <i className="fa-solid fa-users fa-fw" />
           {t("tenant.settings.title.admin", "Admins")} ({tenant.admins.length})
         </h3>
         <div className="icon-text-text">
@@ -101,7 +101,7 @@ export function Settings({ tenant }: Props) {
           </label>
           <div className="input-group">
             <span className="input-group-text">
-              <span className="fa-solid fa-user fa-fw" aria-hidden="true" />
+              <i className="fa-solid fa-user fa-fw" />
             </span>
             <input
               data-test="tenant-setting-admin-search"

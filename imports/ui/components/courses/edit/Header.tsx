@@ -24,7 +24,7 @@ export function Header({ _id, isFrame, group }: Props) {
       </h2>
       <div className="icon-text">
         <div className="icon-text-icon">
-          <i className="fa-solid fa-info fa-fw" aria-hidden="true"></i>
+          <i className="fa-solid fa-info fa-fw" />
         </div>
         <div className="icon-text-text">
           {t(

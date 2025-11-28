@@ -91,7 +91,7 @@ function Event({ entry }: { entry: OEvent & EventEntity & RelStartEnd }) {
         {entry.title}
       </div>
       <div className="timetable-event-time">
-        <span className="fa-regular fa-clock fa-fw" aria-hidden="true"></span>
+        <i className="fa-regular fa-clock fa-fw" />
         {timeFormat(entry.start)} - {timeFormat(entry.end)}
       </div>
       <div className="timetable-event-description">
@@ -150,7 +150,7 @@ export function KioskTimetablePage(props: Props) {
               href={controlDay(-1)}
               title={t("kiosk.timetable.previousDay", "Previous day")}
             >
-              <i className="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
+              <i className="fa-solid fa-angle-left fa-fw" />
             </a>
           )}
           {(props.dayLimit === undefined || props.dayLimit - 1 > props.day) && (
@@ -159,7 +159,7 @@ export function KioskTimetablePage(props: Props) {
               href={controlDay(1)}
               title={t("kiosk.timetable.nextDay", "Next day")}
             >
-              <i className="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i>
+              <i className="fa-solid fa-angle-right fa-fw" />
             </a>
           )}
         </>
@@ -200,12 +200,13 @@ export function KioskTimetablePage(props: Props) {
               >
                 <div className="timetable-location text-start">
                   <span className="text-nowrap">
-                    <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>&nbsp;
+                    <i className="fa-solid fa-house fa-fw" />
+                    &nbsp;
                     {event.venue.name}
                   </span>{" "}
                   {!!event.room && (
                     <span className="text-nowrap">
-                      <span className="fa-solid fa-signs-post fa-fw" aria-hidden="true"></span>
+                      <i className="fa-solid fa-signs-post fa-fw" />
                       &nbsp;{event.room}
                     </span>
                   )}

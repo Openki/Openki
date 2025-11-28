@@ -43,7 +43,7 @@ export function AlertMessage({
   return (
     <div className="alert alert-success alert-dismissible fade show" role="alert">
       <h4>
-        <i className="fa-solid fa-check" aria-hidden="true"></i>{" "}
+        <i className="fa-solid fa-check" />{" "}
         {t("course.edit.savedMessage", "Your proposal has been saved!")}
       </h4>
       <span className="pre-line">

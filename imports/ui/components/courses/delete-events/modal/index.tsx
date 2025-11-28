@@ -67,7 +67,7 @@ export function Modal(props: {
         <div className="modal-content">
           <div className="modal-header">
             <h4 className="modal-title">
-              <span className="fa-solid fa-trash-can fa-fw" aria-hidden="true"></span>{" "}
+              <i className="fa-solid fa-trash-can fa-fw" />{" "}
               {t("deleteEventsModal.title", "Delete events")}
             </h4>
             <button
@@ -172,10 +172,7 @@ export function Modal(props: {
                       >
                         {isBusy ? (
                           <>
-                            <span
-                              className="fa-solid fa-circle-notch fa-spin fa-fw"
-                              aria-hidden="true"
-                            ></span>
+                            <i className="fa-solid fa-circle-notch fa-spin fa-fw" />{" "}
                             {t(
                               "deleteEventsModal.deletingEvents",
                               "Deleting {NUM, plural, one{event} other{events} }…",

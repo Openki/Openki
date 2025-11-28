@@ -83,7 +83,7 @@ export function VisitorToUserPage({ token, email }: Props) {
           <div className="mb-3">
             <div className="input-group">
               <span className="input-group-text">
-                <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
+                <i className="fa-solid fa-user fa-fw" />
               </span>
               <input
                 className={`form-control`}
@@ -100,7 +100,7 @@ export function VisitorToUserPage({ token, email }: Props) {
               <div className="col">
                 <div className="input-group">
                   <span className="input-group-text">
-                    <span className="fa-solid fa-envelope fa-fw" aria-hidden="true"></span>
+                    <i className="fa-solid fa-envelope fa-fw" />
                   </span>
                   <input
                     className={`form-control`}
@@ -123,7 +123,7 @@ export function VisitorToUserPage({ token, email }: Props) {
           <div className="mb-3">
             <div className={`input-group ${errors.password ? "has-validation" : ""}`}>
               <span className="input-group-text">
-                <span className="fa-solid fa-lock fa-fw" aria-hidden="true"></span>
+                <i className="fa-solid fa-lock fa-fw" />
               </span>
               <input
                 className={`form-control ${errors.password ? "is-invalid" : ""}`}
@@ -140,10 +140,7 @@ export function VisitorToUserPage({ token, email }: Props) {
             <button type="submit" className="btn btn-add" disabled={isBusy}>
               {isBusy ? (
                 <>
-                  <span
-                    className="fa-solid fa-circle-notch fa-spin fa-fw"
-                    aria-hidden="true"
-                  ></span>{" "}
+                  <i className="fa-solid fa-circle-notch fa-spin fa-fw" />{" "}
                   {t("login.register.submit.busy", "Registering…")}
                 </>
               ) : (

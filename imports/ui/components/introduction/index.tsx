@@ -60,9 +60,9 @@ export function Introduction({ hasPricePolicy }: Props) {
             }}
           >
             {openedIntro ? (
-              <span className="fa-solid fa-angle-up fa-fw" aria-hidden="true"></span>
+              <i className="fa-solid fa-angle-up fa-fw" />
             ) : (
-              <span className="fa-solid fa-angle-down fa-fw" aria-hidden="true"></span>
+              <i className="fa-solid fa-angle-down fa-fw" />
             )}
             {t("introduction.Title", "What does {SITENAME} do for you?", {
               SITENAME: getSiteName(),
@@ -76,7 +76,7 @@ export function Introduction({ hasPricePolicy }: Props) {
               IntroductionUtil.doneIntro();
             }}
           >
-            <span className="remove-btn fa-solid fa-xmark" aria-hidden="true"></span>
+            <span className="remove-btn fa-solid fa-xmark" />
           </a>
         </h3>
         {!!openedIntro && (
@@ -84,13 +84,13 @@ export function Introduction({ hasPricePolicy }: Props) {
             <div className="introduction-steps row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6">
               <div className="col">
                 <h2>
-                  <span className="fa-regular fa-lightbulb" aria-hidden="true"></span>
+                  <i className="fa-regular fa-lightbulb" />
                 </h2>
                 {t("introduction.1_teachOrLearn", "You want to learn something, or teach others.")}
               </div>
               <div className="col">
                 <h2>
-                  <span className="fa-solid fa-magnifying-glass" aria-hidden="true"></span>
+                  <i className="fa-solid fa-magnifying-glass" />
                 </h2>
                 {t(
                   "introduction.2_searchNPropose",
@@ -99,7 +99,7 @@ export function Introduction({ hasPricePolicy }: Props) {
               </div>
               <div className="col">
                 <h2>
-                  <span className="fa-solid fa-graduation-cap" aria-hidden="true"></span>
+                  <i className="fa-solid fa-graduation-cap" />
                 </h2>
                 {t(
                   "introduction.3_enrole",
@@ -108,19 +108,19 @@ export function Introduction({ hasPricePolicy }: Props) {
               </div>
               <div className="col">
                 <h2>
-                  <span className="fa-regular fa-calendar-check" aria-hidden="true"></span>
+                  <i className="fa-regular fa-calendar-check" />
                 </h2>
                 {t("introduction.4_schedule", "When everybody needed is in, a date gets fixed.")}
               </div>
               <div className="col">
                 <h2>
-                  <span className="fa-solid fa-rocket" aria-hidden="true"></span>
+                  <i className="fa-solid fa-rocket" />
                 </h2>
                 {t("introduction.5_takePlace", "The course takes place.")}
               </div>
               <div className="col">
                 <h2>
-                  <span className="fa-solid fa-circle-info" aria-hidden="true"></span>
+                  <i className="fa-solid fa-circle-info" />
                 </h2>
                 {t("introduction.more", "More info:")}
                 <br />

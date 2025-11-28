@@ -75,7 +75,7 @@ export function RegionDetailsPage({ isNew, region }: Props) {
 
       <div className="container mw-md">
         <a href={Router.path("tenantDetails", { _id: region.tenant })}>
-          <span className="fa-solid fa-angle-left fa-fw" aria-hidden="true" />
+          <i className="fa-solid fa-angle-left fa-fw" />
           {t("regionDetails.goToOverview", "Go to all regions")}
         </a>
         {isNew ? (

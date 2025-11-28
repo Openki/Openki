@@ -19,7 +19,7 @@ import "./styles.scss";
 export function EventHeldHistoryEntry({ _id, title, slug }: EventModel) {
   return (
     <>
-      <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>{" "}
+      <i className="fa-regular fa-calendar-days fa-fw" />{" "}
       <a href={Router.path("showEvent", { _id, slug })}>{title}</a>
     </>
   );
@@ -140,7 +140,7 @@ export function EventInsertedHistoryEntry({
 
   return (
     <>
-      <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>{" "}
+      <i className="fa-regular fa-calendar-days fa-fw" />{" "}
       {t("course.history.eventInserted", "{EVENT} created by {USER}", {
         EVENT: (
           <a href={Router.path("showEvent", { _id, slug })}>
@@ -190,7 +190,7 @@ export function EventUpdatedHistoryEntry({
   };
   return (
     <>
-      <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>{" "}
+      <i className="fa-regular fa-calendar-days fa-fw" />{" "}
       {replicasUpdated
         ? t(
             "course.history.eventAndRepeatsUpdated",
@@ -215,7 +215,7 @@ export function EventRemovedHistoryEntry({
   const { dayOfWeek, calendarDayShort } = useDateTimeFormat();
   return (
     <>
-      <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>{" "}
+      <i className="fa-regular fa-calendar-days fa-fw" />{" "}
       {t("course.history.eventRemoved", "{EVENT} removed by {USER}", {
         EVENT: (
           <>
