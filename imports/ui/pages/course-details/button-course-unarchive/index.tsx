@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Button } from "../../../components/Buttons.old";
+import { Button } from "../../../components/Buttons";
 
 export function ButtonCourseUnarchive({
   disabled,

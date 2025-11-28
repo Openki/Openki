@@ -2,6 +2,7 @@ import React, { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { buildSizeClass, Size } from "../lib/buildSizeClass";
+import { useAccountTasks } from "/imports/utils/useAccountTasks";
 
 interface CommonProps {
   /** needed to identify for testing */
@@ -16,9 +17,12 @@ interface CommonProps {
 
 interface LoginProps {
   /**
+   * Login the user before triggering onClick.
+   *
    * If this button is part of a form, consider using “submit” for reasons of semantic
    * correctness for accessibility and the full use of the browser default behavior.
    */
+  needsLogin?: boolean | undefined;
   onClick: () => Promise<void> | void;
 }
 
@@ -55,10 +59,12 @@ function ControlledButton({
   id,
   className,
   disabled,
+  needsLogin,
   onClick,
   children,
   busyText,
 }: CommonProps & LoginProps) {
+  const { promptToLogin } = useAccountTasks();
   const [isBusy, setIsBusy] = useState(false);
 
   const commonProps = {
@@ -69,6 +75,10 @@ function ControlledButton({
     onClick: async () => {
       setIsBusy(true);
       try {
+        if (needsLogin && !(await promptToLogin())) {
+          return;
+        }
+
         await onClick();
       } finally {
         setIsBusy(false);

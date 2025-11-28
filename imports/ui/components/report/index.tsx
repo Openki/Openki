@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import * as Alert from "/imports/api/alerts/alert";
 import * as emailMethods from "/imports/api/emails/methods";
 
-import { ButtonCancel } from "../Buttons.old";
+import { ButtonCancel } from "../Buttons";
 
 import "./styles.scss";
 

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { CourseModel } from "/imports/api/courses/courses";
 
-import { Button, ButtonCancel } from "../../../components/Buttons.old";
+import { Button, ButtonCancel } from "../../../components/Buttons";
 import { ButtonCourseArchive } from "../button-course-archive";
 
 import "./styles.scss";

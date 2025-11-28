@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ButtonSubmit, ButtonCancel } from "../../components/Buttons.old";
+import { ButtonSubmit } from "../../components/Buttons.old";
+import { ButtonCancel } from "../../components/Buttons";
 import { DeleteConfirm } from "../../components/DeleteConfirm";
 import * as Alert from "/imports/api/alerts/alert";
 import * as usersMethods from "/imports/api/users/methods";
