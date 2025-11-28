@@ -12,7 +12,7 @@ export function Propose(data: Props) {
   return (
     <>
       <MetaTags title={t("course.propose.windowtitle", "Propose new course")} />
-      
+
       <AccountTasks />
       <Edit {...data} />
     </>

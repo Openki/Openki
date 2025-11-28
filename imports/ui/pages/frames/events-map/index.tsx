@@ -31,7 +31,7 @@ export function FrameEventsMapPage() {
   return (
     <>
       <MetaTags title={t("frameEventsMap.windowtitle", "Events map")} />
-      
+
       <div className="vh-100">
         <EventsMap events={events} openLinksInNewTab />
       </div>

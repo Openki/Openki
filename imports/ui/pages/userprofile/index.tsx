@@ -203,7 +203,7 @@ export function UserprofilePage({ user }: Props) {
   return (
     <>
       <MetaTags title={title} />
-      
+
       <div className="container mw-md">
         <div className="page-component">
           <div className="row g-3">

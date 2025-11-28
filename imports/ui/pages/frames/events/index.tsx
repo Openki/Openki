@@ -142,7 +142,7 @@ export function EventsPage(data: Record<string, string>) {
   return (
     <>
       <MetaTags title={t("event.list.windowtitle", "Events")} />
-      
+
       {control() && <Day {...calendarNavAttr()} />}
       <div className="frame-events">
         <EventList dataEvents={take(events, limit)} withDate withImage openInNewTab />
