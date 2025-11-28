@@ -1,7 +1,7 @@
 import React from "react";
 import { Mongo } from "meteor/mongo";
 import { useTranslation } from "react-i18next";
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 
 import { EventEntity, EventModel } from "/imports/api/events/events";
 import { useDetails } from "/imports/api/regions/publications";
@@ -24,23 +24,28 @@ export function EventsMapPage(props: Data) {
     return null;
   }
 
-  Metatags.setCommonTags(t("eventsMap.windowtitle", "Events map"));
-
   return (
-    <div className="container-fluid">
-      <h1>
-        {region
-          ? t("eventsMap.list.titleForRegion", "Events in region {REGION}", {
-              REGION: region.name,
-            })
-          : t("eventsMap.list.title", "Events")}
-      </h1>
-      <div className="row">
-        <div className="col-12">
-          <EventsMap events={props.events.fetch().filter((e) => e.start > now)} fullscreenControl />
+    <>
+      <MetaTags title={t("eventsMap.windowtitle", "Events map")} />
+
+      <div className="container-fluid">
+        <h1>
+          {region
+            ? t("eventsMap.list.titleForRegion", "Events in region {REGION}", {
+                REGION: region.name,
+              })
+            : t("eventsMap.list.title", "Events")}
+        </h1>
+        <div className="row">
+          <div className="col-12">
+            <EventsMap
+              events={props.events.fetch().filter((e) => e.start > now)}
+              fullscreenControl
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

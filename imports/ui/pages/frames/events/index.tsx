@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { take } from "lodash-es";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
@@ -9,7 +9,7 @@ import { Events } from "/imports/api/events/events";
 import { useFindFilter } from "/imports/api/events/publications";
 
 import { Filtering } from "/imports/utils/filtering";
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 import * as Predicates from "/imports/utils/predicates";
 import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 import { useReactiveNow } from "/imports/utils/reactive-now";
@@ -135,16 +135,14 @@ export function EventsPage(data: Record<string, string>) {
     } as CalendarNavData;
   }
 
-  useEffect(() => {
-    Metatags.setCommonTags(t("event.list.windowtitle", "Events"));
-  });
-
   if (isLoading()) {
     return null;
   }
 
   return (
     <>
+      <MetaTags title={t("event.list.windowtitle", "Events")} />
+      
       {control() && <Day {...calendarNavAttr()} />}
       <div className="frame-events">
         <EventList dataEvents={take(events, limit)} withDate withImage openInNewTab />

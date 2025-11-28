@@ -5,7 +5,7 @@ import { take } from "lodash-es";
 
 import { Courses, FindFilter } from "/imports/api/courses/courses";
 
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 import { CssFromQuery } from "/imports/ui/lib/css-from-query";
 import { SortSpec } from "/imports/utils/sort-spec";
 
@@ -59,8 +59,6 @@ export function CourselistPage() {
     options.sort,
   );
 
-  Metatags.setCommonTags(t("course.list.windowtitle", "Courses"));
-
   function courses() {
     return take(coursesList, limit);
   }
@@ -70,7 +68,9 @@ export function CourselistPage() {
 
   return (
     <>
+      <MetaTags title={t("course.list.windowtitle", "Courses")} />
       <style>{options.style.map((rule) => rule)}</style>
+
       {courses().length === 0 && (
         <h2 className="mt-5 text-center">
           {t("frame.courselist.empty", "There is nothing here yet")}

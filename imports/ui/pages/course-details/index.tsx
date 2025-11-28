@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { intersection, truncate } from "lodash-es";
+import React, { useState } from "react";
+import { intersection } from "lodash-es";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { useViewportSize } from "../../lib/useViewportSize";
-import { textPlain } from "/imports/utils/html-tools";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 
@@ -14,7 +13,7 @@ import { Regions } from "/imports/api/regions/regions";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 
 import { ButtonDelete, ButtonEdit } from "../../components/Buttons";
 import { Discussion } from "../../components/courses/discussion";
@@ -167,16 +166,14 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
     Router.go("showCourse", course, { query });
   }
 
-  useEffect(() => {
-    Metatags.setCommonTags(
-      course.name,
-      truncate(textPlain(course.description || ""), { length: 160 }),
-      course.publicUrlForDetailsImage(),
-    );
-  });
-
   return (
     <>
+      <MetaTags
+        title={course.name}
+        description={course.description}
+        image={course.publicUrlForDetailsImage()}
+      />
+
       {searchParams.nextActions === "1" && (
         <ActionResult
           type="success"

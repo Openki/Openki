@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
-import * as Metatags from "/imports/utils/metatags";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
+import { MetaTags } from "/imports/ui/components/MetaTags";
 import { Find } from "../../components/courses/find";
 import { Dashboard } from "../../components/dashboard";
 
@@ -17,28 +17,28 @@ export function DashboardPage({ query }: Props) {
   const { t } = useTranslation();
   const region = useCurrentRegion();
 
-  useEffect(() => {
-    if (search) {
-      Metatags.setCommonTags(t("find.windowtitle", 'Find "{SEARCH}"', { SEARCH: search }));
-    } else {
-      Metatags.setCommonTags(t("find.WhatLearn?"));
-    }
-  });
-
   return (
-    <div className="container">
-      {region?.dashboard ? (
-        <Dashboard defaultRegion={region._id} list={region.dashboard} defaultGroup={group} />
-      ) : PublicSettings.regionDashboardDefault ? (
-        <Dashboard
-          defaultRegion={region?._id}
-          list={PublicSettings.regionDashboardDefault}
-          defaultGroup={group}
-        />
+    <>
+      {search ? (
+        <MetaTags title={t("find.windowtitle", 'Find "{SEARCH}"', { SEARCH: search })} />
       ) : (
-        <Find query={query} />
+        <MetaTags title={t("find.WhatLearn?")} />
       )}
-    </div>
+
+      <div className="container">
+        {region?.dashboard ? (
+          <Dashboard defaultRegion={region._id} list={region.dashboard} defaultGroup={group} />
+        ) : PublicSettings.regionDashboardDefault ? (
+          <Dashboard
+            defaultRegion={region?._id}
+            list={PublicSettings.regionDashboardDefault}
+            defaultGroup={group}
+          />
+        ) : (
+          <Find query={query} />
+        )}
+      </div>
+    </>
   );
 }
 

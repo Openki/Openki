@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
-
-import * as Metatags from "/imports/utils/metatags";
 
 import { useTranslation } from "react-i18next";
 import { useFindFilter } from "/imports/api/users/publications";
+
+import { MetaTags } from "/imports/ui/components/MetaTags";
 
 function FoundUsers({ userSearch }: { userSearch: string }) {
   const [isLoading, foundUsers] = useFindFilter(userSearch);
@@ -31,12 +31,10 @@ export function AdminUsersPage() {
 
   const [userSearch, setUserSearch] = useState("");
 
-  useEffect(() => {
-    Metatags.setCommonTags(t("admin.users.windowtitle", "Users"));
-  });
-
   return (
     <>
+      <MetaTags title={t("admin.users.windowtitle", "Users")} />
+
       <h3>{t("users.title", "Users")}</h3>
       <div className="mb-3">
         <label className="form-label">{t("users.field.find.label", "Find a user")}</label>

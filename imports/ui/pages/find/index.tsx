@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { useTranslation } from "react-i18next";
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 
 import { Find } from "/imports/ui/components/courses/find";
 
@@ -12,18 +12,18 @@ export interface Props {
 export function FindPage({ query }: Props) {
   const { t } = useTranslation();
 
-  useEffect(() => {
-    if (query.search) {
-      Metatags.setCommonTags(t("find.windowtitle", 'Find "{SEARCH}"', { SEARCH: query.search }));
-    } else {
-      Metatags.setCommonTags(t("find.WhatLearn?"));
-    }
-  });
-
   return (
-    <div className="container">
-      <Find query={query} />
-    </div>
+    <>
+      {query.search ? (
+        <MetaTags title={t("find.windowtitle", 'Find "{SEARCH}"', { SEARCH: query.search })} />
+      ) : (
+        <MetaTags title={t("find.WhatLearn?")} />
+      )}
+
+      <div className="container">
+        <Find query={query} />
+      </div>
+    </>
   );
 }
 

@@ -1,5 +1,5 @@
 import { Router } from "meteor/iron:router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useUser } from "/imports/utils/react-meteor-data";
@@ -14,7 +14,7 @@ import * as usersMethods from "/imports/api/users/methods";
 import { UserModel } from "/imports/api/users/users";
 
 import { checkContribution } from "/imports/utils/checkContribution";
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 import * as Tooltips from "/imports/utils/Tooltips";
 
 import { Avatar } from "../../components/avatar";
@@ -36,13 +36,6 @@ export function UserprofilePage({ user }: Props) {
 
   const [isLoadingGroups, inviteGroups] = Groups.useFindFilter({ own: true });
   const [isLoading, coursesCreatedBy] = Courses.useFindFilter({ createdby: user?._id || "-1" });
-
-  useEffect(() => {
-    const title = t("profile.windowtitle", "Profile of {USER}", {
-      USER: user?.getDisplayName() || "...",
-    });
-    Metatags.setCommonTags(title);
-  });
 
   // What privileges the user has
   const privileges = (["admin"] as const).reduce<Record<string, boolean>>((originalPs, p) => {
@@ -203,197 +196,209 @@ export function UserprofilePage({ user }: Props) {
     return null;
   }
 
+  const title = t("profile.windowtitle", "Profile of {USER}", {
+    USER: user?.getDisplayName() || "...",
+  });
+
   return (
-    <div className="container mw-md">
-      <div className="page-component">
-        <div className="row g-3">
-          <div className="col-3">
-            <Avatar userId={user._id} className="profile-avatar" />
-          </div>
+    <>
+      <MetaTags title={title} />
+      
+      <div className="container mw-md">
+        <div className="page-component">
+          <div className="row g-3">
+            <div className="col-3">
+              <Avatar userId={user._id} className="profile-avatar" />
+            </div>
 
-          <div className="col-9">
-            <h1 className="mt-4">
-              {t("profile.users_profile_page", "{NAME}'s Profile", {
-                NAME: user.getDisplayName(),
-              })}
-              <Contribution userId={user._id} />
-            </h1>
+            <div className="col-9">
+              <h1 className="mt-4">
+                {t("profile.users_profile_page", "{NAME}'s Profile", {
+                  NAME: user.getDisplayName(),
+                })}
+                <Contribution userId={user._id} />
+              </h1>
 
-            {ownuser() ? (
-              <em>({t("profile.its_you", "It's you.")})</em>
-            ) : (
-              alterPrivileges &&
-              PublicSettings.contribution &&
-              (!hasContributed() ? (
-                <button
-                  data-test="user-has-contributed-button"
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={handleSetHasContributed}
-                >
-                  <i className={PublicSettings.contribution.icon} aria-hidden="true"></i>{" "}
-                  {t("profile.setHasContributed.button", "Mark this user has contributed")}
-                </button>
+              {ownuser() ? (
+                <em>({t("profile.its_you", "It's you.")})</em>
               ) : (
-                <button
-                  data-test="user-has-contributed-button"
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={handleUnsetHasContributed}
-                >
-                  {t("profile.unsetHasContributed.button", "Remove this user has contributed")}
-                </button>
-              ))
-            )}
+                alterPrivileges &&
+                PublicSettings.contribution &&
+                (!hasContributed() ? (
+                  <button
+                    data-test="user-has-contributed-button"
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handleSetHasContributed}
+                  >
+                    <i className={PublicSettings.contribution.icon} aria-hidden="true"></i>{" "}
+                    {t("profile.setHasContributed.button", "Mark this user has contributed")}
+                  </button>
+                ) : (
+                  <button
+                    data-test="user-has-contributed-button"
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={handleUnsetHasContributed}
+                  >
+                    {t("profile.unsetHasContributed.button", "Remove this user has contributed")}
+                  </button>
+                ))
+              )}
 
-            <p
-              className="profile-description"
-              dangerouslySetInnerHTML={{ __html: user.description }}
-            ></p>
+              <p
+                className="profile-description"
+                dangerouslySetInnerHTML={{ __html: user.description }}
+              ></p>
 
-            {ownuser() ? (
-              <a className="btn btn-primary" href={Router.path("profile")}>
-                <span className="fa-solid fa-gears fa-fw" aria-hidden="true"></span>{" "}
-                {t("profile.preferenceslink", "Account settings")}
-              </a>
-            ) : (
-              allowPrivateMessages() && <SendMessage {...sendMessageAttr()} />
-            )}
+              {ownuser() ? (
+                <a className="btn btn-primary" href={Router.path("profile")}>
+                  <span className="fa-solid fa-gears fa-fw" aria-hidden="true"></span>{" "}
+                  {t("profile.preferenceslink", "Account settings")}
+                </a>
+              ) : (
+                allowPrivateMessages() && <SendMessage {...sendMessageAttr()} />
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      {!isLoadingGroups() && showSettings() && (
-        <div className="page-component page-component-seperated">
-          <div className="row gap-3 mb-3">
-            {showPrivileges && (
-              <div className="col-md">
-                <h3>
-                  <span className="fa-solid fa-gear fa-fw" aria-hidden="true"></span>{" "}
-                  {t("privileges.title", "Edit Privileges")}
-                </h3>
-                <div className="list-group">
-                  {privileges.admin ? (
-                    <li className="list-group-item list-group-item-success">
-                      {alterPrivileges && (
-                        <button
-                          type="button"
-                          className="btn-close btn-close-black float-end"
-                          data-bs-title={t("privilege.remove", "Remove privilege")}
-                          onClick={() => handleRemovePrivilege("admin")}
-                        ></button>
-                      )}
-                      {t("privilege.has.admin", "Administrator privileges granted")}
-                    </li>
-                  ) : (
-                    alterPrivileges && (
-                      <button
-                        type="button"
-                        className="list-group-item-action list-group-item-secondary btn"
-                        onClick={handleGiveAdmin}
-                      >
-                        {t("privilege.add.admin", "Grant administrator privileges")}
-                      </button>
-                    )
-                  )}
-                </div>
-              </div>
-            )}
-
-            {showInviteGroups() && (
-              <div className="col-md">
-                <h3>
-                  <span className="fa-solid fa-gear fa-fw" aria-hidden="true"></span>{" "}
-                  {t("userprofile.groups.header", "Edit groups")}
-                </h3>
-                <div className="list-group">
-                  {inviteGroups.map((group) =>
-                    groupMember(group, user) ? (
-                      <li key={group._id} className="list-group-item list-group-item-success">
-                        <button
-                          type="button"
-                          className="btn-close btn-close-black float-end"
-                          data-bs-title={t("profile.group.expel", "Expel from group {GROUPNAME}", {
-                            GROUPNAME: group.name,
-                          })}
-                          onClick={() => handleExpelFromGroup(group)}
-                        ></button>
-                        {t("profile.group.member", "Member of group")}
-                        <span className="group">{group.name}</span>
+        {!isLoadingGroups() && showSettings() && (
+          <div className="page-component page-component-seperated">
+            <div className="row gap-3 mb-3">
+              {showPrivileges && (
+                <div className="col-md">
+                  <h3>
+                    <span className="fa-solid fa-gear fa-fw" aria-hidden="true"></span>{" "}
+                    {t("privileges.title", "Edit Privileges")}
+                  </h3>
+                  <div className="list-group">
+                    {privileges.admin ? (
+                      <li className="list-group-item list-group-item-success">
+                        {alterPrivileges && (
+                          <button
+                            type="button"
+                            className="btn-close btn-close-black float-end"
+                            data-bs-title={t("privilege.remove", "Remove privilege")}
+                            onClick={() => handleRemovePrivilege("admin")}
+                          ></button>
+                        )}
+                        {t("privilege.has.admin", "Administrator privileges granted")}
                       </li>
                     ) : (
-                      <button
-                        key={group._id}
-                        type="button"
-                        className="list-group-item list-group-item-action list-group-item-secondary btn"
-                        onClick={() => handleDraftIntoGroup(group)}
-                      >
-                        {t("profile.group.draft", "Draft into group")} {group.name}
-                      </button>
-                    ),
+                      alterPrivileges && (
+                        <button
+                          type="button"
+                          className="list-group-item-action list-group-item-secondary btn"
+                          onClick={handleGiveAdmin}
+                        >
+                          {t("privilege.add.admin", "Grant administrator privileges")}
+                        </button>
+                      )
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {showInviteGroups() && (
+                <div className="col-md">
+                  <h3>
+                    <span className="fa-solid fa-gear fa-fw" aria-hidden="true"></span>{" "}
+                    {t("userprofile.groups.header", "Edit groups")}
+                  </h3>
+                  <div className="list-group">
+                    {inviteGroups.map((group) =>
+                      groupMember(group, user) ? (
+                        <li key={group._id} className="list-group-item list-group-item-success">
+                          <button
+                            type="button"
+                            className="btn-close btn-close-black float-end"
+                            data-bs-title={t(
+                              "profile.group.expel",
+                              "Expel from group {GROUPNAME}",
+                              {
+                                GROUPNAME: group.name,
+                              },
+                            )}
+                            onClick={() => handleExpelFromGroup(group)}
+                          ></button>
+                          {t("profile.group.member", "Member of group")}
+                          <span className="group">{group.name}</span>
+                        </li>
+                      ) : (
+                        <button
+                          key={group._id}
+                          type="button"
+                          className="list-group-item list-group-item-action list-group-item-secondary btn"
+                          onClick={() => handleDraftIntoGroup(group)}
+                        >
+                          {t("profile.group.draft", "Draft into group")} {group.name}
+                        </button>
+                      ),
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        <Courselist user={user} ownProfile={false} />
+
+        {alterPrivileges && (
+          <>
+            <h3 className="text-danger">
+              {t("profile.account.delete.header", "Is this a spammer?")}
+            </h3>
+            {!verifyUserDelete ? (
+              <ButtonDelete id="userprofile-verifyUserDelete" onClick={toggleVerifyUserDelete} />
+            ) : (
+              <div className="border border-danger text-danger p-3">
+                <p>
+                  {t(
+                    "profile.account.reallydelete",
+                    'Remove the user profile "{NAME}" permanently? {COURSES, number} Courses created by this user (with {INTERESTED, number} Participants and {EVENTS, number} upcoming events) will also be removed.',
+                    {
+                      NAME: user.getDisplayName(),
+                      COURSES: numberOfCoursesAffectedByDelete,
+                      INTERESTED: numberOfInterestedAffectedByDelete,
+                      EVENTS: numberOfFutureEventsAffectedByDelete,
+                    },
                   )}
+                </p>
+
+                <div className="mb-3">
+                  <textarea
+                    className="form-control"
+                    placeholder={t(
+                      "profile.account.reason.placeholder",
+                      "Reason for deleting this user",
+                    )}
+                    onChange={(e) => setReason(e.target.value)}
+                    value={reason}
+                  ></textarea>
+                </div>
+
+                <div className="form-actions">
+                  <Button
+                    id="userprofile-confirm-delete-user"
+                    className="btn-danger"
+                    onClick={() => handleConfirmDeleteUser()}
+                    busyText={t("profile.account.delete.confirm.button.busy", "Deleting profile…")}
+                  >
+                    {t("profile.account.delete.confirm.button", "Delete user and all his traces")}
+                  </Button>{" "}
+                  <ButtonCancel
+                    id="userprofile-confirm-delete-user-cancel"
+                    onClick={toggleVerifyUserDelete}
+                  />
                 </div>
               </div>
             )}
-          </div>
-        </div>
-      )}
-
-      <Courselist user={user} ownProfile={false} />
-
-      {alterPrivileges && (
-        <>
-          <h3 className="text-danger">
-            {t("profile.account.delete.header", "Is this a spammer?")}
-          </h3>
-          {!verifyUserDelete ? (
-            <ButtonDelete id="userprofile-verifyUserDelete" onClick={toggleVerifyUserDelete} />
-          ) : (
-            <div className="border border-danger text-danger p-3">
-              <p>
-                {t(
-                  "profile.account.reallydelete",
-                  'Remove the user profile "{NAME}" permanently? {COURSES, number} Courses created by this user (with {INTERESTED, number} Participants and {EVENTS, number} upcoming events) will also be removed.',
-                  {
-                    NAME: user.getDisplayName(),
-                    COURSES: numberOfCoursesAffectedByDelete,
-                    INTERESTED: numberOfInterestedAffectedByDelete,
-                    EVENTS: numberOfFutureEventsAffectedByDelete,
-                  },
-                )}
-              </p>
-
-              <div className="mb-3">
-                <textarea
-                  className="form-control"
-                  placeholder={t(
-                    "profile.account.reason.placeholder",
-                    "Reason for deleting this user",
-                  )}
-                  onChange={(e) => setReason(e.target.value)}
-                  value={reason}
-                ></textarea>
-              </div>
-
-              <div className="form-actions">
-                <Button
-                  id="userprofile-confirm-delete-user"
-                  className="btn-danger"
-                  onClick={() => handleConfirmDeleteUser()}
-                  busyText={t("profile.account.delete.confirm.button.busy", "Deleting profile…")}
-                >
-                  {t("profile.account.delete.confirm.button", "Delete user and all his traces")}
-                </Button>{" "}
-                <ButtonCancel
-                  id="userprofile-confirm-delete-user-cancel"
-                  onClick={toggleVerifyUserDelete}
-                />
-              </div>
-            </div>
-          )}
-        </>
-      )}
-    </div>
+          </>
+        )}
+      </div>
+    </>
   );
 }
 

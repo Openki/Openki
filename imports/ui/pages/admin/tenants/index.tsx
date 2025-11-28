@@ -1,12 +1,11 @@
 import React from "react";
-import { useEffect } from "react";
 import { Mongo } from "meteor/mongo";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 
 import { TenantEntity, TenantModel } from "/imports/api/tenants/tenants";
 
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 
 export interface Data {
   tenants: Mongo.Cursor<TenantEntity, TenantModel> | never[];
@@ -15,12 +14,10 @@ export interface Data {
 export function Tenants({ tenants }: Data) {
   const { t } = useTranslation();
 
-  useEffect(() => {
-    Metatags.setCommonTags(t("tenants.windowtitle", "Organizations"));
-  });
-
   return (
     <>
+      <MetaTags title={t("tenants.windowtitle", "Organizations")} />
+
       <h3>{t("tenants.title", "Organizations")}</h3>
 
       <div className="list-group">
