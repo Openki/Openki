@@ -18,8 +18,7 @@ import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
 import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 
-import { ButtonCancel } from "/imports/ui/components/Buttons";
-import { ButtonSave } from "../../components/Buttons.old";
+import { ButtonCancel, ButtonSave } from "/imports/ui/components/Buttons";
 import { Find } from "../../components/courses/find";
 import { Dashboard, Props as DashboardProps } from "../../components/dashboard";
 import { VenueTag } from "../../components/venues/link";
@@ -323,7 +322,12 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
           </div>
           {group.isNew() && (
             <div className="actions">
-              <ButtonSave id="group-details-save" onClick={handleSave} disabled={isBusy} />
+              <ButtonSave
+                id="group-details-save"
+                needsLogin
+                onClick={handleSave}
+                disabled={isBusy}
+              />
               <ButtonCancel id="group-details-cancel" onClick={handleCancel} disabled={isBusy} />
             </div>
           )}

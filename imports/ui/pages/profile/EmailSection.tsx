@@ -1,7 +1,7 @@
 import { ValidationError } from "meteor/mdg:validation-error";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ButtonSubmit } from "../../components/Buttons.old";
+import { Button } from "../../components/Buttons";
 import { VerifyEmail } from "../../components/profiles/VerifyEmail";
 import * as Analytics from "../../lib/analytics";
 import { routerAutoscroll } from "../../lib/router-autoscroll";
@@ -111,7 +111,15 @@ export function EmailSection() {
             <div className="col-auto">
               {/* only for spacing */}
               <div className="form-label">&nbsp;</div>
-              <ButtonSubmit isBusy={isBusy} />
+              <Button
+                id="profile-email-save"
+                submit
+                className="btn-cancel"
+                isBusy={isBusy}
+                busyText={t("_button.saving", "Saving…")}
+              >
+                {t("_button.save")}
+              </Button>
             </div>
           </form>
           {!user.verifiedEmailAddress() && !isBusy && <VerifyEmail />}

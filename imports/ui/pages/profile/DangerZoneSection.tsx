@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ButtonSubmit } from "../../components/Buttons.old";
-import { ButtonCancel } from "../../components/Buttons";
+import { Button, ButtonCancel } from "../../components/Buttons";
 import { DeleteConfirm } from "../../components/DeleteConfirm";
 import * as Alert from "/imports/api/alerts/alert";
 import * as usersMethods from "/imports/api/users/methods";
@@ -130,7 +129,15 @@ export function DangerZoneSection() {
                   </div>
                 </div>
                 <div className="d-flex gap-2 justify-content-end">
-                  <ButtonSubmit isBusy={isBusy} />
+                  <Button
+                    id="profile-dangerZone-changingPasswort-save"
+                    submit
+                    className="btn-cancel"
+                    isBusy={isBusy}
+                    busyText={t("_button.saving", "Saving…")}
+                  >
+                    {t("_button.save")}
+                  </Button>
                   <ButtonCancel
                     id="profile-dangerZone-changingPasswort-cancel"
                     onClick={() => setChangingPassword(false)}

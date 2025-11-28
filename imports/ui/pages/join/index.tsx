@@ -12,7 +12,7 @@ import * as Tenants from "/imports/api/tenants/publications";
 import * as Metatags from "/imports/utils/metatags";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { ButtonSave } from "../../components/Buttons.old";
+import { Button } from "../../components/Buttons";
 
 interface Props {
   joinLink: JoinLinkEntity;
@@ -73,14 +73,14 @@ export function JoinPage({ joinLink }: Props) {
               },
             )}
           </p>
-          <ButtonSave id="join" className="btn-lg" onClick={handleClick}>
+          <Button id="join" size="large" needsLogin onClick={handleClick}>
             {!user
               ? t("joinPage.newUser", "Join {TENANT}", { TENANT: tenant?.name })
               : t("joinPage.existingUser", "Join {TENANT} with my user {USER}", {
                   TENANT: tenant?.name,
                   USER: user.getDisplayName(),
                 })}
-          </ButtonSave>
+          </Button>
           <a className="btn btn-lg btn-secondary ms-2" href={Router.path("home")}>
             {t("joinPage.no", "No thanks")}
           </a>
