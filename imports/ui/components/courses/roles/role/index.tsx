@@ -16,7 +16,7 @@ import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { useRoleDisplay } from "../../../../lib/useRoleDisplay";
 
-import { ButtonCancel } from "../../../Buttons";
+import { Button, ButtonCancel } from "../../../Buttons";
 import { Guide } from "./guide";
 
 import "./styles.scss";
@@ -35,7 +35,6 @@ export function Role(data: Data) {
   const searchParams = useSearchParams();
   const [enrolling, setEnrolling] = useState(false);
   const [showFirstSteps, setShowFirstSteps] = useState(false);
-  const [isBusy, setIsBusy] = useState(false);
   const [comment, setComment] = useState(data.comment);
 
   // Build a subscribe change
@@ -66,11 +65,8 @@ export function Role(data: Data) {
   async function handelRoleSubscribeClick() {
     routerAutoscroll.cancelNext();
 
-    setIsBusy(true);
-
     await processChange(courseSubscribe(comment));
     routerAutoscroll.cancelNext();
-    setIsBusy(false);
     setShowFirstSteps(true);
     setEnrolling(false);
 
@@ -280,26 +276,16 @@ export function Role(data: Data) {
                   )}
                 </div>
                 <div className="form-actions">
-                  <PleaseLogin
+                  <Button
                     id="course-roles-join"
-                    type="button"
-                    className="btn btn-save"
-                    disabled={isBusy}
+                    className="btn-save"
                     onClick={handelRoleSubscribeClick}
+                    needsLogin
                     visitorUserAllowed={data.role.type === "participant"}
+                    busyText={t("course.roles.join.busy", "Joining…")}
                   >
-                    {isBusy ? (
-                      <>
-                        <i
-                          className="fa-solid fa-circle-notch fa-spin fa-fw"
-                          aria-hidden="true"
-                        ></i>{" "}
-                        {t("course.roles.join.busy", "Joining…")}
-                      </>
-                    ) : (
-                      t("course.roles.join", "Join", { COURSE: data.course.name })
-                    )}
-                  </PleaseLogin>
+                    {t("course.roles.join", "Join", { COURSE: data.course.name })}
+                  </Button>
                   <ButtonCancel
                     id="course-roles-join-cancel"
                     onClick={handelRoleEnrollCancelClick}

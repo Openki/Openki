@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { EventModel } from "/imports/api/events/events";
 
-import { PleaseLogin } from "/imports/ui/components/please-login";
+import { Button } from "/imports/ui/components/Buttons";
 
 import "./styles.scss";
 
@@ -55,18 +55,22 @@ export function CancelConfirmDialog({ event, onCancel, onClose }: Props) {
       )}
 
       <div className="form-actions">
-        <PleaseLogin
+        <Button
           id="events-cancel-confirm-dialog-cancel"
-          type="button"
-          className="btn btn-danger text-nowrap"
+          needsLogin
+          className="btn-danger"
           onClick={async () => await onCancel(reason)}
           busyText={t("event.canceling", "Canceling...")}
         >
           {t("event.cancel.confirm.button", "Cancel {EVENT}", { EVENT: event.title })}
-        </PleaseLogin>
-        <button type="button" className="btn btn-edit" onClick={() => onClose()}>
+        </Button>
+        <Button
+          id="events-cancel-confirm-dialog-close"
+          className="btn-edit"
+          onClick={() => onClose()}
+        >
           {t("event.details.close", "Close")}
-        </button>
+        </Button>
       </div>
     </div>
   );

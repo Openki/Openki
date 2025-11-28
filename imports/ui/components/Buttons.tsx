@@ -15,16 +15,29 @@ interface CommonProps {
   busyText?: string | undefined;
 }
 
-interface LoginProps {
-  /**
-   * Login the user before triggering onClick.
-   *
-   * If this button is part of a form, consider using “submit” for reasons of semantic
-   * correctness for accessibility and the full use of the browser default behavior.
-   */
-  needsLogin?: boolean | undefined;
+type LoginProps = {
   onClick: () => Promise<void> | void;
-}
+} & (
+  | {
+      /**
+       * Login the user before triggering onClick.
+       *
+       * If this button is part of a form, consider using “submit” for reasons of semantic
+       * correctness for accessibility and the full use of the browser default behavior.
+       */
+      needsLogin?: false | never;
+    }
+  | {
+      /**
+       * Login the user before triggering onClick.
+       *
+       * If this button is part of a form, consider using “submit” for reasons of semantic
+       * correctness for accessibility and the full use of the browser default behavior.
+       */
+      needsLogin: true;
+      visitorUserAllowed?: boolean | undefined;
+    }
+);
 
 interface SubmitProps {
   submit: true;
@@ -55,15 +68,8 @@ function Content({
   );
 }
 
-function ControlledButton({
-  id,
-  className,
-  disabled,
-  needsLogin,
-  onClick,
-  children,
-  busyText,
-}: CommonProps & LoginProps) {
+function ControlledButton(props: CommonProps & LoginProps) {
+  const { id, className, disabled, needsLogin, onClick, children, busyText } = props;
   const { promptToLogin } = useAccountTasks();
   const [isBusy, setIsBusy] = useState(false);
 
@@ -75,7 +81,7 @@ function ControlledButton({
     onClick: async () => {
       setIsBusy(true);
       try {
-        if (needsLogin && !(await promptToLogin())) {
+        if (needsLogin && !(await promptToLogin(props.visitorUserAllowed))) {
           return;
         }
 
