@@ -141,7 +141,7 @@ export function ProgramPage(data: Record<string, string>) {
   return (
     <>
       <MetaTags title={t("calendar.windowtitle", "Calendar")} />
-      
+
       <AccountTasks />
       {!!filter.get("control") && <CalendarNavProgram {...calendarNavAttr()} />}
       <div className="py-4">

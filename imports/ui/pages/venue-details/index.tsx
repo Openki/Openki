@@ -31,7 +31,7 @@ export function VenueDetailsPage({ venue, isNew }: { venue: VenueModel; isNew: b
   return (
     <>
       <MetaTags title={title} description={venue?.description} />
-      
+
       <div className="container mw-md">
         {editing ? (
           <Edit {...editAttr()} />

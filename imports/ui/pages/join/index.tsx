@@ -54,7 +54,7 @@ export function JoinPage({ joinLink }: Props) {
   return (
     <>
       <MetaTags title={title} />
-      
+
       <div className="container">
         <div className="p-2 p-md-5 bg-light rounded-3">
           <div className="container-fluid py-2 py-md-5">
