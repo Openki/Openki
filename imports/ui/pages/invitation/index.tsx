@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Router } from "meteor/iron:router";
 
 import * as Alert from "/imports/api/alerts/alert";
@@ -12,7 +12,7 @@ import { useTracker } from "meteor/react-meteor-data";
 import { getUserName } from "../../lib/getUserName";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { useUser } from "meteor/react-meteor-accounts";
-import { PleaseLogin } from "../../components/please-login";
+import { Button } from "/imports/ui/components/Buttons";
 
 export function InvitationPage({
   tenant,
@@ -27,10 +27,7 @@ export function InvitationPage({
   const siteName = useSiteName();
   const userName = useTracker(() => getUserName(invitation.createdBy));
 
-  const [isBusy, setIsBusy] = useState(false);
-
   async function handleClick() {
-    setIsBusy(true);
     try {
       await InvitationsMethods.join(invitation.tenant, invitation.token);
 
@@ -43,8 +40,6 @@ export function InvitationPage({
       );
     } catch (err) {
       Alert.serverError(err, t("invitation.join.error", "Join not worked."));
-    } finally {
-      setIsBusy(false);
     }
   }
 
@@ -69,12 +64,12 @@ export function InvitationPage({
               { TENANT: tenant.name, INVITER: userName },
             )}
           </p>
-          <PleaseLogin
+          <Button
             id="invitation-save"
-            type="button"
+            needsLogin
+            size="large"
             onClick={handleClick}
-            className="btn btn-lg btn-save"
-            disabled={isBusy}
+            className="btn-save"
           >
             {!user
               ? t("invitation.join.newUser", "Join {TENANT}", { TENANT: tenant.name })
@@ -82,7 +77,7 @@ export function InvitationPage({
                   TENANT: tenant.name,
                   USER: user.getDisplayName(),
                 })}
-          </PleaseLogin>{" "}
+          </Button>{" "}
           <a className="btn btn-lg btn-secondary" href={Router.path("home")}>
             {t("invitation.join.no", "No thanks")}
           </a>
