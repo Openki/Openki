@@ -40,8 +40,7 @@ export function JoinLink({ tenant }: Props) {
   return (
     <div>
       <h3>
-        <span className="fa-solid fa-chain fa-fw" aria-hidden="true" />{" "}
-        {t("joinLink.title", "Invite via link")}
+        <i className="fa-solid fa-chain fa-fw" /> {t("joinLink.title", "Invite via link")}
       </h3>
       <label className="form-label">
         {t("joinLink.description", "Anyone with this link can join your organisation as member.")}

@@ -92,7 +92,8 @@ export function RoomTag({ name }: { name: string | undefined }) {
   }
   return (
     <div className="tag">
-      <span className="fa-solid fa-signs-post fa-fw" aria-hidden="true"></span>&nbsp;
+      <i className="fa-solid fa-signs-post fa-fw" />
+      &nbsp;
       {name}
     </div>
   );

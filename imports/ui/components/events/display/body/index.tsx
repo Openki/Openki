@@ -49,7 +49,7 @@ function CourseEvent({ event, courseId }: { event: EventModel; courseId: string 
               aria-controls="description"
               aria-selected="true"
             >
-              <span className="fa-solid fa-file-lines fa-fw" aria-hidden="true"></span>
+              <i className="fa-solid fa-file-lines fa-fw" />
               <span className="tab-label">{t("course.subnav.descr", "Description")}</span>
             </button>
           </li>
@@ -64,7 +64,7 @@ function CourseEvent({ event, courseId }: { event: EventModel; courseId: string 
               aria-controls="files"
               aria-selected="false"
             >
-              <span className="fa-solid fa-file fa-fw" aria-hidden="true"></span>
+              <i className="fa-solid fa-file fa-fw" />
               <span className="tab-label">{t("course.subnav.files", "Files")}</span>
             </button>
           </li>

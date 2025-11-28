@@ -73,7 +73,7 @@ export function SelectCategories(props: Props) {
               />
               <label className="form-check-label" htmlFor={`editCategory${category}`}>
                 <CategoryLabel category={category} />
-                {hasSubcategories(category) && <i className="fa-solid fa-angle-down fa-fw"></i>}
+                {hasSubcategories(category) && <i className="fa-solid fa-angle-down fa-fw" />}
               </label>
             </div>
             {availableSubcategories(category).map((subcategory) => {

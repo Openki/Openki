@@ -34,7 +34,8 @@ export function UserFrame() {
               collapse();
             }}
           >
-            <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>&nbsp;
+            <i className="fa-solid fa-user fa-fw" />
+            &nbsp;
             {t("login.frame.profile", "Public profile")}
           </a>
         </div>
@@ -46,7 +47,8 @@ export function UserFrame() {
               collapse();
             }}
           >
-            <span className="fa-solid fa-gears fa-fw" aria-hidden="true"></span>&nbsp;
+            <i className="fa-solid fa-gears fa-fw" />
+            &nbsp;
             {t("login.frame.settings", "Account settings")}
           </a>
         </div>
@@ -65,7 +67,8 @@ export function UserFrame() {
               }
             }}
           >
-            <span className="fa-solid fa-right-from-bracket fa-fw" aria-hidden="true"></span>&nbsp;
+            <i className="fa-solid fa-right-from-bracket fa-fw" />
+            &nbsp;
             {t("login.logout", "Log out")}
           </button>
         </div>

@@ -12,7 +12,7 @@ import "./styles.scss";
 function BackArrow() {
   const isRTL = Session.equals("textDirectionality", "rtl");
   const direction = isRTL ? "right" : "left";
-  return <span className={`fa-solid fa-arrow-${direction} fa-fw`} aria-hidden="true"></span>;
+  return <span className={`fa-solid fa-arrow-${direction} fa-fw`} />;
 }
 
 export function NotFound() {
@@ -24,9 +24,11 @@ export function NotFound() {
       <div className="page-component">
         {/* No line between flash and text, but inside the text.  */}
         <h1 style={{ whiteSpace: "nowrap" }}>
-          <span className="fa-solid fa-bolt fa-fw text-warning" aria-hidden="true"></span>&nbsp;
+          <i className="fa-solid fa-bolt fa-fw text-warning" />
+          &nbsp;
           <span style={{ whiteSpace: "normal" }}>{t("notFound.title", "Page not found")}</span>
-          &nbsp;<span className="fa-solid fa-bolt fa-fw text-warning" aria-hidden="true"></span>
+          &nbsp;
+          <i className="fa-solid fa-bolt fa-fw text-warning" />
         </h1>
         <h3>{t("notFound.explanation", "This page is not available. Maybe it never existed.")}</h3>
         {!loggedIn && (
@@ -61,7 +63,8 @@ export function NotFound() {
           </li>
           <li className="list-inline-item">
             <a href={Router.path("home")}>
-              <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>&nbsp;
+              <i className="fa-solid fa-house fa-fw" />
+              &nbsp;
               {t("notFound.visitStartPage", "Go to the start page")}
             </a>
           </li>

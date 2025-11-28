@@ -244,7 +244,7 @@ export function EditableImage(data: Data) {
             ) : data.thumbnail?.src ? (
               <img {...thumbnailAttributes()} src={data.thumbnail.src} />
             ) : (
-              <i className="fa-regular fa-image fa-5x" aria-hidden="true"></i>
+              <i className="fa-regular fa-image fa-5x" />
             )}
           </div>
           {dragover ? (
@@ -314,11 +314,7 @@ export function EditableImage(data: Data) {
           onClick={handleEditClick}
         />
       ) : (
-        <i
-          className="fa-regular fa-image fa-5x cursor-pointer"
-          aria-hidden="true"
-          onClick={handleEditClick}
-        ></i>
+        <i className="fa-regular fa-image fa-5x cursor-pointer" onClick={handleEditClick} />
       )}{" "}
       <span
         className="align-top fa-solid fa-pencil cursor-pointer"

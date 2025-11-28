@@ -32,7 +32,7 @@ export function DeleteConfirmDialog(props: Props) {
           </button>
         ) : (
           <button type="button" className="btn btn-danger text-nowrap" disabled={true}>
-            <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
+            <i className="fa-solid fa-circle-notch fa-spin fa-fw" />
             {props.busyButton}
           </button>
         )}

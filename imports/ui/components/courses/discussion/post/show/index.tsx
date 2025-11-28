@@ -82,7 +82,8 @@ export function Show({ post, onEdit }: Props) {
       </div>
     ) : (
       <button type="button" className="btn btn-add page-component-btn" onClick={handleEditClick}>
-        <span className="fa-solid fa-pencil fa-fw" aria-hidden="true"></span>&nbsp;
+        <i className="fa-solid fa-pencil fa-fw" />
+        &nbsp;
         {t("course.discussion.write_comment", "Write a comment")}
       </button>
     )
@@ -99,7 +100,6 @@ export function Show({ post, onEdit }: Props) {
                 {" "}
                 <i
                   className="fa-solid fa-bell"
-                  aria-hidden="true"
                   data-bs-title={
                     !post.eventId
                       ? t("course.discussion.allNotified", "All interested notified")
@@ -108,7 +108,7 @@ export function Show({ post, onEdit }: Props) {
                           "All interested and participants notified",
                         )
                   }
-                ></i>
+                />
               </>
             )}
             {hasBeenEdited() && (
@@ -124,7 +124,7 @@ export function Show({ post, onEdit }: Props) {
           <span className="discussion-buttons">
             {mayEdit() && (
               <button type="button" className="discussion-edit-btn" onClick={handleEditClick}>
-                <span className="fa-solid fa-pen-to-square" aria-hidden="true"></span>
+                <i className="fa-solid fa-pen-to-square" />
               </button>
             )}
             {mayDelete() && <RemoveDropdown {...removeDropdownAttr()} />}

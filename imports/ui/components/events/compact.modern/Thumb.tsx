@@ -33,12 +33,12 @@ export function Thumb({ event }: { event: EventModel }) {
       <div className="card-body">
         <h3 className="card-title text-truncate-2l min-h-2l fw-bold">{event.title}</h3>
         <p className="card-text text-truncate">
-          <i className="fa-regular fa-fw fa-clock"></i> {timeFormat(event.startLocal)} -{" "}
+          <i className="fa-regular fa-fw fa-clock" /> {timeFormat(event.startLocal)} -{" "}
           {timeFormat(event.endLocal)}
           <br />
           {!!locationPreview && (
             <>
-              <i className="fa-solid fa-fw fa-location-dot"></i>
+              <i className="fa-solid fa-fw fa-location-dot" />
               {locationPreview}
             </>
           )}

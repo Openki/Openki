@@ -28,7 +28,7 @@ export function Add({ course }: Props) {
             <div className="event-caption-body"></div>
           </div>
           <span className="event-caption-icon">
-            <i className="fa-solid fa-plus fa-2x"></i>
+            <i className="fa-solid fa-plus fa-2x" />
           </span>
         </div>
       </a>

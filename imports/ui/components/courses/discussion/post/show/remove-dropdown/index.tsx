@@ -18,7 +18,7 @@ export function RemoveDropdown({ onRemove }: Props) {
         aria-expanded="false"
         data-bs-toggle="dropdown"
       >
-        <span className="fa-solid fa-trash" aria-hidden="true"></span>
+        <i className="fa-solid fa-trash" />
       </button>
       <ul className="dropdown-menu dropdown-menu-end dialog-dropdown">
         <li className="dropdown-header">

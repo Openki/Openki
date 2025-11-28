@@ -148,7 +148,7 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
                   aria-controls="frequency"
                   aria-selected="true"
                 >
-                  <span className="fa-solid fa-list-ul fa-fw" aria-hidden="true"></span>
+                  <i className="fa-solid fa-list-ul fa-fw" />
                   {t("event.replication.changeToPattern", "Select frequency")}
                 </button>
               </li>
@@ -163,7 +163,7 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
                   aria-controls="datepicker"
                   aria-selected="false"
                 >
-                  <span className="fa-regular fa-calendar-check fa-fw" aria-hidden="true"></span>
+                  <i className="fa-regular fa-calendar-check fa-fw" />
                   {t("event.replication.changeToPicker", "Pick dates")}
                 </button>
               </li>

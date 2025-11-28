@@ -72,7 +72,7 @@ export function FileUpload({ accept, onUpload, onCancel }: Props) {
         />
         <label htmlFor="file">
           <div className="mb-1">
-            <i className="fa-regular fa-file-lines fa-5x" aria-hidden="true"></i>
+            <i className="fa-regular fa-file-lines fa-5x" />
           </div>
           {dragover ? (
             <div className="file-upload-drop">

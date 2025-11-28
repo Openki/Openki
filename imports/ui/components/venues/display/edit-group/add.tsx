@@ -78,7 +78,7 @@ export function Add({ venue }: Props) {
         aria-haspopup="true"
         data-bs-toggle="dropdown"
       >
-        <span className="fa-solid fa-plus fa-fw" aria-hidden="true"></span>
+        <i className="fa-solid fa-plus fa-fw" />
         <span>{t("editGroup.add.btn", "Add a group as hosts")}</span>
       </button>
       <div className="dropdown-menu dialog-dropdown dropdown-menu-scrollable-content">

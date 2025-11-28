@@ -22,7 +22,7 @@ function Disclaimer() {
   return (
     <div className="icon-text">
       <div className="icon-text-icon">
-        <i className="fa-solid fa-info fa-fw" aria-hidden="true"></i>
+        <i className="fa-solid fa-info fa-fw" />
       </div>
       <div className="icon-text-text">
         {t(
@@ -41,7 +41,7 @@ function More() {
     <a href={getLocalizedValue(PublicSettings.pricePolicyLink)}>
       <div className="icon-text">
         <div className="icon-text-icon">
-          <i className="fa-solid fa-book fa-fw" aria-hidden="true"></i>
+          <i className="fa-solid fa-book fa-fw" />
         </div>
         <div className="icon-text-text">
           {t("pricePolicy.moreAboutPricePolicy", "Read our price policy")}
@@ -72,7 +72,7 @@ function Dismissable() {
     <a href="#" onClick={handleHideClick}>
       <div className="icon-text">
         <div className="icon-text-icon">
-          <i className="fa-solid fa-ban fa-fw" aria-hidden="true"></i>
+          <i className="fa-solid fa-ban fa-fw" />
         </div>
         <div className="icon-text-text">
           {t("pricePolicy.dontShowAnymore", "Don't show this anymore")}

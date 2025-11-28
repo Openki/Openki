@@ -228,7 +228,7 @@ export function RegionSelection(props: Props) {
           }`}
         >
           <span className="input-group-text">
-            <span className="fa-solid fa-location-dot fa-fw" aria-hidden="true"></span>
+            <i className="fa-solid fa-location-dot fa-fw" />
           </span>
           <input
             ref={searchElementRef}
@@ -258,13 +258,13 @@ export function RegionSelection(props: Props) {
                   className="badge bg-primary rounded-pill"
                   title={t("regionSelection.legend.numCoursesTitle", "Number of courses")}
                 >
-                  # <i className="fa-solid fa-circle"></i>
+                  # <i className="fa-solid fa-circle" />
                 </span>{" "}
                 <span
                   className="badge bg-success text-dark rounded-pill"
                   title={t("regionSelection.legend.numEventsTitle", "Number of upcoming events")}
                 >
-                  # <i className="fa-solid fa-calendar"></i>
+                  # <i className="fa-solid fa-calendar" />
                 </span>
               </div>
               {t("regionSelection.legend.region", "Region")}
@@ -326,7 +326,7 @@ export function RegionSelection(props: Props) {
                     </li>
                     <li>
                       <a className="dropdown-item" href={aboutLink()}>
-                        <span className="fa-solid fa-circle-info" aria-hidden="true"></span>{" "}
+                        <i className="fa-solid fa-circle-info" />{" "}
                         {t("regionSelection.aboutLink", "About regions")}
                       </a>
                     </li>

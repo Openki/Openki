@@ -335,9 +335,7 @@ export function Editable({
           !!errors.input && <div className="invalid-feedback">{errors.input}</div>
         )}
 
-        {!showControls() && (
-          <span className="fa-solid fa-pencil editable-icon" onClick={handleEdit}></span>
-        )}
+        {!showControls() && <i className="fa-solid fa-pencil editable-icon" onClick={handleEdit} />}
       </div>
       {showControls() && (
         <div className="editable-controls">

@@ -67,7 +67,7 @@ export function Header({ course }: { course: CourseModel }) {
       <div className="details-header-tags">
         {isProposal() && (
           <div className="proposal-tag">
-            <span className="fa-regular fa-lightbulb fa-fw" aria-hidden="true"></span>
+            <i className="fa-regular fa-lightbulb fa-fw" />
             {t("course.details.is-proposalTag", "Proposal")}
           </div>
         )}

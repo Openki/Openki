@@ -17,7 +17,8 @@ export function Tag(props: { region: string }) {
   if (!isLoading() && regions.length > 1) {
     return (
       <div className="region-tag p-2 text-light">
-        <span className="fa-solid fa-location-dot" aria-hidden="true"></span>&nbsp;
+        <i className="fa-solid fa-location-dot" />
+        &nbsp;
         {t("regionTag.inRegion", "in {REGION}", { REGION: regionName(props.region) })}
       </div>
     );

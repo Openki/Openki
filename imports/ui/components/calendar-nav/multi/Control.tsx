@@ -38,7 +38,7 @@ export function Control({ unit: currentUnit, direction, onChangeDate, onChangeUn
           data-bs-toggle="dropdown"
           data-bs-reference="parent"
         >
-          <span className="fa-solid fa-list-ul fa-fw" aria-hidden="true"></span>
+          <i className="fa-solid fa-list-ul fa-fw" />
         </button>
         <ul className="dropdown-menu">
           {units.map((unit) => (

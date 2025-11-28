@@ -117,7 +117,8 @@ export function Discussion({ select, courseId, eventId }: Props) {
     >
       <div className="page-component-header">
         <h4>
-          <span className="fa-solid fa-comments fa-fw" aria-hidden="true"></span>&nbsp;
+          <i className="fa-solid fa-comments fa-fw" />
+          &nbsp;
           {t("course.title.Discussion", "Discussion")}
         </h4>
       </div>
@@ -136,11 +137,9 @@ export function Discussion({ select, courseId, eventId }: Props) {
             <button
               className="btn btn-add page-component-btn"
               type="button"
-              onClick={() => {
-                setLimit(0);
-              }}
+              onClick={() => setLimit(0)}
             >
-              <i className="fa-solid fa-chevron-down fa-fw" aria-hidden="true"></i>
+              <i className="fa-solid fa-chevron-down fa-fw" />
               {t("course.discussions.showAllComment", "Show all {NUM} comments", {
                 NUM: allDiscussions().length,
               })}

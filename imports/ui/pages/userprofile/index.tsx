@@ -231,7 +231,7 @@ export function UserprofilePage({ user }: Props) {
                     className="btn btn-primary"
                     onClick={handleSetHasContributed}
                   >
-                    <i className={PublicSettings.contribution.icon} aria-hidden="true"></i>{" "}
+                    <i className={PublicSettings.contribution.icon} />{" "}
                     {t("profile.setHasContributed.button", "Mark this user has contributed")}
                   </button>
                 ) : (
@@ -253,7 +253,7 @@ export function UserprofilePage({ user }: Props) {
 
               {ownuser() ? (
                 <a className="btn btn-primary" href={Router.path("profile")}>
-                  <span className="fa-solid fa-gears fa-fw" aria-hidden="true"></span>{" "}
+                  <i className="fa-solid fa-gears fa-fw" />{" "}
                   {t("profile.preferenceslink", "Account settings")}
                 </a>
               ) : (
@@ -269,7 +269,7 @@ export function UserprofilePage({ user }: Props) {
               {showPrivileges && (
                 <div className="col-md">
                   <h3>
-                    <span className="fa-solid fa-gear fa-fw" aria-hidden="true"></span>{" "}
+                    <i className="fa-solid fa-gear fa-fw" />{" "}
                     {t("privileges.title", "Edit Privileges")}
                   </h3>
                   <div className="list-group">
@@ -303,7 +303,7 @@ export function UserprofilePage({ user }: Props) {
               {showInviteGroups() && (
                 <div className="col-md">
                   <h3>
-                    <span className="fa-solid fa-gear fa-fw" aria-hidden="true"></span>{" "}
+                    <i className="fa-solid fa-gear fa-fw" />{" "}
                     {t("userprofile.groups.header", "Edit groups")}
                   </h3>
                   <div className="list-group">

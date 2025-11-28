@@ -65,7 +65,7 @@ export function Content({ event }: { event: EventModel }) {
                 </div>
                 {!!event.venue?.address && (
                   <div className="tag">
-                    <span className="fa-solid fa-location-dot fa-fw" aria-hidden="true"></span>
+                    <i className="fa-solid fa-location-dot fa-fw" />
                     {event.venue.address}
                   </div>
                 )}

@@ -60,8 +60,7 @@ export function AdminFeatureGroupPage() {
           >
             {isBusy ? (
               <>
-                <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
-                {t("_button.deleting")}
+                <i className="fa-solid fa-circle-notch fa-spin fa-fw" /> {t("_button.deleting")}
               </>
             ) : (
               t("featureGroup.deleteButton", 'Remove the featured group for "{REGION}"', {
@@ -112,8 +111,7 @@ export function AdminFeatureGroupPage() {
           <button type="submit" className="btn btn-save" disabled={isBusy}>
             {isBusy ? (
               <>
-                <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
-                {t("_button.saving")}
+                <i className="fa-solid fa-circle-notch fa-spin fa-fw" /> {t("_button.saving")}
               </>
             ) : (
               t("featureGroup.saveButton", 'Feature this group in the "{REGION}" region', {

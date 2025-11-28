@@ -15,5 +15,5 @@ export function Arrow(props: { direction: Direction }) {
 
   const direction = isRTL ? "left" : "right";
 
-  return <span className={`fa-solid fa-arrow-${direction} fa-fw`} aria-hidden="true"></span>;
+  return <i className={`fa-solid fa-arrow-${direction} fa-fw`} />;
 }

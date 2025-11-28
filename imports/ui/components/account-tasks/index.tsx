@@ -23,13 +23,13 @@ function Title({ activeTask }: { activeTask: string }) {
     case "login":
       return pleaseLogin ? (
         <>
-          <i className="fa-solid fa-circle-exclamation fa-fw" aria-hidden="true"></i>
+          <i className="fa-solid fa-circle-exclamation fa-fw" />
           &nbsp;
           {t("Please.login", "Please log in or register")}
         </>
       ) : (
         <>
-          <i className="fa-solid fa-right-to-bracket fa-fw" aria-hidden="true"></i>
+          <i className="fa-solid fa-right-to-bracket fa-fw" />
           &nbsp;
           {t("login.login.title", "Log in")}
         </>
@@ -37,21 +37,24 @@ function Title({ activeTask }: { activeTask: string }) {
     case "recoverPwd":
       return (
         <>
-          <i className="fa-solid fa-unlock fa-fw" aria-hidden="true"></i>&nbsp;
+          <i className="fa-solid fa-unlock fa-fw" />
+          &nbsp;
           {t("login.recoverPwd.title", "Recover Password")}
         </>
       );
     case "visitor":
       return (
         <>
-          <i className="fa-solid fa-user-plus fa-fw" aria-hidden="true"></i>&nbsp;
+          <i className="fa-solid fa-user-plus fa-fw" />
+          &nbsp;
           {t("login.visitor.submit")}
         </>
       );
     case "register":
       return (
         <>
-          <i className="fa-solid fa-user-plus fa-fw" aria-hidden="true"></i>&nbsp;
+          <i className="fa-solid fa-user-plus fa-fw" />
+          &nbsp;
           {t("login.register.submit")}
         </>
       );

@@ -44,7 +44,7 @@ export function Submenu({ course }: { course: CourseModel }) {
               aria-controls="description"
               aria-selected="true"
             >
-              <span className="fa-solid fa-file-lines fa-fw" aria-hidden="true"></span>{" "}
+              <i className="fa-solid fa-file-lines fa-fw" />{" "}
               <span className="tab-label">{t("course.subnav.descr", "Description")}</span>
             </button>
           </li>
@@ -60,7 +60,7 @@ export function Submenu({ course }: { course: CourseModel }) {
                 aria-controls="files"
                 aria-selected="false"
               >
-                <span className="fa-solid fa-file fa-fw" aria-hidden="true"></span>{" "}
+                <i className="fa-solid fa-file fa-fw" />{" "}
                 <span className="tab-label">{t("course.subnav.files", "Files")}</span>
               </button>
             </li>
@@ -76,7 +76,7 @@ export function Submenu({ course }: { course: CourseModel }) {
               aria-controls="history"
               aria-selected="false"
             >
-              <span className="fa-solid fa-clock-rotate-left fa-fw" aria-hidden="true"></span>{" "}
+              <i className="fa-solid fa-clock-rotate-left fa-fw" />{" "}
               <span className="tab-label">{t("course.subnav.history", "History")}</span>
             </button>
           </li>

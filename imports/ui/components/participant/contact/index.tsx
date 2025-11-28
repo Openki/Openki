@@ -83,7 +83,7 @@ export function ParticipantContact(props: Props) {
                     setShowModal(true);
                   }}
                 >
-                  <i className="fa-solid fa-envelope fa-fw"></i>
+                  <i className="fa-solid fa-envelope fa-fw" />
                 </button>
               ) : (
                 <button className="btn btn-link p-0 disabled" type="button" disabled>
@@ -93,7 +93,7 @@ export function ParticipantContact(props: Props) {
                       "user.acceptsPrivateMessages.false",
                       "User does not accept direct messages from users",
                     )}
-                  ></i>
+                  />
                 </button>
               ))}
           </div>
@@ -103,7 +103,7 @@ export function ParticipantContact(props: Props) {
                 <div className="modal-content">
                   <div className="modal-header">
                     <h4 className="modal-title">
-                      <span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>
+                      <i className="fa-solid fa-paper-plane fa-fw" />
                       &nbsp;
                       {t("participantContactModal.writeMessageTo", "Write a message to {USER}", {
                         USER: participant?.getDisplayName(),

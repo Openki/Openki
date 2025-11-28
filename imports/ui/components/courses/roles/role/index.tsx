@@ -150,7 +150,7 @@ export function Role(data: Data) {
                 className="toggle-first-steps btn btn-link float-end"
                 onClick={toggleFirstStepsClick}
               >
-                <i className="fa-solid fa-circle-info" aria-hidden="true"></i>
+                <i className="fa-solid fa-circle-info" />
               </button>
             </div>
           </div>
@@ -219,10 +219,7 @@ export function Role(data: Data) {
           {enrolling ? (
             <>
               <div className="course-role-title-enroll">
-                <span
-                  className={`${data.role.icon} fa-fw coursepage-role-icon`}
-                  aria-hidden="true"
-                ></span>
+                <i className={`${data.role.icon} fa-fw coursepage-role-icon`} />
                 &nbsp;
                 {roleSubscribe(data.role.type)}
               </div>
@@ -307,11 +304,7 @@ export function Role(data: Data) {
                 name={data.role.type}
                 onClick={handleRoleEnrollClick}
               >
-                <span
-                  className={`${data.role.icon} fa-fw coursepage-role-icon`}
-                  aria-hidden="true"
-                ></span>
-                &nbsp;
+                <i className={`${data.role.icon} fa-fw coursepage-role-icon`} /> &nbsp;
                 {roleSubscribe(data.role.type)}
               </button>
             )
