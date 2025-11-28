@@ -4,7 +4,6 @@ import moment from "moment";
 
 import * as Tooltips from "/imports/utils/Tooltips";
 
-import * as Viewport from "/imports/ui/lib/viewport";
 import { observeSize } from "../../lib/observeHeight";
 
 import "/imports/ui/layouts/root.html";
@@ -88,9 +87,5 @@ template.onRendered(() => {
     });
   }
 
-  Viewport.update();
-  $(window).on("resize", () => {
-    Viewport.update();
-  });
   Tooltips.enable();
 });
