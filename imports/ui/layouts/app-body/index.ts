@@ -7,7 +7,6 @@ import { Regions } from "/imports/api/regions/regions";
 
 import * as RegionSelection from "/imports/utils/region-selection";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
-import * as Viewport from "/imports/ui/lib/viewport";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import * as Tooltips from "/imports/utils/Tooltips";
 import * as FormsValidation from "/imports/utils/FormsValidation";
@@ -66,10 +65,6 @@ template.helpers({
 });
 
 template.onRendered(() => {
-  Viewport.update();
-  window.addEventListener("resize", () => {
-    Viewport.update();
-  });
   Tooltips.enable();
   FormsValidation.enable();
 });
