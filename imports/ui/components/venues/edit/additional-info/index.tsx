@@ -5,9 +5,9 @@ import { SaveFields } from "/imports/api/venues/methods";
 import { FacilityOption, Venues } from "/imports/api/venues/venues";
 
 import { FormCheckGroup } from "../../../FormCheckGroup";
+import { FormControl } from "/imports/ui/components/form-control";
 
 import "./styles.scss";
-import { FormControl } from "/imports/ui/components/form-control";
 
 export interface Props {
   data: Pick<SaveFields, "short" | "maxPeople" | "maxWorkplaces" | "facilities"> & {

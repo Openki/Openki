@@ -18,7 +18,8 @@ import * as Metatags from "/imports/utils/metatags";
 import * as Tooltips from "/imports/utils/Tooltips";
 
 import { Avatar } from "../../components/avatar";
-import { Button, ButtonCancel, ButtonDelete } from "../../components/Buttons.old";
+import { Button, ButtonCancel } from "/imports/ui/components/Buttons";
+import { ButtonDelete } from "../../components/Buttons.old";
 import { Contribution } from "../../components/Contribution";
 import { Courselist } from "../../components/profiles/course-list";
 import { SendMessage, Props as SendMessageProps } from "../../components/SendMessage";
