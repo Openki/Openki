@@ -5,8 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
 
-import { ButtonDelete, ButtonCancel } from "../Buttons";
-import { ButtonSave } from "../Buttons.old";
+import { ButtonDelete, ButtonCancel, ButtonSave } from "../Buttons";
 
 import "./styles.scss";
 
@@ -298,7 +297,7 @@ export function EditableImage(data: Data) {
       </form>
       <div className="editable-image-controls">
         {progress === "ready" ? (
-          <ButtonSave id="editable-image-save" {...uploadButtonAttributes()} />
+          <ButtonSave needsLogin id="editable-image-save" {...uploadButtonAttributes()} />
         ) : (
           deleteAllowed() && <ButtonDelete id="editable-image-delete" onClick={onDelete} />
         )}{" "}

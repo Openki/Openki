@@ -9,8 +9,7 @@ import * as EventsMethods from "/imports/api/events/methods";
 import { LocalTime } from "/imports/utils/local-time";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
-import { ButtonCancel } from "../../Buttons";
-import { ButtonSave } from "../../Buttons.old";
+import { ButtonCancel, ButtonSave } from "../../Buttons";
 import { FormCheckGroup } from "../../FormCheckGroup";
 import { DateSelect } from "../../date-select";
 import { Notify } from "../Notify";
@@ -316,6 +315,7 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
         {!!replicaDateCount() && (
           <ButtonSave
             id="events-replication-save"
+            needsLogin
             onClick={async () => {
               const startLocal = LocalTime.fromString(event.startLocal);
               const endLocal = LocalTime.fromString(event.endLocal);
