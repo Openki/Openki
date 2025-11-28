@@ -112,7 +112,7 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
     }
   }
 
-  async function handelOnArchive() {
+  async function handleOnArchive() {
     setIsBusy(true);
     try {
       await CoursesMethods.archive(course._id);
@@ -133,7 +133,7 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
     }
   }
 
-  async function handelUnarchive() {
+  async function handleUnarchive() {
     setIsBusy(true);
     try {
       await CoursesMethods.unarchive(course._id);
@@ -153,7 +153,7 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
     }
   }
 
-  function handelOnEdit() {
+  function handleOnEdit() {
     setExpanded(false);
 
     const query: {
@@ -245,16 +245,14 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
                           <ButtonEdit
                             id="course-details-edit"
                             disabled={isBusy}
-                            onClick={handelOnEdit}
+                            onClick={handleOnEdit}
                           />
                         )}
 
                         {course.archived && (
                           <ButtonCourseUnarchive
                             disabled={isBusy}
-                            onUnarchive={async () => {
-                              handelUnarchive();
-                            }}
+                            onUnarchive={async () => handleUnarchive()}
                           />
                         )}
 
@@ -262,7 +260,7 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
                           <ButtonCourseArchive
                             disabled={isBusy}
                             className="btn-archive"
-                            onArchive={async () => handelOnArchive()}
+                            onArchive={async () => handleOnArchive()}
                           >
                             {t("course.archive.archiveButton.archive", "Archive")}
                           </ButtonCourseArchive>
@@ -281,7 +279,7 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
                           archiveButton={!course.archived}
                           disabled={isBusy}
                           course={course}
-                          onArchive={async () => handelOnArchive()}
+                          onArchive={async () => handleOnArchive()}
                           onDelete={handleOnDelete}
                           onCancel={() => setExpanded(false)}
                         />

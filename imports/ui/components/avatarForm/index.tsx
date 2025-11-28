@@ -15,7 +15,7 @@ export function AvatarForm() {
   const user = useUser();
   const [color, setColor] = useState(user?.avatar.color || 0);
 
-  const handelChange = useDebouncedCallback(async function (newValue: number) {
+  const handleChange = useDebouncedCallback(async function (newValue: number) {
     await usersMethods.updateAvatarColor(newValue);
     Alert.success(t("profile.updated", "Updated profile"));
   }, 500);
@@ -38,7 +38,7 @@ export function AvatarForm() {
           onInput={async (event) => {
             const newColor = event.currentTarget.valueAsNumber;
             setColor(newColor);
-            await handelChange(newColor);
+            await handleChange(newColor);
           }}
         />
       </div>

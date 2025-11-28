@@ -14,7 +14,7 @@ export function Splash() {
   const elementRef = useRef<HTMLDivElement>(null);
   const siteName = useSiteName();
 
-  function handelHidden() {
+  function handleHidden() {
     Session.set("showRegionSplash", false);
   }
 
@@ -26,10 +26,10 @@ export function Splash() {
     Modal.getOrCreateInstance(elementRef.current).show();
 
     const element = elementRef.current;
-    element.addEventListener("hidden.bs.modal", handelHidden);
+    element.addEventListener("hidden.bs.modal", handleHidden);
 
     return () => {
-      element.removeEventListener("hidden.bs.modal", handelHidden);
+      element.removeEventListener("hidden.bs.modal", handleHidden);
     };
   });
 

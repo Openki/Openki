@@ -54,7 +54,7 @@ export function ActionResult({ type, dismissible, icon, title, children, actions
   );
 
   let timeoutActionFocus: any = 0;
-  async function handelActionClick(
+  async function handleActionClick(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
     href: string,
   ) {
@@ -125,7 +125,7 @@ export function ActionResult({ type, dismissible, icon, title, children, actions
                           "btn btn-lg btn-" + (type === "success" ? "success" : "secondary")
                         }
                         href={action.href}
-                        onClick={(event) => handelActionClick(event, action.href)}
+                        onClick={(event) => handleActionClick(event, action.href)}
                       >
                         {action.text}
                       </a>

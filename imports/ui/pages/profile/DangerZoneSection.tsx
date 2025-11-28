@@ -38,7 +38,7 @@ export function DangerZoneSection() {
     };
   }
 
-  async function handelChangePassword(event: React.FormEvent<HTMLFormElement>) {
+  async function handleChangePassword(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const old = oldPassword;
     const pass = newPassword;
@@ -82,7 +82,7 @@ export function DangerZoneSection() {
             </button>
           ) : (
             <div className="border border-success text-primary p-3">
-              <form onSubmit={handelChangePassword}>
+              <form onSubmit={handleChangePassword}>
                 <div className="row mb-2">
                   <label htmlFor="oldpassword" className="col-sm-4 col-form-label text-end">
                     {t("profile.input.oldPassword", "Your current password")}

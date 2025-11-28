@@ -59,7 +59,7 @@ export function ResetPasswordPage({ token, email }: Props) {
     }
   }
 
-  function handelCancel() {
+  function handleCancel() {
     Router.go("home");
   }
 
@@ -149,7 +149,7 @@ export function ResetPasswordPage({ token, email }: Props) {
           >
             {t("resetPassword.confirm", "Set my password")}
           </button>
-          <ButtonCancel id="reset-pwd-cancel" disabled={!!isBusy} onClick={handelCancel} />
+          <ButtonCancel id="reset-pwd-cancel" disabled={!!isBusy} onClick={handleCancel} />
         </div>
       </form>
     </div>

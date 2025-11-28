@@ -108,22 +108,22 @@ export function Selection(props: Props) {
     });
   });
 
-  function handelSearchKeyUp(event: React.KeyboardEvent<HTMLInputElement>) {
+  function handleSearchKeyUp(event: React.KeyboardEvent<HTMLInputElement>) {
     const newSearch = event.currentTarget.value.trim();
     if (newSearch !== search) {
       setSearch(newSearch);
     }
   }
 
-  function handelSearchFocus() {
+  function handleSearchFocus() {
     setSearchHasFocus(true);
   }
 
-  function handelSearchBlur() {
+  function handleSearchBlur() {
     setSearchHasFocus(false);
   }
 
-  function handelSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (languages()[0]) {
@@ -133,7 +133,7 @@ export function Selection(props: Props) {
 
   return (
     <li className={`language-selection ${inNavbarClasses()}`}>
-      <form className="d-flex language-selection-form" tabIndex={0} onSubmit={handelSubmit}>
+      <form className="d-flex language-selection-form" tabIndex={0} onSubmit={handleSubmit}>
         <div className="input-group input-group-outline input-group-sm p-2">
           <span className="input-group-text">
             <span className="fa-solid fa-globe fa-fw" aria-hidden="true"></span>
@@ -143,9 +143,9 @@ export function Selection(props: Props) {
             className="form-control"
             type="text"
             defaultValue={currentLanguage().name}
-            onKeyUp={handelSearchKeyUp}
-            onFocus={handelSearchFocus}
-            onBlur={handelSearchBlur}
+            onKeyUp={handleSearchKeyUp}
+            onFocus={handleSearchFocus}
+            onBlur={handleSearchBlur}
           />
           <input className="d-none" type="submit" />
           <button
