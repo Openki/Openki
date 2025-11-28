@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { ButtonDelete } from "./Buttons.old";
+import { ButtonDelete } from "./Buttons";
 import { DeleteConfirmDialog } from "/imports/ui/components/delete-confirm-dialog";
 
 export interface Props {

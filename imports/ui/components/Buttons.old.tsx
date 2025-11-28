@@ -1,7 +1,5 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
-
-import { PleaseLogin } from "./please-login";
 
 import { Size } from "../lib/buildSizeClass";
 import { Button } from "/imports/ui/components/Buttons";
@@ -53,62 +51,5 @@ export function ButtonSubmit({
     >
       {t("_button.save")}
     </Button>
-  );
-}
-
-export function ButtonEdit(props: { onClick: () => void; disabled?: boolean | undefined }) {
-  const { t } = useTranslation();
-  return (
-    <button
-      type="button"
-      className="btn btn-edit text-nowrap"
-      onClick={props.onClick}
-      disabled={props.disabled}
-    >
-      {t("_button.edit")}
-    </button>
-  );
-}
-export function ButtonDelete({
-  id,
-  onClick,
-  disabled,
-  children,
-  busyText,
-}: {
-  id: string;
-  onClick: () => Promise<void>;
-  disabled?: boolean | undefined;
-  children?: ReactNode;
-  busyText?: string | undefined;
-}) {
-  const { t } = useTranslation();
-  const [isBusy, setIsBusy] = useState(false);
-
-  busyText = busyText || t("_button.deleting");
-
-  return (
-    <PleaseLogin
-      id={id}
-      type="button"
-      className="btn btn-delete text-nowrap text-danger"
-      disabled={isBusy || disabled}
-      onClick={async () => {
-        setIsBusy(true);
-        try {
-          await onClick();
-        } finally {
-          setIsBusy(false);
-        }
-      }}
-    >
-      {!isBusy ? (
-        children || t("_button.delete")
-      ) : (
-        <>
-          <i className="fa-solid fa-circle-notch fa-spin fa-fw" /> {busyText}
-        </>
-      )}
-    </PleaseLogin>
   );
 }

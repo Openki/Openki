@@ -13,7 +13,7 @@ describe("event details page", () => {
     );
     cy.get("#events-cancel-confirm-dialog-cancel").click();
     cy.getById("event-details-canceled").should("be.visible");
-    cy.get("#events-display-body-uncancel-button").click();
+    cy.get("#events-display-body-uncancel").click();
     cy.get(".alert-success").should("be.visible");
   });
 

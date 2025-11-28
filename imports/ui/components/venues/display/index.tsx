@@ -9,7 +9,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import * as VenuesMethods from "/imports/api/venues/methods";
 import { VenueModel } from "/imports/api/venues/venues";
 
-import { ButtonDelete, ButtonEdit } from "../../Buttons.old";
+import { ButtonDelete, ButtonEdit } from "../../Buttons";
 import { Contribution } from "../../Contribution";
 import {
   type Props as DeleteConfirmDialogProps,
@@ -219,6 +219,7 @@ export function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => vo
           <>
             <div className="actions">
               <ButtonEdit
+                id="venues-display-edit"
                 onClick={() => {
                   onEdit();
                   setVerifyDelete(false);

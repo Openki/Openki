@@ -69,12 +69,7 @@ export function Edit(data: Data) {
     <div className="edit-page region-edit">
       <h2>{data.title}</h2>
       <PleaseLogin type="form" onSubmit={handleSave}>
-        <Fields
-          region={changes}
-          onChange={(newChanges) => {
-            setChanges(newChanges);
-          }}
-        />
+        <Fields region={changes} onChange={(newChanges) => setChanges(newChanges)} />
         <div className="form-actions">
           <ButtonSave id="regions-edit-save" onClick={handleSave} />
           <ButtonCancel id="regions-edit-cancel" onClick={() => data.onCancel()} />
