@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { FormCheck } from "/imports/ui/components/FormCheck";
 
 export interface Props {
   type: string;
@@ -22,36 +23,27 @@ export function Role(props: Props) {
 
   return (
     <>
-      <div className="form-check">
-        <input
-          className={`form-check-input ${props.type}`}
-          name={props.type}
-          type="checkbox"
-          value=""
-          id={`courseEditRole${props.type}Check`}
-          checked={props.enabled}
-          onChange={(event) => props.onRole(event.currentTarget.checked)}
-        />
-        <label
-          className={`form-check-label ${props.type}`}
-          htmlFor={`courseEditRole${props.type}Check`}
-        >
-          <i className={`${props.icon} fa-fw`} /> {t(roleDescription())}
-        </label>
-      </div>
+      <FormCheck
+        id={`courseEditRole${props.type}Check`}
+        type="box"
+        label={
+          <>
+            <i className={`${props.icon} fa-fw`} /> {t(roleDescription())}
+          </>
+        }
+        checked={props.enabled}
+        onChange={(checked) => props.onRole(checked)}
+      />
+
       {props.enabled && (
-        <div className="form-check ms-4">
-          <input
-            className={`form-check-input ${props.type}`}
-            name={props.type}
-            type="checkbox"
+        <div className="ms-4">
+          <FormCheck
             id={`courseEditRole${props.type}EnrollCheck`}
+            type="box"
+            label={t(roleSubscription())}
             checked={props.enroll}
-            onChange={(event) => props.onEnroll(event.currentTarget.checked)}
+            onChange={(checked) => props.onEnroll(checked)}
           />
-          <label className="form-check-label" htmlFor={`courseEditRole${props.type}EnrollCheck`}>
-            {t(roleSubscription())}
-          </label>
         </div>
       )}
     </>
