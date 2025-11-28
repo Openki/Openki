@@ -1,7 +1,6 @@
 {
   "Please.login": "Пожалуйста, войдите в систему или зарегистрируйтесь",
   "Profile.translate_this_page": "Помогите нам перевести эту страницу",
-  "_button.addingYouToWaitingQueue": "Добавление вас в очередь ожидания…",
   "_button.cancel": "Отмена",
   "_button.delete": "удалить",
   "_button.deleting": "Удаление…",
@@ -458,7 +457,6 @@
   "event.windowtitle.create": "Создать событие",
   "eventDetails.eventRemoved": "Событие \"{TITLE}\" удалено.",
   "eventDetails.eventRemoved.error": "Не удалось удалить событие",
-  "eventDetails.notLoggedIn": "(не вошли в систему?)",
   "eventEdit.replicatesUpdated": "Копии мероприятия \"{TITLE}\" также были обновлены.",
   "eventEdit.replicatesUpdated.error": "Сохранение мероприятия не удалось",
   "eventParticipant.iBringCompanions": "Приводит попутчика.",

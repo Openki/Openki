@@ -1,7 +1,6 @@
 {
   "Please.login": "Please log in or register",
   "Profile.translate_this_page": "Help us to translate this Page",
-  "_button.addingYouToWaitingQueue": "Adding you to waiting queue…",
   "_button.cancel": "Cancel",
   "_button.close": "Close",
   "_button.delete": "Delete",
@@ -466,7 +465,6 @@
   "event.windowtitle.create": "Create event",
   "eventDetails.eventRemoved": "The \"{TITLE}\" event has been deleted.",
   "eventDetails.eventRemoved.error": "Could not remove event",
-  "eventDetails.notLoggedIn": "(not logged in?)",
   "eventEdit.replicatesUpdated": "Replicas of \"{TITLE}\" have also been updated.",
   "eventEdit.replicatesUpdated.error": "Saving the event went wrong",
   "eventParticipant.iBringCompanions": "Brings companion.",
