@@ -31,6 +31,7 @@ export function InfoPage({ page }: Props) {
       await MeteorAsync.defer();
 
       targetTitle.nextUntil(headerTag).show();
+      targetTitle.addClass("active");
       $(window).scrollTop(targetTitle.position().top - ScssVars.navbarHeight);
     }
   }
