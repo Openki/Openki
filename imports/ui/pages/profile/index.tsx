@@ -10,7 +10,7 @@ import { UserModel } from "/imports/api/users/users";
 import * as Venues from "/imports/api/venues/publications";
 
 import * as Analytics from "/imports/ui/lib/analytics";
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 
 import { ActionResult } from "../../components/ActionResult";
 import { AdminSection } from "./AdminSection";
@@ -240,16 +240,6 @@ export function ProfilePage() {
     return !!user?.privileged("visitor");
   }
 
-  useEffect(() => {
-    if (!user) {
-      return;
-    }
-    const title = t("profile.settings.windowtitle", "My Profile Settings - {USER}", {
-      USER: user.getDisplayName(),
-    });
-    Metatags.setCommonTags(title);
-  });
-
   if (query.unsubscribed || query["unsubscribe-error"] === "") {
     return <UnsubscribeResultAlerts />;
   }
@@ -258,18 +248,26 @@ export function ProfilePage() {
     return <VerifyEmailAlerts />;
   }
 
+  const title = t("profile.settings.windowtitle", "My Profile Settings - {USER}", {
+    USER: user?.getDisplayName() || "...",
+  });
+
   return (
-    <div className="container mw-md">
-      {!isVisitor() && (
-        <div className="page-component">
-          <h1 data-test="profile-header">
-            <span className="fa-solid fa-gears fa-fw" aria-hidden="true"></span>{" "}
-            {t("login.frame.settings")}
-          </h1>
-        </div>
-      )}
-      {!user ? <NotLoggedIn /> : <LoggedIn user={user} />}
-    </div>
+    <>
+      <MetaTags title={title} />
+
+      <div className="container mw-md">
+        {!isVisitor() && (
+          <div className="page-component">
+            <h1 data-test="profile-header">
+              <span className="fa-solid fa-gears fa-fw" aria-hidden="true"></span>{" "}
+              {t("login.frame.settings")}
+            </h1>
+          </div>
+        )}
+        {!user ? <NotLoggedIn /> : <LoggedIn user={user} />}
+      </div>
+    </>
   );
 }
 

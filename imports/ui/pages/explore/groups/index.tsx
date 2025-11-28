@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 
 import * as Groups from "/imports/api/groups/publications";
 
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 
 import "./styles.scss";
 
@@ -26,36 +26,36 @@ export function GroupsPage() {
 
   const [isLoading, groups] = Groups.useFindFilter();
 
-  useEffect(() => {
-    Metatags.setCommonTags(t("exploreGroups.title", "Groups"));
-  });
-
   if (isLoading()) {
     return null;
   }
 
   return (
-    <div className="container">
-      <div className="row gap-0 row-gap-4 row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-        {groups.map((group) => (
-          <div key={group._id} className="col">
-            <div
-              className="card card-group border-0 rounded-0 mx-auto"
-              style={bodyStyle(group.publicLogoUrl())}
-            >
-              <div className="card-body overflow-hidden">
-                <h5 className="card-title">
-                  <a className="stretched-link" href={Router.path("groupDetails", group)}>
-                    {group.name}
-                  </a>
-                </h5>
-                <p className="card-text">{group.claim}</p>
+    <>
+      <MetaTags title={t("exploreGroups.title", "Groups")} />
+
+      <div className="container">
+        <div className="row gap-0 row-gap-4 row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+          {groups.map((group) => (
+            <div key={group._id} className="col">
+              <div
+                className="card card-group border-0 rounded-0 mx-auto"
+                style={bodyStyle(group.publicLogoUrl())}
+              >
+                <div className="card-body overflow-hidden">
+                  <h5 className="card-title">
+                    <a className="stretched-link" href={Router.path("groupDetails", group)}>
+                      {group.name}
+                    </a>
+                  </h5>
+                  <p className="card-text">{group.claim}</p>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

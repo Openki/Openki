@@ -1,10 +1,12 @@
+import React from "react";
+
 import { Meteor } from "meteor/meteor";
 
 import { EventModel } from "/imports/api/events/events";
 import { Geodata } from "/imports/api/Geodata";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { isOnCustomMap } from "./isOnCustomMap";
+import { isOnCustomMap } from "../../utils/isOnCustomMap";
 
 function getSiteDefaultImage() {
   const ogLogo = PublicSettings.ogLogo.src;
@@ -102,20 +104,16 @@ function createJsonLd(data: EventModel) {
   };
 }
 
-/**
- * Adds a jsonLd to the eventDetails html-template
- *
- * @param data the event data
- */
-export function appendAsJsonLdToBody(data: EventModel) {
-  if (checkJsonLdMinReqs(data)) {
-    $(() => {
-      const jsonLdTag = document.createElement("script");
-      jsonLdTag.type = "application/ld+json";
-      const jsonLd = createJsonLd(data);
-      const jsonLdTextNode = document.createTextNode(JSON.stringify(jsonLd, null, 4));
-      jsonLdTag.appendChild(jsonLdTextNode);
-      $("body").append(jsonLdTag);
-    });
+export function EventAsJsonLd({ event }: { event: EventModel }) {
+  if (!checkJsonLdMinReqs(event)) {
+    return null;
   }
+
+  const jsonLd = createJsonLd(event);
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd, null, 4) }}
+    />
+  );
 }

@@ -6,7 +6,7 @@ import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 import { Events } from "/imports/api/events/events";
 import { useFindFilter } from "/imports/api/events/publications";
 
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 
 import { LoadingPage } from "../loading";
 import { Day } from "./day";
@@ -72,12 +72,10 @@ export function CalendarPage(data: Record<string, string>) {
     }
   });
 
-  useEffect(() => {
-    Metatags.setCommonTags(t("calendar.windowtitle", "Calendar"));
-  });
-
   return (
     <>
+      <MetaTags title={t("calendar.windowtitle", "Calendar")} />
+
       <Multi
         date={startDate()}
         filter={filter}

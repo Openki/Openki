@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
@@ -13,7 +13,7 @@ import * as UrlTools from "/imports/utils/url-tools";
 import { reactiveNow } from "/imports/utils/reactive-now";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 
 import { ComponentSettings, Dashboard } from "/imports/ui/components/dashboard";
 import { AccountTasks } from "/imports/ui/components/account-tasks";
@@ -122,10 +122,6 @@ export function ProgramPage(data: Record<string, string>) {
     return days;
   }
 
-  useEffect(() => {
-    Metatags.setCommonTags(t("calendar.windowtitle", "Calendar"));
-  });
-
   const routeName = useCurrentRouteName();
 
   function update() {
@@ -144,6 +140,8 @@ export function ProgramPage(data: Record<string, string>) {
 
   return (
     <>
+      <MetaTags title={t("calendar.windowtitle", "Calendar")} />
+      
       <AccountTasks />
       {!!filter.get("control") && <CalendarNavProgram {...calendarNavAttr()} />}
       <div className="py-4">

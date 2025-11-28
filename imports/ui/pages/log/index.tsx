@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
@@ -11,7 +11,7 @@ import { Log } from "/imports/api/log/log";
 
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import * as UrlTools from "/imports/utils/url-tools";
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 
 import { Entry } from "./log-entry";
 
@@ -175,16 +175,14 @@ export function LogPage({
     window.scrollTo(0, 0);
   }, []);
 
-  useEffect(() => {
-    Metatags.setCommonTags(t("log.list.windowtitle", "Log"));
-  });
-
   if (!privileged()) {
     return <h1>PLZ login as admin!</h1>;
   }
 
   return (
     <>
+      <MetaTags title={t("log.list.windowtitle", "Log")} />
+
       <div className="page-component">
         <div>
           <div className="input-group">

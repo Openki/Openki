@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
 import { omit } from "lodash-es";
 import * as Analytics from "/imports/ui/lib/analytics";
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 import { useTranslation } from "react-i18next";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
 
@@ -33,10 +33,6 @@ export function TenantCreatePage(data: Data) {
 
   const { promptToLogin } = useAccountTasks();
   const [isBusy, setIsBusy] = useState(false);
-
-  useEffect(() => {
-    Metatags.setCommonTags(t("tenant.edit.siteTitle.create", "Create private region"));
-  });
 
   async function handleSave() {
     if (!changes.tenantName) {
@@ -85,50 +81,54 @@ export function TenantCreatePage(data: Data) {
   }
 
   return (
-    <div className="container mw-md">
-      <div className="edit-page region-edit">
-        <h2>{t("tenant.create.title", "Create your private region")}</h2>
+    <>
+      <MetaTags title={t("tenant.edit.siteTitle.create", "Create private region")} />
 
-        <form noValidate onSubmit={handleSave}>
-          <div className="mb-3">
-            <label className="form-label">
-              {t("tenant.edit.name", "Name of your organization:")}
-            </label>
-            <input
-              data-test="tenant-edit-name"
-              type="text"
-              className="form-control"
-              placeholder={t("tenant.edit.namePlaceholder", "Full name of your organization")}
-              onChange={(event) => {
-                setChanges({
-                  ...changes,
-                  tenantName: event.currentTarget.value,
+      <div className="container mw-md">
+        <div className="edit-page region-edit">
+          <h2>{t("tenant.create.title", "Create your private region")}</h2>
+
+          <form noValidate onSubmit={handleSave}>
+            <div className="mb-3">
+              <label className="form-label">
+                {t("tenant.edit.name", "Name of your organization:")}
+              </label>
+              <input
+                data-test="tenant-edit-name"
+                type="text"
+                className="form-control"
+                placeholder={t("tenant.edit.namePlaceholder", "Full name of your organization")}
+                onChange={(event) => {
+                  setChanges({
+                    ...changes,
+                    tenantName: event.currentTarget.value,
+                  });
+                }}
+              />
+            </div>
+            <Fields
+              region={changes}
+              onChange={(newChanges) => {
+                setChanges((changes) => {
+                  return {
+                    tenantName: changes.tenantName,
+                    ...newChanges,
+                  };
                 });
               }}
             />
-          </div>
-          <Fields
-            region={changes}
-            onChange={(newChanges) => {
-              setChanges((changes) => {
-                return {
-                  tenantName: changes.tenantName,
-                  ...newChanges,
-                };
-              });
-            }}
-          />
-          <div className="form-actions">
-            <ButtonSave submit id="tenant-create-save" isBusy={isBusy} />
-            <ButtonCancel
-              id="tenant-create-cancel"
-              disabled={isBusy}
-              onClick={() => Router.go("profile")}
-            />
-          </div>
-        </form>
+            <div className="form-actions">
+              <ButtonSave submit id="tenant-create-save" isBusy={isBusy} />
+              <ButtonCancel
+                id="tenant-create-cancel"
+                disabled={isBusy}
+                onClick={() => Router.go("profile")}
+              />
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

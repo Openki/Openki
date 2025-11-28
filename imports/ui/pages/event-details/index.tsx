@@ -4,18 +4,15 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
-import { truncate } from "lodash-es";
 
 import { EventModel } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { Regions } from "/imports/api/regions/regions";
 
-import { appendAsJsonLdToBody } from "/imports/utils/event-to-json-ld";
-import { textPlain } from "/imports/utils/html-tools";
-import * as Metatags from "/imports/utils/metatags";
-
 import * as Analytics from "/imports/ui/lib/analytics";
 
+import { EventAsJsonLd } from "../../components/EventAsJsonLd";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 import { ActionResult } from "../../components/ActionResult";
 import { Event } from "./event";
 
@@ -101,32 +98,32 @@ export function EventPage({ event, isNew }: { event: EventModel; isNew: boolean 
   const { t } = useTranslation();
   const searchParams = useSearchParams();
 
-  useEffect(() => {
-    let title;
-    let description = "";
-    if (!isNew && event) {
-      title = t("event.windowtitle", "{DATE} – {EVENT}", {
-        EVENT: event.title,
-        DATE: moment(event.startLocal)
-          .locale(Session.get("timeLocale") || "en")
-          .format("ddd, MMM D"),
-      });
-      description = truncate(textPlain(event.description), { length: 160 });
-      appendAsJsonLdToBody(event);
-    } else {
-      title = t("event.windowtitle.create", "Create event");
-    }
-    Metatags.setCommonTags(title, description, event?.publicUrlForDetailsImage());
-  });
-
   if (searchParams.action === "unregister" && searchParams.participant && searchParams.token) {
     return (
       <Unregister event={event} participant={searchParams.participant} token={searchParams.token} />
     );
   }
 
+  let title;
+  if (!isNew && event) {
+    title = t("event.windowtitle", "{DATE} – {EVENT}", {
+      EVENT: event.title,
+      DATE: moment(event.startLocal)
+        .locale(Session.get("timeLocale") || "en")
+        .format("ddd, MMM D"),
+    });
+  } else {
+    title = t("event.windowtitle.create", "Create event");
+  }
   return (
     <>
+      <MetaTags
+        title={title}
+        description={event.description}
+        image={event?.publicUrlForDetailsImage()}
+      />
+      <EventAsJsonLd event={event} />
+
       {searchParams.nextActions === "1" && (
         <ActionResult
           type="success"

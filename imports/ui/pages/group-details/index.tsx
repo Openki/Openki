@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { truncate } from "lodash-es";
 import { Router } from "meteor/iron:router";
 import { useUser } from "meteor/react-meteor-accounts";
 import { useTranslation } from "react-i18next";
 import { useValidation } from "../../lib/useValidation";
-import { textPlain } from "/imports/utils/html-tools";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import * as Alert from "/imports/api/alerts/alert";
@@ -13,7 +11,7 @@ import * as GroupsMethods from "/imports/api/groups/methods";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 import { Store } from "/imports/ui/lib/editable";
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
 import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
@@ -229,14 +227,11 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
   };
 
   const title = group.name || t("group.windowtitle.create", "Create group");
-  let claim = "";
-  if (group.claim) {
-    claim = truncate(textPlain(group.claim), { length: 160 });
-  }
-  Metatags.setCommonTags(title, claim, group.publicLogoUrl());
 
   return (
     <>
+      <MetaTags title={title} description={group.claim} image={group.publicLogoUrl()} />
+
       <div className="container mb-4">
         {group.isNew() && <h2>{t("group.details.titleNew", "Create new group")}</h2>}
         <div className="page-component group-details">

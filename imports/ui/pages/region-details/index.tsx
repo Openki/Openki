@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 
@@ -6,7 +6,7 @@ import { RegionModel } from "/imports/api/regions/regions";
 import * as RegionsMethods from "/imports/api/regions/methods";
 
 import * as Analytics from "/imports/ui/lib/analytics";
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 
 import { Display, Props as DisplayData } from "/imports/ui/components/regions/display";
 import { Edit, Data as EditData } from "/imports/ui/components/regions/edit";
@@ -62,31 +62,31 @@ export function RegionDetailsPage({ isNew, region }: Props) {
     } as DisplayData;
   }
 
-  useEffect(() => {
-    let title;
-    if (isNew) {
-      title = t("region.edit.siteTitle.create", "Create region");
-    } else {
-      title = region.name;
-    }
-
-    Metatags.setCommonTags(title);
-  });
+  let title;
+  if (isNew) {
+    title = t("region.edit.siteTitle.create", "Create region");
+  } else {
+    title = region.name;
+  }
 
   return (
-    <div className="container mw-md">
-      <a href={Router.path("tenantDetails", { _id: region.tenant })}>
-        <span className="fa-solid fa-angle-left fa-fw" aria-hidden="true" />
-        {t("regionDetails.goToOverview", "Go to all regions")}
-      </a>
-      {isNew ? (
-        <Edit {...createArgs()} />
-      ) : editing ? (
-        <Edit {...editArgs()} />
-      ) : (
-        <Display {...displayArgs()} />
-      )}
-    </div>
+    <>
+      <MetaTags title={title} />
+
+      <div className="container mw-md">
+        <a href={Router.path("tenantDetails", { _id: region.tenant })}>
+          <span className="fa-solid fa-angle-left fa-fw" aria-hidden="true" />
+          {t("regionDetails.goToOverview", "Go to all regions")}
+        </a>
+        {isNew ? (
+          <Edit {...createArgs()} />
+        ) : editing ? (
+          <Edit {...editArgs()} />
+        ) : (
+          <Display {...displayArgs()} />
+        )}
+      </div>
+    </>
   );
 }
 
