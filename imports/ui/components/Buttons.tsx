@@ -104,7 +104,9 @@ function ControlledButton(props: CommonProps & LoginProps) {
 export function Button(props: Props) {
   const { id, className, size, block, disabled, children, busyText } = props;
 
-  const fullClassName = ["btn", buildSizeClass("btn", size), "text-nowrap", className].join(" ");
+  const fullClassName = ["btn", buildSizeClass("btn", size), !block ? "text-nowrap" : "", className]
+    .filter((v) => v)
+    .join(" ");
 
   const button =
     "onClick" in props ? (
@@ -207,7 +209,12 @@ export function ButtonDelete(
   const { t } = useTranslation();
 
   return (
-    <Button submit {...props} className="btn-delete text-danger" busyText={t("_button.deleting")}>
+    <Button
+      needsLogin
+      {...props}
+      className="btn-delete text-danger"
+      busyText={t("_button.deleting")}
+    >
       {t("_button.delete")}
     </Button>
   );
