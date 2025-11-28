@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
 import { omit } from "lodash-es";
+import * as Analytics from "/imports/ui/lib/analytics";
+import * as Metatags from "/imports/utils/metatags";
+import { useTranslation } from "react-i18next";
+import { useAccountTasks } from "/imports/utils/useAccountTasks";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { TenantModel } from "/imports/api/tenants/tenants";
@@ -8,14 +12,8 @@ import { RegionModel } from "/imports/api/regions/regions";
 import * as TenantsMethods from "/imports/api/tenants/methods";
 import * as RegionsMethods from "/imports/api/regions/methods";
 
-import * as Analytics from "/imports/ui/lib/analytics";
-import * as Metatags from "/imports/utils/metatags";
-import { useTranslation } from "react-i18next";
-
 import { Fields } from "../../components/regions/edit/Fields";
-import { PleaseLogin } from "../../components/please-login";
-import { ButtonCancel } from "/imports/ui/components/Buttons";
-import { ButtonSubmit } from "../../components/Buttons.old";
+import { ButtonCancel, ButtonSave } from "/imports/ui/components/Buttons";
 
 export interface Data {
   tenant: TenantModel;
@@ -25,7 +23,6 @@ export interface Data {
 export function TenantCreatePage(data: Data) {
   const { t } = useTranslation();
 
-  const [isBusy, setIsBusy] = useState(false);
   const [changes, setChanges] = useState({
     tenantName: data.tenant.name,
     name: data.region.name,
@@ -33,6 +30,9 @@ export function TenantCreatePage(data: Data) {
     tz: data.region.tz,
     loc: data.region.loc,
   });
+
+  const { promptToLogin } = useAccountTasks();
+  const [isBusy, setIsBusy] = useState(false);
 
   useEffect(() => {
     Metatags.setCommonTags(t("tenant.edit.siteTitle.create", "Create private region"));
@@ -61,6 +61,10 @@ export function TenantCreatePage(data: Data) {
 
     setIsBusy(true);
     try {
+      if (!(await promptToLogin())) {
+        return;
+      }
+
       const tenantId = await TenantsMethods.create({ name: changes.tenantName });
       await RegionsMethods.create({ tenant: tenantId, ...(omit(changes, "tenantName") as any) });
 
@@ -85,7 +89,7 @@ export function TenantCreatePage(data: Data) {
       <div className="edit-page region-edit">
         <h2>{t("tenant.create.title", "Create your private region")}</h2>
 
-        <PleaseLogin type="form" onSubmit={handleSave}>
+        <form noValidate onSubmit={handleSave}>
           <div className="mb-3">
             <label className="form-label">
               {t("tenant.edit.name", "Name of your organization:")}
@@ -115,14 +119,14 @@ export function TenantCreatePage(data: Data) {
             }}
           />
           <div className="form-actions">
-            <ButtonSubmit isBusy={isBusy} />
+            <ButtonSave submit id="tenant-create-save" isBusy={isBusy} />
             <ButtonCancel
               id="tenant-create-cancel"
               disabled={isBusy}
               onClick={() => Router.go("profile")}
             />
           </div>
-        </PleaseLogin>
+        </form>
       </div>
     </div>
   );

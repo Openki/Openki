@@ -36,7 +36,7 @@ export function EmailSection() {
     return null;
   }
 
-  async function handelEmailChange(event: React.FormEvent<HTMLFormElement>) {
+  async function handleEmailChange(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     resetErrors();
     setIsBusy(true);
@@ -53,7 +53,7 @@ export function EmailSection() {
     setIsBusy(false);
   }
 
-  async function handelNofitifcationsChange(allow: boolean) {
+  async function handleNofitifcationsChange(allow: boolean) {
     routerAutoscroll.cancelNext();
 
     try {
@@ -72,7 +72,7 @@ export function EmailSection() {
       );
     }
   }
-  async function handelAllowPrivateMessagesChange(allow: boolean) {
+  async function handleAllowPrivateMessagesChange(allow: boolean) {
     routerAutoscroll.cancelNext();
 
     try {
@@ -97,7 +97,7 @@ export function EmailSection() {
       <h3>{t("profile.email_settings", "E-mail settings")}</h3>
       <div className="row g-4 mb-2">
         <div className="col-sm-6">
-          <form className="row g-2 mb-2" noValidate onSubmit={handelEmailChange}>
+          <form className="row g-2 mb-2" noValidate onSubmit={handleEmailChange}>
             <div className="col">
               <FormControl
                 id="profile-email-address"
@@ -123,7 +123,7 @@ export function EmailSection() {
               type="switch"
               label={t("profile.toggle.notifications", "Receive automated notifications via email")}
               checked={user.notifications}
-              onChange={handelNofitifcationsChange}
+              onChange={handleNofitifcationsChange}
             />
           </div>
           <FormCheck
@@ -134,7 +134,7 @@ export function EmailSection() {
               "Receive messages from other users (your email address will not be revealed)",
             )}
             checked={user.allowPrivateMessages}
-            onChange={handelAllowPrivateMessagesChange}
+            onChange={handleAllowPrivateMessagesChange}
           />
         </div>
       </div>

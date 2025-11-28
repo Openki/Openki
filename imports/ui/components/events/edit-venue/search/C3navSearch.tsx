@@ -47,16 +47,16 @@ export function C3navSearch({
 }) {
   const { data: locations } = useSWR(apiUrl + "/map/locations/", fetcher);
 
-  const handelRequest = async (query: string) => {
+  async function handleRequest(query: string) {
     return await requestVenuesFromC3nav(locations, query);
-  };
+  }
 
   return (
     <SearchBase
       id={id}
       autofocus={autofocus}
       regionId={regionId}
-      onRequest={handelRequest}
+      onRequest={handleRequest}
       value={value}
       onChange={onChange}
     />

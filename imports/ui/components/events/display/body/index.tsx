@@ -201,12 +201,12 @@ export function Display({
     };
   }
 
-  function handelShowReplication() {
+  function handleShowReplication() {
     setReplicating(true);
     setExpanded(false);
   }
 
-  function handelDownload(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
+  function handleDownload(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
     e.stopPropagation();
     Analytics.trackEvent(
       "Events downloads",
@@ -215,16 +215,16 @@ export function Display({
     );
   }
 
-  function handelCancel() {
+  function handleCancel() {
     setCanceling(true);
     setExpanded(false);
   }
 
-  async function handelExpand() {
+  async function handleExpand() {
     setExpanded(true);
   }
 
-  async function handelUncancel() {
+  async function handleUncancel() {
     try {
       await EventsMethods.uncancel(event._id);
       Alert.success(
@@ -263,7 +263,7 @@ export function Display({
                   <Button
                     id="events-display-body-repeat"
                     className="btn-edit"
-                    onClick={handelShowReplication}
+                    onClick={handleShowReplication}
                   >
                     {t("event.details.repl_menu_btn", "Repeat")}
                   </Button>
@@ -271,7 +271,7 @@ export function Display({
                     className="btn btn-edit"
                     href={Router.path("calEvent", event)}
                     title={t("event.detail.download_cal", "Download event to my calendar")}
-                    onClick={handelDownload}
+                    onClick={handleDownload}
                   >
                     {t("event.details.download", "Download")}
                   </a>
@@ -279,7 +279,7 @@ export function Display({
                     <Button
                       id="events-display-body-cancel"
                       className="btn-remove"
-                      onClick={handelCancel}
+                      onClick={handleCancel}
                     >
                       {t("event.details.cancel", "Cancel this event")}
                     </Button>
@@ -288,12 +288,12 @@ export function Display({
                       submit
                       id="events-display-body-uncancel"
                       className="btn-edit"
-                      onClick={handelUncancel}
+                      onClick={handleUncancel}
                     >
                       {t("event.details.uncancel", "Uncancel this event")}
                     </Button>
                   )}
-                  <ButtonDelete id="events-display-confirmDelete" onClick={handelExpand} />
+                  <ButtonDelete id="events-display-confirmDelete" onClick={handleExpand} />
                 </>
               )}
             </div>

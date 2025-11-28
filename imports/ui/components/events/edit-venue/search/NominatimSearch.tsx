@@ -72,9 +72,9 @@ export function NominatimSearch({
 }) {
   const [isLoadingRegion, region] = Regions.useDetails(regionId);
 
-  const handelRequest = async (query: string) => {
+  async function handleRequest(query: string) {
     return await requestVenuesFromNominatim(region, query);
-  };
+  }
 
   if (isLoadingRegion()) {
     return null;
@@ -85,7 +85,7 @@ export function NominatimSearch({
       id={id}
       autofocus={autofocus}
       regionId={regionId}
-      onRequest={handelRequest}
+      onRequest={handleRequest}
       value={value}
       onChange={onChange}
     />
