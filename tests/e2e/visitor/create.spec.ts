@@ -4,7 +4,7 @@ beforeEach(() => {
 
 describe("Visitor", () => {
   it("should be able to rsvp a event", () => {
-    cy.get("#maincontent button.btn-event").click();
+    cy.get("#register-panel-reserve").click();
     cy.get("#events-display-registration").click();
     cy.get("#acctount-tasks-login-frame-visitor").click();
     cy.get("#visitor-frame-username").type("no name");
