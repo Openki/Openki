@@ -458,7 +458,6 @@
   "event.windowtitle.create": "Создать событие",
   "eventDetails.eventRemoved": "Событие \"{TITLE}\" удалено.",
   "eventDetails.eventRemoved.error": "Не удалось удалить событие",
-  "eventDetails.notLoggedIn": "(не вошли в систему?)",
   "eventEdit.replicatesUpdated": "Копии мероприятия \"{TITLE}\" также были обновлены.",
   "eventEdit.replicatesUpdated.error": "Сохранение мероприятия не удалось",
   "eventParticipant.iBringCompanions": "Приводит попутчика.",

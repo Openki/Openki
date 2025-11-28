@@ -366,7 +366,6 @@
   "event.windowtitle.create": "انشاء حدث",
   "eventDetails.eventRemoved": "تم حذف الحدث \"{TITLE}\".",
   "eventDetails.eventRemoved.error": "تعذر إزالة الحدث",
-  "eventDetails.notLoggedIn": "(لم يتم تسجيل الدخول؟)",
   "eventEdit.replicatesUpdated": "تم أيضا تحديث تفعيل إعادة \"{TITLE}\".",
   "eventEdit.replicatesUpdated.error": "حدث خطأ اثناء حفظ الحدث",
   "eventParticipant.iBringCompanions": "يجلب الرفيق.",

@@ -352,7 +352,6 @@
   "event.windowtitle.create": "Créer un événement",
   "eventDetails.eventRemoved": "L'évènement \"{TITLE}\" a été supprimé.",
   "eventDetails.eventRemoved.error": "L'événement n'a pu être supprimé",
-  "eventDetails.notLoggedIn": "(pas connecté(e) ?)",
   "eventEdit.replicatesUpdated": "Les répliques de \"{TITLE}\" ont également été mises à jour.",
   "eventEdit.replicatesUpdated.error": "Une erreur s'est produite lors de l'enregistrement de cet événement",
   "eventReplication.errWithReason": "Un copie de \"{START}\" n'a pu être créée.",

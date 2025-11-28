@@ -388,7 +388,6 @@
   "event.windowtitle.create": "Crea evento",
   "eventDetails.eventRemoved": "L'evento \"{TITLE}\" è stato eliminato.",
   "eventDetails.eventRemoved.error": "Impossibile eliminare l'evento",
-  "eventDetails.notLoggedIn": "(non sei loggato?)",
   "eventEdit.replicatesUpdated": "Le repliche di \"{TITLE}\" sono state aggiornate.",
   "eventEdit.replicatesUpdated.error": "Salvataggio dell'evento fallito",
   "eventParticipant.iBringCompanions": "Porta compagnia.",

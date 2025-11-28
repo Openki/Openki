@@ -374,7 +374,6 @@
   "event.windowtitle.create": "이벤트 만들기",
   "eventDetails.eventRemoved": "\"{TITLE}\" 이벤트가 삭제되었습니다.",
   "eventDetails.eventRemoved.error": "이벤트 삭제에 실패했습니다",
-  "eventDetails.notLoggedIn": "(아직 로그인하지 않았나요?)",
   "eventEdit.replicatesUpdated": "\"{TITLE}\"의 복사본들도 함께 수정되었습니다.",
   "eventEdit.replicatesUpdated.error": "이벤트 저장에 실패했습니다",
   "eventParticipant.iBringCompanions": "동행인을 추가합니다.",
