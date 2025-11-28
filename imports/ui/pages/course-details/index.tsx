@@ -16,7 +16,7 @@ import * as Analytics from "/imports/ui/lib/analytics";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import * as Metatags from "/imports/utils/metatags";
 
-import { ButtonDelete, ButtonEdit } from "../../components/Buttons.old";
+import { ButtonDelete, ButtonEdit } from "../../components/Buttons";
 import { Discussion } from "../../components/courses/discussion";
 import { Edit } from "../../components/courses/edit";
 import { mayShare } from "../../components/courses/edit/mayShare";
@@ -241,7 +241,13 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
                   {mayEdit(course) && (
                     <>
                       <div className="actions">
-                        {!expanded && <ButtonEdit disabled={isBusy} onClick={handelOnEdit} />}
+                        {!expanded && (
+                          <ButtonEdit
+                            id="course-details-edit"
+                            disabled={isBusy}
+                            onClick={handelOnEdit}
+                          />
+                        )}
 
                         {course.archived && (
                           <ButtonCourseUnarchive

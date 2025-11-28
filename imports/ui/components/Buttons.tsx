@@ -201,7 +201,7 @@ export function ButtonDelete(
   const { t } = useTranslation();
 
   return (
-    <Button {...props} className="btn-delete text-danger" busyText={t("_button.deleting")}>
+    <Button submit {...props} className="btn-delete text-danger" busyText={t("_button.deleting")}>
       {t("_button.delete")}
     </Button>
   );

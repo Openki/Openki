@@ -17,8 +17,7 @@ import { EventReplication, Props as EventReplicationProps } from "../../replicat
 import { Content } from "../content";
 import { Files } from "../../../courses/Files";
 import { DeleteConfirmDialog } from "../../../delete-confirm-dialog";
-import { ButtonDelete, ButtonEdit } from "../../../Buttons.old";
-import { PleaseLogin } from "../../../please-login";
+import { Button, ButtonDelete, ButtonEdit } from "../../../Buttons";
 
 import "./styles.scss";
 
@@ -260,10 +259,14 @@ export function Display({
             <div className="actions">
               {!isExpanded() && (
                 <>
-                  <ButtonEdit onClick={onEdit} />
-                  <button type="button" className="btn btn-edit" onClick={handelShowReplication}>
+                  <ButtonEdit id="events-display-body-repeat" onClick={onEdit} />
+                  <Button
+                    id="events-display-body-repeat"
+                    className="btn-edit"
+                    onClick={handelShowReplication}
+                  >
                     {t("event.details.repl_menu_btn", "Repeat")}
-                  </button>
+                  </Button>
                   <a
                     className="btn btn-edit"
                     href={Router.path("calEvent", event)}
@@ -273,23 +276,22 @@ export function Display({
                     {t("event.details.download", "Download")}
                   </a>
                   {!event.canceled ? (
-                    <button
-                      data-test="events-display-body-cancel-button"
-                      type="button"
-                      className="btn btn-remove"
+                    <Button
+                      id="events-display-body-cancel"
+                      className="btn-remove"
                       onClick={handelCancel}
                     >
                       {t("event.details.cancel", "Cancel this event")}
-                    </button>
+                    </Button>
                   ) : (
-                    <PleaseLogin
-                      id="events-display-body-uncancel-button"
-                      type="button"
-                      className="btn btn-edit"
+                    <Button
+                      submit
+                      id="events-display-body-uncancel"
+                      className="btn-edit"
                       onClick={handelUncancel}
                     >
                       {t("event.details.uncancel", "Uncancel this event")}
-                    </PleaseLogin>
+                    </Button>
                   )}
                   <ButtonDelete id="events-display-confirmDelete" onClick={handelExpand} />
                 </>
