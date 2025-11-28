@@ -79,6 +79,8 @@ export function ActionResult({ type, dismissible, icon, title, children, actions
       element.classList.remove("action-focus");
       await MeteorAsync.defer();
       element.classList.add("action-focus");
+      element.tabIndex = 0;
+      element.focus();
       if (timeoutActionFocus) {
         clearTimeout(timeoutActionFocus);
       }

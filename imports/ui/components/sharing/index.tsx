@@ -78,6 +78,7 @@ export function Sharing({
       <span className="shareon">
         <a
           className="web-share"
+          href="#"
           onClick={function (event) {
             event.preventDefault();
 
@@ -107,11 +108,13 @@ export function Sharing({
       {PublicSettings.feature.socialMediaButtons.map((network) => (
         <a
           key={network}
+          href="#"
           className={network}
           onClick={() => {
             Analytics.trackEvent("social", `${network} clicked`, currentRegion?.nameEn);
           }}
           title={networkTitle[network]}
+          tabIndex={0}
         >
           {btnText[network]}
         </a>
