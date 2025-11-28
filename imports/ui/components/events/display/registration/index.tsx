@@ -1,9 +1,10 @@
 import { Router } from "meteor/iron:router";
 import moment from "moment";
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
+import * as Analytics from "/imports/ui/lib/analytics";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { EventModel } from "/imports/api/events/events";
@@ -14,9 +15,7 @@ import { Regions } from "/imports/api/regions/regions";
 import { RegisterPanel } from "./register-panel";
 import { UnregisterPanel } from "./unregister-panel";
 import { EventParticipants } from "/imports/ui/components/events/participants";
-import { PleaseLogin } from "/imports/ui/components/please-login";
-
-import * as Analytics from "/imports/ui/lib/analytics";
+import { useAccountTasks } from "/imports/utils/useAccountTasks";
 
 import "./styles.scss";
 
@@ -38,6 +37,7 @@ export function EventRegistration({ event }: Props) {
   const user = useUser();
   const searchParams = useSearchParams();
   const { t } = useTranslation();
+  const { promptToLogin } = useAccountTasks();
 
   const [groupsIsLoading, groups] = useGroupsFindFilter({
     ids: event.allGroupOrganizers(),
@@ -73,6 +73,18 @@ export function EventRegistration({ event }: Props) {
     return moment().isBefore(event.end);
   }
 
+  useEffect(() => {
+    (async () => {
+      if (searchParams.action === "register") {
+        if (!(await promptToLogin())) {
+          return;
+        }
+        // register from email
+        await addParticipant();
+      }
+    })();
+  });
+
   if (groupsIsLoading()) {
     return null;
   }
@@ -81,16 +93,6 @@ export function EventRegistration({ event }: Props) {
 
   return (
     <>
-      {searchParams.action === "register" && (
-        <PleaseLogin
-          type="auto"
-          onRender={async () => {
-            // register from email
-            await addParticipant();
-          }}
-        />
-      )}
-
       {isFuture() && (
         <>
           <div className="page-component">
