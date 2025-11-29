@@ -17,7 +17,7 @@ describe("tenant create page", function () {
     cy.get('[data-test="region-edit-description"]').click();
     cy.get('[data-test="region-edit-description"]').click();
     cy.get('[data-test="region-edit-description"]').type("Ein Ort zum Experimentieren.");
-    cy.get("#button-submit").click();
+    cy.get("#tenant-create-save").click();
     cy.get("#account-tasks-login-frame-username").click();
     cy.get("#account-tasks-login-frame-username").type("Seee");
     cy.get("#account-tasks-login-frame-password").type("greg{enter}");

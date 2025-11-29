@@ -387,7 +387,8 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
     setIsBusy(true);
     try {
-      if (!(await promptToLogin())) {
+      const user = await promptToLogin();
+      if (!user) {
         return;
       }
 
@@ -411,9 +412,6 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
         if (event.courseId) {
           if (!course) {
             throw new Error("Unexpected undefined: course");
-          }
-          if (!user) {
-            throw new Error("Unexpected undefined: user");
           }
           let role;
           if (intersection(user.badges, course.editors).length > 0) {

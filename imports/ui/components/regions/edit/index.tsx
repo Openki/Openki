@@ -38,7 +38,9 @@ export function Edit(data: Data) {
   const { promptToLogin } = useAccountTasks();
   const [isBusy, setIsBusy] = useState(false);
 
-  async function handleSave() {
+  async function handleSave(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
     if (!changes.name) {
       Alert.error(t("region.create.plsGiveName", "Please give your region a name"));
       return;
