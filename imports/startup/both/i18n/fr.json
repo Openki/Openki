@@ -556,6 +556,7 @@
   "group.details.group": "Groupe",
   "group.details.isFeatured": "Ce groupe est",
   "group.details.titleNew": "Créer un nouveau groupe",
+  "group.details.venues": "{NUM, plural, one{Lieu :} other{Lieux :} }",
   "group.linksCollection.title": "{NAME}-views",
   "group.missing": "Ce groupe n'existe pas",
   "group.name.placeholder": "Nom de ton groupe, institution, collectif ou programme",
