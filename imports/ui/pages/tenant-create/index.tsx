@@ -34,7 +34,9 @@ export function TenantCreatePage(data: Data) {
   const { promptToLogin } = useAccountTasks();
   const [isBusy, setIsBusy] = useState(false);
 
-  async function handleSave() {
+  async function handleSave(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
     if (!changes.tenantName) {
       Alert.error(t("tenant.create.plsGiveName", "Please give a organization name"));
       return;

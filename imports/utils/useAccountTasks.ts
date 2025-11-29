@@ -1,26 +1,27 @@
 import { useLayoutEffect, useState } from "react";
+import { useSessionEquals, useUser } from "/imports/utils/react-meteor-data";
 
-import { useSessionEquals, useUserId } from "/imports/utils/react-meteor-data";
+import { UserModel } from "/imports/api/users/users";
 
 export function useAccountTasks() {
   const [actionActive, setActionActive] = useState(false);
   const [openedLogin, setOpenedLogin] = useState(false);
-  const userId = useUserId();
+  const user = useUser();
   const notPleaseLogin = useSessionEquals("pleaseLogin", false);
 
-  const [currentResolve, setCurrentResolve] = useState<((loggedIn: boolean) => void) | undefined>(
-    undefined,
-  );
+  const [currentResolve, setCurrentResolve] = useState<
+    ((currentUser: UserModel | null) => void) | undefined
+  >(undefined);
   const [visitorUserAllowed, setVisitorUserAllowed] = useState(false);
 
   useLayoutEffect(() => {
     if (actionActive) {
-      if (userId) {
+      if (user) {
         setActionActive(false);
         setOpenedLogin(false);
 
         // if the user is logged in, give back true
-        currentResolve?.(true);
+        currentResolve?.(user);
         setCurrentResolve(undefined);
       } else if (!openedLogin) {
         // if the user is not logged in open up the login window
@@ -32,11 +33,11 @@ export function useAccountTasks() {
         setOpenedLogin(false);
 
         // if the user closed the login window without logged in, give back false
-        currentResolve?.(false);
+        currentResolve?.(null);
         setCurrentResolve(undefined);
       }
     }
-  }, [actionActive, userId, openedLogin, notPleaseLogin]);
+  }, [actionActive, user, openedLogin, notPleaseLogin]);
 
   return {
     /**
@@ -53,10 +54,10 @@ export function useAccountTasks() {
 
     /**
      * Shows login modal if user is not logged in.
-     * @returns `true` if the user is logged in; `false` it the user canceled the login
+     * @returns `currentUser` if the user is logged in; `null` it the user canceled the login
      */
     promptToLogin: (visitorUserAllowed = false) => {
-      return new Promise<boolean>((resolve) => {
+      return new Promise<UserModel | null>((resolve) => {
         setCurrentResolve(() => resolve);
         setVisitorUserAllowed(visitorUserAllowed);
         setActionActive(true);

@@ -103,12 +103,13 @@ export function Role(data: Data) {
   useEffect(() => {
     (async () => {
       if (searchParams.unsubscribe === data.role.type) {
-        if (!(await promptToLogin())) {
+        const user = await promptToLogin();
+        if (!user) {
           return;
         }
         // unsubscribe by email
         // HACK this is not the right place to act on router actions
-        const change = new Unsubscribe(data.course, user?._id, data.role.type);
+        const change = new Unsubscribe(data.course, user._id, data.role.type);
         if (change.validFor(user)) {
           await processChange(change);
           Alert.success(
@@ -135,7 +136,8 @@ export function Role(data: Data) {
         <>
           <div className="course-role-enrolled">
             <div className="course-role-title">
-              <span className={`${data.role.icon} fa-fw coursepage-role-icon`}></span>&nbsp;
+              <i className={`${data.role.icon} fa-fw coursepage-role-icon`} />
+              &nbsp;
               <span>{roleSubscribed(data.role.type)}</span>
               <button
                 type="button"

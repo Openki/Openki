@@ -381,7 +381,7 @@ export function Edit(props: Props) {
     setSimpleSelectedRole(event.target.value);
   };
 
-  const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
+  async function handleSave(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (!checkValidity()) {
@@ -465,9 +465,7 @@ export function Edit(props: Props) {
 
       Analytics.trackEvent(
         "Course creations",
-        `Course creations as ${
-          changes.subs.length > 0 ? changes.subs.sort().join(" and ") : "participant"
-        }`,
+        `Course creations as ${changes.subs.length > 0 ? changes.subs.sort().join(" and ") : "participant"}`,
         Regions.findOne(changes.region)?.nameEn,
         totalFocusTime(),
       );
@@ -496,9 +494,9 @@ export function Edit(props: Props) {
     } finally {
       setIsBusy(false);
     }
-  };
+  }
 
-  const handleCancel = () => {
+  function handleCancel() {
     const course = props;
 
     if (course._id) {
@@ -506,7 +504,7 @@ export function Edit(props: Props) {
     } else {
       Router.go("home");
     }
-  };
+  }
 
   if (regionsIsLoading() || groupsIsLoading()) {
     return null;
