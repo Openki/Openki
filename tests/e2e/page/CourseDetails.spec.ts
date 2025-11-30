@@ -17,7 +17,9 @@ describe("course details page", () => {
       cy.get('[data-test="course-details"] div.addon button.dropdown-toggle').click();
       cy.get('[data-test="course-details"] li:nth-child(4) a.btn').click();
       cy.get('[data-test="course-details"] button.btn-success').click();
-      cy.get('[data-test="course-details"] i[title="Walliserdütsch lernen is co-organized by this group"]').should('have.class', 'fa-bullhorn');
+      cy.get(
+        '[data-test="course-details"] i[title="Walliserdütsch lernen is co-organized by this group"]',
+      ).should("have.class", "fa-bullhorn");
       cy.get('[data-test="course-details"] div.tag-btn.addon button.dropdown-toggle').click();
       cy.get('[data-test="course-details"] a.btn-danger').click();
       cy.get('[data-test="course-details"] div.danger button.btn').click();

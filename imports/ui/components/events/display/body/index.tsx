@@ -259,7 +259,7 @@ export function Display({
             <div className="actions">
               {!isExpanded() && (
                 <>
-                  <ButtonEdit id="events-display-body-repeat" onClick={onEdit} />
+                  <ButtonEdit id="events-display-body-edit" onClick={onEdit} />
                   <Button
                     id="events-display-body-repeat"
                     className="btn-edit"

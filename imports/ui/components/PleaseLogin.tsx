@@ -1,27 +1,17 @@
-import React, { ReactNode, useLayoutEffect, useState } from "react";
+import React, { FormEvent, ReactNode, useLayoutEffect, useState } from "react";
 
 import { useSessionEquals, useUserId } from "/imports/utils/react-meteor-data";
+import { Content } from "/imports/ui/components/Buttons";
 
-interface FormProps {
-  type: "form";
-  onSubmit: () => Promise<void>;
-}
-interface ButtonProps {
-  /** needed to identify for testing */
-  id: string;
-  type: "button";
-  onClick: () => Promise<void>;
-  disabled?: boolean | undefined;
-  busyText?: string | undefined;
-}
-interface Props {
-  type: "form" | "button";
-  visitorUserAllowed?: boolean;
-  className?: string | undefined;
-  children?: ReactNode;
-}
-
-export function PleaseLogin(props: Props & (FormProps | ButtonProps)) {
+export function Button(
+  props: {
+    visitorUserAllowed?: boolean | undefined;
+    beforeClick?: (() => undefined | boolean) | undefined;
+    onClick: () => void | Promise<void>;
+    onAbort?: (() => void) | undefined;
+    busyText?: string | undefined;
+  } & React.ButtonHTMLAttributes<HTMLButtonElement>,
+) {
   const [actionActive, setActionActive] = useState(false);
   const [isBusy, setIsBusy] = useState(false);
   const [openedLogin, setOpenedLogin] = useState(false);
@@ -34,17 +24,7 @@ export function PleaseLogin(props: Props & (FormProps | ButtonProps)) {
         setActionActive(false);
         (async function () {
           try {
-            // if the user is logged in call the save function
-            switch (props.type) {
-              case "form":
-                await props.onSubmit();
-                break;
-              case "button":
-                await props.onClick();
-                break;
-              default:
-                throw new Error("Unexpected value: type");
-            }
+            await props.onClick();
           } finally {
             setIsBusy(false);
           }
@@ -59,12 +39,20 @@ export function PleaseLogin(props: Props & (FormProps | ButtonProps)) {
         setActionActive(false);
         setOpenedLogin(false);
         setIsBusy(false);
+        props.onAbort?.();
       }
     }
   }, [actionActive, userId, openedLogin, notPleaseLogin, props]);
 
   async function handleEvent(event: { preventDefault: () => void; target: EventTarget }) {
     event.preventDefault();
+
+    if (props.beforeClick?.() === false) {
+      // when beforeClick returns false, we abort
+      props.onAbort?.();
+      return;
+    }
+
     setActionActive(true);
 
     /* in a frame (eg. /frame/program, with the height plugin we need to set the position of the login modal) */
@@ -75,32 +63,105 @@ export function PleaseLogin(props: Props & (FormProps | ButtonProps)) {
     setIsBusy(true);
   }
 
-  switch (props.type) {
-    case "form":
-      return (
-        <form className={props.className} onSubmit={handleEvent}>
-          {props.children}
-        </form>
-      );
-    case "button":
-      return (
-        <button
-          id={props.id}
-          className={props.className}
-          disabled={props.disabled}
-          onClick={handleEvent}
-        >
-          {!isBusy ? (
-            props.children
-          ) : (
-            <>
-              <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
-              {props.busyText}
-            </>
-          )}
-        </button>
-      );
-    default:
-      throw new Error("Unexpected value for type");
+  return (
+    <button {...props} onClick={handleEvent}>
+      <Content isBusy={isBusy} busyText={props.busyText}>
+        {props.children}
+      </Content>
+    </button>
+  );
+}
+
+export function Form(
+  props: {
+    visitorUserAllowed?: boolean | undefined;
+    beforeSubmit?: (() => undefined | boolean) | undefined;
+    onSubmit: () => void | Promise<void>;
+    onAbort?: (() => void) | undefined;
+  } & React.FormHTMLAttributes<HTMLFormElement>,
+) {
+  const [actionActive, setActionActive] = useState(false);
+  const [openedLogin, setOpenedLogin] = useState(false);
+  const userId = useUserId();
+  const notPleaseLogin = useSessionEquals("pleaseLogin", false);
+
+  useLayoutEffect(() => {
+    if (actionActive) {
+      if (userId) {
+        setActionActive(false);
+        (async function () {
+          await props.onSubmit();
+        })();
+      } else if (!openedLogin) {
+        // if the user is not logged in open up the login window
+        Session.set("visitorUserAllowed", props.visitorUserAllowed || false);
+        Session.set("pleaseLogin", true);
+        setOpenedLogin(true);
+      } else if (notPleaseLogin) {
+        // if the user closed the login window without logged in reset without call the save function
+        setActionActive(false);
+        setOpenedLogin(false);
+        props.onAbort?.();
+      }
+    }
+  }, [actionActive, userId, openedLogin, notPleaseLogin, props]);
+
+  async function handleEvent(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (props.beforeSubmit?.() === false) {
+      // when beforeSubmit returns false, we abort
+      props.onAbort?.();
+      return;
+    }
+
+    setActionActive(true);
+
+    /* in a frame (eg. /frame/program, with the height plugin we need to set the position of the login modal) */
+    if (document.querySelector(".frame")) {
+      const rect = ((event as any).submitter || event.currentTarget).getBoundingClientRect();
+      Session.set("top", rect.top + rect.height / 2);
+    }
   }
+
+  return (
+    <form {...props} onSubmit={handleEvent}>
+      {props.children}
+    </form>
+  );
+}
+
+export function Action(props: {
+  visitorUserAllowed?: boolean;
+  children?: ReactNode;
+  onRender: () => Promise<void>;
+  onAbort?: (() => void) | undefined;
+}) {
+  const [actionActive, setActionActive] = useState(true);
+  const [openedLogin, setOpenedLogin] = useState(false);
+  const userId = useUserId();
+  const notPleaseLogin = useSessionEquals("pleaseLogin", false);
+
+  useLayoutEffect(() => {
+    if (actionActive) {
+      if (userId) {
+        setActionActive(false);
+        (async function () {
+          await props.onRender();
+        })();
+      } else if (!openedLogin) {
+        // if the user is not logged in open up the login window
+        Session.set("visitorUserAllowed", props.visitorUserAllowed || false);
+        Session.set("pleaseLogin", true);
+        setOpenedLogin(true);
+      } else if (notPleaseLogin) {
+        // if the user closed the login window without logged in reset without call the save function
+        setActionActive(false);
+        setOpenedLogin(false);
+        props.onAbort?.();
+      }
+    }
+  }, [actionActive, userId, openedLogin, notPleaseLogin, props]);
+
+  return props.children || null;
 }
