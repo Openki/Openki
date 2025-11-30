@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
@@ -14,9 +14,9 @@ import { CourseModel } from "/imports/api/courses/courses";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { useRoleDisplay } from "../../../../lib/useRoleDisplay";
-import { useAccountTasks } from "/imports/utils/useAccountTasks";
 
 import { Button, ButtonCancel } from "../../../Buttons";
+import { Action } from "/imports/ui/components/PleaseLogin";
 import { Guide } from "./guide";
 
 import "./styles.scss";
@@ -36,8 +36,6 @@ export function Role(data: Data) {
   const [enrolling, setEnrolling] = useState(false);
   const [showFirstSteps, setShowFirstSteps] = useState(false);
   const [comment, setComment] = useState(data.comment);
-
-  const { promptToLogin } = useAccountTasks();
 
   // Build a subscribe change
   function courseSubscribe(newComment?: string) {
@@ -100,38 +98,34 @@ export function Role(data: Data) {
     document.getElementById("discussion")?.dispatchEvent(new Event("writeComment"));
   }
 
-  useEffect(() => {
-    (async () => {
-      if (searchParams.unsubscribe === data.role.type) {
-        const user = await promptToLogin();
-        if (!user) {
-          return;
-        }
-        // unsubscribe by email
-        // HACK this is not the right place to act on router actions
-        const change = new Unsubscribe(data.course, user._id, data.role.type);
-        if (change.validFor(user)) {
-          await processChange(change);
-          Alert.success(
-            t("course.roles.unsubscribed", "Unsubscribed from {NAME}", {
-              NAME: data.course.name,
-            }),
-          );
-        } else {
-          Alert.error(`${change} not valid for ${user}`);
-        }
-
-        // After unsubscribe got to the event. Equals in route 'showCourse'.
-        const course = data.course;
-        if (course?.singleEvent && course.nextEvent) {
-          Router.go("showEvent", course.nextEvent, { replaceState: true });
-        }
-      }
-    })();
-  });
-
   return (
     <>
+      {searchParams.unsubscribe === data.role.type && (
+        <Action
+          onRender={async () => {
+            // unsubscribe by email
+            // HACK this is not the right place to act on router actions
+            const change = new Unsubscribe(data.course, user?._id, data.role.type);
+            if (change.validFor(user)) {
+              await processChange(change);
+              Alert.success(
+                t("course.roles.unsubscribed", "Unsubscribed from {NAME}", {
+                  NAME: data.course.name,
+                }),
+              );
+            } else {
+              Alert.error(`${change} not valid for ${user}`);
+            }
+
+            // After unsubscribe got to the event. Equals in route 'showCourse'.
+            const course = data.course;
+            if (course?.singleEvent && course.nextEvent) {
+              Router.go("showEvent", course.nextEvent, { replaceState: true });
+            }
+          }}
+        />
+      )}
+
       {data.subscribed ? (
         <>
           <div className="course-role-enrolled">

@@ -2,7 +2,7 @@ import React, { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { buildSizeClass, Size } from "../lib/buildSizeClass";
-import { useAccountTasks } from "/imports/utils/useAccountTasks";
+import { Button as NeedsLoginButton } from "/imports/ui/components/PleaseLogin";
 
 interface CommonProps {
   /** needed to identify for testing */
@@ -35,6 +35,10 @@ type LoginProps = {
        * correctness for accessibility and the full use of the browser default behavior.
        */
       needsLogin: true;
+      /**
+       * called before login prompt, return false to not run onClick
+       */
+      beforeClick?: (() => undefined | boolean) | undefined;
       visitorUserAllowed?: boolean | undefined;
     }
 );
@@ -46,7 +50,7 @@ interface SubmitProps {
 
 type Props = CommonProps & (LoginProps | SubmitProps);
 
-function Content({
+export function Content({
   isBusy,
   busyText,
   children,
@@ -70,30 +74,39 @@ function Content({
 
 function ControlledButton(props: CommonProps & LoginProps) {
   const { id, className, disabled, needsLogin, onClick, children, busyText } = props;
-  const { promptToLogin } = useAccountTasks();
   const [isBusy, setIsBusy] = useState(false);
 
-  const commonProps = {
-    id,
-    type: "button" as const,
-    className,
-    disabled: isBusy || disabled,
-    onClick: async () => {
-      setIsBusy(true);
-      try {
-        if (needsLogin && !(await promptToLogin(props.visitorUserAllowed))) {
-          return;
-        }
-
-        await onClick();
-      } finally {
-        setIsBusy(false);
-      }
-    },
-  };
+  if (needsLogin) {
+    return (
+      <NeedsLoginButton
+        id={id}
+        type="button"
+        className={className}
+        disabled={disabled}
+        visitorUserAllowed={props.visitorUserAllowed}
+        onClick={onClick}
+        busyText={busyText}
+      >
+        {children}
+      </NeedsLoginButton>
+    );
+  }
 
   return (
-    <button {...commonProps}>
+    <button
+      id={id}
+      type="button"
+      className={className}
+      disabled={isBusy || disabled}
+      onClick={async () => {
+        setIsBusy(true);
+        try {
+          await onClick();
+        } finally {
+          setIsBusy(false);
+        }
+      }}
+    >
       <Content isBusy={isBusy} busyText={busyText}>
         {children}
       </Content>
