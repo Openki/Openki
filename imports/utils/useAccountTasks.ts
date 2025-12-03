@@ -20,7 +20,7 @@ export function useAccountTasks() {
         setActionActive(false);
         setOpenedLogin(false);
 
-        // if the user is logged in, give back true
+        // if the user is logged in, give back the user
         currentResolve?.(user);
         setCurrentResolve(undefined);
       } else if (!openedLogin) {
@@ -32,7 +32,7 @@ export function useAccountTasks() {
         setActionActive(false);
         setOpenedLogin(false);
 
-        // if the user closed the login window without logged in, give back false
+        // if the user closed the login window without logged in, give back `null`
         currentResolve?.(null);
         setCurrentResolve(undefined);
       }

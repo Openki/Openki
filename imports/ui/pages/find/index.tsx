@@ -14,11 +14,13 @@ export function FindPage({ query }: Props) {
 
   return (
     <>
-      {query.search ? (
-        <MetaTags title={t("find.windowtitle", 'Find "{SEARCH}"', { SEARCH: query.search })} />
-      ) : (
-        <MetaTags title={t("find.WhatLearn?")} />
-      )}
+      <MetaTags
+        title={
+          query.search
+            ? t("find.windowtitle", 'Find "{SEARCH}"', { SEARCH: query.search })
+            : t("find.WhatLearn?")
+        }
+      />
 
       <div className="container">
         <Find query={query} />

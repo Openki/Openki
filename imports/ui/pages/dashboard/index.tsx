@@ -19,11 +19,13 @@ export function DashboardPage({ query }: Props) {
 
   return (
     <>
-      {search ? (
-        <MetaTags title={t("find.windowtitle", 'Find "{SEARCH}"', { SEARCH: search })} />
-      ) : (
-        <MetaTags title={t("find.WhatLearn?")} />
-      )}
+      <MetaTags
+        title={
+          search
+            ? t("find.windowtitle", 'Find "{SEARCH}"', { SEARCH: search })
+            : t("find.WhatLearn?")
+        }
+      />
 
       <div className="container">
         {region?.dashboard ? (

@@ -110,7 +110,7 @@ export function Form(
     event.preventDefault();
 
     if (props.beforeSubmit?.() === false) {
-      // when beforeSubmit returns false, we abort
+      // when beforeSubmit returns false, we abort, eg. when validation fails
       props.onAbort?.();
       return;
     }
