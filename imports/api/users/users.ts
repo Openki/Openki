@@ -1,6 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import { _ } from "meteor/underscore";
+import { assignIn } from "lodash-es";
+
 import * as StringTools from "/imports/utils/string-tools";
 
 export type Role = "admin" | "visitor";
@@ -176,5 +177,5 @@ export class User {
 export const Users = Meteor.users as unknown as Mongo.Collection<UserEntity, UserModel>;
 
 (Users as any)._transform = function (user: UserEntity) {
-  return _.extend(new User(), user);
+  return assignIn(new User(), user);
 };

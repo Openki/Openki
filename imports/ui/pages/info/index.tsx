@@ -9,7 +9,7 @@ import { InfoPagesEntity } from "/imports/api/infoPages/infoPages";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { MeteorAsync } from "/imports/utils/promisify";
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 
 import "./styles.scss";
 
@@ -31,15 +31,12 @@ export function InfoPage({ page }: Props) {
       await MeteorAsync.defer();
 
       targetTitle.nextUntil(headerTag).show();
+      targetTitle.addClass("active");
       $(window).scrollTop(targetTitle.position().top - ScssVars.navbarHeight);
     }
   }
 
   useEffect(() => {
-    if (page) {
-      Metatags.setCommonTags(page.title);
-    }
-
     // in order to create nice IDs for the questions also for non-english
     // alphabets we make our own ones
     $(headerTag).each((_index, element) => {
@@ -77,11 +74,15 @@ export function InfoPage({ page }: Props) {
   });
 
   return (
-    <div className="container mw-md info-page">
-      <ReactMarkdown linkTarget="_blank" skipHtml={true}>
-        {page.body}
-      </ReactMarkdown>
-    </div>
+    <>
+      <MetaTags title={page.title} />
+
+      <div className="container mw-md info-page">
+        <ReactMarkdown linkTarget="_blank" skipHtml={true}>
+          {page.body}
+        </ReactMarkdown>
+      </div>
+    </>
   );
 }
 

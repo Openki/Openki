@@ -37,7 +37,7 @@ export function Display({ inNavbar, onClick }: Props) {
           onClick();
         }}
       >
-        <span className="fa-solid fa-globe fa-fw" aria-hidden="true"></span> {setLanguage().short}
+        <i className="fa-solid fa-globe fa-fw" /> {setLanguage().short}
       </a>
     </div>
   );

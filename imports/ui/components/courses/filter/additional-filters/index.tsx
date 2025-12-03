@@ -82,12 +82,12 @@ export function AdditionalFilters(props: Props) {
             }}
           >
             <span className="filter-course-role-icon">
-              <i className={`${role.icon} fa-fw`} aria-hidden="true"></i>
+              <i className={`${role.icon} fa-fw`} />
             </span>
             &nbsp;
             {role.label}
             &nbsp;
-            <i className="fa-solid fa-check" aria-hidden="true"></i>
+            <i className="fa-solid fa-check" />
           </button>
         ))}
       </div>

@@ -167,7 +167,7 @@ Si vous doutez, contactez en avance la personne en charge du cours et réagissez
 
 Openki a pour but de répondre à de nombreuses attentes en termes de respect de la vie privée. Cela inclue l'usage de techniques de chiffrement ainsi que la possibilité de personnaliser les paramètres utilisateurs.
 
-Openki ne vend aucune des données utilisateurs à des tiers et ne traque pas les comportements ni ne laisse d'autres companies traquer les comportements et centres d'intérêt des utilisateurs. Par exemple, nous utilisons les boutons de partage sur les réseaux sociaux de [Shariff](https://www.heise.de/ct/artikel/Shariff-Social-Media-Buttons-mit-Datenschutz-2467514.html).
+Openki ne vend aucune des données utilisateurs à des tiers et ne traque pas les comportements ni ne laisse d'autres companies traquer les comportements et centres d'intérêt des utilisateurs.
 
 ### Openki.net est-elle une page sûre ?
 

@@ -1,22 +1,26 @@
 import { Router } from "meteor/iron:router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { Geodata } from "/imports/api/Geodata";
-import { useFindFilter } from "/imports/api/regions/publications";
+import { useAll as useRegions } from "/imports/api/regions/publications";
 import * as VenuesMethods from "/imports/api/venues/methods";
 import { FacilityOption, VenueModel } from "/imports/api/venues/venues";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
 import { ButtonCancel, ButtonSave } from "../../Buttons";
-import { Edit as LocationEdit } from "../../location/edit";
-import { AdditionalInfo, type Data as AdditionalInfoData } from "./additional-info";
-import { Richtext } from "/imports/ui/components/richtext";
+import { FormControl } from "../../form-control";
+import { FormCheck } from "../../FormCheck";
+import { AdditionalInfo, type Props as AdditionalInfoData } from "./additional-info";
+import { RegionSelect } from "/imports/ui/components/RegionSelect";
 
 import "./styles.scss";
+import { useAccountTasks } from "/imports/utils/useAccountTasks";
+import { useValidation } from "/imports/ui/lib/useValidation";
+import { FormMap } from "/imports/ui/components/location/FormMap";
 
 export interface Props {
   venue: VenueModel;
@@ -25,11 +29,15 @@ export interface Props {
 }
 
 export function Edit({ venue, onSaved, onCanceled }: Props) {
+  const isNew = !venue._id;
   const { t } = useTranslation();
 
-  const sessionRegion = useCurrentRegionId();
+  const currentRegion = useCurrentRegionId();
+  const [isRegionsLoading, regions] = useRegions();
+
   const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
-  const isNew = !venue._id;
+  const [isBusy, setIsBusy] = useState(false);
+  const { promptToLogin } = useAccountTasks();
 
   const [changes, setChanges] = useState({
     name: venue.name,
@@ -44,12 +52,53 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
       .map((f) => f[0] as FacilityOption),
     otherFacilities: venue.otherFacilities,
     restrictedUse: venue.restrictedUse,
-    selectedRegion: isNew ? sessionRegion : venue.region,
+    allowParallelEvents: venue.allowParallelEvents,
+    selectedRegion: venue.region,
     loc: venue.loc as Geodata | undefined,
     level: venue.level,
   });
+  // init selected region
+  useEffect(() => {
+    if (!isNew) {
+      // only needed for new venues
+      return;
+    }
 
-  const [isLoading, regions] = useFindFilter();
+    if (currentRegion) {
+      //  If the session sets the region, we use it.
+      setChanges((prevState) => ({ ...prevState, selectedRegion: currentRegion }));
+    } else if (regions.length === 1) {
+      // There is only one region
+      setChanges((prevState) => ({ ...prevState, selectedRegion: regions[0]._id }));
+    }
+  }, [currentRegion, regions]);
+
+  const [errors, checkValidity, addError] = useValidation(
+    {
+      noName: {
+        field: "name",
+        onCheckValidity: () => !!changes.name,
+        text: () => t("venue.create.plsGiveVenueName", "Please give your venue a name"),
+      },
+      noDescription: {
+        field: "description",
+        onCheckValidity: () => !!changes.description,
+        text: () =>
+          t("venue.create.plsProvideDescription", "Please provide a description for your venue"),
+      },
+      noRegion: {
+        field: "region",
+        onCheckValidity: () => !!changes.selectedRegion,
+        text: () => t("venue.create.plsSelectRegion", "Please select a region"),
+      },
+      noLocation: {
+        field: "location",
+        onCheckValidity: () => !!changes.loc,
+        text: () => t("venue.create.plsSelectPointOnMap", "Please select a point on the map"),
+      },
+    },
+    { autoCheckFixed: true },
+  );
 
   function displayAdditionalInfo() {
     return {
@@ -77,24 +126,32 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
       },
     };
   }
-  function regionSelectable() {
-    if (isNew) {
-      // If the session sets the region, we use it.
-      // If the session does not give us a region, we let the user select it
-      return !sessionRegion;
-    }
-
-    // For existing venues the region is already selected and cannot
-    // be changed
-    return false;
+  function showRegionSelection() {
+    return (
+      // You can select the region for venues that are new
+      isNew &&
+      // and the session not sets the region
+      !currentRegion &&
+      // and when more then one region exists
+      regions.length > 1
+    );
   }
   function showMapSelection() {
-    return regionSelectable() || !!changes.selectedRegion;
+    return showRegionSelection() || !!changes.selectedRegion;
   }
 
-  const handleSave = async () => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!checkValidity()) {
+      setTimeout(() => {
+        document.querySelector<HTMLElement>(".is-invalid")?.focus();
+      }, 0);
+      return;
+    }
+
     const changes1: VenuesMethods.SaveFields = {
       name: changes.name,
+      description: changes.description,
       address: changes.address,
       route: changes.route,
       short: changes.short,
@@ -108,45 +165,31 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
     if (changes.restrictedUse !== undefined) {
       changes1.restrictedUse = changes.restrictedUse;
     }
+    if (changes.allowParallelEvents !== undefined) {
+      changes1.allowParallelEvents = changes.allowParallelEvents;
+    }
     if (changes.otherFacilities) {
       changes1.otherFacilities = changes.otherFacilities;
     }
 
-    if (!changes1.name) {
-      Alert.error(t("venue.create.plsGiveVenueName", "Please give your venue a name"));
-      return;
-    }
-
-    const $description = $(".js-description");
-    if (!$description.text()) {
-      Alert.error(
-        t("venue.create.plsProvideDescription", "Please provide a description for your venue"),
-      );
-      return;
-    }
-
-    changes1.description = $description.html();
-
     if (isNew) {
-      const region = changes.selectedRegion;
-      if (!region) {
-        Alert.error(t("venue.create.plsSelectRegion", "Please select a region"));
+      if (!changes.selectedRegion) {
+        throw new Error("Unexpected falsy: changes.selectedRegion");
+      }
+      changes1.region = changes.selectedRegion;
+    }
+
+    if (!changes.loc) {
+      throw new Error("Unexpected falsy: changes.loc");
+    }
+    changes1.loc = changes.loc;
+
+    setIsBusy(true);
+    try {
+      if (!(await promptToLogin())) {
         return;
       }
-      changes1.region = region;
-    }
-
-    const loc = changes.loc;
-    if (loc) {
-      changes1.loc = loc;
-    } else {
-      Alert.error(t("venue.create.plsSelectPointOnMap", "Please select a point on the map"));
-      return;
-    }
-
-    const venueId = venue?._id || "";
-    try {
-      const res = await VenuesMethods.save(venueId, changes1);
+      const venueId = await VenuesMethods.save(venue?._id || "", changes1);
 
       Alert.success(
         t("venue.saving.success", 'Saved changes to venue "{NAME}".', {
@@ -161,12 +204,17 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
           regions.find((r) => r._id === changes1.region)?.nameEn,
         );
 
-        Router.go("venueDetails", { _id: res });
+        Router.go("venueDetails", { _id: venueId });
       } else {
         onSaved();
       }
     } catch (err) {
-      Alert.serverError(err, t("venue.saving.error", "Could not save the venue"));
+      if (!addError(err.reason)) {
+        // unknown error
+        Alert.serverError(err, t("venue.saving.error", "Could not save the venue"));
+      }
+    } finally {
+      setIsBusy(false);
     }
   };
 
@@ -181,6 +229,10 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
   const selectedRegion = regions.find((r) => r._id === changes.selectedRegion);
   const mapCenter = selectedRegion?.map?.center.coordinates || selectedRegion?.loc?.coordinates;
 
+  if (isRegionsLoading()) {
+    return null;
+  }
+
   return (
     <div className="edit-page venue-edit">
       {venue._id ? (
@@ -188,75 +240,57 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
       ) : (
         <h2>{t("venue.edit.titleCreate", "Create new venue")}</h2>
       )}
-      <form>
+      <form noValidate onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label className="form-label">{t("venue.edit.name", "Name")}</label>
-          <input
+          <FormControl
+            id="venue-edit-name"
             type="text"
-            className="form-control form-control-lg"
+            label={t("venue.edit.name", "Name")}
             placeholder={t("venue.edit.namePlaceholder", "Full name of venue")}
-            size={60}
             value={changes.name}
-            onChange={(event) => {
-              const value = event.currentTarget.value;
-              setChanges((prevState) => ({ ...prevState, name: value }));
-            }}
+            onChange={(value) => setChanges((prevState) => ({ ...prevState, name: value }))}
+            onBlur={() => checkValidity("name")}
+            error={errors.name}
           />
         </div>
         <div className="mb-3">
-          <label className="form-label">{t("venue.edit.description", "Description")}</label>
-          <Richtext
-            className="js-description"
-            text={changes.description}
+          <FormControl
+            id="venue-edit-description"
+            type="richtext"
+            label={t("venue.edit.description", "Description")}
+            value={changes.description}
             placeholder={t("venue.edit.description.placeholder", "Some words about this venue")}
-            onChange={(value) => {
-              setChanges((prevState) => ({ ...prevState, description: value }));
-            }}
+            onChange={(value) => setChanges((prevState) => ({ ...prevState, description: value }))}
+            onBlur={() => checkValidity("description")}
+            error={errors.description}
           />
         </div>
         {showMapSelection() && (
           <div className="row gap-3 mb-3">
-            {regionSelectable() && (
+            {showRegionSelection() && (
               <div className="col-md">
-                <label className="form-label">{t("venue.edit.region", "Region")}</label>
-                <div className="input-group">
-                  <span className="input-group-text">
-                    <span className="fa-solid fa-location-dot" aria-hidden="true"></span>
-                  </span>
-                  {!isLoading() ? (
-                    <select
-                      name="region"
-                      className="form-select"
-                      onChange={(event) => {
-                        const value = event.currentTarget.value;
-                        setChanges((prevState) => ({ ...prevState, selectedRegion: value }));
-                      }}
-                    >
-                      <option value="">{t("venue.edit.pls_select", "Please select")}</option>
-                      {regions.map((region) => (
-                        <option key={region._id} value={region._id}>
-                          {region.name}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    <select className="form-select placeholder-glow" />
-                  )}
-                </div>
+                <RegionSelect
+                  id="venue-edit-region"
+                  value={changes.selectedRegion}
+                  onChange={(value) =>
+                    setChanges((prevState) => ({ ...prevState, selectedRegion: value }))
+                  }
+                  onBlur={() => checkValidity("region")}
+                  error={errors.region}
+                />
               </div>
             )}
             {!!(changes.selectedRegion && mapCenter) && (
               <div className="col-md">
-                <label className="form-label">
-                  {t(
+                <FormMap
+                  id="venue-edit-location"
+                  label={t(
                     "venue.edit.map",
                     'Please add location by clicking "+" (on the right inside the map)',
                   )}
-                </label>
-                <LocationEdit
                   region={changes.selectedRegion}
                   center={mapCenter}
-                  coordinates={changes.loc?.coordinates}
+                  value={changes.loc?.coordinates}
                   level={changes.level}
                   onChange={(newValue) => {
                     setChanges((prevState) => ({
@@ -270,6 +304,8 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
                       level: newValue?.level,
                     }));
                   }}
+                  onBlur={() => checkValidity("location")}
+                  error={errors.location}
                 />
               </div>
             )}
@@ -277,87 +313,77 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
         )}
 
         <div className="mb-3">
-          <label className="form-label">{t("venue.edit.address", "Address")}</label>
-          <div className="input-group">
-            <span className="input-group-text">
-              <span className="fa-solid fa-location-dot fa-fw" aria-hidden="true"></span>
-            </span>
-            <input
-              className="form-control"
-              placeholder={t("venue.edit.address.placeholder", "Street, City, State")}
-              value={changes.address}
-              onChange={(event) => {
-                const value = event.currentTarget.value;
-                setChanges((prevState) => ({ ...prevState, address: value }));
-              }}
-            />
-          </div>
+          <FormControl
+            id="venue-edit-address"
+            type="text"
+            label={t("venue.edit.address", "Address")}
+            optional
+            prepend="fa-solid fa-location-dot fa-fw"
+            placeholder={t("venue.edit.address.placeholder", "Street, City, State")}
+            value={changes.address}
+            onChange={(value) => setChanges((prevState) => ({ ...prevState, address: value }))}
+          />
         </div>
 
         <div className="mb-3">
-          <label className="form-label" htmlFor="editform-address">
-            {t("venue.details.route")}
-          </label>
-          <div className="input-group">
-            <span className="input-group-text">
-              <span className="fa-solid fa-signs-post"></span>
-            </span>
-            <textarea
-              className="form-control"
-              id="editform-address"
-              placeholder={t(
-                "venue.route.placeholder",
-                "near busstop, cross fence, then backyard, enter the black door… 23rd floor, then left.",
-              )}
-              value={changes.route}
-              onChange={(event) => {
-                const value = event.currentTarget.value;
-                setChanges((prevState) => ({ ...prevState, route: value }));
-              }}
-            ></textarea>
-          </div>
+          <FormControl
+            id="editform-address"
+            type="textarea"
+            rows={3}
+            label={t("venue.details.route")}
+            optional
+            prepend="fa-solid fa-signs-post"
+            placeholder={t(
+              "venue.route.placeholder",
+              "near busstop, cross fence, then backyard, enter the black door… 23rd floor, then left.",
+            )}
+            value={changes.route}
+            onChange={(value) => setChanges((prevState) => ({ ...prevState, route: value }))}
+          />
         </div>
 
         <div className="mb-3">
-          <label className="form-label">{t("venue.edit.restrictedUse", "Restricted use")}</label>
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              value=""
-              id="eventRestrictedUseCheck"
-              checked={changes.restrictedUse}
-              onChange={(ev) => {
-                const restrictedUse = ev.currentTarget.checked;
-                setChanges((prevState) => ({
-                  ...prevState,
-                  restrictedUse,
-                }));
-              }}
-            />
-            <label className="form-check-label" htmlFor="eventRestrictedUseCheck">
-              {t(
-                "venue.edit.restrictedUse.label",
-                "This venue can only be chosen by its hosts to publish an event.",
-              )}
-            </label>
-          </div>
+          <div className="form-label">{t("venue.edit.restrictedUse", "Restricted use")}</div>
+          <FormCheck
+            id="venue-edit-restrictedUse"
+            type="box"
+            label={t(
+              "venue.edit.restrictedUse.label",
+              "This venue can only be chosen by its hosts to publish an event.",
+            )}
+            checked={changes.restrictedUse}
+            onChange={(checked) =>
+              setChanges((prevState) => ({
+                ...prevState,
+                restrictedUse: checked,
+              }))
+            }
+          />
+          <FormCheck
+            id="venue-edit-allowParallelEvents"
+            type="box"
+            label={t(
+              "venue.edit.allowParallelEvents.label",
+              "Allow overlapping events in this venue",
+            )}
+            checked={changes.allowParallelEvents}
+            onChange={(checked) =>
+              setChanges((prevState) => ({ ...prevState, allowParallelEvents: checked }))
+            }
+          />
         </div>
         <div className="mb-3">
-          <label className="form-label">
+          <div className="form-label">
             {t(
               "venue.edit.additionalInfo",
               "Additional info (optional, but helps others find the venue)",
             )}
-          </label>
-          <br />
+          </div>
           {showAdditionalInfo ? (
             <button
               type="button"
               className="btn btn-cancel btn-block"
-              onClick={() => {
-                setShowAdditionalInfo(!showAdditionalInfo);
-              }}
+              onClick={() => setShowAdditionalInfo(!showAdditionalInfo)}
             >
               {t("venue.edit.hideAdditionalInfo", "Hide additional info")}
             </button>
@@ -365,9 +391,7 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
             <button
               type="button"
               className="btn btn-secondary btn-block"
-              onClick={() => {
-                setShowAdditionalInfo(!showAdditionalInfo);
-              }}
+              onClick={() => setShowAdditionalInfo(!showAdditionalInfo)}
             >
               {t("venue.edit.provideAdditionalInfo", "Fill out additional info")}
             </button>
@@ -378,8 +402,8 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
           </div>
         </div>
         <div className="form-actions">
-          <ButtonSave onClick={handleSave} />
-          <ButtonCancel onClick={handleCancel} />
+          <ButtonSave submit id="venues-edit-save" isBusy={isBusy} />
+          <ButtonCancel id="venues-edit-cancel" onClick={handleCancel} disabled={isBusy} />
         </div>
       </form>
     </div>

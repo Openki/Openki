@@ -12,7 +12,7 @@ export function Location({ event }: { event: EventModel }) {
     <div className="kiosk-event-location">
       {showLocation() && (
         <>
-          <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span> {event.venue?.name}
+          <i className="fa-solid fa-house fa-fw" /> {event.venue?.name}
           {!!event.room && <> - </>}
         </>
       )}
@@ -20,7 +20,7 @@ export function Location({ event }: { event: EventModel }) {
         <>
           {!showLocation() && (
             <>
-              <span className="fa-solid fa-signs-post fa-fw" aria-hidden="true"></span>{" "}
+              <i className="fa-solid fa-signs-post fa-fw" />{" "}
             </>
           )}
           {event.room}

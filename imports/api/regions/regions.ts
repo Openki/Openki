@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import { _ } from "meteor/underscore";
+import { assignIn } from "lodash-es";
 import { Match, check } from "meteor/check";
 import { Session } from "meteor/session";
 
@@ -16,6 +16,8 @@ import { Geodata } from "/imports/api/Geodata";
 
 export interface CustomMapConfig {
   crs?: "Simple";
+  api?: "c3nav";
+  apiUrl?: string;
   layers: { name: string; level: number; tileUrl: string }[];
   defaultLevel: number;
   center: Geodata;
@@ -139,7 +141,7 @@ export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionMode
   constructor() {
     super("Regions", {
       transform(region) {
-        return _.extend(new Region(), region);
+        return assignIn(new Region(), region);
       },
     });
 

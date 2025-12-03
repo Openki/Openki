@@ -44,7 +44,7 @@ function Member({ tenant, memberId }: { tenant: TenantModel; memberId: string })
             handleOnClick();
           }}
         >
-          <i className="fa-solid fa-xmark fa-fw" aria-hidden="true" /> {userName}
+          <i className="fa-solid fa-xmark fa-fw" /> {userName}
         </button>
       </div>
       <div className="tag tag-link tenant-member-tag-profile addon">
@@ -52,7 +52,7 @@ function Member({ tenant, memberId }: { tenant: TenantModel; memberId: string })
           href={Router.path("userprofile", { _id: memberId })}
           title={t("tenant.settings.member.profile", "Visit profile")}
         >
-          <i className="fa-solid fa-user fa-fw" aria-hidden="true" />
+          <i className="fa-solid fa-user fa-fw" />
         </a>
       </div>
     </>

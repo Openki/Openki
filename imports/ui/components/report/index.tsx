@@ -79,14 +79,9 @@ export function Report() {
             </div>
             <div className="d-flex gap-2 justify-content-end">
               <button type="submit" className="btn btn-save">
-                <span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>{" "}
-                {t("report.report", "Send report")}
+                <i className="fa-solid fa-paper-plane fa-fw" /> {t("report.report", "Send report")}
               </button>
-              <ButtonCancel
-                onClick={() => {
-                  setState("");
-                }}
-              />
+              <ButtonCancel id="report-cancel" onClick={() => setState("")} />
             </div>
           </form>
         </div>

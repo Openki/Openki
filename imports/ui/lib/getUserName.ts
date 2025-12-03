@@ -1,5 +1,5 @@
 import { Meteor } from "meteor/meteor";
-import { _ } from "meteor/underscore";
+import { assignIn } from "lodash-es";
 import { i18n } from "/imports/startup/both/i18next";
 import { Tracker } from "meteor/tracker";
 
@@ -17,7 +17,7 @@ const pending: Record<string, Tracker.Dependency> = {};
 // Update the cache if users are pushed to the collection
 Users.find({}, { projection: { _id: 1, username: 1, contribution: 1 } }).observe({
   added(user) {
-    cache[user._id] = _.extend(new User(), user || { username: "?!" });
+    cache[user._id] = assignIn(new User(), user || { username: "?!" });
     if (pending[user._id]) {
       pending[user._id].changed();
       // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
@@ -44,7 +44,7 @@ export const getCachedUser = (userId: string) => {
 
   if (cachedUser === undefined) {
     // Substitute until the name (or its absence) is loaded
-    cachedUser = _.extend(new User(), { username: "◌" });
+    cachedUser = assignIn(new User(), { username: "◌" });
 
     if (pending[userId]) {
       pending[userId].depend();

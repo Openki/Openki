@@ -6,11 +6,11 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { EventModel, EventParticipantEntity } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 
+import { Contribution } from "../../Contribution";
+import { SendMessage, Props as SendMessageProps } from "../../SendMessage";
+import { RemoveDropdown } from "./remove-dropdown";
 import { ParticipantContact } from "/imports/ui/components/participant/contact";
 import { ProfileLink } from "/imports/ui/components/profile-link";
-import { SendMessage, Data as SendMessageData } from "/imports/ui/components/send-message";
-import { Contribution } from "../../Contribution";
-import { RemoveDropdown } from "./remove-dropdown";
 
 import "./styles.scss";
 
@@ -46,8 +46,7 @@ function EventParticipant({
             className="p-1 bg-primary text-light"
             data-bs-title={t("eventParticipant.iBringCompanions", "Brings companion.")}
           >
-            +{participant.companions}{" "}
-            <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
+            +{participant.companions} <i className="fa-solid fa-user fa-fw" />
           </strong>
         )}
 
@@ -100,7 +99,7 @@ export function EventParticipants({ event }: Props) {
     return !!(user && event.editableBy(user));
   }
 
-  function sendMessageAttr(): SendMessageData {
+  function sendMessageAttr(): SendMessageProps {
     return {
       placeholder: t(
         "eventParticipants.sendMessage.placeholder",
@@ -143,7 +142,7 @@ export function EventParticipants({ event }: Props) {
               <div className="modal-content">
                 <div className="modal-header">
                   <h4 className="modal-title">
-                    <span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>
+                    <i className="fa-solid fa-paper-plane fa-fw" />
                     {t(
                       "participantContactModal.writeMessageToAllAttendees",
                       "Write a message to all participants",
@@ -153,7 +152,7 @@ export function EventParticipants({ event }: Props) {
                     type="button"
                     className="btn-close"
                     data-bs-dismiss="modal"
-                    aria-label="Close"
+                    aria-label={t("_button.close")}
                   ></button>
                 </div>
                 <div className="modal-body text-dark">
@@ -164,7 +163,8 @@ export function EventParticipants({ event }: Props) {
           </div>
         )}
         <h4 data-test="events-participants-header">
-          <span className="fa-solid fa-users fa-fw" aria-hidden="true"></span>&nbsp;
+          <i className="fa-solid fa-users fa-fw" />
+          &nbsp;
           {t(
             "event.details.paticipants.title",
             "{NUM, plural, =0{No participants yet} one{1 Participant} other{# Participants} }",
@@ -174,10 +174,8 @@ export function EventParticipants({ event }: Props) {
             <i
               data-test="events-participants-notify-all"
               className="fa-solid fa-envelope event-participants-contact float-end"
-              onClick={() => {
-                setShowModal(!showModal);
-              }}
-            ></i>
+              onClick={() => setShowModal(!showModal)}
+            />
           )}
           <br />
           {!!event.maxParticipants && !event.canceled && (

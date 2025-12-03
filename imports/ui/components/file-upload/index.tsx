@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import React, { useState } from "react";
 
-import { ButtonSave, ButtonCancel } from "../Buttons";
+import { ButtonCancel, ButtonSave } from "../Buttons";
 
 import "./styles.scss";
 
@@ -72,7 +72,7 @@ export function FileUpload({ accept, onUpload, onCancel }: Props) {
         />
         <label htmlFor="file">
           <div className="mb-1">
-            <i className="fa-regular fa-file-lines fa-5x" aria-hidden="true"></i>
+            <i className="fa-regular fa-file-lines fa-5x" />
           </div>
           {dragover ? (
             <div className="file-upload-drop">
@@ -104,6 +104,8 @@ export function FileUpload({ accept, onUpload, onCancel }: Props) {
       {progress === "ready" && (
         <div className="file-upload-controls">
           <ButtonSave
+            id="file-upload-save"
+            needsLogin
             onClick={async () => {
               if (!droppedFile) {
                 throw new Error(`Unexpected undefined: file`);
@@ -114,23 +116,23 @@ export function FileUpload({ accept, onUpload, onCancel }: Props) {
               const reader = new FileReader();
 
               reader.onload = () => {
+                const arrayBuffer = reader.result as ArrayBuffer;
+                const base64 = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
+
                 onUpload({
                   lastModified: new Date(droppedFile.lastModified),
                   size: droppedFile.size,
                   mimeType: droppedFile.type,
-                  content: reader.result as string,
+                  content: base64,
                 });
+
                 setProgress("done");
               };
 
-              reader.readAsBinaryString(droppedFile);
+              reader.readAsArrayBuffer(droppedFile);
             }}
           />
-          <ButtonCancel
-            onClick={() => {
-              onCancel();
-            }}
-          />
+          <ButtonCancel id="file-upload-cancel" onClick={() => onCancel()} />
         </div>
       )}
     </>

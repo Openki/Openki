@@ -1,6 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
-import omit from "lodash/omit";
+import { omit } from "lodash-es";
+import * as Analytics from "/imports/ui/lib/analytics";
+import { MetaTags } from "/imports/ui/components/MetaTags";
+import { useTranslation } from "react-i18next";
+import { useAccountTasks } from "/imports/utils/useAccountTasks";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { TenantModel } from "/imports/api/tenants/tenants";
@@ -8,13 +12,8 @@ import { RegionModel } from "/imports/api/regions/regions";
 import * as TenantsMethods from "/imports/api/tenants/methods";
 import * as RegionsMethods from "/imports/api/regions/methods";
 
-import * as Analytics from "/imports/ui/lib/analytics";
-import * as Metatags from "/imports/utils/metatags";
-import { useTranslation } from "react-i18next";
-
 import { Fields } from "../../components/regions/edit/Fields";
-import { PleaseLogin } from "../../components/please-login";
-import { ButtonCancel, ButtonSubmit } from "../../components/Buttons";
+import { ButtonCancel, ButtonSave } from "/imports/ui/components/Buttons";
 
 export interface Data {
   tenant: TenantModel;
@@ -24,7 +23,6 @@ export interface Data {
 export function TenantCreatePage(data: Data) {
   const { t } = useTranslation();
 
-  const [isBusy, setIsBusy] = useState(false);
   const [changes, setChanges] = useState({
     tenantName: data.tenant.name,
     name: data.region.name,
@@ -33,11 +31,12 @@ export function TenantCreatePage(data: Data) {
     loc: data.region.loc,
   });
 
-  useEffect(() => {
-    Metatags.setCommonTags(t("tenant.edit.siteTitle.create", "Create private region"));
-  });
+  const { promptToLogin } = useAccountTasks();
+  const [isBusy, setIsBusy] = useState(false);
 
-  async function handleSave() {
+  async function handleSave(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
     if (!changes.tenantName) {
       Alert.error(t("tenant.create.plsGiveName", "Please give a organization name"));
       return;
@@ -60,6 +59,10 @@ export function TenantCreatePage(data: Data) {
 
     setIsBusy(true);
     try {
+      if (!(await promptToLogin())) {
+        return;
+      }
+
       const tenantId = await TenantsMethods.create({ name: changes.tenantName });
       await RegionsMethods.create({ tenant: tenantId, ...(omit(changes, "tenantName") as any) });
 
@@ -80,51 +83,54 @@ export function TenantCreatePage(data: Data) {
   }
 
   return (
-    <div className="container mw-md">
-      <div className="edit-page region-edit">
-        <h2>{t("tenant.create.title", "Create your private region")}</h2>
+    <>
+      <MetaTags title={t("tenant.edit.siteTitle.create", "Create private region")} />
 
-        <PleaseLogin type="form" onSubmit={handleSave}>
-          <div className="mb-3">
-            <label className="form-label">
-              {t("tenant.edit.name", "Name of your organization:")}
-            </label>
-            <input
-              data-test="tenant-edit-name"
-              type="text"
-              className="form-control"
-              placeholder={t("tenant.edit.namePlaceholder", "Full name of your organization")}
-              onChange={(event) => {
-                setChanges({
-                  ...changes,
-                  tenantName: event.currentTarget.value,
+      <div className="container mw-md">
+        <div className="edit-page region-edit">
+          <h2>{t("tenant.create.title", "Create your private region")}</h2>
+
+          <form noValidate onSubmit={handleSave}>
+            <div className="mb-3">
+              <label className="form-label">
+                {t("tenant.edit.name", "Name of your organization:")}
+              </label>
+              <input
+                data-test="tenant-edit-name"
+                type="text"
+                className="form-control"
+                placeholder={t("tenant.edit.namePlaceholder", "Full name of your organization")}
+                onChange={(event) => {
+                  setChanges({
+                    ...changes,
+                    tenantName: event.currentTarget.value,
+                  });
+                }}
+              />
+            </div>
+            <Fields
+              region={changes}
+              onChange={(newChanges) => {
+                setChanges((changes) => {
+                  return {
+                    tenantName: changes.tenantName,
+                    ...newChanges,
+                  };
                 });
               }}
             />
-          </div>
-          <Fields
-            region={changes}
-            onChange={(newChanges) => {
-              setChanges((changes) => {
-                return {
-                  tenantName: changes.tenantName,
-                  ...newChanges,
-                };
-              });
-            }}
-          />
-          <div className="form-actions">
-            <ButtonSubmit isBusy={isBusy} />
-            <ButtonCancel
-              disabled={isBusy}
-              onClick={() => {
-                Router.go("profile");
-              }}
-            />
-          </div>
-        </PleaseLogin>
+            <div className="form-actions">
+              <ButtonSave submit id="tenant-create-save" isBusy={isBusy} />
+              <ButtonCancel
+                id="tenant-create-cancel"
+                disabled={isBusy}
+                onClick={() => Router.go("profile")}
+              />
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

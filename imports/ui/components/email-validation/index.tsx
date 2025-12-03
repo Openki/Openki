@@ -55,7 +55,7 @@ function EmailValidationModal({ user }: Props) {
         <div className="modal-content">
           <div className="modal-header">
             <h4 className="modal-title">
-              <span className="fa-solid fa-circle-exclamation fa-fw" aria-hidden="true"></span>
+              <i className="fa-solid fa-circle-exclamation fa-fw" />
               &nbsp;
               {t("validate.email.title", "Validate e-mail address")}
             </h4>
@@ -76,16 +76,13 @@ function EmailValidationModal({ user }: Props) {
               <button className="btn btn-add form-control" disabled={isBusy} onClick={handleClick}>
                 {isBusy ? (
                   <>
-                    <span
-                      className="fa-solid fa-circle-notch fa-spin fa-fw"
-                      aria-hidden="true"
-                    ></span>
-                    &nbsp;
+                    <i className="fa-solid fa-circle-notch fa-spin fa-fw" /> &nbsp;
                     {t("send.validation.submit.busy", "Sending…")}
                   </>
                 ) : (
                   <>
-                    <span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>&nbsp;
+                    <i className="fa-solid fa-paper-plane fa-fw" />
+                    &nbsp;
                     {t("send.validation.email", "Send me a validation e-mail.")}
                   </>
                 )}

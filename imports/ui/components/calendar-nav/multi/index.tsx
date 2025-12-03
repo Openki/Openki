@@ -14,6 +14,7 @@ import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 
 import { Direction, Unit } from "../Arrow";
 import { Control } from "./Control";
+import { FormCheck } from "/imports/ui/components/FormCheck";
 
 import "../styles.scss";
 
@@ -53,10 +54,11 @@ function mvDateHandler(
 export interface Props {
   date: moment.Moment;
   filter: ReturnType<(typeof Events)["Filtering"]>;
+  isAttendeeFilterOn: boolean;
   setIsAttendeeFilterOn: (state: boolean) => void;
 }
 
-export function Multi({ date, filter, setIsAttendeeFilterOn }: Props) {
+export function Multi({ date, filter, isAttendeeFilterOn, setIsAttendeeFilterOn }: Props) {
   const { t } = useTranslation();
   const { weekNr, dateLong, dateShort } = useDateTimeFormat();
   const currentUser = useUser();
@@ -119,19 +121,14 @@ export function Multi({ date, filter, setIsAttendeeFilterOn }: Props) {
         <Control {...controlAttr("next")} />
       </div>
       {!!currentUser && (
-        <div className="form-check form-switch align-content-center text-center pb-2">
-          <input
-            type="checkbox"
+        <div className="d-flex align-content-center justify-content-center pb-2">
+          <FormCheck
             id="filter-own-events"
-            className="form-check-input float-none"
-            name="filter-own-events"
-            onClick={(event) => {
-              setIsAttendeeFilterOn(event.currentTarget.checked);
-            }}
-          />{" "}
-          <label htmlFor="filter-own-events">
-            {t("calendar.filter-own-events", "Show my events only")}
-          </label>
+            type="switch"
+            label={t("calendar.filter-own-events", "Show my events only")}
+            onChange={(checked) => setIsAttendeeFilterOn(checked)}
+            checked={isAttendeeFilterOn}
+          />
         </div>
       )}
     </div>

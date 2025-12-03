@@ -1,6 +1,5 @@
 import React from "react";
 import { useSession } from "/imports/utils/react-meteor-data";
-import { chain, Dictionary, fromPairs, sortBy } from "lodash";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
@@ -8,6 +7,7 @@ import { useReactiveNow } from "/imports/utils/reactive-now";
 import { LocalTime } from "/imports/utils/local-time";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { chain, sortBy, fromPairs } from "lodash-es";
 
 import { useFindFilter } from "/imports/api/events/publications";
 import { EventEntity, Events } from "/imports/api/events/events";
@@ -147,7 +147,7 @@ export function Schedule() {
     }, {});
 
   // List of days where events where found
-  const daysDic: Dictionary<number> = {};
+  const daysDic: Record<string, number> = {};
 
   // Map of slots where events were found. Each slot holds a list of events.
   const slots: Record<string, Record<string, EventViewModel[]>> = {};

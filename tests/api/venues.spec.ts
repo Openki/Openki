@@ -16,8 +16,8 @@ describe("Venue save", () => {
       .should("be.a", "string")
       .then((venueId) => {
         // Try saving it again with a change
-        venue.name += "!";
-        cy.callMethod("venue.save", venueId, venue);
+        const updatedVenue = { ...venue, name: venue.name + "!" };
+        cy.callMethod("venue.save", venueId, updatedVenue);
       });
   });
 });

@@ -1,20 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 
 import { AccountTasks } from "/imports/ui/components/account-tasks";
-import { Data, Edit } from "/imports/ui/components/courses/edit";
+import { Edit, Props } from "/imports/ui/components/courses/edit";
 
-export function Propose(data: Data) {
+export function Propose(data: Props) {
   const { t } = useTranslation();
-
-  useEffect(() => {
-    Metatags.setCommonTags(t("course.propose.windowtitle", "Propose new course"));
-  });
 
   return (
     <>
+      <MetaTags title={t("course.propose.windowtitle", "Propose new course")} />
+
       <AccountTasks />
       <Edit {...data} />
     </>

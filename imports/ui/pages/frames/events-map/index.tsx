@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 import { Filtering } from "/imports/utils/filtering";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 import moment from "moment";
@@ -24,16 +24,18 @@ export function FrameEventsMapPage() {
 
   const [isLoading, events] = useFindFilter(query);
 
-  Metatags.setCommonTags(t("frameEventsMap.windowtitle", "Events map"));
-
   if (isLoading()) {
     return <LoadingPage />;
   }
 
   return (
-    <div className="vh-100">
-      <EventsMap events={events} openLinksInNewTab />
-    </div>
+    <>
+      <MetaTags title={t("frameEventsMap.windowtitle", "Events map")} />
+
+      <div className="vh-100">
+        <EventsMap events={events} openLinksInNewTab />
+      </div>
+    </>
   );
 }
 

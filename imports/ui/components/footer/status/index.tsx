@@ -25,7 +25,7 @@ export function Status() {
         .map((e) => e.message.replace("Match error: ", ""))
         .join("\n ")}`}
     >
-      <i className="fa-solid fa-circle"></i>
+      <i className="fa-solid fa-circle" />
     </span>
   );
 }

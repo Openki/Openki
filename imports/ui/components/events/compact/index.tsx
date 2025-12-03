@@ -75,12 +75,12 @@ export function EventCompact({
       >
         {!!withDate && (
           <>
-            <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>{" "}
-            {dayOfWeek(event.startLocal)} {calendarDayShort(event.startLocal)}
+            <i className="fa-regular fa-calendar-days fa-fw" /> {dayOfWeek(event.startLocal)}{" "}
+            {calendarDayShort(event.startLocal)}
             <br />
           </>
         )}
-        <span className="fa-regular fa-clock fa-fw" aria-hidden="true"></span>{" "}
+        <i className="fa-regular fa-clock fa-fw" />{" "}
         <span className="event-compact-time">
           {timeFormat(event.startLocal)} - {timeFormat(event.endLocal)}
         </span>

@@ -17,8 +17,7 @@ import { EventReplication, Props as EventReplicationProps } from "../../replicat
 import { Content } from "../content";
 import { Files } from "../../../courses/Files";
 import { DeleteConfirmDialog } from "../../../delete-confirm-dialog";
-import { ButtonDelete, ButtonEdit } from "../../../Buttons";
-import { PleaseLogin } from "../../../please-login";
+import { Button, ButtonDelete, ButtonEdit } from "../../../Buttons";
 
 import "./styles.scss";
 
@@ -50,7 +49,7 @@ function CourseEvent({ event, courseId }: { event: EventModel; courseId: string 
               aria-controls="description"
               aria-selected="true"
             >
-              <span className="fa-solid fa-file-lines fa-fw" aria-hidden="true"></span>
+              <i className="fa-solid fa-file-lines fa-fw" />
               <span className="tab-label">{t("course.subnav.descr", "Description")}</span>
             </button>
           </li>
@@ -65,7 +64,7 @@ function CourseEvent({ event, courseId }: { event: EventModel; courseId: string 
               aria-controls="files"
               aria-selected="false"
             >
-              <span className="fa-solid fa-file fa-fw" aria-hidden="true"></span>
+              <i className="fa-solid fa-file fa-fw" />
               <span className="tab-label">{t("course.subnav.files", "Files")}</span>
             </button>
           </li>
@@ -202,12 +201,12 @@ export function Display({
     };
   }
 
-  function handelShowReplication() {
+  function handleShowReplication() {
     setReplicating(true);
     setExpanded(false);
   }
 
-  function handelDownload(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
+  function handleDownload(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
     e.stopPropagation();
     Analytics.trackEvent(
       "Events downloads",
@@ -216,16 +215,16 @@ export function Display({
     );
   }
 
-  function handelCancel() {
+  function handleCancel() {
     setCanceling(true);
     setExpanded(false);
   }
 
-  async function handelExpand() {
+  async function handleExpand() {
     setExpanded(true);
   }
 
-  async function handelUncancel() {
+  async function handleUncancel() {
     try {
       await EventsMethods.uncancel(event._id);
       Alert.success(
@@ -260,38 +259,41 @@ export function Display({
             <div className="actions">
               {!isExpanded() && (
                 <>
-                  <ButtonEdit onClick={onEdit} />
-                  <button type="button" className="btn btn-edit" onClick={handelShowReplication}>
+                  <ButtonEdit id="events-display-body-edit" onClick={onEdit} />
+                  <Button
+                    id="events-display-body-repeat"
+                    className="btn-edit"
+                    onClick={handleShowReplication}
+                  >
                     {t("event.details.repl_menu_btn", "Repeat")}
-                  </button>
+                  </Button>
                   <a
                     className="btn btn-edit"
                     href={Router.path("calEvent", event)}
                     title={t("event.detail.download_cal", "Download event to my calendar")}
-                    onClick={handelDownload}
+                    onClick={handleDownload}
                   >
                     {t("event.details.download", "Download")}
                   </a>
                   {!event.canceled ? (
-                    <button
-                      data-test="events-display-body-cancel-button"
-                      type="button"
-                      className="btn btn-remove"
-                      onClick={handelCancel}
+                    <Button
+                      id="events-display-body-cancel"
+                      className="btn-remove"
+                      onClick={handleCancel}
                     >
                       {t("event.details.cancel", "Cancel this event")}
-                    </button>
+                    </Button>
                   ) : (
-                    <PleaseLogin
-                      data-test="events-display-body-uncancel-button"
-                      type="button"
-                      className="btn btn-edit"
-                      onClick={handelUncancel}
+                    <Button
+                      submit
+                      id="events-display-body-uncancel"
+                      className="btn-edit"
+                      onClick={handleUncancel}
                     >
                       {t("event.details.uncancel", "Uncancel this event")}
-                    </PleaseLogin>
+                    </Button>
                   )}
-                  <ButtonDelete onClick={handelExpand} />
+                  <ButtonDelete id="events-display-confirmDelete" onClick={handleExpand} />
                 </>
               )}
             </div>

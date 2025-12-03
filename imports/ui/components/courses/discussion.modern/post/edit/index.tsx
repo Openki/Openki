@@ -14,6 +14,7 @@ import { DiscussionProfileIcon } from "../profile-icon";
 import { Richtext } from "/imports/ui/components/richtext";
 import { ButtonCancel } from "../../../../Buttons";
 import { UserName } from "/imports/ui/components/UserName";
+import { FormCheck } from "/imports/ui/components/FormCheck";
 
 export interface Props {
   post: CourseDiscussionEntity & { new?: true };
@@ -60,9 +61,9 @@ export function Edit({ post, onSave, onCancel }: Props) {
 
   function anonDisabled() {
     if (user?._id) {
-      return {};
+      return false;
     }
-    return { disabled: true };
+    return true;
   }
   function hasBeenEdited() {
     return moment(post.time_updated).isAfter(post.time_created);
@@ -162,7 +163,6 @@ export function Edit({ post, onSave, onCancel }: Props) {
                   {" "}
                   <i
                     className="fa-solid fa-bell"
-                    aria-hidden="true"
                     data-bs-title={
                       !post.eventId
                         ? t("course.discussion.allNotified", "All interested notified")
@@ -171,7 +171,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
                             "All interested and participants notified",
                           )
                     }
-                  ></i>
+                  />
                 </>
               )}
               {hasBeenEdited() && (
@@ -195,10 +195,8 @@ export function Edit({ post, onSave, onCancel }: Props) {
                 "_inputField.optional",
               )}`}
               value={commentTitle}
-              onChange={(event) => {
-                setCommentTitle(event.currentTarget.value);
-              }}
-              autoFocus={true}
+              onChange={(event) => setCommentTitle(event.currentTarget.value)}
+              autoFocus
             />
           </div>
           <div className="mb-2">
@@ -207,41 +205,34 @@ export function Edit({ post, onSave, onCancel }: Props) {
           {!!post.new && (
             <>
               {canNotifyAll() && (
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    checked={notifyAll}
-                    id="canNotifyAllCheck"
-                    onChange={(event) => {
-                      setNotifyAll(event.currentTarget.checked);
-                    }}
-                  />
-                  <label className="form-check-label" htmlFor="canNotifyAllCheck">
-                    <i className="fa-solid fa-bell" aria-hidden="true"></i>&nbsp;
-                    {t("course.discussion.notifyAll", "Notify all")}
-                  </label>
-                </div>
-              )}
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  checked={anon}
-                  {...anonDisabled()}
-                  id="anonymousCheck"
-                  onChange={(event) => {
-                    setAnon(event.currentTarget.checked);
-                  }}
+                <FormCheck
+                  type="switch"
+                  id="discussion-post-edit-notify-all"
+                  label={
+                    <>
+                      <i className="fa-solid fa-bell" />
+                      &nbsp;
+                      {t("course.discussion.notifyAll", "Notify all")}
+                    </>
+                  }
+                  checked={notifyAll}
+                  onChange={(checked) => setNotifyAll(checked)}
                 />
-                <label
-                  className="form-check-label discussion-toggle-anonymous"
-                  htmlFor="anonymousCheck"
-                >
-                  <i className="fa-solid fa-user-secret" aria-hidden="true"></i>&nbsp;
-                  {t("course.discussion.anon", "Anonymous comment")}
-                </label>
-              </div>
+              )}
+              <FormCheck
+                type="switch"
+                id="discussion-post-edit-anonymous"
+                label={
+                  <>
+                    <i className="fa-solid fa-user-secret" />
+                    &nbsp;
+                    {t("course.discussion.anon", "Anonymous comment")}
+                  </>
+                }
+                checked={anon}
+                onChange={(checked) => setAnon(checked)}
+                disabled={anonDisabled()}
+              />
             </>
           )}
 
@@ -251,18 +242,14 @@ export function Edit({ post, onSave, onCancel }: Props) {
               className="btn btn-secondary discussion-save-btn"
               disabled={!validComment || isBusy}
             >
-              <span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>{" "}
+              <i className="fa-solid fa-paper-plane fa-fw" />{" "}
               {post.new
                 ? post.parentId
                   ? t("course.discussion.comment_btn.answer", "Answer")
                   : t("course.discussion.comment_btn.write", "Write")
                 : t("course.discussion.comment_btn.update", "Update my comment")}
             </button>{" "}
-            <ButtonCancel
-              onClick={() => {
-                onCancel();
-              }}
-            />
+            <ButtonCancel id="post-edit-cancel" onClick={() => onCancel()} />
           </div>
         </div>
       </form>

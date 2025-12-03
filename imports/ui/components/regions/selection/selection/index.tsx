@@ -177,28 +177,28 @@ export function RegionSelection(props: Props) {
     };
   }, [searchHasFocus]);
 
-  function handelItemClick(region?: RegionModel) {
+  function handleItemClick(region?: RegionModel) {
     const regionId = region?._id || "all";
     changeRegion(regionId);
     return false;
   }
 
-  function handelSearchKeyUp(event: React.KeyboardEvent<HTMLInputElement>) {
+  function handleSearchKeyUp(event: React.KeyboardEvent<HTMLInputElement>) {
     const newSearch = event.currentTarget.value.trim();
     if (newSearch !== search) {
       setSearch(newSearch);
     }
   }
 
-  function handelSearchFocus() {
+  function handleSearchFocus() {
     setSearchHasFocus(true);
   }
 
-  function handelSearchBlur() {
+  function handleSearchBlur() {
     setSearchHasFocus(false);
   }
 
-  function handelShowAllClick(event: React.MouseEvent<HTMLButtonElement>) {
+  function handleShowAllClick(event: React.MouseEvent<HTMLButtonElement>) {
     // prevent menu close
     event.stopPropagation();
 
@@ -206,7 +206,7 @@ export function RegionSelection(props: Props) {
     setSearchHasFocus(true);
   }
 
-  function handelSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (search !== "") {
@@ -221,14 +221,14 @@ export function RegionSelection(props: Props) {
 
   return (
     <li className={`region-selection ${inNavbarClasses()}`}>
-      <form className="d-flex region-search-form" tabIndex={0} onSubmit={handelSubmit}>
+      <form className="d-flex region-search-form" tabIndex={0} onSubmit={handleSubmit}>
         <div
           className={`input-group input-group-outline ${
             props.isSplash ? "is-splash" : "input-group-sm p-2"
           }`}
         >
           <span className="input-group-text">
-            <span className="fa-solid fa-location-dot fa-fw" aria-hidden="true"></span>
+            <i className="fa-solid fa-location-dot fa-fw" />
           </span>
           <input
             ref={searchElementRef}
@@ -237,9 +237,9 @@ export function RegionSelection(props: Props) {
             defaultValue={
               currentRegion ? currentRegion.name : t("menue.All regions", "All regions") || ""
             }
-            onKeyUp={handelSearchKeyUp}
-            onFocus={handelSearchFocus}
-            onBlur={handelSearchBlur}
+            onKeyUp={handleSearchKeyUp}
+            onFocus={handleSearchFocus}
+            onBlur={handleSearchBlur}
           />
           <input className="d-none" type="submit" />
           <button
@@ -258,13 +258,13 @@ export function RegionSelection(props: Props) {
                   className="badge bg-primary rounded-pill"
                   title={t("regionSelection.legend.numCoursesTitle", "Number of courses")}
                 >
-                  # <i className="fa-solid fa-circle"></i>
+                  # <i className="fa-solid fa-circle" />
                 </span>{" "}
                 <span
                   className="badge bg-success text-dark rounded-pill"
                   title={t("regionSelection.legend.numEventsTitle", "Number of upcoming events")}
                 >
-                  # <i className="fa-solid fa-calendar"></i>
+                  # <i className="fa-solid fa-calendar" />
                 </span>
               </div>
               {t("regionSelection.legend.region", "Region")}
@@ -274,7 +274,7 @@ export function RegionSelection(props: Props) {
                 href="#"
                 className="dropdown-item"
                 title={t("menue.All regions")}
-                onClick={() => handelItemClick()}
+                onClick={() => handleItemClick()}
               >
                 <div className="dropdown-addon-right">
                   <span
@@ -316,7 +316,7 @@ export function RegionSelection(props: Props) {
                     key={region._id}
                     region={region}
                     search={search}
-                    onClick={() => handelItemClick(region)}
+                    onClick={() => handleItemClick(region)}
                   />
                 ))}
                 {!!aboutLink() && (
@@ -326,7 +326,7 @@ export function RegionSelection(props: Props) {
                     </li>
                     <li>
                       <a className="dropdown-item" href={aboutLink()}>
-                        <span className="fa-solid fa-circle-info" aria-hidden="true"></span>{" "}
+                        <i className="fa-solid fa-circle-info" />{" "}
                         {t("regionSelection.aboutLink", "About regions")}
                       </a>
                     </li>
@@ -341,7 +341,7 @@ export function RegionSelection(props: Props) {
                     key={region._id}
                     region={region}
                     search={search}
-                    onClick={() => handelItemClick(region)}
+                    onClick={() => handleItemClick(region)}
                   />
                 ))}
                 {hasMore() && (
@@ -354,7 +354,7 @@ export function RegionSelection(props: Props) {
                         data-test="regions-selection-show-more"
                         className="btn btn-link"
                         type="button"
-                        onClick={handelShowAllClick}
+                        onClick={handleShowAllClick}
                       >
                         {t("regionSelection.showAll", "Show more regions")}
                       </button>

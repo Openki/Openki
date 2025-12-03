@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import { chain, escapeRegExp } from "lodash";
+import { assignIn, escapeRegExp, chain } from "lodash-es";
 import { Match, check } from "meteor/check";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
@@ -46,6 +46,8 @@ export interface VenueEntity {
   otherFacilities?: string;
   /** Only hosts and admins can create a event with this venue. */
   restrictedUse?: boolean;
+  /** This venue allow overlapping events. */
+  allowParallelEvents: boolean;
   createdby: string;
   created: Date;
   updated: Date;
@@ -72,6 +74,8 @@ export class Venue {
   public maxWorkplaces = 0;
 
   public facilities = {};
+
+  public allowParallelEvents = true;
 
   /**
    * Check whether a user may edit the venue.
@@ -118,7 +122,7 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
   constructor() {
     super("Venues", {
       transform(venue) {
-        return _.extend(new Venue(), venue);
+        return assignIn(new Venue(), venue);
       },
     });
 

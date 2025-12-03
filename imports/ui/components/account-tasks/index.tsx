@@ -1,17 +1,17 @@
+import { Router } from "meteor/iron:router";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Modal } from "/imports/startup/client/bootstrap";
-import { Router } from "meteor/iron:router";
 import { useSession, useSessionEquals } from "/imports/utils/react-meteor-data";
 
-import { isEmail } from "/imports/utils/email-tools";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import { isEmail } from "/imports/utils/email-tools";
 
-import { LoginFrame, Props as LoginFrameProps } from "./login-frame";
 import { ForgotPwdFrame, Props as ForgotPwdFrameProps } from "./forgot-pwd-frame";
-import { VistiorFrame, Props as VisitorFrameProps } from "./visitor-frame";
+import { LoginFrame, Props as LoginFrameProps } from "./login-frame";
 import { RegisterFrame, Props as RegisterFrameProps } from "./register-frame";
+import { Props as VisitorFrameProps, VistiorFrame } from "./visitor-frame";
 
 import "./styles.scss";
 
@@ -23,13 +23,13 @@ function Title({ activeTask }: { activeTask: string }) {
     case "login":
       return pleaseLogin ? (
         <>
-          <i className="fa-solid fa-circle-exclamation fa-fw" aria-hidden="true"></i>
+          <i className="fa-solid fa-circle-exclamation fa-fw" />
           &nbsp;
           {t("Please.login", "Please log in or register")}
         </>
       ) : (
         <>
-          <i className="fa-solid fa-right-to-bracket fa-fw" aria-hidden="true"></i>
+          <i className="fa-solid fa-right-to-bracket fa-fw" />
           &nbsp;
           {t("login.login.title", "Log in")}
         </>
@@ -37,21 +37,24 @@ function Title({ activeTask }: { activeTask: string }) {
     case "recoverPwd":
       return (
         <>
-          <i className="fa-solid fa-unlock fa-fw" aria-hidden="true"></i>&nbsp;
+          <i className="fa-solid fa-unlock fa-fw" />
+          &nbsp;
           {t("login.recoverPwd.title", "Recover Password")}
         </>
       );
     case "visitor":
       return (
         <>
-          <i className="fa-solid fa-user-plus fa-fw" aria-hidden="true"></i>&nbsp;
+          <i className="fa-solid fa-user-plus fa-fw" />
+          &nbsp;
           {t("login.visitor.submit")}
         </>
       );
     case "register":
       return (
         <>
-          <i className="fa-solid fa-user-plus fa-fw" aria-hidden="true"></i>&nbsp;
+          <i className="fa-solid fa-user-plus fa-fw" />
+          &nbsp;
           {t("login.register.submit")}
         </>
       );
@@ -167,6 +170,7 @@ function Task({
 }
 
 export function AccountTasks() {
+  const { t } = useTranslation();
   const pleaseLogin = useSessionEquals("pleaseLogin", true);
   const top = useSession("top");
   const viewport = useViewportSize();
@@ -235,7 +239,7 @@ export function AccountTasks() {
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
-                aria-label="Close"
+                aria-label={t("_button.close")}
               ></button>
             </div>
             <div className="modal-body">

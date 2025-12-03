@@ -29,7 +29,7 @@ export function EventNotFound() {
           Session.set("pleaseLogin", true);
         }}
       >
-        <span className="fa-solid fa-right-to-bracket fa-fw"></span>{" "}
+        <i className="fa-solid fa-right-to-bracket fa-fw" />{" "}
         <span>{t("event.not_exists.unlogged", "Log in/register")}</span>
       </button>
     </div>

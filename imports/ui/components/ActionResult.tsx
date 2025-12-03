@@ -1,72 +1,153 @@
 import React, { JSX, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
+import scrollIntoView from "scroll-into-view-if-needed";
+import { MeteorAsync } from "/imports/utils/promisify";
 
 import { Report } from "/imports/ui/components/report";
 
+type Action =
+  | {
+      description?: string | undefined;
+      href: string;
+      text: string;
+    }
+  | {
+      description?: string | undefined;
+      button: JSX.Element;
+    }
+  | JSX.Element;
+
 export interface Props {
   type: "success" | "failed";
-  icon?: JSX.Element | undefined;
+  dismissible?: boolean | undefined;
+  icon?: ReactNode | undefined;
   title: string;
   children?: ReactNode | undefined;
-  actions?: (
-    | {
-        description?: string | undefined;
-        href: string;
-        text: string;
-      }
-    | JSX.Element
-  )[];
+  actions?: (Action | undefined)[];
   report?: boolean | undefined;
 }
 
-export function ActionResult({ type, icon, title, children, actions, report }: Props) {
+export function ActionResult({ type, dismissible, icon, title, children, actions, report }: Props) {
+  const { t } = useTranslation();
+
   if (type === "success") {
-    icon = icon || <i className="fa-solid fa-check fa-fw"></i>;
+    icon = icon || "fa-solid fa-check";
 
     report = report ?? false;
   } else if (type === "failed") {
-    icon = icon || <i className="fa-solid fa-triangle-exclamation fa-fw"></i>;
+    icon = icon || "fa-solid fa-triangle-exclamation";
 
     report = report ?? true;
   } else {
     throw new Error('Unexpected value for param "type".');
   }
 
+  if (typeof icon === "string" && icon.startsWith("fa-")) {
+    icon = <i className={`${icon} fa-fw`} />;
+  }
+
+  actions = (actions || []).filter((a) => a);
+
+  // display actions stacked if there is a description or complex element
+  const stacked = (actions as Action[]).find(
+    (a) => "description" in a || !("href" in a || "button" in a),
+  );
+
+  let timeoutActionFocus: any = 0;
+  async function handleActionClick(
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    href: string,
+  ) {
+    const parts = href.split("#");
+
+    if (parts[0].length > 1) {
+      await MeteorAsync.setTimeout(400);
+    } else {
+      event.preventDefault();
+    }
+
+    const elementId = parts[1];
+    const element = elementId && document.getElementById(elementId);
+    if (element) {
+      scrollIntoView(element, {
+        block: "center",
+        inline: "center",
+        behavior: "smooth",
+        scrollMode: "if-needed",
+      });
+
+      element.classList.remove("action-focus");
+      await MeteorAsync.defer();
+      element.classList.add("action-focus");
+      element.tabIndex = 0;
+      element.focus();
+      if (timeoutActionFocus) {
+        clearTimeout(timeoutActionFocus);
+      }
+      timeoutActionFocus = Meteor.setTimeout(() => {
+        element.classList.remove("action-focus");
+      }, 5000);
+    }
+  }
+
   return (
-    <div className="container mt-3">
-      <div className={"alert alert-" + (type === "success" ? "success" : "danger")} role="alert">
-        <h1 className="alert-heading d-flex align-items-center">
-          <span className="flex-shrink-0 me-2">{icon}</span> {title}
-        </h1>
-        {!!children && <p className={"lead" + (!actions?.length ? " mb-0" : "")}>{children}</p>}
-        {!!actions?.length && (
-          <>
-            <hr className="border border-black" />
-            {actions.map((action, index) => (
-              <p key={index} className={"lead" + (index + 1 === actions.length ? " mb-0" : "")}>
-                {"href" in action ? (
-                  <>
-                    {action.description}{" "}
-                    <a
-                      className={"btn btn-lg btn-" + (type === "success" ? "success" : "secondary")}
-                      href={action.href}
-                    >
-                      {action.text}
-                    </a>
-                  </>
-                ) : (
-                  action
-                )}
-              </p>
-            ))}
-          </>
+    <div className="container collapse show" id="action-result">
+      <div className="pt-3 pb-5">
+        <div
+          className={`mb-0 alert alert-${type === "success" ? "success" : "danger"} ${dismissible ? "alert-dismissible" : ""}`}
+          role="alert"
+        >
+          {!!dismissible && (
+            <button
+              id="action-result-close"
+              type="button"
+              className="btn-close"
+              aria-label={t("_button.close")}
+              data-bs-toggle="collapse"
+              data-bs-target="#action-result"
+              aria-expanded="true"
+              aria-controls="action-result"
+            />
+          )}
+
+          <h1 className="alert-heading d-flex align-items-center">
+            <span className="flex-shrink-0 me-2">{icon}</span> {title}
+          </h1>
+          {!!children && <p className={"lead" + (!actions?.length ? " mb-0" : "")}>{children}</p>}
+          {!!actions?.length && (
+            <>
+              <hr className="border border-black" />
+              <div className={`d-flex ${stacked ? "flex-column" : "flex-row flex-wrap"} gap-3`}>
+                {(actions as Action[]).map((action, index) => (
+                  <div key={index} className="lead">
+                    {"description" in action ? <>{action.description} </> : ""}
+                    {"href" in action ? (
+                      <a
+                        className={
+                          "btn btn-lg btn-" + (type === "success" ? "success" : "secondary")
+                        }
+                        href={action.href}
+                        onClick={(event) => handleActionClick(event, action.href)}
+                      >
+                        {action.text}
+                      </a>
+                    ) : "button" in action ? (
+                      action.button
+                    ) : (
+                      action
+                    )}
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+        {report && (
+          <div className="mt-3 d-grid d-md-flex justify-content-center">
+            <Report />
+          </div>
         )}
       </div>
-
-      {report && (
-        <div className="mt-3 d-grid d-md-flex justify-content-center">
-          <Report />
-        </div>
-      )}
     </div>
   );
 }

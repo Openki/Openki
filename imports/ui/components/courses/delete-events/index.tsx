@@ -24,7 +24,7 @@ export function DeleteEvents(props: { onShowEventsDeleteModal: () => void }) {
             <div className="event-caption-body"></div>
           </div>
           <span className="event-caption-icon">
-            <i className="fa-solid fa-trash-can fa-2x"></i>
+            <i className="fa-solid fa-trash-can fa-2x" />
           </span>
         </div>
       </button>

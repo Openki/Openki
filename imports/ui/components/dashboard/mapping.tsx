@@ -31,7 +31,7 @@ export interface ListOfEntities<T> {
   route: string;
   showAll?: { text?: string } | false;
   filter: () => Filtering<any>;
-  find: Publication<any, T[]>;
+  find: Publication<any[], T[]>;
   element: ListOfEntitesElementComponent<T>;
 }
 
@@ -44,7 +44,7 @@ export interface ComponentWithEntities<T> {
   route: string;
   showAll?: { text?: string } | false;
   filter: () => Filtering<any>;
-  find: Publication<any, T[]>;
+  find: Publication<any[], T[]>;
   component: ComponentWithEntitesComponent<T>;
 }
 

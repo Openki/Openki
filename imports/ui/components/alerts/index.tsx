@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
 import { useTracker } from "meteor/react-meteor-data";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Action, Alerts as AlertsCollection } from "/imports/api/alerts/alerts";
+import { Alerts as AlertsCollection } from "/imports/api/alerts/alerts";
 
 import "./styles.scss";
 
@@ -24,14 +24,12 @@ function Alert({
   id,
   title,
   message,
-  actions,
   type,
   timeout,
 }: {
   id: string;
   title: string | undefined;
   message: string;
-  actions?: Action[] | undefined;
   type: string;
   timeout: number;
 }) {
@@ -68,7 +66,6 @@ function Alert({
     }
   });
 
-  let timeoutActionFocus: any = 0;
   return (
     <div
       ref={elementRef}
@@ -77,49 +74,6 @@ function Alert({
     >
       {!!title && <h3 className="alert-heading">{title}</h3>}
       {message}
-      {!!actions && (
-        <>
-          <hr className="border border-black" />
-          <div className="d-flex flex-wrap gap-1">
-            {actions.map((l) => (
-              <React.Fragment key={l.href}>
-                {" "}
-                <a
-                  className="btn btn-success"
-                  href={l.href}
-                  onClick={async (event) => {
-                    const parts = l.href.split("#");
-
-                    if (parts[0].length > 1) {
-                      await MeteorAsync.setTimeout(400);
-                    } else {
-                      event.preventDefault();
-                    }
-
-                    const elementId = parts[1];
-                    const element = elementId && document.getElementById(elementId);
-                    if (element) {
-                      scrollIntoViewIfNotVisible(element, $(".navbar")?.height() || 0);
-
-                      element.classList.remove("action-focus");
-                      await MeteorAsync.defer();
-                      element.classList.add("action-focus");
-                      if (timeoutActionFocus) {
-                        clearTimeout(timeoutActionFocus);
-                      }
-                      timeoutActionFocus = Meteor.setTimeout(() => {
-                        element.classList.remove("action-focus");
-                      }, 5000);
-                    }
-                  }}
-                >
-                  {l.text}
-                </a>
-              </React.Fragment>
-            ))}
-          </div>
-        </>
-      )}
       <button
         type="button"
         className="btn-close"
@@ -147,7 +101,6 @@ export function Alerts() {
             id={a._id}
             title={a.title}
             message={a.message}
-            actions={a.actions}
             type={a.type}
             timeout={a.timeout}
           />
@@ -160,6 +113,5 @@ export function Alerts() {
 // for Blaze
 
 import "./template.html";
-import { MeteorAsync } from "/imports/utils/promisify";
 
 Template.registerHelper("Alerts", () => Alerts);

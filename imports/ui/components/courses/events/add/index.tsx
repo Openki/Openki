@@ -1,6 +1,6 @@
+import { Router } from "meteor/iron:router";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Router } from "meteor/iron:router";
 
 import { CourseModel } from "/imports/api/courses/courses";
 
@@ -12,7 +12,7 @@ export function Add({ course }: Props) {
   const { t } = useTranslation();
 
   return (
-    <div className="event-caption-wrap">
+    <div id="course-event-add" className="event-caption-wrap">
       <a
         className="btn p-0"
         href={Router.path("createEvent", undefined, { query: { courseId: course._id } })}
@@ -28,7 +28,7 @@ export function Add({ course }: Props) {
             <div className="event-caption-body"></div>
           </div>
           <span className="event-caption-icon">
-            <i className="fa-solid fa-plus fa-2x"></i>
+            <i className="fa-solid fa-plus fa-2x" />
           </span>
         </div>
       </a>

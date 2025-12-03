@@ -44,7 +44,7 @@ function Admin({ tenant, adminId }: { tenant: TenantModel; adminId: string }) {
             handleOnClick();
           }}
         >
-          <i className="fa-solid fa-xmark fa-fw" aria-hidden="true" /> {userName}
+          <i className="fa-solid fa-xmark fa-fw" /> {userName}
         </button>
       </div>
       <div className="tag tag-link tenant-admin-tag-profile addon">
@@ -52,7 +52,7 @@ function Admin({ tenant, adminId }: { tenant: TenantModel; adminId: string }) {
           href={Router.path("userprofile", { _id: adminId })}
           title={t("tenant.settings.admin.profile", "Visit profile")}
         >
-          <i className="fa-solid fa-user fa-fw" aria-hidden="true" />
+          <i className="fa-solid fa-user fa-fw" />
         </a>
       </div>
     </>

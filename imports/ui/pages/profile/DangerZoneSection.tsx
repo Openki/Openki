@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ButtonSubmit, ButtonCancel } from "../../components/Buttons";
+import { Button, ButtonCancel } from "../../components/Buttons";
 import { DeleteConfirm } from "../../components/DeleteConfirm";
 import * as Alert from "/imports/api/alerts/alert";
 import * as usersMethods from "/imports/api/users/methods";
@@ -37,7 +37,7 @@ export function DangerZoneSection() {
     };
   }
 
-  async function handelChangePassword(event: React.FormEvent<HTMLFormElement>) {
+  async function handleChangePassword(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const old = oldPassword;
     const pass = newPassword;
@@ -81,7 +81,7 @@ export function DangerZoneSection() {
             </button>
           ) : (
             <div className="border border-success text-primary p-3">
-              <form onSubmit={handelChangePassword}>
+              <form onSubmit={handleChangePassword}>
                 <div className="row mb-2">
                   <label htmlFor="oldpassword" className="col-sm-4 col-form-label text-end">
                     {t("profile.input.oldPassword", "Your current password")}
@@ -124,18 +124,23 @@ export function DangerZoneSection() {
                       className="form-control"
                       id="newpassword_confirm"
                       value={newPasswordConfirm}
-                      onChange={(event) => {
-                        setNewPasswordConfirm(event.currentTarget.value);
-                      }}
+                      onChange={(event) => setNewPasswordConfirm(event.currentTarget.value)}
                     />
                   </div>
                 </div>
                 <div className="d-flex gap-2 justify-content-end">
-                  <ButtonSubmit isBusy={isBusy} />
+                  <Button
+                    id="profile-dangerZone-changingPasswort-save"
+                    submit
+                    className="btn-cancel"
+                    isBusy={isBusy}
+                    busyText={t("_button.saving", "Saving…")}
+                  >
+                    {t("_button.save")}
+                  </Button>
                   <ButtonCancel
-                    onClick={() => {
-                      setChangingPassword(false);
-                    }}
+                    id="profile-dangerZone-changingPasswort-cancel"
+                    onClick={() => setChangingPassword(false)}
                     disabled={isBusy}
                   />
                 </div>

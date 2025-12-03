@@ -1,47 +1,84 @@
 import { Subscription } from "meteor/meteor";
 import { EJSON } from "meteor/ejson";
 import { Mongo } from "meteor/mongo";
-import { useSubscribe, useTracker } from "meteor/react-meteor-data";
+import { useFind, useSubscribe, useTracker } from "meteor/react-meteor-data";
 import { publish, QueryBuilder } from "./ServerPublishUtils";
 import { useUserId } from "./react-meteor-data";
+import { isObject, slice } from "lodash-es";
+
+type DeepPartial<T> = T extends object
+  ? {
+      [P in keyof T]?: DeepPartial<T[P]> | undefined | null;
+    }
+  : T;
 
 /**
  * Subscribe to the record set.
  */
-export type Publication<A extends any[], T> = (...args: A) => [isLoading: () => boolean, data: T];
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare function publication<A extends any[], T>(...args: A): [isLoading: () => boolean, data: T];
+/**
+ * Subsribe to the record set, when the condition is true.
+ * @param condition true: date get loaded; false: none date get loaded, isLoading() will always return false
+ */
+declare function publication<A extends any[], T>(
+  condition: { when: boolean },
+  ...args: DeepPartial<A>
+): [isLoading: () => boolean, data: T | undefined];
+
+export type Publication<A extends any[], T> = typeof publication<A, T>;
 
 export function createPublicationMany<A extends any[], T>(
   name: string,
   queryBuilder: QueryBuilder<A, Mongo.Cursor<T, T>>,
 ) {
-  return function (...args: A) {
-    const isLoading = useSubscribe(name, ...args);
+  return function (...args: any[]) {
+    const hasCondition = isObject(args[0]) && "when" in args[0];
+    const isLoading = useSubscribe(
+      // support conditionally subscribe:
+      // https://docs.meteor.com/packages/react-meteor-data#usesubscribe-subname-args
+      hasCondition && !args[0].when ? "" : name,
+      ...(hasCondition ? slice(args, 1) : args),
+    );
     const userId = useUserId();
     return [
       isLoading,
-      useTracker(
-        () => queryBuilder.call({ userId }, ...args).fetch(),
-        [EJSON.stringify(args as any), userId],
-      ),
+      useFind(() => {
+        if (hasCondition && !args[0].when) {
+          // return undefined when condition is false
+          return undefined;
+        }
+        return queryBuilder.call({ userId }, ...(hasCondition ? slice(args, 1) : args));
+      }, [EJSON.stringify(args as any), userId]),
     ];
-  };
+  } as Publication<A, T>;
 }
 
 export function createPublicationOne<A extends any[], T>(
   name: string,
   queryBuilder: QueryBuilder<A, T>,
 ): Publication<A, T> {
-  return function (...args: A) {
-    const isLoading = useSubscribe(name, ...args);
+  return function (...args: any[]) {
+    const hasCondition = isObject(args[0]) && "when" in args[0];
+    const isLoading = useSubscribe(
+      // support conditionally subscribe:
+      // https://docs.meteor.com/packages/react-meteor-data#usesubscribe-subname-args
+      hasCondition && !args[0].when ? "" : name,
+      ...(hasCondition ? slice(args, 1) : args),
+    );
     const userId = useUserId();
     return [
       isLoading,
-      useTracker(
-        () => queryBuilder.call({ userId }, ...args),
-        [EJSON.stringify(args as any), userId],
-      ),
+      useTracker(() => {
+        if (hasCondition && !args[0].when) {
+          // return undefined when condition is false to conditionally call the
+          // find method: https://docs.meteor.com/packages/react-meteor-data#usefind-cursorfactory-deps
+          return undefined;
+        }
+        return queryBuilder.call({ userId }, ...(hasCondition ? slice(args, 1) : args));
+      }, [EJSON.stringify(args as any), userId]),
     ];
-  };
+  } as Publication<A, T>;
 }
 
 /**

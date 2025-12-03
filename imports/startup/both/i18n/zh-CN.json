@@ -120,7 +120,6 @@
   "course.title.Discussion": "讨论",
   "course.title.placeholder": "你在什么方面感兴趣？",
   "discussion.anonymous": "匿名",
-  "editable.add_text": "添加一些文字",
   "event.description.placeholder": "尽可能准确地描述你的活动。这将帮助人们做出准备，并让他们知道活动的大致内容。如难度层次、前置条件、具体活动、教授方法、应该携带的物品等。",
   "event.detail.download_cal": "将本次活动存到我的日历里",
   "event.edit.dateFormatWarning": "日期必须采用「{EXAMPLEDATE}」的形式。",

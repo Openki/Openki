@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { CourseModel } from "/imports/api/courses/courses";
 
-import { ActionButton, ButtonCancel } from "../../../components/Buttons";
+import { Button, ButtonCancel } from "../../../components/Buttons";
 import { ButtonCourseArchive } from "../button-course-archive";
 
 import "./styles.scss";
@@ -39,28 +39,29 @@ export function ConfirmDialog({
           <ButtonCourseArchive
             className="btn-warning"
             disabled={disabled}
-            onArchive={async () => {
-              onArchive();
-            }}
+            onArchive={async () => onArchive()}
           >
             {t("course.delete.confirm.archiveButton", "Rather archive")}
           </ButtonCourseArchive>
         )}
 
-        <ActionButton
-          className="btn btn-danger"
+        <Button
+          id="coures-details-confirm-dialog-delete"
+          className="btn-danger"
           disabled={disabled}
           needsLogin
-          onClick={async () => {
-            onDelete();
-          }}
+          onClick={async () => onDelete()}
           busyText={t("_button.deleting")}
         >
           {t("course.delete.confirm.button", "Delete {COURSE} and its events", {
             COURSE: course.name,
           })}
-        </ActionButton>
-        <ButtonCancel disabled={disabled} onClick={onCancel} />
+        </Button>
+        <ButtonCancel
+          id="coures-details-confirm-dialog-cancel"
+          disabled={disabled}
+          onClick={onCancel}
+        />
       </div>
     </div>
   );

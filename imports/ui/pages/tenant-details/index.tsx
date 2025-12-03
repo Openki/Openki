@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 import { TenantModel } from "/imports/api/tenants/tenants";
@@ -18,28 +18,30 @@ export function TenantDetailsPage({ tenant }: Data) {
   const { t } = useTranslation();
   const user = useUser();
 
-  useEffect(() => {
-    Metatags.setCommonTags(tenant.name);
-  });
-
   return (
-    <div className="container">
-      <div className="page-component tenant-details">
-        <div className="tenant-details-titlebar">{t("tenant.details.tenant", "Organization")}</div>
-        <div className="details-header tenant-details-header clearfix">
-          <div className="tenant-details-name">{tenant.name}</div>
-        </div>
-        <div className="details-form tenant-settings">
-          <Regions tenant={tenant} />
-        </div>
+    <>
+      <MetaTags title={tenant.name} />
 
-        {tenant.editableBy(user) && (
-          <div className="details-addition clearfix">
-            <Settings tenant={tenant} />
+      <div className="container">
+        <div className="page-component tenant-details">
+          <div className="tenant-details-titlebar">
+            {t("tenant.details.tenant", "Organization")}
           </div>
-        )}
+          <div className="details-header tenant-details-header clearfix">
+            <div className="tenant-details-name">{tenant.name}</div>
+          </div>
+          <div className="details-form tenant-settings">
+            <Regions tenant={tenant} />
+          </div>
+
+          {tenant.editableBy(user) && (
+            <div className="details-addition clearfix">
+              <Settings tenant={tenant} />
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

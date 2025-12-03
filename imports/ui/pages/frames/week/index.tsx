@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { chain } from "lodash";
+import React, { useState } from "react";
+import { chain } from "lodash-es";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
@@ -14,7 +14,7 @@ import * as UrlTools from "/imports/utils/url-tools";
 import { reactiveNow } from "/imports/utils/reactive-now";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 
 import { AccountTasks } from "/imports/ui/components/account-tasks";
 import {
@@ -107,6 +107,7 @@ export function WeekPage(data: Record<string, string>) {
         filter.remove("categories", category);
         update();
       },
+      attendingEventsOnly: isAttendeeFilterOn,
       onChangeAttendingEventsOnly: (state) => {
         setIsAttendeeFilterOn(state);
       },
@@ -140,10 +141,6 @@ export function WeekPage(data: Record<string, string>) {
     return weekdays;
   }
 
-  useEffect(() => {
-    Metatags.setCommonTags(t("calendar.windowtitle", "Calendar"));
-  });
-
   function update() {
     const filterParams = filter.toParams() as Record<string, string>;
     filterParams.count = limit.toString();
@@ -175,6 +172,8 @@ export function WeekPage(data: Record<string, string>) {
 
   return (
     <>
+      <MetaTags title={t("calendar.windowtitle", "Calendar")} />
+
       <AccountTasks />
       {control() && <CalendarNavWeek {...calendarNavAttr()} />}
       <div className="py-4">

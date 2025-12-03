@@ -74,7 +74,7 @@ An Openki course can start simply as a "suggestion": Somebody introduces a conce
 Any type of course: from cooking to nuclear physics and modern dance to Rainer Maria Rilke. The courses are divided into categories (science, sports, music, etc.). Discriminatory content, in particular sexist and racist, is excluded.
 
 ### Can courses cost something?
-Yes, but all prices are intended only as a guide. As a desired donation, so to speak. This means that every one may give more or less than the suggested price, and so can participate. Only the costs (material, space, access routes ...) of a course can be fixed.
+Yes, but all prices are intended only as a guide. As a desired donation, so to speak. This means that everyone may give more or less than the suggested price, and so can participate. Only the costs (material, space, access routes ...) of a course can be fixed.
 
 ### I want to host a course but have no space ...
 Depending on the region, Openki has a short or long list of available venues. All participants can also advertise their spaces - from factory to living room to garden - so that they can be found as a venue. How you get in touch with those responsible for the venue is different from venue to venue. The easiest way is to write to the user who has already written or already hosted an event in the corresponding venue (check the recent and/or past events in the venue's page).
@@ -151,7 +151,7 @@ If you are unsure, contact the person in advance and handle according to common 
 ### How does Openki protect the privacy of its users?
 Openki is keen to meet a wide variety of privacy requirements. These include modern encryption techniques as well as personalized privacy settings.
 
-Openki does not sell user data to companies, it does not track your behavior and it does not let other companies track your behavior and interests. For example, we use the share buttons of [Shariff](https://www.heise.de/ct/artikel/Shariff-Social-Media-Buttons-mit-Datenschutz-2467514.html).
+Openki does not sell user data to companies, it does not track your behavior and it does not let other companies track your behavior and interests.
 
 ### How safe is the Openki webpage?
 Openki.net is SSL encrypted by default. This is the same technology that your online banking uses. But your course participation, for example, is visible to other users. So you can choose not to use your real name in Openki if you want to avoid that.

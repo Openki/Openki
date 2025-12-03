@@ -1,5 +1,5 @@
 import { Mongo } from "meteor/mongo";
-import { _ } from "meteor/underscore";
+import { assignIn } from "lodash-es";
 import { Match, check } from "meteor/check";
 
 import { UserModel } from "/imports/api/users/users";
@@ -47,7 +47,7 @@ export class TenantsCollection extends Mongo.Collection<TenantEntity, TenantMode
   constructor() {
     super("Tenants", {
       transform(tenant) {
-        return _.extend(new Tenant(), tenant);
+        return assignIn(new Tenant(), tenant);
       },
     });
   }

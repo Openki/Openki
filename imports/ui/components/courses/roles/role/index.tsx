@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
-import { PleaseLogin } from "../../../please-login";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 
 import { User, UserModel } from "/imports/api/users/users";
@@ -16,7 +15,8 @@ import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { useRoleDisplay } from "../../../../lib/useRoleDisplay";
 
-import { ButtonCancel } from "../../../Buttons";
+import { Button, ButtonCancel } from "../../../Buttons";
+import { Action } from "/imports/ui/components/PleaseLogin";
 import { Guide } from "./guide";
 
 import "./styles.scss";
@@ -35,7 +35,6 @@ export function Role(data: Data) {
   const searchParams = useSearchParams();
   const [enrolling, setEnrolling] = useState(false);
   const [showFirstSteps, setShowFirstSteps] = useState(false);
-  const [isBusy, setIsBusy] = useState(false);
   const [comment, setComment] = useState(data.comment);
 
   // Build a subscribe change
@@ -57,20 +56,17 @@ export function Role(data: Data) {
     return courseSubscribe().validFor(operator || (new User() as UserModel));
   }
 
-  function handelCommentChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
+  function handleCommentChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
     setComment(event.currentTarget.value.trim());
   }
-  function handelRoleEnrollClick() {
+  function handleRoleEnrollClick() {
     setEnrolling(true);
   }
-  async function handelRoleSubscribeClick() {
+  async function handleRoleSubscribeClick() {
     routerAutoscroll.cancelNext();
-
-    setIsBusy(true);
 
     await processChange(courseSubscribe(comment));
     routerAutoscroll.cancelNext();
-    setIsBusy(false);
     setShowFirstSteps(true);
     setEnrolling(false);
 
@@ -81,10 +77,10 @@ export function Role(data: Data) {
     );
   }
 
-  function handelRoleEnrollCancelClick() {
+  function handleRoleEnrollCancelClick() {
     setEnrolling(false);
   }
-  async function handelRoleUnsubscribeClick() {
+  async function handleRoleUnsubscribeClick() {
     routerAutoscroll.cancelNext();
     const change = new Unsubscribe(data.course, user?._id, data.role.type);
     await processChange(change);
@@ -98,18 +94,17 @@ export function Role(data: Data) {
   function toggleFirstStepsClick() {
     setShowFirstSteps(!showFirstSteps);
   }
-  function handelFirstStepsCommentClick() {
+  function handleFirstStepsCommentClick() {
     document.getElementById("discussion")?.dispatchEvent(new Event("writeComment"));
   }
 
   return (
     <>
       {searchParams.unsubscribe === data.role.type && (
-        // unsubscribe by email
-        // HACK this is not the right place to act on router actions
-        <PleaseLogin
-          type="auto"
+        <Action
           onRender={async () => {
+            // unsubscribe by email
+            // HACK this is not the right place to act on router actions
             const change = new Unsubscribe(data.course, user?._id, data.role.type);
             if (change.validFor(user)) {
               await processChange(change);
@@ -130,17 +125,19 @@ export function Role(data: Data) {
           }}
         />
       )}
+
       {data.subscribed ? (
         <>
           <div className="course-role-enrolled">
             <div className="course-role-title">
-              <span className={`${data.role.icon} fa-fw coursepage-role-icon`}></span>&nbsp;
+              <i className={`${data.role.icon} fa-fw coursepage-role-icon`} />
+              &nbsp;
               <span>{roleSubscribed(data.role.type)}</span>
               <button
                 type="button"
                 className="role-unsubscribe-btn btn btn-cancel"
                 name={data.role.type}
-                onClick={handelRoleUnsubscribeClick}
+                onClick={handleRoleUnsubscribeClick}
               >
                 {t("course.roles.retract", "Retract")}
               </button>
@@ -149,7 +146,7 @@ export function Role(data: Data) {
                 className="toggle-first-steps btn btn-link float-end"
                 onClick={toggleFirstStepsClick}
               >
-                <i className="fa-solid fa-circle-info" aria-hidden="true"></i>
+                <i className="fa-solid fa-circle-info" />
               </button>
             </div>
           </div>
@@ -206,7 +203,7 @@ export function Role(data: Data) {
               <button
                 className="btn btn-link p-0"
                 type="button"
-                onClick={handelFirstStepsCommentClick}
+                onClick={handleFirstStepsCommentClick}
               >
                 {t("course.discussion.write_comment")}
               </button>
@@ -218,10 +215,7 @@ export function Role(data: Data) {
           {enrolling ? (
             <>
               <div className="course-role-title-enroll">
-                <span
-                  className={`${data.role.icon} fa-fw coursepage-role-icon`}
-                  aria-hidden="true"
-                ></span>
+                <i className={`${data.role.icon} fa-fw coursepage-role-icon`} />
                 &nbsp;
                 {roleSubscribe(data.role.type)}
               </div>
@@ -240,7 +234,7 @@ export function Role(data: Data) {
                         "course.roles.messageInfoParticipant",
                         "an (optional) message like a greeting, wish, or interest",
                       )}
-                      onChange={handelCommentChange}
+                      onChange={handleCommentChange}
                     >
                       {comment}
                     </textarea>
@@ -252,7 +246,7 @@ export function Role(data: Data) {
                         "course.roles.messageInfoHost",
                         "an (optional) message including info about the venue",
                       )}
-                      onChange={handelCommentChange}
+                      onChange={handleCommentChange}
                     >
                       {comment}
                     </textarea>
@@ -264,7 +258,7 @@ export function Role(data: Data) {
                         "course.roles.messageInfoMentor",
                         "an (optional) message including info about your experience on the topic",
                       )}
-                      onChange={handelCommentChange}
+                      onChange={handleCommentChange}
                     >
                       {comment}
                     </textarea>
@@ -273,33 +267,27 @@ export function Role(data: Data) {
                     <textarea
                       className="form-control js-comment"
                       placeholder={t("course.roles.messageInfoMentor")}
-                      onChange={handelCommentChange}
+                      onChange={handleCommentChange}
                     >
                       {comment}
                     </textarea>
                   )}
                 </div>
                 <div className="form-actions">
-                  <PleaseLogin
-                    type="button"
-                    className="btn btn-save"
-                    disabled={isBusy}
-                    onClick={handelRoleSubscribeClick}
+                  <Button
+                    id="course-roles-join"
+                    className="btn-save"
+                    onClick={handleRoleSubscribeClick}
+                    needsLogin
                     visitorUserAllowed={data.role.type === "participant"}
+                    busyText={t("course.roles.join.busy", "Joining…")}
                   >
-                    {isBusy ? (
-                      <>
-                        <i
-                          className="fa-solid fa-circle-notch fa-spin fa-fw"
-                          aria-hidden="true"
-                        ></i>{" "}
-                        {t("course.roles.join.busy", "Joining…")}
-                      </>
-                    ) : (
-                      t("course.roles.join", "Join", { COURSE: data.course.name })
-                    )}
-                  </PleaseLogin>
-                  <ButtonCancel onClick={handelRoleEnrollCancelClick} />
+                    {t("course.roles.join", "Join", { COURSE: data.course.name })}
+                  </Button>
+                  <ButtonCancel
+                    id="course-roles-join-cancel"
+                    onClick={handleRoleEnrollCancelClick}
+                  />
                 </div>
               </div>
             </>
@@ -310,13 +298,9 @@ export function Role(data: Data) {
                 type="button"
                 className="btn btn-add text-start page-component-btn"
                 name={data.role.type}
-                onClick={handelRoleEnrollClick}
+                onClick={handleRoleEnrollClick}
               >
-                <span
-                  className={`${data.role.icon} fa-fw coursepage-role-icon`}
-                  aria-hidden="true"
-                ></span>
-                &nbsp;
+                <i className={`${data.role.icon} fa-fw coursepage-role-icon`} /> &nbsp;
                 {roleSubscribe(data.role.type)}
               </button>
             )

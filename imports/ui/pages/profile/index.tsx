@@ -1,29 +1,29 @@
+import { Router } from "meteor/iron:router";
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
-import { Router } from "meteor/iron:router";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 
-import { UserModel } from "/imports/api/users/users";
-import * as Tenants from "/imports/api/tenants/publications";
-import * as Venues from "/imports/api/venues/publications";
 import * as Groups from "/imports/api/groups/publications";
+import * as Tenants from "/imports/api/tenants/publications";
+import { UserModel } from "/imports/api/users/users";
+import * as Venues from "/imports/api/venues/publications";
 
 import * as Analytics from "/imports/ui/lib/analytics";
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 
-import { Appearance } from "./Appearance";
-import { DangerZoneSection } from "./DangerZoneSection";
-import { CreateUserSection } from "./CreateUserSection";
-import { ProfileSection } from "./ProfileSection";
-import { EmailSection } from "./EmailSection";
-import { VenuesSection } from "./VenuesSection";
-import { GroupSection } from "./GroupSection";
-import { TenantSection } from "./TenantSection";
-import { AdminSection } from "./AdminSection";
-import { CalendarSection } from "./CalendarSection";
-import { Report } from "/imports/ui/components/report";
 import { ActionResult } from "../../components/ActionResult";
+import { AdminSection } from "./AdminSection";
+import { Appearance } from "./Appearance";
+import { CalendarSection } from "./CalendarSection";
+import { CreateUserSection } from "./CreateUserSection";
+import { DangerZoneSection } from "./DangerZoneSection";
+import { EmailSection } from "./EmailSection";
+import { GroupSection } from "./GroupSection";
+import { ProfileSection } from "./ProfileSection";
+import { TenantSection } from "./TenantSection";
+import { VenuesSection } from "./VenuesSection";
+import { Report } from "/imports/ui/components/report";
 
 import "./styles.scss";
 
@@ -45,7 +45,7 @@ function VerifyEmailAlerts() {
       <ActionResult
         type="success"
         title={t("profile.verifyEmail.success", "Your e-mail has been verified.")}
-        actions={[<VisitProfileAction key={1} color="success" />]}
+        actions={[{ button: <VisitProfileAction key={1} color="success" /> }]}
       />
     );
   }
@@ -55,7 +55,7 @@ function VerifyEmailAlerts() {
       <ActionResult
         type="failed"
         title={t("profile.verifyEmail.failed", "Address could not be verified. Please Try again.")}
-        actions={[<VisitProfileAction key={1} color="secondary" />]}
+        actions={[{ button: <VisitProfileAction key={1} color="secondary" /> }]}
       />
     );
   }
@@ -98,8 +98,8 @@ function UnsubscribeResultAlerts() {
         type="success"
         icon={
           <span className="fa-stack fa-2xs">
-            <i className="fa-regular fa-envelope fa-stack-1x"></i>
-            <i className="fa-solid fa-ban fa-stack-2x"></i>
+            <i className="fa-regular fa-envelope fa-stack-1x" />
+            <i className="fa-solid fa-ban fa-stack-2x" />
           </span>
         }
         title={t(
@@ -107,13 +107,13 @@ function UnsubscribeResultAlerts() {
           "You have successfully unsubscribed from all automated notifications.",
         )}
         actions={[
-          <>
-            {t(
+          {
+            description: t(
               "notifications.unsubscribeSuccess.action",
               "If you want to unsubscribe from a specific course you can unsubscribe there. Manage your notifications settings:",
-            )}{" "}
-            <VisitProfileAction color="success" />
-          </>,
+            ),
+            button: <VisitProfileAction color="success" />,
+          },
         ]}
       >
         {t(
@@ -129,8 +129,8 @@ function UnsubscribeResultAlerts() {
         type="success"
         icon={
           <span className="fa-stack fa-2xs">
-            <i className="fa-regular fa-envelope fa-stack-1x"></i>
-            <i className="fa-solid fa-ban fa-stack-2x"></i>
+            <i className="fa-regular fa-envelope fa-stack-1x" />
+            <i className="fa-solid fa-ban fa-stack-2x" />
           </span>
         }
         title={t(
@@ -138,20 +138,20 @@ function UnsubscribeResultAlerts() {
           "You will not get direct messages from users anymore.",
         )}
         actions={[
-          <>
-            {t(
+          {
+            description: t(
               "privateMessages.unsubscribeSuccess.action.manage",
               "Manage your notifications settings:",
-            )}{" "}
-            <VisitProfileAction color="success" />
-          </>,
-          <>
-            {t(
+            ),
+            button: <VisitProfileAction color="success" />,
+          },
+          {
+            description: t(
               "privateMessages.unsubscribeSuccess.action.reportHarassment",
               "Report harassment by another user:",
-            )}{" "}
-            <Report />
-          </>,
+            ),
+            button: <Report />,
+          },
         ]}
       >
         {t(
@@ -240,16 +240,6 @@ export function ProfilePage() {
     return !!user?.privileged("visitor");
   }
 
-  useEffect(() => {
-    if (!user) {
-      return;
-    }
-    const title = t("profile.settings.windowtitle", "My Profile Settings - {USER}", {
-      USER: user.getDisplayName(),
-    });
-    Metatags.setCommonTags(title);
-  });
-
   if (query.unsubscribed || query["unsubscribe-error"] === "") {
     return <UnsubscribeResultAlerts />;
   }
@@ -258,18 +248,25 @@ export function ProfilePage() {
     return <VerifyEmailAlerts />;
   }
 
+  const title = t("profile.settings.windowtitle", "My Profile Settings - {USER}", {
+    USER: user?.getDisplayName() || "...",
+  });
+
   return (
-    <div className="container mw-md">
-      {!isVisitor() && (
-        <div className="page-component">
-          <h1 data-test="profile-header">
-            <span className="fa-solid fa-gears fa-fw" aria-hidden="true"></span>{" "}
-            {t("login.frame.settings")}
-          </h1>
-        </div>
-      )}
-      {!user ? <NotLoggedIn /> : <LoggedIn user={user} />}
-    </div>
+    <>
+      <MetaTags title={title} />
+
+      <div className="container mw-md">
+        {!isVisitor() && (
+          <div className="page-component">
+            <h1 data-test="profile-header">
+              <i className="fa-solid fa-gears fa-fw" /> {t("login.frame.settings")}
+            </h1>
+          </div>
+        )}
+        {!user ? <NotLoggedIn /> : <LoggedIn user={user} />}
+      </div>
+    </>
   );
 }
 

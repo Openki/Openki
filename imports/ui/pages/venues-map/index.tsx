@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Mongo } from "meteor/mongo";
 import { Router } from "meteor/iron:router";
@@ -7,7 +7,7 @@ import { useSession } from "/imports/utils/react-meteor-data";
 import { VenueEntity, VenueModel } from "/imports/api/venues/venues";
 import { useDetails } from "/imports/api/regions/publications";
 
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 
 import { MapContainer, Marker } from "react-leaflet";
 import { RegionMapContainer } from "../../components/location/display/RegionMapContainer";
@@ -29,10 +29,6 @@ export function VenuesMap({ region: regionId, venues }: Data) {
   const [selectedVenue, setSelectedVenue] = useState("");
 
   const [isLoading, region] = useDetails(regionId || "-1");
-
-  useEffect(() => {
-    Metatags.setCommonTags(t("venue.map.windowtitle", "Venues map"));
-  });
 
   if (isLoading()) {
     return null;
@@ -97,67 +93,71 @@ export function VenuesMap({ region: regionId, venues }: Data) {
   );
 
   return (
-    <div className="container-fluid">
-      <h1>
-        {region
-          ? t("venues.list.titleForRegion", "Venues in region {REGION}", { REGION: region.name })
-          : t("venues.list.title", "Venues")}
-      </h1>
-      <div className="row">
-        <div className="col-2 d-none d-md-block">
-          {venues.count() > 0 ? (
-            <div className="list-group">
-              {venues.map((venue) => (
-                <a
-                  key={venue._id}
-                  href={Router.path("venueDetails", venue)}
-                  className={`list-group-item list-group-item-action list-group-item-primary ${
-                    selectedVenue === venue._id ? "active" : ""
-                  }`}
-                  onMouseEnter={() => {
-                    setSelectedVenue(venue._id);
-                  }}
-                  onMouseLeave={() => {
-                    setSelectedVenue("");
-                  }}
-                >
-                  {venue.name}
-                  <div className="address">
-                    <small>{venue.address}</small>
-                  </div>
-                </a>
-              ))}
-            </div>
-          ) : (
-            t("venues.list.noneFound", "No venues found")
-          )}
+    <>
+      <MetaTags title={t("venue.map.windowtitle", "Venues map")} />
 
-          <a
-            className="btn btn-secondary mt-3"
-            href={Router.path("venueDetails", { _id: "create" })}
-          >
-            {t("profile.createNewVenue.button")}
-          </a>
-        </div>
-        <div className="col-12 col-md-10 venues-map-location-map">
-          {!region ? (
-            <MapContainer
-              bounds={markers.length > 0 ? (markers.map((mark) => mark.loc) as any) : undefined}
+      <div className="container-fluid">
+        <h1>
+          {region
+            ? t("venues.list.titleForRegion", "Venues in region {REGION}", { REGION: region.name })
+            : t("venues.list.title", "Venues")}
+        </h1>
+        <div className="row">
+          <div className="col-2 d-none d-md-block">
+            {venues.count() > 0 ? (
+              <div className="list-group">
+                {venues.map((venue) => (
+                  <a
+                    key={venue._id}
+                    href={Router.path("venueDetails", venue)}
+                    className={`list-group-item list-group-item-action list-group-item-primary ${
+                      selectedVenue === venue._id ? "active" : ""
+                    }`}
+                    onMouseEnter={() => {
+                      setSelectedVenue(venue._id);
+                    }}
+                    onMouseLeave={() => {
+                      setSelectedVenue("");
+                    }}
+                  >
+                    {venue.name}
+                    <div className="address">
+                      <small>{venue.address}</small>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            ) : (
+              t("venues.list.noneFound", "No venues found")
+            )}
+
+            <a
+              className="btn btn-secondary mt-3"
+              href={Router.path("venueDetails", { _id: "create" })}
             >
-              {TileLayers[locale] || TileLayers.default}
-              {children}
-            </MapContainer>
-          ) : (
-            <RegionMapContainer
-              region={region._id}
-              bounds={markers.length > 0 ? (markers.map((mark) => mark.loc) as any) : undefined}
-            >
-              {children}
-            </RegionMapContainer>
-          )}
+              {t("profile.createNewVenue.button")}
+            </a>
+          </div>
+          <div className="col-12 col-md-10 venues-map-location-map">
+            {!region ? (
+              <MapContainer
+                bounds={markers.length > 0 ? (markers.map((mark) => mark.loc) as any) : undefined}
+              >
+                {TileLayers[locale] || TileLayers.default}
+                {children}
+              </MapContainer>
+            ) : (
+              <RegionMapContainer
+                region={region._id}
+                bounds={markers.length > 0 ? (markers.map((mark) => mark.loc) as any) : undefined}
+              >
+                {children}
+              </RegionMapContainer>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

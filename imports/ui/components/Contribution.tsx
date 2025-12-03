@@ -47,12 +47,12 @@ export function Contribution({ userId }: Props) {
         {
           USERNAME: cachedUser.getDisplayName(),
           SITENAME: getSiteName(currentRegion),
-          ICON: `<i class='${contribution.icon}' aria-hidden='true'></i>`,
+          ICON: `<i class='${contribution.icon}' />`,
         },
       )}
     >
       <sup>
-        <i className={contribution.icon} aria-hidden="true" />
+        <i className={contribution.icon} />
       </sup>
     </a>
   );

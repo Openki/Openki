@@ -9,6 +9,7 @@ import { SearchField, Props as SearchFieldProps } from "../../search-field";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useViewportSize } from "/imports/ui/lib/useViewportSize";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { FormCheck } from "/imports/ui/components/FormCheck";
 
 import "../styles.scss";
 
@@ -28,6 +29,7 @@ export interface Props {
   categories?: string[] | undefined;
   onAddCategory: (category: string) => void;
   onRemoveCategory: (category: string) => void;
+  attendingEventsOnly: boolean;
   onChangeAttendingEventsOnly: (state: boolean) => void;
 }
 
@@ -82,22 +84,14 @@ export function CalendarNavProgram(props: Props) {
             </div>
           )}
           {!!currentUser && (
-            <div className={`col-md-8 col-lg-6 p-1`}>
-              <div className="form-check form-switch">
-                <input
-                  type="checkbox"
-                  id="filter-own-events"
-                  className="form-check-input float-none"
-                  name="filter-own-events"
-                  onClick={(event) => {
-                    const radioSwitch = event.currentTarget;
-                    props.onChangeAttendingEventsOnly(radioSwitch.checked);
-                  }}
-                />{" "}
-                <label htmlFor="filter-own-events">
-                  {t("calendar.filter-own-events", "Show my events only")}
-                </label>
-              </div>
+            <div className="col-md-8 col-lg-6 p-1">
+              <FormCheck
+                id="filter-own-events"
+                type="switch"
+                label={t("calendar.filter-own-events", "Show my events only")}
+                onChange={(checked) => props.onChangeAttendingEventsOnly(checked)}
+                checked={props.attendingEventsOnly}
+              />
             </div>
           )}
         </div>

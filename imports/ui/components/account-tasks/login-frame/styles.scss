@@ -1,10 +1,6 @@
 @use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
-.login {
-  padding-top: 10px;
-}
-
 .login hr {
   border-top: 1px solid color.adjust($gray-400, $lightness: 10%);
   margin: 15px 0;

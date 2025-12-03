@@ -3,7 +3,7 @@ import { Collapse } from "/imports/startup/client/bootstrap";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 import { useSiteName } from "/imports/utils/getSiteName";
-import { isEmpty, isNil, omitBy } from "lodash";
+import { isEmpty, omitBy, isNil } from "lodash-es";
 
 import { EventModel } from "/imports/api/events/events";
 import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
@@ -96,9 +96,9 @@ export function Full({
         <h3 className="card-title min-h-2l fw-bold">{event.title}</h3>
         <p className="card-text">
           <div className="panel-calendar">
-            <i className="fa-regular fa-fw fa-calendar"></i> {dateFormat(event.startLocal)}
+            <i className="fa-regular fa-fw fa-calendar" /> {dateFormat(event.startLocal)}
           </div>
-          <i className="fa-regular fa-fw fa-clock"></i> {timeFormat(event.startLocal)} -{" "}
+          <i className="fa-regular fa-fw fa-clock" /> {timeFormat(event.startLocal)} -{" "}
           {timeFormat(event.endLocal)}
           <br />
           {!!locationPreview && (
@@ -113,7 +113,7 @@ export function Full({
                     ?.scrollIntoView({ block: "center", behavior: "smooth" });
                 }}
               >
-                <i className="fa-solid fa-fw fa-location-dot"></i>
+                <i className="fa-solid fa-fw fa-location-dot" />
                 {locationPreview}
               </a>
             </>
@@ -139,7 +139,7 @@ export function Full({
                 {t("frame.program.editMode", "Edit mode", {
                   SITENAME: siteName,
                 })}{" "}
-                <i className="fa-fw fa-solid fa-arrow-up-right-from-square"></i>
+                <i className="fa-fw fa-solid fa-arrow-up-right-from-square" />
               </a>
             </h4>
           )}
@@ -154,7 +154,7 @@ export function Full({
             <>
               <h4 className="card-title">{t("event.details.location", "Location")}</h4>
               <p id="place" className="card-text">
-                <i className="fa-solid fa-fw fa-location-dot"></i>
+                <i className="fa-solid fa-fw fa-location-dot" />
                 {[event.venue.name, event.venue.address].filter((v) => v).join(", ")}
                 {!!event.room && (
                   <>
@@ -201,7 +201,7 @@ export function Full({
               {t("frame.calendar.moreAboutThisEvent", "More about this event on {SITENAME}", {
                 SITENAME: siteName,
               })}{" "}
-              <i className="fa-fw fa-solid fa-arrow-up-right-from-square"></i>
+              <i className="fa-fw fa-solid fa-arrow-up-right-from-square" />
             </a>
           </p>
         </div>

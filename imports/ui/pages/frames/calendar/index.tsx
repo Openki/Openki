@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
-import * as Metatags from "/imports/utils/metatags";
-import { chain } from "lodash";
+import { MetaTags } from "/imports/ui/components/MetaTags";
+import { chain } from "lodash-es";
 import { useSession } from "/imports/utils/react-meteor-data";
 import { useReactiveNow } from "/imports/utils/reactive-now";
 
@@ -79,8 +79,6 @@ export function CalendarPage() {
     .groupBy((event) => moment(event.start).locale(timeLocale).format("LL"))
     .value();
 
-  Metatags.setCommonTags(t("calendar.windowtitle", "Calendar"));
-
   function days() {
     return Object.keys(groupedEvents);
   }
@@ -93,7 +91,9 @@ export function CalendarPage() {
 
   return (
     <>
+      <MetaTags title={t("calendar.windowtitle", "Calendar")} />
       <style>{options.style.map((rule) => rule)}</style>
+
       {days().map((day) => (
         <React.Fragment key={day}>
           <h4 className="frame-list-title">{day}</h4>

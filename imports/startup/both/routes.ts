@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { Router } from "meteor/iron:router";
 import { Session } from "meteor/session";
-import { _ } from "meteor/underscore";
+import { assignIn } from "lodash-es";
 import moment from "moment";
 import momentTz from "moment-timezone";
 
@@ -304,7 +304,7 @@ RouterAsync.route("createEvent", {
     const subs = this.subscriptions();
 
     const propose = LocalTime.now().startOf("hour");
-    const event = _.extend(new OEvent(), {
+    const event = assignIn(new OEvent(), {
       startLocal: LocalTime.toString(propose),
       endLocal: LocalTime.toString(moment(propose).add(2, "hour")),
       sendReminder: PublicSettings.sendReminderPreset,

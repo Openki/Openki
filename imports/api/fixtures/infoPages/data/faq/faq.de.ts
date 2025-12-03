@@ -179,7 +179,7 @@ Wenn du unsicher bist, kontaktiere die Person im Vorfeld. Handle nach gesundem M
 ### Wie steht Openki zu Datenschutz?
 Openki ist sehr darauf bedacht, verschiedensten Privatsphäre-Ansprüchen gerecht zu werden. Dazu gehören moderne Verschlüsselungstechniken ebenso wie personalisierte Datenschutzeinstellugen.
 
-Openki verkauft keine Benutzer*innendaten an Unternehmen, wir verfolgen dein Verhalten nicht und wir lassen auch keine anderen Firmen dein Verhalten und Interessen verfolgen. Aus diesem Grund benutzen wir beispielsweise die Share Buttons von [Shariff](https://www.heise.de/ct/artikel/Shariff-Social-Media-Buttons-mit-Datenschutz-2467514.html).
+Openki verkauft keine Benutzer*innendaten an Unternehmen, wir verfolgen dein Verhalten nicht und wir lassen auch keine anderen Firmen dein Verhalten und Interessen verfolgen.
 
 ### Wie sicher ist die Openki webpage?
 Openki.net ist standardmässig SSL verschlüsselt. Dies ist die gleiche Technologie, die dein Onlinebanking nutzt. Aber deine Anmeldungen an Kursen sind zum Beispiel für andere Nutzende sichtbar. Wähle daher nicht deinen echten Namen, wenn das vermeiden möchtest.

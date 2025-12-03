@@ -1,46 +1,30 @@
 import { Router } from "meteor/iron:router";
-import { useSearchParams } from "/imports/utils/react-meteor-router";
-import { useTranslation } from "react-i18next";
-import React, { useState } from "react";
-import { useUser } from "/imports/utils/react-meteor-data";
 import moment from "moment";
+import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { useUser } from "/imports/utils/react-meteor-data";
+import { useSearchParams } from "/imports/utils/react-meteor-router";
+import * as Analytics from "/imports/ui/lib/analytics";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { EventModel } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
-import { Regions } from "/imports/api/regions/regions";
 import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
+import { Regions } from "/imports/api/regions/regions";
 
-import { PleaseLogin } from "/imports/ui/components/please-login";
-import { EventParticipants } from "/imports/ui/components/events/participants";
 import { RegisterPanel } from "./register-panel";
 import { UnregisterPanel } from "./unregister-panel";
-
-import * as Analytics from "/imports/ui/lib/analytics";
+import { EventParticipants } from "/imports/ui/components/events/participants";
+import { useAccountTasks } from "/imports/utils/useAccountTasks";
 
 import "./styles.scss";
 
-function ButtonRegistrationClosed(props: {
-  onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
-  busy?: boolean | undefined;
-}) {
+function ButtonRegistrationClosed() {
   const { t } = useTranslation();
 
   return (
-    <button
-      type="button"
-      className="btn btn-warning btn-event text-center"
-      onClick={props.onClick}
-      disabled={props.busy}
-    >
-      {props.busy ? (
-        <>
-          <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
-          {t("_button.addingYouToWaitingQueue", "Adding you to waiting queue…")}
-        </>
-      ) : (
-        t("event.details.isFullyBooked", "The event is fully booked")
-      )}
+    <button type="button" id="event-details-isfullyBooked" className="btn btn-warning btn-lg">
+      <strong>{t("event.details.isFullyBooked", "The event is fully booked")}</strong>
     </button>
   );
 }
@@ -53,46 +37,25 @@ export function EventRegistration({ event }: Props) {
   const user = useUser();
   const searchParams = useSearchParams();
   const { t } = useTranslation();
-  const [isBusy, setIsBusy] = useState("");
+  const { promptToLogin } = useAccountTasks();
 
   const [groupsIsLoading, groups] = useGroupsFindFilter({
     ids: event.allGroupOrganizers(),
   });
 
   async function addParticipant(companions = 0) {
-    setIsBusy("registering");
     try {
       await EventsMethods.addParticipant(event._id, companions);
 
-      Alert.successNextActions(
-        t("event.details.registration.alertNextActions.title", "You registered successfully."),
-        t("event.details.registration.alertNextActions.message", "What do you wannt to do next?"),
-        !event.isFullyBooked()
-          ? {
-              text: t("event.details.registration.alertNextActions.share", "Invite your friends"),
-              href: "#share",
-            }
-          : undefined,
-        {
-          text: t(
-            "event.details.registration.alertNextActions.calendar",
-            "Add events to my calendar",
-          ),
-          href: Router.path("profile", undefined, { hash: "#my-events" }),
-        },
-      );
+      Router.go("showEvent", event, { query: { nextActions: "1" } });
 
       Analytics.trackEvent("RSVPs", "RSVPs as participant", Regions.findOne(event.region)?.nameEn);
     } catch (err) {
       Alert.serverError(err);
-    } finally {
-      setIsBusy("");
     }
   }
 
   async function removeParticipant() {
-    setIsBusy("unregistering");
-
     try {
       await EventsMethods.removeParticipant(event._id);
 
@@ -103,14 +66,24 @@ export function EventRegistration({ event }: Props) {
       );
     } catch (err) {
       Alert.serverError(err, "could not remove participant");
-    } finally {
-      setIsBusy("");
     }
   }
 
   function isFuture() {
     return moment().isBefore(event.end);
   }
+
+  useEffect(() => {
+    (async () => {
+      if (searchParams.action === "register") {
+        if (!(await promptToLogin())) {
+          return;
+        }
+        // register from email
+        await addParticipant();
+      }
+    })();
+  });
 
   if (groupsIsLoading()) {
     return null;
@@ -120,16 +93,6 @@ export function EventRegistration({ event }: Props) {
 
   return (
     <>
-      {searchParams.action === "register" && (
-        <PleaseLogin
-          type="auto"
-          onRender={async () => {
-            // register from email
-            await addParticipant();
-          }}
-        />
-      )}
-
       {isFuture() && (
         <>
           <div className="page-component">
@@ -179,17 +142,15 @@ export function EventRegistration({ event }: Props) {
                   !event.isFullyBooked() ? (
                     <RegisterPanel
                       event={event}
-                      busy={isBusy === "registering"}
                       onRegister={async (companions) => {
                         await addParticipant(companions);
                       }}
                     />
                   ) : (
-                    <ButtonRegistrationClosed busy={isBusy === "registering"} />
+                    <ButtonRegistrationClosed />
                   )
                 ) : (
                   <UnregisterPanel
-                    busy={isBusy === "unregistering"}
                     event={event}
                     onUnregister={async () => {
                       await removeParticipant();

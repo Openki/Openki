@@ -2,7 +2,7 @@ import { Router } from "meteor/iron:router";
 import { EventModel } from "../api/events/events";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { ICalEventData, ICalEventStatus } from "ical-generator";
-import { omitBy } from "lodash";
+import { isEmpty, omitBy } from "lodash-es";
 import { isOnCustomMap } from "./isOnCustomMap";
 
 export function convertToIcal(dbevent: EventModel): ICalEventData {
@@ -21,19 +21,23 @@ export function convertToIcal(dbevent: EventModel): ICalEventData {
       start: dbevent.start,
       end,
       summary: dbevent.title,
-      location: dbevent.venue
-        ? omitBy(
-            {
-              title: (dbevent.venue.name || "") + (dbevent.room ? " (" + dbevent.room + ")" : ""),
-              address: dbevent.venue.address,
-              geo:
-                dbevent.venue.loc && !isOnCustomMap(dbevent.venue)
-                  ? { lat: dbevent.venue.loc.coordinates[1], lon: dbevent.venue.loc.coordinates[0] }
-                  : undefined,
-            },
-            (v) => !v,
-          )
-        : undefined,
+      location:
+        dbevent.venue && !isEmpty(dbevent.venue)
+          ? omitBy(
+              {
+                title: (dbevent.venue.name || "") + (dbevent.room ? " (" + dbevent.room + ")" : ""),
+                address: dbevent.venue.address,
+                geo:
+                  dbevent.venue.loc && !isOnCustomMap(dbevent.venue)
+                    ? {
+                        lat: dbevent.venue.loc.coordinates[1],
+                        lon: dbevent.venue.loc.coordinates[0],
+                      }
+                    : undefined,
+              },
+              (v) => !v,
+            )
+          : undefined,
       description: plainDescription,
       url: Router.url("showEvent", dbevent),
       status: !dbevent.canceled ? ICalEventStatus.CONFIRMED : ICalEventStatus.CANCELLED,

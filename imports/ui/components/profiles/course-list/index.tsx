@@ -90,9 +90,8 @@ export function Courselist(data: { user: UserModel; ownProfile: boolean }) {
                           });
                         }}
                       >
-                        <span className={`${role.icon} fa-fw`} aria-hidden="true"></span>{" "}
-                        {roleShort(role.type)}
-                        <span className="fa-solid fa-arrow-down fa-fw" aria-hidden="true"></span>
+                        <i className={`${role.icon} fa-fw`} /> {roleShort(role.type)}
+                        <i className="fa-solid fa-arrow-down fa-fw" />
                         {coursesByRoleCount(role.type, false)}
                       </a>{" "}
                     </React.Fragment>
@@ -104,7 +103,7 @@ export function Courselist(data: { user: UserModel; ownProfile: boolean }) {
                   <React.Fragment key={role.type}>
                     <h3 id={role.type}>
                       <div className="badge">
-                        <span className={`${role.icon} fa-fw`} aria-hidden="true"></span>
+                        <i className={`${role.icon} fa-fw`} />
                       </div>{" "}
                       {data.ownProfile
                         ? t(roleMyList(role.type))
@@ -122,7 +121,7 @@ export function Courselist(data: { user: UserModel; ownProfile: boolean }) {
                   <React.Fragment key={role.type}>
                     <h3 id={`${role.type}_archived`}>
                       <div className="badge is-archived">
-                        <span className={`${role.icon} fa-fw`} aria-hidden="true"></span>
+                        <i className={`${role.icon} fa-fw`} />
                       </div>{" "}
                       {data.ownProfile
                         ? t(roleMyListPast(role.type))
