@@ -2,7 +2,7 @@ import { Match, check } from "meteor/check";
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { i18n } from "/imports/startup/both/i18next";
-import { uniq } from "lodash";
+import { uniq } from "lodash-es";
 
 import { Courses, Course, CourseEntity, CourseModel } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
@@ -122,6 +122,7 @@ export const CustomFieldPattern = {
   name: String,
   displayText: LocalizedValuePattern,
   value: Match.OneOf(String, Boolean),
+  displayValue: Match.Optional(LocalizedValuePattern),
   visibleFor: StringEnum("all", "editors"),
 };
 export type CustomField = Type<typeof CustomFieldPattern>;
@@ -210,12 +211,20 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     set.slug = StringTools.slug(set.name);
   }
   if (changes.customFields) {
-    set.customFields = changes.customFields.map((i) => ({
-      name: i.name.substring(0, 50),
-      displayText: i.displayText,
-      value: typeof i.value === "string" ? i.value.substring(0, 2000) : i.value,
-      visibleFor: i.visibleFor,
-    }));
+    set.customFields = changes.customFields.map((i) => {
+      const result = {
+        name: i.name.substring(0, 50),
+        displayText: i.displayText,
+        value: typeof i.value === "string" ? i.value.substring(0, 2000) : i.value,
+        visibleFor: i.visibleFor,
+      };
+
+      if (!i.displayValue) {
+        return result;
+      }
+
+      return { ...result, displayValue: i.displayValue };
+    });
   }
   if (changes.internal !== undefined) {
     set.internal = changes.internal;

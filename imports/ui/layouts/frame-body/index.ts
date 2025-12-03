@@ -4,7 +4,6 @@ import moment from "moment";
 
 import * as Tooltips from "/imports/utils/Tooltips";
 
-import * as Viewport from "/imports/ui/lib/viewport";
 import { observeSize } from "../../lib/observeHeight";
 
 import "/imports/ui/layouts/root.html";
@@ -33,7 +32,9 @@ template.onRendered(() => {
 
       // also check children scrollHeight, works only if the right class is set
       element
-        .querySelectorAll(".overflow-auto,.overflow-y-auto,.overflow-scroll,.overflow-y-scroll")
+        .querySelectorAll(
+          ".modal,.overflow-auto,.overflow-y-auto,.overflow-scroll,.overflow-y-scroll",
+        )
         .forEach((e) => {
           scrollHeight = Math.max(scrollHeight, e.scrollHeight);
         });
@@ -86,9 +87,5 @@ template.onRendered(() => {
     });
   }
 
-  Viewport.update();
-  $(window).on("resize", () => {
-    Viewport.update();
-  });
   Tooltips.enable();
 });

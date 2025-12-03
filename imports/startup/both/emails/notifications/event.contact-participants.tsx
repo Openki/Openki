@@ -3,6 +3,7 @@ import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
+import { truncate } from "lodash-es";
 
 import { Log } from "/imports/api/log/log";
 import { UserModel, Users } from "/imports/api/users/users";
@@ -10,7 +11,6 @@ import { Regions } from "/imports/api/regions/regions";
 import { Events } from "/imports/api/events/events";
 
 import * as HtmlTools from "/imports/utils/html-tools";
-import { truncate } from "lodash";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { LocalTime } from "/imports/utils/local-time";
 import { Model as NotificationModel } from "../notification";
@@ -156,7 +156,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
 
       // Show dates in local time and in users locale
-      const regionZone = await LocalTime.zone(event.region);
+      const regionZone = await LocalTime.zoneAsync(event.region);
       const startMoment = regionZone.at(event.start);
       startMoment.locale(locale);
 

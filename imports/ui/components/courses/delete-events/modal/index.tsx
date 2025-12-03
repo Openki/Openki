@@ -1,11 +1,11 @@
+import moment from "moment";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import moment from "moment";
 
-import { Regions } from "/imports/api/regions/regions";
 import * as Alert from "/imports/api/alerts/alert";
-import * as EventsMethods from "/imports/api/events/methods";
 import { EventModel } from "/imports/api/events/events";
+import * as EventsMethods from "/imports/api/events/methods";
+import { Regions } from "/imports/api/regions/regions";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
@@ -67,14 +67,14 @@ export function Modal(props: {
         <div className="modal-content">
           <div className="modal-header">
             <h4 className="modal-title">
-              <span className="fa-solid fa-trash-can fa-fw" aria-hidden="true"></span>{" "}
+              <i className="fa-solid fa-trash-can fa-fw" />{" "}
               {t("deleteEventsModal.title", "Delete events")}
             </h4>
             <button
               type="button"
               className="btn-close"
               data-bs-dismiss="modal"
-              aria-label="Close"
+              aria-label={t("_button.close")}
             ></button>
           </div>
           <div className="modal-body">
@@ -98,7 +98,7 @@ export function Modal(props: {
                           <button
                             type="button"
                             className="btn-close float-end"
-                            aria-label="Close"
+                            aria-label={t("_button.close")}
                             onClick={() => {
                               setSelectedEvents(
                                 selectedEvents.filter((se) => se._id !== event._id),
@@ -172,10 +172,7 @@ export function Modal(props: {
                       >
                         {isBusy ? (
                           <>
-                            <span
-                              className="fa-solid fa-circle-notch fa-spin fa-fw"
-                              aria-hidden="true"
-                            ></span>
+                            <i className="fa-solid fa-circle-notch fa-spin fa-fw" />{" "}
                             {t(
                               "deleteEventsModal.deletingEvents",
                               "Deleting {NUM, plural, one{event} other{events} }…",

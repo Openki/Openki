@@ -1,7 +1,7 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { chain, fromPairs, union, uniq } from "lodash";
+import { uniq, chain, fromPairs, union } from "lodash-es";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { CourseMemberEntity, CourseModel, Courses, isPrivate } from "/imports/api/courses/courses";
@@ -10,198 +10,37 @@ import { Regions } from "/imports/api/regions/regions";
 import { Roles } from "/imports/api/roles/roles";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import * as StringTools from "/imports/utils/string-tools";
 import { hasRoleUser } from "/imports/utils/course-role-utils";
+import * as StringTools from "/imports/utils/string-tools";
+import { useAccountTasks } from "/imports/utils/useAccountTasks";
 
 import * as Analytics from "/imports/ui/lib/analytics";
-import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 
-import { Tag } from "../../regions/tag";
-import { Title } from "./title";
-import { PricePolicy } from "../../price-policy";
-import { Role, Props as CourseEditRoleProps } from "./Role";
 import { ButtonCancel, ButtonSave } from "../../Buttons";
+import { PricePolicy } from "../../price-policy";
+import { Tag } from "../../regions/tag";
+import { Props as CourseEditRoleProps, Role } from "./Role";
+import { Title } from "./title";
+import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
+import { useAll as useRegions } from "/imports/api/regions/publications";
 import { useUser } from "/imports/utils/react-meteor-data";
-import { useAll as useRegionsAll } from "/imports/api/regions/publications";
-import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
-import {
-  useDetails as useCoursesDetails,
-  useFindFilter as useCoursesFindFilter,
-} from "/imports/api/courses/publications";
-import { useDetails, useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
+import { useValidation } from "/imports/ui/lib/useValidation";
+import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
+import { useMeasureTime } from "/imports/ui/lib/useMeasureTime";
 
-import { useSiteName } from "/imports/utils/getSiteName";
-import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
+import { EditCustomFields } from "../../EditCustomFields";
 import { SelectCategories } from "../SelectCategories";
 import { CourseCategories } from "../categories";
-import { EditCustomFields } from "../../EditCustomFields";
-import { mayShare } from "./mayShare";
-import { PleaseLogin } from "../../please-login";
+import { FormCheck } from "/imports/ui/components/FormCheck";
+import { RegionSelect } from "/imports/ui/components/RegionSelect";
+import { Header } from "./Header";
+import { FindHeader } from "./FindHeader";
+import { AlertMessage } from "./AlertMessage";
+import { FormControl } from "/imports/ui/components/form-control";
+
 import "./styles.scss";
 
-function GroupHeader({ groupId }: { groupId: string }) {
-  const { t } = useTranslation();
-  const [groupIsLoading, group] = useDetails(groupId);
-
-  if (groupIsLoading()) {
-    return null;
-  }
-
-  return (
-    <>
-      {t("course.edit.proposeInGroup", "Propose new course in group {GROUP}", {
-        GROUP: group?.name,
-      })}
-    </>
-  );
-}
-
-function Header(data: { _id?: string; isFrame?: boolean; group?: string }) {
-  const { t } = useTranslation();
-  const siteName = useSiteName();
-
-  return data._id ? (
-    <h2>{t("course.edit.edit_course", "Edit course")}</h2>
-  ) : !data.isFrame ? (
-    <>
-      <h2>
-        {data.group ? (
-          <GroupHeader groupId={data.group} />
-        ) : (
-          t("course.edit.propose", "Propose new course")
-        )}
-      </h2>
-      <div className="icon-text">
-        <div className="icon-text-icon">
-          <i className="fa-solid fa-info fa-fw" aria-hidden="true"></i>
-        </div>
-        <div className="icon-text-text">
-          {t(
-            "course.propose.CourseInfo",
-            "Start your own {SITENAME} course here. Whether as a mentor or participant, you decide what and how you want to learn. More info here:",
-            { SITENAME: siteName },
-          )}{" "}
-          <a
-            href={getLocalizedValue(PublicSettings.courseGuideLink)}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {t("course.propose.guideLink", "How to organize my first {SITENAME} course?", {
-              SITENAME: siteName,
-            })}
-          </a>
-          {", "}
-          <a href={getLocalizedValue(PublicSettings.faqLink)} target="_blank" rel="noreferrer">
-            {t("course.propose.faq", "FAQ")}
-          </a>
-        </div>
-      </div>
-    </>
-  ) : null;
-}
-
-function FindHeader(data: {
-  _id?: string;
-  isFrame?: boolean;
-  group?: string;
-  filter: ReturnType<(typeof Courses)["Filtering"]>;
-}) {
-  const { t } = useTranslation();
-
-  const { filter } = data;
-
-  const filterQuery = filter.toQuery();
-  const [coursesIsLoading, courses] = useCoursesFindFilter(filterQuery);
-
-  function proposeFromQuery() {
-    const { search } = filterQuery;
-    if (!search) {
-      return false;
-    }
-
-    return courses.length === 0 && search;
-  }
-  function courseSearch() {
-    const filterParams = filter.toParams();
-
-    return filterParams.search;
-  }
-
-  if (coursesIsLoading()) {
-    return null;
-  }
-
-  return proposeFromQuery() ? (
-    <h2>
-      {t("find.propose_new_course?", 'Why not propose a new course for "{TERM}"?', {
-        TERM: courseSearch(),
-      })}
-    </h2>
-  ) : (
-    <Header {...data} />
-  );
-}
-
-function AlertMessage(data: {
-  isFrame?: boolean | undefined;
-  savedCourseId: string;
-  onClose: () => void;
-}) {
-  const { t } = useTranslation();
-  const siteName = useSiteName();
-  const [savedCourseIsLoading, savedCourse] = useCoursesDetails(data.savedCourseId);
-
-  function savedCourseLink() {
-    if (data.isFrame) {
-      const course = savedCourse;
-      if (course) {
-        return Router.url("showCourse", course);
-      }
-    }
-    return "";
-  }
-  function savedCourseName() {
-    if (data.isFrame) {
-      const course = savedCourse;
-      if (course) {
-        return course.name;
-      }
-    }
-    return false;
-  }
-
-  if (savedCourseIsLoading()) {
-    return null;
-  }
-
-  return (
-    <div className="alert alert-success alert-dismissible fade show" role="alert">
-      <h4>
-        <i className="fa-solid fa-check" aria-hidden="true"></i>{" "}
-        {t("course.edit.savedMessage", "Your proposal has been saved!")}
-      </h4>
-      <span className="pre-line">
-        {t("course.edit.linkToCourse", 'You can see your new proposal "{NAME}" on {SITENAME}', {
-          NAME: (
-            <a className="alert-link" href={savedCourseLink()} target="_blank" rel="noreferrer">
-              {savedCourseName()}
-            </a>
-          ),
-          SITENAME: siteName,
-        })}
-      </span>
-      <button
-        type="button"
-        className="btn-close btn-close-black"
-        data-bs-dismiss="alert"
-        aria-label="Close"
-        onClick={data.onClose}
-      ></button>
-    </div>
-  );
-}
-
-export type Data = {
+export type Props = {
   _id?: string;
   categories?: string[];
   isFrame?: boolean;
@@ -217,40 +56,46 @@ export type Data = {
   filter?: ReturnType<(typeof Courses)["Filtering"]>;
 } & Partial<CourseModel>;
 
-export function Edit(data: Data) {
+export function Edit(props: Props) {
+  const isNew = !props._id;
   const { t } = useTranslation();
-  const user = useUser();
-  const [allRegionsIsLoading, allRegions] = useRegionsAll();
-  const currentRegion = useCurrentRegion();
-  const [isBusy, setIsBusy] = useState(false);
-  const [title, setTitle] = useState(data.name);
 
-  const showInternalCheckbox = () => {
+  const user = useUser();
+
+  const currentRegion = useCurrentRegionId();
+  const [regionsIsLoading, regions] = useRegions();
+
+  const [isBusy, setIsBusy] = useState(false);
+  const [title, setTitle] = useState(props.name);
+
+  const { adjustLoginModalPosition, promptToLogin } = useAccountTasks();
+
+  function showInternalCheckbox() {
     let internalOption;
 
-    if (!data.isFrame && data.group && user?.groups) {
+    if (!props.isFrame && props.group && user?.groups) {
       // Visible in group detail page (for creation) if user is in group
-      internalOption = user.groups.includes(data.group);
+      internalOption = user.groups.includes(props.group);
     } else {
       // and visible on edit if course is in a group
       // For devs: This behaviour is not consistent. But we want the creation to be as simple
       // as possible.
-      internalOption = (data.groups?.length || 0) > 0;
+      internalOption = (props.groups?.length || 0) > 0;
     }
     return internalOption;
-  };
+  }
 
-  const hasTeamGroups = !!(data.teamGroups && data.teamGroups?.length > 0);
+  const hasTeamGroups = !!(props.teamGroups && props.teamGroups?.length > 0);
 
   let internalInitalState;
   if (showInternalCheckbox()) {
     // Usually an "internal" checkbox is displayed so that the users of a group can choose
     // whether the course is internal or not.
-    internalInitalState = data.internal;
-  } else if (data.isFrame && hasTeamGroups) {
+    internalInitalState = props.internal;
+  } else if (props.isFrame && hasTeamGroups) {
     // When in a frame for a group, the `internal` query-param can be set to control whether
     // the group wants the entered courses to be internal.
-    internalInitalState = data.internal;
+    internalInitalState = props.internal;
   }
   // Default is not internal
   internalInitalState = internalInitalState || false;
@@ -258,68 +103,62 @@ export function Edit(data: Data) {
   const [internal, setInternal] = useState(internalInitalState);
 
   useEffect(() => {
-    setTitle(data.name);
-  }, [data.name]);
+    setTitle(props.name);
+  }, [props.name]);
 
-  function getRegion() {
-    const courseId = data._id || "";
-    const isNew = courseId === "";
-    if (isNew) {
-      if (data.isFrame && data.region) {
-        // The region was preset for the frame
-        return allRegions.find((r) => r._id === data.region);
-      }
-      if (allRegions.length === 1) {
-        // There is only one region
-        return allRegions[0];
-      }
-      return currentRegion;
+  const [savedCourseId, setSavedCourseId] = useState<string | undefined>(undefined);
+
+  const [selectedRegion, setSelectedRegion] = useState<string | undefined>(props.region);
+  // init selected region
+  useEffect(() => {
+    if (!isNew) {
+      // only needed for new courses
+      return;
     }
-    return undefined;
-  }
-  const getGroups = () => {
+
+    if (props.isFrame && props.region) {
+      // The region was preset for the frame
+      setSelectedRegion(props.region);
+    } else if (currentRegion) {
+      //  If the session sets the region, we use it.
+      setSelectedRegion(currentRegion);
+    } else if (regions.length === 1) {
+      // There is only one region
+      setSelectedRegion(regions[0]._id);
+    }
+  }, [props, currentRegion, regions]);
+
+  function getGroups() {
     const groups = [];
 
-    const defaultTeamGroups = getRegion()?.defaultTeamGroups;
+    const defaultTeamGroups = regions.find((r) => r._id === selectedRegion)?.defaultTeamGroups;
     if (defaultTeamGroups) {
       groups.push(...defaultTeamGroups);
     }
 
-    if (data && data._id /* is not new */) {
-      groups.push(...(data.groupOrganizers || []));
-    } else if (!data.isFrame) {
-      if (data.group) {
-        groups.push(data.group);
+    if (!isNew) {
+      groups.push(...(props.groupOrganizers || []));
+    } else if (!props.isFrame) {
+      if (props.group) {
+        groups.push(props.group);
       }
-    } else if (data.teamGroups && data.teamGroups?.length > 0) {
-      groups.push(...data.teamGroups);
+    } else if (props.teamGroups && props.teamGroups.length > 0) {
+      groups.push(...props.teamGroups);
     }
     // remove double groups
     return uniq(groups);
-  };
-  const [savedCourseId, setSavedCourseId] = useState<string | undefined>(undefined);
+  }
 
   const [groupsIsLoading, groups] = useGroupsFindFilter({ ids: getGroups() });
 
-  const [selectedRegion, setSelectedRegion] = useState(currentRegion?._id || "");
-
-  const [description, setDescription] = useState(data.description);
+  const [description, setDescription] = useState(props.description);
   const [numberOfCharacters, setNumberOfCharacters] = useState(0);
-  const [totalFocusTimeInSeconds, setTotalFocusTimeInSeconds] = useState(0);
-  const editableDescription: EditableProps = {
-    text: description,
-    multiline: true,
-    placeholder: t(
-      "course.description.placeholder",
-      "Describe your idea, so more people find it and know what to expect.",
-    ),
-    maxlength: PublicSettings.courseDescriptionMax,
-    onChange: (newDescription, newNumberOfCharacters, newTotalFocusTimeInSeconds) => {
-      setDescription(newDescription);
-      setNumberOfCharacters(newNumberOfCharacters);
-      setTotalFocusTimeInSeconds(newTotalFocusTimeInSeconds);
-    },
-  };
+  const {
+    start: startMeasureFocusTime,
+    pause: pauseMeasureFocusTime,
+    reset: resetFocusTime,
+    time: totalFocusTime,
+  } = useMeasureTime();
 
   const [editingCategories, setEditingCategories] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -328,6 +167,8 @@ export function Edit(data: Data) {
   const [simpleRoleSelection, setSimpleRoleSelection] = useState(false);
   // For iframes: Keep state of simple role selection
   const [simpleSelectedRole, setSimpleSelectedRole] = useState("participant");
+
+  const [customFieldValues, setCustomFieldValues] = useState(props.customFields);
 
   const [savedMessage, setSavedMessage] = useState(false);
 
@@ -343,7 +184,7 @@ export function Edit(data: Data) {
         return false;
       }
 
-      if (data && !data._id /* is new */)
+      if (isNew)
         if (disableCreateRoles.includes(role.type)) {
           return false;
         }
@@ -360,8 +201,6 @@ export function Edit(data: Data) {
     Record<string, { icon: string; enabled: boolean; enroll: boolean }>
   >({});
 
-  const groupsAreLoaded = groupsIsLoading();
-
   useEffect(() => {
     setRoles(
       fromPairs(
@@ -369,34 +208,62 @@ export function Edit(data: Data) {
           r.type,
           {
             icon: r.icon,
-            enabled: data.roles?.includes(r.type) || false,
-            enroll: hasRole(data.members, r.type) || false,
+            enabled: props.roles?.includes(r.type) || false,
+            enroll: hasRole(props.members, r.type) || false,
           },
         ]),
       ),
     );
-  }, [groupsAreLoaded]);
+  }, [groups]);
 
-  const showRegionSelection = () => {
+  const [errors, checkValidity, addError] = useValidation(
+    {
+      noTitle: {
+        field: "title",
+        onCheckValidity: () => StringTools.sanitizeSingleline(title).length > 0,
+        text: () => t("course.edit.error.title", "Please provide a title"),
+      },
+      descriptionToLong: {
+        field: "description",
+        onCheckValidity: () =>
+          !PublicSettings.courseDescriptionMax ||
+          numberOfCharacters <= PublicSettings.courseDescriptionMax,
+        text: () =>
+          t("_inputField.maxlength", {
+            MAXNUMBER: PublicSettings.courseDescriptionMax,
+            NUMBER: numberOfCharacters - (PublicSettings.courseDescriptionMax || 0),
+          }),
+      },
+      noRegion: {
+        field: "region",
+        onCheckValidity: () => !!selectedRegion,
+        text: () => t("course.edit.error.region", "Please select a region"),
+      },
+    },
+    { autoCheckFixed: true },
+  );
+
+  useEffect(() => {
+    checkValidity("description");
+  }, [description]);
+
+  function showRegionSelection() {
     return (
       // Region can be set for new courses only.
-      !data._id &&
-      // For the proposal frame we hide the region selection when a region
-      // is set.
-      !(data.region && data.isFrame) &&
-      // If there is only one region on this instance or it is visible to this user, it
-      // will be set automatically.
-      !(allRegions.length === 1)
+      isNew &&
+      // For the proposal frame we hide the region selection when a region is
+      // set.
+      !(props.isFrame && props.region) &&
+      // if the session sets the region we hide the region selection
+      !currentRegion &&
+      // If there is only one region on this instance or it is visible to this
+      // user, it will be set automatically.
+      regions.length > 1
     );
-  };
+  }
 
-  const customFields = (type?: "singleLine" | "multiLine" | "boolean") => {
-    return (
-      groups
-        .flatMap((g) => g.customCourseFields || [])
-        // when type is undefined all will get back
-        .filter((g) => !type || (g.type || "singleLine") === type)
-    );
+  const customFields = () => {
+    return groups.flatMap((g) => g.customCourseFields || []);
   };
 
   const resetFields = () => {
@@ -404,19 +271,20 @@ export function Edit(data: Data) {
     setDescription("");
     setSelectedCategories([]);
     setSimpleSelectedRole("participant");
+    resetFocusTime();
   };
 
   useEffect(() => {
     // Show category selection right away for new courses
-    setEditingCategories(!data._id);
-    setSelectedCategories(data.categories || []);
+    setEditingCategories(isNew);
+    setSelectedCategories(props.categories || []);
 
-    if (data.isFrame) {
+    if (props.isFrame) {
       // When we're in the propose frame, show a simplified role selection
-      setSimpleRoleSelection(!data.hideRoleSelection && !!data.roles?.includes("mentor"));
+      setSimpleRoleSelection(!props.hideRoleSelection && !!props.roles?.includes("mentor"));
       setFullRoleSelection(false);
     }
-  }, [data._id, data.categories, data.isFrame, data.hideRoleSelection, data.roles]);
+  }, [isNew, props.categories, props.isFrame, props.hideRoleSelection, props.roles]);
 
   function simpleRoleActiveClass(role: string) {
     // HACK using btn-add and btn-edit to show activation state
@@ -430,7 +298,7 @@ export function Edit(data: Data) {
     return showRegionSelection() || customFields().length > 0;
   }
   function hideCategories() {
-    return data.isFrame && data.hideCategories;
+    return props.isFrame && props.hideCategories;
   }
   function selectCategoriesAttr() {
     return {
@@ -441,7 +309,7 @@ export function Edit(data: Data) {
     };
   }
   function showSavedMessage() {
-    if (data.isFrame) {
+    if (props.isFrame) {
       return savedMessage;
     }
     return false;
@@ -449,7 +317,7 @@ export function Edit(data: Data) {
   function editBodyClasses() {
     const classes: string[] = [];
 
-    if (data.isFrame) {
+    if (props.isFrame) {
       classes.push("is-frame");
     }
 
@@ -481,83 +349,63 @@ export function Edit(data: Data) {
     });
   }
   function hasPricePolicy() {
-    const { hidePricePolicy } = data;
+    const { hidePricePolicy } = props;
 
     if (hidePricePolicy) {
       return false;
     }
 
-    if (data && data._id /* is not new */) {
-      return !(data.tenant && isPrivate(data as { tenant: string }));
+    if (props && props._id /* is not new */) {
+      return !(props.tenant && isPrivate(props as { tenant: string }));
     }
 
-    if (data.isFrame && data.region) {
+    let regionId;
+    if (props.isFrame && props.region) {
       // The region was preset for the frame
-      const region = allRegions.find((r) => r._id === data.region);
-      if (region) {
-        return !region.isPrivate();
-      }
+      regionId = props.region;
+    } else if (regions.length === 1) {
+      // There is only one region
+      regionId = regions[0]._id;
+    } else if (selectedRegion) {
+      // The one selected by the user.
+      regionId = selectedRegion;
+    } else {
+      return true;
     }
 
-    return !currentRegion?.isPrivate();
-  }
-
-  if (allRegionsIsLoading()) {
-    return null;
+    const region = regions.find((r) => r._id === regionId);
+    return !region?.isPrivate();
   }
 
   const handleRoleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSimpleSelectedRole(event.target.value);
   };
 
-  const handleSave = async () => {
+  async function handleSave(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (!checkValidity()) {
+      setTimeout(() => {
+        document.querySelector<HTMLElement>(".is-invalid")?.focus();
+      }, 0);
+      return;
+    }
+
     const changes = {
       internal,
       name: StringTools.sanitizeSingleline(title),
       categories: selectedCategories || [],
     } as unknown as Required<CoursesMethods.SaveFields>;
 
-    if (changes.name.length === 0) {
-      Alert.serverError(t("course.edit.error.title", "Please provide a title") as string);
-      return;
+    if (description) {
+      changes.description = description;
     }
 
-    const newDescription = description;
-    if (newDescription) {
-      changes.description = newDescription;
-    }
-
-    if (PublicSettings.courseDescriptionMax && numberOfCharacters) {
-      if (numberOfCharacters > PublicSettings.courseDescriptionMax) {
-        Alert.error(
-          t("_inputField.maxlength", {
-            MAXNUMBER: PublicSettings.courseDescriptionMax,
-            NUMBER: numberOfCharacters - PublicSettings.courseDescriptionMax,
-          }),
-        );
-        return;
-      }
-    }
-
-    let courseId = data._id || "";
-    const isNew = courseId === "";
     if (isNew) {
-      if (data.isFrame && data.region) {
-        // The region was preset for the frame
-        changes.region = data.region;
-      } else if (Regions.findFilter({}, 2).count() === 1) {
-        // There is only one region
-        changes.region = Regions.findOne({})?._id as string;
-      } else {
-        changes.region = selectedRegion;
-      }
-      if (!changes.region) {
-        Alert.serverError(t("course.edit.error.region", "Please select a region") as string);
-        return;
-      }
+      changes.region = selectedRegion || "";
 
-      if (data.singleEvent !== undefined) {
-        changes.singleEvent = data.singleEvent;
+      if (props.singleEvent !== undefined) {
+        changes.singleEvent = props.singleEvent;
       } else {
         const singleEvent = Regions.findOne({ _id: changes.region })?.singleEvents;
 
@@ -573,8 +421,8 @@ export function Edit(data: Data) {
     changes.subs = [];
     changes.unsubs = [];
 
-    if (data.isFrame) {
-      data.roles?.forEach((role) => {
+    if (props.isFrame) {
+      props.roles?.forEach((role) => {
         changes.roles[role] = true;
       });
 
@@ -582,7 +430,7 @@ export function Edit(data: Data) {
         changes.subs.push("mentor");
       }
 
-      changes.subs = union(changes.subs, data.creatorsRoles || []);
+      changes.subs = union(changes.subs, props.creatorsRoles || []);
     }
 
     if (fullRoleSelection) {
@@ -602,115 +450,81 @@ export function Edit(data: Data) {
         });
     }
 
-    changes.customFields = customFields().map((i) => {
-      if (i.type !== "boolean")
-        return {
-          name: i.name,
-          displayText: i.displayText,
-          value: $(`.js-custom-field-${i.name}`).val() as string,
-          visibleFor: i.visibleFor,
-        };
-
-      return {
-        name: i.name,
-        displayText: i.displayText,
-        value: $(`.js-custom-field-${i.name}`).prop("checked") as boolean,
-        visibleFor: i.visibleFor,
-      };
-    });
+    if (customFieldValues) {
+      changes.customFields = customFieldValues;
+    }
 
     setIsBusy(true);
     try {
-      courseId = await CoursesMethods.save(courseId, changes);
+      adjustLoginModalPosition(event.nativeEvent);
+      if (!(await promptToLogin())) {
+        return;
+      }
 
-      const course = Courses.findOne(courseId);
+      const courseId = await CoursesMethods.save(props._id || "", changes);
 
-      if (data.isFrame) {
+      Analytics.trackEvent(
+        "Course creations",
+        `Course creations as ${changes.subs.length > 0 ? changes.subs.sort().join(" and ") : "participant"}`,
+        Regions.findOne(changes.region)?.nameEn,
+        totalFocusTime(),
+      );
+
+      if (props.isFrame) {
         setSavedCourseId(courseId);
         setSavedMessage(true);
         resetFields();
-
-        Analytics.trackEvent(
-          "Course creations",
-          `Course creations as ${
-            changes.subs.length > 0 ? changes.subs.sort().join(" and ") : "participant"
-          }`,
-          Regions.findOne(changes.region)?.nameEn,
-          totalFocusTimeInSeconds,
-        );
       } else {
         if (isNew) {
-          Alert.successNextActions(
-            t("message.courseCreated", "{NAME} has been created!", {
-              NAME: changes.name,
-            }),
-            t("message.courseCreated.description", "What do you wannt to do next?"),
-            numberOfCharacters === 0
-              ? {
-                  text: t("message.courseCreated.addDescription", "Add a description"),
-                  href: "#course-description",
-                }
-              : undefined,
-            {
-              text: t("message.courseCreated.addImage", "Add an image"),
-              href: "#files-tab",
-            },
-            course && mayShare(course)
-              ? { text: t("message.courseCreated.share", "Invite your friends"), href: "#share" }
-              : undefined,
-          );
-          Analytics.trackEvent(
-            "Course creations",
-            `Course creations as ${
-              changes.subs.length > 0 ? changes.subs.sort().join(" and ") : "participant"
-            }`,
-            Regions.findOne(changes.region)?.nameEn,
-            totalFocusTimeInSeconds,
-          );
+          Router.go("showCourse", { _id: courseId }, { query: { nextActions: "1" } });
         } else {
           Alert.success(
             t("message.courseChangesSaved", "Your changes to {NAME} have been saved.", {
               NAME: changes.name,
             }),
           );
+          Router.go("showCourse", { _id: courseId });
         }
-
-        Router.go("showCourse", { _id: courseId });
       }
     } catch (err) {
-      Alert.serverError(err, t("message.courseChangesSaved.error", "Saving went wrong"));
+      if (!addError(err.reason)) {
+        // unknown error
+        Alert.serverError(err, t("message.courseChangesSaved.error", "Saving went wrong"));
+      }
     } finally {
       setIsBusy(false);
     }
-  };
+  }
 
-  const handleCancel = () => {
-    const course = data;
+  function handleCancel() {
+    const course = props;
 
     if (course._id) {
       Router.go("showCourse", course);
     } else {
       Router.go("home");
     }
-  };
+  }
 
-  if (groupsAreLoaded) {
+  if (regionsIsLoading() || groupsIsLoading()) {
     return null;
   }
 
   return (
     <div className="edit-page">
-      <PleaseLogin type="form" onSubmit={handleSave}>
-        {data.filter ? <FindHeader {...{ ...data, filter: data.filter }} /> : <Header {...data} />}
+      <form noValidate onSubmit={handleSave}>
+        {props.filter ? (
+          <FindHeader {...{ ...props, filter: props.filter }} />
+        ) : (
+          <Header {...props} />
+        )}
         <div className={`edit-page-body course-edit-body ${editBodyClasses()}`}>
-          {!!data._id && !!data.region && <Tag region={data.region} />}
+          {!isNew && !!props.region && <Tag region={props.region} />}
           {showSavedMessage() && !!savedCourseId && (
             <AlertMessage
-              isFrame={data.isFrame}
+              isFrame={props.isFrame}
               savedCourseId={savedCourseId}
-              onClose={() => {
-                setSavedMessage(false);
-              }}
+              onClose={() => setSavedMessage(false)}
             />
           )}
 
@@ -734,7 +548,7 @@ export function Edit(data: Data) {
                       checked={simpleSelectedRole === "participant"}
                       onChange={handleRoleChange}
                     />
-                    <i className="fa-solid fa-user fa-lg fa-fw"></i>{" "}
+                    <i className="fa-solid fa-user fa-lg fa-fw" />{" "}
                     {t("course.edit.iWantToLearn", "I want to learn")}
                   </label>
                 </div>
@@ -748,7 +562,7 @@ export function Edit(data: Data) {
                       checked={simpleSelectedRole === "mentor"}
                       onChange={handleRoleChange}
                     />
-                    <i className="fa-solid fa-graduation-cap fa-lg fa-fw"></i>{" "}
+                    <i className="fa-solid fa-graduation-cap fa-lg fa-fw" />{" "}
                     {t("course.edit.iCanTeach", "I can teach")}
                   </label>
                 </div>
@@ -758,14 +572,32 @@ export function Edit(data: Data) {
 
           <Title
             value={title}
-            onChange={(newTitle) => {
-              setTitle(newTitle);
-            }}
-            showOtherProposals={!data._id}
+            onChange={(newTitle) => setTitle(newTitle)}
+            showOtherProposals={isNew}
+            onBlur={() => checkValidity("title")}
+            error={errors.title}
           />
           <div className="mb-3">
-            <label className="form-label">{t("course.edit.description", "Description")}</label>
-            <Editable {...editableDescription} />
+            <FormControl
+              id="course-edit-description"
+              type="richtext"
+              label={t("course.edit.description", "Description")}
+              placeholder={t(
+                "course.description.placeholder",
+                "Describe your idea, so more people find it and know what to expect.",
+              )}
+              value={description || ""}
+              onChange={(newValue, numberOfCharacters) => {
+                setDescription(newValue);
+                setNumberOfCharacters(numberOfCharacters);
+              }}
+              onFocus={() => startMeasureFocusTime()}
+              onBlur={() => {
+                pauseMeasureFocusTime();
+                checkValidity("description");
+              }}
+              error={errors.description}
+            />
           </div>
           {hasPricePolicy() && <PricePolicy dismissable={true} wrap="mb-3" />}
           <div className="row gap-3 mb-3">
@@ -775,11 +607,9 @@ export function Edit(data: Data) {
                   <SelectCategories {...selectCategoriesAttr()} />
                 ) : (
                   <>
-                    <label className="form-label">
-                      {t("course.edit.categories", "Categories")}
-                    </label>
-                    {data.categories ? (
-                      <CourseCategories categories={data.categories} />
+                    <div className="form-label">{t("course.edit.categories", "Categories")}</div>
+                    {props.categories ? (
+                      <CourseCategories categories={props.categories} />
                     ) : (
                       <div>{t("course.edit.no.categories", "No categories")}</div>
                     )}{" "}
@@ -799,9 +629,9 @@ export function Edit(data: Data) {
 
             {fullRoleSelection && availableRoles().length > 0 && (
               <div className="col-md">
-                <label className="form-label">
+                <div className="form-label">
                   {t("course.edit.needs.role", "This course might need…")}
-                </label>
+                </div>
                 {courseEditRolesAttr().map((courseEditRoleAttr) => (
                   <Role key={courseEditRoleAttr.type} {...courseEditRoleAttr} />
                 ))}
@@ -811,69 +641,70 @@ export function Edit(data: Data) {
               <div className="col-md">
                 {showRegionSelection() && (
                   <div className="mb-3">
-                    <label className="form-label">{t("course.edit.region", "Region")}</label>
-                    <div className="input-group">
-                      <div className="input-group-text">
-                        <span className="fa-solid fa-location-dot" aria-hidden="true"></span>
-                      </div>
-                      <select
-                        data-test="courses-edit-region-selection"
-                        className="form-select"
-                        name="region"
-                        onChange={(event) => {
-                          setSelectedRegion(event.target.value);
-                        }}
-                        defaultValue={selectedRegion}
-                      >
-                        <option value="" disabled className="select-placeholder">
-                          {t("_selection.pleaseSelect")}
-                        </option>
-                        {allRegions.map((region) => (
-                          <option key={region._id} value={region._id}>
-                            {region.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                    <RegionSelect
+                      id="courses-edit-region-selection"
+                      value={selectedRegion}
+                      onChange={(value) => setSelectedRegion(value)}
+                      onBlur={() => checkValidity("region")}
+                      error={errors.region}
+                    />
                   </div>
                 )}
 
-                <EditCustomFields fields={customFields("boolean")} values={data.customFields} />
+                <EditCustomFields
+                  type="boolean"
+                  fields={customFields()}
+                  values={customFieldValues}
+                  onChange={(values) => setCustomFieldValues(values)}
+                />
 
-                <EditCustomFields fields={customFields("singleLine")} values={data.customFields} />
+                <EditCustomFields
+                  type="singleLine"
+                  fields={customFields()}
+                  values={customFieldValues}
+                  onChange={(values) => setCustomFieldValues(values)}
+                />
+
+                <EditCustomFields
+                  type="option"
+                  fields={customFields()}
+                  values={customFieldValues}
+                  onChange={(values) => setCustomFieldValues(values)}
+                />
               </div>
             )}
           </div>
-          <EditCustomFields fields={customFields("multiLine")} values={data.customFields} />
+          <EditCustomFields
+            type="multiLine"
+            fields={customFields()}
+            values={customFieldValues}
+            onChange={(values) => setCustomFieldValues(values)}
+          />
 
           {showInternalCheckbox() && (
             <div className="mb-3">
-              <label className="form-label">{t("course.edit.intern", "Hide on front page")}</label>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="internalCheckbox"
-                  defaultChecked={internal}
-                  onChange={(event) => setInternal(event.currentTarget.checked)}
-                />
-                <label className="form-check-label" htmlFor="internalCheckbox">
-                  {t(
-                    "course.edit.internDescription",
-                    "Only show when looking at a group's courses",
-                  )}
-                </label>
-              </div>
+              <div className="form-label">{t("course.edit.intern", "Hide on front page")}</div>
+              <FormCheck
+                id="course-edit-internal"
+                type="switch"
+                label={t(
+                  "course.edit.internDescription",
+                  "Only show when looking at a group's courses",
+                )}
+                checked={internal}
+                onChange={(checked) => setInternal(checked)}
+              />
             </div>
           )}
 
           <div className="form-actions">
-            <ButtonSave onClick={handleSave} disabled={isBusy} />
-            {!data.isFrame && <ButtonCancel onClick={handleCancel} />}
+            <ButtonSave submit id="courses-edit-save" isBusy={isBusy} />
+            {!props.isFrame && (
+              <ButtonCancel id="courses-edit-cancel" onClick={handleCancel} disabled={isBusy} />
+            )}
           </div>
         </div>
-      </PleaseLogin>
+      </form>
     </div>
   );
 }

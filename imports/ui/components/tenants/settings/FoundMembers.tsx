@@ -52,7 +52,7 @@ export function FoundMembers({ tenant, userSearch }: { tenant: TenantModel; user
                 handleOnClick(member);
               }}
             >
-              <i className="fa-solid fa-plus fa-fw" aria-hidden="true" /> {member.getDisplayName()}
+              <i className="fa-solid fa-plus fa-fw" /> {member.getDisplayName()}
             </button>
           </div>
           <div className="tag tag-link tenant-member-tag-profile addon">
@@ -60,7 +60,7 @@ export function FoundMembers({ tenant, userSearch }: { tenant: TenantModel; user
               href={Router.path("userprofile", member)}
               title={t("tenant.settings.member.profile")}
             >
-              <i className="fa-solid fa-user fa-fw" aria-hidden="true" />
+              <i className="fa-solid fa-user fa-fw" />
             </a>
           </div>
         </React.Fragment>

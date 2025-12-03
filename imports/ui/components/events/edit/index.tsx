@@ -4,37 +4,80 @@
 // the timezone might actually change when a different region is selected. We
 // wouldn't want the time or even date field to change because of this switch.
 
-import React, { useState } from "react";
+import { intersection } from "lodash-es";
 import { Router } from "meteor/iron:router";
-import { intersection, uniq } from "lodash";
 import moment from "moment";
-import { useSession, useUser } from "/imports/utils/react-meteor-data";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import * as Analytics from "/imports/ui/lib/analytics";
+import { useValidation } from "/imports/ui/lib/useValidation";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { LocalTime } from "/imports/utils/local-time";
-import * as Analytics from "/imports/ui/lib/analytics";
 import { MeteorAsync } from "/imports/utils/promisify";
+import { useUser } from "/imports/utils/react-meteor-data";
+import { useSearchParams } from "/imports/utils/react-meteor-router";
+import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
+import { useAccountTasks } from "/imports/utils/useAccountTasks";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { EventModel, EventVenueEntity, OEvent } from "/imports/api/events/events";
+import * as CoursesMethods from "/imports/api/courses/methods";
+import { EventModel, OEvent } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { SaveFields } from "/imports/api/events/methods";
-import * as CoursesMethods from "/imports/api/courses/methods";
 import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
-import { useAll } from "/imports/api/regions/publications";
+import { useAll as useRegions } from "/imports/api/regions/publications";
+import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
+import { CourseCustomField } from "/imports/api/courses/courses";
 
-import { useTranslation } from "react-i18next";
-import { Tag } from "../../regions/tag";
-import { Richtext } from "../../richtext";
-import { PricePolicy } from "../../price-policy";
-import { EditVenue } from "../edit-venue";
-import { EditCustomFields } from "../../EditCustomFields";
-import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
 import { ButtonCancel, ButtonSave } from "../../Buttons";
+import { EditCustomFields } from "../../EditCustomFields";
+import { FormCheck } from "../../FormCheck";
+import { RegionSelect } from "../../RegionSelect";
+import { FormControl } from "../../form-control";
+import { PricePolicy } from "../../price-policy";
+import { Tag } from "../../regions/tag";
 import { Notify } from "../Notify";
+import { EditVenue, Props as EditVenueProps } from "../edit-venue";
 import { EditStartEnd } from "./EditStartEnd";
+import { OtherEventsMessage } from "./OtherEventsMessage";
 import { UpdateAffectedReplica } from "./UpdateAffectedReplica";
+import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
+
+import { useFindParallelEvents } from "./useFindParallelEvents";
 
 import "./styles.scss";
+
+function EditCourseCustomFields({
+  courseId,
+  values,
+  onChange,
+}: {
+  courseId: string;
+  values: CourseCustomField[] | undefined;
+  onChange: (values: CourseCustomField[]) => void;
+}) {
+  const [isCourseLoading, course] = useCourseDetails(courseId);
+  const [groupsIsLoading, groups] = useGroupsFindFilter(
+    { when: !!course?.groupOrganizers },
+    { ids: course?.groupOrganizers },
+  );
+
+  if (isCourseLoading() || groupsIsLoading()) {
+    return null;
+  }
+
+  const customFields = groups?.flatMap((g) => g.customCourseFields || []);
+
+  return (
+    <>
+      {!!customFields?.length && (
+        <div className="mb-3">
+          <EditCustomFields fields={customFields} values={values} onChange={onChange} />
+        </div>
+      )}
+    </>
+  );
+}
 
 interface NewEventModel {
   startLocal: string;
@@ -61,89 +104,58 @@ export type Props =
 export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   const { t } = useTranslation();
 
-  const currentRegion = useSession("region");
-  const [isRegionsLoading, regions] = useAll();
+  const searchParams = useSearchParams();
+
   const user = useUser();
 
-  let region = event.region;
-  if (regions?.length === 1) {
-    region = region || regions[0]?._id;
-  }
-  const [selectedRegion, setSelectedRegion] = useState<string>(region || currentRegion);
-  const [selectedVenue, setSelectedVenue] = useState(event.venue);
-  const [noRsvpChecked, setNoRsvpChecked] = useState(!!event.noRsvp);
-  const [isBusy, setIsBusy] = useState(false);
+  const currentRegion = useCurrentRegionId();
+  const [isRegionsLoading, regions] = useRegions();
+  const [isCourseLoading, course] = useCourseDetails({ when: !!event.courseId }, event.courseId);
+  const [selectedRegion, setSelectedRegion] = useState<string | undefined>(event.region);
+  // init selected region
+  useEffect(() => {
+    if (!isNew) {
+      // only needed for new events
+      return;
+    }
 
-  const [isCourseLoading, course] = useCourseDetails(event.courseId || "");
-
-  function getRegion() {
-    let result: string;
     if (event.courseId) {
       if (!course) {
-        if (isCourseLoading()) {
-          return undefined;
-        }
-        throw new Error("Unexpected undefined: course");
+        // wait until course is loaded
+        return;
       }
-
-      result = course.region;
-    } else {
-      if (!selectedRegion || selectedRegion === "all") {
-        return undefined;
-      }
-      result = selectedRegion;
-    }
-
-    if (result) {
-      // The region was preset for the frame
-      return regions.find((r) => r._id === result);
-    }
-    if (regions.length === 1) {
+      // The region is the same as in course
+      setSelectedRegion(course.region);
+    } else if (currentRegion) {
+      //  If the session sets the region, we use it.
+      setSelectedRegion(currentRegion);
+    } else if (regions.length === 1) {
       // There is only one region
-      return regions[0];
+      setSelectedRegion(regions[0]._id);
     }
-    return currentRegion;
-  }
+  }, [course, currentRegion, regions]);
 
-  function getGroups() {
-    const { courseId } = event;
-    const groups = [];
+  const [selectedVenue, setSelectedVenue] = useState(event.venue);
+  const [noRsvpChecked, setNoRsvpChecked] = useState(!!event.noRsvp);
 
-    // We have this 'secret' feature where you can set a group ID
-    // in the URL to assign a group to the event on creation
-    if (Router.current().params.query.group) {
-      groups.push(Router.current().params.query.group as string);
-    }
+  const [isBusy, setIsBusy] = useState(false);
+  const { promptToLogin } = useAccountTasks();
 
-    const defaultTeamGroups = getRegion()?.defaultTeamGroups;
-    if (defaultTeamGroups) {
-      groups.push(...defaultTeamGroups);
-    }
-
-    if (courseId) {
-      if (isCourseLoading()) {
-        return groups;
-      }
-
+  const [customFieldValues, setCustomFieldValues] = useState<CourseCustomField[] | undefined>(
+    undefined,
+  );
+  // init custom field values
+  useEffect(() => {
+    if (event.courseId) {
       if (!course) {
-        throw new Error("Unexpected undefined: course");
+        // wait until course is loaded
+        return;
       }
-      groups.push(...course.groupOrganizers);
+      setCustomFieldValues(course.customFields);
     }
+  }, [course]);
 
-    // remove double groups
-    return uniq(groups);
-  }
-
-  function customFieldValues() {
-    const courseId = event.courseId;
-    if (courseId) {
-      return course?.customFields;
-    }
-    return undefined;
-  }
-
-  const [groupsIsLoading, groups] = useGroupsFindFilter({ ids: getGroups() });
+  const [venueIsLoading, venue] = useVenueDetails({ when: !!selectedVenue }, selectedVenue?._id);
 
   const [updateReplicas, setUpdateReplicas] = useState({
     infos: false,
@@ -160,98 +172,178 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
   const [changes, setChanges] = useState({
     title: event.title,
-    description: event.description,
-    descriptionError: false,
+    description: event.description || "",
     descriptionNumberOfCharacters: 0,
     startLocal: event.startLocal,
     endLocal: event.endLocal,
     internal: event.internal,
     sendReminder: event.sendReminder,
-    room: event.room,
+    room: event.room || "",
     maxParticipants: event.maxParticipants,
   });
+  const parallelEvents = useFindParallelEvents(selectedRegion, selectedVenue?._id, {
+    _id: event._id,
+    ...changes,
+  });
+
+  const [errors, checkValidity, addError] = useValidation(
+    {
+      noTitle: {
+        field: "title",
+        onCheckValidity: () => !!changes.title,
+        text: () => t("event.edit.plzProvideTitle", "Please provide a title"),
+      },
+      startWrongFormat: {
+        field: "start",
+        onCheckValidity: () => {
+          const start = LocalTime.fromString(changes.startLocal);
+          return start.isValid();
+        },
+        text: () => {
+          const exampleDate = moment().format("L");
+          return t(
+            "event.edit.dateFormatWarning",
+            "The date format must be of the {EXAMPLEDATE} format.",
+            {
+              EXAMPLEDATE: exampleDate,
+            },
+          );
+        },
+      },
+      startInPast: {
+        field: "start",
+        onCheckValidity: () => {
+          if (isNew) {
+            const start = LocalTime.fromString(changes.startLocal);
+            if (!start.isValid()) {
+              // checked with a other validation
+              return true;
+            }
+            return start.isAfter(LocalTime.now());
+          } else {
+            return true;
+          }
+        },
+        text: () =>
+          t(
+            "event.edit.startInPast",
+            "The event starts in the past. Have you selected a start date and time?",
+          ),
+      },
+      noDescription: {
+        field: "description",
+        onCheckValidity: () => !!changes.description,
+        text: () => t("event.edit.plzProvideDescr", "Please provide a description"),
+      },
+      descriptionToLong: {
+        field: "description",
+        onCheckValidity: () =>
+          !PublicSettings.eventDescriptionMax ||
+          changes.descriptionNumberOfCharacters <= PublicSettings.eventDescriptionMax,
+        text: () =>
+          t("_inputField.maxlength", {
+            MAXNUMBER: PublicSettings.eventDescriptionMax,
+            NUMBER:
+              changes.descriptionNumberOfCharacters - (PublicSettings.eventDescriptionMax || 0),
+          }),
+      },
+      noRegion: {
+        field: "region",
+        onCheckValidity: () => !!selectedRegion,
+        text: () => t("event.edit.plzSelectRegion", "Please select the region for this event"),
+      },
+      parallelEvents: {
+        field: "startEndVenue",
+        onCheckValidity: () =>
+          venueIsLoading() || !venue || venue.allowParallelEvents || parallelEvents.length === 0,
+        text: () => (
+          <>
+            {t(
+              "event.edit.venue.parallelEvents.disallowed",
+              "Parallel events in this venue are not allowed.",
+            )}{" "}
+            <OtherEventsMessage events={parallelEvents} />{" "}
+            {t("event.edit.venue.parallelEvents.pleaseChange", "Please change venue or time.")}
+          </>
+        ),
+      },
+      venueRestricedUse: {
+        field: "venue",
+        onCheckValidity: () => {
+          return (
+            !selectedVenue?._id ||
+            !selectedVenue.restrictedUse ||
+            // on event creation or venue change for venues with restricted use can only selected by the host
+            (!isNew && selectedVenue._id === event.venue?._id) ||
+            !!user?.venues?.includes(selectedVenue._id)
+          );
+        },
+        text: () =>
+          t(
+            "event.edit.venueRestricedUse",
+            "Please use a other venue than {VENUE} or ask its hosts to create your event.",
+            { VENUE: selectedVenue?.name },
+          ),
+      },
+    },
+    { autoCheckFixed: true },
+  );
+
+  useEffect(() => {
+    // only auto check for description to long
+    if (changes.descriptionNumberOfCharacters > 0) {
+      checkValidity("description");
+    }
+  }, [changes.description]);
+
+  useEffect(() => {
+    // loads some resources, so calling checkValidity onChange make unexpected things
+    checkValidity("startEndVenue");
+    // only run when values that get checked are changed
+  }, [venue, parallelEvents]);
 
   function showRegionSelection() {
-    // You can select the region for events that are new and not associated
-    // with a course
-    if (event._id || event.courseId) {
-      return false;
-    }
-    return true;
+    return (
+      // You can select the region for events that are new
+      isNew &&
+      // and not associated with a course
+      !event.courseId &&
+      // and the session not sets the region
+      !currentRegion &&
+      // and when more then one region exists
+      regions.length > 1
+    );
   }
   function showVenueSelection() {
-    return !!selectedRegion && selectedRegion !== "all";
+    return !!selectedRegion;
   }
 
-  function venueEditAttr() {
+  function venueEditAttr(): EditVenueProps {
     return {
-      region: selectedRegion,
-      value: selectedVenue,
-      onChange: (newValue: EventVenueEntity | undefined) => {
-        setSelectedVenue(newValue);
+      region: selectedRegion as string,
+      event: {
+        _id: event._id,
+        room: changes.room,
+        startLocal: changes.startLocal,
+        endLocal: changes.endLocal,
       },
+      value: selectedVenue,
+      onChange: (newValue) => setSelectedVenue(newValue),
+      errors,
     };
   }
-  const customFields = (type?: "singleLine" | "multiLine") => {
-    return (
-      groups
-        .flatMap((g) => g.customCourseFields || [])
-        // when type is undefined all will get back
-        .filter((g) => !type || (g.type || "singleLine") === type)
-    );
-  };
 
-  async function handleSubmit() {
-    const start = LocalTime.fromString(changes.startLocal);
-    if (!start.isValid()) {
-      const exampleDate = moment().format("L");
-      Alert.error(
-        t("event.edit.dateFormatWarning", "The date format must be of the {EXAMPLEDATE} format.", {
-          EXAMPLEDATE: exampleDate,
-        }),
-      );
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+
+    if (!checkValidity()) {
+      setTimeout(() => {
+        document.querySelector<HTMLElement>(".is-invalid")?.focus();
+      }, 0);
       return;
     }
 
     const title = changes.title;
-    if (!title || title.length === 0) {
-      Alert.error(t("event.edit.plzProvideTitle", "Please provide a title"));
-      return;
-    }
-
-    if (!changes.description) {
-      Alert.error(t("event.edit.plzProvideDescr", "Please provide a description"));
-      return;
-    }
-
-    if (PublicSettings.eventDescriptionMax) {
-      if (changes.descriptionError) {
-        Alert.error(
-          t("_inputField.maxlength", {
-            MAXNUMBER: PublicSettings.eventDescriptionMax,
-            NUMBER: changes.descriptionNumberOfCharacters - PublicSettings.eventDescriptionMax,
-          }),
-        );
-        return;
-      }
-    }
-
-    // on event creation or venue change for venues with restricted use can only selected by the host
-    if (
-      selectedVenue?._id &&
-      selectedVenue.restrictedUse &&
-      selectedVenue._id !== event._id &&
-      !user?.venues?.includes(selectedVenue._id)
-    ) {
-      Alert.error(
-        t(
-          "event.edit.venueRestricedUse",
-          "Please use a other venue than {VENUE} or ask its hosts to create your event.",
-          { VENUE: selectedVenue.name },
-        ),
-      );
-      return;
-    }
 
     const noRsvp = noRsvpChecked;
 
@@ -276,55 +368,18 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       maxParticipants,
     } as SaveFields;
 
-    let eventId = event._id || "";
-    const isNew = eventId === "";
     if (isNew) {
-      if (start.isBefore(LocalTime.now())) {
-        Alert.error(
-          t(
-            "event.edit.startInPast",
-            "The event starts in the past. Have you selected a start date and time?",
-          ),
-        );
-        return;
-      }
-
+      editevent.region = selectedRegion as string;
       if (event.courseId) {
-        if (!course) {
-          if (isCourseLoading()) {
-            return;
-          }
-
-          throw new Error("Unexpected undefined: course");
-        }
-
-        editevent.region = course.region;
         editevent.courseId = event.courseId;
       } else {
-        editevent.region = selectedRegion;
-        if (!editevent.region || editevent.region === "all") {
-          Alert.error(t("event.edit.plzSelectRegion", "Please select the region for this event"));
-          return;
-        }
-
         // We have this 'secret' feature where you can set a group ID
         // in the URL to assign a group to the event on creation
-        const gs = [];
-        if (Router.current().params.query.group) {
-          gs.push(Router.current().params.query.group as string);
+        if (searchParams.group) {
+          editevent.groups = [searchParams.group];
         }
-        editevent.groups = gs;
       }
     }
-
-    const newCustomFields = customFields().map((i) => {
-      return {
-        name: i.name,
-        displayText: i.displayText,
-        value: $(`.js-custom-field-${i.name}`).val() as string,
-        visibleFor: i.visibleFor,
-      };
-    });
 
     const newUpdateReplicasTime = !startDayChanged && timeChanged && updateReplicas.time;
 
@@ -332,8 +387,13 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
     setIsBusy(true);
     try {
-      const result = await EventsMethods.save(
-        eventId,
+      const user = await promptToLogin();
+      if (!user) {
+        return;
+      }
+
+      const eventId = await EventsMethods.save(
+        event._id || "",
         editevent,
         updateReplicas.infos,
         newUpdateReplicasTime,
@@ -341,10 +401,6 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
         sendNotifications,
         addNotificationMessage,
       );
-      if (!result) {
-        throw new Error("Unexpected undefined: eventId");
-      }
-      eventId = result;
 
       if (isNew) {
         Alert.success(
@@ -353,32 +409,33 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           }),
         );
 
-        if (!course) {
-          throw new Error("Unexpected undefined: course");
-        }
-        if (!user) {
-          throw new Error("Unexpected undefined: user");
-        }
-        let role;
-        if (intersection(user.badges, course.editors).length > 0) {
-          role = "team";
-        } else if (user.privileged("admin")) {
-          role = "admin";
+        if (event.courseId) {
+          if (!course) {
+            throw new Error("Unexpected undefined: course");
+          }
+          let role;
+          if (intersection(user.badges, course.editors).length > 0) {
+            role = "team";
+          } else if (user.privileged("admin")) {
+            role = "admin";
+          } else {
+            role = "unknown";
+          }
+          Analytics.trackEvent(
+            "Event creations",
+            `Event creations as ${role}`,
+            regions.find((r) => r._id === course.region)?.nameEn,
+            Math.round(
+              (new Date().getTime() - course.time_created.getTime()) /
+                1000 /
+                60 /
+                60 /
+                24 /* Converted into days */,
+            ),
+          );
         } else {
-          role = "unknown";
+          Analytics.trackEvent("Event creations", `Event creations without course`);
         }
-        Analytics.trackEvent(
-          "Event creations",
-          `Event creations as ${role}`,
-          regions.find((r) => r._id === course.region)?.nameEn,
-          Math.round(
-            (new Date().getTime() - course.time_created.getTime()) /
-              1000 /
-              60 /
-              60 /
-              24 /* Converted into days */,
-          ),
-        );
       } else {
         Alert.success(
           t("message.eventChangesSaved", 'Your changes to the event "{TITLE}" have been saved.', {
@@ -395,29 +452,35 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
         );
       }
 
-      if (event.courseId) {
-        await CoursesMethods.save(event.courseId, { customFields: newCustomFields });
+      if (event.courseId && customFieldValues) {
+        await CoursesMethods.save(event.courseId, { customFields: customFieldValues });
       }
 
       afterSave();
+
+      if (isNew) {
+        await MeteorAsync.defer();
+        Router.go("showEvent", { _id: eventId });
+      }
     } catch (err) {
-      Alert.serverError(err, t("eventEdit.replicatesUpdated.error", "Saving the event went wrong"));
+      if (!addError(err.reason)) {
+        // unknown error
+        Alert.serverError(
+          err,
+          t("eventEdit.replicatesUpdated.error", "Saving the event went wrong"),
+        );
+      }
     } finally {
       setIsBusy(false);
     }
-
-    if (isNew) {
-      await MeteorAsync.defer();
-      Router.go("showEvent", { _id: eventId });
-    }
   }
 
-  if (isRegionsLoading() || isCourseLoading() || groupsIsLoading()) {
+  if (isRegionsLoading() || isCourseLoading()) {
     return null;
   }
 
   return (
-    <form>
+    <form noValidate onSubmit={handleSubmit}>
       <div className="edit-page">
         <h3>
           {isNew
@@ -429,7 +492,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             {t(
               "course.createEventInfo",
               "Use this form to publish a singular, one-off, already organized event. Otherwise create or propose a course here:",
-            )}
+            )}{" "}
             <a href={Router.path("proposeCourse")}>
               {t("menue.ProposeCourse", "Propose a course")}
             </a>
@@ -440,23 +503,22 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           {!isNew && !event.courseId && <Tag region={event.region} />}
 
           <div className="mb-3">
-            <label className="form-label">{t("course.event.edit.title", "Event title")}</label>
-            <input
+            <FormControl
+              id="event-edit-title"
               type="text"
-              className="form-control form-control-lg"
+              size="large"
+              label={t("course.event.edit.title", "Event title")}
               placeholder={t("event.title.placeholder", "Write a catchy title here")}
-              size={30}
-              value={changes.title}
-              onChange={(ev) => {
-                setChanges({ ...changes, title: ev.currentTarget.value });
-              }}
+              value={changes.title || ""}
+              onChange={(value) => setChanges((changes) => ({ ...changes, title: value }))}
+              onBlur={() => checkValidity("title")}
+              error={errors.title}
             />
           </div>
-          {/* Disabled for past */}
           <EditStartEnd
             {...changes}
             onChange={(newValue) => {
-              setChanges({ ...changes, ...newValue });
+              setChanges((changes) => ({ ...changes, ...newValue }));
               setStartDayChanged(!moment.utc(newValue.startLocal).isSame(event.startLocal, "day"));
               setTimeChanged(
                 !(
@@ -465,62 +527,46 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                 ),
               );
             }}
+            /* Disabled for past */
             disabled={!!event.start && event.start < new Date()}
+            errors={errors}
           />
         </div>
+
         <div className="edit-page-body event-edit">
           <div className="mb-3">
-            <label className="form-label">{t("course.event.edit.desc", "Description")}</label>
-            <Richtext
-              text={changes.description}
+            <FormControl
+              id="event-edit-description"
+              type="richtext"
+              label={t("course.event.edit.desc", "Description")}
               placeholder={t(
                 "event.description.placeholder",
                 "Describe your event as accurately as possible. This helps people know how to prepare and what to expect from this meeting (e.g. level, prerequisites, activities, teaching methods, what to bring, etc.)",
               )}
-              maxlength={PublicSettings.eventDescriptionMax}
-              onChange={(newValue, numberOfCharacters) => {
-                setChanges({
+              value={changes.description}
+              onChange={(newValue, numberOfCharacters) =>
+                setChanges((changes) => ({
                   ...changes,
                   description: newValue,
-                  descriptionError:
-                    !!PublicSettings.eventDescriptionMax &&
-                    numberOfCharacters > PublicSettings.eventDescriptionMax,
                   descriptionNumberOfCharacters: numberOfCharacters,
-                });
-              }}
+                }))
+              }
+              onBlur={() => checkValidity("description")}
+              error={errors.description}
             />
           </div>
+
           {!(!isNew && event.isPrivate()) && <PricePolicy dismissable wrap="mb-3" />}
 
           {showRegionSelection() && (
             <div className="mb-3">
-              <label className="form-label">{t("course.edit.region", "Region")}</label>
-              <div className="input-group">
-                <div className="input-group-text">
-                  <span className="fa-solid fa-location-dot" aria-hidden="true"></span>
-                </div>
-                <select
-                  className="form-select"
-                  name="region"
-                  onChange={(ev) => {
-                    setSelectedRegion(ev.currentTarget.value);
-                  }}
-                >
-                  <option
-                    className="select-placeholder"
-                    disabled
-                    selected={currentRegion === "all"}
-                    value=""
-                  >
-                    {t("_selection.pleaseSelect")}
-                  </option>
-                  {regions.map((r) => (
-                    <option key={r._id} selected={currentRegion === r._id} value={r._id}>
-                      {r.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <RegionSelect
+                id="event-edit-region"
+                value={selectedRegion}
+                onChange={(value) => setSelectedRegion(value)}
+                onBlur={() => checkValidity("region")}
+                error={errors.region}
+              />
             </div>
           )}
 
@@ -529,160 +575,119 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               <EditVenue {...venueEditAttr()} />
               {!!selectedVenue && (
                 <div className="mb-3">
-                  <label className="form-label">
-                    {t("course.event.edit.room", "Room")}
-                    <small> {t("_inputField.optional")}</small>
-                  </label>
-                  <div className="input-group">
-                    <span className="input-group-text">
-                      <span className="fa-solid fa-signs-post fa-fw" aria-hidden="true"></span>
-                    </span>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={changes.room}
-                      onChange={(ev) => {
-                        setChanges({ ...changes, room: ev.currentTarget.value });
-                      }}
-                    />
-                  </div>
+                  <FormControl
+                    id="event-edit-room"
+                    type="text"
+                    label={t("course.event.edit.room", "Room")}
+                    optional
+                    prepend="fa-solid fa-signs-post fa-fw"
+                    value={changes.room}
+                    onChange={(value) => setChanges((changes) => ({ ...changes, room: value }))}
+                  />
                 </div>
               )}
             </>
           )}
 
-          {!!customFields()?.length && (
-            <div className="mb-3">
-              <EditCustomFields fields={customFields()} values={customFieldValues()} />
-            </div>
+          {!!event.courseId && (
+            <EditCourseCustomFields
+              courseId={event.courseId}
+              values={customFieldValues}
+              onChange={(values) => setCustomFieldValues(values)}
+            />
           )}
           <div className="mb-3">
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="eventEditNoRsvpCheck"
-                checked={noRsvpChecked}
-                onChange={(ev) => {
-                  setNoRsvpChecked(ev.currentTarget.checked);
-                }}
-              />
-              <label className="form-check-label" htmlFor="eventEditNoRsvpCheck">
-                {t("event.edit.noRsvp", "No reservation required")}
-                {noRsvpChecked && (
-                  <span className="form-text d-block">
-                    {t(
+            <FormCheck
+              id="event-edit-no-rsvp"
+              type="switch"
+              label={t("event.edit.noRsvp", "No reservation required")}
+              hint={
+                noRsvpChecked
+                  ? t(
                       "event.edit.noRsvp.description",
                       "Registration for this event is disabled. You might want to explain why in the description.",
-                    )}
-                  </span>
-                )}
-              </label>
-            </div>
+                    )
+                  : undefined
+              }
+              checked={noRsvpChecked}
+              onChange={(checked) => setNoRsvpChecked(checked)}
+            />
+
             {!noRsvpChecked && (
-              <>
-                <label className="form-label">
-                  {t("course.event.edit.maxParticipants", "maximal number of participants")}
-                  <small> {t("_inputField.optional")}</small>
-                </label>
-                <div className="input-group">
-                  <span className="input-group-text">
-                    <span className="fa-solid fa-users fa-fw" aria-hidden="true"></span>
-                  </span>
-                  {/* show empty input instead of 0 */}
-                  <input
-                    type="number"
-                    className="form-control"
-                    min={0}
-                    step={1}
-                    value={changes.maxParticipants || ""}
-                    onChange={(ev) => {
-                      const newValue = ev.currentTarget.valueAsNumber;
-                      if (Number.isNaN(newValue)) {
-                        return;
-                      }
-                      setChanges({
-                        ...changes,
-                        maxParticipants: Math.round(newValue),
-                      });
-                    }}
-                  />
-                </div>
-              </>
+              <div className="form-switch-text-indent">
+                <FormControl
+                  id="event-edit-max-participants"
+                  type="integer"
+                  label={t("course.event.edit.maxParticipants", "maximal number of participants")}
+                  optional
+                  prepend="fa-solid fa-users fa-fw"
+                  min={0}
+                  step={1}
+                  value={changes.maxParticipants || 0}
+                  onChange={(value) =>
+                    setChanges((changes) => ({ ...changes, maxParticipants: value }))
+                  }
+                />
+              </div>
             )}
           </div>
 
           <div className="mb-3">
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="eventEditInternalCheck"
-                checked={changes.internal}
-                onChange={(ev) => {
-                  setChanges({ ...changes, internal: ev.currentTarget.checked });
-                }}
-              />
-              <label className="form-check-label" htmlFor="eventEditInternalCheck">
-                {t("event.edit.internal", "Hide on front page")}
-                <span className="form-text d-block">
-                  {t("event.edit.internal.description", "Show it only on group and venue pages")}
-                </span>
-              </label>
-            </div>
-            {!isNew && (
+            <FormCheck
+              id="event-edit-internal"
+              type="switch"
+              label={t("event.edit.internal", "Hide on front page")}
+              hint={t("event.edit.internal.description", "Show it only on group and venue pages")}
+              checked={changes.internal}
+              onChange={(checked) => setChanges((changes) => ({ ...changes, internal: checked }))}
+            />
+          </div>
+
+          {!isNew && (
+            <div className="mb-3">
               <UpdateAffectedReplica
                 values={updateReplicas}
                 event={event}
                 startDayChanged={startDayChanged}
                 timeChanged={timeChanged}
-                onChange={(newValues) => {
-                  setUpdateReplicas(newValues);
-                }}
+                onChange={(newValues) => setUpdateReplicas(newValues)}
               />
-            )}
+            </div>
+          )}
 
-            <Notify
-              event={event}
-              isNew={isNew}
-              checked={notifyChecked}
-              message={addNotificationMessage}
-              onToggle={(v) => setNotifyChecked(v)}
-              onMessageChange={(v) => {
-                setAddNotificationMessage(v);
-              }}
-            />
-            {!noRsvpChecked && PublicSettings.feature.sendReminderIsEditable && (
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="eventEditSendReminderCheck"
-                  checked={changes.sendReminder}
-                  onChange={(ev) => {
-                    setChanges({
-                      ...changes,
-                      sendReminder: ev.currentTarget.checked,
-                    });
-                  }}
-                />
-                <label className="form-check-label" htmlFor="eventEditSendReminderCheck">
-                  {t(
-                    "event.edit.sendReminder",
-                    "Send a reminder e-mail to all participants 24 hours before the event starts.",
-                  )}
-                </label>
-              </div>
-            )}
-          </div>
+          {!!event.courseId && (
+            <div className="mb-3">
+              <Notify
+                event={event}
+                isNew={isNew}
+                checked={notifyChecked}
+                message={addNotificationMessage}
+                onToggle={(v) => setNotifyChecked(v)}
+                onMessageChange={(v) => setAddNotificationMessage(v)}
+              />
+            </div>
+          )}
+
+          {!noRsvpChecked && PublicSettings.feature.sendReminderIsEditable && (
+            <div className="mb-3">
+              <FormCheck
+                id="event-edit-send-reminder"
+                type="switch"
+                label={t(
+                  "event.edit.sendReminder",
+                  "Send a reminder e-mail to all participants 24 hours before the event starts.",
+                )}
+                checked={changes.sendReminder}
+                onChange={(checked) =>
+                  setChanges((changes) => ({ ...changes, sendReminder: checked }))
+                }
+              />
+            </div>
+          )}
 
           <div className="form-actions">
-            <ButtonSave onClick={handleSubmit} disabled={isBusy} />
-            <ButtonCancel
-              onClick={() => {
-                onCancel();
-              }}
-            />
+            <ButtonSave submit id="events-edit-save" isBusy={isBusy} />
+            <ButtonCancel id="events-edit-cancel" onClick={onCancel} disabled={isBusy} />
           </div>
         </div>
       </div>

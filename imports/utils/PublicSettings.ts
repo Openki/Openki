@@ -2,7 +2,7 @@ import { Match } from "meteor/check";
 import { Meteor } from "meteor/meteor";
 import merge from "deepmerge";
 
-import { Record, Type } from "/imports/utils/CustomChecks";
+import { Record, StringEnum, Type } from "/imports/utils/CustomChecks";
 import { LocalizedValue, LocalizedValuePattern } from "/imports/utils/getLocalizedValue";
 
 // See settings-example.json.md for full documentation
@@ -57,7 +57,7 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
   sendReminderPreset: Boolean,
   feature: {
     /** toggle visibility of login services */
-    login: { google: Boolean, facebook: Boolean, github: Boolean },
+    login: { email: Boolean, google: Boolean, facebook: Boolean, github: Boolean },
     /** allow user without password */
     visitorUser: Boolean,
     /** allow rsvp with +1 / for two seats */
@@ -70,6 +70,29 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
     resizeImagesOnServer: Boolean,
     /** disable the creation of 2dSphere indexes for db entites, this allow to save non geo location in db, used for CustomMapConfig, Default: false */
     disable2dSphereForLocations: Boolean,
+    socialMediaButtons: [
+      StringEnum(
+        "bluesky",
+        "facebook",
+        "fediverse",
+        "hackernews",
+        "linkedin",
+        "mastodon",
+        "odnoklassniki",
+        "pinterest",
+        "pocket",
+        "reddit",
+        "teams",
+        "telegram",
+        "tumblr",
+        "twitter",
+        "viber",
+        "vkontakte",
+        "whatsapp",
+        "copy-url",
+        "email",
+      ),
+    ],
   },
   nav: {
     /** target link when clicking on the logo Default: "/" */
@@ -197,13 +220,34 @@ const defaults = {
   askNewsletterConsent: true,
   sendReminderPreset: true,
   feature: {
-    login: { google: false, facebook: false, github: false },
+    login: { google: false, facebook: false, github: false, email: true },
     visitorUser: false,
     rsvpWithCompanions: false,
     sendReminderIsEditable: true,
     proposeCourseBox: true,
     resizeImagesOnServer: true,
     disable2dSphereForLocations: false,
+    socialMediaButtons: [
+      "bluesky",
+      "facebook",
+      "fediverse",
+      "hackernews",
+      "linkedin",
+      "mastodon",
+      "odnoklassniki",
+      "pinterest",
+      "pocket",
+      "reddit",
+      "teams",
+      "telegram",
+      "tumblr",
+      "twitter",
+      "viber",
+      "vkontakte",
+      "whatsapp",
+      "copy-url",
+      "email",
+    ],
   },
   nav: {
     brandLink: "/",

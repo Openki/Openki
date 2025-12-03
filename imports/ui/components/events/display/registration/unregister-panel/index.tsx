@@ -5,40 +5,32 @@ import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { EventModel } from "/imports/api/events/events";
 import { useDetails } from "/imports/api/courses/publications";
 
-import { ButtonCancel } from "../../../../Buttons";
+import { Button, ButtonCancel } from "../../../../Buttons";
 
-function ButtonUnregister(props: {
-  onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
-  busy?: boolean | undefined;
-}) {
+function ButtonUnregister(props: { onClick: () => void | Promise<void> }) {
   const { t } = useTranslation();
 
   return (
-    <button
-      type="button"
-      className="btn btn-danger btn-event text-center"
+    <Button
+      id="event-details-unregister-withdraw"
+      block
+      className="btn-danger"
+      size="large"
       onClick={props.onClick}
-      disabled={props.busy}
+      needsLogin
+      busyText={t("_button.unregistering", "Unregistering…")}
     >
-      {props.busy ? (
-        <>
-          <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
-          {t("_button.unregistering", "Unregistering…")}
-        </>
-      ) : (
-        t("event.details.unregister-withdraw", "Withdraw")
-      )}
-    </button>
+      <strong>{t("event.details.unregister-withdraw", "Withdraw")}</strong>
+    </Button>
   );
 }
 
 export interface Props {
   event: EventModel;
-  busy: boolean;
   onUnregister: () => Promise<void>;
 }
 
-export function UnregisterPanel({ event, busy, onUnregister }: Props) {
+export function UnregisterPanel({ event, onUnregister }: Props) {
   const { dateFormat } = useDateTimeFormat();
 
   const [isLoading, course] = useDetails(event.courseId || "-1");
@@ -58,12 +50,12 @@ export function UnregisterPanel({ event, busy, onUnregister }: Props) {
       {!unregisterDropdown ? (
         <button
           type="button"
-          className="btn btn-add btn-event"
+          className="btn btn-add btn-lg"
           onClick={() => {
             setUnregisterDropdown(true);
           }}
         >
-          {t("event.details.withdraw-registration", "Withdraw my registration")}
+          <strong>{t("event.details.withdraw-registration", "Withdraw my registration")}</strong>
         </button>
       ) : (
         <div className="p-3 event-detail-register-dropdown">
@@ -77,9 +69,8 @@ export function UnregisterPanel({ event, busy, onUnregister }: Props) {
           <div className="row justify-content-between align-items-center gap-3">
             <div className="col-lg-4 d-grid">
               <ButtonCancel
-                onClick={() => {
-                  setUnregisterDropdown(false);
-                }}
+                id="unregister-panel-cancel"
+                onClick={() => setUnregisterDropdown(false)}
               />
             </div>
             <div className="col-lg-7 d-grid">
@@ -88,7 +79,6 @@ export function UnregisterPanel({ event, busy, onUnregister }: Props) {
                   setUnregisterDropdown(false);
                   await onUnregister();
                 }}
-                busy={busy}
               />
             </div>
           </div>

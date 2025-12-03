@@ -1,4 +1,4 @@
-import { clone } from "lodash";
+import { clone } from "lodash-es";
 import { Log } from "../../log/log";
 import { RegionEntity, Regions } from "../../regions/regions";
 import { ensure } from "../ensureFixture";

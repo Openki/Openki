@@ -25,6 +25,8 @@ export const regions: {
   }[];
   map?: {
     crs?: "Simple";
+    api: "c3nav";
+    apiUrl: string;
     layers: { name: string; level: number; tileUrl: string }[];
     defaultLevel: number;
     maxZoom: number;
@@ -149,6 +151,8 @@ export const regions: {
     },
     map: {
       crs: "Simple",
+      api: "c3nav",
+      apiUrl: "https://hack-mas24.c3nav.de/api/v2/",
       layers: [
         {
           name: "Erdgeschoss",

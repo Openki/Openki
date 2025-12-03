@@ -68,7 +68,8 @@ export function Members({ course }: { course: CourseModel }) {
     <>
       <div className="page-component-header">
         <h4>
-          <span className="fa-solid fa-users fa-fw" aria-hidden="true"></span>&nbsp;
+          <i className="fa-solid fa-users fa-fw" />
+          &nbsp;
           {t(
             "course.details.members.title",
             "{NUM, plural, =0{No interested yet} one{1 interested} other{# interested} }",
@@ -78,7 +79,7 @@ export function Members({ course }: { course: CourseModel }) {
             <i
               className="fa-solid fa-envelope contact-members"
               onClick={handleContactMembersClick}
-            ></i>
+            />
           )}
         </h4>
       </div>

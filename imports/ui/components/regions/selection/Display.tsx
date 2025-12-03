@@ -29,7 +29,8 @@ export function Display({
           onClick();
         }}
       >
-        <span className="fa-solid fa-location-dot" aria-hidden="true"></span>&nbsp;
+        <i className="fa-solid fa-location-dot" />
+        &nbsp;
         {currentRegion ? currentRegion.name : t("menue.All regions", "All regions")}
       </a>
     </li>

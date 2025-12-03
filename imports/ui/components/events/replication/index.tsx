@@ -1,15 +1,16 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
 import moment from "moment";
+import React, { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
+import * as Alert from "/imports/api/alerts/alert";
 import { EventModel } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
-import * as Alert from "/imports/api/alerts/alert";
 
 import { LocalTime } from "/imports/utils/local-time";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
 import { ButtonCancel, ButtonSave } from "../../Buttons";
+import { FormCheckGroup } from "../../FormCheckGroup";
 import { DateSelect } from "../../date-select";
 import { Notify } from "../Notify";
 
@@ -109,10 +110,6 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
     return activeDays().map((days) => moment(start).add(days, "days"));
   }
 
-  const handleReplicateFrequency = (e: ChangeEvent<HTMLInputElement>) => {
-    setReplicateFrequency(e.target.value);
-  };
-
   useEffect(() => {
     setCalcDays(
       getEventFrequency(
@@ -151,7 +148,7 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
                   aria-controls="frequency"
                   aria-selected="true"
                 >
-                  <span className="fa-solid fa-list-ul fa-fw" aria-hidden="true"></span>
+                  <i className="fa-solid fa-list-ul fa-fw" />
                   {t("event.replication.changeToPattern", "Select frequency")}
                 </button>
               </li>
@@ -166,7 +163,7 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
                   aria-controls="datepicker"
                   aria-selected="false"
                 >
-                  <span className="fa-regular fa-calendar-check fa-fw" aria-hidden="true"></span>
+                  <i className="fa-regular fa-calendar-check fa-fw" />
                   {t("event.replication.changeToPicker", "Pick dates")}
                 </button>
               </li>
@@ -233,65 +230,21 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
                   setReplicateEndDate(endDate);
                 }}
               />
-              <label className="form-label" htmlFor="replicateFrequency">
-                {t("event.replication.repeat", "Repeat")}
-              </label>
-              <div className="form-check">
-                <input
-                  className="form-check-input js-replicate-frequency js-update-replicas"
-                  type="radio"
-                  name="replicateFrequency"
-                  id="replicateFrequencyOnce"
-                  value="once"
-                  onChange={handleReplicateFrequency}
-                  checked={replicateFrequency === "once"}
-                />
-                <label className="form-check-label" htmlFor="replicateFrequencyOnce">
-                  {t("event.replication.freq.once", "once")}
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input js-replicate-frequency js-update-replicas"
-                  type="radio"
-                  name="replicateFrequency"
-                  id="replicateFrequencyDaily"
-                  value="daily"
-                  onChange={handleReplicateFrequency}
-                  checked={replicateFrequency === "daily"}
-                />
-                <label className="form-check-label" htmlFor="replicateFrequencyDaily">
-                  {t("event.replication.freq.daily", "every day")}
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input js-replicate-frequency js-update-replicas"
-                  type="radio"
-                  name="replicateFrequency"
-                  id="replicateFrequencyWeekly"
-                  value="weekly"
-                  onChange={handleReplicateFrequency}
-                  checked={replicateFrequency === "weekly"}
-                />
-                <label className="form-check-label" htmlFor="replicateFrequencyWeekly">
-                  {t("event.replication.freq.weekly", "once a week")}
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input js-replicate-frequency js-update-replicas"
-                  type="radio"
-                  name="replicateFrequency"
-                  id="replicateFrequencyBiWeekly"
-                  value="biWeekly"
-                  onChange={handleReplicateFrequency}
-                  checked={replicateFrequency === "biWeekly"}
-                />
-                <label className="form-check-label" htmlFor="replicateFrequencyBiWeekly">
-                  {t("event.replication.freq.biWeekly", "every 2 weeks")}
-                </label>
-              </div>
+              <FormCheckGroup
+                id="replicateFrequency"
+                type="radio"
+                label={t("event.replication.repeat", "Repeat")}
+                options={{
+                  once: t("event.replication.freq.once", "once"),
+                  daily: t("event.replication.freq.daily", "every day"),
+                  weekly: t("event.replication.freq.weekly", "once a week"),
+                  biWeekly: t("event.replication.freq.biWeekly", "every 2 weeks"),
+                }}
+                value={replicateFrequency}
+                onChange={(value) => {
+                  setReplicateFrequency(value);
+                }}
+              />
             </div>
           </div>
         </div>
@@ -361,6 +314,8 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
       <div className="replicate-actions">
         {!!replicaDateCount() && (
           <ButtonSave
+            id="events-replication-save"
+            needsLogin
             onClick={async () => {
               const startLocal = LocalTime.fromString(event.startLocal);
               const endLocal = LocalTime.fromString(event.endLocal);
@@ -439,7 +394,7 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
             }}
           />
         )}
-        <ButtonCancel onClick={onCancel} />
+        <ButtonCancel id="events-replication-cancel" onClick={onCancel} />
       </div>
     </div>
   );

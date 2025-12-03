@@ -15,7 +15,7 @@ describe("region create page", function () {
     cy.get('[data-test="location-edit-add-marker"] i.fa-location-dot').click();
     cy.get('[data-test="region-edit-description"]').click();
     cy.get('[data-test="region-edit-description"]').type("Openki in Luzern");
-    cy.get('[data-test="please-login-button"]').click();
+    cy.get("#regions-edit-save").click();
     cy.get("#maincontent h3").should("have.text", "Luzern");
   });
 });

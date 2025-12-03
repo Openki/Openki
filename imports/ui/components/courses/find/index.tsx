@@ -346,7 +346,7 @@ export function Find({ query }: Props) {
           <>
             <div className="no-results">
               <div className="no-results-body">
-                <span className="fa-solid fa-circle-exclamation fa-fw" aria-hidden="true"></span>{" "}
+                <i className="fa-solid fa-circle-exclamation fa-fw" />{" "}
                 {t("find.no-courses-found", "No Courses found")}
               </div>
               {searchIsLimited() && (
@@ -359,7 +359,7 @@ export function Find({ query }: Props) {
                         RegionSelection.change("all");
                       }}
                     >
-                      <span className="fa-solid fa-location-dot" aria-hidden="true"></span>{" "}
+                      <i className="fa-solid fa-location-dot" />{" "}
                       {t("find.searchAllRegions", "Search in all regions")}
                     </button>
                   )}

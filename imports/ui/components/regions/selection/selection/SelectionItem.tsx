@@ -24,7 +24,7 @@ export function SelectionItem({
 
   const isCurrentRegion = useSessionEquals("region", region._id);
 
-  function handelFocus(active: boolean) {
+  function handleFocus(active: boolean) {
     if (!currentRegion) {
       FilterPreview({
         property: "region",
@@ -44,10 +44,10 @@ export function SelectionItem({
         className={`dropdown-item ${isCurrentRegion ? "fw-bold" : ""}`}
         title={region.nameEn}
         onClick={onClick}
-        onMouseOver={() => handelFocus(true)}
-        onMouseOut={() => handelFocus(false)}
-        onFocus={() => handelFocus(true)}
-        onBlur={() => handelFocus(false)}
+        onMouseOver={() => handleFocus(true)}
+        onMouseOut={() => handleFocus(false)}
+        onFocus={() => handleFocus(true)}
+        onBlur={() => handleFocus(false)}
       >
         <div className="dropdown-addon-right">
           <span

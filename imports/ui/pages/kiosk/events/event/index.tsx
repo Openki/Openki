@@ -34,7 +34,7 @@ export function Event({
         <div className={`kiosk-event kiosk-event-${timePeriod}`}>
           {timePeriod !== "upcoming" && (
             <div className="kiosk-event-timecount">
-              <span className="fa-solid fa-circle-play fa-fw" aria-hidden="true"></span>{" "}
+              <i className="fa-solid fa-circle-play fa-fw" />{" "}
               {timePeriod === "ongoing" && t("kiosk.started", "Started")} {fromNow(event.start)}
             </div>
           )}
@@ -44,13 +44,11 @@ export function Event({
             <div className="kiosk-event-moment">
               {timePeriod === "upcoming" && (
                 <>
-                  <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>{" "}
-                  {dateFormat(event.start)}
+                  <i className="fa-regular fa-calendar-days fa-fw" /> {dateFormat(event.start)}
                   <br />
                 </>
               )}
-              <span className="fa-regular fa-clock fa-fw" aria-hidden="true"></span>{" "}
-              {timeFormat(event.start)}
+              <i className="fa-regular fa-clock fa-fw" /> {timeFormat(event.start)}
               {timePeriod !== "upcoming" && <> - {timeFormat(event.end)}</>}
             </div>
             {timePeriod === "ongoing" && <Location event={event} />}

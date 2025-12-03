@@ -9,7 +9,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import * as VenuesMethods from "/imports/api/venues/methods";
 import { VenueModel } from "/imports/api/venues/venues";
 
-import { ButtonEdit, ButtonDelete } from "../../Buttons";
+import { ButtonDelete, ButtonEdit } from "../../Buttons";
 import { Contribution } from "../../Contribution";
 import {
   type Props as DeleteConfirmDialogProps,
@@ -81,10 +81,9 @@ export function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => vo
                 )}
                 {!!venue.route && (
                   <p>
-                    <span className="venue-property-title">
+                    <div className="venue-property-title">
                       {t("venue.details.route", "How to go there:")}
-                    </span>
-                    <br />
+                    </div>
                     <span className="pre-line">{venue.route}</span>
                   </p>
                 )}
@@ -118,10 +117,9 @@ export function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => vo
                 )}
                 {!!venue.otherFacilities && (
                   <p>
-                    <span className="venue-property-title">
+                    <div className="venue-property-title">
                       {t("venue.details.additionalEquipment", "Additional equipment:")}
-                    </span>
-                    <br />
+                    </div>
                     {venue.otherFacilities}
                   </p>
                 )}
@@ -130,7 +128,7 @@ export function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => vo
                     <span className="venue-property-title">
                       {t("location.details.hosts", "Hosts:")}
                     </span>
-                    <ul className="hosts">
+                    <ul>
                       {!!venue.editor && (
                         <li>
                           <ProfileLink userId={venue.editor} />
@@ -145,11 +143,58 @@ export function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => vo
                     </ul>
                   </>
                 )}
-                {venue.restrictedUse &&
-                  t(
-                    "venue.details.restrictedUse.description",
-                    "This venue can only be chosen by its hosts to publish an event.",
-                  )}
+
+                <span className="venue-property-title">
+                  {t("location.details.hints", "Hints:")}
+                </span>
+                <ul className="fa-ul">
+                  <li>
+                    {!venue.restrictedUse ? (
+                      <>
+                        <span className="fa-li">
+                          <i className="fa-solid fa-check" />
+                        </span>
+                        {t(
+                          "venue.details.notRestrictedUse.description",
+                          "This venue can chosen by everyone to publish an event. Still users are reminded to first contact its hosts to check for available time slot.",
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <span className="fa-li">
+                          <i className="fa-solid fa-xmark" />
+                        </span>
+                        {t(
+                          "venue.details.restrictedUse.description",
+                          "This venue can only be chosen by its hosts to publish an event.",
+                        )}
+                      </>
+                    )}
+                  </li>
+                  <li>
+                    {venue.allowParallelEvents ? (
+                      <>
+                        <span className="fa-li">
+                          <i className="fa-solid fa-check" />
+                        </span>
+                        {t(
+                          "venue.details.allowParallelEvents.description",
+                          "Overlapping events are allowed in this venue.",
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <span className="fa-li">
+                          <i className="fa-solid fa-xmark" />
+                        </span>
+                        {t(
+                          "venue.details.notAllowParallelEvents.description",
+                          "This venue does not allow overlapping events.",
+                        )}
+                      </>
+                    )}
+                  </li>
+                </ul>
               </div>
               {!!venue.loc && !!venue.region && (
                 <div className="col-md-5">
@@ -174,6 +219,7 @@ export function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => vo
           <>
             <div className="actions">
               <ButtonEdit
+                id="venues-display-edit"
                 onClick={() => {
                   onEdit();
                   setVerifyDelete(false);
@@ -181,9 +227,8 @@ export function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => vo
               />
               {!verifyDelete && (
                 <ButtonDelete
-                  onClick={async () => {
-                    setVerifyDelete(true);
-                  }}
+                  id="venues-display-confirmDelete"
+                  onClick={async () => setVerifyDelete(true)}
                 />
               )}
             </div>

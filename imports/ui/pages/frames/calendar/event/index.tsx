@@ -32,7 +32,7 @@ export function Event({ data }: { data: EventModel }) {
       <div className="position-relative">
         {new Date() > data.start && (
           <div className="text-primary">
-            <span className="fa-solid fa-circle-play fa-fw" aria-hidden="true"></span>{" "}
+            <i className="fa-solid fa-circle-play fa-fw" />{" "}
             {t("frame.eventsList.started", "Started {FROMNOW}", { FROMNOW: fromNow(data.start) })}
           </div>
         )}
@@ -43,7 +43,7 @@ export function Event({ data }: { data: EventModel }) {
           }}
         >
           <span className="frame-list-item-toggle-indicator">
-            <i className="fa-solid fa-angle-down"></i>
+            <i className="fa-solid fa-angle-down" />
           </span>
           {!data.noRsvp && (
             <div
@@ -65,7 +65,7 @@ export function Event({ data }: { data: EventModel }) {
               <span className="me-1">
                 {getAttendees()}/{getTotalAvailableSeats()}
               </span>
-              <i className="fa-solid fa-user fa-fw" aria-hidden="true"></i>
+              <i className="fa-solid fa-user fa-fw" />
             </div>
           )}
 

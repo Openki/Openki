@@ -65,7 +65,7 @@ export function Content({ event }: { event: EventModel }) {
                 </div>
                 {!!event.venue?.address && (
                   <div className="tag">
-                    <span className="fa-solid fa-location-dot fa-fw" aria-hidden="true"></span>
+                    <i className="fa-solid fa-location-dot fa-fw" />
                     {event.venue.address}
                   </div>
                 )}
@@ -77,8 +77,9 @@ export function Content({ event }: { event: EventModel }) {
           <>
             <PricePolicy dismissable wrap="event-details-price-policy" />
             <div className="p-3 text-end" id="share">
-              <h4>{t("sharing.title", "Invite your friends")}</h4>
-              <Sharing />
+              <h4>
+                {t("sharing.title", "Invite your friends")} <Sharing />
+              </h4>
             </div>
           </>
         )}

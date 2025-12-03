@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
-
-import * as Metatags from "/imports/utils/metatags";
 
 import { useTranslation } from "react-i18next";
 import { useFindFilter } from "/imports/api/users/publications";
+
+import { MetaTags } from "/imports/ui/components/MetaTags";
 
 function FoundUsers({ userSearch }: { userSearch: string }) {
   const [isLoading, foundUsers] = useFindFilter(userSearch);
@@ -19,7 +19,7 @@ function FoundUsers({ userSearch }: { userSearch: string }) {
           href={Router.path("userprofile", user)}
           className="list-group-item list-group-item-action"
         >
-          <span className="fa-solid fa-user fa-fw" aria-hidden="true" /> {user.getDisplayName()}
+          <i className="fa-solid fa-user fa-fw" /> {user.getDisplayName()}
         </a>
       ))}
     </div>
@@ -31,18 +31,16 @@ export function AdminUsersPage() {
 
   const [userSearch, setUserSearch] = useState("");
 
-  useEffect(() => {
-    Metatags.setCommonTags(t("admin.users.windowtitle", "Users"));
-  });
-
   return (
     <>
+      <MetaTags title={t("admin.users.windowtitle", "Users")} />
+
       <h3>{t("users.title", "Users")}</h3>
       <div className="mb-3">
         <label className="form-label">{t("users.field.find.label", "Find a user")}</label>
         <div className="input-group">
           <span className="input-group-text">
-            <span className="fa-solid fa-user fa-fw" aria-hidden="true" />
+            <i className="fa-solid fa-user fa-fw" />
           </span>
           <input
             className="form-control"

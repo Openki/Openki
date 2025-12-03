@@ -33,23 +33,17 @@
   }
 }
 
-.btn-go {
-  @extend .btn-primary;
-}
-
-.btn-primary,
-.btn-go {
+.btn-primary {
   color: $white;
 
-  &:hover {
+  &:hover,
+  .btn-check:checked + &.btn,
+  :not(.btn-check) + &.btn:active,
+  &.btn:first-child:active,
+  &.btn.active,
+  &.btn.show {
     color: $white;
   }
-}
-
-.btn-primary:focus {
-  box-shadow:
-    0 1px 1px rgb(0 0 0 / 7.5%) inset,
-    0 0 8px rgb(56 130 156 / 60%);
 }
 
 .btn-add,

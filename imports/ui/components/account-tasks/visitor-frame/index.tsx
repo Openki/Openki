@@ -1,19 +1,22 @@
-import React, { useState } from "react";
+import { Router } from "meteor/iron:router";
 import { Random } from "meteor/random";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
-import { useSession } from "/imports/utils/react-meteor-data";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { Router } from "meteor/iron:router";
+import { useSession } from "/imports/utils/react-meteor-data";
+import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
 import * as UsersMethods from "/imports/api/users/methods";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 import { useValidation } from "/imports/ui/lib/useValidation";
 
-import { DataProtectionLaw } from "../data-protection-law";
 import { NotAllowedCharacter } from "../../../../startup/both/NotAllowedCharacter";
+import { DataProtectionLaw } from "../data-protection-law";
+import { FormCheck } from "/imports/ui/components/FormCheck";
+import { FormControl } from "/imports/ui/components/form-control";
+import { Button } from "../../Buttons";
 
 export interface Props {
   username: string;
@@ -76,6 +79,7 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
   });
   return (
     <form
+      noValidate
       onSubmit={async (event) => {
         event.preventDefault();
 
@@ -110,45 +114,27 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
       }}
     >
       <div className="mb-3">
-        <div className="input-group has-validation">
-          <span className="input-group-text">
-            <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
-          </span>
-          <input
-            className={`form-control ${errors.username ? "is-invalid" : ""}`}
-            type="text"
-            placeholder={t("frame.login.username", "Username")}
-            autoFocus={true}
-            value={registerData.username}
-            onChange={(event) => {
-              setRegisterData({
-                ...registerData,
-                username: event.target.value,
-              });
-            }}
-          />
-          {!!errors.username && <div className="invalid-feedback">{errors.username}</div>}
-        </div>
+        <FormControl
+          id="visitor-frame-username"
+          type="text"
+          label={t("frame.login.username", "Username")}
+          prepend="fa-solid fa-user fa-fw"
+          autoFocus
+          value={registerData.username}
+          onChange={(value) => setRegisterData({ ...registerData, username: value })}
+          error={errors.username}
+        />
       </div>
       <div className="mb-3">
-        <div className="input-group has-validation">
-          <span className="input-group-text">
-            <span className="fa-solid fa-envelope fa-fw" aria-hidden="true"></span>
-          </span>
-          <input
-            className={`form-control ${errors.email ? "is-invalid" : ""}`}
-            placeholder={t("frame.visitor.email", "E-Mail")}
-            type="email"
-            value={registerData.email}
-            onChange={(event) => {
-              setRegisterData({
-                ...registerData,
-                email: event.target.value,
-              });
-            }}
-          />
-          {!!errors.email && <div className="invalid-feedback">{errors.email}</div>}
-        </div>
+        <FormControl
+          id="visitor-frame-email"
+          type="email"
+          label={t("frame.visitor.email", "E-Mail")}
+          prepend="fa-solid fa-envelope fa-fw"
+          value={registerData.email}
+          onChange={(value) => setRegisterData({ ...registerData, email: value })}
+          error={errors.email}
+        />
       </div>
       <div className="mb-3">
         {t(
@@ -159,53 +145,35 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
       <DataProtectionLaw />
       {PublicSettings.askNewsletterConsent && (
         <div className="mb-3">
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              checked={registerData.allowNews}
-              onChange={(event) => {
-                setRegisterData({
-                  ...registerData,
-                  allowNews: event.target.checked,
-                });
-              }}
-              id="registerFrameAllowNewsCheck"
-            />
-            <label className="form-check-label" htmlFor="registerFrameAllowNewsCheck">
-              {t(
-                "login.register.agreeEmails",
-                "I agree on receiving occasional emails about {SITENAME}.",
-                { SITENAME: sitename },
-              )}
-            </label>
-          </div>
+          <FormCheck
+            id="visitor-frame-allowNews"
+            type="box"
+            label={t(
+              "login.register.agreeEmails",
+              "I agree on receiving occasional emails about {SITENAME}.",
+              { SITENAME: sitename },
+            )}
+            checked={registerData.allowNews}
+            onChange={(checked) => setRegisterData({ ...registerData, allowNews: checked })}
+          />
         </div>
       )}
       <div className="mb-3">
-        <button type="submit" className="btn btn-add form-control" disabled={isBusy}>
-          {isBusy ? (
-            <>
-              <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
-              {t("login.visitor.submit.busy", "Registering…")}
-            </>
-          ) : (
-            t("login.visitor.submit")
-          )}
-        </button>
+        <Button
+          id="visitor-frame-submit"
+          submit
+          block
+          className="btn-add"
+          busyText={t("login.visitor.submit.busy", "Registering…")}
+          isBusy={isBusy}
+        >
+          {t("login.visitor.submit")}
+        </Button>
       </div>
       <hr />
-      <div className="mb-3">
-        <button
-          className="btn btn-secondary form-control"
-          type="button"
-          onClick={() => {
-            onBack();
-          }}
-        >
-          {t("login.visitor.backToLogin", "Go back to login")}
-        </button>
-      </div>
+      <Button id="visitor-frame-back" block className="btn-secondary" onClick={() => onBack()}>
+        {t("login.visitor.backToLogin", "Go back to login")}
+      </Button>
     </form>
   );
 }

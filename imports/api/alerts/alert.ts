@@ -1,4 +1,4 @@
-import { Action, Alerts } from "./alerts";
+import { Alerts } from "./alerts";
 import { i18n } from "/imports/startup/both/i18next";
 
 /**
@@ -7,9 +7,9 @@ import { i18n } from "/imports/startup/both/i18next";
  * @param message the message text
  * @param timeout timeout for the alert to disappear
  */
-function _alert(type: string, message: string, timeout = 4000, title?: string, actions?: Action[]) {
+function _alert(type: string, message: string, timeout = 4000, title?: string) {
   if (message) {
-    Alerts.insert({ type, title, message, timeout, actions, createdAt: new Date() });
+    Alerts.insert({ type, title, message, timeout, createdAt: new Date() });
   }
 }
 
@@ -18,14 +18,6 @@ function _alert(type: string, message: string, timeout = 4000, title?: string, a
  */
 export function success(message: string) {
   _alert("success", message);
-}
-
-export function successNextActions(
-  title: string,
-  message: string,
-  ...actions: (Action | undefined)[]
-) {
-  _alert("success", message, 60000, title, actions.filter((a) => a) as Action[]);
 }
 
 /**

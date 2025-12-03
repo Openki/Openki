@@ -16,7 +16,7 @@ export function Invitations({ tenant }: Props) {
   return (
     <>
       <h3>
-        <span className="fa-solid fa-envelope fa-fw" aria-hidden="true"></span>{" "}
+        <i className="fa-solid fa-envelope fa-fw" />{" "}
         {t("tenant.settings.title.invitations", "Invite via email")}
       </h3>
       <Create tenant={tenant} />

@@ -1,21 +1,21 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 
-import { Data, Edit } from "/imports/ui/components/courses/edit";
+import { Edit, Props } from "/imports/ui/components/courses/edit";
 
-export function CourseProposePage(data: Data) {
+export function CourseProposePage(data: Props) {
   const { t } = useTranslation();
 
-  useEffect(() => {
-    Metatags.setCommonTags(t("course.propose.windowtitle", "Propose new course"));
-  });
-
   return (
-    <div className="container mw-md">
-      <Edit {...data} />
-    </div>
+    <>
+      <MetaTags title={t("course.propose.windowtitle", "Propose new course")} />
+
+      <div className="container mw-md">
+        <Edit {...data} />
+      </div>
+    </>
   );
 }
 

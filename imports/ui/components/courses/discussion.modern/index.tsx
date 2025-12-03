@@ -91,7 +91,7 @@ export function Discussion({ courseId, eventId }: Props) {
                 setLimit(0);
               }}
             >
-              <i className="fa-solid fa-chevron-down fa-fw" aria-hidden="true"></i>
+              <i className="fa-solid fa-chevron-down fa-fw" />
               {t("course.discussions.showAllComment", "Show all {NUM} comments", {
                 NUM: allDiscussions().length,
               })}

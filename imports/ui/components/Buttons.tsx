@@ -1,191 +1,102 @@
 import React, { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { PleaseLogin } from "./please-login";
 
-export function ActionButton({
-  className,
-  disabled,
-  needsLogin,
-  onClick,
-  children,
-  busyText,
-}: {
+import { buildSizeClass, Size } from "../lib/buildSizeClass";
+import { Button as NeedsLoginButton } from "/imports/ui/components/PleaseLogin";
+
+interface CommonProps {
+  /** needed to identify for testing */
+  id: string;
   className?: string | undefined;
+  size?: Size | undefined;
+  block?: boolean | undefined;
   disabled?: boolean | undefined;
-  /** Login the user before triggering onClick. */
-  needsLogin?: boolean | undefined;
-  onClick: () => Promise<void>;
   children: ReactNode;
   busyText?: string | undefined;
+}
+
+type LoginProps = {
+  onClick: () => Promise<void> | void;
+} & (
+  | {
+      /**
+       * Login the user before triggering onClick.
+       *
+       * If this button is part of a form, consider using “submit” for reasons of semantic
+       * correctness for accessibility and the full use of the browser default behavior.
+       */
+      needsLogin?: false | never;
+    }
+  | {
+      /**
+       * Login the user before triggering onClick.
+       *
+       * If this button is part of a form, consider using “submit” for reasons of semantic
+       * correctness for accessibility and the full use of the browser default behavior.
+       */
+      needsLogin: true;
+      /**
+       * called before login prompt, return false to not run onClick, eg. when validation fails
+       */
+      beforeClick?: (() => undefined | boolean) | undefined;
+      visitorUserAllowed?: boolean | undefined;
+    }
+);
+
+interface SubmitProps {
+  submit: true;
+  isBusy: boolean;
+}
+
+type Props = CommonProps & (LoginProps | SubmitProps);
+
+export function Content({
+  isBusy,
+  busyText,
+  children,
+}: {
+  isBusy?: boolean | undefined;
+  busyText?: string | undefined;
+  children: ReactNode;
 }) {
-  const [isBusy, setIsBusy] = useState(false);
-
-  const attributes = {
-    type: "button" as const,
-    className: `${className} text-nowrap`,
-    disabled: isBusy || disabled,
-    onClick: async () => {
-      setIsBusy(true);
-      try {
-        await onClick();
-      } finally {
-        setIsBusy(false);
-      }
-    },
-  };
-
-  const content = (
+  return (
     <>
       {!isBusy ? (
         children
       ) : (
         <>
-          <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
-          {busyText}
+          <i className="fa-solid fa-circle-notch fa-spin fa-fw" /> {busyText}
         </>
       )}
     </>
   );
+}
+
+function ControlledButton(props: CommonProps & LoginProps) {
+  const { id, className, disabled, needsLogin, onClick, children, busyText } = props;
+  const [isBusy, setIsBusy] = useState(false);
 
   if (needsLogin) {
-    return <PleaseLogin {...attributes}>{content}</PleaseLogin>;
+    return (
+      <NeedsLoginButton
+        id={id}
+        type="button"
+        className={className}
+        disabled={disabled}
+        visitorUserAllowed={props.visitorUserAllowed}
+        onClick={onClick}
+        busyText={busyText}
+      >
+        {children}
+      </NeedsLoginButton>
+    );
   }
-  return <button {...attributes}>{content}</button>;
-}
-
-export function Button({
-  className,
-  disabled,
-  onClick,
-  children,
-  busyText,
-}: {
-  className?: string | undefined;
-  disabled?: boolean | undefined;
-  onClick: (event: { preventDefault: () => void }) => Promise<void>;
-  children: ReactNode;
-  busyText?: string | undefined;
-}) {
-  const [isBusy, setIsBusy] = useState(false);
 
   return (
     <button
+      id={id}
       type="button"
-      className={`${className} text-nowrap`}
-      disabled={isBusy || disabled}
-      onClick={async (event) => {
-        setIsBusy(true);
-        try {
-          await onClick(event);
-        } finally {
-          setIsBusy(false);
-        }
-      }}
-    >
-      {!isBusy ? (
-        children
-      ) : (
-        <>
-          <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
-          {busyText}
-        </>
-      )}
-    </button>
-  );
-}
-
-export function ButtonSave(props: {
-  className?: string;
-  disabled?: boolean | undefined;
-  children?: ReactNode;
-  onClick: () => Promise<void>;
-}) {
-  const { t } = useTranslation();
-  return (
-    <PleaseLogin
-      type="button"
-      className={`btn btn-save text-nowrap ${props.className || ""}`}
-      onClick={props.onClick}
-      disabled={props.disabled}
-      busyText={t("_button.saving", "Saving…")}
-    >
-      {props.children || t("_button.save")}
-    </PleaseLogin>
-  );
-}
-
-export function ButtonSubmit(props: {
-  disabled?: boolean | undefined;
-  isBusy?: boolean | undefined;
-}) {
-  const { t } = useTranslation();
-  return (
-    <button
-      data-test="button-submit"
-      type="submit"
-      className="btn btn-cancel text-nowrap"
-      disabled={props.disabled}
-    >
-      {!props.isBusy ? (
-        t("_button.save")
-      ) : (
-        <>
-          <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
-          {t("_button.saving", "Saving…")}
-        </>
-      )}
-    </button>
-  );
-}
-
-export function ButtonEdit(props: { onClick: () => void; disabled?: boolean | undefined }) {
-  const { t } = useTranslation();
-  return (
-    <button
-      type="button"
-      className="btn btn-edit text-nowrap"
-      onClick={props.onClick}
-      disabled={props.disabled}
-    >
-      {t("_button.edit")}
-    </button>
-  );
-}
-
-export function ButtonCancel(props: { onClick: () => void; disabled?: boolean | undefined }) {
-  const { t } = useTranslation();
-  return (
-    <button
-      type="button"
-      className="btn btn-cancel text-nowrap"
-      onClick={props.onClick}
-      disabled={props.disabled}
-    >
-      {t("_button.cancel")}
-    </button>
-  );
-}
-
-export function ButtonDelete({
-  onClick,
-  disabled,
-  children,
-  busyText,
-}: {
-  onClick: () => Promise<void>;
-  disabled?: boolean | undefined;
-  children?: ReactNode;
-  busyText?: string | undefined;
-}) {
-  const { t } = useTranslation();
-  const [isBusy, setIsBusy] = useState(false);
-
-  busyText = busyText || t("_button.deleting");
-
-  return (
-    <PleaseLogin
-      type="button"
-      className="btn btn-delete text-nowrap text-danger"
+      className={className}
       disabled={isBusy || disabled}
       onClick={async () => {
         setIsBusy(true);
@@ -196,14 +107,128 @@ export function ButtonDelete({
         }
       }}
     >
-      {!isBusy ? (
-        children || t("_button.delete")
-      ) : (
-        <>
-          <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
-          {busyText}
-        </>
-      )}
-    </PleaseLogin>
+      <Content isBusy={isBusy} busyText={busyText}>
+        {children}
+      </Content>
+    </button>
+  );
+}
+
+export function Button(props: Props) {
+  const { id, className, size, block, disabled, children, busyText } = props;
+
+  const fullClassName = ["btn", buildSizeClass("btn", size), !block ? "text-nowrap" : "", className]
+    .filter((v) => v)
+    .join(" ");
+
+  const button =
+    "onClick" in props ? (
+      <ControlledButton {...props} className={fullClassName} />
+    ) : (
+      <button id={id} type="submit" className={fullClassName} disabled={props.isBusy || disabled}>
+        <Content isBusy={props.isBusy} busyText={busyText}>
+          {children}
+        </Content>
+      </button>
+    );
+
+  if (block) {
+    return <div className="d-grid">{button}</div>;
+  }
+
+  return button;
+}
+
+export function ButtonEdit({
+  id,
+  size,
+  block,
+  onClick,
+  disabled,
+}: {
+  id: string;
+  size?: Size | undefined;
+  block?: boolean | undefined;
+  onClick: () => void;
+  disabled?: boolean | undefined;
+}) {
+  const { t } = useTranslation();
+  return (
+    <Button
+      id={id}
+      block={block}
+      size={size}
+      className="btn-edit"
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {t("_button.edit")}
+    </Button>
+  );
+}
+export function ButtonCancel({
+  id,
+  size,
+  block,
+  onClick,
+  disabled,
+}: {
+  id: string;
+  size?: Size | undefined;
+  block?: boolean | undefined;
+  onClick: () => void;
+  disabled?: boolean | undefined;
+}) {
+  const { t } = useTranslation();
+  return (
+    <Button
+      id={id}
+      block={block}
+      size={size}
+      className="btn-cancel"
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {t("_button.cancel")}
+    </Button>
+  );
+}
+
+export function ButtonSave(
+  props: {
+    id: string;
+    size?: Size | undefined;
+    block?: boolean | undefined;
+    disabled?: boolean | undefined;
+  } & (LoginProps | SubmitProps),
+) {
+  const { t } = useTranslation();
+
+  return (
+    <Button {...props} className="btn-save" busyText={t("_button.saving", "Saving…")}>
+      {t("_button.save")}
+    </Button>
+  );
+}
+
+export function ButtonDelete(
+  props: {
+    id: string;
+    size?: Size | undefined;
+    block?: boolean | undefined;
+    disabled?: boolean | undefined;
+  } & (LoginProps | SubmitProps),
+) {
+  const { t } = useTranslation();
+
+  return (
+    <Button
+      needsLogin
+      {...props}
+      className="btn-delete text-danger"
+      busyText={t("_button.deleting")}
+    >
+      {t("_button.delete")}
+    </Button>
   );
 }

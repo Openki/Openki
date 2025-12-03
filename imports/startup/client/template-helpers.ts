@@ -219,10 +219,10 @@ Template.registerHelper("contribution", function (userId: string) {
         {
           USERNAME: cachedUser.getDisplayName(),
           SITENAME: getSiteName(Regions.currentRegion()),
-          ICON: Spacebars.SafeString(`<i class="${contribution.icon}" aria-hidden="true"></i>`),
+          ICON: Spacebars.SafeString(`<i class="${contribution.icon}"></i>`),
         },
       ),
-    )}"><sup><i class="${contribution.icon}" aria-hidden="true"></i></sup></a>`,
+    )}"><sup><i class="${contribution.icon}"></i></sup></a>`,
   );
 });
 

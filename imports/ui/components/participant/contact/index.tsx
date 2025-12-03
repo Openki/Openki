@@ -3,13 +3,13 @@ import { useTranslation } from "react-i18next";
 import { Modal } from "/imports/startup/client/bootstrap";
 import { useUserId } from "/imports/utils/react-meteor-data";
 
-import * as emailMethods from "/imports/api/emails/methods";
-import { EventModel } from "/imports/api/events/events";
 import { CourseModel } from "/imports/api/courses/courses";
+import * as emailMethods from "/imports/api/emails/methods";
 import { SendPrivateMessageOptions } from "/imports/api/emails/methods";
+import { EventModel } from "/imports/api/events/events";
 import * as Users from "/imports/api/users/publications";
 
-import { SendMessage, Data as SendMessageData } from "/imports/ui/components/send-message";
+import { SendMessage, Props as SendMessageProps } from "../../SendMessage";
 
 export interface Props {
   participant: string;
@@ -43,7 +43,7 @@ export function ParticipantContact(props: Props) {
     return userId !== props.participant;
   }
 
-  function sendMessageAttr(): SendMessageData {
+  function sendMessageAttr(): SendMessageProps {
     return {
       placeholder: t(
         "participantContact.sendMessage.placeholder",
@@ -83,7 +83,7 @@ export function ParticipantContact(props: Props) {
                     setShowModal(true);
                   }}
                 >
-                  <i className="fa-solid fa-envelope fa-fw"></i>
+                  <i className="fa-solid fa-envelope fa-fw" />
                 </button>
               ) : (
                 <button className="btn btn-link p-0 disabled" type="button" disabled>
@@ -93,7 +93,7 @@ export function ParticipantContact(props: Props) {
                       "user.acceptsPrivateMessages.false",
                       "User does not accept direct messages from users",
                     )}
-                  ></i>
+                  />
                 </button>
               ))}
           </div>
@@ -103,7 +103,7 @@ export function ParticipantContact(props: Props) {
                 <div className="modal-content">
                   <div className="modal-header">
                     <h4 className="modal-title">
-                      <span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>
+                      <i className="fa-solid fa-paper-plane fa-fw" />
                       &nbsp;
                       {t("participantContactModal.writeMessageTo", "Write a message to {USER}", {
                         USER: participant?.getDisplayName(),
@@ -113,7 +113,7 @@ export function ParticipantContact(props: Props) {
                       type="button"
                       className="btn-close"
                       data-bs-dismiss="modal"
-                      aria-label="Close"
+                      aria-label={t("_button.close")}
                     ></button>
                   </div>
                   <div className="modal-body">

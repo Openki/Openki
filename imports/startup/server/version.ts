@@ -1,6 +1,7 @@
 import { Meteor } from "meteor/meteor";
+import { assignIn } from "lodash-es";
+
 import { Version } from "/imports/api/version/version";
-import { _ } from "meteor/underscore";
 
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
@@ -13,7 +14,7 @@ if (runBackgroundTasks)
         runningVersion.complete !== VERSION.complete ||
         runningVersion.commit !== VERSION.commit)
     ) {
-      const newVersion = _.extend(VERSION, {
+      const newVersion = assignIn(VERSION, {
         activation: new Date(),
       });
       await Version.upsertAsync({}, newVersion);

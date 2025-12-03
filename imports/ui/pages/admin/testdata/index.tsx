@@ -19,7 +19,8 @@ export function TestdataPage() {
         {t("testdata.hint", "This only works if testdata flag is set in the settings.")}
       </div>
       <Button
-        className="btn btn-lg btn-danger"
+        id="admin-testdata-resetAll"
+        className="btn-danger"
         onClick={async () => {
           if (
             !window.confirm(
@@ -41,7 +42,7 @@ export function TestdataPage() {
           }
         }}
       >
-        <i className="fa-solid fa-fw fa-database"></i> {t("testdata.resetAll", "Reset all data")}
+        <i className="fa-solid fa-fw fa-database" /> {t("testdata.resetAll", "Reset all data")}
       </Button>
     </>
   );

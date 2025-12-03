@@ -10,11 +10,7 @@ export function LoadingPage() {
   return (
     <div className="loading-page">
       <h1>
-        <span
-          className="fa-solid fa-circle-notch fa-spin fa-fw"
-          aria-hidden="true"
-          title={t("loading.loading")}
-        ></span>
+        <i className="fa-solid fa-circle-notch fa-spin fa-fw" title={t("loading.loading")} />
         {t("loading.loading", "Loading…")}
       </h1>
     </div>
@@ -27,12 +23,7 @@ export function LoadingRow() {
   return (
     <div className="loading-row">
       <h1>
-        <span
-          className="fa-solid fa-circle-notch fa-spin fa-fw"
-          aria-hidden="true"
-          title={t("loading.loading")}
-        ></span>
-        <span className="sr-only">{t("loading.loading")}</span>
+        <i className="fa-solid fa-circle-notch fa-spin fa-fw" title={t("loading.loading")} />{" "}
         {t("loading.loading")}
       </h1>
     </div>

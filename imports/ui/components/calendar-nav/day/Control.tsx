@@ -22,7 +22,7 @@ export function Control(props: Props) {
     }
 
     const direction = arrowIsRTL ? "left" : "right";
-    return <span className={`fa-solid fa-arrow-${direction} fa-fw`} aria-hidden="true"></span>;
+    return <i className={`fa-solid fa-arrow-${direction} fa-fw`} />;
   }
 
   function text() {

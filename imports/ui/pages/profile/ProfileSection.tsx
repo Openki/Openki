@@ -84,8 +84,7 @@ export function ProfileSection() {
             <Editable {...editableDescriptionAttr} />
           </p>
           <a className="btn btn-primary" href={Router.path("userprofile", user)}>
-            <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>{" "}
-            {t("login.frame.profile", "Public profile")}
+            <i className="fa-solid fa-user fa-fw" /> {t("login.frame.profile", "Public profile")}
           </a>
         </div>
       </div>

@@ -113,7 +113,7 @@ export function Events({ course }: Props) {
               <>
                 <div className="page-component-header">
                   <h4>
-                    <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
+                    <i className="fa-regular fa-calendar-days fa-fw" />
                     &nbsp;
                     {t("course.events.ongoinglist", "Ongoing events")}
                   </h4>
@@ -128,7 +128,7 @@ export function Events({ course }: Props) {
               <>
                 <div className="page-component-header">
                   <h4>
-                    <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
+                    <i className="fa-regular fa-calendar-days fa-fw" />
                     &nbsp;
                     {t(
                       "course.events.upcominglist",
@@ -160,7 +160,8 @@ export function Events({ course }: Props) {
           <div className="page-component">
             <div className="page-component-header">
               <h4>
-                <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>&nbsp;
+                <i className="fa-regular fa-calendar-days fa-fw" />
+                &nbsp;
                 {t("course.details.noEvents", "No events planned")}
               </h4>
             </div>
@@ -170,7 +171,8 @@ export function Events({ course }: Props) {
         <div className="page-component">
           <div className="page-component-header">
             <h4>
-              <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>&nbsp;
+              <i className="fa-regular fa-calendar-days fa-fw" />
+              &nbsp;
               {t("course.details.eventsLoadingHeader", "Events")}
             </h4>
           </div>

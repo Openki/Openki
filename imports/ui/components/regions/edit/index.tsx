@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useAccountTasks } from "/imports/utils/useAccountTasks";
 
 import { RegionEntity } from "/imports/api/regions/regions";
 import { Geodata } from "/imports/api/Geodata";
@@ -7,7 +8,6 @@ import * as Alert from "/imports/api/alerts/alert";
 
 import { Fields } from "./Fields";
 import { ButtonCancel, ButtonSave } from "../../Buttons";
-import { PleaseLogin } from "../../please-login";
 
 import "./styles.scss";
 
@@ -35,7 +35,12 @@ export function Edit(data: Data) {
     loc: data.region.loc,
   });
 
-  async function handleSave() {
+  const { promptToLogin } = useAccountTasks();
+  const [isBusy, setIsBusy] = useState(false);
+
+  async function handleSave(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
     if (!changes.name) {
       Alert.error(t("region.create.plsGiveName", "Please give your region a name"));
       return;
@@ -51,7 +56,12 @@ export function Edit(data: Data) {
       return;
     }
 
+    setIsBusy(true);
     try {
+      if (!(await promptToLogin())) {
+        return;
+      }
+
       await data.onSave(changes as OnSaveFields);
 
       Alert.success(
@@ -61,24 +71,25 @@ export function Edit(data: Data) {
       );
     } catch (err) {
       Alert.serverError(err, t("region.saving.error", "Saving the region went wrong"));
+    } finally {
+      setIsBusy(false);
     }
   }
 
   return (
     <div className="edit-page region-edit">
       <h2>{data.title}</h2>
-      <PleaseLogin type="form" onSubmit={handleSave}>
-        <Fields
-          region={changes}
-          onChange={(newChanges) => {
-            setChanges(newChanges);
-          }}
-        />
+      <form noValidate onSubmit={handleSave}>
+        <Fields region={changes} onChange={(newChanges) => setChanges(newChanges)} />
         <div className="form-actions">
-          <ButtonSave onClick={handleSave} />
-          <ButtonCancel onClick={() => data.onCancel()} />
+          <ButtonSave submit id="regions-edit-save" isBusy={isBusy} />
+          <ButtonCancel
+            id="regions-edit-cancel"
+            disabled={isBusy}
+            onClick={() => data.onCancel()}
+          />
         </div>
-      </PleaseLogin>
+      </form>
     </div>
   );
 }

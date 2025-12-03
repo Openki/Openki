@@ -45,7 +45,7 @@ export function CalendarSection() {
                 );
               }}
             >
-              <i className="fa-fw fa-solid fa-download"></i>{" "}
+              <i className="fa-fw fa-solid fa-download" />{" "}
               {t("profile.calendar.iCal", "Into app on my local device")}
             </a>
           </li>
@@ -56,7 +56,7 @@ export function CalendarSection() {
               target="_blank"
               rel="noreferrer"
             >
-              <i className="fa-fw fa-solid fa-arrow-up-right-from-square"></i>{" "}
+              <i className="fa-fw fa-solid fa-arrow-up-right-from-square" />{" "}
               {t("profile.calendar.google", "Google Kalender (Web)")}
             </a>
           </li>
@@ -67,7 +67,7 @@ export function CalendarSection() {
               target="_blank"
               rel="noreferrer"
             >
-              <i className="fa-fw fa-solid fa-arrow-up-right-from-square"></i>{" "}
+              <i className="fa-fw fa-solid fa-arrow-up-right-from-square" />{" "}
               {t("profile.calendar.outlook", "Outlook.com (Web)")}
             </a>
           </li>
@@ -80,7 +80,7 @@ export function CalendarSection() {
                 Alert.success(t("profile.calendar.urlCopied", "Url copied to the clipboard."));
               }}
             >
-              <i className="fa-fw fa-regular fa-copy"></i>{" "}
+              <i className="fa-fw fa-regular fa-copy" />{" "}
               {t("profile.calendar.copyUrl", "Copy url to clipboard")}
             </a>
           </li>

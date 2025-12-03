@@ -1,6 +1,6 @@
 import { Mongo } from "meteor/mongo";
 import { Meteor } from "meteor/meteor";
-import { _ } from "meteor/underscore";
+import { intersection, assignIn, escapeRegExp } from "lodash-es";
 import { Match, check } from "meteor/check";
 
 import * as tenantDenormalizer from "./tenantDenormalizer";
@@ -11,7 +11,6 @@ import { UserModel } from "/imports/api/users/users";
 import { Filtering } from "/imports/utils/filtering";
 import { LocalTime } from "/imports/utils/local-time";
 import * as Predicates from "/imports/utils/predicates";
-import { escapeRegExp, intersection } from "lodash";
 import * as FileStorage from "/imports/utils/FileStorage";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { FieldSort, FieldSortPattern, Sort } from "/imports/utils/sort-spec";
@@ -268,7 +267,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
   constructor() {
     super("Events", {
       transform(event) {
-        return _.extend(new OEvent(), event);
+        return assignIn(new OEvent(), event);
       },
     });
 

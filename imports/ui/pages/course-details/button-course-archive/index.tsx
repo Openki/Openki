@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
-import { ActionButton } from "../../../components/Buttons";
+
+import { Button } from "../../../components/Buttons";
 
 export function ButtonCourseArchive({
   className,
@@ -16,14 +17,15 @@ export function ButtonCourseArchive({
   const { t } = useTranslation();
 
   return (
-    <ActionButton
-      className={`btn ${className}`}
+    <Button
+      id="course-details-course-archive"
+      className={`${className}`}
       disabled={disabled}
       needsLogin
       onClick={onArchive}
       busyText={t("course.archive.archiveButton.archiving", "Archiving…")}
     >
       {children}
-    </ActionButton>
+    </Button>
   );
 }

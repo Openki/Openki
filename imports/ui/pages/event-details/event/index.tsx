@@ -8,7 +8,7 @@ import { EventModel } from "/imports/api/events/events";
 import { useDetails } from "/imports/api/courses/publications";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
-import * as Viewport from "/imports/ui/lib/viewport";
+import { useViewportSize } from "/imports/ui/lib/useViewportSize";
 
 import { EventCourseHeader } from "/imports/ui/components/events/display/course-header";
 import { Edit } from "/imports/ui/components/events/edit";
@@ -80,11 +80,12 @@ function DisplayDiscussion({ eventId, courseId }: { eventId: string; courseId: s
 
 export function Event({ event, isNew }: { event: EventModel; isNew: boolean }) {
   const { t } = useTranslation();
+  const viewport = useViewportSize();
   const param = useSearchParams();
   const [editing, setEditing] = useState(isNew || param.edit === "1");
 
   function mobileViewport() {
-    return Viewport.get().width <= ScssVars.screenMD;
+    return viewport.width <= ScssVars.screenMD;
   }
   function isEditing() {
     return isNew || editing;

@@ -1,10 +1,5 @@
 import { Mongo } from "meteor/mongo";
 
-export interface Action {
-  text: string;
-  href: string;
-}
-
 /** DB-Model */
 export interface AlertEnity {
   /** ID */
@@ -13,7 +8,6 @@ export interface AlertEnity {
   message: string;
   title?: string | undefined;
 
-  actions?: Action[] | undefined;
   /** Integer */
   timeout: number;
   createdAt: Date;

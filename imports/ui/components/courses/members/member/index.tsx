@@ -88,7 +88,7 @@ export function Member({ member, course }: { member: CourseMemberEntity; course:
               className={`course-member-role ${getRole(role)?.proposal ? "is-proposal" : ""}`}
             >
               <span className="course-member-role-text">
-                <span className={`${getRole(role)?.icon} fa-fw`} aria-hidden="true"></span>{" "}
+                <i className={`${getRole(role)?.icon} fa-fw`} />{" "}
                 <span className="role-short">{roleShort(role)}</span>
               </span>{" "}
               {mayUnsubscribeFromTeam(role) && (
@@ -112,8 +112,8 @@ export function Member({ member, course }: { member: CourseMemberEntity; course:
                 await processChange(change);
               }}
             >
-              <span className={`fa-solid fa-plus ${member.user}`}></span>{" "}
-              <span className="fa-solid fa-bullhorn fa-fw" aria-hidden="true"></span>
+              <i className={`fa-solid fa-plus ${member.user}`} />{" "}
+              <i className="fa-solid fa-bullhorn fa-fw" />
             </button>
           )}
         </div>

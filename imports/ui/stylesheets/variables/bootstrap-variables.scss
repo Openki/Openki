@@ -9,8 +9,6 @@
 
 // Bootstrap Options
 
-$enable-gradients: true;
-
 // Include functions first (so we can manipulate colors, SVGs, calc, etc)
 @import "{}/node_modules/bootstrap/scss/functions"; // Required
 
@@ -55,6 +53,8 @@ $link-decoration: none;
 
 $form-label-color: shade-color($blue, 20%);
 $form-group-margin-bottom: 15px !default;
+$form-check-input-checked-bg-color: color.adjust($blue, $lightness: 5%);
+$form-check-input-indeterminate-bg-color: color.adjust($blue, $lightness: 5%);
 
 // Dropdowns
 

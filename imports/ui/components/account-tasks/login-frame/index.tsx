@@ -1,18 +1,21 @@
-import { MeteorAsync } from "/imports/utils/promisify";
-import { useTranslation } from "react-i18next";
-import { useSession, useSessionEquals } from "/imports/utils/react-meteor-data";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { MeteorAsync } from "/imports/utils/promisify";
+import { useSession, useSessionEquals } from "/imports/utils/react-meteor-data";
+import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
+import { useSiteName } from "/imports/utils/getSiteName";
+import { PublicSettings } from "/imports/utils/PublicSettings";
+import { useValidation } from "../../../lib/useValidation";
+import { Accounts } from "meteor/accounts-base";
+import { promisify } from "es6-promisify";
 
 import * as Alert from "/imports/api/alerts/alert";
 import * as UsersMethods from "/imports/api/users/methods";
-import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
-
-import { useSiteName } from "/imports/utils/getSiteName";
-import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
-import { useValidation } from "../../../lib/useValidation";
+import { Button } from "../../Buttons";
+import { FormControl } from "/imports/ui/components/form-control";
 
 import "./styles.scss";
 
@@ -96,6 +99,7 @@ export function LoginFrame({
 
   return (
     <form
+      noValidate
       onSubmit={async (event) => {
         event.preventDefault();
 
@@ -124,96 +128,76 @@ export function LoginFrame({
       }}
     >
       <div className="login">
-        <div className="mb-3">
-          <div className="input-group has-validation">
-            <span className="input-group-text">
-              <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
-            </span>
-            <input
-              data-test="account-tasks-login-frame-username"
-              className={`form-control ${errors.username ? "is-invalid" : ""}`}
-              placeholder={t("frame.login.usernameOrEmail", "Username or e-mail address")}
-              type="text"
-              autoFocus={true}
-              value={loginData.username}
-              onChange={(event) => {
-                setLoginData({
-                  ...loginData,
-                  username: event.target.value,
-                });
-              }}
-            />
-            {!!errors.username && <div className="invalid-feedback">{errors.username}</div>}
-          </div>
-        </div>
-        <div className="mb-3">
-          <div className="input-group has-validation">
-            <span className="input-group-text">
-              <span className="fa-solid fa-lock fa-fw" aria-hidden="true"></span>
-            </span>
-            <input
-              data-test="account-tasks-login-frame-password"
-              className={`form-control ${errors.password ? "is-invalid" : ""}`}
-              placeholder={t("_inputField.password")}
+        {PublicSettings.feature.login.email && (
+          <>
+            <div className="mb-3">
+              <FormControl
+                id="account-tasks-login-frame-username"
+                type="text"
+                autoFocus
+                prepend="fa-solid fa-user fa-fw"
+                label={t("frame.login.usernameOrEmail", "Username or e-mail address")}
+                value={loginData.username}
+                onChange={(value) => setLoginData({ ...loginData, username: value })}
+                error={errors.username}
+              />
+            </div>
+            <FormControl
+              id="account-tasks-login-frame-password"
               type="password"
+              prepend="fa-solid fa-lock fa-fw"
+              label={t("_inputField.password")}
               value={loginData.password}
-              onChange={(event) => {
-                setLoginData({
-                  ...loginData,
-                  password: event.target.value,
-                });
-              }}
+              onChange={(value) => setLoginData({ ...loginData, password: value })}
+              error={errors.password}
             />
-            {!!errors.password && <div className="invalid-feedback">{errors.password}</div>}
-          </div>
-        </div>
-        <div className="mb-3 text-end">
-          <button
-            type="button"
-            className="btn btn-link p-0 js-forgot-pwd-btn forgot-pwd-mail-info"
-            onClick={() => {
-              onForgotPassword(loginData);
-            }}
-          >
-            {t("forgot", "I forgot my password")}
-          </button>
-        </div>
-        <div className="mb-3">
-          <button
-            data-test="account-tasks-login-frame-submit"
-            type="submit"
-            className="btn btn-secondary js-login form-control"
-            disabled={!!isBusy}
-          >
-            {isBusy === "Password" ? (
-              <>
-                <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
-                {t("login.login.submit.busy", "Logging in…")}
-              </>
-            ) : (
-              t("login.login.submit", "Log in")
-            )}
-          </button>
-        </div>
-        <hr />
-        {oAuthServices.map((service) => (
-          <React.Fragment key={service.key}>
-            <div className="row g-2 align-items-center">
-              <div className="col">
-                <button
-                  className={`btn btn-${service.key} form-control js-oauth-btn my-2`}
-                  type="button"
-                  disabled={!!isBusy}
-                  onClick={() => {
-                    const loginMethod = Meteor[`loginWith${service.serviceName}`];
-                    if (!loginMethod) {
-                      throw new Error(`don't have login method for ${service.serviceName}`);
-                    }
-                    setIsBusy(service.serviceName);
+            <div className="mb-3 text-end">
+              <button
+                type="button"
+                className="btn btn-link p-0"
+                onClick={() => onForgotPassword(loginData)}
+              >
+                {t("forgot", "I forgot my password")}
+              </button>
+            </div>
+            <div>
+              <Button
+                id="account-tasks-login-frame-submit"
+                block
+                submit
+                className="btn-secondary"
+                disabled={!!isBusy}
+                isBusy={isBusy === "Password"}
+                busyText={t("login.login.submit.busy", "Logging in…")}
+              >
+                {t("login.login.submit", "Log in")}
+              </Button>
+            </div>
+            {oAuthServices.length > 0 && <hr />}
+          </>
+        )}
 
-                    loginMethod({}, async (err) => {
-                      try {
-                        if (!err) {
+        {oAuthServices.length > 0 && (
+          <div className="d-grid gap-3">
+            {oAuthServices.map((service) => (
+              <React.Fragment key={service.key}>
+                <div className="row g-2 align-items-center">
+                  <div className="col">
+                    <Button
+                      block
+                      id={"acctount-tasks-login-frame-login-with-" + service.name}
+                      className={`btn-${service.key}`}
+                      disabled={!!isBusy}
+                      onClick={async () => {
+                        const loginMethod = Meteor[`loginWith${service.serviceName}`];
+                        if (!loginMethod) {
+                          throw new Error(`don't have login method for ${service.serviceName}`);
+                        }
+                        setIsBusy(service.serviceName);
+
+                        try {
+                          await promisify(loginMethod)({});
+
                           onLogin();
 
                           if (currentRegion) {
@@ -224,90 +208,81 @@ export function LoginFrame({
 
                           Analytics.trackEvent(
                             "Logins",
-                            `Logins with ${service}`,
+                            `Logins with ${service.serviceName}`,
                             currentRegion?.nameEn,
                           );
-                        } else {
+                        } catch (err) {
+                          if (err instanceof Accounts.LoginCancelledError) {
+                            // do not show error if user cancelled the process
+                            return;
+                          }
                           Alert.serverError(err);
+                        } finally {
+                          setIsBusy(false);
                         }
-                      } finally {
-                        setIsBusy(false);
-                      }
-                    });
-                  }}
-                >
-                  {isBusy === service.serviceName ? (
-                    <>
-                      <span
-                        className="fa-solid fa-circle-notch fa-spin fa-fw"
-                        aria-hidden="true"
-                      ></span>{" "}
-                      {t("login.OAuth.busy", "Logging in with")}
-                    </>
-                  ) : (
-                    <>
-                      <span
-                        className={`fa-brands fa-${service.key} fa-fw`}
-                        aria-hidden="true"
-                      ></span>{" "}
-                      {t("login.OAuth.loginWith", "Login with")}
-                    </>
-                  )}{" "}
-                  {service.name}
-                </button>
-              </div>
-              <div className="col-auto">
-                <a
-                  className="text-body-secondary"
-                  data-bs-toggle="collapse"
-                  href={`#${service.key}-info`}
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls={`${service.key}-info`}
-                >
-                  <i className="fa-solid fa-circle-info fa-lg" aria-hidden="true"></i>
-                </a>
-              </div>
-            </div>
-            <div className="collapse" id={`${service.key}-info`}>
-              <div className="text-body-secondary">
-                {t(
-                  "login.OAuth.info",
-                  "{SITENAME} is getting your user-information (username, e-mail address, …) from that service. It will not grant access to data or info about your activity here, except the fact that you logged in.",
-                  { SITENAME: siteName },
-                )}
-              </div>
-            </div>
-          </React.Fragment>
-        ))}
-        <hr />
-        <div className="row g-2 align-items-center">
-          <div className="col">
-            <button
-              className="btn btn-add form-control js-register-open my-2"
-              type="button"
-              onClick={() => {
-                onRegisterOpen(loginData);
-              }}
-            >
-              {t("login.register.submit", "Create account")}
-            </button>
+                      }}
+                      busyText={t("login.OAuth.busy", "Logging in with {SERVICE}", {
+                        SERVICE: service.name,
+                      })}
+                    >
+                      <i className={`fa-brands fa-${service.key} fa-fw`} />{" "}
+                      {t("login.OAuth.loginWith", "Login with {SERVICE}", {
+                        SERVICE: service.name,
+                      })}
+                    </Button>
+                  </div>
+                  <div className="col-auto">
+                    <a
+                      className="text-body-secondary"
+                      data-bs-toggle="collapse"
+                      href={`#${service.key}-info`}
+                      role="button"
+                      aria-expanded="false"
+                      aria-controls={`${service.key}-info`}
+                    >
+                      <i className="fa-solid fa-circle-info fa-lg" />
+                    </a>
+                  </div>
+                </div>
+                <div className="collapse" id={`${service.key}-info`}>
+                  <div className="text-body-secondary">
+                    {t(
+                      "login.OAuth.info",
+                      "{SITENAME} is getting your user-information (username, e-mail address, …) from that service. It will not grant access to data or info about your activity here, except the fact that you logged in.",
+                      { SITENAME: siteName },
+                    )}
+                  </div>
+                </div>
+              </React.Fragment>
+            ))}
           </div>
-        </div>
-        {PublicSettings.feature.visitorUser && visitorUserAllowed && (
-          <div className="row g-2 align-items-center">
-            <div className="col">
-              <button
-                className="btn btn-add form-control js-visitor-open my-2"
-                type="button"
-                onClick={() => {
-                  onVisitorOpen(loginData);
-                }}
-              >
-                {t("login.visitor.submit", "Continue as visitor")}
-              </button>
+        )}
+
+        {(PublicSettings.feature.login.email ||
+          (PublicSettings.feature.visitorUser && visitorUserAllowed)) && (
+          <>
+            <hr />
+            <div className="d-grid gap-3">
+              {PublicSettings.feature.login.email && (
+                <Button
+                  id="acctount-tasks-login-frame-register"
+                  className="btn-add"
+                  onClick={() => onRegisterOpen(loginData)}
+                >
+                  {t("login.register.submit", "Create account")}
+                </Button>
+              )}
+              {PublicSettings.feature.visitorUser && visitorUserAllowed && (
+                <Button
+                  id="acctount-tasks-login-frame-visitor"
+                  className="btn-add"
+                  onClick={() => onVisitorOpen(loginData)}
+                >
+                  {t("login.visitor.submit", "Continue as guest")}
+                </Button>
+              )}
             </div>
-          </div>
+          </>
         )}
       </div>
     </form>

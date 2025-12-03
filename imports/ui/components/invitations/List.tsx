@@ -10,6 +10,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
 import { ProfileLink } from "/imports/ui/components/profile-link";
+import { FormCheck } from "/imports/ui/components/FormCheck";
 
 function statusFormat(t: TFunction<"translation", undefined>, status: Status) {
   switch (status) {
@@ -106,7 +107,7 @@ function Table({ tenantId, invitations }: { tenantId: string; invitations: Invit
                   }
                 }}
               >
-                <span className="fa-solid fa-trash-can" aria-hidden="true"></span>
+                <i className="fa-solid fa-trash-can" />
               </button>
             </div>
           </div>
@@ -143,19 +144,14 @@ export function List({ tenantId }: Props) {
     <>
       <div className="mt-4"></div>
 
-      <div className="form-check">
-        <input
-          className="form-check-input"
-          type="checkbox"
-          id="invitationsListShowAcceptedCheck"
-          onChange={(event) => {
-            setShowAccepted(event.currentTarget.checked);
-          }}
-        />
-        <label className="form-check-label" htmlFor="invitationsListShowAcceptedCheck">
-          {t("invitations.list.showAccepted", "Show accepted invitations")}
-        </label>
-      </div>
+      <FormCheck
+        type="switch"
+        id="invitations-list-show-accepted"
+        label={t("invitations.list.showAccepted", "Show accepted invitations")}
+        checked={showAccepted}
+        onChange={(checked) => setShowAccepted(checked)}
+      />
+
       <Table
         tenantId={tenantId}
         invitations={invitations.filter((i) => status.includes(i.status))}

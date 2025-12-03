@@ -26,15 +26,15 @@ describe("userprofile page", () => {
   });
 
   it("should allow to send a direct message", () => {
-    cy.get('[data-test="send-message-textarea"]').type(
+    cy.get("#send-message-textarea").type(
       "Hallo Sandro, es freut mich dich am Freitag zu sehen. Gruss Seee",
     );
-    cy.get('[data-test="send-message-submit"]').click();
+    cy.get("#send-message-submit").click();
 
-    cy.get('[data-test="account-tasks-login-frame-username"]').type("Seee");
-    cy.get('[data-test="account-tasks-login-frame-password"]').click();
-    cy.get('[data-test="account-tasks-login-frame-password"]').type("greg");
-    cy.get('[data-test="account-tasks-login-frame-submit"]').click();
+    cy.get("#account-tasks-login-frame-username").type("Seee");
+    cy.get("#account-tasks-login-frame-password").click();
+    cy.get("#account-tasks-login-frame-password").type("greg");
+    cy.get("#account-tasks-login-frame-submit").click();
 
     cy.get(".alert-success").should("be.visible");
   });

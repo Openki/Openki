@@ -1,11 +1,11 @@
-import React, { useState, DragEvent, ChangeEvent } from "react";
 import ImageBlobReduce from "image-blob-reduce";
-import { useTranslation } from "react-i18next";
 import mimeDb from "mime-db";
+import React, { ChangeEvent, DragEvent, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
 
-import { ButtonCancel, ButtonSave, ButtonDelete } from "../Buttons";
+import { ButtonDelete, ButtonCancel, ButtonSave } from "../Buttons";
 
 import "./styles.scss";
 
@@ -244,7 +244,7 @@ export function EditableImage(data: Data) {
             ) : data.thumbnail?.src ? (
               <img {...thumbnailAttributes()} src={data.thumbnail.src} />
             ) : (
-              <i className="fa-regular fa-image fa-5x" aria-hidden="true"></i>
+              <i className="fa-regular fa-image fa-5x" />
             )}
           </div>
           {dragover ? (
@@ -297,11 +297,11 @@ export function EditableImage(data: Data) {
       </form>
       <div className="editable-image-controls">
         {progress === "ready" ? (
-          <ButtonSave {...uploadButtonAttributes()} />
+          <ButtonSave needsLogin id="editable-image-save" {...uploadButtonAttributes()} />
         ) : (
-          deleteAllowed() && <ButtonDelete onClick={onDelete} />
+          deleteAllowed() && <ButtonDelete id="editable-image-delete" onClick={onDelete} />
         )}{" "}
-        <ButtonCancel onClick={onCancel} />
+        <ButtonCancel id="editable-image-cancel" onClick={onCancel} />
       </div>
     </>
   ) : (
@@ -314,11 +314,7 @@ export function EditableImage(data: Data) {
           onClick={handleEditClick}
         />
       ) : (
-        <i
-          className="fa-regular fa-image fa-5x cursor-pointer"
-          aria-hidden="true"
-          onClick={handleEditClick}
-        ></i>
+        <i className="fa-regular fa-image fa-5x cursor-pointer" onClick={handleEditClick} />
       )}{" "}
       <span
         className="align-top fa-solid fa-pencil cursor-pointer"
@@ -340,7 +336,7 @@ export function EditableImage(data: Data) {
                     type="button"
                     className="btn-close"
                     data-bs-dismiss="modal"
-                    aria-label="Close"
+                    aria-label={t("_button.close")}
                   ></button>
                 </div>
                 <div className="modal-body text-center">

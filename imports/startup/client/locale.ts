@@ -2,7 +2,7 @@ import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
 import moment from "moment";
 import { Accounts } from "meteor/accounts-base";
-import { range } from "lodash";
+import { assignIn, range } from "lodash-es";
 import { Session } from "meteor/session";
 import { Tracker } from "meteor/tracker";
 import "bootstrap-datepicker";
@@ -114,7 +114,7 @@ Meteor.startup(() => {
       return locale._monthsShort;
     };
 
-    ($.fn.datepicker as any).dates.en = _.extend({}, ($.fn.datepicker as any).dates.en, {
+    ($.fn.datepicker as any).dates.en = assignIn({}, ($.fn.datepicker as any).dates.en, {
       days: locale._weekdays,
       daysShort: locale._weekdaysShort,
       daysMin: locale._weekdaysMin,

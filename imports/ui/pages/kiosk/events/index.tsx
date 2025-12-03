@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Mongo } from "meteor/mongo";
 import moment from "moment";
 import { useSession } from "/imports/utils/react-meteor-data";
@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { EventEntity, EventModel, FindFilter } from "/imports/api/events/events";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 
 import "./styles.scss";
 import { useDetails as useGroupDetails } from "/imports/api/groups/publications";
@@ -123,67 +123,71 @@ export function KioskEventsPage({
     return PublicSettings.headerLogoKiosk.alt;
   }
 
-  useEffect(() => {
-    Metatags.setCommonTags(t("event.list.windowtitle", "Events"));
-  });
-
   return (
-    <div className="kiosk container-fluid">
-      <div className="page-component">
-        <div className="kiosk-heading">
-          {filter.group ? (
-            <Group groupId={filter.group} />
-          ) : filter.venue ? (
-            <Venue venueId={filter.venue} />
-          ) : (
-            <a href={Router.path("home")}>
-              {!!headerLogo() && (
-                <img src={headerLogo()} alt={headerAlt()} className="kiosk-logo kiosk-logo-brand" />
-              )}
-              {siteName}
-            </a>
-          )}
-        </div>
-        <div className="kiosk-language-selection">
-          <LanguageSelection />
-        </div>
-        <div className="kiosk-moment">
-          <span className="kiosk-moment-time">{showTime()}</span>
-          <span className="kiosk-moment-date">{showDate()}</span>
-        </div>
-      </div>
-      {ongoing.count() > 0 && (
-        <div className="page-component">
-          <h3>
-            {t(
-              "kiosk.ongoing",
-              "{NUM, plural, one{One ongoing event:} other{# ongoing events:} }",
-              { NUM: ongoing.count() },
-            )}
-          </h3>
-          <List events={ongoing.fetch()} timePeriod="ongoing" />
-        </div>
-      )}
+    <>
+      <MetaTags title={t("event.list.windowtitle", "Events")} />
 
-      {today.count() > 0 && (
-        <div className="page-component page-component-seperated">
-          <h3>
-            {t("kiosk.today", "{NUM, plural, one{One event} other{# events} } later today:", {
-              NUM: today.count(),
-            })}
-          </h3>
-          <List events={today.fetch()} timePeriod="today" />
+      <div className="kiosk container-fluid">
+        <div className="page-component">
+          <div className="kiosk-heading">
+            {filter.group ? (
+              <Group groupId={filter.group} />
+            ) : filter.venue ? (
+              <Venue venueId={filter.venue} />
+            ) : (
+              <a href={Router.path("home")}>
+                {!!headerLogo() && (
+                  <img
+                    src={headerLogo()}
+                    alt={headerAlt()}
+                    className="kiosk-logo kiosk-logo-brand"
+                  />
+                )}
+                {siteName}
+              </a>
+            )}
+          </div>
+          <div className="kiosk-language-selection">
+            <LanguageSelection />
+          </div>
+          <div className="kiosk-moment">
+            <span className="kiosk-moment-time">{showTime()}</span>
+            <span className="kiosk-moment-date">{showDate()}</span>
+          </div>
         </div>
-      )}
-      {future.count() > 0 ? (
-        <div className="page-component page-component-seperated">
-          <h3>{t("kiosk.future", "Future events:", { NUM: future.count() })}</h3>
-          <List events={future.fetch()} timePeriod="upcoming" />
-        </div>
-      ) : (
-        <h3>{t("kiosk.noFutureEvents", "There are no future events")}</h3>
-      )}
-    </div>
+        {ongoing.count() > 0 && (
+          <div className="page-component">
+            <h3>
+              {t(
+                "kiosk.ongoing",
+                "{NUM, plural, one{One ongoing event:} other{# ongoing events:} }",
+                { NUM: ongoing.count() },
+              )}
+            </h3>
+            <List events={ongoing.fetch()} timePeriod="ongoing" />
+          </div>
+        )}
+
+        {today.count() > 0 && (
+          <div className="page-component page-component-seperated">
+            <h3>
+              {t("kiosk.today", "{NUM, plural, one{One event} other{# events} } later today:", {
+                NUM: today.count(),
+              })}
+            </h3>
+            <List events={today.fetch()} timePeriod="today" />
+          </div>
+        )}
+        {future.count() > 0 ? (
+          <div className="page-component page-component-seperated">
+            <h3>{t("kiosk.future", "Future events:", { NUM: future.count() })}</h3>
+            <List events={future.fetch()} timePeriod="upcoming" />
+          </div>
+        ) : (
+          <h3>{t("kiosk.noFutureEvents", "There are no future events")}</h3>
+        )}
+      </div>
+    </>
   );
 }
 

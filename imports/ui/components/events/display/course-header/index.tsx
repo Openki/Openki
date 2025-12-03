@@ -48,10 +48,10 @@ export function EventCourseHeader(props: Props) {
             href={props.backlink}
             title={t("event.details.viewCourse")}
           >
-            <i className="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
+            <i className="fa-solid fa-angle-left fa-fw" />
           </a>
           <a href={props.backlink}>
-            <i className="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
+            <i className="fa-solid fa-angle-left fa-fw" />
             {t("event.details.viewCourse", "To the course overview")}
           </a>
         </>

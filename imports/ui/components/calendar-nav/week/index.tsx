@@ -1,5 +1,4 @@
-import React, { useEffect, useRef } from "react";
-import $ from "jquery";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
@@ -8,10 +7,11 @@ import { useTranslation } from "react-i18next";
 import { Control } from "./Control";
 import { FilterGroups } from "../../FilterGroups";
 import { Direction } from "../Arrow";
-
-import "../styles.scss";
 import { SearchField } from "../../search-field";
 import { FilterCategories } from "../../filter-categories";
+import { FormCheck } from "/imports/ui/components/FormCheck";
+
+import "../styles.scss";
 
 export interface Props {
   hideSwitches: boolean;
@@ -26,15 +26,16 @@ export interface Props {
   categories: string[];
   onAddCategory: (category: string) => void;
   onRemoveCategory: (category: string) => void;
+  attendingEventsOnly: boolean;
   onChangeAttendingEventsOnly: (state: boolean) => void;
 }
 
 export function CalendarNavWeek(props: Props) {
   const { hideSwitches, date, availableGroups } = props;
-  const { weekNr, dateLong, dateShort } = useDateTimeFormat();
-  const currentUser = useUser();
   const { t } = useTranslation();
-  const elementRef = useRef(null);
+  const currentUser = useUser();
+  const { weekNr, dateLong, dateShort } = useDateTimeFormat();
+  const [covering, setCovering] = useState(false);
 
   function endDateTo() {
     return moment(date).add(6, "days");
@@ -73,26 +74,20 @@ export function CalendarNavWeek(props: Props) {
   }
 
   useEffect(() => {
-    if (!elementRef.current) {
-      return;
-    }
-    const navContainer = $(elementRef.current);
-    navContainer.slideDown();
+    const handleScroll = () => {
+      const atTop = window.scrollY < 5;
+      setCovering(!atTop);
+    };
 
-    $(window).on("scroll", () => {
-      const isCovering = navContainer.hasClass("calendar-nav-container-covering");
-      const atTop = ($(window).scrollTop() || 0) < 5;
-
-      if (!isCovering && !atTop) {
-        navContainer.addClass("calendar-nav-container-covering");
-      } else if (isCovering && atTop) {
-        navContainer.removeClass("calendar-nav-container-covering");
-      }
-    });
-  });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <div className="calendar-nav-container flex-container" ref={elementRef}>
+    <div
+      className={`flex-container calendar-nav-container${covering ? " calendar-nav-container-covering" : ""}`}
+      style={{ display: "block" }}
+    >
       <div className="row align-items-center p-1">
         <div className="col-md-3 col-lg-4 p-1">
           <SearchField {...searchFieldAttr()} />
@@ -131,28 +126,18 @@ export function CalendarNavWeek(props: Props) {
               <FilterCategories {...filterCategoriesAttr()} />
             </div>
           )}
-        </div>
-        {!currentUser && (
-          <div
-            className={`${!availableGroups ? "offset-md-4 offset-lg-2 " : ""}col-md-8 col-lg-4 p-1`}
-          >
-            <div className="form-check form-switch">
-              <input
-                type="checkbox"
+          {!!currentUser && (
+            <div className="col-md-8 col-lg-4 p-1 d-flex justify-content-center">
+              <FormCheck
                 id="filter-own-events"
-                className="form-check-input float-none"
-                name="filter-own-events"
-                onClick={(event) => {
-                  const radioSwitch = event.currentTarget;
-                  props.onChangeAttendingEventsOnly(radioSwitch.checked);
-                }}
-              />{" "}
-              <label htmlFor="filter-own-events">
-                {t("calendar.filter-own-events", "Show my events only")}
-              </label>
+                type="switch"
+                label={t("calendar.filter-own-events", "Show my events only")}
+                onChange={(checked) => props.onChangeAttendingEventsOnly(checked)}
+                checked={props.attendingEventsOnly}
+              />
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

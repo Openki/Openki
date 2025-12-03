@@ -1,11 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import { debounce } from "lodash-es";
+import { Router } from "meteor/iron:router";
+import React, { ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 import { useFindFilter } from "/imports/api/courses/publications";
+import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
+
+import { FormControl } from "/imports/ui/components/form-control";
 
 import "./styles.scss";
-import { Router } from "meteor/iron:router";
-import { debounce } from "lodash";
 
 function Courses({ search }: { search: string }) {
   const { t } = useTranslation();
@@ -29,9 +31,9 @@ function Courses({ search }: { search: string }) {
             }}
           >
             {collapsed ? (
-              <span className="fa-solid fa-angle-down fa-fw" aria-hidden="true"></span>
+              <i className="fa-solid fa-angle-down fa-fw" />
             ) : (
-              <span className="fa-solid fa-angle-up fa-fw" aria-hidden="true"></span>
+              <i className="fa-solid fa-angle-up fa-fw" />
             )}
           </button>
           {t(
@@ -68,44 +70,44 @@ function Courses({ search }: { search: string }) {
   ) : null;
 }
 
-export function Title(data: {
+export function Title(props: {
   value?: string | undefined;
   showOtherProposals?: boolean | undefined;
   onChange: (newValue: string) => void;
+  onBlur?: (() => void) | undefined;
+  error?: ReactNode;
 }) {
   const { t } = useTranslation();
 
-  const [proposedSearch, setProposedSearch] = useState(data?.value || "");
-  const [value, setValue] = useState(data?.value || "");
-
-  const titleElement = useRef<HTMLInputElement>(null);
+  const [proposedSearch, setProposedSearch] = useState(props?.value || "");
+  const [value, setValue] = useState(props?.value || "");
 
   useEffect(() => {
-    setProposedSearch(data?.value || "");
-    setValue(data?.value || "");
-  }, [data.value]);
+    setProposedSearch(props?.value || "");
+    setValue(props?.value || "");
+  }, [props.value]);
 
   return (
     <div className="mb-3">
-      <label className="form-label">{t("course.edit.title", "Title")}</label>
-      <input
-        className="form-control form-control-lg js-title"
-        ref={titleElement}
-        id="editform_name"
-        placeholder={t("course.title.placeholder", "What are you interested in?")}
-        size={40}
+      <FormControl
+        id="course-edit-title"
         type="text"
+        size="large"
+        label={t("course.edit.title", "Title")}
+        placeholder={t("course.title.placeholder", "What are you interested in?")}
         value={value}
-        onChange={(event) => {
-          setValue(event.target.value);
-          data.onChange(event.target.value);
-        }}
-        onInput={debounce((event: any) => {
-          setProposedSearch(event.target.value);
-        }, 220)}
         autoComplete="off"
+        onChange={(value) => {
+          setValue(value);
+          props.onChange(value);
+          debounce((value: string) => {
+            setProposedSearch(value);
+          }, 220)(value);
+        }}
+        onBlur={props.onBlur}
+        error={props.error}
       />
-      {data.showOtherProposals && proposedSearch.length > 3 && <Courses search={proposedSearch} />}
+      {props.showOtherProposals && proposedSearch.length > 3 && <Courses search={proposedSearch} />}
     </div>
   );
 }

@@ -59,7 +59,7 @@ export function FeaturedGroup() {
     <div className="container">
       <div className="featured-group">
         <div className="featured-group-header">
-          <span className="fa-solid fa-star fa-fw" aria-hidden="true"></span>{" "}
+          <i className="fa-solid fa-star fa-fw" />{" "}
           {t("featuredGroup.heading", "Featured group in {REGION}", {
             REGION: currentRegion.name,
           })}

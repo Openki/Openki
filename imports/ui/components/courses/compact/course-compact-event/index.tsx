@@ -15,18 +15,21 @@ export function CourseCompactEvent(props: { event: CourseNextEventEntity & OEven
     <div className="course-compact-next-event col">
       {!!event.venue?.name && (
         <div className="course-compact-next-event-component">
-          <i className="fa-solid fa-house fa-fw" aria-hidden="true"></i>&nbsp;{event.venue.name}
+          <i className="fa-solid fa-house fa-fw" />
+          &nbsp;{event.venue.name}
         </div>
       )}
       <div className="course-compact-next-event-component">
-        <i className="fa-regular fa-clock fa-fw" aria-hidden="true"></i>&nbsp;
+        <i className="fa-regular fa-clock fa-fw" />
+        &nbsp;
         <span title={`${dateShort(event?.startLocal)} ${timeFormat(event?.startLocal)}`}>
           {dateToRelativeString(event?.startLocal)}
         </span>
       </div>
       {!event.noRsvp && (
         <div className="course-compact-next-event-component">
-          <i className="fa-solid fa-user fa-fw" aria-hidden="true"></i>&nbsp;
+          <i className="fa-solid fa-user fa-fw" />
+          &nbsp;
           {event?.numberOfParticipants()}
         </div>
       )}

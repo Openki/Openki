@@ -26,6 +26,9 @@
 			, "de": "/info/faq#was-ist-eine-openki-region"
 			}
 		}
+  , "feature":
+		{ "visitorUser": true
+		}
 	, "contribution":
 	    { "icon": "fa-solid fa-heart"
 		, "forbiddenChars": ["🖤", "💖", "💔", "💚", "💜", "❤️", "🧡", "💕", "💛", "💝"]

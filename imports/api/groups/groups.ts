@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { Match, check } from "meteor/check";
-import { _ } from "meteor/underscore";
+import { assignIn } from "lodash-es";
 
 import { UserModel } from "/imports/api/users/users";
 
@@ -31,6 +31,21 @@ export type GroupEntityCustomCourseFields =
       name: string;
       /** Used when the value is edited. */
       editText: LocalizedValue;
+      /** Used when the value is shown. It will be copied to the course object. */
+      displayText: LocalizedValue;
+      /** Who will see the entered values. It will be copied to the course object. */
+      visibleFor: "all" | "editors";
+      /** Optional: The type of field. 'singleLine' for single-line text, 'multiLine' for multi-line text, 'option' a choice from a selection of values, 'boolean' for a choice between true and false. Default: 'singleLine' */
+      type: "option";
+      options: Record<string, LocalizedValue>;
+      /** Optional: By type 'option', you can set the default value. */
+      defaultValue?: string;
+    }
+  | {
+      /** For internal us, must be unique in the list. */
+      name: string;
+      /** Used when the value is edited. */
+      editText: LocalizedValue;
       /** Used when the value is edited as placeholder in the field. */
       editDescription: LocalizedValue;
       /** Used when the value is shown. It will be copied to the course object. */
@@ -39,7 +54,7 @@ export type GroupEntityCustomCourseFields =
       visibleFor: "all" | "editors";
       /** Optional: The type of field. 'singleLine' for single-line text, 'multiLine' for multi-line text, boolean for a choice between true and false. Default: 'singleLine' */
       type: "boolean";
-      /** Optional: By type boolean, you can set the default value. Default: false */
+      /** Optional: By type 'boolean', you can set the default value. Default: false */
       defaultValue?: boolean;
     };
 
@@ -136,7 +151,7 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
   constructor() {
     super("Groups", {
       transform(tenant) {
-        return _.extend(new Group(), tenant);
+        return assignIn(new Group(), tenant);
       },
     });
 

@@ -1,21 +1,19 @@
 // file://./../../../imports/ui/pages/event-details/index.tsx
 
-beforeEach(() => {
-  cy.visitOpenki("/event/eb386e8309/Schweissen", { username: "Support" });
-});
-
 describe("event details page", () => {
   //  https://gitlab.com/Openki/Openki/-/issues/2269
   it("should allow to cancel a event", () => {
+    cy.visitOpenki("/event/eb386e8309/Schweissen", { username: "Support" });
+
     cy.getById("events-participants-header").should("contains.text", "Noch keine Teilnehmer_innen");
     cy.get("#maincontent .btn-remove").click();
     cy.get("#maincontent .event-cancel-confirm p").should(
       "have.text",
       'Bitte bestätige das Absagen von dieser Veranstaltung. Sie wird dann als "Abgesagt" dargestellt und die Anmeldefunktion wird deaktiviert.\nDa niemand angemeldet ist, wird niemand benachrichtigt.',
     );
-    cy.get('[data-test="please-login-button"]').click();
+    cy.get("#events-cancel-confirm-dialog-cancel").click();
     cy.getById("event-details-canceled").should("be.visible");
-    cy.get('[data-test="events-display-body-uncancel-button"]').click();
+    cy.get("#events-display-body-uncancel").click();
     cy.get(".alert-success").should("be.visible");
   });
 
@@ -23,6 +21,8 @@ describe("event details page", () => {
   it("should display not found page for not existing events", () => {
     cy.visitOpenki("/event/not-exists", { username: "Seee" });
 
-    cy.get("h3").contains("Diese Veranstaltung konnte nicht gefunden werden.");
+    cy.get("h3").contains(
+      "Could not find this event. Maybe it was deleted, or never existed in the first place.",
+    );
   });
 });

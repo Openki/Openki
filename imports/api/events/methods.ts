@@ -1,6 +1,6 @@
 import { Match, check } from "meteor/check";
 import { Meteor } from "meteor/meteor";
-import { _ } from "meteor/underscore";
+import { assignIn } from "lodash-es";
 import moment from "moment";
 import { Random } from "meteor/random";
 
@@ -67,7 +67,7 @@ const ReplicaSync = function (
           end: newStartMoment.add(timeDelta).toDate(),
         });
 
-        const regionZone = await LocalTime.zone(replica.region);
+        const regionZone = await LocalTime.zoneAsync(replica.region);
         Object.assign(replicaChanges, {
           startLocal: regionZone.toString(replicaChanges.start as Date),
           endLocal: regionZone.toString(replicaChanges.end as Date),
@@ -221,11 +221,11 @@ export const save = ServerMethod(
         : PublicSettings.sendReminderPreset;
 
       // Synthesize event document because the code below relies on it
-      event = _.extend(new OEvent(), {
+      event = assignIn(new OEvent(), {
         region: editFields.region,
         courseId: editFields.courseId,
         editors: [user._id],
-      });
+      }) as EventModel;
     } else {
       const result = await Events.findOneAsync(eventId);
       if (!result) {
@@ -244,7 +244,7 @@ export const save = ServerMethod(
       throw new Meteor.Error(400, "Region not found");
     }
 
-    const regionZone = await LocalTime.zone(region._id);
+    const regionZone = await LocalTime.zoneAsync(region._id);
 
     // Don't allow moving past events or moving events into the past
     // This section needs a rewrite even more than the rest of this method
@@ -284,6 +284,27 @@ export const save = ServerMethod(
       }
     }
 
+    if (editFields.venue?._id || event.venue?._id) {
+      const venue = await Venues.findOneAsync(editFields.venue?._id || event.venue?._id);
+
+      if (venue && !venue.allowParallelEvents) {
+        const hasParallelEvents = !!(
+          await Events.findFilter(
+            {
+              venue: venue._id,
+              period: [editFields.start || event.start, editFields.end || event.end],
+            },
+            /* take two to check for parallel events, maybe one is the current event */
+            2,
+          ).fetchAsync()
+        ).find((e) => e._id !== event._id);
+
+        if (hasParallelEvents) {
+          throw new Meteor.Error(400, `This venue not allows to have two parallel events.`);
+        }
+      }
+    }
+
     // prevent to choose a value which is lower than actual registered participants
     if (editFields.maxParticipants) {
       // if maxParticipants is 0 or no participants registered yet,
@@ -302,7 +323,7 @@ export const save = ServerMethod(
 
     if (editFields.venue?._id && editFields.venue._id !== event.venue?._id) {
       const venue = await Venues.findOneAsync(editFields.venue._id);
-      if (venue?.restrictedUse && venue.editableBy(user))
+      if (venue?.restrictedUse && !venue.editableBy(user))
         throw new Meteor.Error(
           400,
           `this venue can only be chosen by its hosts to publish an event.`,

@@ -1,10 +1,8 @@
-import { truncate } from "lodash";
+import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useUser } from "meteor/react-meteor-accounts";
-import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useValidation } from "../../lib/useValidation";
-import { textPlain } from "/imports/utils/html-tools";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import * as Alert from "/imports/api/alerts/alert";
@@ -13,12 +11,12 @@ import * as GroupsMethods from "/imports/api/groups/methods";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 import { Store } from "/imports/ui/lib/editable";
-import * as Metatags from "/imports/utils/metatags";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
 import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 
-import { ButtonCancel, ButtonSave } from "../../components/Buttons";
+import { ButtonCancel, ButtonSave } from "/imports/ui/components/Buttons";
 import { Find } from "../../components/courses/find";
 import { Dashboard, Props as DashboardProps } from "../../components/dashboard";
 import { VenueTag } from "../../components/venues/link";
@@ -170,7 +168,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
         }
       : undefined,
     onChange: (newName) => {
-      setNewGroup({ ...newGroup, name: newName });
+      setNewGroup((state) => ({ ...state, name: newName }));
     },
   };
 
@@ -187,7 +185,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
         }
       : undefined,
     onChange: (newText) => {
-      setNewGroup({ ...newGroup, short: newText });
+      setNewGroup((state) => ({ ...state, short: newText }));
     },
   };
 
@@ -204,7 +202,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
         }
       : undefined,
     onChange: (newClaim) => {
-      setNewGroup({ ...newGroup, claim: newClaim });
+      setNewGroup((state) => ({ ...state, claim: newClaim }));
     },
   };
 
@@ -224,19 +222,16 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
         }
       : undefined,
     onChange: (newDescription) => {
-      setNewGroup({ ...newGroup, description: newDescription });
+      setNewGroup((state) => ({ ...state, description: newDescription }));
     },
   };
 
   const title = group.name || t("group.windowtitle.create", "Create group");
-  let claim = "";
-  if (group.claim) {
-    claim = truncate(textPlain(group.claim), { length: 160 });
-  }
-  Metatags.setCommonTags(title, claim, group.publicLogoUrl());
 
   return (
     <>
+      <MetaTags title={title} description={group.claim} image={group.publicLogoUrl()} />
+
       <div className="container mb-4">
         {group.isNew() && <h2>{t("group.details.titleNew", "Create new group")}</h2>}
         <div className="page-component group-details">
@@ -248,9 +243,8 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
                 {" "}
                 <i
                   title={t("group.details.isFeatured", "This group is featured")}
-                  aria-hidden="true"
                   className="fa-solid fa-star fa-fw"
-                ></i>
+                />
               </>
             )}
 
@@ -261,7 +255,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
                 Router.go("home"); // Got a better idea?
               }}
             >
-              <i className="fa-solid fa-xmark fa-lg" aria-hidden="true"></i>
+              <i className="fa-solid fa-xmark fa-lg" />
             </button>
             {!group.isNew() && mayEdit && (
               <button
@@ -271,7 +265,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
                   setEditingSettings(!editingSettings);
                 }}
               >
-                <i className="fa-solid fa-gear fa-lg" aria-hidden="true"></i>
+                <i className="fa-solid fa-gear fa-lg" />
               </button>
             )}
           </div>
@@ -322,8 +316,13 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
           </div>
           {group.isNew() && (
             <div className="actions">
-              <ButtonSave onClick={handleSave} disabled={isBusy} />
-              <ButtonCancel onClick={handleCancel} disabled={isBusy} />
+              <ButtonSave
+                id="group-details-save"
+                needsLogin
+                onClick={handleSave}
+                disabled={isBusy}
+              />
+              <ButtonCancel id="group-details-cancel" onClick={handleCancel} disabled={isBusy} />
             </div>
           )}
           {allowEditingSettings() && <GroupSettings group={group} />}
