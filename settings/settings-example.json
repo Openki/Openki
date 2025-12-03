@@ -24,7 +24,7 @@
 	, "theme": // Theming the ui
 		{ "brand": "#38829c"
 		}
-	, "publicTenants": ["8410c099a7"]  // IDs of the tenants that should be displayed publically, choose at least one
+	, "publicTenants": ["8410c099a7"] // IDs of the tenants that should be displayed publically, choose at least one
 	, "regionSelection":
 		{ "minNumber": 5 // The minimum number of regions displayed in the Regions selection. Default: 5
 		, "aboutLink": // A link to a page that explains regions, if not set then none link is shown.
@@ -39,43 +39,43 @@
 		, "site": 1 // Matomo id
 		}
 	, "pricePolicyEnabled": true // by true, show only indicative prices (DE: Richtpreise), default is true
-  , "askNewsletterConsent": true // by true, ask user to receive newsletter on account registration, default is true
+	, "askNewsletterConsent": true // by true, ask user to receive newsletter on account registration, default is true
 	, "sendReminderPreset": true // Should a reminder be sent by default or not. Default is true
 	, "feature":
 		{ "login": // toggle visibility of login services
 			{ "email": false
-      , "google": true
+			, "google": true
 			, "facebook": true
 			, "github": true
 			}
 		, "visitorUser": true // allow user without name and password, Default: false
 		, "rsvpWithCompanions": true // allow rsvp with +1 / for two seats, Default: false
 		, "sendReminderIsEditable": true // allow to edit whether to remind or not, Default: true
-    , "proposeCourseBox": true // show a "empty" course box to propose a new course, Default: true
+		, "proposeCourseBox": true // show a "empty" course box to propose a new course, Default: true
 		, "resizeImagesOnServer": true // needs sharp npm module on server which needs a CPU with v2 microarchitecture level, Default: true
-    , "disable2dSphereForLocations": false // disable the creation of 2dSphere indexes for db entites, this allow to save non geo location in db, used for CustomMapConfig, Default: false
+		, "disable2dSphereForLocations": false // disable the creation of 2dSphere indexes for db entites, this allow to save non geo location in db, used for CustomMapConfig, Default: false
 		, "socialMediaButtons": [ // which social media buttons should be displayed, when web share api is not supported from the browser
-        "bluesky",
-        "facebook",
-        "fediverse",
-        "hackernews",
-        "linkedin",
-        "mastodon",
-        "odnoklassniki",
-        "pinterest",
-        "pocket",
-        "reddit",
-        "teams",
-        "telegram",
-        "tumblr",
-        "twitter",
-        "viber",
-        "vkontakte",
-        "whatsapp",
-        "copy-url",
-        "email"
-    ]
-    }
+		"bluesky",
+		"facebook",
+		"fediverse",
+		"hackernews",
+		"linkedin",
+		"mastodon",
+		"odnoklassniki",
+		"pinterest",
+		"pocket",
+		"reddit",
+		"teams",
+		"telegram",
+		"tumblr",
+		"twitter",
+		"viber",
+		"vkontakte",
+		"whatsapp",
+		"copy-url",
+		"email"
+		]
+		}
 	, "nav":
 		{ "brandLink": "/" // target link when clicking on the logo Default: "/"
 		, "search": true // show/hide find/search item in navbar Default: true
@@ -89,26 +89,26 @@
 				}
 			]
 		}
-  , "regionDashboardDefault": // Standard for all regions, can be overwritten if the "dashboard" property is set in the region, if not set, the ‘find’ page is displayed, default: undefined
-    [	{ "entity": "" // The entity to show: "course", "courseWithoutPropose", "event", "group", "eventsMap", "propose" are supported
-      , "title": "" // Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
-      , "query": "" // Query how the data should be filtered and sorted, all options and filters can be found in the wiki, can be an empty string "". The entities are filtered by region.
-      , "showAll": // Overwrite the standard showAll button (Optional)
-        { "link": "" // The target to which the button links.
-        , "text": "" // The text to display. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
-        }
-      }
-    ]
-  , "groupDashboardDefault": // Standard for all groups, can be overwritten if the "dashboard" property is set in the group, if not set, the ‘find’ page is displayed, default: undefined
-    [	{ "entity": "" // The entity to show: "course", "courseWithoutPropose", "event", "group", "eventsMap", "propose" are supported
-      , "title": "" // Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
-      , "query": "" // Query how the data should be filtered and sorted, all options and filters can be found in the wiki, can be an empty string "". The entities are filtered by region and group.
-      , "showAll": // Overwrite the standard showAll button (Optional)
-        { "link": "" // The target to which the button links.
-        , "text": "" // The text to display. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
-        }
-      }
-    ]
+	, "regionDashboardDefault": // Standard for all regions, can be overwritten if the "dashboard" property is set in the region, if not set, the ‘find’ page is displayed, default: undefined
+		[	{ "entity": "" // The entity to show: "course", "courseWithoutPropose", "event", "group", "eventsMap", "propose" are supported
+			, "title": "" // Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+			, "query": "" // Query how the data should be filtered and sorted, all options and filters can be found in the wiki, can be an empty string "". The entities are filtered by region.
+			, "showAll": // Overwrite the standard showAll button (Optional)
+				{ "link": "" // The target to which the button links.
+				, "text": "" // The text to display. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+				}
+			}
+		]
+	, "groupDashboardDefault": // Standard for all groups, can be overwritten if the "dashboard" property is set in the group, if not set, the ‘find’ page is displayed, default: undefined
+		[	{ "entity": "" // The entity to show: "course", "courseWithoutPropose", "event", "group", "eventsMap", "propose" are supported
+			, "title": "" // Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+			, "query": "" // Query how the data should be filtered and sorted, all options and filters can be found in the wiki, can be an empty string "". The entities are filtered by region and group.
+			, "showAll": // Overwrite the standard showAll button (Optional)
+				{ "link": "" // The target to which the button links.
+				, "text": "" // The text to display. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+				}
+			}
+		]
 	, "footerLinks":
 		[	{ "link": "https://about.openki.net/"
 			, "key": "footer.aboutOpenki" // text from the entry. The value is a translation key from i18next it must be defined in code
@@ -142,7 +142,7 @@
 		}
 	, "courseDescriptionMax": 15000 // Max characters allowed for the description-field of courses. Default: 15000
 	, "eventDescriptionMax": 15000 // Max characters allowed for the description-field of events. Default: 15000
-	, "categories":  // Categories for courses, main and/or sub categories
+	, "categories": // Categories for courses, main and/or sub categories
 			{ "sports":
 				[ "martialarts"
 				, "teamsport"
@@ -167,7 +167,7 @@
 , "robots": false // Tells robots/crawlers whether to index the website or not
 , "hideProfiles": false // Tells robots/crawlers not to index user profiles (/user/*)
 , "printLog": false // Print the log on the server in the console, usually only for development
-, "service":  // OAuth
+, "service": // OAuth
 	{ "facebook":
 		{ "appId": "567890"
 		, "secret": "123abcd"
@@ -194,7 +194,7 @@
 		, "grace": 7, "select": { "tr": "clientError" }, "remove": true // "grace": 7 means: After 7 days it will be removed
 		}
 
-	, 	{ "name": "drop resume-logins",  "comment": "Resume-Logins are not very interesting"
+	, 	{ "name": "drop resume-logins", "comment": "Resume-Logins are not very interesting"
 		, "grace": 7, "select": { "tr": "Login.Success", "body": {"type": "resume"}}, "remove": true // "remove": true means: The whole entry is removed
 		}
 
@@ -202,8 +202,8 @@
 		, "grace": 8, "select": { "tr": "Login.Success"}, "unset": [ "connection", "username" ] // "unset": [ "field1", "field2", ... ] means: Individual fields are removed
 		}
 
-    , 	{ "name": "drop send-results", "comment": "We keep notification send results for troublehooting"
-	  	, "grace": 61, "select": { "tr": "Notification.SendResult"}, "remove": true
+		, 	{ "name": "drop send-results", "comment": "We keep notification send results for troublehooting"
+			, "grace": 61, "select": { "tr": "Notification.SendResult"}, "remove": true
 		}
 	]
 }
