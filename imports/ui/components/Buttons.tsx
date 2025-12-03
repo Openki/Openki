@@ -36,7 +36,7 @@ type LoginProps = {
        */
       needsLogin: true;
       /**
-       * called before login prompt, return false to not run onClick
+       * called before login prompt, return false to not run onClick, eg. when validation fails
        */
       beforeClick?: (() => undefined | boolean) | undefined;
       visitorUserAllowed?: boolean | undefined;
