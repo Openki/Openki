@@ -13,7 +13,7 @@ describe("Propose course via frame", function () {
     cy.get("#accountTaskModal div.modal-body").click();
     cy.get("#account-tasks-login-frame-submit").click();
     cy.get("a.alert-link").invoke("removeAttr", "target").click();
-    cy.get('[data-test="course-details"] .course-member-role span.fa-solid').should(
+    cy.get('[data-test="course-details"] .course-member-role i').should(
       "have.class",
       "fa-graduation-cap",
     );
@@ -43,7 +43,7 @@ describe("Propose course via frame", function () {
     cy.get("#account-tasks-login-frame-username").type("Seee");
     cy.get("#account-tasks-login-frame-password").type("greg{enter}");
     cy.get("a.alert-link").invoke("removeAttr", "target").click();
-    cy.get('[data-test="course-details"] .course-member-role span.fa-solid').should(
+    cy.get('[data-test="course-details"] .course-member-role i').should(
       "have.class",
       "fa-graduation-cap",
     );
