@@ -24,7 +24,7 @@ function Member({ tenant, memberId }: { tenant: TenantModel; memberId: string })
       Alert.success(
         t(
           "tenantSettings.memberRemoved",
-          '"{MEMBER}" has been removed from the "{TENANT}" organization',
+          '"{MEMBER}" has been removed from {TENANT}',
           { MEMBER: memberName, TENANT: tenantName },
         ),
       );

@@ -38,7 +38,7 @@ export function JoinPage({ joinLink }: Props) {
       Router.go("home");
 
       Alert.success(
-        t("joinPage.join.success", 'You joined the organization "{NAME}".', {
+        t("joinPage.join.success", 'You joined {NAME}.', {
           NAME: tenant?.name,
         }),
       );
@@ -66,7 +66,7 @@ export function JoinPage({ joinLink }: Props) {
             <p className="fs-4">
               {t(
                 "joinPage.text",
-                "Become part of the organization {TENANT} and propose, discuss, develop, organize and publish courses with {INVITER} and other nice people in the organization {TENANT}.",
+                "Become part of {TENANT} and propose, discuss, develop, organize and publish courses with {INVITER} and other nice people in {TENANT}.",
                 {
                   TENANT: tenant?.name,
                   INVITER: inviter?.getDisplayName(),

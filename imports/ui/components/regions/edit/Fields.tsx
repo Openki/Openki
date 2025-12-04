@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { getLocation } from "/imports/utils/user-location";
 
 import { Coordinates, Edit as LocationEdit } from "/imports/ui/components/location/edit";
+import { FormControl } from "/imports/ui/components/form-control";
 
 export interface Change {
   name: string;
@@ -46,19 +47,13 @@ export function Fields({ region, onChange }: Props) {
   return (
     <>
       <div className="mb-3">
-        <label className="form-label">{t("region.edit.name", "Name:")}</label>
-        <input
-          data-test="region-edit-name"
+        <FormControl
+          id="region-edit-name"
           type="text"
-          className="form-control form-control-lg"
-          placeholder={t("region.edit.namePlaceholder", "Full name of region")}
+          size="large"
+          label={t("region.edit.name", "Name")}
           value={region.name}
-          onChange={(event) => {
-            onChange({
-              ...region,
-              name: event.currentTarget.value,
-            });
-          }}
+          onChange={(value) => onChange({ ...region, name: value })}
         />
       </div>
 
@@ -91,44 +86,25 @@ export function Fields({ region, onChange }: Props) {
       </div>
 
       <div className="mb-3">
-        <label className="form-label">{t("region.edit.timezone", "Timezone:")}</label>
-        <select
-          className="form-select"
+        <FormControl
+          id="region-edit-timezone"
+          type="select"
+          label={t("region.edit.timezone", "Timezone")}
+          placeholder={t("_selection.pleaseSelect")}
+          options={Object.fromEntries(timezones().map((tz) => [tz, tz]))}
           value={region.tz}
-          onChange={(event) => {
-            onChange({
-              ...region,
-              tz: event.currentTarget.value,
-            });
-          }}
-        >
-          <option value="" disabled className="select-placeholder">
-            {t("_selection.pleaseSelect")}
-          </option>
-          {timezones().map((tz) => (
-            <option key={tz} value={tz}>
-              {tz}
-            </option>
-          ))}
-        </select>
+          onChange={(value) => onChange({ ...region, tz: value })}
+        />
       </div>
 
       <div className="mb-3">
-        <label htmlFor="region-description-id" className="form-label">
-          {t("region.edit.descriptionLabel", "Description:")}
-        </label>
-        <textarea
-          data-test="region-edit-description"
+        <FormControl
           id="region-description-id"
-          className="form-control"
-          placeholder={t("region.edit.descriptionPlaceholder", "An optional description")}
+          type="textarea"
+          optional
+          label={t("region.edit.descriptionLabel", "Description")}
           value={region.description}
-          onChange={(event) => {
-            onChange({
-              ...region,
-              description: event.currentTarget.value,
-            });
-          }}
+          onChange={(value) => onChange({ ...region, description: value })}
         />
       </div>
     </>
