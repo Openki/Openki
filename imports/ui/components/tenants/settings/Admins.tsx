@@ -22,11 +22,10 @@ function Admin({ tenant, adminId }: { tenant: TenantModel; adminId: string }) {
       const adminName = userName;
       const tenantName = tenant.name;
       Alert.success(
-        t(
-          "tenantSettings.adminRemoved",
-          '"{ADMIN}" has been removed as admin of the "{TENANT}" organization',
-          { ADMIN: adminName, TENANT: tenantName },
-        ),
+        t("tenantSettings.adminRemoved", '"{ADMIN}" has been removed as admin of {TENANT}', {
+          ADMIN: adminName,
+          TENANT: tenantName,
+        }),
       );
     } catch (err) {
       Alert.serverError(err, t("tenantSettings.adminRemoved.error", "Could not remove admin"));

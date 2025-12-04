@@ -24,11 +24,10 @@ export function FoundAdmins({ tenant, userSearch }: { tenant: TenantModel; userS
       const adminName = user.getDisplayName();
       const tenantName = tenant.name;
       Alert.success(
-        t(
-          "tenantSettings.adminAdded",
-          '"{ADMIN}" has been added as admin of the "{TENANT}" organization',
-          { ADMIN: adminName, TENANT: tenantName },
-        ),
+        t("tenantSettings.adminAdded", '"{ADMIN}" has been added as admin of {TENANT}', {
+          ADMIN: adminName,
+          TENANT: tenantName,
+        }),
       );
     } catch (err) {
       Alert.serverError(err, t("tenantSettings.adminAdded.error", "Could not add admin"));

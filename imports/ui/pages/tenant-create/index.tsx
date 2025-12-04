@@ -14,6 +14,7 @@ import * as RegionsMethods from "/imports/api/regions/methods";
 
 import { Fields } from "../../components/regions/edit/Fields";
 import { ButtonCancel, ButtonSave } from "/imports/ui/components/Buttons";
+import { FormControl } from "/imports/ui/components/form-control";
 
 export interface Data {
   tenant: TenantModel;
@@ -38,7 +39,7 @@ export function TenantCreatePage(data: Data) {
     event.preventDefault();
 
     if (!changes.tenantName) {
-      Alert.error(t("tenant.create.plsGiveName", "Please give a organization name"));
+      Alert.error(t("tenant.create.plsGiveName", "Please give a name"));
       return;
     }
 
@@ -92,35 +93,22 @@ export function TenantCreatePage(data: Data) {
 
           <form noValidate onSubmit={handleSave}>
             <div className="mb-3">
-              <label className="form-label">
-                {t("tenant.edit.name", "Name of your organization:")}
-              </label>
-              <input
-                data-test="tenant-edit-name"
+              <FormControl
+                id="teanant-create-name"
                 type="text"
-                className="form-control"
-                placeholder={t("tenant.edit.namePlaceholder", "Full name of your organization")}
-                onChange={(event) => {
-                  setChanges({
-                    ...changes,
-                    tenantName: event.currentTarget.value,
-                  });
-                }}
+                label={t("tenant.edit.name", "Name of your tenant")}
+                value={changes.tenantName}
+                onChange={(value) => setChanges({ ...changes, tenantName: value })}
               />
             </div>
             <Fields
               region={changes}
-              onChange={(newChanges) => {
-                setChanges((changes) => {
-                  return {
-                    tenantName: changes.tenantName,
-                    ...newChanges,
-                  };
-                });
-              }}
+              onChange={(newChanges) =>
+                setChanges((changes) => ({ tenantName: changes.tenantName, ...newChanges }))
+              }
             />
             <div className="form-actions">
-              <ButtonSave submit id="tenant-create-save" isBusy={isBusy} />
+              <ButtonSave submit id="tenant-create-submit" isBusy={isBusy} />
               <ButtonCancel
                 id="tenant-create-cancel"
                 disabled={isBusy}

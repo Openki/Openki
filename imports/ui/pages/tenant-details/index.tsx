@@ -25,7 +25,7 @@ export function TenantDetailsPage({ tenant }: Data) {
       <div className="container">
         <div className="page-component tenant-details">
           <div className="tenant-details-titlebar">
-            {t("tenant.details.tenant", "Organization")}
+            {t("tenant.details.tenant", "Tenant")}
           </div>
           <div className="details-header tenant-details-header clearfix">
             <div className="tenant-details-name">{tenant.name}</div>

@@ -25,7 +25,7 @@ export function AdminPanelPage() {
       route: "users",
     },
     {
-      name: t("adminPanel.tasks.tenants", "Organizations"),
+      name: t("adminPanel.tasks.tenants", "Tenants"),
       icon: "fa-solid fa-sitemap",
       route: "tenants",
     },

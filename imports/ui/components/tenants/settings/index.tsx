@@ -40,7 +40,7 @@ export function Settings({ tenant }: Props) {
           <div className="icon-text-text">
             {t(
               "tenant.settings.members.description",
-              "Members can see and use the above regions in the organisation {TENANT}.",
+              "Members can see and use the above regions in {TENANT}.",
               { TENANT: tenant.name },
             )}
           </div>
@@ -51,7 +51,7 @@ export function Settings({ tenant }: Props) {
           <label className="form-label" htmlFor="AddTenantMember">
             {t(
               "tenant.settings.field.addMembers",
-              'Add existing {SITENAME} members to your "{TENANTNAME}" organization.',
+              "Add existing {SITENAME} members to {TENANTNAME}.",
               { SITENAME: siteName, TENANTNAME: tenant.name },
             )}
           </label>
@@ -95,7 +95,7 @@ export function Settings({ tenant }: Props) {
           <label className="form-label" htmlFor="AddTenantAdmin">
             {t(
               "tenant.settings.field.addAdmins",
-              'Add an existing {SITENAME} user as a new admin to your "{TENANTNAME}" organization.',
+              "Add an existing {SITENAME} user as a new admin to {TENANTNAME}.",
               { SITENAME: siteName, TENANTNAME: tenant.name },
             )}
           </label>
