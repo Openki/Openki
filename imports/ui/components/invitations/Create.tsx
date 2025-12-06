@@ -93,7 +93,7 @@ export function Create({ tenant }: Props) {
         <label className="form-label">
           {t(
             "invitations.create.field.emails",
-            'Send e-mail invitations to join {TENANTNAME}. Each invitation can only be used once.',
+            "Send e-mail invitations to join {TENANTNAME}. Each invitation can only be used once.",
             { TENANTNAME: tenant.name },
           )}
         </label>
