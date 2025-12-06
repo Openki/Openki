@@ -80,8 +80,8 @@ export function Settings({ tenant }: Props) {
       </div>
       <div className="col-md">
         <h3>
-          <i className="fa-solid fa-users fa-fw" />
-          {t("tenant.settings.title.admin", "Admins")} ({tenant.admins.length})
+          <i className="fa-solid fa-users fa-fw" /> {t("tenant.settings.title.admin", "Admins")} (
+          {tenant.admins.length})
         </h3>
         <div className="icon-text-text">
           {t(

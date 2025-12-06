@@ -3,8 +3,9 @@ import moment from "moment-timezone";
 import { useTranslation } from "react-i18next";
 import { getLocation } from "/imports/utils/user-location";
 
-import { Coordinates, Edit as LocationEdit } from "/imports/ui/components/location/edit";
+import { Coordinates } from "/imports/ui/components/location/edit";
 import { FormControl } from "/imports/ui/components/form-control";
+import { FormMap } from "/imports/ui/components/location/FormMap";
 
 export interface Change {
   name: string;
@@ -21,9 +22,11 @@ export interface Change {
 export interface Props {
   region: Change;
   onChange: (change: Change) => void;
+  errors: Partial<Record<"regionName" | "location", React.ReactNode>>;
+  onBlur: (field: "regionName" | "location") => void;
 }
 
-export function Fields({ region, onChange }: Props) {
+export function Fields({ region, onChange, errors, onBlur }: Props) {
   const { t } = useTranslation();
 
   function timezones() {
@@ -54,22 +57,21 @@ export function Fields({ region, onChange }: Props) {
           label={t("region.edit.name", "Name")}
           value={region.name}
           onChange={(value) => onChange({ ...region, name: value })}
+          onBlur={() => onBlur("regionName")}
+          error={errors.regionName}
         />
       </div>
 
-      <div className="mb-3 clearfix">
-        <div className="form-label">
-          {t(
-            "region.edit.map",
-            'Please add the center of the region by clicking "+" (on the right inside the map)',
-          )}
-        </div>
-
-        {(!!region.loc?.coordinates || !!center) && (
-          // We need a location or a center point to render the map
-          <LocationEdit
-            coordinates={region.loc?.coordinates}
-            center={!region.loc?.coordinates ? center : (undefined as any)}
+      <div className="mb-3">
+        {!!(region.loc?.coordinates || center) && (
+          <FormMap
+            id="region-edit-map"
+            label={t(
+              "region.edit.map",
+              'Please add the center of the region by clicking "+" (on the right inside the map)',
+            )}
+            value={region.loc?.coordinates as any}
+            center={!region.loc?.coordinates ? center : undefined}
             onChange={(newValue) => {
               onChange({
                 ...region,
@@ -81,6 +83,8 @@ export function Fields({ region, onChange }: Props) {
                   : undefined,
               });
             }}
+            onBlur={() => onBlur("location")}
+            error={errors.location}
           />
         )}
       </div>
