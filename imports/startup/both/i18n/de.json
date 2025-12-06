@@ -421,7 +421,7 @@
   "event.edit.internal.description": "Nur bei Gruppen und Orten anzeigen",
   "event.edit.locationNamePlaceholder": "Nach Name oder Adresse suchen",
   "event.edit.noRsvp": "Keine Anmeldung erforderlich",
-  "event.edit.noRsvp.description": "Für diesen Event wurde die Anmeldung deaktiviert. Erkläre gegebenenfalls Details dazu in der Beschreibung des Events.",
+  "event.edit.noRsvp.description": "Für diesen Event ist die Anmeldefunktion deaktiviert. Erkläre gegebenenfalls Details dazu in der Beschreibung des Events.",
   "event.edit.notifyEditEvent": "Eine Benachrichtigung mit den aktuellen Infos an alle Interessierten und Teilnehmenden von \"{COURSE}\" senden.",
   "event.edit.notifyNewEvent": "Eine Benachrichtigung über diese Veranstaltung an alle Interessierten senden.",
   "event.edit.plzProvideDescr": "Bitte eine Beschreibung eingeben",
