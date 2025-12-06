@@ -52,8 +52,8 @@ export function Settings({ tenant }: Props) {
             type="text"
             label={t(
               "tenant.settings.field.addMembers",
-              "Add existing {SITENAME} members to {TENANTNAME}.",
-              { SITENAME: siteName, TENANTNAME: tenant.name },
+              "Add existing {SITENAME} members to {TENANT}.",
+              { SITENAME: siteName, TENANT: tenant.name },
             )}
             prepend="fa-solid fa-user fa-fw"
             placeholder={t("tenant.settings.field.addMember.placeholder", "Type name of buddy")}
@@ -87,8 +87,8 @@ export function Settings({ tenant }: Props) {
             type="text"
             label={t(
               "tenant.settings.field.addAdmins",
-              "Add an existing {SITENAME} user as a new admin to {TENANTNAME}.",
-              { SITENAME: siteName, TENANTNAME: tenant.name },
+              "Add an existing {SITENAME} user as a new admin to {TENANT}.",
+              { SITENAME: siteName, TENANT: tenant.name },
             )}
             prepend="fa-solid fa-user fa-fw"
             placeholder={t("tenant.settings.field.addAdmin.placeholder", "Type name of buddy")}

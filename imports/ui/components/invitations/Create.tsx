@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import * as InvitationsMethods from "/imports/api/invitations/methods";
@@ -98,8 +98,8 @@ export function Create({ tenant }: Props) {
           rows={5}
           label={t(
             "invitations.create.field.emails",
-            "Send e-mail invitations to join {TENANTNAME}. Each invitation can only be used once.",
-            { TENANTNAME: tenant.name },
+            "Send e-mail invitations to join {TENANT}. Each invitation can only be used once.",
+            { TENANT: tenant.name },
           )}
           placeholder={t(
             "invitations.create.field.emails.placeholder",
