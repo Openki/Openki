@@ -249,7 +249,7 @@
   "course.list.status_titles.u_are_mentor": "Du bist Mentor_in",
   "course.list.status_titles.u_are_organizer": "Du bist Organisator_in",
   "course.list.windowtitle": "Sessions",
-  "course.propose.CourseInfo": "Du entscheidest, was und wie du lernen oder unterrichten möchtest. Dein Vorschlag kann alles sein: eine einfache Idee, ein einmaliger Workshop bis hin zu einer organisierten Reihe von Veranstaltungen. Mehr Informationen findest du hier:",
+  "course.propose.CourseInfo": "Du entscheidest, was und wie du die Session organisieren möchtest. Dein Vorschlag kann vieles sein: Zum Beispiel erst mal nur ein Thema über die du dich austauschen willst, oder ein Wunsch für ein Inputreferat oder dein bereits fertig organisierter Workshop. Mehr Infos hier:",
   "course.propose.faq": "FAQ",
   "course.propose.guideLink": "Wie organisiere ich meinen erste {SITENAME} Session?",
   "course.propose.windowtitle": "Schlage einen neue Session vor",
