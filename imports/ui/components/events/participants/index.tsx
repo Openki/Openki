@@ -101,6 +101,7 @@ export function EventParticipants({ event }: Props) {
 
   function sendMessageAttr(): SendMessageProps {
     return {
+      autoFocus: true,
       placeholder: t(
         "eventParticipants.sendMessage.placeholder",
         "Hi there, I'm looking forward for tomorrow. Please bring your laptops. And don't forget to opt out now if you can't attend in order to free your seat.",

@@ -81,6 +81,7 @@ export function UserprofilePage({ user }: Props) {
   }
   function sendMessageAttr(): SendMessageProps {
     return {
+      autoFocus: false,
       placeholder: t("profile.mail.placeholder", "Hi {USER}. I wanted to tell you…", {
         USER: user.username,
       }),
