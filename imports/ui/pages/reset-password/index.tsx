@@ -141,11 +141,7 @@ export function ResetPasswordPage({ token, email }: Props) {
           )}
 
           <div className="form-actions">
-            <button
-              type="submit"
-              className="btn btn-save js-reset-pwd"
-              disabled={!passwordValid || !!isBusy}
-            >
+            <button type="submit" className="btn btn-save" disabled={!passwordValid || !!isBusy}>
               {t("resetPassword.confirm", "Set my password")}
             </button>
             <ButtonCancel id="reset-pwd-cancel" disabled={!!isBusy} onClick={handleCancel} />
