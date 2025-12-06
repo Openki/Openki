@@ -8,8 +8,10 @@ import * as EventsMethods from "/imports/api/events/methods";
 import { Regions } from "/imports/api/regions/regions";
 
 import * as Analytics from "/imports/ui/lib/analytics";
+import { Modal as BootstrapModal } from "/imports/startup/client/bootstrap";
 
 import { Event } from "./event";
+import { FormCheckGroup } from "/imports/ui/components/FormCheckGroup";
 
 import "./styles.scss";
 
@@ -22,11 +24,8 @@ export function Modal(props: {
   const [selectedEvents, setSelectedEvents] = useState([] as EventModel[]);
   const [allEventsSelected, setAllEventsSelected] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const modalRef = useRef(null);
+  const modalRef = useRef<HTMLDivElement>(null);
 
-  function isSelected(event: EventModel) {
-    return !!selectedEvents?.some((e) => e._id === event._id);
-  }
   function numSelectedEvents() {
     return selectedEvents.length || 0;
   }
@@ -51,14 +50,20 @@ export function Modal(props: {
   }, [showDeleteConfirm, selectedEvents.length]);
 
   useLayoutEffect(() => {
-    if (!modalRef.current) {
+    const modalElement = modalRef.current;
+    if (!modalElement) {
       return;
     }
-    $(modalRef.current)
-      .modal("show")
-      .on("hidden.bs.modal", function () {
-        props.onHideEventsDeleteModal();
-      });
+
+    const handleHidden = () => props.onHideEventsDeleteModal();
+
+    const modal = BootstrapModal.getOrCreateInstance(modalElement);
+    modal.show();
+
+    modalElement.addEventListener("hidden.bs.modal", handleHidden);
+    return () => {
+      modalElement.removeEventListener("hidden.bs.modal", handleHidden);
+    };
   });
 
   return (
@@ -92,23 +97,19 @@ export function Modal(props: {
                     )}
                   </div>
                   <ul className="list-group list-group-flush selected-events">
-                    {selectedEvents.map((event) => {
-                      return (
-                        <li key={event._id} className="list-group-item list-group-item-danger">
-                          <button
-                            type="button"
-                            className="btn-close float-end"
-                            aria-label={t("_button.close")}
-                            onClick={() => {
-                              setSelectedEvents(
-                                selectedEvents.filter((se) => se._id !== event._id),
-                              );
-                            }}
-                          ></button>
-                          <Event event={event} />
-                        </li>
-                      );
-                    })}
+                    {selectedEvents.map((event) => (
+                      <li key={event._id} className="list-group-item list-group-item-danger">
+                        <button
+                          type="button"
+                          className="btn-close float-end"
+                          aria-label={t("_button.close")}
+                          onClick={() => {
+                            setSelectedEvents(selectedEvents.filter((se) => se._id !== event._id));
+                          }}
+                        ></button>
+                        <Event event={event} />
+                      </li>
+                    ))}
                   </ul>
                   <div className="card-body">
                     <div className="delete-events-actions">
@@ -162,7 +163,7 @@ export function Modal(props: {
                                   if (removed === responses) {
                                     setSelectedEvents([]);
                                     if (modalRef.current) {
-                                      $(modalRef.current).modal("hide");
+                                      BootstrapModal.getOrCreateInstance(modalRef.current).hide();
                                     }
                                   }
                                 }
@@ -191,9 +192,7 @@ export function Modal(props: {
                         type="button"
                         className="btn btn-secondary"
                         disabled={isBusy}
-                        onClick={() => {
-                          setShowDeleteConfirm(false);
-                        }}
+                        onClick={() => setShowDeleteConfirm(false)}
                       >
                         {t("_button.cancel")}
                       </button>
@@ -204,47 +203,30 @@ export function Modal(props: {
             ) : (
               <>
                 <div className="delete-events-list">
-                  {props.upcomingEvents.map((event) => {
-                    return (
-                      <div key={event._id} className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id={`deleteEventsListCheck${event._id}`}
-                          checked={isSelected(event)}
-                          disabled={isBusy}
-                          onChange={(e) => {
-                            let newSelectedEvents;
-
-                            if (e.target.checked) {
-                              newSelectedEvents = [...selectedEvents, event];
-                            } else {
-                              newSelectedEvents = selectedEvents.filter(
-                                (se) => se._id !== event._id,
-                              );
-                            }
-
-                            setSelectedEvents(newSelectedEvents);
-                          }}
-                        />
-                        <label
-                          className="form-check-label mb-1"
-                          htmlFor={`deleteEventsListCheck${event._id}`}
-                        >
+                  <FormCheckGroup
+                    id="courses-delete-events-list"
+                    type="box"
+                    options={Object.fromEntries(
+                      props.upcomingEvents.map((event) => [
+                        event._id,
+                        <div key={event._id} className="mb-1">
                           <Event event={event} />
-                        </label>
-                      </div>
-                    );
-                  })}
+                        </div>,
+                      ]),
+                    )}
+                    value={selectedEvents.map((event) => event._id)}
+                    onChange={(values) =>
+                      setSelectedEvents(
+                        props.upcomingEvents.filter((event) => values.includes(event._id)),
+                      )
+                    }
+                  />
                 </div>
                 <div>
                   <button
                     className="btn btn-danger"
                     disabled={noEventsSelected()}
-                    onClick={() => {
-                      setShowDeleteConfirm(true);
-                    }}
+                    onClick={() => setShowDeleteConfirm(true)}
                   >
                     {t(
                       "deleteEventsModal.deleteEvents",

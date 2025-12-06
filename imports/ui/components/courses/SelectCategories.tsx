@@ -1,10 +1,11 @@
-import React, { ChangeEvent } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { uniq, difference } from "lodash-es";
 
 import { Categories } from "/imports/api/categories/categories";
 
 import { CategoryLabel } from "/imports/ui/components/courses/categories";
+import { FormCheck } from "/imports/ui/components/FormCheck";
 
 export interface Props {
   onChange: (selectedCategories: string[]) => void;
@@ -34,10 +35,8 @@ export function SelectCategories(props: Props) {
     return selectedCategories?.includes(self);
   }
 
-  function handleChange(a: ChangeEvent<HTMLInputElement>) {
-    const catKey = a.target.name;
+  function handleChange(catKey: string, checked: boolean) {
     let selectedCategories = props.categories || [];
-    const checked = a.target.checked;
     if (checked) {
       selectedCategories.push(catKey);
       selectedCategories = uniq(selectedCategories);
@@ -61,39 +60,31 @@ export function SelectCategories(props: Props) {
       {availableCategories().map((category) => {
         return (
           <React.Fragment key={category}>
-            <div className="form-check mt-2">
-              <input
-                className="form-check-input"
-                name={category}
-                type="checkbox"
-                value="1"
-                id={`editCategory${category}`}
+            <div className="mt-2">
+              <FormCheck
+                id={`courses-select-categories-${category}`}
+                type="box"
+                label={
+                  <>
+                    <CategoryLabel category={category} />
+                    {hasSubcategories(category) && <i className="fa-solid fa-angle-down fa-fw" />}
+                  </>
+                }
                 checked={isChecked(category)}
-                onChange={handleChange}
+                onChange={(checked) => handleChange(category, checked)}
               />
-              <label className="form-check-label" htmlFor={`editCategory${category}`}>
-                <CategoryLabel category={category} />
-                {hasSubcategories(category) && <i className="fa-solid fa-angle-down fa-fw" />}
-              </label>
             </div>
-            {availableSubcategories(category).map((subcategory) => {
-              return (
-                <div className="form-check ms-4" key={subcategory}>
-                  <input
-                    className="form-check-input"
-                    name={subcategory}
-                    type="checkbox"
-                    value="1"
-                    id={`editSubCategory${subcategory}`}
-                    checked={isChecked(subcategory)}
-                    onChange={handleChange}
-                  />
-                  <label className="form-check-label" htmlFor={`editSubCategory${subcategory}`}>
-                    <CategoryLabel category={subcategory} />
-                  </label>
-                </div>
-              );
-            })}
+            {availableSubcategories(category).map((subcategory) => (
+              <div className="ms-4" key={subcategory}>
+                <FormCheck
+                  id={`courses-select-subcategories-${subcategory}`}
+                  type="box"
+                  label={<CategoryLabel category={subcategory} />}
+                  checked={isChecked(subcategory)}
+                  onChange={(checked) => handleChange(subcategory, checked)}
+                />
+              </div>
+            ))}
           </React.Fragment>
         );
       })}

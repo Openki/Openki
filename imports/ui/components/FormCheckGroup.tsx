@@ -6,7 +6,7 @@ import { FormCheck } from "./FormCheck";
 // Generic over the keys of options
 interface CommonProps<K extends string> {
   id: string;
-  label: ReactNode;
+  label?: ReactNode | undefined;
   /** shows "(optional)" in the label */
   optional?: boolean | undefined;
   options: Record<K, ReactNode>;
@@ -86,9 +86,11 @@ export function FormCheckGroup<K extends string>(props: Props<K>) {
 
   return (
     <>
-      <div className="form-label">
-        {label} {!!optional && <small> {t("_inputField.optional")}</small>}
-      </div>
+      {!!label && (
+        <div className="form-label">
+          {label} {!!optional && <small> {t("_inputField.optional")}</small>}
+        </div>
+      )}
       {createElements(props)}
     </>
   );
