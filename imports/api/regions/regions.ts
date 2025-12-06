@@ -112,6 +112,8 @@ export interface RegionEntity {
 export type RegionModel = Region & RegionEntity;
 
 export class Region {
+  description = "";
+
   isPrivate(this: RegionModel) {
     return !PublicSettings.publicTenants.includes(this.tenant);
   }
