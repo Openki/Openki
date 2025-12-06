@@ -38,7 +38,7 @@ export function JoinPage({ joinLink }: Props) {
       Router.go("home");
 
       Alert.success(
-        t("joinPage.join.success", 'You joined {NAME}.', {
+        t("joinPage.join.success", "You joined {NAME}.", {
           NAME: tenant?.name,
         }),
       );

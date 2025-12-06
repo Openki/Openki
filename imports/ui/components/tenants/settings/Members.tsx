@@ -22,11 +22,10 @@ function Member({ tenant, memberId }: { tenant: TenantModel; memberId: string })
       const memberName = userName;
       const tenantName = tenant.name;
       Alert.success(
-        t(
-          "tenantSettings.memberRemoved",
-          '"{MEMBER}" has been removed from {TENANT}',
-          { MEMBER: memberName, TENANT: tenantName },
-        ),
+        t("tenantSettings.memberRemoved", '"{MEMBER}" has been removed from {TENANT}', {
+          MEMBER: memberName,
+          TENANT: tenantName,
+        }),
       );
     } catch (err) {
       Alert.serverError(err, t("tenantSettings.memberRemoved.error", "Could not remove member"));
