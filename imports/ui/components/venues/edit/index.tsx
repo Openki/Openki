@@ -343,29 +343,26 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
         </div>
 
         <div className="mb-3">
-          <div className="form-label">{t("venue.edit.restrictedUse", "Restricted use")}</div>
           <FormCheck
             id="venue-edit-restrictedUse"
             type="box"
-            label={t(
+            label={t("venue.edit.restrictedUse", "Can be used by everyone")}
+            additionalInformation={t(
               "venue.edit.restrictedUse.label",
-              "This venue can only be chosen by its hosts to publish an event.",
+              "Define, whether this venue can chosen by everyone to publish events, or just by it's hosts. Still users are reminded to first contact its hosts to check for available time slot.",
             )}
-            checked={changes.restrictedUse}
+            checked={!changes.restrictedUse}
             onChange={(checked) =>
               setChanges((prevState) => ({
                 ...prevState,
-                restrictedUse: checked,
+                restrictedUse: !checked,
               }))
             }
           />
           <FormCheck
             id="venue-edit-allowParallelEvents"
             type="box"
-            label={t(
-              "venue.edit.allowParallelEvents.label",
-              "Allow overlapping events in this venue",
-            )}
+            label={t("venue.edit.allowParallelEvents.label", "Allow overlapping events")}
             checked={changes.allowParallelEvents}
             onChange={(checked) =>
               setChanges((prevState) => ({ ...prevState, allowParallelEvents: checked }))
