@@ -10,8 +10,8 @@ describe("tenant create page", function () {
   });
 
   it("should support to create a region", function () {
-    cy.get('[data-test="tenant-edit-name"]').click();
-    cy.get('[data-test="tenant-edit-name"]').type("LabRador");
+    cy.get("#tenant-edit-name").click();
+    cy.get("#tenant-edit-name").type("LabRador");
     cy.get("#region-edit-name").type("Läbi");
     cy.get('[data-test="location-edit-add-marker"] i.fa-location-dot').click();
     cy.get('[data-test="region-edit-description"]').click();
