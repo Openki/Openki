@@ -11,7 +11,7 @@ import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
 import { ProfileLink } from "../../profile-link";
 import { Contribution } from "../../Contribution";
-import { GroupTag } from "../../groups/tag";
+import { GroupTag } from "../../organizations/tag";
 import { RoleIcon } from "/imports/ui/RoleIcon";
 
 import "./styles.scss";

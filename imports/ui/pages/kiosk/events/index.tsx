@@ -11,7 +11,7 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { MetaTags } from "/imports/ui/components/MetaTags";
 
 import "./styles.scss";
-import { useDetails as useGroupDetails } from "/imports/api/groups/publications";
+import { useDetails as useGroupDetails } from "../../../../api/organizations/publications";
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 import { List } from "./List";
 import { Router } from "meteor/iron:router";

@@ -3,7 +3,7 @@ import crypto from "crypto";
 import { Mongo } from "meteor/mongo";
 
 import { Prng } from "/imports/api/fixtures/Prng";
-import { Groups } from "/imports/api/groups/groups";
+import { Groups } from "../organizations/organizations";
 import { Tenants } from "/imports/api/tenants/tenants";
 import { RegionEntity, Regions } from "/imports/api/regions/regions";
 import { VenueEntity, Venues } from "/imports/api/venues/venues";

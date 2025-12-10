@@ -26,7 +26,7 @@ import { PricePolicy } from "../../price-policy";
 import { Tag } from "../../regions/tag";
 import { Props as CourseEditRoleProps, Role } from "./Role";
 import { Title } from "./title";
-import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
+import { useFindFilter as useGroupsFindFilter } from "../../../../api/organizations/publications";
 import { useAll as useRegions } from "/imports/api/regions/publications";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useValidation } from "/imports/ui/lib/useValidation";

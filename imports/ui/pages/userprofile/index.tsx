@@ -7,9 +7,9 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import * as Alert from "/imports/api/alerts/alert";
 import * as Courses from "/imports/api/courses/publications";
 import * as emailMethods from "/imports/api/emails/methods";
-import { GroupEntity } from "/imports/api/groups/groups";
-import * as GroupsMethods from "/imports/api/groups/methods";
-import * as Groups from "/imports/api/groups/publications";
+import { GroupEntity } from "../../../api/organizations/organizations";
+import * as GroupsMethods from "../../../api/organizations/methods";
+import * as Groups from "../../../api/organizations/publications";
 import * as usersMethods from "/imports/api/users/methods";
 import { UserModel } from "/imports/api/users/users";
 

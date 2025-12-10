@@ -4,10 +4,10 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import { Courses as CourseCollection, CourseModel } from "/imports/api/courses/courses";
 import { Events as EventCollection, EventModel } from "/imports/api/events/events";
-import { Groups as GroupCollection, GroupModel } from "/imports/api/groups/groups";
+import { Groups as GroupCollection, GroupModel } from "../../../api/organizations/organizations";
 import * as Courses from "/imports/api/courses/publications";
 import * as Events from "/imports/api/events/publications";
-import * as Groups from "/imports/api/groups/publications";
+import * as Groups from "../../../api/organizations/publications";
 
 import { Filtering } from "/imports/utils/filtering";
 import { Publication } from "/imports/utils/ServerPublishReact";

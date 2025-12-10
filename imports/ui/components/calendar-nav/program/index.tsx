@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { FilterGroups, Props as FilterGroupsProps } from "../../FilterGroups";
+import { FilterGroups, Props as FilterGroupsProps } from "../../FilterOrganizations";
 import { FilterCategories, Props as FilterCategoriesProps } from "../../filter-categories";
 import { SearchField, Props as SearchFieldProps } from "../../search-field";
 import { ScssVars } from "/imports/ui/lib/scss-vars";

@@ -4,7 +4,7 @@ import moment from "moment";
 import { Users } from "/imports/api/users/users";
 import { Courses } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
-import { Groups } from "/imports/api/groups/groups";
+import { Groups } from "./api/organizations/organizations";
 import { Venues } from "/imports/api/venues/venues";
 import { Regions } from "/imports/api/regions/regions";
 import { Geodata } from "/imports/api/Geodata";

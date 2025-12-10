@@ -10,7 +10,7 @@ import { Display } from "../../../location/display";
 import { PricePolicy } from "../../../price-policy";
 import { Sharing } from "../../../sharing";
 import { VenueLink } from "../../../venues/link";
-import { GroupList } from "../group-list";
+import { GroupList } from "../organization-list";
 import { EventHeader } from "../header";
 
 import "./styles.scss";

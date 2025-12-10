@@ -2,7 +2,7 @@ import { useTracker } from "meteor/react-meteor-data";
 import { Session } from "meteor/session";
 
 import { Regions } from "/imports/api/regions/regions";
-import * as Groups from "/imports/api/groups/publications";
+import * as Groups from "../api/organizations/publications";
 
 import { CleanedRegion } from "../ui/lib/cleaned-region";
 

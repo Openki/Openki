@@ -2,7 +2,7 @@ import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { check } from "meteor/check";
 
-import { Groups } from "/imports/api/groups/groups";
+import { Groups } from "../api/organizations/organizations";
 import { UserModel } from "/imports/api/users/users";
 
 // The code to update the groups and groupOrganizers field must do the same

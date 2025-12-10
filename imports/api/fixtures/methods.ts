@@ -3,7 +3,7 @@ import { ServerMethod } from "/imports/utils/ServerMethod";
 
 import { Courses } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
-import { Groups } from "/imports/api/groups/groups";
+import { Groups } from "../organizations/organizations";
 import { Regions } from "/imports/api/regions/regions";
 import { Venues } from "/imports/api/venues/venues";
 import { InfoPages } from "../infoPages/infoPages";
@@ -13,7 +13,7 @@ import { CourseDiscussions } from "../course-discussions/course-discussions";
 import { create as coursesDataCreate } from "./courses/create";
 import { create as eventsDataCreate } from "./events/create";
 import { generate as eventsDataGenerate } from "./events/generate";
-import { create as groupsDataCreate } from "./groups/create";
+import { create as groupsDataCreate } from "./organizations/create";
 import { create as infoPagesDataCreate } from "./infoPages/create";
 import { create as regionsDataCreate } from "./regions/create";
 import { create as venuesDataCreate } from "./venues/create";

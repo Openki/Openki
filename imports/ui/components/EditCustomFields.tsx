@@ -1,7 +1,7 @@
 import React from "react";
 
 import { CourseCustomField } from "/imports/api/courses/courses";
-import { GroupEntityCustomCourseFields } from "/imports/api/groups/groups";
+import { GroupEntityCustomCourseFields } from "../../api/organizations/organizations";
 
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 

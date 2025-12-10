@@ -5,7 +5,7 @@ import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useTranslation } from "react-i18next";
 
 import { Control } from "./Control";
-import { FilterGroups } from "../../FilterGroups";
+import { FilterGroups } from "../../FilterOrganizations";
 import { Direction } from "../Arrow";
 import { SearchField } from "../../search-field";
 import { FilterCategories } from "../../filter-categories";

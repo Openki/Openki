@@ -5,7 +5,7 @@ import { Mongo } from "meteor/mongo";
 import { Regions } from "/imports/api/regions/regions";
 import { VenueEntity, Venues } from "/imports/api/venues/venues";
 import * as userVenuesDenormalizer from "../users/venuesDenormalizer";
-import * as groupVenuesDenormalizer from "/imports/api/groups/venuesDenormalizer";
+import * as groupVenuesDenormalizer from "../organizations/venuesDenormalizer";
 import * as eventVenueDenormalizer from "/imports/api/events/venueDenormalizer";
 
 import { HtmlString, StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";

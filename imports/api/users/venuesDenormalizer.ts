@@ -1,7 +1,7 @@
 import { Users } from "./users";
 import { sum } from "../../utils/sum";
 import { VenueModel, Venues } from "../venues/venues";
-import { GroupModel, Groups } from "../groups/groups";
+import { GroupModel, Groups } from "../organizations/organizations";
 
 // Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers
 

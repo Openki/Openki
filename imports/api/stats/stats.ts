@@ -3,7 +3,7 @@ import { uniq } from "lodash-es";
 
 import { CourseEntity, CourseModel, Courses } from "/imports/api/courses/courses";
 import { EventEntity, EventModel, Events } from "/imports/api/events/events";
-import { Groups } from "../groups/groups";
+import { Groups } from "../organizations/organizations";
 import { sum } from "../../utils/sum";
 
 export interface Stat {

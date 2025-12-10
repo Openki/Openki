@@ -12,8 +12,8 @@ import {
   OEvent,
   FindParams as EventParamPredicates,
 } from "/imports/api/events/events";
-import { Group, GroupModel } from "/imports/api/groups/groups";
-import * as Groups from "/imports/api/groups/publications";
+import { Group, GroupModel } from "../../api/organizations/organizations";
+import * as Groups from "../../api/organizations/publications";
 import { Region, RegionModel } from "/imports/api/regions/regions";
 import * as Regions from "/imports/api/regions/publications";
 import * as InfoPages from "/imports/api/infoPages/publications";
@@ -39,7 +39,7 @@ import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { CourseTemplate } from "/imports/ui/lib/course-template";
 
-import type { Data as GroupDetailsData } from "/imports/ui/pages/group-details";
+import type { Data as GroupDetailsData } from "../../ui/pages/organization-details";
 import type { Data as VenuesMapData } from "/imports/ui/pages/venues-map";
 import type { Data as EventsMapData } from "/imports/ui/pages/events-map";
 import type { Data as AdminTenantsData } from "/imports/ui/pages/admin/tenants";
@@ -135,7 +135,7 @@ RouterAsync.route("exploreGroups", {
   path: "/explore/groups",
   template: "exploreGroupsPage",
   async onRun() {
-    await import("/imports/ui/pages/explore/groups");
+    await import("../../ui/pages/explore/organizations");
   },
 });
 
@@ -143,7 +143,7 @@ RouterAsync.route("groupDetails", {
   path: "group/:_id/:short?",
   template: "groupDetailsPage",
   async onRun() {
-    await import("/imports/ui/pages/group-details");
+    await import("../../ui/pages/organization-details");
   },
   subscriptions() {
     return { details: Groups.details.subscribe(this.params._id as string) };
@@ -934,7 +934,7 @@ RouterAsync.route("featureGroup", {
   path: "admin/feature-group",
   template: "adminFeatureGroupPage",
   async onRun() {
-    await import("/imports/ui/pages/admin/feature-group");
+    await import("../../ui/pages/admin/feature-organization");
   },
 });
 
