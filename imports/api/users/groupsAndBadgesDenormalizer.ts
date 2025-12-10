@@ -1,22 +1,24 @@
 import { Mongo } from "meteor/mongo";
 
-import { Groups } from "../organizations/organizations";
+import { Organizations } from "../organizations/organizations";
 import { UserEntity, Users } from "/imports/api/users/users";
 
 /**
- * Recalculate the groups and badges field
+ * Recalculate the organizations and badges field
  */
 export async function updateGroupsAndBadges(userIdOrSelector: string | Mongo.Selector<UserEntity>) {
   await Promise.all(
     await Users.find(userIdOrSelector).mapAsync(async (user) => {
-      const groups = await Groups.find({ "members.user": user._id }).mapAsync((group) => group._id);
+      const organizations = await Organizations.find({ "members.user": user._id }).mapAsync(
+        (organization) => organization._id,
+      );
 
-      const badges = groups.slice();
+      const badges = organizations.slice();
       badges.push(user._id);
 
       const update = {
         $set: {
-          groups,
+          groups: organizations,
           badges,
         },
       };

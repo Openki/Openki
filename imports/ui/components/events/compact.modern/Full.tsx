@@ -15,7 +15,7 @@ import { RegistrationParticipants } from "../display/registration.modern";
 import { Discussion } from "../../courses/discussion.modern";
 import { Display } from "../../location/display";
 
-import { GroupName } from "./OrganizationName";
+import { OrganizationName } from "./OrganizationName";
 import { useDetails } from "/imports/api/courses/publications";
 import { StatePanel } from "./StatePanel";
 import { CustomFieldDisplay } from "../../courses/CustomFieldDisplay";
@@ -60,20 +60,22 @@ export function Full({
   }, [animation]);
 
   const [isRegionLoading, region] = useRegionDetails(event.region);
-  const visibleGroups = event.allGroups?.filter(
-    (groupId) =>
+  const visibleOrganizations = event.allGroups?.filter(
+    (organizationId) =>
       !(
-        // hide group where are from the region set
+        // hide organization where are from the region set
         (
-          region?.defaultTeamGroups?.includes(groupId) &&
-          // when user ist not member of the group or a admin
-          !user?.mayPromoteWith(groupId) &&
+          region?.defaultTeamGroups?.includes(organizationId) &&
+          // when user is not member of the organization or a admin
+          !user?.mayPromoteWith(organizationId) &&
           !event.editableBy(user)
         )
       ),
   );
 
-  const organizedByGroups = visibleGroups?.filter((group) => event.editors.includes(group));
+  const organizedByOrganizations = visibleOrganizations?.filter((organization) =>
+    event.editors.includes(organization),
+  );
   const locationPreview = [event.venue?.name, event.venue?.address].filter((v) => v)[0];
 
   return (
@@ -173,10 +175,14 @@ export function Full({
             </>
           )}
 
-          {!isRegionLoading() && !!organizedByGroups?.length && (
+          {!isRegionLoading() && !!organizedByOrganizations?.length && (
             <p className="card-text">
               <strong>{t("event.details.organziedBy", "Organized by:")}</strong>{" "}
-              {ReactJoin(organizedByGroups.map((group) => <GroupName key={group} id={group} />))}
+              {ReactJoin(
+                organizedByOrganizations.map((organization) => (
+                  <OrganizationName key={organization} id={organization} />
+                )),
+              )}
             </p>
           )}
 

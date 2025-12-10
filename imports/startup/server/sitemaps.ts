@@ -6,7 +6,7 @@ import { createGzip } from "zlib";
 import { CourseModel, Courses } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
 import { Venues } from "/imports/api/venues/venues";
-import { Groups } from "../../api/organizations/organizations";
+import { Organizations } from "../../api/organizations/organizations";
 import { visibleTenantsAsync } from "/imports/utils/visible-tenants";
 import { serverError } from "/imports/api/log/methods";
 import { LanguagesRaw } from "/imports/api/languages/languages";
@@ -28,23 +28,23 @@ async function requestPages() {
   const courses = Courses.findFilter({ tenants: await visibleTenantsAsync(), internal: false });
   const events = Events.findFilter({ tenants: await visibleTenantsAsync(), internal: false });
   const venues = Venues.find();
-  const groups = Groups.find();
+  const organizations = Organizations.find();
 
   const now = new Date();
 
   // Priorities
   // ==========
-  // start page               = 1.0
-  // calender page            = 1.0
-  // events (future)          = 0.8
-  // course (upcoming)        = 0.8
+  // start page                = 1.0
+  // calender page             = 1.0
+  // events (future)           = 0.8
+  // course (upcoming)         = 0.8
   // course (proposal/resting) = 0.6
-  // find page                = 0.5
-  // propose page             = 0.5
-  // venues                   = 0.2
-  // groups                   = 0.2
-  // course (archived)        = 0.0
-  // event (past/canceled)    = 0.0
+  // find page                 = 0.5
+  // propose page              = 0.5
+  // venues                    = 0.2
+  // organizations             = 0.2
+  // course (archived)         = 0.0
+  // event (past/canceled)     = 0.0
 
   pages.push({
     url: Router.url("home"),
@@ -84,10 +84,10 @@ async function requestPages() {
       priority: 0.2,
     });
   });
-  await groups.forEachAsync((group) => {
+  await organizations.forEachAsync((organization) => {
     pages.push({
-      url: Router.url("groupDetails", group),
-      lastmod: group.time_lastedit,
+      url: Router.url("groupDetails", organization),
+      lastmod: organization.time_lastedit,
       priority: 0.2,
     });
   });

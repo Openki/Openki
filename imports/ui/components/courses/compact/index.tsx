@@ -11,7 +11,7 @@ import { hasRole } from "/imports/utils/course-role-utils";
 import { InternalIndicator } from "/imports/ui/components/internal-indicator";
 import { SingleEventIndicator } from "/imports/ui/components/single-event-indicator";
 import { CourseCategories } from "/imports/ui/components/courses/categories";
-import { GroupTag } from "../../organizations/tag";
+import { OrganizationTag } from "../../organizations/tag";
 import { CourseCompactEvent } from "./course-compact-event";
 import { CourseCompactRoles } from "./course-compact-roles";
 
@@ -19,15 +19,15 @@ import "./styles.scss";
 
 export interface Props {
   course: CourseModel;
-  groupTagEvents?:
-    | ((groupId: string) => {
+  organizationTagEvents?:
+    | ((organizationId: string) => {
         onMouseOver: () => Promise<void>;
         onMouseOut: () => Promise<void>;
         onClick: () => Promise<void>;
       })
     | undefined;
   categorieTagEvents?:
-    | ((groupId: string) => {
+    | ((organizationId: string) => {
         onMouseOver: () => Promise<void>;
         onMouseOut: () => Promise<void>;
         onClick: () => Promise<void>;
@@ -35,7 +35,7 @@ export interface Props {
     | undefined;
 }
 
-export function CourseCompact({ course, groupTagEvents, categorieTagEvents }: Props) {
+export function CourseCompact({ course, organizationTagEvents, categorieTagEvents }: Props) {
   const elementRef = useRef<HTMLDivElement>(null);
   const user = useUser();
 
@@ -93,8 +93,8 @@ export function CourseCompact({ course, groupTagEvents, categorieTagEvents }: Pr
       classes.push(`category-${category}`);
     });
 
-    course.groups?.forEach((group) => {
-      classes.push(`group-${group}`);
+    course.groups?.forEach((organization) => {
+      classes.push(`group-${organization}`);
     });
 
     classes.push(`region-${course.region}`);
@@ -102,32 +102,32 @@ export function CourseCompact({ course, groupTagEvents, categorieTagEvents }: Pr
     return classes.join(" ");
   }
 
-  function groupTagAttr(groupId: string) {
+  function organizationTagAttr(organizationId: string) {
     return {
-      groupId,
-      isOrganizer: course.groupOrganizers.includes(groupId),
+      organizationId,
+      isOrganizer: course.organizationOrganizers.includes(organizationId),
       onClick: async () => {
-        await groupTagEvents?.(groupId).onClick();
+        await organizationTagEvents?.(organizationId).onClick();
       },
       onMouseOver: async () => {
         elementRef.current?.classList.add("elevate-child");
-        await groupTagEvents?.(groupId).onMouseOver();
+        await organizationTagEvents?.(organizationId).onMouseOver();
       },
       onMouseOut: async () => {
         elementRef.current?.classList.remove("elevate-child");
-        await groupTagEvents?.(groupId).onMouseOut();
+        await organizationTagEvents?.(organizationId).onMouseOut();
       },
     };
   }
 
-  const groups = course.groups.filter(
-    (groupId) =>
+  const organizations = course.groups.filter(
+    (organizationId) =>
       !(
-        // hide group where are from the region set
+        // hide organization where are from the region set
         (
-          region?.defaultTeamGroups?.includes(groupId) &&
-          // when user ist not member of the group or a admin
-          !user?.mayPromoteWith(groupId) &&
+          region?.defaultTeamGroups?.includes(organizationId) &&
+          // when user ist not member of the organization or a admin
+          !user?.mayPromoteWith(organizationId) &&
           !course.editableBy(user)
         )
       ),
@@ -169,8 +169,8 @@ export function CourseCompact({ course, groupTagEvents, categorieTagEvents }: Pr
       )}
       {!isRegionLoading() && (
         <div className="tag-group course-groups">
-          {groups.map((group) => (
-            <GroupTag key={group} {...groupTagAttr(group)} />
+          {organizations.map((organization) => (
+            <OrganizationTag key={organization} {...organizationTagAttr(organization)} />
           ))}
         </div>
       )}

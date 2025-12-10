@@ -10,12 +10,12 @@ import { name } from "../../../../lib/organization-name-helpers";
 
 export interface Props {
   event: EventModel;
-  groupId: string;
+  organizationId: string;
 }
 
-export function MakeOrganizer({ event, groupId }: Props) {
+export function MakeOrganizer({ event, organizationId }: Props) {
   const { t } = useTranslation();
-  const [isLoading, group] = useDetails(groupId);
+  const [isLoading, organization] = useDetails(organizationId);
   const [isExpanded, setIsExpanded] = useState(false);
 
   if (isLoading()) {
@@ -40,7 +40,7 @@ export function MakeOrganizer({ event, groupId }: Props) {
   return (
     <div className="group-tool-dialog add">
       {t("course.group.confirmOrgText", {
-        NAME: name(group),
+        NAME: name(organization),
       })}{" "}
       {t("event.group.confirmOrgNotes", "All members of the group will be able to edit the event.")}
       <button
@@ -48,11 +48,11 @@ export function MakeOrganizer({ event, groupId }: Props) {
         className="btn btn-success"
         onClick={async () => {
           try {
-            await EventsMethods.editing(event._id, groupId, true);
+            await EventsMethods.editing(event._id, organizationId, true);
 
             Alert.success(
               t("courseGroupAdd.membersCanEditCourse", {
-                GROUP: name(group),
+                GROUP: name(organization),
                 COURSE: event.title,
               }),
             );

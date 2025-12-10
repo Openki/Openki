@@ -1,26 +1,26 @@
 import { i18n } from "/imports/startup/both/i18next";
 import { Template } from "meteor/templating";
 
-import { GroupModel, Groups } from "../../api/organizations/organizations";
+import { OrganizationModel, Organizations } from "../../api/organizations/organizations";
 
-export function name(group: GroupModel | undefined) {
-  if (!group) {
+export function name(organization: OrganizationModel | undefined) {
+  if (!organization) {
     return i18n("group.missing", "Group does not exist");
   }
-  return group.name;
+  return organization.name;
 }
 
-function subbedGroup(groupId: string) {
-  Template.instance().subscribe("group", groupId);
-  return Groups.findOne(groupId);
+function subbedOrganization(organizationId: string) {
+  Template.instance().subscribe("group", organizationId);
+  return Organizations.findOne(organizationId);
 }
 
-export const GroupNameHelpers = {
-  name(groupId: string) {
-    if (!groupId) {
+export const OrganizationNameHelpers = {
+  name(organizationId: string) {
+    if (!organizationId) {
       return false;
     }
-    const group = subbedGroup(groupId);
-    return name(group);
+    const organization = subbedOrganization(organizationId);
+    return name(organization);
   },
 };

@@ -10,33 +10,33 @@ import { useSiteName } from "/imports/utils/getSiteName";
 
 import "./styles.scss";
 
-function FeaturedGroupBody(props: { groupId: string }) {
+function FeaturedOrganizationBody(props: { organizationId: string }) {
   const { t } = useTranslation();
 
   const siteName = useSiteName();
 
-  const [featuredGroupIsLoading, featuredGroup] = useDetails(props.groupId);
+  const [featuredOrganizationIsLoading, featuredOrganization] = useDetails(props.organizationId);
 
-  if (featuredGroupIsLoading() || !featuredGroup) {
+  if (featuredOrganizationIsLoading() || !featuredOrganization) {
     return null;
   }
 
   return (
     <div className="featured-group-body">
-      {!!featuredGroup.logoUrl && (
+      {!!featuredOrganization.logoUrl && (
         <div className="featured-group-body-logo">
-          <img className="featured-group-logo" src={featuredGroup.publicLogoUrl()} />
+          <img className="featured-group-logo" src={featuredOrganization.publicLogoUrl()} />
         </div>
       )}
 
       <div className="featured-group-body-content">
         <div className="featured-group-name">
-          {featuredGroup.name} ({featuredGroup.short})
+          {featuredOrganization.name} ({featuredOrganization.short})
         </div>
         <div className="featured-group-links">
-          <a href={Router.path("groupDetails", featuredGroup)}>
+          <a href={Router.path("groupDetails", featuredOrganization)}>
             {t("featuredGroup.coursesOnOpenki", "Check out the courses of {GROUP} on {SITENAME}!", {
-              GROUP: featuredGroup.name,
+              GROUP: featuredOrganization.name,
               SITENAME: siteName,
             })}
           </a>
@@ -46,7 +46,7 @@ function FeaturedGroupBody(props: { groupId: string }) {
   );
 }
 
-export function FeaturedGroup() {
+export function FeaturedOrganization() {
   const { t } = useTranslation();
 
   const currentRegion = useCurrentRegion();
@@ -64,7 +64,7 @@ export function FeaturedGroup() {
             REGION: currentRegion.name,
           })}
         </div>
-        <FeaturedGroupBody groupId={currentRegion.featuredGroup} />
+        <FeaturedOrganizationBody organizationId={currentRegion.featuredGroup} />
       </div>
     </div>
   );
@@ -74,4 +74,4 @@ export function FeaturedGroup() {
 
 import "./template.html";
 
-Template.registerHelper("FeaturedGroup", () => FeaturedGroup);
+Template.registerHelper("FeaturedGroup", () => FeaturedOrganization);

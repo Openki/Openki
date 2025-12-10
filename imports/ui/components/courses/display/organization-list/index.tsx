@@ -5,7 +5,7 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { CourseModel } from "/imports/api/courses/courses";
 import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 
-import { GroupTag } from "../../../organizations/tag";
+import { OrganizationTag } from "../../../organizations/tag";
 import { Add } from "./Add";
 import { Remove } from "./Remove";
 import { RemoveOrganizer } from "./RemoveOrganizer";
@@ -15,26 +15,26 @@ export interface Props {
   course: CourseModel;
 }
 
-export function GroupList({ course }: Props) {
+export function OrganizationList({ course }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 
   const [isRegionLoading, region] = useRegionDetails(course.region);
 
-  function tools(groupId: string, course: CourseModel) {
+  function tools(organizationId: string, course: CourseModel) {
     return (
       <>
-        {(!!user?.mayPromoteWith(groupId) || course.editableBy(user)) && (
+        {(!!user?.mayPromoteWith(organizationId) || course.editableBy(user)) && (
           <li className="dialog-dropdown-btn">
-            <Remove course={course} groupId={groupId} />
+            <Remove course={course} organizationId={organizationId} />
           </li>
         )}
         {course.editableBy(user) && (
           <li className="dialog-dropdown-btn">
-            {course.groupOrganizers.includes(groupId) ? (
-              <RemoveOrganizer course={course} groupId={groupId} />
+            {course.organizationOrganizers.includes(organizationId) ? (
+              <RemoveOrganizer course={course} organizationId={organizationId} />
             ) : (
-              <MakeOrganizer course={course} groupId={groupId} />
+              <MakeOrganizer course={course} organizationId={organizationId} />
             )}
           </li>
         )}
@@ -44,14 +44,14 @@ export function GroupList({ course }: Props) {
 
   if (isRegionLoading()) return null;
 
-  const groups = course.groups.filter(
-    (groupId) =>
+  const organizations = course.groups.filter(
+    (organizationId) =>
       !(
-        // hide group where are from the region set
+        // hide organization where are from the region set
         (
-          region?.defaultTeamGroups?.includes(groupId) &&
-          // when user ist not member of the group or a admin
-          !user?.mayPromoteWith(groupId) &&
+          region?.defaultTeamGroups?.includes(organizationId) &&
+          // when user ist not member of the organization or a admin
+          !user?.mayPromoteWith(organizationId) &&
           !course.editableBy(user)
         )
       ),
@@ -59,11 +59,11 @@ export function GroupList({ course }: Props) {
 
   return (
     <div className="tag-group multiline">
-      {groups.map((groupId) => {
-        const isOrganizer = course.groupOrganizers.includes(groupId);
+      {organizations.map((organizationId) => {
+        const isOrganizer = course.organizationOrganizers.includes(organizationId);
         return (
-          <React.Fragment key={groupId}>
-            <GroupTag groupId={groupId} isOrganizer={isOrganizer} />
+          <React.Fragment key={organizationId}>
+            <OrganizationTag organizationId={organizationId} isOrganizer={isOrganizer} />
             {isOrganizer && (
               <div className="tag group-tag addon">
                 <i
@@ -75,7 +75,7 @@ export function GroupList({ course }: Props) {
               </div>
             )}
 
-            {(!!user?.mayPromoteWith(groupId) || course.editableBy(user)) && (
+            {(!!user?.mayPromoteWith(organizationId) || course.editableBy(user)) && (
               <div className="btn-group tag-btn group-tag-btn addon align-top">
                 <button
                   type="button"
@@ -92,7 +92,7 @@ export function GroupList({ course }: Props) {
                   <li>
                     <hr className="dropdown-divider" />
                   </li>
-                  {tools(groupId, course)}
+                  {tools(organizationId, course)}
                 </ul>
               </div>
             )}

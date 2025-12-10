@@ -237,20 +237,20 @@ export function StatsPage() {
                   <td>&nbsp;</td>
                   <Descriptions />
                 </tr>
-                {stats.groups.map((group, index) => {
+                {stats.organizations.map((organization, index) => {
                   return (
                     <tr key={index}>
                       <td>
-                        {group._id ? (
-                          <a href={Router.path("groupDetails", group)}>
-                            {group.name || t("group.missing")}
+                        {organization._id ? (
+                          <a href={Router.path("groupDetails", organization)}>
+                            {organization.name || t("group.missing")}
                           </a>
                         ) : (
                           t("region.stats.ungrouped", "Ungrouped")
                         )}
                       </td>
-                      <td>{group.members}</td>
-                      <Results stat={group} />
+                      <td>{organization.members}</td>
+                      <Results stat={organization} />
                     </tr>
                   );
                 })}

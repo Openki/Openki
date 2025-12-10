@@ -9,7 +9,7 @@ import { FindParams } from "/imports/api/courses/courses";
 export interface Props {
   _id?: string;
   isFrame?: boolean;
-  group?: string;
+  organization?: string;
   coursesQuery: ReturnType<typeof useFiltering<typeof FindParams>>["asQuery"];
 }
 

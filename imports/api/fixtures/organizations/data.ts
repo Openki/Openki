@@ -1,9 +1,9 @@
 import { Template } from "./Template";
 
-// Groups are groups, organizations, institutions, virtual or real instituts, departments or
+// Organizations are organizations, institutions, virtual or real instituts, departments or
 // bodies...
 
-export const groups: Template[] = [
+export const organizations: Template[] = [
   {
     name: "Dynamo",
     short: "Dyn",

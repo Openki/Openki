@@ -1,11 +1,14 @@
 import { VenueModel, Venues } from "../venues/venues";
-import { Groups, GroupVenueEntity } from "./organizations";
+import { Organizations, OrganizationVenueEntity } from "./organizations";
 
 // Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers
 
-export async function afterVenueAddEditGroup(venue: GroupVenueEntity, groupId: string) {
-  await Groups.updateAsync(
-    { _id: groupId },
+export async function afterVenueAddEditOrganization(
+  venue: OrganizationVenueEntity,
+  organizationId: string,
+) {
+  await Organizations.updateAsync(
+    { _id: organizationId },
     {
       $addToSet: {
         venues: {
@@ -18,8 +21,8 @@ export async function afterVenueAddEditGroup(venue: GroupVenueEntity, groupId: s
   );
 }
 
-export async function afterVenueRemoveEditGroup(venueId: string, groupId: string) {
-  await Groups.updateAsync({ _id: groupId }, { $pull: { venues: { _id: venueId } } });
+export async function afterVenueRemoveEditOrganization(venueId: string, organizationId: string) {
+  await Organizations.updateAsync({ _id: organizationId }, { $pull: { venues: { _id: venueId } } });
 }
 
 export async function afterVenueUpdate(venueId: string) {
@@ -49,5 +52,8 @@ export async function beforeVenueRemove(venue: VenueModel) {
   if (!venue.editGroup) {
     return;
   }
-  await Groups.updateAsync({ _id: venue.editGroup }, { $pull: { venues: { _id: venue._id } } });
+  await Organizations.updateAsync(
+    { _id: venue.editGroup },
+    { $pull: { venues: { _id: venue._id } } },
+  );
 }

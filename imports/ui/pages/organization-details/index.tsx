@@ -6,8 +6,8 @@ import { useValidation } from "../../lib/useValidation";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { GroupModel } from "../../../api/organizations/organizations";
-import * as GroupsMethods from "../../../api/organizations/methods";
+import { OrganizationModel } from "../../../api/organizations/organizations";
+import * as OrganizationsMethods from "../../../api/organizations/methods";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 import { Store } from "/imports/ui/lib/editable";
@@ -20,34 +20,34 @@ import { ButtonCancel, ButtonSave } from "/imports/ui/components/Buttons";
 import { Find } from "../../components/courses/find";
 import { Dashboard, Props as DashboardProps } from "../../components/dashboard";
 import { VenueTag } from "../../components/venues/link";
-import { GroupSettings } from "../../components/organizations/settings";
+import { OrganizationSettings } from "../../components/organizations/settings";
 
 import "./styles.scss";
 
-function allSet(group: {
+function allSet(organization: {
   name: string | undefined;
   short: string | undefined;
   claim: string | undefined;
   description: string | undefined;
-}): group is {
+}): organization is {
   name: string;
   short: string;
   claim: string;
   description: string;
 } {
-  return Object.values(group).every((u) => u);
+  return Object.values(organization).every((u) => u);
 }
 
 export interface Data {
   courseQuery: Record<string, string | undefined> & {
-    group: string;
+    organization: string;
     region: string | undefined;
   };
-  group: GroupModel;
+  organization: OrganizationModel;
   showCourses: boolean;
 }
 
-export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
+export function OrganizationDetailsPage({ courseQuery, organization, showCourses }: Data) {
   const { t } = useTranslation();
   const region = useCurrentRegion();
   const [editingSettings, setEditingSettings] = useState(false);
@@ -58,7 +58,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
       field: "all",
     },
   });
-  const [newGroup, setNewGroup] = useState<{
+  const [newOrganization, setNewOrganization] = useState<{
     name: string | undefined;
     short: string | undefined;
     claim: string | undefined;
@@ -67,14 +67,14 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
 
   const user = useUser();
 
-  const mayEdit = group.editableBy(user);
+  const mayEdit = organization.editableBy(user);
 
   function isFeatured() {
-    return !!region && !group.isNew() && region.featuredGroup === group._id;
+    return !!region && !organization.isNew() && region.featuredGroup === organization._id;
   }
   function headerClasses() {
     const classes = [];
-    if (group.logoUrl) {
+    if (organization.logoUrl) {
       classes.push("has-logo");
     }
     if (mayEdit) {
@@ -84,13 +84,13 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
   }
 
   function allowEditingSettings() {
-    return mayEdit && !group.isNew() && editingSettings;
+    return mayEdit && !organization.isNew() && editingSettings;
   }
   function dashboardAttr(): DashboardProps {
     return {
-      list: group.dashboard || PublicSettings.groupDashboardDefault || [],
+      list: organization.dashboard || PublicSettings.groupDashboardDefault || [],
       defaultRegion: region?._id || "",
-      defaultGroup: group._id,
+      defaultOrganization: organization._id,
     };
   }
 
@@ -104,7 +104,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
     onSuccess: () => {
       Alert.success(
         t("groupDetails.changesSaved", 'Changes to the "{GROUP}" group have been saved.', {
-          GROUP: group.name,
+          GROUP: organization.name,
         }),
       );
     },
@@ -112,7 +112,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
       Alert.serverError(
         err as string | Error,
         t("groupDetails.saveError", 'Could not save the "{GROUP}" group', {
-          GROUP: group.name,
+          GROUP: organization.name,
         }),
       );
     },
@@ -121,26 +121,26 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
   const handleSave = async () => {
     resetErrors();
 
-    if (!allSet(newGroup)) {
+    if (!allSet(newOrganization)) {
       addError("emptyField");
       return;
     }
 
     setIsBusy(true);
     try {
-      const groupId = await GroupsMethods.save("", newGroup);
+      const organizationId = await OrganizationsMethods.save("", newOrganization);
 
       Alert.success(
         t("groupDetails.groupCreated", 'The "{GROUP}" group was created.', {
-          GROUP: newGroup.name,
+          GROUP: newOrganization.name,
         }),
       );
 
       Analytics.trackEvent("Group creations", "Group creations");
 
-      Router.go("groupDetails", { _id: groupId, short: newGroup.short });
+      Router.go("groupDetails", { _id: organizationId, short: newOrganization.short });
     } catch (err) {
-      Alert.serverError(err, t("groupDetails.saveError", { GROUP: newGroup.name }));
+      Alert.serverError(err, t("groupDetails.saveError", { GROUP: newOrganization.name }));
     } finally {
       setIsBusy(false);
     }
@@ -150,10 +150,10 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
     Router.go("profile"); // Got a better idea?
   };
 
-  const showControls = !group.isNew();
+  const showControls = !organization.isNew();
 
   const editableNameAttr: EditableProps = {
-    text: group.name,
+    text: organization.name,
     multiline: false,
     placeholder: t(
       "group.name.placeholder",
@@ -163,51 +163,51 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
       ? {
           ...handleSaving,
           onSave: async (newName) => {
-            await GroupsMethods.save(group._id, { name: newName });
+            await OrganizationsMethods.save(organization._id, { name: newName });
           },
         }
       : undefined,
     onChange: (newName) => {
-      setNewGroup((state) => ({ ...state, name: newName }));
+      setNewOrganization((state) => ({ ...state, name: newName }));
     },
   };
 
   const editableShortAttr: EditableProps = {
-    text: group.short,
+    text: organization.short,
     multiline: false,
     placeholder: t("group.short.placeholder", "Abbreviation"),
     store: showControls
       ? {
           ...handleSaving,
           onSave: async (newShort) => {
-            await GroupsMethods.save(group._id, { short: newShort });
+            await OrganizationsMethods.save(organization._id, { short: newShort });
           },
         }
       : undefined,
     onChange: (newText) => {
-      setNewGroup((state) => ({ ...state, short: newText }));
+      setNewOrganization((state) => ({ ...state, short: newText }));
     },
   };
 
   const editableClaimAttr: EditableProps = {
-    text: group.claim,
+    text: organization.claim,
     multiline: false,
     placeholder: t("group.claim.placeholder", "The core idea"),
     store: showControls
       ? {
           ...handleSaving,
           onSave: async (newClaim) => {
-            await GroupsMethods.save(group._id, { claim: newClaim });
+            await OrganizationsMethods.save(organization._id, { claim: newClaim });
           },
         }
       : undefined,
     onChange: (newClaim) => {
-      setNewGroup((state) => ({ ...state, claim: newClaim }));
+      setNewOrganization((state) => ({ ...state, claim: newClaim }));
     },
   };
 
   const editableDescriptionAttr: EditableProps = {
-    text: group.description,
+    text: organization.description,
     multiline: true,
     placeholder: t(
       "group.description.placeholder",
@@ -217,23 +217,27 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
       ? {
           ...handleSaving,
           onSave: async (newDescription) => {
-            await GroupsMethods.save(group._id, { description: newDescription });
+            await OrganizationsMethods.save(organization._id, { description: newDescription });
           },
         }
       : undefined,
     onChange: (newDescription) => {
-      setNewGroup((state) => ({ ...state, description: newDescription }));
+      setNewOrganization((state) => ({ ...state, description: newDescription }));
     },
   };
 
-  const title = group.name || t("group.windowtitle.create", "Create group");
+  const title = organization.name || t("group.windowtitle.create", "Create group");
 
   return (
     <>
-      <MetaTags title={title} description={group.claim} image={group.publicLogoUrl()} />
+      <MetaTags
+        title={title}
+        description={organization.claim}
+        image={organization.publicLogoUrl()}
+      />
 
       <div className="container mb-4">
-        {group.isNew() && <h2>{t("group.details.titleNew", "Create new group")}</h2>}
+        {organization.isNew() && <h2>{t("group.details.titleNew", "Create new group")}</h2>}
         <div className="page-component group-details">
           <div className="group-details-titlebar clearfix">
             {t("group.details.group", "Group")}
@@ -257,7 +261,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
             >
               <i className="fa-solid fa-xmark fa-lg" />
             </button>
-            {!group.isNew() && mayEdit && (
+            {!organization.isNew() && mayEdit && (
               <button
                 className="btn btn-link float-end ms-2"
                 data-bs-title={t("group.settings.title")}
@@ -270,16 +274,16 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
             )}
           </div>
           <div className={`details-header group-details-header clearfix ${headerClasses()}`}>
-            {!!group.publicLogoUrl() && (
+            {!!organization.publicLogoUrl() && (
               <div className="group-details-logo">
-                <img src={group.publicLogoUrl()} />
+                <img src={organization.publicLogoUrl()} />
               </div>
             )}
             <div className="group-details-name">
-              {mayEdit ? <Editable {...editableNameAttr} /> : group.name}
+              {mayEdit ? <Editable {...editableNameAttr} /> : organization.name}
             </div>{" "}
             <div className="group-details-short">
-              {mayEdit ? <Editable {...editableShortAttr} /> : group.short}
+              {mayEdit ? <Editable {...editableShortAttr} /> : organization.short}
             </div>
           </div>
           <div className="details-body group-details-body">
@@ -287,26 +291,26 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
               className={`details-content group-details-content ${errors.all ? "has-error" : ""}`}
             >
               <div className="group-details-claim">
-                {mayEdit ? <Editable {...editableClaimAttr} /> : group.claim}
+                {mayEdit ? <Editable {...editableClaimAttr} /> : organization.claim}
               </div>
 
               <div className="group-details-description">
                 {mayEdit ? (
                   <Editable {...editableDescriptionAttr} />
                 ) : (
-                  <span dangerouslySetInnerHTML={{ __html: group.description }}></span>
+                  <span dangerouslySetInnerHTML={{ __html: organization.description }}></span>
                 )}
               </div>
 
               {!!errors.all && <span className="form-text d-block">{errors.all}</span>}
 
-              {!!(group.venues && group.venues.length > 0) && (
+              {!!(organization.venues && organization.venues.length > 0) && (
                 <div className="group-details-venues">
                   {t("group.details.venues", "{NUM, plural, one{Venue:} other{Venues:} }", {
-                    NUM: group.venues.length,
+                    NUM: organization.venues.length,
                   })}{" "}
                   <span className="tag-group">
-                    {group.venues.map((v) => (
+                    {organization.venues.map((v) => (
                       <VenueTag key={v._id} venue={v} />
                     ))}
                   </span>
@@ -314,7 +318,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
               )}
             </div>
           </div>
-          {group.isNew() && (
+          {organization.isNew() && (
             <div className="actions">
               <ButtonSave
                 id="group-details-save"
@@ -325,7 +329,7 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
               <ButtonCancel id="group-details-cancel" onClick={handleCancel} disabled={isBusy} />
             </div>
           )}
-          {allowEditingSettings() && <GroupSettings group={group} />}
+          {allowEditingSettings() && <OrganizationSettings organization={organization} />}
         </div>
         {!dashboardAttr().list.length && showCourses && <Find query={courseQuery} />}
       </div>
@@ -338,4 +342,4 @@ export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
 
 import "./template.html";
 
-Template.registerHelper("GroupDetailsPage", () => GroupDetailsPage);
+Template.registerHelper("GroupDetailsPage", () => OrganizationDetailsPage);

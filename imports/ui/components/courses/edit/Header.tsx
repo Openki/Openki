@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { GroupHeader } from "./OrganizationHeader";
+import { OrganizationHeader } from "./OrganizationHeader";
 import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { PublicSettings } from "/imports/utils/PublicSettings";
@@ -8,10 +8,10 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 interface Props {
   _id?: string;
   isFrame?: boolean;
-  group?: string;
+  organization?: string;
 }
 
-export function Header({ _id, isFrame, group }: Props) {
+export function Header({ _id, isFrame, organization }: Props) {
   const { t } = useTranslation();
   const siteName = useSiteName();
 
@@ -20,7 +20,11 @@ export function Header({ _id, isFrame, group }: Props) {
   ) : !isFrame ? (
     <>
       <h2>
-        {group ? <GroupHeader groupId={group} /> : t("course.edit.propose", "Propose new course")}
+        {organization ? (
+          <OrganizationHeader organizationId={organization} />
+        ) : (
+          t("course.edit.propose", "Propose new course")
+        )}
       </h2>
       <div className="icon-text">
         <div className="icon-text-icon">

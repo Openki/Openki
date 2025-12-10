@@ -10,7 +10,7 @@ import { Display } from "../../../location/display";
 import { PricePolicy } from "../../../price-policy";
 import { Sharing } from "../../../sharing";
 import { VenueLink } from "../../../venues/link";
-import { GroupList } from "../organization-list";
+import { OrganizationList } from "../organization-list";
 import { EventHeader } from "../header";
 
 import "./styles.scss";
@@ -37,7 +37,7 @@ export function Content({ event }: { event: EventModel }) {
               {!isLoading() && !course?.singleEvent && (
                 <>
                   <h3>{event.title}</h3>
-                  <GroupList event={event} />
+                  <OrganizationList event={event} />
                 </>
               )}
 

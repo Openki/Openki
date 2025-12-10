@@ -1,10 +1,10 @@
 import { Router } from "meteor/iron:router";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { GroupTag } from "../../components/organizations/tag";
-import { GroupModel } from "../../../api/organizations/organizations";
+import { OrganizationTag } from "../../components/organizations/tag";
+import { OrganizationModel } from "../../../api/organizations/organizations";
 
-export function GroupSection({ groups }: { groups: GroupModel[] }) {
+export function OrganizationSection({ organizations }: { organizations: OrganizationModel[] }) {
   const { t } = useTranslation();
   return (
     <div className="page-component page-component-seperated">
@@ -14,14 +14,14 @@ export function GroupSection({ groups }: { groups: GroupModel[] }) {
           "profile.groupMembership",
           "You are {NUM_GROUPS, plural, =0{not member of any group} one{member of the group:} other{member of # groups:} }",
           {
-            NUM_GROUPS: groups.length,
+            NUM_GROUPS: organizations.length,
           },
         )}
       </p>
       <ul className="list-unstyled">
-        {groups.map((group) => (
-          <li key={group._id} className="mb-3">
-            <GroupTag groupId={group._id} full={true} />
+        {organizations.map((organization) => (
+          <li key={organization._id} className="mb-3">
+            <OrganizationTag organizationId={organization._id} full={true} />
           </li>
         ))}
       </ul>

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 
-import * as Groups from "../../../api/organizations/publications";
+import * as Organizations from "../../../api/organizations/publications";
 import * as Tenants from "/imports/api/tenants/publications";
 import { UserModel } from "/imports/api/users/users";
 import * as Venues from "/imports/api/venues/publications";
@@ -19,7 +19,7 @@ import { CalendarSection } from "./CalendarSection";
 import { CreateUserSection } from "./CreateUserSection";
 import { DangerZoneSection } from "./DangerZoneSection";
 import { EmailSection } from "./EmailSection";
-import { GroupSection } from "./OrganizationSection";
+import { OrganizationSection } from "./OrganizationSection";
 import { ProfileSection } from "./ProfileSection";
 import { TenantSection } from "./TenantSection";
 import { VenuesSection } from "./VenuesSection";
@@ -195,7 +195,7 @@ function NotLoggedIn() {
 function LoggedIn({ user }: { user: UserModel }) {
   const [tenantsAreLoading, tenants] = Tenants.useFindFilter({ adminOf: true });
   const [venuesAreLoading, venues] = Venues.useFindFilter({ editor: user._id });
-  const [groupsAreLoading, groups] = Groups.useFindFilter({ own: true });
+  const [organizationsAreLoading, organizations] = Organizations.useFindFilter({ own: true });
 
   function isVisitor() {
     return !!user?.privileged("visitor");
@@ -217,7 +217,7 @@ function LoggedIn({ user }: { user: UserModel }) {
           <CalendarSection />
           {isAdmin() && <AdminSection />}
           {!tenantsAreLoading() && hasTenants() && <TenantSection tenants={tenants} />}
-          {!groupsAreLoading() && <GroupSection groups={groups} />}
+          {!organizationsAreLoading() && <OrganizationSection organizations={organizations} />}
           {!venuesAreLoading() && <VenuesSection venues={venues} />}
         </>
       ) : (

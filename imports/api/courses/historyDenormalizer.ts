@@ -60,9 +60,9 @@ export async function afterUnsubscribe(courseId: string, userId: string, roleTyp
   });
 }
 
-export async function afterGroupPromoteUpdate(
+export async function afterOrganizationPromoteUpdate(
   courseId: string,
-  groupId: string,
+  organizationId: string,
   enable: boolean,
   userId: string,
 ) {
@@ -71,14 +71,14 @@ export async function afterGroupPromoteUpdate(
       history: {
         dateTime: new Date(),
         type: "groupPromote",
-        data: { user: userId, group: groupId, enable },
+        data: { user: userId, group: organizationId, enable },
       },
     },
   });
 }
-export async function afterGroupOrgaUpdate(
+export async function afterOrganizationOrgaUpdate(
   courseId: string,
-  groupId: string,
+  organizationId: string,
   enable: boolean,
   userId: string,
 ) {
@@ -87,7 +87,7 @@ export async function afterGroupOrgaUpdate(
       history: {
         dateTime: new Date(),
         type: "groupOrga",
-        data: { user: userId, group: groupId, enable },
+        data: { user: userId, group: organizationId, enable },
       },
     },
   });

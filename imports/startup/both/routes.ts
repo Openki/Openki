@@ -12,8 +12,8 @@ import {
   OEvent,
   FindParams as EventParamPredicates,
 } from "/imports/api/events/events";
-import { Group, GroupModel } from "../../api/organizations/organizations";
-import * as Groups from "../../api/organizations/publications";
+import { Organization, OrganizationModel } from "../../api/organizations/organizations";
+import * as Organizations from "../../api/organizations/publications";
 import { Region, RegionModel } from "/imports/api/regions/regions";
 import * as Regions from "/imports/api/regions/publications";
 import * as InfoPages from "/imports/api/infoPages/publications";
@@ -39,7 +39,7 @@ import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { CourseTemplate } from "/imports/ui/lib/course-template";
 
-import type { Data as GroupDetailsData } from "../../ui/pages/organization-details";
+import type { Data as OrganizationDetailsData } from "../../ui/pages/organization-details";
 import type { Data as VenuesMapData } from "/imports/ui/pages/venues-map";
 import type { Data as EventsMapData } from "/imports/ui/pages/events-map";
 import type { Data as AdminTenantsData } from "/imports/ui/pages/admin/tenants";
@@ -146,30 +146,30 @@ RouterAsync.route("groupDetails", {
     await import("../../ui/pages/organization-details");
   },
   subscriptions() {
-    return { details: Groups.details.subscribe(this.params._id as string) };
+    return { details: Organizations.details.subscribe(this.params._id as string) };
   },
-  async data(): Promise<GroupDetailsData | undefined> {
-    let group: GroupModel | undefined;
+  async data(): Promise<OrganizationDetailsData | undefined> {
+    let organization: OrganizationModel | undefined;
     const isNew = this.params._id === "create";
     if (isNew) {
-      group = new Group() as GroupModel;
+      organization = new Organization() as OrganizationModel;
     } else {
-      group = await this.subscriptions()?.details();
+      organization = await this.subscriptions()?.details();
     }
 
-    if (!group) {
+    if (!organization) {
       return undefined;
     }
 
     const courseQuery = {
       ...this.params.query,
-      group: group._id,
+      organization: organization._id,
       region: Session.get("region"),
     };
 
     return {
       courseQuery,
-      group,
+      organization,
       showCourses: !isNew,
     };
   },

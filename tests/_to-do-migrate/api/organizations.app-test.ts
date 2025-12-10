@@ -2,12 +2,12 @@ import { Meteor } from "meteor/meteor";
 import { MeteorAsync } from "/imports/utils/promisify";
 import { assert } from "chai";
 
-import { Groups } from "../../../imports/api/organizations/organizations";
-import * as GroupsMethods from "../../../imports/api/organizations/methods";
+import { Organizations } from "../../../imports/api/organizations/organizations";
+import * as OrganizationsMethods from "../../../imports/api/organizations/methods";
 
 if (Meteor.isClient) {
-  describe("Group save", () => {
-    it("should allow to edit the group name", async function () {
+  describe("Organization save", () => {
+    it("should allow to edit the organization name", async function () {
       this.timeout(5000);
 
       const randomName = `TEST${1000 + Math.floor(Math.random() * 9000)}`;
@@ -15,54 +15,54 @@ if (Meteor.isClient) {
 
       await MeteorAsync.loginWithPassword("Seee", "greg");
 
-      const newGroup = {
+      const newOrganization = {
         name: randomName,
         short: `${randomName} short`,
         claim: `${randomName} claim`,
         description: `${randomName} description`,
       };
 
-      const groupId = await GroupsMethods.save("", newGroup);
+      const organizationId = await OrganizationsMethods.save("", newOrganization);
 
-      assert.isString(groupId, "group.save returns an groupId string");
+      assert.isString(organizationId, "organization.save returns an organizationId string");
 
-      await GroupsMethods.save(groupId as string, { name: editRandomName });
+      await OrganizationsMethods.save(organizationId as string, { name: editRandomName });
 
-      const handle = await MeteorAsync.subscribe("group", groupId);
+      const handle = await MeteorAsync.subscribe("organization", organizationId);
       handle.stop();
 
-      const group = Groups.findOne(groupId);
+      const organization = Organizations.findOne(organizationId);
 
-      assert.equal(group?.name, editRandomName);
+      assert.equal(organization?.name, editRandomName);
     });
 
-    it("does not allow setting a empty group name", async function () {
+    it("does not allow setting a empty organization name", async function () {
       this.timeout(5000);
 
       const randomName = `TEST${1000 + Math.floor(Math.random() * 9000)}`;
 
       await MeteorAsync.loginWithPassword("Seee", "greg");
 
-      const newGroup = {
+      const newOrganization = {
         name: randomName,
         short: `${randomName} short`,
         claim: `${randomName} claim`,
         description: `${randomName} description`,
       };
 
-      const groupId = await GroupsMethods.save("", newGroup);
+      const organizationId = await OrganizationsMethods.save("", newOrganization);
 
-      assert.isString(groupId, "group.save returns an groupId string");
+      assert.isString(organizationId, "organization.save returns an organizationId string");
 
       let hasFailed = false;
       try {
-        await GroupsMethods.save(groupId as string, { name: "" });
+        await OrganizationsMethods.save(organizationId as string, { name: "" });
       } catch (err) {
         if (err) {
           hasFailed = true;
         }
       }
-      assert.isTrue(hasFailed, "group.save throws an error on empty name");
+      assert.isTrue(hasFailed, "organization.save throws an error on empty name");
     });
   });
 }

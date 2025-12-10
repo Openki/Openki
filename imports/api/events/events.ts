@@ -68,17 +68,17 @@ export interface EventEntity {
   time_lastedit: Date;
   /** course._id of parent course, optional */
   courseId?: string;
-  /** (Events are only displayed when group or venue-filter is active) */
+  /** (Events are only displayed when organization or venue-filter is active) */
   internal: boolean;
   /** Send a reminder to all attendees of an event just before the event starts */
   sendReminder: boolean;
   /** Shows the event as canceled. */
   canceled?: boolean;
-  /** list of group._id that promote this event ("promote groups"). */
+  /** list of organization._id that promote this event ("promote organizations"). */
   groups: string[];
   /**
-   * list of group._id that are allowed to edit the event ("team groups", based on the ui design:
-   * Every "team group" promotes the event and is part of the groups list). */
+   * list of organization._id that are allowed to edit the event ("team organizations", based on the ui design:
+   * Every "team organization" promotes the event and is part of the organizations list). */
   groupOrganizers: string[];
   /** ID of the replication parent, only cloned events have this */
   replicaOf?: string;
@@ -88,17 +88,17 @@ export interface EventEntity {
   /** maximum participants of event, 0 means no participant limit */
   maxParticipants: number;
   /**
-   * (calculated) list of group._id inherited from course (if courseId is set) ("promote groups"
+   * (calculated) list of organization._id inherited from course (if courseId is set) ("promote organizations"
    * from course)
    */
   courseGroups: string[];
   /**
-   * (calculated) all groups that promote this course, both inherited from course and set on the
-   * event itself ("promote groups" from event and course)
+   * (calculated) all organizations that promote this course, both inherited from course and set on the
+   * event itself ("promote organizations" from event and course)
    */
   allGroups?: string[];
   /**
-   * (calculated) list of user and group _id that are allowed to edit the event, calculated from
+   * (calculated) list of user and organization _id that are allowed to edit the event, calculated from
    * the groupOranizers from the event and the editors from the course
    */
   editors: string[];
@@ -184,9 +184,9 @@ export class OEvent {
     return this.numberOfParticipants() >= this.maxParticipants;
   }
 
-  /** list of group _id that are allowed to edit the event, calculated from
+  /** list of organization _ids that are allowed to edit the event, calculated from
    * the groupOranizers from the event and the course */
-  allGroupOrganizers(this: EventModel) {
+  allOrganizationOrganizers(this: EventModel) {
     return this.allGroups?.filter((g) => this.editors.includes(g)) || [];
   }
 }
@@ -223,13 +223,13 @@ export const FindFilterPattern = {
   tenants: Match.Maybe([String]),
   /** list of category ID the event must be in */
   categories: Match.Maybe([String]),
-  /** the event must be in that group (ID) */
+  /** the event must be in that organization (ID) */
   group: Match.Maybe(String),
-  /** the event must be in one of the group ID */
+  /** the event must be in one of the organization (ID) */
   groups: Match.Maybe([String]),
-  /** the event must be in none of the group ID */
+  /** the event must be in none of the organization (ID) */
   notGroup: Match.Maybe(String),
-  /** the event must be in none of the group ID */
+  /** the event must be in none of the organization (ID) */
   notGroups: Match.Maybe([String]),
   /** only events for this course (ID) */
   course: Match.Maybe(String),
@@ -384,30 +384,30 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
       find.categories = { $all: filter.categories };
     }
 
-    let inGroups = [];
+    let inOrganizations = [];
     if (filter.group) {
-      inGroups.push(filter.group);
+      inOrganizations.push(filter.group);
     }
 
     if (filter.groups) {
-      inGroups = inGroups.concat(filter.groups);
+      inOrganizations = inOrganizations.concat(filter.groups);
     }
 
-    if (inGroups.length > 0) {
-      find.allGroups = { $in: inGroups };
+    if (inOrganizations.length > 0) {
+      find.allGroups = { $in: inOrganizations };
     }
 
-    let notInGroups = [];
+    let notInOrganizations = [];
     if (filter.notGroup) {
-      notInGroups.push(filter.notGroup);
+      notInOrganizations.push(filter.notGroup);
     }
 
     if (filter.notGroups) {
-      notInGroups = notInGroups.concat(filter.notGroups);
+      notInOrganizations = notInOrganizations.concat(filter.notGroups);
     }
 
-    if (notInGroups.length > 0) {
-      find.allGroups = { $nin: notInGroups };
+    if (notInOrganizations.length > 0) {
+      find.allGroups = { $nin: notInOrganizations };
     }
 
     if (filter.course) {

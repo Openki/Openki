@@ -10,9 +10,15 @@ import * as VenuesMethods from "/imports/api/venues/methods";
 
 import { name } from "../../../../lib/organization-name-helpers";
 
-function GroupToAdd({ venue, groupId }: { venue: VenueModel; groupId: string }) {
+function OrganizationToAdd({
+  venue,
+  organizationId,
+}: {
+  venue: VenueModel;
+  organizationId: string;
+}) {
   const { t } = useTranslation();
-  const [isLoading, group] = useDetails(groupId);
+  const [isLoading, organization] = useDetails(organizationId);
 
   if (isLoading()) {
     return null;
@@ -22,14 +28,14 @@ function GroupToAdd({ venue, groupId }: { venue: VenueModel; groupId: string }) 
     <button
       className="dropdown-item btn btn-link"
       type="button"
-      value={groupId}
+      value={organizationId}
       onClick={async () => {
         try {
-          await VenuesMethods.addEditGroup(venue._id, groupId);
+          await VenuesMethods.addEditOrganization(venue._id, organizationId);
 
           Alert.success(
             t("editGroup.add.groupAdded", "{GROUP} was added as host for {VENUE}.", {
-              GROUP: name(group),
+              GROUP: name(organization),
               VENUE: venue.name,
             }),
           );
@@ -38,7 +44,7 @@ function GroupToAdd({ venue, groupId }: { venue: VenueModel; groupId: string }) 
         }
       }}
     >
-      {name(group)}
+      {name(organization)}
     </button>
   );
 }
@@ -52,22 +58,27 @@ export function Add({ venue }: Props) {
   const [search, setSearch] = useState("");
   const user = useUser();
 
-  const [isLoading, groups] = useFindFilter({}, undefined, undefined, [["name", "asc"]]);
+  const [isLoading, organizations] = useFindFilter({}, undefined, undefined, [["name", "asc"]]);
 
-  if (isLoading() || groups.length === 0) {
+  if (isLoading() || organizations.length === 0) {
     return null;
   }
 
   const searchUpperCase = search.toUpperCase();
 
-  let filteredGroups = groups.filter(
-    (group) =>
-      group.name.toUpperCase().includes(searchUpperCase) ||
-      group.short.toUpperCase().includes(searchUpperCase),
+  let filteredOrganizations = organizations.filter(
+    (organization) =>
+      organization.name.toUpperCase().includes(searchUpperCase) ||
+      organization.short.toUpperCase().includes(searchUpperCase),
   );
 
-  const usersGroup = filteredGroups.filter((group) => user?.groups.includes(group._id));
-  filteredGroups = filteredGroups.filter((group) => !user?.groups.includes(group._id)); // exclude from result
+  const usersOrganization = filteredOrganizations.filter((organization) =>
+    user?.groups.includes(organization._id),
+  );
+  filteredOrganizations = filteredOrganizations.filter(
+    // exclude from result
+    (organization) => !user?.groups.includes(organization._id),
+  );
 
   return (
     <div className="btn-group tag-btn group-tag-btn align-top">
@@ -100,13 +111,21 @@ export function Add({ venue }: Props) {
             }}
           />
         </form>
-        {/* Show users groups first */}
-        {usersGroup.map((group) => (
-          <GroupToAdd key={group._id} venue={venue} groupId={group._id} />
+        {/* Show users organizations first */}
+        {usersOrganization.map((organization) => (
+          <OrganizationToAdd
+            key={organization._id}
+            venue={venue}
+            organizationId={organization._id}
+          />
         ))}
         {/* then the rest */}
-        {filteredGroups.map((group) => (
-          <GroupToAdd key={group._id} venue={venue} groupId={group._id} />
+        {filteredOrganizations.map((organization) => (
+          <OrganizationToAdd
+            key={organization._id}
+            venue={venue}
+            organizationId={organization._id}
+          />
         ))}
         <div className="dropdown-divider"></div>
         <div className="dialog-dropdown-btn">
