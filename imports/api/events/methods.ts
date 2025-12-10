@@ -10,12 +10,12 @@ import * as courseHistoryDenormalizer from "/imports/api/courses/historyDenormal
 import * as courseTimeLastEditDenormalizer from "/imports/api/courses/timeLastEditDenormalizer";
 import * as courseImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
 import * as categoriesDenormalizer from "/imports/api/events/categoriesDenormalizer";
-import * as groupsDenormalizer from "/imports/api/events/groupsDenormalizer";
+import * as groupsDenormalizer from "./organizationsDenormalizer";
 import * as venueDenormalizer from "/imports/api/events/venueDenormalizer";
 import * as courseNextEventDenormalizer from "/imports/api/courses/nextEventDenormalizer";
 import * as regionsCountDenormalizer from "/imports/api/regions/countDenormalizer";
 import { EventEntity, EventModel, Events, OEvent } from "/imports/api/events/events";
-import { Groups } from "/imports/api/groups/groups";
+import { Groups } from "../organizations/organizations";
 import { Regions } from "/imports/api/regions/regions";
 
 import { Notification } from "../../startup/both/emails/notification";

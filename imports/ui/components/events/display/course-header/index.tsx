@@ -6,7 +6,7 @@ import { CourseModel } from "/imports/api/courses/courses";
 
 import { CourseCategories } from "/imports/ui/components/courses/categories";
 import { Tag } from "/imports/ui/components/regions/tag";
-import { GroupList } from "/imports/ui/components/courses/display/group-list";
+import { GroupList } from "../../../courses/display/organization-list";
 
 import "./styles.scss";
 

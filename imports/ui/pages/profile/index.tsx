@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 
-import * as Groups from "/imports/api/groups/publications";
+import * as Groups from "../../../api/organizations/publications";
 import * as Tenants from "/imports/api/tenants/publications";
 import { UserModel } from "/imports/api/users/users";
 import * as Venues from "/imports/api/venues/publications";
@@ -19,7 +19,7 @@ import { CalendarSection } from "./CalendarSection";
 import { CreateUserSection } from "./CreateUserSection";
 import { DangerZoneSection } from "./DangerZoneSection";
 import { EmailSection } from "./EmailSection";
-import { GroupSection } from "./GroupSection";
+import { GroupSection } from "./OrganizationSection";
 import { ProfileSection } from "./ProfileSection";
 import { TenantSection } from "./TenantSection";
 import { VenuesSection } from "./VenuesSection";

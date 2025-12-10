@@ -1,6 +1,6 @@
 import { Mongo } from "meteor/mongo";
 
-import { Groups } from "/imports/api/groups/groups";
+import { Groups } from "../organizations/organizations";
 import { UserEntity, Users } from "/imports/api/users/users";
 
 /**

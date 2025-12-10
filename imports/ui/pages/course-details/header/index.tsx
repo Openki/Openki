@@ -11,7 +11,7 @@ import { InternalIndicator } from "/imports/ui/components/internal-indicator";
 import { SingleEventIndicator } from "/imports/ui/components/single-event-indicator";
 import { Tag } from "/imports/ui/components/regions/tag";
 import { CourseCategories } from "/imports/ui/components/courses/categories";
-import { GroupList } from "/imports/ui/components/courses/display/group-list";
+import { GroupList } from "../../../components/courses/display/organization-list";
 
 import "./styles.scss";
 

@@ -1,4 +1,4 @@
-import * as courseGroupsDenormalizer from "../courses/groupsDenormalizer";
+import * as courseGroupsDenormalizer from "../courses/organizationsDenormalizer";
 import * as courseNextEventDenormalizer from "../courses/nextEventDenormalizer";
 import * as coursesTenantDenormalizer from "../courses/tenantDenormalizer";
 import * as eventsCategoriesDenormalizer from "../events/categoriesDenormalizer";

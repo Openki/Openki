@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { GroupHeader } from "./GroupHeader";
+import { GroupHeader } from "./OrganizationHeader";
 import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { PublicSettings } from "/imports/utils/PublicSettings";

@@ -10,7 +10,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import { Events } from "/imports/api/events/events";
 import { UserModel } from "/imports/api/users/users";
 import { Method } from "/imports/api/courses/methods";
-import * as groupsDenormalizer from "./groupsDenormalizer";
+import * as groupsDenormalizer from "./organizationsDenormalizer";
 
 import { hasRole } from "/imports/utils/course-role-utils";
 import { Notification } from "../../startup/both/emails/notification";

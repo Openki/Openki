@@ -6,7 +6,7 @@ import { uniq } from "lodash-es";
 
 import { Courses, Course, CourseEntity, CourseModel } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
-import { Groups } from "/imports/api/groups/groups";
+import { Groups } from "../organizations/organizations";
 import { Regions } from "/imports/api/regions/regions";
 import { CourseDiscussions } from "/imports/api/course-discussions/course-discussions";
 import { Roles } from "/imports/api/roles/roles";
@@ -18,7 +18,7 @@ import * as eventsCategoriesDenormalizer from "/imports/api/events/categoriesDen
 import * as eventsCourseImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
 import { Log } from "/imports/api/log/log";
 import { UserModel } from "/imports/api/users/users";
-import * as groupsDenormalizer from "./groupsDenormalizer";
+import * as groupsDenormalizer from "./organizationsDenormalizer";
 
 import { Subscribe, Unsubscribe, Message } from "./subscription";
 

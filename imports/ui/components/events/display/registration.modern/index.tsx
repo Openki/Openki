@@ -8,7 +8,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import { EventModel } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { Regions } from "/imports/api/regions/regions";
-import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
+import { useFindFilter as useGroupsFindFilter } from "../../../../../api/organizations/publications";
 
 import { EventParticipants } from "/imports/ui/components/events/participants.modern";
 import { RegisterPanel } from "./register-panel";

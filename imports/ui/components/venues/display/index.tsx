@@ -17,7 +17,7 @@ import {
 } from "../../delete-confirm-dialog";
 import { Display as LocationDisplay } from "../../location/display";
 import { ProfileLink } from "../../profile-link";
-import { EditGroup } from "./edit-group";
+import { EditGroup } from "./edit-organization";
 import { PastEvents } from "./PastEvents";
 import { UpcomingEvents } from "./UpcomingEvents";
 

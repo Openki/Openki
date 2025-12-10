@@ -17,7 +17,7 @@ import { update as update20210513ensureTenantAdminsField } from "./updates/2021.
 import { update as update20220621EnrichEventCourseImage } from "./updates/2022.06.21 enrichEventCourseImage";
 import { update as update20230506extendEventParticipants } from "./updates/2023.05.06 extendEventParticipants";
 import { update as update20230802ensureEventSendReminderField } from "./updates/2023.08.02 ensureEventSendReminderField";
-import { update as update20240224refactorGroupMembers } from "./updates/2024.02.24 refactorGroupMembers";
+import { update as update20240224refactorGroupMembers } from "./updates/2024.02.24 refactorOrganizationMembers";
 import { update as update20241014enrichCourseCompactImage } from "./updates/2024.10.14 enrichCourseCompactImage";
 import { update as update20250407enrichUserVenues } from "./updates/2025.04.07 enrichUserVenues";
 import { update as update20250723extendEventParticipants } from "./updates/2025.07.23 extendEventParticipants";

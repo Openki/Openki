@@ -11,7 +11,7 @@ import { hasRole } from "/imports/utils/course-role-utils";
 import { InternalIndicator } from "/imports/ui/components/internal-indicator";
 import { SingleEventIndicator } from "/imports/ui/components/single-event-indicator";
 import { CourseCategories } from "/imports/ui/components/courses/categories";
-import { GroupTag } from "/imports/ui/components/groups/tag";
+import { GroupTag } from "../../organizations/tag";
 import { CourseCompactEvent } from "./course-compact-event";
 import { CourseCompactRoles } from "./course-compact-roles";
 

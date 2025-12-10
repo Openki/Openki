@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
-import { FilterGroups, Props as FilterGroupsProps } from "../../FilterGroups";
+import { FilterGroups, Props as FilterGroupsProps } from "../../FilterOrganizations";
 import { FilterCategories, Props as FilterCategoriesProps } from "../../filter-categories";
 import { SearchField, Props as SearchFieldProps } from "../../search-field";
 import { Direction } from "../Arrow";

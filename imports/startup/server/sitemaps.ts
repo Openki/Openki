@@ -6,7 +6,7 @@ import { createGzip } from "zlib";
 import { CourseModel, Courses } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
 import { Venues } from "/imports/api/venues/venues";
-import { Groups } from "/imports/api/groups/groups";
+import { Groups } from "../../api/organizations/organizations";
 import { visibleTenantsAsync } from "/imports/utils/visible-tenants";
 import { serverError } from "/imports/api/log/methods";
 import { LanguagesRaw } from "/imports/api/languages/languages";

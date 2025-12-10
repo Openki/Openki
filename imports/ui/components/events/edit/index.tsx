@@ -24,7 +24,7 @@ import * as CoursesMethods from "/imports/api/courses/methods";
 import { EventModel, OEvent } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { SaveFields } from "/imports/api/events/methods";
-import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
+import { useFindFilter as useGroupsFindFilter } from "/imports/api/organizations/publications";
 import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
 import { useAll as useRegions } from "/imports/api/regions/publications";
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";

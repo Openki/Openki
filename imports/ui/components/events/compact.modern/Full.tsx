@@ -15,7 +15,7 @@ import { RegistrationParticipants } from "../display/registration.modern";
 import { Discussion } from "../../courses/discussion.modern";
 import { Display } from "../../location/display";
 
-import { GroupName } from "./GroupName";
+import { GroupName } from "./OrganizationName";
 import { useDetails } from "/imports/api/courses/publications";
 import { StatePanel } from "./StatePanel";
 import { CustomFieldDisplay } from "../../courses/CustomFieldDisplay";
