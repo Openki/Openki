@@ -83,7 +83,7 @@ export function EventRegistration({ event }: Props) {
         await addParticipant();
       }
     })();
-  });
+  }, []);
 
   if (groupsIsLoading()) {
     return null;
