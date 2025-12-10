@@ -110,7 +110,7 @@ export function TenantCreatePage(props: Props) {
           <form noValidate onSubmit={handleSubmit}>
             <div className="mb-3">
               <FormControl
-                id="teanant-create-name"
+                id="tenant-edit-name"
                 type="text"
                 label={t("tenant.edit.name", "Name of your tenant")}
                 value={changes.tenantName}
