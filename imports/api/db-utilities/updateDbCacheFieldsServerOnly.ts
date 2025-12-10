@@ -1,4 +1,4 @@
-import * as courseGroupsDenormalizer from "../courses/organizationsDenormalizer";
+import * as courseOrganizationsDenormalizer from "../courses/organizationsDenormalizer";
 import * as courseNextEventDenormalizer from "../courses/nextEventDenormalizer";
 import * as coursesTenantDenormalizer from "../courses/tenantDenormalizer";
 import * as eventsCategoriesDenormalizer from "../events/categoriesDenormalizer";
@@ -21,8 +21,8 @@ export async function updateDbCacheFieldsServerOnly() {
       // Resync location cache in events
       eventsVenueDenormalizer.updateVenue({}),
 
-      // Update list of organizers per course, triggers updateGroups from events
-      courseGroupsDenormalizer.updateGroups({}),
+      // Update list of organizers per course, triggers updateOrganizations from events
+      courseOrganizationsDenormalizer.updateOrganizations({}),
 
       eventsCategoriesDenormalizer.onStartUp(),
 

@@ -10,12 +10,12 @@ import { name } from "../../../../lib/organization-name-helpers";
 
 export interface Props {
   course: CourseModel;
-  groupId: string;
+  organizationId: string;
 }
 
-export function Remove({ course, groupId }: Props) {
+export function Remove({ course, organizationId }: Props) {
   const { t } = useTranslation();
-  const [isLoading, group] = useDetails(groupId);
+  const [isLoading, organization] = useDetails(organizationId);
   const [isExpanded, setIsExpanded] = useState(false);
 
   if (isLoading()) {
@@ -40,18 +40,18 @@ export function Remove({ course, groupId }: Props) {
   return (
     <div className="group-tool-dialog danger">
       {t("course.group.confirmRemoveText", 'Stop listing the "{NAME}" group as promoters?', {
-        NAME: name(group),
+        NAME: name(organization),
       })}
       <button
         type="button"
         className="btn btn-danger"
         onClick={async () => {
           try {
-            await CoursesMethods.promote(course._id, groupId, false);
+            await CoursesMethods.promote(course._id, organizationId, false);
 
             Alert.success(
               t("courseGroupAdd.groupRemoved", "{GROUP} was removed from {COURSE}.", {
-                GROUP: name(group),
+                GROUP: name(organization),
                 COURSE: course.name,
               }),
             );

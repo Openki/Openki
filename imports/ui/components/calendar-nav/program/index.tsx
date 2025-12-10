@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { FilterGroups, Props as FilterGroupsProps } from "../../FilterOrganizations";
+import { FilterOrganizations, Props as FilterOrganizationsProps } from "../../FilterOrganizations";
 import { FilterCategories, Props as FilterCategoriesProps } from "../../filter-categories";
 import { SearchField, Props as SearchFieldProps } from "../../search-field";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
@@ -22,10 +22,10 @@ export interface Props {
   selectedDays: moment.Moment[];
   onAddDay: (day: moment.Moment) => void;
   onRemoveDay: (day: moment.Moment) => void;
-  availableGroups?: string[] | undefined;
-  selectedGroups?: string[] | undefined;
-  onAddGroup: (group: string) => void;
-  onRemoveGroup: (group: string) => void;
+  availableOrganizations?: string[] | undefined;
+  selectedOrganizations?: string[] | undefined;
+  onAddOrganization: (organization: string) => void;
+  onRemoveOrganization: (organization: string) => void;
   categories?: string[] | undefined;
   onAddCategory: (category: string) => void;
   onRemoveCategory: (category: string) => void;
@@ -34,7 +34,7 @@ export interface Props {
 }
 
 export function CalendarNavProgram(props: Props) {
-  const { hideSwitches, days, availableGroups } = props;
+  const { hideSwitches, days, availableOrganizations: availableOrganizations } = props;
   const currentUser = useUser();
   const { t } = useTranslation();
   const { dayOfWeekShort, dayOfWeekLong } = useDateTimeFormat();
@@ -48,12 +48,12 @@ export function CalendarNavProgram(props: Props) {
   function searchFieldAttr(): SearchFieldProps {
     return { search: props.search, onChange: props.onChangeSearch };
   }
-  function filterGroupsAttr(): FilterGroupsProps {
+  function filterOrganizationsAttr(): FilterOrganizationsProps {
     return {
-      availableGroups: props.availableGroups,
-      selectedGroups: props.selectedGroups,
-      onAdd: props.onAddGroup,
-      onRemove: props.onRemoveGroup,
+      availableOrganizations: props.availableOrganizations,
+      selectedOrganizations: props.selectedOrganizations,
+      onAdd: props.onAddOrganization,
+      onRemove: props.onRemoveOrganization,
     };
   }
   function filterCategoriesAttr(): FilterCategoriesProps {
@@ -73,9 +73,9 @@ export function CalendarNavProgram(props: Props) {
           </div>
         </div>
         <div className="row align-items-center px-1">
-          {!!availableGroups?.length && (
+          {!!availableOrganizations?.length && (
             <div className="col-md-4 col-lg-3 p-1">
-              <FilterGroups {...filterGroupsAttr()} />
+              <FilterOrganizations {...filterOrganizationsAttr()} />
             </div>
           )}
           {!props.hideCategories && (

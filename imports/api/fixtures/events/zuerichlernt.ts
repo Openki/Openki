@@ -18,7 +18,7 @@ export const events: {
   time_created: {
     $date: string;
   };
-  groups?: string[];
+  organizations?: string[];
   courseId?: string;
   internal?: boolean;
   sendReminder?: boolean;
@@ -50,7 +50,7 @@ export const events: {
     time_created: {
       $date: "2024-05-30T15:21:55.226+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T07:30:00.000+0000",
     },
@@ -108,7 +108,7 @@ export const events: {
     time_created: {
       $date: "2024-05-30T13:34:23.358+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T08:00:00.000+0000",
     },
@@ -146,7 +146,7 @@ export const events: {
     time_created: {
       $date: "2024-05-02T13:58:47.005+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T10:15:00.000+0000",
     },
@@ -248,7 +248,7 @@ export const events: {
     time_created: {
       $date: "2024-04-12T13:00:47.486+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T12:00:00.000+0000",
     },
@@ -310,7 +310,7 @@ export const events: {
     time_created: {
       $date: "2024-05-30T13:57:13.472+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T12:00:00.000+0000",
     },
@@ -391,7 +391,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T05:02:21.029+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T14:00:00.000+0000",
     },
@@ -486,7 +486,7 @@ export const events: {
     time_created: {
       $date: "2024-07-11T09:09:43.210+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T14:50:00.000+0000",
     },
@@ -599,7 +599,7 @@ export const events: {
     time_created: {
       $date: "2024-03-14T13:06:15.970+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T15:00:00.000+0000",
     },
@@ -673,7 +673,7 @@ export const events: {
     time_created: {
       $date: "2024-04-09T15:05:55.203+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T15:00:00.000+0000",
     },
@@ -759,7 +759,7 @@ export const events: {
     time_created: {
       $date: "2024-05-28T11:41:26.241+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T15:00:00.000+0000",
     },
@@ -861,7 +861,7 @@ export const events: {
     time_created: {
       $date: "2024-06-01T17:43:44.967+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T15:00:00.000+0000",
     },
@@ -907,7 +907,7 @@ export const events: {
     time_created: {
       $date: "2024-05-02T12:11:37.321+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:00:00.000+0000",
     },
@@ -961,7 +961,7 @@ export const events: {
     time_created: {
       $date: "2024-05-02T14:09:00.407+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:00:00.000+0000",
     },
@@ -1047,7 +1047,7 @@ export const events: {
     time_created: {
       $date: "2024-05-21T10:21:45.879+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:00:00.000+0000",
     },
@@ -1133,7 +1133,7 @@ export const events: {
     time_created: {
       $date: "2024-05-24T15:12:44.233+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:00:00.000+0000",
     },
@@ -1239,7 +1239,7 @@ export const events: {
     time_created: {
       $date: "2024-05-26T08:44:33.266+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:00:00.000+0000",
     },
@@ -1321,7 +1321,7 @@ export const events: {
     time_created: {
       $date: "2024-05-30T10:09:58.994+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:00:00.000+0000",
     },
@@ -1386,7 +1386,7 @@ export const events: {
     time_created: {
       $date: "2024-05-30T16:30:51.523+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:00:00.000+0000",
     },
@@ -1473,7 +1473,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T11:45:37.874+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:00:00.000+0000",
     },
@@ -1515,7 +1515,7 @@ export const events: {
     time_created: {
       $date: "2024-06-03T12:16:48.100+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:00:00.000+0000",
     },
@@ -1572,7 +1572,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T13:57:52.192+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:30:00.000+0000",
     },
@@ -1678,7 +1678,7 @@ export const events: {
     time_created: {
       $date: "2024-06-03T08:54:23.768+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:30:00.000+0000",
     },
@@ -1818,7 +1818,7 @@ export const events: {
     time_created: {
       $date: "2024-04-09T17:35:07.334+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:45:00.000+0000",
     },
@@ -1869,7 +1869,7 @@ export const events: {
     time_created: {
       $date: "2024-06-04T11:32:38.388+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T17:00:00.000+0000",
     },
@@ -1902,7 +1902,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T13:27:16.410+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T17:15:00.000+0000",
     },
@@ -1952,7 +1952,7 @@ export const events: {
     time_created: {
       $date: "2024-05-26T08:46:37.168+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T18:00:00.000+0000",
     },
@@ -2002,7 +2002,7 @@ export const events: {
     time_created: {
       $date: "2024-06-01T18:14:07.683+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T07:00:00.000+0000",
     },
@@ -2076,7 +2076,7 @@ export const events: {
     time_created: {
       $date: "2024-05-23T12:00:02.601+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T10:00:00.000+0000",
     },
@@ -2153,7 +2153,7 @@ export const events: {
     time_created: {
       $date: "2024-04-09T15:15:50.403+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T10:30:00.000+0000",
     },
@@ -2240,7 +2240,7 @@ export const events: {
     time_created: {
       $date: "2024-03-24T19:35:33.668+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T12:00:00.000+0000",
     },
@@ -2335,7 +2335,7 @@ export const events: {
     time_created: {
       $date: "2024-04-09T15:10:15.887+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T12:00:00.000+0000",
     },
@@ -2442,7 +2442,7 @@ export const events: {
     time_created: {
       $date: "2024-05-28T07:31:21.119+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T12:00:00.000+0000",
     },
@@ -2529,7 +2529,7 @@ export const events: {
     time_created: {
       $date: "2024-07-02T14:11:56.078+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T12:00:00.000+0000",
     },
@@ -2602,7 +2602,7 @@ export const events: {
     time_created: {
       $date: "2024-05-16T14:04:14.631+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T13:00:00.000+0000",
     },
@@ -2668,7 +2668,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T09:50:48.927+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T14:00:00.000+0000",
     },
@@ -2738,7 +2738,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T12:41:31.209+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T14:30:00.000+0000",
     },
@@ -2792,7 +2792,7 @@ export const events: {
     time_created: {
       $date: "2024-05-21T09:02:26.329+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T15:00:00.000+0000",
     },
@@ -2866,7 +2866,7 @@ export const events: {
     time_created: {
       $date: "2024-05-30T13:30:22.393+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T15:00:00.000+0000",
     },
@@ -2948,7 +2948,7 @@ export const events: {
     time_created: {
       $date: "2024-05-27T06:18:06.473+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T15:30:00.000+0000",
     },
@@ -3023,7 +3023,7 @@ export const events: {
     time_created: {
       $date: "2024-05-24T07:17:14.513+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T16:00:00.000+0000",
     },
@@ -3104,7 +3104,7 @@ export const events: {
     time_created: {
       $date: "2024-05-24T12:02:21.502+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T16:00:00.000+0000",
     },
@@ -3162,7 +3162,7 @@ export const events: {
     time_created: {
       $date: "2024-05-30T08:33:05.145+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T16:00:00.000+0000",
     },
@@ -3216,7 +3216,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T11:50:49.500+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T16:00:00.000+0000",
     },
@@ -3325,7 +3325,7 @@ export const events: {
     time_created: {
       $date: "2024-03-13T08:50:01.807+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T16:30:00.000+0000",
     },
@@ -3375,7 +3375,7 @@ export const events: {
     time_created: {
       $date: "2024-04-17T15:43:20.285+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T17:00:00.000+0000",
     },
@@ -3421,7 +3421,7 @@ export const events: {
     time_created: {
       $date: "2024-05-19T10:06:33.792+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T17:00:00.000+0000",
     },
@@ -3479,7 +3479,7 @@ export const events: {
     time_created: {
       $date: "2024-05-30T09:18:42.472+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T17:00:00.000+0000",
     },
@@ -3605,7 +3605,7 @@ export const events: {
     time_created: {
       $date: "2024-07-04T06:41:33.053+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T17:00:00.000+0000",
     },
@@ -3679,7 +3679,7 @@ export const events: {
     time_created: {
       $date: "2024-05-21T10:24:13.751+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T17:30:00.000+0000",
     },
@@ -3710,7 +3710,7 @@ export const events: {
     time_created: {
       $date: "2024-05-21T11:04:20.694+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T17:30:00.000+0000",
     },
@@ -3856,7 +3856,7 @@ export const events: {
     time_created: {
       $date: "2024-05-26T08:50:43.471+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T17:30:00.000+0000",
     },
@@ -3928,7 +3928,7 @@ export const events: {
     time_created: {
       $date: "2024-03-16T07:29:14.235+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T17:40:00.000+0000",
     },
@@ -3987,7 +3987,7 @@ export const events: {
     time_created: {
       $date: "2024-05-01T07:25:06.079+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T18:00:00.000+0000",
     },
@@ -4057,7 +4057,7 @@ export const events: {
     time_created: {
       $date: "2024-05-29T11:45:28.537+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T07:30:00.000+0000",
     },
@@ -4115,7 +4115,7 @@ export const events: {
     time_created: {
       $date: "2024-05-16T13:35:30.866+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T08:00:00.000+0000",
     },
@@ -4193,7 +4193,7 @@ export const events: {
     time_created: {
       $date: "2024-05-21T13:55:10.670+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T08:00:00.000+0000",
     },
@@ -4270,7 +4270,7 @@ export const events: {
     time_created: {
       $date: "2024-03-21T14:19:37.567+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T10:30:00.000+0000",
     },
@@ -4352,7 +4352,7 @@ export const events: {
     time_created: {
       $date: "2024-04-03T14:19:47.722+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T11:00:00.000+0000",
     },
@@ -4404,7 +4404,7 @@ export const events: {
     time_created: {
       $date: "2024-04-18T09:37:20.940+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T12:00:00.000+0000",
     },
@@ -4453,7 +4453,7 @@ export const events: {
     time_created: {
       $date: "2024-05-13T12:39:25.474+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T12:00:00.000+0000",
     },
@@ -4534,7 +4534,7 @@ export const events: {
     time_created: {
       $date: "2024-05-14T12:47:47.455+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T12:00:00.000+0000",
     },
@@ -4592,7 +4592,7 @@ export const events: {
     time_created: {
       $date: "2024-05-22T13:43:51.745+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T12:00:00.000+0000",
     },
@@ -4662,7 +4662,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T08:05:17.972+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T12:00:00.000+0000",
     },
@@ -4728,7 +4728,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T08:48:20.740+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T12:00:00.000+0000",
     },
@@ -4814,7 +4814,7 @@ export const events: {
     time_created: {
       $date: "2024-05-22T10:00:38.812+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T13:00:00.000+0000",
     },
@@ -4900,7 +4900,7 @@ export const events: {
     time_created: {
       $date: "2024-06-03T10:55:06.919+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T13:00:00.000+0000",
     },
@@ -4932,7 +4932,7 @@ export const events: {
     time_created: {
       $date: "2024-06-03T19:11:56.744+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T13:00:00.000+0000",
     },
@@ -4994,7 +4994,7 @@ export const events: {
     time_created: {
       $date: "2024-05-26T08:52:11.914+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T14:00:00.000+0000",
     },
@@ -5037,7 +5037,7 @@ export const events: {
     time_created: {
       $date: "2024-05-30T07:44:50.318+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T14:00:00.000+0000",
     },
@@ -5139,7 +5139,7 @@ export const events: {
     time_created: {
       $date: "2024-05-21T16:51:18.817+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T14:30:00.000+0000",
     },
@@ -5229,7 +5229,7 @@ export const events: {
     time_created: {
       $date: "2024-03-18T07:34:07.575+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T15:00:00.000+0000",
     },
@@ -5379,7 +5379,7 @@ export const events: {
     time_created: {
       $date: "2024-04-09T15:14:22.694+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T15:00:00.000+0000",
     },
@@ -5513,7 +5513,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T07:24:13.936+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T15:00:00.000+0000",
     },
@@ -5635,7 +5635,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T10:41:21.003+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T15:00:00.000+0000",
     },
@@ -5669,7 +5669,7 @@ export const events: {
     time_created: {
       $date: "2024-06-04T07:04:22.335+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T15:00:00.000+0000",
     },
@@ -5751,7 +5751,7 @@ export const events: {
     time_created: {
       $date: "2024-05-02T14:16:24.210+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T15:30:00.000+0000",
     },
@@ -5802,7 +5802,7 @@ export const events: {
     time_created: {
       $date: "2024-05-14T12:38:31.099+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T15:30:00.000+0000",
     },
@@ -5948,7 +5948,7 @@ export const events: {
     time_created: {
       $date: "2024-05-21T13:58:03.448+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T15:30:00.000+0000",
     },
@@ -6014,7 +6014,7 @@ export const events: {
     time_created: {
       $date: "2024-07-02T14:07:41.593+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T15:30:00.000+0000",
     },
@@ -6053,7 +6053,7 @@ export const events: {
     time_created: {
       $date: "2024-09-10T10:35:59.533+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T15:30:00.000+0000",
     },
@@ -6111,7 +6111,7 @@ export const events: {
     time_created: {
       $date: "2024-04-26T09:24:22.268+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:00:00.000+0000",
     },
@@ -6177,7 +6177,7 @@ export const events: {
     time_created: {
       $date: "2024-05-21T13:50:30.889+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:00:00.000+0000",
     },
@@ -6251,7 +6251,7 @@ export const events: {
     time_created: {
       $date: "2024-05-23T12:56:50.560+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:00:00.000+0000",
     },
@@ -6284,7 +6284,7 @@ export const events: {
     time_created: {
       $date: "2024-05-23T16:15:32.387+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:00:00.000+0000",
     },
@@ -6365,7 +6365,7 @@ export const events: {
     time_created: {
       $date: "2024-05-28T16:54:45.029+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:00:00.000+0000",
     },
@@ -6419,7 +6419,7 @@ export const events: {
     time_created: {
       $date: "2024-06-01T18:18:48.301+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:00:00.000+0000",
     },
@@ -6497,7 +6497,7 @@ export const events: {
     time_created: {
       $date: "2024-05-21T15:45:49.536+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:15:00.000+0000",
     },
@@ -6550,7 +6550,7 @@ export const events: {
     time_created: {
       $date: "2024-04-04T12:07:33.367+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:30:00.000+0000",
     },
@@ -6638,7 +6638,7 @@ export const events: {
     time_created: {
       $date: "2024-04-16T06:35:53.682+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:30:00.000+0000",
     },
@@ -6709,7 +6709,7 @@ export const events: {
     time_created: {
       $date: "2024-05-06T07:35:37.860+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:30:00.000+0000",
     },
@@ -6771,7 +6771,7 @@ export const events: {
     time_created: {
       $date: "2024-05-22T15:24:31.062+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:30:00.000+0000",
     },
@@ -6825,7 +6825,7 @@ export const events: {
     time_created: {
       $date: "2024-05-24T08:11:47.916+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:30:00.000+0000",
     },
@@ -6923,7 +6923,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T09:22:34.516+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:30:00.000+0000",
     },
@@ -6954,7 +6954,7 @@ export const events: {
     time_created: {
       $date: "2024-04-16T14:34:52.870+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T17:00:00.000+0000",
     },
@@ -6999,7 +6999,7 @@ export const events: {
     time_created: {
       $date: "2024-04-17T10:02:35.168+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T17:00:00.000+0000",
     },
@@ -7032,7 +7032,7 @@ export const events: {
     time_created: {
       $date: "2024-05-21T14:32:14.591+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T17:00:00.000+0000",
     },
@@ -7090,7 +7090,7 @@ export const events: {
     time_created: {
       $date: "2024-05-22T07:15:39.949+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T17:00:00.000+0000",
     },
@@ -7200,7 +7200,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T07:59:37.354+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T17:00:00.000+0000",
     },
@@ -7270,7 +7270,7 @@ export const events: {
     time_created: {
       $date: "2024-06-24T12:20:41.118+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T17:00:00.000+0000",
     },
@@ -7340,7 +7340,7 @@ export const events: {
     time_created: {
       $date: "2024-05-26T08:55:28.082+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T17:30:00.000+0000",
     },
@@ -7394,7 +7394,7 @@ export const events: {
     time_created: {
       $date: "2024-05-21T07:00:07.382+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T18:00:00.000+0000",
     },
@@ -7471,7 +7471,7 @@ export const events: {
     time_created: {
       $date: "2024-03-22T13:57:36.024+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T07:00:00.000+0000",
     },
@@ -7534,7 +7534,7 @@ export const events: {
     time_created: {
       $date: "2024-09-03T12:40:20.441+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T07:00:00.000+0000",
     },
@@ -7576,7 +7576,7 @@ export const events: {
     time_created: {
       $date: "2024-05-30T09:57:53.111+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T07:30:00.000+0000",
     },
@@ -7608,7 +7608,7 @@ export const events: {
     time_created: {
       $date: "2024-04-30T15:36:03.826+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T08:00:00.000+0000",
     },
@@ -7641,7 +7641,7 @@ export const events: {
     time_created: {
       $date: "2024-07-04T08:29:32.116+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T08:00:00.000+0000",
     },
@@ -7727,7 +7727,7 @@ export const events: {
     time_created: {
       $date: "2024-09-03T12:45:07.033+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T08:00:00.000+0000",
     },
@@ -7792,7 +7792,7 @@ export const events: {
     time_created: {
       $date: "2024-04-11T16:39:31.271+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T08:30:00.000+0000",
     },
@@ -7863,7 +7863,7 @@ export const events: {
     time_created: {
       $date: "2024-06-03T13:50:16.398+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T09:00:00.000+0000",
     },
@@ -7925,7 +7925,7 @@ export const events: {
     time_created: {
       $date: "2024-04-26T07:28:43.244+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T10:15:00.000+0000",
     },
@@ -7987,7 +7987,7 @@ export const events: {
     time_created: {
       $date: "2024-05-21T15:09:38.623+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T12:00:00.000+0000",
     },
@@ -8041,7 +8041,7 @@ export const events: {
     time_created: {
       $date: "2024-07-09T09:27:06.606+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T12:00:00.000+0000",
     },
@@ -8135,7 +8135,7 @@ export const events: {
     time_created: {
       $date: "2024-09-03T12:49:26.155+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T12:00:00.000+0000",
     },
@@ -8245,7 +8245,7 @@ export const events: {
     time_created: {
       $date: "2024-05-29T12:27:47.593+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T12:15:00.000+0000",
     },
@@ -8319,7 +8319,7 @@ export const events: {
     time_created: {
       $date: "2024-05-29T13:10:32.335+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T13:00:00.000+0000",
     },
@@ -8388,7 +8388,7 @@ export const events: {
     time_created: {
       $date: "2024-05-14T12:49:35.804+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T14:00:00.000+0000",
     },
@@ -8438,7 +8438,7 @@ export const events: {
     time_created: {
       $date: "2024-09-18T08:06:58.480+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T14:30:00.000+0000",
     },
@@ -8470,7 +8470,7 @@ export const events: {
     time_created: {
       $date: "2024-04-09T15:18:02.666+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T15:00:00.000+0000",
     },
@@ -8559,7 +8559,7 @@ export const events: {
     time_created: {
       $date: "2024-04-09T15:19:26.636+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T15:00:00.000+0000",
     },
@@ -8645,7 +8645,7 @@ export const events: {
     time_created: {
       $date: "2024-05-23T16:09:25.111+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T15:00:00.000+0000",
     },
@@ -8703,7 +8703,7 @@ export const events: {
     time_created: {
       $date: "2024-05-24T07:37:48.187+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T15:00:00.000+0000",
     },
@@ -8777,7 +8777,7 @@ export const events: {
     time_created: {
       $date: "2024-05-26T08:57:51.273+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T15:00:00.000+0000",
     },
@@ -8835,7 +8835,7 @@ export const events: {
     time_created: {
       $date: "2024-06-03T07:53:32.817+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T15:00:00.000+0000",
     },
@@ -8889,7 +8889,7 @@ export const events: {
     time_created: {
       $date: "2024-05-28T08:58:06.906+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T15:30:00.000+0000",
     },
@@ -9027,7 +9027,7 @@ export const events: {
     time_created: {
       $date: "2024-05-28T13:46:53.522+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T15:30:00.000+0000",
     },
@@ -9117,7 +9117,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T09:06:04.248+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T15:30:00.000+0000",
     },
@@ -9160,7 +9160,7 @@ export const events: {
     time_created: {
       $date: "2024-07-08T09:53:26.050+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T15:30:00.000+0000",
     },
@@ -9238,7 +9238,7 @@ export const events: {
     time_created: {
       $date: "2024-05-13T13:35:18.679+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:00:00.000+0000",
     },
@@ -9269,7 +9269,7 @@ export const events: {
     time_created: {
       $date: "2024-05-28T19:48:29.523+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:00:00.000+0000",
     },
@@ -9331,7 +9331,7 @@ export const events: {
     time_created: {
       $date: "2024-05-29T12:52:53.137+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:00:00.000+0000",
     },
@@ -9401,7 +9401,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T13:09:05.297+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:00:00.000+0000",
     },
@@ -9507,7 +9507,7 @@ export const events: {
     time_created: {
       $date: "2024-06-03T12:40:43.095+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:00:00.000+0000",
     },
@@ -9580,7 +9580,7 @@ export const events: {
     time_created: {
       $date: "2024-03-18T09:22:08.248+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:30:00.000+0000",
     },
@@ -9655,7 +9655,7 @@ export const events: {
     time_created: {
       $date: "2024-05-02T12:00:33.900+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:30:00.000+0000",
     },
@@ -9717,7 +9717,7 @@ export const events: {
     time_created: {
       $date: "2024-05-22T14:31:09.806+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:30:00.000+0000",
     },
@@ -9780,7 +9780,7 @@ export const events: {
     time_created: {
       $date: "2024-05-24T12:14:46.661+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:30:00.000+0000",
     },
@@ -9846,7 +9846,7 @@ export const events: {
     time_created: {
       $date: "2024-05-28T09:01:53.764+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:30:00.000+0000",
     },
@@ -9935,7 +9935,7 @@ export const events: {
     time_created: {
       $date: "2024-05-30T08:13:06.571+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:30:00.000+0000",
     },
@@ -10033,7 +10033,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T11:35:28.400+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:30:00.000+0000",
     },
@@ -10151,7 +10151,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T08:20:32.132+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T17:00:00.000+0000",
     },
@@ -10193,7 +10193,7 @@ export const events: {
     time_created: {
       $date: "2024-05-26T09:07:54.772+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T17:30:00.000+0000",
     },
@@ -10247,7 +10247,7 @@ export const events: {
     time_created: {
       $date: "2024-05-08T19:55:57.316+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T18:00:00.000+0000",
     },
@@ -10341,7 +10341,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T10:52:24.310+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T07:00:00.000+0000",
     },
@@ -10391,7 +10391,7 @@ export const events: {
     time_created: {
       $date: "2024-09-03T12:52:02.993+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T07:00:00.000+0000",
     },
@@ -10452,7 +10452,7 @@ export const events: {
     time_created: {
       $date: "2024-05-30T10:05:46.793+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T07:30:00.000+0000",
     },
@@ -10484,7 +10484,7 @@ export const events: {
     time_created: {
       $date: "2024-05-30T14:42:20.973+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T07:30:00.000+0000",
     },
@@ -10542,7 +10542,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T10:59:17.195+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T08:00:00.000+0000",
     },
@@ -10608,7 +10608,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T11:07:51.609+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T08:00:00.000+0000",
     },
@@ -10646,7 +10646,7 @@ export const events: {
     time_created: {
       $date: "2024-06-17T09:56:13.571+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T08:00:00.000+0000",
     },
@@ -10736,7 +10736,7 @@ export const events: {
     time_created: {
       $date: "2024-05-30T09:28:21.742+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T09:00:00.000+0000",
     },
@@ -10842,7 +10842,7 @@ export const events: {
     time_created: {
       $date: "2024-07-11T16:02:58.343+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T09:00:00.000+0000",
     },
@@ -10911,7 +10911,7 @@ export const events: {
     time_created: {
       $date: "2024-05-21T10:50:01.474+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T11:30:00.000+0000",
     },
@@ -10981,7 +10981,7 @@ export const events: {
     time_created: {
       $date: "2024-05-23T14:49:28.671+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T11:30:00.000+0000",
     },
@@ -11028,7 +11028,7 @@ export const events: {
     time_created: {
       $date: "2024-05-07T15:47:44.922+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T12:00:00.000+0000",
     },
@@ -11094,7 +11094,7 @@ export const events: {
     time_created: {
       $date: "2024-05-24T12:09:58.256+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T12:00:00.000+0000",
     },
@@ -11164,7 +11164,7 @@ export const events: {
     time_created: {
       $date: "2024-05-29T14:06:09.714+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T12:00:00.000+0000",
     },
@@ -11226,7 +11226,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T12:36:42.028+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T12:00:00.000+0000",
     },
@@ -11280,7 +11280,7 @@ export const events: {
     time_created: {
       $date: "2024-06-05T07:07:20.267+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T12:00:00.000+0000",
     },
@@ -11374,7 +11374,7 @@ export const events: {
     time_created: {
       $date: "2024-05-02T10:47:49.097+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T12:30:00.000+0000",
     },
@@ -11436,7 +11436,7 @@ export const events: {
     time_created: {
       $date: "2024-05-28T08:06:08.682+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T12:30:00.000+0000",
     },
@@ -11494,7 +11494,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T13:38:49.497+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T13:00:00.000+0000",
     },
@@ -11552,7 +11552,7 @@ export const events: {
     time_created: {
       $date: "2024-06-03T07:46:48.904+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T13:00:00.000+0000",
     },
@@ -11585,7 +11585,7 @@ export const events: {
     time_created: {
       $date: "2024-05-25T11:26:29.193+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T13:30:00.000+0000",
     },
@@ -11639,7 +11639,7 @@ export const events: {
     time_created: {
       $date: "2024-05-02T10:52:08.194+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T14:00:00.000+0000",
     },
@@ -11697,7 +11697,7 @@ export const events: {
     time_created: {
       $date: "2024-05-16T06:29:56.362+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T14:00:00.000+0000",
     },
@@ -11759,7 +11759,7 @@ export const events: {
     time_created: {
       $date: "2024-05-23T15:54:42.206+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T14:00:00.000+0000",
     },
@@ -11861,7 +11861,7 @@ export const events: {
     time_created: {
       $date: "2024-05-29T15:12:18.719+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T14:00:00.000+0000",
     },
@@ -11899,7 +11899,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T12:52:31.973+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T14:00:00.000+0000",
     },
@@ -11961,7 +11961,7 @@ export const events: {
     time_created: {
       $date: "2024-06-03T07:49:40.226+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T14:00:00.000+0000",
     },
@@ -12007,7 +12007,7 @@ export const events: {
     time_created: {
       $date: "2024-06-03T13:28:49.464+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T14:00:00.000+0000",
     },
@@ -12069,7 +12069,7 @@ export const events: {
     time_created: {
       $date: "2024-07-04T11:12:27.379+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T14:00:00.000+0000",
     },
@@ -12126,7 +12126,7 @@ export const events: {
     time_created: {
       $date: "2024-04-09T15:27:13.321+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T14:30:00.000+0000",
     },
@@ -12204,7 +12204,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T09:19:43.011+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T14:30:00.000+0000",
     },
@@ -12236,7 +12236,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T13:36:14.961+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T14:30:00.000+0000",
     },
@@ -12281,7 +12281,7 @@ export const events: {
     time_created: {
       $date: "2024-05-13T10:56:43.863+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T15:00:00.000+0000",
     },
@@ -12351,7 +12351,7 @@ export const events: {
     time_created: {
       $date: "2024-05-23T16:13:20.979+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T15:00:00.000+0000",
     },
@@ -12413,7 +12413,7 @@ export const events: {
     time_created: {
       $date: "2024-05-30T07:35:25.141+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T15:00:00.000+0000",
     },
@@ -12491,7 +12491,7 @@ export const events: {
     time_created: {
       $date: "2024-05-23T15:15:52.052+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T15:30:00.000+0000",
     },
@@ -12613,7 +12613,7 @@ export const events: {
     time_created: {
       $date: "2024-05-29T14:13:21.370+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T15:30:00.000+0000",
     },
@@ -12663,7 +12663,7 @@ export const events: {
     time_created: {
       $date: "2024-06-05T12:44:11.724+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T15:30:00.000+0000",
     },
@@ -12733,7 +12733,7 @@ export const events: {
     time_created: {
       $date: "2024-05-13T12:35:00.544+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T16:00:00.000+0000",
     },
@@ -12863,7 +12863,7 @@ export const events: {
     time_created: {
       $date: "2024-05-23T15:47:31.768+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T16:00:00.000+0000",
     },
@@ -12933,7 +12933,7 @@ export const events: {
     time_created: {
       $date: "2024-05-27T06:15:50.053+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T16:00:00.000+0000",
     },
@@ -12980,7 +12980,7 @@ export const events: {
     time_created: {
       $date: "2024-05-29T15:13:05.652+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T16:00:00.000+0000",
     },
@@ -13050,7 +13050,7 @@ export const events: {
     time_created: {
       $date: "2024-05-30T14:11:32.662+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T16:00:00.000+0000",
     },
@@ -13136,7 +13136,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T12:58:53.138+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T16:00:00.000+0000",
     },
@@ -13182,7 +13182,7 @@ export const events: {
     time_created: {
       $date: "2024-06-05T13:07:23.009+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T16:00:00.000+0000",
     },
@@ -13252,7 +13252,7 @@ export const events: {
     time_created: {
       $date: "2024-07-01T08:16:50.091+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T16:00:00.000+0000",
     },
@@ -13312,7 +13312,7 @@ export const events: {
     time_created: {
       $date: "2024-04-14T08:17:58.335+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T16:30:00.000+0000",
     },
@@ -13407,7 +13407,7 @@ export const events: {
     time_created: {
       $date: "2024-05-23T12:39:27.500+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T16:30:00.000+0000",
     },
@@ -13457,7 +13457,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T13:46:18.888+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T16:30:00.000+0000",
     },
@@ -13526,7 +13526,7 @@ export const events: {
     time_created: {
       $date: "2024-04-17T10:14:29.342+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T17:00:00.000+0000",
     },
@@ -13568,7 +13568,7 @@ export const events: {
     time_created: {
       $date: "2024-05-21T11:57:58.183+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T17:00:00.000+0000",
     },
@@ -13630,7 +13630,7 @@ export const events: {
     time_created: {
       $date: "2024-05-30T08:41:15.680+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T17:00:00.000+0000",
     },
@@ -13708,7 +13708,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T11:32:21.342+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T17:00:00.000+0000",
     },
@@ -13823,7 +13823,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T14:05:03.791+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T17:00:00.000+0000",
     },
@@ -13873,7 +13873,7 @@ export const events: {
     time_created: {
       $date: "2024-06-03T09:06:05.663+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T17:00:00.000+0000",
     },
@@ -13927,7 +13927,7 @@ export const events: {
     time_created: {
       $date: "2024-05-26T09:19:39.051+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T17:30:00.000+0000",
     },
@@ -13997,7 +13997,7 @@ export const events: {
     time_created: {
       $date: "2024-05-30T08:35:24.460+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T18:00:00.000+0000",
     },
@@ -14075,7 +14075,7 @@ export const events: {
     time_created: {
       $date: "2024-05-22T15:15:05.706+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T07:00:00.000+0000",
     },
@@ -14145,7 +14145,7 @@ export const events: {
     time_created: {
       $date: "2024-05-24T16:28:20.701+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T07:00:00.000+0000",
     },
@@ -14195,7 +14195,7 @@ export const events: {
     time_created: {
       $date: "2024-05-14T13:20:34.266+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T07:30:00.000+0000",
     },
@@ -14264,7 +14264,7 @@ export const events: {
     time_created: {
       $date: "2024-03-17T09:45:02.638+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T08:00:00.000+0000",
     },
@@ -14322,7 +14322,7 @@ export const events: {
     time_created: {
       $date: "2024-04-26T11:57:59.954+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T08:00:00.000+0000",
     },
@@ -14376,7 +14376,7 @@ export const events: {
     time_created: {
       $date: "2024-05-02T07:47:16.730+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T08:00:00.000+0000",
     },
@@ -14454,7 +14454,7 @@ export const events: {
     time_created: {
       $date: "2024-05-24T16:19:14.126+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T08:00:00.000+0000",
     },
@@ -14501,7 +14501,7 @@ export const events: {
     time_created: {
       $date: "2024-05-29T09:24:23.466+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T08:00:00.000+0000",
     },
@@ -14543,7 +14543,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T11:03:42.523+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T08:00:00.000+0000",
     },
@@ -14606,7 +14606,7 @@ export const events: {
       "<p>Was bedeutet es für dich, an einem Ort zuhause zu sein?<br />Im Austausch mit Maria entwirfst du ein Zeichen, das für dein Gefühl von zuhause Sein steht. Du lernst verschiedene Sticktechniken und wendest sie an, indem du dein Zeichen auf eine Stoffinstallation stickst, die in Leimbach ausgestellt wird.<br /></p>",
     room: "Kleiner Kursraum (im UG des GZ)",
     region: "h4MnI3psRr8hSljk2",
-    groups: [],
+    organizations: [],
     internal: false,
     sendReminder: false,
     noRsvp: false,
@@ -14648,7 +14648,7 @@ export const events: {
       "<p>Wie kann ich eine Wohung suchen? Wo kann ich suchen? Wie kann ich mich bewerben? Was für Unterlagen brauche ich? Wo finde ich Hilfe?<br />Das WOHNMOBIL vermittelt Informationen zur Wohnungssuche. Anschliessend hast du Gelegenheit, an deinen Unterlagen zu arbeiten und dich für Wohnungen zu bewerben. <br /></p>",
     room: "Kursraum",
     region: "h4MnI3psRr8hSljk2",
-    groups: [],
+    organizations: [],
     internal: false,
     sendReminder: false,
     noRsvp: false,
@@ -14705,7 +14705,7 @@ export const events: {
     time_created: {
       $date: "2024-07-08T09:30:26.081+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T08:00:00.000+0000",
     },
@@ -14802,7 +14802,7 @@ export const events: {
     time_created: {
       $date: "2024-04-09T15:28:27.746+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T08:15:00.000+0000",
     },
@@ -14876,7 +14876,7 @@ export const events: {
     time_created: {
       $date: "2024-03-25T13:45:17.156+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T08:30:00.000+0000",
     },
@@ -14951,7 +14951,7 @@ export const events: {
     time_created: {
       $date: "2024-05-07T16:03:59.368+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T08:30:00.000+0000",
     },
@@ -15025,7 +15025,7 @@ export const events: {
     time_created: {
       $date: "2024-05-16T06:19:58.697+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T08:30:00.000+0000",
     },
@@ -15091,7 +15091,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T10:05:00.390+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T09:00:00.000+0000",
     },
@@ -15181,7 +15181,7 @@ export const events: {
     time_created: {
       $date: "2024-05-22T15:18:45.190+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T10:00:00.000+0000",
     },
@@ -15251,7 +15251,7 @@ export const events: {
     time_created: {
       $date: "2024-05-29T13:49:03.026+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T10:00:00.000+0000",
     },
@@ -15297,7 +15297,7 @@ export const events: {
     time_created: {
       $date: "2024-07-08T08:26:27.690+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T10:00:00.000+0000",
     },
@@ -15346,7 +15346,7 @@ export const events: {
     time_created: {
       $date: "2024-03-13T08:38:39.420+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T11:00:00.000+0000",
     },
@@ -15417,7 +15417,7 @@ export const events: {
     time_created: {
       $date: "2024-05-30T12:00:49.809+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T11:00:00.000+0000",
     },
@@ -15467,7 +15467,7 @@ export const events: {
     time_created: {
       $date: "2024-07-12T07:16:15.048+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T11:00:00.000+0000",
     },
@@ -15504,7 +15504,7 @@ export const events: {
     time_created: {
       $date: "2024-05-21T16:36:29.490+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T11:30:00.000+0000",
     },
@@ -15554,7 +15554,7 @@ export const events: {
     time_created: {
       $date: "2024-05-26T10:21:37.802+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T11:30:00.000+0000",
     },
@@ -15612,7 +15612,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T07:33:39.756+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T11:30:00.000+0000",
     },
@@ -15686,7 +15686,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T07:35:45.776+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T11:30:00.000+0000",
     },
@@ -15740,7 +15740,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T12:07:57.132+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T11:30:00.000+0000",
     },
@@ -15814,7 +15814,7 @@ export const events: {
     time_created: {
       $date: "2024-07-30T15:43:46.530+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T11:30:00.000+0000",
     },
@@ -15875,7 +15875,7 @@ export const events: {
     time_created: {
       $date: "2024-04-09T15:30:47.044+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T12:00:00.000+0000",
     },
@@ -15958,7 +15958,7 @@ export const events: {
     time_created: {
       $date: "2024-05-16T11:15:40.264+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T12:00:00.000+0000",
     },
@@ -16016,7 +16016,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T11:39:05.115+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T12:00:00.000+0000",
     },
@@ -16103,7 +16103,7 @@ export const events: {
       "<p>Was bedeutet es für dich, an einem Ort zuhause zu sein?<br />Im Austausch mit Maria entwirfst du ein Zeichen, das für dein Gefühl von zuhause Sein steht. Du lernst verschiedene Sticktechniken und wendest sie an, indem du dein Zeichen auf eine Stoffinstallation stickst, die in Leimbach ausgestellt wird.<br /></p>",
     room: "Kleiner Kursraum (im UG des GZ)",
     region: "h4MnI3psRr8hSljk2",
-    groups: [],
+    organizations: [],
     internal: false,
     sendReminder: false,
     noRsvp: false,
@@ -16159,7 +16159,7 @@ export const events: {
     time_created: {
       $date: "2024-06-07T20:57:33.640+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T12:00:00.000+0000",
     },
@@ -16201,7 +16201,7 @@ export const events: {
     time_created: {
       $date: "2024-06-10T13:32:47.263+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T12:00:00.000+0000",
     },
@@ -16270,7 +16270,7 @@ export const events: {
     time_created: {
       $date: "2024-04-11T17:41:40.275+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T12:30:00.000+0000",
     },
@@ -16324,7 +16324,7 @@ export const events: {
     time_created: {
       $date: "2024-03-28T12:36:11.665+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T13:00:00.000+0000",
     },
@@ -16399,7 +16399,7 @@ export const events: {
     time_created: {
       $date: "2024-05-08T09:49:58.200+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T13:00:00.000+0000",
     },
@@ -16477,7 +16477,7 @@ export const events: {
     time_created: {
       $date: "2024-05-22T15:21:42.922+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T13:00:00.000+0000",
     },
@@ -16547,7 +16547,7 @@ export const events: {
     time_created: {
       $date: "2024-05-30T12:06:05.936+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T13:00:00.000+0000",
     },
@@ -16665,7 +16665,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T10:24:08.761+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T13:30:00.000+0000",
     },
@@ -16706,7 +16706,7 @@ export const events: {
     time_created: {
       $date: "2024-04-12T13:39:53.223+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T14:00:00.000+0000",
     },
@@ -16788,7 +16788,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T10:29:58.953+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T14:30:00.000+0000",
     },
@@ -16822,7 +16822,7 @@ export const events: {
     time_created: {
       $date: "2024-06-02T12:56:48.995+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T14:30:00.000+0000",
     },
@@ -16954,7 +16954,7 @@ export const events: {
     time_created: {
       $date: "2024-04-17T09:46:27.892+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T15:00:00.000+0000",
     },
@@ -16988,7 +16988,7 @@ export const events: {
     time_created: {
       $date: "2024-05-17T08:29:07.587+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T15:00:00.000+0000",
     },
@@ -17062,7 +17062,7 @@ export const events: {
     time_created: {
       $date: "2024-05-22T08:22:18.464+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T16:00:00.000+0000",
     },
@@ -17128,7 +17128,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T07:46:06.503+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T16:00:00.000+0000",
     },
@@ -17218,7 +17218,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T09:58:03.482+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T16:30:00.000+0000",
     },
@@ -17292,7 +17292,7 @@ export const events: {
     time_created: {
       $date: "2024-05-19T10:26:21.070+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T17:00:00.000+0000",
     },
@@ -17358,7 +17358,7 @@ export const events: {
     time_created: {
       $date: "2024-05-22T08:40:39.675+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T06:30:00.000+0000",
     },
@@ -17444,7 +17444,7 @@ export const events: {
     time_created: {
       $date: "2024-05-31T13:53:30.850+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T08:00:00.000+0000",
     },
@@ -17498,7 +17498,7 @@ export const events: {
     time_created: {
       $date: "2024-05-21T13:57:45.510+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T08:30:00.000+0000",
     },
@@ -17604,7 +17604,7 @@ export const events: {
     time_created: {
       $date: "2024-05-27T12:30:00.031+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T09:00:00.000+0000",
     },
@@ -17654,7 +17654,7 @@ export const events: {
     time_created: {
       $date: "2024-05-29T14:47:03.198+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T09:00:00.000+0000",
     },
@@ -17712,7 +17712,7 @@ export const events: {
     time_created: {
       $date: "2024-05-28T13:20:04.901+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T11:00:00.000+0000",
     },
@@ -17782,7 +17782,7 @@ export const events: {
     time_created: {
       $date: "2024-05-28T16:35:10.099+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T11:00:00.000+0000",
     },
@@ -17865,7 +17865,7 @@ export const events: {
       "<p>Jeden Sommer lassen sich mehrere tausend Gummiboote die Limmat hinunter treiben. <br />Beim Höngger Wehr wird es dann aber lebensgefährlich !<br /><br />Wir erklären das Wehr und üben gemeinsam, wie man Unfälle verhindert und wie man Personen aus der tödlichen Wasserwalze rettet. </p>",
     room: "",
     region: "h4MnI3psRr8hSljk2",
-    groups: [],
+    organizations: [],
     internal: false,
     sendReminder: false,
     maxParticipants: 10,
@@ -17953,7 +17953,7 @@ export const events: {
     time_created: {
       $date: "2024-05-26T09:23:43.018+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T12:30:00.000+0000",
     },
@@ -18010,7 +18010,7 @@ export const events: {
     time_created: {
       $date: "2024-05-28T12:00:37.119+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T12:30:00.000+0000",
     },
@@ -18123,7 +18123,7 @@ export const events: {
     time_created: {
       $date: "2024-04-04T12:09:17.911+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T13:30:00.000+0000",
     },
@@ -18218,7 +18218,7 @@ export const events: {
     time_created: {
       $date: "2024-05-29T12:15:48.781+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T13:30:00.000+0000",
     },
@@ -18304,7 +18304,7 @@ export const events: {
     time_created: {
       $date: "2024-07-08T09:54:21.691+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T14:00:00.000+0000",
     },
@@ -18378,7 +18378,7 @@ export const events: {
     time_created: {
       $date: "2024-05-29T08:44:17.086+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T15:30:00.000+0000",
     },
@@ -18516,7 +18516,7 @@ export const events: {
     time_created: {
       $date: "2024-06-04T15:49:50.023+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T17:30:00.000+0000",
     },

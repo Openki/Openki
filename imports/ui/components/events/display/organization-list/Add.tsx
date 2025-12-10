@@ -11,9 +11,15 @@ import * as EventsMethods from "/imports/api/events/methods";
 
 import { name } from "../../../../lib/organization-name-helpers";
 
-function GroupToAdd({ event, groupId }: { event: EventModel; groupId: string }) {
+function OrganizationToAdd({
+  event,
+  organizationId,
+}: {
+  event: EventModel;
+  organizationId: string;
+}) {
   const { t } = useTranslation();
-  const [isLoading, group] = useDetails(groupId);
+  const [isLoading, organization] = useDetails(organizationId);
 
   if (isLoading()) {
     return null;
@@ -24,14 +30,14 @@ function GroupToAdd({ event, groupId }: { event: EventModel; groupId: string }) 
       <button
         className="btn btn-link"
         type="button"
-        value={groupId}
+        value={organizationId}
         onClick={async () => {
           try {
-            await EventsMethods.promote(event._id, groupId, true);
+            await EventsMethods.promote(event._id, organizationId, true);
 
             Alert.success(
               t("courseGroupAdd.groupAdded", {
-                GROUP: name(group),
+                GROUP: name(organization),
                 COURSE: event.title,
               }),
             );
@@ -40,7 +46,7 @@ function GroupToAdd({ event, groupId }: { event: EventModel; groupId: string }) 
           }
         }}
       >
-        {name(group)}
+        {name(organization)}
       </button>
     </li>
   );
@@ -54,9 +60,9 @@ export function Add({ event }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 
-  const groupsToAdd = user && difference(user.groups, event.allGroups || []);
+  const organizationsToAdd = user && difference(user.groups, event.allGroups || []);
 
-  if (!groupsToAdd) {
+  if (!organizationsToAdd) {
     return null;
   }
 
@@ -80,8 +86,8 @@ export function Add({ event }: Props) {
         <li>
           <hr className="dropdown-divider" />
         </li>
-        {groupsToAdd.map((groupId) => (
-          <GroupToAdd key={groupId} event={event} groupId={groupId} />
+        {organizationsToAdd.map((organizationId) => (
+          <OrganizationToAdd key={organizationId} event={event} organizationId={organizationId} />
         ))}
         <li className="dialog-dropdown-btn">
           <a href={Router.path("groupDetails", { _id: "create" })} className="btn btn-success">

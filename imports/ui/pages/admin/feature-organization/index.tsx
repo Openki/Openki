@@ -2,26 +2,30 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
-import * as Groups from "../../../../api/organizations/publications";
+import * as Organizations from "../../../../api/organizations/publications";
 import * as RegionsMethods from "/imports/api/regions/methods";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
 import "./styles.scss";
 
-export function AdminFeatureGroupPage() {
+export function AdminFeatureOrganizationPage() {
   const { t } = useTranslation();
   const [isBusy, setIsBusy] = useState(false);
   const currentRegion = useCurrentRegion();
-  const [groupToBeFeatured, setGroupToBeFeatured] = useState(currentRegion?.featuredGroup || "");
+  const [organizationToBeFeatured, setOrganizationToBeFeatured] = useState(
+    currentRegion?.featuredGroup || "",
+  );
 
-  const [isLoading, groups] = Groups.useFindFilter({}, undefined, undefined, [["name", "asc"]]);
+  const [isLoading, organizations] = Organizations.useFindFilter({}, undefined, undefined, [
+    ["name", "asc"],
+  ]);
 
-  function featuredGroup() {
-    const groupId = currentRegion?.featuredGroup;
-    if (!groupId) {
+  function featuredOrganization() {
+    const organizationId = currentRegion?.featuredGroup;
+    if (!organizationId) {
       return undefined;
     }
-    return groups.find((g) => g._id === groupId);
+    return organizations.find((g) => g._id === organizationId);
   }
 
   if (isLoading()) {
@@ -30,13 +34,13 @@ export function AdminFeatureGroupPage() {
 
   return (
     <>
-      {!!featuredGroup() && (
+      {!!featuredOrganization() && (
         <div className="admin-featured-group">
           <div className="mb-2">
             {t(
               "featureGroup.groupIsFeatured",
               'The "{GROUP}" group is featured for the "{REGION}" region.',
-              { GROUP: featuredGroup()?.name, REGION: currentRegion?.name },
+              { GROUP: featuredOrganization()?.name, REGION: currentRegion?.name },
             )}
           </div>
           <button
@@ -50,7 +54,7 @@ export function AdminFeatureGroupPage() {
 
               setIsBusy(true);
               try {
-                await RegionsMethods.unsetFeaturedGroup(currentRegion._id);
+                await RegionsMethods.unsetFeaturedOrganization(currentRegion._id);
               } catch (err) {
                 Alert.serverError(err);
               } finally {
@@ -81,7 +85,7 @@ export function AdminFeatureGroupPage() {
 
           setIsBusy(true);
           try {
-            await RegionsMethods.featureGroup(currentRegion._id, groupToBeFeatured);
+            await RegionsMethods.featureOrganization(currentRegion._id, organizationToBeFeatured);
           } catch (err) {
             Alert.serverError(err);
           } finally {
@@ -93,16 +97,16 @@ export function AdminFeatureGroupPage() {
           <select
             className="form-select"
             onChange={(event) => {
-              setGroupToBeFeatured(event.currentTarget.value);
+              setOrganizationToBeFeatured(event.currentTarget.value);
             }}
-            defaultValue={groupToBeFeatured}
+            defaultValue={organizationToBeFeatured}
           >
             <option value="" disabled className="select-placeholder">
               {t("_selection.pleaseSelect")}
             </option>
-            {groups.map((group) => (
-              <option key={group._id} value={group._id}>
-                {group.name}
+            {organizations.map((organization) => (
+              <option key={organization._id} value={organization._id}>
+                {organization.name}
               </option>
             ))}
           </select>
@@ -129,4 +133,4 @@ export function AdminFeatureGroupPage() {
 
 import "./template.html";
 
-Template.registerHelper("AdminFeatureGroupPage", () => AdminFeatureGroupPage);
+Template.registerHelper("AdminFeatureGroupPage", () => AdminFeatureOrganizationPage);

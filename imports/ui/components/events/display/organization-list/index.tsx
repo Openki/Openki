@@ -5,7 +5,7 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { EventModel } from "/imports/api/events/events";
 import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 
-import { GroupTag } from "../../../organizations/tag";
+import { OrganizationTag } from "../../../organizations/tag";
 import { Add } from "./Add";
 import { Remove } from "./Remove";
 import { RemoveOrganizer } from "./RemoveOrganizer";
@@ -15,29 +15,29 @@ export interface Props {
   event: EventModel;
 }
 
-export function GroupList({ event }: Props) {
+export function OrganizationList({ event }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 
   const [isRegionLoading, region] = useRegionDetails(event.region);
 
-  function tools(groupId: string, event: EventModel) {
-    // Groups may be adopted from the course, these cannot be removed
-    const ownGroup = event.groups.includes(groupId);
+  function tools(organizationId: string, event: EventModel) {
+    // Organizations may be adopted from the course, these cannot be removed
+    const ownOrganization = event.groups.includes(organizationId);
 
     return (
       <>
-        {ownGroup && (!!user?.mayPromoteWith(groupId) || event.editableBy(user)) && (
+        {ownOrganization && (!!user?.mayPromoteWith(organizationId) || event.editableBy(user)) && (
           <li className="dialog-dropdown-btn">
-            <Remove event={event} groupId={groupId} />
+            <Remove event={event} organizationId={organizationId} />
           </li>
         )}
-        {ownGroup && event.editableBy(user) && (
+        {ownOrganization && event.editableBy(user) && (
           <li className="dialog-dropdown-btn">
-            {event.groupOrganizers.includes(groupId) ? (
-              <RemoveOrganizer event={event} groupId={groupId} />
+            {event.groupOrganizers.includes(organizationId) ? (
+              <RemoveOrganizer event={event} organizationId={organizationId} />
             ) : (
-              <MakeOrganizer event={event} groupId={groupId} />
+              <MakeOrganizer event={event} organizationId={organizationId} />
             )}
           </li>
         )}
@@ -47,14 +47,14 @@ export function GroupList({ event }: Props) {
 
   if (isRegionLoading()) return null;
 
-  const groups = event.allGroups?.filter(
-    (groupId) =>
+  const organizations = event.allGroups?.filter(
+    (organizationId) =>
       !(
-        // hide group where are from the region set
+        // hide organization where are from the region set
         (
-          region?.defaultTeamGroups?.includes(groupId) &&
-          // when user ist not member of the group or a admin
-          !user?.mayPromoteWith(groupId) &&
+          region?.defaultTeamGroups?.includes(organizationId) &&
+          // when user ist not member of the organization or a admin
+          !user?.mayPromoteWith(organizationId) &&
           !event.editableBy(user)
         )
       ),
@@ -62,13 +62,13 @@ export function GroupList({ event }: Props) {
 
   return (
     <div className="tag-group multiline">
-      {groups?.map((groupId) => {
-        const isOrganizer = event.editors.includes(groupId);
-        // Groups may be adopted from the course, these cannot be removed
-        const ownGroup = event.groups.includes(groupId);
+      {organizations?.map((organizationId) => {
+        const isOrganizer = event.editors.includes(organizationId);
+        // Organization may be adopted from the course, these cannot be removed
+        const ownOrganization = event.groups.includes(organizationId);
         return (
-          <React.Fragment key={groupId}>
-            <GroupTag groupId={groupId} isOrganizer={isOrganizer} />
+          <React.Fragment key={organizationId}>
+            <OrganizationTag organizationId={organizationId} isOrganizer={isOrganizer} />
             {isOrganizer && (
               <div className="tag group-tag addon">
                 <i
@@ -80,27 +80,28 @@ export function GroupList({ event }: Props) {
               </div>
             )}
 
-            {ownGroup && (!!user?.mayPromoteWith(groupId) || event.editableBy(user)) && (
-              <div className="btn-group tag-btn group-tag-btn addon align-top">
-                <button
-                  type="button"
-                  className="dropdown-toggle"
-                  aria-expanded="false"
-                  aria-haspopup="true"
-                  data-bs-toggle="dropdown"
-                ></button>
-                <ul className="dropdown-menu dialog-dropdown">
-                  <li className="dropdown-header">
-                    {t("grouplist.editgroup.header", "Edit group")}
-                    <button type="button" className="btn-close"></button>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  {tools(groupId, event)}
-                </ul>
-              </div>
-            )}
+            {ownOrganization &&
+              (!!user?.mayPromoteWith(organizationId) || event.editableBy(user)) && (
+                <div className="btn-group tag-btn group-tag-btn addon align-top">
+                  <button
+                    type="button"
+                    className="dropdown-toggle"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    data-bs-toggle="dropdown"
+                  ></button>
+                  <ul className="dropdown-menu dialog-dropdown">
+                    <li className="dropdown-header">
+                      {t("grouplist.editgroup.header", "Edit group")}
+                      <button type="button" className="btn-close"></button>
+                    </li>
+                    <li>
+                      <hr className="dropdown-divider" />
+                    </li>
+                    {tools(organizationId, event)}
+                  </ul>
+                </div>
+              )}
           </React.Fragment>
         );
       })}

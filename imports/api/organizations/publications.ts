@@ -1,22 +1,22 @@
 import { check } from "meteor/check";
 
-import { Groups, FindFilter } from "./organizations";
+import { Organizations, FindFilter } from "./organizations";
 
 import { ServerPublishMany, ServerPublishOne } from "/imports/utils/ServerPublish";
 import { FieldSort } from "/imports/utils/sort-spec";
 
 export const [findFilter, useFindFilter] = ServerPublishMany(
-  "Groups.findFilter",
+  "Organizations.findFilter",
   (filter: FindFilter = {}, limit?: number, skip?: number, sort?: FieldSort[]) =>
-    Groups.findFilter(filter, limit, skip, sort),
+    Organizations.findFilter(filter, limit, skip, sort),
 );
 
 export const [details, useDetails] = ServerPublishOne(
-  "group",
-  (groupId: string) => {
-    check(groupId, String);
+  "organization",
+  (organizationId: string) => {
+    check(organizationId, String);
 
-    return Groups.find(groupId);
+    return Organizations.find(organizationId);
   },
-  (groupId) => Groups.findOne(groupId),
+  (organizationId) => Organizations.findOne(organizationId),
 );

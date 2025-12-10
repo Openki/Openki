@@ -65,7 +65,7 @@ export class TenantsCollection extends Mongo.Collection<TenantEntity, TenantMode
   }
 
   /**
-   * Find groups for given filters
+   * Find organizations for given filters
    * @param filter dictionary with filter options
    * @param limit how many to find
    * @param skip skip this many before returning results

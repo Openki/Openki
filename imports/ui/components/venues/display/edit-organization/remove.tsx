@@ -10,12 +10,12 @@ import { name } from "../../../../lib/organization-name-helpers";
 
 export interface Props {
   venue: VenueModel;
-  groupId: string;
+  organizationId: string;
 }
 
-export function Remove({ venue, groupId }: Props) {
+export function Remove({ venue, organizationId }: Props) {
   const { t } = useTranslation();
-  const [isLoading, group] = useDetails(groupId);
+  const [isLoading, organization] = useDetails(organizationId);
 
   if (isLoading()) {
     return null;
@@ -37,7 +37,7 @@ export function Remove({ venue, groupId }: Props) {
         </div>
         <div className="p-2">
           {t("editGroup.remove.desc", "Disable members of {GROUP} to manage this venue.", {
-            GROUP: name(group),
+            GROUP: name(organization),
           })}
         </div>
         <div className="dialog-dropdown-btn">
@@ -46,11 +46,11 @@ export function Remove({ venue, groupId }: Props) {
             className="btn btn-danger"
             onClick={async () => {
               try {
-                await VenuesMethods.removeEditGroup(venue._id);
+                await VenuesMethods.removeEditOrganization(venue._id);
 
                 Alert.success(
                   t("editGroup.remove.groupRemoved", "{GROUP} was removed from {VENUE}.", {
-                    GROUP: name(group),
+                    GROUP: name(organization),
                     VENUE: venue.name,
                   }),
                 );

@@ -10,12 +10,12 @@ import { name } from "../../../../lib/organization-name-helpers";
 
 export interface Props {
   event: EventModel;
-  groupId: string;
+  organizationId: string;
 }
 
-export function RemoveOrganizer({ event, groupId }: Props) {
+export function RemoveOrganizer({ event, organizationId }: Props) {
   const { t } = useTranslation();
-  const [isLoading, group] = useDetails(groupId);
+  const [isLoading, organization] = useDetails(organizationId);
   const [isExpanded, setIsExpanded] = useState(false);
 
   if (isLoading()) {
@@ -40,19 +40,19 @@ export function RemoveOrganizer({ event, groupId }: Props) {
 
   return (
     <div className="group-tool-dialog danger">
-      {t("course.group.confirmRemoveOrgText", { NAME: name(group) })}
+      {t("course.group.confirmRemoveOrgText", { NAME: name(organization) })}
       <button
         type="button"
         className="btn btn-danger"
         onClick={async () => {
           try {
-            await EventsMethods.editing(event._id, groupId, false);
+            await EventsMethods.editing(event._id, organizationId, false);
 
             Alert.success(
               t(
                 "courseGroupAdd.membersCanNoLongerEditCourse",
                 "Members of {GROUP} can no longer edit {COURSE}.",
-                { GROUP: name(group), COURSE: event.title },
+                { GROUP: name(organization), COURSE: event.title },
               ),
             );
 

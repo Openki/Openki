@@ -152,18 +152,18 @@ export const remove = ServerMethod("region.remove", async (regionId: string) => 
   await Regions.removeAsync(regionId);
 });
 
-export const featureGroup = ServerMethod(
-  "region.featureGroup",
-  async (regionId: string, groupId: string) => {
+export const featureOrganization = ServerMethod(
+  "region.featureOrganization",
+  async (regionId: string, organizationId: string) => {
     check(regionId, String);
-    check(groupId, String);
+    check(organizationId, String);
 
-    await Regions.updateAsync(regionId, { $set: { featuredGroup: groupId } });
+    await Regions.updateAsync(regionId, { $set: { featuredGroup: organizationId } });
   },
 );
 
-export const unsetFeaturedGroup = ServerMethod(
-  "region.unsetFeaturedGroup",
+export const unsetFeaturedOrganization = ServerMethod(
+  "region.unsetFeaturedOrganization",
   async (regionId: string) => {
     check(regionId, String);
 

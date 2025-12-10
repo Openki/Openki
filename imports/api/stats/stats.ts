@@ -3,7 +3,7 @@ import { uniq } from "lodash-es";
 
 import { CourseEntity, CourseModel, Courses } from "/imports/api/courses/courses";
 import { EventEntity, EventModel, Events } from "/imports/api/events/events";
-import { Groups } from "../organizations/organizations";
+import { Organizations } from "../organizations/organizations";
 import { sum } from "../../utils/sum";
 
 export interface Stat {
@@ -44,7 +44,7 @@ export interface Stat {
   };
 }
 
-export interface GroupStat extends Stat {
+export interface OrganizationStat extends Stat {
   _id?: string | undefined;
   name?: string | undefined;
   short?: string | undefined;
@@ -53,7 +53,7 @@ export interface GroupStat extends Stat {
 
 export interface Stats {
   region: Stat;
-  groups: GroupStat[];
+  organizations: OrganizationStat[];
 }
 
 function getCourses(regionId: string) {
@@ -78,27 +78,27 @@ function getEvents(regionId: string) {
   }).fetchAsync();
 }
 
-/** Get all groups that promotes courses or events */
-async function getGroups(courses: CourseModel[], events: EventModel[]) {
-  let groupIds = [];
-  groupIds.push(...courses.flatMap((c) => c.groups));
-  groupIds.push(...events.flatMap((e) => e.groups));
-  groupIds = uniq(groupIds).filter((g) => g);
+/** Get all organizations that promotes courses or events */
+async function getOrganizations(courses: CourseModel[], events: EventModel[]) {
+  let organizationIds = [];
+  organizationIds.push(...courses.flatMap((c) => c.groups));
+  organizationIds.push(...events.flatMap((e) => e.groups));
+  organizationIds = uniq(organizationIds).filter((g) => g);
 
-  const groupEntities = await Groups.find(
+  const organizationEntities = await Organizations.find(
     {},
     {
       projection: { _id: 1, name: 1, short: 1, members: 1 },
     },
   ).fetchAsync();
 
-  return groupIds.map((g) => {
-    const group = groupEntities.find((e) => e._id === g);
+  return organizationIds.map((g) => {
+    const organization = organizationEntities.find((e) => e._id === g);
     return {
       _id: g,
-      name: group?.name,
-      short: group?.short,
-      members: group?.members.length,
+      name: organization?.name,
+      short: organization?.short,
+      members: organization?.members.length,
     };
   });
 }
@@ -142,19 +142,19 @@ export async function getRegionStats(regionId: string): Promise<Stats> {
   // load data into memorie
   const courses = await getCourses(regionId);
   const events = await getEvents(regionId);
-  const groups = await getGroups(courses, events);
+  const organizations = await getOrganizations(courses, events);
 
   return {
     // calc stat for overview over all or one region
     region: calcStats(courses, events),
-    groups: [
-      // calc stat for ungrouped
+    organizations: [
+      // calc stat for courses and events without a organization
       calcStats(
         courses.filter((c) => !c.groups?.length),
         events.filter((e) => !e.groups?.length && !e.allGroups?.length),
       ),
-      // calc stat for every group
-      ...groups.map((g) => ({
+      // calc stat for every organization
+      ...organizations.map((g) => ({
         ...g,
         ...calcStats(
           courses.filter((c) => c.groups?.includes(g._id)),
@@ -162,7 +162,7 @@ export async function getRegionStats(regionId: string): Promise<Stats> {
         ),
       })),
     ]
-      // sort groups by number of active users in events
+      // sort organizations by number of active users in events
       //        then by number of active users in courses
       //        then by number of events
       //        then by number of courses

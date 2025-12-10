@@ -13,7 +13,7 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import * as FileStorage from "/imports/utils/FileStorage";
-import { GroupEntityCustomCourseFields } from "../organizations/organizations";
+import { OrganizationEntityCustomCourseFields } from "../organizations/organizations";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { StringEnum, Type } from "/imports/utils/CustomChecks";
 import { LocalizedValue } from "/imports/utils/getLocalizedValue";
@@ -25,7 +25,7 @@ export interface CourseMemberEntity {
 }
 
 export type CourseCustomField = Pick<
-  GroupEntityCustomCourseFields,
+  OrganizationEntityCustomCourseFields,
   "name" | "displayText" | "visibleFor"
 > & {
   value: string | boolean;
@@ -51,13 +51,13 @@ export interface CourseEntity {
   categories: string[];
   /** (not used) */
   tags: string[];
-  /** List ID_groups ("promote groups") */
+  /** List ID_organizations ("promote organizations") */
   groups: string[];
   /**
-   * List of group ID that are allowed to edit the course ("team groups", based on the ui design:
-   * Every "team group" promotes the course and is part of the groups list)
+   * List of organization ID that are allowed to edit the course ("team organizations", based on the ui design:
+   * Every "team organization" promotes the course and is part of the organizations list)
    */
-  groupOrganizers: string[];
+  organizationOrganizers: string[];
   description?: string;
   /** small image that is used for the compact view, scaled down to max size (width*height) 500px */
   compactImage: string;
@@ -85,7 +85,7 @@ export interface CourseEntity {
     data: object;
   }[];
   /**
-   * (calculated) List of user and group id allowed to edit the course, calculated from members
+   * (calculated) List of user and organization id allowed to edit the course, calculated from members
    * and groupOrganizers
    */
   editors: string[];
@@ -110,7 +110,7 @@ export class Course {
 
   roles: string[] = [];
 
-  groupOrganizers: string[] = [];
+  organizationOrganizers: string[] = [];
 
   nextEvent: (CourseNextEventEntity & OEvent) | null = null;
 

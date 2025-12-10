@@ -7,15 +7,15 @@ import { CourseModel } from "/imports/api/courses/courses";
 
 export interface Props {
   courses: CourseModel[];
-  groupTagEvents?:
-    | ((groupId: string) => {
+  organizationTagEvents?:
+    | ((organizationId: string) => {
         onMouseOver: () => Promise<void>;
         onMouseOut: () => Promise<void>;
         onClick: () => Promise<void>;
       })
     | undefined;
   categorieTagEvents?:
-    | ((groupId: string) => {
+    | ((organizationId: string) => {
         onMouseOver: () => Promise<void>;
         onMouseOut: () => Promise<void>;
         onClick: () => Promise<void>;
@@ -24,16 +24,16 @@ export interface Props {
   small?: boolean;
   containsPropose?: boolean;
   /** that should be added on propose a new course */
-  group?: string | undefined;
+  organization?: string | undefined;
 }
 
 export function CourseList({
   courses,
-  groupTagEvents,
+  organizationTagEvents,
   categorieTagEvents,
   small,
   containsPropose,
-  group,
+  organization,
 }: Props) {
   return (
     <div
@@ -46,13 +46,16 @@ export function CourseList({
             !!containsPropose &&
             (index - 6) % 10 === 0 && (
               <div className="col">
-                <CompactPropose group={group} groupTagEvents={groupTagEvents} />
+                <CompactPropose
+                  organization={organization}
+                  organizationTagEvents={organizationTagEvents}
+                />
               </div>
             )}
           <div className="col">
             <CourseCompact
               course={course}
-              groupTagEvents={groupTagEvents}
+              organizationTagEvents={organizationTagEvents}
               categorieTagEvents={categorieTagEvents}
             />
           </div>

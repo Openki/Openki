@@ -4,7 +4,7 @@ import moment from "moment";
 import { Users } from "/imports/api/users/users";
 import { Courses } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
-import { Groups } from "./api/organizations/organizations";
+import { Organizations } from "./api/organizations/organizations";
 import { Venues } from "/imports/api/venues/venues";
 import { Regions } from "/imports/api/regions/regions";
 import { Geodata } from "/imports/api/Geodata";
@@ -62,7 +62,7 @@ export interface ApiEvent {
     image?: string;
     customFields?: { name: string; value: string | boolean }[];
   };
-  groups: {
+  organizations: {
     id: string;
     name: string;
     short: string;
@@ -99,10 +99,12 @@ function maybeUrl(route: string, context: { _id?: string } | undefined) {
 }
 
 export const Api = {
-  groups: await apiResponse(Groups, async (originalGroup) => {
-    const group = { ...originalGroup } as typeof originalGroup & { link: string };
-    group.link = Router.url("groupDetails", group);
-    return group;
+  organizations: await apiResponse(Organizations, async (originalOrganization) => {
+    const organization = { ...originalOrganization } as typeof originalOrganization & {
+      link: string;
+    };
+    organization.link = Router.url("groupDetails", organization);
+    return organization;
   }),
   venues: await apiResponse(Venues, async (originalVenue) => {
     const venue = { ...originalVenue } as typeof originalVenue & { link: string };
@@ -171,16 +173,16 @@ export const Api = {
         }
       }
 
-      evr.groups = [];
-      const groups = ev.allGroups || [];
-      for (const groupId of groups) {
-        const group = await Groups.findOneAsync(groupId);
-        if (group) {
-          evr.groups.push({
-            id: group._id,
-            name: group.name,
-            short: group.short,
-            link: Router.url("groupDetails", group),
+      evr.organizations = [];
+      const organizations = ev.allGroups || [];
+      for (const organizationId of organizations) {
+        const organization = await Organizations.findOneAsync(organizationId);
+        if (organization) {
+          evr.organizations.push({
+            id: organization._id,
+            name: organization.name,
+            short: organization.short,
+            link: Router.url("groupDetails", organization),
           });
         }
       }
@@ -223,7 +225,7 @@ export const Api = {
           id: string;
           name: string;
         };
-        groups: {
+        organizations: {
           id: string;
           name: string;
           short: string;
@@ -247,16 +249,16 @@ export const Api = {
         };
       }
 
-      course.groups = [];
-      const groups = orginalCourse.groups || [];
-      groups.forEach(async (groupId) => {
-        const group = await Groups.findOneAsync(groupId);
-        if (group) {
-          course.groups.push({
-            id: group._id,
-            name: group.name,
-            short: group.short,
-            link: Router.url("groupDetails", group),
+      course.organizations = [];
+      const organizations = orginalCourse.groups || [];
+      organizations.forEach(async (organizationId) => {
+        const organization = await Organizations.findOneAsync(organizationId);
+        if (organization) {
+          course.organizations.push({
+            id: organization._id,
+            name: organization.name,
+            short: organization.short,
+            link: Router.url("groupDetails", organization),
           });
         }
       });

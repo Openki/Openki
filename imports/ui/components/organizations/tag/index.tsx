@@ -2,19 +2,19 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 
-import { GroupModel } from "../../../../api/organizations/organizations";
+import { OrganizationModel } from "../../../../api/organizations/organizations";
 import { useDetails } from "../../../../api/organizations/publications";
 
 import { name } from "../../../lib/organization-name-helpers";
 
 import "./styles.scss";
 
-function short(group: GroupModel | undefined) {
-  return group ? group.short : "-";
+function short(organization: OrganizationModel | undefined) {
+  return organization ? organization.short : "-";
 }
 
 export interface Props {
-  groupId: string;
+  organizationId: string;
   full?: boolean;
   isOrganizer?: boolean;
   onClick?: () => Promise<void>;
@@ -22,13 +22,20 @@ export interface Props {
   onMouseOut?: () => Promise<void>;
 }
 
-export function GroupTag({ groupId, full, isOrganizer, onMouseOver, onMouseOut, onClick }: Props) {
+export function OrganizationTag({
+  organizationId,
+  full,
+  isOrganizer,
+  onMouseOver,
+  onMouseOut,
+  onClick,
+}: Props) {
   const { t } = useTranslation();
-  const [isLoading, group] = useDetails(groupId);
+  const [isLoading, organization] = useDetails(organizationId);
 
   return (
     <div
-      data-test={`group-tag-${groupId}`}
+      data-test={`group-tag-${organizationId}`}
       className={`tag tag-link group-tag ${isOrganizer ? "group-tag-is-organizer" : ""}`}
     >
       {isLoading() ? (
@@ -38,12 +45,12 @@ export function GroupTag({ groupId, full, isOrganizer, onMouseOver, onMouseOut, 
           onMouseOver={onMouseOver}
           onMouseOut={onMouseOut}
           onClick={onClick}
-          href={Router.path("groupDetails", group)}
+          href={Router.path("groupDetails", organization)}
           data-bs-title={t("groupList.show_courses", "{NAME}, show all their courses", {
-            NAME: name(group),
+            NAME: name(organization),
           })}
         >
-          {full ? name(group) : short(group)}
+          {full ? name(organization) : short(organization)}
         </a>
       )}
     </div>

@@ -9,7 +9,7 @@ Before opening a new issue, please search for keywords in the issues to make sur
 
 ### Intended users
 
-<!-- Who will use this feature? If known, include any of the following: types of users (e.g. Mentors, GroupMembers). It's okay to write "Unknown" and fill this field in later. -->
+<!-- Who will use this feature? If known, include any of the following: types of users (e.g. Mentors, OrganizationMembers). It's okay to write "Unknown" and fill this field in later. -->
 
 ### Further details
 
@@ -21,7 +21,7 @@ Before opening a new issue, please search for keywords in the issues to make sur
 
 ### Permissions and Security
 
-<!-- What permissions are required to perform the described actions? Are they consistent with the existing permissions as documented for users and groups -->
+<!-- What permissions are required to perform the described actions? Are they consistent with the existing permissions as documented for users and organizations -->
 
 ### Links / references
 

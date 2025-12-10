@@ -10,12 +10,12 @@ import * as courseHistoryDenormalizer from "/imports/api/courses/historyDenormal
 import * as courseTimeLastEditDenormalizer from "/imports/api/courses/timeLastEditDenormalizer";
 import * as courseImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
 import * as categoriesDenormalizer from "/imports/api/events/categoriesDenormalizer";
-import * as groupsDenormalizer from "./organizationsDenormalizer";
+import * as organizationsDenormalizer from "./organizationsDenormalizer";
 import * as venueDenormalizer from "/imports/api/events/venueDenormalizer";
 import * as courseNextEventDenormalizer from "/imports/api/courses/nextEventDenormalizer";
 import * as regionsCountDenormalizer from "/imports/api/regions/countDenormalizer";
 import { EventEntity, EventModel, Events, OEvent } from "/imports/api/events/events";
-import { Groups } from "../organizations/organizations";
+import { Organizations } from "../organizations/organizations";
 import { Regions } from "/imports/api/regions/regions";
 
 import { Notification } from "../../startup/both/emails/notification";
@@ -26,7 +26,7 @@ import * as StringTools from "/imports/utils/string-tools";
 import * as UpdateMethods from "/imports/utils/update-methods";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { HtmlString, Type } from "/imports/utils/CustomChecks";
-import { GroupPromoters } from "/imports/utils/update-methods";
+import { OrganizationPromoters } from "/imports/utils/update-methods";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { Venues } from "../venues/venues";
 import { UserModel } from "../users/users";
@@ -199,16 +199,16 @@ export const save = ServerMethod(
         throw new Meteor.Error(400, "Event date not provided");
       }
 
-      const testedGroups = await Promise.all(
-        editFields.groups?.map(async (groupId) => {
-          const group = await Groups.findOneAsync(groupId);
-          if (!group) {
-            throw new Meteor.Error(404, `no group with id ${groupId}`);
+      const testedOrganizations = await Promise.all(
+        editFields.groups?.map(async (organizationId) => {
+          const organization = await Organizations.findOneAsync(organizationId);
+          if (!organization) {
+            throw new Meteor.Error(404, `no organization with id ${organizationId}`);
           }
-          return group._id;
+          return organization._id;
         }) || [],
       );
-      editFields.groups = testedGroups;
+      editFields.groups = testedOrganizations;
 
       // Coerce faulty end dates
       if (!editFields.endLocal || editFields.endLocal < editFields.startLocal) {
@@ -394,7 +394,7 @@ export const save = ServerMethod(
     }
 
     await venueDenormalizer.updateVenue(eventId);
-    await groupsDenormalizer.updateGroups(eventId);
+    await organizationsDenormalizer.updateOrganizations(eventId);
     await regionsCountDenormalizer.updateCounters(event.region);
     // the assumption is that all replicas have the same course if any
     if (event.courseId) {
@@ -452,35 +452,43 @@ export const remove = ServerMethod(
 );
 
 /**
- * Add or remove a group from the groups list
+ * Add or remove a organization from the organization list
  *
  * @param eventId The event to update
- * @param groupId The group to add or remove
- * @param add Whether to add or remove the group
+ * @param organizationId The organization to add or remove
+ * @param add Whether to add or remove the organization
  *
  */
 export const promote = ServerMethod(
   "event.promote",
-  async (eventId: string, groupId: string, enable: boolean) => {
-    await UpdateMethods.promote(Events as unknown as GroupPromoters)(eventId, groupId, enable);
-    await groupsDenormalizer.updateGroups(eventId);
+  async (eventId: string, organizationId: string, enable: boolean) => {
+    await UpdateMethods.promote(Events as unknown as OrganizationPromoters)(
+      eventId,
+      organizationId,
+      enable,
+    );
+    await organizationsDenormalizer.updateOrganizations(eventId);
   },
   { simulation: false },
 );
 
 /**
- * Add or remove a group from the groupOrganizers list
+ * Add or remove a organization from the groupOrganizers list
  *
  * @param eventId The event to update
- * @param groupId The group to add or remove
- * @param add Whether to add or remove the group
+ * @param organizationId The organization to add or remove
+ * @param add Whether to add or remove the organization
  *
  */
 export const editing = ServerMethod(
   "event.editing",
-  async (eventId: string, groupId: string, enable: boolean) => {
-    await UpdateMethods.editing(Events as unknown as GroupPromoters)(eventId, groupId, enable);
-    await groupsDenormalizer.updateGroups(eventId);
+  async (eventId: string, organizationId: string, enable: boolean) => {
+    await UpdateMethods.editing(Events as unknown as OrganizationPromoters)(
+      eventId,
+      organizationId,
+      enable,
+    );
+    await organizationsDenormalizer.updateOrganizations(eventId);
   },
   { simulation: false },
 );
@@ -584,7 +592,7 @@ export const removeParticipant = ServerMethod(
           throw new Meteor.Error(403, "not enough authorisation.");
         }
       } else if (!event.editableBy(operator)) {
-        // only users that have edit permissions (admin, group-orga-members, orga-team) can remove other users.
+        // only users that have edit permissions (admin, organization-orga-members, orga-team) can remove other users.
         throw new Meteor.Error(403, "not enough authorisation.");
       }
     } else {

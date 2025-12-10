@@ -7,8 +7,12 @@ import { useUser, useUserId } from "/imports/utils/react-meteor-data";
 import { useTracker } from "meteor/react-meteor-data";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { GroupModel, Groups, GroupMemberEntity } from "/imports/api/organizations/organizations";
-import * as GroupsMethods from "/imports/api/organizations/methods";
+import {
+  OrganizationModel,
+  Organizations,
+  OrganizationMemberEntity,
+} from "../../../../api/organizations/organizations";
+import * as OrganizationsMethods from "../../../../api/organizations/methods";
 import { UserModel } from "/imports/api/users/users";
 import { useFindFilter } from "/imports/api/users/publications";
 
@@ -28,7 +32,7 @@ function RemoveMember({
   user,
   notify,
   onRemove,
-}: GroupMemberEntity & { onRemove: (memberId: string, memberName: string) => void }) {
+}: OrganizationMemberEntity & { onRemove: (memberId: string, memberName: string) => void }) {
   const { t } = useTranslation();
   const userName = useTracker(() => getUserName(user));
   const currentUserId = useUserId();
@@ -55,18 +59,18 @@ function RemoveMember({
 }
 
 function FoundUsers({
-  group,
+  organization,
   userSearch,
   onAdd,
 }: {
-  group: GroupModel;
+  organization: OrganizationModel;
   userSearch: string;
   onAdd: (user: UserModel) => void;
 }) {
   const { t } = useTranslation();
 
   const [isLoading, users] = useFindFilter(userSearch, {
-    exclude: group.members.map((m) => m.user),
+    exclude: organization.members.map((m) => m.user),
   });
 
   if (isLoading()) {
@@ -98,10 +102,10 @@ function FoundUsers({
 }
 
 export interface Props {
-  group: GroupModel;
+  organization: OrganizationModel;
 }
 
-export function GroupSettings({ group }: Props) {
+export function OrganizationSettings({ organization }: Props) {
   const { t } = useTranslation();
   const currentUser = useUser();
   const { calendarDayFormat } = useDateTimeFormat();
@@ -109,18 +113,18 @@ export function GroupSettings({ group }: Props) {
 
   function logoFileUploadArgs(): EditableImageProps {
     return {
-      thumbnail: { src: group?.publicLogoUrl?.(), maxSize: 150 },
+      thumbnail: { src: organization?.publicLogoUrl?.(), maxSize: 150 },
       maxSize: 600, // scale the image to max width/height. Note: image scaling also happens on the server
       async onUpload(file: UploadImage) {
-        const groupId = group._id;
+        const organizationId = organization._id;
         try {
-          await GroupsMethods.updateLogo(groupId, file);
-          const groupName = Groups.findOne(groupId)?.name;
+          await OrganizationsMethods.updateLogo(organizationId, file);
+          const organizationName = Organizations.findOne(organizationId)?.name;
           Alert.success(
             t(
               "groupSettings.group.logo.updated",
               'Changes to the "{GROUP}" group settings have been saved.',
-              { GROUP: groupName },
+              { GROUP: organizationName },
             ),
           );
         } catch (err) {
@@ -130,17 +134,17 @@ export function GroupSettings({ group }: Props) {
           );
         }
       },
-      onDelete: group?.logoUrl
+      onDelete: organization?.logoUrl
         ? async function () {
-            const groupId = group._id;
+            const organizationId = organization._id;
             try {
-              await GroupsMethods.deleteLogo(groupId);
-              const groupName = Groups.findOne(groupId)?.name;
+              await OrganizationsMethods.deleteLogo(organizationId);
+              const organizationName = Organizations.findOne(organizationId)?.name;
               Alert.success(
                 t(
                   "groupSettings.group.logo.removed",
                   'Changes to the "{GROUP}" group settings have been saved.',
-                  { GROUP: groupName },
+                  { GROUP: organizationName },
                 ),
               );
             } catch (err) {
@@ -154,25 +158,25 @@ export function GroupSettings({ group }: Props) {
     };
   }
   function kioskEventURL() {
-    return Router.url("kioskEvents", {}, { query: { group: group._id } });
+    return Router.url("kioskEvents", {}, { query: { group: organization._id } });
   }
   function timetableURL() {
-    return Router.url("timetable", {}, { query: { group: group._id } });
+    return Router.url("timetable", {}, { query: { group: organization._id } });
   }
   function scheduleURL() {
-    return Router.url("frameSchedule", {}, { query: { group: group._id } });
+    return Router.url("frameSchedule", {}, { query: { group: organization._id } });
   }
   function frameEventsURL() {
-    return Router.url("frameEvents", {}, { query: { group: group._id } });
+    return Router.url("frameEvents", {}, { query: { group: organization._id } });
   }
   function frameWeekURL() {
-    return Router.url("frameWeek", {}, { query: { group: group._id } });
+    return Router.url("frameWeek", {}, { query: { group: organization._id } });
   }
   function frameCalendarURL() {
-    return Router.url("frameCalendar", {}, { query: { group: group._id } });
+    return Router.url("frameCalendar", {}, { query: { group: organization._id } });
   }
   function frameListURL() {
-    return Router.url("frameCourselist", {}, { query: { group: group._id } });
+    return Router.url("frameCourselist", {}, { query: { group: organization._id } });
   }
 
   function deleteConfirmAttr() {
@@ -180,12 +184,14 @@ export function GroupSettings({ group }: Props) {
       confirmText: t(
         "group.reallydelete",
         "Please confirm that you would like to delete {GROUP}. This cannot be undone.",
-        { GROUP: group.name },
+        { GROUP: organization.name },
       ),
-      confirmButton: t("group.delete.confirm.button", "Delete {GROUP}", { GROUP: group.name }),
+      confirmButton: t("group.delete.confirm.button", "Delete {GROUP}", {
+        GROUP: organization.name,
+      }),
       onRemove: async () => {
-        const groupId = group._id;
-        await GroupsMethods.remove(groupId);
+        const organizationId = organization._id;
+        await OrganizationsMethods.remove(organizationId);
 
         Alert.success(t("group.deleted", "Group has been deleted"));
       },
@@ -195,11 +201,11 @@ export function GroupSettings({ group }: Props) {
 
   async function handleMemberRemove(memberId: string, memberName: string) {
     try {
-      await GroupsMethods.updateMembership(memberId, group._id, false);
+      await OrganizationsMethods.updateMembership(memberId, organization._id, false);
       Alert.success(
         t("groupSettings.memberRemoved", '"{MEMBER}" has been removed from the "{GROUP}" group', {
           MEMBER: memberName,
-          GROUP: group.name,
+          GROUP: organization.name,
         }),
       );
     } catch (err) {
@@ -209,11 +215,11 @@ export function GroupSettings({ group }: Props) {
 
   async function handleMemberAdd(user: UserModel) {
     try {
-      await GroupsMethods.updateMembership(user._id, group._id, true);
+      await OrganizationsMethods.updateMembership(user._id, organization._id, true);
       Alert.success(
         t("groupSettings.memberAdded", '"{MEMBER}" has been added to the "{GROUP}" group', {
           MEMBER: user.getDisplayName(),
-          GROUP: group.name,
+          GROUP: organization.name,
         }),
       );
     } catch (err) {
@@ -223,7 +229,7 @@ export function GroupSettings({ group }: Props) {
 
   async function handleMemberToggleNotify() {
     try {
-      await GroupsMethods.toggleMemberNotify(group._id);
+      await OrganizationsMethods.toggleMemberNotify(organization._id);
     } catch (err) {
       Alert.serverError(
         err,
@@ -252,7 +258,7 @@ export function GroupSettings({ group }: Props) {
               {t("group.settings.title.Members", "Members")}
             </h3>
             <div className="tag-group multiline">
-              {group.members.map((member) => (
+              {organization.members.map((member) => (
                 <React.Fragment key={member.user}>
                   <RemoveMember {...member} onRemove={handleMemberRemove} />
 
@@ -309,7 +315,11 @@ export function GroupSettings({ group }: Props) {
             </div>
             {!!userSearch && (
               <div className="tag-group multiline">
-                <FoundUsers group={group} userSearch={userSearch} onAdd={handleMemberAdd} />
+                <FoundUsers
+                  organization={organization}
+                  userSearch={userSearch}
+                  onAdd={handleMemberAdd}
+                />
               </div>
             )}
           </div>
@@ -367,32 +377,32 @@ export function GroupSettings({ group }: Props) {
 
         {currentUser?.privileged("admin") && (
           <p>
-            {!!group.createdby && (
+            {!!organization.createdby && (
               <>
                 <strong>{t("group.settings.createdBy", "Created by")}</strong>:{" "}
-                <ProfileLink userId={group.createdby} />
+                <ProfileLink userId={organization.createdby} />
                 <br />
               </>
             )}
-            {!!group.time_created && (
+            {!!organization.time_created && (
               <>
                 <strong>{t("group.settings.timeCreated", "Created at")}</strong>:{" "}
-                {calendarDayFormat(group.time_created)}
+                {calendarDayFormat(organization.time_created)}
                 <br />
               </>
             )}
 
-            {!!group.time_lastedit && (
+            {!!organization.time_lastedit && (
               <>
                 <strong>{t("group.settings.timeLastEdit", "Last edit at")}</strong>:{" "}
-                {calendarDayFormat(group.time_lastedit)}
+                {calendarDayFormat(organization.time_lastedit)}
               </>
             )}
           </p>
         )}
       </div>
 
-      {group.editableBy(currentUser) && (
+      {organization.editableBy(currentUser) && (
         <div className="actions">
           <DeleteConfirm {...deleteConfirmAttr()} />
         </div>

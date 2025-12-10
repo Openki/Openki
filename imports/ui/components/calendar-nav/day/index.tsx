@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
-import { FilterGroups, Props as FilterGroupsProps } from "../../FilterOrganizations";
+import { FilterOrganizations, Props as FilterOrganizationsProps } from "../../FilterOrganizations";
 import { FilterCategories, Props as FilterCategoriesProps } from "../../filter-categories";
 import { SearchField, Props as SearchFieldProps } from "../../search-field";
 import { Direction } from "../Arrow";
@@ -19,10 +19,10 @@ export interface Props {
   onChangeSearch: (newValue: string) => void;
   date: moment.Moment;
   onChangeDate: (newDate: moment.Moment) => void;
-  availableGroups: string[];
-  selectedGroups: string[];
-  onAddGroup: (group: string) => void;
-  onRemoveGroup: (group: string) => void;
+  availableOrganizations: string[];
+  selectedOrganizations: string[];
+  onAddOrganization: (organization: string) => void;
+  onRemoveOrganization: (organization: string) => void;
   categories: string[];
   onAddCategory: (category: string) => void;
   onRemoveCategory: (category: string) => void;
@@ -42,12 +42,12 @@ export function Day(props: Props) {
   function searchFieldAttr(): SearchFieldProps {
     return { search: props.search, onChange: props.onChangeSearch };
   }
-  function filterGroupsAttr(): FilterGroupsProps {
+  function filterOrganizationsAttr(): FilterOrganizationsProps {
     return {
-      availableGroups: props.availableGroups,
-      selectedGroups: props.selectedGroups,
-      onAdd: props.onAddGroup,
-      onRemove: props.onRemoveGroup,
+      availableOrganizations: props.availableOrganizations,
+      selectedOrganizations: props.selectedOrganizations,
+      onAdd: props.onAddOrganization,
+      onRemove: props.onRemoveOrganization,
     };
   }
   function filterCategoriesAttr(): FilterCategoriesProps {
@@ -94,9 +94,9 @@ export function Day(props: Props) {
         </div>
       </div>
       <div className="row align-items-center p-1">
-        {!!props.availableGroups && (
+        {!!props.availableOrganizations && (
           <div className="col-md-4 col-lg-2 p-1">
-            <FilterGroups {...filterGroupsAttr()} />
+            <FilterOrganizations {...filterOrganizationsAttr()} />
           </div>
         )}
         <div className="col-md-4 col-lg-2 p-1">
@@ -104,7 +104,7 @@ export function Day(props: Props) {
         </div>
         {!!currentUser && (
           <div
-            className={`${props.availableGroups ? "offset-md-4 offset-lg-2 " : ""}col-md-8 col-lg-4 p-1`}
+            className={`${props.availableOrganizations ? "offset-md-4 offset-lg-2 " : ""}col-md-8 col-lg-4 p-1`}
           >
             <FormCheck
               id="filter-own-events"

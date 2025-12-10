@@ -12,7 +12,7 @@ import { LocalizedValue } from "/imports/utils/getLocalizedValue";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { Type } from "/imports/utils/CustomChecks";
 
-export type GroupEntityCustomCourseFields =
+export type OrganizationEntityCustomCourseFields =
   | {
       /** For internal us, must be unique in the list. */
       name: string;
@@ -59,12 +59,12 @@ export type GroupEntityCustomCourseFields =
       defaultValue?: boolean;
     };
 
-export interface GroupMemberEntity {
+export interface OrganizationMemberEntity {
   user: string;
   notify: boolean;
 }
 
-export type GroupEntityDashboard = {
+export type OrganizationEntityDashboard = {
   entity: "group" | "course" | "courseWithoutPropose" | "event" | "eventsMap" | "propose";
   title?: string;
   query?: string;
@@ -74,10 +74,10 @@ export type GroupEntityDashboard = {
   };
 }[];
 
-export type GroupVenueEntity = Pick<VenueEntity, "_id" | "name" | "slug">;
+export type OrganizationVenueEntity = Pick<VenueEntity, "_id" | "name" | "slug">;
 
 /** DB-Model */
-export interface GroupEntity {
+export interface OrganizationEntity {
   /** ID */
   _id: string;
   name: string;
@@ -86,49 +86,51 @@ export interface GroupEntity {
   description: string;
   logoUrl?: string;
   /** Customize the inputs that the user can enter when creating and editing a course. */
-  customCourseFields?: GroupEntityCustomCourseFields[];
-  dashboard?: GroupEntityDashboard;
+  customCourseFields?: OrganizationEntityCustomCourseFields[];
+  dashboard?: OrganizationEntityDashboard;
   /** Hide some role options in the propose new course. */
   disableCreateRoles?: string[];
-  /** When a team group has this setting set, a message is shown that the registration is closed. */
+  /** When a team organization has this setting set, a message is shown that the registration is closed. */
   registrationClosed?: boolean;
   /** List of userIds with notify */
-  members: GroupMemberEntity[];
+  members: OrganizationMemberEntity[];
   createdby?: string;
 
   time_created?: Date;
 
   time_lastedit?: Date;
-  /** (calculated) venues where the group is manger */
-  venues?: GroupVenueEntity[];
+  /** (calculated) venues where the organization is manger */
+  venues?: OrganizationVenueEntity[];
 }
-export type GroupModel = Group & GroupEntity;
+export type OrganizationModel = Organization & OrganizationEntity;
 
-export class Group {
-  members = [] as GroupMemberEntity[];
+export class Organization {
+  members = [] as OrganizationMemberEntity[];
 
   /**
-   * Check if the group is new (not yet saved).
+   * Check if the organization is new (not yet saved).
    */
-  isNew(this: GroupModel) {
+  isNew(this: OrganizationModel) {
     return !this._id;
   }
 
   /**
-   * Check whether a user may edit the group.
+   * Check whether a user may edit the organization.
    */
-  editableBy(this: GroupModel, user: UserModel | null | undefined) {
+  editableBy(this: OrganizationModel, user: UserModel | null | undefined) {
     if (!user) {
       return false;
     }
     return (
-      this.isNew() /* Anybody may create a new group */ ||
-      user.privileged("admin") /* Admins can edit all groups */ ||
-      this.members?.some((m) => m.user === user._id) /* User must be member of group to edit it */
+      this.isNew() /* Anybody may create a new organization */ ||
+      user.privileged("admin") /* Admins can edit all organizations */ ||
+      this.members?.some(
+        (m) => m.user === user._id,
+      ) /* User must be member of organization to edit it */
     );
   }
 
-  publicLogoUrl(this: GroupModel) {
+  publicLogoUrl(this: OrganizationModel) {
     if (!this.logoUrl) {
       return "";
     }
@@ -139,16 +141,19 @@ export class Group {
 
 export const FindFilterPattern = {
   ids: Match.Maybe([String]),
-  /** Limit to groups where logged-in user is a member */
+  /** Limit to organizations where logged-in user is a member */
   own: Match.Maybe(Boolean),
 };
 export type FindFilter = Type<typeof FindFilterPattern>;
 
-export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> {
+export class OrganizationsCollection extends Mongo.Collection<
+  OrganizationEntity,
+  OrganizationModel
+> {
   constructor() {
     super("Groups", {
       transform(tenant) {
-        return assignIn(new Group(), tenant);
+        return assignIn(new Organization(), tenant);
       },
     });
 
@@ -168,10 +173,10 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
     limit?: number,
     skip?: number,
     sort?: FieldSort[] | undefined,
-  ): Mongo.Cursor<GroupEntity, GroupModel>;
+  ): Mongo.Cursor<OrganizationEntity, OrganizationModel>;
 
   /**
-   * Find groups for given filters
+   * Find organizations for given filters
    * @param filter dictionary with filter options
    * @param limit how many to find
    * @param skip skip this many before returning results
@@ -182,7 +187,7 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
     limit?: number,
     skip?: number,
     sort?: FieldSort[],
-  ): Mongo.Cursor<GroupEntity, GroupModel>;
+  ): Mongo.Cursor<OrganizationEntity, OrganizationModel>;
 
   findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort?: FieldSort[]) {
     check(filter, Match.Maybe(FindFilterPattern));
@@ -190,9 +195,9 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
     check(skip, Match.Maybe(Match.Integer));
     check(sort, Match.Maybe([FieldSortPattern]));
 
-    const find: Mongo.Selector<GroupEntity> = {};
+    const find: Mongo.Selector<OrganizationEntity> = {};
 
-    const options: Mongo.Options<GroupEntity> = { sort };
+    const options: Mongo.Options<OrganizationEntity> = { sort };
 
     if (limit > 0) {
       options.limit = limit;
@@ -216,8 +221,8 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
       find._id = { $in: filter.ids };
     }
 
-    return this.find(find, options) as Mongo.Cursor<GroupEntity, GroupModel>;
+    return this.find(find, options) as Mongo.Cursor<OrganizationEntity, OrganizationModel>;
   }
 }
 
-export const Groups = new GroupsCollection();
+export const Organizations = new OrganizationsCollection();

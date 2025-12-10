@@ -1,6 +1,6 @@
 import {
-  GroupEntityCustomCourseFields,
-  GroupEntityDashboard,
+  OrganizationEntityCustomCourseFields,
+  OrganizationEntityDashboard,
 } from "../../organizations/organizations";
 
 export interface Template {
@@ -12,6 +12,6 @@ export interface Template {
   members?: string[];
   createdby?: string;
   logoUrl?: string;
-  customCourseFields?: GroupEntityCustomCourseFields[];
-  dashboard?: GroupEntityDashboard;
+  customCourseFields?: OrganizationEntityCustomCourseFields[];
+  dashboard?: OrganizationEntityDashboard;
 }

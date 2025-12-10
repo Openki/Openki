@@ -28,7 +28,7 @@ export function Members({ course }: { course: CourseModel }) {
 
     return !!(
       course?.userHasRole(user?._id, "team") ||
-      user?.groups.some((g) => course?.groupOrganizers.includes(g))
+      user?.groups.some((g) => course?.organizationOrganizers.includes(g))
     );
   }
   function sortedMembers() {

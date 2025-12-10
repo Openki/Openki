@@ -6,7 +6,7 @@ import { uniq } from "lodash-es";
 
 import { Courses, Course, CourseEntity, CourseModel } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
-import { Groups } from "../organizations/organizations";
+import { Organizations } from "../organizations/organizations";
 import { Regions } from "/imports/api/regions/regions";
 import { CourseDiscussions } from "/imports/api/course-discussions/course-discussions";
 import { Roles } from "/imports/api/roles/roles";
@@ -18,7 +18,7 @@ import * as eventsCategoriesDenormalizer from "/imports/api/events/categoriesDen
 import * as eventsCourseImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
 import { Log } from "/imports/api/log/log";
 import { UserModel } from "/imports/api/users/users";
-import * as groupsDenormalizer from "./organizationsDenormalizer";
+import * as organizationsDenormalizer from "./organizationsDenormalizer";
 
 import { Subscribe, Unsubscribe, Message } from "./subscription";
 
@@ -30,7 +30,7 @@ import * as HtmlTools from "/imports/utils/html-tools";
 import { LocalizedValuePattern } from "/imports/utils/getLocalizedValue";
 import * as FileStorage from "/imports/utils/FileStorage";
 import { HtmlString, StringEnum, Type } from "/imports/utils/CustomChecks";
-import { GroupPromoters } from "/imports/utils/update-methods";
+import { OrganizationPromoters } from "/imports/utils/update-methods";
 import { resizeImage } from "../../utils/resize-image";
 
 export interface Method<T> {
@@ -100,18 +100,18 @@ async function loadCourse(courseId: string) {
   return course;
 }
 
-async function loadDisabledRoles(groupIds: string[]) {
-  const groups = await Promise.all(
-    uniq(groupIds).map(async (groupId) => {
-      const group = await Groups.findOneAsync(groupId);
-      if (!group) {
-        throw new Meteor.Error(404, `no group with id ${groupId}`);
+async function loadDisabledRoles(organizationIds: string[]) {
+  const organizations = await Promise.all(
+    uniq(organizationIds).map(async (organizationId) => {
+      const organization = await Organizations.findOneAsync(organizationId);
+      if (!organization) {
+        throw new Meteor.Error(404, `no organization with id ${organizationId}`);
       }
-      return group;
+      return organization;
     }),
   );
 
-  return groups.flatMap((g) => g.disableCreateRoles).filter((r) => r) as string[];
+  return organizations.flatMap((g) => g.disableCreateRoles).filter((r) => r) as string[];
 }
 
 registerMethod(Subscribe);
@@ -235,20 +235,20 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
   }
 
   if (course.isNew()) {
-    // You can add newly created courses to any group
-    let groups = changes.groups || [];
-    groups = uniq(groups);
-    groups = await Promise.all(
-      groups.map(async (groupId) => {
-        const group = await Groups.findOneAsync(groupId);
-        if (!group) {
-          throw new Meteor.Error(404, `no group with id ${groupId}`);
+    // You can add newly created courses to any organization
+    let organizations = changes.groups || [];
+    organizations = uniq(organizations);
+    organizations = await Promise.all(
+      organizations.map(async (organizationId) => {
+        const organization = await Organizations.findOneAsync(organizationId);
+        if (!organization) {
+          throw new Meteor.Error(404, `no organization with id ${organizationId}`);
         }
-        return group._id;
+        return organization._id;
       }),
     );
-    set.groups = groups;
-    set.groupOrganizers = groups;
+    set.groups = organizations;
+    set.organizationOrganizers = organizations;
 
     /* region cannot be changed */
     if (!changes.region) {
@@ -279,13 +279,13 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
 
     await Notification.Course.record(courseId);
 
-    if (set.groupOrganizers.length > 0) {
+    if (set.organizationOrganizers.length > 0) {
       await Notification["Group.Course"].record(courseId);
     }
 
     // Init calculated fields
     await nextEventDenormalizer.updateNextEvent(courseId);
-    await groupsDenormalizer.updateGroups(courseId);
+    await organizationsDenormalizer.updateOrganizations(courseId);
   } else {
     const enrichedSet = timeLastEditDenormalizer.beforeUpdate(set);
     await Courses.updateAsync({ _id: courseId }, { $set: enrichedSet });
@@ -337,7 +337,6 @@ export const updateImage = ServerMethod(
       throw new Meteor.Error(401, "please log-in");
     }
 
-    // Load group from DB
     const course = await loadCourse(courseId);
 
     if (course.isNew() || !course.editableBy(user)) {
@@ -393,7 +392,6 @@ export const deleteImage = ServerMethod(
       throw new Meteor.Error(401, "please log-in");
     }
 
-    // Load group from DB
     const course = await loadCourse(courseId);
 
     if (course.isNew() || !course.editableBy(user)) {
@@ -424,20 +422,24 @@ export const deleteImage = ServerMethod(
 );
 
 /**
- * Add or remove a group from the groups list
+ * Add or remove a organization from the organizations list
  * @param courseId The course to update
- * @param groupId The group to add or remove
- * @param add Whether to add or remove the group
+ * @param organizationId The organization to add or remove
+ * @param add Whether to add or remove the organization
  *
  */
 export const promote = ServerMethod(
   "course.promote",
-  async (courseId: string, groupId: string, enable: boolean) => {
-    await UpdateMethods.promote(Courses as unknown as GroupPromoters)(courseId, groupId, enable);
-    await groupsDenormalizer.updateGroups(courseId);
-    await historyDenormalizer.afterGroupPromoteUpdate(
+  async (courseId: string, organizationId: string, enable: boolean) => {
+    await UpdateMethods.promote(Courses as unknown as OrganizationPromoters)(
       courseId,
-      groupId,
+      organizationId,
+      enable,
+    );
+    await organizationsDenormalizer.updateOrganizations(courseId);
+    await historyDenormalizer.afterOrganizationPromoteUpdate(
+      courseId,
+      organizationId,
       enable,
       Meteor.userId() as string,
     );
@@ -445,20 +447,24 @@ export const promote = ServerMethod(
 );
 
 /**
- * Add or remove a group from the groupOrganizers list
+ * Add or remove a organization from the groupOrganizers list
  * @param courseId The course to update
- * @param groupId The group to add or remove
- * @param add Whether to add or remove the group
+ * @param organizationId The organization to add or remove
+ * @param add Whether to add or remove the organization
  *
  */
 export const editing = ServerMethod(
   "course.editing",
-  async (courseId: string, groupId: string, enable: boolean) => {
-    await UpdateMethods.editing(Courses as unknown as GroupPromoters)(courseId, groupId, enable);
-    await groupsDenormalizer.updateGroups(courseId);
-    await historyDenormalizer.afterGroupOrgaUpdate(
+  async (courseId: string, organizationId: string, enable: boolean) => {
+    await UpdateMethods.editing(Courses as unknown as OrganizationPromoters)(
       courseId,
-      groupId,
+      organizationId,
+      enable,
+    );
+    await organizationsDenormalizer.updateOrganizations(courseId);
+    await historyDenormalizer.afterOrganizationOrgaUpdate(
+      courseId,
+      organizationId,
       enable,
       Meteor.userId() as string,
     );

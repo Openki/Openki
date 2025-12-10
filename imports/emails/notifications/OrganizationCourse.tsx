@@ -7,7 +7,7 @@ import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 export interface Props {
   course: JSX.Element;
   courseDescription: string;
-  groups: JSX.Element;
+  organizations: JSX.Element;
   creater: UserModel;
   username: string;
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
@@ -15,10 +15,10 @@ export interface Props {
   lng: string;
 }
 
-export function GroupCourse({
+export function OrganizationCourse({
   course,
   courseDescription,
-  groups,
+  organizations,
   creater,
   username,
   unsubscribe,
@@ -35,7 +35,7 @@ export function GroupCourse({
             {t(
               "notification.group.course.mail.intro",
               "{CREATER} just proposed {COURSE} in your group {GROUPS}.",
-              { CREATER: creater.getDisplayName(), COURSE: course, GROUPS: groups },
+              { CREATER: creater.getDisplayName(), COURSE: course, GROUPS: organizations },
             )}
           </p>
 
@@ -61,7 +61,7 @@ export function GroupCourse({
         receiveNote={t(
           "notification.group.course.mail.recpnote",
           "You receive this message because you're a member of {GROUPS}.",
-          { GROUPS: groups },
+          { GROUPS: organizations },
         )}
         unsubscribe={unsubscribe}
         campaign={campaign}

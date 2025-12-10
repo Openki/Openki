@@ -10,12 +10,12 @@ import { name } from "../../../../lib/organization-name-helpers";
 
 export interface Props {
   course: CourseModel;
-  groupId: string;
+  organizationId: string;
 }
 
-export function RemoveOrganizer({ course, groupId }: Props) {
+export function RemoveOrganizer({ course, organizationId }: Props) {
   const { t } = useTranslation();
-  const [isLoading, group] = useDetails(groupId);
+  const [isLoading, organization] = useDetails(organizationId);
   const [isExpanded, setIsExpanded] = useState(false);
 
   if (isLoading()) {
@@ -43,20 +43,20 @@ export function RemoveOrganizer({ course, groupId }: Props) {
       {t(
         "course.group.confirmRemoveOrgText",
         'Revoke all editing rights from the "{NAME}" group?',
-        { NAME: name(group) },
+        { NAME: name(organization) },
       )}
       <button
         type="button"
         className="btn btn-danger"
         onClick={async () => {
           try {
-            await CoursesMethods.editing(course._id, groupId, false);
+            await CoursesMethods.editing(course._id, organizationId, false);
 
             Alert.success(
               t(
                 "courseGroupAdd.membersCanNoLongerEditCourse",
                 "Members of {GROUP} can no longer edit {COURSE}.",
-                { GROUP: name(group), COURSE: course.name },
+                { GROUP: name(organization), COURSE: course.name },
               ),
             );
           } catch (err) {

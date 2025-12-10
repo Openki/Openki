@@ -11,7 +11,7 @@ import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
 import { ProfileLink } from "../../profile-link";
 import { Contribution } from "../../Contribution";
-import { GroupTag } from "../../organizations/tag";
+import { OrganizationTag } from "../../organizations/tag";
 import { RoleIcon } from "/imports/ui/RoleIcon";
 
 import "./styles.scss";
@@ -62,18 +62,18 @@ export function UserUnsubscribedHistoryEntry({ user, role }: { user: string; rol
   );
 }
 
-export function GroupPromoteHistoryEntry({
+export function OrganizationPromoteHistoryEntry({
   user,
-  group,
+  organization,
   enable,
 }: {
   user: string;
-  group: string;
+  organization: string;
   enable: boolean;
 }) {
   const { t } = useTranslation();
   const tOptions = {
-    GROUP: <GroupTag groupId={group} full={true} />,
+    GROUP: <OrganizationTag organizationId={organization} full={true} />,
     USER: (
       <>
         <ProfileLink userId={user} />
@@ -90,18 +90,18 @@ export function GroupPromoteHistoryEntry({
   );
 }
 
-export function GroupOrgaHistoryEntry({
+export function OrganizationOrgaHistoryEntry({
   user,
-  group,
+  organization,
   enable,
 }: {
   user: string;
-  group: string;
+  organization: string;
   enable: boolean;
 }) {
   const { t } = useTranslation();
   const tOptions = {
-    GROUP: <GroupTag groupId={group} full={true} />,
+    GROUP: <OrganizationTag organizationId={organization} full={true} />,
     USER: (
       <>
         <ProfileLink userId={user} />
@@ -269,8 +269,8 @@ const map = {
   updated: UpdatedHistoryEntry,
   userSubscribed: UserSubscribedHistoryEntry,
   userUnsubscribed: UserUnsubscribedHistoryEntry,
-  groupPromote: GroupPromoteHistoryEntry,
-  groupOrga: GroupOrgaHistoryEntry,
+  groupPromote: OrganizationPromoteHistoryEntry,
+  groupOrga: OrganizationOrgaHistoryEntry,
   eventInserted: EventInsertedHistoryEntry,
   eventUpdated: EventUpdatedHistoryEntry,
   eventRemoved: EventRemovedHistoryEntry,

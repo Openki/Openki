@@ -7,9 +7,9 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import * as Alert from "/imports/api/alerts/alert";
 import * as Courses from "/imports/api/courses/publications";
 import * as emailMethods from "/imports/api/emails/methods";
-import { GroupEntity } from "../../../api/organizations/organizations";
-import * as GroupsMethods from "../../../api/organizations/methods";
-import * as Groups from "../../../api/organizations/publications";
+import { OrganizationEntity } from "../../../api/organizations/organizations";
+import * as OrganizationsMethods from "../../../api/organizations/methods";
+import * as Organizations from "../../../api/organizations/publications";
 import * as usersMethods from "/imports/api/users/methods";
 import { UserModel } from "/imports/api/users/users";
 
@@ -34,7 +34,7 @@ export function UserprofilePage({ user }: Props) {
   const [verifyUserDelete, setVerifyUserDelete] = useState(false);
   const currentUser = useUser();
 
-  const [isLoadingGroups, inviteGroups] = Groups.useFindFilter({ own: true });
+  const [isLoadingOrganizations, inviteOrganizations] = Organizations.useFindFilter({ own: true });
   const [isLoading, coursesCreatedBy] = Courses.useFindFilter({ createdby: user?._id || "-1" });
 
   // What privileges the user has
@@ -59,14 +59,14 @@ export function UserprofilePage({ user }: Props) {
   function allowPrivateMessages() {
     return user.allowPrivateMessages || !!currentUser?.privileged("admin");
   }
-  function groupMember(group: GroupEntity, user: UserModel) {
-    return !!(user && group?.members?.some((m) => m.user === user._id));
+  function organizationMember(organization: OrganizationEntity, user: UserModel) {
+    return !!(user && organization?.members?.some((m) => m.user === user._id));
   }
-  function showInviteGroups() {
+  function showInviteOrganizations() {
     if (user._id === currentUser?._id) {
       return false;
     }
-    return inviteGroups.length > 0;
+    return inviteOrganizations.length > 0;
   }
   function showSettings() {
     if (showPrivileges) {
@@ -77,7 +77,7 @@ export function UserprofilePage({ user }: Props) {
       return false;
     }
 
-    return inviteGroups.length > 0;
+    return inviteOrganizations.length > 0;
   }
   function sendMessageAttr(): SendMessageProps {
     return {
@@ -148,24 +148,24 @@ export function UserprofilePage({ user }: Props) {
     }
   }
 
-  async function handleDraftIntoGroup(group: GroupEntity) {
-    const { _id: groupId, name } = group;
+  async function handleDraftIntoOrganization(organization: OrganizationEntity) {
+    const { _id: organizationId, name } = organization;
     const userId = user._id;
     try {
-      await GroupsMethods.updateMembership(userId, groupId, true);
+      await OrganizationsMethods.updateMembership(userId, organizationId, true);
       Alert.success(t("profile.group.drafted", "Added to group {NAME}", { NAME: name }));
     } catch (err) {
       Alert.serverError(err, t("profile.group.drafted.error", "Unable to draft user into group"));
     }
   }
 
-  async function handleExpelFromGroup(group: GroupEntity) {
+  async function handleExpelFromOrganization(organization: OrganizationEntity) {
     Tooltips.hide();
 
-    const { _id: groupId, name } = group;
+    const { _id: organizationId, name } = organization;
     const userId = user._id;
     try {
-      await GroupsMethods.updateMembership(userId, groupId, false);
+      await OrganizationsMethods.updateMembership(userId, organizationId, false);
       Alert.success(t("profile.group.expelled", "Expelled from group {NAME}", { NAME: name }));
     } catch (err) {
       Alert.serverError(err, t("profile.group.expelled.error", "Unable to expel user from group"));
@@ -264,7 +264,7 @@ export function UserprofilePage({ user }: Props) {
           </div>
         </div>
 
-        {!isLoadingGroups() && showSettings() && (
+        {!isLoadingOrganizations() && showSettings() && (
           <div className="page-component page-component-seperated">
             <div className="row gap-3 mb-3">
               {showPrivileges && (
@@ -301,16 +301,19 @@ export function UserprofilePage({ user }: Props) {
                 </div>
               )}
 
-              {showInviteGroups() && (
+              {showInviteOrganizations() && (
                 <div className="col-md">
                   <h3>
                     <i className="fa-solid fa-gear fa-fw" />{" "}
                     {t("userprofile.groups.header", "Edit groups")}
                   </h3>
                   <div className="list-group">
-                    {inviteGroups.map((group) =>
-                      groupMember(group, user) ? (
-                        <li key={group._id} className="list-group-item list-group-item-success">
+                    {inviteOrganizations.map((organization) =>
+                      organizationMember(organization, user) ? (
+                        <li
+                          key={organization._id}
+                          className="list-group-item list-group-item-success"
+                        >
                           <button
                             type="button"
                             className="btn-close btn-close-black float-end"
@@ -318,22 +321,22 @@ export function UserprofilePage({ user }: Props) {
                               "profile.group.expel",
                               "Expel from group {GROUPNAME}",
                               {
-                                GROUPNAME: group.name,
+                                GROUPNAME: organization.name,
                               },
                             )}
-                            onClick={() => handleExpelFromGroup(group)}
+                            onClick={() => handleExpelFromOrganization(organization)}
                           ></button>
                           {t("profile.group.member", "Member of group")}
-                          <span className="group">{group.name}</span>
+                          <span className="group">{organization.name}</span>
                         </li>
                       ) : (
                         <button
-                          key={group._id}
+                          key={organization._id}
                           type="button"
                           className="list-group-item list-group-item-action list-group-item-secondary btn"
-                          onClick={() => handleDraftIntoGroup(group)}
+                          onClick={() => handleDraftIntoOrganization(organization)}
                         >
-                          {t("profile.group.draft", "Draft into group")} {group.name}
+                          {t("profile.group.draft", "Draft into group")} {organization.name}
                         </button>
                       ),
                     )}

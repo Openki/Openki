@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 
-import * as Groups from "../../../../api/organizations/publications";
+import * as Organizations from "../../../../api/organizations/publications";
 
 import { MetaTags } from "/imports/ui/components/MetaTags";
 
@@ -21,10 +21,10 @@ function bodyStyle(imageUrl: string) {
   };
 }
 
-export function GroupsPage() {
+export function OrganizationsPage() {
   const { t } = useTranslation();
 
-  const [isLoading, groups] = Groups.useFindFilter();
+  const [isLoading, organizations] = Organizations.useFindFilter();
 
   if (isLoading()) {
     return null;
@@ -36,19 +36,19 @@ export function GroupsPage() {
 
       <div className="container">
         <div className="row gap-0 row-gap-4 row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-          {groups.map((group) => (
-            <div key={group._id} className="col">
+          {organizations.map((organization) => (
+            <div key={organization._id} className="col">
               <div
                 className="card card-group border-0 rounded-0 mx-auto"
-                style={bodyStyle(group.publicLogoUrl())}
+                style={bodyStyle(organization.publicLogoUrl())}
               >
                 <div className="card-body overflow-hidden">
                   <h5 className="card-title">
-                    <a className="stretched-link" href={Router.path("groupDetails", group)}>
-                      {group.name}
+                    <a className="stretched-link" href={Router.path("groupDetails", organization)}>
+                      {organization.name}
                     </a>
                   </h5>
-                  <p className="card-text">{group.claim}</p>
+                  <p className="card-text">{organization.claim}</p>
                 </div>
               </div>
             </div>
@@ -63,4 +63,4 @@ export function GroupsPage() {
 
 import "./template.html";
 
-Template.registerHelper("ExploreGroupsPage", () => GroupsPage);
+Template.registerHelper("ExploreGroupsPage", () => OrganizationsPage);

@@ -2,15 +2,15 @@ beforeEach(() => {
   cy.visitOpenki("/group/create", { username: "Seee" });
 });
 
-describe("Group create", () => {
-  it("should throw a error on create a group with only a name", () => {
+describe("Organization create", () => {
+  it("should throw a error on create a organization with only a name", () => {
     cy.get('#maincontent div[data-medium-editor-editor-index="1"]').click();
     cy.get('#maincontent div[data-medium-editor-editor-index="1"]').type("Seeworld");
     cy.get("#group-details-save").click();
     cy.get("#maincontent span.d-block").should("have.text", "All four fields are mandatory.");
   });
 
-  it("should allow to create a group with name, short, claim and description", () => {
+  it("should allow to create a organization with name, short, claim and description", () => {
     cy.get('#maincontent div[data-medium-editor-editor-index="1"]').click();
     cy.get('#maincontent div[data-medium-editor-editor-index="1"]').type("Seeworld");
     cy.get('#maincontent div[data-medium-editor-editor-index="2"]').type("sw");

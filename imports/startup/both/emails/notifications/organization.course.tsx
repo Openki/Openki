@@ -6,12 +6,12 @@ import i18next from "i18next";
 import { chain, truncate } from "lodash-es";
 
 import { Courses } from "/imports/api/courses/courses";
-import { Groups } from "../../../../api/organizations/organizations";
+import { Organizations } from "../../../../api/organizations/organizations";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { Log } from "/imports/api/log/log";
 import { Users, UserModel } from "/imports/api/users/users";
 import { Model as NotificationModel } from "../notification";
-import { GroupCourse, Props } from "../../../../emails/notifications/OrganizationCourse";
+import { OrganizationCourse, Props } from "../../../../emails/notifications/OrganizationCourse";
 
 import { getSiteName } from "/imports/utils/getSiteName";
 import { ReactJoin } from "/imports/utils/ReactJoin";
@@ -35,7 +35,9 @@ export async function record(courseId: string) {
   }
 
   const recipients = chain(
-    await Groups.find({ _id: { $in: course.groupOrganizers } }).mapAsync((g) => g.members),
+    await Organizations.find({ _id: { $in: course.organizationOrganizers } }).mapAsync(
+      (g) => g.members,
+    ),
   )
     .flatten()
     .filter((m) => m.notify)
@@ -60,9 +62,11 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
   if (!course) {
     throw new Error("Course does not exist (0.o)");
   }
-  const groups = await Groups.find({ _id: { $in: course.groupOrganizers } }).fetchAsync();
-  if (!(groups.length > 0)) {
-    throw new Error("Groups does not exist (0.o)");
+  const organizations = await Organizations.find({
+    _id: { $in: course.organizationOrganizers },
+  }).fetchAsync();
+  if (!(organizations.length > 0)) {
+    throw new Error("Organizations does not exist (0.o)");
   }
 
   const creater = await Users.findOneAsync(course.createdby);
@@ -79,15 +83,15 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
     async vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
-      const campaign = "groupCourseNotify";
+      const campaign = "organizationCourseNotify";
 
-      const recipientsGroups = groups.filter((g) =>
+      const recipientsOrganizations = organizations.filter((g) =>
         g.members.some((m) => m.user === actualRecipient._id),
       );
 
       const subjectvars = {
         COURSE: truncate(course.name, { length: 10 }),
-        GROUPS: truncate(recipientsGroups.map((g) => g.short).join(", "), { length: 30 }),
+        GROUPS: truncate(recipientsOrganizations.map((g) => g.short).join(", "), { length: 30 }),
       };
 
       const subject = t(
@@ -108,8 +112,8 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         course: <a href={courseLink}>{course.name}</a>,
         courseLink,
         courseDescription: course.description || "",
-        groups: ReactJoin(
-          recipientsGroups.map((g) => (
+        organizations: ReactJoin(
+          recipientsOrganizations.map((g) => (
             <a
               key={g._id}
               href={Router.url("groupDetails", g, {
@@ -130,6 +134,6 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         campaign,
       };
     },
-    template: (props) => <GroupCourse {...props} />,
+    template: (props) => <OrganizationCourse {...props} />,
   };
 }
