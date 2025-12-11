@@ -126,8 +126,8 @@ export function OrganizationSettings({ organization }: Props) {
           Alert.success(
             t(
               "organizations.settings.logo.updated.success",
-              'Changes to the "{GROUP}" group settings have been saved.',
-              { GROUP: organizationName },
+              'Changes to the "{ORGANIZATION}" group settings have been saved.',
+              { ORGANIZATION: organizationName },
             ),
           );
         } catch (err) {
@@ -146,8 +146,8 @@ export function OrganizationSettings({ organization }: Props) {
               Alert.success(
                 t(
                   "organizations.settings.organization.logo.removed",
-                  'Changes to the "{GROUP}" group settings have been saved.',
-                  { GROUP: organizationName },
+                  'Changes to the "{ORGANIZATION}" group settings have been saved.',
+                  { ORGANIZATION: organizationName },
                 ),
               );
             } catch (err) {
@@ -186,11 +186,11 @@ export function OrganizationSettings({ organization }: Props) {
     return {
       confirmText: t(
         "organizations.settings.reallydelete",
-        "Please confirm that you would like to delete {GROUP}. This cannot be undone.",
-        { GROUP: organization.name },
+        "Please confirm that you would like to delete {ORGANIZATION}. This cannot be undone.",
+        { ORGANIZATION: organization.name },
       ),
-      confirmButton: t("organizations.settings.delete.confirm.button", "Delete {GROUP}", {
-        GROUP: organization.name,
+      confirmButton: t("organizations.settings.delete.confirm.button", "Delete {ORGANIZATION}", {
+        ORGANIZATION: organization.name,
       }),
       onRemove: async () => {
         const organizationId = organization._id;
@@ -208,10 +208,10 @@ export function OrganizationSettings({ organization }: Props) {
       Alert.success(
         t(
           "organizations.settings.memberRemoved",
-          '"{MEMBER}" has been removed from the "{GROUP}" group',
+          '"{MEMBER}" has been removed from the "{ORGANIZATION}" group',
           {
             MEMBER: memberName,
-            GROUP: organization.name,
+            ORGANIZATION: organization.name,
           },
         ),
       );
@@ -227,10 +227,14 @@ export function OrganizationSettings({ organization }: Props) {
     try {
       await OrganizationsMethods.updateMembership(user._id, organization._id, true);
       Alert.success(
-        t("organizations.settings.memberAdded", '"{MEMBER}" has been added to the "{GROUP}" group', {
-          MEMBER: user.getDisplayName(),
-          GROUP: organization.name,
-        }),
+        t(
+          "organizations.settings.memberAdded",
+          '"{MEMBER}" has been added to the "{ORGANIZATION}" group',
+          {
+            MEMBER: user.getDisplayName(),
+            ORGANIZATION: organization.name,
+          },
+        ),
       );
     } catch (err) {
       Alert.serverError(err, t("organizations.settings.memberAdded.error", "Could not add member"));

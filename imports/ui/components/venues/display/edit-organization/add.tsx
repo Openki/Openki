@@ -36,9 +36,9 @@ function OrganizationToAdd({
           Alert.success(
             t(
               "venues.editOrganization.add.organizationAdded",
-              "{GROUP} was added as host for {VENUE}.",
+              "{ORGANIZATION} was added as host for {VENUE}.",
               {
-                GROUP: name(organization),
+                ORGANIZATION: name(organization),
                 VENUE: venue.name,
               },
             ),

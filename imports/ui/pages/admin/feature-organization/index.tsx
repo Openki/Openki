@@ -39,8 +39,8 @@ export function AdminFeatureOrganizationPage() {
           <div className="mb-2">
             {t(
               "admin.featureOrganization.organizationIsFeatured",
-              'The "{GROUP}" group is featured for the "{REGION}" region.',
-              { GROUP: featuredOrganization()?.name, REGION: currentRegion?.name },
+              'The "{ORGANIZATION}" group is featured for the "{REGION}" region.',
+              { ORGANIZATION: featuredOrganization()?.name, REGION: currentRegion?.name },
             )}
           </div>
           <button

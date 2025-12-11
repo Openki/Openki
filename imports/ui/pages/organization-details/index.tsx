@@ -103,16 +103,20 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
     },
     onSuccess: () => {
       Alert.success(
-        t("organizationDetails.changesSaved", 'Changes to the "{GROUP}" group have been saved.', {
-          GROUP: organization.name,
-        }),
+        t(
+          "organizationDetails.changesSaved",
+          'Changes to the "{ORGANIZATION}" group have been saved.',
+          {
+            ORGANIZATION: organization.name,
+          },
+        ),
       );
     },
     onError: (err) => {
       Alert.serverError(
         err as string | Error,
-        t("organizationDetails.saveError", 'Could not save the "{GROUP}" group', {
-          GROUP: organization.name,
+        t("organizationDetails.saveError", 'Could not save the "{ORGANIZATION}" group', {
+          ORGANIZATION: organization.name,
         }),
       );
     },
@@ -131,8 +135,8 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
       const organizationId = await OrganizationsMethods.save("", newOrganization);
 
       Alert.success(
-        t("organizationDetails.created", 'The "{GROUP}" group was created.', {
-          GROUP: newOrganization.name,
+        t("organizationDetails.created", 'The "{ORGANIZATION}" group was created.', {
+          ORGANIZATION: newOrganization.name,
         }),
       );
 
@@ -140,7 +144,10 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
 
       Router.go("groupDetails", { _id: organizationId, short: newOrganization.short });
     } catch (err) {
-      Alert.serverError(err, t("organizationDetails.saveError", { GROUP: newOrganization.name }));
+      Alert.serverError(
+        err,
+        t("organizationDetails.saveError", { ORGANIZATION: newOrganization.name }),
+      );
     } finally {
       setIsBusy(false);
     }

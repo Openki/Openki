@@ -38,9 +38,9 @@ export function Remove({ venue, organizationId }: Props) {
         <div className="p-2">
           {t(
             "venues.editOrganization.remove.desc",
-            "Disable members of {GROUP} to manage this venue.",
+            "Disable members of {ORGANIZATION} to manage this venue.",
             {
-              GROUP: name(organization),
+              ORGANIZATION: name(organization),
             },
           )}
         </div>
@@ -55,9 +55,9 @@ export function Remove({ venue, organizationId }: Props) {
                 Alert.success(
                   t(
                     "venues.editOrganization.remove.organizationRemoved.success",
-                    "{GROUP} was removed from {VENUE}.",
+                    "{ORGANIZATION} was removed from {VENUE}.",
                     {
-                      GROUP: name(organization),
+                      ORGANIZATION: name(organization),
                       VENUE: venue.name,
                     },
                   ),

@@ -12,9 +12,9 @@ export function OrganizationSection({ organizations }: { organizations: Organiza
       <p>
         {t(
           "profile.organizationMembership",
-          "You are {NUM_GROUPS, plural, =0{not member of any group} one{member of the group:} other{member of # groups:} }",
+          "You are {NUM_ORGANIZATIONS, plural, =0{not member of any group} one{member of the group:} other{member of # groups:} }",
           {
-            NUM_GROUPS: organizations.length,
+            NUM_ORGANIZATIONS: organizations.length,
           },
         )}
       </p>

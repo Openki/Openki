@@ -327,9 +327,9 @@ export function UserprofilePage({ user }: Props) {
                             className="btn-close btn-close-black float-end"
                             data-bs-title={t(
                               "profile.organization.expel",
-                              "Expel from group {GROUPNAME}",
+                              "Expel from group {ORGANIZATION}",
                               {
-                                GROUPNAME: organization.name,
+                                ORGANIZATION: organization.name,
                               },
                             )}
                             onClick={() => handleExpelFromOrganization(organization)}

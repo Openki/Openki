@@ -55,7 +55,7 @@ export function MakeOrganizer({ event, organizationId }: Props) {
 
             Alert.success(
               t("course.organizationList.makeOrganizer.membersCanEditCourse", {
-                GROUP: name(organization),
+                ORGANIZATION: name(organization),
                 COURSE: event.title,
               }),
             );
