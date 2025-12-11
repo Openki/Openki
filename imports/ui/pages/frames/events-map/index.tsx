@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { MetaTags } from "/imports/ui/components/MetaTags";
 import { Filtering } from "/imports/utils/filtering";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
-import moment from "moment";
+import { useReactiveNow } from "/imports/utils/reactive-now";
 
 import { useFindFilter } from "/imports/api/events/publications";
 import { FindParams } from "/imports/api/events/events";
@@ -16,11 +16,12 @@ import "./styles.scss";
 export function FrameEventsMapPage() {
   const { t } = useTranslation();
   const searchParams = useSearchParams();
+  const now = useReactiveNow();
 
   const filter = new Filtering(FindParams);
   filter.read(searchParams);
   const query = filter.toQuery();
-  query.after = query.after || moment().toDate();
+  query.after = query.after || now;
 
   const [isLoading, events] = useFindFilter(query);
 

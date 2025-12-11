@@ -40,7 +40,7 @@ export function FileUpload({ accept, onUpload, onCancel }: Props) {
       <form
         encType="multipart/form-data"
         noValidate={true}
-        className="text-center file-upload{{#if (state 'supportsDragndrop')}} supports-dragndrop{{/if}}{{#if (state 'dragover')}} is-dragover{{/if}}"
+        className={`text-center file-upload${supportsDragndrop ? " supports-dragndrop" : ""}${dragover ? " is-dragover" : ""}`}
         onDragOver={() => {
           setDragover(true);
         }}

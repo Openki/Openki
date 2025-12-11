@@ -8,11 +8,11 @@ export function TenantSection({ tenants }: { tenants: TenantModel[] }) {
 
   return (
     <div className="page-component page-component-seperated">
-      <h3 data-test="profile-tenant-section-header">{t("profile.tenants", "My organizations")}</h3>
+      <h3 data-test="profile-tenant-section-header">{t("profile.tenants", "My tenants")}</h3>
       <h5>
         {t(
           "profile.tenantMembership",
-          "You are {NUM_TENANTS, plural, =0{not admin of any organization} one{admin of the organization:} other{admin of # organizations:} }",
+          "You are {NUM_TENANTS, plural, =0{not admin of any tenant} one{admin of the tenant:} other{admin of # tenants:} }",
           { NUM_TENANTS: tenants.length },
         )}
       </h5>

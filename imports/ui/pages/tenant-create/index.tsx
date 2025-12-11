@@ -5,6 +5,7 @@ import * as Analytics from "/imports/ui/lib/analytics";
 import { MetaTags } from "/imports/ui/components/MetaTags";
 import { useTranslation } from "react-i18next";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
+import { useValidation } from "/imports/ui/lib/useValidation";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { TenantModel } from "/imports/api/tenants/tenants";
@@ -14,46 +15,59 @@ import * as RegionsMethods from "/imports/api/regions/methods";
 
 import { Fields } from "../../components/regions/edit/Fields";
 import { ButtonCancel, ButtonSave } from "/imports/ui/components/Buttons";
+import { FormControl } from "/imports/ui/components/form-control";
 
-export interface Data {
+export interface Props {
   tenant: TenantModel;
   region: RegionModel;
 }
 
-export function TenantCreatePage(data: Data) {
+export function TenantCreatePage(props: Props) {
   const { t } = useTranslation();
 
   const [changes, setChanges] = useState({
-    tenantName: data.tenant.name,
-    name: data.region.name,
-    description: data.region.description,
-    tz: data.region.tz,
-    loc: data.region.loc,
+    tenantName: props.tenant.name,
+    name: props.region.name,
+    description: props.region.description,
+    tz: props.region.tz,
+    loc: props.region.loc,
   });
+
+  const [errors, checkValidity, addError] = useValidation(
+    {
+      noTenantName: {
+        field: "tenantName",
+        onCheckValidity: () => !!changes.tenantName,
+        text: () => t("tenant.create.plsGiveName", "Please give a name"),
+      },
+      noRegionName: {
+        field: "regionName",
+        onCheckValidity: () => !!changes.name,
+        text: () => t("tenant.region.create.plsGiveName", "Please give your region a name"),
+      },
+      noLocation: {
+        field: "location",
+        onCheckValidity: () => !!changes.loc,
+        text: () =>
+          t(
+            "tenant.region.create.plsSelectPointOnMap",
+            'Please add a marker on the map by clicking on the "+" sign.',
+          ),
+      },
+    },
+    { autoCheckFixed: true },
+  );
 
   const { promptToLogin } = useAccountTasks();
   const [isBusy, setIsBusy] = useState(false);
 
-  async function handleSave(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (!changes.tenantName) {
-      Alert.error(t("tenant.create.plsGiveName", "Please give a organization name"));
-      return;
-    }
-
-    if (!changes.name) {
-      Alert.error(t("tenant.region.create.plsGiveName", "Please give your region a name"));
-      return;
-    }
-
-    if (!changes.loc) {
-      Alert.error(
-        t(
-          "tenant.region.create.plsSelectPointOnMap",
-          'Please add a marker on the map by clicking on the "+" sign.',
-        ),
-      );
+    if (!checkValidity()) {
+      setTimeout(() => {
+        document.querySelector<HTMLElement>(".is-invalid")?.focus();
+      }, 0);
       return;
     }
 
@@ -76,7 +90,10 @@ export function TenantCreatePage(data: Data) {
 
       Analytics.trackEvent("Tenant creations", "Tenant with region creations");
     } catch (err) {
-      Alert.serverError(err, t("privateRegion.creating.error", "Creating the region went wrong"));
+      if (!addError(err.reason)) {
+        // unknown error
+        Alert.serverError(err, t("privateRegion.creating.error", "Creating the region went wrong"));
+      }
     } finally {
       setIsBusy(false);
     }
@@ -90,37 +107,28 @@ export function TenantCreatePage(data: Data) {
         <div className="edit-page region-edit">
           <h2>{t("tenant.create.title", "Create your private region")}</h2>
 
-          <form noValidate onSubmit={handleSave}>
+          <form noValidate onSubmit={handleSubmit}>
             <div className="mb-3">
-              <label className="form-label">
-                {t("tenant.edit.name", "Name of your organization:")}
-              </label>
-              <input
-                data-test="tenant-edit-name"
+              <FormControl
+                id="tenant-edit-name"
                 type="text"
-                className="form-control"
-                placeholder={t("tenant.edit.namePlaceholder", "Full name of your organization")}
-                onChange={(event) => {
-                  setChanges({
-                    ...changes,
-                    tenantName: event.currentTarget.value,
-                  });
-                }}
+                label={t("tenant.edit.name", "Name of your tenant")}
+                value={changes.tenantName}
+                onChange={(value) => setChanges({ ...changes, tenantName: value })}
+                onBlur={() => checkValidity("tenantName")}
+                error={errors.tenantName}
               />
             </div>
             <Fields
               region={changes}
-              onChange={(newChanges) => {
-                setChanges((changes) => {
-                  return {
-                    tenantName: changes.tenantName,
-                    ...newChanges,
-                  };
-                });
-              }}
+              onChange={(newChanges) =>
+                setChanges((changes) => ({ tenantName: changes.tenantName, ...newChanges }))
+              }
+              onBlur={(field) => checkValidity(field)}
+              errors={errors}
             />
             <div className="form-actions">
-              <ButtonSave submit id="tenant-create-save" isBusy={isBusy} />
+              <ButtonSave submit id="tenant-create-submit" isBusy={isBusy} />
               <ButtonCancel
                 id="tenant-create-cancel"
                 disabled={isBusy}

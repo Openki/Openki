@@ -62,13 +62,12 @@ export function Report() {
               <textarea
                 className="form-control"
                 id="reportMessage"
+                autoFocus
                 rows={5}
                 placeholder={t("report.placeholder", "My hovercraft is full of eels.")}
                 required
                 minLength={6}
-                onChange={(event) => {
-                  setMessage(event.target.value);
-                }}
+                onChange={(event) => setMessage(event.target.value)}
               ></textarea>
               <div className="invalid-feedback">
                 {t(
