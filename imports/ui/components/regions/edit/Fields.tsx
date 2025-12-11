@@ -103,7 +103,7 @@ export function Fields({ region, onChange, errors, onBlur }: Props) {
 
       <div className="mb-3">
         <FormControl
-          id="region-description-id"
+          id="region-edit-description"
           type="textarea"
           optional
           label={t("region.edit.descriptionLabel", "Description")}
