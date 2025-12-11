@@ -13,16 +13,16 @@ describe("tenant settings", () => {
     cy.get('[data-test="tenant-setting-member-remove-button-Seeeen"]').click();
     cy.get(".alert-success").should("be.visible");
 
-    cy.get('[data-test="tenant-setting-member-search"]').click();
-    cy.get('[data-test="tenant-setting-member-search"]').type("Seeeen");
+    cy.get("#tenant-settings-members-search").click();
+    cy.get("#tenant-settings-members-search").type("Seeeen");
 
     cy.get('[data-test="tenant-setting-member-add-button-Seeeen"] i.fa-plus').click();
     cy.get(".alert-success").should("be.visible");
   });
 
   it("should allow to search, add & remove a admin", function () {
-    cy.get('[data-test="tenant-setting-admin-search"]').click();
-    cy.get('[data-test="tenant-setting-admin-search"]').type("See");
+    cy.get("#tenant-setting-admins-search").click();
+    cy.get("#tenant-setting-admins-search").type("See");
 
     cy.get('[data-test="tenant-setting-admin-add-button-Seeeen"]').click();
     cy.get(".alert-success").should("be.visible");

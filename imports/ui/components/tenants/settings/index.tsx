@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-
 import { useSiteName } from "/imports/utils/getSiteName";
 
 import { TenantModel } from "/imports/api/tenants/tenants";
@@ -11,6 +10,7 @@ import { Members } from "./Members";
 import { FoundAdmins } from "./FoundAdmins";
 import { FoundMembers } from "./FoundMembers";
 import { Admins } from "./Admins";
+import { FormControl } from "/imports/ui/components/form-control";
 
 import "./styles.scss";
 
@@ -34,43 +34,32 @@ export function Settings({ tenant }: Props) {
       <div className="col-md">
         <h3>
           <i className="fa-solid fa-users fa-fw" /> {t("tenant.settings.title.Members", "Members")}{" "}
-          ({members().length})
+          <small>
+            <span className="badge rounded-pill bg-primary">{members().length}</span>
+          </small>
         </h3>
-        <div className="icon-text-icon">
-          <div className="icon-text-text">
-            {t(
-              "tenant.settings.members.description",
-              "Members can see and use the above regions in the organisation {TENANT}.",
-              { TENANT: tenant.name },
-            )}
-          </div>
-        </div>
-        <br />
+        <p>
+          {t(
+            "tenant.settings.members.description",
+            "Members can see and use the above regions in {TENANT}.",
+            { TENANT: tenant.name },
+          )}
+        </p>
         <Members tenant={tenant} />
         <div className="mb-3">
-          <label className="form-label" htmlFor="AddTenantMember">
-            {t(
+          <FormControl
+            id="tenant-settings-members-search"
+            type="text"
+            label={t(
               "tenant.settings.field.addMembers",
-              'Add existing {SITENAME} members to your "{TENANTNAME}" organization.',
-              { SITENAME: siteName, TENANTNAME: tenant.name },
+              "Add existing {SITENAME} members to {TENANT}.",
+              { SITENAME: siteName, TENANT: tenant.name },
             )}
-          </label>
-          <div className="input-group">
-            <span className="input-group-text">
-              <i className="fa-solid fa-user fa-fw" />
-            </span>
-            <input
-              data-test="tenant-setting-member-search"
-              className="form-control"
-              id="AddTenantMember"
-              placeholder={t("tenant.settings.field.addMember.placeholder", "Type name of buddy")}
-              type="text"
-              value={memberSearch}
-              onChange={(event) => {
-                setMemberSearch(event.currentTarget.value);
-              }}
-            />
-          </div>
+            prepend="fa-solid fa-user fa-fw"
+            placeholder={t("tenant.settings.field.addMember.placeholder", "Type name of buddy")}
+            value={memberSearch}
+            onChange={(value) => setMemberSearch(value)}
+          />
         </div>
         {memberSearch.length > 0 && <FoundMembers tenant={tenant} userSearch={memberSearch} />}
         <hr />
@@ -80,41 +69,32 @@ export function Settings({ tenant }: Props) {
       </div>
       <div className="col-md">
         <h3>
-          <i className="fa-solid fa-users fa-fw" />
-          {t("tenant.settings.title.admin", "Admins")} ({tenant.admins.length})
+          <i className="fa-solid fa-users fa-fw" /> {t("tenant.settings.title.admin", "Admins")}{" "}
+          <small>
+            <span className="badge rounded-pill bg-primary">{tenant.admins.length}</span>
+          </small>
         </h3>
-        <div className="icon-text-text">
+        <p>
           {t(
             "tenant.settings.admin.description",
             "Admins are empowered to see and manage this panel here, like you.",
           )}
-        </div>
-        <br />
+        </p>
         <Admins tenant={tenant} />
         <div className="mb-3">
-          <label className="form-label" htmlFor="AddTenantAdmin">
-            {t(
+          <FormControl
+            id="tenant-setting-admins-search"
+            type="text"
+            label={t(
               "tenant.settings.field.addAdmins",
-              'Add an existing {SITENAME} user as a new admin to your "{TENANTNAME}" organization.',
-              { SITENAME: siteName, TENANTNAME: tenant.name },
+              "Add an existing {SITENAME} user as a new admin to {TENANT}.",
+              { SITENAME: siteName, TENANT: tenant.name },
             )}
-          </label>
-          <div className="input-group">
-            <span className="input-group-text">
-              <i className="fa-solid fa-user fa-fw" />
-            </span>
-            <input
-              data-test="tenant-setting-admin-search"
-              className="form-control"
-              id="AddTenantAdmin"
-              placeholder={t("tenant.settings.field.addAdmin.placeholder", "Type name of buddy")}
-              type="text"
-              value={adminSearch}
-              onChange={(event) => {
-                setAdminSearch(event.currentTarget.value);
-              }}
-            />
-          </div>
+            prepend="fa-solid fa-user fa-fw"
+            placeholder={t("tenant.settings.field.addAdmin.placeholder", "Type name of buddy")}
+            value={adminSearch}
+            onChange={(value) => setAdminSearch(value)}
+          />
         </div>
         {adminSearch.length > 0 && <FoundAdmins tenant={tenant} userSearch={adminSearch} />}
       </div>

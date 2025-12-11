@@ -3,7 +3,9 @@ import moment from "moment-timezone";
 import { useTranslation } from "react-i18next";
 import { getLocation } from "/imports/utils/user-location";
 
-import { Coordinates, Edit as LocationEdit } from "/imports/ui/components/location/edit";
+import { Coordinates } from "/imports/ui/components/location/edit";
+import { FormControl } from "/imports/ui/components/form-control";
+import { FormMap } from "/imports/ui/components/location/FormMap";
 
 export interface Change {
   name: string;
@@ -20,9 +22,11 @@ export interface Change {
 export interface Props {
   region: Change;
   onChange: (change: Change) => void;
+  errors: Partial<Record<"regionName" | "location", React.ReactNode>>;
+  onBlur: (field: "regionName" | "location") => void;
 }
 
-export function Fields({ region, onChange }: Props) {
+export function Fields({ region, onChange, errors, onBlur }: Props) {
   const { t } = useTranslation();
 
   function timezones() {
@@ -46,35 +50,28 @@ export function Fields({ region, onChange }: Props) {
   return (
     <>
       <div className="mb-3">
-        <label className="form-label">{t("region.edit.name", "Name:")}</label>
-        <input
-          data-test="region-edit-name"
+        <FormControl
+          id="region-edit-name"
           type="text"
-          className="form-control form-control-lg"
-          placeholder={t("region.edit.namePlaceholder", "Full name of region")}
+          size="large"
+          label={t("region.edit.name", "Name")}
           value={region.name}
-          onChange={(event) => {
-            onChange({
-              ...region,
-              name: event.currentTarget.value,
-            });
-          }}
+          onChange={(value) => onChange({ ...region, name: value })}
+          onBlur={() => onBlur("regionName")}
+          error={errors.regionName}
         />
       </div>
 
-      <div className="mb-3 clearfix">
-        <div className="form-label">
-          {t(
-            "region.edit.map",
-            'Please add the center of the region by clicking "+" (on the right inside the map)',
-          )}
-        </div>
-
-        {(!!region.loc?.coordinates || !!center) && (
-          // We need a location or a center point to render the map
-          <LocationEdit
-            coordinates={region.loc?.coordinates}
-            center={!region.loc?.coordinates ? center : (undefined as any)}
+      <div className="mb-3">
+        {!!(region.loc?.coordinates || center) && (
+          <FormMap
+            id="region-edit-map"
+            label={t(
+              "region.edit.map",
+              'Please add the center of the region by clicking "+" (on the right inside the map)',
+            )}
+            value={region.loc?.coordinates as any}
+            center={!region.loc?.coordinates ? center : undefined}
             onChange={(newValue) => {
               onChange({
                 ...region,
@@ -86,49 +83,32 @@ export function Fields({ region, onChange }: Props) {
                   : undefined,
               });
             }}
+            onBlur={() => onBlur("location")}
+            error={errors.location}
           />
         )}
       </div>
 
       <div className="mb-3">
-        <label className="form-label">{t("region.edit.timezone", "Timezone:")}</label>
-        <select
-          className="form-select"
+        <FormControl
+          id="region-edit-timezone"
+          type="select"
+          label={t("region.edit.timezone", "Timezone")}
+          placeholder={t("_selection.pleaseSelect")}
+          options={Object.fromEntries(timezones().map((tz) => [tz, tz]))}
           value={region.tz}
-          onChange={(event) => {
-            onChange({
-              ...region,
-              tz: event.currentTarget.value,
-            });
-          }}
-        >
-          <option value="" disabled className="select-placeholder">
-            {t("_selection.pleaseSelect")}
-          </option>
-          {timezones().map((tz) => (
-            <option key={tz} value={tz}>
-              {tz}
-            </option>
-          ))}
-        </select>
+          onChange={(value) => onChange({ ...region, tz: value })}
+        />
       </div>
 
       <div className="mb-3">
-        <label htmlFor="region-description-id" className="form-label">
-          {t("region.edit.descriptionLabel", "Description:")}
-        </label>
-        <textarea
-          data-test="region-edit-description"
-          id="region-description-id"
-          className="form-control"
-          placeholder={t("region.edit.descriptionPlaceholder", "An optional description")}
+        <FormControl
+          id="region-edit-description"
+          type="textarea"
+          optional
+          label={t("region.edit.descriptionLabel", "Description")}
           value={region.description}
-          onChange={(event) => {
-            onChange({
-              ...region,
-              description: event.currentTarget.value,
-            });
-          }}
+          onChange={(value) => onChange({ ...region, description: value })}
         />
       </div>
     </>

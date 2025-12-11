@@ -83,8 +83,8 @@ export function Edit(
         center: Coordinates;
       }
     | {
-        coordinates?: Coordinates | undefined;
-        center: Coordinates;
+        coordinates: Coordinates;
+        center?: Coordinates | undefined;
       }
   ),
 ) {

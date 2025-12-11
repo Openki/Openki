@@ -10,10 +10,11 @@ import { Fields } from "./Fields";
 import { ButtonCancel, ButtonSave } from "../../Buttons";
 
 import "./styles.scss";
+import { useValidation } from "/imports/ui/lib/useValidation";
 
-export interface Data {
-  region: RegionEntity;
+export interface Props {
   title: string;
+  region: RegionEntity;
   onSave: (changes: OnSaveFields) => Promise<void>;
   onCancel: () => void;
 }
@@ -25,34 +26,45 @@ export interface OnSaveFields {
   loc: Geodata;
 }
 
-export function Edit(data: Data) {
+export function Edit(props: Props) {
   const { t } = useTranslation();
 
   const [changes, setChanges] = useState({
-    name: data.region.name,
-    description: data.region.description,
-    tz: data.region.tz,
-    loc: data.region.loc,
+    name: props.region.name,
+    description: props.region.description,
+    tz: props.region.tz,
+    loc: props.region.loc,
   });
+  const [errors, checkValidity, addError] = useValidation(
+    {
+      noName: {
+        field: "regionName",
+        onCheckValidity: () => !!changes.name,
+        text: () => t("region.create.plsGiveName", "Please give your region a name"),
+      },
+      noLocation: {
+        field: "location",
+        onCheckValidity: () => !!changes.loc,
+        text: () =>
+          t(
+            "region.create.plsSelectPointOnMap",
+            'Please add a marker on the map by clicking on the "+" sign.',
+          ),
+      },
+    },
+    { autoCheckFixed: true },
+  );
 
   const { promptToLogin } = useAccountTasks();
   const [isBusy, setIsBusy] = useState(false);
 
-  async function handleSave(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (!changes.name) {
-      Alert.error(t("region.create.plsGiveName", "Please give your region a name"));
-      return;
-    }
-
-    if (!changes.loc) {
-      Alert.error(
-        t(
-          "region.create.plsSelectPointOnMap",
-          'Please add a marker on the map by clicking on the "+" sign.',
-        ),
-      );
+    if (!checkValidity()) {
+      setTimeout(() => {
+        document.querySelector<HTMLElement>(".is-invalid")?.focus();
+      }, 0);
       return;
     }
 
@@ -62,7 +74,7 @@ export function Edit(data: Data) {
         return;
       }
 
-      await data.onSave(changes as OnSaveFields);
+      await props.onSave(changes as OnSaveFields);
 
       Alert.success(
         t("region.saving.success", 'Saved changes to region "{NAME}".', {
@@ -70,7 +82,10 @@ export function Edit(data: Data) {
         }),
       );
     } catch (err) {
-      Alert.serverError(err, t("region.saving.error", "Saving the region went wrong"));
+      if (!addError(err.reason)) {
+        // unknown error
+        Alert.serverError(err, t("region.saving.error", "Saving the region went wrong"));
+      }
     } finally {
       setIsBusy(false);
     }
@@ -78,15 +93,20 @@ export function Edit(data: Data) {
 
   return (
     <div className="edit-page region-edit">
-      <h2>{data.title}</h2>
-      <form noValidate onSubmit={handleSave}>
-        <Fields region={changes} onChange={(newChanges) => setChanges(newChanges)} />
+      <h2>{props.title}</h2>
+      <form noValidate onSubmit={handleSubmit}>
+        <Fields
+          region={changes}
+          onChange={(newChanges) => setChanges(newChanges)}
+          onBlur={(field) => checkValidity(field)}
+          errors={errors}
+        />
         <div className="form-actions">
           <ButtonSave submit id="regions-edit-save" isBusy={isBusy} />
           <ButtonCancel
             id="regions-edit-cancel"
             disabled={isBusy}
-            onClick={() => data.onCancel()}
+            onClick={() => props.onCancel()}
           />
         </div>
       </form>
