@@ -35,10 +35,14 @@ function FeaturedOrganizationBody(props: { organizationId: string }) {
         </div>
         <div className="featured-group-links">
           <a href={Router.path("groupDetails", featuredOrganization)}>
-            {t("featuredGroup.coursesOnOpenki", "Check out the courses of {GROUP} on {SITENAME}!", {
-              GROUP: featuredOrganization.name,
-              SITENAME: siteName,
-            })}
+            {t(
+              "featuredOrganization.coursesOnOpenki",
+              "Check out the courses of {GROUP} on {SITENAME}!",
+              {
+                GROUP: featuredOrganization.name,
+                SITENAME: siteName,
+              },
+            )}
           </a>
         </div>
       </div>
@@ -60,7 +64,7 @@ export function FeaturedOrganization() {
       <div className="featured-group">
         <div className="featured-group-header">
           <i className="fa-solid fa-star fa-fw" />{" "}
-          {t("featuredGroup.heading", "Featured group in {REGION}", {
+          {t("featuredOrganization.heading", "Featured group in {REGION}", {
             REGION: currentRegion.name,
           })}
         </div>

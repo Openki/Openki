@@ -46,7 +46,7 @@ export function OrganizationTag({
           onMouseOut={onMouseOut}
           onClick={onClick}
           href={Router.path("groupDetails", organization)}
-          data-bs-title={t("groupList.show_courses", "{NAME}, show all their courses", {
+          data-bs-title={t("organizationTag.showCourses", "{NAME}, show all their courses", {
             NAME: name(organization),
           })}
         >

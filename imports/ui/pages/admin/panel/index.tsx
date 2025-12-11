@@ -15,7 +15,7 @@ export function AdminPanelPage() {
       route: "log",
     },
     {
-      name: t("adminPanel.tasks.featuredGroup", "Feature group"),
+      name: t("adminPanel.tasks.featuredOrganization", "Feature group"),
       icon: "fa-solid fa-users",
       route: "featureGroup",
     },

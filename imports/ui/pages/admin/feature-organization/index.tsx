@@ -38,7 +38,7 @@ export function AdminFeatureOrganizationPage() {
         <div className="admin-featured-group">
           <div className="mb-2">
             {t(
-              "featureGroup.groupIsFeatured",
+              "admin.featureOrganization.organizationIsFeatured",
               'The "{GROUP}" group is featured for the "{REGION}" region.',
               { GROUP: featuredOrganization()?.name, REGION: currentRegion?.name },
             )}
@@ -67,14 +67,18 @@ export function AdminFeatureOrganizationPage() {
                 <i className="fa-solid fa-circle-notch fa-spin fa-fw" /> {t("_button.deleting")}
               </>
             ) : (
-              t("featureGroup.deleteButton", 'Remove the featured group for "{REGION}"', {
-                REGION: currentRegion?.name,
-              })
+              t(
+                "admin.featureOrganization.deleteButton",
+                'Remove the featured group for "{REGION}"',
+                {
+                  REGION: currentRegion?.name,
+                },
+              )
             )}
           </button>
         </div>
       )}
-      <h3>{t("featureGroup.featureGroup", "Feature group")}</h3>
+      <h3>{t("admin.featureOrganization.featureOrganization", "Feature group")}</h3>
       <form
         onSubmit={async (event) => {
           event.preventDefault();
@@ -118,9 +122,13 @@ export function AdminFeatureOrganizationPage() {
                 <i className="fa-solid fa-circle-notch fa-spin fa-fw" /> {t("_button.saving")}
               </>
             ) : (
-              t("featureGroup.saveButton", 'Feature this group in the "{REGION}" region', {
-                REGION: currentRegion?.name,
-              })
+              t(
+                "admin.featureOrganization.saveButton.feature",
+                'Feature this group in the "{REGION}" region',
+                {
+                  REGION: currentRegion?.name,
+                },
+              )
             )}
           </button>
         </div>

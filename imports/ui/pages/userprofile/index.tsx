@@ -153,9 +153,12 @@ export function UserprofilePage({ user }: Props) {
     const userId = user._id;
     try {
       await OrganizationsMethods.updateMembership(userId, organizationId, true);
-      Alert.success(t("profile.group.drafted", "Added to group {NAME}", { NAME: name }));
+      Alert.success(t("profile.organization.drafted", "Added to group {NAME}", { NAME: name }));
     } catch (err) {
-      Alert.serverError(err, t("profile.group.drafted.error", "Unable to draft user into group"));
+      Alert.serverError(
+        err,
+        t("profile.organization.drafted.error", "Unable to draft user into group"),
+      );
     }
   }
 
@@ -166,9 +169,14 @@ export function UserprofilePage({ user }: Props) {
     const userId = user._id;
     try {
       await OrganizationsMethods.updateMembership(userId, organizationId, false);
-      Alert.success(t("profile.group.expelled", "Expelled from group {NAME}", { NAME: name }));
+      Alert.success(
+        t("profile.organization.expelled", "Expelled from group {NAME}", { NAME: name }),
+      );
     } catch (err) {
-      Alert.serverError(err, t("profile.group.expelled.error", "Unable to expel user from group"));
+      Alert.serverError(
+        err,
+        t("profile.organization.expelled.error", "Unable to expel user from group"),
+      );
     }
   }
 
@@ -305,7 +313,7 @@ export function UserprofilePage({ user }: Props) {
                 <div className="col-md">
                   <h3>
                     <i className="fa-solid fa-gear fa-fw" />{" "}
-                    {t("userprofile.groups.header", "Edit groups")}
+                    {t("userprofile.organizations.header", "Edit groups")}
                   </h3>
                   <div className="list-group">
                     {inviteOrganizations.map((organization) =>
@@ -318,7 +326,7 @@ export function UserprofilePage({ user }: Props) {
                             type="button"
                             className="btn-close btn-close-black float-end"
                             data-bs-title={t(
-                              "profile.group.expel",
+                              "profile.organization.expel",
                               "Expel from group {GROUPNAME}",
                               {
                                 GROUPNAME: organization.name,
@@ -326,7 +334,7 @@ export function UserprofilePage({ user }: Props) {
                             )}
                             onClick={() => handleExpelFromOrganization(organization)}
                           ></button>
-                          {t("profile.group.member", "Member of group")}
+                          {t("profile.organization.member", "Member of group")}
                           <span className="group">{organization.name}</span>
                         </li>
                       ) : (
@@ -336,7 +344,7 @@ export function UserprofilePage({ user }: Props) {
                           className="list-group-item list-group-item-action list-group-item-secondary btn"
                           onClick={() => handleDraftIntoOrganization(organization)}
                         >
-                          {t("profile.group.draft", "Draft into group")} {organization.name}
+                          {t("profile.organization.draft", "Draft into group")} {organization.name}
                         </button>
                       ),
                     )}

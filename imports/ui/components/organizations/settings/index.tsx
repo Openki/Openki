@@ -41,7 +41,7 @@ function RemoveMember({
     <div className="tag tag-btn group-member-tag-btn-remove ">
       <button
         type="button"
-        title={t("group.settings.removeFromGroup", "remove member")}
+        title={t("organizations.settings.removeMember", "remove member")}
         onClick={() => {
           onRemove(user, userName);
         }}
@@ -83,7 +83,7 @@ function FoundUsers({
         <React.Fragment key={user._id}>
           <div className="tag tag-btn group-member-tag-btn-add ">
             <button
-              title={t("group.settings.addMember", "add as member")}
+              title={t("organizations.settings.addMember", "add as member")}
               type="button"
               onClick={() => onAdd(user)}
             >
@@ -91,7 +91,10 @@ function FoundUsers({
             </button>
           </div>
           <div className="tag tag-link group-member-tag-profile addon">
-            <a href={Router.path("userprofile", user)} title={t("group.settings.member.profile")}>
+            <a
+              href={Router.path("userprofile", user)}
+              title={t("organizations.settings.member.profile")}
+            >
               <i className="fa-solid fa-user fa-fw" />
             </a>
           </div>
@@ -122,7 +125,7 @@ export function OrganizationSettings({ organization }: Props) {
           const organizationName = Organizations.findOne(organizationId)?.name;
           Alert.success(
             t(
-              "groupSettings.group.logo.updated",
+              "organizations.settings.logo.updated.success",
               'Changes to the "{GROUP}" group settings have been saved.',
               { GROUP: organizationName },
             ),
@@ -130,7 +133,7 @@ export function OrganizationSettings({ organization }: Props) {
         } catch (err) {
           Alert.serverError(
             err,
-            t("groupSettings.group.logo.updated.error", "Could not save settings"),
+            t("organizations.settings.logo.updated.error", "Could not save settings"),
           );
         }
       },
@@ -142,7 +145,7 @@ export function OrganizationSettings({ organization }: Props) {
               const organizationName = Organizations.findOne(organizationId)?.name;
               Alert.success(
                 t(
-                  "groupSettings.group.logo.removed",
+                  "organizations.settings.organization.logo.removed",
                   'Changes to the "{GROUP}" group settings have been saved.',
                   { GROUP: organizationName },
                 ),
@@ -150,7 +153,7 @@ export function OrganizationSettings({ organization }: Props) {
             } catch (err) {
               Alert.serverError(
                 err,
-                t("groupSettings.group.logo.removed.error", "Could not save settings"),
+                t("organizations.settings.logo.removed.error", "Could not save settings"),
               );
             }
           }
@@ -182,20 +185,20 @@ export function OrganizationSettings({ organization }: Props) {
   function deleteConfirmAttr() {
     return {
       confirmText: t(
-        "group.reallydelete",
+        "organizations.settings.reallydelete",
         "Please confirm that you would like to delete {GROUP}. This cannot be undone.",
         { GROUP: organization.name },
       ),
-      confirmButton: t("group.delete.confirm.button", "Delete {GROUP}", {
+      confirmButton: t("organizations.settings.delete.confirm.button", "Delete {GROUP}", {
         GROUP: organization.name,
       }),
       onRemove: async () => {
         const organizationId = organization._id;
         await OrganizationsMethods.remove(organizationId);
 
-        Alert.success(t("group.deleted", "Group has been deleted"));
+        Alert.success(t("organizations.settings.deleted", "Group has been deleted"));
       },
-      busyButton: t("group.delete.confirm.button.busy", "Deleting group…"),
+      busyButton: t("organizations.settings.delete.confirm.button.busy", "Deleting group…"),
     };
   }
 
@@ -203,13 +206,20 @@ export function OrganizationSettings({ organization }: Props) {
     try {
       await OrganizationsMethods.updateMembership(memberId, organization._id, false);
       Alert.success(
-        t("groupSettings.memberRemoved", '"{MEMBER}" has been removed from the "{GROUP}" group', {
-          MEMBER: memberName,
-          GROUP: organization.name,
-        }),
+        t(
+          "organizations.settings.memberRemoved",
+          '"{MEMBER}" has been removed from the "{GROUP}" group',
+          {
+            MEMBER: memberName,
+            GROUP: organization.name,
+          },
+        ),
       );
     } catch (err) {
-      Alert.serverError(err, t("groupSettings.memberRemoved.error", "Could not remove member"));
+      Alert.serverError(
+        err,
+        t("organizations.settings.memberRemoved.error", "Could not remove member"),
+      );
     }
   }
 
@@ -217,13 +227,13 @@ export function OrganizationSettings({ organization }: Props) {
     try {
       await OrganizationsMethods.updateMembership(user._id, organization._id, true);
       Alert.success(
-        t("groupSettings.memberAdded", '"{MEMBER}" has been added to the "{GROUP}" group', {
+        t("organizations.settings.memberAdded", '"{MEMBER}" has been added to the "{GROUP}" group', {
           MEMBER: user.getDisplayName(),
           GROUP: organization.name,
         }),
       );
     } catch (err) {
-      Alert.serverError(err, t("groupSettings.memberAdded.error", "Could not add member"));
+      Alert.serverError(err, t("organizations.settings.memberAdded.error", "Could not add member"));
     }
   }
 
@@ -233,7 +243,10 @@ export function OrganizationSettings({ organization }: Props) {
     } catch (err) {
       Alert.serverError(
         err,
-        t("groupSettings.memberToggleNotify.error", "Could not change members notify setting."),
+        t(
+          "organizations.settings.memberToggleNotify.error",
+          "Could not change members notify setting.",
+        ),
       );
     }
   }
@@ -244,10 +257,11 @@ export function OrganizationSettings({ organization }: Props) {
         <div className="row">
           <div className="col-md">
             <h3>
-              <i className="fa-solid fa-gear fa-fw" /> {t("group.settings.title", "Settings")}
+              <i className="fa-solid fa-gear fa-fw" />{" "}
+              {t("organizations.settings.title", "Settings")}
             </h3>
             <div className="mb-3">
-              <label className="form-label">{t("group.settings.field.logo", "Logo")}</label>
+              <label className="form-label">{t("organizations.settings.field.logo", "Logo")}</label>
               <EditableImage {...logoFileUploadArgs()} />
             </div>
           </div>
@@ -255,7 +269,7 @@ export function OrganizationSettings({ organization }: Props) {
           <div className="col-md">
             <h3>
               <i className="fa-solid fa-users fa-fw" />{" "}
-              {t("group.settings.title.Members", "Members")}
+              {t("organizations.settings.title.Members", "Members")}
             </h3>
             <div className="tag-group multiline">
               {organization.members.map((member) => (
@@ -268,7 +282,7 @@ export function OrganizationSettings({ organization }: Props) {
                         <button
                           type="button"
                           title={t(
-                            "group.settings.member.turnNotifyOff",
+                            "organizations.settings.member.turnNotifyOff",
                             "Turn my notifications off",
                           )}
                           onClick={handleMemberToggleNotify}
@@ -281,7 +295,7 @@ export function OrganizationSettings({ organization }: Props) {
                         <button
                           type="button"
                           title={t(
-                            "group.settings.member.turnNotifyOn",
+                            "organization.settings.member.turnNotifyOn",
                             "Turn my notifications on",
                           )}
                           onClick={handleMemberToggleNotify}
@@ -294,7 +308,7 @@ export function OrganizationSettings({ organization }: Props) {
                   <div className="tag tag-link group-member-tag-profile addon">
                     <a
                       href={Router.path("userprofile", { _id: member.user })}
-                      title={t("group.settings.member.profile", "Visit profile")}
+                      title={t("organizations.settings.member.profile", "Visit profile")}
                     >
                       <i className="fa-solid fa-user fa-fw" />
                     </a>
@@ -306,9 +320,15 @@ export function OrganizationSettings({ organization }: Props) {
               <FormControl
                 id="group-settings-members-search"
                 type="text"
-                label={t("group.settings.field.addMembers", "Add a new member to your group")}
+                label={t(
+                  "organizations.settings.field.addMembers",
+                  "Add a new member to your group",
+                )}
                 prepend="fa-solid fa-user fa-fw"
-                placeholder={t("group.settings.field.addMember.placeholder", "Type name of buddy")}
+                placeholder={t(
+                  "organizations.settings.field.addMember.placeholder",
+                  "Type name of buddy",
+                )}
                 value={userSearch}
                 onChange={(value) => setUserSearch(value)}
               />
@@ -328,7 +348,9 @@ export function OrganizationSettings({ organization }: Props) {
       <div className="details-addition">
         <h3>
           <i className="fa-solid fa-link fa-fw" />{" "}
-          {t("group.linksCollection.title", "{NAME}-views", { NAME: PublicSettings.siteName })}
+          {t("organizations.settings.linksCollection.title", "{NAME}-views", {
+            NAME: PublicSettings.siteName,
+          })}
         </h3>
         <ul className="list-unstyled">
           <li>
@@ -379,14 +401,14 @@ export function OrganizationSettings({ organization }: Props) {
           <p>
             {!!organization.createdby && (
               <>
-                <strong>{t("group.settings.createdBy", "Created by")}</strong>:{" "}
+                <strong>{t("organizations.settings.createdBy", "Created by")}</strong>:{" "}
                 <ProfileLink userId={organization.createdby} />
                 <br />
               </>
             )}
             {!!organization.time_created && (
               <>
-                <strong>{t("group.settings.timeCreated", "Created at")}</strong>:{" "}
+                <strong>{t("organizations.settings.timeCreated", "Created at")}</strong>:{" "}
                 {calendarDayFormat(organization.time_created)}
                 <br />
               </>
@@ -394,7 +416,7 @@ export function OrganizationSettings({ organization }: Props) {
 
             {!!organization.time_lastedit && (
               <>
-                <strong>{t("group.settings.timeLastEdit", "Last edit at")}</strong>:{" "}
+                <strong>{t("organizations.settings.timeLastEdit", "Last edit at")}</strong>:{" "}
                 {calendarDayFormat(organization.time_lastedit)}
               </>
             )}

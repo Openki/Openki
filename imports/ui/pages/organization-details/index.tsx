@@ -54,7 +54,7 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
   const [isBusy, setIsBusy] = useState(false);
   const [errors, , addError, resetErrors] = useValidation({
     emptyField: {
-      text: () => t("group.details.error.allMandatory", "All four fields are mandatory."),
+      text: () => t("organizationDetails.error.allMandatory", "All four fields are mandatory."),
       field: "all",
     },
   });
@@ -98,12 +98,12 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
     clientValidations: {
       all: {
         check: (text) => !!text,
-        errorMessage: () => t("group.details.error.allMandatory"),
+        errorMessage: () => t("organizationDetails.error.allMandatory"),
       },
     },
     onSuccess: () => {
       Alert.success(
-        t("groupDetails.changesSaved", 'Changes to the "{GROUP}" group have been saved.', {
+        t("organizationDetails.changesSaved", 'Changes to the "{GROUP}" group have been saved.', {
           GROUP: organization.name,
         }),
       );
@@ -111,7 +111,7 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
     onError: (err) => {
       Alert.serverError(
         err as string | Error,
-        t("groupDetails.saveError", 'Could not save the "{GROUP}" group', {
+        t("organizationDetails.saveError", 'Could not save the "{GROUP}" group', {
           GROUP: organization.name,
         }),
       );
@@ -131,7 +131,7 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
       const organizationId = await OrganizationsMethods.save("", newOrganization);
 
       Alert.success(
-        t("groupDetails.groupCreated", 'The "{GROUP}" group was created.', {
+        t("organizationDetails.created", 'The "{GROUP}" group was created.', {
           GROUP: newOrganization.name,
         }),
       );
@@ -140,7 +140,7 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
 
       Router.go("groupDetails", { _id: organizationId, short: newOrganization.short });
     } catch (err) {
-      Alert.serverError(err, t("groupDetails.saveError", { GROUP: newOrganization.name }));
+      Alert.serverError(err, t("organizationDetails.saveError", { GROUP: newOrganization.name }));
     } finally {
       setIsBusy(false);
     }
@@ -156,7 +156,7 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
     text: organization.name,
     multiline: false,
     placeholder: t(
-      "group.name.placeholder",
+      "organization.name.placeholder",
       "Name of your group, institution, community or program",
     ),
     store: showControls
@@ -175,7 +175,7 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
   const editableShortAttr: EditableProps = {
     text: organization.short,
     multiline: false,
-    placeholder: t("group.short.placeholder", "Abbreviation"),
+    placeholder: t("organization.short.placeholder", "Abbreviation"),
     store: showControls
       ? {
           ...handleSaving,
@@ -192,7 +192,7 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
   const editableClaimAttr: EditableProps = {
     text: organization.claim,
     multiline: false,
-    placeholder: t("group.claim.placeholder", "The core idea"),
+    placeholder: t("organization.claim.placeholder", "The core idea"),
     store: showControls
       ? {
           ...handleSaving,
@@ -210,7 +210,7 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
     text: organization.description,
     multiline: true,
     placeholder: t(
-      "group.description.placeholder",
+      "organization.description.placeholder",
       "Describe the audience, the interests and activities of your group.",
     ),
     store: showControls
@@ -226,7 +226,7 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
     },
   };
 
-  const title = organization.name || t("group.windowtitle.create", "Create group");
+  const title = organization.name || t("organizationDetails.windowtitle.create", "Create group");
 
   return (
     <>
@@ -237,16 +237,16 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
       />
 
       <div className="container mb-4">
-        {organization.isNew() && <h2>{t("group.details.titleNew", "Create new group")}</h2>}
+        {organization.isNew() && <h2>{t("organizationDetails.titleNew", "Create new group")}</h2>}
         <div className="page-component group-details">
           <div className="group-details-titlebar clearfix">
-            {t("group.details.group", "Group")}
+            {t("organizationDetails.organization", "Group")}
 
             {isFeatured() && (
               <>
                 {" "}
                 <i
-                  title={t("group.details.isFeatured", "This group is featured")}
+                  title={t("organizationDetails.isFeatured", "This group is featured")}
                   className="fa-solid fa-star fa-fw"
                 />
               </>
@@ -254,7 +254,7 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
 
             <button
               className="btn btn-link float-end ms-2"
-              data-bs-title={t("group.page.removeFilter", "See all courses")}
+              data-bs-title={t("organizationDetails.removeFilter", "See all courses")}
               onClick={() => {
                 Router.go("home"); // Got a better idea?
               }}
@@ -264,7 +264,7 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
             {!organization.isNew() && mayEdit && (
               <button
                 className="btn btn-link float-end ms-2"
-                data-bs-title={t("group.settings.title")}
+                data-bs-title={t("organizations.settings.title")}
                 onClick={() => {
                   setEditingSettings(!editingSettings);
                 }}
@@ -306,7 +306,7 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
 
               {!!(organization.venues && organization.venues.length > 0) && (
                 <div className="group-details-venues">
-                  {t("group.details.venues", "{NUM, plural, one{Venue:} other{Venues:} }", {
+                  {t("organization.details.venues", "{NUM, plural, one{Venue:} other{Venues:} }", {
                     NUM: organization.venues.length,
                   })}{" "}
                   <span className="tag-group">

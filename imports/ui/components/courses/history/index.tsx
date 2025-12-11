@@ -84,8 +84,12 @@ export function OrganizationPromoteHistoryEntry({
   return (
     <>
       {enable
-        ? t("course.history.groupPromote.added", "{GROUP} got added by {USER}", tOptions)
-        : t("course.history.groupPromote.removed", "{GROUP} got removed by {USER}", tOptions)}
+        ? t("course.history.organizationPromote.added", "{GROUP} got added by {USER}", tOptions)
+        : t(
+            "course.history.organizationPromote.removed",
+            "{GROUP} got removed by {USER}",
+            tOptions,
+          )}
     </>
   );
 }
@@ -112,9 +116,13 @@ export function OrganizationOrgaHistoryEntry({
   return (
     <>
       {enable
-        ? t("course.history.groupOrga.added", "{GROUP} got added as orga-group by {USER}", tOptions)
+        ? t(
+            "course.history.organizationOrga.added",
+            "{GROUP} got added as orga-group by {USER}",
+            tOptions,
+          )
         : t(
-            "course.history.groupOrga.removed",
+            "course.history.organizationOrga.removed",
             "{GROUP} got removed as orga-group by {USER}",
             tOptions,
           )}

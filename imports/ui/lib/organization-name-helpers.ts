@@ -5,7 +5,7 @@ import { OrganizationModel, Organizations } from "../../api/organizations/organi
 
 export function name(organization: OrganizationModel | undefined) {
   if (!organization) {
-    return i18n("group.missing", "Group does not exist");
+    return i18n("organization.missing", "Group does not exist");
   }
   return organization.name;
 }

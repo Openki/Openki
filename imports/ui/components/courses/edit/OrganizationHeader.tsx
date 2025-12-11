@@ -8,7 +8,7 @@ export function OrganizationHeader({ organizationId }: { organizationId: string 
 
   return (
     <>
-      {t("course.edit.proposeInGroup", "Propose new course in group {GROUP}", {
+      {t("course.edit.proposeInOrganization", "Propose new course in group {GROUP}", {
         GROUP: organizationIsLoading() ? "..." : organization?.name,
       })}
     </>

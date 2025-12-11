@@ -34,13 +34,20 @@ function OrganizationToAdd({
           await VenuesMethods.addEditOrganization(venue._id, organizationId);
 
           Alert.success(
-            t("editGroup.add.groupAdded", "{GROUP} was added as host for {VENUE}.", {
-              GROUP: name(organization),
-              VENUE: venue.name,
-            }),
+            t(
+              "venues.editOrganization.add.organizationAdded",
+              "{GROUP} was added as host for {VENUE}.",
+              {
+                GROUP: name(organization),
+                VENUE: venue.name,
+              },
+            ),
           );
         } catch (err) {
-          Alert.serverError(err, t("editGroup.add.groupAdded.error", "Adding failed"));
+          Alert.serverError(
+            err,
+            t("venues.editOrganization.add.organizationAdded.error", "Adding failed"),
+          );
         }
       }}
     >
@@ -90,21 +97,24 @@ export function Add({ venue }: Props) {
         data-bs-toggle="dropdown"
       >
         <i className="fa-solid fa-plus fa-fw" />
-        <span>{t("editGroup.add.btn", "Add a group as hosts")}</span>
+        <span>{t("venues.editOrganization.add.btn", "Add a group as hosts")}</span>
       </button>
       <div className="dropdown-menu dialog-dropdown dropdown-menu-scrollable-content">
         <div className="dropdown-header">
-          {t("editGroup.add.header", "Choose group")}
+          {t("venues.editOrganization.add.header", "Choose group")}
           <button type="button" className="btn-close"></button>
         </div>
         <div className="p-2">
-          {t("editGroup.add.desc", "All members of that group will be able to mange this venue.")}
+          {t(
+            "venues.editOrganization.add.desc",
+            "All members of that group will be able to mange this venue.",
+          )}
         </div>
         <form className="p-2">
           <input
             type="search"
             className="form-control"
-            placeholder={t("editGroup.add.search", "Search for a group")}
+            placeholder={t("venues.editOrganization.add.search", "Search for a group")}
             value={search}
             onChange={(e) => {
               setSearch(e.currentTarget.value);
@@ -130,7 +140,7 @@ export function Add({ venue }: Props) {
         <div className="dropdown-divider"></div>
         <div className="dialog-dropdown-btn">
           <a href={Router.path("groupDetails", { _id: "create" })} className="btn btn-success">
-            {t("profile.createNewGroup.button")}
+            {t("profile.createNewOrganization.button")}
           </a>
         </div>
       </div>

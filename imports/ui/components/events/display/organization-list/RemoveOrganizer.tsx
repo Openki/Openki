@@ -33,14 +33,16 @@ export function RemoveOrganizer({ event, organizationId }: Props) {
         }}
       >
         <i className="fa-solid fa-xmark fa-fw" />
-        {t("course.group.removeOrgText")}
+        {t("course.organizationList.removeOrganizer.removeOrgText")}
       </a>
     );
   }
 
   return (
     <div className="group-tool-dialog danger">
-      {t("course.group.confirmRemoveOrgText", { NAME: name(organization) })}
+      {t("course.organizationList.removeOrganizer.confirmRemoveOrgText", {
+        NAME: name(organization),
+      })}
       <button
         type="button"
         className="btn btn-danger"
@@ -50,7 +52,7 @@ export function RemoveOrganizer({ event, organizationId }: Props) {
 
             Alert.success(
               t(
-                "courseGroupAdd.membersCanNoLongerEditCourse",
+                "course.organizationList.removeOrganizer.membersCanNoLongerEditCourse",
                 "Members of {GROUP} can no longer edit {COURSE}.",
                 { GROUP: name(organization), COURSE: event.title },
               ),
@@ -58,11 +60,14 @@ export function RemoveOrganizer({ event, organizationId }: Props) {
 
             setIsExpanded(false);
           } catch (err) {
-            Alert.serverError(err, t("courseGroupAdd.membersCanNoLongerEditCourse.error"));
+            Alert.serverError(
+              err,
+              t("course.organizationList.removeOrganizer.membersCanNoLongerEditCourse.error"),
+            );
           }
         }}
       >
-        {t("course.group.confimRemoveOrgButton")}
+        {t("course.organizationList.removeOrganizer.confimRemoveOrgButton")}
       </button>
     </div>
   );
