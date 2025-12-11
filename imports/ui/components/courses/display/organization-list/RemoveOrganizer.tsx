@@ -55,8 +55,8 @@ export function RemoveOrganizer({ course, organizationId }: Props) {
             Alert.success(
               t(
                 "course.organizationList.removeOrganizer.membersCanNoLongerEditCourse",
-                "Members of {GROUP} can no longer edit {COURSE}.",
-                { GROUP: name(organization), COURSE: course.name },
+                "Members of {ORGANIZATION} can no longer edit {COURSE}.",
+                { ORGANIZATION: name(organization), COURSE: course.name },
               ),
             );
           } catch (err) {

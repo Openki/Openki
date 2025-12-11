@@ -52,9 +52,9 @@ export function Remove({ event, organizationId }: Props) {
             Alert.success(
               t(
                 "course.organizationList.remove.organizationRemoved.success",
-                "{GROUP} was removed from {COURSE}.",
+                "{ORGANIZATION} was removed from {COURSE}.",
                 {
-                  GROUP: name(organization),
+                  ORGANIZATION: name(organization),
                   COURSE: event.title,
                 },
               ),

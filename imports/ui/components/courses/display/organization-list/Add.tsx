@@ -38,9 +38,9 @@ function OrganizationToAdd({
             Alert.success(
               t(
                 "courses.organizationList.organizationAdded.success",
-                "{GROUP} was added to promote {COURSE}.",
+                "{ORGANIZATION} was added to promote {COURSE}.",
                 {
-                  GROUP: name(organization),
+                  ORGANIZATION: name(organization),
                   COURSE: course.name,
                 },
               ),

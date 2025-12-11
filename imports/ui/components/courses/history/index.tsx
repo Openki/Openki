@@ -73,7 +73,7 @@ export function OrganizationPromoteHistoryEntry({
 }) {
   const { t } = useTranslation();
   const tOptions = {
-    GROUP: <OrganizationTag organizationId={organization} full={true} />,
+    ORGANIZATION: <OrganizationTag organizationId={organization} full={true} />,
     USER: (
       <>
         <ProfileLink userId={user} />
@@ -84,10 +84,14 @@ export function OrganizationPromoteHistoryEntry({
   return (
     <>
       {enable
-        ? t("course.history.organizationPromote.added", "{GROUP} got added by {USER}", tOptions)
+        ? t(
+            "course.history.organizationPromote.added",
+            "{ORGANIZATION} got added by {USER}",
+            tOptions,
+          )
         : t(
             "course.history.organizationPromote.removed",
-            "{GROUP} got removed by {USER}",
+            "{ORGANIZATION} got removed by {USER}",
             tOptions,
           )}
     </>
@@ -105,7 +109,7 @@ export function OrganizationOrgaHistoryEntry({
 }) {
   const { t } = useTranslation();
   const tOptions = {
-    GROUP: <OrganizationTag organizationId={organization} full={true} />,
+    ORGANIZATION: <OrganizationTag organizationId={organization} full={true} />,
     USER: (
       <>
         <ProfileLink userId={user} />
@@ -118,12 +122,12 @@ export function OrganizationOrgaHistoryEntry({
       {enable
         ? t(
             "course.history.organizationOrga.added",
-            "{GROUP} got added as orga-group by {USER}",
+            "{ORGANIZATION} got added as orga-group by {USER}",
             tOptions,
           )
         : t(
             "course.history.organizationOrga.removed",
-            "{GROUP} got removed as orga-group by {USER}",
+            "{ORGANIZATION} got removed as orga-group by {USER}",
             tOptions,
           )}
     </>

@@ -284,7 +284,7 @@
   "organization.description.placeholder": "Beschriib s'Zielpublikum, d'Intresse und d'Aktivitäte vo dinere Gruppe.",
   "organization.short.placeholder": "Abchürzig",
   "courses.organizationList.addText": "verlink ä Gruppä",
-  "course.edit.proposeInOrganization": "Schlahn en noie Kurs vor ide Gruppä {GROUP}",
+  "course.edit.proposeInOrganization": "Schlahn en noie Kurs vor ide Gruppä {ORGANIZATION}",
   "course.organizationList.addOrgText": "Gib d Rächt zum bearbeite",
   "course.organizationList.confirmOrgNotes": "Alli Teilnähmer vode Gruppä chönd de Kurs bearbeite und noii Veraschtaltige erstelle.",
   "course.organizationList.remove": "Lösche",

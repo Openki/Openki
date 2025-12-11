@@ -37,7 +37,7 @@ function OrganizationToAdd({
 
             Alert.success(
               t("courses.organizationList.organizationAdded.success", {
-                GROUP: name(organization),
+                ORGANIZATION: name(organization),
                 COURSE: event.title,
               }),
             );

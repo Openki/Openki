@@ -425,8 +425,8 @@
   "organizations.settings.title": "Configurações",
   "organizations.settings.field.addMembers": "Adicione um novo membro ao seu grupo",
   "organizations.settings.title.Members": "Membros",
-  "organizations.settings.memberRemoved": "\"{MEMBER}\" foi removido do grupo \"{GROUP}\"",
-  "organizations.settings.memberAdded": "\"{MEMBER}\" foi adicionado como membro ao grupo \"{GROUP}\"",
+  "organizations.settings.memberRemoved": "\"{MEMBER}\" foi removido do grupo \"{ORGANIZATION}\"",
+  "organizations.settings.memberAdded": "\"{MEMBER}\" foi adicionado como membro ao grupo \"{ORGANIZATION}\"",
   "organizationDetails.titleNew": "Criar novo grupo",
   "organizationDetails.organization": "Grupo",
   "organizationDetails.isFeatured": "Este grupo é destaque"

@@ -61,9 +61,9 @@ export function MakeOrganizer({ course, organizationId }: Props) {
             Alert.success(
               t(
                 "course.organizationList.makeOrganizer.membersCanEditCourse",
-                "Members of {GROUP} can now edit {COURSE}.",
+                "Members of {ORGANIZATION} can now edit {COURSE}.",
                 {
-                  GROUP: name(organization),
+                  ORGANIZATION: name(organization),
                   COURSE: course.name,
                 },
               ),
