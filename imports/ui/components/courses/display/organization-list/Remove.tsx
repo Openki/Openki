@@ -32,16 +32,20 @@ export function Remove({ course, organizationId }: Props) {
           setIsExpanded(true);
         }}
       >
-        {t("course.group.remove", "Remove")}
+        {t("course.organizationList.remove", "Remove")}
       </button>
     );
   }
 
   return (
     <div className="group-tool-dialog danger">
-      {t("course.group.confirmRemoveText", 'Stop listing the "{NAME}" group as promoters?', {
-        NAME: name(organization),
-      })}
+      {t(
+        "course.organizationList.confirmRemoveText",
+        'Stop listing the "{NAME}" group as promoters?',
+        {
+          NAME: name(organization),
+        },
+      )}
       <button
         type="button"
         className="btn btn-danger"
@@ -50,17 +54,24 @@ export function Remove({ course, organizationId }: Props) {
             await CoursesMethods.promote(course._id, organizationId, false);
 
             Alert.success(
-              t("courseGroupAdd.groupRemoved", "{GROUP} was removed from {COURSE}.", {
-                GROUP: name(organization),
-                COURSE: course.name,
-              }),
+              t(
+                "course.organizationList.remove.organizationRemoved.success",
+                "{GROUP} was removed from {COURSE}.",
+                {
+                  GROUP: name(organization),
+                  COURSE: course.name,
+                },
+              ),
             );
           } catch (err) {
-            Alert.serverError(err, t("courseGroupAdd.groupRemoved.error", "Removing failed"));
+            Alert.serverError(
+              err,
+              t("course.organizationList.remove.organizationRemoved.error", "Removing failed"),
+            );
           }
         }}
       >
-        {t("course.group.confirmRemoveButton", "Delist")}
+        {t("course.organizationList.remove.confirmRemoveButton", "Delist")}
       </button>
     </div>
   );

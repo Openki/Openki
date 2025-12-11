@@ -36,13 +36,20 @@ function OrganizationToAdd({
             await CoursesMethods.promote(course._id, organizationId, true);
 
             Alert.success(
-              t("courseGroupAdd.groupAdded", "{GROUP} was added to promote {COURSE}.", {
-                GROUP: name(organization),
-                COURSE: course.name,
-              }),
+              t(
+                "courses.organizationList.organizationAdded.success",
+                "{GROUP} was added to promote {COURSE}.",
+                {
+                  GROUP: name(organization),
+                  COURSE: course.name,
+                },
+              ),
             );
           } catch (err) {
-            Alert.serverError(err, t("courseGroupAdd.groupAdded.error", "Adding failed"));
+            Alert.serverError(
+              err,
+              t("courses.organizationList.organizationAdded.error", "Adding failed"),
+            );
           }
         }}
       >
@@ -76,11 +83,11 @@ export function Add({ course }: Props) {
         data-bs-toggle="dropdown"
       >
         <i className="fa-solid fa-plus fa-fw" />
-        <span>{t("course.group.addText", "link a group")}</span>
+        <span>{t("courses.organizationList.addText", "link a group")}</span>
       </button>
       <ul className="dropdown-menu dialog-dropdown">
         <li className="dropdown-header">
-          {t("grouplist.addgroups.header", "Add group")}
+          {t("courses.organizationList.add.addOrganization", "Add group")}
           <button type="button" className="btn-close"></button>
         </li>
         <li>
@@ -91,7 +98,7 @@ export function Add({ course }: Props) {
         ))}
         <li className="dialog-dropdown-btn">
           <a href={Router.path("groupDetails", { _id: "create" })} className="btn btn-success">
-            {t("profile.createNewGroup.button")}
+            {t("profile.createNewOrganization.button")}
           </a>
         </li>
       </ul>

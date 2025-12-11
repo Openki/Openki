@@ -68,9 +68,13 @@ export function OrganizationList({ course }: Props) {
               <div className="tag group-tag addon">
                 <i
                   className="fa-solid fa-bullhorn fa-fw"
-                  title={t("grouplist.organizer.title", "{COURSE} is co-organized by this group", {
-                    COURSE: course.name,
-                  })}
+                  title={t(
+                    "course.organizationList.title.organizedBy",
+                    "{COURSE} is co-organized by this group",
+                    {
+                      COURSE: course.name,
+                    },
+                  )}
                 />
               </div>
             )}
@@ -86,7 +90,7 @@ export function OrganizationList({ course }: Props) {
                 ></button>
                 <ul className="dropdown-menu dialog-dropdown">
                   <li className="dropdown-header">
-                    {t("grouplist.editgroup.header", "Edit group")}
+                    {t("course.organizationList.dropdownTitle.editOrganization", "Edit group")}
                     <button type="button" className="btn-close"></button>
                   </li>
                   <li>

@@ -32,13 +32,17 @@ export function Remove({ venue, organizationId }: Props) {
       ></button>
       <div className="dropdown-menu dialog-dropdown">
         <div className="dropdown-header">
-          {t("editGroup.remove.header", "Remove group")}
+          {t("venues.editOrganization.remove.header", "Remove group")}
           <button type="button" className="btn-close"></button>
         </div>
         <div className="p-2">
-          {t("editGroup.remove.desc", "Disable members of {GROUP} to manage this venue.", {
-            GROUP: name(organization),
-          })}
+          {t(
+            "venues.editOrganization.remove.desc",
+            "Disable members of {GROUP} to manage this venue.",
+            {
+              GROUP: name(organization),
+            },
+          )}
         </div>
         <div className="dialog-dropdown-btn">
           <button
@@ -49,17 +53,24 @@ export function Remove({ venue, organizationId }: Props) {
                 await VenuesMethods.removeEditOrganization(venue._id);
 
                 Alert.success(
-                  t("editGroup.remove.groupRemoved", "{GROUP} was removed from {VENUE}.", {
-                    GROUP: name(organization),
-                    VENUE: venue.name,
-                  }),
+                  t(
+                    "venues.editOrganization.remove.organizationRemoved.success",
+                    "{GROUP} was removed from {VENUE}.",
+                    {
+                      GROUP: name(organization),
+                      VENUE: venue.name,
+                    },
+                  ),
                 );
               } catch (err) {
-                Alert.serverError(err, t("editGroup.remove.groupRemoved.error", "Removing failed"));
+                Alert.serverError(
+                  err,
+                  t("venues.editOrganization.remove.organizationRemoved.error", "Removing failed"),
+                );
               }
             }}
           >
-            {t("editGroup.remove.btn", "Remove")}
+            {t("venues.editOrganization.remove.btn", "Remove")}
           </button>
         </div>
       </div>

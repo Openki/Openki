@@ -33,18 +33,22 @@ export function MakeOrganizer({ course, organizationId }: Props) {
         }}
       >
         <i className="fa-solid fa-bullhorn fa-fw" />{" "}
-        {t("course.group.addOrgText", "Give editing rights")}
+        {t("course.organizationList.addOrgText", "Give editing rights")}
       </a>
     );
   }
 
   return (
     <div className="group-tool-dialog add">
-      {t("course.group.confirmOrgText", 'Add members of the "{NAME}" group as editors?', {
-        NAME: name(organization),
-      })}{" "}
       {t(
-        "course.group.confirmOrgNotes",
+        "course.organizationList.confirmOrgText",
+        'Add members of the "{NAME}" group as editors?',
+        {
+          NAME: name(organization),
+        },
+      )}{" "}
+      {t(
+        "course.organizationList.confirmOrgNotes",
         "All members of the group will be able to edit the course and create new events for it.",
       )}
       <button
@@ -56,7 +60,7 @@ export function MakeOrganizer({ course, organizationId }: Props) {
 
             Alert.success(
               t(
-                "courseGroupAdd.membersCanEditCourse",
+                "course.organizationList.makeOrganizer.membersCanEditCourse",
                 "Members of {GROUP} can now edit {COURSE}.",
                 {
                   GROUP: name(organization),
@@ -67,12 +71,15 @@ export function MakeOrganizer({ course, organizationId }: Props) {
           } catch (err) {
             Alert.serverError(
               err,
-              t("courseGroupAdd.membersCanEditCourse.error", "Failed to give editing rights"),
+              t(
+                "course.organizationList.makeOrganizer.membersCanEditCourse.error",
+                "Failed to give editing rights",
+              ),
             );
           }
         }}
       >
-        {t("course.group.confimOrgButton", "Give editing rights")}
+        {t("course.organizationList.makeOrganizer.confimOrgButton", "Give editing rights")}
       </button>
     </div>
   );

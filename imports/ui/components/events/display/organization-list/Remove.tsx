@@ -32,14 +32,14 @@ export function Remove({ event, organizationId }: Props) {
           setIsExpanded(true);
         }}
       >
-        {t("course.group.remove")}
+        {t("course.organizationList.remove")}
       </button>
     );
   }
 
   return (
     <div className="group-tool-dialog danger">
-      {t("course.group.confirmRemoveText", {
+      {t("course.organizationList.confirmRemoveText", {
         NAME: name(organization),
       })}
       <button
@@ -50,17 +50,24 @@ export function Remove({ event, organizationId }: Props) {
             await EventsMethods.promote(event._id, organizationId, false);
 
             Alert.success(
-              t("courseGroupAdd.groupRemoved", "{GROUP} was removed from {COURSE}.", {
-                GROUP: name(organization),
-                COURSE: event.title,
-              }),
+              t(
+                "course.organizationList.remove.organizationRemoved.success",
+                "{GROUP} was removed from {COURSE}.",
+                {
+                  GROUP: name(organization),
+                  COURSE: event.title,
+                },
+              ),
             );
           } catch (err) {
-            Alert.serverError(err, t("courseGroupAdd.groupRemoved.error", "Removing failed"));
+            Alert.serverError(
+              err,
+              t("course.organizationList.remove.organizationRemoved.error", "Removing failed"),
+            );
           }
         }}
       >
-        {t("course.group.confirmRemoveButton")}
+        {t("course.organizationList.remove.confirmRemoveButton")}
       </button>
     </div>
   );

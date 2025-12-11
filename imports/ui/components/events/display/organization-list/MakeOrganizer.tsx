@@ -32,17 +32,20 @@ export function MakeOrganizer({ event, organizationId }: Props) {
           setIsExpanded(true);
         }}
       >
-        <i className="fa-solid fa-bullhorn fa-fw" /> {t("course.group.addOrgText")}
+        <i className="fa-solid fa-bullhorn fa-fw" /> {t("course.organizationList.addOrgText")}
       </a>
     );
   }
 
   return (
     <div className="group-tool-dialog add">
-      {t("course.group.confirmOrgText", {
+      {t("course.organizationList.confirmOrgText", {
         NAME: name(organization),
       })}{" "}
-      {t("event.group.confirmOrgNotes", "All members of the group will be able to edit the event.")}
+      {t(
+        "event.organizationList.confirmOrgNotes",
+        "All members of the group will be able to edit the event.",
+      )}
       <button
         type="button"
         className="btn btn-success"
@@ -51,17 +54,20 @@ export function MakeOrganizer({ event, organizationId }: Props) {
             await EventsMethods.editing(event._id, organizationId, true);
 
             Alert.success(
-              t("courseGroupAdd.membersCanEditCourse", {
+              t("course.organizationList.makeOrganizer.membersCanEditCourse", {
                 GROUP: name(organization),
                 COURSE: event.title,
               }),
             );
           } catch (err) {
-            Alert.serverError(err, t("courseGroupAdd.membersCanEditCourse.error"));
+            Alert.serverError(
+              err,
+              t("course.organizationList.makeOrganizer.membersCanEditCourse.error"),
+            );
           }
         }}
       >
-        {t("course.group.confimOrgButton")}
+        {t("course.organizationList.makeOrganizer.confimOrgButton")}
       </button>
     </div>
   );

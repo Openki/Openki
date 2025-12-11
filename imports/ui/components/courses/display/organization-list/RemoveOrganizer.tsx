@@ -33,7 +33,7 @@ export function RemoveOrganizer({ course, organizationId }: Props) {
         }}
       >
         <i className="fa-solid fa-xmark fa-fw" />
-        {t("course.group.removeOrgText", "Remove editing rights")}
+        {t("course.organizationList.removeOrganizer.removeOrgText", "Remove editing rights")}
       </a>
     );
   }
@@ -41,7 +41,7 @@ export function RemoveOrganizer({ course, organizationId }: Props) {
   return (
     <div className="group-tool-dialog danger">
       {t(
-        "course.group.confirmRemoveOrgText",
+        "course.organizationList.removeOrganizer.confirmRemoveOrgText",
         'Revoke all editing rights from the "{NAME}" group?',
         { NAME: name(organization) },
       )}
@@ -54,7 +54,7 @@ export function RemoveOrganizer({ course, organizationId }: Props) {
 
             Alert.success(
               t(
-                "courseGroupAdd.membersCanNoLongerEditCourse",
+                "course.organizationList.removeOrganizer.membersCanNoLongerEditCourse",
                 "Members of {GROUP} can no longer edit {COURSE}.",
                 { GROUP: name(organization), COURSE: course.name },
               ),
@@ -63,14 +63,17 @@ export function RemoveOrganizer({ course, organizationId }: Props) {
             Alert.serverError(
               err,
               t(
-                "courseGroupAdd.membersCanNoLongerEditCourse.error",
+                "course.organizationList.removeOrganizer.membersCanNoLongerEditCourse.error",
                 "Failed to remove organizer status",
               ),
             );
           }
         }}
       >
-        {t("course.group.confimRemoveOrgButton", "Take away editing rights")}
+        {t(
+          "course.organizationList.removeOrganizer.confimRemoveOrgButton",
+          "Take away editing rights",
+        )}
       </button>
     </div>
   );

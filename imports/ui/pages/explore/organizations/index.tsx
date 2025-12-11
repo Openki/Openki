@@ -32,7 +32,7 @@ export function OrganizationsPage() {
 
   return (
     <>
-      <MetaTags title={t("exploreGroups.title", "Groups")} />
+      <MetaTags title={t("exploreOrganizations.title", "Groups")} />
 
       <div className="container">
         <div className="row gap-0 row-gap-4 row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">

@@ -45,8 +45,8 @@ export function FilterOrganizations({
       className="groups-select form-control"
       multiple={true}
       value={selectedOrganizations}
-      placeholder={t("filterGroups.placeholder", "Choose group")}
-      noResults={t("filterGroups.no-groups-found", "No groups found")}
+      placeholder={t("filterOrganizations.placeholder.choose", "Choose group")}
+      noResults={t("filterOrganizations.noResults.noOrganizationsFound", "No groups found")}
       onSelect={onAdd}
       onUnselect={onRemove}
     >

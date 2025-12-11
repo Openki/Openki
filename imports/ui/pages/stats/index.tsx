@@ -222,12 +222,12 @@ export function StatsPage() {
             <table className="table-hover-vertical stats">
               <thead>
                 <tr>
-                  <th colSpan={2}>{t("region.stats.group", "Group")}</th>
+                  <th colSpan={2}>{t("region.stats.organization", "Group")}</th>
                   <Header />
                 </tr>
                 <tr>
                   <th>&nbsp;</th>
-                  <th>{t("region.stats.group.members", "Members")}</th>
+                  <th>{t("region.stats.organization.members", "Members")}</th>
                   <SubHeader />
                 </tr>
               </thead>
@@ -243,10 +243,10 @@ export function StatsPage() {
                       <td>
                         {organization._id ? (
                           <a href={Router.path("groupDetails", organization)}>
-                            {organization.name || t("group.missing")}
+                            {organization.name || t("organization.missing")}
                           </a>
                         ) : (
-                          t("region.stats.ungrouped", "Ungrouped")
+                          t("region.stats.noOrganization", "Ungrouped")
                         )}
                       </td>
                       <td>{organization.members}</td>
