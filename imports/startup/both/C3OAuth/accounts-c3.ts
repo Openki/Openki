@@ -23,6 +23,6 @@ if (Meteor.isClient) {
   Accounts.addAutopublishFields({
     // publish all fields including access token
     forLoggedInUser: ["services.c3"],
-    forOtherUsers: ["services.c3.nickname"],
+    forOtherUsers: ["services.c3.username"],
   });
 }
