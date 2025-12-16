@@ -25,7 +25,7 @@ if (Meteor.isServer) {
 
     return {
       serviceData,
-      options: { profile: { name: (serviceData as any).nickname } },
+      options: { profile: { name: (serviceData as any).username } },
       // XXX use username for name until meteor accounts has a profile with a name
     };
   });
@@ -51,7 +51,7 @@ if (Meteor.isServer) {
       redirect_uri: OAuth._redirectUri("c3", config),
     }).toString();
 
-    return OAuth._fetch("https://hub.test.c3voc.de/oauth2/token", "POST", {
+    return OAuth._fetch("https://hub.test.c3voc.de/sso/token", "POST", {
       headers: {
         Accept: "application/json",
         "Content-type": "application/x-www-form-urlencoded",
@@ -83,7 +83,7 @@ if (Meteor.isServer) {
   };
 
   const getIdentity = async (accessToken: any) => {
-    return OAuth._fetch(`https://hub.test.c3voc.de/oauth2/userinfo`, "GET", {
+    return OAuth._fetch(`https://hub.test.c3voc.de/api/me`, "GET", {
       headers: { Authorization: `Bearer ${accessToken}` },
     })
       .then((data: { json: () => any }) => data.json())

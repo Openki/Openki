@@ -27,7 +27,7 @@ export const requestCredential = (
   const loginStyle = OAuth._loginStyle("c3", config, options);
 
   const loginUrl =
-    "https://hub.test.c3voc.de/oauth2/authorize" +
+    "https://hub.test.c3voc.de/sso/authorize/" +
     `?client_id=${(config as any).clientId}` +
     "&response_type=code" +
     `&redirect_uri=${OAuth._redirectUri("c3", config)}` +
