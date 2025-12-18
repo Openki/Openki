@@ -9,7 +9,7 @@ import * as Analytics from "/imports/ui/lib/analytics";
 import { MetaTags } from "/imports/ui/components/MetaTags";
 
 import { Display, Props as DisplayData } from "/imports/ui/components/regions/display";
-import { Edit, Data as EditData } from "/imports/ui/components/regions/edit";
+import { Edit, Props as EditProps } from "/imports/ui/components/regions/edit";
 
 export interface Props {
   isNew: boolean;
@@ -34,7 +34,7 @@ export function RegionDetailsPage({ isNew, region }: Props) {
       onCancel() {
         Router.go("tenantDetails", { _id: region.tenant });
       },
-    } as EditData;
+    } as EditProps;
   }
   function editArgs() {
     return {
@@ -47,7 +47,7 @@ export function RegionDetailsPage({ isNew, region }: Props) {
       onCancel() {
         setEditing(false);
       },
-    } as EditData;
+    } as EditProps;
   }
   function displayArgs() {
     return {

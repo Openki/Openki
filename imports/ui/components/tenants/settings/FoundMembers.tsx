@@ -24,11 +24,10 @@ export function FoundMembers({ tenant, userSearch }: { tenant: TenantModel; user
       const memberName = user.getDisplayName();
       const tenantName = tenant.name;
       Alert.success(
-        t(
-          "tenantSettings.memberAdded",
-          '"{MEMBER}" has been added to the "{TENANT}" organization',
-          { MEMBER: memberName, TENANT: tenantName },
-        ),
+        t("tenantSettings.memberAdded", '"{MEMBER}" has been added to {TENANT}', {
+          MEMBER: memberName,
+          TENANT: tenantName,
+        }),
       );
     } catch (err) {
       Alert.serverError(err, t("tenantSettings.memberAdded.error", "Could not add member"));

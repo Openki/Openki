@@ -20,6 +20,7 @@ import {
 import { getUserName } from "/imports/ui/lib/getUserName";
 import { DeleteConfirm } from "../../DeleteConfirm";
 import { ProfileLink } from "/imports/ui/components/profile-link";
+import { FormControl } from "/imports/ui/components/form-control";
 
 import "./styles.scss";
 
@@ -297,28 +298,15 @@ export function GroupSettings({ group }: Props) {
               ))}
             </div>
             <div className="mb-3">
-              <label className="form-label">
-                {t("group.settings.field.addMembers", "Add a new member to your group")}
-              </label>
-              <div className="input-group">
-                <span className="input-group-text">
-                  <i className="fa-solid fa-user fa-fw" />
-                </span>
-                <input
-                  className="form-control"
-                  id="AddGroupMember"
-                  placeholder={t(
-                    "group.settings.field.addMember.placeholder",
-                    "Type name of buddy",
-                  )}
-                  size={40}
-                  type="text"
-                  defaultValue={userSearch}
-                  onKeyUp={(ev) => {
-                    setUserSearch(ev.currentTarget.value);
-                  }}
-                />
-              </div>
+              <FormControl
+                id="group-settings-members-search"
+                type="text"
+                label={t("group.settings.field.addMembers", "Add a new member to your group")}
+                prepend="fa-solid fa-user fa-fw"
+                placeholder={t("group.settings.field.addMember.placeholder", "Type name of buddy")}
+                value={userSearch}
+                onChange={(value) => setUserSearch(value)}
+              />
             </div>
             {!!userSearch && (
               <div className="tag-group multiline">

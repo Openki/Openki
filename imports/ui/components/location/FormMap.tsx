@@ -43,8 +43,8 @@ export function FormMap({
       center: Coordinates;
     }
   | {
-      value?: Coordinates | undefined;
-      center: Coordinates;
+      value: Coordinates;
+      center?: Coordinates | undefined;
     }
 )) {
   const { t } = useTranslation();
@@ -64,7 +64,7 @@ export function FormMap({
         id={id}
         className={error ? "focus-ring-danger is-invalid" : ""}
         region={region}
-        center={center}
+        center={center as any} // one of "center" or "coordinates" are set, so we can ignore the error from typescript
         coordinates={value}
         level={level}
         onChange={onChange}

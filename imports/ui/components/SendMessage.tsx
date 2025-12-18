@@ -13,6 +13,7 @@ import { useValidation } from "/imports/ui/lib/useValidation";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
 
 export interface Props {
+  autoFocus?: boolean | undefined;
   placeholder: string;
   onSend: (
     message: string,
@@ -75,7 +76,7 @@ export function SendMessage(props: Props) {
           id="send-message-textarea"
           type="textarea"
           rows={7}
-          autoFocus
+          autoFocus={props.autoFocus}
           label={t("profile.mail.message", "Message")}
           placeholder={props.placeholder}
           value={message}

@@ -601,20 +601,19 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               id="event-edit-no-rsvp"
               type="switch"
               label={t("event.edit.noRsvp", "No reservation required")}
-              hint={
-                noRsvpChecked
-                  ? t(
-                      "event.edit.noRsvp.description",
-                      "Registration for this event is disabled. You might want to explain why in the description.",
-                    )
-                  : undefined
-              }
               checked={noRsvpChecked}
               onChange={(checked) => setNoRsvpChecked(checked)}
             />
 
-            {!noRsvpChecked && (
-              <div className="form-switch-text-indent">
+            <div className="form-switch-text-indent">
+              {noRsvpChecked ? (
+                <div className="form-text">
+                  {t(
+                    "event.edit.noRsvp.description",
+                    "Registration for this event is disabled. You might want to explain why in the description.",
+                  )}
+                </div>
+              ) : (
                 <FormControl
                   id="event-edit-max-participants"
                   type="integer"
@@ -628,8 +627,8 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                     setChanges((changes) => ({ ...changes, maxParticipants: value }))
                   }
                 />
-              </div>
-            )}
+              )}
+            </div>
           </div>
 
           <div className="mb-3">
@@ -637,7 +636,10 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               id="event-edit-internal"
               type="switch"
               label={t("event.edit.internal", "Hide on front page")}
-              hint={t("event.edit.internal.description", "Show it only on group and venue pages")}
+              additionalInformation={t(
+                "event.edit.internal.description",
+                "Show it only on group and venue pages",
+              )}
               checked={changes.internal}
               onChange={(checked) => setChanges((changes) => ({ ...changes, internal: checked }))}
             />

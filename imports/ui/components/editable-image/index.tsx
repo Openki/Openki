@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import * as Alert from "/imports/api/alerts/alert";
 
 import { ButtonDelete, ButtonCancel, ButtonSave } from "../Buttons";
+import { FormCheck } from "/imports/ui/components/FormCheck";
 
 import "./styles.scss";
 
@@ -253,7 +254,6 @@ export function EditableImage(data: Data) {
             </div>
           ) : progress === "edit" ? (
             <>
-              {" "}
               <span className="btn btn-secondary">
                 {t("fileUpload.choose.text", "Choose a file")}
               </span>
@@ -278,20 +278,14 @@ export function EditableImage(data: Data) {
         </label>
 
         {progress === "ready" && (
-          <div className="form-check text-start">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              value=""
-              id="editableImageCopyRights"
+          <div className="text-start">
+            <FormCheck
+              id="editable-image-copyrights"
+              type="box"
+              label={t("fileUpload.copyrights", "I have the copy rights to publish that file.")}
               checked={copyRights}
-              onChange={(event) => {
-                setCopyRights(event.currentTarget.checked);
-              }}
+              onChange={(checked) => setCopyRights(checked)}
             />
-            <label className="form-check-label" htmlFor="editableImageCopyRights">
-              {t("fileUpload.copyrights", "I have the copy rights to publish that file.")}
-            </label>
           </div>
         )}
       </form>

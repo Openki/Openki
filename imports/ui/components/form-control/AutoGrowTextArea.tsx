@@ -10,13 +10,32 @@ export function AutoGrowTextArea(
   const elementRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    if (!elementRef.current) {
+    const element = elementRef.current;
+
+    if (!element) {
       return;
     }
 
-    elementRef.current.style.height = "auto";
-    elementRef.current.style.height = elementRef.current.scrollHeight + "px";
+    element.style.height = "auto";
+    element.style.height = element.scrollHeight + "px";
   });
+  useEffect(() => {
+    const element = elementRef.current;
+
+    if (!element) {
+      return;
+    }
+
+    // fix: inside a modal the inital not works
+    setTimeout(() => {
+      element.style.height = "auto";
+      element.style.height = element.scrollHeight + "px";
+
+      if (props.autoFocus) {
+        element.focus();
+      }
+    }, 0);
+  }, []);
 
   return <textarea ref={elementRef} {...props} style={{ overflowY: "hidden", resize: "none" }} />;
 }

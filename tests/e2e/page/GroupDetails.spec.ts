@@ -32,8 +32,8 @@ describe("Group edit", () => {
       cy.get("#course-edit-internal").check();
       cy.get("#courseEditRolehostCheck").uncheck();
       cy.get("#maincontent i.fa-angle-down").click();
-      cy.get('[name="misc"]').check();
-      cy.get('[name="♥undefined♥"]').check();
+      cy.get("#courses-select-categories-misc").check();
+      cy.get("#courses-select-subcategories-♥undefined♥").check();
       cy.get("#courses-edit-save").click();
       cy.get('[data-test="course-details"] span.internal-indicator').should("be.visible");
     });

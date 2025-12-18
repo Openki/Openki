@@ -22,7 +22,9 @@ accounts-github@1.5.1
 facebook-config-ui@1.0.4
 google-config-ui@1.0.4
 github-config-ui@1.0.3
-service-configuration@1.3.5
+service-configuration
+oauth2
+oauth
 
 # UI
 blaze-html-templates            # Compile .html files into Meteor Blaze views

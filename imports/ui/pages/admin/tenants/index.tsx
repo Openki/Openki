@@ -16,9 +16,9 @@ export function Tenants({ tenants }: Data) {
 
   return (
     <>
-      <MetaTags title={t("tenants.windowtitle", "Organizations")} />
+      <MetaTags title={t("tenants.windowtitle", "Tenants")} />
 
-      <h3>{t("tenants.title", "Organizations")}</h3>
+      <h3>{t("tenants.title", "Tenants")}</h3>
 
       <div className="list-group">
         {tenants.map((tenant) => (
