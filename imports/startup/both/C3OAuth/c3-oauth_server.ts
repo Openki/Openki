@@ -87,6 +87,8 @@ if (Meteor.isServer) {
         };
       })
       .catch((err: { message: any; response: any }) => {
+        Log.record("login.c3", [], { name: "fetch.error", err });
+
         throw Object.assign(
           new Error(`Failed to complete OAuth handshake with C3. ${err.message}`),
           {
