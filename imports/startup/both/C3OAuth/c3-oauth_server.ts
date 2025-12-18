@@ -3,7 +3,7 @@ import { C3Settings } from "/imports/startup/both/C3OAuth/settings";
 import { Log } from "/imports/api/log/log";
 
 if (Meteor.isServer) {
-  OAuth.registerService("c3", 2, async (query: any) => {
+  OAuth.registerService("c3", 2, null, async (query: any) => {
     try {
       Log.record("login.c3", [], { name: "start" });
 
@@ -63,7 +63,7 @@ if (Meteor.isServer) {
       redirect_uri: OAuth._redirectUri("c3", config),
     }).toString();
 
-    Log.record("login.c3", [], { name: "fetch" , body});
+    Log.record("login.c3", [], { name: "fetch", body });
     return OAuth._fetch(config.tokenUrl, "POST", {
       headers: {
         Accept: "application/json",
