@@ -69,7 +69,7 @@ Meteor.startup(async () => {
       },
       {
         $set: {
-          loginStyle: "popup",
+          loginStyle: "redirect",
           clientId: serviceConf.c3.clientId,
           secret: serviceConf.c3.secret,
           authorizeUrl: serviceConf.c3.authorizeUrl,
