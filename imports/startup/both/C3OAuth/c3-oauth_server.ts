@@ -1,33 +1,42 @@
 import { ServiceConfiguration, ConfigError } from "meteor/service-configuration";
 import { C3Settings } from "/imports/startup/both/C3OAuth/settings";
+import { Log } from "/imports/api/log/log";
 
 if (Meteor.isServer) {
   OAuth.registerService("c3", 2, null, async (query: any) => {
-    const response = await getTokens(query);
-    const { accessToken } = response;
-    const identity = await getIdentity(accessToken);
+    try {
+      Log.record("login.c3", [], { name: "start" });
 
-    const serviceData = {
-      accessToken: OAuth.sealSecret(accessToken),
-      expiresAt: +new Date() + 1000 * response.expiresIn,
-      refreshToken: undefined,
-    };
+      const response = await getTokens(query);
+      Log.record("login.c3", [], { name: "token", response });
+      const { accessToken } = response;
+      const identity = await getIdentity(accessToken);
+      Log.record("login.c3", [], { name: "identity", identity });
 
-    Object.assign(serviceData, identity);
+      const serviceData = {
+        accessToken: OAuth.sealSecret(accessToken),
+        expiresAt: +new Date() + 1000 * response.expiresIn,
+        refreshToken: undefined,
+      };
 
-    // only set the token in serviceData if it's there. this ensures
-    // that we don't lose old ones (since we only get this on the first
-    // log in attempt)
-    if (response.refreshToken) {
-      serviceData.refreshToken = OAuth.sealSecret(response.refreshToken);
+      Object.assign(serviceData, identity);
+
+      // only set the token in serviceData if it's there. this ensures
+      // that we don't lose old ones (since we only get this on the first
+      // log in attempt)
+      if (response.refreshToken) {
+        serviceData.refreshToken = OAuth.sealSecret(response.refreshToken);
+      }
+
+      console.info("servicedata: " + JSON.stringify(serviceData));
+
+      return {
+        serviceData,
+        options: { profile: { name: (serviceData as any).username } },
+      };
+    } catch (e) {
+      Log.record("login.c3", [], { name: "err", e });
     }
-
-    console.info("servicedata: " + JSON.stringify(serviceData));
-
-    return {
-      serviceData,
-      options: { profile: { name: (serviceData as any).username } },
-    };
   });
 
   // returns an object containing:
