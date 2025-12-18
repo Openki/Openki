@@ -407,7 +407,7 @@ export function Edit(props: Props) {
       if (props.singleEvent !== undefined) {
         changes.singleEvent = props.singleEvent;
       } else {
-        const singleEvent = Regions.findOne({ _id: changes.region })?.singleEvents;
+        const singleEvent = regions.find((r) => r._id === changes.region)?.singleEvents;
 
         if (singleEvent !== undefined) {
           changes.singleEvent = singleEvent;

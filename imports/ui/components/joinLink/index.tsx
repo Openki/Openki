@@ -43,7 +43,9 @@ export function JoinLink({ tenant }: Props) {
         <i className="fa-solid fa-chain fa-fw" /> {t("joinLink.title", "Invite via link")}
       </h3>
       <label className="form-label">
-        {t("joinLink.description", "Anyone with this link can join your organisation as member.")}
+        {t("joinLink.description", "Anyone with this link can join {TENANT} as member.", {
+          TENANT: tenant.name,
+        })}
       </label>
 
       {!joinLink ? (

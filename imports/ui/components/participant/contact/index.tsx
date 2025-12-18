@@ -45,6 +45,7 @@ export function ParticipantContact(props: Props) {
 
   function sendMessageAttr(): SendMessageProps {
     return {
+      autoFocus: true,
       placeholder: t(
         "participantContact.sendMessage.placeholder",
         "Hi {USER}. I wanted to tell you…",

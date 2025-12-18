@@ -24,7 +24,7 @@ export function Sharing({
   text = text || t("sharing.mailbody.quote", "Hi!\nLook what I found, are you interested?");
 
   const btnText: Record<string, string> = {
-    bluesky: t("sharing.bluesky.text", "Share"),
+    bluesky: t("sharing.bluesky.text", ""),
     facebook: t("sharing.facebook.text", ""),
     fediverse: t("sharing.fediverse.text", ""),
     hackernews: t("sharing.hackernews.text", ""),
@@ -42,7 +42,7 @@ export function Sharing({
     vkontakte: t("sharing.vkontakte.text", ""),
     whatsapp: t("sharing.whatsapp.text", ""),
     "copy-url": t("sharing.copy-url.text", "Copy URL"),
-    email: t("sharing.email.text", ""),
+    email: t("sharing.email.text", "email"),
   };
 
   const networkTitle: Record<string, string> = {

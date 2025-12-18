@@ -49,9 +49,9 @@ function useOptions() {
   const count = Number.parseInt(query.count || "", 10) || 200;
 
   const style = new CssFromQuery(query, [
-    ["itembg", "background-color", ".frame-list-item-course"],
-    ["itemcolor", "color", ".frame-list-item-course"],
-    ["linkcolor", "color", ".frame-list-item-course a"],
+    ["itembg", "background-color", ".frame-list-item-event"],
+    ["itemcolor", "color", ".frame-list-item-event"],
+    ["linkcolor", "color", ".frame-list-item-event a"],
     ["regionbg", "background-color", ".frame-list-item-region"],
     ["regioncolor", "color", ".frame-list-item-region"],
     ["itemfontweight", "font-weight", ".frame-list-item-header"],
