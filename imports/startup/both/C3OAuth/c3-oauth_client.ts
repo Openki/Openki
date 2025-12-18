@@ -1,5 +1,6 @@
 import { ServiceConfiguration, ConfigError } from "meteor/service-configuration";
 import { Random } from "meteor/random";
+import { C3Settings } from "/imports/startup/both/C3OAuth/settings";
 
 // Request C3 credentials for the user
 // @param options {optional}
@@ -16,7 +17,9 @@ export const requestCredential = (
     options = {};
   }
 
-  const config = ServiceConfiguration.configurations.findOne({ service: "c3" });
+  const config = ServiceConfiguration.configurations.findOne({
+    service: "c3",
+  }) as unknown as C3Settings;
   if (!config) {
     credentialRequestCompleteCallback?.(new ConfigError());
     return;
@@ -27,8 +30,8 @@ export const requestCredential = (
   const loginStyle = OAuth._loginStyle("c3", config, options);
 
   const loginUrl =
-    "https://hub.test.c3voc.de/sso/authorize/" +
-    `?client_id=${(config as any).clientId}` +
+    config.authorizeUrl +
+    `?client_id=${config.clientId}` +
     "&response_type=code" +
     `&redirect_uri=${OAuth._redirectUri("c3", config)}` +
     `&state=${OAuth._stateParam(loginStyle, credentialToken, options && options.redirectUrl)}`;

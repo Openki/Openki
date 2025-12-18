@@ -72,6 +72,9 @@ Meteor.startup(async () => {
           loginStyle: "popup",
           clientId: serviceConf.c3.clientId,
           secret: serviceConf.c3.secret,
+          authorizeUrl: serviceConf.c3.authorizeUrl,
+          tokenUrl: serviceConf.c3.tokenUrl,
+          userInfoUrl: serviceConf.c3.userInfoUrl,
         },
       },
     );

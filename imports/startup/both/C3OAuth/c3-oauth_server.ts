@@ -1,4 +1,5 @@
 import { ServiceConfiguration, ConfigError } from "meteor/service-configuration";
+import { C3Settings } from "/imports/startup/both/C3OAuth/settings";
 
 if (Meteor.isServer) {
   OAuth.registerService("c3", 2, null, async (query: any) => {
@@ -26,7 +27,6 @@ if (Meteor.isServer) {
     return {
       serviceData,
       options: { profile: { name: (serviceData as any).username } },
-      // XXX use username for name until meteor accounts has a profile with a name
     };
   });
 
@@ -36,9 +36,9 @@ if (Meteor.isServer) {
   // - refreshToken, if this is the first authorization request and we got a
   //   refresh token from the server
   const getTokens = async (query: { code: any }) => {
-    const config = await ServiceConfiguration.configurations.findOneAsync({
+    const config = (await ServiceConfiguration.configurations.findOneAsync({
       service: "c3",
-    });
+    })) as unknown as C3Settings;
     if (!config) {
       throw new ConfigError();
     }
@@ -46,12 +46,12 @@ if (Meteor.isServer) {
     const body = OAuth._addValuesToQueryParams({
       grant_type: "authorization_code",
       code: query.code,
-      client_id: (config as any).clientId,
+      client_id: config.clientId,
       client_secret: OAuth.openSecret(config.secret),
       redirect_uri: OAuth._redirectUri("c3", config),
     }).toString();
 
-    return OAuth._fetch("https://hub.test.c3voc.de/sso/token", "POST", {
+    return OAuth._fetch(config.tokenUrl, "POST", {
       headers: {
         Accept: "application/json",
         "Content-type": "application/x-www-form-urlencoded",
@@ -83,7 +83,14 @@ if (Meteor.isServer) {
   };
 
   const getIdentity = async (accessToken: any) => {
-    return OAuth._fetch(`https://hub.test.c3voc.de/api/me`, "GET", {
+    const config = (await ServiceConfiguration.configurations.findOneAsync({
+      service: "c3",
+    })) as unknown as C3Settings;
+    if (!config) {
+      throw new ConfigError();
+    }
+
+    return OAuth._fetch(config.userInfoUrl, "GET", {
       headers: { Authorization: `Bearer ${accessToken}` },
     })
       .then((data: { json: () => any }) => data.json())
@@ -93,7 +100,4 @@ if (Meteor.isServer) {
         });
       });
   };
-
-  // export const retrieveCredential = (credentialToken: any, credentialSecret: any) =>
-  //   OAuth.retrieveCredential(credentialToken, credentialSecret);
 }

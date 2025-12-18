@@ -1,6 +1,7 @@
 import { Match } from "meteor/check";
 import { Meteor } from "meteor/meteor";
 import { StringEnum, Type } from "./CustomChecks";
+import { C3SettingsPattern } from "/imports/startup/both/C3OAuth/settings";
 
 export const PrivateSettingsPattern = Match.ObjectIncluding({
   /** User Administrator Accounts */
@@ -41,10 +42,7 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
       clientId: String,
       secret: String,
     },
-    c3: {
-      clientId: String,
-      secret: String,
-    },
+    c3: C3SettingsPattern,
   }),
   /** Delete entries from the log or remove critical information */
   scrub: Match.Maybe([
