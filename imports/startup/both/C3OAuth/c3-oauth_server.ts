@@ -71,9 +71,12 @@ if (Meteor.isServer) {
       },
       body,
     })
-      .then((data: { json: () => any }) => data.json())
+      .then((data: { json: () => any }) => {
+        Log.record("login.c3", [], { name: "fetch.result1", data });
+        return data.json();
+      })
       .then((data: { error: any; access_token: any; refresh_token: any; expires_in: any }) => {
-        Log.record("login.c3", [], { name: "fetch.result", data });
+        Log.record("login.c3", [], { name: "fetch.result2", data });
         if (data.error) {
           throw new Error(
             "Failed to complete OAuth handshake with C3. " +
