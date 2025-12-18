@@ -1,6 +1,6 @@
 if (Meteor.isDevelopment) {
 
-    //@ts-ignore
+    //@ts-expect-error
     SSL(
         `-----BEGIN PRIVATE KEY-----
 MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCL5z96OcW04LBb
