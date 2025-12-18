@@ -1,6 +1,18 @@
 import { ServiceConfiguration, ConfigError } from "meteor/service-configuration";
-import { Random } from "meteor/random";
+// import { Random } from "meteor/random";
 import { C3Settings } from "/imports/startup/both/C3OAuth/settings";
+import crypto from "crypto";
+
+// const generateCodeVerifier = (): string => crypto.randomBytes(32).toString("base64");
+
+const generateCodeChallenge = (verifier: string): string =>
+  crypto
+    .createHash("sha256")
+    .update(verifier, "utf8")
+    .digest("base64")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
 
 // Request C3 credentials for the user
 // @param options {optional}
@@ -25,23 +37,25 @@ export const requestCredential = (
     return;
   }
 
-  const credentialToken = Random.secret();
-
   const loginStyle = OAuth._loginStyle("c3", config, options);
+
+  const verifier = "a"; //generateCodeVerifier();
+  const challenge = generateCodeChallenge(verifier);
 
   const loginUrl =
     config.authorizeUrl +
     `?client_id=${config.clientId}` +
     "&response_type=code" +
     `&redirect_uri=${OAuth._redirectUri("c3", config)}` +
-    `&state=${OAuth._stateParam(loginStyle, credentialToken, options && options.redirectUrl)}`;
+    `&code_challenge_method=S256` +
+    `&code_challenge=${challenge}`;
 
   OAuth.launchLogin({
     loginService: "c3",
     loginStyle,
     loginUrl,
-    credentialRequestCompleteCallback,
-    credentialToken,
-    popupOptions: { width: 900, height: 620 },
+    //credentialRequestCompleteCallback,
+    credentialToken: verifier,
+    // popupOptions: { width: 900, height: 620 },
   });
 };
