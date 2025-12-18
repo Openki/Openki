@@ -99,6 +99,7 @@ socket-stream-client@0.6.1
 spacebars@2.0.0
 spacebars-compiler@2.0.0
 standard-minifier-css@1.9.3
+storyteller:ssl@0.3.1
 templating@1.4.4
 templating-compiler@2.0.0
 templating-runtime@2.0.1

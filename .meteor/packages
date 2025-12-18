@@ -49,3 +49,4 @@ mys:fonts
 # DEV
 zodern:types                    # Pull in type declarations from other Meteor packages
 typescript@5.6.6                # Enable TypeScript syntax in .ts and .tsx modules
+storyteller:ssl
