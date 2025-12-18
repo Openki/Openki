@@ -45,6 +45,7 @@ export const requestCredential = (
   const loginUrl =
     config.authorizeUrl +
     `?client_id=${config.clientId}` +
+    `&state=${OAuth._stateParam(loginStyle, verifier, options && options.redirectUrl)}`+
     "&response_type=code" +
     `&redirect_uri=${OAuth._redirectUri("c3", config)}` +
     `&code_challenge_method=S256` +
@@ -54,7 +55,7 @@ export const requestCredential = (
     loginService: "c3",
     loginStyle,
     loginUrl,
-    //credentialRequestCompleteCallback,
+    credentialRequestCompleteCallback,
     credentialToken: verifier,
     // popupOptions: { width: 900, height: 620 },
   });
