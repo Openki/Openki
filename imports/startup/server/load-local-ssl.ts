@@ -1,6 +1,6 @@
 if (Meteor.isDevelopment) {
 
-    //@ts-expect-error
+    //@ts-expect-error loadLocalSSL not in typings
     SSL(
         `-----BEGIN PRIVATE KEY-----
 MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCL5z96OcW04LBb
