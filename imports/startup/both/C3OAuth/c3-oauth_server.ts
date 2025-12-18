@@ -36,6 +36,7 @@ if (Meteor.isServer) {
       };
     } catch (e) {
       Log.record("login.c3", [], { name: "err", e });
+      throw e;
     }
   });
 
@@ -45,12 +46,14 @@ if (Meteor.isServer) {
   // - refreshToken, if this is the first authorization request and we got a
   //   refresh token from the server
   const getTokens = async (query: { code: any }) => {
+    Log.record("login.c3", [], { name: "token.start", query });
     const config = (await ServiceConfiguration.configurations.findOneAsync({
       service: "c3",
     })) as unknown as C3Settings;
     if (!config) {
       throw new ConfigError();
     }
+    Log.record("login.c3", [], { name: "token._addValuesToQueryParams", config });
 
     const body = OAuth._addValuesToQueryParams({
       grant_type: "authorization_code",
@@ -60,6 +63,7 @@ if (Meteor.isServer) {
       redirect_uri: OAuth._redirectUri("c3", config),
     }).toString();
 
+    Log.record("login.c3", [], { name: "fetch" });
     return OAuth._fetch(config.tokenUrl, "POST", {
       headers: {
         Accept: "application/json",
@@ -69,6 +73,7 @@ if (Meteor.isServer) {
     })
       .then((data: { json: () => any }) => data.json())
       .then((data: { error: any; access_token: any; refresh_token: any; expires_in: any }) => {
+        Log.record("login.c3", [], { name: "fetch.result", data });
         if (data.error) {
           throw new Error(
             "Failed to complete OAuth handshake with C3. " +
