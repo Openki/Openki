@@ -13,7 +13,7 @@ if (Meteor.isServer) {
       refreshToken: undefined,
     };
 
-    Object.assign(serviceData, identity);
+    Object.assign(serviceData, identity, { id: identity.username });
 
     // only set the token in serviceData if it's there. this ensures
     // that we don't lose old ones (since we only get this on the first
