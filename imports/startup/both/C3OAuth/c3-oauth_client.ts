@@ -1,9 +1,8 @@
 import { ServiceConfiguration, ConfigError } from "meteor/service-configuration";
-// import { Random } from "meteor/random";
+//  import { Random } from "meteor/random";
 import { C3Settings } from "/imports/startup/both/C3OAuth/settings";
 import crypto from "crypto";
 
-// const generateCodeVerifier = (): string => crypto.randomBytes(32).toString("base64");
 
 const generateCodeChallenge = (verifier: string): string =>
   crypto
@@ -39,7 +38,7 @@ export const requestCredential = (
 
   const loginStyle = OAuth._loginStyle("c3", config, options);
 
-  const verifier = "a"; //generateCodeVerifier();
+  const verifier = "a"; // Random.secret();
   const challenge = generateCodeChallenge(verifier);
 
   const loginUrl =
@@ -47,7 +46,7 @@ export const requestCredential = (
     `?client_id=${config.clientId}` +
     `&state=${OAuth._stateParam(loginStyle, verifier, options && options.redirectUrl)}` +
     "&response_type=code" +
-    `&redirect_uri=${OAuth._redirectUri("c3", config)}` +
+    `&redirect_uri=${"https://dev.openki.net/_oauth/c3" /*OAuth._redirectUri("c3", config)*/}` +
     `&code_challenge_method=S256` +
     `&code_challenge=${challenge}`;
 
