@@ -44,18 +44,18 @@ if (Meteor.isServer) {
       throw new ConfigError();
     }
 
-    Log.record("c3-oauth-debug", [], {
-      message: "redirect uri " + OAuth._redirectUri("c3", config),
-    });
-
     const body = OAuth._addValuesToQueryParams({
       grant_type: "authorization_code",
       code: query.code,
       client_id: config.clientId,
       client_secret: OAuth.openSecret(config.secret),
-      redirect_uri: "https://dev.openki.net/_oauth/c3" /*OAuth._redirectUri("c3", config)*/,
+      redirect_uri: OAuth._redirectUri("c3", config),
       code_verifier: "a",
     }).toString();
+
+    Log.record("c3-oauth-debug", [], {
+      body,
+    });
 
     return OAuth._fetch(config.tokenUrl, "POST", {
       headers: {
@@ -74,12 +74,16 @@ if (Meteor.isServer) {
         return data.json();
       })
       .then((data: { error: any; access_token: any; refresh_token: any; expires_in: any }) => {
+        Log.record("c3-oauth-debug", [], {
+          data,
+        });
         if (data.error) {
           throw new Error(
             "Failed to complete OAuth handshake with C3. " +
               (data ? data.error : "No response data"),
           );
         }
+
         return {
           accessToken: data.access_token,
           refreshToken: data.refresh_token,
