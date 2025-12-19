@@ -278,6 +278,9 @@ const publicSettings = merge(defaults, Meteor.settings.public);
 // seperate merge of matomo to make jsPath and phpPath optional
 publicSettings.matomo = { ...defaults.matomo, ...Meteor.settings.public.matomo };
 
+// override default from socialMediaButtons
+publicSettings.feature.socialMediaButtons = Meteor.settings.public.feature.socialMediaButtons || defaults.feature.socialMediaButtons;
+
 /**
  * Get access to some settings from the `Meteor.settings.public` enriched with default values.
  */
