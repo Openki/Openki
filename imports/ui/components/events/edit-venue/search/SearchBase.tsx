@@ -125,7 +125,11 @@ function CustomMenu({
         </>
       )}
       <MenuItem
-        option={isLoading() ? {} : ({ loc: region?.loc, name: text } as EventVenueEntity)}
+        option={
+          isLoading()
+            ? {}
+            : ({ loc: region?.map?.center || region?.loc, name: text } as EventVenueEntity)
+        }
         position={uvs.length + uvs.length + 1}
       >
         <i className="fa-solid fa-location-pin fa-fw" />{" "}
