@@ -1,5 +1,6 @@
 import { ServiceConfiguration, ConfigError } from "meteor/service-configuration";
 import { C3Settings } from "/imports/startup/both/C3OAuth/settings";
+import { Log } from "/imports/api/log/log";
 
 if (Meteor.isServer) {
   OAuth.registerService("c3", 2, null, async (query: any) => {
@@ -43,12 +44,16 @@ if (Meteor.isServer) {
       throw new ConfigError();
     }
 
+    Log.record("c3-oauth-debug", [], {
+      message: "redirect uri " + OAuth._redirectUri("c3", config),
+    });
+
     const body = OAuth._addValuesToQueryParams({
       grant_type: "authorization_code",
       code: query.code,
       client_id: config.clientId,
       client_secret: OAuth.openSecret(config.secret),
-      redirect_uri: OAuth._redirectUri("c3", config),
+      redirect_uri: "https://dev.openki.net/_oauth/c3" /*OAuth._redirectUri("c3", config)*/,
       code_verifier: "a",
     }).toString();
 
@@ -59,7 +64,13 @@ if (Meteor.isServer) {
       },
       body,
     })
-      .then((data: { json: () => any }) => {
+      .then((data: Response) => {
+        if (!data.ok) {
+          throw Object.assign(new Error(`${data.status}: ${data.statusText}`), {
+            response: data,
+          });
+        }
+
         return data.json();
       })
       .then((data: { error: any; access_token: any; refresh_token: any; expires_in: any }) => {
@@ -75,7 +86,7 @@ if (Meteor.isServer) {
           expiresIn: data.expires_in,
         };
       })
-      .catch((err: { message: any; response: any }) => {
+      .catch((err: { message: string; response: Response }) => {
         throw Object.assign(
           new Error(`Failed to complete OAuth handshake with C3. ${err.message}`),
           {
