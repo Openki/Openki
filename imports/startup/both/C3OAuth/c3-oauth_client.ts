@@ -46,7 +46,7 @@ export const requestCredential = (
     `?client_id=${config.clientId}` +
     `&state=${OAuth._stateParam(loginStyle, verifier, options && options.redirectUrl)}` +
     "&response_type=code" +
-    `&redirect_uri=${"https://dev.openki.net/_oauth/c3" /*OAuth._redirectUri("c3", config)*/}` +
+    `&redirect_uri=${OAuth._redirectUri("c3", config)}` +
     `&code_challenge_method=S256` +
     `&code_challenge=${challenge}`;
 
