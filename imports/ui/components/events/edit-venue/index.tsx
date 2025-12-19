@@ -1,5 +1,6 @@
 import React, { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { isEmpty } from "lodash-es";
 
 import { EventVenueEntity } from "/imports/api/events/events";
 
@@ -32,7 +33,7 @@ export function EditVenue({ region: regionId, event, value, onChange, errors }: 
 
   return (
     <>
-      {!value ? (
+      {!value || isEmpty(value) ? (
         <div className="mb-3">
           <label className="form-label" htmlFor="event-edit-venue-search">
             {t("course.event.edit.location", "Venue")} <small>{t("_inputField.optional")}</small>
