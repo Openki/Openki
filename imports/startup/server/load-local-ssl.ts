@@ -1,8 +1,7 @@
 if (Meteor.isDevelopment) {
-
-    //@ts-expect-error loadLocalSSL not in typings
-    SSL(
-        `-----BEGIN PRIVATE KEY-----
+  //@ts-expect-error loadLocalSSL not in typings
+  SSL(
+    `-----BEGIN PRIVATE KEY-----
 MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCL5z96OcW04LBb
 taSdMshvhhiJQNhI/U1Hi3mOi6eKLiu0YtpASQI/q05OPAUpt1lDUgYeSpW83Psj
 wEvnLRAk0kMxCSQ3PvtPLZd49wDAdew9rZmk8bVyJgnAtd03jpHezRYux/gceVsL
@@ -30,7 +29,7 @@ jm0ezBGRQfTYlOBjTM73XI4nI6FCuCiw6aXonUDeQedBWELGxIbH3S/9moMqAfr+
 /Z2eIVWxpOqNmC3qEb/f7YnBFiktCp1jCyVLRl1tB9ea1xIYAlCRfi4/wswNlpt7
 PN7QEZskMdMXMprBkX2aWmg=
 -----END PRIVATE KEY-----`,
-        `-----BEGIN CERTIFICATE-----
+    `-----BEGIN CERTIFICATE-----
 MIIDDzCCAfegAwIBAgIUIrfEYUz+E/F8gI1t7W0Ky4H06o0wDQYJKoZIhvcNAQEL
 BQAwFDESMBAGA1UEAwwJbG9jYWxob3N0MB4XDTI1MTIxODEzMzUxNVoXDTM1MTIx
 NjEzMzUxNVowFDESMBAGA1UEAwwJbG9jYWxob3N0MIIBIjANBgkqhkiG9w0BAQEF
@@ -48,7 +47,7 @@ iuX3RPbKS4vtUpIFeppNxoRU6NEb05C/FzBLOup+87ulJQgJIVMa7wvlO8STkeNn
 0FW/qAHRHJwtYqO+ff5KcYD7ZARE3TgeG0n/BFbYwsTpjwiJ9d4NXamPRqUi2trk
 VeIDF+ECP2SCCcuhNYmVRK7us5yxIZPKDeq5yyFVMQ4ZZMKB1DrD+DbIyXBkGI3t
 MjXdJYkmRVj7jXmaeNsk9NF86w==
------END CERTIFICATE-----`, 
-        3443
-    );
+-----END CERTIFICATE-----`,
+    3443,
+  );
 }
