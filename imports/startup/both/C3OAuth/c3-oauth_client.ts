@@ -3,7 +3,6 @@ import { ServiceConfiguration, ConfigError } from "meteor/service-configuration"
 import { C3Settings } from "/imports/startup/both/C3OAuth/settings";
 import crypto from "crypto";
 
-
 const generateCodeChallenge = (verifier: string): string =>
   crypto
     .createHash("sha256")
