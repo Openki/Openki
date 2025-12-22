@@ -7,12 +7,13 @@ import { FilteringReadError } from "/imports/utils/filtering";
 import { NoActionError, orderedResults } from "./api.routes.utils";
 import { textPlain } from "/imports/utils/html-tools";
 import { Regions } from "/imports/api/regions/regions";
+import { LocalTime, Zone } from "/imports/utils/local-time";
 
 const OPENKI_UUID_NAMESPACE = "bfcc029a-5d16-4863-af43-17277e2e717b";
 
-const sortByTimeAndRoom = (results: ApiEvent[]) =>
+const sortByTimeAndRoom = (regionZone: Zone, results: ApiEvent[]) =>
   results.reduce((accumulator: Record<string, Record<string, ApiEvent[]>>, current: ApiEvent) => {
-    const currentDate = moment(current.start).format("YYYY-MM-DD");
+    const currentDate = regionZone.fromString(current.startLocal).format("YYYY-MM-DD");
 
     let currentRoom;
     if (current.venue?.name && current.room) {
@@ -80,11 +81,16 @@ Router.route("api.0.xml", {
     await xmlSendResponder(this.response, async () => {
       const region = await Regions.findOneAsync({ _id: this.params.query.region });
 
+      if (!region) {
+        throw new Meteor.Error("region requried", "The region param must be given.");
+      }
+      const regionZone = await LocalTime.zoneAsync(region._id);
+
       // Hide canceled events in schedule
       this.params.query.canceled = this.params.query.canceled ?? "0";
       const results = await orderedResults(this.params, "events");
 
-      const resultsByTimeAndRoom = sortByTimeAndRoom(results);
+      const resultsByTimeAndRoom = sortByTimeAndRoom(regionZone, results);
 
       const scheduleNode = create({ version: "1.0" }).ele("schedule", {
         "xsi:noNamespaceSchemaLocation": "https://c3voc.de/schedule/schema.xsd",
@@ -120,9 +126,13 @@ Router.route("api.0.xml", {
       for (const [date, dateEvents] of Object.entries(resultsByTimeAndRoom)) {
         const dayNode = scheduleNode.ele("day", {
           date,
-          end: moment(date).add(1, "day").startOf("day").format("YYYY-MM-DDTHH:mm:ssZ"),
+          end: regionZone
+            .fromString(date)
+            .add(1, "day")
+            .startOf("day")
+            .format("YYYY-MM-DDTHH:mm:ssZ"),
           index: dayIdx,
-          start: moment(date).startOf("day").format("YYYY-MM-DDTHH:mm:ssZ"),
+          start: regionZone.fromString(date).startOf("day").format("YYYY-MM-DDTHH:mm:ssZ"),
         });
 
         dayIdx += 1;
@@ -140,10 +150,10 @@ Router.route("api.0.xml", {
                 guid: uuidv5(event.id, OPENKI_UUID_NAMESPACE),
               })
               .ele("date")
-              .txt(moment(event.startLocal).format("YYYY-MM-DDTHH:mm:ssZ"))
+              .txt(regionZone.fromString(event.startLocal).format("YYYY-MM-DDTHH:mm:ssZ"))
               .up()
               .ele("start")
-              .txt(moment(event.startLocal).format("HH:mm"))
+              .txt(regionZone.fromString(event.startLocal).format("HH:mm"))
               .up()
               .ele("duration")
               .txt(duration)
