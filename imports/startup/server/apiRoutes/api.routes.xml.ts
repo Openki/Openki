@@ -1,4 +1,3 @@
-import moment from "moment";
 import { v5 as uuidv5 } from "uuid";
 import { create } from "xmlbuilder2";
 import { ApiEvent } from "/imports/Api";
