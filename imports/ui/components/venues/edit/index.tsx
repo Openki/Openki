@@ -227,7 +227,7 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
   };
 
   const selectedRegion = regions.find((r) => r._id === changes.selectedRegion);
-  const mapCenter = selectedRegion?.map?.center.coordinates || selectedRegion?.loc?.coordinates;
+  const mapCenter = selectedRegion?.map?.center?.coordinates || selectedRegion?.loc?.coordinates;
 
   if (isRegionsLoading()) {
     return null;
