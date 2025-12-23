@@ -12,6 +12,7 @@ shell-server@0.6.2            # Server-side component of the `meteor shell` comm
 session@1.2.2
 mdg:validation-error
 dynamic-import@0.7.4
+ostrio:cookies
 
 # Accounts
 accounts-password@3.2.1
