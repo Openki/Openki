@@ -1,8 +1,18 @@
 import { ServiceConfiguration, ConfigError } from "meteor/service-configuration";
 import { C3Settings } from "/imports/startup/both/C3OAuth/settings";
 import { Log } from "/imports/api/log/log";
+import { WebApp } from "meteor/webapp";
 
 if (Meteor.isServer) {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { AsyncLocalStorage } = require("node:async_hooks");
+  const requestContext = new AsyncLocalStorage();
+
+  // save the request context for later to have access to the cookies
+  WebApp.rawConnectHandlers.use("/_oauth/c3", (request, _response, next) => {
+    requestContext.run({ request }, () => next());
+  });
+
   OAuth.registerService("c3", 2, null, async (query: any) => {
     const response = await getTokens(query);
     const { accessToken } = response;
@@ -50,7 +60,8 @@ if (Meteor.isServer) {
       client_id: config.clientId,
       client_secret: OAuth.openSecret(config.secret),
       redirect_uri: OAuth._redirectUri("c3", config),
-      code_verifier: "a",
+      // read out the verifier set on the client (Proof Key for Code Exchange, https://oauth.net/2/pkce/)
+      code_verifier: requestContext.getStore()?.request.cookies.verifier,
     }).toString();
 
     Log.record("c3-oauth-debug", [], {

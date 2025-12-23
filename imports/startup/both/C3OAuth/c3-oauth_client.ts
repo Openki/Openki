@@ -1,7 +1,12 @@
 import { ServiceConfiguration, ConfigError } from "meteor/service-configuration";
-//  import { Random } from "meteor/random";
+import { Random } from "meteor/random";
 import { C3Settings } from "/imports/startup/both/C3OAuth/settings";
 import crypto from "crypto";
+import { Cookies } from "meteor/ostrio:cookies";
+
+export const cookies = new Cookies();
+
+// Some code are inspired from the voc/infobeamer-cms See: https://github.com/voc/infobeamer-cms/blob/6a133e66290d5ec86c9e9cf078f525a0b4d3b9bf/frontend.py#L188
 
 const generateCodeChallenge = (verifier: string): string =>
   crypto
@@ -37,13 +42,16 @@ export const requestCredential = (
 
   const loginStyle = OAuth._loginStyle("c3", config, options);
 
-  const verifier = "a"; // Random.secret();
+  // set the verifier for use on the server (Proof Key for Code Exchange, https://oauth.net/2/pkce/)
+  const verifier = Random.secret();
+  cookies.set("verifier", verifier);
   const challenge = generateCodeChallenge(verifier);
 
   const loginUrl =
     config.authorizeUrl +
     `?client_id=${config.clientId}` +
-    `&state=${OAuth._stateParam(loginStyle, verifier, options && options.redirectUrl)}` +
+    // state is only nessecary to redirect to the place where the user was and to give some code advices how to proceed
+    `&state=${OAuth._stateParam(loginStyle, verifier, (options && options.redirectUrl) || document.location.href)}` +
     "&response_type=code" +
     `&redirect_uri=${OAuth._redirectUri("c3", config)}` +
     `&code_challenge_method=S256` +
