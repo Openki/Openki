@@ -23,6 +23,7 @@
     "i18next-icu": "2.4.0",
     "i18next-localstorage-backend": "4.2.0",
     "i18next-resources-to-backend": "1.2.1",
+    "ical-expander": "3.2.0",
     "ical-generator": "9.0.0",
     "image-blob-reduce": "4.1.0",
     "intl-messageformat": "10.7.16",

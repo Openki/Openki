@@ -1,12 +1,13 @@
 import { chain, sumBy } from "lodash-es";
 import { Router } from "meteor/iron:router";
 import moment, { max, min } from "moment";
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import * as Events from "/imports/api/events/publications";
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 import { useFindParallelEvents } from "/imports/ui/components/events/edit/useFindParallelEvents";
 import { useLocalTimeZone } from "/imports/utils/local-time";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useFindExternalParallelEvents } from "/imports/ui/components/events/edit/useFindExternalParallelEvents";
 
 function ScrollIntoView({ children }: { children: React.ReactNode }) {
   const elementRef = useRef<HTMLDivElement>(null);
@@ -60,6 +61,36 @@ export function useFindNearEvents(
     return [...events.filter((e) => e._id !== event._id), event];
   }, [venueId, regionId, event.room, event.startLocal, event.endLocal, isLoading()]);
 }
+export function useFindNearExternalEvents(
+  venueId: string | undefined,
+  regionId: string,
+  event: {
+    _id?: string | undefined;
+    room?: string | undefined;
+    startLocal: string;
+    endLocal: string;
+  },
+) {
+  const [result, setResult] = useState<
+    { id: string; summary: string; location: string; start: string; end: string; url: string }[]
+  >([]);
+  const regionZone = useLocalTimeZone(regionId);
+  const start = regionZone.fromString(event.startLocal);
+  const end = regionZone.fromString(event.endLocal);
+
+  useEffect(() => {
+    (async () => {
+      const params = new URLSearchParams();
+      params.append("start", start.subtract(18, "hours").toISOString());
+      params.append("end", end.add(18, "hours").toISOString());
+      setResult(
+        (await (await fetch(`/api/venue/${venueId}/external-bookings?${params}`)).json()).data,
+      );
+    })();
+  }, [venueId, regionId, event.room, event.startLocal, event.endLocal]);
+
+  return result;
+}
 
 function getDaysBetween(startDate: moment.MomentInput, endDate: moment.MomentInput) {
   const start = moment(startDate);
@@ -111,13 +142,31 @@ export function Timetable({
 
   const [venueIsLoading, venue] = useVenueDetails(venueId || "-1");
   const events = useFindNearEvents(venueId, regionId, currentEvent);
+  const externalEvents = useFindNearExternalEvents(venueId, regionId, currentEvent);
   const parallelEvents = useFindParallelEvents(regionId, venueId, currentEvent);
+  const externalParallelEvents = useFindExternalParallelEvents(regionId, venueId, currentEvent);
 
-  const startLocal = chain(events)
+  const allParallelEvents = [
+    ...parallelEvents.map((e) => ({ room: e.room })),
+    ...externalParallelEvents.map((e) => ({ room: e.location })),
+  ];
+
+  const allEvents = [
+    ...events.map((e) => ({ ...e, url: Router.path("showEvent", e) })),
+    ...externalEvents.map((e) => ({
+      _id: e.id,
+      title: e.summary,
+      room: e.location,
+      startLocal: e.start,
+      endLocal: e.end,
+      url: e.url,
+    })),
+  ];
+  const startLocal = chain(allEvents)
     .map((e) => e.startLocal)
     .min()
     .value();
-  const endLocal = chain(events)
+  const endLocal = chain(allEvents)
     .map((e) => e.endLocal)
     .max()
     .value();
@@ -153,24 +202,24 @@ export function Timetable({
     };
   });
 
-  const rooms = chain(events)
+  const rooms = chain(allEvents)
     .groupBy((e) => e.room?.toUpperCase() || "")
     .orderBy((g) => g[0].room)
     .value();
 
   const totalCols = sumBy(viewModel, (v) => v.hours.length) + 1; // +1 for first empty/room column
 
-  if (events.length <= 1) {
+  if (allEvents.length <= 1) {
     // only show if more then 1 event found
     return null;
   }
 
-  const inSameRoom = parallelEvents.find(
+  const inSameRoom = allParallelEvents.find(
     (e) => e.room && currentEvent.room && e.room.toUpperCase() === currentEvent.room.toUpperCase(),
   );
 
   let state;
-  if (parallelEvents.length > 0) {
+  if (allParallelEvents.length > 0) {
     if (inSameRoom || !(!venueIsLoading() && venue?.allowParallelEvents)) {
       state = "danger";
     } else {
@@ -271,7 +320,7 @@ export function Timetable({
                       >
                         <a
                           className="stretched-link"
-                          href={Router.path("showEvent", event)}
+                          href={event.url}
                           target="_blank"
                           rel="noreferrer"
                           title={event.title}
