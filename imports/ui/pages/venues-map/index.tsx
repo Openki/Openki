@@ -15,7 +15,9 @@ import { TileLayers } from "../../components/TileLayer";
 import { FullscreenControl } from "../../components/FullscreenControl";
 import { DivIcon } from "leaflet";
 import { isOnCustomMap } from "/imports/utils/isOnCustomMap";
+import { AutoInvalidateSize } from "/imports/ui/components/location/display/AutoInvalidateSize";
 
+import "leaflet/dist/leaflet.css";
 import "./styles.scss";
 
 export interface Data {
@@ -88,6 +90,7 @@ export function VenuesMap({ region: regionId, venues }: Data) {
           ></Marker>
         </React.Fragment>
       ))}
+      <AutoInvalidateSize />
       <FullscreenControl />
     </>
   );
