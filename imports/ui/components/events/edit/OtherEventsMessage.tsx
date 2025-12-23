@@ -1,10 +1,12 @@
-import { Router } from "meteor/iron:router";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { EventModel } from "/imports/api/events/events";
 import { ReactJoin } from "/imports/utils/ReactJoin";
 
-export function OtherEventsMessage({ events }: { events: EventModel[] }) {
+export function OtherEventsMessage({
+  events,
+}: {
+  events: { title: string; room: string; _id: string; url: string }[];
+}) {
   const { t } = useTranslation();
 
   return ReactJoin(
@@ -16,7 +18,7 @@ export function OtherEventsMessage({ events }: { events: EventModel[] }) {
               `There is the event "{TITLE}" in room "{ROOM}".`,
               {
                 TITLE: (
-                  <a href={Router.path("showEvent", e)} target="_blank" rel="noreferrer">
+                  <a href={e.url} target="_blank" rel="noreferrer">
                     {e.title}
                   </a>
                 ),
@@ -25,7 +27,7 @@ export function OtherEventsMessage({ events }: { events: EventModel[] }) {
             )
           : t("event.edit.venue.parallelEvents.otherEvent", `There is the event "{TITLE}".`, {
               TITLE: (
-                <a href={Router.path("showEvent", e)} target="_blank" rel="noreferrer">
+                <a href={e.url} target="_blank" rel="noreferrer">
                   {e.title}
                 </a>
               ),

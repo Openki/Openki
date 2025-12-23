@@ -44,6 +44,7 @@ import { UpdateAffectedReplica } from "./UpdateAffectedReplica";
 import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
 
 import { useFindParallelEvents } from "./useFindParallelEvents";
+import { useFindExternalParallelEvents } from "/imports/ui/components/events/edit/useFindExternalParallelEvents";
 
 import "./styles.scss";
 
@@ -185,6 +186,22 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     _id: event._id,
     ...changes,
   });
+  const externalParallelEvents = useFindExternalParallelEvents(selectedRegion, selectedVenue?._id, {
+    _id: event._id,
+    ...changes,
+  });
+
+  const allParallelEvents = [
+    ...parallelEvents.map((e) => ({ ...e, url: Router.path("showEvent", e) })),
+    ...externalParallelEvents.map((e) => ({
+      _id: e.id,
+      title: e.summary,
+      room: e.location,
+      startLocal: e.start,
+      endLocal: e.end,
+      url: e.url,
+    })),
+  ];
 
   const [errors, checkValidity, addError] = useValidation(
     {
@@ -255,14 +272,14 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       parallelEvents: {
         field: "startEndVenue",
         onCheckValidity: () =>
-          venueIsLoading() || !venue || venue.allowParallelEvents || parallelEvents.length === 0,
+          venueIsLoading() || !venue || venue.allowParallelEvents || allParallelEvents.length === 0,
         text: () => (
           <>
             {t(
               "event.edit.venue.parallelEvents.disallowed",
               "Parallel events in this venue are not allowed.",
             )}{" "}
-            <OtherEventsMessage events={parallelEvents} />{" "}
+            <OtherEventsMessage events={allParallelEvents} />{" "}
             {t("event.edit.venue.parallelEvents.pleaseChange", "Please change venue or time.")}
           </>
         ),
@@ -300,7 +317,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     // loads some resources, so calling checkValidity onChange make unexpected things
     checkValidity("startEndVenue");
     // only run when values that get checked are changed
-  }, [venue, parallelEvents]);
+  }, [venue, allParallelEvents]);
 
   function showRegionSelection() {
     return (
