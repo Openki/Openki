@@ -2,7 +2,9 @@ import { Router } from "meteor/iron:router";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Modal } from "/imports/startup/client/bootstrap";
-import { useSession, useSessionEquals, useUserId } from "/imports/utils/react-meteor-data";
+import { useSession, useSessionEquals, useUser } from "/imports/utils/react-meteor-data";
+import { useSearchParams } from "/imports/utils/react-meteor-router";
+import { ActionResult } from "/imports/ui/components/ActionResult";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useViewportSize } from "/imports/ui/lib/useViewportSize";
@@ -171,7 +173,7 @@ function Task({
 
 export function AccountTasks() {
   const { t } = useTranslation();
-  const userId = useUserId();
+  const user = useUser();
   const pleaseLogin = useSessionEquals("pleaseLogin", true);
   const top = useSession("top");
   const viewport = useViewportSize();
@@ -179,6 +181,7 @@ export function AccountTasks() {
   const [show, setShow] = useState(false);
   const elementModalRef = useRef<HTMLDivElement>(null);
   const elementModalDialogRef = useRef<HTMLDivElement>(null);
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     function hide() {
@@ -189,12 +192,16 @@ export function AccountTasks() {
       setShow(false);
     }
 
-    if (userId && pleaseLogin) {
+    if (user && pleaseLogin) {
       // Logged in after a redirect login flow
       hide();
 
       // fix endless loading after login
-      document.location.reload();
+      const url = new URL(document.location.href);
+
+      // If your expected result is "http://foo.bar/?x=42&y=2"
+      url.searchParams.set("afterLogin", "1");
+      document.location = url.toString();
 
       return;
     }
@@ -224,65 +231,87 @@ export function AccountTasks() {
       element?.removeEventListener("hidden.bs.modal", hidden);
       element?.removeEventListener("shown.bs.modal", shown);
     };
-  }, [pleaseLogin, userId]);
+  }, [pleaseLogin, user?._id]);
 
   return (
-    <div
-      className="modal account-tasks"
-      id="accountTaskModal"
-      tabIndex={-1}
-      role="dialog"
-      ref={elementModalRef}
-    >
+    <>
+      {searchParams.afterLogin === "1" && user && !user.emailAddress() && (
+        <div className="mt-5">
+          <ActionResult
+            type="success"
+            dismissible
+            title={t("accountTasks.addEmail.title", "Welcome to Openki")}
+            actions={[
+              {
+                text: t("accountTasks.addEmail.btn", "Go to profile"),
+                href: Router.path("profile"),
+              },
+            ]}
+          >
+            {t(
+              "accountTasks.addEmail.description",
+              "Please complete your profile. eg. add an email address to get notifications.",
+            )}
+          </ActionResult>
+        </div>
+      )}
       <div
-        className="modal-dialog modal-sm"
-        role="document"
-        style={
-          top
-            ? { top: top - 280 /* half modal height, todo: make this better */ + "px" }
-            : undefined
-        }
-        ref={elementModalDialogRef}
+        className="modal account-tasks"
+        id="accountTaskModal"
+        tabIndex={-1}
+        role="dialog"
+        ref={elementModalRef}
       >
-        {show && (
-          <div className="modal-content">
-            <div className="modal-header">
-              <h4 className="modal-title">
-                <Title activeTask={activeTask} />
-              </h4>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label={t("_button.close")}
-              ></button>
-            </div>
-            <div className="modal-body">
-              <Task
-                activeTask={activeTask}
-                onSwitch={(task) => {
-                  setActiveTask(task);
-                }}
-                onLogin={() => {
-                  if (viewport.width <= ScssVars.gridFloatBreakpoint) {
-                    $("#bs-navbar-collapse").collapse("hide");
-                  }
+        <div
+          className="modal-dialog modal-sm"
+          role="document"
+          style={
+            top
+              ? { top: top - 280 /* half modal height, todo: make this better */ + "px" }
+              : undefined
+          }
+          ref={elementModalDialogRef}
+        >
+          {show && (
+            <div className="modal-content">
+              <div className="modal-header">
+                <h4 className="modal-title">
+                  <Title activeTask={activeTask} />
+                </h4>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label={t("_button.close")}
+                ></button>
+              </div>
+              <div className="modal-body">
+                <Task
+                  activeTask={activeTask}
+                  onSwitch={(task) => {
+                    setActiveTask(task);
+                  }}
+                  onLogin={() => {
+                    if (viewport.width <= ScssVars.gridFloatBreakpoint) {
+                      $("#bs-navbar-collapse").collapse("hide");
+                    }
 
-                  if (elementModalRef.current) {
-                    Modal.getOrCreateInstance(elementModalRef.current).hide();
-                  }
-                }}
-                onResetPasswort={() => {
-                  if (elementModalRef.current) {
-                    Modal.getOrCreateInstance(elementModalRef.current).hide();
-                  }
-                }}
-              />
+                    if (elementModalRef.current) {
+                      Modal.getOrCreateInstance(elementModalRef.current).hide();
+                    }
+                  }}
+                  onResetPasswort={() => {
+                    if (elementModalRef.current) {
+                      Modal.getOrCreateInstance(elementModalRef.current).hide();
+                    }
+                  }}
+                />
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
