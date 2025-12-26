@@ -95,6 +95,10 @@ export function EmailSection() {
   return (
     <div data-test="email-section" className="page-component page-component-seperated">
       <h3>{t("profile.email_settings", "E-mail settings")}</h3>
+      <p>
+        {!user.emailAddress() &&
+          t("profile.email_settings.hint", "Add your email address to get notifications.")}
+      </p>
       <div className="row g-4 mb-2">
         <div className="col-sm-6">
           <form className="row g-2 mb-2" noValidate onSubmit={handleEmailChange}>
@@ -122,7 +126,7 @@ export function EmailSection() {
               </Button>
             </div>
           </form>
-          {!user.verifiedEmailAddress() && !isBusy && <VerifyEmail />}
+          {user.emailAddress() && !user.verifiedEmailAddress() && !isBusy && <VerifyEmail />}
         </div>
         <div className="col-sm-6">
           <div className="mb-2">

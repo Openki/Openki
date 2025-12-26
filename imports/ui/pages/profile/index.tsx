@@ -213,7 +213,7 @@ function LoggedIn({ user }: { user: UserModel }) {
       <Appearance />
       {!isVisitor() ? (
         <>
-          {!!user.emailAddress() && <EmailSection />}
+          <EmailSection />
           <CalendarSection />
           {isAdmin() && <AdminSection />}
           {!tenantsAreLoading() && hasTenants() && <TenantSection tenants={tenants} />}
