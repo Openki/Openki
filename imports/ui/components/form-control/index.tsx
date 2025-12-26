@@ -32,7 +32,7 @@ interface CommonProps {
 }
 
 interface TextInputProps {
-  type: "text" | "tel" | "email" | "password";
+  type: "text" | "tel" | "email" | "url" | "password";
   autoFocus?: boolean | undefined;
   /** Used for instructions or an example of the required data format. */
   placeholder?: string | undefined;
@@ -188,6 +188,7 @@ function createInputElement<K extends string>(props: Props<K>) {
     case "text":
     case "tel":
     case "email":
+    case "url":
     case "password":
       return (
         <input

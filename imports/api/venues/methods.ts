@@ -45,6 +45,7 @@ export const SaveFieldPattern = {
   otherFacilities: Match.Optional(String),
   restrictedUse: Match.Optional(Boolean),
   allowParallelEvents: Match.Optional(Boolean),
+  bookingIcal: Match.Optional(String),
 };
 export type SaveFields = Type<typeof SaveFieldPattern>;
 
@@ -118,6 +119,10 @@ export const save = ServerMethod(
 
     if (changes.allowParallelEvents !== undefined) {
       set.allowParallelEvents = changes.allowParallelEvents;
+    }
+
+    if (changes.bookingIcal !== undefined) {
+      set.bookingIcal = changes.bookingIcal.substring(0, 40 * 1024);
     }
 
     if (isNew) {
