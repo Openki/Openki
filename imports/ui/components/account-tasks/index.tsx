@@ -2,7 +2,7 @@ import { Router } from "meteor/iron:router";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Modal } from "/imports/startup/client/bootstrap";
-import { useSession, useSessionEquals } from "/imports/utils/react-meteor-data";
+import { useSession, useSessionEquals, useUserId } from "/imports/utils/react-meteor-data";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useViewportSize } from "/imports/ui/lib/useViewportSize";
@@ -171,6 +171,7 @@ function Task({
 
 export function AccountTasks() {
   const { t } = useTranslation();
+  const userId = useUserId();
   const pleaseLogin = useSessionEquals("pleaseLogin", true);
   const top = useSession("top");
   const viewport = useViewportSize();
@@ -180,6 +181,24 @@ export function AccountTasks() {
   const elementModalDialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    function hide() {
+      setActiveTask("login");
+      Session.set("pleaseLogin", false);
+      Session.set("visitorUserAllowed", false);
+      Session.set("top", 0);
+      setShow(false);
+    }
+
+    if (userId && pleaseLogin) {
+      // Logged in after a redirect login flow
+      hide();
+
+      // fix endless loading after login
+      document.location.reload();
+
+      return;
+    }
+
     if (pleaseLogin && elementModalRef.current) {
       setShow(true);
       Modal.getOrCreateInstance(elementModalRef.current).show();
@@ -191,11 +210,7 @@ export function AccountTasks() {
     }
 
     const hidden = () => {
-      setActiveTask("login");
-      Session.set("pleaseLogin", false);
-      Session.set("visitorUserAllowed", false);
-      Session.set("top", 0);
-      setShow(false);
+      hide();
     };
     const shown = () => {
       setShow(true);
@@ -209,7 +224,7 @@ export function AccountTasks() {
       element?.removeEventListener("hidden.bs.modal", hidden);
       element?.removeEventListener("shown.bs.modal", shown);
     };
-  }, [pleaseLogin]);
+  }, [pleaseLogin, userId]);
 
   return (
     <div
