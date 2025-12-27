@@ -5,6 +5,7 @@ import { Modal } from "/imports/startup/client/bootstrap";
 import { useSession, useSessionEquals, useUser } from "/imports/utils/react-meteor-data";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 import { ActionResult } from "/imports/ui/components/ActionResult";
+import { useSiteName } from "/imports/utils/getSiteName";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useViewportSize } from "/imports/ui/lib/useViewportSize";
@@ -173,6 +174,7 @@ function Task({
 
 export function AccountTasks() {
   const { t } = useTranslation();
+  const siteName = useSiteName();
   const user = useUser();
   const pleaseLogin = useSessionEquals("pleaseLogin", true);
   const top = useSession("top");
@@ -240,7 +242,10 @@ export function AccountTasks() {
           <ActionResult
             type="success"
             dismissible
-            title={t("accountTasks.addEmail.title", "Welcome to Openki")}
+            title={t("accountTasks.addEmail.title", "Welcome {USER} to {SITE}", {
+              USER: user.getDisplayName(),
+              SITE: siteName,
+            })}
             actions={[
               {
                 text: t("accountTasks.addEmail.btn", "Go to profile"),
