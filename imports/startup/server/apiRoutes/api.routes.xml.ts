@@ -138,6 +138,7 @@ Router.route("api.0.xml", {
         for (const [room, roomEvents] of Object.entries(dateEvents)) {
           const roomNode = dayNode.ele("room", {
             name: room,
+            guid: roomEvents.find((e) => e.id)?.id,
           });
 
           roomEvents.forEach((event) => {
