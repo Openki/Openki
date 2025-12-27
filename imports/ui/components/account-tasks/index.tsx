@@ -250,7 +250,7 @@ export function AccountTasks() {
           >
             {t(
               "accountTasks.addEmail.description",
-              "Please complete your profile. eg. add an email address to get notifications.",
+              "Please complete your profile: E.g. add an email address to get notifications.",
             )}
           </ActionResult>
         </div>
