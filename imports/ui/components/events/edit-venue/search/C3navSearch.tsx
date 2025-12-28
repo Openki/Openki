@@ -33,14 +33,16 @@ const fetcher = (input: URL | RequestInfo) =>
 export function C3navSearch({
   id,
   autofocus,
-  regionId,
+  region,
+  venues,
   apiUrl,
   value,
   onChange,
 }: {
   id: string;
   autofocus?: boolean | undefined;
-  regionId: string;
+  region: string;
+  venues: string[];
   apiUrl: string;
   value: EventVenueEntity | undefined;
   onChange: (newValue: EventVenueEntity) => void;
@@ -55,7 +57,8 @@ export function C3navSearch({
     <SearchBase
       id={id}
       autofocus={autofocus}
-      regionId={regionId}
+      region={region}
+      venues={venues}
       onRequest={handleRequest}
       value={value}
       onChange={onChange}
