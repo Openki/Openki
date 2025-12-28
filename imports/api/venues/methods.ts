@@ -6,6 +6,7 @@ import { Regions } from "/imports/api/regions/regions";
 import { VenueEntity, Venues } from "/imports/api/venues/venues";
 import * as userVenuesDenormalizer from "../users/venuesDenormalizer";
 import * as groupVenuesDenormalizer from "/imports/api/groups/venuesDenormalizer";
+import * as eventVenueDenormalizer from "/imports/api/events/venueDenormalizer";
 
 import { HtmlString, StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";
 import * as HtmlTools from "/imports/utils/html-tools";
@@ -144,6 +145,9 @@ export const save = ServerMethod(
       userVenuesDenormalizer.afterVenueCreate(venueId, user._id);
     } else {
       await Venues.updateAsync({ _id: venueId }, { $set: set });
+
+      await eventVenueDenormalizer.updateVenue({ "venue._id": venueId });
+      await groupVenuesDenormalizer.afterVenueUpdate(venueId);
     }
 
     return venueId;
