@@ -1,8 +1,10 @@
 import React, { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { isEmpty } from "lodash-es";
+import { chain, isEmpty } from "lodash-es";
 
 import { EventVenueEntity } from "/imports/api/events/events";
+import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
+import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
 
 import { Display } from "../../location/display";
 import { VenueTag } from "../../venues/link";
@@ -18,6 +20,7 @@ export interface Props {
   value?: EventVenueEntity | undefined;
   event: {
     _id?: string | undefined;
+    courseId?: string | undefined;
     room?: string | undefined;
     startLocal: string;
     endLocal: string;
@@ -28,8 +31,17 @@ export interface Props {
 
 export function EditVenue({ region: regionId, event, value, onChange, errors }: Props) {
   const { t } = useTranslation();
-
   const [autofocusOnSearch, setAutoFocusOnSearch] = useState(false);
+
+  const [isCourseLoading, course] = useCourseDetails({ when: !!event?.courseId }, event?.courseId);
+  const [groupsIsLoading, groups] = useGroupsFindFilter(
+    { when: !!course?.groupOrganizers },
+    { ids: course?.groupOrganizers },
+  );
+
+  if (isCourseLoading() || groupsIsLoading()) {
+    return null;
+  }
 
   return (
     <>
@@ -41,7 +53,12 @@ export function EditVenue({ region: regionId, event, value, onChange, errors }: 
           <Search
             id="event-edit-venue-search"
             autofocus={autofocusOnSearch}
-            regionId={regionId}
+            region={regionId}
+            venues={chain(groups)
+              .flatMap((g) => g.venues)
+              .filter((v) => !!v)
+              .map((v) => v._id)
+              .value()}
             value={value}
             onChange={onChange}
           />

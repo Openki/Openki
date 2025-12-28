@@ -25,6 +25,7 @@ import { EventModel, OEvent } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { SaveFields } from "/imports/api/events/methods";
 import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
+import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
 import { useAll as useRegions } from "/imports/api/regions/publications";
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 import { CourseCustomField } from "/imports/api/courses/courses";
@@ -41,7 +42,6 @@ import { EditVenue, Props as EditVenueProps } from "../edit-venue";
 import { EditStartEnd } from "./EditStartEnd";
 import { OtherEventsMessage } from "./OtherEventsMessage";
 import { UpdateAffectedReplica } from "./UpdateAffectedReplica";
-import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
 
 import { useFindParallelEvents } from "./useFindParallelEvents";
 import { useFindExternalParallelEvents } from "/imports/ui/components/events/edit/useFindExternalParallelEvents";
@@ -340,6 +340,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       region: selectedRegion as string,
       event: {
         _id: event._id,
+        courseId: event.courseId,
         room: changes.room,
         startLocal: changes.startLocal,
         endLocal: changes.endLocal,

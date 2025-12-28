@@ -10,11 +10,12 @@ import { SearchBase } from "/imports/ui/components/events/edit-venue/search/Sear
 export function Search(props: {
   id: string;
   autofocus?: boolean | undefined;
-  regionId: string;
+  region: string;
+  venues: string[];
   value: EventVenueEntity | undefined;
   onChange: (newValue: EventVenueEntity) => void;
 }) {
-  const [isLoadingRegion, region] = Regions.useDetails(props.regionId);
+  const [isLoadingRegion, region] = Regions.useDetails(props.region);
 
   if (isLoadingRegion()) {
     return null;
