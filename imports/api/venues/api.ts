@@ -9,8 +9,20 @@ Router.route("venueExternalEvents", {
   async action() {
     const venue = await Venues.findOneAsync({ _id: this.params._id as string });
 
-    if (!venue || !venue.bookingIcal) {
+    if (!venue) {
       throw new Error();
+    }
+
+    if (!venue.bookingIcal) {
+      const body = {
+        status: "success",
+        data: [],
+      };
+      this.response.statusCode = 200;
+      this.response.setHeader("Content-Type", "application/json; charset=utf-8");
+      this.response.end(JSON.stringify(body, null, "\t"));
+
+      return;
     }
 
     const ical = await fetch(venue.bookingIcal);
