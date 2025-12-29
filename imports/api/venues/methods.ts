@@ -163,7 +163,11 @@ export const remove = ServerMethod("venue.remove", async (venueId: string) => {
   await userVenuesDenormalizer.beforeVenueRemove(venue);
   await groupVenuesDenormalizer.beforeVenueRemove(venue);
 
-  return Venues.removeAsync(venueId);
+  const result = await Venues.removeAsync(venueId);
+
+  await eventVenueDenormalizer.updateVenue({ "venue._id": venueId });
+
+  return result;
 });
 
 export const addEditGroup = ServerMethod(
