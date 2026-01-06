@@ -9,7 +9,7 @@ import { useTracker } from "meteor/react-meteor-data";
 import * as Alert from "/imports/api/alerts/alert";
 import { GroupModel, Groups, GroupMemberEntity } from "/imports/api/groups/groups";
 import * as GroupsMethods from "/imports/api/groups/methods";
-import { UserModel, Users } from "/imports/api/users/users";
+import { UserModel } from "/imports/api/users/users";
 import { useFindFilter } from "/imports/api/users/publications";
 
 import {
