@@ -9,7 +9,7 @@ import { useTracker } from "meteor/react-meteor-data";
 import * as Alert from "/imports/api/alerts/alert";
 import { GroupModel, Groups, GroupMemberEntity } from "/imports/api/groups/groups";
 import * as GroupsMethods from "/imports/api/groups/methods";
-import { Users } from "/imports/api/users/users";
+import { UserModel, Users } from "/imports/api/users/users";
 import { useFindFilter } from "/imports/api/users/publications";
 
 import {
@@ -61,7 +61,7 @@ function FoundUsers({
 }: {
   group: GroupModel;
   userSearch: string;
-  onAdd: (userId: string) => void;
+  onAdd: (user: UserModel) => void;
 }) {
   const { t } = useTranslation();
 
@@ -81,7 +81,7 @@ function FoundUsers({
             <button
               title={t("group.settings.addMember", "add as member")}
               type="button"
-              onClick={() => onAdd(user._id)}
+              onClick={() => onAdd(user)}
             >
               <i className="fa-solid fa-plus fa-fw" /> {user.username}
             </button>
@@ -207,13 +207,12 @@ export function GroupSettings({ group }: Props) {
     }
   }
 
-  async function handleMemberAdd(userId: string) {
+  async function handleMemberAdd(user: UserModel) {
     try {
-      await GroupsMethods.updateMembership(userId, group._id, true);
-      const memberName = Users.findOne(userId)?.getDisplayName();
+      await GroupsMethods.updateMembership(user._id, group._id, true);
       Alert.success(
         t("groupSettings.memberAdded", '"{MEMBER}" has been added to the "{GROUP}" group', {
-          MEMBER: memberName,
+          MEMBER: user.getDisplayName(),
           GROUP: group.name,
         }),
       );
