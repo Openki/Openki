@@ -3,6 +3,7 @@ import { Random } from "meteor/random";
 import { C3Settings } from "/imports/startup/both/C3OAuth/settings";
 import crypto from "crypto";
 import { Cookies } from "meteor/ostrio:cookies";
+import { LocalhostSsl } from "/imports/utils/LocalhostSsl";
 
 export const cookies = new Cookies();
 
@@ -53,7 +54,7 @@ export const requestCredential = (
     // state is only nessecary to redirect to the place where the user was and to give some code advices how to proceed
     `&state=${OAuth._stateParam(loginStyle, verifier, (options && options.redirectUrl) || document.location.href)}` +
     "&response_type=code" +
-    `&redirect_uri=${OAuth._redirectUri("c3", config)}` +
+    `&redirect_uri=${LocalhostSsl ? "https://localhost:3443/_oauth/c3" : OAuth._redirectUri("c3", config)}` +
     `&code_challenge_method=S256` +
     `&code_challenge=${challenge}`;
 
