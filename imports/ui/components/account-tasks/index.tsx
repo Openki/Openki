@@ -200,8 +200,6 @@ export function AccountTasks() {
 
       // fix endless loading after login
       const url = new URL(document.location.href);
-
-      // If your expected result is "http://foo.bar/?x=42&y=2"
       url.searchParams.set("afterLogin", "1");
       document.location = url.toString();
 
