@@ -101,7 +101,7 @@ export function CalendarPage() {
         <React.Fragment key={day}>
           <h4 className="frame-list-title">{day}</h4>
           {eventsOn(day).map((event) => (
-            <Event key={event._id} data={event} hideRsvp={options.hideRsvp} />
+            <Event key={event._id} event={event} hideRsvp={options.hideRsvp} />
           ))}
         </React.Fragment>
       ))}
