@@ -11,5 +11,16 @@ declare module "meteor/meteor" {
     function userAsync(options?: {
       fields?: Mongo.FieldSpecifier | undefined;
     }): Promise<UserModel | null>;
+
+    function loginWithC3(
+      options?:
+        | (Meteor.LoginWithExternalServiceOptions & {
+            loginUrlParameters?: {
+              include_granted_scopes: boolean;
+            };
+          })
+        | undefined,
+      callback?: (error?: global_Error | Meteor.Error | Meteor.TypedError) => void,
+    ): void;
   }
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Mongo } from "meteor/mongo";
 import { Router } from "meteor/iron:router";
@@ -15,7 +15,9 @@ import { TileLayers } from "../../components/TileLayer";
 import { FullscreenControl } from "../../components/FullscreenControl";
 import { DivIcon } from "leaflet";
 import { isOnCustomMap } from "/imports/utils/isOnCustomMap";
+import { AutoInvalidateSize } from "/imports/ui/components/location/display/AutoInvalidateSize";
 
+import "leaflet/dist/leaflet.css";
 import "./styles.scss";
 
 export interface Data {
@@ -27,8 +29,13 @@ export function VenuesMap({ region: regionId, venues }: Data) {
   const { t } = useTranslation();
   const locale = useSession("locale");
   const [selectedVenue, setSelectedVenue] = useState("");
+  const [selectedLevel, setSelectedLevel] = useState<number | undefined>(undefined);
 
   const [isLoading, region] = useDetails(regionId || "-1");
+
+  useEffect(() => {
+    setSelectedLevel(region?.map?.defaultLevel);
+  }, [region]);
 
   if (isLoading()) {
     return null;
@@ -54,7 +61,13 @@ export function VenuesMap({ region: regionId, venues }: Data) {
 
   const markers = venues
     .fetch()
-    .filter((v) => !(!region && isOnCustomMap(v)))
+    .filter(
+      (v) =>
+        // when show all region: only show venue when not on custum map
+        (!region && isOnCustomMap(v)) ||
+        // when only a region with a custom map is shown: only show venue on the selected level
+        (region && isOnCustomMap(v) && v.level === selectedLevel),
+    )
     .map((v) => ({
       _id: v._id,
       loc: { lat: v.loc.coordinates[1], lng: v.loc.coordinates[0] },
@@ -88,6 +101,7 @@ export function VenuesMap({ region: regionId, venues }: Data) {
           ></Marker>
         </React.Fragment>
       ))}
+      <AutoInvalidateSize />
       <FullscreenControl />
     </>
   );
@@ -106,26 +120,27 @@ export function VenuesMap({ region: regionId, venues }: Data) {
           <div className="col-2 d-none d-md-block">
             {venues.count() > 0 ? (
               <div className="list-group">
-                {venues.map((venue) => (
-                  <a
-                    key={venue._id}
-                    href={Router.path("venueDetails", venue)}
-                    className={`list-group-item list-group-item-action list-group-item-primary ${
-                      selectedVenue === venue._id ? "active" : ""
-                    }`}
-                    onMouseEnter={() => {
-                      setSelectedVenue(venue._id);
-                    }}
-                    onMouseLeave={() => {
-                      setSelectedVenue("");
-                    }}
-                  >
-                    {venue.name}
-                    <div className="address">
-                      <small>{venue.address}</small>
-                    </div>
-                  </a>
-                ))}
+                {venues.map(function (venue) {
+                  const levelName = region?.map?.layers.find((l) => l.level === venue.level)?.name;
+                  return (
+                    <a
+                      key={venue._id}
+                      href={Router.path("venueDetails", venue)}
+                      className={`list-group-item list-group-item-action list-group-item-primary ${selectedVenue === venue._id ? "active" : ""}`}
+                      onMouseEnter={() => {
+                        setSelectedVenue(venue._id);
+                      }}
+                      onMouseLeave={() => {
+                        setSelectedVenue("");
+                      }}
+                    >
+                      {venue.name} {levelName ? <small>({levelName})</small> : ""}
+                      <div className="address">
+                        <small>{venue.address}</small>
+                      </div>
+                    </a>
+                  );
+                })}
               </div>
             ) : (
               t("venues.list.noneFound", "No venues found")
@@ -150,6 +165,7 @@ export function VenuesMap({ region: regionId, venues }: Data) {
               <RegionMapContainer
                 region={region._id}
                 bounds={markers.length > 0 ? (markers.map((mark) => mark.loc) as any) : undefined}
+                onLevelChange={(level) => setSelectedLevel(level)}
               >
                 {children}
               </RegionMapContainer>

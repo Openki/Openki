@@ -194,6 +194,32 @@ export function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => vo
                       </>
                     )}
                   </li>
+
+                  {venue.editableBy(user) && (
+                    <li>
+                      {venue.bookingIcal ? (
+                        <>
+                          <span className="fa-li">
+                            <i className="fa-solid fa-check" />
+                          </span>
+                          {t(
+                            "venue.details.bookingIcal.isSet",
+                            "A link to existing bookings is given.",
+                          )}
+                        </>
+                      ) : (
+                        <>
+                          <span className="fa-li">
+                            <i className="fa-solid fa-xmark" />
+                          </span>
+                          {t(
+                            "venue.details.bookingIcal.isNotSet",
+                            "No link to exisitng booking is known. Add a iCalendar link to show other users when your venue is booked or free.",
+                          )}
+                        </>
+                      )}
+                    </li>
+                  )}
                 </ul>
               </div>
               {!!venue.loc && !!venue.region && (
