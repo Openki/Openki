@@ -182,13 +182,6 @@ Router.route("api.0.xml", {
               .ele("url")
               .txt(event.link || "")
               .up()
-              .ele("recording")
-              .ele("license")
-              .up()
-              .ele("optout")
-              .txt("false")
-              .up()
-              .up()
               .ele("title")
               .txt(event.title)
               .up()
@@ -210,26 +203,32 @@ Router.route("api.0.xml", {
               .ele("attachements")
               .up();
 
-            let hasPerson = false;
-            const fields = event.course?.customFields;
-            if (typeof fields === `object`) {
-              const persons = eventNode.ele("persons");
-              fields.forEach((field: any) => {
-                if (field.name === `speaker`) {
-                  hasPerson = true;
-                  persons
-                    .ele("person", {
-                      id: toPseudoHash(field.value),
-                    })
-                    .txt(field.value);
-                }
-              });
+            function getCustomFieldValue(field: string) {
+              return event.course?.customFields?.find((f) => f.name === field)?.value;
             }
 
-            // If no custom field with speaker exists we use de group
-            if (!hasPerson) {
-              const persons = eventNode.ele("persons");
+            const recording = getCustomFieldValue("recording");
+            // optout (do not record flag) is true when the customfield is not setted or when recording is disabled
+            const optout = !(typeof recording === "boolean" && recording);
+            eventNode
+              .ele("recording")
+              .ele("license")
+              .up()
+              .ele("optout")
+              .txt("" + optout)
+              .up()
+              .up();
 
+            const persons = eventNode.ele("persons");
+            const speaker = getCustomFieldValue("speaker");
+            if (typeof speaker === "string" && speaker) {
+              persons
+                .ele("person", {
+                  id: toPseudoHash(speaker),
+                })
+                .txt(speaker);
+            } else {
+              // If no custom field with speaker exists we use the group
               event.groups.forEach((group) => {
                 persons
                   .ele("person", {
