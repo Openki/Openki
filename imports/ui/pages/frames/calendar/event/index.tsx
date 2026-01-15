@@ -8,11 +8,11 @@ import { useSiteName } from "/imports/utils/getSiteName";
 import { Router } from "meteor/iron:router";
 
 export interface Props {
-  data: EventModel;
+  event: EventModel;
   hideRsvp: boolean;
 }
 
-export function Event({ data, hideRsvp }: Props) {
+export function Event({ event, hideRsvp }: Props) {
   const { t } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
   const { timeFormat, fromNow } = useDateTimeFormat();
@@ -20,37 +20,35 @@ export function Event({ data, hideRsvp }: Props) {
   const siteName = useSiteName();
 
   function regionName() {
-    return Regions.findOne(data.region)?.name;
+    return Regions.findOne(event.region)?.name;
   }
   function getAttendees() {
-    return data.numberOfParticipants();
+    return event.numberOfParticipants();
   }
   function getTotalAvailableSeats() {
-    return data.maxParticipants || <>&#8734;</>;
+    return event.maxParticipants || <>&#8734;</>;
   }
   function isUnlimited() {
-    return !data.maxParticipants;
+    return !event.maxParticipants;
   }
 
   return (
-    <div className={`frame-list-item-event ${data.canceled ? "frame-list-item-canceled" : ""}`}>
+    <div className={`frame-list-item-event ${event.canceled ? "frame-list-item-canceled" : ""}`}>
       <div className="position-relative">
-        {new Date() > data.start && (
+        {new Date() > event.start && (
           <div className="text-primary">
             <i className="fa-solid fa-circle-play fa-fw" />{" "}
-            {t("frame.eventsList.started", "Started {FROMNOW}", { FROMNOW: fromNow(data.start) })}
+            {t("frame.eventsList.started", "Started {FROMNOW}", { FROMNOW: fromNow(event.start) })}
           </div>
         )}
         <h4
           className={`frame-list-item-header ${isExpanded ? "active" : ""} stretched-link`}
-          onClick={() => {
-            setIsExpanded(!isExpanded);
-          }}
+          onClick={() => setIsExpanded(!isExpanded)}
         >
           <span className="frame-list-item-toggle-indicator">
             <i className="fa-solid fa-angle-down" />
           </span>
-          {!hideRsvp && !data.noRsvp && (
+          {!hideRsvp && !event.noRsvp && (
             <div
               className="frame-list-free-seats"
               data-bs-title={
@@ -75,9 +73,9 @@ export function Event({ data, hideRsvp }: Props) {
           )}
 
           <span className={`frame-list-item-time ${isExpanded ? "hidden" : ""}`}>
-            {timeFormat(data.start)}
+            {timeFormat(event.start)}
           </span>
-          <strong>{data.title}</strong>
+          <strong>{event.title}</strong>
           {allRegions && (
             <span className="badge bg-primary frame-list-item-region">{regionName()}</span>
           )}
@@ -90,7 +88,7 @@ export function Event({ data, hideRsvp }: Props) {
               <strong>{t("frame.eventsList.when", "When:")}</strong>
             </div>
             <div className="col-8 col-sm-10">
-              {timeFormat(data.start)} - {timeFormat(data.end)}
+              {timeFormat(event.start)} - {timeFormat(event.end)}
             </div>
           </div>
           <div className="row">
@@ -98,26 +96,29 @@ export function Event({ data, hideRsvp }: Props) {
               <strong>{t("frame.eventsList.where", "Where:")}</strong>
             </div>
             <div className="col-8 col-sm-10">
-              {data.venue?._id ? (
-                <a href={Router.path("venueDetails", data.venue)} target="_blank" rel="noreferrer">
-                  {data.venue.name}
+              {event.venue?._id ? (
+                <a href={Router.path("venueDetails", event.venue)} target="_blank" rel="noreferrer">
+                  {event.venue.name}
                 </a>
               ) : (
-                data.venue?.name
+                event.venue?.name
               )}
-              {!!data.room && <> - {data.room}</>}
+              {!!event.room && <> - {event.room}</>}
             </div>
           </div>
           <div className="row">
             <div className="col-sm-2">
               <strong>{t("frame.eventsList.description", "Description:")}</strong>
             </div>
-            <div className="col-sm-10" dangerouslySetInnerHTML={{ __html: data.description }}></div>
+            <div
+              className="col-sm-10"
+              dangerouslySetInnerHTML={{ __html: event.description }}
+            ></div>
           </div>
           <div className="mt-2 d-grid d-sm-flex">
             <a
               className="btn btn-outline-dark"
-              href={Router.path("showEvent", data)}
+              href={Router.path("showEvent", event)}
               target="_blank"
               rel="noreferrer"
             >
