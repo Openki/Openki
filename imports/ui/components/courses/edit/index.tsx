@@ -686,7 +686,7 @@ export function Edit(props: Props) {
               <div className="form-label">{t("course.edit.intern", "Hide on front page")}</div>
               <FormCheck
                 id="course-edit-internal"
-                type="switch"
+                type="box"
                 label={t(
                   "course.edit.internDescription",
                   "Only show when looking at a group's courses",

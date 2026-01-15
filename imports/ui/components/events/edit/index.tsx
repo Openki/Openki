@@ -617,7 +617,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           <div className="mb-3">
             <FormCheck
               id="event-edit-no-rsvp"
-              type="switch"
+              type="box"
               label={t("event.edit.noRsvp", "No reservation required")}
               checked={noRsvpChecked}
               onChange={(checked) => setNoRsvpChecked(checked)}
@@ -652,7 +652,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           <div className="mb-3">
             <FormCheck
               id="event-edit-internal"
-              type="switch"
+              type="box"
               label={t("event.edit.internal", "Hide on front page")}
               additionalInformation={t(
                 "event.edit.internal.description",
@@ -692,7 +692,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             <div className="mb-3">
               <FormCheck
                 id="event-edit-send-reminder"
-                type="switch"
+                type="box"
                 label={t(
                   "event.edit.sendReminder",
                   "Send a reminder e-mail to all participants 24 hours before the event starts.",
