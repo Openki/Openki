@@ -42,7 +42,7 @@ export function Event({ event, hideRsvp }: Props) {
           </div>
         )}
         <h4
-          className={`frame-list-item-header ${isExpanded ? "active" : ""} stretched-link`}
+          className={`frame-list-item-header ${isExpanded ? "active" : ""}`}
           onClick={() => setIsExpanded(!isExpanded)}
         >
           <span className="frame-list-item-toggle-indicator">
