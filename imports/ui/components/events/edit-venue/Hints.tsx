@@ -8,6 +8,8 @@ import { EventVenueEntity } from "/imports/api/events/events";
 import { OtherEventsMessage } from "/imports/ui/components/events/edit/OtherEventsMessage";
 import { useFindParallelEvents } from "/imports/ui/components/events/edit/useFindParallelEvents";
 import { filterUserVenues } from "/imports/ui/components/events/edit-venue/search/SearchBase";
+import { useFindExternalParallelEvents } from "/imports/ui/components/events/edit/useFindExternalParallelEvents";
+import { Router } from "meteor/iron:router";
 
 function ContactHostHint() {
   const { t } = useTranslation();
@@ -41,8 +43,21 @@ export function Hints({
 
   const [venueIsLoading, venue] = useVenueDetails(eventVenue?._id || "-1");
   const parallelEvents = useFindParallelEvents(regionId, eventVenue?._id, event);
+  const externalParallelEvents = useFindExternalParallelEvents(regionId, eventVenue?._id, event);
 
-  const inSameRoom = parallelEvents.find(
+  const allParallelEvents = [
+    ...parallelEvents.map((e) => ({ ...e, url: Router.path("showEvent", e) })),
+    ...externalParallelEvents.map((e) => ({
+      _id: e.id,
+      title: e.summary,
+      room: e.location,
+      startLocal: e.start,
+      endLocal: e.end,
+      url: e.url,
+    })),
+  ];
+
+  const inSameRoom = allParallelEvents.find(
     (e) => e.room && event.room && e.room.toUpperCase() === event.room.toUpperCase(),
   );
 
@@ -57,7 +72,7 @@ export function Hints({
   if (venue) {
     return (
       <>
-        {venue.allowParallelEvents && parallelEvents.length > 0 && (
+        {venue.allowParallelEvents && allParallelEvents.length > 0 && (
           <div
             data-test="events-edit-venue-hint-parallel-events"
             className="alert alert-warning p-2"
@@ -72,7 +87,7 @@ export function Hints({
                 )}{" "}
               </>
             )}
-            <OtherEventsMessage events={parallelEvents} />
+            <OtherEventsMessage events={allParallelEvents} />
           </div>
         )}
 

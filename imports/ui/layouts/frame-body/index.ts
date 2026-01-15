@@ -87,5 +87,23 @@ template.onRendered(() => {
     });
   }
 
+  // fix for kiosk extension: prevent idle timeout if user make actions in iframe
+  // https://stackoverflow.com/questions/667555/how-to-detect-idle-time-in-javascript
+  function handleUserAction() {
+    const message = {
+      type: "onUserAction",
+    };
+    window.parent.postMessage(message, "*");
+    if (Meteor.isDevelopment) {
+      console.debug(`window.parent.postMessage(${JSON.stringify(message)})`);
+    }
+  }
+
+  window.addEventListener("load", handleUserAction, true);
+  const events = ["mousedown", "mousemove", "keypress", "scroll", "touchstart"];
+  events.forEach(function (name) {
+    document.addEventListener(name, handleUserAction, true);
+  });
+
   Tooltips.enable();
 });

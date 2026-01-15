@@ -25,6 +25,7 @@ import { EventModel, OEvent } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { SaveFields } from "/imports/api/events/methods";
 import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
+import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
 import { useAll as useRegions } from "/imports/api/regions/publications";
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 import { CourseCustomField } from "/imports/api/courses/courses";
@@ -41,9 +42,9 @@ import { EditVenue, Props as EditVenueProps } from "../edit-venue";
 import { EditStartEnd } from "./EditStartEnd";
 import { OtherEventsMessage } from "./OtherEventsMessage";
 import { UpdateAffectedReplica } from "./UpdateAffectedReplica";
-import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
 
 import { useFindParallelEvents } from "./useFindParallelEvents";
+import { useFindExternalParallelEvents } from "/imports/ui/components/events/edit/useFindExternalParallelEvents";
 
 import "./styles.scss";
 
@@ -185,6 +186,22 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     _id: event._id,
     ...changes,
   });
+  const externalParallelEvents = useFindExternalParallelEvents(selectedRegion, selectedVenue?._id, {
+    _id: event._id,
+    ...changes,
+  });
+
+  const allParallelEvents = [
+    ...parallelEvents.map((e) => ({ ...e, url: Router.path("showEvent", e) })),
+    ...externalParallelEvents.map((e) => ({
+      _id: e.id,
+      title: e.summary,
+      room: e.location,
+      startLocal: e.start,
+      endLocal: e.end,
+      url: e.url,
+    })),
+  ];
 
   const [errors, checkValidity, addError] = useValidation(
     {
@@ -255,14 +272,14 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       parallelEvents: {
         field: "startEndVenue",
         onCheckValidity: () =>
-          venueIsLoading() || !venue || venue.allowParallelEvents || parallelEvents.length === 0,
+          venueIsLoading() || !venue || venue.allowParallelEvents || allParallelEvents.length === 0,
         text: () => (
           <>
             {t(
               "event.edit.venue.parallelEvents.disallowed",
               "Parallel events in this venue are not allowed.",
             )}{" "}
-            <OtherEventsMessage events={parallelEvents} />{" "}
+            <OtherEventsMessage events={allParallelEvents} />{" "}
             {t("event.edit.venue.parallelEvents.pleaseChange", "Please change venue or time.")}
           </>
         ),
@@ -300,7 +317,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     // loads some resources, so calling checkValidity onChange make unexpected things
     checkValidity("startEndVenue");
     // only run when values that get checked are changed
-  }, [venue, parallelEvents]);
+  }, [venue, allParallelEvents]);
 
   function showRegionSelection() {
     return (
@@ -323,6 +340,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       region: selectedRegion as string,
       event: {
         _id: event._id,
+        courseId: event.courseId,
         room: changes.room,
         startLocal: changes.startLocal,
         endLocal: changes.endLocal,

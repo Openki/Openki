@@ -82,6 +82,7 @@ $external-servies: (
   google: #4285f4,
   facebook: #3b5998,
   github: #333,
+  c3: #fd8e07,
 );
 
 @each $color, $value in $external-servies {

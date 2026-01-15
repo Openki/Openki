@@ -6,7 +6,7 @@ import { UserEntity, Users } from "/imports/api/users/users";
 /**
  * Recalculate the groups and badges field
  */
-export async function updateBadges(userIdOrSelector: string | Mongo.Selector<UserEntity>) {
+export async function updateGroupsAndBadges(userIdOrSelector: string | Mongo.Selector<UserEntity>) {
   await Promise.all(
     await Users.find(userIdOrSelector).mapAsync(async (user) => {
       const groups = await Groups.find({ "members.user": user._id }).mapAsync((group) => group._id);

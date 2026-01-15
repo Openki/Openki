@@ -24,6 +24,7 @@ import "/imports/api/tenants/publications";
 import "/imports/api/users/users";
 import "/imports/api/users/methods";
 import "/imports/api/users/publications";
+import "/imports/api/venues/api";
 import "/imports/api/venues/methods";
 import "/imports/api/venues/publications";
 import "/imports/api/version/publications";

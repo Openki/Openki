@@ -4,6 +4,7 @@ import { Match, check } from "meteor/check";
 import { assignIn } from "lodash-es";
 
 import { UserModel } from "/imports/api/users/users";
+import { VenueEntity } from "/imports/api/venues/venues";
 
 import { Filtering } from "/imports/utils/filtering";
 import * as FileStorage from "/imports/utils/FileStorage";
@@ -73,11 +74,7 @@ export type GroupEntityDashboard = {
   };
 }[];
 
-export interface GroupVenueEntity {
-  _id: string;
-  name: string;
-  slug: string;
-}
+export type GroupVenueEntity = Pick<VenueEntity, "_id" | "name" | "slug">;
 
 /** DB-Model */
 export interface GroupEntity {

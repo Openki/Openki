@@ -1,5 +1,4 @@
-import moment from "moment";
-import { v5 as uuidv5 } from "uuid";
+import { v5 as uuidv5, validate as isValidUUID } from "uuid";
 import { create } from "xmlbuilder2";
 import { ApiEvent } from "/imports/Api";
 import { Router } from "meteor/iron:router";
@@ -7,36 +6,41 @@ import { FilteringReadError } from "/imports/utils/filtering";
 import { NoActionError, orderedResults } from "./api.routes.utils";
 import { textPlain } from "/imports/utils/html-tools";
 import { Regions } from "/imports/api/regions/regions";
+import { LocalTime, Zone } from "/imports/utils/local-time";
 
 const OPENKI_UUID_NAMESPACE = "bfcc029a-5d16-4863-af43-17277e2e717b";
 
-const sortByTimeAndRoom = (results: ApiEvent[]) =>
-  results.reduce((accumulator: Record<string, Record<string, ApiEvent[]>>, current: ApiEvent) => {
-    const currentDate = moment(current.start).format("YYYY-MM-DD");
+function sortByTimeAndRoom(regionZone: Zone, results: ApiEvent[]) {
+  return results.reduce(
+    (accumulator: Record<string, Record<string, ApiEvent[]>>, current: ApiEvent) => {
+      const currentDate = regionZone.fromString(current.startLocal).format("YYYY-MM-DD");
 
-    let currentRoom;
-    if (current.venue?.name && current.room) {
-      currentRoom = `${current.venue?.name} (${current.room})`;
-    } else {
-      currentRoom = current.venue?.name || current.room;
-    }
-
-    if (currentDate in accumulator) {
-      const dateEvents = accumulator[currentDate];
-      if (currentRoom in dateEvents) {
-        dateEvents[currentRoom].push(current);
+      let currentRoom;
+      if (current.venue?.name && current.room) {
+        currentRoom = `${current.venue?.name} (${current.room})`;
       } else {
-        dateEvents[currentRoom] = [current];
+        currentRoom = current.venue?.name || current.room;
       }
-    } else {
-      accumulator[currentDate] = {
-        [currentRoom]: [current],
-      };
-    }
-    return accumulator;
-  }, {});
 
-const xmlSendResponder = async function (res: any, process: any) {
+      if (currentDate in accumulator) {
+        const dateEvents = accumulator[currentDate];
+        if (currentRoom in dateEvents) {
+          dateEvents[currentRoom].push(current);
+        } else {
+          dateEvents[currentRoom] = [current];
+        }
+      } else {
+        accumulator[currentDate] = {
+          [currentRoom]: [current],
+        };
+      }
+      return accumulator;
+    },
+    {},
+  );
+}
+
+async function xmlSendResponder(res: any, process: any) {
   try {
     const body = await process();
     res.statusCode = 200;
@@ -61,17 +65,25 @@ const xmlSendResponder = async function (res: any, process: any) {
     }
     res.end(JSON.stringify(body, null, "\t"));
   }
-};
+}
 
-const pseudoHash = function (str: string) {
+function toPseudoHash(value: string) {
   let hash = 0;
-  for (let i = 0, len = str.length; i < len; i += 1) {
-    const chr = str.charCodeAt(i);
+  for (let i = 0, len = value.length; i < len; i += 1) {
+    const chr = value.charCodeAt(i);
     hash = (hash << 5) - hash + chr;
     hash |= 0; // Convert to 32bit integer
   }
   return hash < 0 ? hash * -1 : hash;
-};
+}
+
+function asUuid(value: string) {
+  if (isValidUUID(value)) {
+    return value;
+  }
+
+  return uuidv5(value, OPENKI_UUID_NAMESPACE);
+}
 
 Router.route("api.0.xml", {
   path: "/api/0/xml/schedule",
@@ -80,11 +92,16 @@ Router.route("api.0.xml", {
     await xmlSendResponder(this.response, async () => {
       const region = await Regions.findOneAsync({ _id: this.params.query.region });
 
+      if (!region) {
+        throw new Meteor.Error("region requried", "The region param must be given.");
+      }
+      const regionZone = await LocalTime.zoneAsync(region._id);
+
       // Hide canceled events in schedule
       this.params.query.canceled = this.params.query.canceled ?? "0";
       const results = await orderedResults(this.params, "events");
 
-      const resultsByTimeAndRoom = sortByTimeAndRoom(results);
+      const resultsByTimeAndRoom = sortByTimeAndRoom(regionZone, results);
 
       const scheduleNode = create({ version: "1.0" }).ele("schedule", {
         "xsi:noNamespaceSchemaLocation": "https://c3voc.de/schedule/schema.xsd",
@@ -120,15 +137,23 @@ Router.route("api.0.xml", {
       for (const [date, dateEvents] of Object.entries(resultsByTimeAndRoom)) {
         const dayNode = scheduleNode.ele("day", {
           date,
-          end: moment(date).add(1, "day").startOf("day").format("YYYY-MM-DDTHH:mm:ssZ"),
+          end: regionZone
+            .fromString(date)
+            .add(1, "day")
+            .startOf("day")
+            .format("YYYY-MM-DDTHH:mm:ssZ"),
           index: dayIdx,
-          start: moment(date).startOf("day").format("YYYY-MM-DDTHH:mm:ssZ"),
+          start: regionZone.fromString(date).startOf("day").format("YYYY-MM-DDTHH:mm:ssZ"),
         });
 
         dayIdx += 1;
         for (const [room, roomEvents] of Object.entries(dateEvents)) {
+          const roomId = roomEvents.find((e) => e.venue?.id)?.venue?.id;
+
           const roomNode = dayNode.ele("room", {
             name: room,
+            // use venue id for uuid if none is set use venue name to generate a uuid
+            guid: asUuid(roomId || room),
           });
 
           roomEvents.forEach((event) => {
@@ -136,14 +161,14 @@ Router.route("api.0.xml", {
             const duration = `${Math.floor(event.duration / 60)}:${durationMinutes}`;
             const eventNode = roomNode
               .ele("event", {
-                id: pseudoHash(event.id),
-                guid: uuidv5(event.id, OPENKI_UUID_NAMESPACE),
+                id: toPseudoHash(event.id),
+                guid: asUuid(event.id),
               })
               .ele("date")
-              .txt(moment(event.startLocal).format("YYYY-MM-DDTHH:mm:ssZ"))
+              .txt(regionZone.fromString(event.startLocal).format("YYYY-MM-DDTHH:mm:ssZ"))
               .up()
               .ele("start")
-              .txt(moment(event.startLocal).format("HH:mm"))
+              .txt(regionZone.fromString(event.startLocal).format("HH:mm"))
               .up()
               .ele("duration")
               .txt(duration)
@@ -194,7 +219,7 @@ Router.route("api.0.xml", {
                   hasPerson = true;
                   persons
                     .ele("person", {
-                      id: pseudoHash(field.value),
+                      id: toPseudoHash(field.value),
                     })
                     .txt(field.value);
                 }

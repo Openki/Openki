@@ -6,6 +6,7 @@ import { Regions } from "/imports/api/regions/regions";
 import { VenueEntity, Venues } from "/imports/api/venues/venues";
 import * as userVenuesDenormalizer from "../users/venuesDenormalizer";
 import * as groupVenuesDenormalizer from "/imports/api/groups/venuesDenormalizer";
+import * as eventVenueDenormalizer from "/imports/api/events/venueDenormalizer";
 
 import { HtmlString, StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";
 import * as HtmlTools from "/imports/utils/html-tools";
@@ -45,6 +46,7 @@ export const SaveFieldPattern = {
   otherFacilities: Match.Optional(String),
   restrictedUse: Match.Optional(Boolean),
   allowParallelEvents: Match.Optional(Boolean),
+  bookingIcal: Match.Optional(String),
 };
 export type SaveFields = Type<typeof SaveFieldPattern>;
 
@@ -120,6 +122,10 @@ export const save = ServerMethod(
       set.allowParallelEvents = changes.allowParallelEvents;
     }
 
+    if (changes.bookingIcal !== undefined) {
+      set.bookingIcal = changes.bookingIcal.substring(0, 40 * 1024);
+    }
+
     if (isNew) {
       /* region cannot be changed */
       const region = await Regions.findOneAsync(changes.region);
@@ -139,6 +145,9 @@ export const save = ServerMethod(
       userVenuesDenormalizer.afterVenueCreate(venueId, user._id);
     } else {
       await Venues.updateAsync({ _id: venueId }, { $set: set });
+
+      await eventVenueDenormalizer.updateVenue({ "venue._id": venueId });
+      await groupVenuesDenormalizer.afterVenueUpdate(venueId);
     }
 
     return venueId;
@@ -154,7 +163,11 @@ export const remove = ServerMethod("venue.remove", async (venueId: string) => {
   await userVenuesDenormalizer.beforeVenueRemove(venue);
   await groupVenuesDenormalizer.beforeVenueRemove(venue);
 
-  return Venues.removeAsync(venueId);
+  const result = await Venues.removeAsync(venueId);
+
+  await eventVenueDenormalizer.updateVenue({ "venue._id": venueId });
+
+  return result;
 });
 
 export const addEditGroup = ServerMethod(

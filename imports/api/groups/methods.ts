@@ -6,7 +6,7 @@ import { assignIn } from "lodash-es";
 import { Users } from "/imports/api/users/users";
 import * as timeLastEditDenormalizer from "/imports/api/groups/timeLastEditDenormalizer";
 import * as courseGroupsDenormalizer from "/imports/api/courses/groupsDenormalizer";
-import * as userBadgesDenormalizer from "/imports/api/users/badgesDenormalizer";
+import * as userGroupsAndBadgesDenormalizer from "../users/groupsAndBadgesDenormalizer";
 import * as userVenuesDenormalizer from "/imports/api/users/venuesDenormalizer";
 import { Group, GroupEntity, GroupModel, Groups } from "./groups";
 
@@ -91,7 +91,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
 
   if (group.isNew()) {
     groupId = await Groups.insertAsync(assignIn(group, updates));
-    await userBadgesDenormalizer.updateBadges(user._id);
+    await userGroupsAndBadgesDenormalizer.updateGroupsAndBadges(user._id);
   } else {
     updates = timeLastEditDenormalizer.beforeUpdate(updates);
     await Groups.updateAsync(group._id, { $set: updates });
@@ -198,7 +198,7 @@ export const remove = ServerMethod("group.remove", async (groupId: string) => {
   // Update list of organizers per course
   await courseGroupsDenormalizer.updateGroups({ groups: groupId });
   // Update List of badges per user
-  await userBadgesDenormalizer.updateBadges(user._id);
+  await userGroupsAndBadgesDenormalizer.updateGroupsAndBadges({ groups: groupId });
 });
 
 export const updateMembership = ServerMethod(
@@ -242,7 +242,7 @@ export const updateMembership = ServerMethod(
       await userVenuesDenormalizer.afterGroupRemoveMember(userId, group);
     }
 
-    await userBadgesDenormalizer.updateBadges(user._id);
+    await userGroupsAndBadgesDenormalizer.updateGroupsAndBadges(user._id);
   },
 );
 export const toggleMemberNotify = ServerMethod(

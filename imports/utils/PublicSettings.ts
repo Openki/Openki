@@ -57,7 +57,7 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
   sendReminderPreset: Boolean,
   feature: {
     /** toggle visibility of login services */
-    login: { email: Boolean, google: Boolean, facebook: Boolean, github: Boolean },
+    login: { email: Boolean, google: Boolean, facebook: Boolean, github: Boolean, c3: Boolean },
     /** allow user without password */
     visitorUser: Boolean,
     /** allow rsvp with +1 / for two seats */
@@ -220,7 +220,7 @@ const defaults = {
   askNewsletterConsent: true,
   sendReminderPreset: true,
   feature: {
-    login: { google: false, facebook: false, github: false, email: true },
+    login: { email: true, google: false, facebook: false, github: false, c3: false },
     visitorUser: false,
     rsvpWithCompanions: false,
     sendReminderIsEditable: true,
@@ -277,6 +277,10 @@ const publicSettings = merge(defaults, Meteor.settings.public);
 
 // seperate merge of matomo to make jsPath and phpPath optional
 publicSettings.matomo = { ...defaults.matomo, ...Meteor.settings.public.matomo };
+
+// override default from socialMediaButtons
+publicSettings.feature.socialMediaButtons =
+  Meteor.settings.public.feature.socialMediaButtons || defaults.feature.socialMediaButtons;
 
 /**
  * Get access to some settings from the `Meteor.settings.public` enriched with default values.

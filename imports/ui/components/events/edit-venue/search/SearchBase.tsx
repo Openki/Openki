@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { EJSON } from "meteor/ejson";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
-import { intersectionBy, differenceBy } from "lodash-es";
+import { differenceBy, uniqBy } from "lodash-es";
 
 import { UserModel } from "/imports/api/users/users";
 import * as Alert from "/imports/api/alerts/alert";
@@ -22,15 +22,15 @@ import {
 import { ReactJoin } from "../../../../../utils/ReactJoin";
 import { Icon as VenueIcon } from "../../../venues/Icon";
 
-function toEventVenue(v: EventVenueEntity) {
+function toEventVenue(venue: EventVenueEntity) {
   return {
-    _id: v._id,
-    name: v.name,
-    loc: v.loc,
-    level: v.level,
-    address: v.address,
-    editor: v.editor,
-    restrictedUse: v.restrictedUse,
+    _id: venue._id,
+    name: venue.name,
+    loc: venue.loc,
+    level: venue.level,
+    address: venue.address,
+    editor: venue.editor,
+    restrictedUse: venue.restrictedUse,
   } as EventVenueEntity;
 }
 
@@ -50,21 +50,20 @@ function CustomMenu({
 }: {
   region: string;
   text: string;
-  results: any[];
+  results: EventVenueEntity[];
   menuProps: RenderMenuProps;
 }) {
   const { t } = useTranslation();
   const user = useUser();
   const [isLoading, region] = Regions.useDetails(regionId);
 
-  let vs = results as EventVenueEntity[];
-  const userVenues = filterUserVenues(user, vs);
-  const uvs = intersectionBy(vs, userVenues, (v) => v._id);
-  vs = differenceBy(vs, uvs, (v) => v._id);
+  const userVenues = filterUserVenues(user, results);
+
+  const venues = differenceBy(results, userVenues, (v) => v._id);
 
   return (
     <Menu {...menuProps} id="event-venue">
-      {vs.length === 0 && (
+      {venues.length === 0 && (
         <>
           <BaseMenuItem disabled role="option">
             {menuProps.emptyLabel}
@@ -72,9 +71,9 @@ function CustomMenu({
           <Menu.Divider />
         </>
       )}
-      {uvs.length > 0 && (
+      {userVenues.length > 0 && (
         <>
-          {uvs.map((venue, index) => (
+          {userVenues.map((venue, index) => (
             <MenuItem
               key={index}
               option={venue}
@@ -88,13 +87,13 @@ function CustomMenu({
           <Menu.Divider />
         </>
       )}
-      {vs.length > 0 && (
+      {venues.length > 0 && (
         <>
-          {vs.map((venue, index) => (
+          {venues.map((venue, index) => (
             <MenuItem
-              key={index + uvs.length}
+              key={index + userVenues.length}
               option={venue}
-              position={index + uvs.length}
+              position={index + userVenues.length}
               className={
                 venue._id
                   ? !venue.restrictedUse
@@ -125,8 +124,12 @@ function CustomMenu({
         </>
       )}
       <MenuItem
-        option={isLoading() ? {} : ({ loc: region?.loc, name: text } as EventVenueEntity)}
-        position={uvs.length + uvs.length + 1}
+        option={
+          isLoading()
+            ? {}
+            : ({ loc: region?.map?.center || region?.loc, name: text } as EventVenueEntity)
+        }
+        position={userVenues.length + userVenues.length + 1}
       >
         <i className="fa-solid fa-location-pin fa-fw" />{" "}
         {t("location.setMeetingPoint", "Just set a point on the map")}
@@ -149,14 +152,17 @@ function CustomMenu({
 export function SearchBase({
   id,
   autofocus,
-  regionId,
+  region,
+  venues: venueIds,
   onRequest,
   value,
   onChange,
 }: {
   id: string;
   autofocus?: boolean | undefined;
-  regionId: string;
+  region: string;
+  /** A selection of venues proposed to the user. */
+  venues: string[];
   onRequest: (query: string) => Promise<EventVenueEntity[]>;
   value: EventVenueEntity | undefined;
   onChange: (newValue: EventVenueEntity) => void;
@@ -166,8 +172,9 @@ export function SearchBase({
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const [isLoadingVenues, venues] = Venues.useFindFilter({ region: regionId });
-  const [options, setOptions] = useState<EventVenueEntity[]>(filterUserVenues(user, venues));
+  const [isLoadingAllVenues, allVenues] = Venues.useFindFilter({ region: region });
+
+  const [options, setOptions] = useState<EventVenueEntity[]>([]);
 
   const handleSearch = async (query: string) => {
     setIsLoading(true);
@@ -176,7 +183,7 @@ export function SearchBase({
       const request = onRequest(query);
 
       query = query.toUpperCase();
-      const filteredVenues = venues
+      const filteredVenues = allVenues
         .filter((venue) =>
           `${venue.short}, ${venue.name}, ${venue.address}`.toUpperCase().includes(query),
         )
@@ -192,10 +199,12 @@ export function SearchBase({
   };
 
   useEffect(() => {
-    setOptions(filterUserVenues(user, venues));
-  }, [EJSON.stringify([user, venues] as any)]);
+    const userVenues = filterUserVenues(user, allVenues);
+    const venues = allVenues.filter((v) => venueIds.includes(v._id)).map(toEventVenue);
+    setOptions(uniqBy([...userVenues, ...venues], (v) => v._id));
+  }, [EJSON.stringify([user, venueIds, allVenues] as any)]);
 
-  if (isLoadingVenues()) {
+  if (isLoadingAllVenues()) {
     return null;
   }
 
@@ -228,7 +237,12 @@ export function SearchBase({
         return <TypeaheadInputSingle {...commonProps} type="search" autoFocus={autofocus} />;
       }}
       renderMenu={(results, menuProps, state) => (
-        <CustomMenu region={regionId} results={results} menuProps={menuProps} text={state.text} />
+        <CustomMenu
+          region={region}
+          results={results as EventVenueEntity[]}
+          menuProps={menuProps}
+          text={state.text}
+        />
       )}
       onChange={(newValue) => onChange(newValue[0] as EventVenueEntity)}
     />

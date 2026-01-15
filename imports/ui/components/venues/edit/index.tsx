@@ -53,6 +53,7 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
     otherFacilities: venue.otherFacilities,
     restrictedUse: venue.restrictedUse,
     allowParallelEvents: venue.allowParallelEvents,
+    bookingIcal: venue.bookingIcal,
     selectedRegion: venue.region,
     loc: venue.loc as Geodata | undefined,
     level: venue.level,
@@ -159,6 +160,9 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
       maxWorkplaces: changes.maxWorkplaces,
       facilities: changes.facilities,
     };
+    if (changes.otherFacilities !== undefined) {
+      changes1.otherFacilities = changes.otherFacilities;
+    }
     if (changes.level !== undefined) {
       changes1.level = changes.level;
     }
@@ -168,8 +172,8 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
     if (changes.allowParallelEvents !== undefined) {
       changes1.allowParallelEvents = changes.allowParallelEvents;
     }
-    if (changes.otherFacilities) {
-      changes1.otherFacilities = changes.otherFacilities;
+    if (changes.bookingIcal !== undefined) {
+      changes1.bookingIcal = changes.bookingIcal;
     }
 
     if (isNew) {
@@ -227,7 +231,7 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
   };
 
   const selectedRegion = regions.find((r) => r._id === changes.selectedRegion);
-  const mapCenter = selectedRegion?.map?.center.coordinates || selectedRegion?.loc?.coordinates;
+  const mapCenter = selectedRegion?.map?.center?.coordinates || selectedRegion?.loc?.coordinates;
 
   if (isRegionsLoading()) {
     return null;
@@ -367,6 +371,17 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
             onChange={(checked) =>
               setChanges((prevState) => ({ ...prevState, allowParallelEvents: checked }))
             }
+          />
+        </div>
+        <div className="mb-3">
+          <FormControl
+            id="venue.edit.bookingIcalUrl"
+            type="url"
+            label={t("venue.edit.bookingIcalUrl.label", "iCalendar url for existings bookings")}
+            optional
+            placeholder={t("venue.edit.bookingIcalUrl.placeholder", "https://....ics")}
+            value={changes.bookingIcal || ""}
+            onChange={(value) => setChanges((prevState) => ({ ...prevState, bookingIcal: value }))}
           />
         </div>
         <div className="mb-3">

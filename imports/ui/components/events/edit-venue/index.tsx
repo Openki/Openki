@@ -1,7 +1,10 @@
 import React, { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { chain, isEmpty } from "lodash-es";
 
 import { EventVenueEntity } from "/imports/api/events/events";
+import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
+import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
 
 import { Display } from "../../location/display";
 import { VenueTag } from "../../venues/link";
@@ -17,6 +20,7 @@ export interface Props {
   value?: EventVenueEntity | undefined;
   event: {
     _id?: string | undefined;
+    courseId?: string | undefined;
     room?: string | undefined;
     startLocal: string;
     endLocal: string;
@@ -27,12 +31,21 @@ export interface Props {
 
 export function EditVenue({ region: regionId, event, value, onChange, errors }: Props) {
   const { t } = useTranslation();
-
   const [autofocusOnSearch, setAutoFocusOnSearch] = useState(false);
+
+  const [isCourseLoading, course] = useCourseDetails({ when: !!event?.courseId }, event?.courseId);
+  const [groupsIsLoading, groups] = useGroupsFindFilter(
+    { when: !!course?.groupOrganizers },
+    { ids: course?.groupOrganizers },
+  );
+
+  if (isCourseLoading() || groupsIsLoading()) {
+    return null;
+  }
 
   return (
     <>
-      {!value ? (
+      {!value || isEmpty(value) ? (
         <div className="mb-3">
           <label className="form-label" htmlFor="event-edit-venue-search">
             {t("course.event.edit.location", "Venue")} <small>{t("_inputField.optional")}</small>
@@ -40,7 +53,12 @@ export function EditVenue({ region: regionId, event, value, onChange, errors }: 
           <Search
             id="event-edit-venue-search"
             autofocus={autofocusOnSearch}
-            regionId={regionId}
+            region={regionId}
+            venues={chain(groups)
+              .flatMap((g) => g.venues)
+              .filter((v) => !!v)
+              .map((v) => v._id)
+              .value()}
             value={value}
             onChange={onChange}
           />
@@ -106,9 +124,11 @@ export function EditVenue({ region: regionId, event, value, onChange, errors }: 
           {!errors.venue && !errors.startEndVenue && (
             <Hints regionId={regionId} event={event} venue={value} />
           )}
-          <div className="mb-3">
-            <Timetable regionId={regionId} event={event} venueId={value._id} />
-          </div>
+          {!!value._id && (
+            <div className="mb-3">
+              <Timetable regionId={regionId} event={event} venueId={value._id} />
+            </div>
+          )}
           {!!value.loc && (
             <div className="mb-3">
               {!value._id ? (

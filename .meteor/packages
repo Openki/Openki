@@ -12,6 +12,7 @@ shell-server@0.6.2            # Server-side component of the `meteor shell` comm
 session@1.2.2
 mdg:validation-error
 dynamic-import@0.7.4
+ostrio:cookies
 
 # Accounts
 accounts-password@3.2.1
@@ -22,7 +23,9 @@ accounts-github@1.5.1
 facebook-config-ui@1.0.4
 google-config-ui@1.0.4
 github-config-ui@1.0.3
-service-configuration@1.3.5
+service-configuration
+oauth2
+oauth
 
 # UI
 blaze-html-templates            # Compile .html files into Meteor Blaze views

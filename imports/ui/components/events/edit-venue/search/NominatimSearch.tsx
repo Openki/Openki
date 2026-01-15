@@ -60,13 +60,15 @@ async function requestVenuesFromNominatim(
 export function NominatimSearch({
   id,
   autofocus,
-  regionId,
+  region: regionId,
+  venues,
   value,
   onChange,
 }: {
   id: string;
   autofocus?: boolean | undefined;
-  regionId: string;
+  region: string;
+  venues: string[];
   value: EventVenueEntity | undefined;
   onChange: (newValue: EventVenueEntity) => void;
 }) {
@@ -84,7 +86,8 @@ export function NominatimSearch({
     <SearchBase
       id={id}
       autofocus={autofocus}
-      regionId={regionId}
+      region={regionId}
+      venues={venues}
       onRequest={handleRequest}
       value={value}
       onChange={onChange}
