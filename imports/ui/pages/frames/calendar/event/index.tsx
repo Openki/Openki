@@ -7,7 +7,12 @@ import { useSessionEquals } from "/imports/utils/react-meteor-data";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { Router } from "meteor/iron:router";
 
-export function Event({ data }: { data: EventModel }) {
+export interface Props {
+  data: EventModel;
+  hideRsvp: boolean;
+}
+
+export function Event({ data, hideRsvp }: Props) {
   const { t } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
   const { timeFormat, fromNow } = useDateTimeFormat();
@@ -45,7 +50,7 @@ export function Event({ data }: { data: EventModel }) {
           <span className="frame-list-item-toggle-indicator">
             <i className="fa-solid fa-angle-down" />
           </span>
-          {!data.noRsvp && (
+          {!hideRsvp && !data.noRsvp && (
             <div
               className="frame-list-free-seats"
               data-bs-title={
