@@ -4,7 +4,12 @@ import { useTranslation } from "react-i18next";
 import { uniq, chain, fromPairs, union } from "lodash-es";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { CourseMemberEntity, CourseModel, Courses, isPrivate } from "/imports/api/courses/courses";
+import {
+  CourseMemberEntity,
+  CourseModel,
+  FindParams,
+  isPrivate,
+} from "/imports/api/courses/courses";
 import * as CoursesMethods from "/imports/api/courses/methods";
 import { Regions } from "/imports/api/regions/regions";
 import { Roles } from "/imports/api/roles/roles";
@@ -37,6 +42,7 @@ import { Header } from "./Header";
 import { FindHeader } from "./FindHeader";
 import { AlertMessage } from "./AlertMessage";
 import { FormControl } from "/imports/ui/components/form-control";
+import { useFiltering } from "/imports/utils/filtering";
 
 import "./styles.scss";
 
@@ -53,7 +59,7 @@ export type Props = {
   singleEvent?: boolean;
   hideCategories?: boolean;
   internal?: boolean;
-  filter?: ReturnType<(typeof Courses)["Filtering"]>;
+  coursesQuery?: ReturnType<typeof useFiltering<typeof FindParams>>["asQuery"];
 } & Partial<CourseModel>;
 
 export function Edit(props: Props) {
@@ -513,8 +519,8 @@ export function Edit(props: Props) {
   return (
     <div className="edit-page">
       <form noValidate onSubmit={handleSave}>
-        {props.filter ? (
-          <FindHeader {...{ ...props, filter: props.filter }} />
+        {props.coursesQuery ? (
+          <FindHeader {...props} coursesQuery={props.coursesQuery} />
         ) : (
           <Header {...props} />
         )}

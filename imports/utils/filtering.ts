@@ -1,5 +1,7 @@
 import { Tracker } from "meteor/tracker";
 import { ParamWrapper, Predicate } from "imports/utils/predicates";
+import { useEffect, useMemo } from "react";
+import { useTracker } from "meteor/react-meteor-data";
 
 export class FilteringReadError {
   constructor(
@@ -89,12 +91,12 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
     return this;
   }
 
-  remove(name: keyof T, param?: string) {
+  remove<N extends keyof T>(name: N, param: GetPredicateT3<T[N]> | string) {
     try {
       if (!this._availablePredicates[name]) {
         throw new FilteringReadError("", `No predicate ${name as string}`);
       }
-      const toRemove = this._availablePredicates[name](param as any);
+      const toRemove = this._availablePredicates[name](param);
 
       const predicate = this._predicates[name];
       if (predicate) {
@@ -117,16 +119,16 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
   /** eg. for flag */
   toggle(name: keyof T): Filtering<T>;
 
-  /** eg. for string and id */
-  toggle(name: keyof T, param: string): Filtering<T>;
+  /** eg. for ids and enums */
+  toggle<N extends keyof T>(name: N, param: GetPredicateT3<T[N]> | string): Filtering<T>;
 
-  toggle(name: keyof T, param?: string) {
+  toggle<N extends keyof T>(name: N, param?: GetPredicateT3<T[N]> | string) {
     if (!param) {
       // overload: toggle(name)
       if (this.get(name)) {
         this.disable(name);
       } else {
-        this.add(name, "1");
+        this.enable(name);
       }
     }
     // overload: toggle(name, param)
@@ -136,6 +138,11 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
       this.add(name, param);
     }
 
+    return this;
+  }
+
+  enable(name: keyof T) {
+    this.add(name, "1");
     return this;
   }
 
@@ -171,4 +178,37 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
     });
     return query;
   }
+}
+
+export function useFiltering<T extends Record<string, Predicate<any>>>(
+  predicates: T,
+  params: Partial<{ [name in keyof T]: string | undefined }>,
+) {
+  const filter = useMemo(() => new Filtering(predicates), [predicates]);
+
+  useEffect(() => {
+    filter.read(params);
+  }, [filter, params]);
+
+  return {
+    add: <N extends keyof T>(name: N, param: GetPredicateT3<T[N]> | string) =>
+      filter.add(name, param),
+    remove: <N extends keyof T>(name: N, param: GetPredicateT3<T[N]> | string) =>
+      filter.remove(name, param),
+    toggle: <N extends keyof T>(name: N, param?: GetPredicateT3<T[N]> | string) => {
+      if (param === undefined) {
+        filter.toggle(name);
+      } else {
+        filter.toggle(name, param);
+      }
+    },
+    enable: (name: keyof T) => {
+      filter.enable(name);
+    },
+    disable: (name: keyof T) => {
+      filter.disable(name);
+    },
+    asQuery: useTracker(() => filter.toQuery()),
+    asParams: useTracker(() => filter.toParams()),
+  };
 }
