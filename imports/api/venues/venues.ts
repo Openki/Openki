@@ -48,6 +48,7 @@ export interface VenueEntity {
   restrictedUse?: boolean;
   /** This venue allow overlapping events. */
   allowParallelEvents: boolean;
+  /** A url to an ical calendar with existing reservations for this venue */
   bookingIcal?: string;
   createdby: string;
   created: Date;

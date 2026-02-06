@@ -88,13 +88,13 @@ export function SendMessage(props: Props) {
       {user?.hasVerifiedEmail() ? (
         <>
           <FormCheck
-            type="switch"
+            type="box"
             id="send-message-send-copy"
             label={t("profile.mail.copy", "Send me a copy of this message")}
             onChange={(checked) => setSendCopy(checked)}
           />
           <FormCheck
-            type="switch"
+            type="box"
             id="send-message-reveal-address"
             label={t("profile.mail.attachmail", "Attach my e-mail address")}
             onChange={(checked) => setRevealAddress(checked)}

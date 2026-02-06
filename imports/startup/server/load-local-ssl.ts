@@ -1,4 +1,6 @@
-if (Meteor.isDevelopment) {
+import { LocalhostSsl } from "/imports/utils/LocalhostSsl";
+
+if (LocalhostSsl) {
   //@ts-expect-error loadLocalSSL not in typings
   SSL(
     `-----BEGIN PRIVATE KEY-----

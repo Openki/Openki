@@ -24,6 +24,9 @@ export function useFindExternalParallelEvents(
   const end = regionZone?.fromString(event.endLocal).toDate();
 
   useEffect(() => {
+    if (!venueId) {
+      return;
+    }
     (async () => {
       const params = new URLSearchParams();
       params.append("start", start?.toISOString() || "");
