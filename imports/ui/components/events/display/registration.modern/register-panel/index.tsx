@@ -84,7 +84,7 @@ export function RegisterPanel({ event, onRegister }: Props) {
               <div className="mb-2">
                 <FormCheck
                   id="register-with-companions"
-                  type="switch"
+                  type="box"
                   label={t(
                     "event.details.register-with-companions",
                     "I want to reserve for two persons.",

@@ -185,6 +185,18 @@ export const FindFilterPattern = {
 };
 export type FindFilter = Type<typeof FindFilterPattern>;
 
+export const FindParams = {
+  region: Predicates.id,
+  group: Predicates.string,
+  search: Predicates.string,
+  state: Predicates.createEnumsPredicate("proposal", "resting", "upcomingEvent"),
+  categories: Predicates.ids,
+  needsRole: Predicates.createEnumsPredicate("host", "mentor", "team"),
+  internal: Predicates.flag,
+  archived: Predicates.flag,
+  userInvolved: Predicates.string,
+};
+
 export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseModel> {
   constructor() {
     super("Courses", {
@@ -219,17 +231,7 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
   }
 
   Filtering() {
-    return new Filtering({
-      region: Predicates.id,
-      group: Predicates.string,
-      search: Predicates.string,
-      state: Predicates.createEnumsPredicate("proposal", "resting", "upcomingEvent"),
-      categories: Predicates.ids,
-      needsRole: Predicates.createEnumsPredicate("host", "mentor", "team"),
-      internal: Predicates.flag,
-      archived: Predicates.flag,
-      userInvolved: Predicates.string,
-    });
+    return new Filtering(FindParams);
   }
 
   /**

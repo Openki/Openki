@@ -1,35 +1,35 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Courses } from "/imports/api/courses/courses";
+
 import { useFindFilter as useCoursesFindFilter } from "/imports/api/courses/publications";
 import { Header } from "./Header";
+import { useFiltering } from "/imports/utils/filtering";
+import { FindParams } from "/imports/api/courses/courses";
 
 export interface Props {
   _id?: string;
   isFrame?: boolean;
   group?: string;
-  filter: ReturnType<(typeof Courses)["Filtering"]>;
+  coursesQuery: ReturnType<typeof useFiltering<typeof FindParams>>["asQuery"];
 }
 
 export function FindHeader(props: Props) {
-  const { filter } = props;
   const { t } = useTranslation();
 
-  const filterQuery = filter.toQuery();
-  const [coursesIsLoading, courses] = useCoursesFindFilter(filterQuery);
+  const [coursesIsLoading, courses] = useCoursesFindFilter(props.coursesQuery);
 
   function proposeFromQuery() {
-    const { search } = filterQuery;
+    const { search } = props.coursesQuery;
     if (!search) {
       return false;
     }
 
-    return courses.length === 0 && search;
+    return courses.length === 0 && !!search;
   }
   function courseSearch() {
-    const filterParams = filter.toParams();
+    const { search } = props.coursesQuery;
 
-    return filterParams.search;
+    return search;
   }
 
   if (coursesIsLoading()) {

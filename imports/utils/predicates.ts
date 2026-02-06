@@ -38,10 +38,7 @@ export const string: Predicate<string> = function (param: string) {
 };
 
 export const id: Predicate<string> = function (param) {
-  if (param === "all") {
-    return undefined;
-  }
-  return string(param);
+  return string(param === "all" ? "" : param);
 };
 
 export const ids: Predicate<string[]> = function (param) {

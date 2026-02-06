@@ -1,6 +1,5 @@
 import { ServiceConfiguration, ConfigError } from "meteor/service-configuration";
 import { C3Settings } from "/imports/startup/both/C3OAuth/settings";
-import { Log } from "/imports/api/log/log";
 import { WebApp } from "meteor/webapp";
 import { LocalhostSsl } from "/imports/utils/LocalhostSsl";
 
@@ -71,10 +70,6 @@ if (Meteor.isServer) {
       code_verifier: requestContext.getStore()?.request.cookies.verifier,
     }).toString();
 
-    Log.record("c3-oauth-debug", [], {
-      body,
-    });
-
     return OAuth._fetch(config.tokenUrl, "POST", {
       headers: {
         Accept: "application/json",
@@ -92,9 +87,6 @@ if (Meteor.isServer) {
         return data.json();
       })
       .then((data: { error: any; access_token: any; refresh_token: any; expires_in: any }) => {
-        Log.record("c3-oauth-debug", [], {
-          data,
-        });
         if (data.error) {
           throw new Error(
             "Failed to complete OAuth handshake with C3. " +

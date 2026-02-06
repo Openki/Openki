@@ -33,14 +33,24 @@ Router.route("venueExternalEvents", {
     );
     const body = {
       status: "success",
-      data: events.events.map((e) => ({
-        id: e.uid,
-        summary: e.summary,
-        location: e.location,
-        start: e.startDate.toJSDate().toISOString(),
-        end: e.endDate.toJSDate().toISOString(),
-        url: e.component.getFirstPropertyValue("url"),
-      })),
+      data: [
+        ...events.events.map((e) => ({
+          id: e.uid,
+          summary: e.summary,
+          location: e.location,
+          start: e.startDate.toJSDate().toISOString(),
+          end: e.endDate.toJSDate().toISOString(),
+          url: e.component.getFirstPropertyValue("url"),
+        })),
+        ...events.occurrences.map((o) => ({
+          id: o.item.uid,
+          summary: o.item.summary,
+          location: o.item.location,
+          start: o.startDate.toJSDate().toISOString(),
+          end: o.endDate.toJSDate().toISOString(),
+          url: o.item.component.getFirstPropertyValue("url"),
+        })),
+      ],
     };
     this.response.statusCode = 200;
     this.response.setHeader("Content-Type", "application/json; charset=utf-8");
