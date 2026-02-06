@@ -63,8 +63,8 @@ export function VenuesMap({ region: regionId, venues }: Data) {
     .fetch()
     .filter(
       (v) =>
-        // when show all region: only show venue when not on custum map
-        (!region && isOnCustomMap(v)) ||
+        // when show all region: only show venue when not on custom map
+        (!region && !isOnCustomMap(v)) ||
         // when only a region with a custom map is shown: only show venue on the selected level
         (region && isOnCustomMap(v) && v.level === selectedLevel),
     )
