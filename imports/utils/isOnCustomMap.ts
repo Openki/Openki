@@ -1,5 +1,3 @@
-import { Geodata } from "../api/Geodata";
-
-export function isOnCustomMap(venue: { loc?: Geodata; level?: number }) {
+export function isOnCustomMap(venue: { level?: number }) {
   return venue.level !== undefined;
 }
