@@ -31,7 +31,7 @@ function CourseMembers({
   return (
     <FormCheck
       id="event-edit-notify-check"
-      type="switch"
+      type="box"
       checked={notifyChecked}
       onChange={onChange}
       label={

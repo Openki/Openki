@@ -79,7 +79,7 @@ export const groups: Template[] = [
       },
       {
         type: "boolean",
-        name: "record",
+        name: "recording",
         displayText: { en: "Recording", de: "Aufzeichung" },
         editText: { en: "Recording", de: "Aufzeichung" },
         editDescription: {
