@@ -106,7 +106,7 @@ export function EditCustomFields({ type, fields, values, onChange }: Props) {
                   <div className="form-label">{getLocalizedValue(field.editText)}</div>
                   <FormCheck
                     id={`course-custom-field-${field.name}`}
-                    type="switch"
+                    type="box"
                     label={getLocalizedValue(field.editDescription)}
                     checked={(value(field.name) as boolean | undefined) ?? field.defaultValue}
                     onChange={handleChange(field.name)}

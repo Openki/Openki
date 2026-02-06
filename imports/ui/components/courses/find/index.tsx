@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useCurrentRouteName, useParams } from "/imports/utils/react-meteor-router";
 
-import { Courses } from "/imports/api/courses/courses";
 import { SortSpec } from "/imports/utils/sort-spec";
 
 import * as UrlTools from "/imports/utils/url-tools";
@@ -24,11 +23,13 @@ import { SearchField } from "/imports/ui/components/search-field";
 import { CourseList } from "../List";
 import { Edit } from "/imports/ui/components/courses/edit";
 import { useFindFilter } from "/imports/api/courses/publications";
+import { FindParams } from "/imports/api/courses/courses";
 import { LoadingPage } from "/imports/ui/pages/loading";
+import { useFiltering } from "/imports/utils/filtering";
 
 import "./styles.scss";
 
-const hiddenFilters = ["needsRole", "categories"];
+const hiddenFilters: (keyof typeof FindParams)[] = ["needsRole", "categories"];
 const filters = hiddenFilters.concat(["state"]);
 
 export interface Props {
@@ -40,11 +41,11 @@ export function Find({ query }: Props) {
   const [showingFilters, setShowingFilters] = useState(false);
   const courseBlockSize = 36;
   const [courseLimit, setCourseLimit] = useState(courseBlockSize);
-  const filter = Courses.Filtering().read(query);
+  const filter = useFiltering(FindParams, query);
   const sort = query.sort ? SortSpec.fromString(query.sort) : SortSpec.unordered();
 
   // Add one to the limit so we know there is more to show
-  const [isLoading, courses] = useFindFilter(filter.toQuery(), courseLimit + 1, 0, sort.spec());
+  const [isLoading, courses] = useFindFilter(filter.asQuery, courseLimit + 1, 0, sort.spec());
   const searchParams = useParams();
   const currentRouterName = useCurrentRouteName();
 
@@ -53,7 +54,7 @@ export function Find({ query }: Props) {
   // change. For example, when the search-field receives keydowns, the filter
   // is updated but the change is not reflected in the URI.
   function updateUrl() {
-    const urlParams = filter.toParams() as Record<string, string>;
+    const urlParams = filter.asParams as Record<string, string>;
     delete urlParams.region; // HACK region is kept in the session (for bad reasons)
     delete urlParams.internal;
 
@@ -63,56 +64,44 @@ export function Find({ query }: Props) {
     }
     const queryString = UrlTools.paramsToQueryString(urlParams);
 
-    const options: { query?: string } = {};
+    const options: { query?: string; replaceState?: boolean } = {};
 
     if (queryString.length) {
       options.query = queryString;
     }
 
+    // fix: replace current state to prevent endless reloads on back
+    options.replaceState = true;
+
     routerAutoscroll.cancelNext();
 
     Router.go(currentRouterName, { _id: searchParams._id }, options);
-
-    return true;
   }
 
   function searchFieldAttr() {
     return {
-      search: filter.get("search"),
-      onChange: (newValue: string) => {
-        filter.add("search", newValue);
-        updateUrl();
-      },
-      onFocusOut: () => {
-        updateUrl();
-      },
+      search: filter.asQuery["search"],
+      onChange: (newValue: string) => filter.add("search", newValue),
     };
   }
   function filterAttr(): FilterProps {
     return {
       showingFilters,
       // check if one of the filters indicated as filters is active
-      active: VisibleFilters.some((f) => filter.get(f)),
+      active: VisibleFilters.some((f) => filter.asQuery[f]),
       onToggleFilters: () => {
         if (showingFilters) {
-          VisibleFilters.forEach((f) => {
-            filter.disable(f);
-          });
+          VisibleFilters.forEach((f) => filter.disable(f));
 
-          updateUrl();
           setShowingFilters(false);
         } else {
           setShowingFilters(true);
         }
       },
-      state: filter.get("state") || [],
-      onStateClick: (state) => {
-        filter.toggle("state", state.name);
-
-        updateUrl();
-      },
+      state: filter.asQuery["state"] || [],
+      onStateClick: (state) => filter.toggle("state", state.name),
       onStateMouseOver: (state) => {
-        if (!filter.get("state")) {
+        if (!filter.asQuery["state"]) {
           FilterPreview({
             property: "state",
             id: state.cssClass,
@@ -121,7 +110,7 @@ export function Find({ query }: Props) {
         }
       },
       onStateMouseOut: (state) => {
-        if (!filter.get("state")) {
+        if (!filter.asQuery["state"]) {
           FilterPreview({
             property: "state",
             id: state.cssClass,
@@ -129,13 +118,10 @@ export function Find({ query }: Props) {
           });
         }
       },
-      archived: filter.get("archived") || false,
-      onArchivedClick: () => {
-        filter.toggle("archived");
-        updateUrl();
-      },
+      archived: filter.asQuery["archived"] || false,
+      onArchivedClick: () => filter.toggle("archived"),
       onArchivedMouseOver: () => {
-        if (!filter.get("archived")) {
+        if (!filter.asQuery["archived"]) {
           FilterPreview({
             property: "is",
             id: "archived",
@@ -144,7 +130,7 @@ export function Find({ query }: Props) {
         }
       },
       onArchivedMouseOut: () => {
-        if (!filter.get("archived")) {
+        if (!filter.asQuery["archived"]) {
           FilterPreview({
             property: "is",
             id: "archived",
@@ -152,20 +138,11 @@ export function Find({ query }: Props) {
           });
         }
       },
-      categories: filter.get("categories") || [],
-      onCategoryAdd: (category: string) => {
-        filter.add("categories", category);
-        updateUrl();
-      },
-      onCategoryRemove: (category: string) => {
-        filter.remove("categories", category);
-        updateUrl();
-      },
-      needsRole: filter.get("needsRole") || [],
-      onNeedsRoleClick: (role) => {
-        filter.toggle("needsRole", role);
-        updateUrl();
-      },
+      categories: filter.asQuery["categories"] || [],
+      onCategoryAdd: (category: string) => filter.add("categories", category),
+      onCategoryRemove: (category: string) => filter.remove("categories", category),
+      needsRole: filter.asQuery["needsRole"] || [],
+      onNeedsRoleClick: (role) => filter.toggle("needsRole", role),
       onNeedsRoleMouseOut: (role) => {
         FilterPreview({
           property: "role",
@@ -185,12 +162,11 @@ export function Find({ query }: Props) {
 
   function newCourse() {
     const course = CourseTemplate();
-    course.filter = filter;
-    const search = filter.get("search");
+    const search = filter.asQuery["search"];
     if (search) {
       course.name = search;
     }
-    const groupId = filter.get("group");
+    const groupId = filter.asQuery["group"];
     if (groupId) {
       course.group = groupId;
     }
@@ -206,15 +182,15 @@ export function Find({ query }: Props) {
     return courses.slice(0, courseLimit);
   }
   function filteredRegion() {
-    return !!filter.get("region");
+    return !!filter.asQuery["region"];
   }
   function activeFilters() {
-    return hiddenFilters.some((f) => !!filter.get(f as any));
+    return hiddenFilters.some((f) => filter.asQuery[f]);
   }
   function searchIsLimited() {
     const relevantFilters = hiddenFilters.slice(); // clone
     relevantFilters.push("region");
-    return relevantFilters.some((f) => !!filter.get(f as any));
+    return relevantFilters.some((f) => filter.asQuery[f]);
   }
   function groupTagEvents() {
     return (groupId: string) => {
@@ -265,7 +241,6 @@ export function Find({ query }: Props) {
         onClick: async () => {
           Tooltips.hide();
           filter.add("categories", category);
-          updateUrl();
           window.scrollTo(0, 0);
         },
       };
@@ -274,16 +249,18 @@ export function Find({ query }: Props) {
 
   function handleToggleFilter() {
     if (showingFilters) {
-      filters.forEach((f) => filter.disable(f as any));
-      updateUrl();
+      filters.forEach((f) => filter.disable(f));
     }
     setShowingFilters(!showingFilters);
   }
 
+  useEffect(() => {
+    updateUrl();
+    // update only when params has changed
+  }, [JSON.stringify(filter.asParams)]);
+
   // Read URL state
   useEffect(() => {
-    filter.clear().read(query);
-
     if (query.coursesAmount) {
       const coursesAmount = Number.parseInt(query.coursesAmount, 10);
       if (coursesAmount > courseBlockSize) {
@@ -296,8 +273,8 @@ export function Find({ query }: Props) {
 
   // When there are filters set, show the filtering pane
   useEffect(() => {
-    Object.keys(filter.toParams()).forEach((name) => {
-      if (hiddenFilters.includes(name)) {
+    Object.keys(filter.asParams).forEach((name) => {
+      if (hiddenFilters.some((f) => f === name)) {
         setShowingFilters(true);
       }
     });
@@ -326,7 +303,7 @@ export function Find({ query }: Props) {
               groupTagEvents={groupTagEvents()}
               categorieTagEvents={categorieTagEvents()}
               containsPropose={true}
-              group={filter.get("group")}
+              group={filter.asQuery["group"]}
             />
             {hasMore() && (
               <div className="text-center mt-3">
@@ -377,7 +354,7 @@ export function Find({ query }: Props) {
       </div>
       <div className="page-component">
         <div className="container mw-md">
-          <Edit {...newCourse()} />
+          <Edit {...newCourse()} coursesQuery={filter.asQuery} />
         </div>
       </div>
     </>

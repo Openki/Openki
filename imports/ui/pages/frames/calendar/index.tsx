@@ -48,6 +48,8 @@ function useOptions() {
 
   const count = Number.parseInt(query.count || "", 10) || 200;
 
+  const hideRsvp = !!Number.parseInt(query.hideRsvp || "", 10) || false;
+
   const style = new CssFromQuery(query, [
     ["itembg", "background-color", ".frame-list-item-event"],
     ["itemcolor", "color", ".frame-list-item-event"],
@@ -60,6 +62,7 @@ function useOptions() {
   return {
     filter: filterQuery,
     count,
+    hideRsvp,
     style,
   };
 }
@@ -98,7 +101,7 @@ export function CalendarPage() {
         <React.Fragment key={day}>
           <h4 className="frame-list-title">{day}</h4>
           {eventsOn(day).map((event) => (
-            <Event key={event._id} data={event} />
+            <Event key={event._id} event={event} hideRsvp={options.hideRsvp} />
           ))}
         </React.Fragment>
       ))}

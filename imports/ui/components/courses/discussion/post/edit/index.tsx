@@ -206,7 +206,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
               <>
                 {canNotifyAll() && (
                   <FormCheck
-                    type="switch"
+                    type="box"
                     id="discussion-post-edit-notify-all"
                     label={
                       <>
@@ -220,7 +220,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
                   />
                 )}
                 <FormCheck
-                  type="switch"
+                  type="box"
                   id="discussion-post-edit-anonymous"
                   label={
                     <>
