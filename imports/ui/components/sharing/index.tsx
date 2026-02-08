@@ -29,7 +29,7 @@ export function Sharing({
     fediverse: t("sharing.fediverse.text", ""),
     hackernews: t("sharing.hackernews.text", ""),
     linkedin: t("sharing.linkedin.text", ""),
-    mastodon: t("sharing.mastodon.text", "Toot"),
+    mastodon: t("sharing.mastodon.text", "Toot!"),
     odnoklassniki: t("sharing.odnoklassniki.text", ""),
     pinterest: t("sharing.pinterest.text", ""),
     pocket: t("sharing.pocket.text", ""),
@@ -63,8 +63,8 @@ export function Sharing({
     viber: t("sharing.viber.title", "Share via Viber"),
     vkontakte: t("sharing.vkontakte.title", "Share on VK"),
     whatsapp: t("sharing.whatsapp.title", "Share via WhatsApp"),
-    "copy-url": t("sharing.copy-url.title", "Copy URL to Clipboard"),
-    email: t("sharing.email.title", "Share via Email"),
+    "copy-url": t("sharing.copy-url.title", "Copy URL to clipboard"),
+    email: t("sharing.email.title", "Share via email"),
   };
 
   useEffect(() => {
