@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Router } from "meteor/iron:router";
-import { useCurrentRouteName, useParams } from "/imports/utils/react-meteor-router";
+// import { Router } from "meteor/iron:router";
+// import { useCurrentRouteName, useParams } from "/imports/utils/react-meteor-router";
 
 import { SortSpec } from "/imports/utils/sort-spec";
 
-import * as UrlTools from "/imports/utils/url-tools";
+// import * as UrlTools from "/imports/utils/url-tools";
 import * as Tooltips from "/imports/utils/Tooltips";
 
 import { CourseTemplate } from "/imports/ui/lib/course-template";
 import * as RegionSelection from "/imports/utils/region-selection";
 import { FilterPreview } from "/imports/ui/lib/filter-preview";
-import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
+// import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 
 import {
   Filter,
@@ -46,37 +46,38 @@ export function Find({ query }: Props) {
 
   // Add one to the limit so we know there is more to show
   const [isLoading, courses] = useFindFilter(filter.asQuery, courseLimit + 1, 0, sort.spec());
-  const searchParams = useParams();
-  const currentRouterName = useCurrentRouteName();
+  // const searchParams = useParams();
+  // const currentRouterName = useCurrentRouteName();
 
   // Reflect filter selection in URI
   // This creates a browser history entry so it is not done on every filter
   // change. For example, when the search-field receives keydowns, the filter
   // is updated but the change is not reflected in the URI.
-  function updateUrl() {
-    const urlParams = filter.asParams as Record<string, string>;
-    delete urlParams.region; // HACK region is kept in the session (for bad reasons)
-    delete urlParams.internal;
+  // current disabled until migrate to new router
+  // function updateUrl() {
+  //   const urlParams = filter.asParams as Record<string, string>;
+  //   delete urlParams.region; // HACK region is kept in the session (for bad reasons)
+  //   delete urlParams.internal;
 
-    // used to keep scrollpos when navigating back
-    if (courseLimit > courseBlockSize) {
-      urlParams.coursesAmount = courseLimit.toString();
-    }
-    const queryString = UrlTools.paramsToQueryString(urlParams);
+  //   // used to keep scrollpos when navigating back
+  //   if (courseLimit > courseBlockSize) {
+  //     urlParams.coursesAmount = courseLimit.toString();
+  //   }
+  //   const queryString = UrlTools.paramsToQueryString(urlParams);
 
-    const options: { query?: string; replaceState?: boolean } = {};
+  //   const options: { query?: string; replaceState?: boolean } = {};
 
-    if (queryString.length) {
-      options.query = queryString;
-    }
+  //   if (queryString.length) {
+  //     options.query = queryString;
+  //   }
 
-    // fix: replace current state to prevent endless reloads on back
-    options.replaceState = true;
+  //   // fix: replace current state to prevent endless reloads on back
+  //   options.replaceState = true;
 
-    routerAutoscroll.cancelNext();
+  //   routerAutoscroll.cancelNext();
 
-    Router.go(currentRouterName, { _id: searchParams._id }, options);
-  }
+  //   Router.go(currentRouterName, { _id: searchParams._id }, options);
+  // }
 
   function searchFieldAttr() {
     return {
@@ -253,11 +254,10 @@ export function Find({ query }: Props) {
     }
     setShowingFilters(!showingFilters);
   }
-
-  useEffect(() => {
-    updateUrl();
-    // update only when params has changed
-  }, [JSON.stringify(filter.asParams)]);
+  // useEffect(() => {
+  //   updateUrl();
+  //   // update only when params has changed
+  // }, [JSON.stringify(filter.asParams)]);
 
   // Read URL state
   useEffect(() => {
