@@ -33,7 +33,12 @@ export function Richtext({ className, text, placeholder, maxLength, onChange }: 
     return numberOfCharacters - maxLength;
   }
 
-  function handleChange(event: React.KeyboardEvent<HTMLDivElement>) {
+  function handleChange(
+    event:
+      | React.ChangeEvent<HTMLDivElement>
+      | React.InputEvent<HTMLDivElement>
+      | React.KeyboardEvent<HTMLDivElement>,
+  ) {
     const element = event.currentTarget;
 
     let value = "";
