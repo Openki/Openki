@@ -1,6 +1,6 @@
 import { debounce } from "lodash-es";
 import { useTranslation } from "react-i18next";
-import React, { useCallback } from "react";
+import React, { useMemo } from "react";
 
 import "./styles.scss";
 
@@ -15,11 +15,12 @@ export function SearchField({ search, color, onChange, onGo }: Props) {
   const { t } = useTranslation();
 
   // prevented unwanted input in the search
-  const handleSearch = useCallback(
-    debounce((newValue: string) => {
-      onChange(newValue);
-    }, 200),
-    [],
+  const handleSearch = useMemo(
+    () =>
+      debounce((newValue: string) => {
+        onChange(newValue);
+      }, 200),
+    [onChange],
   );
 
   function handleChange(

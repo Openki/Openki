@@ -1,13 +1,14 @@
 import { chain, sumBy } from "lodash-es";
 import { Router } from "meteor/iron:router";
 import moment, { max, min } from "moment";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import * as Events from "/imports/api/events/publications";
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 import { useFindParallelEvents } from "/imports/ui/components/events/edit/useFindParallelEvents";
 import { useLocalTimeZone } from "/imports/utils/local-time";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useFindExternalParallelEvents } from "/imports/ui/components/events/edit/useFindExternalParallelEvents";
+import { useData } from "../../../lib/useData";
 
 function ScrollIntoView({ children }: { children: React.ReactNode }) {
   const elementRef = useRef<HTMLDivElement>(null);
@@ -51,16 +52,18 @@ export function useFindNearEvents(
     canceled: false,
   });
 
+  const loaded = !isLoading();
   // cache to prevent endless recalls
   return useMemo(() => {
-    if (isLoading()) {
+    if (!loaded) {
       return [];
     }
 
     /* replace with current event state */
     return [...events.filter((e) => e._id !== event._id), event];
-  }, [venueId, regionId, event.room, event.startLocal, event.endLocal, isLoading()]);
+  }, [loaded, events, event]);
 }
+
 export function useFindNearExternalEvents(
   venueId: string | undefined,
   regionId: string,
@@ -71,25 +74,22 @@ export function useFindNearExternalEvents(
     endLocal: string;
   },
 ) {
-  const [result, setResult] = useState<
-    { id: string; summary: string; location: string; start: string; end: string; url: string }[]
-  >([]);
   const regionZone = useLocalTimeZone(regionId);
   const start = regionZone.fromString(event.startLocal);
   const end = regionZone.fromString(event.endLocal);
 
-  useEffect(() => {
-    (async () => {
-      const params = new URLSearchParams();
-      params.append("start", start.subtract(18, "hours").toISOString());
-      params.append("end", end.add(18, "hours").toISOString());
-      setResult(
-        (await (await fetch(`/api/venue/${venueId}/external-bookings?${params}`)).json()).data,
-      );
-    })();
-  }, [venueId, regionId, event.room, event.startLocal, event.endLocal]);
+  const params = new URLSearchParams();
+  params.append("start", start.subtract(18, "hours").toISOString());
+  params.append("end", end.add(18, "hours").toISOString());
 
-  return result;
+  return (useData(`/api/venue/${venueId}/external-bookings?${params}`)?.data || []) as {
+    id: string;
+    summary: string;
+    location: string;
+    start: string;
+    end: string;
+    url: string;
+  }[];
 }
 
 function getDaysBetween(startDate: moment.MomentInput, endDate: moment.MomentInput) {
@@ -192,6 +192,7 @@ export function Timetable({
 
     const startPos = pos;
     const endPos = pos + hours.length;
+    // eslint-disable-next-line react-hooks/immutability
     pos = endPos;
 
     return {
