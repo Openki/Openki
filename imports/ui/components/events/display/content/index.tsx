@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { Courses } from "/imports/api/courses/courses";
+import { useDetails } from "/imports/api/courses/publications";
 import { EventModel } from "/imports/api/events/events";
 
 import { CustomFieldDisplay } from "../../../courses/CustomFieldDisplay";
@@ -18,9 +18,7 @@ import "./styles.scss";
 export function Content({ event }: { event: EventModel }) {
   const { t } = useTranslation();
 
-  function singleEvent() {
-    return Courses.findOne(event.courseId)?.singleEvent;
-  }
+  const [isLoading, course] = useDetails({ when: !!event.courseId }, event.courseId);
 
   return (
     <>
@@ -36,7 +34,7 @@ export function Content({ event }: { event: EventModel }) {
 
           <div className="row">
             <div className="col-md-7">
-              {!singleEvent() && (
+              {!isLoading() && !course?.singleEvent && (
                 <>
                   <h3>{event.title}</h3>
                   <GroupList event={event} />
