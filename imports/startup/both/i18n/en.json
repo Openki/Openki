@@ -12,7 +12,7 @@
   "_clientError": "There was an error: \"{ERROR}.\" Sorry about this.",
   "_event.state.canceled": "Canceled",
   "_event.state.fullyBooked": "Fully booked",
-  "_inputField.additional-information.hint": "Additional info beside.",
+  "_inputField.additional-information.screenreaderHint": "Additional info beside.",
   "_inputField.additional-information.label": "Show additional info",
   "_inputField.maxlength": "Too many characters used. {MAXNUMBER} are allowed. Please remove {NUMBER} characters to be able to save.",
   "_inputField.maxlength.notEditing": "There are too many characters here. You should edit it.",
