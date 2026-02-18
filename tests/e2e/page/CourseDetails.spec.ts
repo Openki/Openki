@@ -35,6 +35,7 @@ describe("course details page", () => {
       cy.get("div.discussion-post-header i.fa-bell").should("be.visible");
     });
   });
+
   describe("Archive course", function () {
     beforeEach(() => {
       cy.visitOpenki("/course/e49ed1ce5d/walliserduetsch-lernen", { username: "LeOnI" });
@@ -44,6 +45,18 @@ describe("course details page", () => {
       cy.get("button.btn-archive").click();
       cy.get('[data-test="course-details"] div.alert').should("have.class", "alert-archived");
       cy.get("#course-details-course-unarchive").click();
+    });
+  });
+
+  describe("Single event", function () {
+    beforeEach(() => {
+      cy.visitOpenki(
+        "/course/LZCJQmLzr9d6gcrhH/hochsensibilitaet-was-ist-das-und-die-unterschiede",
+      );
+    });
+
+    it("should redirect to single event page", () => {
+      cy.get(".details-header").should("have.class", "event-details-header");
     });
   });
 });
