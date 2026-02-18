@@ -12,7 +12,7 @@ export default tseslint.config(
   tseslint.configs.strict,
   tseslint.configs.stylistic,
   react.configs.flat.recommended,
-  reactHooks.configs["recommended-latest"],
+  reactHooks.configs.flat["recommended-latest"],
 
   {
     settings: {
@@ -56,6 +56,9 @@ export default tseslint.config(
           ignoreOverloadsWithDifferentJSDoc: true,
         },
       ],
+      "react-hooks/set-state-in-effect": "warn",
+      "react-hooks/exhaustive-deps": "warn",
+      "react-hooks/refs": "warn",
     },
   },
 
