@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
@@ -95,17 +95,18 @@ export function LogPage({
   }
 
   const [track, setTrack] = useState(trFilter() || "");
-  const handleTrackSearch = useCallback(
-    debounce((newValue: string) => {
-      setTrack(newValue);
-      filter.disable("tr");
+  const handleTrackSearch = useMemo(
+    () =>
+      debounce((newValue: string) => {
+        setTrack(newValue);
+        filter.disable("tr");
 
-      const trStr = newValue.trim();
-      if (trStr) {
-        filter.add("tr", trStr);
-      }
-      updateUrl();
-    }, 200),
+        const trStr = newValue.trim();
+        if (trStr) {
+          filter.add("tr", trStr);
+        }
+        updateUrl();
+      }, 200),
     [],
   );
   const handleTrackChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,18 +115,19 @@ export function LogPage({
   };
 
   const [date, setDate] = useState(dateFilter() || "");
-  const handleDateSearch = useCallback(
-    debounce((newValue: string) => {
-      setDate(newValue);
-      const dateStr = newValue.trim();
-      if (dateStr === "") {
-        filter.disable("start");
-      } else {
-        filter.add("start", dateStr);
-      }
+  const handleDateSearch = useMemo(
+    () =>
+      debounce((newValue: string) => {
+        setDate(newValue);
+        const dateStr = newValue.trim();
+        if (dateStr === "") {
+          filter.disable("start");
+        } else {
+          filter.add("start", dateStr);
+        }
 
-      updateUrl();
-    }, 200),
+        updateUrl();
+      }, 200),
     [],
   );
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -134,18 +136,19 @@ export function LogPage({
   };
 
   const [id, setId] = useState(relFilter() || "");
-  const handleIdSearch = useCallback(
-    debounce((newValue: string) => {
-      setId(newValue);
-      filter.disable("rel");
+  const handleIdSearch = useMemo(
+    () =>
+      debounce((newValue: string) => {
+        setId(newValue);
+        filter.disable("rel");
 
-      const relStr = newValue.trim();
-      if (relStr) {
-        filter.add("rel", relStr);
-      }
+        const relStr = newValue.trim();
+        if (relStr) {
+          filter.add("rel", relStr);
+        }
 
-      updateUrl();
-    }, 200),
+        updateUrl();
+      }, 200),
     [],
   );
   const handleIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {

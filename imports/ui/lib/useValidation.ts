@@ -27,17 +27,6 @@ export function useValidation<T extends string>(
         initialState[m.field] = m.text();
       });
   }
-
-  useEffect(() => {
-    if (options?.autoCheckFixed) {
-      Object.keys(errors).forEach((key) => {
-        checkValidity(key as T);
-      });
-    }
-  });
-
-  const [errors, setErrors] = useState(initialState);
-
   const add = (key: string) => {
     const m = mapping[key];
     if (!m) {
@@ -101,6 +90,16 @@ export function useValidation<T extends string>(
     });
     return validity;
   };
+
+  const [errors, setErrors] = useState(initialState);
+
+  useEffect(() => {
+    if (options?.autoCheckFixed) {
+      Object.keys(errors).forEach((key) => {
+        checkValidity(key as T);
+      });
+    }
+  });
 
   return [errors, checkValidity, add, resetErrors] as [
     errors: Partial<Record<T, ReactNode>>,
