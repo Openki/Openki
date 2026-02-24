@@ -23,8 +23,26 @@ export function Sharing({
   const [showAll, setShowAll] = useState(false);
   text = text || t("sharing.mailbody.quote", "Hi!\nLook what I found, are you interested?");
 
+  // to define a custom text for a network, add a translation key like
+  // sharing.[network].text, e.g. sharing.mastodon.text
   const btnText: Record<string, string> = {
+    // bluesky: t("sharing.bluesky.text", ""),
+    // facebook: t("sharing.facebook.text", ""),
+    // fediverse: t("sharing.fediverse.text", ""),
+    // hackernews: t("sharing.hackernews.text", ""),
+    // linkedin: t("sharing.linkedin.text", ""),
     mastodon: t("sharing.mastodon.text", "Toot!"),
+    // odnoklassniki: t("sharing.odnoklassniki.text", ""),
+    // pinterest: t("sharing.pinterest.text", ""),
+    // pocket: t("sharing.pocket.text", ""),
+    // reddit: t("sharing.reddit.text", ""),
+    // teams: t("sharing.teams.text", ""),
+    // telegram: t("sharing.telegram.text", ""),
+    // tumblr: t("sharing.tumblr.text", ""),
+    // twitter: t("sharing.twitter.text", ""),
+    // viber: t("sharing.viber.text", ""),
+    // vkontakte: t("sharing.vkontakte.text", ""),
+    // whatsapp: t("sharing.whatsapp.text", ""),
     "copy-url": t("sharing.copy-url.text", "Copy URL"),
     email: t("sharing.email.text", "email"),
   };
