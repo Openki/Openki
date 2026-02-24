@@ -20,7 +20,7 @@ Demo playground: [sandbox.openki.net](https://sandbox.openki.net/?region=Spilist
 ## Why choose Openki?
 **Community‑driven** – anyone can propose topics, host events, and join discussions.  
 **Multilingual & extensible** – built‑in i18n, custom roles, and plug‑in‑friendly architecture.  
-**Flexible deployment** – works for long‑term public installations **and** ad‑hoc setups such as unconferences, BarCamps or festivals.  
+**Various use cases** – works for long‑term public installations **and** ad‑hoc setups such as unconferences, BarCamps or festivals.  
 
 ### Core functionalities
 - Easily propose topics and events
