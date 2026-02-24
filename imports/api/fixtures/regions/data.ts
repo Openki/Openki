@@ -46,6 +46,45 @@ export const regions: {
     nameEn: "Spilistan",
     loc: [47.05, 8.3],
     tz: "Europe/Andorra",
+    dashboard: [
+      {
+        entity: "course",
+        title: "dashboard.userInvolvedIn.title",
+        query: "userInvolved={currentUser}",
+      },
+      {
+        entity: "event",
+        title: "dashboard.userRegistredFor.title",
+        query: "participant={currentUser}&after=now&sort=start",
+      },
+      { entity: "course", title: "dashboard.recentActivities.title", query: "internal=0" },
+      {
+        entity: "event",
+        title: "dashboard.upcomingEvents.title",
+        query: "after=now&sort=start&internal=0&canceled=0",
+      },
+      {
+        entity: "course",
+        title: "dashboard.newProposals.title",
+        query: "state=proposal&internal=0&sort=-time_created",
+      },
+      {
+        entity: "course",
+        title: "dashboard.lookingForMentors.title",
+        query: "needsRole=mentor&state=proposal,resting&internal=0",
+      },
+      {
+        entity: "course",
+        title: "dashboard.lookingForVenues.title",
+        query: "needsRole=host&state=proposal,resting&internal=0",
+      },
+      {
+        entity: "eventsMap",
+        title: "dashboard.eventsMap.title",
+        query: "after=now&internal=0&canceled=0",
+      },
+      { entity: "propose" },
+    ],
   },
   {
     _id: "MPKEnGGC8T9XyCCRG",
