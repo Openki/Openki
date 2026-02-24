@@ -3,13 +3,13 @@ import { union, difference, intersection, uniq } from "lodash-es";
 
 import { FilteringReadError } from "./filtering";
 
-export interface ParamWrapper<G = any, Q = G> {
+export interface ParamWrapper<G = unknown, Q = G> {
   merge(other: ParamWrapper<G, Q>): ParamWrapper<G, Q>;
   without(predicate: ParamWrapper<G, Q>): ParamWrapper<G, Q> | undefined;
   get(): G;
   param(): string;
   query(): Q;
-  equals(other: ParamWrapper): boolean;
+  equals(other: ParamWrapper<G, Q>): boolean;
 }
 
 export type Predicate<G, Q = G, P = string> = (param: P) => ParamWrapper<G, Q> | undefined;
