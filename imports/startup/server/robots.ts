@@ -13,6 +13,15 @@ WebApp.connectHandlers.use("/robots.txt", (_req, res) => {
       res.write("Disallow: /\n");
     } else {
       res.write("User-agent: *\n");
+      res.write("Disallow: /api/\n");
+      res.write("Disallow: /admin/\n");
+      res.write("Disallow: /kiosk/\n");
+      res.write("Disallow: /cal/\n");
+      res.write("Disallow: /tenant/\n");
+      res.write("Disallow: /region/\n");
+      res.write("Disallow: /*?categories=\n");
+      res.write("Disallow: /verify-email/\n");
+      res.write("Disallow: /reset-password/\n");
       if (PrivateSettings.hideProfiles === true) {
         res.write("Disallow: /user/\n");
       } else {

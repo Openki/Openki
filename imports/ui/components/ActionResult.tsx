@@ -1,4 +1,4 @@
-import React, { JSX, ReactNode } from "react";
+import React, { JSX, ReactNode, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import scrollIntoView from "scroll-into-view-if-needed";
 import { MeteorAsync } from "/imports/utils/promisify";
@@ -53,7 +53,7 @@ export function ActionResult({ type, dismissible, icon, title, children, actions
     (a) => "description" in a || !("href" in a || "button" in a),
   );
 
-  let timeoutActionFocus: any = 0;
+  const timeoutActionFocusRef = useRef(0);
   async function handleActionClick(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
     href: string,
@@ -81,10 +81,11 @@ export function ActionResult({ type, dismissible, icon, title, children, actions
       element.classList.add("action-focus");
       element.tabIndex = 0;
       element.focus();
-      if (timeoutActionFocus) {
-        clearTimeout(timeoutActionFocus);
+      if (timeoutActionFocusRef.current) {
+        clearTimeout(timeoutActionFocusRef.current);
       }
-      timeoutActionFocus = Meteor.setTimeout(() => {
+
+      timeoutActionFocusRef.current = Meteor.setTimeout(() => {
         element.classList.remove("action-focus");
       }, 5000);
     }

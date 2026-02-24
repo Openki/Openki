@@ -29,13 +29,15 @@ export function useFindParallelEvents(
     },
   );
 
+  const loaded = !isLoading();
+
   // cache to prevent endless recalls
   return useMemo(() => {
-    if (isLoading()) {
+    if (!loaded) {
       return [];
     }
 
     /* ignore current event */
     return events?.filter((e) => e._id !== event._id) || [];
-  }, [venueId, regionId, event._id, event.startLocal, event.endLocal, isLoading()]);
+  }, [loaded, events, event._id]);
 }
