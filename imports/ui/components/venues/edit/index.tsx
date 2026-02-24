@@ -165,8 +165,23 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
     }
     if (changes.level !== undefined) {
       changes1.level = changes.level;
+    } else {
+      if (isNew && changes.selectedRegion) {
+        const region = regions.find((r) => r._id === changes.selectedRegion);
+        if (region?.map?.defaultLevel !== undefined) {
+          changes1.level = region.map.defaultLevel;
+        }
+      }
     }
-    if (changes.restrictedUse !== undefined) {
+
+    if (isNew) {
+      if (changes.restrictedUse !== undefined) {
+        changes1.restrictedUse = changes.restrictedUse;
+      } else {
+        // default for new venues is that they can be used by everyone
+        changes1.restrictedUse = false;
+      }
+    } else if (changes.restrictedUse !== undefined) {
       changes1.restrictedUse = changes.restrictedUse;
     }
     if (changes.allowParallelEvents !== undefined) {
