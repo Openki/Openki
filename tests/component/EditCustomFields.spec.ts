@@ -46,12 +46,12 @@ describe("EditCustomFields", () => {
 
     cy.get("#description p:nth-child(3)").should("have.text", "Recording: No");
     cy.get('[data-test="course-details"] button.btn-edit').click();
-    cy.get('[data-test="course-details"] label[for="course-custom-field-record"]').click();
-    cy.get("#course-custom-field-record").check();
+    cy.get('[data-test="course-details"] label[for="course-custom-field-recording"]').click();
+    cy.get("#course-custom-field-recording").check();
     cy.get("#courses-edit-save").click();
     cy.get("#description p:nth-child(3)").should("have.text", "Recording: Yes");
     cy.get('[data-test="course-details"] button.btn-edit').click();
-    cy.get("#course-custom-field-record").uncheck();
+    cy.get("#course-custom-field-recording").uncheck();
     cy.get("#courses-edit-save").click();
     cy.get("#description p:nth-child(3)").should("have.text", "Recording: No");
   });
