@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+// from https://de.react.dev/learn/you-might-not-need-an-effect#fetching-data
 export function useData(url: string) {
   const [data, setData] = useState<any>(null);
   useEffect(() => {
