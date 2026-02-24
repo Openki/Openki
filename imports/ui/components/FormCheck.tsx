@@ -46,7 +46,7 @@ export function FormCheck(props: Props) {
       {!!additionalInformation && (
         <>
           <span id={`${id}-additional-information`} hidden>
-            {t("_inputField.additional-information.hint", "Additional info beside.")}
+            {t("_inputField.additional-information.screenreaderHint", "Additional info beside.")}
           </span>
           <ToggleTip
             label={t("_inputField.additional-information.label", "Show additional info")}
