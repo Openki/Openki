@@ -44,7 +44,7 @@ export function MakeOrganizer({ event, organizationId }: Props) {
       })}{" "}
       {t(
         "event.organizationList.confirmOrgNotes",
-        "All members of the group will be able to edit the event.",
+        "All members of the organization will be able to edit the event.",
       )}
       <button
         type="button"

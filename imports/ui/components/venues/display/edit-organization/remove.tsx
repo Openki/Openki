@@ -32,7 +32,7 @@ export function Remove({ venue, organizationId }: Props) {
       ></button>
       <div className="dropdown-menu dialog-dropdown">
         <div className="dropdown-header">
-          {t("venues.editOrganization.remove.header", "Remove group")}
+          {t("venues.editOrganization.remove.header", "Remove organization")}
           <button type="button" className="btn-close"></button>
         </div>
         <div className="p-2">

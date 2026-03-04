@@ -10,7 +10,7 @@ export async function updateOrganizations(
   courseIdOrSelector: string | Mongo.Selector<CourseEntity>,
 ) {
   for (const course of await Courses.find(courseIdOrSelector).fetchAsync()) {
-    const editors = course.organizationOrganizers.slice();
+    const editors = course.groupOrganizers.slice();
 
     course.members.forEach((member) => {
       if (member.roles.includes("team")) {

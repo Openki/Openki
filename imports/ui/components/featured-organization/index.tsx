@@ -64,7 +64,7 @@ export function FeaturedOrganization() {
       <div className="featured-group">
         <div className="featured-group-header">
           <i className="fa-solid fa-star fa-fw" />{" "}
-          {t("featuredOrganization.heading", "Featured group in {REGION}", {
+          {t("featuredOrganization.heading", "Featured organization in {REGION}", {
             REGION: currentRegion.name,
           })}
         </div>
