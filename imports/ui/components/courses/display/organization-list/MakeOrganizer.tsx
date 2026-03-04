@@ -42,14 +42,14 @@ export function MakeOrganizer({ course, organizationId }: Props) {
     <div className="group-tool-dialog add">
       {t(
         "course.organizationList.confirmOrgText",
-        'Add members of the "{NAME}" group as editors?',
+        'Add members of the "{NAME}" organization as editors?',
         {
           NAME: name(organization),
         },
       )}{" "}
       {t(
         "course.organizationList.confirmOrgNotes",
-        "All members of the group will be able to edit the course and create new events for it.",
+        "All members of the organization will be able to edit the course and create new events for it.",
       )}
       <button
         type="button"
@@ -61,9 +61,9 @@ export function MakeOrganizer({ course, organizationId }: Props) {
             Alert.success(
               t(
                 "course.organizationList.makeOrganizer.membersCanEditCourse",
-                "Members of {GROUP} can now edit {COURSE}.",
+                "Members of {ORGANIZATION} can now edit {COURSE}.",
                 {
-                  GROUP: name(organization),
+                  ORGANIZATION: name(organization),
                   COURSE: course.name,
                 },
               ),

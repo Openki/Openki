@@ -49,9 +49,9 @@ async function createBase(prng: PRNG) {
       name: template.name,
       categories: template.categories || [],
       tags: template.tags || [],
-      groups: await Promise.all(template.organizations?.map((g) => ensure.organization(g)) || []),
+      groups: await Promise.all(template.organizations?.map((o) => ensure.organization(o)) || []),
       groupOrganizers: await Promise.all(
-        template.organizationOrganizers?.map((g) => ensure.organization(g)) || [],
+        template.organizationOrganizers?.map((o) => ensure.organization(o)) || [],
       ),
       description: template.description,
       compactImage: "",

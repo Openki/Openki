@@ -611,7 +611,7 @@ RouterAsync.route("framePropose", {
     const query = new Filtering(predicates).read(this.params.query).toQuery() as any;
 
     if (query.addTeamGroups) {
-      // For security reasons only 5 groups are allowed
+      // For security reasons only 5 organizations are allowed
       query.teamGroups = query.addTeamGroups.slice(0, 5);
     }
     delete query.addTeamGroups;

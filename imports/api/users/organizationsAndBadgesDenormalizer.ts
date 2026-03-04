@@ -6,7 +6,9 @@ import { UserEntity, Users } from "/imports/api/users/users";
 /**
  * Recalculate the organizations and badges field
  */
-export async function updateGroupsAndBadges(userIdOrSelector: string | Mongo.Selector<UserEntity>) {
+export async function updateOrganizationsAndBadges(
+  userIdOrSelector: string | Mongo.Selector<UserEntity>,
+) {
   await Promise.all(
     await Users.find(userIdOrSelector).mapAsync(async (user) => {
       const organizations = await Organizations.find({ "members.user": user._id }).mapAsync(

@@ -57,7 +57,7 @@ export interface CourseEntity {
    * List of organization ID that are allowed to edit the course ("team organizations", based on the ui design:
    * Every "team organization" promotes the course and is part of the organizations list)
    */
-  organizationOrganizers: string[];
+  groupOrganizers: string[];
   description?: string;
   /** small image that is used for the compact view, scaled down to max size (width*height) 500px */
   compactImage: string;

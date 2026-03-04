@@ -83,7 +83,7 @@ async function getOrganizations(courses: CourseModel[], events: EventModel[]) {
   let organizationIds = [];
   organizationIds.push(...courses.flatMap((c) => c.groups));
   organizationIds.push(...events.flatMap((e) => e.groups));
-  organizationIds = uniq(organizationIds).filter((g) => g);
+  organizationIds = uniq(organizationIds).filter((o) => o);
 
   const organizationEntities = await Organizations.find(
     {},
@@ -92,10 +92,10 @@ async function getOrganizations(courses: CourseModel[], events: EventModel[]) {
     },
   ).fetchAsync();
 
-  return organizationIds.map((g) => {
-    const organization = organizationEntities.find((e) => e._id === g);
+  return organizationIds.map((o) => {
+    const organization = organizationEntities.find((e) => e._id === o);
     return {
-      _id: g,
+      _id: o,
       name: organization?.name,
       short: organization?.short,
       members: organization?.members.length,
@@ -154,11 +154,11 @@ export async function getRegionStats(regionId: string): Promise<Stats> {
         events.filter((e) => !e.groups?.length && !e.allGroups?.length),
       ),
       // calc stat for every organization
-      ...organizations.map((g) => ({
-        ...g,
+      ...organizations.map((o) => ({
+        ...o,
         ...calcStats(
-          courses.filter((c) => c.groups?.includes(g._id)),
-          events.filter((e) => e.allGroups?.includes(g._id) || e.groups?.includes(g._id)),
+          courses.filter((c) => c.groups?.includes(o._id)),
+          events.filter((e) => e.allGroups?.includes(o._id) || e.groups?.includes(o._id)),
         ),
       })),
     ]

@@ -41,7 +41,7 @@ export function Remove({ course, organizationId }: Props) {
     <div className="group-tool-dialog danger">
       {t(
         "course.organizationList.confirmRemoveText",
-        'Stop listing the "{NAME}" group as promoters?',
+        'Stop listing the "{NAME}" organization as promoters?',
         {
           NAME: name(organization),
         },
@@ -56,9 +56,9 @@ export function Remove({ course, organizationId }: Props) {
             Alert.success(
               t(
                 "course.organizationList.remove.organizationRemoved.success",
-                "{GROUP} was removed from {COURSE}.",
+                "{ORGANIZATION} was removed from {COURSE}.",
                 {
-                  GROUP: name(organization),
+                  ORGANIZATION: name(organization),
                   COURSE: course.name,
                 },
               ),

@@ -111,7 +111,7 @@ async function loadDisabledRoles(organizationIds: string[]) {
     }),
   );
 
-  return organizations.flatMap((g) => g.disableCreateRoles).filter((r) => r) as string[];
+  return organizations.flatMap((o) => o.disableCreateRoles).filter((r) => r) as string[];
 }
 
 registerMethod(Subscribe);
@@ -248,7 +248,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
       }),
     );
     set.groups = organizations;
-    set.organizationOrganizers = organizations;
+    set.groupOrganizers = organizations;
 
     /* region cannot be changed */
     if (!changes.region) {
@@ -279,7 +279,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
 
     await Notification.Course.record(courseId);
 
-    if (set.organizationOrganizers.length > 0) {
+    if (set.groupOrganizers.length > 0) {
       await Notification["Group.Course"].record(courseId);
     }
 

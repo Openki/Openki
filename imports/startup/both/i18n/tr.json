@@ -217,7 +217,7 @@
   "organization.claim.placeholder": "Esas fikir",
   "organization.short.placeholder": "Kısaltma",
   "courses.organizationList.addText": "gruba bağlantı ver",
-  "course.edit.proposeInOrganization": "{GROUP} grubunda yeni bir kurs teklif et",
+  "course.edit.proposeInOrganization": "{ORGANIZATION} grubunda yeni bir kurs teklif et",
   "adminPanel.tasks.featuredOrganization": "Özellik grubu",
   "course.organizationList.addOrgText": "Düzenleme yetkileri ver",
   "course.organizationList.confirmOrgText": "\"{NAME}\" grubunu düzenleyici olarak ekle?",

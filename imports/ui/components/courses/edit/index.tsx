@@ -95,7 +95,7 @@ export function Edit(props: Props) {
 
   let internalInitalState;
   if (showInternalCheckbox()) {
-    // Usually an "internal" checkbox is displayed so that the users of a group can choose
+    // Usually an "internal" checkbox is displayed so that the users of a organization can choose
     // whether the course is internal or not.
     internalInitalState = props.internal;
   } else if (props.isFrame && hasTeamOrganizations) {
@@ -145,7 +145,7 @@ export function Edit(props: Props) {
     }
 
     if (!isNew) {
-      organizations.push(...(props.organizationOrganizers || []));
+      organizations.push(...(props.groupOrganizers || []));
     } else if (!props.isFrame) {
       if (props.organization) {
         organizations.push(props.organization);
@@ -184,7 +184,7 @@ export function Edit(props: Props) {
 
   function availableRoles() {
     const disableCreateRoles = chain(organizations)
-      .flatMap((g) => g.disableCreateRoles)
+      .flatMap((o) => o.disableCreateRoles)
       .uniq()
       .value();
 
@@ -273,7 +273,7 @@ export function Edit(props: Props) {
   }
 
   const customFields = () => {
-    return organizations.flatMap((g) => g.customCourseFields || []);
+    return organizations.flatMap((o) => o.customCourseFields || []);
   };
 
   const resetFields = () => {
@@ -699,7 +699,7 @@ export function Edit(props: Props) {
                 type="box"
                 label={t(
                   "course.edit.internDescription",
-                  "Only show when looking at a group's courses",
+                  "Only show when looking at a organization's courses",
                 )}
                 checked={internal}
                 onChange={(checked) => setInternal(checked)}

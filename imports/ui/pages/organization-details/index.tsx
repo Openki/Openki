@@ -103,16 +103,20 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
     },
     onSuccess: () => {
       Alert.success(
-        t("organizationDetails.changesSaved", 'Changes to the "{GROUP}" group have been saved.', {
-          GROUP: organization.name,
-        }),
+        t(
+          "organizationDetails.changesSaved",
+          'Changes to the "{ORGANIZATION}" organization have been saved.',
+          {
+            ORGANIZATION: organization.name,
+          },
+        ),
       );
     },
     onError: (err) => {
       Alert.serverError(
         err as string | Error,
-        t("organizationDetails.saveError", 'Could not save the "{GROUP}" group', {
-          GROUP: organization.name,
+        t("organizationDetails.saveError", 'Could not save the "{ORGANIZATION}" organization', {
+          ORGANIZATION: organization.name,
         }),
       );
     },
@@ -131,16 +135,19 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
       const organizationId = await OrganizationsMethods.save("", newOrganization);
 
       Alert.success(
-        t("organizationDetails.created", 'The "{GROUP}" group was created.', {
-          GROUP: newOrganization.name,
+        t("organizationDetails.created", 'The "{ORGANIZATION}" organization was created.', {
+          ORGANIZATION: newOrganization.name,
         }),
       );
 
-      Analytics.trackEvent("Group creations", "Group creations");
+      Analytics.trackEvent("Organization creations", "Organization creations");
 
       Router.go("groupDetails", { _id: organizationId, short: newOrganization.short });
     } catch (err) {
-      Alert.serverError(err, t("organizationDetails.saveError", { GROUP: newOrganization.name }));
+      Alert.serverError(
+        err,
+        t("organizationDetails.saveError", { ORGANIZATION: newOrganization.name }),
+      );
     } finally {
       setIsBusy(false);
     }
@@ -157,7 +164,7 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
     multiline: false,
     placeholder: t(
       "organization.name.placeholder",
-      "Name of your group, institution, community or program",
+      "Name of your organization, institution, community or program",
     ),
     store: showControls
       ? {
@@ -211,7 +218,7 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
     multiline: true,
     placeholder: t(
       "organization.description.placeholder",
-      "Describe the audience, the interests and activities of your group.",
+      "Describe the audience, the interests and activities of your organization.",
     ),
     store: showControls
       ? {
@@ -226,7 +233,8 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
     },
   };
 
-  const title = organization.name || t("organizationDetails.windowtitle.create", "Create group");
+  const title =
+    organization.name || t("organizationDetails.windowtitle.create", "Create organization");
 
   return (
     <>
@@ -237,16 +245,18 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
       />
 
       <div className="container mb-4">
-        {organization.isNew() && <h2>{t("organizationDetails.titleNew", "Create new group")}</h2>}
+        {organization.isNew() && (
+          <h2>{t("organizationDetails.titleNew", "Create new organization")}</h2>
+        )}
         <div className="page-component group-details">
           <div className="group-details-titlebar clearfix">
-            {t("organizationDetails.organization", "Group")}
+            {t("organizationDetails.organization", "Organization")}
 
             {isFeatured() && (
               <>
                 {" "}
                 <i
-                  title={t("organizationDetails.isFeatured", "This group is featured")}
+                  title={t("organizationDetails.isFeatured", "This organization is featured")}
                   className="fa-solid fa-star fa-fw"
                 />
               </>

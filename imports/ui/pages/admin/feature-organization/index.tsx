@@ -25,7 +25,7 @@ export function AdminFeatureOrganizationPage() {
     if (!organizationId) {
       return undefined;
     }
-    return organizations.find((g) => g._id === organizationId);
+    return organizations.find((o) => o._id === organizationId);
   }
 
   if (isLoading()) {
@@ -39,8 +39,8 @@ export function AdminFeatureOrganizationPage() {
           <div className="mb-2">
             {t(
               "admin.featureOrganization.organizationIsFeatured",
-              'The "{GROUP}" group is featured for the "{REGION}" region.',
-              { GROUP: featuredOrganization()?.name, REGION: currentRegion?.name },
+              'The "{ORGANIZATION}" organization is featured for the "{REGION}" region.',
+              { ORGANIZATION: featuredOrganization()?.name, REGION: currentRegion?.name },
             )}
           </div>
           <button
@@ -69,7 +69,7 @@ export function AdminFeatureOrganizationPage() {
             ) : (
               t(
                 "admin.featureOrganization.deleteButton",
-                'Remove the featured group for "{REGION}"',
+                'Remove the featured organization for "{REGION}"',
                 {
                   REGION: currentRegion?.name,
                 },
@@ -78,7 +78,7 @@ export function AdminFeatureOrganizationPage() {
           </button>
         </div>
       )}
-      <h3>{t("admin.featureOrganization.featureOrganization", "Feature group")}</h3>
+      <h3>{t("admin.featureOrganization.featureOrganization", "Feature organization")}</h3>
       <form
         onSubmit={async (event) => {
           event.preventDefault();
@@ -124,7 +124,7 @@ export function AdminFeatureOrganizationPage() {
             ) : (
               t(
                 "admin.featureOrganization.saveButton.feature",
-                'Feature this group in the "{REGION}" region',
+                'Feature this organization in the "{REGION}" region',
                 {
                   REGION: currentRegion?.name,
                 },
