@@ -50,8 +50,8 @@ export type Props = {
   _id?: string;
   categories?: string[];
   isFrame?: boolean;
-  organization?: string;
-  teamOrganizations?: string[];
+  group?: string;
+  teamGroups?: string[];
   hideRoleSelection?: boolean;
   hidePricePolicy?: boolean;
   roles?: string[];
@@ -79,34 +79,34 @@ export function Edit(props: Props) {
   function showInternalCheckbox() {
     let internalOption;
 
-    if (!props.isFrame && props.organization && user?.groups) {
+    if (!props.isFrame && props.group && user?.groups) {
       // Visible in organization detail page (for creation) if user is in organization
-      internalOption = user.groups.includes(props.organization);
+      internalOption = user.groups.includes(props.group);
     } else {
       // and visible on edit if course is in a organization
-      // For devs: This behaviour is not consistent. But we want the creation to be as simple
+      // For devs: This behavior is not consistent. But we want the creation to be as simple
       // as possible.
       internalOption = (props.groups?.length || 0) > 0;
     }
     return internalOption;
   }
 
-  const hasTeamOrganizations = !!(props.teamOrganizations && props.teamOrganizations?.length > 0);
+  const hasTeamOrganizations = !!(props.teamGroups && props.teamGroups?.length > 0);
 
-  let internalInitalState;
+  let internalInitialState;
   if (showInternalCheckbox()) {
     // Usually an "internal" checkbox is displayed so that the users of a organization can choose
     // whether the course is internal or not.
-    internalInitalState = props.internal;
+    internalInitialState = props.internal;
   } else if (props.isFrame && hasTeamOrganizations) {
     // When in a frame for a organization, the `internal` query-param can be set to control whether
     // the organization wants the entered courses to be internal.
-    internalInitalState = props.internal;
+    internalInitialState = props.internal;
   }
   // Default is not internal
-  internalInitalState = internalInitalState || false;
+  internalInitialState = internalInitialState || false;
 
-  const [internal, setInternal] = useState(internalInitalState);
+  const [internal, setInternal] = useState(internalInitialState);
 
   useEffect(() => {
     setTitle(props.name);
@@ -147,11 +147,11 @@ export function Edit(props: Props) {
     if (!isNew) {
       organizations.push(...(props.groupOrganizers || []));
     } else if (!props.isFrame) {
-      if (props.organization) {
-        organizations.push(props.organization);
+      if (props.group) {
+        organizations.push(props.group);
       }
-    } else if (props.teamOrganizations && props.teamOrganizations.length > 0) {
-      organizations.push(...props.teamOrganizations);
+    } else if (props.teamGroups && props.teamGroups.length > 0) {
+      organizations.push(...props.teamGroups);
     }
     // remove double organizations
     return uniq(organizations);

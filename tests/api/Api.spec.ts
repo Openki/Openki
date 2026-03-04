@@ -101,7 +101,7 @@ describe("API", () => {
         .its("body.data")
         .should("not.be.empty")
         .each((event: any) => {
-          const organizationIds = event.groups.map((g: any) => g.id);
+          const organizationIds = event.organizations.map((g: any) => g.id);
           expect(organizationIds).to.include(organizationId);
         });
     });
