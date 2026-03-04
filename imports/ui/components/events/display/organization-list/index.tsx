@@ -92,7 +92,10 @@ export function OrganizationList({ event }: Props) {
                   ></button>
                   <ul className="dropdown-menu dialog-dropdown">
                     <li className="dropdown-header">
-                      {t("course.organizationList.dropdownTitle.editOrganization", "Edit organization")}
+                      {t(
+                        "course.organizationList.dropdownTitle.editOrganization",
+                        "Edit organization",
+                      )}
                       <button type="button" className="btn-close"></button>
                     </li>
                     <li>

@@ -147,7 +147,7 @@ export const save = ServerMethod(
       await Venues.updateAsync({ _id: venueId }, { $set: set });
 
       await eventVenueDenormalizer.updateVenue({ "venue._id": venueId });
-      await groupVenuesDenormalizer.afterVenueUpdate(venueId);
+      await organizationVenuesDenormalizer.afterVenueUpdate(venueId);
     }
 
     return venueId;

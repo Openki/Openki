@@ -153,7 +153,9 @@ export function UserprofilePage({ user }: Props) {
     const userId = user._id;
     try {
       await OrganizationsMethods.updateMembership(userId, organizationId, true);
-      Alert.success(t("profile.organization.drafted", "Added to organization {NAME}", { NAME: name }));
+      Alert.success(
+        t("profile.organization.drafted", "Added to organization {NAME}", { NAME: name }),
+      );
     } catch (err) {
       Alert.serverError(
         err,
@@ -344,7 +346,8 @@ export function UserprofilePage({ user }: Props) {
                           className="list-group-item list-group-item-action list-group-item-secondary btn"
                           onClick={() => handleDraftIntoOrganization(organization)}
                         >
-                          {t("profile.organization.draft", "Draft into organization")} {organization.name}
+                          {t("profile.organization.draft", "Draft into organization")}{" "}
+                          {organization.name}
                         </button>
                       ),
                     )}
