@@ -46,9 +46,9 @@ export interface RegionEntity {
    * Number of future events in that region, calculated field (does not count internal events)
    */
   futureEventCount: number;
-  /** ID of featured group */
+  /** ID of featured organization */
   featuredGroup: string;
-  /** Team groups that is added to all courses on create. */
+  /** Team organizations that is added to all courses on create. */
   defaultTeamGroups?: string[];
   /** Courses in this region are default single events. */
   singleEvents?: boolean;

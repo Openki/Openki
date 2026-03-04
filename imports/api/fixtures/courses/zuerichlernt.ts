@@ -4,7 +4,7 @@ export const courses: {
   _id?: string;
   name: string;
   categories?: string[];
-  groups?: string[];
+  organizations?: string[];
   createdby: string;
   description?: string;
   roles: string[];
@@ -82,7 +82,7 @@ export const courses: {
       },
     ],
     internal: false,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -651,7 +651,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "MzGp4ZDxcS2uobGcv"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "MzGp4ZDxcS2uobGcv"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -789,7 +789,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -1722,7 +1722,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["MzGp4ZDxcS2uobGcv", "Hx7iiRX5Fg3Pf2xne"],
+    organizations: ["MzGp4ZDxcS2uobGcv", "Hx7iiRX5Fg3Pf2xne"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -1924,7 +1924,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["spZf6DugA8y8K7Z6F", "fhupZhFxFCD7FwBSm", "Hx7iiRX5Fg3Pf2xne"],
+    organizations: ["spZf6DugA8y8K7Z6F", "fhupZhFxFCD7FwBSm", "Hx7iiRX5Fg3Pf2xne"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -1992,7 +1992,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["QeppkGZxMmihjbhZf", "Hx7iiRX5Fg3Pf2xne"],
+    organizations: ["QeppkGZxMmihjbhZf", "Hx7iiRX5Fg3Pf2xne"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -2405,7 +2405,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "fhupZhFxFCD7FwBSm"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "fhupZhFxFCD7FwBSm"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -2515,7 +2515,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "zTkLPCGyxvadeLKG6"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "zTkLPCGyxvadeLKG6"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -2868,7 +2868,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -3236,7 +3236,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -3496,7 +3496,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -3946,7 +3946,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -4387,7 +4387,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -4670,7 +4670,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "6rSMTsSmXAj9rdPF6"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "6rSMTsSmXAj9rdPF6"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -4916,7 +4916,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -5223,7 +5223,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -5492,7 +5492,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -5822,7 +5822,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -6124,7 +6124,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -6430,7 +6430,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "MzGp4ZDxcS2uobGcv", "yJBGGe8K4Pb9ZLEoX"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "MzGp4ZDxcS2uobGcv", "yJBGGe8K4Pb9ZLEoX"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -6544,7 +6544,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "Qxdoq84bqbwG3qvZk"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "Qxdoq84bqbwG3qvZk"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -7166,7 +7166,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "SErB6i2hv8SaWmxF6"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "SErB6i2hv8SaWmxF6"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -7449,7 +7449,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "SErB6i2hv8SaWmxF6"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "SErB6i2hv8SaWmxF6"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -7732,7 +7732,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -7836,7 +7836,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "Qxdoq84bqbwG3qvZk"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "Qxdoq84bqbwG3qvZk"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -8534,7 +8534,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -8854,7 +8854,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "Qxdoq84bqbwG3qvZk"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "Qxdoq84bqbwG3qvZk"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -9391,7 +9391,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -9472,7 +9472,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "zTkLPCGyxvadeLKG6"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "zTkLPCGyxvadeLKG6"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -9808,7 +9808,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "zTkLPCGyxvadeLKG6"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "zTkLPCGyxvadeLKG6"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -10003,7 +10003,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -10346,7 +10346,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "Qxdoq84bqbwG3qvZk"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "Qxdoq84bqbwG3qvZk"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -10503,7 +10503,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "BGKaKo49RKgbeAsNt"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "BGKaKo49RKgbeAsNt"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -10607,7 +10607,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -11041,7 +11041,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -11323,7 +11323,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -11952,7 +11952,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -12634,7 +12634,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -13116,7 +13116,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -13624,7 +13624,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -13917,7 +13917,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -14155,7 +14155,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -14690,7 +14690,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -15217,7 +15217,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -15567,7 +15567,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -15920,7 +15920,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -16570,7 +16570,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "2RYY82cFigyLs6etP"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "2RYY82cFigyLs6etP"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -16903,7 +16903,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -17337,7 +17337,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -17686,7 +17686,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "2RYY82cFigyLs6etP"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "2RYY82cFigyLs6etP"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -17959,7 +17959,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "42bNNenBx2Jbobm9r"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "42bNNenBx2Jbobm9r"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -18298,7 +18298,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "SErB6i2hv8SaWmxF6"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "SErB6i2hv8SaWmxF6"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -18754,7 +18754,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "6rSMTsSmXAj9rdPF6"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "6rSMTsSmXAj9rdPF6"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -19207,7 +19207,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "Qxdoq84bqbwG3qvZk"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "Qxdoq84bqbwG3qvZk"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -19656,7 +19656,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -20185,7 +20185,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "6rSMTsSmXAj9rdPF6"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "6rSMTsSmXAj9rdPF6"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -20426,7 +20426,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "2RYY82cFigyLs6etP"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "2RYY82cFigyLs6etP"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -20704,7 +20704,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -21292,7 +21292,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -21492,7 +21492,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "zTkLPCGyxvadeLKG6"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "zTkLPCGyxvadeLKG6"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -21975,7 +21975,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -22588,7 +22588,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "SErB6i2hv8SaWmxF6"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "SErB6i2hv8SaWmxF6"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -23024,7 +23024,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -23377,7 +23377,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -23698,7 +23698,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -23978,7 +23978,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -24300,7 +24300,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -24466,7 +24466,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -24624,7 +24624,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "dxQTANZsF6koGxqCW"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "dxQTANZsF6koGxqCW"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -24973,7 +24973,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -25229,7 +25229,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "Qxdoq84bqbwG3qvZk"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "Qxdoq84bqbwG3qvZk"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -26001,7 +26001,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "Qxdoq84bqbwG3qvZk"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "Qxdoq84bqbwG3qvZk"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -26312,7 +26312,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -27308,7 +27308,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "ZDAARaoF27eQmDaBZ"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "ZDAARaoF27eQmDaBZ"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -27377,7 +27377,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "BGKaKo49RKgbeAsNt"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "BGKaKo49RKgbeAsNt"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -27744,7 +27744,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "BGKaKo49RKgbeAsNt"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "BGKaKo49RKgbeAsNt"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -28106,7 +28106,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -28436,7 +28436,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
     region: "h4MnI3psRr8hSljk2",
     members: [],
     archived: false,
@@ -28608,7 +28608,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -28757,7 +28757,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -28925,7 +28925,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -29098,7 +29098,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -29686,7 +29686,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -30095,7 +30095,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -30404,7 +30404,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -30573,7 +30573,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -30865,7 +30865,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -31170,7 +31170,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "42bNNenBx2Jbobm9r"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "42bNNenBx2Jbobm9r"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -31291,7 +31291,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -31736,7 +31736,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "BGKaKo49RKgbeAsNt"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "BGKaKo49RKgbeAsNt"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -31991,7 +31991,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "BGKaKo49RKgbeAsNt"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "BGKaKo49RKgbeAsNt"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -32388,7 +32388,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -32704,7 +32704,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "2RYY82cFigyLs6etP"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "2RYY82cFigyLs6etP"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -32968,7 +32968,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "5MiKEfwC8fyQLuPkp"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "5MiKEfwC8fyQLuPkp"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -33554,7 +33554,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -33870,7 +33870,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -34191,7 +34191,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -34535,7 +34535,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -34851,7 +34851,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -35028,7 +35028,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -35353,7 +35353,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "6rSMTsSmXAj9rdPF6"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "6rSMTsSmXAj9rdPF6"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -35938,7 +35938,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "dxQTANZsF6koGxqCW"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "dxQTANZsF6koGxqCW"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -36419,7 +36419,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "dxQTANZsF6koGxqCW"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "dxQTANZsF6koGxqCW"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -36743,7 +36743,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "2RYY82cFigyLs6etP"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "2RYY82cFigyLs6etP"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -36985,7 +36985,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -37301,7 +37301,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -37781,7 +37781,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -38121,7 +38121,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -38598,7 +38598,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -38873,7 +38873,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -38974,7 +38974,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -39173,7 +39173,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -39494,7 +39494,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -39918,7 +39918,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "2RYY82cFigyLs6etP"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "2RYY82cFigyLs6etP"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -40214,7 +40214,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -40480,7 +40480,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -40694,7 +40694,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "6rSMTsSmXAj9rdPF6"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "6rSMTsSmXAj9rdPF6"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -40962,7 +40962,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -41279,7 +41279,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -41959,7 +41959,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "SErB6i2hv8SaWmxF6"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "SErB6i2hv8SaWmxF6"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -42131,7 +42131,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -42367,7 +42367,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "6rSMTsSmXAj9rdPF6"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "6rSMTsSmXAj9rdPF6"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -42687,7 +42687,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -42943,7 +42943,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -43245,7 +43245,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -43632,7 +43632,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "42bNNenBx2Jbobm9r"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "42bNNenBx2Jbobm9r"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -44037,7 +44037,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "BGKaKo49RKgbeAsNt"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "BGKaKo49RKgbeAsNt"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -44251,7 +44251,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -44525,7 +44525,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -44898,7 +44898,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -45256,7 +45256,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -45540,7 +45540,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "SErB6i2hv8SaWmxF6"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "SErB6i2hv8SaWmxF6"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -45940,7 +45940,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -46257,7 +46257,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -46606,7 +46606,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -47234,7 +47234,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "dxQTANZsF6koGxqCW"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "dxQTANZsF6koGxqCW"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -47724,7 +47724,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -48063,7 +48063,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -48207,7 +48207,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -48606,7 +48606,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -49018,7 +49018,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -49273,7 +49273,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "SErB6i2hv8SaWmxF6"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "SErB6i2hv8SaWmxF6"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -49638,7 +49638,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -50070,7 +50070,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "2RYY82cFigyLs6etP"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "2RYY82cFigyLs6etP"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -50362,7 +50362,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -50580,7 +50580,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -50906,7 +50906,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "5MiKEfwC8fyQLuPkp"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "5MiKEfwC8fyQLuPkp"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -51324,7 +51324,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -51895,7 +51895,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -52358,7 +52358,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -52562,7 +52562,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "BMvkjFghun6qW4M9K"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "BMvkjFghun6qW4M9K"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -52929,7 +52929,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -53398,7 +53398,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -53774,7 +53774,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -54290,7 +54290,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -54931,7 +54931,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "6rSMTsSmXAj9rdPF6"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "6rSMTsSmXAj9rdPF6"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -55223,7 +55223,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "zTkLPCGyxvadeLKG6"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "zTkLPCGyxvadeLKG6"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -55749,7 +55749,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -56139,7 +56139,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -56428,7 +56428,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -56549,7 +56549,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -56818,7 +56818,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "42bNNenBx2Jbobm9r"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "42bNNenBx2Jbobm9r"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -57308,7 +57308,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -57494,7 +57494,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "3rLCvz8TFLCwwcreF"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -57869,7 +57869,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -58166,7 +58166,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -58474,7 +58474,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -58744,7 +58744,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -58907,7 +58907,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -59310,7 +59310,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "BMvkjFghun6qW4M9K"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "BMvkjFghun6qW4M9K"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -59712,7 +59712,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "5MiKEfwC8fyQLuPkp"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "5MiKEfwC8fyQLuPkp"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -59968,7 +59968,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -60377,7 +60377,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -60823,7 +60823,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -61053,7 +61053,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -61308,7 +61308,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -61531,7 +61531,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -61791,7 +61791,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "BGKaKo49RKgbeAsNt"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "BGKaKo49RKgbeAsNt"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -62083,7 +62083,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "BGKaKo49RKgbeAsNt"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "BGKaKo49RKgbeAsNt"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -62443,7 +62443,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -63149,7 +63149,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -63579,7 +63579,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "5MiKEfwC8fyQLuPkp"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "5MiKEfwC8fyQLuPkp"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -64322,7 +64322,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -64993,7 +64993,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -65933,7 +65933,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "BMvkjFghun6qW4M9K"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "BMvkjFghun6qW4M9K"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -66162,7 +66162,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -66814,7 +66814,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -67237,7 +67237,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -67492,7 +67492,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -67859,7 +67859,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "42bNNenBx2Jbobm9r"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "42bNNenBx2Jbobm9r"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -68039,7 +68039,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -68252,7 +68252,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "42bNNenBx2Jbobm9r"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "42bNNenBx2Jbobm9r"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -68602,7 +68602,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -68772,7 +68772,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "MzGp4ZDxcS2uobGcv"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "MzGp4ZDxcS2uobGcv"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -68841,7 +68841,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "MzGp4ZDxcS2uobGcv"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "MzGp4ZDxcS2uobGcv"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -68910,7 +68910,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "rscJDvWpSdoFNecXJ"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "rscJDvWpSdoFNecXJ"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -69511,7 +69511,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "42bNNenBx2Jbobm9r"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "42bNNenBx2Jbobm9r"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -69826,7 +69826,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "MzGp4ZDxcS2uobGcv"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "MzGp4ZDxcS2uobGcv"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -69895,7 +69895,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "MzGp4ZDxcS2uobGcv"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "MzGp4ZDxcS2uobGcv"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -69963,7 +69963,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -70388,7 +70388,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "5MiKEfwC8fyQLuPkp"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "5MiKEfwC8fyQLuPkp"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -70942,7 +70942,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "Qxdoq84bqbwG3qvZk"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "Qxdoq84bqbwG3qvZk"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -71233,7 +71233,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -71535,7 +71535,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "rscJDvWpSdoFNecXJ"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "rscJDvWpSdoFNecXJ"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -71603,7 +71603,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -71942,7 +71942,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -72137,7 +72137,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -72572,7 +72572,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "SErB6i2hv8SaWmxF6"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "SErB6i2hv8SaWmxF6"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -73107,7 +73107,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -73462,7 +73462,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "SErB6i2hv8SaWmxF6"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "SErB6i2hv8SaWmxF6"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -73993,7 +73993,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -74285,7 +74285,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -74447,7 +74447,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -75103,7 +75103,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -75349,7 +75349,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "42bNNenBx2Jbobm9r"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "42bNNenBx2Jbobm9r"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -75760,7 +75760,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -75912,7 +75912,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -76046,7 +76046,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "BMvkjFghun6qW4M9K"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "BMvkjFghun6qW4M9K"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -76526,7 +76526,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "QeppkGZxMmihjbhZf"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -76928,7 +76928,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -77120,7 +77120,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -77274,7 +77274,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "rscJDvWpSdoFNecXJ"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "rscJDvWpSdoFNecXJ"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -77604,7 +77604,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "zTkLPCGyxvadeLKG6"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "zTkLPCGyxvadeLKG6"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -77730,7 +77730,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo", "buwCFod8Qsnin9c5o"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo", "buwCFod8Qsnin9c5o"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -78147,7 +78147,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -78321,7 +78321,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -78981,7 +78981,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -79432,7 +79432,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "Qxdoq84bqbwG3qvZk"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "Qxdoq84bqbwG3qvZk"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -79677,7 +79677,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -80030,7 +80030,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -80427,7 +80427,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -80928,7 +80928,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -81207,7 +81207,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -81363,7 +81363,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "dxQTANZsF6koGxqCW"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "dxQTANZsF6koGxqCW"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -81609,7 +81609,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -81965,7 +81965,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -82290,7 +82290,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -82392,7 +82392,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "5MiKEfwC8fyQLuPkp"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "5MiKEfwC8fyQLuPkp"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -82860,7 +82860,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -83013,7 +83013,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -83143,7 +83143,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -83399,7 +83399,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -83877,7 +83877,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -84054,7 +84054,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -84359,7 +84359,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -84716,7 +84716,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "b5N3to7cQpZgbdgMn"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -84994,7 +84994,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -85222,7 +85222,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "SErB6i2hv8SaWmxF6"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "SErB6i2hv8SaWmxF6"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -85849,7 +85849,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -86291,7 +86291,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -86640,7 +86640,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -87007,7 +87007,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "5MiKEfwC8fyQLuPkp"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "5MiKEfwC8fyQLuPkp"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -87682,7 +87682,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -87981,7 +87981,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "oAKa3Es5T8piWAENg"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -88470,7 +88470,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -88796,7 +88796,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "rscJDvWpSdoFNecXJ"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "rscJDvWpSdoFNecXJ"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -89032,7 +89032,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -89198,7 +89198,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "2RYY82cFigyLs6etP"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "2RYY82cFigyLs6etP"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -89472,7 +89472,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "BGKaKo49RKgbeAsNt", "buwCFod8Qsnin9c5o"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "BGKaKo49RKgbeAsNt", "buwCFod8Qsnin9c5o"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -89840,7 +89840,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "xRu2dnHG97ABFErJo"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -89908,7 +89908,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX", "buwCFod8Qsnin9c5o"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX", "buwCFod8Qsnin9c5o"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -90460,7 +90460,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "buwCFod8Qsnin9c5o", "ZjdbyN3iRCyQTDmTG"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "buwCFod8Qsnin9c5o", "ZjdbyN3iRCyQTDmTG"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -90652,7 +90652,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD", "buwCFod8Qsnin9c5o"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "sSj2doBt5yTTAQEnD", "buwCFod8Qsnin9c5o"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -90957,7 +90957,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "6rSMTsSmXAj9rdPF6", "buwCFod8Qsnin9c5o"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "6rSMTsSmXAj9rdPF6", "buwCFod8Qsnin9c5o"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -91353,7 +91353,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "buwCFod8Qsnin9c5o", "MzGp4ZDxcS2uobGcv"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "buwCFod8Qsnin9c5o", "MzGp4ZDxcS2uobGcv"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -91929,7 +91929,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs", "buwCFod8Qsnin9c5o"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "dmwtkos4TWYJ4pzPs", "buwCFod8Qsnin9c5o"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -92368,7 +92368,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG", "buwCFod8Qsnin9c5o"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG", "buwCFod8Qsnin9c5o"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -92709,7 +92709,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "rscJDvWpSdoFNecXJ", "buwCFod8Qsnin9c5o"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "rscJDvWpSdoFNecXJ", "buwCFod8Qsnin9c5o"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -93028,7 +93028,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "BGKaKo49RKgbeAsNt", "buwCFod8Qsnin9c5o"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "BGKaKo49RKgbeAsNt", "buwCFod8Qsnin9c5o"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -93321,7 +93321,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG", "buwCFod8Qsnin9c5o"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG", "buwCFod8Qsnin9c5o"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -93759,7 +93759,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG", "buwCFod8Qsnin9c5o"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "ZjdbyN3iRCyQTDmTG", "buwCFod8Qsnin9c5o"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -94175,7 +94175,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B", "buwCFod8Qsnin9c5o"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B", "buwCFod8Qsnin9c5o"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -94257,7 +94257,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B", "buwCFod8Qsnin9c5o"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B", "buwCFod8Qsnin9c5o"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -94402,7 +94402,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -94510,7 +94510,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B", "buwCFod8Qsnin9c5o"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "Y6N5ymAtT8iH9NG2B", "buwCFod8Qsnin9c5o"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -94789,7 +94789,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -94857,7 +94857,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -95056,7 +95056,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -95339,7 +95339,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr", "buwCFod8Qsnin9c5o"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr", "buwCFod8Qsnin9c5o"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -95866,7 +95866,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "nakdPuAv53ezjcthr"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {
@@ -96140,7 +96140,7 @@ export const courses: {
     ],
     internal: false,
     singleEvent: true,
-    groups: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX", "buwCFod8Qsnin9c5o"],
+    organizations: ["Hx7iiRX5Fg3Pf2xne", "yJBGGe8K4Pb9ZLEoX", "buwCFod8Qsnin9c5o"],
     region: "h4MnI3psRr8hSljk2",
     members: [
       {

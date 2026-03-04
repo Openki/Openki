@@ -24,7 +24,7 @@ import * as CoursesMethods from "/imports/api/courses/methods";
 import { EventModel, OEvent } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { SaveFields } from "/imports/api/events/methods";
-import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
+import { useFindFilter as useOrganizationsFindFilter } from "/imports/api/organizations/publications";
 import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
 import { useAll as useRegions } from "/imports/api/regions/publications";
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
@@ -58,16 +58,16 @@ function EditCourseCustomFields({
   onChange: (values: CourseCustomField[]) => void;
 }) {
   const [isCourseLoading, course] = useCourseDetails(courseId);
-  const [groupsIsLoading, groups] = useGroupsFindFilter(
-    { when: !!course?.groupOrganizers },
-    { ids: course?.groupOrganizers },
+  const [organizationsIsLoading, organizations] = useOrganizationsFindFilter(
+    { when: !!course?.organizationOrganizers },
+    { ids: course?.organizationOrganizers },
   );
 
-  if (isCourseLoading() || groupsIsLoading()) {
+  if (isCourseLoading() || organizationsIsLoading()) {
     return null;
   }
 
-  const customFields = groups?.flatMap((g) => g.customCourseFields || []);
+  const customFields = organizations?.flatMap((g) => g.customCourseFields || []);
 
   return (
     <>
@@ -391,8 +391,8 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       if (event.courseId) {
         editevent.courseId = event.courseId;
       } else {
-        // We have this 'secret' feature where you can set a group ID
-        // in the URL to assign a group to the event on creation
+        // We have this 'secret' feature where you can set a organization ID
+        // in the URL to assign a organization to the event on creation
         if (searchParams.group) {
           editevent.groups = [searchParams.group];
         }

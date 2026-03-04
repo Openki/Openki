@@ -18,7 +18,7 @@ export const events: {
   time_created: {
     $date: number;
   };
-  groups?: string[];
+  organizations?: string[];
   courseId?: string;
   internal?: boolean;
   categories?: string[];
@@ -35,7 +35,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Sandro",
     time_created: { $date: 1425255006913 },
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "23pHya44bHji9SbfZ",
   },
   {
@@ -50,7 +50,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Sandro",
     time_created: { $date: 1425138768658 },
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "2hWpGKQWYZRQJcNaL",
   },
   {
@@ -65,7 +65,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Meret",
     time_created: { $date: 1425247990828 },
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "2u8f9DopDkicy5Qm4",
   },
   {
@@ -80,7 +80,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Ruedi",
     time_created: { $date: 1425138493200 },
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "4xTYQ3NW5hDK2shkp",
   },
   {
@@ -95,7 +95,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "greg",
     time_created: { $date: 1425256157707 },
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "5mjPC2nthDQkstxYb",
   },
   {
@@ -110,7 +110,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Sophie Rüdisüli",
     time_created: { $date: 1425247723510 },
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "5yzKCxnmv75PPWL8g",
   },
   {
@@ -125,11 +125,11 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Meret",
     time_created: { $date: 1425253395524 },
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "6JNeNAvoLyLNwhqL2",
   },
   {
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "6x2gZqEGixFJPnEPY",
     createdBy: "Nora",
     description:
@@ -155,7 +155,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Meret",
     time_created: { $date: 1425255909087 },
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "7JGfEeKZNWmizuWmA",
   },
   {
@@ -170,7 +170,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "greg",
     time_created: { $date: 1425255407075 },
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "8RJcAqLZPCLZgbTTf",
   },
   {
@@ -185,7 +185,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Seee",
     time_created: { $date: 1425138947025 },
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "8cKbtr8K6mRDFAuTF",
   },
   {
@@ -200,7 +200,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Vera",
     time_created: { $date: 1425253512379 },
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "9EXYpqjEqGR9xxpRq",
   },
   {
@@ -215,11 +215,11 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Nic",
     time_created: { $date: 1425138858714 },
-    groups: ["NHW", "Openki"],
+    organizations: ["NHW", "Openki"],
     _id: "ALzN3oyijSr7WKGgJ",
   },
   {
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "BmJnhd6Pdm8iThFHB",
     createdBy: "Nic",
     description:
@@ -245,11 +245,11 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Nic",
     time_created: { $date: 1425253617248 },
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "CZAdSmEDbF6js5PHB",
   },
   {
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "CagtrNgyPymj9tquM",
     createdBy: "Seee",
     description:
@@ -275,7 +275,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "greg",
     time_created: { $date: 1425247477475 },
-    groups: ["NHW", "Studiengang Kommunikationsguerilla"],
+    organizations: ["NHW", "Studiengang Kommunikationsguerilla"],
     _id: "CzoqCY5juqd7RSjsc",
   },
   {
@@ -290,11 +290,11 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "wankelmut",
     time_created: { $date: 1425255808676 },
-    groups: ["NHW", "DIY-ZH"],
+    organizations: ["NHW", "DIY-ZH"],
     _id: "Djb4enAdKSWyQsKnq",
   },
   {
-    groups: ["NHW", "Jungfreisinnige"],
+    organizations: ["NHW", "Jungfreisinnige"],
     _id: "GS27FXZuDgfsHkNmq",
     createdBy: "wankelmut",
     description:
@@ -320,11 +320,11 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Claudio Beretta",
     time_created: { $date: 1425256393196 },
-    groups: ["NHW", "DIY-ZH"],
+    organizations: ["NHW", "DIY-ZH"],
     _id: "GWzAgypjFDGMPkS6x",
   },
   {
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "GkAgCpa6CaELfJjdY",
     createdBy: "Vollpfoschte",
     description:
@@ -350,11 +350,11 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Sandro",
     time_created: { $date: 1425252642428 },
-    groups: ["NHW", "LAMM"],
+    organizations: ["NHW", "LAMM"],
     _id: "HAeL8JYhFHFxE8xYy",
   },
   {
-    groups: ["Wohlfühlgruppe-ZH"],
+    organizations: ["Wohlfühlgruppe-ZH"],
     _id: "Htpqu2AWjfyLX4Mnc",
     createdBy: "Sandro",
     description:
@@ -380,7 +380,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "greg",
     time_created: { $date: 1425252820327 },
-    groups: ["NHW", "Wohlfühlgruppe-ZH"],
+    organizations: ["NHW", "Wohlfühlgruppe-ZH"],
     _id: "JniffMYmJN2Y4sYZo",
   },
   {
@@ -395,11 +395,11 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "mutti",
     time_created: { $date: 1425247607764 },
-    groups: ["NHW", "DIY-ZH"],
+    organizations: ["NHW", "DIY-ZH"],
     _id: "LMLxDp5zvj8bYvpRk",
   },
   {
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "M7o8Z3WsBSntTQqY8",
     createdBy: "Sandro",
     description:
@@ -414,7 +414,7 @@ export const events: {
     title: "KICK-OFF-BRUNCH MIT STUDENTISCHEN NACHHALTIGKEITSORGANISATIONEN",
   },
   {
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "M7xE4cYWpjmSGh2jA",
     createdBy: "Seee",
     description:
@@ -440,7 +440,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Rudolf von Guggisbühl",
     time_created: { $date: 1425328677498 },
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "NcYsMfqpFjBd2m9cG",
   },
   {
@@ -455,7 +455,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Verena Aeberli",
     time_created: { $date: 1425247269060 },
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "PT9CsGq84orriQarr",
   },
   {
@@ -470,7 +470,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Milva Serengeti",
     time_created: { $date: 1425247903016 },
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "Q4KyabewWWs7nvENS",
   },
   {
@@ -485,11 +485,11 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Pietro Chang",
     time_created: { $date: 1425139480080 },
-    groups: ["NHW", "Filme für die Erde"],
+    organizations: ["NHW", "Filme für die Erde"],
     _id: "Q7Sh2N2MuzQrnhERp",
   },
   {
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "RxpzwvcBm8YyBkSkz",
     createdBy: "Sandra Mihailovic",
     description:
@@ -515,7 +515,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Taneia Tanabalasindram",
     time_created: { $date: 1425252730125 },
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "TppwNueFQzLqa9izG",
   },
   {
@@ -530,11 +530,11 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Gregory Sauber",
     time_created: { $date: 1425138999036 },
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "WYmJrwDbX3cR2D2XR",
   },
   {
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "XdoyogCP4upyDf7pK",
     createdBy: "Maria_95",
     description:
@@ -560,7 +560,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Mondblume",
     time_created: { $date: 1425138304229 },
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "YPmqsj7h4WBNgM4h7",
   },
   {
@@ -575,7 +575,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Freedomfighter_Against_War_007",
     time_created: { $date: 1425138415494 },
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "ZAnTEKS2xrEgcFCDa",
   },
   {
@@ -590,7 +590,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Nimbus",
     time_created: { $date: 1425256492588 },
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "a988iHc4dftCyxuF4",
   },
   {
@@ -605,7 +605,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Wehrmutstropfen",
     time_created: { $date: 1425139306472 },
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "ake3CnwMPQMh4scFJ",
   },
   {
@@ -620,11 +620,11 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "The Machine",
     time_created: { $date: 1425255197923 },
-    groups: ["NHW", "DIY-ZH"],
+    organizations: ["NHW", "DIY-ZH"],
     _id: "cAhb6cLG8TQxy2CeY",
   },
   {
-    groups: ["NHW", "Openki"],
+    organizations: ["NHW", "Openki"],
     _id: "essdofDRZsB8evsDJ",
     createdBy: "greg",
     description:
@@ -650,7 +650,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Seee",
     time_created: { $date: 1425247388477 },
-    groups: ["NHW", "CSA - regionale Vertragslandwirtschaft"],
+    organizations: ["NHW", "CSA - regionale Vertragslandwirtschaft"],
     _id: "i5p7CXT45EDbaTBgT",
   },
   {
@@ -665,7 +665,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "No_Boarder-No_Nation-Stop_Deportation",
     time_created: { $date: 1425256107264 },
-    groups: ["NHW", "Museum für Gestaltung"],
+    organizations: ["NHW", "Museum für Gestaltung"],
     _id: "jznGRbLBoYzoXnG5w",
   },
   {
@@ -680,7 +680,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Randständig",
     time_created: { $date: 1425252547013 },
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "ok9eD6cEoJrmKpoCp",
   },
   {
@@ -696,11 +696,11 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Büsi1986",
     time_created: { $date: 1425305141823 },
-    groups: ["ASZ Bildung für Alle"],
+    organizations: ["ASZ Bildung für Alle"],
     _id: "qxZWkGN4MBXgTRKX2",
   },
   {
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "rbBb9mmzKTZYYAipR",
     createdBy: "macanico",
     description:
@@ -726,7 +726,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Marcel",
     time_created: { $date: 1425139108683 },
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "reh2QBzbLfZoXpeRu",
   },
   {
@@ -741,7 +741,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Martin",
     time_created: { $date: 1425138559337 },
-    groups: ["NHW", "Vegan Züri"],
+    organizations: ["NHW", "Vegan Züri"],
     _id: "rerCG63aLoxHo8Fa8",
   },
   {
@@ -756,7 +756,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Vera",
     time_created: { $date: 1425253998018 },
-    groups: ["NHW", "Bio für Jede"],
+    organizations: ["NHW", "Bio für Jede"],
     _id: "s9KsbJTkHgKHGuN7J",
   },
   {
@@ -771,11 +771,11 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Android_lover-with_heart",
     time_created: { $date: 1425253723944 },
-    groups: ["NHW", "Vegan Züri"],
+    organizations: ["NHW", "Vegan Züri"],
     _id: "sBbXKdxpc5zXntnHh",
   },
   {
-    groups: ["NHW", "DIY-ZH"],
+    organizations: ["NHW", "DIY-ZH"],
     _id: "t3kxMFiyaozW8kZy4",
     createdBy: "Android_lover-with_heart",
     description:
@@ -790,7 +790,7 @@ export const events: {
     title: "ESSEN LÄNGER HALTBAR MACHEN",
   },
   {
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "wTdSXp3EfccLAt5Mn",
     createdBy: "Anderson72",
     description:
@@ -806,7 +806,7 @@ export const events: {
     internal: true,
   },
   {
-    groups: ["Geographisch-Ethnographische Gesellschaft Zürich"],
+    organizations: ["Geographisch-Ethnographische Gesellschaft Zürich"],
     _id: "0T4SXl3ErJcLAt5MK",
     categories: ["Naturwissenschaft", "Geographie", "Geschichte"],
     createdBy: "Norman Backhaus",
@@ -836,7 +836,7 @@ export const events: {
     region: "J6GDhEEvdmdSMzPPF",
     createdBy: "Stephan",
     time_created: { $date: 1425505012741 },
-    groups: ["DIY-BE", "DIY-ZH"],
+    organizations: ["DIY-BE", "DIY-ZH"],
     _id: "nnBXH4a44jdHjYnFD",
   },
   {
@@ -855,7 +855,7 @@ export const events: {
     title: "Catching fish with flies!",
   },
   {
-    groups: ["NHW", "DIY-ZH"],
+    organizations: ["NHW", "DIY-ZH"],
     _id: "gcT94v49CE9F2jz2C",
     courseId: "9602699f30",
     createdBy: "Serengeti",
@@ -871,7 +871,7 @@ export const events: {
     title: "Kleider flicken",
   },
   {
-    groups: ["NHW"],
+    organizations: ["NHW"],
     _id: "RbnfsBXd6CsNxYYfK",
     courseId: "40ccd81ccf",
     createdBy: "Die Speerspitze des Gedankenguts",

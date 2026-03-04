@@ -19,7 +19,7 @@ describe("Propose course via frame", function () {
     );
   });
 
-  it("allows to add multiple groups", () => {
+  it("allows to add multiple organizations", () => {
     cy.visitOpenki("/frame/propose?addTeamGroups=cc89c5e476,573edec5d6");
 
     cy.get("#course-edit-title").click();

@@ -1,0 +1,30 @@
+import React from "react";
+import { useUser } from "/imports/utils/react-meteor-data";
+
+import { VenueModel } from "/imports/api/venues/venues";
+
+import { OrganizationTag } from "../../../organizations/tag";
+import { Add } from "./add";
+import { Remove } from "./remove";
+
+export interface Props {
+  venue: VenueModel;
+}
+
+export function EditOrganization({ venue }: Props) {
+  const user = useUser();
+
+  const organizationId = venue.editGroup;
+  return (
+    <span className="tag-group multiline">
+      {organizationId ? (
+        <>
+          <OrganizationTag organizationId={organizationId} />
+          {venue.editableBy(user) && <Remove venue={venue} organizationId={organizationId} />}
+        </>
+      ) : (
+        <Add venue={venue} />
+      )}
+    </span>
+  );
+}

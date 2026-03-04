@@ -167,9 +167,9 @@ export function Find({ query }: Props) {
     if (search) {
       course.name = search;
     }
-    const groupId = filter.asQuery["group"];
-    if (groupId) {
-      course.group = groupId;
+    const organizationId = filter.asQuery["group"];
+    if (organizationId) {
+      course.organization = organizationId;
     }
     return course;
   }
@@ -193,13 +193,13 @@ export function Find({ query }: Props) {
     relevantFilters.push("region");
     return relevantFilters.some((f) => filter.asQuery[f]);
   }
-  function groupTagEvents() {
-    return (groupId: string) => {
+  function organizationTagEvents() {
+    return (organizationId: string) => {
       return {
         onMouseOver: async () => {
           FilterPreview({
             property: "group",
-            id: groupId,
+            id: organizationId,
             activate: true,
             delayed: true,
           });
@@ -207,7 +207,7 @@ export function Find({ query }: Props) {
         onMouseOut: async () => {
           FilterPreview({
             property: "group",
-            id: groupId,
+            id: organizationId,
             activate: false,
             delayed: true,
           });
@@ -300,10 +300,10 @@ export function Find({ query }: Props) {
           <>
             <CourseList
               courses={results()}
-              groupTagEvents={groupTagEvents()}
+              organizationTagEvents={organizationTagEvents()}
               categorieTagEvents={categorieTagEvents()}
               containsPropose={true}
-              group={filter.asQuery["group"]}
+              organization={filter.asQuery["group"]}
             />
             {hasMore() && (
               <div className="text-center mt-3">

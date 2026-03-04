@@ -84,18 +84,18 @@ export function WeekPage(data: Record<string, string>) {
         filter.add("after", newDate.startOf("week").toISOString());
         update();
       },
-      availableGroups: new Filtering({
+      availableOrganizations: new Filtering({
         filterGroups: Predicates.ids,
       })
         .read(data)
         .get("filterGroups"),
-      selectedGroups: filter.get("groups"),
-      onAddGroup: (group) => {
-        filter.add("groups", group);
+      selectedOrganizations: filter.get("groups"),
+      onAddOrganization: (organization) => {
+        filter.add("groups", organization);
         update();
       },
-      onRemoveGroup: (group) => {
-        filter.remove("groups", group);
+      onRemoveOrganization: (organization) => {
+        filter.remove("groups", organization);
         update();
       },
       categories: filter.get("categories"),

@@ -65,7 +65,7 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
               onClick();
             }}
           >
-            {t("course.group.remove", "Remove")}
+            {t("course.organizationList.remove", "Remove")}
           </button>
         </li>
       </ul>

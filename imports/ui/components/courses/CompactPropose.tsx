@@ -1,12 +1,12 @@
 import { Router } from "meteor/iron:router";
 import React, { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { GroupTag } from "../groups/tag";
+import { OrganizationTag } from "../organizations/tag";
 
 export interface Props {
-  group?: string | undefined;
-  groupTagEvents?:
-    | ((groupId: string) => {
+  organization?: string | undefined;
+  organizationTagEvents?:
+    | ((organizationId: string) => {
         onMouseOver: () => Promise<void>;
         onMouseOut: () => Promise<void>;
         onClick: () => Promise<void>;
@@ -14,25 +14,25 @@ export interface Props {
     | undefined;
 }
 
-export function CompactPropose({ group, groupTagEvents }: Props) {
+export function CompactPropose({ organization, organizationTagEvents }: Props) {
   const { t } = useTranslation();
   const elementRef = useRef<HTMLDivElement>(null);
 
   const [title, setTitle] = useState("");
 
-  function groupTagAttr(groupId: string) {
+  function organizationTagAttr(organizationId: string) {
     return {
-      groupId,
+      organizationId,
       onClick: async () => {
-        await groupTagEvents?.(groupId).onClick();
+        await organizationTagEvents?.(organizationId).onClick();
       },
       onMouseOver: async () => {
         elementRef.current?.classList.add("elevate-child");
-        await groupTagEvents?.(groupId).onMouseOver();
+        await organizationTagEvents?.(organizationId).onMouseOver();
       },
       onMouseOut: async () => {
         elementRef.current?.classList.remove("elevate-child");
-        await groupTagEvents?.(groupId).onMouseOut();
+        await organizationTagEvents?.(organizationId).onMouseOut();
       },
     };
   }
@@ -40,7 +40,7 @@ export function CompactPropose({ group, groupTagEvents }: Props) {
   return (
     <div
       className={`row mx-0 align-items-start course-compact is-proposal${
-        group ? ` group-${group}` : ""
+        organization ? ` group-${organization}` : ""
       }`}
       ref={elementRef}
     >
@@ -50,7 +50,7 @@ export function CompactPropose({ group, groupTagEvents }: Props) {
             onSubmit={(event) => {
               event.preventDefault();
               Router.go("proposeCourse", undefined, {
-                query: group ? { title, group } : { title },
+                query: organization ? { title, group: organization } : { title },
               });
             }}
           >
@@ -76,8 +76,10 @@ export function CompactPropose({ group, groupTagEvents }: Props) {
           )}
         </div>
       </div>
-      {!!group && (
-        <div className="tag-group course-groups">{<GroupTag {...groupTagAttr(group)} />}</div>
+      {!!organization && (
+        <div className="tag-group course-groups">
+          {<OrganizationTag {...organizationTagAttr(organization)} />}
+        </div>
       )}
     </div>
   );

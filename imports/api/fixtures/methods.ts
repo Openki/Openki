@@ -3,7 +3,7 @@ import { ServerMethod } from "/imports/utils/ServerMethod";
 
 import { Courses } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
-import { Groups } from "/imports/api/groups/groups";
+import { Organizations } from "../organizations/organizations";
 import { Regions } from "/imports/api/regions/regions";
 import { Venues } from "/imports/api/venues/venues";
 import { InfoPages } from "../infoPages/infoPages";
@@ -13,7 +13,7 @@ import { CourseDiscussions } from "../course-discussions/course-discussions";
 import { create as coursesDataCreate } from "./courses/create";
 import { create as eventsDataCreate } from "./events/create";
 import { generate as eventsDataGenerate } from "./events/generate";
-import { create as groupsDataCreate } from "./groups/create";
+import { create as organizationsDataCreate } from "./organizations/create";
 import { create as infoPagesDataCreate } from "./infoPages/create";
 import { create as regionsDataCreate } from "./regions/create";
 import { create as venuesDataCreate } from "./venues/create";
@@ -39,7 +39,7 @@ export const clean = ServerMethod(
         Invitations.removeAsync({}),
         JoinLinks.removeAsync({}),
         Tenants.removeAsync({}),
-        Groups.removeAsync({}),
+        Organizations.removeAsync({}),
         InfoPages.removeAsync({}),
       ]);
     } catch (e) {
@@ -64,8 +64,8 @@ export const create = ServerMethod(
 
       await usersDataCreate();
 
-      if ((await Groups.countDocuments()) === 0) {
-        await groupsDataCreate();
+      if ((await Organizations.countDocuments()) === 0) {
+        await organizationsDataCreate();
       }
 
       if ((await Regions.countDocuments()) === 0) {

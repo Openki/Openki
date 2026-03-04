@@ -228,13 +228,13 @@ Router.route("api.0.xml", {
                 })
                 .txt(speaker);
             } else {
-              // If no custom field with speaker exists we use the group
-              event.groups.forEach((group) => {
+              // If no custom field with speaker exists we use the organization
+              event.organizations.forEach((organization) => {
                 persons
                   .ele("person", {
-                    id: group.id,
+                    id: organization.id,
                   })
-                  .txt(group.name);
+                  .txt(organization.name);
               });
             }
           });
