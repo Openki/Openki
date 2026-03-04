@@ -67,7 +67,7 @@ function EditCourseCustomFields({
     return null;
   }
 
-  const customFields = organizations?.flatMap((g) => g.customCourseFields || []);
+  const customFields = organizations?.flatMap((o) => o.customCourseFields || []);
 
   return (
     <>

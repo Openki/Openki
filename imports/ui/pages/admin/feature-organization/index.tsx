@@ -25,7 +25,7 @@ export function AdminFeatureOrganizationPage() {
     if (!organizationId) {
       return undefined;
     }
-    return organizations.find((g) => g._id === organizationId);
+    return organizations.find((o) => o._id === organizationId);
   }
 
   if (isLoading()) {

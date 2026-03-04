@@ -89,7 +89,7 @@ export function EventRegistration({ event }: Props) {
     return null;
   }
 
-  const registrationClosed = organizations.some((g) => g.registrationClosed);
+  const registrationClosed = organizations.some((o) => o.registrationClosed);
 
   return (
     <>
