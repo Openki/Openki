@@ -53,7 +53,7 @@ Demo playground: [sandbox.openki.net](https://sandbox.openki.net/?region=Spilist
 - :ghost: Customizability and some white-labeling
   - Single event mode ([docs](https://gitlab.com/Openki/Openki/-/wikis/singleEvent))
   - Startpage dashboard ([docs](https://gitlab.com/Openki/Openki/-/wikis/Dashboard-Settings))
-  - Custom fields and roles for organizations ([docs](https://gitlab.com/Openki/Openki/-/wikis/Group-Settings))
+  - Custom fields and roles for organizations ([docs](https://gitlab.com/Openki/Openki/-/wikis/Organization-Settings))
   - White-labeling per region ([docs](https://gitlab.com/Openki/Openki/-/wikis/Region-Settings))
     - E.g. set page name, logos and calendar start date per region
     - Feature organizations
