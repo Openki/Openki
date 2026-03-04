@@ -8,7 +8,7 @@ import * as eventsVenueDenormalizer from "../events/venueDenormalizer";
 import { Log } from "../log/log";
 import { serverError } from "../log/methods";
 import * as regionsCountDenormalizer from "../regions/countDenormalizer";
-import * as userBadgesDenormalizer from "../users/organizationsAndBadgesDenormalizer";
+import * as userOrganizationsAndBadgesDenormalizer from "../users/organizationsAndBadgesDenormalizer";
 import * as usersTenantsDenormalizer from "../users/tenantsDenormalizer";
 import * as usersVenuesDenormalizer from "../users/venuesDenormalizer";
 
@@ -27,7 +27,7 @@ export async function updateDbCacheFieldsServerOnly() {
       eventsCategoriesDenormalizer.onStartUp(),
 
       // Update List of badges per user
-      userBadgesDenormalizer.updateOrganizationsAndBadges({}),
+      userOrganizationsAndBadgesDenormalizer.updateOrganizationsAndBadges({}),
 
       coursesTenantDenormalizer.onStartUp(),
       eventsTenantDenormalizer.onStartUp(),
