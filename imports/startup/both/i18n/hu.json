@@ -43,6 +43,7 @@
   "course.discussion.comment_btn.answer": "Válaszolj!",
   "course.discussion.text_placeholder": "Kommentárod",
   "course.discussion.text_placeholder_answer": "Válszod",
+  "course.organizationList.confirmOrgNotes": "A csoport összes tagja szerkesztheti a tanfolyamot és kezdeményezhet eseményeket a tanfolyam keretében.",
   "course.roles.maketeam": "Hozzáadás a csapathoz",
   "course.subnav.descr": "Leírás",
   "discussion.anonymous": "Anoním",
@@ -56,11 +57,11 @@
   "profile.changePass": "Jelszavat változtatok",
   "profile.delete.confirm.button": "Törlöm a fiókomat és a profilomat.",
   "profile.deleted": "Fiökod törlődött",
+  "profile.input.oldPassword": "Aktuális jelszavad",
+  "profile.mail.sent": "Üzeneted elküldve",
   "profile.organization.drafted": "Csoporthoz hozzáadva: {NAME}",
   "profile.organization.member": "Csoporttag",
   "profile.organizations": "Csoportjaim:",
-  "profile.input.oldPassword": "Aktuális jelszavad",
-  "profile.mail.sent": "Üzeneted elküldve",
   "profile.passwordChangedSuccess": "Jeleszavad sikeresen megváltoztattad.",
   "profile.users_profile_page": "{NAME} profilja",
   "report.confirm": "Jelentésed el lett küldve. Egy emeri lény meg fog próbálni találni egy megfelelő megoldást.",
@@ -71,6 +72,5 @@
   "roles.mentor.description": "egy mentor",
   "roles.mentor.short": "mentor",
   "roles.mentor.subscribe": "Lehetnék mentor",
-  "roles.message.placeholder": "Érdeklődési köreim...",
-  "course.organizationList.confirmOrgNotes": "A csoport összes tagja szerkesztheti a tanfolyamot és kezdeményezhet eseményeket a tanfolyam keretében."
+  "roles.message.placeholder": "Érdeklődési köreim..."
 }
