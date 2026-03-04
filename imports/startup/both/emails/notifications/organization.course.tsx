@@ -35,7 +35,7 @@ export async function record(courseId: string) {
   }
 
   const recipients = chain(
-    await Organizations.find({ _id: { $in: course.groupOrganizers } }).mapAsync((g) => g.members),
+    await Organizations.find({ _id: { $in: course.groupOrganizers } }).mapAsync((o) => o.members),
   )
     .flatten()
     .filter((m) => m.notify)
@@ -83,13 +83,13 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       const t = i18next.getFixedT(locale);
       const campaign = "organizationCourseNotify";
 
-      const recipientsOrganizations = organizations.filter((g) =>
-        g.members.some((m) => m.user === actualRecipient._id),
+      const recipientsOrganizations = organizations.filter((o) =>
+        o.members.some((m) => m.user === actualRecipient._id),
       );
 
       const subjectvars = {
         COURSE: truncate(course.name, { length: 10 }),
-        ORGANIZATIONS: truncate(recipientsOrganizations.map((g) => g.short).join(", "), {
+        ORGANIZATIONS: truncate(recipientsOrganizations.map((o) => o.short).join(", "), {
           length: 30,
         }),
       };
@@ -113,14 +113,14 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         courseLink,
         courseDescription: course.description || "",
         organizations: ReactJoin(
-          recipientsOrganizations.map((g) => (
+          recipientsOrganizations.map((o) => (
             <a
-              key={g._id}
-              href={Router.url("groupDetails", g, {
+              key={o._id}
+              href={Router.url("groupDetails", o, {
                 query: { campaign },
               })}
             >
-              {g.name}
+              {o.name}
             </a>
           )),
           <>&quot;, &quot;</>,

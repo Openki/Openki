@@ -111,7 +111,7 @@ async function loadDisabledRoles(organizationIds: string[]) {
     }),
   );
 
-  return organizations.flatMap((g) => g.disableCreateRoles).filter((r) => r) as string[];
+  return organizations.flatMap((o) => o.disableCreateRoles).filter((r) => r) as string[];
 }
 
 registerMethod(Subscribe);

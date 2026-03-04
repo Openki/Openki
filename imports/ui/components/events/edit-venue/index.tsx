@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { chain, isEmpty } from "lodash-es";
 
 import { EventVenueEntity } from "/imports/api/events/events";
-import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
+import { useFindFilter as useOrganizationsFindFilter } from "/imports/api/organizations/publications";
 import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
 
 import { Display } from "../../location/display";
@@ -34,12 +34,12 @@ export function EditVenue({ region: regionId, event, value, onChange, errors }: 
   const [autofocusOnSearch, setAutoFocusOnSearch] = useState(false);
 
   const [isCourseLoading, course] = useCourseDetails({ when: !!event?.courseId }, event?.courseId);
-  const [groupsIsLoading, groups] = useGroupsFindFilter(
+  const [organizationsIsLoading, organizations] = useOrganizationsFindFilter(
     { when: !!course?.groupOrganizers },
     { ids: course?.groupOrganizers },
   );
 
-  if (isCourseLoading() || groupsIsLoading()) {
+  if (isCourseLoading() || organizationsIsLoading()) {
     return null;
   }
 
@@ -54,8 +54,8 @@ export function EditVenue({ region: regionId, event, value, onChange, errors }: 
             id="event-edit-venue-search"
             autofocus={autofocusOnSearch}
             region={regionId}
-            venues={chain(groups)
-              .flatMap((g) => g.venues)
+            venues={chain(organizations)
+              .flatMap((o) => o.venues)
               .filter((v) => !!v)
               .map((v) => v._id)
               .value()}

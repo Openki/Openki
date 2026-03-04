@@ -184,7 +184,7 @@ export function Edit(props: Props) {
 
   function availableRoles() {
     const disableCreateRoles = chain(organizations)
-      .flatMap((g) => g.disableCreateRoles)
+      .flatMap((o) => o.disableCreateRoles)
       .uniq()
       .value();
 
@@ -273,7 +273,7 @@ export function Edit(props: Props) {
   }
 
   const customFields = () => {
-    return organizations.flatMap((g) => g.customCourseFields || []);
+    return organizations.flatMap((o) => o.customCourseFields || []);
   };
 
   const resetFields = () => {

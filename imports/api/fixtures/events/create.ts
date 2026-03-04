@@ -84,7 +84,7 @@ export async function create() {
       courseId: template.courseId,
       internal: template.internal || false,
       sendReminder: PublicSettings.sendReminderPreset,
-      groups: template.organizations?.map((g) => ensure.organization(g)) || [],
+      groups: template.organizations?.map((o) => ensure.organization(o)) || [],
       groupOrganizers: [],
       start: regionZone.fromString(startLocal).toDate(),
       end: regionZone.fromString(endLocal).toDate(),
