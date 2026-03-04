@@ -203,7 +203,9 @@ export const remove = ServerMethod("organization.remove", async (organizationId:
   // Update list of organizers per course
   await courseOrganizationsDenormalizer.updateOrganizations({ groups: organizationId });
   // Update List of badges per user
-  await userOrganizationsAndBadgesDenormalizer.updateOrganizationsAndBadges({ groups: groupId });
+  await userOrganizationsAndBadgesDenormalizer.updateOrganizationsAndBadges({
+    groups: organizationId,
+  });
 });
 
 export const updateMembership = ServerMethod(

@@ -30,7 +30,7 @@ export async function afterVenueUpdate(venueId: string) {
   if (!venue?.editGroup) {
     return;
   }
-  await Groups.updateAsync(
+  await Organizations.updateAsync(
     { _id: venue.editGroup },
     {
       $set: {

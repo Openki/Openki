@@ -233,7 +233,8 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
     },
   };
 
-  const title = organization.name || t("organizationDetails.windowtitle.create", "Create organization");
+  const title =
+    organization.name || t("organizationDetails.windowtitle.create", "Create organization");
 
   return (
     <>
@@ -244,7 +245,9 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
       />
 
       <div className="container mb-4">
-        {organization.isNew() && <h2>{t("organizationDetails.titleNew", "Create new organization")}</h2>}
+        {organization.isNew() && (
+          <h2>{t("organizationDetails.titleNew", "Create new organization")}</h2>
+        )}
         <div className="page-component group-details">
           <div className="group-details-titlebar clearfix">
             {t("organizationDetails.organization", "Organization")}
