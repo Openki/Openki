@@ -34,7 +34,7 @@ export function OrganizationCourse({
           <p>
             {t(
               "notification.organization.course.mail.intro",
-              "{CREATER} just proposed {COURSE} in your group {ORGANIZATIONS}.",
+              "{CREATER} just proposed {COURSE} in your organization {ORGANIZATIONS}.",
               { CREATER: creater.getDisplayName(), COURSE: course, ORGANIZATIONS: organizations },
             )}
           </p>

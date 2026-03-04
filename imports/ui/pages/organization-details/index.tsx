@@ -105,7 +105,7 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
       Alert.success(
         t(
           "organizationDetails.changesSaved",
-          'Changes to the "{ORGANIZATION}" group have been saved.',
+          'Changes to the "{ORGANIZATION}" organization have been saved.',
           {
             ORGANIZATION: organization.name,
           },
@@ -115,7 +115,7 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
     onError: (err) => {
       Alert.serverError(
         err as string | Error,
-        t("organizationDetails.saveError", 'Could not save the "{ORGANIZATION}" group', {
+        t("organizationDetails.saveError", 'Could not save the "{ORGANIZATION}" organization', {
           ORGANIZATION: organization.name,
         }),
       );
@@ -135,12 +135,12 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
       const organizationId = await OrganizationsMethods.save("", newOrganization);
 
       Alert.success(
-        t("organizationDetails.created", 'The "{ORGANIZATION}" group was created.', {
+        t("organizationDetails.created", 'The "{ORGANIZATION}" organization was created.', {
           ORGANIZATION: newOrganization.name,
         }),
       );
 
-      Analytics.trackEvent("Group creations", "Group creations");
+      Analytics.trackEvent("Organization creations", "Organization creations");
 
       Router.go("groupDetails", { _id: organizationId, short: newOrganization.short });
     } catch (err) {
@@ -164,7 +164,7 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
     multiline: false,
     placeholder: t(
       "organization.name.placeholder",
-      "Name of your group, institution, community or program",
+      "Name of your organization, institution, community or program",
     ),
     store: showControls
       ? {
@@ -218,7 +218,7 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
     multiline: true,
     placeholder: t(
       "organization.description.placeholder",
-      "Describe the audience, the interests and activities of your group.",
+      "Describe the audience, the interests and activities of your organization.",
     ),
     store: showControls
       ? {
@@ -233,7 +233,7 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
     },
   };
 
-  const title = organization.name || t("organizationDetails.windowtitle.create", "Create group");
+  const title = organization.name || t("organizationDetails.windowtitle.create", "Create organization");
 
   return (
     <>
@@ -244,16 +244,16 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
       />
 
       <div className="container mb-4">
-        {organization.isNew() && <h2>{t("organizationDetails.titleNew", "Create new group")}</h2>}
+        {organization.isNew() && <h2>{t("organizationDetails.titleNew", "Create new organization")}</h2>}
         <div className="page-component group-details">
           <div className="group-details-titlebar clearfix">
-            {t("organizationDetails.organization", "Group")}
+            {t("organizationDetails.organization", "Organization")}
 
             {isFeatured() && (
               <>
                 {" "}
                 <i
-                  title={t("organizationDetails.isFeatured", "This group is featured")}
+                  title={t("organizationDetails.isFeatured", "This organization is featured")}
                   className="fa-solid fa-star fa-fw"
                 />
               </>

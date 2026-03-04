@@ -42,7 +42,7 @@ export function RemoveOrganizer({ course, organizationId }: Props) {
     <div className="group-tool-dialog danger">
       {t(
         "course.organizationList.removeOrganizer.confirmRemoveOrgText",
-        'Revoke all editing rights from the "{NAME}" group?',
+        'Revoke all editing rights from the "{NAME}" organization?',
         { NAME: name(organization) },
       )}
       <button

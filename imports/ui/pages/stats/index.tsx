@@ -218,11 +218,11 @@ export function StatsPage() {
             </tbody>
           </table>
           <div className="mt-5">
-            <h2>{t("regions.stats.header", "Group statistics")}</h2>
+            <h2>{t("regions.stats.header", "Organization statistics")}</h2>
             <table className="table-hover-vertical stats">
               <thead>
                 <tr>
-                  <th colSpan={2}>{t("region.stats.organization", "Group")}</th>
+                  <th colSpan={2}>{t("region.stats.organization", "Organization")}</th>
                   <Header />
                 </tr>
                 <tr>
@@ -246,7 +246,7 @@ export function StatsPage() {
                             {organization.name || t("organization.missing")}
                           </a>
                         ) : (
-                          t("region.stats.noOrganization", "Ungrouped")
+                          t("region.stats.noOrganization", "Not assigned to any organization")
                         )}
                       </td>
                       <td>{organization.members}</td>

@@ -35,9 +35,7 @@ export async function record(courseId: string) {
   }
 
   const recipients = chain(
-    await Organizations.find({ _id: { $in: course.organizationOrganizers } }).mapAsync(
-      (g) => g.members,
-    ),
+    await Organizations.find({ _id: { $in: course.groupOrganizers } }).mapAsync((g) => g.members),
   )
     .flatten()
     .filter((m) => m.notify)
@@ -63,7 +61,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
     throw new Error("Course does not exist (0.o)");
   }
   const organizations = await Organizations.find({
-    _id: { $in: course.organizationOrganizers },
+    _id: { $in: course.groupOrganizers },
   }).fetchAsync();
   if (!(organizations.length > 0)) {
     throw new Error("Organizations does not exist (0.o)");

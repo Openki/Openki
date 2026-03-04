@@ -97,24 +97,24 @@ export function Add({ venue }: Props) {
         data-bs-toggle="dropdown"
       >
         <i className="fa-solid fa-plus fa-fw" />
-        <span>{t("venues.editOrganization.add.btn", "Add a group as hosts")}</span>
+        <span>{t("venues.editOrganization.add.btn", "Add a organization as hosts")}</span>
       </button>
       <div className="dropdown-menu dialog-dropdown dropdown-menu-scrollable-content">
         <div className="dropdown-header">
-          {t("venues.editOrganization.add.header", "Choose group")}
+          {t("venues.editOrganization.add.header", "Choose organization")}
           <button type="button" className="btn-close"></button>
         </div>
         <div className="p-2">
           {t(
             "venues.editOrganization.add.desc",
-            "All members of that group will be able to mange this venue.",
+            "All members of that organization will be able to mange this venue.",
           )}
         </div>
         <form className="p-2">
           <input
             type="search"
             className="form-control"
-            placeholder={t("venues.editOrganization.add.search", "Search for a group")}
+            placeholder={t("venues.editOrganization.add.search", "Search for a organization")}
             value={search}
             onChange={(e) => {
               setSearch(e.currentTarget.value);

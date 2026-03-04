@@ -126,7 +126,7 @@ export function OrganizationSettings({ organization }: Props) {
           Alert.success(
             t(
               "organizations.settings.logo.updated.success",
-              'Changes to the "{ORGANIZATION}" group settings have been saved.',
+              'Changes to the "{ORGANIZATION}" organization settings have been saved.',
               { ORGANIZATION: organizationName },
             ),
           );
@@ -146,7 +146,7 @@ export function OrganizationSettings({ organization }: Props) {
               Alert.success(
                 t(
                   "organizations.settings.organization.logo.removed",
-                  'Changes to the "{ORGANIZATION}" group settings have been saved.',
+                  'Changes to the "{ORGANIZATION}" organization settings have been saved.',
                   { ORGANIZATION: organizationName },
                 ),
               );
@@ -196,9 +196,9 @@ export function OrganizationSettings({ organization }: Props) {
         const organizationId = organization._id;
         await OrganizationsMethods.remove(organizationId);
 
-        Alert.success(t("organizations.settings.deleted", "Group has been deleted"));
+        Alert.success(t("organizations.settings.deleted", "Organization has been deleted"));
       },
-      busyButton: t("organizations.settings.delete.confirm.button.busy", "Deleting group…"),
+      busyButton: t("organizations.settings.delete.confirm.button.busy", "Deleting organization…"),
     };
   }
 
@@ -208,7 +208,7 @@ export function OrganizationSettings({ organization }: Props) {
       Alert.success(
         t(
           "organizations.settings.memberRemoved",
-          '"{MEMBER}" has been removed from the "{ORGANIZATION}" group',
+          '"{MEMBER}" has been removed from the "{ORGANIZATION}" organization',
           {
             MEMBER: memberName,
             ORGANIZATION: organization.name,
@@ -229,7 +229,7 @@ export function OrganizationSettings({ organization }: Props) {
       Alert.success(
         t(
           "organizations.settings.memberAdded",
-          '"{MEMBER}" has been added to the "{ORGANIZATION}" group',
+          '"{MEMBER}" has been added to the "{ORGANIZATION}" organization',
           {
             MEMBER: user.getDisplayName(),
             ORGANIZATION: organization.name,
@@ -326,7 +326,7 @@ export function OrganizationSettings({ organization }: Props) {
                 type="text"
                 label={t(
                   "organizations.settings.field.addMembers",
-                  "Add a new member to your group",
+                  "Add a new member to your organization",
                 )}
                 prepend="fa-solid fa-user fa-fw"
                 placeholder={t(
