@@ -169,7 +169,7 @@ export function Find({ query }: Props) {
     }
     const organizationId = filter.asQuery["group"];
     if (organizationId) {
-      course.organization = organizationId;
+      course.group = organizationId;
     }
     return course;
   }
