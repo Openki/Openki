@@ -38,9 +38,9 @@ function OrganizationToAdd({
             Alert.success(
               t(
                 "courses.organizationList.organizationAdded.success",
-                "{GROUP} was added to promote {COURSE}.",
+                "{ORGANIZATION} was added to promote {COURSE}.",
                 {
-                  GROUP: name(organization),
+                  ORGANIZATION: name(organization),
                   COURSE: course.name,
                 },
               ),
@@ -83,11 +83,11 @@ export function Add({ course }: Props) {
         data-bs-toggle="dropdown"
       >
         <i className="fa-solid fa-plus fa-fw" />
-        <span>{t("courses.organizationList.addText", "link a group")}</span>
+        <span>{t("courses.organizationList.addText", "link a organization")}</span>
       </button>
       <ul className="dropdown-menu dialog-dropdown">
         <li className="dropdown-header">
-          {t("courses.organizationList.add.addOrganization", "Add group")}
+          {t("courses.organizationList.add.addOrganization", "Add organization")}
           <button type="button" className="btn-close"></button>
         </li>
         <li>

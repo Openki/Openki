@@ -32,15 +32,15 @@ export function Remove({ venue, organizationId }: Props) {
       ></button>
       <div className="dropdown-menu dialog-dropdown">
         <div className="dropdown-header">
-          {t("venues.editOrganization.remove.header", "Remove group")}
+          {t("venues.editOrganization.remove.header", "Remove organization")}
           <button type="button" className="btn-close"></button>
         </div>
         <div className="p-2">
           {t(
             "venues.editOrganization.remove.desc",
-            "Disable members of {GROUP} to manage this venue.",
+            "Disable members of {ORGANIZATION} to manage this venue.",
             {
-              GROUP: name(organization),
+              ORGANIZATION: name(organization),
             },
           )}
         </div>
@@ -55,9 +55,9 @@ export function Remove({ venue, organizationId }: Props) {
                 Alert.success(
                   t(
                     "venues.editOrganization.remove.organizationRemoved.success",
-                    "{GROUP} was removed from {VENUE}.",
+                    "{ORGANIZATION} was removed from {VENUE}.",
                     {
-                      GROUP: name(organization),
+                      ORGANIZATION: name(organization),
                       VENUE: venue.name,
                     },
                   ),

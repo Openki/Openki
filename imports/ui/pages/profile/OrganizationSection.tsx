@@ -8,13 +8,13 @@ export function OrganizationSection({ organizations }: { organizations: Organiza
   const { t } = useTranslation();
   return (
     <div className="page-component page-component-seperated">
-      <h3>{t("profile.organizations", "My groups")}</h3>
+      <h3>{t("profile.organizations", "My organizations")}</h3>
       <p>
         {t(
           "profile.organizationMembership",
-          "You are {NUM_GROUPS, plural, =0{not member of any group} one{member of the group:} other{member of # groups:} }",
+          "You are {NUM_ORGANIZATIONS, plural, =0{not member of any organization} one{member of the organization:} other{member of # organizations:} }",
           {
-            NUM_GROUPS: organizations.length,
+            NUM_ORGANIZATIONS: organizations.length,
           },
         )}
       </p>
@@ -31,7 +31,7 @@ export function OrganizationSection({ organizations }: { organizations: Organiza
           _id: "create",
         })}
       >
-        {t("profile.createNewOrganization.button", "Create a new group")}
+        {t("profile.createNewOrganization.button", "Create a new organization")}
       </a>
     </div>
   );

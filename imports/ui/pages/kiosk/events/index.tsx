@@ -21,13 +21,13 @@ import { LanguageSelection } from "/imports/ui/components/language-selection";
 function Organization({ organizationId }: { organizationId: string }) {
   const [isLoading, organization] = useOrganizationDetails(organizationId);
 
-  function organizationLogo() {
+  function logo() {
     if (organization) {
       return organization.publicLogoUrl();
     }
     return "";
   }
-  function organizationName() {
+  function name() {
     if (organization) {
       return organization.name;
     }
@@ -39,11 +39,9 @@ function Organization({ organizationId }: { organizationId: string }) {
 
   return (
     <a href={Router.path("groupDetails", organization)}>
-      {!!organizationLogo() && (
-        <img className="kiosk-logo kiosk-logo-group" src={organizationLogo()} />
-      )}
+      {!!logo() && <img className="kiosk-logo kiosk-logo-group" src={logo()} />}
 
-      {organizationName()}
+      {name()}
     </a>
   );
 }

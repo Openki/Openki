@@ -31,7 +31,7 @@ export function OrganizationList({ course }: Props) {
         )}
         {course.editableBy(user) && (
           <li className="dialog-dropdown-btn">
-            {course.organizationOrganizers.includes(organizationId) ? (
+            {course.groupOrganizers.includes(organizationId) ? (
               <RemoveOrganizer course={course} organizationId={organizationId} />
             ) : (
               <MakeOrganizer course={course} organizationId={organizationId} />
@@ -60,7 +60,7 @@ export function OrganizationList({ course }: Props) {
   return (
     <div className="tag-group multiline">
       {organizations.map((organizationId) => {
-        const isOrganizer = course.organizationOrganizers.includes(organizationId);
+        const isOrganizer = course.groupOrganizers.includes(organizationId);
         return (
           <React.Fragment key={organizationId}>
             <OrganizationTag organizationId={organizationId} isOrganizer={isOrganizer} />
@@ -70,7 +70,7 @@ export function OrganizationList({ course }: Props) {
                   className="fa-solid fa-bullhorn fa-fw"
                   title={t(
                     "course.organizationList.title.organizedBy",
-                    "{COURSE} is co-organized by this group",
+                    "{COURSE} is co-organized by this organization",
                     {
                       COURSE: course.name,
                     },
@@ -90,7 +90,10 @@ export function OrganizationList({ course }: Props) {
                 ></button>
                 <ul className="dropdown-menu dialog-dropdown">
                   <li className="dropdown-header">
-                    {t("course.organizationList.dropdownTitle.editOrganization", "Edit group")}
+                    {t(
+                      "course.organizationList.dropdownTitle.editOrganization",
+                      "Edit organization",
+                    )}
                     <button type="button" className="btn-close"></button>
                   </li>
                   <li>

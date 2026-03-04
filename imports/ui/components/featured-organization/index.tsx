@@ -37,9 +37,9 @@ function FeaturedOrganizationBody(props: { organizationId: string }) {
           <a href={Router.path("groupDetails", featuredOrganization)}>
             {t(
               "featuredOrganization.coursesOnOpenki",
-              "Check out the courses of {GROUP} on {SITENAME}!",
+              "Check out the courses of {ORGANIZATION} on {SITENAME}!",
               {
-                GROUP: featuredOrganization.name,
+                ORGANIZATION: featuredOrganization.name,
                 SITENAME: siteName,
               },
             )}
@@ -64,7 +64,7 @@ export function FeaturedOrganization() {
       <div className="featured-group">
         <div className="featured-group-header">
           <i className="fa-solid fa-star fa-fw" />{" "}
-          {t("featuredOrganization.heading", "Featured group in {REGION}", {
+          {t("featuredOrganization.heading", "Featured organization in {REGION}", {
             REGION: currentRegion.name,
           })}
         </div>

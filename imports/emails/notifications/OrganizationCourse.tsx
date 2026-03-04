@@ -34,8 +34,8 @@ export function OrganizationCourse({
           <p>
             {t(
               "notification.organization.course.mail.intro",
-              "{CREATER} just proposed {COURSE} in your group {GROUPS}.",
-              { CREATER: creater.getDisplayName(), COURSE: course, GROUPS: organizations },
+              "{CREATER} just proposed {COURSE} in your organization {ORGANIZATIONS}.",
+              { CREATER: creater.getDisplayName(), COURSE: course, ORGANIZATIONS: organizations },
             )}
           </p>
 
@@ -60,8 +60,8 @@ export function OrganizationCourse({
       <Footer
         receiveNote={t(
           "notification.organization.course.mail.recpnote",
-          "You receive this message because you're a member of {GROUPS}.",
-          { GROUPS: organizations },
+          "You receive this message because you're a member of {ORGANIZATIONS}.",
+          { ORGANIZATIONS: organizations },
         )}
         unsubscribe={unsubscribe}
         campaign={campaign}

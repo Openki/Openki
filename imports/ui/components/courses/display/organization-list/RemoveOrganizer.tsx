@@ -42,7 +42,7 @@ export function RemoveOrganizer({ course, organizationId }: Props) {
     <div className="group-tool-dialog danger">
       {t(
         "course.organizationList.removeOrganizer.confirmRemoveOrgText",
-        'Revoke all editing rights from the "{NAME}" group?',
+        'Revoke all editing rights from the "{NAME}" organization?',
         { NAME: name(organization) },
       )}
       <button
@@ -55,8 +55,8 @@ export function RemoveOrganizer({ course, organizationId }: Props) {
             Alert.success(
               t(
                 "course.organizationList.removeOrganizer.membersCanNoLongerEditCourse",
-                "Members of {GROUP} can no longer edit {COURSE}.",
-                { GROUP: name(organization), COURSE: course.name },
+                "Members of {ORGANIZATION} can no longer edit {COURSE}.",
+                { ORGANIZATION: name(organization), COURSE: course.name },
               ),
             );
           } catch (err) {

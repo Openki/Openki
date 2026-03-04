@@ -59,15 +59,15 @@ function EditCourseCustomFields({
 }) {
   const [isCourseLoading, course] = useCourseDetails(courseId);
   const [organizationsIsLoading, organizations] = useOrganizationsFindFilter(
-    { when: !!course?.organizationOrganizers },
-    { ids: course?.organizationOrganizers },
+    { when: !!course?.groupOrganizers },
+    { ids: course?.groupOrganizers },
   );
 
   if (isCourseLoading() || organizationsIsLoading()) {
     return null;
   }
 
-  const customFields = organizations?.flatMap((g) => g.customCourseFields || []);
+  const customFields = organizations?.flatMap((o) => o.customCourseFields || []);
 
   return (
     <>
@@ -656,7 +656,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               label={t("event.edit.internal", "Hide on front page")}
               additionalInformation={t(
                 "event.edit.internal.description",
-                "Show it only on group and venue pages",
+                "Show it only on organization and venue pages",
               )}
               checked={changes.internal}
               onChange={(checked) => setChanges((changes) => ({ ...changes, internal: checked }))}
