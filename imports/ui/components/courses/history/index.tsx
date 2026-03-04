@@ -11,7 +11,7 @@ import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
 import { ProfileLink } from "../../profile-link";
 import { Contribution } from "../../Contribution";
-import { GroupTag } from "../../groups/tag";
+import { OrganizationTag } from "../../organizations/tag";
 import { RoleIcon } from "/imports/ui/RoleIcon";
 
 import "./styles.scss";
@@ -62,18 +62,18 @@ export function UserUnsubscribedHistoryEntry({ user, role }: { user: string; rol
   );
 }
 
-export function GroupPromoteHistoryEntry({
+export function OrganizationPromoteHistoryEntry({
   user,
-  group,
+  organization,
   enable,
 }: {
   user: string;
-  group: string;
+  organization: string;
   enable: boolean;
 }) {
   const { t } = useTranslation();
   const tOptions = {
-    GROUP: <GroupTag groupId={group} full={true} />,
+    GROUP: <OrganizationTag organizationId={organization} full={true} />,
     USER: (
       <>
         <ProfileLink userId={user} />
@@ -84,24 +84,28 @@ export function GroupPromoteHistoryEntry({
   return (
     <>
       {enable
-        ? t("course.history.groupPromote.added", "{GROUP} got added by {USER}", tOptions)
-        : t("course.history.groupPromote.removed", "{GROUP} got removed by {USER}", tOptions)}
+        ? t("course.history.organizationPromote.added", "{GROUP} got added by {USER}", tOptions)
+        : t(
+            "course.history.organizationPromote.removed",
+            "{GROUP} got removed by {USER}",
+            tOptions,
+          )}
     </>
   );
 }
 
-export function GroupOrgaHistoryEntry({
+export function OrganizationOrgaHistoryEntry({
   user,
-  group,
+  organization,
   enable,
 }: {
   user: string;
-  group: string;
+  organization: string;
   enable: boolean;
 }) {
   const { t } = useTranslation();
   const tOptions = {
-    GROUP: <GroupTag groupId={group} full={true} />,
+    GROUP: <OrganizationTag organizationId={organization} full={true} />,
     USER: (
       <>
         <ProfileLink userId={user} />
@@ -112,9 +116,13 @@ export function GroupOrgaHistoryEntry({
   return (
     <>
       {enable
-        ? t("course.history.groupOrga.added", "{GROUP} got added as orga-group by {USER}", tOptions)
+        ? t(
+            "course.history.organizationOrga.added",
+            "{GROUP} got added as orga-group by {USER}",
+            tOptions,
+          )
         : t(
-            "course.history.groupOrga.removed",
+            "course.history.organizationOrga.removed",
             "{GROUP} got removed as orga-group by {USER}",
             tOptions,
           )}
@@ -269,8 +277,8 @@ const map = {
   updated: UpdatedHistoryEntry,
   userSubscribed: UserSubscribedHistoryEntry,
   userUnsubscribed: UserUnsubscribedHistoryEntry,
-  groupPromote: GroupPromoteHistoryEntry,
-  groupOrga: GroupOrgaHistoryEntry,
+  groupPromote: OrganizationPromoteHistoryEntry,
+  groupOrga: OrganizationOrgaHistoryEntry,
   eventInserted: EventInsertedHistoryEntry,
   eventUpdated: EventUpdatedHistoryEntry,
   eventRemoved: EventRemovedHistoryEntry,

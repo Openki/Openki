@@ -4,8 +4,8 @@ export const courses: {
   name: string;
   categories?: string[];
   tags: string[];
-  groups?: string[];
-  groupOrganizers?: string[];
+  organizations?: string[];
+  organizationOrganizers?: string[];
   createdby: string;
   description: string;
   roles: string[];
@@ -24,7 +24,7 @@ export const courses: {
     name: "Meditation & Yoga/Qi-Gong",
     categories: ["sports", "spiritual"],
     tags: ["Sport", "Gspürschmi", "TuetGuet"],
-    groups: ["WFG-ZH"],
+    organizations: ["WFG-ZH"],
     createdby: "FeeLing",
     description:
       "Es wäre toll, regelmässig an einem Morgen zusammen zu Meditieren und Yoga/Qi-Gong zu machen. Mir selber fehlt die Selbstdisziplin und für Yoga/Qi-Gong auch das Knowhow, darum wäre eine kleine Gruppe toll. Ein extra Raum wäre toll, geht aber eigentlich überall.",
@@ -38,7 +38,7 @@ export const courses: {
     name: "Aikido",
     categories: ["sports", "martialarts"],
     tags: ["Kampfsport", "Gschpürschmi"],
-    groups: ["WFG-ZH"],
+    organizations: ["WFG-ZH"],
     createdby: "Kampfhippie",
     description:
       '<p> Würde sehr gerne regelmässig Aikido trainieren. Wenn eine kleine Gruppe zustande käme, könnte ich sogar vielleicht einen Trainer und ein Dojo auftreiben. Finde Aikido eine der schönsten Kampfsportarten, weil sie versucht auf das Gegenüber einzugehen und den Konflikt zu lösen ohne den anderen Menschen zu zerstören.</p> <p><ul>  <li><a href="https://www.youtube.com/watch?v=qAc-gQIeAaI"> Video on Youtube</a>  <li><a href="http://en.wikipedia.org/wiki/Aikido"> Aikido on Wikipedia</a> </ul></p>',
@@ -58,7 +58,7 @@ export const courses: {
     name: "Garten",
     categories: ["gardening", "biology"],
     tags: ["Garten", "Pflanzen"],
-    groups: ["WFG-ZH", "CSA"],
+    organizations: ["WFG-ZH", "CSA"],
     createdby: "Greendampf",
     description:
       "Regelmässig zusammen gärtnern und miteinander Knowhow, Infrastruktur, Beziehungen, Samen, Pflanzen austauschen. Verschiedene schon existierende freie Gärten unterstützen, die Nahrungs- und Heilmittel produzieren. Hätte Zugang zu 2-3 Gärten, die noch Kapazität für motivierte Gärtner hätten.",
@@ -78,7 +78,7 @@ export const courses: {
     categories: ["computer", "programming"],
     tags: ["Design", "Computer"],
     createdby: "Seee",
-    groups: ["CCC-ZH", "ASZ"],
+    organizations: ["CCC-ZH", "ASZ"],
     description:
       "Könnte gerne eine ganzheitliche Einführung in die Konzeption, die Gestaltung und die technische Realisierung eines Games anbieten. Der Kurs würde einen Bogen spannen von der Ideenentwickling hin zum Spielmechanik-Entwerfen bis zur Realisierung eines spielbaren Games und eine einfache Einführung in folgende Disziplinen beinhalten: <ul> <li> Spieltheorie <li> Spielidee <li> Spielmechanik <li> Storytelling <li> Concept Art <li> Charakterentwicklung <li> Zeichnen und Bildbearbeitung mit Photoshop <li> Usability <li> Prototyping und Gamedesign mit Unity Gameengine <li> Leveldesign <li> 3D-Modelling und -Animation mit Blender <li> Programmieren mit JavaScript und C-Sharp <li> Sound-Design mit Audacity <li> Polishing </ul>",
     roles: ["team", "participant", "mentor", "host"],
@@ -88,7 +88,7 @@ export const courses: {
     name: "unkommerzielle Commons-based peer production",
     categories: ["handicraft", "gardening"],
     tags: ["Theorie", "Projekt"],
-    groups: ["CSA", "DIY-ZH"],
+    organizations: ["CSA", "DIY-ZH"],
     createdby: "Greendampf",
     description:
       '"commons sind gemeinschaftlich getragene formelle oder informelle Governance-Systeme rund um kollektiv zu nutzende Ressourcen"<a href="http://commonsblog.wordpress.com/was-sind-commons/"> Was sind Commons?</a> <br> Fände es interessant, das Thema der unkommerziellen <i>Commons-based peer production</i> zu besprechen und es am besten auch gerade mit einem praktischen Projekt (zB. Gemüsegarten) versuchen in einem etwas grösseren Rahmen umzusetzen. (Das wäre aber eine längerfristige, grössere und verpflichtendere Angelegenheit.)',
@@ -100,7 +100,7 @@ export const courses: {
     categories: ["computer", "internet", "operating"],
     tags: ["Design", "Computer"],
     createdby: "Seee",
-    groups: ["CCC-ZH", "ASZ"],
+    organizations: ["CCC-ZH", "ASZ"],
     description:
       "Könnte gerne eine ganzheitliche Einführung in die Konzeption, die Gestaltung und die technische Realisierung einer einfachen Webseite anbieten. <ul> <li> Konzeption / Idee  <li> Usability  <li> Gestaltung mit Photoshop  <li> Clientseitige Programmierung mit HTML, CSS und JavaScript  <li> Serverseitige Programmierung mit PHP / Phyton  <li> Datenbank mit mySQL </ul>",
     roles: ["team", "participant", "mentor", "host"],
@@ -118,7 +118,7 @@ export const courses: {
     categories: ["handicraft", "electronics"],
     tags: ["Elektronik"],
     createdby: "greg",
-    groups: ["SGMK"],
+    organizations: ["SGMK"],
     description:
       " hoi tsäme! <br>Ich würd mal gerne die Grundlagen von elektronik lernen… <br> so n bisschen strom basteln kann ich (halt lampen und dimmer und so) und mir hats auch schon ein paar mal eins geputzt ;) <br> einen konkreten anlass gibts nicht, bin diesbezüglich detailthematisch offen…  hab zugang zu versch. räumen, wo genau müsst ich abklären wenn das ganze konkreter ist. <br> <br> nehm mir auch gerne zeit mitzuorganisiern, so ab jetzt bis ende sommer irgendwann (dann bin ich dann mal n bisschen weg).  <br>hat wer bock? <br> c u",
     roles: ["team", "participant", "mentor", "host"],
@@ -133,7 +133,7 @@ export const courses: {
     name: "Ubuntu auf Mac (dual-Boot)",
     categories: ["computer", "operating"],
     tags: [],
-    groups: ["CCC-ZH"],
+    organizations: ["CCC-ZH"],
     createdby: "greg",
     description:
       "Ich will ubuntu auf meinem mac ohne auf os zu verzichten. habs probiert abr s hat nicht geklappt und die technik-kacke interessiert mich nicht soooooo derart unglaublich. <br> <b> gibts wer, der mir und andern mit dem selben problem frontalunterrichtsmässig hilft? </b> so im allgemeinen welt-rettungsplan? ich rett die welt dafür n ander mal. von mir aus morgen abend, in meiner küche hats platz für 4 people (wenn sie cool sind, sonst für 5)." /*   --> Wieso gibts keine Komputer-Kategorie????? */,
@@ -148,7 +148,7 @@ export const courses: {
     name: "Kleiderflick Nachmittag",
     categories: ["culture", "design", "handicraft", "fabric"],
     tags: ["DIY", "Kleider", "Handwerk"],
-    groups: ["DIY-ZH"],
+    organizations: ["DIY-ZH"],
     createdby: "Sandro",
     description:
       " Habe eine Kiste voll mit Kleider, an denen ich (bei den meisten schon seit längerem) etwas flicken müsste: Reisverschlüsse grosse Risse, Löcher und so. <br> Zusammen macht das irrgendwie mehr Spass und eine fachkundige Hilfe währe natürlich auch nicht schlecht, wenn man bedenkt das die Flicke auch ein bisschen halten sollen.",
@@ -159,7 +159,7 @@ export const courses: {
     name: "Walliserdütsch lernen",
     categories: ["humanities", "languages"],
     tags: ["Dialekt", "Wallis"],
-    groups: ["SKG"],
+    organizations: ["SKG"],
     createdby: "LeOnI",
     description:
       '<p> Unter fachkundiger Leitung die Walliser Sprche verstehen und auch sprechen lernen.      Ich würde voll gerne die eigene Melodie, die spezielle Betonung, die struben Endungen und Wendungen und natürlich die wichtigsten „spezialbegriffe“ vom Walliserdeutsch lernen. à la mbrüf …. di zwee schönschte schwarznaase nou! .. chüm Üeli. </p> <p> Hörspiele oder Filme währen natürlich gute Grundlage <ul> <li> <a href="http://youtu.be/p7WCJ-A2C58"> Schwarznasenschafe Baywatch</a> <li> <a href="http://youtu.be/IEVIi91FWq0"> Synked Ueli Murer </a> <li> <a href="http://youtu.be/CXNv9CpYFCw"> LC1 Werbung </a> </ul></p>',
@@ -174,7 +174,7 @@ export const courses: {
     name: "Bier brauen",
     tags: ["Bier"],
     categories: ["culture"],
-    groups: ["SKG", "DIY-ZH"],
+    organizations: ["SKG", "DIY-ZH"],
     createdby: "Gähri",
     description:
       "Gutes Bier brauen isch ganz einfach! Ich zeig euch, wie ihr in der eigenen Badewanne feines Bier braut! Wir brauchen nur ein paar Zutaten, und schon gärt's von allein zu nem Hopfigen!! Ein super Hobby das nicht nur Abwechslung vom Einheitsbräu bietet, sondern auch noch gesund ist!",
@@ -192,7 +192,7 @@ export const courses: {
     name: "Crypto Party",
     categories: ["computer", "internet"],
     tags: ["IT", "Computer", "Überwachung", "Privacy"],
-    groups: ["CCC-ZH"],
+    organizations: ["CCC-ZH"],
     createdby: "Mike_85",
     description:
       "<p> Ein paar Leute veranstalten am Freitag 28. Eine Crypto-Party. Da wird gelernt, ausprobiert und Bier getrunken. Onion-/DarkNet, Email verschlüsselung mit PGP, Browsereinstellungen für sichereres Surfen, VPN, Proxi... </p> <p>Es Sollte für alle etwas dabei sein, für den noob bis zum nerd. Die, die können und wollen, werden sich gegenseitig und Allen Themen vorstellen </p>",
@@ -209,7 +209,7 @@ export const courses: {
     name: "Open Lab",
     categories: ["handicraft", "electronics", "computer", "programming"],
     tags: ["DIY", "Elektronik", "Computer"],
-    groups: ["SGMK"],
+    organizations: ["SGMK"],
     createdby: "Mike_85",
     description:
       ' Wöchentlich, jeden Dienstag Abend: DIY - Löten, Häcken, Basteln, Programmieren. Im Lab der SGMK Ohne Leitung, respektive unter eigener Leitung. Umkostenbeitrag Freiwilig / Materialgeld…<br><a href="http://www.mechatronicart.ch/mechartlab/openlab"OpenLab</a>',
@@ -226,7 +226,7 @@ export const courses: {
     name: "Deutschkurse",
     categories: ["humanities", "languages"],
     tags: ["Sprache"],
-    groups: ["ASZ"],
+    organizations: ["ASZ"],
     createdby: "ASZ - Bildung für alle",
     description: "Doitsh yezd!",
     roles: ["team", "participant", "mentor", "host"],
@@ -261,7 +261,7 @@ export const courses: {
     name: "Deutschkurs",
     categories: ["humanities", "languages"],
     tags: ["Deutsch", "Aussländer_in", "Immigrant_in"],
-    groups: ["ASZ"],
+    organizations: ["ASZ"],
     createdby: "IvanZ",
     description: "Würdich gerne auch Deutsch lernen, findich super.",
     roles: ["team", "participant", "mentor", "host"],
@@ -339,7 +339,7 @@ export const courses: {
     name: "Jodeln",
     categories: ["culture", "music"],
     tags: ["Singen", "Jodeln"],
-    groups: ["SKG"],
+    organizations: ["SKG"],
     createdby: "Sandra",
     description:
       "Wer will auch Jodeln (lernen) ? <br> Nicht so spiessig wie beim Jodelverein. Wenn möglich unter profesioneller Leitung. <br> Vielleicht auch, wenn sich niemand finden lässt, in Gruppe ein paar Lieder einstudieren, vielleicht auch entfremden… villeicht auch aufführen :) ",
@@ -358,7 +358,7 @@ export const courses: {
   {
     name: "Erste-Hilfe",
     categories: ["sciences", "medicine"],
-    groups: ["DIY-ZH"],
+    organizations: ["DIY-ZH"],
     tags: ["Medizin", "Nothelfer"],
     createdby: "OliviaTheMan!!!Yeah <!-- Hack -->",
     description:
@@ -374,7 +374,7 @@ export const courses: {
     name: "Meteor.js Workshop",
     categories: ["computer", "programming"],
     tags: ["Meteor.js", "Coden"],
-    groups: ["Myzelia"],
+    organizations: ["Myzelia"],
     createdby: "HackerOne",
     description: "Wer ist dabei?",
     roles: ["team", "participant", "mentor", "host"],
@@ -389,7 +389,7 @@ export const courses: {
     name: "Mobiles Soundsystem bauen",
     categories: ["handicraft", "electronics", "culture", "music"],
     tags: ["1", "2"],
-    groups: ["SKG"],
+    organizations: ["SKG"],
     createdby: "OhBacchanal",
     description:
       "Mein Traum ist es, ein mobiles Soundsystem zu haben damit ich spontane soca Paraden und illegale outdoorpartys veranstalten kann. Es gibt doch sicher <br>a) Leute die auch ein mobiles Soundsystem haben wollen und <br>b) Leute die wissen wie man eines baut. <br>Wir sollten uns zusammentun uns bei meinem Vater in der Werkstatt unsere indivuellen Soundsysteme bauen." /* Mehr Lärm in der Schweiz!' */,
@@ -430,7 +430,7 @@ export const courses: {
     name: "Schweissen",
     categories: ["handicraft", "metalwood"],
     tags: ["", ""],
-    groups: ["DIY-ZH"],
+    organizations: ["DIY-ZH"],
     createdby: "Julia",
     description:
       'Ich habe vor 2 Jahren mit Holzbearbeitung angefangen. Und mache selbständig Innenausstattung und hab auch schon ein Bühnenbild für ein Theater gemacht. Nun würde ich gerne massive Sachen aus Stahl bauen aber auch kleine Sachen wie Kerzenständer. Anscheinend gibt es viele verschiedene Arten von Schweissen und ich weiss nicht, welche die geeignetste oder und praktischste ist. auf dem Wikipediapartikel "Schweissen" bin ich nicht schlau geworden',
@@ -443,7 +443,7 @@ export const courses: {
     name: "Velo Flicken",
     categories: ["handicraft"],
     tags: ["", ""],
-    groups: ["DIY-ZH"],
+    organizations: ["DIY-ZH"],
     createdby: "Sandra",
     description: "Wer kann mir beibringen, Fahrräder zu reparieren?",
     roles: ["team", "participant", "mentor", "host"],
@@ -471,8 +471,8 @@ export const courses: {
     name: "Notebooks auf Ubuntu Linux umrüsten",
     categories: ["computer"],
     tags: ["", ""],
-    groups: ["CCC-ZH"],
-    groupOrganizers: ["CCC-ZH"],
+    organizations: ["CCC-ZH"],
+    organizationOrganizers: ["CCC-ZH"],
     createdby: "birdy1976",
     description:
       "<p>In diesem Workshop rüsten wir alte Notebook auf das Betriebssystem Ubuntu Linux als Alternative zu OS X oder Windows um, damit die alten Notebooks wieder schneller laufen und potentiell noch Jahre lang verwendet werden können. <br /></p><p>Bringe dein altes Notebook mit und wir helfen dir bei der Installation und den ersten Schritten. PS: Bitte sichere allfällige Daten möglichst vorher, damit nichts verloren geht... Anmeldung ist erwünscht.<br /></p>",
@@ -489,7 +489,7 @@ export const courses: {
     name: "Catching fish with flies!?",
     categories: ["♥undefined♥", "experimental", "sports"],
     tags: ["", ""],
-    groups: ["Outdoor", "DIY-ZH"],
+    organizations: ["Outdoor", "DIY-ZH"],
     createdby: "Päda",
     description:
       "<p>Verbringst du gerne Zeit am Wasser und wolltes immer schon einen Fisch selber fangen und zubereiten. Dann offenbart dir das Fliegenfischen eine neue Welt mit einem umfassenden Einblick in  Aquatische Ökosysteme. Fliegenfischen setzt Grundkenntnisse in Entomologie, Fischdökologie, Studium des Wetters und eine gutes Auge für die Geschehnisse in am Wasser voraus. Insbesondere die technischen Grundlagen dieser anspruchsvollen Angeltechnik bilden Thema dieses Kurses.  Komm vorbei, wenn du Lust hast, die faszinierende Technik des Fliegenfischens einmal selbst auszuprobieren, oder mehr über die Angelfischerei im allgemeinen wissen möchtest.  </p><p>Was lernst du dabei? Werfen mit der Fliegenrute als Einstieg ins Gebiet. <br /></p>",
@@ -500,7 +500,7 @@ export const courses: {
     name: "WC-Brunnen Bau",
     categories: ["handicraft", "metalwood"],
     tags: ["DIY", "Ökologie"],
-    groups: ["SKG", "DIY-ZH"],
+    organizations: ["SKG", "DIY-ZH"],
     createdby: "sb",
     description:
       '"<p>WC-Brunnen bieten nicht nur viel Komfort beim Händewaschen, sie helfen auch beim Wassersparen! </p><p><br /><a href="http://www.vorsicht-glass.de/assets/images/Good_Hotel_bathroom.jpg">Foto von professionellem Beispiel</a><br />Dieses Prinzip, aber alles DIY und für weniger als 10.-</p><p><br /></p>',
@@ -527,7 +527,7 @@ export const courses: {
     name: "Wöchentliche Sitzung",
     categories: [],
     tags: ["", ""],
-    groups: ["CCC-ZH"],
+    organizations: ["CCC-ZH"],
     internal: true,
     createdby: "birdy1976",
     description:
@@ -545,7 +545,7 @@ export const courses: {
     name: "Vokü",
     categories: [],
     tags: ["", ""],
-    groups: ["ASZ"],
+    organizations: ["ASZ"],
     internal: true,
     createdby: "greg",
     description: "<p>Essen für alle für 5.- oder mehr oder weniger. Immer auch Vegan</p>",
@@ -561,7 +561,7 @@ export const courses: {
   {
     name: "Sonntags-Kino",
     tags: ["", ""],
-    groups: ["ASZ"],
+    organizations: ["ASZ"],
     internal: true,
     createdby: "greg",
     description: "<p>immer gute filme.</p>",
@@ -577,7 +577,7 @@ export const courses: {
   {
     name: "Schreibmaschine schreiben",
     tags: ["", ""],
-    groups: ["CCC-ZH"],
+    organizations: ["CCC-ZH"],
     createdby: "greg",
     description:
       "<p>Eine Schreibmaschine ist ein moderne von Handangetriebenes Gerät, das dazu dient, Text mit Drucktypen zu schreiben und hauptsächlich auf Papier darzustellen.</p>",
@@ -719,7 +719,7 @@ export const courses: {
     name: "Patching up Clothes-Afternoon",
     categories: ["culture", "design", "handicraft"],
     tags: ["DIY", "Kleider", "Handwerk"],
-    groups: ["DIY-ZH"],
+    organizations: ["DIY-ZH"],
     createdby: "Sandroen",
     description:
       " I have a big box full of old clothes I should patch (some of them since long long time): Zipper, big rifts, holes etc. I think fixing those together with others would be more fun and maybe there is some expert around who helps us out. The patching should be done good so its not gonna bust again so soon.",
@@ -731,7 +731,7 @@ export const courses: {
     name: "Different accents",
     categories: ["humanities", "languages"],
     tags: ["Dialekt", "Wallis"],
-    groups: ["SKG"],
+    organizations: ["SKG"],
     createdby: "LeOnIen",
     description:
       'Watch this video: <a href="http://youtu.be/dABo_DCIdpM"> Link </a><br> - Is there a Expert who could teach me how to speak and understand the English from the habitants of all this different regions? The sounds, the special intonations, the weird endings and windings and not to forgett the unique phrases is what I want to learn. Audio-dramas or movies are very welcome and a good basis I think.<br> So share some links in the comments!',
@@ -746,7 +746,7 @@ export const courses: {
   {
     name: "to brew beer",
     tags: ["Bier"],
-    groups: ["CCC-ZH", "DIY-ZH"],
+    organizations: ["CCC-ZH", "DIY-ZH"],
     categories: ["culture"],
     createdby: "Gähri Weberen",
     description:
@@ -766,7 +766,7 @@ export const courses: {
     name: "Crypto Party",
     categories: ["computer", "internet"],
     tags: ["IT", "Computer", "Überwachung", "Privacy"],
-    groups: ["CCC-ZH"],
+    organizations: ["CCC-ZH"],
     createdby: "Mike_85en",
     description:
       "Some people are organizing a crypto-party on friday the 28th of September. Beer drinking, playing around, trying out stuff, learning. oNION-/dARKnET, Email encryption with PGP, Browsersetting for save surfing, VPN, Proxi, for noobs and nerds.",
@@ -784,7 +784,7 @@ export const courses: {
     name: "Open Lab",
     categories: ["handicraft", "electronics", "computer", "programming"],
     tags: ["DIY", "Elektronik", "Computer"],
-    groups: ["SGMK"],
+    organizations: ["SGMK"],
     createdby: "Mike_85en",
     description:
       'Every tuesday evening: DIY – soldering, hacking, crafting, programming. At the Lab of SGMK without guidance... well self-guidance of course. Money for Material etc. is optional..... <br><a href="http://www.mechatronicart.ch/mechartlab/openlab"OpenLab</a>',
@@ -802,7 +802,7 @@ export const courses: {
     name: "German Class for everybody",
     categories: ["humanities", "languages"],
     tags: ["Sprache"],
-    groups: ["ASZ"],
+    organizations: ["ASZ"],
     createdby: "ASZ - Bildung für alleen",
     description: "jerman now and for effrybody",
     roles: ["team", "participant", "mentor", "host"],
@@ -838,7 +838,7 @@ export const courses: {
     name: "Deutsch Kurs",
     categories: ["humanities", "languages"],
     tags: ["Deutsch", "Aussländer_in", "Immigrant_in"],
-    groups: ["ASZ"],
+    organizations: ["ASZ"],
     createdby: "Ylmaz Z.en",
     description: "I want to learn german, thats great!",
     roles: ["team", "participant", "mentor", "host"],
@@ -985,7 +985,7 @@ export const courses: {
     name: "Weekly meeting",
     categories: [],
     tags: ["", ""],
-    groups: ["CCC-ZH"],
+    organizations: ["CCC-ZH"],
     internal: true,
     createdby: "birdy1976",
     description:
@@ -1004,7 +1004,7 @@ export const courses: {
     name: "Vokü",
     categories: [],
     tags: ["", ""],
-    groups: ["ASZ"],
+    organizations: ["ASZ"],
     internal: true,
     createdby: "greg",
     description:
@@ -1023,7 +1023,7 @@ export const courses: {
     name: "Sunnday-Cinema",
     categories: [],
     tags: ["", ""],
-    groups: ["ASZ"],
+    organizations: ["ASZ"],
     internal: true,
     createdby: "greg",
     description: "<p>One movie better than the other!</p>",

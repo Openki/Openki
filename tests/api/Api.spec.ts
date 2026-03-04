@@ -32,9 +32,9 @@ function assertAscendingString(base: string, message: string) {
 }
 
 describe("API", () => {
-  describe("GroupApi", () => {
+  describe("OrganizationApi", () => {
     it("should return JSON response", () => {
-      cy.request(`/api/0/json/groups`).should(assertGoodHeaders);
+      cy.request(`/api/0/json/organizations`).should(assertGoodHeaders);
     });
   });
 
@@ -94,15 +94,15 @@ describe("API", () => {
         });
     });
 
-    it("filters events by group", () => {
-      const groupId = "573edec5d6";
-      cy.request(`/api/0/json/events?group=${groupId}`)
+    it("filters events by organization", () => {
+      const organizationId = "573edec5d6";
+      cy.request(`/api/0/json/events?group=${organizationId}`)
         .should(assertGoodHeaders)
         .its("body.data")
         .should("not.be.empty")
         .each((event: any) => {
-          const groupIds = event.groups.map((g: any) => g.id);
-          expect(groupIds).to.include(groupId);
+          const organizationIds = event.groups.map((g: any) => g.id);
+          expect(organizationIds).to.include(organizationId);
         });
     });
   });

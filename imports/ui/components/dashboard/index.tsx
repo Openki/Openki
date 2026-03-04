@@ -23,7 +23,7 @@ export interface ComponentSettings {
 export interface Props {
   list: ComponentSettings[];
   defaultRegion?: string | undefined;
-  defaultGroup?: string | undefined;
+  defaultOrganization?: string | undefined;
   limit?: number | undefined;
   fluid?: boolean | undefined;
 }
@@ -89,13 +89,13 @@ function EntitiesComponent<T>({
 function DashboardComponent({
   settings,
   defaultRegion,
-  defaultGroup,
+  defaultOrganization,
   limit,
   fluid,
 }: {
   settings: ComponentSettings;
   defaultRegion?: string | undefined;
-  defaultGroup?: string | undefined;
+  defaultOrganization?: string | undefined;
   limit?: number | undefined;
   fluid?: boolean | undefined;
 }) {
@@ -145,8 +145,8 @@ function DashboardComponent({
   if (defaultRegion) {
     urlParams.append("region", defaultRegion);
   }
-  if (defaultGroup) {
-    urlParams.append("group", defaultGroup);
+  if (defaultOrganization) {
+    urlParams.append("group", defaultOrganization);
   }
 
   // Convert to params, can not use Object.fromEntries because it breaks on safari on ios.
@@ -172,7 +172,7 @@ function DashboardComponent({
   );
 }
 
-export function Dashboard({ list, defaultRegion, defaultGroup, limit, fluid }: Props) {
+export function Dashboard({ list, defaultRegion, defaultOrganization, limit, fluid }: Props) {
   return (
     <>
       {list.map((h, i) => (
@@ -180,7 +180,7 @@ export function Dashboard({ list, defaultRegion, defaultGroup, limit, fluid }: P
           key={i}
           settings={h}
           defaultRegion={defaultRegion}
-          defaultGroup={defaultGroup}
+          defaultOrganization={defaultOrganization}
           limit={limit}
           fluid={fluid}
         />

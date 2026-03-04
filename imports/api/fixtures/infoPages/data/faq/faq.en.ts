@@ -53,9 +53,9 @@ The O-Team of a specific course has the right to administer this course on the O
 ### What is a host?
 A "host" is the person who takes care of the place where a course is held: she has access to the event room, informs about its availability in advance, could be the owner of the place or a contact person to the owner, and is responsible for ensuring that the respective "house rules" are communicated and adhered to.
 
-### What is a group?
+### What is a organization?
 
-Groups are already existing organizations, communities, etc., which use Openki to organize their courses.
+Organizations are already existing organizations, communities, etc., which use Openki to organize their courses.
 
 
 ## Courses
@@ -129,16 +129,16 @@ If you are unsure, contact the person in advance. Handle according to a healthy 
 We believe that education (and thus the events on Openki) should be accessible to all - regardless of one's bank account and income.
 
 
-## Groups
+## Organizations
 
-### What are groups?
-Groups are already existing organizations, communities, etc. that use Openki to organize their courses.
+### What are organizations?
+Organizations are already existing organizations, communities, etc. that use Openki to organize their courses.
 
-### How can we register as a group with Openki?
-Each user can create a new group under their account settings. [https://openki.net/group/create](https://openki.net/group/create)
+### How can we register as a organization with Openki?
+Each user can create a new organization under their account settings. [https://openki.net/group/create](https://openki.net/group/create)
 
-### Can we as a group show openki courses on our own website?
-Yes! You can find the different views for embedding for your group in the group settings. More info about these views (also called _Frames_) can be found in [the Openki wiki](https://gitlab.com/Openki/Openki/wikis/Frames)
+### Can we as a organization show openki courses on our own website?
+Yes! You can find the different views for embedding for your organization in the organization settings. More info about these views (also called _Frames_) can be found in [the Openki wiki](https://gitlab.com/Openki/Openki/wikis/Frames)
 
 ## Safety
 
@@ -162,7 +162,7 @@ Openki.net is SSL encrypted by default. This is the same technology that your on
 
 ### What is an Openki Region?
 
-Every Openki course and group belongs to a certain (geographic) region, typically a city or a village. Visiting the Openki.net page one can choose to explore the courses of a selected region or of all regions at the same time.
+Every Openki course and organization belongs to a certain (geographic) region, typically a city or a village. Visiting the Openki.net page one can choose to explore the courses of a selected region or of all regions at the same time.
 
 ### How can I create a new Openki Region?
 

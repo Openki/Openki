@@ -4,10 +4,13 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import { Courses as CourseCollection, CourseModel } from "/imports/api/courses/courses";
 import { Events as EventCollection, EventModel } from "/imports/api/events/events";
-import { Groups as GroupCollection, GroupModel } from "/imports/api/groups/groups";
+import {
+  Organizations as OrganizationCollection,
+  OrganizationModel,
+} from "../../../api/organizations/organizations";
 import * as Courses from "/imports/api/courses/publications";
 import * as Events from "/imports/api/events/publications";
-import * as Groups from "/imports/api/groups/publications";
+import * as Organizations from "../../../api/organizations/publications";
 
 import { Filtering } from "/imports/utils/filtering";
 import { Publication } from "/imports/utils/ServerPublishReact";
@@ -65,7 +68,7 @@ const course: ListOfEntities<CourseModel> = {
       {/* The sevent box should allways be the propose one, after then every 21 */}
       {PublicSettings.feature.proposeCourseBox && (index - 6) % 21 === 0 && (
         <div className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
-          <CompactPropose group={params.group} />
+          <CompactPropose organization={params.group} />
         </div>
       )}
       <div className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
@@ -126,10 +129,10 @@ function bodyStyle(imageUrl: string) {
     backgroundSize: "cover",
   };
 }
-const group: ListOfEntities<GroupModel> = {
+const group: ListOfEntities<OrganizationModel> = {
   route: "exploreGroups",
-  filter: GroupCollection.Filtering,
-  find: Groups.useFindFilter,
+  filter: OrganizationCollection.Filtering,
+  find: Organizations.useFindFilter,
   element: ({ entity }) => (
     <div key={entity._id} className="me-2">
       <div className="card card-group border-0 rounded-0" style={bodyStyle(entity.publicLogoUrl())}>

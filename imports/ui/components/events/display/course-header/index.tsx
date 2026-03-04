@@ -6,7 +6,7 @@ import { CourseModel } from "/imports/api/courses/courses";
 
 import { CourseCategories } from "/imports/ui/components/courses/categories";
 import { Tag } from "/imports/ui/components/regions/tag";
-import { GroupList } from "/imports/ui/components/courses/display/group-list";
+import { OrganizationList } from "../../../courses/display/organization-list";
 
 import "./styles.scss";
 
@@ -16,7 +16,7 @@ export interface Props {
   headerlink?: string;
   regionId: string;
   categories: string[] | undefined;
-  groups?: string[];
+  organizations?: string[];
   title: string;
   image: string | undefined;
 }
@@ -58,7 +58,7 @@ export function EventCourseHeader(props: Props) {
       )}
       <h2>{props.title}</h2>
       {!!props.categories && <CourseCategories categories={props.categories} />}
-      {!!props.course && <GroupList course={props.course} />}
+      {!!props.course && <OrganizationList course={props.course} />}
       <Tag region={props.regionId} />
     </div>
   );

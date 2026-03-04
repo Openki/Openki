@@ -26,7 +26,7 @@ import { PricePolicy } from "../../price-policy";
 import { Tag } from "../../regions/tag";
 import { Props as CourseEditRoleProps, Role } from "./Role";
 import { Title } from "./title";
-import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
+import { useFindFilter as useOrganizationsFindFilter } from "../../../../api/organizations/publications";
 import { useAll as useRegions } from "/imports/api/regions/publications";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useValidation } from "/imports/ui/lib/useValidation";
@@ -50,8 +50,8 @@ export type Props = {
   _id?: string;
   categories?: string[];
   isFrame?: boolean;
-  group?: string;
-  teamGroups?: string[];
+  organization?: string;
+  teamOrganizations?: string[];
   hideRoleSelection?: boolean;
   hidePricePolicy?: boolean;
   roles?: string[];
@@ -79,11 +79,11 @@ export function Edit(props: Props) {
   function showInternalCheckbox() {
     let internalOption;
 
-    if (!props.isFrame && props.group && user?.groups) {
-      // Visible in group detail page (for creation) if user is in group
-      internalOption = user.groups.includes(props.group);
+    if (!props.isFrame && props.organization && user?.groups) {
+      // Visible in organization detail page (for creation) if user is in organization
+      internalOption = user.groups.includes(props.organization);
     } else {
-      // and visible on edit if course is in a group
+      // and visible on edit if course is in a organization
       // For devs: This behaviour is not consistent. But we want the creation to be as simple
       // as possible.
       internalOption = (props.groups?.length || 0) > 0;
@@ -91,16 +91,16 @@ export function Edit(props: Props) {
     return internalOption;
   }
 
-  const hasTeamGroups = !!(props.teamGroups && props.teamGroups?.length > 0);
+  const hasTeamOrganizations = !!(props.teamOrganizations && props.teamOrganizations?.length > 0);
 
   let internalInitalState;
   if (showInternalCheckbox()) {
     // Usually an "internal" checkbox is displayed so that the users of a group can choose
     // whether the course is internal or not.
     internalInitalState = props.internal;
-  } else if (props.isFrame && hasTeamGroups) {
-    // When in a frame for a group, the `internal` query-param can be set to control whether
-    // the group wants the entered courses to be internal.
+  } else if (props.isFrame && hasTeamOrganizations) {
+    // When in a frame for a organization, the `internal` query-param can be set to control whether
+    // the organization wants the entered courses to be internal.
     internalInitalState = props.internal;
   }
   // Default is not internal
@@ -134,28 +134,32 @@ export function Edit(props: Props) {
     }
   }, [props, currentRegion, regions]);
 
-  function getGroups() {
-    const groups = [];
+  function getOrganizations() {
+    const organizations = [];
 
-    const defaultTeamGroups = regions.find((r) => r._id === selectedRegion)?.defaultTeamGroups;
-    if (defaultTeamGroups) {
-      groups.push(...defaultTeamGroups);
+    const defaultTeamOrganizations = regions.find(
+      (r) => r._id === selectedRegion,
+    )?.defaultTeamGroups;
+    if (defaultTeamOrganizations) {
+      organizations.push(...defaultTeamOrganizations);
     }
 
     if (!isNew) {
-      groups.push(...(props.groupOrganizers || []));
+      organizations.push(...(props.organizationOrganizers || []));
     } else if (!props.isFrame) {
-      if (props.group) {
-        groups.push(props.group);
+      if (props.organization) {
+        organizations.push(props.organization);
       }
-    } else if (props.teamGroups && props.teamGroups.length > 0) {
-      groups.push(...props.teamGroups);
+    } else if (props.teamOrganizations && props.teamOrganizations.length > 0) {
+      organizations.push(...props.teamOrganizations);
     }
-    // remove double groups
-    return uniq(groups);
+    // remove double organizations
+    return uniq(organizations);
   }
 
-  const [groupsIsLoading, groups] = useGroupsFindFilter({ ids: getGroups() });
+  const [organizationsIsLoading, organizations] = useOrganizationsFindFilter({
+    ids: getOrganizations(),
+  });
 
   const [description, setDescription] = useState(props.description);
   const [numberOfCharacters, setNumberOfCharacters] = useState(0);
@@ -179,7 +183,7 @@ export function Edit(props: Props) {
   const [savedMessage, setSavedMessage] = useState(false);
 
   function availableRoles() {
-    const disableCreateRoles = chain(groups)
+    const disableCreateRoles = chain(organizations)
       .flatMap((g) => g.disableCreateRoles)
       .uniq()
       .value();
@@ -220,7 +224,7 @@ export function Edit(props: Props) {
         ]),
       ),
     );
-  }, [groups]);
+  }, [organizations]);
 
   const [errors, checkValidity, addError] = useValidation(
     {
@@ -269,7 +273,7 @@ export function Edit(props: Props) {
   }
 
   const customFields = () => {
-    return groups.flatMap((g) => g.customCourseFields || []);
+    return organizations.flatMap((g) => g.customCourseFields || []);
   };
 
   const resetFields = () => {
@@ -420,7 +424,7 @@ export function Edit(props: Props) {
         }
       }
 
-      changes.groups = getGroups();
+      changes.groups = getOrganizations();
     }
 
     changes.roles = {};
@@ -512,7 +516,7 @@ export function Edit(props: Props) {
     }
   }
 
-  if (regionsIsLoading() || groupsIsLoading()) {
+  if (regionsIsLoading() || organizationsIsLoading()) {
     return null;
   }
 
