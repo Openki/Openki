@@ -61,7 +61,7 @@ export function DateInput(props: {
     return () => {
       $(element).datepicker("destroy");
     };
-  }, [locale]);
+  }, [locale, onChange, min, max]);
 
   return (
     <input
