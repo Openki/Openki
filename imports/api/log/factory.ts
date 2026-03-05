@@ -121,11 +121,11 @@ export class LogCollection extends Mongo.Collection<LogEntity> {
       res: [],
     };
 
-    const id = await this.insertAsync(entry);
-
     if (Meteor.isServer && PrivateSettings.printLog) {
       console.log(entry);
     }
+
+    const id = await this.insertAsync(entry);
 
     return new ResultLogger(id, this);
   }
