@@ -11,6 +11,7 @@
   "adminPanel.backToDashboard": "Ga terug naar het overzicht",
   "adminPanel.heading": "Beheerder ",
   "adminPanel.pleaseLogin": "Alleen voor beheerders",
+  "adminPanel.tasks.featuredOrganization": "Functie groep",
   "adminPanel.tasks.log": "Toon log",
   "backToKiosk": "Terug naar overzicht",
   "calendar.next.month.long": "Ga naar volgende maand",
@@ -80,8 +81,7 @@
   "course.compact.youAreInterested": "Je bent geïnteresseerd ",
   "privilege.addedAdmin": "Admin rechten toegekend",
   "privilege.removed": "Rechten verwijderd",
-  "profile.organization.drafted": "Toegevoegd aan groep {NAME}",
   "profile.input.oldPassword": "Uw huidig paswoord",
-  "userprofile.sendmail-btn": "Verzend E-Mail",
-  "adminPanel.tasks.featuredOrganization": "Functie groep"
+  "profile.organization.drafted": "Toegevoegd aan groep {NAME}",
+  "userprofile.sendmail-btn": "Verzend E-Mail"
 }
