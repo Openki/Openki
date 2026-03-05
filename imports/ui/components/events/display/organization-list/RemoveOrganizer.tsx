@@ -50,14 +50,6 @@ export function RemoveOrganizer({ event, organizationId }: Props) {
           try {
             await EventsMethods.editing(event._id, organizationId, false);
 
-            Alert.success(
-              t(
-                "course.organizationList.removeOrganizer.membersCanNoLongerEditCourse",
-                "Members of {ORGANIZATION} can no longer edit {COURSE}.",
-                { ORGANIZATION: name(organization), COURSE: event.title },
-              ),
-            );
-
             setIsExpanded(false);
           } catch (err) {
             Alert.serverError(

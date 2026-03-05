@@ -51,14 +51,6 @@ export function RemoveOrganizer({ course, organizationId }: Props) {
         onClick={async () => {
           try {
             await CoursesMethods.editing(course._id, organizationId, false);
-
-            Alert.success(
-              t(
-                "course.organizationList.removeOrganizer.membersCanNoLongerEditCourse",
-                "Members of {ORGANIZATION} can no longer edit {COURSE}.",
-                { ORGANIZATION: name(organization), COURSE: course.name },
-              ),
-            );
           } catch (err) {
             Alert.serverError(
               err,
