@@ -1,5 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { serverError } from "../api/log/methods";
+import { getStack } from "/imports/utils/getStack";
 
 /**
  * Registers a function as a meteor method and makes it callable.
@@ -36,7 +37,9 @@ export function ServerMethod<T extends any[], R>(
       // this runs on the server (and is simulated on the client)
 
       if (Meteor.isDevelopment && Meteor.isClient) {
-        console.debug(`Meteor.callAsync("${name}",${JSON.stringify(args)})`);
+        console.groupCollapsed(`Meteor.callAsync("${name}",${JSON.stringify(args)})`);
+        console.debug(getStack());
+        console.groupEnd();
       }
 
       if (Meteor.isClient && !options.simulation) {
@@ -45,11 +48,18 @@ export function ServerMethod<T extends any[], R>(
       }
 
       try {
-        // everyting is okay, do the work
+        // everything is okay, do the work
         return run.call(this, ...args);
       } catch (error) {
-        // an error happens on the server
-        serverError(error);
+        if (Meteor.isServer) {
+          // An error occurs on the server during execution on the server side.
+          serverError(error);
+        } else {
+          // An error occurs on the client during execution on the client side.
+          console.groupCollapsed(`%cError in ${name}(${JSON.stringify(args)})`, "color: red");
+          console.error(error);
+          console.groupEnd();
+        }
         throw error;
       }
     },
