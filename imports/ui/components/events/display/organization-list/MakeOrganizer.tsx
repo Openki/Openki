@@ -52,13 +52,6 @@ export function MakeOrganizer({ event, organizationId }: Props) {
         onClick={async () => {
           try {
             await EventsMethods.editing(event._id, organizationId, true);
-
-            Alert.success(
-              t("course.organizationList.makeOrganizer.membersCanEditCourse", {
-                ORGANIZATION: name(organization),
-                COURSE: event.title,
-              }),
-            );
           } catch (err) {
             Alert.serverError(
               err,

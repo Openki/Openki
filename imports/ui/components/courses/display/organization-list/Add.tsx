@@ -34,17 +34,6 @@ function OrganizationToAdd({
         onClick={async () => {
           try {
             await CoursesMethods.promote(course._id, organizationId, true);
-
-            Alert.success(
-              t(
-                "courses.organizationList.organizationAdded.success",
-                "{ORGANIZATION} was added to promote {COURSE}.",
-                {
-                  ORGANIZATION: name(organization),
-                  COURSE: course.name,
-                },
-              ),
-            );
           } catch (err) {
             Alert.serverError(
               err,

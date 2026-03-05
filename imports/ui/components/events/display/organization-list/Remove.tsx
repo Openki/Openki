@@ -48,17 +48,6 @@ export function Remove({ event, organizationId }: Props) {
         onClick={async () => {
           try {
             await EventsMethods.promote(event._id, organizationId, false);
-
-            Alert.success(
-              t(
-                "course.organizationList.remove.organizationRemoved.success",
-                "{ORGANIZATION} was removed from {COURSE}.",
-                {
-                  ORGANIZATION: name(organization),
-                  COURSE: event.title,
-                },
-              ),
-            );
           } catch (err) {
             Alert.serverError(
               err,
