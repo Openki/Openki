@@ -6,7 +6,6 @@ import { publish, QueryBuilder } from "./ServerPublishUtils";
 import { useUserId } from "./react-meteor-data";
 import { isObject, slice } from "lodash-es";
 import { getStack } from "/imports/utils/getStack";
-import { serverError } from "/imports/api/log/methods";
 
 type DeepPartial<T> = T extends object
   ? {
