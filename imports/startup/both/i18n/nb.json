@@ -188,7 +188,6 @@
   "course.organizationList.addOrgText": "Innvilg redigeringsmulighet",
   "course.organizationList.dropdownTitle.editOrganization": "Rediger gruppe",
   "course.organizationList.makeOrganizer.confimOrgButton": "Innvilg redigeringsmuligheter",
-  "course.organizationList.makeOrganizer.membersCanEditCourse": "Medlemmer av {GROUP}-gruppen kan nå redigere {COURSE}-faget.",
   "course.organizationList.remove": "Fjern",
   "course.organizationList.remove.confirmRemoveButton": "Stryk fra listen",
   "course.organizationList.remove.organizationRemoved.error": "Klarte ikke å fjerne gruppe",
