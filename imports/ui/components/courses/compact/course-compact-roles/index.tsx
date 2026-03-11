@@ -6,7 +6,7 @@ import { CourseModel } from "/imports/api/courses/courses";
 import { hasRole, hasRoleUser } from "/imports/utils/course-role-utils";
 import { useUserId } from "/imports/utils/react-meteor-data";
 
-import { RoleIcon } from "/imports/ui/RoleIcon";
+import { RoleIcon } from "../../../RoleIcon";
 
 import "./styles.scss";
 
