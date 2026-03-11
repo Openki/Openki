@@ -63,7 +63,7 @@ export const save = ServerMethod(
     let updates = {} as Mongo.OptionalId<OrganizationEntity>;
 
     if (organization.isNew()) {
-      // Saving user is added as first member of the organization and as creater
+      // Saving user is added as first member of the organization and as creator
       organization.members.push({ user: user._id, notify: true });
       updates.createdby = user._id;
       updates.time_created = new Date();

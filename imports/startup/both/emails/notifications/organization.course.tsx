@@ -46,7 +46,7 @@ export async function record(courseId: string) {
   const body: Body = {
     courseId: course._id,
 
-    // Don't send to creater
+    // Don't send to creator
     recipients: recipients.filter((r) => r !== course.createdby),
     model: "Group.Course",
   };
@@ -125,7 +125,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
           )),
           <>&quot;, &quot;</>,
         ) as JSX.Element,
-        creater,
+        creator,
         subject,
         customSiteUrl: Router.url("home", {}, { query: { campaign } }),
         customSiteName: siteName,
