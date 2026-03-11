@@ -1,7 +1,7 @@
 import { Mongo } from "meteor/mongo";
 
 import { CourseEntity, Courses } from "./courses";
-import * as eventOrganizationsDenormalizer from "../events/organizationsDenormalizer";
+import * as eventOrganizationsAndEditorsDenormalizer from "../events/organizationsAndEditorsDenormalizer";
 
 /**
  * Recalculate the editors field
@@ -22,6 +22,6 @@ export async function updateEditors(courseIdOrSelector: string | Mongo.Selector<
 
     // At some point we'll have to figure out a proper caching hierarchy
 
-    await eventOrganizationsDenormalizer.updateOrganizations({ courseId: course._id });
+    await eventOrganizationsAndEditorsDenormalizer.updateOrganizationsAndEditors({ courseId: course._id });
   }
 }

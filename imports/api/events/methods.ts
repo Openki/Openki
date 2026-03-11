@@ -10,7 +10,7 @@ import * as courseHistoryDenormalizer from "/imports/api/courses/historyDenormal
 import * as courseTimeLastEditDenormalizer from "/imports/api/courses/timeLastEditDenormalizer";
 import * as courseImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
 import * as categoriesDenormalizer from "/imports/api/events/categoriesDenormalizer";
-import * as organizationsDenormalizer from "./organizationsDenormalizer";
+import * as organizationsAndEditorsDenormalizer from "./organizationsAndEditorsDenormalizer";
 import * as venueDenormalizer from "/imports/api/events/venueDenormalizer";
 import * as courseNextEventDenormalizer from "/imports/api/courses/nextEventDenormalizer";
 import * as regionsCountDenormalizer from "/imports/api/regions/countDenormalizer";
@@ -394,7 +394,7 @@ export const save = ServerMethod(
     }
 
     await venueDenormalizer.updateVenue(eventId);
-    await organizationsDenormalizer.updateOrganizations(eventId);
+    await organizationsAndEditorsDenormalizer.updateOrganizationsAndEditors(eventId);
     await regionsCountDenormalizer.updateCounters(event.region);
     // the assumption is that all replicas have the same course if any
     if (event.courseId) {
@@ -467,7 +467,7 @@ export const promote = ServerMethod(
       organizationId,
       enable,
     );
-    await organizationsDenormalizer.updateOrganizations(eventId);
+    await organizationsAndEditorsDenormalizer.updateOrganizationsAndEditors(eventId);
   },
   { simulation: false },
 );
@@ -488,7 +488,7 @@ export const editing = ServerMethod(
       organizationId,
       enable,
     );
-    await organizationsDenormalizer.updateOrganizations(eventId);
+    await organizationsAndEditorsDenormalizer.updateOrganizationsAndEditors(eventId);
   },
   { simulation: false },
 );
