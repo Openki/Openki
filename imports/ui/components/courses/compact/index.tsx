@@ -105,7 +105,7 @@ export function CourseCompact({ course, organizationTagEvents, categorieTagEvent
   function organizationTagAttr(organizationId: string) {
     return {
       organizationId,
-      isOrganizer: course.teamOrganizations.includes(organizationId),
+      isTeam: course.teamOrganizations.includes(organizationId),
       onClick: async () => {
         await organizationTagEvents?.(organizationId).onClick();
       },
