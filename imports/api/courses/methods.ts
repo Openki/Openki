@@ -18,7 +18,7 @@ import * as eventsCategoriesDenormalizer from "/imports/api/events/categoriesDen
 import * as eventsCourseImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
 import { Log } from "/imports/api/log/log";
 import { UserModel } from "/imports/api/users/users";
-import * as organizationsDenormalizer from "./organizationsDenormalizer";
+import * as editorsDenormalizer from "./editorsDenormalizer";
 
 import { Subscribe, Unsubscribe, Message } from "./subscription";
 
@@ -285,7 +285,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
 
     // Init calculated fields
     await nextEventDenormalizer.updateNextEvent(courseId);
-    await organizationsDenormalizer.updateOrganizations(courseId);
+    await editorsDenormalizer.updateEditors(courseId);
   } else {
     const enrichedSet = timeLastEditDenormalizer.beforeUpdate(set);
     await Courses.updateAsync({ _id: courseId }, { $set: enrichedSet });
@@ -436,7 +436,7 @@ export const promote = ServerMethod(
       organizationId,
       enable,
     );
-    await organizationsDenormalizer.updateOrganizations(courseId);
+    await editorsDenormalizer.updateEditors(courseId);
     await historyDenormalizer.afterOrganizationPromoteUpdate(
       courseId,
       organizationId,
@@ -461,7 +461,7 @@ export const editing = ServerMethod(
       organizationId,
       enable,
     );
-    await organizationsDenormalizer.updateOrganizations(courseId);
+    await editorsDenormalizer.updateEditors(courseId);
     await historyDenormalizer.afterOrganizationOrgaUpdate(
       courseId,
       organizationId,

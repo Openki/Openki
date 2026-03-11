@@ -6,9 +6,7 @@ import * as eventOrganizationsDenormalizer from "../events/organizationsDenormal
 /**
  * Recalculate the editors field
  */
-export async function updateOrganizations(
-  courseIdOrSelector: string | Mongo.Selector<CourseEntity>,
-) {
+export async function updateEditors(courseIdOrSelector: string | Mongo.Selector<CourseEntity>) {
   for (const course of await Courses.find(courseIdOrSelector).fetchAsync()) {
     const editors = course.teamOrganizations.slice();
 

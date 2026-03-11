@@ -1,4 +1,4 @@
-import * as courseOrganizationsDenormalizer from "../courses/organizationsDenormalizer";
+import * as courseEditorsDenormalizer from "../courses/editorsDenormalizer";
 import * as courseNextEventDenormalizer from "../courses/nextEventDenormalizer";
 import * as coursesTenantDenormalizer from "../courses/tenantDenormalizer";
 import * as eventsCategoriesDenormalizer from "../events/categoriesDenormalizer";
@@ -22,7 +22,7 @@ export async function updateDbCacheFieldsServerOnly() {
       eventsVenueDenormalizer.updateVenue({}),
 
       // Update list of team (users & groups) per course, triggers updateOrganizations from events
-      courseOrganizationsDenormalizer.updateOrganizations({}),
+      courseEditorsDenormalizer.updateEditors({}),
 
       eventsCategoriesDenormalizer.onStartUp(),
 
