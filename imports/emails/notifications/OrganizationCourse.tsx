@@ -8,7 +8,7 @@ export interface Props {
   course: JSX.Element;
   courseDescription: string;
   organizations: JSX.Element;
-  creater: UserModel;
+  creator: UserModel;
   username: string;
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   campaign: string;
@@ -19,7 +19,7 @@ export function OrganizationCourse({
   course,
   courseDescription,
   organizations,
-  creater,
+  creator,
   username,
   unsubscribe,
   campaign,
@@ -34,8 +34,8 @@ export function OrganizationCourse({
           <p>
             {t(
               "notification.organization.course.mail.intro",
-              "{CREATER} just proposed {COURSE} in your organization {ORGANIZATIONS}.",
-              { CREATER: creater.getDisplayName(), COURSE: course, ORGANIZATIONS: organizations },
+              "{CREATOR} just proposed {COURSE} in your organization {ORGANIZATIONS}.",
+              { CREATOR: creator.getDisplayName(), COURSE: course, ORGANIZATIONS: organizations },
             )}
           </p>
 
@@ -50,8 +50,8 @@ export function OrganizationCourse({
           <p>
             {t(
               "notification.organization.course.mail.next",
-              "You can contact {CREATER} in order to support and help organizing {COURSE}. You have the possibility to edit the description and announce events.",
-              { CREATER: creater.getDisplayName(), COURSE: course },
+              "You can contact {CREATOR} in order to support and help organizing {COURSE}. You have the possibility to edit the description and announce events.",
+              { CREATOR: creator.getDisplayName(), COURSE: course },
             )}
           </p>
         </td>
