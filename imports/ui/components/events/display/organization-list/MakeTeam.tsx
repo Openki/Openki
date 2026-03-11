@@ -55,12 +55,12 @@ export function MakeTeam({ event, organizationId }: Props) {
           } catch (err) {
             Alert.serverError(
               err,
-              t("course.organizationList.makeOrganizer.membersCanEditCourse.error"),
+              t("course.organizationList.makeTeam.membersCanEditCourse.error"),
             );
           }
         }}
       >
-        {t("course.organizationList.makeOrganizer.confimOrgButton")}
+        {t("course.organizationList.makeTeam.confimOrgButton")}
       </button>
     </div>
   );

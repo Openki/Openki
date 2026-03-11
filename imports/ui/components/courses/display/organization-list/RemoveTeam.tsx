@@ -33,7 +33,7 @@ export function RemoveTeam({ course, organizationId }: Props) {
         }}
       >
         <i className="fa-solid fa-xmark fa-fw" />
-        {t("course.organizationList.removeOrganizer.removeOrgText", "Remove editing rights")}
+        {t("course.organizationList.removeTeam.removeOrgText", "Remove editing rights")}
       </a>
     );
   }
@@ -41,7 +41,7 @@ export function RemoveTeam({ course, organizationId }: Props) {
   return (
     <div className="group-tool-dialog danger">
       {t(
-        "course.organizationList.removeOrganizer.confirmRemoveOrgText",
+        "course.organizationList.removeTeam.confirmRemoveOrgText",
         'Revoke all editing rights from the "{NAME}" organization?',
         { NAME: name(organization) },
       )}
@@ -55,17 +55,14 @@ export function RemoveTeam({ course, organizationId }: Props) {
             Alert.serverError(
               err,
               t(
-                "course.organizationList.removeOrganizer.membersCanNoLongerEditCourse.error",
+                "course.organizationList.removeTeam.membersCanNoLongerEditCourse.error",
                 "Failed to remove organizer status",
               ),
             );
           }
         }}
       >
-        {t(
-          "course.organizationList.removeOrganizer.confimRemoveOrgButton",
-          "Take away editing rights",
-        )}
+        {t("course.organizationList.removeTeam.confimRemoveOrgButton", "Take away editing rights")}
       </button>
     </div>
   );
