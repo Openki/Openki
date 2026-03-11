@@ -85,7 +85,7 @@ export async function create() {
       internal: template.internal || false,
       sendReminder: PublicSettings.sendReminderPreset,
       groups: template.organizations?.map((o) => ensure.organization(o)) || [],
-      groupOrganizers: [],
+      teamOrganizations: [],
       start: regionZone.fromString(startLocal).toDate(),
       end: regionZone.fromString(endLocal).toDate(),
     } as unknown as EventEntity;
@@ -153,7 +153,7 @@ export async function create() {
       sendReminder: template.sendReminder,
       canceled: template.canceled,
       groups: template.organizations || [],
-      groupOrganizers: [],
+      teamOrganizations: [],
       participants: template.participants
         ? await mapSync(template.participants, async (participant) => ({
             ...participant,

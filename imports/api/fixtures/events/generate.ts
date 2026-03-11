@@ -71,7 +71,7 @@ export async function generate() {
       event.tenant = course.tenant;
       event.region = course.region;
       event.groups = course.groups;
-      event.groupOrganizers = [];
+      event.teamOrganizations = [];
 
       const venue = await ensure.venue(
         testVenues[Math.floor(prng() * testVenues.length)],

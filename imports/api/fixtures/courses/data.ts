@@ -5,7 +5,7 @@ export const courses: {
   categories?: string[];
   tags: string[];
   organizations?: string[];
-  organizationOrganizers?: string[];
+  teamOrganizations?: string[];
   createdby: string;
   description: string;
   roles: string[];
@@ -472,7 +472,7 @@ export const courses: {
     categories: ["computer"],
     tags: ["", ""],
     organizations: ["CCC-ZH"],
-    organizationOrganizers: ["CCC-ZH"],
+    teamOrganizations: ["CCC-ZH"],
     createdby: "birdy1976",
     description:
       "<p>In diesem Workshop rüsten wir alte Notebook auf das Betriebssystem Ubuntu Linux als Alternative zu OS X oder Windows um, damit die alten Notebooks wieder schneller laufen und potentiell noch Jahre lang verwendet werden können. <br /></p><p>Bringe dein altes Notebook mit und wir helfen dir bei der Installation und den ersten Schritten. PS: Bitte sichere allfällige Daten möglichst vorher, damit nichts verloren geht... Anmeldung ist erwünscht.<br /></p>",

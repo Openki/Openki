@@ -31,7 +31,7 @@ export function OrganizationList({ course }: Props) {
         )}
         {course.editableBy(user) && (
           <li className="dialog-dropdown-btn">
-            {course.groupOrganizers.includes(organizationId) ? (
+            {course.teamOrganizations.includes(organizationId) ? (
               <RemoveOrganizer course={course} organizationId={organizationId} />
             ) : (
               <MakeOrganizer course={course} organizationId={organizationId} />
@@ -60,7 +60,7 @@ export function OrganizationList({ course }: Props) {
   return (
     <div className="tag-group multiline">
       {organizations.map((organizationId) => {
-        const isOrganizer = course.groupOrganizers.includes(organizationId);
+        const isOrganizer = course.teamOrganizations.includes(organizationId);
         return (
           <React.Fragment key={organizationId}>
             <OrganizationTag organizationId={organizationId} isOrganizer={isOrganizer} />

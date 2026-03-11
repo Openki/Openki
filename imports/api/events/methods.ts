@@ -343,7 +343,7 @@ export const save = ServerMethod(
     let affectedReplicas: string[] = [];
     if (isNew) {
       editFields.createdBy = user._id;
-      editFields.groupOrganizers = [];
+      editFields.teamOrganizations = [];
       let enrichedEvent = await courseImageDenormalizer.beforeInsert(editFields as any);
       if (enrichedEvent.courseId) {
         enrichedEvent = await categoriesDenormalizer.beforeInsert(enrichedEvent);
@@ -473,7 +473,7 @@ export const promote = ServerMethod(
 );
 
 /**
- * Add or remove a organization from the groupOrganizers list
+ * Add or remove a organization from the teamOrganizations list
  *
  * @param eventId The event to update
  * @param organizationId The organization to add or remove

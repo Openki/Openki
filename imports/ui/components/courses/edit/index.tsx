@@ -145,7 +145,7 @@ export function Edit(props: Props) {
     }
 
     if (!isNew) {
-      organizations.push(...(props.groupOrganizers || []));
+      organizations.push(...(props.teamOrganizations || []));
     } else if (!props.isFrame) {
       if (props.group) {
         organizations.push(props.group);
