@@ -7,7 +7,9 @@ import { Events, EventEntity } from "/imports/api/events/events";
 /**
  * Update the organization-related fields of events matching the selector
  */
-export async function updateOrganizations(eventIdOrSelector: string | Mongo.Selector<EventEntity>) {
+export async function updateOrganizationsAndEditors(
+  eventIdOrSelector: string | Mongo.Selector<EventEntity>,
+) {
   for (const event of await Events.find(eventIdOrSelector).fetchAsync()) {
     // Any organizations listed as team are allowed to edit.
     let editors = event.teamOrganizations.slice(); // Clone
