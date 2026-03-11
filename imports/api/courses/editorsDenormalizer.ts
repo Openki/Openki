@@ -22,6 +22,8 @@ export async function updateEditors(courseIdOrSelector: string | Mongo.Selector<
 
     // At some point we'll have to figure out a proper caching hierarchy
 
-    await eventOrganizationsAndEditorsDenormalizer.updateOrganizationsAndEditors({ courseId: course._id });
+    await eventOrganizationsAndEditorsDenormalizer.updateOrganizationsAndEditors({
+      courseId: course._id,
+    });
   }
 }

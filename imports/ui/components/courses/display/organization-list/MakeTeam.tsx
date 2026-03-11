@@ -61,14 +61,14 @@ export function MakeTeam({ course, organizationId }: Props) {
             Alert.serverError(
               err,
               t(
-                "course.organizationList.makeOrganizer.membersCanEditCourse.error",
+                "course.organizationList.makeTeam.membersCanEditCourse.error",
                 "Failed to give editing rights",
               ),
             );
           }
         }}
       >
-        {t("course.organizationList.makeOrganizer.confimOrgButton", "Give editing rights")}
+        {t("course.organizationList.makeTeam.confimOrgButton", "Give editing rights")}
       </button>
     </div>
   );

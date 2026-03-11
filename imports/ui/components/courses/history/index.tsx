@@ -121,12 +121,12 @@ export function OrganizationTeamHistoryEntry({
     <>
       {enable
         ? t(
-            "course.history.organizationOrga.added",
+            "course.history.organizationTeam.added",
             "{ORGANIZATION} got added as orga-organization by {USER}",
             tOptions,
           )
         : t(
-            "course.history.organizationOrga.removed",
+            "course.history.organizationTeam.removed",
             "{ORGANIZATION} got removed as orga-organization by {USER}",
             tOptions,
           )}
@@ -298,7 +298,9 @@ export function History({ course }: { course: CourseModel }) {
     const history =
       user && course.editableBy(user)
         ? course.history
-        : course.history?.filter((e) => e.type !== "organizationPromote" && e.type !== "organizationTeam");
+        : course.history?.filter(
+            (e) => e.type !== "organizationPromote" && e.type !== "organizationTeam",
+          );
 
     // add past events
     historyEntries.push(
