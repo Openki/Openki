@@ -10,7 +10,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import { Events } from "/imports/api/events/events";
 import { UserModel } from "/imports/api/users/users";
 import { Method } from "/imports/api/courses/methods";
-import * as organizationsDenormalizer from "./organizationsDenormalizer";
+import * as editorsDenormalizer from "./editorsDenormalizer";
 
 import { hasRole } from "/imports/utils/course-role-utils";
 import { Notification } from "../../startup/both/emails/notification";
@@ -241,7 +241,7 @@ export class Subscribe extends Change<{
 
     // Update member related calculated fields
     await interestedDenormalizer.afterSubscribe(this.course._id);
-    await organizationsDenormalizer.updateOrganizations(this.course._id);
+    await editorsDenormalizer.updateEditors(this.course._id);
 
     await timeLastEditDenormalizer.afterSubscribe(this.course._id);
     await historyDenormalizer.afterSubscribe(this.course._id, this.userId, this.role);
@@ -359,7 +359,7 @@ export class Unsubscribe extends Change<{
 
     // Update member related calculated fields
     await interestedDenormalizer.afterUnsubscribe(this.course._id);
-    await organizationsDenormalizer.updateOrganizations(this.course._id);
+    await editorsDenormalizer.updateEditors(this.course._id);
 
     await timeLastEditDenormalizer.afterUnsubscribe(this.course._id);
     await historyDenormalizer.afterUnsubscribe(this.course._id, this.userId, this.role);
