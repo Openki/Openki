@@ -8,12 +8,12 @@ describe("course details page", () => {
     cy.get("h1").contains("Page not found");
   });
 
-  describe("Organizer organization course", function () {
+  describe("Team organization course", function () {
     beforeEach(() => {
       cy.visitOpenki("/course/e49ed1ce5d/walliserduetsch-lernen", { username: "LeOnI" });
     });
 
-    it("should allow to set a organization as organizer", () => {
+    it("should allow to set a organization as team", () => {
       cy.get('[data-test="course-details"] div.addon button.dropdown-toggle').click();
       cy.get('[data-test="course-details"] li:nth-child(4) a.btn').click();
       cy.get('[data-test="course-details"] button.btn-success').click();
@@ -25,7 +25,7 @@ describe("course details page", () => {
       cy.get('[data-test="course-details"] div.danger button.btn').click();
     });
 
-    it("should allow a member a organizer organization to send a message to all", () => {
+    it("should allow a member a team organization to send a message to all", () => {
       cy.get('[data-test="course-details"] i.contact-members').click();
       cy.get("#discussion div.richtext").type(
         "Postet mal wenn ihr Zeit habt für ein nächstes Treffen.",

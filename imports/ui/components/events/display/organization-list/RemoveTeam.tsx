@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { CourseModel } from "/imports/api/courses/courses";
+import { EventModel } from "/imports/api/events/events";
 import { useDetails } from "../../../../../api/organizations/publications";
-import * as CoursesMethods from "/imports/api/courses/methods";
+import * as EventsMethods from "/imports/api/events/methods";
 
 import { name } from "../../../../lib/organization-name-helpers";
 
 export interface Props {
-  course: CourseModel;
+  event: EventModel;
   organizationId: string;
 }
 
-export function RemoveOrganizer({ course, organizationId }: Props) {
+export function RemoveTeam({ event, organizationId }: Props) {
   const { t } = useTranslation();
   const [isLoading, organization] = useDetails(organizationId);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -33,39 +33,33 @@ export function RemoveOrganizer({ course, organizationId }: Props) {
         }}
       >
         <i className="fa-solid fa-xmark fa-fw" />
-        {t("course.organizationList.removeOrganizer.removeOrgText", "Remove editing rights")}
+        {t("course.organizationList.removeOrganizer.removeOrgText")}
       </a>
     );
   }
 
   return (
     <div className="group-tool-dialog danger">
-      {t(
-        "course.organizationList.removeOrganizer.confirmRemoveOrgText",
-        'Revoke all editing rights from the "{NAME}" organization?',
-        { NAME: name(organization) },
-      )}
+      {t("course.organizationList.removeOrganizer.confirmRemoveOrgText", {
+        NAME: name(organization),
+      })}
       <button
         type="button"
         className="btn btn-danger"
         onClick={async () => {
           try {
-            await CoursesMethods.editing(course._id, organizationId, false);
+            await EventsMethods.editing(event._id, organizationId, false);
+
+            setIsExpanded(false);
           } catch (err) {
             Alert.serverError(
               err,
-              t(
-                "course.organizationList.removeOrganizer.membersCanNoLongerEditCourse.error",
-                "Failed to remove organizer status",
-              ),
+              t("course.organizationList.removeOrganizer.membersCanNoLongerEditCourse.error"),
             );
           }
         }}
       >
-        {t(
-          "course.organizationList.removeOrganizer.confimRemoveOrgButton",
-          "Take away editing rights",
-        )}
+        {t("course.organizationList.removeOrganizer.confimRemoveOrgButton")}
       </button>
     </div>
   );
