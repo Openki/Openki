@@ -248,7 +248,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
       }),
     );
     set.groups = organizations;
-    set.groupOrganizers = organizations;
+    set.teamOrganizations = organizations;
 
     /* region cannot be changed */
     if (!changes.region) {
@@ -279,7 +279,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
 
     await Notification.Course.record(courseId);
 
-    if (set.groupOrganizers.length > 0) {
+    if (set.teamOrganizations.length > 0) {
       await Notification["Group.Course"].record(courseId);
     }
 
@@ -447,7 +447,7 @@ export const promote = ServerMethod(
 );
 
 /**
- * Add or remove a organization from the groupOrganizers list
+ * Add or remove a organization from the teamOrganizations list
  * @param courseId The course to update
  * @param organizationId The organization to add or remove
  * @param add Whether to add or remove the organization

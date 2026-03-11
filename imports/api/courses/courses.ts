@@ -57,7 +57,7 @@ export interface CourseEntity {
    * List of organization ID that are allowed to edit the course ("team organizations", based on the ui design:
    * Every "team organization" promotes the course and is part of the organizations list)
    */
-  groupOrganizers: string[];
+  teamOrganizations: string[];
   description?: string;
   /** small image that is used for the compact view, scaled down to max size (width*height) 500px */
   compactImage: string;
@@ -86,7 +86,7 @@ export interface CourseEntity {
   }[];
   /**
    * (calculated) List of user and organization id allowed to edit the course, calculated from members
-   * and groupOrganizers
+   * and teamOrganizations
    */
   editors: string[];
   /** (calculated) count of events still in the future for this course */
@@ -110,7 +110,7 @@ export class Course {
 
   roles: string[] = [];
 
-  organizationOrganizers: string[] = [];
+  teamOrganizations: string[] = [];
 
   nextEvent: (CourseNextEventEntity & OEvent) | null = null;
 

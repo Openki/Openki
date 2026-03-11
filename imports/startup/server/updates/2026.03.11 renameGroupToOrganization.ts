@@ -1,3 +1,5 @@
+import { CourseEntity, Courses } from "/imports/api/courses/courses";
+import { EventEntity, Events } from "/imports/api/events/events";
 import { RegionEntity, Regions } from "/imports/api/regions/regions";
 
 export async function update() {
@@ -13,6 +15,32 @@ export async function update() {
       delete region.defaultTeamGroups;
 
       updated += await Regions.updateAsync(region._id, region);
+    }
+  }
+
+  for (const originalEvent of await Events.find().fetchAsync()) {
+    const event = { ...originalEvent } as EventEntity & {
+      groupOrganizers?: RegionEntity["teamOrganizations"];
+    };
+
+    if (event.groupOrganizers) {
+      event.teamOrganizations = event.groupOrganizers;
+      delete event.groupOrganizers;
+
+      updated += await Events.updateAsync(event._id, event);
+    }
+  }
+
+  for (const originalCourse of await Courses.find().fetchAsync()) {
+    const course = { ...originalCourse } as CourseEntity & {
+      groupOrganizers?: RegionEntity["teamOrganizations"];
+    };
+
+    if (course.groupOrganizers) {
+      course.teamOrganizations = course.groupOrganizers;
+      delete course.groupOrganizers;
+
+      updated += await Events.updateAsync(course._id, course);
     }
   }
 

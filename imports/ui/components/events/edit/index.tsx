@@ -59,8 +59,8 @@ function EditCourseCustomFields({
 }) {
   const [isCourseLoading, course] = useCourseDetails(courseId);
   const [organizationsIsLoading, organizations] = useOrganizationsFindFilter(
-    { when: !!course?.groupOrganizers },
-    { ids: course?.groupOrganizers },
+    { when: !!course?.teamOrganizations },
+    { ids: course?.teamOrganizations },
   );
 
   if (isCourseLoading() || organizationsIsLoading()) {

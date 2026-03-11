@@ -34,7 +34,7 @@ export function OrganizationList({ event }: Props) {
         )}
         {ownOrganization && event.editableBy(user) && (
           <li className="dialog-dropdown-btn">
-            {event.groupOrganizers.includes(organizationId) ? (
+            {event.teamOrganizations.includes(organizationId) ? (
               <RemoveOrganizer event={event} organizationId={organizationId} />
             ) : (
               <MakeOrganizer event={event} organizationId={organizationId} />

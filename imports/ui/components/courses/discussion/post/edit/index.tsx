@@ -86,7 +86,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
 
     return !!(
       course?.userHasRole(user?._id, "team") ||
-      user?.groups.some((g) => course?.groupOrganizers.includes(g))
+      user?.groups.some((g) => course?.teamOrganizations.includes(g))
     );
   }
   function richtextAttr() {

@@ -9,8 +9,8 @@ import { Events, EventEntity } from "/imports/api/events/events";
  */
 export async function updateOrganizations(eventIdOrSelector: string | Mongo.Selector<EventEntity>) {
   for (const event of await Events.find(eventIdOrSelector).fetchAsync()) {
-    // Any organizations listed as organizers are allowed to edit.
-    let editors = event.groupOrganizers.slice(); // Clone
+    // Any organizations listed as team are allowed to edit.
+    let editors = event.teamOrganizations.slice(); // Clone
 
     // If an event has a parent course, it inherits all organizations and all editors from it.
     let courseOrganizations: string[] = [];

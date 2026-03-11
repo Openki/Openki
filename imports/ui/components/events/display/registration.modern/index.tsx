@@ -160,7 +160,7 @@ export function RegistrationParticipants({ event }: Props) {
   const user = useUser();
 
   const [organizationsIsLoading, organizations] = useOrganizationsFindFilter({
-    ids: event.allOrganizationOrganizers(),
+    ids: event.allTeamOrganizations(),
   });
 
   function isFuture() {
