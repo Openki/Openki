@@ -6,7 +6,7 @@ import { useSiteName } from "/imports/utils/getSiteName";
 import { Regions } from "/imports/api/regions/regions";
 import { CourseModel } from "/imports/api/courses/courses";
 import { Router } from "meteor/iron:router";
-import { RoleIcon } from "/imports/ui/RoleIcon";
+import { RoleIcon } from "../../../../components/RoleIcon";
 
 export interface Props {
   course: CourseModel;

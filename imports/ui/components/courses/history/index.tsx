@@ -12,7 +12,7 @@ import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { ProfileLink } from "../../profile-link";
 import { Contribution } from "../../Contribution";
 import { OrganizationTag } from "../../organizations/tag";
-import { RoleIcon } from "/imports/ui/RoleIcon";
+import { RoleIcon } from "../../RoleIcon";
 
 import "./styles.scss";
 
