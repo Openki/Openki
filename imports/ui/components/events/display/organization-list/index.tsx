@@ -63,13 +63,13 @@ export function OrganizationList({ event }: Props) {
   return (
     <div className="tag-group multiline">
       {organizations?.map((organizationId) => {
-        const isOrganizer = event.editors.includes(organizationId);
+        const isTeam = event.editors.includes(organizationId);
         // Organization may be adopted from the course, these cannot be removed
         const ownOrganization = event.groups.includes(organizationId);
         return (
           <React.Fragment key={organizationId}>
-            <OrganizationTag organizationId={organizationId} isOrganizer={isOrganizer} />
-            {isOrganizer && (
+            <OrganizationTag organizationId={organizationId} isTeam={isTeam} />
+            {isTeam && (
               <div className="tag group-tag addon">
                 <i
                   className="fa-solid fa-bullhorn fa-fw"

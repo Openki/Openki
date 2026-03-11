@@ -60,11 +60,11 @@ export function OrganizationList({ course }: Props) {
   return (
     <div className="tag-group multiline">
       {organizations.map((organizationId) => {
-        const isOrganizer = course.teamOrganizations.includes(organizationId);
+        const isTeam = course.teamOrganizations.includes(organizationId);
         return (
           <React.Fragment key={organizationId}>
-            <OrganizationTag organizationId={organizationId} isOrganizer={isOrganizer} />
-            {isOrganizer && (
+            <OrganizationTag organizationId={organizationId} isTeam={isTeam} />
+            {isTeam && (
               <div className="tag group-tag addon">
                 <i
                   className="fa-solid fa-bullhorn fa-fw"
