@@ -462,7 +462,7 @@ export const editing = ServerMethod(
       enable,
     );
     await editorsDenormalizer.updateEditors(courseId);
-    await historyDenormalizer.afterOrganizationOrgaUpdate(
+    await historyDenormalizer.afterOrganizationTeamUpdate(
       courseId,
       organizationId,
       enable,
