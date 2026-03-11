@@ -8,8 +8,8 @@ import { useDetails as useRegionDetails } from "/imports/api/regions/publication
 import { OrganizationTag } from "../../../organizations/tag";
 import { Add } from "./Add";
 import { Remove } from "./Remove";
-import { RemoveOrganizer } from "./RemoveOrganizer";
-import { MakeOrganizer } from "./MakeOrganizer";
+import { RemoveTeam } from "./RemoveTeam";
+import { MakeTeam } from "./MakeTeam";
 
 export interface Props {
   course: CourseModel;
@@ -32,9 +32,9 @@ export function OrganizationList({ course }: Props) {
         {course.editableBy(user) && (
           <li className="dialog-dropdown-btn">
             {course.teamOrganizations.includes(organizationId) ? (
-              <RemoveOrganizer course={course} organizationId={organizationId} />
+              <RemoveTeam course={course} organizationId={organizationId} />
             ) : (
-              <MakeOrganizer course={course} organizationId={organizationId} />
+              <MakeTeam course={course} organizationId={organizationId} />
             )}
           </li>
         )}

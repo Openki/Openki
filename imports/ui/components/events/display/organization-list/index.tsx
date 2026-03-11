@@ -8,8 +8,8 @@ import { useDetails as useRegionDetails } from "/imports/api/regions/publication
 import { OrganizationTag } from "../../../organizations/tag";
 import { Add } from "./Add";
 import { Remove } from "./Remove";
-import { RemoveOrganizer } from "./RemoveOrganizer";
-import { MakeOrganizer } from "./MakeOrganizer";
+import { RemoveTeam } from "./RemoveTeam";
+import { MakeTeam } from "./MakeTeam";
 
 export interface Props {
   event: EventModel;
@@ -35,9 +35,9 @@ export function OrganizationList({ event }: Props) {
         {ownOrganization && event.editableBy(user) && (
           <li className="dialog-dropdown-btn">
             {event.teamOrganizations.includes(organizationId) ? (
-              <RemoveOrganizer event={event} organizationId={organizationId} />
+              <RemoveTeam event={event} organizationId={organizationId} />
             ) : (
-              <MakeOrganizer event={event} organizationId={organizationId} />
+              <MakeTeam event={event} organizationId={organizationId} />
             )}
           </li>
         )}
