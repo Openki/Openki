@@ -139,7 +139,7 @@ export function Edit(props: Props) {
 
     const defaultTeamOrganizations = regions.find(
       (r) => r._id === selectedRegion,
-    )?.defaultTeamGroups;
+    )?.defaultTeamOrganizations;
     if (defaultTeamOrganizations) {
       organizations.push(...defaultTeamOrganizations);
     }
