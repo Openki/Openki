@@ -141,4 +141,4 @@ export function AdminFeatureOrganizationPage() {
 
 import "./template.html";
 
-Template.registerHelper("AdminFeatureGroupPage", () => AdminFeatureOrganizationPage);
+Template.registerHelper("AdminFeatureOrganizationPage", () => AdminFeatureOrganizationPage);
