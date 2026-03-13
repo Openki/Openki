@@ -19,7 +19,8 @@ async function updateAll() {
         const userVenues = venues
           .filter(
             (v) =>
-              v.editor === u._id || (v.editOrganization && u.groups.includes(v.editOrganization)),
+              v.editor === u._id ||
+              (v.editOrganization && u.organizations.includes(v.editOrganization)),
           )
           .map((v) => v._id);
 
