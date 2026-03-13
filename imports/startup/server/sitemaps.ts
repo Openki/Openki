@@ -86,7 +86,7 @@ async function requestPages() {
   });
   await organizations.forEachAsync((organization) => {
     pages.push({
-      url: Router.url("groupDetails", organization),
+      url: Router.url("organizationDetails", organization),
       lastmod: organization.time_lastedit,
       priority: 0.2,
     });

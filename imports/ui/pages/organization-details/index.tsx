@@ -142,7 +142,7 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
 
       Analytics.trackEvent("Organization creations", "Organization creations");
 
-      Router.go("groupDetails", { _id: organizationId, short: newOrganization.short });
+      Router.go("organizationDetails", { _id: organizationId, short: newOrganization.short });
     } catch (err) {
       Alert.serverError(
         err,

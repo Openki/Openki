@@ -83,7 +83,10 @@ export function Add({ event }: Props) {
           <OrganizationToAdd key={organizationId} event={event} organizationId={organizationId} />
         ))}
         <li className="dialog-dropdown-btn">
-          <a href={Router.path("groupDetails", { _id: "create" })} className="btn btn-success">
+          <a
+            href={Router.path("organizationDetails", { _id: "create" })}
+            className="btn btn-success"
+          >
             {t("profile.createNewOrganization.button")}
           </a>
         </li>

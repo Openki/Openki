@@ -44,7 +44,10 @@ export function OrganizationsPage() {
               >
                 <div className="card-body overflow-hidden">
                   <h5 className="card-title">
-                    <a className="stretched-link" href={Router.path("groupDetails", organization)}>
+                    <a
+                      className="stretched-link"
+                      href={Router.path("organizationDetails", organization)}
+                    >
                       {organization.name}
                     </a>
                   </h5>
