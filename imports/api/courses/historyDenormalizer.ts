@@ -70,13 +70,13 @@ export async function afterOrganizationPromoteUpdate(
     $addToSet: {
       history: {
         dateTime: new Date(),
-        type: "groupPromote",
+        type: "organizationPromote",
         data: { user: userId, group: organizationId, enable },
       },
     },
   });
 }
-export async function afterOrganizationOrgaUpdate(
+export async function afterOrganizationTeamUpdate(
   courseId: string,
   organizationId: string,
   enable: boolean,
@@ -86,7 +86,7 @@ export async function afterOrganizationOrgaUpdate(
     $addToSet: {
       history: {
         dateTime: new Date(),
-        type: "groupOrga",
+        type: "organizationTeam",
         data: { user: userId, group: organizationId, enable },
       },
     },

@@ -20,7 +20,7 @@ describe("Propose course via frame", function () {
   });
 
   it("allows to add multiple organizations", () => {
-    cy.visitOpenki("/frame/propose?addTeamGroups=cc89c5e476,573edec5d6");
+    cy.visitOpenki("/frame/propose?addTeamOrganizations=cc89c5e476,573edec5d6");
 
     cy.get("#course-edit-title").click();
     cy.get("#course-edit-title").type("OpenStreetMap für Anfänger");
@@ -29,8 +29,8 @@ describe("Propose course via frame", function () {
     cy.get("#account-tasks-login-frame-username").type("Seee");
     cy.get("#account-tasks-login-frame-password").type("greg{enter}");
     cy.get("a.alert-link").invoke("removeAttr", "target").click();
-    cy.getById("group-tag-cc89c5e476").should("have.class", "group-tag-is-organizer");
-    cy.getById("group-tag-573edec5d6").should("have.class", "group-tag-is-organizer");
+    cy.getById("group-tag-cc89c5e476").should("have.class", "group-tag-is-team");
+    cy.getById("group-tag-573edec5d6").should("have.class", "group-tag-is-team");
   });
 
   it("allows to set creators role via url", () => {

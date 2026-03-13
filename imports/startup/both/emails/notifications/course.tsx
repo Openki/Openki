@@ -48,9 +48,9 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
     throw new Error("Course does not exist (0.o)");
   }
 
-  const creater = await Users.findOneAsync(course.createdby);
-  if (!creater) {
-    throw new Error("Creater does not exist (0.o)");
+  const creator = await Users.findOneAsync(course.createdby);
+  if (!creator) {
+    throw new Error("Creator does not exist (0.o)");
   }
 
   return {
@@ -82,7 +82,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         course: <a href={courseLink}>{course.name}</a>,
         courseLink,
         courseDescription: course.description || "",
-        creater,
+        creator,
         subject,
         customSiteUrl: Router.url("home", {}, { query: { campaign } }),
         customSiteName: siteName,

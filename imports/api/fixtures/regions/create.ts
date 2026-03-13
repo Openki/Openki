@@ -18,7 +18,7 @@ export async function create() {
         : prng() > 0.3
           ? await ensure.tenant("Hmmm")
           : await ensure.tenant("Kopf", (await ensure.user("Kopf"))._id),
-      defaultTeamGroups: template.defaultTeamOrganizations,
+      defaultTeamOrganizations: template.defaultTeamOrganizations,
     } as unknown as RegionEntity;
     if (template.loc) {
       const coordinates = clone(template.loc).reverse() as [long: number, lat: number]; // GeoJSON takes latitude first

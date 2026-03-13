@@ -35,7 +35,7 @@ export async function record(courseId: string) {
   }
 
   const recipients = chain(
-    await Organizations.find({ _id: { $in: course.groupOrganizers } }).mapAsync((o) => o.members),
+    await Organizations.find({ _id: { $in: course.teamOrganizations } }).mapAsync((o) => o.members),
   )
     .flatten()
     .filter((m) => m.notify)
@@ -46,7 +46,7 @@ export async function record(courseId: string) {
   const body: Body = {
     courseId: course._id,
 
-    // Don't send to creater
+    // Don't send to creator
     recipients: recipients.filter((r) => r !== course.createdby),
     model: "Group.Course",
   };
@@ -61,15 +61,15 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
     throw new Error("Course does not exist (0.o)");
   }
   const organizations = await Organizations.find({
-    _id: { $in: course.groupOrganizers },
+    _id: { $in: course.teamOrganizations },
   }).fetchAsync();
   if (!(organizations.length > 0)) {
     throw new Error("Organizations does not exist (0.o)");
   }
 
-  const creater = await Users.findOneAsync(course.createdby);
-  if (!creater) {
-    throw new Error("Creater does not exist (0.o)");
+  const creator = await Users.findOneAsync(course.createdby);
+  if (!creator) {
+    throw new Error("Creator does not exist (0.o)");
   }
 
   return {
@@ -125,7 +125,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
           )),
           <>&quot;, &quot;</>,
         ) as JSX.Element,
-        creater,
+        creator,
         subject,
         customSiteUrl: Router.url("home", {}, { query: { campaign } }),
         customSiteName: siteName,

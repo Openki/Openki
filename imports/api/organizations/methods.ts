@@ -5,7 +5,7 @@ import { assignIn } from "lodash-es";
 
 import { Users } from "/imports/api/users/users";
 import * as timeLastEditDenormalizer from "./timeLastEditDenormalizer";
-import * as courseOrganizationsDenormalizer from "../courses/organizationsDenormalizer";
+import * as courseEditorsDenormalizer from "../courses/editorsDenormalizer";
 import * as userOrganizationsAndBadgesDenormalizer from "../users/organizationsAndBadgesDenormalizer";
 import * as userVenuesDenormalizer from "/imports/api/users/venuesDenormalizer";
 import {
@@ -63,7 +63,7 @@ export const save = ServerMethod(
     let updates = {} as Mongo.OptionalId<OrganizationEntity>;
 
     if (organization.isNew()) {
-      // Saving user is added as first member of the organization and as creater
+      // Saving user is added as first member of the organization and as creator
       organization.members.push({ user: user._id, notify: true });
       updates.createdby = user._id;
       updates.time_created = new Date();
@@ -200,8 +200,8 @@ export const remove = ServerMethod("organization.remove", async (organizationId:
 
   await Organizations.removeAsync(organizationId);
 
-  // Update list of organizers per course
-  await courseOrganizationsDenormalizer.updateOrganizations({ groups: organizationId });
+  // Update list of editors per course
+  await courseEditorsDenormalizer.updateEditors({ groups: organizationId });
   // Update List of badges per user
   await userOrganizationsAndBadgesDenormalizer.updateOrganizationsAndBadges({
     groups: organizationId,

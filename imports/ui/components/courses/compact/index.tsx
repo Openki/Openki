@@ -105,7 +105,7 @@ export function CourseCompact({ course, organizationTagEvents, categorieTagEvent
   function organizationTagAttr(organizationId: string) {
     return {
       organizationId,
-      isOrganizer: course.groupOrganizers.includes(organizationId),
+      isTeam: course.teamOrganizations.includes(organizationId),
       onClick: async () => {
         await organizationTagEvents?.(organizationId).onClick();
       },
@@ -125,7 +125,7 @@ export function CourseCompact({ course, organizationTagEvents, categorieTagEvent
       !(
         // hide organization where are from the region set
         (
-          region?.defaultTeamGroups?.includes(organizationId) &&
+          region?.defaultTeamOrganizations?.includes(organizationId) &&
           // when user ist not member of the organization or a admin
           !user?.mayPromoteWith(organizationId) &&
           !course.editableBy(user)

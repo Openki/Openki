@@ -49,7 +49,7 @@ export interface RegionEntity {
   /** ID of featured organization */
   featuredGroup: string;
   /** Team organizations that is added to all courses on create. */
-  defaultTeamGroups?: string[];
+  defaultTeamOrganizations?: string[];
   /** Courses in this region are default single events. */
   singleEvents?: boolean;
   /**

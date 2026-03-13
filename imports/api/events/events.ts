@@ -79,7 +79,7 @@ export interface EventEntity {
   /**
    * list of organization._id that are allowed to edit the event ("team organizations", based on the ui design:
    * Every "team organization" promotes the event and is part of the organizations list). */
-  groupOrganizers: string[];
+  teamOrganizations: string[];
   /** ID of the replication parent, only cloned events have this */
   replicaOf?: string;
   participants?: EventParticipantEntity[];
@@ -185,8 +185,8 @@ export class OEvent {
   }
 
   /** list of organization _ids that are allowed to edit the event, calculated from
-   * the groupOranizers from the event and the course */
-  allOrganizationOrganizers(this: EventModel) {
+   * the teamOrganizations from the event and the course */
+  allTeamOrganizations(this: EventModel) {
     return this.allGroups?.filter((g) => this.editors.includes(g)) || [];
   }
 }

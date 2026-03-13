@@ -18,7 +18,7 @@ import * as eventsCategoriesDenormalizer from "/imports/api/events/categoriesDen
 import * as eventsCourseImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
 import { Log } from "/imports/api/log/log";
 import { UserModel } from "/imports/api/users/users";
-import * as organizationsDenormalizer from "./organizationsDenormalizer";
+import * as editorsDenormalizer from "./editorsDenormalizer";
 
 import { Subscribe, Unsubscribe, Message } from "./subscription";
 
@@ -248,7 +248,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
       }),
     );
     set.groups = organizations;
-    set.groupOrganizers = organizations;
+    set.teamOrganizations = organizations;
 
     /* region cannot be changed */
     if (!changes.region) {
@@ -279,13 +279,13 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
 
     await Notification.Course.record(courseId);
 
-    if (set.groupOrganizers.length > 0) {
+    if (set.teamOrganizations.length > 0) {
       await Notification["Group.Course"].record(courseId);
     }
 
     // Init calculated fields
     await nextEventDenormalizer.updateNextEvent(courseId);
-    await organizationsDenormalizer.updateOrganizations(courseId);
+    await editorsDenormalizer.updateEditors(courseId);
   } else {
     const enrichedSet = timeLastEditDenormalizer.beforeUpdate(set);
     await Courses.updateAsync({ _id: courseId }, { $set: enrichedSet });
@@ -436,7 +436,7 @@ export const promote = ServerMethod(
       organizationId,
       enable,
     );
-    await organizationsDenormalizer.updateOrganizations(courseId);
+    await editorsDenormalizer.updateEditors(courseId);
     await historyDenormalizer.afterOrganizationPromoteUpdate(
       courseId,
       organizationId,
@@ -447,7 +447,7 @@ export const promote = ServerMethod(
 );
 
 /**
- * Add or remove a organization from the groupOrganizers list
+ * Add or remove a organization from the teamOrganizations list
  * @param courseId The course to update
  * @param organizationId The organization to add or remove
  * @param add Whether to add or remove the organization
@@ -461,8 +461,8 @@ export const editing = ServerMethod(
       organizationId,
       enable,
     );
-    await organizationsDenormalizer.updateOrganizations(courseId);
-    await historyDenormalizer.afterOrganizationOrgaUpdate(
+    await editorsDenormalizer.updateEditors(courseId);
+    await historyDenormalizer.afterOrganizationTeamUpdate(
       courseId,
       organizationId,
       enable,

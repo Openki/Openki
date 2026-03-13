@@ -8,7 +8,7 @@ export interface Props {
   course: JSX.Element;
   courseLink: string;
   courseDescription: string;
-  creater: UserModel;
+  creator: UserModel;
   username: string;
   customSiteUrl: string;
   customSiteName: string;
