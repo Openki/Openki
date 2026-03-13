@@ -79,11 +79,13 @@ export interface CourseEntity {
   internal: boolean;
   singleEvent: boolean;
   archived?: boolean;
-  history: {
-    dateTime: Date;
-    type: string;
-    data: object;
-  }[];
+  history?:
+    | {
+        dateTime: Date;
+        type: string;
+        data: object;
+      }[]
+    | undefined;
   /**
    * (calculated) List of user and organization id allowed to edit the course, calculated from members
    * and teamOrganizations

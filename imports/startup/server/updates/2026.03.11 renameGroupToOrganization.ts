@@ -41,17 +41,19 @@ export async function update() {
     }
     delete course.groupOrganizers;
 
-    course.history
-      .filter((e) => e.type === "groupPromote")
-      .forEach((e) => {
-        e.type = "organizationPromote";
-      });
+    if (course.history) {
+      course.history
+        .filter((e) => e.type === "groupPromote")
+        .forEach((e) => {
+          e.type = "organizationPromote";
+        });
 
-    course.history
-      .filter((e) => e.type === "groupOrga")
-      .forEach((e) => {
-        e.type = "organizationTeam";
-      });
+      course.history
+        .filter((e) => e.type === "groupOrga")
+        .forEach((e) => {
+          e.type = "organizationTeam";
+        });
+    }
 
     updated += await Courses.updateAsync(course._id, course);
   }
