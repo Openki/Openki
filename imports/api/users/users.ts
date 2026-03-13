@@ -109,7 +109,7 @@ export interface UserEntity extends Meteor.User {
    */
   badges: string[];
   /** (calculated) List of organizations the user is a member of, calculated by updateBadges() */
-  groups: string[];
+  organizations: string[];
 
   /** (calculated) List of venues the user is a editor of */
   venues: string[];
@@ -136,10 +136,10 @@ export class User {
    * @param organizationId The organization to check
    */
   mayPromoteWith(this: UserModel, organizationId: string) {
-    if (!organizationId || !this.groups) {
+    if (!organizationId || !this.organizations) {
       return false;
     }
-    return this.groups.includes(organizationId);
+    return this.organizations.includes(organizationId);
   }
 
   hasVerifiedEmail(this: UserModel) {
