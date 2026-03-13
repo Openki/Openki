@@ -123,7 +123,7 @@ export function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => vo
                     {venue.otherFacilities}
                   </p>
                 )}
-                {(!!venue.editor || !!venue.editGroup || venue.editableBy(user)) && (
+                {(!!venue.editor || !!venue.editOrganization || venue.editableBy(user)) && (
                   <>
                     <span className="venue-property-title">
                       {t("location.details.hosts", "Hosts:")}
@@ -135,7 +135,7 @@ export function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => vo
                           <Contribution userId={venue.editor} />
                         </li>
                       )}
-                      {(!!venue.editGroup || venue.editableBy(user)) && (
+                      {(!!venue.editOrganization || venue.editableBy(user)) && (
                         <li>
                           <EditOrganization venue={venue} />
                         </li>
