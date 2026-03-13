@@ -126,7 +126,7 @@ export const CreateFieldsPattern = {
   courseId: Match.Optional(String),
   region: String,
   replicaOf: Match.Optional(String),
-  groups: Match.Optional([String]),
+  organizations: Match.Optional([String]),
 };
 export type CreateFields = Type<typeof CreateFieldsPattern>;
 
@@ -200,7 +200,7 @@ export const save = ServerMethod(
       }
 
       const testedOrganizations = await Promise.all(
-        editFields.groups?.map(async (organizationId) => {
+        editFields.organizations?.map(async (organizationId) => {
           const organization = await Organizations.findOneAsync(organizationId);
           if (!organization) {
             throw new Meteor.Error(404, `no organization with id ${organizationId}`);
@@ -208,7 +208,7 @@ export const save = ServerMethod(
           return organization._id;
         }) || [],
       );
-      editFields.groups = testedOrganizations;
+      editFields.organizations = testedOrganizations;
 
       // Coerce faulty end dates
       if (!editFields.endLocal || editFields.endLocal < editFields.startLocal) {

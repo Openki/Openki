@@ -60,7 +60,7 @@ export function Full({
   }, [animation]);
 
   const [isRegionLoading, region] = useRegionDetails(event.region);
-  const visibleOrganizations = event.allGroups?.filter(
+  const visibleOrganizations = event.allOrganizations?.filter(
     (organizationId) =>
       !(
         // hide organization where are from the region set

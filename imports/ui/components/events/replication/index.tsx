@@ -332,7 +332,7 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
                   description: event.description,
                   room: event.room || "",
                   region: event.region,
-                  groups: event.groups,
+                  organizations: event.organizations,
                   // delegate the same replicaOf ID for this replica if the replicated event is also a replica
                   replicaOf: event.replicaOf || event._id,
                   internal: event.internal,

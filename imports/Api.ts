@@ -174,7 +174,7 @@ export const Api = {
       }
 
       evr.organizations = [];
-      const organizations = ev.allGroups || [];
+      const organizations = ev.allOrganizations || [];
       for (const organizationId of organizations) {
         const organization = await Organizations.findOneAsync(organizationId);
         if (organization) {
@@ -250,7 +250,7 @@ export const Api = {
       }
 
       course.organizations = [];
-      const organizations = orginalCourse.groups || [];
+      const organizations = orginalCourse.organizations || [];
       organizations.forEach(async (organizationId) => {
         const organization = await Organizations.findOneAsync(organizationId);
         if (organization) {

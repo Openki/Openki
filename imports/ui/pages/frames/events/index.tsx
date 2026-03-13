@@ -45,7 +45,7 @@ export function EventsPage(data: Record<string, string>) {
 
   // by default internal and not internal are show
   // in this view we want only show internal if a organization is set
-  if (!filterQuery.group && !filterQuery.groups?.length) {
+  if (!filterQuery.organization && !filterQuery.organizations?.length) {
     filterQuery.internal = filterQuery.internal || false;
   }
 
@@ -73,10 +73,10 @@ export function EventsPage(data: Record<string, string>) {
     } else {
       delete filterParams.hideSwitches;
     }
-    if (data.filterGroups) {
-      filterParams.filterGroups = data.filterGroups;
+    if (data.filterOrganizations) {
+      filterParams.filterOrganizations = data.filterOrganizations;
     } else {
-      delete filterParams.filterGroups;
+      delete filterParams.filterOrganizations;
     }
     delete filterParams.region; // HACK region is kept in the session (for bad reasons)
     const queryString = UrlTools.paramsToQueryString(filterParams);
@@ -106,17 +106,17 @@ export function EventsPage(data: Record<string, string>) {
         update();
       },
       availableOrganizations: new Filtering({
-        filterGroups: Predicates.ids,
+        filterOrganizations: Predicates.ids,
       })
         .read(data)
-        .get("filterGroups"),
-      selectedOrganizations: filter.get("groups"),
+        .get("filterOrganizations"),
+      selectedOrganizations: filter.get("organizations"),
       onAddOrganization: (organization) => {
-        filter.add("groups", organization);
+        filter.add("organizations", organization);
         update();
       },
       onRemoveOrganization: (organization) => {
-        filter.remove("groups", organization);
+        filter.remove("organizations", organization);
         update();
       },
       categories: filter.get("categories"),
