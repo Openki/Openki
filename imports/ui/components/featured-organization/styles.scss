@@ -1,38 +1,38 @@
 @use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
-$featured-group-bg: color.adjust($green, $lightness: 10%);
+$featured-organization-bg: color.adjust($green, $lightness: 10%);
 
-.featured-group {
-  background-color: $featured-group-bg;
-  border: 1px solid color.adjust($featured-group-bg, $lightness: -5%);
+.featured-organization {
+  background-color: $featured-organization-bg;
+  border: 1px solid color.adjust($featured-organization-bg, $lightness: -5%);
   margin-top: 15px;
 }
 
-.featured-group-header,
-.featured-group-body {
+.featured-organization-header,
+.featured-organization-body {
   padding: 15px;
 }
 
-.featured-group-header {
-  background-color: color.adjust($featured-group-bg, $lightness: -5%);
-  border-bottom: 1px solid color.adjust($featured-group-bg, $lightness: -10%);
+.featured-organization-header {
+  background-color: color.adjust($featured-organization-bg, $lightness: -5%);
+  border-bottom: 1px solid color.adjust($featured-organization-bg, $lightness: -10%);
 }
 
-.featured-group-logo {
+.featured-organization-logo {
   width: 65px;
 }
 
-.featured-group-body-logo,
-.featured-group-body-content {
+.featured-organization-body-logo,
+.featured-organization-body-content {
   display: inline-block;
   vertical-align: top;
 }
 
-.featured-group-body-logo + .featured-group-body-content {
+.featured-organization-body-logo + .featured-organization-body-content {
   margin-left: 10px;
 }
 
-.featured-group-name {
+.featured-organization-name {
   font-weight: bold;
 }
