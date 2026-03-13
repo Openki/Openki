@@ -17,7 +17,7 @@ export function AdminPanelPage() {
     {
       name: t("adminPanel.tasks.featuredOrganization", "Feature organization"),
       icon: "fa-solid fa-users",
-      route: "featureGroup",
+      route: "featureOrganization",
     },
     {
       name: t("adminPanel.tasks.users", "Users"),
