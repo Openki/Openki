@@ -1,9 +1,23 @@
 import { CourseEntity, Courses } from "/imports/api/courses/courses";
 import { EventEntity, Events } from "/imports/api/events/events";
- import { RegionEntity, Regions } from "/imports/api/regions/regions";
+import { RegionEntity, Regions } from "/imports/api/regions/regions";
+import { VenueEntity, Venues } from "/imports/api/venues/venues";
 
 export async function update() {
   let updated = 0;
+
+  for (const originalVenue of await Venues.find().fetchAsync()) {
+    const venue = { ...originalVenue } as VenueEntity & {
+      editGroup?: VenueEntity["editOrganization"];
+    };
+
+    if (venue.editGroup) {
+      venue.editOrganization = venue.editGroup;
+    }
+    delete venue.editGroup;
+
+    updated += await Venues.updateAsync(venue._id, venue);
+  }
 
   for (const originalRegion of await Regions.find().fetchAsync()) {
     const region = { ...originalRegion } as RegionEntity & {

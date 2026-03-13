@@ -27,11 +27,11 @@ export async function afterVenueRemoveEditOrganization(venueId: string, organiza
 
 export async function afterVenueUpdate(venueId: string) {
   const venue = await Venues.findOneAsync(venueId);
-  if (!venue?.editGroup) {
+  if (!venue?.editOrganization) {
     return;
   }
   await Organizations.updateAsync(
-    { _id: venue.editGroup },
+    { _id: venue.editOrganization },
     {
       $set: {
         "venues.$[x].name": venue.name,
@@ -49,11 +49,11 @@ export async function afterVenueUpdate(venueId: string) {
 }
 
 export async function beforeVenueRemove(venue: VenueModel) {
-  if (!venue.editGroup) {
+  if (!venue.editOrganization) {
     return;
   }
   await Organizations.updateAsync(
-    { _id: venue.editGroup },
+    { _id: venue.editOrganization },
     { $pull: { venues: { _id: venue._id } } },
   );
 }

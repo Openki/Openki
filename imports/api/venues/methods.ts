@@ -178,7 +178,7 @@ export const addEditOrganization = ServerMethod(
 
     const venue = await checkEditAllowed(venueId);
 
-    await Venues.updateAsync(venueId, { $set: { editGroup: organizationId } });
+    await Venues.updateAsync(venueId, { $set: { editOrganization: organizationId } });
 
     await userVenuesDenormalizer.afterVenueAddEditOrganization(venue._id, organizationId);
     await organizationVenuesDenormalizer.afterVenueAddEditOrganization(venue, organizationId);
@@ -191,9 +191,9 @@ export const removeEditOrganization = ServerMethod(
     check(venueId, String);
 
     const venue = await checkEditAllowed(venueId);
-    const organizationId = venue.editGroup;
+    const organizationId = venue.editOrganization;
 
-    await Venues.updateAsync(venueId, { $unset: { editGroup: true } });
+    await Venues.updateAsync(venueId, { $unset: { editOrganization: true } });
 
     if (organizationId) {
       await userVenuesDenormalizer.afterVenueRemoveEditOrganization(venueId, organizationId);

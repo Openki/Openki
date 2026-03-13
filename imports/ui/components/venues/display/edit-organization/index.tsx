@@ -14,7 +14,7 @@ export interface Props {
 export function EditOrganization({ venue }: Props) {
   const user = useUser();
 
-  const organizationId = venue.editGroup;
+  const organizationId = venue.editOrganization;
   return (
     <span className="tag-group multiline">
       {organizationId ? (
