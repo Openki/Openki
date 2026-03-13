@@ -116,7 +116,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
           recipientsOrganizations.map((o) => (
             <a
               key={o._id}
-              href={Router.url("groupDetails", o, {
+              href={Router.url("organizationDetails", o, {
                 query: { campaign },
               })}
             >

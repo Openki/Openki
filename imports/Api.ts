@@ -103,7 +103,7 @@ export const Api = {
     const organization = { ...originalOrganization } as typeof originalOrganization & {
       link: string;
     };
-    organization.link = Router.url("groupDetails", organization);
+    organization.link = Router.url("organizationDetails", organization);
     return organization;
   }),
   venues: await apiResponse(Venues, async (originalVenue) => {
@@ -182,7 +182,7 @@ export const Api = {
             id: organization._id,
             name: organization.name,
             short: organization.short,
-            link: Router.url("groupDetails", organization),
+            link: Router.url("organizationDetails", organization),
           });
         }
       }
@@ -258,7 +258,7 @@ export const Api = {
             id: organization._id,
             name: organization.name,
             short: organization.short,
-            link: Router.url("groupDetails", organization),
+            link: Router.url("organizationDetails", organization),
           });
         }
       });
