@@ -52,7 +52,7 @@ export interface CourseEntity {
   /** (not used) */
   tags: string[];
   /** List ID_organizations ("promote organizations") */
-  groups: string[];
+  organizations: string[];
   /**
    * List of organization ID that are allowed to edit the course ("team organizations", based on the ui design:
    * Every "team organization" promotes the course and is part of the organizations list)
@@ -175,7 +175,7 @@ export class Course {
 export const FindFilterPattern = {
   tenants: Match.Maybe([String]),
   region: Match.Maybe(String),
-  group: Match.Maybe(String),
+  organization: Match.Maybe(String),
   search: Match.Maybe(String),
   state: Match.Maybe([StringEnum("proposal", "resting", "upcomingEvent")]),
   categories: Match.Maybe([String]),
@@ -189,7 +189,7 @@ export type FindFilter = Type<typeof FindFilterPattern>;
 
 export const FindParams = {
   region: Predicates.id,
-  group: Predicates.string,
+  organization: Predicates.string,
   search: Predicates.string,
   state: Predicates.createEnumsPredicate("proposal", "resting", "upcomingEvent"),
   categories: Predicates.ids,
@@ -218,7 +218,7 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
     });
 
     if (Meteor.isServer) {
-      this.createIndex({ tenant: 1, archived: 1, region: 1, time_lastedit: 1, groups: 1 });
+      this.createIndex({ tenant: 1, archived: 1, region: 1, time_lastedit: 1, organizations: 1 });
     }
   }
 
@@ -332,8 +332,8 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
       find.categories = { $all: filter.categories };
     }
 
-    if (filter.group) {
-      find.groups = filter.group;
+    if (filter.organization) {
+      find.organizations = filter.organization;
     }
 
     if (missingRoles.length > 0) {

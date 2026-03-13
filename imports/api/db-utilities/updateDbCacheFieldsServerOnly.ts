@@ -21,7 +21,7 @@ export async function updateDbCacheFieldsServerOnly() {
       // Resync location cache in events
       eventsVenueDenormalizer.updateVenue({}),
 
-      // Update list of team (users & groups) per course, triggers updateOrganizations from events
+      // Update list of team (users & organizations) per course, triggers updateOrganizations from events
       courseEditorsDenormalizer.updateEditors({}),
 
       eventsCategoriesDenormalizer.onStartUp(),
