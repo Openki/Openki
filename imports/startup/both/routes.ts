@@ -86,7 +86,7 @@ RouterAsync.route("home", {
   path: "/",
   template: "dashboardPage",
   yieldRegions: {
-    featuredGroup: { to: "aboveContent" },
+    featuredOrganization: { to: "aboveContent" },
   },
   async onRun() {
     await import("/imports/ui/pages/dashboard");
@@ -105,7 +105,7 @@ RouterAsync.route("search", {
   path: "search",
   template: "findPage",
   yieldRegions: {
-    featuredGroup: { to: "aboveContent" },
+    featuredOrganization: { to: "aboveContent" },
   },
   async onRun() {
     await import("/imports/ui/pages/find");
