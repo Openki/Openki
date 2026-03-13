@@ -136,7 +136,7 @@ export const SaveFieldPattern = {
   roles: Match.Optional(Match.ObjectIncluding<Record<string, boolean>>({})),
   subs: Match.Optional([String]),
   unsubs: Match.Optional([String]),
-  groups: Match.Optional([String]),
+  organizations: Match.Optional([String]),
   internal: Match.Optional(Boolean),
   singleEvent: Match.Optional(Boolean),
 };
@@ -160,7 +160,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
   /* Changes we want to perform */
   const set = {} as Mongo.OptionalId<CourseEntity>;
 
-  const disabledRoles = await loadDisabledRoles(changes.groups || []);
+  const disabledRoles = await loadDisabledRoles(changes.organizations || []);
 
   if (changes.roles) {
     await Promise.all(
@@ -236,7 +236,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
 
   if (course.isNew()) {
     // You can add newly created courses to any organization
-    let organizations = changes.groups || [];
+    let organizations = changes.organizations || [];
     organizations = uniq(organizations);
     organizations = await Promise.all(
       organizations.map(async (organizationId) => {
@@ -247,7 +247,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
         return organization._id;
       }),
     );
-    set.groups = organizations;
+    set.organizations = organizations;
     set.teamOrganizations = organizations;
 
     /* region cannot be changed */

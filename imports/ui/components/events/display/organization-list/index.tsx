@@ -23,7 +23,7 @@ export function OrganizationList({ event }: Props) {
 
   function tools(organizationId: string, event: EventModel) {
     // Organizations may be adopted from the course, these cannot be removed
-    const ownOrganization = event.groups.includes(organizationId);
+    const ownOrganization = event.organizations.includes(organizationId);
 
     return (
       <>
@@ -47,7 +47,7 @@ export function OrganizationList({ event }: Props) {
 
   if (isRegionLoading()) return null;
 
-  const organizations = event.allGroups?.filter(
+  const organizations = event.allOrganizations?.filter(
     (organizationId) =>
       !(
         // hide organization where are from the region set
@@ -65,7 +65,7 @@ export function OrganizationList({ event }: Props) {
       {organizations?.map((organizationId) => {
         const isTeam = event.editors.includes(organizationId);
         // Organization may be adopted from the course, these cannot be removed
-        const ownOrganization = event.groups.includes(organizationId);
+        const ownOrganization = event.organizations.includes(organizationId);
         return (
           <React.Fragment key={organizationId}>
             <OrganizationTag organizationId={organizationId} isTeam={isTeam} />

@@ -19,7 +19,7 @@ function useOptions() {
   const filter = Courses.Filtering().read(query);
   const filterQuery: FindFilter = filter.toQuery();
   // Show internal courses only when a organization is specified
-  if (!filterQuery.group && filterQuery.internal === undefined) {
+  if (!filterQuery.organization && filterQuery.internal === undefined) {
     filterQuery.internal = false;
   }
 

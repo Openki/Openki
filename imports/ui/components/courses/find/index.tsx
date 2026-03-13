@@ -167,9 +167,9 @@ export function Find({ query }: Props) {
     if (search) {
       course.name = search;
     }
-    const organizationId = filter.asQuery["group"];
+    const organizationId = filter.asQuery["organization"];
     if (organizationId) {
-      course.group = organizationId;
+      course.organization = organizationId;
     }
     return course;
   }
@@ -303,7 +303,7 @@ export function Find({ query }: Props) {
               organizationTagEvents={organizationTagEvents()}
               categorieTagEvents={categorieTagEvents()}
               containsPropose={true}
-              organization={filter.asQuery["group"]}
+              organization={filter.asQuery["organization"]}
             />
             {hasMore() && (
               <div className="text-center mt-3">

@@ -44,7 +44,7 @@ export function OrganizationList({ course }: Props) {
 
   if (isRegionLoading()) return null;
 
-  const organizations = course.groups.filter(
+  const organizations = course.organizations.filter(
     (organizationId) =>
       !(
         // hide organization where are from the region set
