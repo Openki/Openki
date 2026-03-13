@@ -391,7 +391,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Ralph",
-          group: "spZf6DugA8y8K7Z6F",
+          organization: "spZf6DugA8y8K7Z6F",
           enable: false,
         },
       },
@@ -402,7 +402,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Alida",
-          group: "nakdPuAv53ezjcthr",
+          organization: "nakdPuAv53ezjcthr",
           enable: false,
         },
       },
@@ -413,7 +413,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Yelena",
-          group: "nakdPuAv53ezjcthr",
+          organization: "nakdPuAv53ezjcthr",
           enable: true,
         },
       },
@@ -424,7 +424,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Burnard",
-          group: "nakdPuAv53ezjcthr",
+          organization: "nakdPuAv53ezjcthr",
           enable: true,
         },
       },
@@ -1254,7 +1254,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Leonard",
-          group: "Hx7iiRX5Fg3Pf2xne",
+          organization: "Hx7iiRX5Fg3Pf2xne",
           enable: true,
         },
       },
@@ -1265,7 +1265,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Luciano",
-          group: "Hx7iiRX5Fg3Pf2xne",
+          organization: "Hx7iiRX5Fg3Pf2xne",
           enable: true,
         },
       },
@@ -1276,7 +1276,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Coraline",
-          group: "spZf6DugA8y8K7Z6F",
+          organization: "spZf6DugA8y8K7Z6F",
           enable: false,
         },
       },
@@ -1287,7 +1287,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Berky",
-          group: "nakdPuAv53ezjcthr",
+          organization: "nakdPuAv53ezjcthr",
           enable: false,
         },
       },
@@ -1298,7 +1298,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Nikkie",
-          group: "nakdPuAv53ezjcthr",
+          organization: "nakdPuAv53ezjcthr",
           enable: true,
         },
       },
@@ -1309,7 +1309,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Maryjo",
-          group: "nakdPuAv53ezjcthr",
+          organization: "nakdPuAv53ezjcthr",
           enable: true,
         },
       },
@@ -3325,7 +3325,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Misti",
-          group: "F9aByF9suBzKEw5Wp",
+          organization: "F9aByF9suBzKEw5Wp",
           enable: false,
         },
       },
@@ -3366,7 +3366,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Lemmy",
-          group: "F9aByF9suBzKEw5Wp",
+          organization: "F9aByF9suBzKEw5Wp",
           enable: false,
         },
       },
@@ -4026,7 +4026,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Aimee",
-          group: "xRu2dnHG97ABFErJo",
+          organization: "xRu2dnHG97ABFErJo",
           enable: true,
         },
       },
@@ -4101,7 +4101,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Gerhardine",
-          group: "xRu2dnHG97ABFErJo",
+          organization: "xRu2dnHG97ABFErJo",
           enable: true,
         },
       },
@@ -4112,7 +4112,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Dory",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -4438,7 +4438,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Phylys",
-          group: "oAKa3Es5T8piWAENg",
+          organization: "oAKa3Es5T8piWAENg",
           enable: true,
         },
       },
@@ -4449,7 +4449,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Jennilee",
-          group: "oAKa3Es5T8piWAENg",
+          organization: "oAKa3Es5T8piWAENg",
           enable: false,
         },
       },
@@ -4460,7 +4460,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Ingemar",
-          group: "xRu2dnHG97ABFErJo",
+          organization: "xRu2dnHG97ABFErJo",
           enable: true,
         },
       },
@@ -4493,7 +4493,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Cloris",
-          group: "xRu2dnHG97ABFErJo",
+          organization: "xRu2dnHG97ABFErJo",
           enable: true,
         },
       },
@@ -4504,7 +4504,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Obadiah",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -4701,7 +4701,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Kelbee",
-          group: "6rSMTsSmXAj9rdPF6",
+          organization: "6rSMTsSmXAj9rdPF6",
           enable: true,
         },
       },
@@ -4712,7 +4712,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Alexandra",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -4723,7 +4723,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Lilllie",
-          group: "6rSMTsSmXAj9rdPF6",
+          organization: "6rSMTsSmXAj9rdPF6",
           enable: true,
         },
       },
@@ -6471,7 +6471,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Jo-anne",
-          group: "yJBGGe8K4Pb9ZLEoX",
+          organization: "yJBGGe8K4Pb9ZLEoX",
           enable: true,
         },
       },
@@ -6635,7 +6635,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Findlay",
-          group: "xRu2dnHG97ABFErJo",
+          organization: "xRu2dnHG97ABFErJo",
           enable: true,
         },
       },
@@ -6646,7 +6646,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Leigh",
-          group: "sSj2doBt5yTTAQEnD",
+          organization: "sSj2doBt5yTTAQEnD",
           enable: true,
         },
       },
@@ -6677,7 +6677,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Ignacio",
-          group: "Qxdoq84bqbwG3qvZk",
+          organization: "Qxdoq84bqbwG3qvZk",
           enable: true,
         },
       },
@@ -6688,7 +6688,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Florenza",
-          group: "Qxdoq84bqbwG3qvZk",
+          organization: "Qxdoq84bqbwG3qvZk",
           enable: true,
         },
       },
@@ -6699,7 +6699,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Wyn",
-          group: "sSj2doBt5yTTAQEnD",
+          organization: "sSj2doBt5yTTAQEnD",
           enable: false,
         },
       },
@@ -6710,7 +6710,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Avril",
-          group: "xRu2dnHG97ABFErJo",
+          organization: "xRu2dnHG97ABFErJo",
           enable: false,
         },
       },
@@ -6721,7 +6721,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Sallee",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -6935,7 +6935,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Merle",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -6946,7 +6946,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Alard",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -6957,7 +6957,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Rem",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -6968,7 +6968,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Marleah",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -6979,7 +6979,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Dean",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -7013,7 +7013,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Georgianne",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -7751,7 +7751,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Gertruda",
-          group: "yJBGGe8K4Pb9ZLEoX",
+          organization: "yJBGGe8K4Pb9ZLEoX",
           enable: true,
         },
       },
@@ -7762,7 +7762,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Dagny",
-          group: "yJBGGe8K4Pb9ZLEoX",
+          organization: "yJBGGe8K4Pb9ZLEoX",
           enable: true,
         },
       },
@@ -7773,7 +7773,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Hynda",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -8602,7 +8602,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Pansy",
-          group: "3rLCvz8TFLCwwcreF",
+          organization: "3rLCvz8TFLCwwcreF",
           enable: true,
         },
       },
@@ -8635,7 +8635,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Jenifer",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -8706,7 +8706,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Gal",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -8717,7 +8717,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Moises",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -8758,7 +8758,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Tomasine",
-          group: "3rLCvz8TFLCwwcreF",
+          organization: "3rLCvz8TFLCwwcreF",
           enable: true,
         },
       },
@@ -9046,7 +9046,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Odell",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -9080,7 +9080,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Eliot",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -9410,7 +9410,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Burgess",
-          group: "F9aByF9suBzKEw5Wp",
+          organization: "F9aByF9suBzKEw5Wp",
           enable: false,
         },
       },
@@ -16079,7 +16079,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Mariellen",
-          group: "yJBGGe8K4Pb9ZLEoX",
+          organization: "yJBGGe8K4Pb9ZLEoX",
           enable: true,
         },
       },
@@ -16090,7 +16090,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Anton",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -18384,7 +18384,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Sumner",
-          group: "SErB6i2hv8SaWmxF6",
+          organization: "SErB6i2hv8SaWmxF6",
           enable: true,
         },
       },
@@ -18395,7 +18395,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Gawain",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -20489,7 +20489,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Isac",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -20522,7 +20522,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Cullen",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -20812,7 +20812,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Constantia",
-          group: "xRu2dnHG97ABFErJo",
+          organization: "xRu2dnHG97ABFErJo",
           enable: true,
         },
       },
@@ -20823,7 +20823,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Aldridge",
-          group: "sSj2doBt5yTTAQEnD",
+          organization: "sSj2doBt5yTTAQEnD",
           enable: true,
         },
       },
@@ -20834,7 +20834,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Nance",
-          group: "yJBGGe8K4Pb9ZLEoX",
+          organization: "yJBGGe8K4Pb9ZLEoX",
           enable: false,
         },
       },
@@ -20845,7 +20845,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Coraline",
-          group: "SErB6i2hv8SaWmxF6",
+          organization: "SErB6i2hv8SaWmxF6",
           enable: false,
         },
       },
@@ -20983,7 +20983,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Jaye",
-          group: "xRu2dnHG97ABFErJo",
+          organization: "xRu2dnHG97ABFErJo",
           enable: true,
         },
       },
@@ -20994,7 +20994,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Prentiss",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -21005,7 +21005,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Laural",
-          group: "sSj2doBt5yTTAQEnD",
+          organization: "sSj2doBt5yTTAQEnD",
           enable: false,
         },
       },
@@ -22078,7 +22078,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Maryl",
-          group: "xRu2dnHG97ABFErJo",
+          organization: "xRu2dnHG97ABFErJo",
           enable: true,
         },
       },
@@ -22134,7 +22134,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Alair",
-          group: "xRu2dnHG97ABFErJo",
+          organization: "xRu2dnHG97ABFErJo",
           enable: true,
         },
       },
@@ -22145,7 +22145,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Vincenz",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -22667,7 +22667,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Marijn",
-          group: "SErB6i2hv8SaWmxF6",
+          organization: "SErB6i2hv8SaWmxF6",
           enable: true,
         },
       },
@@ -22678,7 +22678,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Wolfie",
-          group: "SErB6i2hv8SaWmxF6",
+          organization: "SErB6i2hv8SaWmxF6",
           enable: false,
         },
       },
@@ -22689,7 +22689,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Norby",
-          group: "SErB6i2hv8SaWmxF6",
+          organization: "SErB6i2hv8SaWmxF6",
           enable: true,
         },
       },
@@ -22700,7 +22700,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Faye",
-          group: "SErB6i2hv8SaWmxF6",
+          organization: "SErB6i2hv8SaWmxF6",
           enable: true,
         },
       },
@@ -22711,7 +22711,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Rudolph",
-          group: "F9aByF9suBzKEw5Wp",
+          organization: "F9aByF9suBzKEw5Wp",
           enable: false,
         },
       },
@@ -25362,7 +25362,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Martica",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -25650,7 +25650,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Gregor",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -26410,7 +26410,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Karney",
-          group: "ZDAARaoF27eQmDaBZ",
+          organization: "ZDAARaoF27eQmDaBZ",
           enable: true,
         },
       },
@@ -26664,7 +26664,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Rea",
-          group: "ZDAARaoF27eQmDaBZ",
+          organization: "ZDAARaoF27eQmDaBZ",
           enable: false,
         },
       },
@@ -26697,7 +26697,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Deidre",
-          group: "ZjdbyN3iRCyQTDmTG",
+          organization: "ZjdbyN3iRCyQTDmTG",
           enable: true,
         },
       },
@@ -26708,7 +26708,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Wallis",
-          group: "ZjdbyN3iRCyQTDmTG",
+          organization: "ZjdbyN3iRCyQTDmTG",
           enable: false,
         },
       },
@@ -26719,7 +26719,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Inglebert",
-          group: "ZjdbyN3iRCyQTDmTG",
+          organization: "ZjdbyN3iRCyQTDmTG",
           enable: true,
         },
       },
@@ -26730,7 +26730,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Eberhard",
-          group: "ZjdbyN3iRCyQTDmTG",
+          organization: "ZjdbyN3iRCyQTDmTG",
           enable: true,
         },
       },
@@ -26741,7 +26741,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Alida",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -30916,7 +30916,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Judye",
-          group: "SErB6i2hv8SaWmxF6",
+          organization: "SErB6i2hv8SaWmxF6",
           enable: true,
         },
       },
@@ -30927,7 +30927,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Zahara",
-          group: "SErB6i2hv8SaWmxF6",
+          organization: "SErB6i2hv8SaWmxF6",
           enable: false,
         },
       },
@@ -31207,7 +31207,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Pammie",
-          group: "42bNNenBx2Jbobm9r",
+          organization: "42bNNenBx2Jbobm9r",
           enable: true,
         },
       },
@@ -31218,7 +31218,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Cullen",
-          group: "42bNNenBx2Jbobm9r",
+          organization: "42bNNenBx2Jbobm9r",
           enable: true,
         },
       },
@@ -31229,7 +31229,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Bertie",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -32823,7 +32823,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Reinaldo",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -32834,7 +32834,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Nessi",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -36114,7 +36114,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Perri",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -36217,7 +36217,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Julina",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -36560,7 +36560,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Yolanda",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -36571,7 +36571,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Barb",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -37380,7 +37380,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Ranee",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -37391,7 +37391,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Alida",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -37411,7 +37411,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Dov",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -37422,7 +37422,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Erasmus",
-          group: "sSj2doBt5yTTAQEnD",
+          organization: "sSj2doBt5yTTAQEnD",
           enable: true,
         },
       },
@@ -37433,7 +37433,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Misha",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -37444,7 +37444,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Welch",
-          group: "sSj2doBt5yTTAQEnD",
+          organization: "sSj2doBt5yTTAQEnD",
           enable: true,
         },
       },
@@ -38902,7 +38902,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Aldridge",
-          group: "yJBGGe8K4Pb9ZLEoX",
+          organization: "yJBGGe8K4Pb9ZLEoX",
           enable: true,
         },
       },
@@ -40754,7 +40754,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Hasty",
-          group: "SErB6i2hv8SaWmxF6",
+          organization: "SErB6i2hv8SaWmxF6",
           enable: true,
         },
       },
@@ -40796,7 +40796,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Giavani",
-          group: "SErB6i2hv8SaWmxF6",
+          organization: "SErB6i2hv8SaWmxF6",
           enable: false,
         },
       },
@@ -43711,7 +43711,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Leoine",
-          group: "42bNNenBx2Jbobm9r",
+          organization: "42bNNenBx2Jbobm9r",
           enable: true,
         },
       },
@@ -43722,7 +43722,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Tammie",
-          group: "42bNNenBx2Jbobm9r",
+          organization: "42bNNenBx2Jbobm9r",
           enable: true,
         },
       },
@@ -43733,7 +43733,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Elvis",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -47339,7 +47339,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Dean",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -47372,7 +47372,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Alexandros",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -47415,7 +47415,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Felicle",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -47449,7 +47449,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Frasier",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -48697,7 +48697,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Tremaine",
-          group: "yJBGGe8K4Pb9ZLEoX",
+          organization: "yJBGGe8K4Pb9ZLEoX",
           enable: true,
         },
       },
@@ -48708,7 +48708,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Nealson",
-          group: "yJBGGe8K4Pb9ZLEoX",
+          organization: "yJBGGe8K4Pb9ZLEoX",
           enable: true,
         },
       },
@@ -48719,7 +48719,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Cob",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -52006,7 +52006,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Wiatt",
-          group: "ZjdbyN3iRCyQTDmTG",
+          organization: "ZjdbyN3iRCyQTDmTG",
           enable: true,
         },
       },
@@ -52017,7 +52017,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Adelbert",
-          group: "ZjdbyN3iRCyQTDmTG",
+          organization: "ZjdbyN3iRCyQTDmTG",
           enable: true,
         },
       },
@@ -53475,7 +53475,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Mill",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -53486,7 +53486,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Alexandros",
-          group: "yJBGGe8K4Pb9ZLEoX",
+          organization: "yJBGGe8K4Pb9ZLEoX",
           enable: true,
         },
       },
@@ -53516,7 +53516,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Hanny",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -53527,7 +53527,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Nanette",
-          group: "yJBGGe8K4Pb9ZLEoX",
+          organization: "yJBGGe8K4Pb9ZLEoX",
           enable: true,
         },
       },
@@ -53538,7 +53538,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Lavinie",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -54417,7 +54417,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Rurik",
-          group: "yJBGGe8K4Pb9ZLEoX",
+          organization: "yJBGGe8K4Pb9ZLEoX",
           enable: true,
         },
       },
@@ -54428,7 +54428,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Royall",
-          group: "yJBGGe8K4Pb9ZLEoX",
+          organization: "yJBGGe8K4Pb9ZLEoX",
           enable: true,
         },
       },
@@ -54439,7 +54439,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Carlee",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -56925,7 +56925,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Alyse",
-          group: "42bNNenBx2Jbobm9r",
+          organization: "42bNNenBx2Jbobm9r",
           enable: true,
         },
       },
@@ -56936,7 +56936,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Stevana",
-          group: "42bNNenBx2Jbobm9r",
+          organization: "42bNNenBx2Jbobm9r",
           enable: true,
         },
       },
@@ -56947,7 +56947,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Dean",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -59755,7 +59755,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Auberta",
-          group: "5MiKEfwC8fyQLuPkp",
+          organization: "5MiKEfwC8fyQLuPkp",
           enable: true,
         },
       },
@@ -59766,7 +59766,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Alice",
-          group: "5MiKEfwC8fyQLuPkp",
+          organization: "5MiKEfwC8fyQLuPkp",
           enable: true,
         },
       },
@@ -59777,7 +59777,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Chadd",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -63818,7 +63818,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Lauri",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -63874,7 +63874,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Myranda",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -69082,7 +69082,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Berkie",
-          group: "rscJDvWpSdoFNecXJ",
+          organization: "rscJDvWpSdoFNecXJ",
           enable: true,
         },
       },
@@ -69093,7 +69093,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Moreen",
-          group: "rscJDvWpSdoFNecXJ",
+          organization: "rscJDvWpSdoFNecXJ",
           enable: true,
         },
       },
@@ -69104,7 +69104,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Daniela",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -69560,7 +69560,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Agnesse",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -69571,7 +69571,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Evered",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -69582,7 +69582,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Selia",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -69593,7 +69593,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Etti",
-          group: "sSj2doBt5yTTAQEnD",
+          organization: "sSj2doBt5yTTAQEnD",
           enable: true,
         },
       },
@@ -69604,7 +69604,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Barb",
-          group: "sSj2doBt5yTTAQEnD",
+          organization: "sSj2doBt5yTTAQEnD",
           enable: false,
         },
       },
@@ -69615,7 +69615,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Siward",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -69626,7 +69626,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Shayne",
-          group: "42bNNenBx2Jbobm9r",
+          organization: "42bNNenBx2Jbobm9r",
           enable: true,
         },
       },
@@ -69637,7 +69637,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Lavinie",
-          group: "42bNNenBx2Jbobm9r",
+          organization: "42bNNenBx2Jbobm9r",
           enable: true,
         },
       },
@@ -69648,7 +69648,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Udell",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -69659,7 +69659,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Faustine",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -70087,7 +70087,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Ralph",
-          group: "xRu2dnHG97ABFErJo",
+          organization: "xRu2dnHG97ABFErJo",
           enable: true,
         },
       },
@@ -70098,7 +70098,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Faye",
-          group: "xRu2dnHG97ABFErJo",
+          organization: "xRu2dnHG97ABFErJo",
           enable: true,
         },
       },
@@ -70109,7 +70109,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Joshuah",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -70120,7 +70120,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Aprilette",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -70507,7 +70507,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Norby",
-          group: "5MiKEfwC8fyQLuPkp",
+          organization: "5MiKEfwC8fyQLuPkp",
           enable: true,
         },
       },
@@ -70518,7 +70518,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Dana",
-          group: "5MiKEfwC8fyQLuPkp",
+          organization: "5MiKEfwC8fyQLuPkp",
           enable: true,
         },
       },
@@ -70529,7 +70529,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Margeaux",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -72212,7 +72212,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Sibby",
-          group: "xRu2dnHG97ABFErJo",
+          organization: "xRu2dnHG97ABFErJo",
           enable: true,
         },
       },
@@ -72295,7 +72295,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Daryn",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -72306,7 +72306,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Tremaine",
-          group: "xRu2dnHG97ABFErJo",
+          organization: "xRu2dnHG97ABFErJo",
           enable: true,
         },
       },
@@ -75440,7 +75440,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Robby",
-          group: "42bNNenBx2Jbobm9r",
+          organization: "42bNNenBx2Jbobm9r",
           enable: true,
         },
       },
@@ -75451,7 +75451,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Emery",
-          group: "42bNNenBx2Jbobm9r",
+          organization: "42bNNenBx2Jbobm9r",
           enable: true,
         },
       },
@@ -75462,7 +75462,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Lisha",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -75473,7 +75473,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Denna",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -76602,7 +76602,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Tiffani",
-          group: "QeppkGZxMmihjbhZf",
+          organization: "QeppkGZxMmihjbhZf",
           enable: true,
         },
       },
@@ -76613,7 +76613,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Ingemar",
-          group: "QeppkGZxMmihjbhZf",
+          organization: "QeppkGZxMmihjbhZf",
           enable: true,
         },
       },
@@ -76624,7 +76624,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Daniela",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -76635,7 +76635,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Lisha",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -77806,7 +77806,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Kenyon",
-          group: "42bNNenBx2Jbobm9r",
+          organization: "42bNNenBx2Jbobm9r",
           enable: true,
         },
       },
@@ -77817,7 +77817,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Kalle",
-          group: "42bNNenBx2Jbobm9r",
+          organization: "42bNNenBx2Jbobm9r",
           enable: true,
         },
       },
@@ -77828,7 +77828,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Robbie",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -77839,7 +77839,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Eduard",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -77850,7 +77850,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Aprilette",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -77861,7 +77861,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Roberto",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -77872,7 +77872,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Shantee",
-          group: "42bNNenBx2Jbobm9r",
+          organization: "42bNNenBx2Jbobm9r",
           enable: false,
         },
       },
@@ -77883,7 +77883,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Elvis",
-          group: "42bNNenBx2Jbobm9r",
+          organization: "42bNNenBx2Jbobm9r",
           enable: false,
         },
       },
@@ -77934,7 +77934,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Bride",
-          group: "xRu2dnHG97ABFErJo",
+          organization: "xRu2dnHG97ABFErJo",
           enable: true,
         },
       },
@@ -77945,7 +77945,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Tiphani",
-          group: "xRu2dnHG97ABFErJo",
+          organization: "xRu2dnHG97ABFErJo",
           enable: true,
         },
       },
@@ -77956,7 +77956,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Bev",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -77967,7 +77967,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Brent",
-          group: "buwCFod8Qsnin9c5o",
+          organization: "buwCFod8Qsnin9c5o",
           enable: true,
         },
       },
@@ -79744,7 +79744,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Elvis",
-          group: "sSj2doBt5yTTAQEnD",
+          organization: "sSj2doBt5yTTAQEnD",
           enable: true,
         },
       },
@@ -79755,7 +79755,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Cletus",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -79793,7 +79793,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Giavani",
-          group: "sSj2doBt5yTTAQEnD",
+          organization: "sSj2doBt5yTTAQEnD",
           enable: true,
         },
       },
@@ -80113,7 +80113,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Ken",
-          group: "nakdPuAv53ezjcthr",
+          organization: "nakdPuAv53ezjcthr",
           enable: true,
         },
       },
@@ -80124,7 +80124,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Darda",
-          group: "nakdPuAv53ezjcthr",
+          organization: "nakdPuAv53ezjcthr",
           enable: true,
         },
       },
@@ -80135,7 +80135,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Sayers",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -80146,7 +80146,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Yolanda",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -81464,7 +81464,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Riki",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -81475,7 +81475,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Gerhardine",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -85916,7 +85916,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Laural",
-          group: "xRu2dnHG97ABFErJo",
+          organization: "xRu2dnHG97ABFErJo",
           enable: true,
         },
       },
@@ -85990,7 +85990,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Emelyne",
-          group: "xRu2dnHG97ABFErJo",
+          organization: "xRu2dnHG97ABFErJo",
           enable: true,
         },
       },
@@ -86001,7 +86001,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Adelbert",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -86362,7 +86362,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Adella",
-          group: "xRu2dnHG97ABFErJo",
+          organization: "xRu2dnHG97ABFErJo",
           enable: true,
         },
       },
@@ -86395,7 +86395,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Tori",
-          group: "xRu2dnHG97ABFErJo",
+          organization: "xRu2dnHG97ABFErJo",
           enable: true,
         },
       },
@@ -86406,7 +86406,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Nanette",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -89253,7 +89253,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Erhart",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -89318,7 +89318,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Odell",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -89757,7 +89757,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Erasmus",
-          group: "buwCFod8Qsnin9c5o",
+          organization: "buwCFod8Qsnin9c5o",
           enable: true,
         },
       },
@@ -90055,7 +90055,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Even",
-          group: "buwCFod8Qsnin9c5o",
+          organization: "buwCFod8Qsnin9c5o",
           enable: true,
         },
       },
@@ -90483,7 +90483,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Levon",
-          group: "buwCFod8Qsnin9c5o",
+          organization: "buwCFod8Qsnin9c5o",
           enable: true,
         },
       },
@@ -90503,7 +90503,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Conni",
-          group: "ZjdbyN3iRCyQTDmTG",
+          organization: "ZjdbyN3iRCyQTDmTG",
           enable: true,
         },
       },
@@ -90514,7 +90514,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Allene",
-          group: "ZjdbyN3iRCyQTDmTG",
+          organization: "ZjdbyN3iRCyQTDmTG",
           enable: true,
         },
       },
@@ -90525,7 +90525,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Nessi",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: false,
         },
       },
@@ -90751,7 +90751,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Darrick",
-          group: "buwCFod8Qsnin9c5o",
+          organization: "buwCFod8Qsnin9c5o",
           enable: true,
         },
       },
@@ -91028,7 +91028,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Helge",
-          group: "buwCFod8Qsnin9c5o",
+          organization: "buwCFod8Qsnin9c5o",
           enable: true,
         },
       },
@@ -91057,7 +91057,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Collette",
-          group: "Sg5Z59P5WBku5SsmB",
+          organization: "Sg5Z59P5WBku5SsmB",
           enable: true,
         },
       },
@@ -91173,7 +91173,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Wallie",
-          group: "Sg5Z59P5WBku5SsmB",
+          organization: "Sg5Z59P5WBku5SsmB",
           enable: false,
         },
       },
@@ -91504,7 +91504,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Chiarra",
-          group: "buwCFod8Qsnin9c5o",
+          organization: "buwCFod8Qsnin9c5o",
           enable: true,
         },
       },
@@ -91515,7 +91515,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Lexie",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -91526,7 +91526,7 @@ export const courses: {
         type: "organizationTeam",
         data: {
           user: "Cloris",
-          group: "MzGp4ZDxcS2uobGcv",
+          organization: "MzGp4ZDxcS2uobGcv",
           enable: true,
         },
       },
@@ -92028,7 +92028,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Cary",
-          group: "buwCFod8Qsnin9c5o",
+          organization: "buwCFod8Qsnin9c5o",
           enable: true,
         },
       },
@@ -92507,7 +92507,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Mariya",
-          group: "buwCFod8Qsnin9c5o",
+          organization: "buwCFod8Qsnin9c5o",
           enable: true,
         },
       },
@@ -92806,7 +92806,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Eldon",
-          group: "buwCFod8Qsnin9c5o",
+          organization: "buwCFod8Qsnin9c5o",
           enable: true,
         },
       },
@@ -93075,7 +93075,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Caitlin",
-          group: "buwCFod8Qsnin9c5o",
+          organization: "buwCFod8Qsnin9c5o",
           enable: true,
         },
       },
@@ -93404,7 +93404,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Garrick",
-          group: "buwCFod8Qsnin9c5o",
+          organization: "buwCFod8Qsnin9c5o",
           enable: true,
         },
       },
@@ -93842,7 +93842,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Leland",
-          group: "buwCFod8Qsnin9c5o",
+          organization: "buwCFod8Qsnin9c5o",
           enable: true,
         },
       },
@@ -94194,7 +94194,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Margeaux",
-          group: "buwCFod8Qsnin9c5o",
+          organization: "buwCFod8Qsnin9c5o",
           enable: true,
         },
       },
@@ -94310,7 +94310,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Wylma",
-          group: "buwCFod8Qsnin9c5o",
+          organization: "buwCFod8Qsnin9c5o",
           enable: true,
         },
       },
@@ -94699,7 +94699,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Curt",
-          group: "buwCFod8Qsnin9c5o",
+          organization: "buwCFod8Qsnin9c5o",
           enable: true,
         },
       },
@@ -95591,7 +95591,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Veronike",
-          group: "buwCFod8Qsnin9c5o",
+          organization: "buwCFod8Qsnin9c5o",
           enable: true,
         },
       },
@@ -96213,7 +96213,7 @@ export const courses: {
         type: "organizationPromote",
         data: {
           user: "Lauri",
-          group: "buwCFod8Qsnin9c5o",
+          organization: "buwCFod8Qsnin9c5o",
           enable: true,
         },
       },
