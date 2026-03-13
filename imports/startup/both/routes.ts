@@ -930,9 +930,9 @@ RouterAsync.route("adminPanel", {
   },
 });
 
-RouterAsync.route("featureGroup", {
+RouterAsync.route("featureOrganization", {
   path: "admin/feature-group",
-  template: "adminFeatureGroupPage",
+  template: "adminFeatureOrganizationPage",
   async onRun() {
     await import("../../ui/pages/admin/feature-organization");
   },
