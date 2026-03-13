@@ -138,7 +138,7 @@ const group: ListOfEntities<OrganizationModel> = {
       <div className="card card-group border-0 rounded-0" style={bodyStyle(entity.publicLogoUrl())}>
         <div className="card-body">
           <h5 className="card-title">
-            <a className="stretched-link" href={Router.path("groupDetails", entity)}>
+            <a className="stretched-link" href={Router.path("organizationDetails", entity)}>
               {entity.name}
             </a>
           </h5>

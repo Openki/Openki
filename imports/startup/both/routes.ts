@@ -139,9 +139,9 @@ RouterAsync.route("exploreGroups", {
   },
 });
 
-RouterAsync.route("groupDetails", {
+RouterAsync.route("organizationDetails", {
   path: "group/:_id/:short?",
-  template: "groupDetailsPage",
+  template: "organizationDetailsPage",
   async onRun() {
     await import("../../ui/pages/organization-details");
   },

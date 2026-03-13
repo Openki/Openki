@@ -139,7 +139,10 @@ export function Add({ venue }: Props) {
         ))}
         <div className="dropdown-divider"></div>
         <div className="dialog-dropdown-btn">
-          <a href={Router.path("groupDetails", { _id: "create" })} className="btn btn-success">
+          <a
+            href={Router.path("organizationDetails", { _id: "create" })}
+            className="btn btn-success"
+          >
             {t("profile.createNewOrganization.button")}
           </a>
         </div>
