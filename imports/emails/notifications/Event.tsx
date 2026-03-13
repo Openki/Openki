@@ -81,7 +81,7 @@ export function Event({
               <p>
                 {t(
                   "notification.event.mail.personalMessage",
-                  "The organizer left a message for you:",
+                  "A coordinator left a message for you:",
                 )}
               </p>
               <table className="comment-box">

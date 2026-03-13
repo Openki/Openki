@@ -42,7 +42,7 @@ The administration and the technical maintenance (clean up, recognize problems a
 ## The Openki roles
 
 ### What is a participant?
-A participant is any person who participates in a course. In addition to stay informed and join the various events, participants can also take over the roles of Mentor, Host, or Organizer.
+A participant is any person who participates in a course. In addition to stay informed and join the various events, participants can also take over the roles of Mentor or Host or being part of the coordination-team.
 
 ### What is a Mentor?
 Mentors are expected to have a certain level of knowledge and / or experience on the topic of the course, and thus help to guide the participants through the course. They are usually responsible for the preparation and follow-up of a course.

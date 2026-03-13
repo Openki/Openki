@@ -56,7 +56,7 @@ export function RemoveTeam({ course, organizationId }: Props) {
               err,
               t(
                 "course.organizationList.removeTeam.membersCanNoLongerEditCourse.error",
-                "Failed to remove organizer status",
+                "Failed to remove coordination-organization status",
               ),
             );
           }

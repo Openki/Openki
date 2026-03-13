@@ -73,9 +73,12 @@ export function CourseCompactRoles({ course }: Props) {
 
     const tooltips = {
       team: {
-        needed: t("course.list.status_titles.needs_team", "Needs an organizer"),
-        occupied: t("course.list.status_titles.has_team", "Has an organizer-team"),
-        occupiedByUser: t("course.list.status_titles.u_are_team", "You are organizer"),
+        needed: t("course.list.status_titles.needs_team", "Needs a coordination-team"),
+        occupied: t("course.list.status_titles.has_team", "Has a coordination-team"),
+        occupiedByUser: t(
+          "course.list.status_titles.u_are_team",
+          "You are part of the coordination-team",
+        ),
       },
       mentor: {
         needed: t("course.list.status_titles.needs_mentor", "Needs a mentor"),
