@@ -71,7 +71,7 @@ export async function afterOrganizationPromoteUpdate(
       history: {
         dateTime: new Date(),
         type: "organizationPromote",
-        data: { user: userId, group: organizationId, enable },
+        data: { user: userId, organization: organizationId, enable },
       },
     },
   });
@@ -87,7 +87,7 @@ export async function afterOrganizationTeamUpdate(
       history: {
         dateTime: new Date(),
         type: "organizationTeam",
-        data: { user: userId, group: organizationId, enable },
+        data: { user: userId, organization: organizationId, enable },
       },
     },
   });

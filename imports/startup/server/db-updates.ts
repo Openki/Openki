@@ -24,6 +24,7 @@ import { update as update20250723extendEventParticipants } from "./updates/2025.
 import { update as update20251018ensureVenueAllowParallelEvents } from "./updates/2025.10.18 ensureVenueAllowParallelEventsField";
 import { update as update20260311renameGroupToOrganization } from "./updates/2026.03.11 renameGroupToOrganization";
 import { update as update20260313renameGroupToOrganization2 } from "./updates/2026.03.13 renameGroupToOrganization2";
+import { update as update20260313renameGroupToOrganization3 } from "./updates/2026.03.13 renameGroupToOrganization3";
 
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
@@ -48,6 +49,7 @@ const UpdatesAvailable: Record<string, () => Promise<number>> = {
   "2025.10.18 ensureVenueAllowParallelEventsField": update20251018ensureVenueAllowParallelEvents,
   "2026.03.11 renameGroupToOrganization": update20260311renameGroupToOrganization,
   "2026.03.13 renameGroupToOrganization2": update20260313renameGroupToOrganization2,
+  "2026.03.13 renameGroupToOrganization3": update20260313renameGroupToOrganization3,
 };
 
 interface UpdatesAppliedEntity {
