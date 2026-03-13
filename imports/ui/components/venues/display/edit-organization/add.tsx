@@ -80,11 +80,11 @@ export function Add({ venue }: Props) {
   );
 
   const usersOrganization = filteredOrganizations.filter((organization) =>
-    user?.groups.includes(organization._id),
+    user?.organizations.includes(organization._id),
   );
   filteredOrganizations = filteredOrganizations.filter(
     // exclude from result
-    (organization) => !user?.groups.includes(organization._id),
+    (organization) => !user?.organizations.includes(organization._id),
   );
 
   return (

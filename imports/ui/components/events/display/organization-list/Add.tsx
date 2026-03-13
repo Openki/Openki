@@ -53,7 +53,7 @@ export function Add({ event }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 
-  const organizationsToAdd = user && difference(user.groups, event.allOrganizations || []);
+  const organizationsToAdd = user && difference(user.organizations, event.allOrganizations || []);
 
   if (!organizationsToAdd) {
     return null;

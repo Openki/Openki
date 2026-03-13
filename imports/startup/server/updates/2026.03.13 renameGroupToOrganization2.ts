@@ -2,9 +2,23 @@ import { CourseEntity, Courses } from "/imports/api/courses/courses";
 import { EventEntity, Events } from "/imports/api/events/events";
 import { RegionEntity, Regions } from "/imports/api/regions/regions";
 import { VenueEntity, Venues } from "/imports/api/venues/venues";
+import { UserEntity, Users } from "/imports/api/users/users";
 
 export async function update() {
   let updated = 0;
+
+  for (const originalUser of await Users.find().fetchAsync()) {
+    const user = { ...originalUser } as UserEntity & {
+      groups?: UserEntity["organizations"];
+    };
+
+    if (user.groups) {
+      user.organizations = user.groups;
+    }
+    delete user.groups;
+
+    updated += await Venues.updateAsync(user._id, user);
+  }
 
   for (const originalVenue of await Venues.find().fetchAsync()) {
     const venue = { ...originalVenue } as VenueEntity & {
