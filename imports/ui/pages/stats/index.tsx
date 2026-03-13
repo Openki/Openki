@@ -242,7 +242,7 @@ export function StatsPage() {
                     <tr key={index}>
                       <td>
                         {organization._id ? (
-                          <a href={Router.path("groupDetails", organization)}>
+                          <a href={Router.path("organizationDetails", organization)}>
                             {organization.name || t("organization.missing")}
                           </a>
                         ) : (

@@ -45,7 +45,7 @@ export function OrganizationTag({
           onMouseOver={onMouseOver}
           onMouseOut={onMouseOut}
           onClick={onClick}
-          href={Router.path("groupDetails", organization)}
+          href={Router.path("organizationDetails", organization)}
           data-bs-title={t("organizationTag.showCourses", "{NAME}, show all their courses", {
             NAME: name(organization),
           })}
