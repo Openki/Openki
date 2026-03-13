@@ -56,7 +56,7 @@ export function Add({ course }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 
-  const organizationsToAdd = user && difference(user.groups, course.groups);
+  const organizationsToAdd = user && difference(user.groups, course.organizations);
 
   if (!organizationsToAdd) {
     return null;

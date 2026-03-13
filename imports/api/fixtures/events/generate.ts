@@ -70,7 +70,7 @@ export async function generate() {
       const words = shuffle(description.split(" "));
       event.tenant = course.tenant;
       event.region = course.region;
-      event.groups = course.groups;
+      event.organizations = course.organizations;
       event.teamOrganizations = [];
 
       const venue = await ensure.venue(
@@ -107,7 +107,7 @@ export async function generate() {
       event.description = HtmlTools.sanitizeHtml(
         words.slice(0, 10 + Math.floor(prng() * 30)).join(" "),
       );
-      event.groups = course.groups;
+      event.organizations = course.organizations;
 
       let relativeDate = prng() - 0.7; // put 70% in the past, linear distribution
 

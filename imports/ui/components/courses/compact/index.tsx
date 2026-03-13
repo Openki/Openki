@@ -93,7 +93,7 @@ export function CourseCompact({ course, organizationTagEvents, categorieTagEvent
       classes.push(`category-${category}`);
     });
 
-    course.groups?.forEach((organization) => {
+    course.organizations?.forEach((organization) => {
       classes.push(`group-${organization}`);
     });
 
@@ -120,7 +120,7 @@ export function CourseCompact({ course, organizationTagEvents, categorieTagEvent
     };
   }
 
-  const organizations = course.groups.filter(
+  const organizations = course.organizations.filter(
     (organizationId) =>
       !(
         // hide organization where are from the region set

@@ -75,7 +75,7 @@ export interface EventEntity {
   /** Shows the event as canceled. */
   canceled?: boolean;
   /** list of organization._id that promote this event ("promote organizations"). */
-  groups: string[];
+  organizations: string[];
   /**
    * list of organization._id that are allowed to edit the event ("team organizations", based on the ui design:
    * Every "team organization" promotes the event and is part of the organizations list). */
@@ -91,15 +91,15 @@ export interface EventEntity {
    * (calculated) list of organization._id inherited from course (if courseId is set) ("promote organizations"
    * from course)
    */
-  courseGroups: string[];
+  courseOrganizations: string[];
   /**
    * (calculated) all organizations that promote this course, both inherited from course and set on the
    * event itself ("promote organizations" from event and course)
    */
-  allGroups?: string[];
+  allOrganizations?: string[];
   /**
    * (calculated) list of user and organization _id that are allowed to edit the event, calculated from
-   * the groupOranizers from the event and the editors from the course
+   * the teamOrganizations from the event and the editors from the course
    */
   editors: string[];
   /**
@@ -187,7 +187,7 @@ export class OEvent {
   /** list of organization _ids that are allowed to edit the event, calculated from
    * the teamOrganizations from the event and the course */
   allTeamOrganizations(this: EventModel) {
-    return this.allGroups?.filter((g) => this.editors.includes(g)) || [];
+    return this.allOrganizations?.filter((g) => this.editors.includes(g)) || [];
   }
 }
 
@@ -224,13 +224,13 @@ export const FindFilterPattern = {
   /** list of category ID the event must be in */
   categories: Match.Maybe([String]),
   /** the event must be in that organization (ID) */
-  group: Match.Maybe(String),
+  organization: Match.Maybe(String),
   /** the event must be in one of the organization (ID) */
-  groups: Match.Maybe([String]),
+  organizations: Match.Maybe([String]),
   /** the event must be in none of the organization (ID) */
-  notGroup: Match.Maybe(String),
+  notOrganization: Match.Maybe(String),
   /** the event must be in none of the organization (ID) */
-  notGroups: Match.Maybe([String]),
+  notOrganizations: Match.Maybe([String]),
   /** only events for this course (ID) */
   course: Match.Maybe(String),
   /** only events that are internal (if true) or public (if false), Default: Show both */
@@ -248,10 +248,10 @@ export const FindParams = {
   participant: Predicates.id,
   search: Predicates.string,
   categories: Predicates.ids,
-  group: Predicates.id,
-  groups: Predicates.ids,
-  notGroup: Predicates.id,
-  notGroups: Predicates.ids,
+  organization: Predicates.id,
+  organizations: Predicates.ids,
+  notOrganization: Predicates.id,
+  notOrganizations: Predicates.ids,
   venue: Predicates.id,
   venues: Predicates.ids,
   room: Predicates.string,
@@ -275,7 +275,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
       this.createIndex({ tenant: 1, region: 1, start: 1 });
       this.createIndex({ tenant: 1, region: 1, end: 1 });
       this.createIndex({ tenant: 1, region: 1, "venue._id": 1 });
-      this.createIndex({ tenant: 1, region: 1, allGroups: 1 });
+      this.createIndex({ tenant: 1, region: 1, allOrganizations: 1 });
     }
   }
 
@@ -385,29 +385,29 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
     }
 
     let inOrganizations = [];
-    if (filter.group) {
-      inOrganizations.push(filter.group);
+    if (filter.organization) {
+      inOrganizations.push(filter.organization);
     }
 
-    if (filter.groups) {
-      inOrganizations = inOrganizations.concat(filter.groups);
+    if (filter.organizations) {
+      inOrganizations = inOrganizations.concat(filter.organizations);
     }
 
     if (inOrganizations.length > 0) {
-      find.allGroups = { $in: inOrganizations };
+      find.allOrganizations = { $in: inOrganizations };
     }
 
     let notInOrganizations = [];
-    if (filter.notGroup) {
-      notInOrganizations.push(filter.notGroup);
+    if (filter.notOrganization) {
+      notInOrganizations.push(filter.notOrganization);
     }
 
-    if (filter.notGroups) {
-      notInOrganizations = notInOrganizations.concat(filter.notGroups);
+    if (filter.notOrganizations) {
+      notInOrganizations = notInOrganizations.concat(filter.notOrganizations);
     }
 
     if (notInOrganizations.length > 0) {
-      find.allGroups = { $nin: notInOrganizations };
+      find.allOrganizations = { $nin: notInOrganizations };
     }
 
     if (filter.course) {
