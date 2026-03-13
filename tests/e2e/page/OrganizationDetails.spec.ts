@@ -12,7 +12,7 @@ describe("Organization edit", () => {
       // Members of the organization the course was created in must be able to
       // edit / delete the course.
       // See ticket #1331 organization members can not edit all courses despite their
-      // organization being in the orga-team.
+      // organization being in the teamOrganization.
       // So we login as a member of "SKG" then check whether the edit button shows up.
 
       cy.logout();

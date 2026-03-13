@@ -131,7 +131,7 @@ export function Full({
 
           {event.editableBy(user) && (
             <h4 className="card-title mt-3">
-              {t("event.details.yourAreTeam", "You are organizer")}{" "}
+              {t("event.details.yourAreTeam", "You are part of the coordination-team")}{" "}
               <a
                 className="btn btn-sm btn-secondary"
                 href={Router.path("showEvent", event, { query: { edit: "1" } })}

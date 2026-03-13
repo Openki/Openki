@@ -592,7 +592,7 @@ export const removeParticipant = ServerMethod(
           throw new Meteor.Error(403, "not enough authorisation.");
         }
       } else if (!event.editableBy(operator)) {
-        // only users that have edit permissions (admin, organization-orga-members, orga-team) can remove other users.
+        // only users that have edit permissions (admin, teamOrganizationMembers, teamMembers) can remove other users.
         throw new Meteor.Error(403, "not enough authorisation.");
       }
     } else {

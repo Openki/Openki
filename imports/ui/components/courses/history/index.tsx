@@ -122,12 +122,12 @@ export function OrganizationTeamHistoryEntry({
       {enable
         ? t(
             "course.history.organizationTeam.added",
-            "{ORGANIZATION} got added as orga-organization by {USER}",
+            "{ORGANIZATION} got added as coordination-organization by {USER}",
             tOptions,
           )
         : t(
             "course.history.organizationTeam.removed",
-            "{ORGANIZATION} got removed as orga-organization by {USER}",
+            "{ORGANIZATION} got removed as coordination-organization by {USER}",
             tOptions,
           )}
     </>
