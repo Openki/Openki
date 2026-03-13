@@ -161,25 +161,25 @@ export function OrganizationSettings({ organization }: Props) {
     };
   }
   function kioskEventURL() {
-    return Router.url("kioskEvents", {}, { query: { group: organization._id } });
+    return Router.url("kioskEvents", {}, { query: { organization: organization._id } });
   }
   function timetableURL() {
-    return Router.url("timetable", {}, { query: { group: organization._id } });
+    return Router.url("timetable", {}, { query: { organization: organization._id } });
   }
   function scheduleURL() {
-    return Router.url("frameSchedule", {}, { query: { group: organization._id } });
+    return Router.url("frameSchedule", {}, { query: { organization: organization._id } });
   }
   function frameEventsURL() {
-    return Router.url("frameEvents", {}, { query: { group: organization._id } });
+    return Router.url("frameEvents", {}, { query: { organization: organization._id } });
   }
   function frameWeekURL() {
-    return Router.url("frameWeek", {}, { query: { group: organization._id } });
+    return Router.url("frameWeek", {}, { query: { organization: organization._id } });
   }
   function frameCalendarURL() {
-    return Router.url("frameCalendar", {}, { query: { group: organization._id } });
+    return Router.url("frameCalendar", {}, { query: { organization: organization._id } });
   }
   function frameListURL() {
-    return Router.url("frameCourselist", {}, { query: { group: organization._id } });
+    return Router.url("frameCourselist", {}, { query: { organization: organization._id } });
   }
 
   function deleteConfirmAttr() {
