@@ -1,7 +1,7 @@
 @use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
-.admin-featured-group {
+.admin-featured-organization {
   $bg-color: color.adjust($green, $lightness: 10%);
 
   background-color: $bg-color;
