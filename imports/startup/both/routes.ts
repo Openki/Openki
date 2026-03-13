@@ -250,7 +250,7 @@ RouterAsync.route("proposeCourse", {
 
     course.name = query.title || "";
 
-    return { ...course, group: query.group, singleEvent: query.singleEvent === "1" };
+    return { ...course, organization: query.organization, singleEvent: query.singleEvent === "1" };
   },
 });
 
