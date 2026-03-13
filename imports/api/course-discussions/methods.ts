@@ -64,7 +64,7 @@ export const postComment = ServerMethod(
         comment.notifyAll &&
         (user.privileged("admin") ||
           course.userHasRole(user._id, "team") ||
-          user.groups.some((g) => course?.teamOrganizations.includes(g)));
+          user.organizations.some((g) => course?.teamOrganizations.includes(g)));
     }
 
     const now = new Date();

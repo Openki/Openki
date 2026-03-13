@@ -79,9 +79,9 @@ export function Edit(props: Props) {
   function showInternalCheckbox() {
     let internalOption;
 
-    if (!props.isFrame && props.organization && user?.groups) {
+    if (!props.isFrame && props.organization && user?.organizations) {
       // Visible in organization detail page (for creation) if user is in organization
-      internalOption = user.groups.includes(props.organization);
+      internalOption = user.organizations.includes(props.organization);
     } else {
       // and visible on edit if course is in a organization
       // For devs: This behavior is not consistent. But we want the creation to be as simple

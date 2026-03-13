@@ -176,7 +176,7 @@ Accounts.onCreateUser(
 
     user.tenants = [];
 
-    user.groups = [];
+    user.organizations = [];
     user.badges = [user._id];
     user.venues = [];
 
