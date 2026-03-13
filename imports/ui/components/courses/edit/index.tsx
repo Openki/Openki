@@ -51,7 +51,7 @@ export type Props = {
   categories?: string[];
   isFrame?: boolean;
   group?: string;
-  teamGroups?: string[];
+  teamOrganizations?: string[];
   hideRoleSelection?: boolean;
   hidePricePolicy?: boolean;
   roles?: string[];
@@ -91,7 +91,7 @@ export function Edit(props: Props) {
     return internalOption;
   }
 
-  const hasTeamOrganizations = !!(props.teamGroups && props.teamGroups?.length > 0);
+  const hasTeamOrganizations = !!(props.teamOrganizations && props.teamOrganizations?.length > 0);
 
   let internalInitialState;
   if (showInternalCheckbox()) {
@@ -139,19 +139,19 @@ export function Edit(props: Props) {
 
     const defaultTeamOrganizations = regions.find(
       (r) => r._id === selectedRegion,
-    )?.defaultTeamGroups;
+    )?.defaultTeamOrganizations;
     if (defaultTeamOrganizations) {
       organizations.push(...defaultTeamOrganizations);
     }
 
     if (!isNew) {
-      organizations.push(...(props.groupOrganizers || []));
+      organizations.push(...(props.teamOrganizations || []));
     } else if (!props.isFrame) {
       if (props.group) {
         organizations.push(props.group);
       }
-    } else if (props.teamGroups && props.teamGroups.length > 0) {
-      organizations.push(...props.teamGroups);
+    } else if (props.teamOrganizations && props.teamOrganizations.length > 0) {
+      organizations.push(...props.teamOrganizations);
     }
     // remove double organizations
     return uniq(organizations);

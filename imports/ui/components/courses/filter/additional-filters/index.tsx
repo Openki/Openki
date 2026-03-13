@@ -29,7 +29,7 @@ export function AdditionalFilters(props: Props) {
   const roles = [
     {
       name: "team",
-      label: t("find.needsOrganizer", "Looking for an organizer"),
+      label: t("find.needsTeam", "Looking for an organizer"),
     },
     {
       name: "mentor",

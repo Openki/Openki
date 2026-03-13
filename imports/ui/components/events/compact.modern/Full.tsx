@@ -65,7 +65,7 @@ export function Full({
       !(
         // hide organization where are from the region set
         (
-          region?.defaultTeamGroups?.includes(organizationId) &&
+          region?.defaultTeamOrganizations?.includes(organizationId) &&
           // when user is not member of the organization or a admin
           !user?.mayPromoteWith(organizationId) &&
           !event.editableBy(user)
@@ -131,7 +131,7 @@ export function Full({
 
           {event.editableBy(user) && (
             <h4 className="card-title mt-3">
-              {t("event.details.yourAreOrganizer", "You are organizer")}{" "}
+              {t("event.details.yourAreTeam", "You are organizer")}{" "}
               <a
                 className="btn btn-sm btn-secondary"
                 href={Router.path("showEvent", event, { query: { edit: "1" } })}

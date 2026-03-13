@@ -600,7 +600,7 @@ RouterAsync.route("framePropose", {
   data() {
     const predicates = {
       region: Predicates.id,
-      addTeamGroups: Predicates.ids,
+      addTeamOrganizations: Predicates.ids,
       neededRoles: Predicates.ids,
       setCreatorsRoles: Predicates.ids,
       internal: Predicates.flag,
@@ -610,11 +610,11 @@ RouterAsync.route("framePropose", {
     };
     const query = new Filtering(predicates).read(this.params.query).toQuery() as any;
 
-    if (query.addTeamGroups) {
+    if (query.addTeamOrganizations) {
       // For security reasons only 5 organizations are allowed
-      query.teamGroups = query.addTeamGroups.slice(0, 5);
+      query.teamOrganizations = query.addTeamOrganizations.slice(0, 5);
     }
-    delete query.addTeamGroups;
+    delete query.addTeamOrganizations;
 
     if (!query.neededRoles) {
       query.neededRoles = ["mentor"];

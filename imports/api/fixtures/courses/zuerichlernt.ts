@@ -388,7 +388,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-11T20:05:09.825+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Ralph",
           group: "spZf6DugA8y8K7Z6F",
@@ -399,7 +399,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-11T20:06:10.204+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Alida",
           group: "nakdPuAv53ezjcthr",
@@ -410,7 +410,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-11T20:06:13.441+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Yelena",
           group: "nakdPuAv53ezjcthr",
@@ -421,7 +421,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-11T20:06:17.786+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Burnard",
           group: "nakdPuAv53ezjcthr",
@@ -1251,7 +1251,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-19T14:29:22.714+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Leonard",
           group: "Hx7iiRX5Fg3Pf2xne",
@@ -1262,7 +1262,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-19T14:29:31.877+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Luciano",
           group: "Hx7iiRX5Fg3Pf2xne",
@@ -1273,7 +1273,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-19T14:30:07.485+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Coraline",
           group: "spZf6DugA8y8K7Z6F",
@@ -1284,7 +1284,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-19T14:30:29.096+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Berky",
           group: "nakdPuAv53ezjcthr",
@@ -1295,7 +1295,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-19T14:30:33.593+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Nikkie",
           group: "nakdPuAv53ezjcthr",
@@ -1306,7 +1306,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-19T14:30:36.697+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Maryjo",
           group: "nakdPuAv53ezjcthr",
@@ -3322,7 +3322,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-09T23:04:08.595+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Misti",
           group: "F9aByF9suBzKEw5Wp",
@@ -3363,7 +3363,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-09T23:08:23.316+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Lemmy",
           group: "F9aByF9suBzKEw5Wp",
@@ -4023,7 +4023,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-25T22:33:02.453+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Aimee",
           group: "xRu2dnHG97ABFErJo",
@@ -4098,7 +4098,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-20T09:16:40.254+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Gerhardine",
           group: "xRu2dnHG97ABFErJo",
@@ -4109,7 +4109,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-20T09:16:49.437+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Dory",
           group: "MzGp4ZDxcS2uobGcv",
@@ -4435,7 +4435,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-30T13:07:33.731+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Phylys",
           group: "oAKa3Es5T8piWAENg",
@@ -4446,7 +4446,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-30T13:07:57.565+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Jennilee",
           group: "oAKa3Es5T8piWAENg",
@@ -4457,7 +4457,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-03T09:00:21.523+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Ingemar",
           group: "xRu2dnHG97ABFErJo",
@@ -4490,7 +4490,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T20:49:19.762+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Cloris",
           group: "xRu2dnHG97ABFErJo",
@@ -4501,7 +4501,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T20:49:25.106+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Obadiah",
           group: "MzGp4ZDxcS2uobGcv",
@@ -4698,7 +4698,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-06T14:52:58.448+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Kelbee",
           group: "6rSMTsSmXAj9rdPF6",
@@ -4709,7 +4709,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-06T14:58:45.934+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Alexandra",
           group: "MzGp4ZDxcS2uobGcv",
@@ -4720,7 +4720,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-06T17:37:47.683+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Lilllie",
           group: "6rSMTsSmXAj9rdPF6",
@@ -6468,7 +6468,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-16T09:28:00.884+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Jo-anne",
           group: "yJBGGe8K4Pb9ZLEoX",
@@ -6632,7 +6632,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-25T22:30:21.219+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Findlay",
           group: "xRu2dnHG97ABFErJo",
@@ -6643,7 +6643,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-29T14:51:02.105+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Leigh",
           group: "sSj2doBt5yTTAQEnD",
@@ -6674,7 +6674,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-22T13:29:48.036+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Ignacio",
           group: "Qxdoq84bqbwG3qvZk",
@@ -6685,7 +6685,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-22T13:29:53.299+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Florenza",
           group: "Qxdoq84bqbwG3qvZk",
@@ -6696,7 +6696,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-22T13:30:01.917+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Wyn",
           group: "sSj2doBt5yTTAQEnD",
@@ -6707,7 +6707,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-22T13:30:05.486+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Avril",
           group: "xRu2dnHG97ABFErJo",
@@ -6718,7 +6718,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-22T13:30:12.199+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Sallee",
           group: "MzGp4ZDxcS2uobGcv",
@@ -6932,7 +6932,7 @@ export const courses: {
         dateTime: {
           $date: "2024-08-22T12:44:10.189+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Merle",
           group: "MzGp4ZDxcS2uobGcv",
@@ -6943,7 +6943,7 @@ export const courses: {
         dateTime: {
           $date: "2024-08-22T12:44:21.175+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Alard",
           group: "MzGp4ZDxcS2uobGcv",
@@ -6954,7 +6954,7 @@ export const courses: {
         dateTime: {
           $date: "2024-08-22T12:44:28.271+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Rem",
           group: "MzGp4ZDxcS2uobGcv",
@@ -6965,7 +6965,7 @@ export const courses: {
         dateTime: {
           $date: "2024-08-22T12:45:42.041+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Marleah",
           group: "MzGp4ZDxcS2uobGcv",
@@ -6976,7 +6976,7 @@ export const courses: {
         dateTime: {
           $date: "2024-08-22T12:46:00.228+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Dean",
           group: "MzGp4ZDxcS2uobGcv",
@@ -7010,7 +7010,7 @@ export const courses: {
         dateTime: {
           $date: "2024-08-22T12:51:06.800+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Georgianne",
           group: "MzGp4ZDxcS2uobGcv",
@@ -7748,7 +7748,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-16T09:22:12.421+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Gertruda",
           group: "yJBGGe8K4Pb9ZLEoX",
@@ -7759,7 +7759,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-20T10:11:43.634+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Dagny",
           group: "yJBGGe8K4Pb9ZLEoX",
@@ -7770,7 +7770,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-20T10:11:46.976+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Hynda",
           group: "MzGp4ZDxcS2uobGcv",
@@ -8599,7 +8599,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-26T07:25:38.212+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Pansy",
           group: "3rLCvz8TFLCwwcreF",
@@ -8632,7 +8632,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-26T07:30:01.782+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Jenifer",
           group: "MzGp4ZDxcS2uobGcv",
@@ -8703,7 +8703,7 @@ export const courses: {
         dateTime: {
           $date: "2024-08-26T10:24:07.096+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Gal",
           group: "MzGp4ZDxcS2uobGcv",
@@ -8714,7 +8714,7 @@ export const courses: {
         dateTime: {
           $date: "2024-08-26T10:24:15.377+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Moises",
           group: "MzGp4ZDxcS2uobGcv",
@@ -8755,7 +8755,7 @@ export const courses: {
         dateTime: {
           $date: "2024-08-30T17:37:41.206+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Tomasine",
           group: "3rLCvz8TFLCwwcreF",
@@ -9043,7 +9043,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-11T17:33:01.113+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Odell",
           group: "MzGp4ZDxcS2uobGcv",
@@ -9077,7 +9077,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-11T17:46:12.653+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Eliot",
           group: "MzGp4ZDxcS2uobGcv",
@@ -9407,7 +9407,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-24T07:56:16.025+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Burgess",
           group: "F9aByF9suBzKEw5Wp",
@@ -16076,7 +16076,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-06T15:20:20.545+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Mariellen",
           group: "yJBGGe8K4Pb9ZLEoX",
@@ -16087,7 +16087,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-06T15:20:26.095+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Anton",
           group: "MzGp4ZDxcS2uobGcv",
@@ -18381,7 +18381,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-20T09:19:38.012+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Sumner",
           group: "SErB6i2hv8SaWmxF6",
@@ -18392,7 +18392,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-20T09:19:43.998+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Gawain",
           group: "MzGp4ZDxcS2uobGcv",
@@ -20486,7 +20486,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-12T12:30:00.372+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Isac",
           group: "MzGp4ZDxcS2uobGcv",
@@ -20519,7 +20519,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-25T22:31:42.060+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Cullen",
           group: "MzGp4ZDxcS2uobGcv",
@@ -20809,7 +20809,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-25T22:33:49.420+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Constantia",
           group: "xRu2dnHG97ABFErJo",
@@ -20820,7 +20820,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-29T14:49:09.121+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Aldridge",
           group: "sSj2doBt5yTTAQEnD",
@@ -20831,7 +20831,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-21T07:18:33.790+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Nance",
           group: "yJBGGe8K4Pb9ZLEoX",
@@ -20842,7 +20842,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-30T07:46:00.073+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Coraline",
           group: "SErB6i2hv8SaWmxF6",
@@ -20980,7 +20980,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T12:19:07.065+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Jaye",
           group: "xRu2dnHG97ABFErJo",
@@ -20991,7 +20991,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T12:19:09.518+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Prentiss",
           group: "MzGp4ZDxcS2uobGcv",
@@ -21002,7 +21002,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T12:19:37.135+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Laural",
           group: "sSj2doBt5yTTAQEnD",
@@ -22075,7 +22075,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-25T22:32:36.224+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Maryl",
           group: "xRu2dnHG97ABFErJo",
@@ -22131,7 +22131,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T20:49:40.948+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Alair",
           group: "xRu2dnHG97ABFErJo",
@@ -22142,7 +22142,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T20:49:45.194+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Vincenz",
           group: "MzGp4ZDxcS2uobGcv",
@@ -22664,7 +22664,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-14T13:14:38.799+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Marijn",
           group: "SErB6i2hv8SaWmxF6",
@@ -22675,7 +22675,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-20T09:51:09.082+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Wolfie",
           group: "SErB6i2hv8SaWmxF6",
@@ -22686,7 +22686,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-24T07:54:47.957+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Norby",
           group: "SErB6i2hv8SaWmxF6",
@@ -22697,7 +22697,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T10:01:56.772+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Faye",
           group: "SErB6i2hv8SaWmxF6",
@@ -22708,7 +22708,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T10:02:07.705+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Rudolph",
           group: "F9aByF9suBzKEw5Wp",
@@ -25359,7 +25359,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-11T17:24:27.005+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Martica",
           group: "MzGp4ZDxcS2uobGcv",
@@ -25647,7 +25647,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-11T17:46:36.302+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Gregor",
           group: "MzGp4ZDxcS2uobGcv",
@@ -26407,7 +26407,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-12T19:00:13.267+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Karney",
           group: "ZDAARaoF27eQmDaBZ",
@@ -26661,7 +26661,7 @@ export const courses: {
         dateTime: {
           $date: "2024-04-18T19:49:45.676+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Rea",
           group: "ZDAARaoF27eQmDaBZ",
@@ -26694,7 +26694,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-11T14:00:55.959+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Deidre",
           group: "ZjdbyN3iRCyQTDmTG",
@@ -26705,7 +26705,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-11T14:06:08.543+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Wallis",
           group: "ZjdbyN3iRCyQTDmTG",
@@ -26716,7 +26716,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-11T14:26:26.662+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Inglebert",
           group: "ZjdbyN3iRCyQTDmTG",
@@ -26727,7 +26727,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-11T14:26:46.623+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Eberhard",
           group: "ZjdbyN3iRCyQTDmTG",
@@ -26738,7 +26738,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-11T14:26:59.298+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Alida",
           group: "MzGp4ZDxcS2uobGcv",
@@ -30913,7 +30913,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-14T13:34:11.616+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Judye",
           group: "SErB6i2hv8SaWmxF6",
@@ -30924,7 +30924,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-20T09:50:40.100+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Zahara",
           group: "SErB6i2hv8SaWmxF6",
@@ -31204,7 +31204,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-11T14:27:26.294+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Pammie",
           group: "42bNNenBx2Jbobm9r",
@@ -31215,7 +31215,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-11T14:27:29.806+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Cullen",
           group: "42bNNenBx2Jbobm9r",
@@ -31226,7 +31226,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-11T14:27:35.098+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Bertie",
           group: "MzGp4ZDxcS2uobGcv",
@@ -32820,7 +32820,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-02T10:59:49.446+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Reinaldo",
           group: "MzGp4ZDxcS2uobGcv",
@@ -32831,7 +32831,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-20T09:21:33.925+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Nessi",
           group: "MzGp4ZDxcS2uobGcv",
@@ -36111,7 +36111,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T07:53:48.661+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Perri",
           group: "MzGp4ZDxcS2uobGcv",
@@ -36214,7 +36214,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T08:41:49.243+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Julina",
           group: "MzGp4ZDxcS2uobGcv",
@@ -36557,7 +36557,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T08:42:22.871+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Yolanda",
           group: "MzGp4ZDxcS2uobGcv",
@@ -36568,7 +36568,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T08:42:36.391+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Barb",
           group: "MzGp4ZDxcS2uobGcv",
@@ -37377,7 +37377,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-06T15:00:09.310+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Ranee",
           group: "MzGp4ZDxcS2uobGcv",
@@ -37388,7 +37388,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-06T15:00:25.939+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Alida",
           group: "MzGp4ZDxcS2uobGcv",
@@ -37408,7 +37408,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-06T15:44:50.573+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Dov",
           group: "MzGp4ZDxcS2uobGcv",
@@ -37419,7 +37419,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-07T06:53:42.793+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Erasmus",
           group: "sSj2doBt5yTTAQEnD",
@@ -37430,7 +37430,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-07T06:55:42.251+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Misha",
           group: "MzGp4ZDxcS2uobGcv",
@@ -37441,7 +37441,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-07T10:09:53.855+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Welch",
           group: "sSj2doBt5yTTAQEnD",
@@ -38899,7 +38899,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-14T12:21:33.457+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Aldridge",
           group: "yJBGGe8K4Pb9ZLEoX",
@@ -40751,7 +40751,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-24T07:56:19.554+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Hasty",
           group: "SErB6i2hv8SaWmxF6",
@@ -40793,7 +40793,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-27T07:22:55.376+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Giavani",
           group: "SErB6i2hv8SaWmxF6",
@@ -43708,7 +43708,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-17T14:51:00.990+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Leoine",
           group: "42bNNenBx2Jbobm9r",
@@ -43719,7 +43719,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-17T14:51:30.960+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Tammie",
           group: "42bNNenBx2Jbobm9r",
@@ -43730,7 +43730,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-17T14:51:42.104+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Elvis",
           group: "MzGp4ZDxcS2uobGcv",
@@ -47336,7 +47336,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T07:43:59.576+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Dean",
           group: "MzGp4ZDxcS2uobGcv",
@@ -47369,7 +47369,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T07:48:07.506+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Alexandros",
           group: "MzGp4ZDxcS2uobGcv",
@@ -47412,7 +47412,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T07:57:11.172+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Felicle",
           group: "MzGp4ZDxcS2uobGcv",
@@ -47446,7 +47446,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-01T20:16:28.211+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Frasier",
           group: "MzGp4ZDxcS2uobGcv",
@@ -48694,7 +48694,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-21T07:23:46.080+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Tremaine",
           group: "yJBGGe8K4Pb9ZLEoX",
@@ -48705,7 +48705,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-28T09:58:01.141+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Nealson",
           group: "yJBGGe8K4Pb9ZLEoX",
@@ -48716,7 +48716,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-28T09:58:07.357+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Cob",
           group: "MzGp4ZDxcS2uobGcv",
@@ -52003,7 +52003,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-04T11:18:29.635+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Wiatt",
           group: "ZjdbyN3iRCyQTDmTG",
@@ -52014,7 +52014,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-04T11:18:37.324+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Adelbert",
           group: "ZjdbyN3iRCyQTDmTG",
@@ -53472,7 +53472,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-21T13:29:48.929+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Mill",
           group: "MzGp4ZDxcS2uobGcv",
@@ -53483,7 +53483,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-21T14:46:30.543+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Alexandros",
           group: "yJBGGe8K4Pb9ZLEoX",
@@ -53513,7 +53513,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-28T09:54:49.186+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Hanny",
           group: "MzGp4ZDxcS2uobGcv",
@@ -53524,7 +53524,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-28T09:56:23.880+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Nanette",
           group: "yJBGGe8K4Pb9ZLEoX",
@@ -53535,7 +53535,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-28T09:56:33.383+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Lavinie",
           group: "MzGp4ZDxcS2uobGcv",
@@ -54414,7 +54414,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-22T13:25:10.968+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Rurik",
           group: "yJBGGe8K4Pb9ZLEoX",
@@ -54425,7 +54425,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-28T09:57:14.588+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Royall",
           group: "yJBGGe8K4Pb9ZLEoX",
@@ -54436,7 +54436,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-28T09:57:22.770+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Carlee",
           group: "MzGp4ZDxcS2uobGcv",
@@ -56922,7 +56922,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-27T07:36:04.781+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Alyse",
           group: "42bNNenBx2Jbobm9r",
@@ -56933,7 +56933,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-27T07:36:08.710+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Stevana",
           group: "42bNNenBx2Jbobm9r",
@@ -56944,7 +56944,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-27T07:36:14.338+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Dean",
           group: "MzGp4ZDxcS2uobGcv",
@@ -59752,7 +59752,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-27T08:21:38.143+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Auberta",
           group: "5MiKEfwC8fyQLuPkp",
@@ -59763,7 +59763,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-27T08:21:41.909+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Alice",
           group: "5MiKEfwC8fyQLuPkp",
@@ -59774,7 +59774,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-27T08:21:45.743+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Chadd",
           group: "MzGp4ZDxcS2uobGcv",
@@ -63815,7 +63815,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T11:29:53.854+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Lauri",
           group: "MzGp4ZDxcS2uobGcv",
@@ -63871,7 +63871,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T14:01:47.545+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Myranda",
           group: "MzGp4ZDxcS2uobGcv",
@@ -69079,7 +69079,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-29T09:57:43.701+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Berkie",
           group: "rscJDvWpSdoFNecXJ",
@@ -69090,7 +69090,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-29T09:57:47.780+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Moreen",
           group: "rscJDvWpSdoFNecXJ",
@@ -69101,7 +69101,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-29T09:57:54.745+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Daniela",
           group: "MzGp4ZDxcS2uobGcv",
@@ -69557,7 +69557,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-29T10:10:35.533+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Agnesse",
           group: "MzGp4ZDxcS2uobGcv",
@@ -69568,7 +69568,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-29T10:10:45.184+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Evered",
           group: "MzGp4ZDxcS2uobGcv",
@@ -69579,7 +69579,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-29T10:10:48.988+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Selia",
           group: "MzGp4ZDxcS2uobGcv",
@@ -69590,7 +69590,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-29T10:10:54.229+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Etti",
           group: "sSj2doBt5yTTAQEnD",
@@ -69601,7 +69601,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-29T10:10:57.910+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Barb",
           group: "sSj2doBt5yTTAQEnD",
@@ -69612,7 +69612,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-29T11:57:19.863+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Siward",
           group: "MzGp4ZDxcS2uobGcv",
@@ -69623,7 +69623,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T13:43:30.896+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Shayne",
           group: "42bNNenBx2Jbobm9r",
@@ -69634,7 +69634,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T13:43:39.373+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Lavinie",
           group: "42bNNenBx2Jbobm9r",
@@ -69645,7 +69645,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T13:43:43.501+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Udell",
           group: "MzGp4ZDxcS2uobGcv",
@@ -69656,7 +69656,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T13:43:46.607+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Faustine",
           group: "MzGp4ZDxcS2uobGcv",
@@ -70084,7 +70084,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T10:56:41.191+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Ralph",
           group: "xRu2dnHG97ABFErJo",
@@ -70095,7 +70095,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T10:56:57.352+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Faye",
           group: "xRu2dnHG97ABFErJo",
@@ -70106,7 +70106,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T10:57:04.700+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Joshuah",
           group: "MzGp4ZDxcS2uobGcv",
@@ -70117,7 +70117,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T10:57:12.344+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Aprilette",
           group: "MzGp4ZDxcS2uobGcv",
@@ -70504,7 +70504,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-30T06:49:29.588+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Norby",
           group: "5MiKEfwC8fyQLuPkp",
@@ -70515,7 +70515,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-30T06:49:35.090+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Dana",
           group: "5MiKEfwC8fyQLuPkp",
@@ -70526,7 +70526,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-30T06:49:41.833+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Margeaux",
           group: "MzGp4ZDxcS2uobGcv",
@@ -72209,7 +72209,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T18:35:15.152+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Sibby",
           group: "xRu2dnHG97ABFErJo",
@@ -72292,7 +72292,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-04T07:22:15.038+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Daryn",
           group: "MzGp4ZDxcS2uobGcv",
@@ -72303,7 +72303,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-04T08:31:38.961+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Tremaine",
           group: "xRu2dnHG97ABFErJo",
@@ -75437,7 +75437,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T13:48:00.989+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Robby",
           group: "42bNNenBx2Jbobm9r",
@@ -75448,7 +75448,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T13:48:04.431+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Emery",
           group: "42bNNenBx2Jbobm9r",
@@ -75459,7 +75459,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T13:48:08.216+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Lisha",
           group: "MzGp4ZDxcS2uobGcv",
@@ -75470,7 +75470,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T13:48:11.322+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Denna",
           group: "MzGp4ZDxcS2uobGcv",
@@ -76599,7 +76599,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T12:27:30.686+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Tiffani",
           group: "QeppkGZxMmihjbhZf",
@@ -76610,7 +76610,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T12:27:35.817+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Ingemar",
           group: "QeppkGZxMmihjbhZf",
@@ -76621,7 +76621,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T12:27:43.899+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Daniela",
           group: "MzGp4ZDxcS2uobGcv",
@@ -76632,7 +76632,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T12:27:47.295+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Lisha",
           group: "MzGp4ZDxcS2uobGcv",
@@ -77803,7 +77803,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T13:44:35.269+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Kenyon",
           group: "42bNNenBx2Jbobm9r",
@@ -77814,7 +77814,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T13:44:38.742+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Kalle",
           group: "42bNNenBx2Jbobm9r",
@@ -77825,7 +77825,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T13:44:42.136+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Robbie",
           group: "MzGp4ZDxcS2uobGcv",
@@ -77836,7 +77836,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T13:44:45.953+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Eduard",
           group: "MzGp4ZDxcS2uobGcv",
@@ -77847,7 +77847,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T13:45:24.348+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Aprilette",
           group: "MzGp4ZDxcS2uobGcv",
@@ -77858,7 +77858,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T13:45:28.254+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Roberto",
           group: "MzGp4ZDxcS2uobGcv",
@@ -77869,7 +77869,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T13:45:32.090+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Shantee",
           group: "42bNNenBx2Jbobm9r",
@@ -77880,7 +77880,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T13:45:35.329+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Elvis",
           group: "42bNNenBx2Jbobm9r",
@@ -77931,7 +77931,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-10T22:38:48.563+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Bride",
           group: "xRu2dnHG97ABFErJo",
@@ -77942,7 +77942,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-10T22:38:52.102+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Tiphani",
           group: "xRu2dnHG97ABFErJo",
@@ -77953,7 +77953,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-10T22:38:58.736+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Bev",
           group: "MzGp4ZDxcS2uobGcv",
@@ -77964,7 +77964,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-10T22:39:10.995+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Brent",
           group: "buwCFod8Qsnin9c5o",
@@ -79741,7 +79741,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T13:32:30.270+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Elvis",
           group: "sSj2doBt5yTTAQEnD",
@@ -79752,7 +79752,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T13:32:42.896+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Cletus",
           group: "MzGp4ZDxcS2uobGcv",
@@ -79790,7 +79790,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-03T15:21:06.227+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Giavani",
           group: "sSj2doBt5yTTAQEnD",
@@ -80110,7 +80110,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T14:01:52.881+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Ken",
           group: "nakdPuAv53ezjcthr",
@@ -80121,7 +80121,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T14:01:56.290+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Darda",
           group: "nakdPuAv53ezjcthr",
@@ -80132,7 +80132,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T14:02:04.657+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Sayers",
           group: "MzGp4ZDxcS2uobGcv",
@@ -80143,7 +80143,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T14:02:07.758+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Yolanda",
           group: "MzGp4ZDxcS2uobGcv",
@@ -81461,7 +81461,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-20T13:51:06.908+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Riki",
           group: "MzGp4ZDxcS2uobGcv",
@@ -81472,7 +81472,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-24T13:20:26.777+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Gerhardine",
           group: "MzGp4ZDxcS2uobGcv",
@@ -85913,7 +85913,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T18:31:23.443+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Laural",
           group: "xRu2dnHG97ABFErJo",
@@ -85987,7 +85987,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-01T20:16:43.820+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Emelyne",
           group: "xRu2dnHG97ABFErJo",
@@ -85998,7 +85998,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-01T20:16:48.408+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Adelbert",
           group: "MzGp4ZDxcS2uobGcv",
@@ -86359,7 +86359,7 @@ export const courses: {
         dateTime: {
           $date: "2024-05-31T18:24:24.356+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Adella",
           group: "xRu2dnHG97ABFErJo",
@@ -86392,7 +86392,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-01T20:16:57.722+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Tori",
           group: "xRu2dnHG97ABFErJo",
@@ -86403,7 +86403,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-01T20:17:04.222+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Nanette",
           group: "MzGp4ZDxcS2uobGcv",
@@ -89250,7 +89250,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-03T13:35:24.779+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Erhart",
           group: "MzGp4ZDxcS2uobGcv",
@@ -89315,7 +89315,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-03T13:55:25.194+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Odell",
           group: "MzGp4ZDxcS2uobGcv",
@@ -89754,7 +89754,7 @@ export const courses: {
         dateTime: {
           $date: "2024-09-10T12:24:58.030+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Erasmus",
           group: "buwCFod8Qsnin9c5o",
@@ -90052,7 +90052,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-13T20:16:22.475+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Even",
           group: "buwCFod8Qsnin9c5o",
@@ -90480,7 +90480,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-14T17:05:29.385+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Levon",
           group: "buwCFod8Qsnin9c5o",
@@ -90500,7 +90500,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-25T06:52:51.418+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Conni",
           group: "ZjdbyN3iRCyQTDmTG",
@@ -90511,7 +90511,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-25T06:52:55.281+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Allene",
           group: "ZjdbyN3iRCyQTDmTG",
@@ -90522,7 +90522,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-25T06:53:00.775+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Nessi",
           group: "MzGp4ZDxcS2uobGcv",
@@ -90748,7 +90748,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-24T13:19:01.030+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Darrick",
           group: "buwCFod8Qsnin9c5o",
@@ -91025,7 +91025,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-25T08:29:43.427+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Helge",
           group: "buwCFod8Qsnin9c5o",
@@ -91054,7 +91054,7 @@ export const courses: {
         dateTime: {
           $date: "2024-07-11T16:00:44.859+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Collette",
           group: "Sg5Z59P5WBku5SsmB",
@@ -91170,7 +91170,7 @@ export const courses: {
         dateTime: {
           $date: "2024-09-09T07:06:43.698+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Wallie",
           group: "Sg5Z59P5WBku5SsmB",
@@ -91501,7 +91501,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-27T23:07:59.828+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Chiarra",
           group: "buwCFod8Qsnin9c5o",
@@ -91512,7 +91512,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-27T23:08:27.308+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Lexie",
           group: "MzGp4ZDxcS2uobGcv",
@@ -91523,7 +91523,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-27T23:08:35.022+0000",
         },
-        type: "groupOrga",
+        type: "organizationTeam",
         data: {
           user: "Cloris",
           group: "MzGp4ZDxcS2uobGcv",
@@ -92025,7 +92025,7 @@ export const courses: {
         dateTime: {
           $date: "2024-06-28T08:17:40.607+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Cary",
           group: "buwCFod8Qsnin9c5o",
@@ -92504,7 +92504,7 @@ export const courses: {
         dateTime: {
           $date: "2024-07-03T12:12:39.003+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Mariya",
           group: "buwCFod8Qsnin9c5o",
@@ -92803,7 +92803,7 @@ export const courses: {
         dateTime: {
           $date: "2024-07-04T10:42:00.119+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Eldon",
           group: "buwCFod8Qsnin9c5o",
@@ -93072,7 +93072,7 @@ export const courses: {
         dateTime: {
           $date: "2024-07-04T10:42:22.181+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Caitlin",
           group: "buwCFod8Qsnin9c5o",
@@ -93401,7 +93401,7 @@ export const courses: {
         dateTime: {
           $date: "2024-07-07T17:21:54.928+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Garrick",
           group: "buwCFod8Qsnin9c5o",
@@ -93839,7 +93839,7 @@ export const courses: {
         dateTime: {
           $date: "2024-07-07T17:22:24.024+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Leland",
           group: "buwCFod8Qsnin9c5o",
@@ -94191,7 +94191,7 @@ export const courses: {
         dateTime: {
           $date: "2024-07-14T20:45:59.480+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Margeaux",
           group: "buwCFod8Qsnin9c5o",
@@ -94307,7 +94307,7 @@ export const courses: {
         dateTime: {
           $date: "2024-07-14T20:45:54.033+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Wylma",
           group: "buwCFod8Qsnin9c5o",
@@ -94696,7 +94696,7 @@ export const courses: {
         dateTime: {
           $date: "2024-09-10T12:24:45.631+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Curt",
           group: "buwCFod8Qsnin9c5o",
@@ -95588,7 +95588,7 @@ export const courses: {
         dateTime: {
           $date: "2024-09-10T12:27:01.417+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Veronike",
           group: "buwCFod8Qsnin9c5o",
@@ -96210,7 +96210,7 @@ export const courses: {
         dateTime: {
           $date: "2024-09-10T12:24:14.497+0000",
         },
-        type: "groupPromote",
+        type: "organizationPromote",
         data: {
           user: "Lauri",
           group: "buwCFod8Qsnin9c5o",

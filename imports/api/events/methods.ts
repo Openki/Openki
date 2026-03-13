@@ -10,7 +10,7 @@ import * as courseHistoryDenormalizer from "/imports/api/courses/historyDenormal
 import * as courseTimeLastEditDenormalizer from "/imports/api/courses/timeLastEditDenormalizer";
 import * as courseImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
 import * as categoriesDenormalizer from "/imports/api/events/categoriesDenormalizer";
-import * as organizationsDenormalizer from "./organizationsDenormalizer";
+import * as organizationsAndEditorsDenormalizer from "./organizationsAndEditorsDenormalizer";
 import * as venueDenormalizer from "/imports/api/events/venueDenormalizer";
 import * as courseNextEventDenormalizer from "/imports/api/courses/nextEventDenormalizer";
 import * as regionsCountDenormalizer from "/imports/api/regions/countDenormalizer";
@@ -343,7 +343,7 @@ export const save = ServerMethod(
     let affectedReplicas: string[] = [];
     if (isNew) {
       editFields.createdBy = user._id;
-      editFields.groupOrganizers = [];
+      editFields.teamOrganizations = [];
       let enrichedEvent = await courseImageDenormalizer.beforeInsert(editFields as any);
       if (enrichedEvent.courseId) {
         enrichedEvent = await categoriesDenormalizer.beforeInsert(enrichedEvent);
@@ -394,7 +394,7 @@ export const save = ServerMethod(
     }
 
     await venueDenormalizer.updateVenue(eventId);
-    await organizationsDenormalizer.updateOrganizations(eventId);
+    await organizationsAndEditorsDenormalizer.updateOrganizationsAndEditors(eventId);
     await regionsCountDenormalizer.updateCounters(event.region);
     // the assumption is that all replicas have the same course if any
     if (event.courseId) {
@@ -467,13 +467,13 @@ export const promote = ServerMethod(
       organizationId,
       enable,
     );
-    await organizationsDenormalizer.updateOrganizations(eventId);
+    await organizationsAndEditorsDenormalizer.updateOrganizationsAndEditors(eventId);
   },
   { simulation: false },
 );
 
 /**
- * Add or remove a organization from the groupOrganizers list
+ * Add or remove a organization from the teamOrganizations list
  *
  * @param eventId The event to update
  * @param organizationId The organization to add or remove
@@ -488,7 +488,7 @@ export const editing = ServerMethod(
       organizationId,
       enable,
     );
-    await organizationsDenormalizer.updateOrganizations(eventId);
+    await organizationsAndEditorsDenormalizer.updateOrganizationsAndEditors(eventId);
   },
   { simulation: false },
 );

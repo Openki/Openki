@@ -16,7 +16,7 @@ function short(organization: OrganizationModel | undefined) {
 export interface Props {
   organizationId: string;
   full?: boolean;
-  isOrganizer?: boolean;
+  isTeam?: boolean;
   onClick?: () => Promise<void>;
   onMouseOver?: () => Promise<void>;
   onMouseOut?: () => Promise<void>;
@@ -25,7 +25,7 @@ export interface Props {
 export function OrganizationTag({
   organizationId,
   full,
-  isOrganizer,
+  isTeam,
   onMouseOver,
   onMouseOut,
   onClick,
@@ -36,7 +36,7 @@ export function OrganizationTag({
   return (
     <div
       data-test={`group-tag-${organizationId}`}
-      className={`tag tag-link group-tag ${isOrganizer ? "group-tag-is-organizer" : ""}`}
+      className={`tag tag-link group-tag ${isTeam ? "group-tag-is-team" : ""}`}
     >
       {isLoading() ? (
         <span className="placeholder" style={{ width: full ? "100px" : "40px" }}></span>

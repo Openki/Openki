@@ -68,7 +68,7 @@ function Descriptions() {
       </td>
       <td className="description">&nbsp;</td>
       <td className="description">
-        {t("region.stats.courses.enrollments.description", "interested or any role, incl. creater")}
+        {t("region.stats.courses.enrollments.description", "interested or any role, incl. creator")}
       </td>
       <td className="description">
         {t("region.stats.courses.users.description", "unique accounts enrolled")}

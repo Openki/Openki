@@ -40,7 +40,7 @@ export function EventRegistration({ event }: Props) {
   const { promptToLogin } = useAccountTasks();
 
   const [organizationsIsLoading, organizations] = useOrganizationsFindFilter({
-    ids: event.allOrganizationOrganizers(),
+    ids: event.allTeamOrganizations(),
   });
 
   async function addParticipant(companions = 0) {

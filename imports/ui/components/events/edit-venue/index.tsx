@@ -35,8 +35,8 @@ export function EditVenue({ region: regionId, event, value, onChange, errors }: 
 
   const [isCourseLoading, course] = useCourseDetails({ when: !!event?.courseId }, event?.courseId);
   const [organizationsIsLoading, organizations] = useOrganizationsFindFilter(
-    { when: !!course?.groupOrganizers },
-    { ids: course?.groupOrganizers },
+    { when: !!course?.teamOrganizations },
+    { ids: course?.teamOrganizations },
   );
 
   if (isCourseLoading() || organizationsIsLoading()) {

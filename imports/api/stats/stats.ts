@@ -17,7 +17,7 @@ export interface Stat {
     /** only passed events */
     resting: number;
     archived: number;
-    /** interested or any role, incl. creater */
+    /** interested or any role, incl. creator */
     enrollments: number;
     /** unique accounts enrolled */
     users: number;

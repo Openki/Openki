@@ -8,8 +8,8 @@ import { useDetails as useRegionDetails } from "/imports/api/regions/publication
 import { OrganizationTag } from "../../../organizations/tag";
 import { Add } from "./Add";
 import { Remove } from "./Remove";
-import { RemoveOrganizer } from "./RemoveOrganizer";
-import { MakeOrganizer } from "./MakeOrganizer";
+import { RemoveTeam } from "./RemoveTeam";
+import { MakeTeam } from "./MakeTeam";
 
 export interface Props {
   course: CourseModel;
@@ -31,10 +31,10 @@ export function OrganizationList({ course }: Props) {
         )}
         {course.editableBy(user) && (
           <li className="dialog-dropdown-btn">
-            {course.groupOrganizers.includes(organizationId) ? (
-              <RemoveOrganizer course={course} organizationId={organizationId} />
+            {course.teamOrganizations.includes(organizationId) ? (
+              <RemoveTeam course={course} organizationId={organizationId} />
             ) : (
-              <MakeOrganizer course={course} organizationId={organizationId} />
+              <MakeTeam course={course} organizationId={organizationId} />
             )}
           </li>
         )}
@@ -49,7 +49,7 @@ export function OrganizationList({ course }: Props) {
       !(
         // hide organization where are from the region set
         (
-          region?.defaultTeamGroups?.includes(organizationId) &&
+          region?.defaultTeamOrganizations?.includes(organizationId) &&
           // when user ist not member of the organization or a admin
           !user?.mayPromoteWith(organizationId) &&
           !course.editableBy(user)
@@ -60,11 +60,11 @@ export function OrganizationList({ course }: Props) {
   return (
     <div className="tag-group multiline">
       {organizations.map((organizationId) => {
-        const isOrganizer = course.groupOrganizers.includes(organizationId);
+        const isTeam = course.teamOrganizations.includes(organizationId);
         return (
           <React.Fragment key={organizationId}>
-            <OrganizationTag organizationId={organizationId} isOrganizer={isOrganizer} />
-            {isOrganizer && (
+            <OrganizationTag organizationId={organizationId} isTeam={isTeam} />
+            {isTeam && (
               <div className="tag group-tag addon">
                 <i
                   className="fa-solid fa-bullhorn fa-fw"

@@ -8,8 +8,8 @@ import { useDetails as useRegionDetails } from "/imports/api/regions/publication
 import { OrganizationTag } from "../../../organizations/tag";
 import { Add } from "./Add";
 import { Remove } from "./Remove";
-import { RemoveOrganizer } from "./RemoveOrganizer";
-import { MakeOrganizer } from "./MakeOrganizer";
+import { RemoveTeam } from "./RemoveTeam";
+import { MakeTeam } from "./MakeTeam";
 
 export interface Props {
   event: EventModel;
@@ -34,10 +34,10 @@ export function OrganizationList({ event }: Props) {
         )}
         {ownOrganization && event.editableBy(user) && (
           <li className="dialog-dropdown-btn">
-            {event.groupOrganizers.includes(organizationId) ? (
-              <RemoveOrganizer event={event} organizationId={organizationId} />
+            {event.teamOrganizations.includes(organizationId) ? (
+              <RemoveTeam event={event} organizationId={organizationId} />
             ) : (
-              <MakeOrganizer event={event} organizationId={organizationId} />
+              <MakeTeam event={event} organizationId={organizationId} />
             )}
           </li>
         )}
@@ -52,7 +52,7 @@ export function OrganizationList({ event }: Props) {
       !(
         // hide organization where are from the region set
         (
-          region?.defaultTeamGroups?.includes(organizationId) &&
+          region?.defaultTeamOrganizations?.includes(organizationId) &&
           // when user ist not member of the organization or a admin
           !user?.mayPromoteWith(organizationId) &&
           !event.editableBy(user)
@@ -63,13 +63,13 @@ export function OrganizationList({ event }: Props) {
   return (
     <div className="tag-group multiline">
       {organizations?.map((organizationId) => {
-        const isOrganizer = event.editors.includes(organizationId);
+        const isTeam = event.editors.includes(organizationId);
         // Organization may be adopted from the course, these cannot be removed
         const ownOrganization = event.groups.includes(organizationId);
         return (
           <React.Fragment key={organizationId}>
-            <OrganizationTag organizationId={organizationId} isOrganizer={isOrganizer} />
-            {isOrganizer && (
+            <OrganizationTag organizationId={organizationId} isTeam={isTeam} />
+            {isTeam && (
               <div className="tag group-tag addon">
                 <i
                   className="fa-solid fa-bullhorn fa-fw"
