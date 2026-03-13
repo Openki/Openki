@@ -70,7 +70,7 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
   const mayEdit = organization.editableBy(user);
 
   function isFeatured() {
-    return !!region && !organization.isNew() && region.featuredGroup === organization._id;
+    return !!region && !organization.isNew() && region.featuredOrganization === organization._id;
   }
   function headerClasses() {
     const classes = [];

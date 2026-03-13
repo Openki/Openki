@@ -13,7 +13,7 @@ export function AdminFeatureOrganizationPage() {
   const [isBusy, setIsBusy] = useState(false);
   const currentRegion = useCurrentRegion();
   const [organizationToBeFeatured, setOrganizationToBeFeatured] = useState(
-    currentRegion?.featuredGroup || "",
+    currentRegion?.featuredOrganization || "",
   );
 
   const [isLoading, organizations] = Organizations.useFindFilter({}, undefined, undefined, [
@@ -21,7 +21,7 @@ export function AdminFeatureOrganizationPage() {
   ]);
 
   function featuredOrganization() {
-    const organizationId = currentRegion?.featuredGroup;
+    const organizationId = currentRegion?.featuredOrganization;
     if (!organizationId) {
       return undefined;
     }
@@ -35,7 +35,7 @@ export function AdminFeatureOrganizationPage() {
   return (
     <>
       {!!featuredOrganization() && (
-        <div className="admin-featured-group">
+        <div className="admin-featured-organization">
           <div className="mb-2">
             {t(
               "admin.featureOrganization.organizationIsFeatured",
