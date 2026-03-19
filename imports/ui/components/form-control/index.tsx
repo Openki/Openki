@@ -20,7 +20,7 @@ interface CommonProps {
    * A ReactNode appended as part of the control (e.g. a toggle button).
    * Strings beginning with "fa-" are treated as icons, similar to prepend.
    */
-  append?: ReactNode | undefined; 
+  append?: ReactNode | undefined;
   /**
    * shows "(optional)" in the label and
    * allow return values for number and integer to be empty
@@ -329,7 +329,7 @@ function getGroupClassNames(size: Size | undefined, hasErrorMessage: boolean) {
 export function FormControl<K extends string>(props: Props<K>) {
   const { t } = useTranslation();
 
-  const { id, size, label, prepend, append, optional, error } = props; 
+  const { id, size, label, prepend, append, optional, error } = props;
   const hasErrorMessage = typeof error !== "boolean" && !!error;
 
   // Create input using a factory
@@ -344,7 +344,8 @@ export function FormControl<K extends string>(props: Props<K>) {
     </>
   );
 
-  if (prepend || append) { // check prepend and append
+  if (prepend || append) {
+    // check prepend and append
     inputElement = (
       <div className={getGroupClassNames(size, hasErrorMessage).join(" ")}>
         {prepend && ( // only if prepend exist
@@ -357,11 +358,7 @@ export function FormControl<K extends string>(props: Props<K>) {
           </span>
         )}
         {inputElement}
-        {append && ( 
-          <span className="input-group-text p-0">
-            {append}
-          </span>
-        )}
+        {append && <span className="input-group-text p-0">{append}</span>}
       </div>
     );
   }
