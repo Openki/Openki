@@ -131,16 +131,16 @@ RouterAsync.route("calendar", {
   },
 });
 
-RouterAsync.route("exploreGroups", {
-  path: "/explore/groups",
-  template: "exploreGroupsPage",
+RouterAsync.route("exploreOrganizations", {
+  path: "/explore/organizations",
+  template: "exploreOrganizationsPage",
   async onRun() {
     await import("../../ui/pages/explore/organizations");
   },
 });
 
 RouterAsync.route("organizationDetails", {
-  path: "group/:_id/:short?",
+  path: "organization/:_id/:short?",
   template: "organizationDetailsPage",
   async onRun() {
     await import("../../ui/pages/organization-details");
@@ -964,7 +964,7 @@ RouterAsync.route("adminPanel", {
 });
 
 RouterAsync.route("featureOrganization", {
-  path: "admin/feature-group",
+  path: "admin/feature-organization",
   template: "adminFeatureOrganizationPage",
   async onRun() {
     await import("../../ui/pages/admin/feature-organization");

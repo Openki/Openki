@@ -39,7 +39,7 @@ export function MakeTeam({ course, organizationId }: Props) {
   }
 
   return (
-    <div className="group-tool-dialog add">
+    <div className="organization-tool-dialog add">
       {t(
         "course.organizationList.confirmOrgText",
         'Add members of the "{NAME}" organization as editors?',

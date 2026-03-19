@@ -39,7 +39,7 @@ export function RemoveTeam({ course, organizationId }: Props) {
   }
 
   return (
-    <div className="group-tool-dialog danger">
+    <div className="organization-tool-dialog danger">
       {t(
         "course.organizationList.removeTeam.confirmRemoveOrgText",
         'Revoke all editing rights from the "{NAME}" organization?',

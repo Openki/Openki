@@ -39,7 +39,7 @@ export function OrganizationsPage() {
           {organizations.map((organization) => (
             <div key={organization._id} className="col">
               <div
-                className="card card-group border-0 rounded-0 mx-auto"
+                className="card card-organization border-0 rounded-0 mx-auto"
                 style={bodyStyle(organization.publicLogoUrl())}
               >
                 <div className="card-body overflow-hidden">
@@ -66,4 +66,4 @@ export function OrganizationsPage() {
 
 import "./template.html";
 
-Template.registerHelper("ExploreGroupsPage", () => OrganizationsPage);
+Template.registerHelper("ExploreOrganizationsPage", () => OrganizationsPage);

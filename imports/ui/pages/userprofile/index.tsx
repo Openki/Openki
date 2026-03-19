@@ -337,7 +337,7 @@ export function UserprofilePage({ user }: Props) {
                             onClick={() => handleExpelFromOrganization(organization)}
                           ></button>
                           {t("profile.organization.member", "Member of organization")}
-                          <span className="group">{organization.name}</span>
+                          {organization.name}
                         </li>
                       ) : (
                         <button

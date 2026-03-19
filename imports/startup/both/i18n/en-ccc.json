@@ -860,7 +860,7 @@
   "profile.organization.expelled": "Expelled from tag {NAME}",
   "profile.organization.expelled.error": "Unable to expel user from tag",
   "profile.organization.member": "Member of tag",
-  "profile.organizationMembership": "You are {NUM_GROUPS, plural, =0{not member of any tag} one{member of the tag:} other{member of # tags:} }",
+  "profile.organizationMembership": "You are {NUM_ORGANIZATIONS, plural, =0{not member of any tag} one{member of the tag:} other{member of # tags:} }",
   "profile.organizations": "My tags",
   "profile.passwordChangeError": "Could not change your password",
   "profile.passwordChangedSuccess": "You have changed your password.",

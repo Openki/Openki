@@ -848,7 +848,7 @@
   "profile.organization.expelled": "Исключен из группы {NAME}",
   "profile.organization.expelled.error": "Невозможно исключить пользователя из группы",
   "profile.organization.member": "Участник группы",
-  "profile.organizationMembership": "Вы {NUM_GROUPS, plural, =0{не состоите ни в одной группе} one{участник группы:} other{участник # групп:} }",
+  "profile.organizationMembership": "Вы {NUM_ORGANIZATIONS, plural, =0{не состоите ни в одной группе} one{участник группы:} other{участник # групп:} }",
   "profile.organizations": "Мои группы",
   "profile.passwordChangeError": "Не удалось изменить пароль",
   "profile.passwordChangedSuccess": "Вы изменили пароль.",

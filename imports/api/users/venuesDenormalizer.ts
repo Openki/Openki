@@ -15,7 +15,7 @@ async function updateAll() {
 
   const updated = sum(
     await Promise.all(
-      await Users.find({}, { projection: { _id: 1, groups: 1 } }).mapAsync((u) => {
+      await Users.find({}, { projection: { _id: 1, organizations: 1 } }).mapAsync((u) => {
         const userVenues = venues
           .filter(
             (v) =>

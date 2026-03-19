@@ -48,7 +48,7 @@ export async function record(courseId: string) {
 
     // Don't send to creator
     recipients: recipients.filter((r) => r !== course.createdby),
-    model: "Group.Course",
+    model: "Organization.Course",
   };
 
   await Log.record("Notification.Send", [course._id], body);
