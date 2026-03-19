@@ -35,9 +35,21 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
   const [isBusy, setIsBusy] = useState(false);
   const [registerData, setRegisterData] = useState({ username, password, email, allowNews });
 
+  // Controls password visibility toggle between plain text and masked input.
+  // Security note: password is automatically hidden again on form submit.
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  // Stores the confirmation password value separately from registerData
+  // since it is only needed for validation and not sent to the server.
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  // Reset password visibility when modal is reopened to prevent
+  // accidental exposure on shared devices.
   useEffect(() => {
     setShowPassword(false);
+    setShowConfirmPassword(false);
+    setConfirmPassword("");
   }, [username, password]);
 
   const [errors, checkValidity, addError] = useValidation({
@@ -65,6 +77,11 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
       text: () => t("register.warning.noPasswordProvided", "Please enter a password to register."),
       field: "password",
       onCheckValidity: () => !!registerData.password,
+    },
+    passwordMismatch: {
+      text: () => t("register.warning.passwordMismatch", "Passwords do not match."),
+      field: "confirmPassword",
+      onCheckValidity: () => registerData.password === confirmPassword,
     },
     noEmail: {
       text: () =>
@@ -97,12 +114,14 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
       noValidate
       onSubmit={async (event) => {
         event.preventDefault();
-        setShowPassword(false);
 
         if (!checkValidity()) {
           return;
         }
-
+        // Hide password before submitting to prevent accidental exposure
+        // if the user leaves the page after a failed login attempt.
+        setShowPassword(false);
+        setShowConfirmPassword(false);
         setIsBusy(true);
 
         try {
@@ -159,11 +178,35 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
           append={
             <button
               type="button"
-              className="btn btn-outline-secondary"
+              className="btn btn-outline-secondary text-dark"
               onClick={() => setShowPassword(!showPassword)}
             >
               <i
                 className={showPassword ? "fa-solid fa-eye-slash fa-fw" : "fa-solid fa-eye fa-fw"}
+              />
+            </button>
+          }
+        />
+      </div>
+      <div className="mb-3">
+        <FormControl
+          id="register-frame-confirm-password"
+          type={showConfirmPassword ? ("text" as const) : ("password" as const)}
+          label={t("register.confirmPassword", "Confirm password")}
+          prepend="fa-solid fa-lock fa-fw"
+          value={confirmPassword}
+          onChange={(value: string) => setConfirmPassword(value)}
+          error={errors.confirmPassword}
+          append={
+            <button
+              type="button"
+              className="btn btn-outline-secondary text-dark"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            >
+              <i
+                className={
+                  showConfirmPassword ? "fa-solid fa-eye-slash fa-fw" : "fa-solid fa-eye fa-fw"
+                }
               />
             </button>
           }

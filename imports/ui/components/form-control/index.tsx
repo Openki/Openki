@@ -134,6 +134,7 @@ function getControlClassNames(
   size: Size | undefined,
   prepend: string | undefined,
   isInvalid: boolean,
+  append?: ReactNode | undefined,
 ) {
   let baseClass;
   switch (type) {
@@ -154,6 +155,11 @@ function getControlClassNames(
 
   if (isInvalid) {
     className.push("is-invalid");
+    // When append is present, hide Bootstrap's validation icon
+    // to prevent overlap with the append element.
+    if (append) {
+      className.push("no-validation-icon");
+    }
   }
   return className;
 }
@@ -178,7 +184,7 @@ function createInputElement<K extends string>(props: Props<K>) {
   const isInvalid = !!error;
   const commonProps = {
     id,
-    className: getControlClassNames(type, size, prepend, isInvalid).join(" "),
+    className: getControlClassNames(type, size, prepend, isInvalid, props.append).join(" "),
     disabled,
     autoComplete: "autoComplete" in props ? props.autoComplete : undefined,
     required: !optional,
@@ -333,22 +339,15 @@ export function FormControl<K extends string>(props: Props<K>) {
   const hasErrorMessage = typeof error !== "boolean" && !!error;
 
   // Create input using a factory
-  let inputElement = (
-    <>
-      {createInputElement(props)}
-      {hasErrorMessage && (
-        <div id={`${id}-error`} className="invalid-feedback" role="alert">
-          {error}
-        </div>
-      )}
-    </>
-  );
+  let inputElement;
 
   if (prepend || append) {
-    // check prepend and append
+    /** When prepend or append is present, render inside input-group.
+    Error message is placed after append to prevent overlap with
+    Bootstrap's validation icon and the append button. **/
     inputElement = (
       <div className={getGroupClassNames(size, hasErrorMessage).join(" ")}>
-        {prepend && ( // only if prepend exist
+        {prepend && (
           <span
             className="input-group-text"
             id={`${id}-prepend`}
@@ -357,9 +356,26 @@ export function FormControl<K extends string>(props: Props<K>) {
             {prepend.startsWith("fa-") ? <i className={prepend} /> : prepend}
           </span>
         )}
-        {inputElement}
+        {createInputElement(props)}
         {append && <span className="input-group-text p-0">{append}</span>}
+        {hasErrorMessage && (
+          <div id={`${id}-error`} className="invalid-feedback" role="alert">
+            {error}
+          </div>
+        )}
       </div>
+    );
+  } else {
+    // Default: no prepend or append
+    inputElement = (
+      <>
+        {createInputElement(props)}
+        {hasErrorMessage && (
+          <div id={`${id}-error`} className="invalid-feedback" role="alert">
+            {error}
+          </div>
+        )}
+      </>
     );
   }
 
