@@ -864,7 +864,6 @@
   "report.placeholder": "Mon aéroglisseur est rempli d'anguilles.",
   "report.report": "Envoyer le rapport",
   "report.sending": "Le rapport est entrain d'être envoyé…",
-  "report.text": "S'il te plaît, dis-nous ce qui pose problème.\n\nTon message sera envoyé à l'équipe technique et aux modérateurs du site.\nSi ton problème concerne l'organisation, utilise le formulaire de discussion ou contacte directement l'équipe organisatrice de ce groupe.",
   "report.warning.tooShort": "Ce message de signalement est trop court ! Écrit plus que 5 caractères.",
   "resetPassword.confirm": "Céer mon mot de passe",
   "resetPassword.confirmPasswordByTyping": "Ré-écrivez le une fois afin de confirmer",

@@ -972,7 +972,6 @@
   "report.placeholder": "Mein technisches Problem ist...\nMeine E-Mail ist: fredi@email.example",
   "report.report": "Bericht abschicken",
   "report.sending": "Bericht wird gesendet…",
-  "report.text": "Bitte beschreibe dein Problem.\n\nAchtung: Deine Nachricht geht an den technischen Support von Zürich Lernt.\nBetrifft dein Problem eine Lektion, bitte nutze stattdessen \"Fragen und Antworten\".\n\nDamit wir uns bei dir zurückmelden können, gib uns bitte auch deine E-Mail oder Telefonnummer an.",
   "report.warning.tooShort": "Diese Problemmeldung ist zu kurz. Bitte schreibe uns mehr als 5 Zeichen.",
   "resetPassword.confirm": "Passwort setzen",
   "resetPassword.confirmPasswordByTyping": "Bestätige durch wiederholtes Eingeben",
