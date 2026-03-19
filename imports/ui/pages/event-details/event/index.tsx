@@ -149,7 +149,7 @@ export function Event({ event, isNew }: { event: EventModel; isNew: boolean }) {
             <DisplayDiscussion courseId={event.courseId} eventId={event._id} />
           )}
           <div className="page-component mt-3">
-            <Report />
+            <Report showGroupHint={true} />
           </div>
         </div>
       )}

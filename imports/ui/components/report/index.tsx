@@ -8,7 +8,7 @@ import { ButtonCancel } from "../Buttons";
 
 import "./styles.scss";
 
-export function Report() {
+export function Report({ showGroupHint = false }: { showGroupHint?: boolean }) {
   const { t } = useTranslation();
   const [state, setState] = useState("");
   const [message, setMessage] = useState("");
@@ -55,8 +55,17 @@ export function Report() {
             <div className="mb-3">
               <label className="form-label pre-line" htmlFor="reportMessage">
                 {t(
-                  "report.text",
-                  "Please tell us what is wrong.\n\nYour message will be sent to the technical team and the moderators of the site.\nIf your issue is organizational, please use the discussion form or contact the organization team of this group directly.",
+                  "report.textShort",
+                  "Please tell us what is wrong.\n\nYour message will be sent to the technical team and the moderators of the site.",
+                )}
+                {showGroupHint && (
+                  <>
+                    {"\n"}
+                    {t(
+                      "report.groupHint",
+                      "\nIf your issue is organizational, please use the discussion form or contact the organization team of this group directly.",
+                    )}
+                  </>
                 )}
               </label>
               <textarea
