@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { MeteorAsync } from "/imports/utils/promisify";
 import { useSession, useSessionEquals } from "/imports/utils/react-meteor-data";
@@ -47,9 +47,11 @@ export function LoginFrame({
     false | "Password" | "Google" | "Facebook" | "Github" | "C3"
   >(false);
   const [loginData, setLoginData] = useState({ username, password });
-  
-  const [showPassword, setShowPassword] = useState(false); 
-  useEffect(() => {   setShowPassword(false); }, [username, password]);
+
+  const [showPassword, setShowPassword] = useState(false);
+  useEffect(() => {
+    setShowPassword(false);
+  }, [username, password]);
 
   const [errors, checkValidity, addError] = useValidation({
     noUsername: {
@@ -112,7 +114,7 @@ export function LoginFrame({
     <form
       noValidate
       onSubmit={async (event) => {
-        setShowPassword(false); 
+        setShowPassword(false);
         event.preventDefault();
 
         if (!checkValidity()) {
@@ -162,13 +164,17 @@ export function LoginFrame({
               value={loginData.password}
               onChange={(value: string) => setLoginData({ ...loginData, password: value })}
               error={errors.password}
-              append={ 
+              append={
                 <button
                   type="button"
                   className="btn btn-outline-secondary"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  <i className={showPassword ? "fa-solid fa-eye-slash fa-fw" : "fa-solid fa-eye fa-fw"} />
+                  <i
+                    className={
+                      showPassword ? "fa-solid fa-eye-slash fa-fw" : "fa-solid fa-eye fa-fw"
+                    }
+                  />
                 </button>
               }
             />
