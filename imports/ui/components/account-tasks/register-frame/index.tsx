@@ -1,5 +1,5 @@
 import { Router } from "meteor/iron:router";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"; 
 import { useTranslation } from "react-i18next";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { PublicSettings } from "/imports/utils/PublicSettings";
@@ -34,6 +34,10 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
   const locale = useSession("locale");
   const [isBusy, setIsBusy] = useState(false);
   const [registerData, setRegisterData] = useState({ username, password, email, allowNews });
+ 
+  const [showPassword, setShowPassword] = useState(false);
+  useEffect(() => { setShowPassword(false); }, [username, password]);
+
   const [errors, checkValidity, addError] = useValidation({
     noUsername: {
       text: () => t("register.warning.noUserName", "Please enter a name for your new user."),
@@ -91,6 +95,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
       noValidate
       onSubmit={async (event) => {
         event.preventDefault();
+        setShowPassword(false); 
 
         if (!checkValidity()) {
           return;
@@ -143,12 +148,21 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
       <div className="mb-3">
         <FormControl
           id="register-frame-password"
-          type="password"
+          type={showPassword ? ("text" as const) : ("password" as const)} 
           label={t("_inputField.password")}
           prepend="fa-solid fa-lock fa-fw"
           value={registerData.password}
-          onChange={(value) => setRegisterData({ ...registerData, password: value })}
+          onChange={(value: string) => setRegisterData({ ...registerData, password: value })}
           error={errors.password}
+          append={ 
+            <button
+              type="button"
+              className="btn btn-outline-secondary"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              <i className={showPassword ? "fa-solid fa-eye-slash fa-fw" : "fa-solid fa-eye fa-fw"} />
+            </button>
+          }
         />
       </div>
       <div className="mb-3">
