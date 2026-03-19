@@ -96,7 +96,7 @@ describe("API", () => {
 
     it("filters events by organization", () => {
       const organizationId = "573edec5d6";
-      cy.request(`/api/0/json/events?group=${organizationId}`)
+      cy.request(`/api/0/json/events?organization=${organizationId}`)
         .should(assertGoodHeaders)
         .its("body.data")
         .should("not.be.empty")

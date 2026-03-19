@@ -1,23 +1,28 @@
 @use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
-$group-member-bg: rgba($gray-600, 0.15);
+$organization-member-bg: rgba($gray-600, 0.15);
 
-.group-member-tag-profile {
-  @include tag($group-member-bg, $body-color, $group-member-bg, $primary);
+.organization-member-tag-profile {
+  @include tag($organization-member-bg, $body-color, $organization-member-bg, $primary);
 }
 
-.group-member-tag-notify {
-  @include tag-btn($group-member-bg, $primary, $group-member-bg, $primary);
+.organization-member-tag-notify {
+  @include tag-btn($organization-member-bg, $primary, $organization-member-bg, $primary);
 }
 
-.group-member-tag-btn-remove {
-  @include tag-btn($group-member-bg, $body-color, $danger, color.adjust($danger, $lightness: -30%));
-}
-
-.group-member-tag-btn-add {
+.organization-member-tag-btn-remove {
   @include tag-btn(
-    color.adjust($group-member-bg, $lightness: -10%),
+    $organization-member-bg,
+    $body-color,
+    $danger,
+    color.adjust($danger, $lightness: -30%)
+  );
+}
+
+.organization-member-tag-btn-add {
+  @include tag-btn(
+    color.adjust($organization-member-bg, $lightness: -10%),
     $body-color,
     $success,
     color.adjust($success, $lightness: -45%)

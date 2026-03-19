@@ -3,12 +3,12 @@
 
 /* stylelint-disable scss/at-extend-no-missing-placeholder */
 
-.group-details .editable {
+.organization-details .editable {
   background-color: none;
 }
 
-.group-details-header {
-  background-color: color.adjust($group-bg, $lightness: -20%);
+.organization-details-header {
+  background-color: color.adjust($organization-bg, $lightness: -20%);
   font-size: x-large;
   padding: 0 10px 10px;
 
@@ -22,30 +22,30 @@
   }
 }
 
-.group-details-titlebar {
-  background-color: color.adjust($group-bg, $lightness: -20%);
+.organization-details-titlebar {
+  background-color: color.adjust($organization-bg, $lightness: -20%);
   padding: 15px 15px 0 23px;
 }
 
-.group-details-logo > img {
+.organization-details-logo > img {
   @include td-margin(right, 5px);
 
   vertical-align: middle;
   width: 50px;
 }
 
-.group-details-name,
-.group-details-short,
-.group-details-claim,
-.group-details-description {
+.organization-details-name,
+.organization-details-short,
+.organization-details-claim,
+.organization-details-description {
   @include editable-form-control;
 }
 
-.group-details-name,
-.group-details-short,
-.group-details-claim,
-.group-details-description,
-.group-details-venues {
+.organization-details-name,
+.organization-details-short,
+.organization-details-claim,
+.organization-details-description,
+.organization-details-venues {
   padding: 8px 13px;
 
   .editable {
@@ -53,7 +53,7 @@
   }
 }
 
-.group-details-name {
+.organization-details-name {
   padding-right: 0;
 
   .editable {
@@ -61,7 +61,7 @@
   }
 }
 
-.group-details-short {
+.organization-details-short {
   padding-left: 0;
 
   .editable {
@@ -69,22 +69,22 @@
   }
 }
 
-.group-details-logo,
-.group-details-name,
-.group-details-short {
+.organization-details-logo,
+.organization-details-name,
+.organization-details-short {
   display: inline-block;
   vertical-align: top;
 }
 
-.group-details-content {
+.organization-details-content {
   padding: 10px;
 }
 
-.group-details-body {
-  background: color.adjust($group-bg, $lightness: 10%);
+.organization-details-body {
+  background: color.adjust($organization-bg, $lightness: 10%);
 }
 
-.group-details-claim {
+.organization-details-claim {
   font-size: large;
 
   .editable {
@@ -92,10 +92,10 @@
   }
 }
 
-.group-details-description {
+.organization-details-description {
   height: auto;
 }
 
-.group-details-claim + .group-details-description {
+.organization-details-claim + .organization-details-description {
   margin-top: 4px;
 }

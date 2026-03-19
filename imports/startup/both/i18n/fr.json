@@ -777,7 +777,7 @@
   "profile.organization.expelled": "Expulsé du groupe {NAME}",
   "profile.organization.expelled.error": "Impossible d'expulser l'utilisateur du groupe",
   "profile.organization.member": "Membre du groupe",
-  "profile.organizationMembership": "Tu es membre {NUM_GROUPS, plural, =0{d'aucun groupe} one{d'un groupe :} other{de # groupes :} }",
+  "profile.organizationMembership": "Tu es membre {NUM_ORGANIZATIONS, plural, =0{d'aucun groupe} one{d'un groupe :} other{de # groupes :} }",
   "profile.organizations": "Mes groupes",
   "profile.passwordChangeError": "Ton mot de passe n'a pas pu être modifié",
   "profile.passwordChangedSuccess": "Ton mot de passe a été modifié.",

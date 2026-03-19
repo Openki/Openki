@@ -150,7 +150,7 @@ Wir sind der Meinung, dass Bildung (und somit auch die Veranstaltungen auf Openk
 Gruppen sind bereits bestehende Organisationen, Communities usw., welche Openki dazu verwenden, ihre Kurse zu organisieren.
 
 ### Wie können wir uns als Gruppe bei Openki anmelden?
-Jede Benutzerin kann unter ihren Account-Einstellungen eine Gruppe erstellen. [https://openki.net/group/create](https://openki.net/group/create)
+Jede Benutzerin kann unter ihren Account-Einstellungen eine Gruppe erstellen. [https://openki.net/organization/create](https://openki.net/organization/create)
 <!-- TODO:
 ### Wie kann ich einen Kurs in meine Gruppe nehmen?
 

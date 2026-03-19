@@ -45,7 +45,7 @@ export function FilterPreview(options: {
 
   // for properties which have labels used on the courses,
   // highlight the labels too
-  if (property === "category" || property === "group") {
+  if (property === "category" || property === "organization") {
     const labelClass = `.js-${property}-label${selector}`;
     const label = instance ? instance.$(labelClass) : $(labelClass);
 

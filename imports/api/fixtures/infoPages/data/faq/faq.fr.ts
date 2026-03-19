@@ -147,7 +147,7 @@ Les groupes sont les organisations existantes, communautés, etc qui utilisent O
 
 ### Comment inscrire un nouveau groupe ?
 
-Tout utilisateur peut créer un nouveau groupe sur la page de son compte [https://openki.net/group/create](https://openki.net/group/create).
+Tout utilisateur peut créer un nouveau groupe sur la page de son compte [https://openki.net/organization/create](https://openki.net/organization/create).
 
 ### En tant que groupe, peut-on afficher Openki sur notre site web ?
 

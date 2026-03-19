@@ -70,7 +70,7 @@ export function OrganizationList({ event }: Props) {
           <React.Fragment key={organizationId}>
             <OrganizationTag organizationId={organizationId} isTeam={isTeam} />
             {isTeam && (
-              <div className="tag group-tag addon">
+              <div className="tag organization-tag addon">
                 <i
                   className="fa-solid fa-bullhorn fa-fw"
                   title={t("course.organizationList.title.organizedBy", {
@@ -82,7 +82,7 @@ export function OrganizationList({ event }: Props) {
 
             {ownOrganization &&
               (!!user?.mayPromoteWith(organizationId) || event.editableBy(user)) && (
-                <div className="btn-group tag-btn group-tag-btn addon align-top">
+                <div className="btn-group tag-btn organization-tag-btn addon align-top">
                   <button
                     type="button"
                     className="dropdown-toggle"

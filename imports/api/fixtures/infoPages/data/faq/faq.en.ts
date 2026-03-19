@@ -135,7 +135,7 @@ We believe that education (and thus the events on Openki) should be accessible t
 Organizations are already existing organizations, communities, etc. that use Openki to organize their courses.
 
 ### How can we register as a organization with Openki?
-Each user can create a new organization under their account settings. [https://openki.net/group/create](https://openki.net/group/create)
+Each user can create a new organization under their account settings. [https://openki.net/organization/create](https://openki.net/organization/create)
 
 ### Can we as a organization show openki courses on our own website?
 Yes! You can find the different views for embedding for your organization in the organization settings. More info about these views (also called _Frames_) can be found in [the Openki wiki](https://gitlab.com/Openki/Openki/wikis/Frames)

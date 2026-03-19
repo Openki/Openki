@@ -280,7 +280,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     await Notification.Course.record(courseId);
 
     if (set.teamOrganizations.length > 0) {
-      await Notification["Group.Course"].record(courseId);
+      await Notification["Organization.Course"].record(courseId);
     }
 
     // Init calculated fields

@@ -849,7 +849,7 @@
   "profile.organization.expelled": "Ausgeschlossen aus {NAME}",
   "profile.organization.expelled.error": "Benutzer_in konnte nicht aus der Gruppe gelöscht werden",
   "profile.organization.member": "Mitglied des Austragungsortes",
-  "profile.organizationMembership": "Du bist Mitglied {NUM_GROUPS, plural, =0{keines Austragungsortes} one{dieser Austragungsorte:} other{von diesen # Austragungsorten:} }",
+  "profile.organizationMembership": "Du bist Mitglied {NUM_ORGANIZATIONS, plural, =0{keines Austragungsortes} one{dieser Austragungsorte:} other{von diesen # Austragungsorten:} }",
   "profile.organizations": "Meine Austragungsorte",
   "profile.passwordChangeError": "Dein Passwort konnte nicht geändert werden",
   "profile.passwordChangedSuccess": "Dein Passwort wurde geändert.",
