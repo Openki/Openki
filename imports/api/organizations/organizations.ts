@@ -151,7 +151,7 @@ export class OrganizationsCollection extends Mongo.Collection<
   OrganizationModel
 > {
   constructor() {
-    super("Groups", {
+    super("Organizations", {
       transform(tenant) {
         return assignIn(new Organization(), tenant);
       },
