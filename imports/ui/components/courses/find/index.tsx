@@ -198,7 +198,7 @@ export function Find({ query }: Props) {
       return {
         onMouseOver: async () => {
           FilterPreview({
-            property: "group",
+            property: "organization",
             id: organizationId,
             activate: true,
             delayed: true,
@@ -206,7 +206,7 @@ export function Find({ query }: Props) {
         },
         onMouseOut: async () => {
           FilterPreview({
-            property: "group",
+            property: "organization",
             id: organizationId,
             activate: false,
             delayed: true,

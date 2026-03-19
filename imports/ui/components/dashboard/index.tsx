@@ -146,7 +146,7 @@ function DashboardComponent({
     urlParams.append("region", defaultRegion);
   }
   if (defaultOrganization) {
-    urlParams.append("group", defaultOrganization);
+    urlParams.append("organization", defaultOrganization);
   }
 
   // Convert to params, can not use Object.fromEntries because it breaks on safari on ios.

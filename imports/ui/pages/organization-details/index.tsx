@@ -88,7 +88,7 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
   }
   function dashboardAttr(): DashboardProps {
     return {
-      list: organization.dashboard || PublicSettings.groupDashboardDefault || [],
+      list: organization.dashboard || PublicSettings.organizationDashboardDefault || [],
       defaultRegion: region?._id || "",
       defaultOrganization: organization._id,
     };
@@ -248,8 +248,8 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
         {organization.isNew() && (
           <h2>{t("organizationDetails.titleNew", "Create new organization")}</h2>
         )}
-        <div className="page-component group-details">
-          <div className="group-details-titlebar clearfix">
+        <div className="page-component organization-details">
+          <div className="organization-details-titlebar clearfix">
             {t("organizationDetails.organization", "Organization")}
 
             {isFeatured() && (
@@ -283,28 +283,28 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
               </button>
             )}
           </div>
-          <div className={`details-header group-details-header clearfix ${headerClasses()}`}>
+          <div className={`details-header organization-details-header clearfix ${headerClasses()}`}>
             {!!organization.publicLogoUrl() && (
-              <div className="group-details-logo">
+              <div className="organization-details-logo">
                 <img src={organization.publicLogoUrl()} />
               </div>
             )}
-            <div className="group-details-name">
+            <div className="organization-details-name">
               {mayEdit ? <Editable {...editableNameAttr} /> : organization.name}
             </div>{" "}
-            <div className="group-details-short">
+            <div className="organization-details-short">
               {mayEdit ? <Editable {...editableShortAttr} /> : organization.short}
             </div>
           </div>
-          <div className="details-body group-details-body">
+          <div className="details-body organization-details-body">
             <div
-              className={`details-content group-details-content ${errors.all ? "has-error" : ""}`}
+              className={`details-content organization-details-content ${errors.all ? "has-error" : ""}`}
             >
-              <div className="group-details-claim">
+              <div className="organization-details-claim">
                 {mayEdit ? <Editable {...editableClaimAttr} /> : organization.claim}
               </div>
 
-              <div className="group-details-description">
+              <div className="organization-details-description">
                 {mayEdit ? (
                   <Editable {...editableDescriptionAttr} />
                 ) : (
@@ -315,7 +315,7 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
               {!!errors.all && <span className="form-text d-block">{errors.all}</span>}
 
               {!!(organization.venues && organization.venues.length > 0) && (
-                <div className="group-details-venues">
+                <div className="organization-details-venues">
                   {t("organization.details.venues", "{NUM, plural, one{Venue:} other{Venues:} }", {
                     NUM: organization.venues.length,
                   })}{" "}
@@ -331,12 +331,16 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
           {organization.isNew() && (
             <div className="actions">
               <ButtonSave
-                id="group-details-save"
+                id="organization-details-save"
                 needsLogin
                 onClick={handleSave}
                 disabled={isBusy}
               />
-              <ButtonCancel id="group-details-cancel" onClick={handleCancel} disabled={isBusy} />
+              <ButtonCancel
+                id="organization-details-cancel"
+                onClick={handleCancel}
+                disabled={isBusy}
+              />
             </div>
           )}
           {allowEditingSettings() && <OrganizationSettings organization={organization} />}
@@ -352,4 +356,4 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
 
 import "./template.html";
 
-Template.registerHelper("GroupDetailsPage", () => OrganizationDetailsPage);
+Template.registerHelper("OrganizationDetailsPage", () => OrganizationDetailsPage);

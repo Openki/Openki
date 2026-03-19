@@ -38,7 +38,7 @@ function RemoveMember({
   const currentUserId = useUserId();
 
   return (
-    <div className="tag tag-btn group-member-tag-btn-remove ">
+    <div className="tag tag-btn organization-member-tag-btn-remove ">
       <button
         type="button"
         title={t("organizations.settings.removeMember", "remove member")}
@@ -81,7 +81,7 @@ function FoundUsers({
     <>
       {users.map((user) => (
         <React.Fragment key={user._id}>
-          <div className="tag tag-btn group-member-tag-btn-add ">
+          <div className="tag tag-btn organization-member-tag-btn-add ">
             <button
               title={t("organizations.settings.addMember", "add as member")}
               type="button"
@@ -90,7 +90,7 @@ function FoundUsers({
               <i className="fa-solid fa-plus fa-fw" /> {user.username}
             </button>
           </div>
-          <div className="tag tag-link group-member-tag-profile addon">
+          <div className="tag tag-link organization-member-tag-profile addon">
             <a
               href={Router.path("userprofile", user)}
               title={t("organizations.settings.member.profile")}
@@ -257,7 +257,7 @@ export function OrganizationSettings({ organization }: Props) {
 
   return (
     <form>
-      <div className="details-form group-settings">
+      <div className="details-form">
         <div className="row">
           <div className="col-md">
             <h3>
@@ -282,7 +282,7 @@ export function OrganizationSettings({ organization }: Props) {
 
                   {currentUser?._id === member.user &&
                     (member.notify ? (
-                      <div className="tag tag-btn group-member-tag-notify addon">
+                      <div className="tag tag-btn organization-member-tag-notify addon">
                         <button
                           type="button"
                           title={t(
@@ -295,7 +295,7 @@ export function OrganizationSettings({ organization }: Props) {
                         </button>
                       </div>
                     ) : (
-                      <div className="tag tag-btn group-member-tag-notify addon">
+                      <div className="tag tag-btn organization-member-tag-notify addon">
                         <button
                           type="button"
                           title={t(
@@ -309,7 +309,7 @@ export function OrganizationSettings({ organization }: Props) {
                       </div>
                     ))}
 
-                  <div className="tag tag-link group-member-tag-profile addon">
+                  <div className="tag tag-link organization-member-tag-profile addon">
                     <a
                       href={Router.path("userprofile", { _id: member.user })}
                       title={t("organizations.settings.member.profile", "Visit profile")}

@@ -56,7 +56,7 @@ export function Report() {
               <label className="form-label pre-line" htmlFor="reportMessage">
                 {t(
                   "report.text",
-                  "Please tell us what is wrong.\n\nYour message will be sent to the technical team and the moderators of the site.\nIf your issue is organizational, please use the discussion form or contact the organization team of this group directly.",
+                  "Please tell us what is wrong.\n\nYour message will be sent to the technical team and the moderators of the site.\nIf your issue is organizational, please use the discussion form or contact the coordination-team of this group directly.",
                 )}
               </label>
               <textarea

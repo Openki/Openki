@@ -90,7 +90,7 @@
 			]
 		}
 	, "regionDashboardDefault": // Standard for all regions, can be overwritten if the "dashboard" property is set in the region, if not set, the ‘find’ page is displayed, default: undefined
-		[	{ "entity": "" // The entity to show: "course", "courseWithoutPropose", "event", "group", "eventsMap", "propose" are supported
+		[	{ "entity": "" // The entity to show: "course", "courseWithoutPropose", "event", "organization", "eventsMap", "propose" are supported
 			, "title": "" // Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 			, "query": "" // Query how the data should be filtered and sorted, all options and filters can be found in the wiki, can be an empty string "". The entities are filtered by region.
 			, "showAll": // Overwrite the standard showAll button (Optional)
@@ -99,8 +99,8 @@
 				}
 			}
 		]
-	, "groupDashboardDefault": // Standard for all groups, can be overwritten if the "dashboard" property is set in the group, if not set, the ‘find’ page is displayed, default: undefined
-		[	{ "entity": "" // The entity to show: "course", "courseWithoutPropose", "event", "group", "eventsMap", "propose" are supported
+	, "organizationDashboardDefault": // Standard for all organizations, can be overwritten if the "dashboard" property is set in the organization, if not set, the ‘find’ page is displayed, default: undefined
+		[	{ "entity": "" // The entity to show: "course", "courseWithoutPropose", "event", "organization", "eventsMap", "propose" are supported
 			, "title": "" // Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 			, "query": "" // Query how the data should be filtered and sorted, all options and filters can be found in the wiki, can be an empty string "". The entities are filtered by region and group.
 			, "showAll": // Overwrite the standard showAll button (Optional)

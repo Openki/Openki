@@ -29,8 +29,8 @@ describe("Propose course via frame", function () {
     cy.get("#account-tasks-login-frame-username").type("Seee");
     cy.get("#account-tasks-login-frame-password").type("greg{enter}");
     cy.get("a.alert-link").invoke("removeAttr", "target").click();
-    cy.getById("group-tag-cc89c5e476").should("have.class", "group-tag-is-team");
-    cy.getById("group-tag-573edec5d6").should("have.class", "group-tag-is-team");
+    cy.getById("organization-tag-cc89c5e476").should("have.class", "organization-tag-is-team");
+    cy.getById("organization-tag-573edec5d6").should("have.class", "organization-tag-is-team");
   });
 
   it("allows to set creators role via url", () => {

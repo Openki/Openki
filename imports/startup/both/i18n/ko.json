@@ -720,7 +720,7 @@
   "profile.organization.expelled": "{NAME} 그룹에서 방출되었습니다",
   "profile.organization.expelled.error": "그룹에서 사용자를 방출하는데 실패했습니다",
   "profile.organization.member": "그룹의 멤버",
-  "profile.organizationMembership": "현재 {NUM_GROUPS, plural, =0{참가 중인 그룹이 없습니다} one{1개의 그룹에 참가 중 입니다:} other{#개의 그룹에 참가 중 입니다:} }",
+  "profile.organizationMembership": "현재 {NUM_ORGANIZATIONS, plural, =0{참가 중인 그룹이 없습니다} one{1개의 그룹에 참가 중 입니다:} other{#개의 그룹에 참가 중 입니다:} }",
   "profile.organizations": "참가 중인 그룹",
   "profile.passwordChangeError": "비밀번호 변경에 실패했습니다",
   "profile.passwordChangedSuccess": "비밀번호 변경에 성공했습니다.",
