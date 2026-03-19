@@ -89,7 +89,7 @@ async function createZuerichLernt(prng: PRNG) {
       _id: template._id || ensure.fixedId([template.name, template.description || ""]),
       name: template.name,
       categories: template.categories || [],
-      groups: template.organizations,
+      organizations: template.organizations,
       teamOrganizations: template.organizations,
       description: template.description,
       compactImage: template.image,
