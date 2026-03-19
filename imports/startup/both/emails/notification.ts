@@ -49,6 +49,6 @@ export const Notification = {
   Comment: comment,
   Join: join,
   Course: course,
-  "Group.Course": organizationCourse,
+  "Organization.Course": organizationCourse,
   PrivateMessage: privateMessage,
 };

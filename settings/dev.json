@@ -75,11 +75,11 @@
       }
     , { "entity": "course"
       , "title": "Chaos Computer Club Zürich"
-      , "query": "group=573edec5d6&internal=0"
+      , "query": "organization=573edec5d6&internal=0"
       }
     , { "entity": "event"
       , "title": "Chaos Computer Club Zürich"
-      , "query": "group=573edec5d6&after=now&sort=start&internal=0&canceled=0"
+      , "query": "organization=573edec5d6&after=now&sort=start&internal=0&canceled=0"
       }
     , { "entity": "event"
       , "title": "dashboard.upcomingEvents.title"
@@ -104,7 +104,7 @@
     , { "entity": "propose"
       }
     ]
-  , "groupDashboardDefault":
+  , "organizationDashboardDefault":
     [ { "entity": "course"
       , "title": "dashboard.recentActivities.title"
       , "query": ""

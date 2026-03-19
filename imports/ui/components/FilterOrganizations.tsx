@@ -14,11 +14,7 @@ interface OptionProps {
 function Option({ organizationId }: OptionProps) {
   const [isLoading, organization] = useDetails(organizationId);
 
-  return (
-    <option className="groups-select-option" value={organizationId}>
-      {isLoading() ? "..." : name(organization)}
-    </option>
-  );
+  return <option value={organizationId}>{isLoading() ? "..." : name(organization)}</option>;
 }
 
 export interface Props {
@@ -42,7 +38,7 @@ export function FilterOrganizations({
 
   return (
     <ReactSelect2
-      className="groups-select form-control"
+      className="form-control"
       multiple={true}
       value={selectedOrganizations}
       placeholder={t("filterOrganizations.placeholder.choose", "Choose organization")}

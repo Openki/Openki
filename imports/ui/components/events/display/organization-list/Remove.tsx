@@ -38,7 +38,7 @@ export function Remove({ event, organizationId }: Props) {
   }
 
   return (
-    <div className="group-tool-dialog danger">
+    <div className="organization-tool-dialog danger">
       {t("course.organizationList.confirmRemoveText", {
         NAME: name(organization),
       })}

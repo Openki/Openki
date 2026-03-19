@@ -696,7 +696,7 @@
   "profile.organization.expelled": "مستبعد من مجموعة {NAME}",
   "profile.organization.expelled.error": "غير قادر على طرد المستخدم من المجموعة",
   "profile.organization.member": "عضو في المجموعة",
-  "profile.organizationMembership": "أنت عضو {NUM_GROUPS ، plural ، = 0 {لا توجد مجموعة} one{هذه المجموعة:} other {من هذه # المجموعات :} }",
+  "profile.organizationMembership": "أنت عضو {NUM_ORGANIZATIONS ، plural ، = 0 {لا توجد مجموعة} one{هذه المجموعة:} other {من هذه # المجموعات :} }",
   "profile.organizations": "مجموعاتي",
   "profile.passwordChangeError": "تعذر تغيير كلمة المرور الخاصة بك",
   "profile.passwordChangedSuccess": "تم تغيير كلمة المرور الخاصة بك.",

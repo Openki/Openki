@@ -10,7 +10,7 @@ export const organizations: Template[] = [
     claim: "Leben ins Quartier!",
     description:
       '<p>mehr unter <a href="https://www.qth.ch/" rel="nofollow">https://www.qth.ch/</a> </p>',
-    logoUrl: "groups/logos/01b6c66ee5a4e393bb2a04b9.png",
+    logoUrl: "organizations/logos/01b6c66ee5a4e393bb2a04b9.png",
   },
   {
     _id: "MzGp4ZDxcS2uobGcv",
@@ -49,7 +49,7 @@ export const organizations: Template[] = [
     name: "GZ Wollishofen",
     claim: "Macht am Mittwoch und Samstag mit.",
     description: "<p>GZ Wollishofen</p><p>Bachstrasse 7</p><p>8038 Zürich</p>",
-    logoUrl: "groups/logos/a89d8786257768f2e1d01cbb.png",
+    logoUrl: "organizations/logos/a89d8786257768f2e1d01cbb.png",
   },
   {
     _id: "vmsMqDCBp929ZvnBN",
@@ -126,7 +126,7 @@ export const organizations: Template[] = [
     claim: "Limmattalstrasse 214 und Hurdäckerstrasse 6 8049 Zürich",
     description:
       "<p>Vielen Dank für die Lektion, die du im Rahmen von Zürich lernt 2023, verschenken möchtest. Wir machen von Donnerstag bis Samstag bei Zürich lernt mit. Das GZ Höngg hat zwei Standorte, die du auswählen kannst: Limmattalstrasse 214 und Hurdäckerstrasse 6 (Standort Rütihof).<br /></p><p>Deinen Vorschlag kannst du unten ins Formular eintragen und wir melden uns innerhalb von zwei Wochen bei dir. Gerne kannst du Ideen und oder fertige Angebote auch über simone@caseri.ch oder telefonisch unter +41 79 236 92 82 anmelden oder besprechen.</p><p>Wir freuen uns auf dein Angebot und ein vielfältiges Lernfestival!<br /></p>",
-    logoUrl: "groups/logos/b6daffcc60de2dae9da5d54b.png",
+    logoUrl: "organizations/logos/b6daffcc60de2dae9da5d54b.png",
   },
   {
     _id: "oAKa3Es5T8piWAENg",
@@ -242,7 +242,7 @@ export const organizations: Template[] = [
     claim: "Zürich Interkulturell",
     description:
       '<p><a href="http://www.about-us.ch" rel="nofollow">About Us! </a>Zürich Interkulturell lädt alle 2 Jahre im Sommer in verschiedenen Quartieren zu künstlerischen Aktivitäten und Begegnungen ein. Im Juni 2023 sind wir in Albisrieden, Affoltern und Oerlikon aktiv. Mit Zürich lernt sind wir mit ersten künstlerischen Angeboten in diesen drei Quartieren zu Gast.<br />Wir machen am Dienstag, Mittwoch und Samstag, mit. Trage unten deine Lektions-Idee ein und wir melden uns bei dir.</p><p>Wir freuen uns auf dein Angebot und ein vielfältiges Lernfestival!</p>',
-    logoUrl: "groups/logos/aa1345bf7e81d54d8fa79026.png",
+    logoUrl: "organizations/logos/aa1345bf7e81d54d8fa79026.png",
   },
   {
     _id: "SErB6i2hv8SaWmxF6",
@@ -360,7 +360,7 @@ export const organizations: Template[] = [
     claim: "Reformierte Kirche Witikon,  Witikonerstrasse 286,  8053 Zürich",
     description:
       "<p>Wir machen vom Montag bis Sonntag  bei Zürich lernt mit.</p><p>Trage unten deine Lektions-Idee ein und wir melden uns bei dir.</p>",
-    logoUrl: "groups/logos/7a1066f9ea99dd9baf441ebb.jpeg",
+    logoUrl: "organizations/logos/7a1066f9ea99dd9baf441ebb.jpeg",
   },
   {
     _id: "bQKfskH5pz8Di4hGa",
@@ -475,7 +475,7 @@ export const organizations: Template[] = [
     claim: "Wissen schenken.",
     description:
       '<p>Mehr Wissenswertes über uns gibt es auf unserer Homepage: <a href="http://zuerich-lernt.ch" rel="nofollow">zuerich-lernt.ch</a>. </p>',
-    logoUrl: "groups/logos/b19b1c55c3c3671fad0347d4.png",
+    logoUrl: "organizations/logos/b19b1c55c3c3671fad0347d4.png",
     customCourseFields: [
       {
         name: "instructor",
