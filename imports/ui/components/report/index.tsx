@@ -59,13 +59,13 @@ export function Report({ showGroupHint = false }: { showGroupHint?: boolean }) {
                   "Please tell us what is wrong.\n\nYour message will be sent to the technical team and the moderators of the site.",
                 )}
                 {showGroupHint && (
-                <>
-                  {"\n"}
-                  {t(
-                    "report.groupHint",
-                    "\nIf your issue is organizational, please use the discussion form or contact the organization team of this group directly.",
-                  )}
-                </>
+                  <>
+                    {"\n"}
+                    {t(
+                      "report.groupHint",
+                      "\nIf your issue is organizational, please use the discussion form or contact the organization team of this group directly.",
+                    )}
+                  </>
                 )}
               </label>
               <textarea

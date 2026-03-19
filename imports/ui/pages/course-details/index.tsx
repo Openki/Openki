@@ -306,7 +306,7 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
             {mobileViewport() && <Discussion courseId={course._id} select={select} />}
 
             <div className="page-component mt-3">
-              <Report showGroupHint={true}/>
+              <Report showGroupHint={true} />
             </div>
           </div>
         </div>
