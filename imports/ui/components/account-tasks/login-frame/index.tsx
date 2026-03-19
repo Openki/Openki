@@ -167,7 +167,7 @@ export function LoginFrame({
               append={
                 <button
                   type="button"
-                  className="btn btn-outline-secondary"
+                  className="btn btn-outline-secondary text-dark"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   <i
