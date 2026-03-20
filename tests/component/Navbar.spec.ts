@@ -25,17 +25,17 @@ describe("Navbar", () => {
 
     it("should support show more region", function () {
       // Open the region selection dropdown
-      cy.get('[data-test="region-selection-display"] .nav-link').click();
+      cy.get('[data-test="region-select-display"] .nav-link').click();
 
       // Count list items before clicking "Show more"
-      cy.get('[data-test="region-selection-item"]')
+      cy.get('[data-test="region-select-option"]')
         .its("length")
         .then((initialCount) => {
           // Click "Show more"
-          cy.get('[data-test="regions-selection-show-more"]').click();
+          cy.get('[data-test="region-select-show-more"]').click();
 
           // Verify the number of list items increased
-          cy.get('[data-test="region-selection-item"]').its("length").should("be.gt", initialCount);
+          cy.get('[data-test="region-select-option"]').its("length").should("be.gt", initialCount);
         });
     });
   });
@@ -70,17 +70,17 @@ describe("Navbar", () => {
     it("should support show more region", function () {
       cy.get('[data-test="navbar-toggler"]').click();
       // Open the region selection dropdown
-      cy.get('[data-test="region-selection-display"] .nav-link').click();
+      cy.get('[data-test="region-select-display"] .nav-link').click();
 
       // Count list items before clicking "Show more"
-      cy.get('[data-test="region-selection-item"]')
+      cy.get('[data-test="region-select-option"]')
         .its("length")
         .then((initialCount) => {
           // Click "Show more"
-          cy.get('[data-test="regions-selection-show-more"]').click();
+          cy.get('[data-test="region-select-show-more"]').click();
 
           // Verify the number of list items increased
-          cy.get('[data-test="region-selection-item"]').its("length").should("be.gt", initialCount);
+          cy.get('[data-test="region-select-option"]').its("length").should("be.gt", initialCount);
         });
     });
   });

@@ -13,7 +13,7 @@ export function Display({
   const currentRegion = useCurrentRegion();
 
   return (
-    <li data-test="region-selection-display" className={className}>
+    <li data-test="region-select-display" className={className}>
       <a
         className="nav-link text-white"
         onClick={(e) => {

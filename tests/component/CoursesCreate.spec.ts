@@ -3,8 +3,8 @@
 describe("courses create", () => {
   it("should show region selection if none region set", function () {
     cy.visitOpenki("/courses/propose");
-    cy.get("#courses-edit-region-selection").should("be.visible");
-    cy.get("#courses-edit-region-selection").select("h4MnI3psRr8hSljk2");
+    cy.get("#courses-edit-region-select").should("be.visible");
+    cy.get("#courses-edit-region-select").select("h4MnI3psRr8hSljk2");
     cy.get("#course-edit-title").click();
     cy.get("#course-edit-title").type("Lebensmittel einmachen");
     cy.get("#course-custom-field-instructor").click();

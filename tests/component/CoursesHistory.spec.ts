@@ -10,7 +10,7 @@ describe("Course history", function () {
 
     // Create the course
     cy.get("#course-edit-title").type(randomTitle);
-    cy.get("#courses-edit-region-selection").select("9JyFCoKWkxnf8LWPh");
+    cy.get("#courses-edit-region-select").select("9JyFCoKWkxnf8LWPh");
     cy.get("#courses-edit-save").click();
 
     // We should be redirected to the created course

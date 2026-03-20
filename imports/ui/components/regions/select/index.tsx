@@ -2,10 +2,10 @@ import React, { useState } from "react";
 
 import { useFindFilter } from "/imports/api/regions/publications";
 
-import { RegionSelection, Props as RegionSelectionProps } from "./selection";
+import { Select, Props as RegionSelectProps } from "./select";
 import { Display } from "./Display";
 
-export function RegionSelectionWrap({
+export function RegionSelectWrap({
   className,
   size,
   autoFocus,
@@ -24,7 +24,7 @@ export function RegionSelectionWrap({
     return regions.length > 1;
   }
 
-  function regionSelectionDisplayAttr() {
+  function regionSelectDisplayAttr() {
     return {
       className,
       onClick: () => {
@@ -33,7 +33,7 @@ export function RegionSelectionWrap({
     };
   }
 
-  function regionSelectionAttr(): RegionSelectionProps {
+  function regionSelectAttr(): RegionSelectProps {
     return {
       className,
       size,
@@ -52,8 +52,8 @@ export function RegionSelectionWrap({
   }
 
   if (searchingRegions) {
-    return <RegionSelection {...regionSelectionAttr()} />;
+    return <Select {...regionSelectAttr()} />;
   }
 
-  return <Display {...regionSelectionDisplayAttr()} />;
+  return <Display {...regionSelectDisplayAttr()} />;
 }

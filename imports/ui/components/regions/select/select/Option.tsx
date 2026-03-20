@@ -10,7 +10,7 @@ import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
 import { MarkedName } from "/imports/utils/marked-name";
 
-export function SelectionItem({
+export function Option({
   region,
   search,
   onClick,
@@ -36,7 +36,7 @@ export function SelectionItem({
 
   return (
     <li
-      data-test="region-selection-item"
+      data-test="region-select-option"
       className={region.isPrivate() ? "region-link-private" : ""}
     >
       <a

@@ -14,7 +14,7 @@ import { useSiteName } from "/imports/utils/getSiteName";
 import { Introduction } from "../../lib/introduction";
 
 import { Collapse } from "/imports/startup/client/bootstrap";
-import { RegionSelectionWrap } from "/imports/ui/components/regions/selection";
+import { RegionSelectWrap } from "../regions/select";
 import { LanguageSelection } from "/imports/ui/components/language-selection";
 import { TestWarningTicker } from "./TestWarningTicker";
 import { UserFrame } from "./user-frame";
@@ -213,7 +213,7 @@ export function Navbar() {
               ))}
             </ul>
             <ul className="navbar-nav flex-row" data-bs-theme="light">
-              <RegionSelectionWrap
+              <RegionSelectWrap
                 className="nav-item text-center col col-lg-auto"
                 autoFocus
                 size="small"
