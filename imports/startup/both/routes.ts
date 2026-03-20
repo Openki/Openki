@@ -208,9 +208,9 @@ RouterAsync.route("info", {
   async data() {
     const page = await this.subscriptions()?.infoPage();
     if (!page) {
-      const content =
-        (await getInfoPageMarkdown(`/info-pages/${this.params.page_slug}/${Session.get("locale")}.md`)) ||
-        (await getInfoPageMarkdown(`/info-pages/${this.params.page_slug}/en.md`));
+      const content = await getInfoPageMarkdown(
+        `/info-pages/${this.params.page_slug}/${Session.get("locale")}.md`,
+      );
 
       if (!content) {
         return undefined;
