@@ -12,15 +12,6 @@
   }
 }
 
-.region-selection .is-splash .dropdown-menu {
-  /* fixes a UI error on splash */
-  margin-right: 0 !important;
-
-  @include media-breakpoint-down(lg) {
-    background: $white;
-  }
-}
-
 .region-link-private {
   background-color: #c2c3;
 }

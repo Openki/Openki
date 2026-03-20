@@ -6,12 +6,14 @@ import { RegionSelection, Props as RegionSelectionProps } from "./selection";
 import { Display } from "./Display";
 
 export function RegionSelectionWrap({
-  inNavbar,
-  isSplash,
+  className,
+  size,
+  autoFocus,
   onSelect,
 }: {
-  inNavbar?: boolean | undefined;
-  isSplash?: boolean | undefined;
+  className?: string | undefined;
+  size?: "medium" | "small" | undefined;
+  autoFocus?: boolean | undefined;
   onSelect?: (() => void) | undefined;
 }) {
   const [isLoading, regions] = useFindFilter({}, 2);
@@ -24,7 +26,7 @@ export function RegionSelectionWrap({
 
   function regionSelectionDisplayAttr() {
     return {
-      inNavbar,
+      className,
       onClick: () => {
         setSearchingRegions(true);
       },
@@ -33,8 +35,9 @@ export function RegionSelectionWrap({
 
   function regionSelectionAttr(): RegionSelectionProps {
     return {
-      inNavbar,
-      isSplash,
+      className,
+      size,
+      autoFocus,
       onSelect,
       onClose: () => {
         if (searchingRegions) {

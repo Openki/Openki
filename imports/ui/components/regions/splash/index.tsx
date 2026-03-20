@@ -54,7 +54,6 @@ export function Splash() {
             </h5>
             <div className="regions-splash-selection">
               <RegionSelection
-                isSplash={true}
                 onSelect={() => {
                   if (!elementRef.current) {
                     return;
