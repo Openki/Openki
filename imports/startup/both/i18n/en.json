@@ -1008,7 +1008,7 @@
   "register.warning.noUserName": "Please enter a name for your new user.",
   "register.warning.userExists": "This username is already in use. Please choose another one.",
   "report.confirm": "Your report was sent. A human will try to find an appropriate solution.",
-  "report.groupHint": "\nIf your issue is organizational, please use the discussion form or contact the organization team of this group directly.",
+  "report.groupHint": "If your issue is organizational, please use the discussion form or contact the coordination-team of this group directly.",
   "report.notSent": "Your report could not be sent",
   "report.open": "Report problem",
   "report.placeholder": "My hovercraft is full of eels.",
