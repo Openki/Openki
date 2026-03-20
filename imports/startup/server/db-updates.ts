@@ -26,6 +26,7 @@ import { update as update20260311renameGroupToOrganization } from "./updates/202
 import { update as update20260313renameGroupToOrganization2 } from "./updates/2026.03.13 renameGroupToOrganization2";
 import { update as update20260313renameGroupToOrganization3 } from "./updates/2026.03.13 renameGroupToOrganization3";
 import { update as update20260319renameGroupToOrganizationDbCollection } from "./updates/2026.03.19 renameGroupToOrganizationDbCollection";
+import { update as update20260320moveAllS3FilesFromGroupsToOrganizations } from "./updates/2026.03.20 moveAllS3FilesFromGroupsToOrganizations";
 
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
@@ -51,7 +52,10 @@ const UpdatesAvailable: Record<string, () => Promise<number>> = {
   "2026.03.11 renameGroupToOrganization": update20260311renameGroupToOrganization,
   "2026.03.13 renameGroupToOrganization2": update20260313renameGroupToOrganization2,
   "2026.03.13 renameGroupToOrganization3": update20260313renameGroupToOrganization3,
-  "2026.03.19 renameGroupToOrganizationDbCollection": update20260319renameGroupToOrganizationDbCollection,
+  "2026.03.19 renameGroupToOrganizationDbCollection":
+    update20260319renameGroupToOrganizationDbCollection,
+  "2026.03.20 moveAllS3FilesFromGroupsToOrganizations":
+    update20260320moveAllS3FilesFromGroupsToOrganizations,
 };
 
 interface UpdatesAppliedEntity {
