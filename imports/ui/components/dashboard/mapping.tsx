@@ -68,7 +68,7 @@ const course: ListOfEntities<CourseModel> = {
       {/* The sevent box should allways be the propose one, after then every 21 */}
       {PublicSettings.feature.proposeCourseBox && (index - 6) % 21 === 0 && (
         <div className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
-          <CompactPropose organization={params.group} />
+          <CompactPropose organization={params.organization} />
         </div>
       )}
       <div className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
@@ -129,16 +129,19 @@ function bodyStyle(imageUrl: string) {
     backgroundSize: "cover",
   };
 }
-const group: ListOfEntities<OrganizationModel> = {
-  route: "exploreGroups",
+const organization: ListOfEntities<OrganizationModel> = {
+  route: "exploreOrganizations",
   filter: OrganizationCollection.Filtering,
   find: Organizations.useFindFilter,
   element: ({ entity }) => (
     <div key={entity._id} className="me-2">
-      <div className="card card-group border-0 rounded-0" style={bodyStyle(entity.publicLogoUrl())}>
+      <div
+        className="card card-organization border-0 rounded-0"
+        style={bodyStyle(entity.publicLogoUrl())}
+      >
         <div className="card-body">
           <h5 className="card-title">
-            <a className="stretched-link" href={Router.path("groupDetails", entity)}>
+            <a className="stretched-link" href={Router.path("organizationDetails", entity)}>
               {entity.name}
             </a>
           </h5>
@@ -175,7 +178,7 @@ export const mapping = {
   event,
   eventModern,
   eventModernWithoutCategories,
-  group,
+  organization,
   eventsMap,
   propose,
 } as const;

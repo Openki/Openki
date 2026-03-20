@@ -9,15 +9,19 @@ async function updateAll() {
   const venues = await Venues.find(
     {},
     {
-      projection: { _id: 1, editor: 1, editGroup: 1 },
+      projection: { _id: 1, editor: 1, editOrganization: 1 },
     },
   ).fetchAsync();
 
   const updated = sum(
     await Promise.all(
-      await Users.find({}, { projection: { _id: 1, groups: 1 } }).mapAsync((u) => {
+      await Users.find({}, { projection: { _id: 1, organizations: 1 } }).mapAsync((u) => {
         const userVenues = venues
-          .filter((v) => v.editor === u._id || (v.editGroup && u.groups.includes(v.editGroup)))
+          .filter(
+            (v) =>
+              v.editor === u._id ||
+              (v.editOrganization && u.organizations.includes(v.editOrganization)),
+          )
           .map((v) => v._id);
 
         return Users.updateAsync(u._id, { $set: { venues: userVenues } });
@@ -47,10 +51,10 @@ export async function beforeVenueRemove(venue: VenueModel) {
   await Users.updateAsync(venue.editor, { $pull: { venues: venue._id } });
 
   // Remove from all organization members of edit organization
-  if (!venue.editGroup) {
+  if (!venue.editOrganization) {
     return;
   }
-  const organization = await Organizations.findOneAsync(venue.editGroup);
+  const organization = await Organizations.findOneAsync(venue.editOrganization);
   if (!organization) {
     throw new Error("Unexpected falsy: organization");
   }

@@ -50,7 +50,7 @@ export type Props = {
   _id?: string;
   categories?: string[];
   isFrame?: boolean;
-  group?: string;
+  organization?: string;
   teamOrganizations?: string[];
   hideRoleSelection?: boolean;
   hidePricePolicy?: boolean;
@@ -79,14 +79,14 @@ export function Edit(props: Props) {
   function showInternalCheckbox() {
     let internalOption;
 
-    if (!props.isFrame && props.group && user?.groups) {
+    if (!props.isFrame && props.organization && user?.organizations) {
       // Visible in organization detail page (for creation) if user is in organization
-      internalOption = user.groups.includes(props.group);
+      internalOption = user.organizations.includes(props.organization);
     } else {
       // and visible on edit if course is in a organization
       // For devs: This behavior is not consistent. But we want the creation to be as simple
       // as possible.
-      internalOption = (props.groups?.length || 0) > 0;
+      internalOption = (props.organizations?.length || 0) > 0;
     }
     return internalOption;
   }
@@ -147,8 +147,8 @@ export function Edit(props: Props) {
     if (!isNew) {
       organizations.push(...(props.teamOrganizations || []));
     } else if (!props.isFrame) {
-      if (props.group) {
-        organizations.push(props.group);
+      if (props.organization) {
+        organizations.push(props.organization);
       }
     } else if (props.teamOrganizations && props.teamOrganizations.length > 0) {
       organizations.push(...props.teamOrganizations);
@@ -424,7 +424,7 @@ export function Edit(props: Props) {
         }
       }
 
-      changes.groups = getOrganizations();
+      changes.organizations = getOrganizations();
     }
 
     changes.roles = {};

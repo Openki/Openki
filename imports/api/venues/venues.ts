@@ -22,7 +22,7 @@ export interface VenueEntity {
   /** user ID */
   editor: string;
   /** a organization that can edit the venue */
-  editGroup?: string;
+  editOrganization?: string;
   name: string;
   slug: string;
   /** HTML */
@@ -90,7 +90,7 @@ export class Venue {
     return (
       isNew /* Anybody may create a new location */ ||
       user._id === this.editor ||
-      (this.editGroup && user.groups.includes(this.editGroup)) ||
+      (this.editOrganization && user.organizations.includes(this.editOrganization)) ||
       user.privileged("admin") // Admins can edit all venues
     );
   }

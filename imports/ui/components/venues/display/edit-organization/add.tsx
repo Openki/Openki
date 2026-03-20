@@ -80,15 +80,15 @@ export function Add({ venue }: Props) {
   );
 
   const usersOrganization = filteredOrganizations.filter((organization) =>
-    user?.groups.includes(organization._id),
+    user?.organizations.includes(organization._id),
   );
   filteredOrganizations = filteredOrganizations.filter(
     // exclude from result
-    (organization) => !user?.groups.includes(organization._id),
+    (organization) => !user?.organizations.includes(organization._id),
   );
 
   return (
-    <div className="btn-group tag-btn group-tag-btn align-top">
+    <div className="btn-group tag-btn organization-tag-btn align-top">
       <button
         type="button"
         className="dropdown-toggle"
@@ -139,7 +139,10 @@ export function Add({ venue }: Props) {
         ))}
         <div className="dropdown-divider"></div>
         <div className="dialog-dropdown-btn">
-          <a href={Router.path("groupDetails", { _id: "create" })} className="btn btn-success">
+          <a
+            href={Router.path("organizationDetails", { _id: "create" })}
+            className="btn btn-success"
+          >
             {t("profile.createNewOrganization.button")}
           </a>
         </div>

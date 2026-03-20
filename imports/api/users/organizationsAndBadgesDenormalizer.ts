@@ -20,7 +20,7 @@ export async function updateOrganizationsAndBadges(
 
       const update = {
         $set: {
-          groups: organizations,
+          organizations,
           badges,
         },
       };

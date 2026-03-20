@@ -22,7 +22,7 @@ export function Remove({ venue, organizationId }: Props) {
   }
 
   return (
-    <span className="btn-group tag-btn group-tag-btn addon align-top">
+    <span className="btn-group tag-btn organization-tag-btn addon align-top">
       <button
         type="button"
         className="dropdown-toggle"

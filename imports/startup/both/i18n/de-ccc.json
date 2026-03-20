@@ -860,7 +860,7 @@
   "profile.organization.expelled": "Ausgeschlossen aus dem Tag {NAME}",
   "profile.organization.expelled.error": "Benutzer_in konnte nicht aus dem Tag gelöscht werden",
   "profile.organization.member": "Mitglied des Tags",
-  "profile.organizationMembership": "Du bist Mitglied {NUM_GROUPS, plural, =0{keiner Tags} one{dieses Tags:} other{von diesen # Tags:} }",
+  "profile.organizationMembership": "Du bist Mitglied {NUM_ORGANIZATIONS, plural, =0{keiner Tags} one{dieses Tags:} other{von diesen # Tags:} }",
   "profile.organizations": "Meine Tags",
   "profile.passwordChangeError": "Dein Passwort konnte nicht geändert werden",
   "profile.passwordChangedSuccess": "Dein Passwort wurde geändert.",

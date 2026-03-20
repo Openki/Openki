@@ -103,7 +103,7 @@ export const Api = {
     const organization = { ...originalOrganization } as typeof originalOrganization & {
       link: string;
     };
-    organization.link = Router.url("groupDetails", organization);
+    organization.link = Router.url("organizationDetails", organization);
     return organization;
   }),
   venues: await apiResponse(Venues, async (originalVenue) => {
@@ -174,7 +174,7 @@ export const Api = {
       }
 
       evr.organizations = [];
-      const organizations = ev.allGroups || [];
+      const organizations = ev.allOrganizations || [];
       for (const organizationId of organizations) {
         const organization = await Organizations.findOneAsync(organizationId);
         if (organization) {
@@ -182,7 +182,7 @@ export const Api = {
             id: organization._id,
             name: organization.name,
             short: organization.short,
-            link: Router.url("groupDetails", organization),
+            link: Router.url("organizationDetails", organization),
           });
         }
       }
@@ -250,7 +250,7 @@ export const Api = {
       }
 
       course.organizations = [];
-      const organizations = orginalCourse.groups || [];
+      const organizations = orginalCourse.organizations || [];
       organizations.forEach(async (organizationId) => {
         const organization = await Organizations.findOneAsync(organizationId);
         if (organization) {
@@ -258,7 +258,7 @@ export const Api = {
             id: organization._id,
             name: organization.name,
             short: organization.short,
-            link: Router.url("groupDetails", organization),
+            link: Router.url("organizationDetails", organization),
           });
         }
       });

@@ -34,9 +34,7 @@ export function FilterCategories({ categories, onAdd, onRemove }: Props) {
     >
       {allCategories.map((category) => (
         <React.Fragment key={category}>
-          <option className="categories-select-option" value={category}>
-            {t(`category.${category}`)}
-          </option>
+          <option value={category}>{t(`category.${category}`)}</option>
           {Categories[category].map((subcategory) => (
             <option key={subcategory} className="categories-select-sub-option" value={subcategory}>
               {t(`category.${subcategory}`)}

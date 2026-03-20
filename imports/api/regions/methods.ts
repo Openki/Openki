@@ -158,7 +158,7 @@ export const featureOrganization = ServerMethod(
     check(regionId, String);
     check(organizationId, String);
 
-    await Regions.updateAsync(regionId, { $set: { featuredGroup: organizationId } });
+    await Regions.updateAsync(regionId, { $set: { featuredOrganization: organizationId } });
   },
 );
 
@@ -167,6 +167,6 @@ export const unsetFeaturedOrganization = ServerMethod(
   async (regionId: string) => {
     check(regionId, String);
 
-    await Regions.updateAsync(regionId, { $set: { featuredGroup: "" } });
+    await Regions.updateAsync(regionId, { $set: { featuredOrganization: "" } });
   },
 );

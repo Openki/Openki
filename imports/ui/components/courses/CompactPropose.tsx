@@ -40,7 +40,7 @@ export function CompactPropose({ organization, organizationTagEvents }: Props) {
   return (
     <div
       className={`row mx-0 align-items-start course-compact is-proposal${
-        organization ? ` group-${organization}` : ""
+        organization ? ` organization-${organization}` : ""
       }`}
       ref={elementRef}
     >
@@ -50,7 +50,7 @@ export function CompactPropose({ organization, organizationTagEvents }: Props) {
             onSubmit={(event) => {
               event.preventDefault();
               Router.go("proposeCourse", undefined, {
-                query: organization ? { title, group: organization } : { title },
+                query: organization ? { title, organization } : { title },
               });
             }}
           >
@@ -77,7 +77,7 @@ export function CompactPropose({ organization, organizationTagEvents }: Props) {
         </div>
       </div>
       {!!organization && (
-        <div className="tag-group course-groups">
+        <div className="tag-group course-organizations">
           {<OrganizationTag {...organizationTagAttr(organization)} />}
         </div>
       )}

@@ -42,7 +42,7 @@ function useOptions() {
   const filterQuery = filter.toQuery();
 
   // Show internal events only when a organization or venue is specified
-  if (!filterQuery.group && !filterQuery.venue && filterQuery.internal === undefined) {
+  if (!filterQuery.organization && !filterQuery.venue && filterQuery.internal === undefined) {
     filterQuery.internal = false;
   }
 
