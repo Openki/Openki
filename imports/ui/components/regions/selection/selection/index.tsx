@@ -17,8 +17,9 @@ import { SelectionItem } from "./SelectionItem";
 import "./styles.scss";
 
 export interface Props {
-  isSplash?: boolean | undefined;
-  inNavbar?: boolean | undefined;
+  className?: string | undefined;
+  size?: "medium" | "small" | undefined;
+  autoFocus?: boolean | undefined;
   onSelect?: (() => void) | undefined;
   onClose?: (() => void) | undefined;
 }
@@ -27,7 +28,7 @@ export function RegionSelection(props: Props) {
   const { t } = useTranslation();
   const minNumberOfRegionInSelection = PublicSettings.regionSelection.minNumber;
   const [search, setSearch] = useState("");
-  const [searchHasFocus, setSearchHasFocus] = useState(!props.isSplash);
+  const [searchHasFocus, setSearchHasFocus] = useState(props.autoFocus || false);
   const [showAllRegions, setShowAllRegions] = useState(false);
   const searchElementRef = useRef<HTMLInputElement>(null);
   const dropdownToggleElementRef = useRef<HTMLButtonElement>(null);
@@ -110,12 +111,6 @@ export function RegionSelection(props: Props) {
     props.onClose?.();
   }
 
-  function inNavbarClasses() {
-    if (props.inNavbar) {
-      return "nav-item text-center col col-lg-auto";
-    }
-    return "";
-  }
   function allCourses() {
     return Regions.find()
       .fetch()
@@ -220,11 +215,11 @@ export function RegionSelection(props: Props) {
   }
 
   return (
-    <li className={`region-selection ${inNavbarClasses()}`}>
+    <li className={`region-selection ${props.className}`}>
       <form className="d-flex region-search-form" tabIndex={0} onSubmit={handleSubmit}>
         <div
           className={`input-group input-group-outline ${
-            props.isSplash ? "is-splash" : "input-group-sm p-2"
+            props.size === "small" ? "input-group-sm p-2" : ""
           }`}
         >
           <span className="input-group-text">

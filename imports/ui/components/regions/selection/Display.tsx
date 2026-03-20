@@ -3,24 +3,17 @@ import { useTranslation } from "react-i18next";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
 export function Display({
-  inNavbar,
+  className,
   onClick,
 }: {
-  inNavbar?: boolean | undefined;
+  className?: string | undefined;
   onClick: () => void;
 }) {
   const { t } = useTranslation();
   const currentRegion = useCurrentRegion();
 
-  function inNavbarClasses() {
-    if (inNavbar) {
-      return "nav-item text-center col col-lg-auto";
-    }
-    return "";
-  }
-
   return (
-    <li data-test="region-selection-display" className={inNavbarClasses()}>
+    <li data-test="region-selection-display" className={className}>
       <a
         className="nav-link text-white"
         onClick={(e) => {

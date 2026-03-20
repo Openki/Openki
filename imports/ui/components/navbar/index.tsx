@@ -214,10 +214,10 @@ export function Navbar() {
             </ul>
             <ul className="navbar-nav flex-row" data-bs-theme="light">
               <RegionSelectionWrap
-                inNavbar
-                onSelect={() => {
-                  close();
-                }}
+                className="nav-item text-center col col-lg-auto"
+                autoFocus
+                size="small"
+                onSelect={() => close()}
               />
               <LanguageSelection
                 inNavbar
