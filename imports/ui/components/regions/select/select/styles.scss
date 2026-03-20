@@ -1,6 +1,6 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
-.region-selection .dropdown-menu {
+.region-select .dropdown-menu {
   @include media-breakpoint-down(lg) {
     background: none;
     border: 0;

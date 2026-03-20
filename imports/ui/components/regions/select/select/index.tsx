@@ -12,7 +12,7 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 import { useSiteName } from "/imports/utils/getSiteName";
 
-import { SelectionItem } from "./SelectionItem";
+import { Option } from "./Option";
 
 import "./styles.scss";
 
@@ -24,7 +24,7 @@ export interface Props {
   onClose?: (() => void) | undefined;
 }
 
-export function RegionSelection(props: Props) {
+export function Select(props: Props) {
   const { t } = useTranslation();
   const minNumberOfRegionInSelection = PublicSettings.regionSelection.minNumber;
   const [search, setSearch] = useState("");
@@ -215,7 +215,7 @@ export function RegionSelection(props: Props) {
   }
 
   return (
-    <li className={`region-selection ${props.className}`}>
+    <li className={`region-select ${props.className}`}>
       <form className="d-flex region-search-form" tabIndex={0} onSubmit={handleSubmit}>
         <div
           className={`input-group input-group-outline ${
@@ -307,7 +307,7 @@ export function RegionSelection(props: Props) {
               //  here follows the "long" version, all regions that the user has access to
               <>
                 {allRegions().map((region) => (
-                  <SelectionItem
+                  <Option
                     key={region._id}
                     region={region}
                     search={search}
@@ -332,7 +332,7 @@ export function RegionSelection(props: Props) {
               // here follows the "short" version, only some regions are shown
               <>
                 {notAllRegions().map((region) => (
-                  <SelectionItem
+                  <Option
                     key={region._id}
                     region={region}
                     search={search}
@@ -346,7 +346,7 @@ export function RegionSelection(props: Props) {
                     </li>
                     <li>
                       <button
-                        data-test="regions-selection-show-more"
+                        data-test="region-select-show-more"
                         className="btn btn-link"
                         type="button"
                         onClick={handleShowAllClick}

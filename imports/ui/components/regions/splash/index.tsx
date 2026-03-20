@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import { RegionSelection } from "../selection/selection";
+import { Select } from "../select/select";
 
 import { Modal } from "/imports/startup/client/bootstrap";
 
@@ -53,7 +53,7 @@ export function Splash() {
               {t("regionsSplash.plsChooseRegion", "Please choose a region")}
             </h5>
             <div className="regions-splash-selection">
-              <RegionSelection
+              <Select
                 onSelect={() => {
                   if (!elementRef.current) {
                     return;

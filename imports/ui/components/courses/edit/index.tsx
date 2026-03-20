@@ -652,7 +652,7 @@ export function Edit(props: Props) {
                 {showRegionSelection() && (
                   <div className="mb-3">
                     <RegionSelect
-                      id="courses-edit-region-selection"
+                      id="courses-edit-region-select"
                       value={selectedRegion}
                       onChange={(value) => setSelectedRegion(value)}
                       onBlur={() => checkValidity("region")}
