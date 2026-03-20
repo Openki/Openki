@@ -63,7 +63,7 @@ export async function upload(directoryName: string, file: UploadFile) {
     await new Upload({
       // s3 is only undefined when not on server we check that already so it is
       // not a problem, so wie can ignore undefined at this place
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion 
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       client: s3!,
       params,
     }).done();
