@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 import { Mongo } from "meteor/mongo";
@@ -20,6 +20,7 @@ export interface Props {
   className?: string | undefined;
   size?: "medium" | "small" | undefined;
   autoFocus?: boolean | undefined;
+  append?: ReactNode | undefined;
   onSelect?: (() => void) | undefined;
   onClose?: (() => void) | undefined;
 }
@@ -359,6 +360,7 @@ export function Select(props: Props) {
               </>
             )}
           </ul>
+          {props.append}
         </div>
       </form>
     </li>

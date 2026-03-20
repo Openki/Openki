@@ -60,19 +60,21 @@ export function Splash() {
                   }
                   Modal.getOrCreateInstance(elementRef.current).hide();
                 }}
+                append={
+                  <button
+                    className="btn btn-primary"
+                    type="button"
+                    onClick={() => {
+                      if (!elementRef.current) {
+                        return;
+                      }
+                      Modal.getOrCreateInstance(elementRef.current).hide();
+                    }}
+                  >
+                    {t("regionSplash.ok", "Go!")}
+                  </button>
+                }
               />
-              <button
-                className="btn btn-primary"
-                type="button"
-                onClick={() => {
-                  if (!elementRef.current) {
-                    return;
-                  }
-                  Modal.getOrCreateInstance(elementRef.current).hide();
-                }}
-              >
-                {t("regionSplash.ok", "Go!")}
-              </button>
             </div>
             <div className="regions-splash-login">
               <button
