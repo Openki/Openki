@@ -807,7 +807,6 @@
   "report.placeholder": "페이지가 정상적으로 작동하지 않아요.",
   "report.report": "문제 보고하기",
   "report.sending": "문제 보고하는 중…",
-  "report.text": "무엇이 문제인지 알려주세요.",
   "report.warning.tooShort": "메시지가 너무 짧습니다! 5글자 이상으로 작성해주세요.",
   "resetPassword.confirm": "비밀번호 설정",
   "resetPassword.confirmPasswordByTyping": "확인을 위해 재입력하기",
