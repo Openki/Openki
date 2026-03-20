@@ -38,8 +38,8 @@ function Organization({ organizationId }: { organizationId: string }) {
   }
 
   return (
-    <a href={Router.path("groupDetails", organization)}>
-      {!!logo() && <img className="kiosk-logo kiosk-logo-group" src={logo()} />}
+    <a href={Router.path("organizationDetails", organization)}>
+      {!!logo() && <img className="kiosk-logo kiosk-logo-organization" src={logo()} />}
 
       {name()}
     </a>
@@ -130,8 +130,8 @@ export function KioskEventsPage({
       <div className="kiosk container-fluid">
         <div className="page-component">
           <div className="kiosk-heading">
-            {filter.group ? (
-              <Organization organizationId={filter.group} />
+            {filter.organization ? (
+              <Organization organizationId={filter.organization} />
             ) : filter.venue ? (
               <Venue venueId={filter.venue} />
             ) : (

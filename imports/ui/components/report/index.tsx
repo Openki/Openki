@@ -63,7 +63,7 @@ export function Report({ showGroupHint = false }: { showGroupHint?: boolean }) {
                     {"\n"}
                     {t(
                       "report.groupHint",
-                      "\nIf your issue is organizational, please use the discussion form or contact the organization team of this group directly.",
+                      "If your issue is organizational, please use the discussion form or contact the coordination-team of this group directly.",
                     )}
                   </>
                 )}

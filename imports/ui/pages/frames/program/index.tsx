@@ -48,7 +48,7 @@ export function ProgramPage(data: Record<string, string>) {
     control: Predicates.flag,
     hideSwitches: Predicates.flag,
     hideCategories: Predicates.flag,
-    filterGroups: Predicates.ids,
+    filterOrganizations: Predicates.ids,
   }).read(data);
 
   const date = moment(reactiveNow.get());
@@ -84,14 +84,14 @@ export function ProgramPage(data: Record<string, string>) {
       onRemoveDay: (day) => {
         setSelectedDays(selectedDays.filter((d) => !d.isSame(day)));
       },
-      availableOrganizations: filter.get("filterGroups"),
-      selectedOrganizations: filter.get("groups"),
+      availableOrganizations: filter.get("filterOrganizations"),
+      selectedOrganizations: filter.get("organizations"),
       onAddOrganization: (organization) => {
-        filter.add("groups", organization);
+        filter.add("organizations", organization);
         update();
       },
       onRemoveOrganization: (organization) => {
-        filter.remove("groups", organization);
+        filter.remove("organizations", organization);
         update();
       },
       categories: filter.get("categories"),

@@ -48,7 +48,7 @@ export async function record(courseId: string) {
 
     // Don't send to creator
     recipients: recipients.filter((r) => r !== course.createdby),
-    model: "Group.Course",
+    model: "Organization.Course",
   };
 
   await Log.record("Notification.Send", [course._id], body);
@@ -116,7 +116,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
           recipientsOrganizations.map((o) => (
             <a
               key={o._id}
-              href={Router.url("groupDetails", o, {
+              href={Router.url("organizationDetails", o, {
                 query: { campaign },
               })}
             >

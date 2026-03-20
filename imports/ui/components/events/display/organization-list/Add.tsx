@@ -53,14 +53,14 @@ export function Add({ event }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 
-  const organizationsToAdd = user && difference(user.groups, event.allGroups || []);
+  const organizationsToAdd = user && difference(user.organizations, event.allOrganizations || []);
 
   if (!organizationsToAdd) {
     return null;
   }
 
   return (
-    <div className="btn-group tag-btn group-tag-btn align-top">
+    <div className="btn-group tag-btn organization-tag-btn align-top">
       <button
         type="button"
         className="dropdown-toggle"
@@ -83,7 +83,10 @@ export function Add({ event }: Props) {
           <OrganizationToAdd key={organizationId} event={event} organizationId={organizationId} />
         ))}
         <li className="dialog-dropdown-btn">
-          <a href={Router.path("groupDetails", { _id: "create" })} className="btn btn-success">
+          <a
+            href={Router.path("organizationDetails", { _id: "create" })}
+            className="btn btn-success"
+          >
             {t("profile.createNewOrganization.button")}
           </a>
         </li>

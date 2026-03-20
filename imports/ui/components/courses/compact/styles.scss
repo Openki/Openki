@@ -92,14 +92,14 @@
 
 // ** Organizationlist
 // ========================================================================================
-.course-groups {
+.course-organizations {
   position: absolute;
 
   /* Move over stretched-link */
   z-index: 2;
 }
 
-.course-compact > .course-groups {
+.course-compact > .course-organizations {
   bottom: $course-border-width;
   inset-inline-end: $course-border-width;
   padding: 0;

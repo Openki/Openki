@@ -393,8 +393,8 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       } else {
         // We have this 'secret' feature where you can set a organization ID
         // in the URL to assign a organization to the event on creation
-        if (searchParams.group) {
-          editevent.groups = [searchParams.group];
+        if (searchParams.organization) {
+          editevent.organizations = [searchParams.organization];
         }
       }
     }

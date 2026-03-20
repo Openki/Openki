@@ -27,7 +27,7 @@ export function OrganizationSection({ organizations }: { organizations: Organiza
       </ul>
       <a
         className="btn btn-add"
-        href={Router.path("groupDetails", {
+        href={Router.path("organizationDetails", {
           _id: "create",
         })}
       >

@@ -86,7 +86,7 @@ RouterAsync.route("home", {
   path: "/",
   template: "dashboardPage",
   yieldRegions: {
-    featuredGroup: { to: "aboveContent" },
+    featuredOrganization: { to: "aboveContent" },
   },
   async onRun() {
     await import("/imports/ui/pages/dashboard");
@@ -105,7 +105,7 @@ RouterAsync.route("search", {
   path: "search",
   template: "findPage",
   yieldRegions: {
-    featuredGroup: { to: "aboveContent" },
+    featuredOrganization: { to: "aboveContent" },
   },
   async onRun() {
     await import("/imports/ui/pages/find");
@@ -131,17 +131,17 @@ RouterAsync.route("calendar", {
   },
 });
 
-RouterAsync.route("exploreGroups", {
-  path: "/explore/groups",
-  template: "exploreGroupsPage",
+RouterAsync.route("exploreOrganizations", {
+  path: "/explore/organizations",
+  template: "exploreOrganizationsPage",
   async onRun() {
     await import("../../ui/pages/explore/organizations");
   },
 });
 
-RouterAsync.route("groupDetails", {
-  path: "group/:_id/:short?",
-  template: "groupDetailsPage",
+RouterAsync.route("organizationDetails", {
+  path: "organization/:_id/:short?",
+  template: "organizationDetailsPage",
   async onRun() {
     await import("../../ui/pages/organization-details");
   },
@@ -250,7 +250,7 @@ RouterAsync.route("proposeCourse", {
 
     course.name = query.title || "";
 
-    return { ...course, group: query.group, singleEvent: query.singleEvent === "1" };
+    return { ...course, organization: query.organization, singleEvent: query.singleEvent === "1" };
   },
 });
 
@@ -963,9 +963,9 @@ RouterAsync.route("adminPanel", {
   },
 });
 
-RouterAsync.route("featureGroup", {
-  path: "admin/feature-group",
-  template: "adminFeatureGroupPage",
+RouterAsync.route("featureOrganization", {
+  path: "admin/feature-organization",
+  template: "adminFeatureOrganizationPage",
   async onRun() {
     await import("../../ui/pages/admin/feature-organization");
   },

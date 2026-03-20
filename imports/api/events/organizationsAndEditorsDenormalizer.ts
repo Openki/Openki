@@ -22,7 +22,7 @@ export async function updateOrganizationsAndEditors(
         throw new Error(`Missing course ${event.courseId} for event ${event._id}`);
       }
 
-      courseOrganizations = course.groups;
+      courseOrganizations = course.organizations;
       editors = union(editors, course.editors);
     } else {
       editors.push(event.createdBy);
@@ -36,10 +36,10 @@ export async function updateOrganizationsAndEditors(
     // Past events keep their list of organizations even if it changes for the course
     const historical = event.start < new Date();
     if (historical) {
-      update.allGroups = union(event.groups, event.courseGroups);
+      update.allOrganizations = union(event.organizations, event.courseOrganizations);
     } else {
-      update.courseGroups = courseOrganizations;
-      update.allGroups = union(event.groups, courseOrganizations);
+      update.courseOrganizations = courseOrganizations;
+      update.allOrganizations = union(event.organizations, courseOrganizations);
     }
 
     Events.updateAsync({ _id: event._id }, { $set: update });

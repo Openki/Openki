@@ -5,12 +5,12 @@ import { check } from "meteor/check";
 import { Organizations } from "../api/organizations/organizations";
 import { UserModel } from "/imports/api/users/users";
 
-// The code to update the groups and teamOrganizations field must do the same
+// The code to update the organizations and teamOrganizations field must do the same
 // thing for Courses and Events. So we parameterize the methods
 // with a collection passed as argument on construction.
 
 export interface OrganizationPromoterEntity {
-  groups: string[];
+  organizations: string[];
   teamOrganizations: string[];
 }
 
@@ -25,7 +25,7 @@ export type OrganizationPromoters = Mongo.Collection<
 >;
 
 /**
- * Create an update method for the groups field
+ * Create an update method for the organizations field
  * @param collection The collection the changes will be applied to when the method is called
  */
 export function promote(collection: OrganizationPromoters) {
@@ -58,14 +58,14 @@ export function promote(collection: OrganizationPromoters) {
       if (!mayPromote) {
         throw new Meteor.Error(401, "not permitted");
       }
-      update.$addToSet = { groups: organization._id };
+      update.$addToSet = { organizations: organization._id };
     } else {
       // The user is allowed to remove the organization if she is part of the organization
       // or if she has editing rights on the course
       if (!mayPromote && !mayEdit) {
         throw new Meteor.Error(401, "not permitted");
       }
-      update.$pull = { groups: organization._id, teamOrganizations: organization._id };
+      update.$pull = { organizations: organization._id, teamOrganizations: organization._id };
     }
 
     await collection.updateAsync(doc._id, update);

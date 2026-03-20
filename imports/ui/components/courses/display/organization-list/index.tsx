@@ -44,7 +44,7 @@ export function OrganizationList({ course }: Props) {
 
   if (isRegionLoading()) return null;
 
-  const organizations = course.groups.filter(
+  const organizations = course.organizations.filter(
     (organizationId) =>
       !(
         // hide organization where are from the region set
@@ -65,7 +65,7 @@ export function OrganizationList({ course }: Props) {
           <React.Fragment key={organizationId}>
             <OrganizationTag organizationId={organizationId} isTeam={isTeam} />
             {isTeam && (
-              <div className="tag group-tag addon">
+              <div className="tag organization-tag addon">
                 <i
                   className="fa-solid fa-bullhorn fa-fw"
                   title={t(
@@ -80,7 +80,7 @@ export function OrganizationList({ course }: Props) {
             )}
 
             {(!!user?.mayPromoteWith(organizationId) || course.editableBy(user)) && (
-              <div className="btn-group tag-btn group-tag-btn addon align-top">
+              <div className="btn-group tag-btn organization-tag-btn addon align-top">
                 <button
                   type="button"
                   className="dropdown-toggle"

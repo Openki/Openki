@@ -25,7 +25,7 @@ export function CalendarPage(data: Record<string, string>) {
   const date = region?.calendarStartDate || new Date();
   filter.clear().add("start", moment(date).startOf("week").toISOString()).read(data);
   // Show internal events only when a organization or venue is specified
-  if (!data.group && !data.venue && data.internal === undefined) {
+  if (!data.organization && !data.venue && data.internal === undefined) {
     filter.add("internal", "0");
   }
   filter.add("region", region?._id || "all");

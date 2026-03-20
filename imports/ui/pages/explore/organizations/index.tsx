@@ -39,12 +39,15 @@ export function OrganizationsPage() {
           {organizations.map((organization) => (
             <div key={organization._id} className="col">
               <div
-                className="card card-group border-0 rounded-0 mx-auto"
+                className="card card-organization border-0 rounded-0 mx-auto"
                 style={bodyStyle(organization.publicLogoUrl())}
               >
                 <div className="card-body overflow-hidden">
                   <h5 className="card-title">
-                    <a className="stretched-link" href={Router.path("groupDetails", organization)}>
+                    <a
+                      className="stretched-link"
+                      href={Router.path("organizationDetails", organization)}
+                    >
                       {organization.name}
                     </a>
                   </h5>
@@ -63,4 +66,4 @@ export function OrganizationsPage() {
 
 import "./template.html";
 
-Template.registerHelper("ExploreGroupsPage", () => OrganizationsPage);
+Template.registerHelper("ExploreOrganizationsPage", () => OrganizationsPage);

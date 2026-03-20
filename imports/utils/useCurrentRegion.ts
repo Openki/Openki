@@ -22,8 +22,8 @@ export function useFeaturedOrganization() {
   return useTracker(() => {
     const currentRegion = Regions.currentRegion();
 
-    if (currentRegion && currentRegion.featuredGroup) {
-      return Organizations.details.subscribe(currentRegion.featuredGroup)();
+    if (currentRegion && currentRegion.featuredOrganization) {
+      return Organizations.details.subscribe(currentRegion.featuredOrganization)();
     }
     return undefined;
   });

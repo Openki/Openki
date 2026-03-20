@@ -65,7 +65,7 @@ export interface OrganizationMemberEntity {
 }
 
 export type OrganizationEntityDashboard = {
-  entity: "group" | "course" | "courseWithoutPropose" | "event" | "eventsMap" | "propose";
+  entity: "organization" | "course" | "courseWithoutPropose" | "event" | "eventsMap" | "propose";
   title?: string;
   query?: string;
   showAll?: {
@@ -151,7 +151,7 @@ export class OrganizationsCollection extends Mongo.Collection<
   OrganizationModel
 > {
   constructor() {
-    super("Groups", {
+    super("Organizations", {
       transform(tenant) {
         return assignIn(new Organization(), tenant);
       },

@@ -64,16 +64,16 @@ export function UserUnsubscribedHistoryEntry({ user, role }: { user: string; rol
 
 export function OrganizationPromoteHistoryEntry({
   user,
-  group,
+  organization,
   enable,
 }: {
   user: string;
-  group: string;
+  organization: string;
   enable: boolean;
 }) {
   const { t } = useTranslation();
   const tOptions = {
-    ORGANIZATION: <OrganizationTag organizationId={group} full={true} />,
+    ORGANIZATION: <OrganizationTag organizationId={organization} full={true} />,
     USER: (
       <>
         <ProfileLink userId={user} />
@@ -100,16 +100,16 @@ export function OrganizationPromoteHistoryEntry({
 
 export function OrganizationTeamHistoryEntry({
   user,
-  group,
+  organization,
   enable,
 }: {
   user: string;
-  group: string;
+  organization: string;
   enable: boolean;
 }) {
   const { t } = useTranslation();
   const tOptions = {
-    ORGANIZATION: <OrganizationTag organizationId={group} full={true} />,
+    ORGANIZATION: <OrganizationTag organizationId={organization} full={true} />,
     USER: (
       <>
         <ProfileLink userId={user} />

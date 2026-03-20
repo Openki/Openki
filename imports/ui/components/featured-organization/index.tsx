@@ -22,19 +22,19 @@ function FeaturedOrganizationBody(props: { organizationId: string }) {
   }
 
   return (
-    <div className="featured-group-body">
+    <div className="featured-organization-body">
       {!!featuredOrganization.logoUrl && (
-        <div className="featured-group-body-logo">
-          <img className="featured-group-logo" src={featuredOrganization.publicLogoUrl()} />
+        <div className="featured-organization-body-logo">
+          <img className="featured-organization-logo" src={featuredOrganization.publicLogoUrl()} />
         </div>
       )}
 
-      <div className="featured-group-body-content">
-        <div className="featured-group-name">
+      <div className="featured-organization-body-content">
+        <div className="featured-organization-name">
           {featuredOrganization.name} ({featuredOrganization.short})
         </div>
-        <div className="featured-group-links">
-          <a href={Router.path("groupDetails", featuredOrganization)}>
+        <div className="featured-organization-links">
+          <a href={Router.path("organizationDetails", featuredOrganization)}>
             {t(
               "featuredOrganization.coursesOnOpenki",
               "Check out the courses of {ORGANIZATION} on {SITENAME}!",
@@ -55,20 +55,20 @@ export function FeaturedOrganization() {
 
   const currentRegion = useCurrentRegion();
 
-  if (!currentRegion || !currentRegion.featuredGroup) {
+  if (!currentRegion || !currentRegion.featuredOrganization) {
     return null;
   }
 
   return (
     <div className="container">
-      <div className="featured-group">
-        <div className="featured-group-header">
+      <div className="featured-organization">
+        <div className="featured-organization-header">
           <i className="fa-solid fa-star fa-fw" />{" "}
           {t("featuredOrganization.heading", "Featured organization in {REGION}", {
             REGION: currentRegion.name,
           })}
         </div>
-        <FeaturedOrganizationBody organizationId={currentRegion.featuredGroup} />
+        <FeaturedOrganizationBody organizationId={currentRegion.featuredOrganization} />
       </div>
     </div>
   );
@@ -78,4 +78,4 @@ export function FeaturedOrganization() {
 
 import "./template.html";
 
-Template.registerHelper("FeaturedGroup", () => FeaturedOrganization);
+Template.registerHelper("FeaturedOrganization", () => FeaturedOrganization);

@@ -93,8 +93,8 @@ export function CourseCompact({ course, organizationTagEvents, categorieTagEvent
       classes.push(`category-${category}`);
     });
 
-    course.groups?.forEach((organization) => {
-      classes.push(`group-${organization}`);
+    course.organizations?.forEach((organization) => {
+      classes.push(`organization-${organization}`);
     });
 
     classes.push(`region-${course.region}`);
@@ -120,7 +120,7 @@ export function CourseCompact({ course, organizationTagEvents, categorieTagEvent
     };
   }
 
-  const organizations = course.groups.filter(
+  const organizations = course.organizations.filter(
     (organizationId) =>
       !(
         // hide organization where are from the region set
@@ -168,7 +168,7 @@ export function CourseCompact({ course, organizationTagEvents, categorieTagEvent
         <CourseCompactRoles course={course} />
       )}
       {!isRegionLoading() && (
-        <div className="tag-group course-groups">
+        <div className="tag-group course-organizations">
           {organizations.map((organization) => (
             <OrganizationTag key={organization} {...organizationTagAttr(organization)} />
           ))}
