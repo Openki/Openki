@@ -978,6 +978,7 @@
   "register.warning.notAllowedCharacter": "{CHARACTERS} not allowed in username.",
   "register.warning.userExists": "This username is already in use. Please choose another one.",
   "report.confirm": "Your report was sent. A human will try to find an appropriate solution.",
+  "report.groupHint": "If your issue is organizational, please use the discussion form or contact the organization team of this tag directly.",
   "report.notSent": "Your report could not be sent",
   "report.open": "Report problem",
   "report.placeholder": "My hovercraft is full of eels.",
