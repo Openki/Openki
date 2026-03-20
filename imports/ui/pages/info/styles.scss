@@ -11,6 +11,12 @@
     margin-top: 30px;
   }
 
+  p + p,
+  p + ul,
+  ul + p {
+    margin-top: -2em;
+  }
+
   h3 {
     border-bottom: 1px solid $blue-lighter;
     cursor: pointer;
@@ -36,11 +42,20 @@
     padding: 1em;
   }
 
+  ul {
+    padding-left: 2.2em;
+  }
+
   h2,
   h3 {
     ~ p,
     ~ ul {
       display: none;
     }
+  }
+
+  h3 + p,
+  h3 + ul {
+    margin-top: -0.5em;
   }
 }
