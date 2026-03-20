@@ -14,7 +14,6 @@ import { create as coursesDataCreate } from "./courses/create";
 import { create as eventsDataCreate } from "./events/create";
 import { generate as eventsDataGenerate } from "./events/generate";
 import { create as groupsDataCreate } from "./groups/create";
-import { create as infoPagesDataCreate } from "./infoPages/create";
 import { create as regionsDataCreate } from "./regions/create";
 import { create as venuesDataCreate } from "./venues/create";
 import { generate as commentsDataGenerate } from "./comments/generate";
@@ -58,10 +57,6 @@ export const create = ServerMethod(
     }
 
     try {
-      if ((await InfoPages.countDocuments()) === 0) {
-        await infoPagesDataCreate();
-      }
-
       await usersDataCreate();
 
       if ((await Groups.countDocuments()) === 0) {
