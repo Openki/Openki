@@ -17,7 +17,7 @@ export async function update() {
     }
     delete user.groups;
 
-    updated += await Venues.updateAsync(user._id, user);
+    updated += await Users.updateAsync(user._id, user);
   }
 
   for (const originalVenue of await Venues.find().fetchAsync()) {
