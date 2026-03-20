@@ -1,186 +1,163 @@
 # FAQ
+
 ## General
 
 ### What is Openki?
-
-Openki is an open education platform. Courses can be proposed, discussed, developed, organized and published. The focus is on the promotion of self-organization, the bringing together of people, groupings and initiatives, and ensure a barrier-free exchange of experiences and knowledge. The courses are accessible to all, regardless of their financial situation. The organization behind it is non-profit and Open Source.
+Openki is an open education platform where courses can be proposed, discussed, developed, organized, and published. The focus is on promoting self-organization, bringing people and initiatives together, and ensuring a barrier-free exchange of experience and knowledge. The courses are accessible to all, regardless of their financial situation. The organization behind Openki is non-profit and the software is open source.
 
 Find out more about [Openki and its philosophy](https://about.openki.net/) or read about [the basic concepts behind the Openki platform](https://about.openki.net/?page_id=1216).
 
+### What does the name "Openki" actually mean?
+Openki is a Ukrainian word (опеньки) referring to a type of fungus commonly known as the honey fungus or [*Armillaria mellea*](https://en.wikipedia.org/wiki/Armillaria_mellea).
+The name refers specifically to the [mycelium](https://en.wikipedia.org/wiki/Mycelium), the part of a fungus that is usually not visible when we think of a “mushroom.” It consists of thousands of thin threads forming a dense underground network, which in the case of Openki can span several square kilometers and weigh hundreds of tons.
+Many plants are connected through these mycelial networks, relying on them for germination, nutrient exchange, and even communication. Above the surface, the mushrooms—the "fruiting bodies"—pop up unexpectedly and unpredictably.
 
-### What does the name "Openki" actually means?
-
-Openki is an Ukranian word (опеньки), and is part of a mushroom or fungus commonly known as honey fungus. or [Armillaria mellea](https://en.wikipedia.org/wiki/Armillaria_mellea).
-The name Openki refers to the [mycelium](https://en.wikipedia.org/wiki/Mycelium) of this fungus, which is the part of a fungus not normally considered when talking about a "mushroom". It consists of thousands of thin threads that form a dense net below ground. In the case of Openki, this can be as large as several square kilometers and hundreds of tons.
-
-Many plants are connected by such mycelial threads. They need these to germinate, for food exchange or even to communicate with each other. Above the earth's surface, the fruit bodies of the mushrooms pop up unexpectedly and unpredictably.
-
-An openki is fed on both living shrubs and trees, as later on from their dead organic material. On the philosophical level, the networks of Openki mycelium are a metaphor for an alternative model of education and knowledge exchange. It forms the hierarchical branch and root structure of the ancient Greek knowledge tree, in which subject areas are separated and subordinated, and connects them to become a horizontal network of knowledge.
-
+Openki (the fungus) feeds on both living shrubs and dead organic material. Philosophically, the mycelium serves as a metaphor for a transformation to an alternative model of education: it composts the hierarchical branch-and-root structure of the "ancient Greek tree of knowledge"—where disciplines are separated and subordinated—and connects them into a horizontal interconnected network of knowledge.
 
 ### Who owns Openki?
-
-Openki belongs to me, to you and to all who participate in it. The application is open source and is freely available under the [GNU AGPL license](https://www.gnu.org/licenses/agpl-3.0.de.html). Behind Openki is the collectively organized non-profit association "KOPF", which has been developing Openki during the last years.
+Openki belongs to you, to me, and to everyone who participates. The application is open source and freely available under the [GNU AGPL license](https://www.gnu.org/licenses/agpl-3.0.de.html). Openki is maintained by the collectively organized non-profit association "KOPF," which has been developing the platform over the past years.
 
 ### Is Openki a social network?
+Yes and no. We provide a tool for self-organization, and social interaction is naturally part of that. However, unlike typical social media platforms, we want you to spend as little time as possible on our website and instead use that time to organize real-world learning experiences with great people.
 
-Yes and no. We provide a tool for self-organization. Social contacts naturally belong to this. Comparing to other providers of social media, however, we want you to stay hooked on our web site only for a little time, and then invest as much time as possible to organize collective learning processes in the real world with nice people, like you.
+### I have an idea for a technical improvement. Can I contribute?
+That’s great! We need your feedback to make Openki even better. We have dozens of ideas we want to work on, but we currently limit ourselves to the most essential features to keep Openki easy to use and maintainable within our capacity. Nevertheless, we are always happy to receive feedback or feature proposals that could further simplify self-organization.
 
+Both the software and its development process are fully transparent. You can view or join discussions on our next technical steps in our [issue tracker](https://gitlab.com/Openki/Openki/issues). Alternatively, you can send your suggestions via email. Also, please upvote issues and features you care about; it helps us prioritize our roadmap and decide what to work on next.
 
-### I have an idea on how Openki could be technically improved. Can I contribute my ideas?
-Nice! To make Openki even better, we need your feedback. We have also dozens of ideas that we find important, and we want to work on. But we are currently limiting ourselves to the most necessary functions because of our limited capacity to keep Openki as easy to understand as possible.
-Nevertheless, we are aware that there are several additional features that could simplify the self-organization promoted by Openki, and thus we are always very glad to receive feedback.
-
-Not only Openki's software is open-source, but its development and organization is also fully transparent. This means, for example, that you can see and participate in the discussion on our next technical steps in our [issue tracker](https://gitlab.com/Openki/Openki/issues). Alternatively, you can send an email with your suggestions to: openki-core [at] lists.xiala.net.
-
-You can also help translate Openki using the [online translator](https://gitlab.com/Openki/Openki/-/wikis/translation).
-
+You can also help translate Openki using our [online translation tool](https://gitlab.com/Openki/Openki/-/wikis/translation).
 
 ### Who administers the Openki.net website?
-The administration and the technical maintenance (clean up, recognize problems and solve them, make improvements and much more) is done by a group of administrators working on a voluntary base mostly in Zurich but also in other Swiss cities. The goal is to set up similar administration groups for all the different resiong where Openki is (or will be) active.
+Administration and technical maintenance (addressing user issues, cleanup, bug fixing, and improvements) are handled by a volunteer-based collective. Our goal is to establish similar local admin collectives for each region where Openki is active.
 
 
 ## The Openki roles
 
-### What is a participant?
-A participant is any person who participates in a course. In addition to stay informed and join the various events, participants can also take over the roles of Mentor or Host or being part of the coordination-team.
+### What is an interested User?
+A User is "interested" when they join a course. Beyond joining events and staying informed, interested can also take on the roles of Mentor, Host, or join the coordination team.
 
 ### What is a Mentor?
-Mentors are expected to have a certain level of knowledge and / or experience on the topic of the course, and thus help to guide the participants through the course. They are usually responsible for the preparation and follow-up of a course.
+Mentors have a certain level of knowledge and/or experience in a topic and guide participants through the learning process. They are usually responsible for preparation and follow-up.\
+Unlike teachers, mentors are typically not formally trained for this role but contribute based on their experience and knowledge.
 
-### What is an O-Team (organization team)?
-The O-Team of a specific course has the right to administer this course on the Openki platform. For example, add new "Events", change the course description and invite other participants to the O-Team. Once someone proposes a course on Openki, they automatically become the first person of the O-Team.
+### What is a (Coordination Team)?
+The Coordinators are responsible for coordinating inside a course (creating events, editing descriptions, making polls). The person who proposes a course automatically becomes the first member of the Coordination-Team and can add others.
 
 ### What is a host?
-A "host" is the person who takes care of the place where a course is held: she has access to the event room, informs about its availability in advance, could be the owner of the place or a contact person to the owner, and is responsible for ensuring that the respective "house rules" are communicated and adhered to.
+A host is responsible for the venue where a course takes place. This includes access to the space, coordinating availability, acting as a contact person, and ensuring that house rules are communicated and respected.
 
-### What is a organization?
-
-Organizations are already existing organizations, communities, etc., which use Openki to organize their courses.
+### What is an organization?
+Organizations are existing communities or associations that use Openki to organize and publish their courses. They can just promote courses and they can also help organizing them when they are granted coordination rights.
 
 
 ## Courses
 
 ### How do I organize my first Openki course meeting?
+You can find detailed tips and instructions in this [PDF guide](https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf).
 
-Details and tips can be found in our <a href="https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf">PDF</a>.
+### What is an Openki course?
+An Openki course is more than just a traditional classroom setting. It involves discussions regarding content and goals, finding mentors, and organizing events. Like a ship, all participants can help steer the course and influence its direction. Formats can range from lectures and workshops to learning groups, reading circles, or alternative education projects.
 
-### What is an Openki-course?
+A course typically begins as a "suggestion" — an idea, a wish, or a question. Others can join, mentors may emerge, and a venue may be found. Once an event is scheduled, the course “takes place.” Courses can be one-time events or recurring series.
 
-An Openki course is much more than a typical "classroom" course, and it can include discussions on the participants' content and goals, as well as the engagement of mentors and the organization of events. Like a ship, all participants can control the course and continuously influence and change the goal. The types of possible courses could range from lectures, traditional lessons, workshops, discussion and working groups to alternative education projects and reading groups.
-
-An Openki course can start simply as a "suggestion": Somebody introduces a concept - an idea, a wish, a question. Other people can "participate" in the course, which means to stay informed and join when the course takes place. A mentor might appear in and and a venue offered by someone else. As soon as a course leads to its first planned event, "it takes place". A course can be one-time or repeated, build on other courses, or stand alone.
-
-### Which courses can be organized?
-Any type of course: from cooking to nuclear physics and modern dance to Rainer Maria Rilke. The courses are divided into categories (science, sports, music, etc.). Discriminatory content, in particular sexist and racist, is excluded.
+### What courses can be organized?
+Any topic is welcome: from cooking to nuclear physics, modern dance to literature. Courses are categorized (science, sports, music, etc.). Discriminatory content (e.g. sexist or racist) is strictly excluded.
 
 ### Can courses cost something?
-Yes, but all prices are intended only as a guide. As a desired donation, so to speak. This means that everyone may give more or less than the suggested price, and so can participate. Only the costs (material, space, access routes ...) of a course can be fixed.
+Yes, but prices are considered suggested contributions (donations). Participants may pay more or less. Only actual costs (materials, space, travel, etc.) may be fixed.
 
-### I want to host a course but have no space ...
-Depending on the region, Openki has a short or long list of available venues. All participants can also advertise their spaces - from factory to living room to garden - so that they can be found as a venue. How you get in touch with those responsible for the venue is different from venue to venue. The easiest way is to write to the user who has already written or already hosted an event in the corresponding venue (check the recent and/or past events in the venue's page).
+### I want to host a course but have no space...
+Depending on the region, Openki has a list of available venues. All users can also list their own spaces—from factories and living rooms to gardens—to be used as venues. To use a space, contact the person listed as the host or someone who has previously organized an event at that location.
 
 ### When does a course take place?
-As soon as someone proposes a course, this is published as a "suggestion" and appears with a dashed line in the course overview.
+As soon as someone proposes a course, it is published as a "suggestion" and appears with a dashed border in the course overview.\
+For a course to appear in the calendar, a member of the Coordination-Team must create an "Event". This is done after the date, time, and location have been defined.
 
-However, in order for the course to appear in the calendar, someone from the O-Team must create an event. This is done after all the details (mentor, place, date, etc.) have been defined.
+### How binding is the registration for a course?
+The level of commitment required depends on the specific course and should be stated in the course description.
 
-### How can I register for a course?
-The exact registration process for a course depends on the course and the O-team and is communicated in the course description.
+### Where do courses take place?
+Everywhere! The Course is responsible for finding a suitable venue and a [Host](#what-is-a-host). Users are encouraged to share their own spaces. We are constantly working on expanding the list of available venues in every region.
 
-### Where can I find courses?
-Everywhere where people come. The participants themselves are responsible for finding a suitable venue and a ["host"](# what-is-a-host) for their course. All can advertise their rooms - from factory to living room to garden - so that they can be found as a venue. How you get in touch with those responsible for the room varies from room to room. We are working on a list of all possible venues in your region.
+### Can I archive course materials?
+Currently, there is no dedicated system for archiving files. However, discussions and links remain visible in the course description, and past courses stay accessible.
 
-### Can I archive course materials, documentation, or experience reports and use them at a later date?
-There is currently no possibility to collect course materials and document the course. The goal is that the content of a course for further courses is prepared. Currently, however, the discussion, as well as shared links can be viewed in the course description. Therefore, past courses are still to be found in the course overview.
+### In what language are the courses held? Why is the course description not translated?
+Courses are typically held in the language in which they are published. Multilingual courses will be listed as such in their descriptions.
 
-### In which language are the courses taking place? Why is the course description not translated?
-Normally, courses are held in the language in which they are published. Multilingual courses are offered in several languages.
+### Why are past courses still visible?
+The idea is that a topic is never truly "finished." An idea may remain relevant, and users can reactivate a course or access its documentation at any time. Active courses with upcoming events can be found in the [Calendar](https://openki.net/calendar).
 
-### Why do I find numerous courses in the course overview which have already passed?
-The idea behind it is that a course is never really finished; An idea or a topic can remain current in the future. Thus users can develop a course at any time or access the documentation of it. The current courses with upcoming "Events" can be found in [Calendar](https://openki.net/calendar).
-
-
-### I really need this tool for the organization of my course!
-Many tools are already available on the web freely and humans can link them to Openki simply by link in the course description. Some examples:
-
-* Create your own wiki: [https://www.wikispaces.com/content/classroom](https://www.wikispaces.com/content/classroom)
-* Compose texts: [Etherpad](https://etherpad.wikimedia.org) or [Hackpad](https://hackpad.com)
-* Simple voting: [Dudle](https://dudle.inf.tu-dresden.de/) or [Framadate](https://framadate.org)
-* More complex choices in a group: [https://loomio.org](https://loomio.org)
-* Upload files: [https://wetransfer.com/](https://wetransfer.com/) or self-host a [NextCloud](https://nextcloud.com) instance.
+### I need a specific tool to organize my course!
+Many free tools are available online and can be linked directly in your course description. For example:
+* Create a wiki: [https://www.wikispaces.com/content/classroom](https://www.wikispaces.com/content/classroom)
+* Collaborative writing: [Etherpad](https://etherpad.wikimedia.org) or [Hackpad](https://hackpad.com)
+* Simple voting/scheduling: [Dudle](https://dudle.inf.tu-dresden.de/) or [Framadate](https://framadate.org)
+* Group decision making: [Loomio](https://loomio.org)
+* File sharing: [WeTransfer](https://wetransfer.com/) or a self-hosted [NextCloud](https://nextcloud.com) instance.
 
 
 ## Mentoring
 
 ### What is a mentor?
-See ["What is a Mentor in?"](#what-is-a-mentor)
+See ["What is a Mentor?"](#what-is-a-mentor)
 
 ### Who can be a mentor?
-All users can register for courses as mentors.
+Any user can sign up to be a mentor for a course.
 
 ### Does a course always need a mentor?
-No. There are also courses, with all participants participating equally in the learning process without needing a particular Mentor.
+No. Some courses function perfectly well with all participants sharing knowledge equally without a designated mentor.
 
-### How do I know if a Mentor is good?
-If you are unsure, contact the person in advance. Handle according to a healthy human understanding.
+### How do I know if a Mentor is reliable?
+If you are unsure, contact the person in advance and use your best judgment. 
 
-### Why can not I ask for a fixed price as a mentor?
-
-We believe that education (and thus the events on Openki) should be accessible to all - regardless of one's bank account and income.
+### Why can't I charge a fixed fee as a mentor?
+Openki aims to make education accessible to everyone, regardless of financial situation.
 
 
 ## Organizations
 
 ### What are organizations?
-Organizations are already existing organizations, communities, etc. that use Openki to organize their courses.
+Organizations can be any entity that uses Openki to help their community to collaboratively organize knowledge exchange or manage and promote their educational offerings.
 
-### How can we register as a organization with Openki?
-Each user can create a new organization under their account settings. [https://openki.net/organization/create](https://openki.net/organization/create)
+### How can we register our organization?
+Any user can create an organization profile via their account settings: [https://openki.net/organization/create](https://openki.net/organization/create)
 
-### Can we as a organization show openki courses on our own website?
-Yes! You can find the different views for embedding for your organization in the organization settings. More info about these views (also called _Frames_) can be found in [the Openki wiki](https://gitlab.com/Openki/Openki/wikis/Frames)
+### Can we show Openki courses on our own website?
+Yes! Embedding options (iframes links) are available in the organization settings.. More information is available in the [Openki wiki](https://gitlab.com/Openki/Openki/wikis/Frames).
+
 
 ## Safety
 
-### How is abusive behaviour through Openki prevented? for example discrimination, racism etc.
-Identifying and addressing discriminating content is the responsibility of all users; moderation will be carried out by the administration, which will ensure full transparency regarding censored content (never happened until today).
+### How is abusive behavior prevented?
+Identifying and reporting discriminatory harmful content is the responsibility of all users. The administration handles moderation and ensures transparency regarding any content that is removed.
 
-### How do I know if I'm in danger when attending a course?
-If you are unsure, contact the person in advance and handle according to common sense.
+### How do I know if I'm safe attending a course?
+Contact the organizer in advance if you have concerns. Use common sense and, if you feel uneasy, avoid attending alone.
 
-### How does Openki protect the privacy of its users?
-Openki is keen to meet a wide variety of privacy requirements. These include modern encryption techniques as well as personalized privacy settings.
+### How does Openki protect user privacy?
+Openki utilizes modern encryption and offers personalized privacy settings. We do not sell user data, we do not track your behavior, and we do not allow third parties to track your interests on our platform.
 
-Openki does not sell user data to companies, it does not track your behavior and it does not let other companies track your behavior and interests.
-
-### How safe is the Openki webpage?
-Openki.net is SSL encrypted by default. This is the same technology that your online banking uses. But your course participation, for example, is visible to other users. So you can choose not to use your real name in Openki if you want to avoid that.
-
+### How secure is the Openki website?
+Openki.net uses SSL/TLS encryption by default—the same technology used for online banking. However, your participation in courses is visible to others, so using a pseudonym is possible.
 
 
 ## Regions
 
 ### What is an Openki Region?
-
-Every Openki course and organization belongs to a certain (geographic) region, typically a city or a village. Visiting the Openki.net page one can choose to explore the courses of a selected region or of all regions at the same time.
+Every course, event and venue belongs to a geographic region, such as a city or village. You can choose to browse courses in a specific region or view all regions simultaneously.
 
 ### How can I create a new Openki Region?
+Our long-term vision is for Openki to be a global platform where people can add their own regions or even self-host the software that connects with other Openki instances.\
+Currently, we add new regions for Openki.net upon request from individuals who demonstrate a commitment to activating a local community and ensuring it remains free of spam and aligned with Openki's values.
 
-It is part of our long-term vision to make Openki an open platform that allows people in different areas to use it through the “region” feature or even by self-hosting the Openki software on their own servers.
+We have an e-mail list for [region-admins](https://lists.lists.openki.net/mailman/listinfo/region-admins) to exchange ideas and solve common issues. We are also developing specific "region admin" tools to allow for local moderation and management.
 
-Today we only create new regions at the Openki.net platform upon requests from individuals that show a certain level of commitment to activate an Openki community in their region and make sure it is functioning properly (not extensive spam or abuses take place) and according to Openki's core values.
-
-For this, we have recently established an e-mail list, [region-admins@lists.openki.net](https://lists.lists.openki.net/mailman/listinfo/region-admins), with all “region admins” to exchange ideas and ways to resolve common issues.
-
-We are also working to implement a special region admin functionality in the platform, which will allow region administrators to delete or edit region courses, block misbehaving users, give administrator rights to other people from the same region, etc.
-
-### How can I contact the administrator of my region?
-
-For now, region admins cannot be contacted directly. Please send an e-mail request to region-admin-owner@lists.openki.net and we will direct you accordingly.
+### How can I contact my region's administrator?
+Currently, region admins cannot be contacted directly. Please send an inquiry to region-admin-owner@lists.openki.net and we will forward your message.
 
 
 ## Technical
 
-### Where can I find answers to technical questions?
-Detailed technical documentation can be found in our [GitLab wiki](https://gitlab.com/Openki/Openki/wikis/home).
+### Where can I find answers to my technical questions?
+Detailed technical documentation is available in our [GitLab wiki](https://gitlab.com/Openki/Openki/wikis/home).
