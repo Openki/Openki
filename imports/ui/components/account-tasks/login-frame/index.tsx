@@ -152,12 +152,23 @@ export function LoginFrame({
             </div>
             <FormControl
               id="account-tasks-login-frame-password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               prepend="fa-solid fa-lock fa-fw"
               label={t("_inputField.password")}
               value={loginData.password}
               onChange={(value) => setLoginData({ ...loginData, password: value })}
               error={errors.password}
+              append={
+                <span className="input-group-text p-0">
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary text-dark"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    <i className={`fa-fw fa-solid ${showPassword ? " fa-eye-slash" : "fa-eye"}`} />
+                  </button>
+                </span>
+              }
             />
             <div className="mb-3 text-end">
               <button
