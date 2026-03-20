@@ -14,7 +14,7 @@ import { MetaTags } from "/imports/ui/components/MetaTags";
 import "./styles.scss";
 
 export interface Props {
-  page: InfoPagesEntity;
+  page: Pick<InfoPagesEntity, "title" | "body">;
 }
 
 export function InfoPage({ page }: Props) {
