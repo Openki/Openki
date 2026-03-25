@@ -110,7 +110,7 @@ async function send(
           unsubToken = Random.secret();
           const vars = await model.vars(locale, user, unsubToken);
 
-          const message = renderToEmail(
+          const message = await renderToEmail(
             <Root
               subject={vars.subject}
               logo={await toEmailLogo(vars.customEmailLogo || PublicSettings.emailLogo)}

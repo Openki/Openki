@@ -1,12 +1,10 @@
 import { Meteor } from "meteor/meteor";
 import { ReactNode } from "react";
 
-export function renderToEmail(element: ReactNode) {
+export async function renderToEmail(element: ReactNode) {
   if (Meteor.isServer) {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { renderToStaticMarkup } = require("react-dom/server");
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const juice = require("juice");
+    const { renderToStaticMarkup } = await import("react-dom/server");
+    const juice = (await import("juice")).default;
     // react can't handle DOCTYPE header, so we add the thing here.
     return juice(
       `<!DOCTYPE html>
