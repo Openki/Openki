@@ -173,7 +173,7 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
   pricePolicyLink: LocalizedValuePattern,
   courseGuideLink: LocalizedValuePattern,
   aboutLink: LocalizedValuePattern,
-  /** Contribution to the plattform. */
+  /** Contribution to the platform. */
   contribution: Match.Maybe({
     icon: String,
     /** forbidden chars in username */

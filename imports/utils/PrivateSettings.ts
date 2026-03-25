@@ -19,7 +19,12 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
    * visible in e-mail that are send to users.
    */
   reporter: {
+    /**
+     * The e-mail address of the sender. All e-mail addresses can be plain 'sender@server.com'
+     * or formatted 'Sender Name sender@server.com'
+     */
     sender: String,
+    /** Comma separated list of recipients e-mail addresses that will appear on the To: field */
     recipient: String,
   },
   /** Tells robots/crawlers whether to index the website or not */
@@ -30,19 +35,19 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
   printLog: Boolean,
   /** OAuth */
   service: Match.Maybe({
-    facebook: Match.Maybe({
+    facebook: {
       appId: String,
       secret: String,
-    }),
-    github: Match.Maybe({
+    },
+    github: {
       clientId: String,
       secret: String,
-    }),
-    google: Match.Maybe({
+    },
+    google:{
       clientId: String,
       secret: String,
-    }),
-    c3: Match.Maybe(C3SettingsPattern),
+    },
+    c3: C3SettingsPattern,
   }),
   /** Delete entries from the log or remove critical information */
   scrub: Match.Maybe([
@@ -63,7 +68,12 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
     secretAccessKey: String,
   },
   startup: {
-    /** Build the cache in the db async or sync. For larger databases it takes a long time until all fields are updated, during this time the startup is blocked. The users cannot use the website. Because in a normal startup the database already has these fields, this task can also be done async every sunnday at 22:30. */
+    /** 
+     * Build the cache in the db async or sync. For larger databases it takes a 
+     * long time until all fields are updated, during this time the startup is blocked. 
+     * The users cannot use the website. Because in a normal startup the database 
+     * already has these fields, this task can also be done async every sunday at 22:30. 
+     */
     buildDbCacheAsync: Boolean,
   },
   /** Maximum number of entities that the api returns. */

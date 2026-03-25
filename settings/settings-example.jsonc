@@ -24,7 +24,7 @@
 	, "theme": // Theming the ui
 		{ "brand": "#38829c"
 		}
-	, "publicTenants": ["8410c099a7"] // IDs of the tenants that should be displayed publically, choose at least one
+	, "publicTenants": ["8410c099a7"] // IDs of the tenants that should be displayed publicly, choose at least one
 	, "regionSelection":
 		{ "minNumber": 5 // The minimum number of regions displayed in the Regions selection. Default: 5
 		, "aboutLink": // A link to a page that explains regions, if not set then none link is shown.
@@ -53,7 +53,7 @@
 		, "sendReminderIsEditable": true // allow to edit whether to remind or not, Default: true
 		, "proposeCourseBox": true // show a "empty" course box to propose a new course, Default: true
 		, "resizeImagesOnServer": true // needs sharp npm module on server which needs a CPU with v2 microarchitecture level, Default: true
-		, "disable2dSphereForLocations": false // disable the creation of 2dSphere indexes for db entites, this allow to save non geo location in db, used for CustomMapConfig, Default: false
+		, "disable2dSphereForLocations": false // disable the creation of 2dSphere indexes for db entities, this allow to save non geo location in db, used for CustomMapConfig, Default: false
 		, "socialMediaButtons": [ // which social media buttons should be displayed, when web share api is not supported from the browser
 		"bluesky",
 		"facebook",
@@ -162,8 +162,11 @@
 	, "apiMaxLimit": 100 // Maximum number of entities that the api returns. Default: 100. If the parameter "limit" is not set in the URL, the API always returns 100 entities whatever this setting is set to.
 	}
 , "siteEmail": "" // Sender e-mail address in mails
-, "replyToEmail": "" // "Reply to" adress in mails 
-, "reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net"} // Sender and recipient address for "Report problem" function
+, "replyToEmail": "" // "Reply to" address in mails 
+, "reporter": // Sender and recipient address for "Report problem" function
+  { "sender": "pingpong@mail.openki.net" // The e-mail address of the sender. All e-mail addresses can be plain 'sender@server.com' or formatted 'Sender Name sender@server.com'
+  , "recipient": "badabuff@openki.net" // Comma separated list of recipients e-mail addresses that will appear on the To: field
+  }
 , "robots": false // Tells robots/crawlers whether to index the website or not
 , "hideProfiles": false // Tells robots/crawlers not to index user profiles (/user/*)
 , "printLog": false // Print the log on the server in the console, usually only for development
