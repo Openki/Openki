@@ -12,7 +12,7 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
   testdata: Boolean,
   /** Sender e-mail address in mails */
   siteEmail: String,
-  /** "Reply to" adress in mails */
+  /** "Reply to" address in mails */
   replyToEmail: Match.Maybe(String),
   /**
    * Sender and recipient address for "Report problem" function. The recipient is also
@@ -30,19 +30,19 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
   printLog: Boolean,
   /** OAuth */
   service: Match.Maybe({
-    facebook: {
+    facebook: Match.Maybe({
       appId: String,
       secret: String,
-    },
-    github: {
+    }),
+    github: Match.Maybe({
       clientId: String,
       secret: String,
-    },
-    google: {
+    }),
+    google: Match.Maybe({
       clientId: String,
       secret: String,
-    },
-    c3: C3SettingsPattern,
+    }),
+    c3: Match.Maybe(C3SettingsPattern),
   }),
   /** Delete entries from the log or remove critical information */
   scrub: Match.Maybe([
