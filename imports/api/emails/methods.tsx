@@ -93,7 +93,7 @@ export const sendReport = ServerMethod(
     const subjectPrefix = `[${siteName}] `;
     const subject = `Report: ${title}`;
 
-    const message = renderToEmail(
+    const message = await renderToEmail(
       <Root subject={subject} logo={await toEmailLogo(PublicSettings.emailLogo)}>
         <Report
           user={user}
