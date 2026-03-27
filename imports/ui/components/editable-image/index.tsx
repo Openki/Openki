@@ -67,7 +67,7 @@ export function EditableImage(data: Data) {
   const id = createId();
 
   async function onDrop(file: File) {
-    if ( !SupportedMimeList.some((type) => type === file.type.toLowerCase())) {
+    if (!SupportedMimeList.some((type) => type === file.type.toLowerCase())) {
       Alert.error(
         t("editableImage.accept.error", `Only images ({SUPPORTEDMIME}) are allowed.`, {
           SUPPORTEDMIME: SupportedMimeList.join(", "),
