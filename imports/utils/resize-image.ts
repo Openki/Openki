@@ -1,5 +1,3 @@
-import { PublicSettings } from "./PublicSettings";
-
 interface Image {
   content: string;
   mimeType: "image/bmp" | "image/png" | "image/gif" | "image/jpeg";
@@ -12,7 +10,6 @@ export async function resizeImage(
   maxHeigth: number,
 ): Promise<Image>;
 export async function resizeImage(file: Image, maxWidth: number, maxHeigth = maxWidth) {
-
   // create custom version of Jimp to not load font plugin. It makes problem with meteor.
   // Source: https://jimp-dev.github.io/jimp/guides/custom-jimp/, https://github.com/jimp-dev/jimp/blob/main/packages/jimp/src/index.ts
   const { createJimp } = await import("@jimp/core");
