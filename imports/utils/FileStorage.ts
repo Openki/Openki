@@ -7,6 +7,7 @@ import { Match } from "meteor/check";
 
 import { PrivateSettings } from "./PrivateSettings";
 import { PublicSettings } from "./PublicSettings";
+import { StringEnum } from "/imports/utils/CustomChecks";
 
 function getBucket() {
   return PrivateSettings.s3.bucketEndpoint;
@@ -30,7 +31,7 @@ function createS3Client() {
 }
 
 export const UploadFilePattern = Match.ObjectIncluding({
-  mimeType: String,
+  mimeType: StringEnum("image/bmp", "image/png", "image/gif", "image/jpeg"),
   /** As base64url */
   content: String,
 });
