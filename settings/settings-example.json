@@ -52,7 +52,6 @@
 		, "rsvpWithCompanions": true // allow rsvp with +1 / for two seats, Default: false
 		, "sendReminderIsEditable": true // allow to edit whether to remind or not, Default: true
 		, "proposeCourseBox": true // show a "empty" course box to propose a new course, Default: true
-		, "resizeImagesOnServer": true // needs sharp npm module on server which needs a CPU with v2 microarchitecture level, Default: true
 		, "disable2dSphereForLocations": false // disable the creation of 2dSphere indexes for db entites, this allow to save non geo location in db, used for CustomMapConfig, Default: false
 		, "socialMediaButtons": [ // which social media buttons should be displayed, when web share api is not supported from the browser
 		"bluesky",

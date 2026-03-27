@@ -50,7 +50,6 @@
 		, "rsvpWithCompanions": true
 		, "sendReminderIsEditable": true
     , "proposeCourseBox": true 
-		, "resizeImagesOnServer": false
     , "disable2dSphereForLocations": false
 		}
 	, "nav":

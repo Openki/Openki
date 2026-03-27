@@ -12,10 +12,6 @@ export async function resizeImage(
   maxHeigth: number,
 ): Promise<Image>;
 export async function resizeImage(file: Image, maxWidth: number, maxHeigth = maxWidth) {
-  if (!PublicSettings.feature.resizeImagesOnServer) {
-    console.info("Resizing images with sharp on the server is disabled.");
-    return file.content.substring(file.content.indexOf("base64") + 7);
-  }
 
   // create custom version of Jimp to not load font plugin. It makes problem with meteor.
   // Source: https://jimp-dev.github.io/jimp/guides/custom-jimp/, https://github.com/jimp-dev/jimp/blob/main/packages/jimp/src/index.ts
