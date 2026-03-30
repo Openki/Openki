@@ -1,7 +1,6 @@
 import path from "path";
 import type { PutObjectCommandInput } from "@aws-sdk/client-s3";
 import mime from "mime-types";
-import urljoin from "url-join";
 import { Mongo } from "meteor/mongo";
 import { Match } from "meteor/check";
 
@@ -38,7 +37,7 @@ export const UploadFilePattern = Match.ObjectIncluding({
 export type UploadFile = Match.PatternMatch<typeof UploadFilePattern>;
 
 export function generatePublicUrl(fullFileName: string) {
-  return urljoin(PublicSettings.s3.publicUrlBase, fullFileName);
+  return new URL(fullFileName, PublicSettings.s3.publicUrlBase).toString();
 }
 
 export async function upload(directoryName: string, file: UploadFile) {
