@@ -295,7 +295,7 @@ export function EditableImage(data: Data) {
             <FormCheck
               id="editable-image-copyrights"
               type="box"
-              label={t("fileUpload.copyrights", "I have the copy rights to publish that file.")}
+              label={t("fileUpload.copyrights", "I have the copy rights to publish this file.")}
               checked={copyRights}
               onChange={(checked) => setCopyRights(checked)}
             />
