@@ -356,16 +356,10 @@ export const updateImage = ServerMethod(
     }
 
     // Note: image scaling also happens on the client
-    const resizedCompactImage = await resizeImage(file.content, 500);
-    const compactResult = await FileStorage.upload("courses/image/compact", {
-      content: resizedCompactImage,
-      mimeType: file.mimeType,
-    });
-    const resizedDetailsImage = await resizeImage(file.content, 2000, 5000);
-    const detailsResult = await FileStorage.upload("courses/image/details", {
-      content: resizedDetailsImage,
-      mimeType: file.mimeType,
-    });
+    const resizedCompactImage = await resizeImage(file, 500);
+    const compactResult = await FileStorage.upload("courses/image/compact", resizedCompactImage);
+    const resizedDetailsImage = await resizeImage(file, 2000, 5000);
+    const detailsResult = await FileStorage.upload("courses/image/details", resizedDetailsImage);
 
     const update = {
       compactImage: compactResult.fullFileName,
