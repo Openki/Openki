@@ -493,7 +493,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     }
   }
 
-  if (isRegionsLoading() || isCourseLoading()) {
+  if (isCourseLoading()) {
     return null;
   }
 
@@ -576,7 +576,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
           {!(!isNew && event.isPrivate()) && <PricePolicy dismissable wrap="mb-3" />}
 
-          {showRegionSelection() && (
+          {!isRegionsLoading() && showRegionSelection() && (
             <div className="mb-3">
               <RegionSelect
                 id="event-edit-region"

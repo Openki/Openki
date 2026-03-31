@@ -66,8 +66,6 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
     sendReminderIsEditable: Boolean,
     /** show a "empty" course box to propose a new course, Default: true */
     proposeCourseBox: Boolean,
-    /** needs sharp npm module on server which needs a CPU with v2 microarchitecture level, Default: true */
-    resizeImagesOnServer: Boolean,
     /** disable the creation of 2dSphere indexes for db entites, this allow to save non geo location in db, used for CustomMapConfig, Default: false */
     disable2dSphereForLocations: Boolean,
     socialMediaButtons: [
@@ -225,7 +223,6 @@ const defaults = {
     rsvpWithCompanions: false,
     sendReminderIsEditable: true,
     proposeCourseBox: true,
-    resizeImagesOnServer: true,
     disable2dSphereForLocations: false,
     socialMediaButtons: [
       "bluesky",
