@@ -354,7 +354,7 @@
   "discussion.anonymous": "Anonymous",
   "discussionPost.deleted": "Comment deleted.",
   "discussionPost.deleted.error": "Could not delete comment",
-  "editableImage.accept.error": "Only images are allowed.",
+  "editableImage.accept.error": "Only images ({SUPPORTEDMIME}) are allowed.",
   "editGroup.add.btn": "Add a group as hosts",
   "editGroup.add.desc": "All members of that group will be able to mange this venue.",
   "editGroup.add.groupAdded": "{GROUP} was added as host for {VENUE}.",

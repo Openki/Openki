@@ -73,7 +73,7 @@ Demo playground: [sandbox.openki.net](https://sandbox.openki.net/?region=Spilist
 
 # Contribution
 → _Please upvote features you would like to see or propose new ones in our [issue tracker](https://gitlab.com/Openki/Openki/-/issues/?sort=milestone&state=opened)._  
-Code submissions are warmly welcome.  
+Code submissions are warmly welcome, please check out our [Code of Conduct](https://gitlab.com/Openki/Openki/wikis/Code-of-Conduct)💜.  
 Free software built with love and care. We use [Meteor.js](https://meteor.com) and [React](https://react.dev/).
 
 ### Installation (Linux, OSX and Windows)
