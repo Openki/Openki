@@ -133,11 +133,8 @@ export const updateLogo = ServerMethod(
     }
 
     // Note: image scaling also happens on the client
-    const resizedImage = await resizeImage(file.content, 600);
-    const result = await FileStorage.upload("organizations/logos/", {
-      content: resizedImage,
-      mimeType: file.mimeType,
-    });
+    const resizedImage = await resizeImage(file, 600);
+    const result = await FileStorage.upload("organizations/logos/", resizedImage);
 
     const update = { logoUrl: result.fullFileName };
 
