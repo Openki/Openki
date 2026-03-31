@@ -40,6 +40,8 @@ function VerifyEmailAlerts() {
   const { t } = useTranslation();
   const query = useSearchParams();
 
+  const [isLoading, user] = useVerify({ when: !!query.email }, query.email);
+
   if (query.verifyEmail === "success") {
     return (
       <ActionResult
@@ -51,6 +53,21 @@ function VerifyEmailAlerts() {
   }
 
   if (query.verifyEmail === "failed") {
+    if (isLoading()) {
+      return null;
+    }
+
+    if (user?.emails?.[0]?.verified) {
+      // email was already verified by the user
+      return (
+        <ActionResult
+          type="success"
+          title={t("profile.verifyEmail.success", "Your e-mail has been verified.")}
+          actions={[{ button: <VisitProfileAction key={1} color="success" /> }]}
+        />
+      );
+    }
+
     return (
       <ActionResult
         type="failed"
@@ -273,5 +290,6 @@ export function ProfilePage() {
 // for Blaze
 
 import "./template.html";
+import { useVerify } from "/imports/api/users/publications";
 
 Template.registerHelper("ProfilePage", () => ProfilePage);
