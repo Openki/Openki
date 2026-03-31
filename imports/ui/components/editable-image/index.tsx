@@ -10,6 +10,10 @@ import { FormCheck } from "/imports/ui/components/FormCheck";
 
 import "./styles.scss";
 
+const SupportedMimeList = ["image/bmp", "image/png", "image/gif", "image/jpeg"] as const;
+
+type SupportedMime = (typeof SupportedMimeList)[number];
+
 // feature detection for drag&drop upload
 const supportsDragndrop = (function () {
   const div = document.createElement("div");
@@ -24,7 +28,7 @@ export interface UploadImage {
   lastModified: Date;
   name: string;
   size: number;
-  mimeType: string;
+  mimeType: SupportedMime;
   /** As BinaryString */
   content: string;
 }
@@ -50,7 +54,7 @@ export function EditableImage(data: Data) {
         lastModified: Date;
         name: string;
         size: number;
-        mimeType: string;
+        mimeType: SupportedMime;
         content: string;
       }
     | undefined
@@ -63,25 +67,29 @@ export function EditableImage(data: Data) {
   const id = createId();
 
   async function onDrop(file: File) {
-    if (!file.type.startsWith("image/")) {
-      Alert.error(t("editableImage.accept.error", "Only images are allowed."));
+    if (!SupportedMimeList.some((type) => type === file.type.toLowerCase())) {
+      Alert.error(
+        t("editableImage.accept.error", `Only images ({SUPPORTEDMIME}) are allowed.`, {
+          SUPPORTEDMIME: SupportedMimeList.join(", "),
+        }),
+      );
       return;
     }
 
-    let rezisedFile: Blob;
+    let resizedFile: Blob;
     if (data.maxSize) {
       try {
-        rezisedFile = await new ImageBlobReduce({
+        resizedFile = await new ImageBlobReduce({
           pica: ImageBlobReduce.pica({ features: ["js", "wasm"] }),
         }).toBlob(file, { max: data.maxSize });
       } catch (ex) {
         console.info(
           `Some browsers do not support this. It is okay to use the original. Errormessage: ${ex}`,
         );
-        rezisedFile = file;
+        resizedFile = file;
       }
     } else {
-      rezisedFile = file;
+      resizedFile = file;
     }
 
     {
@@ -89,7 +97,7 @@ export function EditableImage(data: Data) {
       reader.onload = () => {
         let name = file.name;
         // handle if resizing changed file type
-        const fileExtension = mimeDb[rezisedFile.type]?.extensions?.[0];
+        const fileExtension = mimeDb[resizedFile.type]?.extensions?.[0];
         if (fileExtension) {
           name = changeExt(name, fileExtension);
         }
@@ -98,14 +106,14 @@ export function EditableImage(data: Data) {
           lastModified: new Date(file.lastModified),
           name,
           size: file.size,
-          mimeType: file.type,
+          mimeType: file.type as SupportedMime,
           content: reader.result as string,
         });
 
         setCopyRights(false);
         setProgress("ready");
       };
-      reader.readAsDataURL(rezisedFile);
+      reader.readAsDataURL(resizedFile);
     }
 
     {
@@ -113,7 +121,7 @@ export function EditableImage(data: Data) {
       reader.onload = function () {
         setPreview(reader.result as string);
       };
-      reader.readAsDataURL(rezisedFile);
+      reader.readAsDataURL(resizedFile);
     }
   }
 
@@ -233,7 +241,7 @@ export function EditableImage(data: Data) {
       >
         <input
           type="file"
-          accept="image/*"
+          accept={SupportedMimeList.join(", ")}
           className="d-none"
           id="file"
           onChange={handleFileChange}
