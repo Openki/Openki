@@ -83,7 +83,7 @@ deploy_staging:
   stage: deploy
   variables:
     SOURCE_BRANCH: staging
-    TARGET_HOST: staging
+    TARGET_HOST: openki-staging
   only:
     - staging
   when: always
