@@ -262,9 +262,12 @@ export function EditableImage(data: Data) {
             </div>
           ) : progress === "edit" ? (
             <>
-              <span className="btn btn-secondary">
-                {t("fileUpload.choose.text", "Choose a file")}
-              </span>
+              <div className="editable-image-actions">
+                <span className="btn btn-secondary">
+                  {t("fileUpload.choose.text", "Choose a file")}
+                </span>
+                {deleteAllowed() && <ButtonDelete id="editable-image-delete" onClick={onDelete} />}
+              </div>
               {supportsDragndrop && (
                 <>
                   <br />
@@ -300,9 +303,7 @@ export function EditableImage(data: Data) {
       <div className="editable-image-controls">
         {progress === "ready" ? (
           <ButtonSave needsLogin id="editable-image-save" {...uploadButtonAttributes()} />
-        ) : (
-          deleteAllowed() && <ButtonDelete id="editable-image-delete" onClick={onDelete} />
-        )}{" "}
+        ) : null}{" "}
         <ButtonCancel id="editable-image-cancel" onClick={onCancel} />
       </div>
     </>
