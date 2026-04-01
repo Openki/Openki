@@ -41,8 +41,8 @@ export const clientError = ServerMethod(
   { simulation: false },
 );
 
+/** For logging errors on the server that have occurred on the server. */
 export async function serverError(error: Error) {
-  console.log(error.stack);
   try {
     await Log.record("serverError", [], {
       name: error.name,

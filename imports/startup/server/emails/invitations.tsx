@@ -38,7 +38,7 @@ async function sendInvitation(invitation: InvitationEntity) {
 
   const subject = `Invitation to ${tenant.name}`;
 
-  const message = renderToEmail(
+  const message = await renderToEmail(
     <Root subject={subject} logo={await toEmailLogo(PublicSettings.emailLogo)}>
       <Invitation
         siteName={siteName}

@@ -89,6 +89,16 @@ deploy_staging:
   when: always
   trigger: Openki/sysadmin/deploy-config
 
+deploy_dev2:
+  stage: deploy
+  variables:
+    SOURCE_BRANCH: nlnet-dev
+    TARGET_HOST: dev2
+  only:
+    - nlnet-dev
+  when: always
+  trigger: Openki/sysadmin/deploy-config
+
 deploy_sandbox:
   stage: deploy
   variables:
