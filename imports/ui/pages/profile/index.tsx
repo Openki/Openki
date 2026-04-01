@@ -8,6 +8,7 @@ import * as Groups from "/imports/api/groups/publications";
 import * as Tenants from "/imports/api/tenants/publications";
 import { UserModel } from "/imports/api/users/users";
 import * as Venues from "/imports/api/venues/publications";
+import { useVerify } from "/imports/api/users/publications";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 import { MetaTags } from "/imports/ui/components/MetaTags";
@@ -290,6 +291,5 @@ export function ProfilePage() {
 // for Blaze
 
 import "./template.html";
-import { useVerify } from "/imports/api/users/publications";
 
 Template.registerHelper("ProfilePage", () => ProfilePage);
