@@ -5,6 +5,7 @@ import { useFind, useSubscribe, useTracker } from "meteor/react-meteor-data";
 import { publish, QueryBuilder } from "./ServerPublishUtils";
 import { useUserId } from "./react-meteor-data";
 import { isObject, slice } from "lodash-es";
+import { getStack } from "/imports/utils/getStack";
 
 type DeepPartial<T> = T extends object
   ? {
@@ -34,11 +35,36 @@ export function createPublicationMany<A extends any[], T>(
 ) {
   return function (...args: any[]) {
     const hasCondition = isObject(args[0]) && "when" in args[0];
+
+    if (Meteor.isDevelopment && Meteor.isClient) {
+      console.groupCollapsed(
+        `useSubscribe("${name}",${JSON.stringify(args)}), hasCondition: ${hasCondition}${hasCondition ? `, when: ${!args[0].when}` : ""}`,
+      );
+      console.debug(getStack());
+      console.groupEnd();
+    }
+
+    // add error logging on client
+    const handleCallback = {
+      onStop: (error?: Error) => {
+        if (error) {
+          // An error occurs on the server during execution on the server side.
+          console.groupCollapsed(
+            `%cError on useSubscribe("${name}",${JSON.stringify(args)}), hasCondition: ${hasCondition}${hasCondition ? `, when: ${!args[0].when}` : ""}`,
+            "color: red",
+          );
+          console.error(error);
+          console.groupEnd();
+        }
+      },
+    };
+
     const isLoading = useSubscribe(
       // support conditionally subscribe:
       // https://docs.meteor.com/packages/react-meteor-data#usesubscribe-subname-args
       hasCondition && !args[0].when ? "" : name,
       ...(hasCondition ? slice(args, 1) : args),
+      handleCallback,
     );
     const userId = useUserId();
     return [
@@ -48,7 +74,15 @@ export function createPublicationMany<A extends any[], T>(
           // return undefined when condition is false
           return undefined;
         }
-        return queryBuilder.call({ userId }, ...(hasCondition ? slice(args, 1) : args));
+        try {
+          return queryBuilder.call({ userId }, ...(hasCondition ? slice(args, 1) : args));
+        } catch (error) {
+          // An error occurs on the server during execution on the server side.
+          console.groupCollapsed(`%cError in ${name}(${JSON.stringify(args)})`, "color: red");
+          console.error(error);
+          console.groupEnd();
+          throw error;
+        }
       }, [EJSON.stringify(args as any), userId]),
     ];
   } as Publication<A, T>;
@@ -60,11 +94,36 @@ export function createPublicationOne<A extends any[], T>(
 ): Publication<A, T> {
   return function (...args: any[]) {
     const hasCondition = isObject(args[0]) && "when" in args[0];
+
+    if (Meteor.isDevelopment && Meteor.isClient) {
+      console.groupCollapsed(
+        `useSubscribe("${name}",${JSON.stringify(args)}), hasCondition: ${hasCondition}${hasCondition ? `, when: ${!args[0].when}` : ""}`,
+      );
+      console.debug(getStack());
+      console.groupEnd();
+    }
+
+    // add error logging on client
+    const handleCallback = {
+      onStop: (error?: Error) => {
+        if (error) {
+          // An error occurs on the server during execution on the server side.
+          console.groupCollapsed(
+            `%cError on useSubscribe("${name}",${JSON.stringify(args)}), hasCondition: ${hasCondition}${hasCondition ? `, when: ${!args[0].when}` : ""}`,
+            "color: red",
+          );
+          console.error(error);
+          console.groupEnd();
+        }
+      },
+    };
+
     const isLoading = useSubscribe(
       // support conditionally subscribe:
       // https://docs.meteor.com/packages/react-meteor-data#usesubscribe-subname-args
       hasCondition && !args[0].when ? "" : name,
       ...(hasCondition ? slice(args, 1) : args),
+      handleCallback,
     );
     const userId = useUserId();
     return [
@@ -75,7 +134,16 @@ export function createPublicationOne<A extends any[], T>(
           // find method: https://docs.meteor.com/packages/react-meteor-data#usefind-cursorfactory-deps
           return undefined;
         }
-        return queryBuilder.call({ userId }, ...(hasCondition ? slice(args, 1) : args));
+
+        try {
+          return queryBuilder.call({ userId }, ...(hasCondition ? slice(args, 1) : args));
+        } catch (error) {
+          // An error occurs on the server during execution on the server side.
+          console.groupCollapsed(`%cError in ${name}(${JSON.stringify(args)})`, "color: red");
+          console.error(error);
+          console.groupEnd();
+          throw error;
+        }
       }, [EJSON.stringify(args as any), userId]),
     ];
   } as Publication<A, T>;
