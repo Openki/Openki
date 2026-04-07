@@ -1,8 +1,8 @@
-import * as courseEditorsDenormalizer from "../courses/editorsDenormalizer";
-import * as courseNextEventDenormalizer from "../courses/nextEventDenormalizer";
-import * as coursesTenantDenormalizer from "../courses/tenantDenormalizer";
+import * as groupEditorsDenormalizer from "../courses/editorsDenormalizer";
+import * as groupNextEventDenormalizer from "../courses/nextEventDenormalizer";
+import * as groupsTenantDenormalizer from "../courses/tenantDenormalizer";
 import * as eventsCategoriesDenormalizer from "../events/categoriesDenormalizer";
-import * as eventsCourseImageDenormalizer from "../events/courseImageDenormalizer";
+import * as eventsGroupImageDenormalizer from "../events/courseImageDenormalizer";
 import * as eventsTenantDenormalizer from "../events/tenantDenormalizer";
 import * as eventsVenueDenormalizer from "../events/venueDenormalizer";
 import { Log } from "../log/log";
@@ -17,19 +17,19 @@ export async function updateDbCacheFieldsServerOnly() {
 
   try {
     await Promise.all([
-      eventsCourseImageDenormalizer.onStartUp(),
+      eventsGroupImageDenormalizer.onStartUp(),
       // Resync location cache in events
       eventsVenueDenormalizer.updateVenue({}),
 
-      // Update list of team (users & organizations) per course, triggers updateOrganizations from events
-      courseEditorsDenormalizer.updateEditors({}),
+      // Update list of team (users & organizations) per group, triggers updateOrganizations from events
+      groupEditorsDenormalizer.updateEditors({}),
 
       eventsCategoriesDenormalizer.onStartUp(),
 
       // Update List of badges per user
       userOrganizationsAndBadgesDenormalizer.updateOrganizationsAndBadges({}),
 
-      coursesTenantDenormalizer.onStartUp(),
+      groupsTenantDenormalizer.onStartUp(),
       eventsTenantDenormalizer.onStartUp(),
       usersTenantsDenormalizer.onStartUp(),
 
@@ -37,7 +37,7 @@ export async function updateDbCacheFieldsServerOnly() {
 
       // Keep the nextEvent entry updated
       // On startup do a full scan to catch stragglers
-      courseNextEventDenormalizer.updateNextEvent({}),
+      groupNextEventDenormalizer.updateNextEvent({}),
       regionsCountDenormalizer.updateCounters({}),
     ]);
   } catch (error) {

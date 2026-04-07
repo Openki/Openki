@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { CourseModel } from "/imports/api/courses/courses";
+import { GroupModel } from "/imports/api/courses/courses";
 import { useDetails } from "../../../../../api/organizations/publications";
 import * as CoursesMethods from "/imports/api/courses/methods";
 
 import { name } from "../../../../lib/organization-name-helpers";
 
 export interface Props {
-  course: CourseModel;
+  group: GroupModel;
   organizationId: string;
 }
 
-export function Remove({ course, organizationId }: Props) {
+export function Remove({ group, organizationId }: Props) {
   const { t } = useTranslation();
   const [isLoading, organization] = useDetails(organizationId);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -51,7 +51,7 @@ export function Remove({ course, organizationId }: Props) {
         className="btn btn-danger"
         onClick={async () => {
           try {
-            await CoursesMethods.promote(course._id, organizationId, false);
+            await CoursesMethods.promote(group._id, organizationId, false);
           } catch (err) {
             Alert.serverError(
               err,

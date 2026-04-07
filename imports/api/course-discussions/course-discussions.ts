@@ -3,14 +3,13 @@ import { Mongo } from "meteor/mongo";
 
 /** DB-Model */
 
-export interface CourseDiscussionEntity {
+export interface GroupDiscussionEntity {
   /** ID */
   _id: string;
   title: string;
   text: string;
-  /** ID_users undefined if anon comment */
+  /** users ID, undefined if anonymous comment */
   userId?: string;
-  /** ID_Courses */
   courseId: string;
   eventId?: string | undefined;
   notifyAll?: boolean | undefined;
@@ -18,11 +17,11 @@ export interface CourseDiscussionEntity {
   time_created: Date;
 
   time_updated: Date;
-  /** ID_CourseDiscussions (optional) */
+  /** Parent GroupDiscussion ID (optional) */
   parentId?: string;
 }
 
-export class CourseDiscussionsCollection extends Mongo.Collection<CourseDiscussionEntity> {
+export class GroupDiscussionsCollection extends Mongo.Collection<GroupDiscussionEntity> {
   constructor() {
     super("CourseDiscussions");
 
@@ -31,4 +30,4 @@ export class CourseDiscussionsCollection extends Mongo.Collection<CourseDiscussi
     }
   }
 }
-export const CourseDiscussions = new CourseDiscussionsCollection();
+export const GroupDiscussions = new GroupDiscussionsCollection();

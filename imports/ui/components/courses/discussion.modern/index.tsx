@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useUserId } from "/imports/utils/react-meteor-data";
 
-import * as CourseDiscussions from "/imports/api/course-discussions/publications";
+import * as GroupDiscussions from "/imports/api/course-discussions/publications";
 
 import { LoadingRow } from "/imports/ui/pages/loading";
 import { Post } from "./post";
@@ -10,11 +10,11 @@ import { Post } from "./post";
 import "./styles.scss";
 
 export interface Props {
-  courseId: string;
+  groupId: string;
   eventId?: string | undefined;
 }
 
-export function Discussion({ courseId, eventId }: Props) {
+export function Discussion({ groupId, eventId }: Props) {
   const { t } = useTranslation();
   const userId = useUserId();
   // If we want to jump to a comment we don't fold the comments
@@ -22,7 +22,7 @@ export function Discussion({ courseId, eventId }: Props) {
   const [edit, setEdit] = useState(false);
   const [notifyAll, setNotifyAll] = useState(false);
 
-  const [isLoading, posts] = CourseDiscussions.useForCourse(courseId);
+  const [isLoading, posts] = GroupDiscussions.useForGroup(groupId);
 
   function allDiscussions() {
     return posts
@@ -30,7 +30,7 @@ export function Discussion({ courseId, eventId }: Props) {
       .sort((a, b) => b.time_created.valueOf() - a.time_created.valueOf());
   }
 
-  function dicussions() {
+  function discussions() {
     let filteredPosts = allDiscussions();
 
     if (limit) {
@@ -49,7 +49,7 @@ export function Discussion({ courseId, eventId }: Props) {
     return {
       post: {
         new: true,
-        courseId,
+        courseId: groupId,
         eventId,
         userId,
         title: "",
@@ -78,7 +78,7 @@ export function Discussion({ courseId, eventId }: Props) {
       ) : (
         <>
           <Post {...newPostAttr()} />
-          {dicussions().map((post) => (
+          {discussions().map((post) => (
             <div className="list-group mb-3" key={post._id}>
               <Post post={post} responses={responses(post._id)} />
             </div>

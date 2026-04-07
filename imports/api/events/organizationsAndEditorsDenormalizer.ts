@@ -1,7 +1,7 @@
 import { Mongo } from "meteor/mongo";
 import { union } from "lodash-es";
 
-import { Courses } from "../courses/courses";
+import { Groups } from "../courses/courses";
 import { Events, EventEntity } from "/imports/api/events/events";
 
 /**
@@ -14,15 +14,15 @@ export async function updateOrganizationsAndEditors(
     // Any organizations listed as team are allowed to edit.
     let editors = event.teamOrganizations.slice(); // Clone
 
-    // If an event has a parent course, it inherits all organizations and all editors from it.
-    let courseOrganizations: string[] = [];
+    // If an event has a parent group, it inherits all organizations and all editors from it.
+    let groupOrganizations: string[] = [];
     if (event.courseId) {
-      const course = await Courses.findOneAsync(event.courseId);
+      const course = await Groups.findOneAsync(event.courseId);
       if (!course) {
         throw new Error(`Missing course ${event.courseId} for event ${event._id}`);
       }
 
-      courseOrganizations = course.organizations;
+      groupOrganizations = course.organizations;
       editors = union(editors, course.editors);
     } else {
       editors.push(event.createdBy);
@@ -32,14 +32,14 @@ export async function updateOrganizationsAndEditors(
       editors,
     };
 
-    // The course organizations are only inherited if the event lies in the future
-    // Past events keep their list of organizations even if it changes for the course
+    // The group organizations are only inherited if the event lies in the future
+    // Past events keep their list of organizations even if it changes for the group
     const historical = event.start < new Date();
     if (historical) {
       update.allOrganizations = union(event.organizations, event.courseOrganizations);
     } else {
-      update.courseOrganizations = courseOrganizations;
-      update.allOrganizations = union(event.organizations, courseOrganizations);
+      update.courseOrganizations = groupOrganizations;
+      update.allOrganizations = union(event.organizations, groupOrganizations);
     }
 
     Events.updateAsync({ _id: event._id }, { $set: update });

@@ -1,4 +1,4 @@
-import { Courses } from "/imports/api/courses/courses";
+import { Groups } from "/imports/api/courses/courses";
 import { Log } from "/imports/api/log/log";
 
 export async function update() {
@@ -7,7 +7,7 @@ export async function update() {
   for (const entry of await Log.find({ tr: "Courses.Subscribe" }).fetchAsync()) {
     const { courseId, userId, role } = entry.body as any;
 
-    await Courses.updateAsync(courseId, {
+    await Groups.updateAsync(courseId, {
       $addToSet: {
         history: {
           dateTime: entry.ts,
@@ -22,7 +22,7 @@ export async function update() {
   for (const entry of await Log.find({ tr: "Courses.Unsubscribe" }).fetchAsync()) {
     const { courseId, userId, role } = entry.body as any;
 
-    await Courses.updateAsync(courseId, {
+    await Groups.updateAsync(courseId, {
       $addToSet: {
         history: {
           dateTime: entry.ts,

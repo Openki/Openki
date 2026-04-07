@@ -3,7 +3,7 @@ import { Router } from "meteor/iron:router";
 import { SitemapStream } from "sitemap";
 import { createGzip } from "zlib";
 
-import { CourseModel, Courses } from "/imports/api/courses/courses";
+import { GroupModel, Groups } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
 import { Venues } from "/imports/api/venues/venues";
 import { Organizations } from "../../api/organizations/organizations";
@@ -11,12 +11,12 @@ import { visibleTenantsAsync } from "/imports/utils/visible-tenants";
 import { serverError } from "/imports/api/log/methods";
 import { LanguagesRaw } from "/imports/api/languages/languages";
 
-function calcCoursePriority(course: CourseModel) {
-  if (course.archived) {
+function calcCoursePriority(group: GroupModel) {
+  if (group.archived) {
     return 0.0; // archived
   }
 
-  if (course.futureEvents > 0) {
+  if (group.futureEvents > 0) {
     return 0.8; // upcoming
   }
 
@@ -25,7 +25,7 @@ function calcCoursePriority(course: CourseModel) {
 
 async function requestPages() {
   const pages: { url: string; lastmod?: Date | undefined; priority: number }[] = [];
-  const courses = Courses.findFilter({ tenants: await visibleTenantsAsync(), internal: false });
+  const groups = Groups.findFilter({ tenants: await visibleTenantsAsync(), internal: false });
   const events = Events.findFilter({ tenants: await visibleTenantsAsync(), internal: false });
   const venues = Venues.find();
   const organizations = Organizations.find();
@@ -63,11 +63,11 @@ async function requestPages() {
     priority: 0.5,
   });
 
-  await courses.forEachAsync((course) => {
+  await groups.forEachAsync((group) => {
     pages.push({
-      url: Router.url("showCourse", course),
-      lastmod: course.time_lastedit,
-      priority: calcCoursePriority(course),
+      url: Router.url("showCourse", group),
+      lastmod: group.time_lastedit,
+      priority: calcCoursePriority(group),
     });
   });
   await events.forEachAsync((event) => {

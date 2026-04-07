@@ -4,26 +4,26 @@ import { useSessionEquals } from "/imports/utils/react-meteor-data";
 import { useSiteName } from "/imports/utils/getSiteName";
 
 import { Regions } from "/imports/api/regions/regions";
-import { CourseModel } from "/imports/api/courses/courses";
+import { GroupModel } from "/imports/api/courses/courses";
 import { Router } from "meteor/iron:router";
 import { RoleIcon } from "../../../../components/RoleIcon";
 
 export interface Props {
-  course: CourseModel;
+  group: GroupModel;
   hideInterested: boolean;
 }
 
-export function Course({ course, hideInterested }: Props) {
+export function Group({ group, hideInterested }: Props) {
   const { t } = useTranslation();
   const allRegions = useSessionEquals("region", "all");
   const [isExpanded, setIsExpanded] = useState(false);
   const siteName = useSiteName();
 
   function regionOf() {
-    return Regions.findOne(course.region)?.name;
+    return Regions.findOne(group.region)?.name;
   }
   function interestedPersons() {
-    return course.members.filter((m) => m.roles.includes("participant")).length;
+    return group.members.filter((m) => m.roles.includes("participant")).length;
   }
 
   return (
@@ -38,7 +38,7 @@ export function Course({ course, hideInterested }: Props) {
         <span className="frame-list-item-toggle-indicator">
           <i className="fa-solid fa-angle-down" />
         </span>
-        {!hideInterested && course.roles.includes("participant") && (
+        {!hideInterested && group.roles.includes("participant") && (
           <span
             className="frame-list-item-interested"
             data-bs-title={t("frame.courseList.interestedPersons", "Interested people")}
@@ -46,7 +46,7 @@ export function Course({ course, hideInterested }: Props) {
             <span className="me-1">{interestedPersons()}</span> <RoleIcon type="participant" />
           </span>
         )}
-        {course.name}
+        {group.name}
         {!!allRegions && (
           <span className="badge bg-primary frame-list-item-region">{regionOf()}</span>
         )}
@@ -59,13 +59,13 @@ export function Course({ course, hideInterested }: Props) {
             </div>
             <div
               className="col-sm-10"
-              dangerouslySetInnerHTML={{ __html: course.description || "" }}
+              dangerouslySetInnerHTML={{ __html: group.description || "" }}
             ></div>
           </div>
           <div className="mt-2 d-grid d-sm-flex">
             <a
               className="btn btn-outline-dark"
-              href={Router.path("showCourse", course)}
+              href={Router.path("showCourse", group)}
               target="_blank"
               rel="noreferrer"
             >

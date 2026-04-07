@@ -1,12 +1,12 @@
 import { Meteor } from "meteor/meteor";
 import { Match, check } from "meteor/check";
 
-import { Courses } from "/imports/api/courses/courses";
+import { Groups } from "/imports/api/courses/courses";
 import {
-  CourseDiscussionEntity,
-  CourseDiscussions,
+  GroupDiscussionEntity,
+  GroupDiscussions,
 } from "/imports/api/course-discussions/course-discussions";
-import * as CourseDiscussionUtils from "/imports/utils/course-discussion-utils";
+import * as GroupDiscussionUtils from "/imports/utils/course-discussion-utils";
 import { Notification } from "../../startup/both/emails/notification";
 import * as StringTools from "/imports/utils/string-tools";
 import * as HtmlTools from "/imports/utils/html-tools";
@@ -37,21 +37,21 @@ export const postComment = ServerMethod(
   async function (comment: PostCommentFields) {
     check(comment, PostCommentFieldsPattern);
 
-    const saneComment = sanitizeComment(comment) as CourseDiscussionEntity & { saving?: boolean };
+    const saneComment = sanitizeComment(comment) as GroupDiscussionEntity & { saving?: boolean };
 
     if (!saneComment.text) {
       throw new Meteor.Error(400, "Invalid comment");
     }
 
-    const course = await Courses.findOneAsync(comment.courseId);
-    if (!course) {
-      throw new Meteor.Error(404, "course not found");
+    const group = await Groups.findOneAsync(comment.courseId);
+    if (!group) {
+      throw new Meteor.Error(404, "group not found");
     }
-    saneComment.courseId = course._id;
+    saneComment.courseId = group._id;
 
-    if (course.singleEvent && comment.eventId) {
+    if (group.singleEvent && comment.eventId) {
       const event = await Events.findOneAsync(comment.eventId);
-      if (!event || event.courseId !== course._id) {
+      if (!event || event.courseId !== group._id) {
         throw new Meteor.Error(404, "event not found");
       }
       saneComment.eventId = event._id;
@@ -63,8 +63,8 @@ export const postComment = ServerMethod(
       saneComment.notifyAll =
         comment.notifyAll &&
         (user.privileged("admin") ||
-          course.userHasRole(user._id, "team") ||
-          user.organizations.some((g) => course?.teamOrganizations.includes(g)));
+          group.userHasRole(user._id, "team") ||
+          user.organizations.some((g) => group?.teamOrganizations.includes(g)));
     }
 
     const now = new Date();
@@ -72,7 +72,7 @@ export const postComment = ServerMethod(
     saneComment.time_updated = now;
 
     if (comment.parentId) {
-      const parentComment = await CourseDiscussions.findOneAsync(comment.parentId);
+      const parentComment = await GroupDiscussions.findOneAsync(comment.parentId);
 
       if (!parentComment) {
         throw new Meteor.Error(404, "parent comment not found");
@@ -80,7 +80,7 @@ export const postComment = ServerMethod(
 
       if (parentComment.courseId !== comment.courseId) {
         // I could try to mend this but why should I?
-        throw new Meteor.Error(400, "Course mismatch");
+        throw new Meteor.Error(400, "Group mismatch");
       }
 
       // No nesting beyond one level
@@ -95,7 +95,7 @@ export const postComment = ServerMethod(
       saneComment.saving = true;
     }
 
-    const commentId = await CourseDiscussions.insertAsync(saneComment);
+    const commentId = await GroupDiscussions.insertAsync(saneComment);
 
     await Notification.Comment.record(commentId);
 
@@ -115,20 +115,20 @@ export const editComment = ServerMethod(
   async (comment: EditCommentFields) => {
     check(comment, EditCommentFieldsPattern);
 
-    const update = sanitizeComment(comment) as CourseDiscussionEntity;
+    const update = sanitizeComment(comment) as GroupDiscussionEntity;
 
-    const originalComment = await CourseDiscussions.findOneAsync(comment._id);
+    const originalComment = await GroupDiscussions.findOneAsync(comment._id);
     if (!originalComment) {
       throw new Meteor.Error(404, "no such comment");
     }
 
-    if (!CourseDiscussionUtils.mayEditPost(await Meteor.userAsync(), originalComment)) {
+    if (!GroupDiscussionUtils.mayEditPost(await Meteor.userAsync(), originalComment)) {
       throw new Meteor.Error(401, "you cant");
     }
 
     update.time_updated = new Date();
 
-    await CourseDiscussions.updateAsync(originalComment._id, { $set: update });
+    await GroupDiscussions.updateAsync(originalComment._id, { $set: update });
   },
 );
 
@@ -142,22 +142,22 @@ export const deleteComment = ServerMethod(
       throw new Meteor.Error(401, "please log in");
     }
 
-    const comment = await CourseDiscussions.findOneAsync(commentId);
+    const comment = await GroupDiscussions.findOneAsync(commentId);
     if (!comment) {
       throw new Meteor.Error(404, "no such comment");
     }
 
-    const course = await Courses.findOneAsync(comment.courseId);
+    const group = await Groups.findOneAsync(comment.courseId);
 
-    if (!course) {
+    if (!group) {
       throw new Meteor.Error(401, "delete not permitted");
     }
 
-    if (!CourseDiscussionUtils.mayDeletePost(user, course, comment)) {
+    if (!GroupDiscussionUtils.mayDeletePost(user, group, comment)) {
       throw new Meteor.Error(401, "delete not permitted");
     }
 
-    await CourseDiscussions.removeAsync({ _id: comment._id });
-    await CourseDiscussions.removeAsync({ parentId: comment._id });
+    await GroupDiscussions.removeAsync({ _id: comment._id });
+    await GroupDiscussions.removeAsync({ parentId: comment._id });
   },
 );

@@ -1,7 +1,7 @@
 import { Blaze } from "meteor/blaze";
 
 /**
- * Give a preview of a filter by highlighting the matching courses
+ * Give a preview of a filter by highlighting the matching groups
  */
 
 export function FilterPreview(options: {
@@ -17,7 +17,7 @@ export function FilterPreview(options: {
   instance?: Blaze.TemplateInstance;
 }) {
   const instance = options.instance || false;
-  const course = instance ? instance.$(".course-compact") : $(".course-compact");
+  const group = instance ? instance.$(".course-compact") : $(".course-compact");
   const { property } = options;
 
   // build selector class
@@ -33,17 +33,17 @@ export function FilterPreview(options: {
 
   selector = `.${selector}`;
 
-  // create class for courses which are to be faded out and
+  // create class for groups which are to be faded out and
   // add a suffix if the fading effect is delayed
   let fadeClass = "filter-no-match";
   if (options.delayed) {
     fadeClass += "-delayed";
   }
 
-  // fade out the courses which don't match the selector
-  course.not(selector).toggleClass(fadeClass, options.activate);
+  // fade out the groups which don't match the selector
+  group.not(selector).toggleClass(fadeClass, options.activate);
 
-  // for properties which have labels used on the courses,
+  // for properties which have labels used on the groups,
   // highlight the labels too
   if (property === "category" || property === "organization") {
     const labelClass = `.js-${property}-label${selector}`;

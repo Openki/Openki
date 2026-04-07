@@ -5,7 +5,7 @@ import moment from "moment";
 import { Events } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { MeteorAsync } from "/imports/utils/promisify";
-import { CourseModel, Courses } from "/imports/api/courses/courses";
+import { GroupModel, Groups } from "/imports/api/courses/courses";
 import { UserModel } from "/imports/api/users/users";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { Default as RegionDefault } from "/imports/ui/lib/cleaned-region";
@@ -88,11 +88,11 @@ if (Meteor.isClient) {
 
         await MeteorAsync.loginWithPassword("greg", "greg");
 
-        const courseId = "eb6aedecf9";
+        const groupId = "eb6aedecf9";
 
-        const handle = await MeteorAsync.subscribe("courseDetails", courseId);
+        const handle = await MeteorAsync.subscribe("courseDetails", groupId);
         try {
-          const oldCourse = Courses.findOne(courseId);
+          const oldGroup = Groups.findOne(groupId);
 
           const theFuture = new Date();
           theFuture.setHours(1000);
@@ -103,7 +103,7 @@ if (Meteor.isClient) {
           const regionId = "9JyFCoKWkxnf8LWPh"; // Testistan
 
           const newEvent = {
-            courseId,
+            groupId,
             title: "Intentionally clever title for a generated test-event",
             description: "Nothing special here.",
             venue: { name: "Undisclosed place where heavy testing takes place" },
@@ -115,11 +115,11 @@ if (Meteor.isClient) {
 
           await EventsMethods.save("", newEvent);
 
-          const newCourse = Courses.findOne(courseId);
+          const newGroup = Groups.findOne(groupId);
 
           assert.isAbove(
-            (newCourse as CourseModel).time_lastedit.getTime(),
-            (oldCourse as CourseModel).time_lastedit.getTime(),
+            (newGroup as GroupModel).time_lastedit.getTime(),
+            (oldGroup as GroupModel).time_lastedit.getTime(),
           );
         } finally {
           handle.stop();

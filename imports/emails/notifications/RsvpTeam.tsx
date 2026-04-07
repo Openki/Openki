@@ -4,7 +4,7 @@ import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 
 export interface Props {
-  course: string;
+  group: string;
   event: JSX.Element;
   newParticipant: JSX.Element;
   companionsOfNewParticipant: number;
@@ -16,7 +16,7 @@ export interface Props {
 }
 
 export function RsvpTeam({
-  course,
+  group,
   event,
   newParticipant,
   companionsOfNewParticipant,
@@ -49,7 +49,7 @@ export function RsvpTeam({
         </td>
       </tr>
       <Footer
-        receiveNote={t("email.base.receiveNote.courseTeam", { COURSE: course })}
+        receiveNote={t("email.base.receiveNote.courseTeam", { COURSE: group })}
         unsubscribe={unsubscribe}
         spamPrevention={true}
         campaign={campaign}

@@ -5,9 +5,9 @@ import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 
 export interface Props {
-  course: JSX.Element;
-  courseLink: string;
-  courseDescription: string;
+  group: JSX.Element;
+  groupLink: string;
+  groupDescription: string;
   creator: UserModel;
   username: string;
   customSiteUrl: string;
@@ -17,10 +17,10 @@ export interface Props {
   lng: string;
 }
 
-export function Course({
-  course,
-  courseLink,
-  courseDescription,
+export function Group({
+  group,
+  groupLink,
+  groupDescription,
   username,
   customSiteUrl,
   customSiteName,
@@ -39,22 +39,22 @@ export function Course({
             {t(
               "notification.course.mail.intro",
               'Congratulations, you successfully created "{COURSE}" on `{SITENAME}`.',
-              { COURSE: course, SITENAME: <a href={customSiteUrl}>{customSiteName}</a> },
+              { COURSE: group, SITENAME: <a href={customSiteUrl}>{customSiteName}</a> },
             )}
           </p>
 
-          {!!courseDescription && (
+          {!!groupDescription && (
             <>
               <p>
                 {t(
                   "notification.course.mail.description",
                   "Here is a copy of the description you entered:",
-                  { COURSE: course, SITENAME: <a href={customSiteUrl}>{customSiteName}</a> },
+                  { COURSE: group, SITENAME: <a href={customSiteUrl}>{customSiteName}</a> },
                 )}
               </p>
               <table className="comment-box">
                 <tr>
-                  <td dangerouslySetInnerHTML={{ __html: courseDescription }}></td>
+                  <td dangerouslySetInnerHTML={{ __html: groupDescription }}></td>
                 </tr>
               </table>
             </>
@@ -67,7 +67,7 @@ export function Course({
             )}
           </p>
           <p className="text-center">
-            <a className="button" href={courseLink}>
+            <a className="button" href={groupLink}>
               {t("notification.course.mail.replyButton.simple", "Visit my proposal")}
             </a>
           </p>

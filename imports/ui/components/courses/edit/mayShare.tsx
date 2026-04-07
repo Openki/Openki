@@ -1,15 +1,15 @@
-import { CourseModel } from "/imports/api/courses/courses";
+import { GroupModel } from "/imports/api/courses/courses";
 
-export function mayShare(course: CourseModel) {
-  if (course.isPrivate()) {
+export function mayShare(group: GroupModel) {
+  if (group.isPrivate()) {
     return false;
   }
 
-  // only show share a course if there is a role to subscribe
+  // only show share a group if there is a role to subscribe
   if (
     !(
-      course.roles.some((r) => r !== "team") ||
-      (course.roles.includes("team") && !course.members.some((m) => m.roles.includes("team")))
+      group.roles.some((r) => r !== "team") ||
+      (group.roles.includes("team") && !group.members.some((m) => m.roles.includes("team")))
     )
   ) {
     return false;

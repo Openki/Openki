@@ -5,17 +5,17 @@ import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { CourseModel } from "/imports/api/courses/courses";
+import { GroupModel } from "/imports/api/courses/courses";
 import { useDetails } from "../../../../../api/organizations/publications";
-import * as CoursesMethods from "/imports/api/courses/methods";
+import * as GroupsMethods from "/imports/api/courses/methods";
 
 import { name } from "../../../../lib/organization-name-helpers";
 
 function OrganizationToAdd({
-  course,
+  group,
   organizationId,
 }: {
-  course: CourseModel;
+  group: GroupModel;
   organizationId: string;
 }) {
   const { t } = useTranslation();
@@ -33,7 +33,7 @@ function OrganizationToAdd({
         value={organizationId}
         onClick={async () => {
           try {
-            await CoursesMethods.promote(course._id, organizationId, true);
+            await GroupsMethods.promote(group._id, organizationId, true);
           } catch (err) {
             Alert.serverError(
               err,
@@ -49,14 +49,14 @@ function OrganizationToAdd({
 }
 
 export interface Props {
-  course: CourseModel;
+  group: GroupModel;
 }
 
-export function Add({ course }: Props) {
+export function Add({ group }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 
-  const organizationsToAdd = user && difference(user.organizations, course.organizations);
+  const organizationsToAdd = user && difference(user.organizations, group.organizations);
 
   if (!organizationsToAdd) {
     return null;
@@ -83,7 +83,7 @@ export function Add({ course }: Props) {
           <hr className="dropdown-divider" />
         </li>
         {organizationsToAdd.map((organizationId) => (
-          <OrganizationToAdd key={organizationId} course={course} organizationId={organizationId} />
+          <OrganizationToAdd key={organizationId} group={group} organizationId={organizationId} />
         ))}
         <li className="dialog-dropdown-btn">
           <a

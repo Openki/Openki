@@ -5,8 +5,8 @@ import { Meteor } from "meteor/meteor";
 import { uniq, truncate } from "lodash-es";
 import i18next from "i18next";
 
-import { CourseDiscussions } from "/imports/api/course-discussions/course-discussions";
-import { CourseModel, Courses } from "/imports/api/courses/courses";
+import { GroupDiscussions } from "/imports/api/course-discussions/course-discussions";
+import { GroupModel, Groups } from "/imports/api/courses/courses";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { UserModel, Users } from "/imports/api/users/users";
 import { Log } from "/imports/api/log/log";
@@ -24,23 +24,23 @@ export interface Body {
 
 /**
  * Record the intent to send event notifications
- * @param commentId ID for the CourseDiscussions collection
+ * @param commentId ID for the GroupDiscussions collection
  */
 export async function record(commentId: string) {
   check(commentId, String);
-  const comment = await CourseDiscussions.findOneAsync(commentId);
+  const comment = await GroupDiscussions.findOneAsync(commentId);
   if (!comment) {
-    throw new Meteor.Error(`No CourseDiscussion entry for ${commentId}`);
+    throw new Meteor.Error(`No GroupDiscussion entry for ${commentId}`);
   }
 
-  const course = await Courses.findOneAsync(comment.courseId);
-  if (!course) {
-    throw new Meteor.Error(`No course entry for ${commentId}`);
+  const group = await Groups.findOneAsync(comment.courseId);
+  if (!group) {
+    throw new Meteor.Error(`No group entry for ${commentId}`);
   }
 
   let recipients = [];
   if (comment.notifyAll) {
-    recipients.push(...course.members.map((m) => m.user));
+    recipients.push(...group.members.map((m) => m.user));
 
     // if a post on a single event all participants also get notified
     if (comment.eventId) {
@@ -53,7 +53,7 @@ export async function record(commentId: string) {
       }
     }
   } else {
-    recipients.push(...course.membersWithRole("team").map((m) => m.user));
+    recipients.push(...group.membersWithRole("team").map((m) => m.user));
 
     // All participants in the thread are notified.
     const threadId = comment.parentId;
@@ -62,7 +62,7 @@ export async function record(commentId: string) {
         $or: [{ _id: threadId }, { parentId: threadId }],
       };
 
-      await CourseDiscussions.find(threadSelector).forEachAsync((threadComment) => {
+      await GroupDiscussions.find(threadSelector).forEachAsync((threadComment) => {
         const partId = threadComment.userId;
         if (partId) {
           recipients.push(partId);
@@ -84,18 +84,18 @@ export async function record(commentId: string) {
     model: "Comment",
   };
 
-  await Log.record("Notification.Send", [course._id, comment._id], body);
+  await Log.record("Notification.Send", [group._id, comment._id], body);
 }
 
 export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
-  const comment = await CourseDiscussions.findOneAsync(entry.body.commentId);
+  const comment = await GroupDiscussions.findOneAsync(entry.body.commentId);
 
-  let course: CourseModel | undefined;
+  let group: GroupModel | undefined;
   let commenter: UserModel | undefined;
   let commenterName: string | undefined;
 
   if (comment) {
-    course = await Courses.findOneAsync(comment.courseId);
+    group = await Groups.findOneAsync(comment.courseId);
     if (comment.userId) {
       commenter = await Users.findOneAsync(comment.userId);
     }
@@ -118,12 +118,12 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       if (!comment) {
         throw new Error("Comment does not exist (0.o)");
       }
-      if (!course) {
-        throw new Error("Course does not exist (0.o)");
+      if (!group) {
+        throw new Error("Group does not exist (0.o)");
       }
 
       const subjectvars = {
-        COURSE: truncate(course.name, { length: 10 }),
+        COURSE: truncate(group.name, { length: 10 }),
         TITLE: truncate(comment.title, { length: 50 }),
         COMMENTER: "",
       };
@@ -145,20 +145,20 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
 
       let region: RegionModel | undefined;
-      if (course.region) {
-        region = await Regions.findOneAsync(course.region);
+      if (group.region) {
+        region = await Regions.findOneAsync(group.region);
       }
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);
-      const courseLink = Router.url("showCourse", course, {
+      const courseLink = Router.url("showCourse", group, {
         query: { campaign },
       });
-      const commentLink = Router.url("showCourse", course, {
+      const commentLink = Router.url("showCourse", group, {
         query: { select: comment._id, campaign },
       });
 
       return {
-        course: <a href={courseLink}>{course.name}</a>,
+        group: <a href={courseLink}>{group.name}</a>,
         commentLink,
         subject,
         comment,

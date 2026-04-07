@@ -12,7 +12,7 @@ import { LocalizedValue } from "/imports/utils/getLocalizedValue";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { Type } from "/imports/utils/CustomChecks";
 
-export type OrganizationEntityCustomCourseFields =
+export type OrganizationEntityCustomGroupFields =
   | {
       /** For internal us, must be unique in the list. */
       name: string;
@@ -86,7 +86,7 @@ export interface OrganizationEntity {
   description: string;
   logoUrl?: string;
   /** Customize the inputs that the user can enter when creating and editing a course. */
-  customCourseFields?: OrganizationEntityCustomCourseFields[];
+  customCourseFields?: OrganizationEntityCustomGroupFields[];
   dashboard?: OrganizationEntityDashboard;
   /** Hide some role options in the propose new course. */
   disableCreateRoles?: string[];

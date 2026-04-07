@@ -7,8 +7,8 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { CourseModel } from "/imports/api/courses/courses";
-import * as CoursesMethods from "/imports/api/courses/methods";
+import { GroupModel } from "/imports/api/courses/courses";
+import * as GroupsMethods from "/imports/api/courses/methods";
 import { Regions } from "/imports/api/regions/regions";
 
 import * as Analytics from "/imports/ui/lib/analytics";
@@ -23,8 +23,8 @@ import { Events } from "../../components/courses/events";
 import { Members } from "../../components/courses/members";
 import { Roles } from "../../components/courses/roles";
 import { Sharing } from "../../components/sharing";
-import { ButtonCourseArchive } from "./button-course-archive";
-import { ButtonCourseUnarchive } from "./button-course-unarchive";
+import { ButtonGroupArchive } from "./button-course-archive";
+import { ButtonGroupUnarchive } from "./button-course-unarchive";
 import { ConfirmDialog } from "./confirm-dialog";
 import { Header } from "./header";
 import { Submenu } from "./submenu";
@@ -35,11 +35,11 @@ import "./styles.scss";
 
 export interface Props {
   edit: boolean;
-  course: CourseModel;
+  group: GroupModel;
   select: string;
 }
 
-export function CourseDetailsPage({ edit, course, select }: Props) {
+export function GroupDetailsPage({ edit, group, select }: Props) {
   const { t } = useTranslation();
   const user = useUser();
   const viewport = useViewportSize();
@@ -48,22 +48,22 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
 
   const [expanded, setExpanded] = useState(false);
 
-  function mayEdit(course: CourseModel) {
-    return course?.editableBy(user);
+  function mayEdit(group: GroupModel) {
+    return group?.editableBy(user);
   }
 
-  function courseStateClasses(course: CourseModel) {
+  function groupStateClasses(group: GroupModel) {
     const classes = [];
 
-    if (course?.nextEvent) {
+    if (group?.nextEvent) {
       classes.push("has-upcoming-events");
-    } else if (course?.lastEvent) {
+    } else if (group?.lastEvent) {
       classes.push("has-past-events");
     } else {
       classes.push("is-proposal");
     }
 
-    if (course?.archived) {
+    if (group?.archived) {
       classes.push("is-archived");
     }
 
@@ -77,16 +77,16 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
     setIsBusy(true);
 
     try {
-      await CoursesMethods.remove(course._id);
+      await GroupsMethods.remove(group._id);
 
       Alert.success(
         t("courseDetailsPage.message.courseHasBeenDeleted", "{COURSE} was deleted.", {
-          COURSE: course.name,
+          COURSE: group.name,
         }),
       );
 
       let role;
-      if (intersection(user?.badges || [], course.editors).length > 0) {
+      if (intersection(user?.badges || [], group.editors).length > 0) {
         role = "team";
       } else if (user?.privileged("admin")) {
         role = "admin";
@@ -97,7 +97,7 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
       Analytics.trackEvent(
         "Course deletions",
         `Course deletions as ${role}`,
-        Regions.findOne(course.region)?.nameEn,
+        Regions.findOne(group.region)?.nameEn,
       );
 
       Router.go("home");
@@ -114,12 +114,12 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
   async function handleOnArchive() {
     setIsBusy(true);
     try {
-      await CoursesMethods.archive(course._id);
+      await GroupsMethods.archive(group._id);
       setExpanded(false);
 
       Alert.success(
         t("courseDetailsPage.message.courseHasBeenArchived", "{COURSE} was archived.", {
-          COURSE: course.name,
+          COURSE: group.name,
         }),
       );
     } catch (err) {
@@ -135,11 +135,11 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
   async function handleUnarchive() {
     setIsBusy(true);
     try {
-      await CoursesMethods.unarchive(course._id);
+      await GroupsMethods.unarchive(group._id);
 
       Alert.success(
         t("courseDetailsPage.message.courseHasBeenUnarchived", "{COURSE} has been unarchived.", {
-          COURSE: course.name,
+          COURSE: group.name,
         }),
       );
     } catch (err) {
@@ -163,15 +163,15 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
     if (force) {
       query.force = force;
     }
-    Router.go("showCourse", course, { query });
+    Router.go("showCourse", group, { query });
   }
 
   return (
     <>
       <MetaTags
-        title={course.name}
-        description={course.description}
-        image={course.publicUrlForDetailsImage()}
+        title={group.name}
+        description={group.description}
+        image={group.publicUrlForDetailsImage()}
       />
 
       {searchParams.nextActions === "1" && (
@@ -179,10 +179,10 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
           type="success"
           dismissible
           title={t("message.courseCreated", "{NAME} has been created", {
-            NAME: course.name,
+            NAME: group.name,
           })}
           actions={[
-            course.description
+            group.description
               ? {
                   text: t("message.courseCreated.addDescription", "Add a description"),
                   href: "#course-description",
@@ -192,7 +192,7 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
               text: t("message.courseCreated.addImage", "Add an image"),
               href: "#files-tab",
             },
-            mayShare(course)
+            mayShare(group)
               ? { text: t("message.courseCreated.share", "Invite your friends"), href: "#share" }
               : undefined,
             {
@@ -208,26 +208,26 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
         <div className="row course-page g-3">
           <div className="col-lg-8">
             <div className="page-component">
-              {course.archived && (
+              {group.archived && (
                 <div className="alert alert-archived text-center" role="alert">
                   <strong>
                     {t("course.archive.alert", "{COURSE} is archived and not active anymore.", {
-                      COURSE: course.name,
+                      COURSE: group.name,
                     })}
                   </strong>
                 </div>
               )}
 
               {edit ? (
-                <Edit {...course} />
+                <Edit {...group} />
               ) : (
                 <>
-                  <div className={`course-details ${courseStateClasses(course)}`}>
-                    <Header course={course} />
-                    <Submenu course={course} />
+                  <div className={`course-details ${groupStateClasses(group)}`}>
+                    <Header group={group} />
+                    <Submenu group={group} />
                   </div>
 
-                  {mayShare(course) && (
+                  {mayShare(group) && (
                     <div className="p-3 sharing-wrapper text-end" id="share">
                       <h4>
                         {t("sharing.title", "Invite your friends")} <Sharing />
@@ -235,7 +235,7 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
                     </div>
                   )}
 
-                  {mayEdit(course) && (
+                  {mayEdit(group) && (
                     <>
                       <div className="actions">
                         {!expanded && (
@@ -246,21 +246,21 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
                           />
                         )}
 
-                        {course.archived && (
-                          <ButtonCourseUnarchive
+                        {group.archived && (
+                          <ButtonGroupUnarchive
                             disabled={isBusy}
                             onUnarchive={async () => handleUnarchive()}
                           />
                         )}
 
-                        {!expanded && !course.archived && (
-                          <ButtonCourseArchive
+                        {!expanded && !group.archived && (
+                          <ButtonGroupArchive
                             disabled={isBusy}
                             className="btn-archive"
                             onArchive={async () => handleOnArchive()}
                           >
                             {t("course.archive.archiveButton.archive", "Archive")}
-                          </ButtonCourseArchive>
+                          </ButtonGroupArchive>
                         )}
 
                         {!expanded && (
@@ -273,9 +273,9 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
 
                       {expanded && (
                         <ConfirmDialog
-                          archiveButton={!course.archived}
+                          archiveButton={!group.archived}
                           disabled={isBusy}
-                          course={course}
+                          group={group}
                           onArchive={async () => handleOnArchive()}
                           onDelete={handleOnDelete}
                           onCancel={() => setExpanded(false)}
@@ -284,26 +284,26 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
                     </>
                   )}
 
-                  <Roles course={course} />
+                  <Roles group={group} />
                 </>
               )}
             </div>
 
             {mobileViewport() ? (
-              <Events course={course} />
+              <Events group={group} />
             ) : (
-              <Discussion courseId={course._id} select={select} />
+              <Discussion groupId={group._id} select={select} />
             )}
           </div>
 
           <div className="col-lg-4">
-            {!mobileViewport() && <Events course={course} />}
+            {!mobileViewport() && <Events group={group} />}
 
             <div className="page-component">
-              <Members course={course} />
+              <Members group={group} />
             </div>
 
-            {mobileViewport() && <Discussion courseId={course._id} select={select} />}
+            {mobileViewport() && <Discussion groupId={group._id} select={select} />}
 
             <div className="page-component mt-3">
               <Report showGroupHint={true} />
@@ -317,4 +317,4 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
 
 // for Blaze
 import "./template.html";
-Template.registerHelper("CourseDetailsPage", () => CourseDetailsPage);
+Template.registerHelper("GroupDetailsPage", () => GroupDetailsPage);

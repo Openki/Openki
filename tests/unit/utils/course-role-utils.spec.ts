@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { CourseMemberEntity } from "/imports/api/courses/courses";
+import { GroupMemberEntity } from "/imports/api/courses/courses";
 
 import { hasRole, hasRoleUser } from "/imports/utils/course-role-utils";
 
 describe("Role check", () => {
-  const members: CourseMemberEntity[] = [
+  const members: GroupMemberEntity[] = [
     { user: "user1", roles: ["role1", "role1000"], comment: "" },
     { user: "user2", roles: ["role2", "role1000"], comment: "" },
     { user: "user3", roles: ["role3"], comment: "" },

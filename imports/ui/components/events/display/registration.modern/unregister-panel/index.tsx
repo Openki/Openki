@@ -32,14 +32,14 @@ export interface Props {
 export function UnregisterPanel({ event, onUnregister }: Props) {
   const { dateFormat } = useDateTimeFormat();
 
-  const [isLoading, course] = useDetails(event.courseId || "-1");
+  const [isLoading, group] = useDetails(event.courseId || "-1");
 
   const { t } = useTranslation();
   const [unregisterDropdown, setUnregisterDropdown] = useState(false);
 
-  function courseTitle() {
+  function groupTitle() {
     if (event.courseId) {
-      return course?.name;
+      return group?.name;
     }
     return undefined;
   }
@@ -85,12 +85,12 @@ export function UnregisterPanel({ event, onUnregister }: Props) {
               />
             </div>
           </div>
-          {!isLoading() && !!courseTitle() && (
+          {!isLoading() && !!groupTitle() && (
             <p className="pt-3 mb-0">
               {t(
                 "event.details.youStayEnrolled",
                 "Note that you will stay enrolled as interested for {COURSETITLE}.",
-                { COURSETITLE: courseTitle() },
+                { COURSETITLE: groupTitle() },
               )}
             </p>
           )}

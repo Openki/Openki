@@ -66,7 +66,7 @@ async function handleHideClick() {
   Analytics.trackEvent("price", "hide policy");
 }
 
-function Dismissable() {
+function Dismissible() {
   const { t } = useTranslation();
   return (
     <a href="#" onClick={handleHideClick}>
@@ -83,7 +83,7 @@ function Dismissable() {
 }
 
 interface Props {
-  dismissable?: boolean | undefined;
+  dismissible?: boolean | undefined;
   wrap?: string | undefined;
 }
 
@@ -113,14 +113,14 @@ function useShown(props: Props) {
     return false;
   }
 
-  if (props.dismissable) {
+  if (props.dismissible) {
     return !dismissed;
   }
   return true;
 }
 
-function Content(props: { dismissable?: boolean | undefined }) {
-  if (props.dismissable) {
+function Content(props: { dismissible?: boolean | undefined }) {
+  if (props.dismissible) {
     return (
       <>
         <div>
@@ -131,7 +131,7 @@ function Content(props: { dismissable?: boolean | undefined }) {
             <More />
           </div>
           <div className="col-12 col-sm-6">
-            <Dismissable />
+            <Dismissible />
           </div>
         </div>
       </>
@@ -151,8 +151,8 @@ function Content(props: { dismissable?: boolean | undefined }) {
 
 function classNames(props: Props) {
   const classes = [];
-  if (props.dismissable) {
-    classes.push("is-dismissable");
+  if (props.dismissible) {
+    classes.push("is-dismissible");
   }
   if (props.wrap) {
     classes.push(props.wrap);
@@ -168,7 +168,7 @@ export function PricePolicy(props: Props) {
   return (
     <div className={`price-policy ${classNames(props)}`}>
       <div className="price-policy-content">
-        <Content dismissable={props.dismissable} />
+        <Content dismissible={props.dismissible} />
       </div>
     </div>
   );

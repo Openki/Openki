@@ -3,22 +3,22 @@ import { Router } from "meteor/iron:router";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 import { Roles } from "/imports/api/roles/roles";
-import { CourseModel } from "/imports/api/courses/courses";
+import { GroupModel } from "/imports/api/courses/courses";
 import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 
 import { hasRole } from "/imports/utils/course-role-utils";
 
 import { InternalIndicator } from "/imports/ui/components/internal-indicator";
 import { SingleEventIndicator } from "/imports/ui/components/single-event-indicator";
-import { CourseCategories } from "/imports/ui/components/courses/categories";
+import { GroupCategories } from "/imports/ui/components/courses/categories";
 import { OrganizationTag } from "../../organizations/tag";
-import { CourseCompactEvent } from "./course-compact-event";
-import { CourseCompactRoles } from "./course-compact-roles";
+import { GroupCompactEvent } from "./course-compact-event";
+import { GroupCompactRoles } from "./course-compact-roles";
 
 import "./styles.scss";
 
 export interface Props {
-  course: CourseModel;
+  group: GroupModel;
   organizationTagEvents?:
     | ((organizationId: string) => {
         onMouseOver: () => Promise<void>;
@@ -26,7 +26,7 @@ export interface Props {
         onClick: () => Promise<void>;
       })
     | undefined;
-  categorieTagEvents?:
+  categoryTagEvents?:
     | ((organizationId: string) => {
         onMouseOver: () => Promise<void>;
         onMouseOut: () => Promise<void>;
@@ -35,18 +35,18 @@ export interface Props {
     | undefined;
 }
 
-export function CourseCompact({ course, organizationTagEvents, categorieTagEvents }: Props) {
+export function GroupCompact({ group, organizationTagEvents, categoryTagEvents }: Props) {
   const elementRef = useRef<HTMLDivElement>(null);
   const user = useUser();
 
-  const [isRegionLoading, region] = useRegionDetails(course?.region);
+  const [isRegionLoading, region] = useRegionDetails(group?.region);
 
-  function courseCss() {
-    if (!course.nextEvent) {
+  function groupCss() {
+    if (!group.nextEvent) {
       return {};
     }
 
-    const src = course?.publicUrlForCompactImage();
+    const src = group?.publicUrlForCompactImage();
     if (!src) {
       return {};
     }
@@ -59,18 +59,18 @@ export function CourseCompact({ course, organizationTagEvents, categorieTagEvent
     };
   }
 
-  function courseStateClasses() {
+  function groupStateClasses() {
     const classes = [];
 
-    if (course.nextEvent) {
+    if (group.nextEvent) {
       classes.push("has-upcoming-events");
-    } else if (course.lastEvent) {
+    } else if (group.lastEvent) {
       classes.push("has-past-events");
     } else {
       classes.push("is-proposal");
     }
 
-    if (course.archived) {
+    if (group.archived) {
       classes.push("is-archived");
     }
 
@@ -83,21 +83,21 @@ export function CourseCompact({ course, organizationTagEvents, categorieTagEvent
     const roles = Roles.map((role) => role.type);
 
     roles.forEach((role) => {
-      const roleDisengaged = !hasRole(course.members, role);
-      if (course.roles.includes(role) && roleDisengaged) {
+      const roleDisengaged = !hasRole(group.members, role);
+      if (group.roles.includes(role) && roleDisengaged) {
         classes.push(`needs-role-${role}`);
       }
     });
 
-    course.categories?.forEach((category) => {
+    group.categories?.forEach((category) => {
       classes.push(`category-${category}`);
     });
 
-    course.organizations?.forEach((organization) => {
+    group.organizations?.forEach((organization) => {
       classes.push(`organization-${organization}`);
     });
 
-    classes.push(`region-${course.region}`);
+    classes.push(`region-${group.region}`);
 
     return classes.join(" ");
   }
@@ -105,7 +105,7 @@ export function CourseCompact({ course, organizationTagEvents, categorieTagEvent
   function organizationTagAttr(organizationId: string) {
     return {
       organizationId,
-      isTeam: course.teamOrganizations.includes(organizationId),
+      isTeam: group.teamOrganizations.includes(organizationId),
       onClick: async () => {
         await organizationTagEvents?.(organizationId).onClick();
       },
@@ -120,7 +120,7 @@ export function CourseCompact({ course, organizationTagEvents, categorieTagEvent
     };
   }
 
-  const organizations = course.organizations.filter(
+  const organizations = group.organizations.filter(
     (organizationId) =>
       !(
         // hide organization where are from the region set
@@ -128,7 +128,7 @@ export function CourseCompact({ course, organizationTagEvents, categorieTagEvent
           region?.defaultTeamOrganizations?.includes(organizationId) &&
           // when user ist not member of the organization or a admin
           !user?.mayPromoteWith(organizationId) &&
-          !course.editableBy(user)
+          !group.editableBy(user)
         )
       ),
   );
@@ -136,36 +136,36 @@ export function CourseCompact({ course, organizationTagEvents, categorieTagEvent
   return (
     <div
       ref={elementRef}
-      className={`row mx-0 align-items-start course-compact ${courseStateClasses()} ${filterPreviewClasses()}`}
-      style={courseCss()}
+      className={`row mx-0 align-items-start course-compact ${groupStateClasses()} ${filterPreviewClasses()}`}
+      style={groupCss()}
     >
       <div className="course-compact-content col-8">
-        {course.internal && <InternalIndicator />}
-        {course.singleEvent && <SingleEventIndicator />}
-        <div className="course-compact-title" title={course.name}>
-          <a className="stretched-link" href={Router.path("showCourse", course)}>
-            {course.name}
+        {group.internal && <InternalIndicator />}
+        {group.singleEvent && <SingleEventIndicator />}
+        <div className="course-compact-title" title={group.name}>
+          <a className="stretched-link" href={Router.path("showCourse", group)}>
+            {group.name}
           </a>
         </div>
-        <CourseCategories
-          categories={course.categories}
-          onClick={async (categorie) => {
-            categorieTagEvents?.(categorie).onClick();
+        <GroupCategories
+          categories={group.categories}
+          onClick={async (category) => {
+            categoryTagEvents?.(category).onClick();
           }}
-          onMouseOver={async (categorie) => {
+          onMouseOver={async (category) => {
             elementRef.current?.classList.add("elevate-child");
-            categorieTagEvents?.(categorie).onMouseOver();
+            categoryTagEvents?.(category).onMouseOver();
           }}
-          onMouseOut={async (categorie) => {
+          onMouseOut={async (category) => {
             elementRef.current?.classList.remove("elevate-child");
-            categorieTagEvents?.(categorie).onMouseOut();
+            categoryTagEvents?.(category).onMouseOut();
           }}
         />
       </div>
-      {course.nextEvent ? (
-        <CourseCompactEvent event={course.nextEvent} />
+      {group.nextEvent ? (
+        <GroupCompactEvent event={group.nextEvent} />
       ) : (
-        <CourseCompactRoles course={course} />
+        <GroupCompactRoles group={group} />
       )}
       {!isRegionLoading() && (
         <div className="tag-group course-organizations">

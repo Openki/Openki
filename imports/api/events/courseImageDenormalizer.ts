@@ -1,11 +1,11 @@
-import { Courses } from "/imports/api/courses/courses";
+import { Groups } from "/imports/api/courses/courses";
 import { Events, EventEntity } from "/imports/api/events/events";
 
 export async function onStartUp() {
   let updated = 0;
 
   for (const event of (await Events.find({}).fetchAsync()).filter((e) => e.courseId)) {
-    const course = await Courses.findOneAsync(event.courseId);
+    const course = await Groups.findOneAsync(event.courseId);
     if (!course) {
       throw new Error(`Missing course ${event.courseId} for event`);
     }
@@ -31,7 +31,7 @@ export async function beforeInsert(
     return event;
   }
 
-  const course = await Courses.findOneAsync(event.courseId);
+  const course = await Groups.findOneAsync(event.courseId);
   if (!course) {
     throw new Error(`Missing course ${event.courseId} for new event`);
   }
@@ -39,7 +39,7 @@ export async function beforeInsert(
   return { ...event, courseImage: course.image, courseCompactImage: course.compactImage };
 }
 
-export async function afterCourseUpdateImage(
+export async function afterGroupUpdateImage(
   courseId: string,
   set: { compactImage: string; image: string },
 ) {
@@ -50,7 +50,7 @@ export async function afterCourseUpdateImage(
   );
 }
 
-export async function afterCourseDeleteImage(courseId: string) {
+export async function afterGroupDeleteImage(courseId: string) {
   await Events.updateAsync(
     { courseId },
     { $set: { courseImage: "", courseCompactImage: "" } },

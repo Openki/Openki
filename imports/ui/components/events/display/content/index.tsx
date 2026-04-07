@@ -18,7 +18,7 @@ import "./styles.scss";
 export function Content({ event }: { event: EventModel }) {
   const { t } = useTranslation();
 
-  const [isLoading, course] = useDetails({ when: !!event.courseId }, event.courseId);
+  const [isLoading, group] = useDetails({ when: !!event.courseId }, event.courseId);
 
   return (
     <>
@@ -34,7 +34,7 @@ export function Content({ event }: { event: EventModel }) {
 
           <div className="row">
             <div className="col-md-7">
-              {!isLoading() && !course?.singleEvent && (
+              {!isLoading() && !group?.singleEvent && (
                 <>
                   <h3>{event.title}</h3>
                   <OrganizationList event={event} />
@@ -46,7 +46,7 @@ export function Content({ event }: { event: EventModel }) {
                 dangerouslySetInnerHTML={{ __html: event.description }}
               ></p>
 
-              {!!event.courseId && <CustomFieldDisplay courseId={event.courseId} />}
+              {!!event.courseId && <CustomFieldDisplay groupId={event.courseId} />}
             </div>
             <div className="col-md-5">
               <div className="details-map">
@@ -73,7 +73,7 @@ export function Content({ event }: { event: EventModel }) {
         </div>
         {!event.isPrivate() && (
           <>
-            <PricePolicy dismissable wrap="event-details-price-policy" />
+            <PricePolicy dismissible wrap="event-details-price-policy" />
             <div className="p-3 text-end" id="share">
               <h4>
                 {t("sharing.title", "Invite your friends")} <Sharing />

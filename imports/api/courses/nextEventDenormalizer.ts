@@ -1,27 +1,27 @@
 import { Mongo } from "meteor/mongo";
 
 import {
-  Courses,
-  CourseLastEventEntity,
-  CourseNextEventEntity,
-  CourseEntity,
+  Groups,
+  GroupLastEventEntity,
+  GroupNextEventEntity,
+  GroupEntity,
 } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
 
 /**
- * Update the nextEvent field for the courses matching the selector
+ * Update the nextEvent field for the groups matching the selector
  */
-export async function updateNextEvent(courseIdOrSelector: string | Mongo.Selector<CourseEntity>) {
+export async function updateNextEvent(groupIdOrSelector: string | Mongo.Selector<GroupEntity>) {
   await Promise.all(
-    await Courses.find(courseIdOrSelector).mapAsync(async (course) => {
+    await Groups.find(groupIdOrSelector).mapAsync(async (group) => {
       const futureEvents = await Events.countDocuments({
-        courseId: course._id,
+        courseId: group._id,
         start: { $gt: new Date() },
         canceled: { $ne: true },
       });
 
-      const nextEvent: CourseNextEventEntity | undefined = await Events.findOneAsync(
-        { courseId: course._id, start: { $gt: new Date() }, canceled: { $ne: true } },
+      const nextEvent: GroupNextEventEntity | undefined = await Events.findOneAsync(
+        { courseId: group._id, start: { $gt: new Date() }, canceled: { $ne: true } },
         {
           sort: { start: 1 },
           projection: {
@@ -35,8 +35,8 @@ export async function updateNextEvent(courseIdOrSelector: string | Mongo.Selecto
         },
       );
 
-      const lastEvent: CourseLastEventEntity | undefined = await Events.findOneAsync(
-        { courseId: course._id, start: { $lt: new Date() }, canceled: { $ne: true } },
+      const lastEvent: GroupLastEventEntity | undefined = await Events.findOneAsync(
+        { courseId: group._id, start: { $lt: new Date() }, canceled: { $ne: true } },
         {
           sort: { start: -1 },
           projection: {
@@ -49,7 +49,7 @@ export async function updateNextEvent(courseIdOrSelector: string | Mongo.Selecto
         },
       );
 
-      await Courses.updateAsync(course._id, {
+      await Groups.updateAsync(group._id, {
         $set: {
           futureEvents,
           nextEvent: nextEvent || null,

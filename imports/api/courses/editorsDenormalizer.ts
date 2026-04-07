@@ -1,16 +1,16 @@
 import { Mongo } from "meteor/mongo";
 
-import { CourseEntity, Courses } from "./courses";
+import { GroupEntity, Groups } from "./courses";
 import * as eventOrganizationsAndEditorsDenormalizer from "../events/organizationsAndEditorsDenormalizer";
 
 /**
  * Recalculate the editors field
  */
-export async function updateEditors(courseIdOrSelector: string | Mongo.Selector<CourseEntity>) {
-  for (const course of await Courses.find(courseIdOrSelector).fetchAsync()) {
-    const editors = course.teamOrganizations.slice();
+export async function updateEditors(groupIdOrSelector: string | Mongo.Selector<GroupEntity>) {
+  for (const group of await Groups.find(groupIdOrSelector).fetchAsync()) {
+    const editors = group.teamOrganizations.slice();
 
-    course.members.forEach((member) => {
+    group.members.forEach((member) => {
       if (member.roles.includes("team")) {
         editors.push(member.user);
       }
@@ -18,12 +18,12 @@ export async function updateEditors(courseIdOrSelector: string | Mongo.Selector<
 
     const update = { $set: { editors } };
 
-    await Courses.updateAsync({ _id: course._id }, update);
+    await Groups.updateAsync({ _id: group._id }, update);
 
     // At some point we'll have to figure out a proper caching hierarchy
 
     await eventOrganizationsAndEditorsDenormalizer.updateOrganizationsAndEditors({
-      courseId: course._id,
+      courseId: group._id,
     });
   }
 }

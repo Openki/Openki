@@ -5,7 +5,7 @@ import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
 import { truncate, capitalize } from "lodash-es";
 
-import { Courses } from "/imports/api/courses/courses";
+import { Groups } from "/imports/api/courses/courses";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { Log } from "/imports/api/log/log";
 import { UserModel, Users } from "/imports/api/users/users";
@@ -27,25 +27,25 @@ interface Body {
 
 /**
  * Record the intent to send join notifications
- * @param courseId ID for the CourseDiscussions collection
+ * @param groupId ID for the CourseDiscussions collection
  * @param participantId ID of the user that joined
  * @param newRole new role of the participant
  * @param message Optional message of the new participant
  */
 export async function record(
-  courseId: string,
+  groupId: string,
   participantId: string,
   newRole: string,
   message?: string,
 ) {
-  check(courseId, String);
+  check(groupId, String);
   check(participantId, String);
   check(newRole, String);
   check(message, Match.Optional(String));
 
-  const course = await Courses.findOneAsync(courseId);
-  if (!course) {
-    throw new Meteor.Error(`No course entry for ${courseId}`);
+  const group = await Groups.findOneAsync(groupId);
+  if (!group) {
+    throw new Meteor.Error(`No group entry for ${groupId}`);
   }
 
   const participant = await Users.findOneAsync(participantId);
@@ -54,25 +54,25 @@ export async function record(
   }
 
   const body: Body = {
-    courseId: course._id,
+    courseId: group._id,
     participantId: participant._id,
     newRole,
     message,
 
     // Don't send to new member, they know
-    recipients: course
+    recipients: group
       .membersWithRole("team")
       .map((m) => m.user)
       .filter((r) => r !== participantId),
     model: "Join",
   };
 
-  await Log.record("Notification.Send", [course._id, participant._id], body);
+  await Log.record("Notification.Send", [group._id, participant._id], body);
 }
 
 export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
-  const course = await Courses.findOneAsync(body.courseId);
+  const group = await Groups.findOneAsync(body.courseId);
   const newParticipant = await Users.findOneAsync(body.participantId);
   const recipients = await Users.find({
     _id: { $in: body.recipients.filter((r) => r !== body.participantId) },
@@ -93,13 +93,13 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       if (!newParticipant) {
         throw new Error("New participant does not exist (0.o)");
       }
-      if (!course) {
+      if (!group) {
         throw new Error("Course does not exist (0.o)");
       }
 
       const roleTitle = t(`roles.${body.newRole}.short`);
       const subjectvars = {
-        COURSE: truncate(course.name, { length: 10 }),
+        COURSE: truncate(group.name, { length: 10 }),
         USER: truncate(newParticipant.getDisplayName(), { length: 50 }),
         ROLE: roleTitle,
         ROLETYPE: body.newRole,
@@ -112,22 +112,22 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       );
 
       const figures = ["host", "mentor", "participant", "team"]
-        .filter((role) => course.roles.includes(role))
+        .filter((role) => group.roles.includes(role))
         .map((role) => ({
           role: capitalize(t(`roles.${role}.short`)),
-          count: course.membersWithRole(role).length,
+          count: group.membersWithRole(role).length,
         }));
 
       let region: RegionModel | undefined;
-      if (course.region) {
-        region = await Regions.findOneAsync(course.region);
+      if (group.region) {
+        region = await Regions.findOneAsync(group.region);
       }
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);
 
-      const courseLink = Router.url("showCourse", course, { query: { campaign } });
+      const courseLink = Router.url("showCourse", group, { query: { campaign } });
       return {
-        course: <a href={courseLink}>{course.name}</a>,
+        group: <a href={courseLink}>{group.name}</a>,
         newParticipant: <strong>{newParticipant.getDisplayName()}</strong>,
         subject,
         roleTitle,

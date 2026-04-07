@@ -4,7 +4,7 @@ import { chain, isEmpty } from "lodash-es";
 
 import { EventVenueEntity } from "/imports/api/events/events";
 import { useFindFilter as useOrganizationsFindFilter } from "/imports/api/organizations/publications";
-import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
+import { useDetails as useGroupDetails } from "/imports/api/courses/publications";
 
 import { Display } from "../../location/display";
 import { VenueTag } from "../../venues/link";
@@ -33,13 +33,13 @@ export function EditVenue({ region: regionId, event, value, onChange, errors }: 
   const { t } = useTranslation();
   const [autofocusOnSearch, setAutoFocusOnSearch] = useState(false);
 
-  const [isCourseLoading, course] = useCourseDetails({ when: !!event?.courseId }, event?.courseId);
+  const [isGroupLoading, group] = useGroupDetails({ when: !!event?.courseId }, event?.courseId);
   const [organizationsIsLoading, organizations] = useOrganizationsFindFilter(
-    { when: !!course?.teamOrganizations },
-    { ids: course?.teamOrganizations },
+    { when: !!group?.teamOrganizations },
+    { ids: group?.teamOrganizations },
   );
 
-  if (isCourseLoading() || organizationsIsLoading()) {
+  if (isGroupLoading() || organizationsIsLoading()) {
     return null;
   }
 

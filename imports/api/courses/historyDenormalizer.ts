@@ -1,7 +1,7 @@
-import { Courses } from "./courses";
+import { Groups } from "./courses";
 
-export async function afterUpdate(courseId: string, userId: string) {
-  await Courses.updateAsync(courseId, {
+export async function afterUpdate(groupId: string, userId: string) {
+  await Groups.updateAsync(groupId, {
     $addToSet: {
       history: {
         dateTime: new Date(),
@@ -12,8 +12,8 @@ export async function afterUpdate(courseId: string, userId: string) {
   });
 }
 
-export async function afterUpdateImage(courseId: string, userId: string) {
-  await Courses.updateAsync(courseId, {
+export async function afterUpdateImage(groupId: string, userId: string) {
+  await Groups.updateAsync(groupId, {
     $addToSet: {
       history: {
         dateTime: new Date(),
@@ -24,8 +24,8 @@ export async function afterUpdateImage(courseId: string, userId: string) {
   });
 }
 
-export async function afterDeleteImage(courseId: string, userId: string) {
-  await Courses.updateAsync(courseId, {
+export async function afterDeleteImage(groupId: string, userId: string) {
+  await Groups.updateAsync(groupId, {
     $addToSet: {
       history: {
         dateTime: new Date(),
@@ -36,8 +36,8 @@ export async function afterDeleteImage(courseId: string, userId: string) {
   });
 }
 
-export async function afterSubscribe(courseId: string, userId: string, roleType: string) {
-  await Courses.updateAsync(courseId, {
+export async function afterSubscribe(groupId: string, userId: string, roleType: string) {
+  await Groups.updateAsync(groupId, {
     $addToSet: {
       history: {
         dateTime: new Date(),
@@ -48,8 +48,8 @@ export async function afterSubscribe(courseId: string, userId: string, roleType:
   });
 }
 
-export async function afterUnsubscribe(courseId: string, userId: string, roleType: string) {
-  await Courses.updateAsync(courseId, {
+export async function afterUnsubscribe(groupId: string, userId: string, roleType: string) {
+  await Groups.updateAsync(groupId, {
     $addToSet: {
       history: {
         dateTime: new Date(),
@@ -61,12 +61,12 @@ export async function afterUnsubscribe(courseId: string, userId: string, roleTyp
 }
 
 export async function afterOrganizationPromoteUpdate(
-  courseId: string,
+  groupId: string,
   organizationId: string,
   enable: boolean,
   userId: string,
 ) {
-  await Courses.updateAsync(courseId, {
+  await Groups.updateAsync(groupId, {
     $addToSet: {
       history: {
         dateTime: new Date(),
@@ -77,12 +77,12 @@ export async function afterOrganizationPromoteUpdate(
   });
 }
 export async function afterOrganizationTeamUpdate(
-  courseId: string,
+  groupId: string,
   organizationId: string,
   enable: boolean,
   userId: string,
 ) {
-  await Courses.updateAsync(courseId, {
+  await Groups.updateAsync(groupId, {
     $addToSet: {
       history: {
         dateTime: new Date(),
@@ -94,7 +94,7 @@ export async function afterOrganizationTeamUpdate(
 }
 
 export async function afterEventInsert(
-  courseId: string,
+  groupId: string,
   userId: string,
   event: {
     _id: string;
@@ -103,7 +103,7 @@ export async function afterEventInsert(
     startLocal: string;
   },
 ) {
-  await Courses.updateAsync(courseId, {
+  await Groups.updateAsync(groupId, {
     $addToSet: {
       history: {
         dateTime: new Date(),
@@ -115,7 +115,7 @@ export async function afterEventInsert(
 }
 
 export async function afterEventUpdate(
-  courseId: string,
+  groupId: string,
   userId: string,
   event: {
     _id: string;
@@ -125,7 +125,7 @@ export async function afterEventUpdate(
     replicasUpdated: boolean;
   },
 ) {
-  await Courses.updateAsync(courseId, {
+  await Groups.updateAsync(groupId, {
     $addToSet: {
       history: {
         dateTime: new Date(),
@@ -137,14 +137,14 @@ export async function afterEventUpdate(
 }
 
 export async function afterEventRemove(
-  courseId: string,
+  groupId: string,
   userId: string,
   event: {
     title: string;
     startLocal: string;
   },
 ) {
-  await Courses.updateAsync(courseId, {
+  await Groups.updateAsync(groupId, {
     $addToSet: {
       history: {
         dateTime: new Date(),

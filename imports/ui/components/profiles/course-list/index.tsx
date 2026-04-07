@@ -8,7 +8,7 @@ import { ScssVars } from "/imports/ui/lib/scss-vars";
 
 import { useFindFilter } from "/imports/api/courses/publications";
 import { LoadingPage } from "/imports/ui/pages/loading";
-import { CourseList } from "../../courses/List";
+import { GroupList } from "../../courses/List";
 import { useRoleDisplay } from "../../../lib/useRoleDisplay";
 
 import "./styles.scss";
@@ -111,7 +111,7 @@ export function Courselist(data: { user: UserModel; ownProfile: boolean }) {
                             NAME: data.user.getDisplayName(),
                           })}
                     </h3>
-                    <CourseList courses={coursesByRole(role.type, false)} small={true} />
+                    <GroupList groups={coursesByRole(role.type, false)} small={true} />
                   </React.Fragment>
                 ))}
 
@@ -129,7 +129,7 @@ export function Courselist(data: { user: UserModel; ownProfile: boolean }) {
                             NAME: data.user.getDisplayName(),
                           })}
                     </h3>
-                    <CourseList courses={coursesByRole(role.type, true)} small={true} />
+                    <GroupList groups={coursesByRole(role.type, true)} small={true} />
                   </React.Fragment>
                 ))}
             </>

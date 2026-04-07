@@ -2,20 +2,20 @@ import { Router } from "meteor/iron:router";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { CourseModel } from "/imports/api/courses/courses";
+import { GroupModel } from "/imports/api/courses/courses";
 
 export interface Props {
-  course: CourseModel;
+  group: GroupModel;
 }
 
-export function Add({ course }: Props) {
+export function Add({ group }: Props) {
   const { t } = useTranslation();
 
   return (
     <div id="course-event-add" className="event-caption-wrap">
       <a
         className="btn p-0"
-        href={Router.path("createEvent", undefined, { query: { courseId: course._id } })}
+        href={Router.path("createEvent", undefined, { query: { courseId: group._id } })}
         title={t("course.event.edit.add")}
       >
         <div className="event-caption event-caption-placeholder event-caption-action event-caption-add">

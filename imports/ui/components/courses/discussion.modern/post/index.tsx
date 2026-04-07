@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useUserId } from "/imports/utils/react-meteor-data";
 import { useTranslation } from "react-i18next";
 
-import { CourseDiscussionEntity } from "/imports/api/course-discussions/course-discussions";
+import { GroupDiscussionEntity } from "/imports/api/course-discussions/course-discussions";
 
 import { Edit } from "./edit";
 import { Show } from "./show";
 
 import "./styles.scss";
 
-function Responses({ responses: replies }: { responses: CourseDiscussionEntity[] }) {
+function Responses({ responses: replies }: { responses: GroupDiscussionEntity[] }) {
   const { t } = useTranslation();
   const [limit, setLimit] = useState(2);
 
@@ -43,8 +43,8 @@ function Responses({ responses: replies }: { responses: CourseDiscussionEntity[]
 }
 
 export interface Props {
-  post: CourseDiscussionEntity & { new?: true };
-  responses?: CourseDiscussionEntity[];
+  post: GroupDiscussionEntity & { new?: true };
+  responses?: GroupDiscussionEntity[];
   edit?: boolean;
   onCancel?: () => void;
 }

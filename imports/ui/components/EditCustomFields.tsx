@@ -1,7 +1,7 @@
 import React from "react";
 
-import { CourseCustomField } from "/imports/api/courses/courses";
-import { OrganizationEntityCustomCourseFields } from "../../api/organizations/organizations";
+import { GroupCustomField } from "/imports/api/courses/courses";
+import { OrganizationEntityCustomGroupFields } from "../../api/organizations/organizations";
 
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
@@ -11,9 +11,9 @@ import { FormCheck } from "/imports/ui/components/FormCheck";
 export interface Props {
   /** Filter / Edit only specific field types. Default: all */
   type?: "singleLine" | "multiLine" | "option" | "boolean" | undefined;
-  fields: OrganizationEntityCustomCourseFields[];
-  values: CourseCustomField[] | undefined;
-  onChange: (values: CourseCustomField[]) => void;
+  fields: OrganizationEntityCustomGroupFields[];
+  values: GroupCustomField[] | undefined;
+  onChange: (values: GroupCustomField[]) => void;
 }
 
 export function EditCustomFields({ type, fields, values, onChange }: Props) {

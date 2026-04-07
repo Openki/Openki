@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { CourseModel } from "/imports/api/courses/courses";
+import { GroupModel } from "/imports/api/courses/courses";
 
 import { Description } from "../description";
 import { History } from "/imports/ui/components/courses/history";
@@ -12,14 +12,14 @@ import { CustomFieldDisplay } from "/imports/ui/components/courses/CustomFieldDi
 
 import "./styles.scss";
 
-export function Submenu({ course }: { course: CourseModel }) {
+export function Submenu({ group }: { group: GroupModel }) {
   const { t } = useTranslation();
   const user = useUser();
   const [descriptionTruncated, setDescriptionTruncated] = useState(true);
   const elementRef = useRef<HTMLDivElement>(null);
 
   function mayEdit() {
-    return course.editableBy(user);
+    return group.editableBy(user);
   }
 
   useEffect(() => {
@@ -96,13 +96,13 @@ export function Submenu({ course }: { course: CourseModel }) {
               ref={elementRef}
             >
               <Description
-                course={course}
+                group={group}
                 onStartEditing={() => {
                   // sets the state when the user starts editing
                   setDescriptionTruncated(false);
                 }}
               />
-              <CustomFieldDisplay courseId={course._id} />
+              <CustomFieldDisplay groupId={group._id} />
             </div>
             {descriptionTruncated && <div className="course-description-fade-bottom"></div>}
           </div>
@@ -125,7 +125,7 @@ export function Submenu({ course }: { course: CourseModel }) {
           aria-labelledby="history-tab"
           tabIndex={0}
         >
-          <History course={course} />
+          <History group={group} />
         </div>
         {mayEdit() && (
           <div
@@ -135,15 +135,11 @@ export function Submenu({ course }: { course: CourseModel }) {
             aria-labelledby="files-tab"
             tabIndex={0}
           >
-            <Files course={course} />
+            <Files group={group} />
           </div>
         )}
-        {!course.isPrivate() && <PricePolicy dismissable wrap="course-details-price-policy" />}
+        {!group.isPrivate() && <PricePolicy dismissible wrap="course-details-price-policy" />}
       </div>
     </>
   );
 }
-
-// for Blaze
-import "./template.html";
-Template.registerHelper("CourseDetailsSubmenu", () => Submenu);

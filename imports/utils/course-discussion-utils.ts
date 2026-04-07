@@ -1,10 +1,10 @@
-import { CourseMemberEntity } from "/imports/api/courses/courses";
+import { GroupMemberEntity } from "/imports/api/courses/courses";
 import { UserModel } from "/imports/api/users/users";
 import { hasRoleUser } from "/imports/utils/course-role-utils";
 
 export function mayDeletePost(
   user: UserModel | undefined | null,
-  course: { members: CourseMemberEntity[] },
+  course: { members: GroupMemberEntity[] },
   post: { userId?: string },
 ) {
   if (!user) {

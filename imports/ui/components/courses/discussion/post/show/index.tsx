@@ -2,12 +2,12 @@ import React from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 
-import { Courses } from "/imports/api/courses/courses";
-import { CourseDiscussionEntity } from "/imports/api/course-discussions/course-discussions";
-import * as CourseDiscussionsMethods from "/imports/api/course-discussions/methods";
+import { Groups } from "/imports/api/courses/courses";
+import { GroupDiscussionEntity } from "/imports/api/course-discussions/course-discussions";
+import * as GroupDiscussionsMethods from "/imports/api/course-discussions/methods";
 import * as Alert from "/imports/api/alerts/alert";
 
-import * as CourseDiscussionUtils from "/imports/utils/course-discussion-utils";
+import * as GroupDiscussionUtils from "/imports/utils/course-discussion-utils";
 import * as Tooltips from "/imports/utils/Tooltips";
 import { useUser } from "/imports/utils/react-meteor-data";
 
@@ -17,7 +17,7 @@ import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { RemoveDropdown } from "./remove-dropdown";
 
 export interface Props {
-  post: CourseDiscussionEntity & { new?: true } & { saving?: boolean };
+  post: GroupDiscussionEntity & { new?: true } & { saving?: boolean };
   onEdit: () => void;
 }
 
@@ -37,14 +37,14 @@ export function Show({ post, onEdit }: Props) {
     return classes.join(" ");
   }
   function mayEdit() {
-    return CourseDiscussionUtils.mayEditPost(user ?? undefined, post);
+    return GroupDiscussionUtils.mayEditPost(user ?? undefined, post);
   }
   function mayDelete() {
-    const course = Courses.findOne(post.courseId);
-    if (!course) {
-      throw new Error("Unexpected falsy: course");
+    const group = Groups.findOne(post.courseId);
+    if (!group) {
+      throw new Error("Unexpected falsy: group");
     }
-    return CourseDiscussionUtils.mayDeletePost(user ?? undefined, course, post);
+    return GroupDiscussionUtils.mayDeletePost(user ?? undefined, group, post);
   }
   function hasBeenEdited() {
     return moment(post.time_updated).isAfter(post.time_created);
@@ -55,7 +55,7 @@ export function Show({ post, onEdit }: Props) {
         Tooltips.hide();
 
         try {
-          await CourseDiscussionsMethods.deleteComment(post._id);
+          await GroupDiscussionsMethods.deleteComment(post._id);
           Alert.success(t("discussionPost.deleted", "Comment deleted."));
         } catch (err) {
           Alert.serverError(err, t("discussionPost.deleted.error", "Could not delete comment"));

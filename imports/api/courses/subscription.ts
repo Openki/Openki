@@ -2,7 +2,7 @@ import { Meteor } from "meteor/meteor";
 import { Match, check } from "meteor/check";
 import { ValidationError } from "meteor/mdg:validation-error";
 
-import { Courses, Course, CourseModel } from "/imports/api/courses/courses";
+import { Groups, Group, GroupModel } from "/imports/api/courses/courses";
 import * as interestedDenormalizer from "/imports/api/courses/interestedDenormalizer";
 import * as historyDenormalizer from "/imports/api/courses/historyDenormalizer";
 import * as timeLastEditDenormalizer from "/imports/api/courses/timeLastEditDenormalizer";
@@ -29,11 +29,11 @@ export async function processChange<T>(change: Change<T>, options?: { isSimulati
   }
 }
 
-const checkCourse = function (obj: unknown) {
-  if (!(obj instanceof Course)) {
-    throw new Meteor.Error("Match failed", "Expected Course object");
+const checkGroup = function (obj: unknown) {
+  if (!(obj instanceof Group)) {
+    throw new Meteor.Error("Match failed", "Expected group object");
   }
-  return obj as CourseModel;
+  return obj as GroupModel;
 };
 
 /** A change by a user
@@ -87,7 +87,7 @@ export class Subscribe extends Change<{
   reason: Reason;
   comment: string | undefined;
 }> {
-  course: CourseModel;
+  course: GroupModel;
 
   userId: string | undefined;
 
@@ -108,7 +108,7 @@ export class Subscribe extends Change<{
   }) {
     check(body, Object);
     return new this(
-      await Courses.findOneAsync(body.courseId),
+      await Groups.findOneAsync(body.courseId),
       body.userId,
       body.role,
       body.reason,
@@ -117,7 +117,7 @@ export class Subscribe extends Change<{
   }
 
   constructor(
-    course: CourseModel | undefined,
+    group: GroupModel | undefined,
     userId: string | undefined,
     role: string,
     reason: Reason,
@@ -125,7 +125,7 @@ export class Subscribe extends Change<{
   ) {
     super();
 
-    this.course = checkCourse(course);
+    this.course = checkGroup(group);
 
     check(userId, Match.Optional(String));
     this.userId = userId;
@@ -220,20 +220,20 @@ export class Subscribe extends Change<{
     // Add the user as member if she's not listed yet
     // Note that the user will be created with the role already
     // filled to avoid seeing empty list of roles.
-    await Courses.updateAsync(
+    await Groups.updateAsync(
       { _id: this.course._id, "members.user": { $ne: this.userId } },
       { $addToSet: { members: { user: this.userId, roles: [this.role] } } },
     );
 
     // Now that we're sure she's listed, add the role too.
     // If we just added her, this is a no-op.
-    await Courses.updateAsync(
+    await Groups.updateAsync(
       { _id: this.course._id, "members.user": this.userId },
       { $addToSet: { "members.$.roles": this.role } },
     );
 
     if (this.comment) {
-      await Courses.updateAsync(
+      await Groups.updateAsync(
         { _id: this.course._id, "members.user": this.userId },
         { $set: { "members.$.comment": this.comment } },
       );
@@ -259,7 +259,7 @@ export class Unsubscribe extends Change<{
   userId: string;
   role: string;
 }> {
-  course: CourseModel;
+  course: GroupModel;
 
   userId: string;
 
@@ -268,13 +268,13 @@ export class Unsubscribe extends Change<{
   static readonly method = "Courses.Unsubscribe";
 
   static async read(body: { courseId: string; userId: string; role: string }) {
-    return new this(await Courses.findOneAsync(body.courseId), body.userId, body.role);
+    return new this(await Groups.findOneAsync(body.courseId), body.userId, body.role);
   }
 
-  constructor(course: CourseModel | undefined, userId: string | undefined | null, role: string) {
+  constructor(group: GroupModel | undefined, userId: string | undefined | null, role: string) {
     super();
 
-    this.course = checkCourse(course);
+    this.course = checkGroup(group);
 
     check(userId, String);
     this.userId = userId;
@@ -347,10 +347,10 @@ export class Unsubscribe extends Change<{
         { multi: true },
       );
     }
-    await Courses.updateAsync({ _id: this.course._id, "members.user": this.userId }, update);
+    await Groups.updateAsync({ _id: this.course._id, "members.user": this.userId }, update);
 
     // Housekeeping: Remove members that have no role left
-    await Courses.updateAsync(
+    await Groups.updateAsync(
       { _id: this.course._id },
       {
         $pull: { members: { roles: { $size: 0 } } },
@@ -372,7 +372,7 @@ export class Message extends Change<{
   userId: string;
   message: string | undefined;
 }> {
-  course: CourseModel;
+  course: GroupModel;
 
   userId: string;
 
@@ -381,13 +381,13 @@ export class Message extends Change<{
   static readonly method = "Courses.Message";
 
   static async read(body: { courseId: string; userId: string; message: string | undefined }) {
-    return new this(await Courses.findOneAsync(body.courseId), body.userId, body.message);
+    return new this(await Groups.findOneAsync(body.courseId), body.userId, body.message);
   }
 
-  constructor(course: CourseModel | undefined, userId: string, message: string | undefined) {
+  constructor(group: GroupModel | undefined, userId: string, message: string | undefined) {
     super();
 
-    this.course = checkCourse(course);
+    this.course = checkGroup(group);
 
     check(userId, String);
     this.userId = userId;
@@ -434,7 +434,7 @@ export class Message extends Change<{
   }
 
   async apply() {
-    await Courses.updateAsync(
+    await Groups.updateAsync(
       { _id: this.course._id, "members.user": this.userId },
       { $set: { "members.$.comment": this.message } },
     );

@@ -1,4 +1,4 @@
-import { CourseEntity, Courses } from "/imports/api/courses/courses";
+import { GroupEntity, Groups } from "/imports/api/courses/courses";
 import { EventEntity, Events } from "/imports/api/events/events";
 import { RegionEntity, Regions } from "/imports/api/regions/regions";
 import { VenueEntity, Venues } from "/imports/api/venues/venues";
@@ -59,17 +59,17 @@ export async function update() {
     updated += await Events.updateAsync(event._id, event);
   }
 
-  for (const originalCourse of await Courses.find().fetchAsync()) {
-    const course = { ...originalCourse } as CourseEntity & {
-      groups?: CourseEntity["organizations"];
+  for (const originalGroup of await Groups.find().fetchAsync()) {
+    const group = { ...originalGroup } as GroupEntity & {
+      groups?: GroupEntity["organizations"];
     };
 
-    if (course.groups) {
-      course.organizations = course.groups;
+    if (group.groups) {
+      group.organizations = group.groups;
     }
-    delete course.groups;
+    delete group.groups;
 
-    updated += await Courses.updateAsync(course._id, course);
+    updated += await Groups.updateAsync(group._id, group);
   }
 
   return updated;

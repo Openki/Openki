@@ -5,24 +5,24 @@ import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 export function CustomFieldDisplay({
-  courseId,
+  groupId,
   customClassName,
 }: {
-  courseId: string;
+  groupId: string;
   customClassName?: string | undefined;
 }) {
   const { t } = useTranslation();
-  const [isLoading, course] = useDetails(courseId);
+  const [isLoading, group] = useDetails(groupId);
   const user = useUser();
 
-  if (isLoading() || !course) {
+  if (isLoading() || !group) {
     return null;
   }
 
-  const isEditor = user && course.editableBy(user);
+  const isEditor = user && group.editableBy(user);
 
   const customFields =
-    course.customFields
+    group.customFields
       ?.filter((i) => i.visibleFor === "all" || (i.visibleFor === "editors" && isEditor))
       .map((i) => {
         const isboolean = typeof i.value === "boolean";

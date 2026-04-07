@@ -179,7 +179,7 @@ export function OrganizationSettings({ organization }: Props) {
     return Router.url("frameCalendar", {}, { query: { organization: organization._id } });
   }
   function frameListURL() {
-    return Router.url("frameCourselist", {}, { query: { organization: organization._id } });
+    return Router.url("frameGroupList", {}, { query: { organization: organization._id } });
   }
 
   function deleteConfirmAttr() {

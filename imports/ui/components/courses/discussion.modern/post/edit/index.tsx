@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { CourseDiscussionEntity } from "/imports/api/course-discussions/course-discussions";
+import { GroupDiscussionEntity } from "/imports/api/course-discussions/course-discussions";
 import * as CourseDiscussionsMethods from "/imports/api/course-discussions/methods";
 import { EditCommentFields, PostCommentFields } from "/imports/api/course-discussions/methods";
 import * as Alert from "/imports/api/alerts/alert";
@@ -17,7 +17,7 @@ import { UserName } from "/imports/ui/components/UserName";
 import { FormCheck } from "/imports/ui/components/FormCheck";
 
 export interface Props {
-  post: CourseDiscussionEntity & { new?: true };
+  post: GroupDiscussionEntity & { new?: true };
   onSave: () => void;
   onCancel: () => void;
 }

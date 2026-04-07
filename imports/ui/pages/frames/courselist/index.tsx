@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 import { take } from "lodash-es";
 
-import { Courses, FindFilter } from "/imports/api/courses/courses";
+import { Groups, FindFilter } from "/imports/api/courses/courses";
 
 import { MetaTags } from "/imports/ui/components/MetaTags";
 import { CssFromQuery } from "/imports/ui/lib/css-from-query";
@@ -11,14 +11,14 @@ import { SortSpec } from "/imports/utils/sort-spec";
 
 import { LoadingRow } from "../../loading";
 import { useFindFilter } from "/imports/api/courses/publications";
-import { Course } from "./course";
+import { Group } from "./course";
 
 function useOptions() {
   const query = useSearchParams();
 
-  const filter = Courses.Filtering().read(query);
+  const filter = Groups.Filtering().read(query);
   const filterQuery: FindFilter = filter.toQuery();
-  // Show internal courses only when a organization is specified
+  // Show internal groups only when a organization is specified
   if (!filterQuery.organization && filterQuery.internal === undefined) {
     filterQuery.internal = false;
   }
@@ -47,23 +47,18 @@ function useOptions() {
   };
 }
 
-export function CourselistPage() {
+export function GroupListPage() {
   const { t } = useTranslation();
   const options = useOptions();
   const [limit, setLimit] = useState(options.count);
 
-  const [isLoading, coursesList] = useFindFilter(
-    options.filter,
-    limit + 1,
-    undefined,
-    options.sort,
-  );
+  const [isLoading, groupsList] = useFindFilter(options.filter, limit + 1, undefined, options.sort);
 
-  function courses() {
-    return take(coursesList, limit);
+  function groups() {
+    return take(groupsList, limit);
   }
-  function moreCourses() {
-    return coursesList.length > limit;
+  function moreGroups() {
+    return groupsList.length > limit;
   }
 
   return (
@@ -71,16 +66,16 @@ export function CourselistPage() {
       <MetaTags title={t("course.list.windowtitle", "Courses")} />
       <style>{options.style.map((rule) => rule)}</style>
 
-      {courses().length === 0 && (
+      {groups().length === 0 && (
         <h2 className="mt-5 text-center">
           {t("frame.courselist.empty", "There is nothing here yet")}
         </h2>
       )}
-      {courses().map((course) => (
-        <Course key={course._id} course={course} hideInterested={options.hideInterested} />
+      {groups().map((group) => (
+        <Group key={group._id} group={group} hideInterested={options.hideInterested} />
       ))}
       {isLoading() && <LoadingRow />}
-      {moreCourses() && (
+      {moreGroups() && (
         <div className="mt-2 text-center">
           <button
             className="btn btn-secondary"
@@ -101,4 +96,4 @@ export function CourselistPage() {
 
 import "./template.html";
 
-Template.registerHelper("CourselistPage", () => CourselistPage);
+Template.registerHelper("GroupListPage", () => GroupListPage);

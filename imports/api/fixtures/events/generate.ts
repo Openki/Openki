@@ -1,7 +1,7 @@
 import { Mongo } from "meteor/mongo";
 import { shuffle, sample } from "lodash-es";
 
-import { Courses } from "/imports/api/courses/courses";
+import { Groups } from "/imports/api/courses/courses";
 import { EventEntity, Events } from "/imports/api/events/events";
 import { ensure } from "/imports/api/fixtures/ensureFixture";
 import { Prng } from "/imports/api/fixtures/Prng";
@@ -57,7 +57,7 @@ export async function generate() {
     "Moscow",
   ];
 
-  for (const course of await Courses.find().fetchAsync()) {
+  for (const course of await Groups.find().fetchAsync()) {
     if ((await Events.countDocuments({ courseId: course._id })) > 0) {
       continue;
     }

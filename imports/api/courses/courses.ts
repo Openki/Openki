@@ -13,37 +13,37 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import * as FileStorage from "/imports/utils/FileStorage";
-import { OrganizationEntityCustomCourseFields } from "../organizations/organizations";
+import { OrganizationEntityCustomGroupFields } from "../organizations/organizations";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { StringEnum, Type } from "/imports/utils/CustomChecks";
 import { LocalizedValue } from "/imports/utils/getLocalizedValue";
 
-export interface CourseMemberEntity {
+export interface GroupMemberEntity {
   user: string;
   roles: string[];
   comment?: string;
 }
 
-export type CourseCustomField = Pick<
-  OrganizationEntityCustomCourseFields,
+export type GroupCustomField = Pick<
+  OrganizationEntityCustomGroupFields,
   "name" | "displayText" | "visibleFor"
 > & {
   value: string | boolean;
   displayValue?: LocalizedValue;
 };
 
-export type CourseNextEventEntity = Pick<
+export type GroupNextEventEntity = Pick<
   EventEntity,
   "_id" | "start" | "startLocal" | "venue" | "noRsvp" | "participants"
 >;
 
-export type CourseLastEventEntity = Pick<
+export type GroupLastEventEntity = Pick<
   EventEntity,
   "_id" | "start" | "startLocal" | "venue" | "participants"
 >;
 
 /** DB-Model */
-export interface CourseEntity {
+export interface GroupEntity {
   _id: string;
   tenant: string;
   name: string;
@@ -54,8 +54,8 @@ export interface CourseEntity {
   /** List ID_organizations ("promote organizations") */
   organizations: string[];
   /**
-   * List of organization ID that are allowed to edit the course ("team organizations", based on the ui design:
-   * Every "team organization" promotes the course and is part of the organizations list)
+   * List of organization ID that are allowed to edit the group ("team organizations", based on the ui design:
+   * Every "team organization" promotes the group and is part of the organizations list)
    */
   teamOrganizations: string[];
   description?: string;
@@ -66,7 +66,7 @@ export interface CourseEntity {
   slug: string;
   /** ID_region */
   region: string;
-  customFields: CourseCustomField[];
+  customFields: GroupCustomField[];
   /** ID_user */
   createdby: string;
 
@@ -75,7 +75,7 @@ export interface CourseEntity {
   time_lastedit: Date;
   /** [role-keys] */
   roles: string[];
-  members: CourseMemberEntity[];
+  members: GroupMemberEntity[];
   internal: boolean;
   singleEvent: boolean;
   archived?: boolean;
@@ -87,58 +87,58 @@ export interface CourseEntity {
       }[]
     | undefined;
   /**
-   * (calculated) List of user and organization id allowed to edit the course, calculated from members
+   * (calculated) List of user and organization id allowed to edit the group, calculated from members
    * and teamOrganizations
    */
   editors: string[];
-  /** (calculated) count of events still in the future for this course */
+  /** (calculated) count of events still in the future for this group */
   futureEvents: number;
   /** (calculated) next upcoming event object, only includes the _id and start field */
-  nextEvent: CourseNextEventEntity | null;
+  nextEvent: GroupNextEventEntity | null;
   /** (calculated) most recent event object, only includes the _id and start field */
-  lastEvent: CourseLastEventEntity | null;
+  lastEvent: GroupLastEventEntity | null;
   /** (calculated) based to members.length, to support sorting by number of interested user over url params */
   interested: number;
 }
 
-export type CourseModel = Course & CourseEntity;
+export type GroupModel = Group & GroupEntity;
 
-export function isPrivate(course: { tenant: string }) {
-  return !PublicSettings.publicTenants.includes(course.tenant);
+export function isPrivate(group: { tenant: string }) {
+  return !PublicSettings.publicTenants.includes(group.tenant);
 }
 
-export class Course {
-  members: CourseMemberEntity[] = [];
+export class Group {
+  members: GroupMemberEntity[] = [];
 
   roles: string[] = [];
 
   teamOrganizations: string[] = [];
 
-  nextEvent: (CourseNextEventEntity & OEvent) | null = null;
+  nextEvent: (GroupNextEventEntity & OEvent) | null = null;
 
-  lastEvent: (CourseLastEventEntity & OEvent) | null = null;
+  lastEvent: (GroupLastEventEntity & OEvent) | null = null;
 
   /**
-   * Check if the course is new (not yet saved).
+   * Check if the group is new (not yet saved).
    */
-  isNew(this: CourseModel) {
+  isNew(this: GroupModel) {
     return !this._id;
   }
 
-  isPrivate(this: CourseModel) {
+  isPrivate(this: GroupModel) {
     return isPrivate(this);
   }
 
   /**
-   * Check whether a user may edit the course.
+   * Check whether a user may edit the group.
    */
-  editableBy(this: CourseModel, user: UserModel | null | undefined) {
+  editableBy(this: GroupModel, user: UserModel | null | undefined) {
     if (!user) {
       return false;
     }
     return (
-      this.isNew() /* Anybody may create a new course */ ||
-      user.privileged("admin") /* Admins can edit all courses */ ||
+      this.isNew() /* Anybody may create a new group */ ||
+      user.privileged("admin") /* Admins can edit all groups */ ||
       intersection(user.badges, this.editors).length > 0
     );
   }
@@ -147,15 +147,15 @@ export class Course {
    * Get list of members with specified role
    * @param role like 'team'
    */
-  membersWithRole(this: CourseModel, role: string) {
+  membersWithRole(this: GroupModel, role: string) {
     return this.members.filter((member) => member.roles.includes(role));
   }
 
-  userHasRole(this: CourseModel, userId: string | undefined | null, role: string) {
+  userHasRole(this: GroupModel, userId: string | undefined | null, role: string) {
     return hasRoleUser(this.members, role, userId);
   }
 
-  publicUrlForCompactImage(this: CourseModel) {
+  publicUrlForCompactImage(this: GroupModel) {
     if (!this.compactImage) {
       return undefined;
     }
@@ -163,7 +163,7 @@ export class Course {
     return FileStorage.generatePublicUrl(this.compactImage);
   }
 
-  publicUrlForDetailsImage(this: CourseModel) {
+  publicUrlForDetailsImage(this: GroupModel) {
     if (!this.image) {
       return undefined;
     }
@@ -199,21 +199,21 @@ export const FindParams = {
   userInvolved: Predicates.string,
 };
 
-export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseModel> {
+export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> {
   constructor() {
     super("Courses", {
-      transform(course) {
-        const courseModel = assignIn(new Course(), course);
+      transform(group) {
+        const groupModel = assignIn(new Group(), group);
 
-        if (courseModel.nextEvent) {
-          courseModel.nextEvent = assignIn(new OEvent(), courseModel.nextEvent);
+        if (groupModel.nextEvent) {
+          groupModel.nextEvent = assignIn(new OEvent(), groupModel.nextEvent);
         }
 
-        if (courseModel.lastEvent) {
-          courseModel.lastEvent = assignIn(new OEvent(), courseModel.lastEvent);
+        if (groupModel.lastEvent) {
+          groupModel.lastEvent = assignIn(new OEvent(), groupModel.lastEvent);
         }
 
-        return courseModel;
+        return groupModel;
       },
     });
 
@@ -223,13 +223,13 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
   }
 
   async insertAsync(
-    course: Mongo.OptionalId<CourseEntity>,
+    group: Mongo.OptionalId<GroupEntity>,
     callback?: (err: unknown | undefined, id?: string) => void,
   ) {
-    let enrichedCourse = await tenantDenormalizer.beforeInsert(course);
-    enrichedCourse = interestedDenormalizer.beforeInsert(enrichedCourse);
+    let enrichedGroup = await tenantDenormalizer.beforeInsert(group);
+    enrichedGroup = interestedDenormalizer.beforeInsert(enrichedGroup);
 
-    return super.insertAsync(enrichedCourse, callback);
+    return super.insertAsync(enrichedGroup, callback);
   }
 
   Filtering() {
@@ -247,8 +247,8 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
     check(skip, Match.Maybe(Match.Integer));
     check(sort, Match.Maybe([FieldSortPattern]));
 
-    const find: Mongo.Selector<CourseEntity> = {};
-    const options: Mongo.Options<CourseEntity> = {};
+    const find: Mongo.Selector<GroupEntity> = {};
+    const options: Mongo.Options<GroupEntity> = {};
     const order = sort;
 
     if (limit > 0) {
@@ -316,7 +316,7 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 
       if (needsRole.includes("team")) {
         missingRoles.push("team");
-        // All courses have the team role so we don't need to restrict to those having it
+        // All groups have the team role so we don't need to restrict to those having it
       }
     }
 
@@ -368,8 +368,8 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
       history: 0,
     };
 
-    return this.find(find, options) as Mongo.Cursor<CourseEntity, CourseModel>;
+    return this.find(find, options) as Mongo.Cursor<GroupEntity, GroupModel>;
   }
 }
 
-export const Courses = new CoursesCollection();
+export const Groups = new GroupsCollection();

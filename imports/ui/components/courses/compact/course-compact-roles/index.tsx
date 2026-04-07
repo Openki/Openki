@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { CourseModel } from "/imports/api/courses/courses";
+import { GroupModel } from "/imports/api/courses/courses";
 
 import { hasRole, hasRoleUser } from "/imports/utils/course-role-utils";
 import { useUserId } from "/imports/utils/react-meteor-data";
@@ -11,15 +11,15 @@ import { RoleIcon } from "../../../RoleIcon";
 import "./styles.scss";
 
 export interface Props {
-  course: CourseModel;
+  group: GroupModel;
 }
 
-export function CourseCompactRoles({ course }: Props) {
+export function GroupCompactRoles({ group }: Props) {
   const userId = useUserId();
   const { t } = useTranslation();
 
   function participantClass() {
-    const { members } = course;
+    const { members } = group;
 
     if (hasRoleUser(members, "participant", userId)) {
       return "course-compact-role-occupied-by-user";
@@ -34,8 +34,8 @@ export function CourseCompactRoles({ course }: Props) {
 
   function participantTooltip() {
     let tooltip;
-    const numMembers = course.interested;
-    const isParticipant = hasRoleUser(course.members, "participant", userId);
+    const numMembers = group.interested;
+    const isParticipant = hasRoleUser(group.members, "participant", userId);
 
     if (numMembers === 1 && isParticipant) {
       tooltip = t("course.compact.youAreInterested", "You are interested");
@@ -57,9 +57,9 @@ export function CourseCompactRoles({ course }: Props) {
 
   function roleStateClass(role: string) {
     let className = "course-compact-role-";
-    if (!hasRole(course.members, role)) {
+    if (!hasRole(group.members, role)) {
       className += "needed";
-    } else if (hasRoleUser(course.members, role, userId)) {
+    } else if (hasRoleUser(group.members, role, userId)) {
       className += "occupied-by-user";
     } else {
       className += "occupied";
@@ -92,9 +92,9 @@ export function CourseCompactRoles({ course }: Props) {
       },
     };
 
-    if (!hasRole(course.members, role)) {
+    if (!hasRole(group.members, role)) {
       tooltip = tooltips[role].needed;
-    } else if (hasRoleUser(course.members, role, userId)) {
+    } else if (hasRoleUser(group.members, role, userId)) {
       tooltip = tooltips[role].occupiedByUser;
     } else {
       tooltip = tooltips[role].occupied;
@@ -111,7 +111,7 @@ export function CourseCompactRoles({ course }: Props) {
       >
         <RoleIcon type="team" />
       </div>
-      {course.roles.includes("mentor") && (
+      {group.roles.includes("mentor") && (
         <div
           className={`course-compact-role ${roleStateClass("mentor")}`}
           data-bs-title={`${roleStateTooltip("mentor")}`}
@@ -119,7 +119,7 @@ export function CourseCompactRoles({ course }: Props) {
           <RoleIcon type="mentor" />
         </div>
       )}
-      {course.roles.includes("host") && (
+      {group.roles.includes("host") && (
         <div
           className={`course-compact-role ${roleStateClass("host")}`}
           data-bs-title={`${roleStateTooltip("host")}`}
@@ -127,14 +127,14 @@ export function CourseCompactRoles({ course }: Props) {
           <RoleIcon type="host" />
         </div>
       )}
-      {course.roles.includes("participant") && (
+      {group.roles.includes("participant") && (
         <div
           className={`course-compact-role ${participantClass()}`}
           data-bs-title={`${participantTooltip()}`}
         >
           <RoleIcon type="participant" />
           &nbsp;
-          {course.members.filter((m) => m.roles.includes("participant")).length}
+          {group.members.filter((m) => m.roles.includes("participant")).length}
         </div>
       )}
     </div>

@@ -7,7 +7,7 @@ import { SortSpec } from "/imports/utils/sort-spec";
 // import * as UrlTools from "/imports/utils/url-tools";
 import * as Tooltips from "/imports/utils/Tooltips";
 
-import { CourseTemplate } from "/imports/ui/lib/course-template";
+import { GroupTemplate } from "/imports/ui/lib/course-template";
 import * as RegionSelection from "/imports/utils/region-selection";
 import { FilterPreview } from "/imports/ui/lib/filter-preview";
 // import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
@@ -20,7 +20,7 @@ import {
 
 import { useTranslation } from "react-i18next";
 import { SearchField } from "/imports/ui/components/search-field";
-import { CourseList } from "../List";
+import { GroupList } from "../List";
 import { Edit } from "/imports/ui/components/courses/edit";
 import { useFindFilter } from "/imports/api/courses/publications";
 import { FindParams } from "/imports/api/courses/courses";
@@ -39,13 +39,13 @@ export interface Props {
 export function Find({ query }: Props) {
   const { t } = useTranslation();
   const [showingFilters, setShowingFilters] = useState(false);
-  const courseBlockSize = 36;
-  const [courseLimit, setCourseLimit] = useState(courseBlockSize);
+  const groupBlockSize = 36;
+  const [groupLimit, setGroupLimit] = useState(groupBlockSize);
   const filter = useFiltering(FindParams, query);
   const sort = query.sort ? SortSpec.fromString(query.sort) : SortSpec.unordered();
 
   // Add one to the limit so we know there is more to show
-  const [isLoading, courses] = useFindFilter(filter.asQuery, courseLimit + 1, 0, sort.spec());
+  const [isLoading, groups] = useFindFilter(filter.asQuery, groupLimit + 1, 0, sort.spec());
   // const searchParams = useParams();
   // const currentRouterName = useCurrentRouteName();
 
@@ -60,8 +60,8 @@ export function Find({ query }: Props) {
   //   delete urlParams.internal;
 
   //   // used to keep scrollpos when navigating back
-  //   if (courseLimit > courseBlockSize) {
-  //     urlParams.coursesAmount = courseLimit.toString();
+  //   if (groupLimit > groupBlockSize) {
+  //     urlParams.groupsAmount = groupLimit.toString();
   //   }
   //   const queryString = UrlTools.paramsToQueryString(urlParams);
 
@@ -161,26 +161,26 @@ export function Find({ query }: Props) {
     };
   }
 
-  function newCourse() {
-    const course = CourseTemplate();
+  function newGroup() {
+    const group = GroupTemplate();
     const search = filter.asQuery["search"];
     if (search) {
-      course.name = search;
+      group.name = search;
     }
     const organizationId = filter.asQuery["organization"];
     if (organizationId) {
-      course.organization = organizationId;
+      group.organization = organizationId;
     }
-    return course;
+    return group;
   }
   function hasResults() {
-    return courses.length > 0;
+    return groups.length > 0;
   }
   function hasMore() {
-    return courses.length > courseLimit;
+    return groups.length > groupLimit;
   }
   function results() {
-    return courses.slice(0, courseLimit);
+    return groups.slice(0, groupLimit);
   }
   function filteredRegion() {
     return !!filter.asQuery["region"];
@@ -220,7 +220,7 @@ export function Find({ query }: Props) {
     };
   }
 
-  function categorieTagEvents() {
+  function categoryTagEvents() {
     return (category: string) => {
       return {
         onMouseOver: async () => {
@@ -262,12 +262,12 @@ export function Find({ query }: Props) {
   // Read URL state
   useEffect(() => {
     if (query.coursesAmount) {
-      const coursesAmount = Number.parseInt(query.coursesAmount, 10);
-      if (coursesAmount > courseBlockSize) {
-        setCourseLimit(coursesAmount);
+      const groupsAmount = Number.parseInt(query.coursesAmount, 10);
+      if (groupsAmount > groupBlockSize) {
+        setGroupLimit(groupsAmount);
       }
     } else {
-      setCourseLimit(courseBlockSize);
+      setGroupLimit(groupBlockSize);
     }
   }, [query]);
 
@@ -298,10 +298,10 @@ export function Find({ query }: Props) {
           <LoadingPage />
         ) : hasResults() ? (
           <>
-            <CourseList
-              courses={results()}
+            <GroupList
+              groups={results()}
               organizationTagEvents={organizationTagEvents()}
-              categorieTagEvents={categorieTagEvents()}
+              categoryTagEvents={categoryTagEvents()}
               containsPropose={true}
               organization={filter.asQuery["organization"]}
             />
@@ -311,7 +311,7 @@ export function Find({ query }: Props) {
                   type="button"
                   className="btn btn-success"
                   onClick={() => {
-                    setCourseLimit(courseLimit + courseBlockSize);
+                    setGroupLimit(groupLimit + groupBlockSize);
                   }}
                 >
                   {t("_button.more")}
@@ -354,7 +354,7 @@ export function Find({ query }: Props) {
       </div>
       <div className="page-component">
         <div className="container mw-md">
-          <Edit {...newCourse()} coursesQuery={filter.asQuery} />
+          <Edit {...newGroup()} groupsQuery={filter.asQuery} />
         </div>
       </div>
     </>

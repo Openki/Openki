@@ -39,15 +39,15 @@ function allSet(organization: {
 }
 
 export interface Data {
-  courseQuery: Record<string, string | undefined> & {
+  groupQuery: Record<string, string | undefined> & {
     organization: string;
     region: string | undefined;
   };
   organization: OrganizationModel;
-  showCourses: boolean;
+  showGroups: boolean;
 }
 
-export function OrganizationDetailsPage({ courseQuery, organization, showCourses }: Data) {
+export function OrganizationDetailsPage({ groupQuery, organization, showGroups }: Data) {
   const { t } = useTranslation();
   const region = useCurrentRegion();
   const [editingSettings, setEditingSettings] = useState(false);
@@ -345,9 +345,9 @@ export function OrganizationDetailsPage({ courseQuery, organization, showCourses
           )}
           {allowEditingSettings() && <OrganizationSettings organization={organization} />}
         </div>
-        {!dashboardAttr().list.length && showCourses && <Find query={courseQuery} />}
+        {!dashboardAttr().list.length && showGroups && <Find query={groupQuery} />}
       </div>
-      {!!dashboardAttr().list.length && showCourses && <Dashboard {...dashboardAttr()} />}
+      {!!dashboardAttr().list.length && showGroups && <Dashboard {...dashboardAttr()} />}
     </>
   );
 }

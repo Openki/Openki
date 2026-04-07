@@ -9,7 +9,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import { Subscribe, Unsubscribe, processChange } from "/imports/api/courses/subscription";
 import { Regions } from "/imports/api/regions/regions";
 import { RoleEntity } from "/imports/api/roles/roles";
-import { CourseModel } from "/imports/api/courses/courses";
+import { GroupModel } from "/imports/api/courses/courses";
 
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import * as Analytics from "/imports/ui/lib/analytics";
@@ -25,7 +25,7 @@ export interface Data {
   role: RoleEntity;
   subscribed: boolean;
   comment: string | undefined;
-  course: CourseModel;
+  group: GroupModel;
 }
 
 export function Role(data: Data) {
@@ -38,8 +38,8 @@ export function Role(data: Data) {
   const [comment, setComment] = useState(data.comment);
 
   // Build a subscribe change
-  function courseSubscribe(newComment?: string) {
-    return new Subscribe(data.course, user?._id, data.role.type, "interested", newComment);
+  function groupSubscribe(newComment?: string) {
+    return new Subscribe(data.group, user?._id, data.role.type, "interested", newComment);
   }
 
   function roleSubscribe(type: string) {
@@ -53,7 +53,7 @@ export function Role(data: Data) {
   }
   function maySubscribe() {
     const operator = user;
-    return courseSubscribe().validFor(operator || (new User() as UserModel));
+    return groupSubscribe().validFor(operator || (new User() as UserModel));
   }
 
   function handleCommentChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
@@ -65,7 +65,7 @@ export function Role(data: Data) {
   async function handleRoleSubscribeClick() {
     routerAutoscroll.cancelNext();
 
-    await processChange(courseSubscribe(comment));
+    await processChange(groupSubscribe(comment));
     routerAutoscroll.cancelNext();
     setShowFirstSteps(true);
     setEnrolling(false);
@@ -73,7 +73,7 @@ export function Role(data: Data) {
     Analytics.trackEvent(
       "Enrollments in courses",
       `Enrollments in courses as ${data.role.type}`,
-      Regions.findOne(data.course.region)?.nameEn,
+      Regions.findOne(data.group.region)?.nameEn,
     );
   }
 
@@ -82,13 +82,13 @@ export function Role(data: Data) {
   }
   async function handleRoleUnsubscribeClick() {
     routerAutoscroll.cancelNext();
-    const change = new Unsubscribe(data.course, user?._id, data.role.type);
+    const change = new Unsubscribe(data.group, user?._id, data.role.type);
     await processChange(change);
     routerAutoscroll.cancelNext();
     Analytics.trackEvent(
       "Unsubscribes from courses",
       `Unsubscribes from courses as ${data.role.type}`,
-      Regions.findOne(data.course.region)?.nameEn,
+      Regions.findOne(data.group.region)?.nameEn,
     );
   }
   function toggleFirstStepsClick() {
@@ -105,12 +105,12 @@ export function Role(data: Data) {
           onRender={async () => {
             // unsubscribe by email
             // HACK this is not the right place to act on router actions
-            const change = new Unsubscribe(data.course, user?._id, data.role.type);
+            const change = new Unsubscribe(data.group, user?._id, data.role.type);
             if (change.validFor(user)) {
               await processChange(change);
               Alert.success(
                 t("course.roles.unsubscribed", "Unsubscribed from {NAME}", {
-                  NAME: data.course.name,
+                  NAME: data.group.name,
                 }),
               );
             } else {
@@ -118,9 +118,9 @@ export function Role(data: Data) {
             }
 
             // After unsubscribe got to the event. Equals in route 'showCourse'.
-            const course = data.course;
-            if (course?.singleEvent && course.nextEvent) {
-              Router.go("showEvent", course.nextEvent, { replaceState: true });
+            const group = data.group;
+            if (group?.singleEvent && group.nextEvent) {
+              Router.go("showEvent", group.nextEvent, { replaceState: true });
             }
           }}
         />
@@ -155,7 +155,7 @@ export function Role(data: Data) {
             <div className="course-role-first-steps">
               <b>
                 {t("course.roles.firstSteps.title", "Thank you for your interest in {COURSE}.", {
-                  COURSE: data.course.name,
+                  COURSE: data.group.name,
                   ROLE: roleShort(data.role.type),
                 })}
               </b>
@@ -282,7 +282,7 @@ export function Role(data: Data) {
                     visitorUserAllowed={data.role.type === "participant"}
                     busyText={t("course.roles.join.busy", "Joining…")}
                   >
-                    {t("course.roles.join", "Join", { COURSE: data.course.name })}
+                    {t("course.roles.join", "Join", { COURSE: data.group.name })}
                   </Button>
                   <ButtonCancel
                     id="course-roles-join-cancel"

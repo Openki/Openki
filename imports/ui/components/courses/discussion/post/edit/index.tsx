@@ -4,11 +4,11 @@ import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { CourseDiscussionEntity } from "/imports/api/course-discussions/course-discussions";
-import * as CourseDiscussionsMethods from "/imports/api/course-discussions/methods";
+import { GroupDiscussionEntity } from "/imports/api/course-discussions/course-discussions";
+import * as GroupDiscussionsMethods from "/imports/api/course-discussions/methods";
 import { EditCommentFields, PostCommentFields } from "/imports/api/course-discussions/methods";
 import * as Alert from "/imports/api/alerts/alert";
-import * as Courses from "/imports/api/courses/publications";
+import * as Groups from "/imports/api/courses/publications";
 
 import { DiscussionProfileIcon } from "../profile-icon";
 import { DiscussionProfileLink } from "../profile-link";
@@ -17,7 +17,7 @@ import { ButtonCancel } from "../../../../Buttons";
 import { FormCheck } from "/imports/ui/components/FormCheck";
 
 export interface Props {
-  post: CourseDiscussionEntity & { new?: true };
+  post: GroupDiscussionEntity & { new?: true };
   onSave: () => void;
   onCancel: () => void;
 }
@@ -32,7 +32,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
   const [commentText, setCommentText] = useState(post.text);
   const [isBusy, setIsBusy] = useState(false);
 
-  const [isLoading, course] = Courses.useDetails(post.courseId);
+  const [isLoading, group] = Groups.useDetails(post.courseId);
 
   function notifyAllChecked() {
     if (!post.new) {
@@ -85,8 +85,8 @@ export function Edit({ post, onSave, onCancel }: Props) {
     }
 
     return !!(
-      course?.userHasRole(user?._id, "team") ||
-      user?.organizations.some((g) => course?.teamOrganizations.includes(g))
+      group?.userHasRole(user?._id, "team") ||
+      user?.organizations.some((g) => group?.teamOrganizations.includes(g))
     );
   }
   function richtextAttr() {
@@ -128,11 +128,11 @@ export function Edit({ post, onSave, onCancel }: Props) {
                 postComment.anon = anon;
                 postComment.notifyAll = notifyAll;
 
-                await CourseDiscussionsMethods.postComment(postComment);
+                await GroupDiscussionsMethods.postComment(postComment);
               } else {
                 const editComment = comment as EditCommentFields;
                 editComment._id = post._id;
-                await CourseDiscussionsMethods.editComment(editComment);
+                await GroupDiscussionsMethods.editComment(editComment);
               }
 
               onSave();

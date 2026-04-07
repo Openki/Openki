@@ -1,32 +1,32 @@
 import { Mongo } from "meteor/mongo";
 
-import { CourseEntity, Courses } from "./courses";
+import { GroupEntity, Groups } from "./courses";
 
-async function updateAsync(courseId: string) {
-  const course = await Courses.findOneAsync(courseId);
+async function updateAsync(groupId: string) {
+  const group = await Groups.findOneAsync(groupId);
 
-  if (!course) {
+  if (!group) {
     return;
   }
 
-  await Courses.updateAsync(
-    { _id: course._id },
-    { $set: { interested: course.members?.length || 0 } },
+  await Groups.updateAsync(
+    { _id: group._id },
+    { $set: { interested: group.members?.length || 0 } },
   );
 }
 
-export function beforeInsert(course: Mongo.OptionalId<CourseEntity>) {
-  return { ...course, interested: course.members.length };
+export function beforeInsert(group: Mongo.OptionalId<GroupEntity>) {
+  return { ...group, interested: group.members.length };
 }
 
-export async function afterSubscribe(courseId: string) {
-  await updateAsync(courseId);
+export async function afterSubscribe(groupId: string) {
+  await updateAsync(groupId);
 }
 
-export async function afterUnsubscribe(courseId: string) {
-  await updateAsync(courseId);
+export async function afterUnsubscribe(groupId: string) {
+  await updateAsync(groupId);
 }
 
-export async function afterUserAdminRemove(courseId: string) {
-  await updateAsync(courseId);
+export async function afterUserAdminRemove(groupId: string) {
+  await updateAsync(groupId);
 }

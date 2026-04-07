@@ -1,4 +1,4 @@
-import { CourseCustomField } from "../../courses/courses";
+import { GroupCustomField } from "../../courses/courses";
 
 export const courses: {
   _id?: string;
@@ -26,7 +26,7 @@ export const courses: {
     type: string;
     data: any;
   }[];
-  customFields?: CourseCustomField[];
+  customFields?: GroupCustomField[];
 }[] = [
   {
     _id: "mSpnbZtMtQm9DGtTd",

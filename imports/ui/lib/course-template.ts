@@ -1,9 +1,9 @@
 import { Session } from "meteor/session";
 import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
 
-import type { Props as CourseEditProps } from "/imports/ui/components/courses/edit";
+import type { Props as GroupEditProps } from "/imports/ui/components/courses/edit";
 
-export function CourseTemplate(): Partial<CourseEditProps> {
+export function GroupTemplate(): Partial<GroupEditProps> {
   const currentRegion = CleanedRegion(Session.get("region"));
 
   if (currentRegion) {

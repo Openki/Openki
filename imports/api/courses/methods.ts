@@ -4,18 +4,18 @@ import { Mongo } from "meteor/mongo";
 import { i18n } from "/imports/startup/both/i18next";
 import { uniq } from "lodash-es";
 
-import { Courses, Course, CourseEntity, CourseModel } from "/imports/api/courses/courses";
+import { Groups, Group, GroupEntity, GroupModel } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
 import { Organizations } from "../organizations/organizations";
 import { Regions } from "/imports/api/regions/regions";
-import { CourseDiscussions } from "/imports/api/course-discussions/course-discussions";
+import { GroupDiscussions } from "/imports/api/course-discussions/course-discussions";
 import { Roles } from "/imports/api/roles/roles";
 import * as UpdateMethods from "/imports/utils/update-methods";
 import * as historyDenormalizer from "/imports/api/courses/historyDenormalizer";
 import * as timeLastEditDenormalizer from "/imports/api/courses/timeLastEditDenormalizer";
 import * as nextEventDenormalizer from "/imports/api/courses/nextEventDenormalizer";
 import * as eventsCategoriesDenormalizer from "/imports/api/events/categoriesDenormalizer";
-import * as eventsCourseImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
+import * as eventsGroupImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
 import { Log } from "/imports/api/log/log";
 import { UserModel } from "/imports/api/users/users";
 import * as editorsDenormalizer from "./editorsDenormalizer";
@@ -87,17 +87,17 @@ function registerMethod<T>(method: Method<T>): void {
   Meteor.methods({ [method.method]: apply });
 }
 
-async function loadCourse(courseId: string) {
+async function loadGroup(groupId: string) {
   // new!
-  if (courseId === "") {
-    return new Course() as CourseModel;
+  if (groupId === "") {
+    return new Group() as GroupModel;
   }
 
-  const course = await Courses.findOneAsync({ _id: courseId });
-  if (!course) {
-    throw new Meteor.Error(404, "Course not found");
+  const group = await Groups.findOneAsync({ _id: groupId });
+  if (!group) {
+    throw new Meteor.Error(404, "Group not found");
   }
-  return course;
+  return group;
 }
 
 async function loadDisabledRoles(organizationIds: string[]) {
@@ -142,8 +142,8 @@ export const SaveFieldPattern = {
 };
 export type SaveFields = Type<typeof SaveFieldPattern>;
 
-export const save = ServerMethod("course.save", async (courseId: string, changes: SaveFields) => {
-  check(courseId, String);
+export const save = ServerMethod("course.save", async (groupId: string, changes: SaveFields) => {
+  check(groupId, String);
   check(changes, SaveFieldPattern);
 
   const user = await Meteor.userAsync();
@@ -151,14 +151,14 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     throw new Meteor.Error(401, "please log in");
   }
 
-  const course = await loadCourse(courseId);
+  const group = await loadGroup(groupId);
 
-  if (!course.editableBy(user)) {
+  if (!group.editableBy(user)) {
     throw new Meteor.Error(401, "edit not permitted");
   }
 
   /* Changes we want to perform */
-  const set = {} as Mongo.OptionalId<CourseEntity>;
+  const set = {} as Mongo.OptionalId<GroupEntity>;
 
   const disabledRoles = await loadDisabledRoles(changes.organizations || []);
 
@@ -167,7 +167,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
       Roles.map(async (role) => {
         const { type } = role;
 
-        if (course.isNew()) {
+        if (group.isNew()) {
           const shouldHave =
             !!(role.preset || changes.roles?.[type]) && !disabledRoles.includes(type);
 
@@ -177,22 +177,22 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
           }
         } else if (role.editable) {
           const shouldHave = !!changes.roles?.[type];
-          const have = course.roles.includes(type);
+          const have = group.roles.includes(type);
           if (have && !shouldHave) {
-            await Courses.updateAsync({ _id: courseId }, { $pull: { roles: type } });
+            await Groups.updateAsync({ _id: groupId }, { $pull: { roles: type } });
 
             // HACK
             // due to a mongo limitation we can't { $pull { 'members.roles': type } }
             // so we keep removing one by one until there are none left
             while (
-              await Courses.updateAsync(
-                { _id: courseId, "members.roles": type },
+              await Groups.updateAsync(
+                { _id: groupId, "members.roles": type },
                 { $pull: { "members.$.roles": type } },
               )
             );
           }
           if (!have && shouldHave) {
-            await Courses.updateAsync({ _id: courseId }, { $addToSet: { roles: type } });
+            await Groups.updateAsync({ _id: groupId }, { $addToSet: { roles: type } });
           }
         }
       }),
@@ -234,8 +234,8 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     set.singleEvent = changes.singleEvent;
   }
 
-  if (course.isNew()) {
-    // You can add newly created courses to any organization
+  if (group.isNew()) {
+    // You can add newly created groups to any organization
     let organizations = changes.organizations || [];
     organizations = uniq(organizations);
     organizations = await Promise.all(
@@ -260,7 +260,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     }
     set.region = region._id;
 
-    /* When a course is created, the creator is automatically added as sole member of the team */
+    /* When a group is created, the creator is automatically added as sole member of the team */
     set.members = [
       {
         user: user._id,
@@ -275,36 +275,36 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     set.time_created = new Date();
     const enrichedSet = timeLastEditDenormalizer.beforeInsert(set);
 
-    courseId = await Courses.insertAsync(enrichedSet);
+    groupId = await Groups.insertAsync(enrichedSet);
 
-    await Notification.Course.record(courseId);
+    await Notification.Course.record(groupId);
 
     if (set.teamOrganizations.length > 0) {
-      await Notification["Organization.Course"].record(courseId);
+      await Notification["Organization.Course"].record(groupId);
     }
 
     // Init calculated fields
-    await nextEventDenormalizer.updateNextEvent(courseId);
-    await editorsDenormalizer.updateEditors(courseId);
+    await nextEventDenormalizer.updateNextEvent(groupId);
+    await editorsDenormalizer.updateEditors(groupId);
   } else {
     const enrichedSet = timeLastEditDenormalizer.beforeUpdate(set);
-    await Courses.updateAsync({ _id: courseId }, { $set: enrichedSet });
+    await Groups.updateAsync({ _id: groupId }, { $set: enrichedSet });
 
-    await historyDenormalizer.afterUpdate(courseId, user._id);
+    await historyDenormalizer.afterUpdate(groupId, user._id);
     if (changes.categories) {
       // if categories are update, update those from the event
-      await eventsCategoriesDenormalizer.afterCourseUpdateCategories({
-        _id: courseId,
+      await eventsCategoriesDenormalizer.afterGroupUpdateCategories({
+        _id: groupId,
         categories: changes.categories,
       });
     }
   }
 
   if (changes.subs) {
-    const changedCourse = await Courses.findOneAsync(courseId);
+    const changedGroup = await Groups.findOneAsync(groupId);
     await Promise.all(
       changes.subs.map(async (role) => {
-        const change = new Subscribe(changedCourse, user._id, role, "interested");
+        const change = new Subscribe(changedGroup, user._id, role, "interested");
         if (change.validFor(user)) {
           await change.apply();
         }
@@ -312,10 +312,10 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     );
   }
   if (changes.unsubs) {
-    const changedCourse = await Courses.findOneAsync(courseId);
+    const changedGroup = await Groups.findOneAsync(groupId);
     await Promise.all(
       changes.unsubs.map(async (role) => {
-        const change = new Unsubscribe(changedCourse, user._id, role);
+        const change = new Unsubscribe(changedGroup, user._id, role);
         if (change.validFor(user)) {
           await change.apply();
         }
@@ -323,13 +323,13 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     );
   }
 
-  return courseId;
+  return groupId;
 });
 
 export const updateImage = ServerMethod(
   "course.update.image",
-  async (courseId: string, file: FileStorage.UploadFile) => {
-    check(courseId, String);
+  async (groupId: string, file: FileStorage.UploadFile) => {
+    check(groupId, String);
     check(file, FileStorage.UploadFilePattern);
 
     const user = await Meteor.userAsync();
@@ -337,9 +337,9 @@ export const updateImage = ServerMethod(
       throw new Meteor.Error(401, "please log-in");
     }
 
-    const course = await loadCourse(courseId);
+    const group = await loadGroup(groupId);
 
-    if (course.isNew() || !course.editableBy(user)) {
+    if (group.isNew() || !group.editableBy(user)) {
       throw new Meteor.Error(401, "Denied");
     }
 
@@ -347,12 +347,12 @@ export const updateImage = ServerMethod(
       return undefined;
     }
 
-    if (course.image && !course.image.startsWith("https://")) {
-      FileStorage.remove(course.image);
+    if (group.image && !group.image.startsWith("https://")) {
+      FileStorage.remove(group.image);
     }
 
-    if (course.compactImage && !course.compactImage.startsWith("https://")) {
-      FileStorage.remove(course.compactImage);
+    if (group.compactImage && !group.compactImage.startsWith("https://")) {
+      FileStorage.remove(group.compactImage);
     }
 
     // Note: image scaling also happens on the client
@@ -367,72 +367,72 @@ export const updateImage = ServerMethod(
     };
 
     const enrichedSet = timeLastEditDenormalizer.beforeUpdateImage(update);
-    await Courses.updateAsync(course._id, { $set: enrichedSet });
-    await historyDenormalizer.afterUpdateImage(courseId, user._id);
-    await eventsCourseImageDenormalizer.afterCourseUpdateImage(courseId, enrichedSet);
+    await Groups.updateAsync(group._id, { $set: enrichedSet });
+    await historyDenormalizer.afterUpdateImage(groupId, user._id);
+    await eventsGroupImageDenormalizer.afterGroupUpdateImage(groupId, enrichedSet);
 
-    return courseId;
+    return groupId;
   },
   { simulation: false },
 );
 
 export const deleteImage = ServerMethod(
   "course.delete.image",
-  async (courseId: string) => {
-    check(courseId, String);
+  async (groupId: string) => {
+    check(groupId, String);
 
     const user = await Meteor.userAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log-in");
     }
 
-    const course = await loadCourse(courseId);
+    const group = await loadGroup(groupId);
 
-    if (course.isNew() || !course.editableBy(user)) {
+    if (group.isNew() || !group.editableBy(user)) {
       throw new Meteor.Error(401, "Denied");
     }
 
-    if (course.image && !course.image.startsWith("https://")) {
-      FileStorage.remove(course.image);
+    if (group.image && !group.image.startsWith("https://")) {
+      FileStorage.remove(group.image);
     }
 
-    if (course.compactImage && !course.compactImage.startsWith("https://")) {
-      FileStorage.remove(course.compactImage);
+    if (group.compactImage && !group.compactImage.startsWith("https://")) {
+      FileStorage.remove(group.compactImage);
     }
 
     const update = { image: "", compactImage: "" };
 
     const set = timeLastEditDenormalizer.beforeDeleteImage();
-    await Courses.updateAsync(course._id, {
+    await Groups.updateAsync(group._id, {
       $unset: update,
       $set: set,
-    } as Mongo.Modifier<CourseEntity>);
-    await historyDenormalizer.afterDeleteImage(courseId, user._id);
-    await eventsCourseImageDenormalizer.afterCourseDeleteImage(courseId);
+    } as Mongo.Modifier<GroupEntity>);
+    await historyDenormalizer.afterDeleteImage(groupId, user._id);
+    await eventsGroupImageDenormalizer.afterGroupDeleteImage(groupId);
 
-    return courseId;
+    return groupId;
   },
   { simulation: false },
 );
 
 /**
  * Add or remove a organization from the organizations list
- * @param courseId The course to update
+ * @param groupId The group to update
  * @param organizationId The organization to add or remove
  * @param add Whether to add or remove the organization
  *
  */
 export const promote = ServerMethod(
   "course.promote",
-  async (courseId: string, organizationId: string, enable: boolean) => {
-    await UpdateMethods.promote(Courses as unknown as OrganizationPromoters)(
-      courseId,
+  async (groupId: string, organizationId: string, enable: boolean) => {
+    await UpdateMethods.promote(Groups as unknown as OrganizationPromoters)(
+      groupId,
       organizationId,
       enable,
     );
-    await editorsDenormalizer.updateEditors(courseId);
+    await editorsDenormalizer.updateEditors(groupId);
     await historyDenormalizer.afterOrganizationPromoteUpdate(
-      courseId,
+      groupId,
       organizationId,
       enable,
       Meteor.userId() as string,
@@ -442,22 +442,22 @@ export const promote = ServerMethod(
 
 /**
  * Add or remove a organization from the teamOrganizations list
- * @param courseId The course to update
+ * @param groupId The group to update
  * @param organizationId The organization to add or remove
  * @param add Whether to add or remove the organization
  *
  */
 export const editing = ServerMethod(
   "course.editing",
-  async (courseId: string, organizationId: string, enable: boolean) => {
-    await UpdateMethods.editing(Courses as unknown as OrganizationPromoters)(
-      courseId,
+  async (groupId: string, organizationId: string, enable: boolean) => {
+    await UpdateMethods.editing(Groups as unknown as OrganizationPromoters)(
+      groupId,
       organizationId,
       enable,
     );
-    await editorsDenormalizer.updateEditors(courseId);
+    await editorsDenormalizer.updateEditors(groupId);
     await historyDenormalizer.afterOrganizationTeamUpdate(
-      courseId,
+      groupId,
       organizationId,
       enable,
       Meteor.userId() as string,
@@ -465,43 +465,43 @@ export const editing = ServerMethod(
   },
 );
 
-export const archive = ServerMethod("course.archive", async (courseId: string) => {
-  check(courseId, String);
+export const archive = ServerMethod("course.archive", async (groupId: string) => {
+  check(groupId, String);
 
-  const course = await Courses.findOneAsync({ _id: courseId });
-  if (!course) {
-    throw new Meteor.Error(404, "no such course");
+  const group = await Groups.findOneAsync({ _id: groupId });
+  if (!group) {
+    throw new Meteor.Error(404, "no such group");
   }
-  if (!course.editableBy(await Meteor.userAsync())) {
+  if (!group.editableBy(await Meteor.userAsync())) {
     throw new Meteor.Error(401, "edit not permitted");
   }
-  await Courses.updateAsync(course._id, { $set: { archived: true } });
+  await Groups.updateAsync(group._id, { $set: { archived: true } });
 });
 
-export const unarchive = ServerMethod("course.unarchive", async (courseId: string) => {
-  check(courseId, String);
+export const unarchive = ServerMethod("course.unarchive", async (groupId: string) => {
+  check(groupId, String);
 
-  const course = await Courses.findOneAsync({ _id: courseId });
-  if (!course) {
-    throw new Meteor.Error(404, "no such course");
+  const group = await Groups.findOneAsync({ _id: groupId });
+  if (!group) {
+    throw new Meteor.Error(404, "no such group");
   }
-  if (!course.editableBy(await Meteor.userAsync())) {
+  if (!group.editableBy(await Meteor.userAsync())) {
     throw new Meteor.Error(401, "edit not permitted");
   }
-  await Courses.updateAsync(course._id, { $set: { archived: false } });
+  await Groups.updateAsync(group._id, { $set: { archived: false } });
 });
 
-export const remove = ServerMethod("course.remove", async (courseId: string) => {
-  check(courseId, String);
+export const remove = ServerMethod("course.remove", async (groupId: string) => {
+  check(groupId, String);
 
-  const course = await Courses.findOneAsync({ _id: courseId });
-  if (!course) {
-    throw new Meteor.Error(404, "no such course");
+  const group = await Groups.findOneAsync({ _id: groupId });
+  if (!group) {
+    throw new Meteor.Error(404, "no such group");
   }
-  if (!course.editableBy(await Meteor.userAsync())) {
+  if (!group.editableBy(await Meteor.userAsync())) {
     throw new Meteor.Error(401, "edit not permitted");
   }
-  await Events.removeAsync({ courseId });
-  await CourseDiscussions.removeAsync({ courseId });
-  await Courses.removeAsync(courseId);
+  await Events.removeAsync({ courseId: groupId });
+  await GroupDiscussions.removeAsync({ courseId: groupId });
+  await Groups.removeAsync(groupId);
 });
