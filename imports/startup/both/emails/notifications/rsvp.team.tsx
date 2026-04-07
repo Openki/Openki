@@ -89,7 +89,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         throw new Error("New participant does not exist (0.o)");
       }
       if (!group) {
-        throw new Error("Course does not exist (0.o)");
+        throw new Error("Group does not exist (0.o)");
       }
       if (!event) {
         throw new Error("Event does not exist (0.o)");

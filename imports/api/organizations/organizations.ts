@@ -20,9 +20,9 @@ export type OrganizationEntityCustomGroupFields =
       editText: LocalizedValue;
       /** Used when the value is edited as placeholder in the field. */
       editPlaceholder: LocalizedValue;
-      /** Used when the value is shown. It will be copied to the course object. */
+      /** Used when the value is shown. It will be copied to the group object. */
       displayText: LocalizedValue;
-      /** Who will see the entered values. It will be copied to the course object. */
+      /** Who will see the entered values. It will be copied to the group object. */
       visibleFor: "all" | "editors";
       /** Optional: The type of field. 'singleLine' for single-line text, 'multiLine' for multi-line text, boolean for a choice between true and false. Default: 'singleLine' */
       type?: "singleLine" | "multiLine";
@@ -32,9 +32,9 @@ export type OrganizationEntityCustomGroupFields =
       name: string;
       /** Used when the value is edited. */
       editText: LocalizedValue;
-      /** Used when the value is shown. It will be copied to the course object. */
+      /** Used when the value is shown. It will be copied to the group object. */
       displayText: LocalizedValue;
-      /** Who will see the entered values. It will be copied to the course object. */
+      /** Who will see the entered values. It will be copied to the group object. */
       visibleFor: "all" | "editors";
       /** Optional: The type of field. 'singleLine' for single-line text, 'multiLine' for multi-line text, 'option' a choice from a selection of values, 'boolean' for a choice between true and false. Default: 'singleLine' */
       type: "option";
@@ -49,9 +49,9 @@ export type OrganizationEntityCustomGroupFields =
       editText: LocalizedValue;
       /** Used when the value is edited as placeholder in the field. */
       editDescription: LocalizedValue;
-      /** Used when the value is shown. It will be copied to the course object. */
+      /** Used when the value is shown. It will be copied to the group object. */
       displayText: LocalizedValue;
-      /** Who will see the entered values. It will be copied to the course object. */
+      /** Who will see the entered values. It will be copied to the group object. */
       visibleFor: "all" | "editors";
       /** Optional: The type of field. 'singleLine' for single-line text, 'multiLine' for multi-line text, boolean for a choice between true and false. Default: 'singleLine' */
       type: "boolean";
@@ -85,10 +85,10 @@ export interface OrganizationEntity {
   claim: string;
   description: string;
   logoUrl?: string;
-  /** Customize the inputs that the user can enter when creating and editing a course. */
+  /** Customize the inputs that the user can enter when creating and editing a group. */
   customCourseFields?: OrganizationEntityCustomGroupFields[];
   dashboard?: OrganizationEntityDashboard;
-  /** Hide some role options in the propose new course. */
+  /** Hide some role options in the propose new group. */
   disableCreateRoles?: string[];
   /** When a team organization has this setting set, a message is shown that the registration is closed. */
   registrationClosed?: boolean;

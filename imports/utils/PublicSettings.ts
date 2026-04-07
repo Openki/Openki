@@ -64,9 +64,9 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
     rsvpWithCompanions: Boolean,
     /** allow to edit whether to remind or not, Default: true */
     sendReminderIsEditable: Boolean,
-    /** show a "empty" course box to propose a new course, Default: true */
+    /** show a "empty" group box to propose a new group, Default: true */
     proposeCourseBox: Boolean,
-    /** disable the creation of 2dSphere indexes for db entites, this allow to save non geo location in db, used for CustomMapConfig, Default: false */
+    /** disable the creation of 2dSphere indexes for db entities, this allow to save non geo location in db, used for CustomMapConfig, Default: false */
     disable2dSphereForLocations: Boolean,
     socialMediaButtons: [
       StringEnum(
@@ -118,7 +118,7 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
   /** Standard for all regions, can be overwritten if the "dashboard" property is set in the region, if not set, the ‘find’ page is displayed, default: undefined */
   regionDashboardDefault: Match.Maybe([
     {
-      /** The entity to show: "course", "courseWithoutPropose", "event", "organization", "eventsMap", "propose" are supported */
+      /** The entity to show: "group", "groupWithoutPropose", "event", "organization", "eventsMap", "propose" are supported */
       entity: String,
       /** Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }` */
       title: Match.Maybe(LocalizedValuePattern),
@@ -136,7 +136,7 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
   /** Standard for all organizations, can be overwritten if the "dashboard" property is set in the organization, if not set, the ‘find’ page is displayed, default: undefined */
   organizationDashboardDefault: Match.Maybe([
     {
-      /** The entity to show: "course", "courseWithoutPropose", "event", "organization", "eventsMap", "propose" are supported */
+      /** The entity to show: "group", "groupWithoutPropose", "event", "organization", "eventsMap", "propose" are supported */
       entity: String,
       /** Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }` */
       title: Match.Maybe(LocalizedValuePattern),
@@ -182,11 +182,11 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
     forbiddenChars: string[];
     link: LocalizedValue;
   }>,
-  /** Max characters allowed for the description-field of courses. */
+  /** Max characters allowed for the description-field of groups. */
   courseDescriptionMax: Match.Maybe(Number),
   /** Max characters allowed for the description-field of events. */
   eventDescriptionMax: Match.Maybe(Number),
-  /**  Categories for courses, main and/or sub categories */
+  /**  Categories for groups, main and/or sub categories */
   categories: Record([String]),
   /** file storage */
   s3: {

@@ -27,7 +27,7 @@ interface Body {
 
 /**
  * Record the intent to send join notifications
- * @param groupId ID for the CourseDiscussions collection
+ * @param groupId ID for the GroupDiscussions collection
  * @param participantId ID of the user that joined
  * @param newRole new role of the participant
  * @param message Optional message of the new participant
@@ -94,7 +94,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         throw new Error("New participant does not exist (0.o)");
       }
       if (!group) {
-        throw new Error("Course does not exist (0.o)");
+        throw new Error("Group does not exist (0.o)");
       }
 
       const roleTitle = t(`roles.${body.newRole}.short`);
@@ -125,9 +125,9 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);
 
-      const courseLink = Router.url("showCourse", group, { query: { campaign } });
+      const groupLink = Router.url("showCourse", group, { query: { campaign } });
       return {
-        group: <a href={courseLink}>{group.name}</a>,
+        group: <a href={groupLink}>{group.name}</a>,
         newParticipant: <strong>{newParticipant.getDisplayName()}</strong>,
         subject,
         roleTitle,

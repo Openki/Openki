@@ -1,5 +1,5 @@
-describe("Course history", function () {
-  it("should show a entry for course create and should show a entry for user subscribe", async () => {
+describe("Group history", function () {
+  it("should show a entry for group create and should show a entry for user subscribe", async () => {
     cy.visitOpenki("/courses/propose");
 
     const randomTitle = `COURSEHISTORY${1000 + Math.floor(Math.random() * 9000)}`;
@@ -8,12 +8,12 @@ describe("Course history", function () {
 
     cy.login("Seee");
 
-    // Create the course
+    // Create the group
     cy.get("#course-edit-title").type(randomTitle);
     cy.get("#courses-edit-region-select").select("9JyFCoKWkxnf8LWPh");
     cy.get("#courses-edit-save").click();
 
-    // We should be redirected to the created course
+    // We should be redirected to the created group
     cy.get('[data-test="course-details"]');
 
     cy.get("#history-tab").click();

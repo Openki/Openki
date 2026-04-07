@@ -5,7 +5,7 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 import * as Alert from "/imports/api/alerts/alert";
-import * as Courses from "../../../api/groups/publications";
+import * as Groups from "../../../api/groups/publications";
 import * as emailMethods from "/imports/api/emails/methods";
 import { OrganizationEntity } from "../../../api/organizations/organizations";
 import * as OrganizationsMethods from "../../../api/organizations/methods";
@@ -21,7 +21,7 @@ import { Avatar } from "../../components/avatar";
 import { Button, ButtonCancel } from "/imports/ui/components/Buttons";
 import { ButtonDelete } from "../../components/Buttons";
 import { Contribution } from "../../components/Contribution";
-import { Courselist } from "../../components/profiles/course-list";
+import { GroupListSection } from "../../components/profiles/course-list";
 import { SendMessage, Props as SendMessageProps } from "../../components/SendMessage";
 
 export interface Props {
@@ -35,7 +35,7 @@ export function UserprofilePage({ user }: Props) {
   const currentUser = useUser();
 
   const [isLoadingOrganizations, inviteOrganizations] = Organizations.useFindFilter({ own: true });
-  const [isLoading, coursesCreatedBy] = Courses.useFindFilter({ createdby: user?._id || "-1" });
+  const [isLoading, groupsCreatedBy] = Groups.useFindFilter({ createdby: user?._id || "-1" });
 
   // What privileges the user has
   const privileges = (["admin"] as const).reduce<Record<string, boolean>>((originalPs, p) => {
@@ -50,7 +50,7 @@ export function UserprofilePage({ user }: Props) {
   /**
    * whether userprofile is for the logged-in user
    */
-  function ownuser() {
+  function ownUser() {
     return user._id === currentUser?._id;
   }
   function hasContributed() {
@@ -90,17 +90,17 @@ export function UserprofilePage({ user }: Props) {
       },
     };
   }
-  function numberOfCoursesAffectedByDelete() {
-    return coursesCreatedBy.length;
+  function numberOfGroupsAffectedByDelete() {
+    return groupsCreatedBy.length;
   }
   function numberOfInterestedAffectedByDelete() {
-    return coursesCreatedBy.reduce(
+    return groupsCreatedBy.reduce(
       (accumulator, currentValue) => accumulator + currentValue.interested,
       0,
     );
   }
   function numberOfFutureEventsAffectedByDelete() {
-    return coursesCreatedBy.reduce(
+    return groupsCreatedBy.reduce(
       (accumulator, currentValue) => accumulator + currentValue.futureEvents,
       0,
     );
@@ -195,7 +195,7 @@ export function UserprofilePage({ user }: Props) {
     const userId = user._id;
 
     try {
-      await usersMethods.adminRemove(userId, reason, { courses: true });
+      await usersMethods.adminRemove(userId, reason, { groups: true });
       Alert.success(t("profile.account.deleted", "The account has been deleted"));
       Router.go("users");
     } catch (err) {
@@ -230,7 +230,7 @@ export function UserprofilePage({ user }: Props) {
                 <Contribution userId={user._id} />
               </h1>
 
-              {ownuser() ? (
+              {ownUser() ? (
                 <em>({t("profile.its_you", "It's you.")})</em>
               ) : (
                 alterPrivileges &&
@@ -262,7 +262,7 @@ export function UserprofilePage({ user }: Props) {
                 dangerouslySetInnerHTML={{ __html: user.description }}
               ></p>
 
-              {ownuser() ? (
+              {ownUser() ? (
                 <a className="btn btn-primary" href={Router.path("profile")}>
                   <i className="fa-solid fa-gears fa-fw" />{" "}
                   {t("profile.preferenceslink", "Account settings")}
@@ -358,7 +358,7 @@ export function UserprofilePage({ user }: Props) {
           </div>
         )}
 
-        <Courselist user={user} ownProfile={false} />
+        <GroupListSection user={user} ownProfile={false} />
 
         {alterPrivileges && (
           <>
@@ -375,7 +375,7 @@ export function UserprofilePage({ user }: Props) {
                     'Remove the user profile "{NAME}" permanently? {COURSES, number} Courses created by this user (with {INTERESTED, number} Participants and {EVENTS, number} upcoming events) will also be removed.',
                     {
                       NAME: user.getDisplayName(),
-                      COURSES: numberOfCoursesAffectedByDelete,
+                      COURSES: numberOfGroupsAffectedByDelete,
                       INTERESTED: numberOfInterestedAffectedByDelete,
                       EVENTS: numberOfFutureEventsAffectedByDelete,
                     },

@@ -8,7 +8,7 @@ import { Log } from "/imports/api/log/log";
 import { Users } from "/imports/api/users/users";
 import { Group, Groups } from "../groups/groups";
 import { Events } from "/imports/api/events/events";
-import * as courseInterestedDenormalizer from "../groups/interestedDenormalizer";
+import * as groupInterestedDenormalizer from "../groups/interestedDenormalizer";
 import * as editorsDenormalizer from "../groups/editorsDenormalizer";
 
 import * as HtmlTools from "/imports/utils/html-tools";
@@ -243,7 +243,7 @@ export const selfRemove = ServerMethod("user.self.remove", async () => {
 
 export const AdminRemoveOptionsPattern = {
   /** On true the groups (and events) created by the user will also be deleted */
-  courses: Match.Maybe(Boolean),
+  groups: Match.Maybe(Boolean),
 };
 
 export type AdminRemoveOptions = Type<typeof AdminRemoveOptionsPattern>;
@@ -260,40 +260,40 @@ export const adminRemove = ServerMethod(
       return;
     }
 
-    const deletedCourses: Group[] = [];
+    const deletedGroups: Group[] = [];
     let numberOfDeletedEvents = 0;
-    if (options.courses) {
-      // Remove courses created by this user
-      for (const course of await Groups.find({ createdby: userId }).fetchAsync()) {
-        deletedCourses.push(course);
+    if (options.groups) {
+      // Remove groups created by this user
+      for (const group of await Groups.find({ createdby: userId }).fetchAsync()) {
+        deletedGroups.push(group);
 
-        numberOfDeletedEvents += await Events.removeAsync({ courseId: course._id });
+        numberOfDeletedEvents += await Events.removeAsync({ courseId: group._id });
       }
 
       await Groups.removeAsync({ createdby: userId });
     }
 
-    // Updated courses and events the user is involved
-    const courses = await Groups.find({ "members.user": userId }).fetchAsync();
+    // Updated groups and events the user is involved
+    const groups = await Groups.find({ "members.user": userId }).fetchAsync();
 
-    for await (const course of courses) {
+    for await (const group of groups) {
       await Events.updateAsync(
-        { courseId: course._id },
+        { courseId: group._id },
         { $pull: { editors: userId } },
         { multi: true },
       );
       await Events.updateAsync(
-        { courseId: course._id },
+        { courseId: group._id },
         { $pull: { participants: { user: userId } } },
         { multi: true },
       );
 
-      await Groups.updateAsync({ _id: course._id }, { $pull: { members: { user: userId } } });
-      await Groups.updateAsync({ _id: course._id }, { $pull: { editors: userId } });
+      await Groups.updateAsync({ _id: group._id }, { $pull: { members: { user: userId } } });
+      await Groups.updateAsync({ _id: group._id }, { $pull: { editors: userId } });
 
       // Update member related calculated fields
-      await courseInterestedDenormalizer.afterUserAdminRemove(course._id);
-      await editorsDenormalizer.updateEditors(course._id);
+      await groupInterestedDenormalizer.afterUserAdminRemove(group._id);
+      await editorsDenormalizer.updateEditors(group._id);
     }
 
     const user = (await Users.findOneAsync(userId)) as any;
@@ -306,7 +306,7 @@ export const adminRemove = ServerMethod(
       operatorId: operator._id,
       reason,
       user,
-      deletedCourses,
+      deletedGroups,
       numberOfDeletedEvents,
     });
   },

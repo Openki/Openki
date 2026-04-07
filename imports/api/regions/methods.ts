@@ -59,7 +59,7 @@ export const create = ServerMethod("region.create", async (changes: CreateFields
   set.tz = changes.tz.trim().substring(0, 40);
 
   set.description = changes.description.trim().substring(0, 1000);
-  // Todo: check this already when the user writes into the textarea? is there a limit for course descriptions?
+  // Todo: check this already when the user writes into the textarea? is there a limit for group descriptions?
 
   return Regions.insertAsync(set);
 });
@@ -138,12 +138,12 @@ export const remove = ServerMethod("region.remove", async (regionId: string) => 
   if ((await Groups.countDocuments({ region: regionId })) > 20) {
     throw new Meteor.Error(
       401,
-      "Deleting regions with more than 20 courses is not allowed. Delete courses or contact an administrator. For safety reasons. So that an active region is not deleted by mistake.",
+      "Deleting regions with more than 20 groups is not allowed. Delete groups or contact an administrator. For safety reasons. So that an active region is not deleted by mistake.",
     );
   }
 
   await Events.removeAsync({ region: regionId });
-  // CourseDiscussionEntity do not currently have a region.
+  // GroupDiscussionEntity do not currently have a region.
   for (const c of await Groups.find({ region: regionId }).fetchAsync()) {
     await GroupDiscussions.removeAsync({ courseId: c._id });
   }

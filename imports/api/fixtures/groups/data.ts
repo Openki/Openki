@@ -1,6 +1,6 @@
 /* eslint max-len: 0 */
 
-export const courses: {
+export const groups: {
   name: string;
   categories?: string[];
   tags: string[];
@@ -592,7 +592,7 @@ export const courses: {
     archived: true,
   },
 
-  /** *************** english Testcourses ********************* */
+  /** *************** english Testgroups ********************* */
   {
     name: "Meditation & Yoga/Qi-Gong",
     categories: ["sports"],

@@ -4,7 +4,7 @@ import { hasRoleUser } from "./group-role-utils";
 
 export function mayDeletePost(
   user: UserModel | undefined | null,
-  course: { members: GroupMemberEntity[] },
+  group: { members: GroupMemberEntity[] },
   post: { userId?: string },
 ) {
   if (!user) {
@@ -12,7 +12,7 @@ export function mayDeletePost(
   }
   return (
     user.privileged("admin") /* is admin */ ||
-    hasRoleUser(course.members, "team", user._id) /* is in team of course */ ||
+    hasRoleUser(group.members, "team", user._id) /* is in team of group */ ||
     post.userId === user._id // is creator
   );
 }

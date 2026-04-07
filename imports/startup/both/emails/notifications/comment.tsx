@@ -150,7 +150,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);
-      const courseLink = Router.url("showCourse", group, {
+      const groupLink = Router.url("showCourse", group, {
         query: { campaign },
       });
       const commentLink = Router.url("showCourse", group, {
@@ -158,7 +158,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       });
 
       return {
-        group: <a href={courseLink}>{group.name}</a>,
+        group: <a href={groupLink}>{group.name}</a>,
         commentLink,
         subject,
         comment,

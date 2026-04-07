@@ -107,7 +107,7 @@ export namespace Notifications {
         }).mapAsync(async (entry) => {
           const body = entry.body as { unsubToken: string; recipient: string };
           // See whether it was indeed a secret token.
-          // This check is not redundant because public ID like courseID
+          // This check is not redundant because public ID like group ID
           // are also written into the rel-index and would be found if provided.
           if (body.unsubToken === token) {
             await Notifications.change(body.recipient, false, entry._id, "unsubscribe token");
@@ -170,7 +170,7 @@ export namespace PrivateMessages {
         }).mapAsync(async (entry) => {
           const body = entry.body as { unsubToken: string; recipient: string };
           // See whether it was indeed a secret token.
-          // This check is not redundant because public ID like courseID
+          // This check is not redundant because public ID like group ID
           // are also written into the rel-index and would be found if provided.
           if (body.unsubToken === token) {
             await PrivateMessages.change(body.recipient, false, entry._id, "unsubscribe token");

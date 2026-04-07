@@ -116,7 +116,7 @@ export const events: {
   {
     title: "DEIN KURS — WELCHEN KURS VERMISST DU AN DER NHW 2015?",
     description:
-      '<p><i>Freie Workshop-Slots</i></p><p>organisiert mit dem Tool von <a href="http://about.openki.net">openki.net<br /><br /></a>ExpertIn bist du — seid ihr alle! Am Nachmittag stehen Räume in der ZHAW für von euch organisierte Kurse bereit. Schreibe deine Vorschläge ab 17. Februar hier auf openki.nachhaltigkeitswoche.ch ein. Du kannst dort auch Vorschläge aller Anderen durchstöbern und dich für deren Kurse anmelden — als TeilnehmerIn oder auch als MentorIn. <br /></p><p>Wir freuen uns auf viele Vorschläge!  -&gt; klick <a href="http://openki.nachhaltigkeitswoche.ch/courses/propose">hier</a><br /></p><p><br /></p><p><br /></p><p><br /></p>',
+      '<p><i>Freie Workshop-Slots</i></p><p>organisiert mit dem Tool von <a href="http://about.openki.net">openki.net<br /><br /></a>ExpertIn bist du — seid ihr alle! Am Nachmittag stehen Räume in der ZHAW für von euch organisierte Kurse bereit. Schreibe deine Vorschläge ab 17. Februar hier auf openki.nachhaltigkeitswoche.ch ein. Du kannst dort auch Vorschläge aller Anderen durchstöbern und dich für deren Kurse anmelden — als TeilnehmerIn oder auch als MentorIn. <br /></p><p>Wir freuen uns auf viele Vorschläge!  -&gt; klick <a href="http://openki.nachhaltigkeitswoche.ch/groups/propose">hier</a><br /></p><p><br /></p><p><br /></p><p><br /></p>',
     venue: "Toni-Areal",
     room: "6.D27",
     start: { $date: 1425640500000 },
@@ -823,7 +823,7 @@ export const events: {
     internal: true,
   },
 
-  // ////////////////////// Events whith courses  ////////////////////////
+  // ////////////////////// Events whith groups  ////////////////////////
 
   {
     title: "WC-Brunnen bauen",

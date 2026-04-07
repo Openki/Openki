@@ -21,7 +21,7 @@ export async function onStartUp() {
     updated += 1;
   }
 
-  console.log(`events.courseImageDenormalizer.onStartUp: ${updated} affected events`);
+  console.log(`events.groupImageDenormalizer.onStartUp: ${updated} affected events`);
 }
 
 export async function beforeInsert(
@@ -31,28 +31,28 @@ export async function beforeInsert(
     return event;
   }
 
-  const course = await Groups.findOneAsync(event.courseId);
-  if (!course) {
-    throw new Error(`Missing course ${event.courseId} for new event`);
+  const group = await Groups.findOneAsync(event.courseId);
+  if (!group) {
+    throw new Error(`Missing group ${event.courseId} for new event`);
   }
 
-  return { ...event, courseImage: course.image, courseCompactImage: course.compactImage };
+  return { ...event, courseImage: group.image, courseCompactImage: group.compactImage };
 }
 
 export async function afterGroupUpdateImage(
-  courseId: string,
+  groupId: string,
   set: { compactImage: string; image: string },
 ) {
   await Events.updateAsync(
-    { courseId },
+    { courseId: groupId },
     { $set: { courseImage: set.image, courseCompactImage: set.compactImage } },
     { multi: true },
   );
 }
 
-export async function afterGroupDeleteImage(courseId: string) {
+export async function afterGroupDeleteImage(groupId: string) {
   await Events.updateAsync(
-    { courseId },
+    { courseId: groupId },
     { $set: { courseImage: "", courseCompactImage: "" } },
     { multi: true },
   );

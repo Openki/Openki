@@ -1,6 +1,6 @@
 import { GroupCustomField } from "../../groups/groups";
 
-export const courses: {
+export const groups: {
   _id?: string;
   name: string;
   categories?: string[];

@@ -191,7 +191,7 @@ export const save = ServerMethod(
           throw new Meteor.Error(404, "replica parent not found");
         }
         if (parent.courseId !== editFields.courseId) {
-          throw new Meteor.Error(400, "replica must be in same course");
+          throw new Meteor.Error(400, "replica must be in same group");
         }
       }
 
@@ -536,7 +536,7 @@ export const addParticipant = ServerMethod(
     if (!event.courseId) {
       return;
     }
-    // if you cant load course its probably because the event doesn't have one
+    // if you cant load group its probably because the event doesn't have one
     const group = await Groups.findOneAsync(event.courseId);
     if (!group) {
       return;

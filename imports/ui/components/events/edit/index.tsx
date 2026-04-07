@@ -149,7 +149,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   useEffect(() => {
     if (event.courseId) {
       if (!group) {
-        // wait until course is loaded
+        // wait until group is loaded
         return;
       }
       setCustomFieldValues(group.customFields);
