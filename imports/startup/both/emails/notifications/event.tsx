@@ -5,7 +5,7 @@ import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
 import { uniq } from "lodash-es";
 
-import { GroupModel, Groups } from "/imports/api/courses/courses";
+import { GroupModel, Groups } from "../../../../api/groups/groups";
 import { Events } from "/imports/api/events/events";
 import { Log } from "/imports/api/log/log";
 import { RegionModel, Regions } from "/imports/api/regions/regions";

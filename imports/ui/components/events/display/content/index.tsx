@@ -1,10 +1,10 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { useDetails } from "/imports/api/courses/publications";
+import { useDetails } from "../../../../../api/groups/publications";
 import { EventModel } from "/imports/api/events/events";
 
-import { CustomFieldDisplay } from "../../../courses/CustomFieldDisplay";
+import { CustomFieldDisplay } from "../../../groups/CustomFieldDisplay";
 import { InternalIndicator } from "../../../internal-indicator";
 import { Display } from "../../../location/display";
 import { PricePolicy } from "../../../price-policy";

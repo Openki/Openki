@@ -1,7 +1,7 @@
 import { Mongo } from "meteor/mongo";
 import { shuffle, sample } from "lodash-es";
 
-import { Groups } from "/imports/api/courses/courses";
+import { Groups } from "../../groups/groups";
 import { EventEntity, Events } from "/imports/api/events/events";
 import { ensure } from "/imports/api/fixtures/ensureFixture";
 import { Prng } from "/imports/api/fixtures/Prng";

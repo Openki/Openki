@@ -5,7 +5,7 @@ import moment from "moment";
 import { Events } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { MeteorAsync } from "/imports/utils/promisify";
-import { GroupModel, Groups } from "/imports/api/courses/courses";
+import { GroupModel, Groups } from "../../../imports/api/groups/groups";
 import { UserModel } from "/imports/api/users/users";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { Default as RegionDefault } from "/imports/ui/lib/cleaned-region";

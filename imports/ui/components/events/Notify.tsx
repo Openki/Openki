@@ -3,7 +3,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { useDetails as useGroupDetails } from "/imports/api/courses/publications";
+import { useDetails as useGroupDetails } from "../../../api/groups/publications";
 
 import { FormControl } from "../form-control";
 import { FormCheck } from "../FormCheck";

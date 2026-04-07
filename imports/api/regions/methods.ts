@@ -2,8 +2,8 @@ import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { Match, check } from "meteor/check";
 
-import { Groups } from "/imports/api/courses/courses";
-import { GroupDiscussions } from "/imports/api/course-discussions/course-discussions";
+import { Groups } from "../groups/groups";
+import { GroupDiscussions } from "../group-discussions/group-discussions";
 import { Events } from "/imports/api/events/events";
 import { RegionEntity, Regions } from "./regions";
 import { Venues } from "/imports/api/venues/venues";

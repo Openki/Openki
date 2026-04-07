@@ -5,7 +5,7 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 import * as Alert from "/imports/api/alerts/alert";
-import * as Courses from "/imports/api/courses/publications";
+import * as Courses from "../../../api/groups/publications";
 import * as emailMethods from "/imports/api/emails/methods";
 import { OrganizationEntity } from "../../../api/organizations/organizations";
 import * as OrganizationsMethods from "../../../api/organizations/methods";

@@ -6,10 +6,10 @@ import { ValidationError } from "meteor/mdg:validation-error";
 
 import { Log } from "/imports/api/log/log";
 import { Users } from "/imports/api/users/users";
-import { Group, Groups } from "/imports/api/courses/courses";
+import { Group, Groups } from "../groups/groups";
 import { Events } from "/imports/api/events/events";
-import * as courseInterestedDenormalizer from "/imports/api/courses/interestedDenormalizer";
-import * as editorsDenormalizer from "../courses/editorsDenormalizer";
+import * as courseInterestedDenormalizer from "../groups/interestedDenormalizer";
+import * as editorsDenormalizer from "../groups/editorsDenormalizer";
 
 import * as HtmlTools from "/imports/utils/html-tools";
 import * as Profile from "/imports/utils/profile";

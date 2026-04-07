@@ -22,7 +22,7 @@ import { Venue, VenueModel, FindParams as VenueParamPredicates } from "/imports/
 import * as Venues from "/imports/api/venues/publications";
 import * as Events from "/imports/api/events/publications";
 import * as Tenants from "/imports/api/tenants/publications";
-import * as Groups from "/imports/api/courses/publications";
+import * as Groups from "../../api/groups/publications";
 import * as Invitations from "/imports/api/invitations/publications";
 import * as JoinLinks from "/imports/api/joinLinks/publications";
 import * as Users from "/imports/api/users/publications";
@@ -37,7 +37,7 @@ import * as RouterAsync from "/imports/utils/RouterAsync";
 import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
 
 import * as Analytics from "/imports/ui/lib/analytics";
-import { GroupTemplate } from "/imports/ui/lib/course-template";
+import { GroupTemplate } from "../../ui/lib/group-template";
 
 import type { Data as OrganizationDetailsData } from "../../ui/pages/organization-details";
 import type { Data as VenuesMapData } from "/imports/ui/pages/venues-map";
@@ -241,7 +241,7 @@ RouterAsync.route("proposeCourse", {
   path: "courses/propose",
   template: "courseProposePage",
   async onRun() {
-    await import("/imports/ui/pages/course-create");
+    await import("../../ui/pages/group-create");
   },
   data() {
     const { query } = this.params;
@@ -300,7 +300,7 @@ RouterAsync.route("showCourse", {
   },
 
   async onRun() {
-    await import("/imports/ui/pages/course-details");
+    await import("../../ui/pages/group-details");
   },
   subscriptions() {
     return { groups: Groups.details.subscribe(this.params._id as string) };
@@ -604,7 +604,7 @@ RouterAsync.route("frameGroupList", {
   template: "frameGroupListPage",
   layoutTemplate: "frameLayout",
   async onRun() {
-    await import("/imports/ui/pages/frames/courselist");
+    await import("../../ui/pages/frames/group-list");
   },
 });
 

@@ -1,5 +1,5 @@
 import { EventEntity, Events } from "/imports/api/events/events";
-import { Groups } from "/imports/api/courses/courses";
+import { Groups } from "../groups/groups";
 import { sum } from "../../utils/sum";
 
 // Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers

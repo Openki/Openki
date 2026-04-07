@@ -20,15 +20,15 @@ import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
 
 import * as Alert from "/imports/api/alerts/alert";
-import * as GroupsMethods from "/imports/api/courses/methods";
+import * as GroupsMethods from "../../../../api/groups/methods";
 import { EventModel, OEvent } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { SaveFields } from "/imports/api/events/methods";
 import { useFindFilter as useOrganizationsFindFilter } from "/imports/api/organizations/publications";
-import { useDetails as useGroupDetails } from "/imports/api/courses/publications";
+import { useDetails as useGroupDetails } from "../../../../api/groups/publications";
 import { useAll as useRegions } from "/imports/api/regions/publications";
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
-import { GroupCustomField } from "/imports/api/courses/courses";
+import { GroupCustomField } from "../../../../api/groups/groups";
 
 import { ButtonCancel, ButtonSave } from "../../Buttons";
 import { EditCustomFields } from "../../EditCustomFields";

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useParams, useSearchParams } from "/imports/utils/react-meteor-router";
 
 import { EventModel } from "/imports/api/events/events";
-import { useDetails } from "/imports/api/courses/publications";
+import { useDetails } from "../../../../api/groups/publications";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useViewportSize } from "/imports/ui/lib/useViewportSize";
@@ -13,7 +13,7 @@ import { useViewportSize } from "/imports/ui/lib/useViewportSize";
 import { EventGroupHeader } from "/imports/ui/components/events/display/course-header";
 import { Edit } from "/imports/ui/components/events/edit";
 import { Display } from "/imports/ui/components/events/display/body";
-import { Discussion } from "/imports/ui/components/courses/discussion";
+import { Discussion } from "../../../components/groups/discussion";
 import { EventRegistration } from "/imports/ui/components/events/display/registration";
 import { Report } from "/imports/ui/components/report";
 

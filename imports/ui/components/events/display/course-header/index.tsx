@@ -2,11 +2,11 @@ import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import React from "react";
 
-import { GroupModel } from "/imports/api/courses/courses";
+import { GroupModel } from "../../../../../api/groups/groups";
 
-import { GroupCategories } from "/imports/ui/components/courses/categories";
+import { GroupCategories } from "../../../groups/categories";
 import { Tag } from "/imports/ui/components/regions/tag";
-import { OrganizationList } from "../../../courses/display/organization-list";
+import { OrganizationList } from "../../../groups/display/organization-list";
 
 import "./styles.scss";
 

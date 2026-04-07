@@ -12,13 +12,13 @@ import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 import { RegistrationParticipants } from "../display/registration.modern";
-import { Discussion } from "../../courses/discussion.modern";
+import { Discussion } from "../../groups/discussion.modern";
 import { Display } from "../../location/display";
 
 import { OrganizationName } from "./OrganizationName";
-import { useDetails } from "/imports/api/courses/publications";
+import { useDetails } from "../../../../api/groups/publications";
 import { StatePanel } from "./StatePanel";
-import { CustomFieldDisplay } from "../../courses/CustomFieldDisplay";
+import { CustomFieldDisplay } from "../../groups/CustomFieldDisplay";
 import { ReactJoin } from "/imports/utils/ReactJoin";
 import { ImagePlaceholder } from "./ImagePlaceholder";
 

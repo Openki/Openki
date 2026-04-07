@@ -6,9 +6,9 @@ import { UserModel } from "/imports/api/users/users";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 
-import { useFindFilter } from "/imports/api/courses/publications";
+import { useFindFilter } from "../../../../api/groups/publications";
 import { LoadingPage } from "/imports/ui/pages/loading";
-import { GroupList } from "../../courses/List";
+import { GroupList } from "../../groups/List";
 import { useRoleDisplay } from "../../../lib/useRoleDisplay";
 
 import "./styles.scss";
