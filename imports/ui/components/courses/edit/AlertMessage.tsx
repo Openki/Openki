@@ -1,42 +1,42 @@
 import { Router } from "meteor/iron:router";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useDetails as useCoursesDetails } from "/imports/api/courses/publications";
+import { useDetails as useGroupsDetails } from "/imports/api/courses/publications";
 import { useSiteName } from "/imports/utils/getSiteName";
 
 export function AlertMessage({
   isFrame,
-  savedCourseId,
+  savedGroupId,
   onClose,
 }: {
   isFrame?: boolean | undefined;
-  savedCourseId: string;
+  savedGroupId: string;
   onClose: () => void;
 }) {
   const { t } = useTranslation();
   const siteName = useSiteName();
-  const [savedCourseIsLoading, savedCourse] = useCoursesDetails(savedCourseId);
+  const [savedGroupIsLoading, savedGroup] = useGroupsDetails(savedGroupId);
 
-  function savedCourseLink() {
+  function savedGroupLink() {
     if (isFrame) {
-      const course = savedCourse;
-      if (course) {
-        return Router.url("showCourse", course);
+      const group = savedGroup;
+      if (group) {
+        return Router.url("showCourse", group);
       }
     }
     return "";
   }
-  function savedCourseName() {
+  function savedGroupName() {
     if (isFrame) {
-      const course = savedCourse;
-      if (course) {
-        return course.name;
+      const group = savedGroup;
+      if (group) {
+        return group.name;
       }
     }
     return false;
   }
 
-  if (savedCourseIsLoading()) {
+  if (savedGroupIsLoading()) {
     return null;
   }
 
@@ -49,8 +49,8 @@ export function AlertMessage({
       <span className="pre-line">
         {t("course.edit.linkToCourse", 'You can see your new proposal "{NAME}" on {SITENAME}', {
           NAME: (
-            <a className="alert-link" href={savedCourseLink()} target="_blank" rel="noreferrer">
-              {savedCourseName()}
+            <a className="alert-link" href={savedGroupLink()} target="_blank" rel="noreferrer">
+              {savedGroupName()}
             </a>
           ),
           SITENAME: siteName,

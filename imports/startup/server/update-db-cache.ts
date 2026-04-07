@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import schedule from "node-schedule";
 
-import * as courseNextEventDenormalizer from "/imports/api/courses/nextEventDenormalizer";
+import * as groupNextEventDenormalizer from "/imports/api/courses/nextEventDenormalizer";
 import * as regionsCountDenormalizer from "/imports/api/regions/countDenormalizer";
 
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
@@ -11,12 +11,12 @@ import { updateDbCacheFieldsServerOnly } from "/imports/api/db-utilities/updateD
 
 if (runBackgroundTasks)
   Meteor.startup(async () => {
-    /* Initialize cache-fields on startup (Also called calculated fields or denomalized data) */
+    /* Initialize cache-fields on startup (Also called calculated fields or denormalized data) */
 
     if (PrivateSettings.startup.buildDbCacheAsync) {
-      // Run every week at sunnday at 22:30
+      // Run every week at sunday at 22:30
       schedule.scheduleJob(
-        { hour: 22, minute: 30, dayOfWeek: 0 /* Sunnday */ },
+        { hour: 22, minute: 30, dayOfWeek: 0 /* Sunday */ },
         Meteor.bindEnvironment(async () => {
           await updateDbCacheFieldsServerOnly();
         }),
@@ -28,8 +28,8 @@ if (runBackgroundTasks)
     Meteor.setInterval(
       async () => {
         try {
-          // Update nextEvent for courses where it expired
-          await courseNextEventDenormalizer.updateNextEvent({
+          // Update nextEvent for groups where it expired
+          await groupNextEventDenormalizer.updateNextEvent({
             "nextEvent.start": { $lt: new Date() },
           });
           await regionsCountDenormalizer.updateCounters({});

@@ -5,7 +5,7 @@ import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
 import { uniq } from "lodash-es";
 
-import { CourseModel, Courses } from "/imports/api/courses/courses";
+import { GroupModel, Groups } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
 import { Log } from "/imports/api/log/log";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
@@ -50,9 +50,9 @@ export async function record(
   // What do we do when we receive an event which is not attached to a course?
   // For now when we don't have a course we just go through the motions but
   // the recipient list will be empty.
-  let course: CourseModel | undefined;
+  let group: GroupModel | undefined;
   if (event.courseId) {
-    course = await Courses.findOneAsync(event.courseId);
+    group = await Groups.findOneAsync(event.courseId);
   }
 
   const body: Body = {
@@ -65,21 +65,21 @@ export async function record(
     // at the time of event creation will get the notice even if sending is
     // delayed.
     // The notification is sended to all members of the course and on a event change to all participants
-    recipients: uniq([...(course?.members || []), ...(event.participants || [])])?.map(
+    recipients: uniq([...(group?.members || []), ...(event.participants || [])])?.map(
       (p) => p.user,
     ),
     model: "Event",
   };
 
-  await Log.record("Notification.Send", course ? [course._id] : [], body);
+  await Log.record("Notification.Send", group ? [group._id] : [], body);
 }
 
 export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const event = await Events.findOneAsync(entry.body.eventId);
 
-  let course: CourseModel | undefined;
+  let group: GroupModel | undefined;
   if (event?.courseId) {
-    course = await Courses.findOneAsync(event.courseId);
+    group = await Groups.findOneAsync(event.courseId);
   }
 
   let region: RegionModel | undefined;
@@ -103,14 +103,14 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       if (!event) {
         throw new Error("Event does not exist (0.o)");
       }
-      if (!course) {
-        throw new Error("Course does not exist (0.o)");
+      if (!group) {
+        throw new Error("Group does not exist (0.o)");
       }
       if (!region) {
         throw new Error("Region does not exist (0.o)");
       }
       if (replicats.length !== entry.body.replicats.length) {
-        throw new Error("Not all replicats found (0.o)");
+        throw new Error("Not all replicas found (0.o)");
       }
 
       const { startMoment, tz } = await getStartEndDate(event, locale);
@@ -134,7 +134,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       const siteName = getSiteName(region);
       const emailLogo = region.custom?.emailLogo;
 
-      const courseLink = Router.url("showCourse", course, { query: { campaign } });
+      const courseLink = Router.url("showCourse", group, { query: { campaign } });
       return {
         event,
         tz,
@@ -142,9 +142,9 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         registerToEventLink: Router.url("showEvent", event, {
           query: { action: "register", campaign },
         }),
-        course: <a href={courseLink}>{course.name}</a>,
-        courseName: course.name,
-        unsubscribeFromCourseLink: Router.url("showCourse", course, {
+        course: <a href={courseLink}>{group.name}</a>,
+        courseName: group.name,
+        unsubscribeFromCourseLink: Router.url("showCourse", group, {
           query: { unsubscribe: "participant", force: 1, campaign },
         }),
         isNew: entry.body.isNew,

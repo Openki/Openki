@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import * as Alert from "/imports/api/alerts/alert";
 import { getRole } from "/imports/api/roles/roles";
 import { Subscribe, Unsubscribe, Message, processChange } from "/imports/api/courses/subscription";
-import { CourseMemberEntity, CourseModel } from "/imports/api/courses/courses";
+import { GroupMemberEntity, GroupModel } from "/imports/api/courses/courses";
 
 import * as Tooltips from "/imports/utils/Tooltips";
 
@@ -18,17 +18,17 @@ import { useRoleDisplay } from "../../../../lib/useRoleDisplay";
 
 import "./styles.scss";
 
-export function Member({ member, course }: { member: CourseMemberEntity; course: CourseModel }) {
+export function Member({ member, group }: { member: GroupMemberEntity; group: GroupModel }) {
   const { t } = useTranslation();
   const currentUser = useUser();
   const { roleShort } = useRoleDisplay();
 
   function subscribeToTeam() {
-    return new Subscribe(course, member.user, "team", "interested");
+    return new Subscribe(group, member.user, "team", "interested");
   }
 
   function removeFromTeam() {
-    return new Unsubscribe(course, member.user, "team");
+    return new Unsubscribe(group, member.user, "team");
   }
 
   function ownUserMemberClass() {
@@ -80,7 +80,7 @@ export function Member({ member, course }: { member: CourseMemberEntity; course:
           <ProfileLink userId={member.user} />
           <Contribution userId={member.user} />
         </div>
-        <ParticipantContact participant={member.user} course={course} />
+        <ParticipantContact participant={member.user} group={group} />
         <div className="ms-auto d-flex flex-wrap align-items-center">
           {memberRoles().map((role) => (
             <div
@@ -130,7 +130,7 @@ export function Member({ member, course }: { member: CourseMemberEntity; course:
                   placeholderText: t("roles.message.placeholder", "My interests…"),
                   store: {
                     onSave: async (newMessage) => {
-                      const change = new Message(course, currentUser._id, newMessage);
+                      const change = new Message(group, currentUser._id, newMessage);
                       await processChange(change);
                     },
                     onSuccess: () => {

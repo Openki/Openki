@@ -3,7 +3,7 @@ import { Meteor } from "meteor/meteor";
 import { MeteorAsync } from "/imports/utils/promisify";
 import { Session } from "meteor/session";
 
-import { Courses } from "/imports/api/courses/courses";
+import { Groups } from "/imports/api/courses/courses";
 import { UserModel } from "/imports/api/users/users";
 
 import { Default as RegionDefault } from "/imports/ui/lib/cleaned-region";
@@ -27,7 +27,7 @@ if (Meteor.isClient) {
 
         await MeteorAsync.subscribe("Courses.findFilter");
 
-        const coursesAsGast = Courses.findFilter().fetch();
+        const coursesAsGast = Groups.findFilter().fetch();
 
         assert.isNotEmpty(coursesAsGast, "shows courses");
 
@@ -42,14 +42,14 @@ if (Meteor.isClient) {
 
         await MeteorAsync.subscribe("Courses.findFilter");
 
-        const coursesAsGast = Courses.findFilter().fetch();
+        const coursesAsGast = Groups.findFilter().fetch();
 
         await MeteorAsync.loginWithPassword("Schufien", "greg");
         const schufien = (await Meteor.userAsync()) as UserModel;
 
         assert.ok(schufien);
 
-        const coursesAsSchufien = Courses.findFilter().fetch();
+        const coursesAsSchufien = Groups.findFilter().fetch();
 
         assert.includeMembers(
           coursesAsSchufien.map((c) => c._id),
@@ -74,7 +74,7 @@ if (Meteor.isClient) {
 
         await MeteorAsync.subscribe("Courses.findFilter", {}, undefined, undefined, []);
 
-        Courses.findFilter({}, undefined, undefined, []).fetch();
+        Groups.findFilter({}, undefined, undefined, []).fetch();
       });
     });
   });

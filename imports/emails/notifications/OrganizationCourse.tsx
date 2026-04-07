@@ -5,8 +5,8 @@ import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 
 export interface Props {
-  course: JSX.Element;
-  courseDescription: string;
+  group: JSX.Element;
+  groupDescription: string;
   organizations: JSX.Element;
   creator: UserModel;
   username: string;
@@ -15,9 +15,9 @@ export interface Props {
   lng: string;
 }
 
-export function OrganizationCourse({
-  course,
-  courseDescription,
+export function OrganizationGroup({
+  group,
+  groupDescription,
   organizations,
   creator,
   username,
@@ -35,14 +35,14 @@ export function OrganizationCourse({
             {t(
               "notification.organization.course.mail.intro",
               "{CREATOR} just proposed {COURSE} in your organization {ORGANIZATIONS}.",
-              { CREATOR: creator.getDisplayName(), COURSE: course, ORGANIZATIONS: organizations },
+              { CREATOR: creator.getDisplayName(), COURSE: group, ORGANIZATIONS: organizations },
             )}
           </p>
 
-          {!!courseDescription && (
+          {!!groupDescription && (
             <table className="comment-box">
               <tr>
-                <td dangerouslySetInnerHTML={{ __html: courseDescription }}></td>
+                <td dangerouslySetInnerHTML={{ __html: groupDescription }}></td>
               </tr>
             </table>
           )}
@@ -51,7 +51,7 @@ export function OrganizationCourse({
             {t(
               "notification.organization.course.mail.next",
               "You can contact {CREATOR} in order to support and help organizing {COURSE}. You have the possibility to edit the description and announce events.",
-              { CREATOR: creator.getDisplayName(), COURSE: course },
+              { CREATOR: creator.getDisplayName(), COURSE: group },
             )}
           </p>
         </td>

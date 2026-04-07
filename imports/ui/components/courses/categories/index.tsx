@@ -44,19 +44,19 @@ function CategoryLabelLinked({
   );
 }
 
-export interface CourseCategoriesProps {
+export interface GroupCategoriesProps {
   categories: string[];
   onClick?: (categorie: string) => Promise<void>;
   onMouseOver?: (categorie: string) => Promise<void>;
   onMouseOut?: (categorie: string) => Promise<void>;
 }
 
-export function CourseCategories({
+export function GroupCategories({
   categories,
   onMouseOver,
   onMouseOut,
   onClick,
-}: CourseCategoriesProps) {
+}: GroupCategoriesProps) {
   if (!categories?.length) {
     return null;
   }

@@ -1,14 +1,14 @@
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 
-import { Courses } from "/imports/api/courses/courses";
+import { Groups } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
 import { Organizations } from "../organizations/organizations";
 import { Regions } from "/imports/api/regions/regions";
 import { Venues } from "/imports/api/venues/venues";
 import { InfoPages } from "../infoPages/infoPages";
 import { Tenants } from "../tenants/tenants";
-import { CourseDiscussions } from "../course-discussions/course-discussions";
+import { GroupDiscussions } from "../course-discussions/course-discussions";
 
 import { create as coursesDataCreate } from "./courses/create";
 import { create as eventsDataCreate } from "./events/create";
@@ -30,9 +30,9 @@ export const clean = ServerMethod(
     }
     try {
       await Promise.all([
-        CourseDiscussions.removeAsync({}),
+        GroupDiscussions.removeAsync({}),
         Events.removeAsync({}),
-        Courses.removeAsync({}),
+        Groups.removeAsync({}),
         Venues.removeAsync({}),
         Regions.removeAsync({}),
         Invitations.removeAsync({}),
@@ -71,7 +71,7 @@ export const create = ServerMethod(
         await venuesDataCreate();
       }
 
-      if ((await Courses.countDocuments()) === 0) {
+      if ((await Groups.countDocuments()) === 0) {
         await coursesDataCreate();
       }
 
@@ -80,7 +80,7 @@ export const create = ServerMethod(
         await eventsDataGenerate();
       }
 
-      if ((await CourseDiscussions.countDocuments()) === 0) {
+      if ((await GroupDiscussions.countDocuments()) === 0) {
         await commentsDataGenerate();
       }
     } catch (e) {

@@ -1,22 +1,22 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { CourseModel } from "/imports/api/courses/courses";
+import { GroupModel } from "/imports/api/courses/courses";
 
 import { Button, ButtonCancel } from "../../../components/Buttons";
-import { ButtonCourseArchive } from "../button-course-archive";
+import { ButtonGroupArchive } from "../button-course-archive";
 
 import "./styles.scss";
 
 export function ConfirmDialog({
-  course,
+  group,
   disabled,
   archiveButton,
   onArchive,
   onDelete,
   onCancel,
 }: {
-  course: CourseModel;
+  group: GroupModel;
   disabled?: boolean | undefined;
   archiveButton?: boolean | undefined;
   onArchive: () => void;
@@ -31,18 +31,18 @@ export function ConfirmDialog({
         {t(
           "course.reallydelete",
           "Please confirm that you would like to delete {COURSE}. This cannot be undone.",
-          { COURSE: course.name },
+          { COURSE: group.name },
         )}
       </p>
       <div className="form-actions">
         {!!archiveButton && (
-          <ButtonCourseArchive
+          <ButtonGroupArchive
             className="btn-warning"
             disabled={disabled}
             onArchive={async () => onArchive()}
           >
             {t("course.delete.confirm.archiveButton", "Rather archive")}
-          </ButtonCourseArchive>
+          </ButtonGroupArchive>
         )}
 
         <Button
@@ -54,7 +54,7 @@ export function ConfirmDialog({
           busyText={t("_button.deleting")}
         >
           {t("course.delete.confirm.button", "Delete {COURSE} and its events", {
-            COURSE: course.name,
+            COURSE: group.name,
           })}
         </Button>
         <ButtonCancel

@@ -3,26 +3,26 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
+import { useDetails as useGroupDetails } from "/imports/api/courses/publications";
 
 import { FormControl } from "../form-control";
 import { FormCheck } from "../FormCheck";
 import { EventEditData } from "./edit";
 
-function CourseMembers({
-  courseId,
+function GroupMembers({
+  groupId,
   isNew,
   notifyChecked,
   onChange,
 }: {
-  courseId: string;
+  groupId: string;
   isNew: boolean;
   notifyChecked: boolean;
   onChange: (newValue: boolean) => void;
 }) {
   const { t } = useTranslation();
 
-  const [isLoading, course] = useCourseDetails(courseId);
+  const [isLoading, group] = useGroupDetails(groupId);
 
   if (isLoading()) {
     return null;
@@ -39,12 +39,12 @@ function CourseMembers({
           ? t(
               "event.edit.notifyNewEvent",
               'Send notification to all members of the "{COURSE}" course about this event.',
-              { COURSE: course?.name || "..." },
+              { COURSE: group?.name || "..." },
             )
           : t(
               "event.edit.notifyEditEvent",
               'Send notification to all interested and participants of "{COURSE}" with the up-to-date event information.',
-              { COURSE: course?.name || "..." },
+              { COURSE: group?.name || "..." },
             )
       }
     />
@@ -69,10 +69,10 @@ export function Notify({
   const { t } = useTranslation();
   const user = useUser();
 
-  const [isCourseLoading, course] = useCourseDetails(event.courseId || "");
+  const [isGroupLoading, group] = useGroupDetails(event.courseId || "");
 
   function showAddMessage() {
-    return [...(course?.members || []), ...(event.participants || [])].length > 0;
+    return [...(group?.members || []), ...(event.participants || [])].length > 0;
   }
 
   function onlyYouReceive() {
@@ -81,21 +81,21 @@ export function Notify({
     }
 
     const involved = uniq(
-      [...(course?.members || []), ...(event.participants || [])].map((m) => m.user),
+      [...(group?.members || []), ...(event.participants || [])].map((m) => m.user),
     );
 
     return involved.length === 1 && involved.includes(user._id);
   }
 
-  if (isCourseLoading() || !showAddMessage()) {
+  if (isGroupLoading() || !showAddMessage()) {
     return null;
   }
 
   return (
     <>
       {!!event.courseId && (
-        <CourseMembers
-          courseId={event.courseId}
+        <GroupMembers
+          groupId={event.courseId}
           isNew={isNew}
           notifyChecked={checked}
           onChange={onToggle}

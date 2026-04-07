@@ -1,8 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { CourseModel } from "/imports/api/courses/courses";
-import * as CourseMethods from "/imports/api/courses/methods";
+import { GroupModel } from "/imports/api/courses/courses";
+import * as GroupMethods from "/imports/api/courses/methods";
 import * as Alert from "/imports/api/alerts/alert";
 
 import {
@@ -11,25 +11,25 @@ import {
   EditableImage,
 } from "/imports/ui/components/editable-image";
 
-export function Files({ course }: { course: CourseModel }) {
+export function Files({ group }: { group: GroupModel }) {
   const { t } = useTranslation();
 
   function imageUploadArgs(): EditableImageData {
     return {
-      thumbnail: { src: course.publicUrlForCompactImage(), maxSize: 150 },
+      thumbnail: { src: group.publicUrlForCompactImage(), maxSize: 150 },
       maxSize: 5000, // scale the image to max width/height. Note: image scaling also happens on the server
       async onUpload(file: UploadImage) {
         try {
-          await CourseMethods.updateImage(course._id, file);
+          await GroupMethods.updateImage(group._id, file);
           Alert.success(t("course.edit.image.updated", "Image have been saved."));
         } catch (err) {
           Alert.serverError(err, t("course.edit.image.updated.error", "Could not save image."));
         }
       },
-      onDelete: course.image
+      onDelete: group.image
         ? async function () {
             try {
-              await CourseMethods.deleteImage(course._id);
+              await GroupMethods.deleteImage(group._id);
               Alert.success(t("course.edit.image.removed", "Image have been removed."));
             } catch (err) {
               Alert.serverError(

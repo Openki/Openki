@@ -1,4 +1,4 @@
-import { CourseEntity, Courses } from "/imports/api/courses/courses";
+import { GroupEntity, Groups } from "/imports/api/courses/courses";
 import { EventEntity, Events } from "/imports/api/events/events";
 import { RegionEntity, Regions } from "/imports/api/regions/regions";
 
@@ -31,31 +31,31 @@ export async function update() {
     updated += await Events.updateAsync(event._id, event);
   }
 
-  for (const originalCourse of await Courses.find().fetchAsync()) {
-    const course = { ...originalCourse } as CourseEntity & {
-      groupOrganizers?: CourseEntity["teamOrganizations"];
+  for (const originalGroup of await Groups.find().fetchAsync()) {
+    const group = { ...originalGroup } as GroupEntity & {
+      groupOrganizers?: GroupEntity["teamOrganizations"];
     };
 
-    if (course.groupOrganizers) {
-      course.teamOrganizations = course.groupOrganizers;
+    if (group.groupOrganizers) {
+      group.teamOrganizations = group.groupOrganizers;
     }
-    delete course.groupOrganizers;
+    delete group.groupOrganizers;
 
-    if (course.history) {
-      course.history
+    if (group.history) {
+      group.history
         .filter((e) => e.type === "groupPromote")
         .forEach((e) => {
           e.type = "organizationPromote";
         });
 
-      course.history
+      group.history
         .filter((e) => e.type === "groupOrga")
         .forEach((e) => {
           e.type = "organizationTeam";
         });
     }
 
-    updated += await Courses.updateAsync(course._id, course);
+    updated += await Groups.updateAsync(group._id, group);
   }
 
   return updated;

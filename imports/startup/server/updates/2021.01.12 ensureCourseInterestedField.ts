@@ -1,13 +1,13 @@
-import { Courses } from "/imports/api/courses/courses";
+import { Groups } from "/imports/api/courses/courses";
 
 export async function update() {
   let updated = 0;
 
-  for (const orginalCourse of await Courses.find({ interested: { $exists: false } }).fetchAsync()) {
-    const course = { ...orginalCourse };
-    course.interested = course.members?.length || 0;
+  for (const originalGroup of await Groups.find({ interested: { $exists: false } }).fetchAsync()) {
+    const group = { ...originalGroup };
+    group.interested = group.members?.length || 0;
 
-    updated += await Courses.updateAsync(course._id, course);
+    updated += await Groups.updateAsync(group._id, group);
   }
 
   return updated;

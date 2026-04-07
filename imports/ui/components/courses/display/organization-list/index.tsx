@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { CourseModel } from "/imports/api/courses/courses";
+import { GroupModel } from "/imports/api/courses/courses";
 import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 
 import { OrganizationTag } from "../../../organizations/tag";
@@ -12,29 +12,29 @@ import { RemoveTeam } from "./RemoveTeam";
 import { MakeTeam } from "./MakeTeam";
 
 export interface Props {
-  course: CourseModel;
+  group: GroupModel;
 }
 
-export function OrganizationList({ course }: Props) {
+export function OrganizationList({ group }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 
-  const [isRegionLoading, region] = useRegionDetails(course.region);
+  const [isRegionLoading, region] = useRegionDetails(group.region);
 
-  function tools(organizationId: string, course: CourseModel) {
+  function tools(organizationId: string, group: GroupModel) {
     return (
       <>
-        {(!!user?.mayPromoteWith(organizationId) || course.editableBy(user)) && (
+        {(!!user?.mayPromoteWith(organizationId) || group.editableBy(user)) && (
           <li className="dialog-dropdown-btn">
-            <Remove course={course} organizationId={organizationId} />
+            <Remove group={group} organizationId={organizationId} />
           </li>
         )}
-        {course.editableBy(user) && (
+        {group.editableBy(user) && (
           <li className="dialog-dropdown-btn">
-            {course.teamOrganizations.includes(organizationId) ? (
-              <RemoveTeam course={course} organizationId={organizationId} />
+            {group.teamOrganizations.includes(organizationId) ? (
+              <RemoveTeam group={group} organizationId={organizationId} />
             ) : (
-              <MakeTeam course={course} organizationId={organizationId} />
+              <MakeTeam group={group} organizationId={organizationId} />
             )}
           </li>
         )}
@@ -44,7 +44,7 @@ export function OrganizationList({ course }: Props) {
 
   if (isRegionLoading()) return null;
 
-  const organizations = course.organizations.filter(
+  const organizations = group.organizations.filter(
     (organizationId) =>
       !(
         // hide organization where are from the region set
@@ -52,7 +52,7 @@ export function OrganizationList({ course }: Props) {
           region?.defaultTeamOrganizations?.includes(organizationId) &&
           // when user ist not member of the organization or a admin
           !user?.mayPromoteWith(organizationId) &&
-          !course.editableBy(user)
+          !group.editableBy(user)
         )
       ),
   );
@@ -60,7 +60,7 @@ export function OrganizationList({ course }: Props) {
   return (
     <div className="tag-group multiline">
       {organizations.map((organizationId) => {
-        const isTeam = course.teamOrganizations.includes(organizationId);
+        const isTeam = group.teamOrganizations.includes(organizationId);
         return (
           <React.Fragment key={organizationId}>
             <OrganizationTag organizationId={organizationId} isTeam={isTeam} />
@@ -72,14 +72,14 @@ export function OrganizationList({ course }: Props) {
                     "course.organizationList.title.organizedBy",
                     "{COURSE} is co-organized by this organization",
                     {
-                      COURSE: course.name,
+                      COURSE: group.name,
                     },
                   )}
                 />
               </div>
             )}
 
-            {(!!user?.mayPromoteWith(organizationId) || course.editableBy(user)) && (
+            {(!!user?.mayPromoteWith(organizationId) || group.editableBy(user)) && (
               <div className="btn-group tag-btn organization-tag-btn addon align-top">
                 <button
                   type="button"
@@ -99,7 +99,7 @@ export function OrganizationList({ course }: Props) {
                   <li>
                     <hr className="dropdown-divider" />
                   </li>
-                  {tools(organizationId, course)}
+                  {tools(organizationId, group)}
                 </ul>
               </div>
             )}
@@ -107,7 +107,7 @@ export function OrganizationList({ course }: Props) {
         );
       })}
 
-      <Add course={course} />
+      <Add group={group} />
     </div>
   );
 }

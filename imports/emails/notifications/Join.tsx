@@ -4,7 +4,7 @@ import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 
 export interface Props {
-  course: JSX.Element;
+  group: JSX.Element;
   newParticipant: JSX.Element;
   roleTitle: string;
   roleType: string;
@@ -22,7 +22,7 @@ export interface Props {
 }
 
 export function Join({
-  course,
+  group,
   newParticipant,
   roleTitle,
   roleType,
@@ -44,7 +44,7 @@ export function Join({
           <p>
             {t("notification.join.mail.intro", "{USERNAME} just joined {COURSE} as: {ROLE}.", {
               USERNAME: newParticipant,
-              COURSE: course,
+              COURSE: group,
               ROLE: roleTitle,
               ROLETYPE: roleType,
             })}
@@ -65,7 +65,7 @@ export function Join({
               {t(
                 "notification.join.mail.collaborationHint",
                 "If you like them to collaborate feel free to make contact. Give out rights to edit {COURSE} by adding people to its organization team by clicking the bullhorn next to a name.",
-                { COURSE: course },
+                { COURSE: group },
               )}
             </p>
           )}
@@ -83,7 +83,7 @@ export function Join({
         </td>
       </tr>
       <Footer
-        receiveNote={t("email.base.receiveNote.courseTeam", { COURSE: course })}
+        receiveNote={t("email.base.receiveNote.courseTeam", { COURSE: group })}
         unsubscribe={unsubscribe}
         spamPrevention={true}
         campaign={campaign}

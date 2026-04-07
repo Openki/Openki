@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Modal } from "/imports/startup/client/bootstrap";
 import { useUserId } from "/imports/utils/react-meteor-data";
 
-import { CourseModel } from "/imports/api/courses/courses";
+import { GroupModel } from "/imports/api/courses/courses";
 import * as emailMethods from "/imports/api/emails/methods";
 import { SendPrivateMessageOptions } from "/imports/api/emails/methods";
 import { EventModel } from "/imports/api/events/events";
@@ -13,7 +13,7 @@ import { SendMessage, Props as SendMessageProps } from "../../SendMessage";
 
 export interface Props {
   participant: string;
-  course?: CourseModel;
+  group?: GroupModel;
   event?: EventModel;
 }
 
@@ -53,8 +53,8 @@ export function ParticipantContact(props: Props) {
       ),
       onSend: async (message, options) => {
         const sendPrivateMessageOptions = options as SendPrivateMessageOptions;
-        if (props.course) {
-          sendPrivateMessageOptions.courseId = props.course?._id;
+        if (props.group) {
+          sendPrivateMessageOptions.courseId = props.group?._id;
         }
         if (props.event) {
           sendPrivateMessageOptions.eventId = props.event?._id;

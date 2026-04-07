@@ -1,4 +1,4 @@
-import { CourseEntity, Courses } from "/imports/api/courses/courses";
+import { GroupEntity, Groups } from "/imports/api/courses/courses";
 import { ensure } from "/imports/api/fixtures/ensureFixture";
 import { Prng } from "/imports/api/fixtures/Prng";
 import * as StringTools from "/imports/utils/string-tools";
@@ -75,9 +75,9 @@ async function createBase(prng: PRNG) {
       singleEvent: template.singleEvent || false,
       archived: template.archived,
       history: [],
-    } as unknown as CourseEntity;
+    } as unknown as GroupEntity;
 
-    await Courses.insertAsync(course);
+    await Groups.insertAsync(course);
   }
 }
 
@@ -119,8 +119,8 @@ async function createZuerichLernt(prng: PRNG) {
             return h;
           })
         : [],
-    } as unknown as CourseEntity;
+    } as unknown as GroupEntity;
 
-    await Courses.insertAsync(course);
+    await Groups.insertAsync(course);
   }
 }

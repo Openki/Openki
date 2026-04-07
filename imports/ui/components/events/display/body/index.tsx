@@ -21,13 +21,13 @@ import { Button, ButtonDelete, ButtonEdit } from "../../../Buttons";
 
 import "./styles.scss";
 
-function CourseEvent({ event, courseId }: { event: EventModel; courseId: string }) {
+function GroupEvent({ event, groupId }: { event: EventModel; groupId: string }) {
   const { t } = useTranslation();
 
-  const [isLoading, course] = useDetails(courseId);
+  const [isLoading, group] = useDetails(groupId);
 
   function singleEvent() {
-    return course?.singleEvent;
+    return group?.singleEvent;
   }
 
   if (isLoading()) {
@@ -80,7 +80,7 @@ function CourseEvent({ event, courseId }: { event: EventModel; courseId: string 
         >
           <Content event={event} />
         </div>
-        {!!course && (
+        {!!group && (
           <div
             className="tab-pane mh-none"
             id="files"
@@ -89,7 +89,7 @@ function CourseEvent({ event, courseId }: { event: EventModel; courseId: string 
             tabIndex={0}
           >
             <div className="p-3">
-              <Files course={course} />
+              <Files group={group} />
             </div>
           </div>
         )}
@@ -155,7 +155,7 @@ export function Display({
       busyButton: t("event.delete.confirm.button.busy", "Deleting event…"),
       onRemove: async () => {
         const { title, region } = event;
-        const course = event.courseId;
+        const group = event.courseId;
 
         onRemove();
         try {
@@ -173,8 +173,8 @@ export function Display({
             Regions.findOne(region)?.nameEn,
           );
 
-          if (course) {
-            Router.go("showCourse", { _id: course });
+          if (group) {
+            Router.go("showCourse", { _id: group });
           } else {
             Router.go("home");
           }
@@ -247,7 +247,7 @@ export function Display({
   return (
     <div className="page-component">
       {event.editableBy(user) && event.courseId ? (
-        <CourseEvent event={event} courseId={event.courseId} />
+        <GroupEvent event={event} groupId={event.courseId} />
       ) : (
         <Content event={event} />
       )}

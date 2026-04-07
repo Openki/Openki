@@ -6,7 +6,7 @@ import { ValidationError } from "meteor/mdg:validation-error";
 
 import { Log } from "/imports/api/log/log";
 import { Users } from "/imports/api/users/users";
-import { Course, Courses } from "/imports/api/courses/courses";
+import { Group, Groups } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
 import * as courseInterestedDenormalizer from "/imports/api/courses/interestedDenormalizer";
 import * as editorsDenormalizer from "../courses/editorsDenormalizer";
@@ -242,7 +242,7 @@ export const selfRemove = ServerMethod("user.self.remove", async () => {
 });
 
 export const AdminRemoveOptionsPattern = {
-  /** On true the courses (and events) created by the user will also be deleted */
+  /** On true the groups (and events) created by the user will also be deleted */
   courses: Match.Maybe(Boolean),
 };
 
@@ -260,21 +260,21 @@ export const adminRemove = ServerMethod(
       return;
     }
 
-    const deletedCourses: Course[] = [];
+    const deletedCourses: Group[] = [];
     let numberOfDeletedEvents = 0;
     if (options.courses) {
       // Remove courses created by this user
-      for (const course of await Courses.find({ createdby: userId }).fetchAsync()) {
+      for (const course of await Groups.find({ createdby: userId }).fetchAsync()) {
         deletedCourses.push(course);
 
         numberOfDeletedEvents += await Events.removeAsync({ courseId: course._id });
       }
 
-      await Courses.removeAsync({ createdby: userId });
+      await Groups.removeAsync({ createdby: userId });
     }
 
-    // Updated courses and events he is involted
-    const courses = await Courses.find({ "members.user": userId }).fetchAsync();
+    // Updated courses and events the user is involved
+    const courses = await Groups.find({ "members.user": userId }).fetchAsync();
 
     for await (const course of courses) {
       await Events.updateAsync(
@@ -288,8 +288,8 @@ export const adminRemove = ServerMethod(
         { multi: true },
       );
 
-      await Courses.updateAsync({ _id: course._id }, { $pull: { members: { user: userId } } });
-      await Courses.updateAsync({ _id: course._id }, { $pull: { editors: userId } });
+      await Groups.updateAsync({ _id: course._id }, { $pull: { members: { user: userId } } });
+      await Groups.updateAsync({ _id: course._id }, { $pull: { editors: userId } });
 
       // Update member related calculated fields
       await courseInterestedDenormalizer.afterUserAdminRemove(course._id);

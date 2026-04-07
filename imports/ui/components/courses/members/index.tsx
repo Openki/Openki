@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { CourseModel } from "/imports/api/courses/courses";
+import { GroupModel } from "/imports/api/courses/courses";
 
 import { Member } from "./member";
 
 import "./styles.scss";
 
-export function Members({ course }: { course: CourseModel }) {
+export function Members({ group }: { group: GroupModel }) {
   const { t } = useTranslation();
   const user = useUser();
 
@@ -16,10 +16,10 @@ export function Members({ course }: { course: CourseModel }) {
   const [membersDisplayLimit, setMembersDisplayLimit] = useState(increaseBy);
 
   function howManyEnrolled() {
-    if (!course) {
+    if (!group) {
       return undefined;
     }
-    return course.members.length;
+    return group.members.length;
   }
   function canNotifyAll() {
     if (user?.privileged("admin")) {
@@ -27,15 +27,15 @@ export function Members({ course }: { course: CourseModel }) {
     }
 
     return !!(
-      course?.userHasRole(user?._id, "team") ||
-      user?.organizations.some((g) => course?.teamOrganizations.includes(g))
+      group?.userHasRole(user?._id, "team") ||
+      user?.organizations.some((g) => group?.teamOrganizations.includes(g))
     );
   }
   function sortedMembers() {
-    if (!course) {
+    if (!group) {
       return undefined;
     }
-    const { members } = course;
+    const { members } = group;
     members.sort((a, b) => {
       const aRoles = a.roles.filter((role) => role !== "participant");
       const bRoles = b.roles.filter((role) => role !== "participant");
@@ -53,7 +53,7 @@ export function Members({ course }: { course: CourseModel }) {
     return members.slice(0, membersDisplayLimit);
   }
   function limited() {
-    return (course?.members.length || 0) > membersDisplayLimit;
+    return (group?.members.length || 0) > membersDisplayLimit;
   }
 
   function handleContactMembersClick() {
@@ -83,10 +83,10 @@ export function Members({ course }: { course: CourseModel }) {
           )}
         </h4>
       </div>
-      {!!course?.members && (
+      {!!group?.members && (
         <div className="course-members">
           {sortedMembers()?.map((member) => (
-            <Member key={member.user} member={member} course={course} />
+            <Member key={member.user} member={member} group={group} />
           ))}
           {limited() && (
             <button

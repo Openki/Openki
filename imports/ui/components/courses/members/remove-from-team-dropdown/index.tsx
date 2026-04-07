@@ -2,14 +2,14 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { CourseMemberEntity } from "/imports/api/courses/courses";
+import { GroupMemberEntity } from "/imports/api/courses/courses";
 
 import * as Tooltips from "/imports/utils/Tooltips";
 
 import "./styles.scss";
 
 export interface Props {
-  member: CourseMemberEntity;
+  member: GroupMemberEntity;
   onClick: () => void;
 }
 
@@ -17,9 +17,9 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 
-  function isNotPriviledgedSelf() {
-    const notPriviledgedUser = !user?.privileged("admin");
-    return member.user === user?._id && notPriviledgedUser;
+  function isNotPrivilegedSelf() {
+    const notPrivilegedUser = !user?.privileged("admin");
+    return member.user === user?._id && notPrivilegedUser;
   }
 
   return (
@@ -38,7 +38,7 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
       ></button>
       <ul className="dropdown-menu dropdown-menu-end dialog-dropdown">
         <li className="dropdown-header">
-          {isNotPriviledgedSelf()
+          {isNotPrivilegedSelf()
             ? t("course.details.removeTeam.self.header", "Remove yourself from the team")
             : t("course.details.removeTeam.others.header", "Remove member from the team")}
           <button type="button" className="btn-close"></button>
@@ -47,7 +47,7 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
           <hr className="dropdown-divider" />
         </li>
         <li className="dialog-dropdown-text">
-          {isNotPriviledgedSelf()
+          {isNotPrivilegedSelf()
             ? t(
                 "course.detail.remove.yourself.team",
                 "Remove yourself from the team? Only another member can add you back.",

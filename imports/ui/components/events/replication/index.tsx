@@ -97,7 +97,7 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
   const activeDays = () => (usingPicker ? pickDays : calcDays);
 
   // Sending an event notification is only possible when the event is
-  // attached to a course. Otherwise there is nobody to inform.
+  // attached to a group. Otherwise there is nobody to inform.
   const [notifyChecked, setNotifyChecked] = useState(!!event.courseId && "new" in event);
   const [addNotificationMessage, setAddNotificationMessage] = useState("");
 

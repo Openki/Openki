@@ -1,24 +1,24 @@
 import React from "react";
 import { useUserId } from "/imports/utils/react-meteor-data";
 import { Roles as RolesEntities } from "/imports/api/roles/roles";
-import { CourseMemberEntity, CourseModel } from "/imports/api/courses/courses";
+import { GroupMemberEntity, GroupModel } from "/imports/api/courses/courses";
 
 import { Role } from "./role";
 
-function loadRoles(userId: string | null, course: CourseModel, member?: CourseMemberEntity) {
-  return RolesEntities.filter((r) => course.roles?.includes(r.type)).map((r) => ({
+function loadRoles(userId: string | null, group: GroupModel, member?: GroupMemberEntity) {
+  return RolesEntities.filter((r) => group.roles?.includes(r.type)).map((r) => ({
     role: r,
-    subscribed: course.userHasRole(userId, r.type),
+    subscribed: group.userHasRole(userId, r.type),
     comment: member?.comment,
-    course,
+    group,
   }));
 }
 
-export function Roles({ course }: { course: CourseModel }) {
+export function Roles({ group }: { group: GroupModel }) {
   const userId = useUserId();
 
-  const member = course.members?.find((m) => m.user === userId);
-  const roles = loadRoles(userId, course, member);
+  const member = group.members?.find((m) => m.user === userId);
+  const roles = loadRoles(userId, group, member);
 
   return (
     <div id="subscribe">

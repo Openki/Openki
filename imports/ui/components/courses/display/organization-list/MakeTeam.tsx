@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { CourseModel } from "/imports/api/courses/courses";
+import { GroupModel } from "/imports/api/courses/courses";
 import { useDetails } from "../../../../../api/organizations/publications";
 import * as CoursesMethods from "/imports/api/courses/methods";
 
 import { name } from "../../../../lib/organization-name-helpers";
 
 export interface Props {
-  course: CourseModel;
+  group: GroupModel;
   organizationId: string;
 }
 
-export function MakeTeam({ course, organizationId }: Props) {
+export function MakeTeam({ group, organizationId }: Props) {
   const { t } = useTranslation();
   const [isLoading, organization] = useDetails(organizationId);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -56,7 +56,7 @@ export function MakeTeam({ course, organizationId }: Props) {
         className="btn btn-success"
         onClick={async () => {
           try {
-            await CoursesMethods.editing(course._id, organizationId, true);
+            await CoursesMethods.editing(group._id, organizationId, true);
           } catch (err) {
             Alert.serverError(
               err,

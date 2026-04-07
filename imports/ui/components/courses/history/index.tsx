@@ -2,7 +2,7 @@ import React from "react";
 
 import { Router } from "meteor/iron:router";
 import { EventModel, Events } from "/imports/api/events/events";
-import { CourseModel } from "/imports/api/courses/courses";
+import { GroupModel } from "/imports/api/courses/courses";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
@@ -261,7 +261,7 @@ export function UpdatedHistoryEntry({ updatedBy }: { updatedBy: string }) {
   );
 }
 
-export function CreatedHistoryEntry({ createdby }: CourseModel) {
+export function CreatedHistoryEntry({ createdby }: GroupModel) {
   const { t } = useTranslation();
   return (
     <>
@@ -288,7 +288,7 @@ const map = {
   eventRemoved: EventRemovedHistoryEntry,
 } as const;
 
-export function History({ course }: { course: CourseModel }) {
+export function History({ group }: { group: GroupModel }) {
   const user = useUser();
 
   function pastEventsList() {
@@ -296,16 +296,16 @@ export function History({ course }: { course: CourseModel }) {
       [];
 
     const history =
-      user && course.editableBy(user)
-        ? course.history
-        : course.history?.filter(
+      user && group.editableBy(user)
+        ? group.history
+        : group.history?.filter(
             (e) => e.type !== "organizationPromote" && e.type !== "organizationTeam",
           );
 
     // add past events
     historyEntries.push(
       ...Events.find(
-        { courseId: course._id, start: { $lt: new Date() } },
+        { courseId: group._id, start: { $lt: new Date() } },
         { limit: 100 }, // Hack: https://gitlab.com/Openki/Openki/-/issues/1768
       ).map((e) => ({
         dateTime: e.start,
@@ -323,11 +323,11 @@ export function History({ course }: { course: CourseModel }) {
       })) || []),
     );
 
-    // and with the course creation
+    // and with the group creation
     historyEntries.push({
-      dateTime: course.time_created,
+      dateTime: group.time_created,
       template: CreatedHistoryEntry,
-      data: course,
+      data: group,
     });
 
     // and sort by date time desc

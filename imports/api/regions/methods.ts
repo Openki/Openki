@@ -2,8 +2,8 @@ import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { Match, check } from "meteor/check";
 
-import { Courses } from "/imports/api/courses/courses";
-import { CourseDiscussions } from "/imports/api/course-discussions/course-discussions";
+import { Groups } from "/imports/api/courses/courses";
+import { GroupDiscussions } from "/imports/api/course-discussions/course-discussions";
 import { Events } from "/imports/api/events/events";
 import { RegionEntity, Regions } from "./regions";
 import { Venues } from "/imports/api/venues/venues";
@@ -135,7 +135,7 @@ export const remove = ServerMethod("region.remove", async (regionId: string) => 
 
   await checkEditAllowed(regionId);
 
-  if ((await Courses.countDocuments({ region: regionId })) > 20) {
+  if ((await Groups.countDocuments({ region: regionId })) > 20) {
     throw new Meteor.Error(
       401,
       "Deleting regions with more than 20 courses is not allowed. Delete courses or contact an administrator. For safety reasons. So that an active region is not deleted by mistake.",
@@ -144,10 +144,10 @@ export const remove = ServerMethod("region.remove", async (regionId: string) => 
 
   await Events.removeAsync({ region: regionId });
   // CourseDiscussionEntity do not currently have a region.
-  for (const c of await Courses.find({ region: regionId }).fetchAsync()) {
-    await CourseDiscussions.removeAsync({ courseId: c._id });
+  for (const c of await Groups.find({ region: regionId }).fetchAsync()) {
+    await GroupDiscussions.removeAsync({ courseId: c._id });
   }
-  await Courses.removeAsync({ region: regionId });
+  await Groups.removeAsync({ region: regionId });
   await Venues.removeAsync({ region: regionId });
   await Regions.removeAsync(regionId);
 });

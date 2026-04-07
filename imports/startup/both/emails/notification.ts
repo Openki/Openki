@@ -9,8 +9,8 @@ import * as rsvp from "./notifications/rsvp";
 import * as rsvpTeam from "./notifications/rsvp.team";
 import * as comment from "./notifications/comment";
 import * as join from "./notifications/join";
-import * as course from "./notifications/course";
-import * as organizationCourse from "./notifications/organization.course";
+import * as group from "./notifications/course";
+import * as organizationGroup from "./notifications/organization.course";
 import * as privateMessage from "./notifications/private-message";
 import { JSX } from "react";
 
@@ -48,7 +48,7 @@ export const Notification = {
   "Rsvp.Team": rsvpTeam,
   Comment: comment,
   Join: join,
-  Course: course,
-  "Organization.Course": organizationCourse,
+  Course: group,
+  "Organization.Course": organizationGroup,
   PrivateMessage: privateMessage,
 };

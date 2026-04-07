@@ -1,13 +1,13 @@
 import { Mongo } from "meteor/mongo";
 import { uniq } from "lodash-es";
 
-import { CourseEntity, CourseModel, Courses } from "/imports/api/courses/courses";
+import { GroupEntity, GroupModel, Groups } from "/imports/api/courses/courses";
 import { EventEntity, EventModel, Events } from "/imports/api/events/events";
 import { Organizations } from "../organizations/organizations";
 import { sum } from "../../utils/sum";
 
 export interface Stat {
-  courses: {
+  groups: {
     /** excl. archived */
     total: number;
     /** no events */
@@ -56,12 +56,12 @@ export interface Stats {
   organizations: OrganizationStat[];
 }
 
-function getCourses(regionId: string) {
-  const filter: Mongo.Selector<CourseEntity> = {};
+function getGroups(regionId: string) {
+  const filter: Mongo.Selector<GroupEntity> = {};
   if (regionId && regionId !== "all") {
     filter.region = regionId;
   }
-  return Courses.find(filter, {
+  return Groups.find(filter, {
     // Do not load any data into the memory that is not required
     projection: { name: 0, slug: 0, description: 0, image: 0, customFields: 0, history: 0 },
   }).fetchAsync();
@@ -79,7 +79,7 @@ function getEvents(regionId: string) {
 }
 
 /** Get all organizations that promotes courses or events */
-async function getOrganizations(courses: CourseModel[], events: EventModel[]) {
+async function getOrganizations(courses: GroupModel[], events: EventModel[]) {
   let organizationIds = [];
   organizationIds.push(...courses.flatMap((c) => c.organizations));
   organizationIds.push(...events.flatMap((e) => e.organizations));
@@ -103,23 +103,23 @@ async function getOrganizations(courses: CourseModel[], events: EventModel[]) {
   });
 }
 
-function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
+function calcStats(groups: GroupModel[], events: EventModel[]): Stat {
   const now = new Date();
 
-  const notArchived = courses.filter((c) => !c.archived);
-  const members = courses.flatMap((c) => c.members);
+  const notArchived = groups.filter((c) => !c.archived);
+  const members = groups.flatMap((c) => c.members);
 
   const notCanceled = events.filter((e) => !e.canceled);
   const canceled = events.filter((e) => e.canceled);
   const futureAndNotCanceled = notCanceled.filter((e) => e.start > now);
   return {
-    // inspired from courses.findFilter in /imports/api/courses/courses
-    courses: {
+    // inspired from groups.findFilter in /imports/api/courses/courses
+    groups: {
       total: notArchived.length,
       proposed: notArchived.filter((c) => !c.lastEvent && !c.futureEvents).length,
       resting: notArchived.filter((c) => c.lastEvent && !c.futureEvents).length,
       upcoming: notArchived.filter((c) => c.futureEvents > 0).length,
-      archived: courses.filter((c) => c.archived).length,
+      archived: groups.filter((c) => c.archived).length,
       enrollments: members.length,
       users: uniq(members.map((m) => m.user)).length,
     },
@@ -139,25 +139,25 @@ function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
 }
 
 export async function getRegionStats(regionId: string): Promise<Stats> {
-  // load data into memorie
-  const courses = await getCourses(regionId);
+  // load data into memory
+  const groups = await getGroups(regionId);
   const events = await getEvents(regionId);
-  const organizations = await getOrganizations(courses, events);
+  const organizations = await getOrganizations(groups, events);
 
   return {
     // calc stat for overview over all or one region
-    region: calcStats(courses, events),
+    region: calcStats(groups, events),
     organizations: [
       // calc stat for courses and events without a organization
       calcStats(
-        courses.filter((c) => !c.organizations?.length),
+        groups.filter((c) => !c.organizations?.length),
         events.filter((e) => !e.organizations?.length && !e.allOrganizations?.length),
       ),
       // calc stat for every organization
       ...organizations.map((o) => ({
         ...o,
         ...calcStats(
-          courses.filter((c) => c.organizations?.includes(o._id)),
+          groups.filter((c) => c.organizations?.includes(o._id)),
           events.filter(
             (e) => e.allOrganizations?.includes(o._id) || e.organizations?.includes(o._id),
           ),
@@ -167,10 +167,10 @@ export async function getRegionStats(regionId: string): Promise<Stats> {
       // sort organizations by number of active users in events
       //        then by number of active users in courses
       //        then by number of events
-      //        then by number of courses
-      .sort((a, b) => b.courses.total + b.courses.archived - (a.courses.total + a.courses.archived))
+      //        then by number of groups
+      .sort((a, b) => b.groups.total + b.groups.archived - (a.groups.total + a.groups.archived))
       .sort((a, b) => b.events.total - a.events.total)
-      .sort((a, b) => b.courses.users - a.courses.users)
+      .sort((a, b) => b.groups.users - a.groups.users)
       .sort((a, b) => b.events.users - a.events.users),
   };
 }

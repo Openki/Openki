@@ -9,17 +9,17 @@ import { FormControl } from "/imports/ui/components/form-control";
 
 import "./styles.scss";
 
-function Courses({ search }: { search: string }) {
+function Groups({ search }: { search: string }) {
   const { t } = useTranslation();
   const region = useCurrentRegionId();
 
   const [collapsed, setCollapsed] = useState(false);
 
-  const [isLoading, courses] = useFindFilter({ search, region: region || "all" }, 20, undefined, [
+  const [isLoading, groups] = useFindFilter({ search, region: region || "all" }, 20, undefined, [
     ["name", "asc"],
   ]);
 
-  return !isLoading() && courses.length ? (
+  return !isLoading() && groups.length ? (
     <div className="list-group proposed-courses mt-3">
       <span className="list-group-item  border-0 border-bottom">
         <h5 className="m-0">
@@ -44,13 +44,13 @@ function Courses({ search }: { search: string }) {
       </span>
       {!collapsed && (
         <>
-          {courses.map((course) => (
+          {groups.map((group) => (
             <a
               className="list-group-item list-group-item-action border-0"
-              key={course._id}
-              href={Router.path("showCourse", course)}
+              key={group._id}
+              href={Router.path("showCourse", group)}
             >
-              {course.name}
+              {group.name}
             </a>
           ))}
           <span className="list-group-item text-center border-0 border-top">
@@ -107,7 +107,7 @@ export function Title(props: {
         onBlur={props.onBlur}
         error={props.error}
       />
-      {props.showOtherProposals && proposedSearch.length > 3 && <Courses search={proposedSearch} />}
+      {props.showOtherProposals && proposedSearch.length > 3 && <Groups search={proposedSearch} />}
     </div>
   );
 }

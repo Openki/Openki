@@ -5,7 +5,7 @@ import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
 import { truncate } from "lodash-es";
 
-import { Courses } from "/imports/api/courses/courses";
+import { Groups } from "/imports/api/courses/courses";
 import { Log } from "/imports/api/log/log";
 import { UserModel, Users } from "/imports/api/users/users";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
@@ -131,7 +131,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         customSiteName: undefined as string | undefined,
         customEmailLogo: undefined as string | undefined,
         fromAddress: "",
-        course: undefined as JSX.Element | undefined,
+        group: undefined as JSX.Element | undefined,
         event: undefined as JSX.Element | undefined,
         unsubscribe: { type: "privateMessage" as const, token: unsubToken },
         campaign,
@@ -148,18 +148,18 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       let region: RegionModel | undefined;
       let regionId = actualRecipient.profile?.regionId;
 
-      const courseContextId = body.context.course;
-      if (courseContextId) {
-        const course = await Courses.findOneAsync(courseContextId);
-        if (!course) {
+      const groupContextId = body.context.course;
+      if (groupContextId) {
+        const group = await Groups.findOneAsync(groupContextId);
+        if (!group) {
           throw new Meteor.Error(404, "course not found");
         }
-        const courseLink = Router.url("showCourse", course, {
+        const groupLink = Router.url("showCourse", group, {
           query: { campaign },
         });
-        vars.course = <a href={courseLink}>{course.name}</a>;
+        vars.group = <a href={groupLink}>{group.name}</a>;
 
-        regionId = course.region;
+        regionId = group.region;
       }
 
       const eventContextId = body.context.event;

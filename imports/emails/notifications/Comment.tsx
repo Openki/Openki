@@ -1,5 +1,5 @@
-import React from "react";
-import { CourseDiscussionEntity } from "/imports/api/course-discussions/course-discussions";
+import React, { ReactNode } from "react";
+import { GroupDiscussionEntity } from "/imports/api/course-discussions/course-discussions";
 import { UserModel } from "/imports/api/users/users";
 import { useTranslation } from "react-i18next";
 import { Footer } from "./components/Footer";
@@ -7,10 +7,10 @@ import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 
 export interface Props {
   username: string;
-  course: any;
+  group: ReactNode;
   commentLink: string;
   subject: string;
-  comment: CourseDiscussionEntity;
+  comment: GroupDiscussionEntity;
   commenter: UserModel | undefined;
   commenterLink: string;
   commenterName: string | undefined;
@@ -22,7 +22,7 @@ export interface Props {
 
 export function Comment({
   username,
-  course,
+  group,
   commentLink,
   comment,
   commenter,
@@ -45,12 +45,12 @@ export function Comment({
               ? t(
                   "notification.comment.mail.intro",
                   "There was a comment by {USERNAME} on {COURSE}:",
-                  { USERNAME: commenterName, COURSE: course },
+                  { USERNAME: commenterName, COURSE: group },
                 )
               : t(
                   "notification.comment.mail.intro.anon",
                   "There was an anonymous comment on {COURSE}:",
-                  { COURSE: course },
+                  { COURSE: group },
                 )}
           </p>
           <table className="comment-box">
@@ -83,8 +83,8 @@ export function Comment({
       <Footer
         receiveNote={
           comment.notifyAll
-            ? t("notification.event.mail.notice", { COURSE: course })
-            : t("email.base.receiveNote.courseTeam", { COURSE: course })
+            ? t("notification.event.mail.notice", { COURSE: group })
+            : t("email.base.receiveNote.courseTeam", { COURSE: group })
         }
         unsubscribe={unsubscribe}
         campaign={campaign}

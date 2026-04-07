@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { Button } from "../../../components/Buttons";
 
-export function ButtonCourseArchive({
+export function ButtonGroupArchive({
   className,
   disabled,
   onArchive,

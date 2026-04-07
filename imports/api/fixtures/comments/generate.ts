@@ -2,10 +2,10 @@ import { Mongo } from "meteor/mongo";
 import { sampleSize } from "lodash-es";
 import { PRNG } from "seedrandom";
 
-import { Courses } from "/imports/api/courses/courses";
+import { Groups } from "/imports/api/courses/courses";
 import {
-  CourseDiscussionEntity,
-  CourseDiscussions,
+  GroupDiscussionEntity,
+  GroupDiscussions,
 } from "/imports/api/course-discussions/course-discussions";
 import { Prng } from "/imports/api/fixtures/Prng";
 import { Users } from "/imports/api/users/users";
@@ -36,7 +36,7 @@ export async function generate() {
   let count = 0;
 
   const userCount = await Users.countDocuments();
-  for (const course of await Courses.find().fetchAsync()) {
+  for (const course of await Groups.find().fetchAsync()) {
     const createCount = Math.floor((prng() * 2) ** 4);
     const courseMembers = course.members.length;
     let { description } = course;
@@ -44,7 +44,7 @@ export async function generate() {
     const words = description.split(" ");
 
     for (let n = 0; n < createCount; n += 1) {
-      const comment = {} as Mongo.OptionalId<CourseDiscussionEntity>;
+      const comment = {} as Mongo.OptionalId<GroupDiscussionEntity>;
       comment.courseId = course._id;
       comment.title = sampleSize(words, 1 + Math.floor(prng() * 3)).join(" ");
       comment.text = HtmlTools.sanitizeHtml(
@@ -69,7 +69,7 @@ export async function generate() {
         comment.userId = commenter.user;
       }
 
-      await CourseDiscussions.insertAsync(comment);
+      await GroupDiscussions.insertAsync(comment);
     }
 
     count += createCount;

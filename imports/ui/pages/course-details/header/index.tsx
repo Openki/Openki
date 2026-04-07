@@ -3,30 +3,30 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
-import * as CoursesMethods from "/imports/api/courses/methods";
-import { CourseModel } from "/imports/api/courses/courses";
+import * as GroupsMethods from "/imports/api/courses/methods";
+import { GroupModel } from "/imports/api/courses/courses";
 
 import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 import { InternalIndicator } from "/imports/ui/components/internal-indicator";
 import { SingleEventIndicator } from "/imports/ui/components/single-event-indicator";
 import { Tag } from "/imports/ui/components/regions/tag";
-import { CourseCategories } from "/imports/ui/components/courses/categories";
+import { GroupCategories } from "/imports/ui/components/courses/categories";
 import { OrganizationList } from "../../../components/courses/display/organization-list";
 
 import "./styles.scss";
 
-export function Header({ course }: { course: CourseModel }) {
+export function Header({ group }: { group: GroupModel }) {
   const { t } = useTranslation();
 
   const user = useUser();
 
   const editableNameAttr: EditableProps = {
-    text: course.name,
+    text: group.name,
     multiline: false,
     placeholder: t("course.title.placeholder"),
     store: {
       onSave: async (newName) => {
-        await CoursesMethods.save(course._id, { name: newName });
+        await GroupsMethods.save(group._id, { name: newName });
       },
       onSuccess: (newName) => {
         Alert.success(
@@ -42,7 +42,7 @@ export function Header({ course }: { course: CourseModel }) {
   };
 
   function detailsHeaderAttr() {
-    const src = course?.publicUrlForDetailsImage();
+    const src = group?.publicUrlForDetailsImage();
     if (!src) {
       return {};
     }
@@ -57,13 +57,13 @@ export function Header({ course }: { course: CourseModel }) {
   }
 
   function isProposal() {
-    return !course?.nextEvent && !course?.lastEvent;
+    return !group?.nextEvent && !group?.lastEvent;
   }
 
   return (
     <div className="details-header" {...detailsHeaderAttr()}>
-      {course.internal && <InternalIndicator />}
-      {course.singleEvent && <SingleEventIndicator />}
+      {group.internal && <InternalIndicator />}
+      {group.singleEvent && <SingleEventIndicator />}
       <div className="details-header-tags">
         {isProposal() && (
           <div className="proposal-tag">
@@ -71,23 +71,17 @@ export function Header({ course }: { course: CourseModel }) {
             {t("course.details.is-proposalTag", "Proposal")}
           </div>
         )}
-        <Tag region={course.region} />
+        <Tag region={group.region} />
       </div>
       <div className="course-details-title">
-        {course?.editableBy(user) ? <Editable {...editableNameAttr} /> : <h2>{course.name}</h2>}
+        {group?.editableBy(user) ? <Editable {...editableNameAttr} /> : <h2>{group.name}</h2>}
       </div>
-      {!!course.categories && (
+      {!!group.categories && (
         <div className="course-details-categories">
-          <CourseCategories categories={course.categories} />
+          <GroupCategories categories={group.categories} />
         </div>
       )}
-      <OrganizationList course={course} />
+      <OrganizationList group={group} />
     </div>
   );
 }
-
-// for Blaze
-
-import "./template.html";
-
-Template.registerHelper("CourseDetailsHeader", () => Header);

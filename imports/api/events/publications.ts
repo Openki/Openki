@@ -49,7 +49,7 @@ export const [findFilter, useFindFilter] = ServerPublishMany(
     Events.findFilter({ ...filter, tenants: visibleTenants() }, limit, skip, sort),
 );
 
-export const [forCourse, useForCourse] = ServerPublishMany(
+export const [forCourse, useForGroup] = ServerPublishMany(
   "eventsForCourse",
   async (courseId: string) => {
     check(courseId, String);

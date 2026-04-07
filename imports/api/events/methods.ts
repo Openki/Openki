@@ -4,15 +4,15 @@ import { assignIn } from "lodash-es";
 import moment from "moment";
 import { Random } from "meteor/random";
 
-import { Courses } from "/imports/api/courses/courses";
+import { Groups } from "/imports/api/courses/courses";
 import { Subscribe, processChange } from "/imports/api/courses/subscription";
-import * as courseHistoryDenormalizer from "/imports/api/courses/historyDenormalizer";
-import * as courseTimeLastEditDenormalizer from "/imports/api/courses/timeLastEditDenormalizer";
-import * as courseImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
+import * as groupHistoryDenormalizer from "/imports/api/courses/historyDenormalizer";
+import * as groupTimeLastEditDenormalizer from "/imports/api/courses/timeLastEditDenormalizer";
+import * as groupImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
 import * as categoriesDenormalizer from "/imports/api/events/categoriesDenormalizer";
 import * as organizationsAndEditorsDenormalizer from "./organizationsAndEditorsDenormalizer";
 import * as venueDenormalizer from "/imports/api/events/venueDenormalizer";
-import * as courseNextEventDenormalizer from "/imports/api/courses/nextEventDenormalizer";
+import * as groupNextEventDenormalizer from "/imports/api/courses/nextEventDenormalizer";
 import * as regionsCountDenormalizer from "/imports/api/regions/countDenormalizer";
 import { EventEntity, EventModel, Events, OEvent } from "/imports/api/events/events";
 import { Organizations } from "../organizations/organizations";
@@ -176,11 +176,11 @@ export const save = ServerMethod(
     if (isNew) {
       editFields.time_created = now;
       if (editFields.courseId) {
-        const course = await Courses.findOneAsync(editFields.courseId);
-        if (!course) {
-          throw new Meteor.Error(404, "course not found");
+        const group = await Groups.findOneAsync(editFields.courseId);
+        if (!group) {
+          throw new Meteor.Error(404, "group not found");
         }
-        if (!course.editableBy(user)) {
+        if (!group.editableBy(user)) {
           throw new Meteor.Error(401, "not permitted");
         }
       }
@@ -344,7 +344,7 @@ export const save = ServerMethod(
     if (isNew) {
       editFields.createdBy = user._id;
       editFields.teamOrganizations = [];
-      let enrichedEvent = await courseImageDenormalizer.beforeInsert(editFields as any);
+      let enrichedEvent = await groupImageDenormalizer.beforeInsert(editFields as any);
       if (enrichedEvent.courseId) {
         enrichedEvent = await categoriesDenormalizer.beforeInsert(enrichedEvent);
       }
@@ -352,8 +352,8 @@ export const save = ServerMethod(
       eventId = await Events.insertAsync(enrichedEvent);
 
       if (editFields.courseId) {
-        await courseTimeLastEditDenormalizer.afterEventInsert(editFields.courseId);
-        await courseHistoryDenormalizer.afterEventInsert(editFields.courseId, user._id, {
+        await groupTimeLastEditDenormalizer.afterEventInsert(editFields.courseId);
+        await groupHistoryDenormalizer.afterEventInsert(editFields.courseId, user._id, {
           _id: eventId,
           title: editFields.title as string,
           slug: editFields.slug as string,
@@ -375,7 +375,7 @@ export const save = ServerMethod(
       }
 
       if (event.courseId) {
-        await courseHistoryDenormalizer.afterEventUpdate(event.courseId, user._id, {
+        await groupHistoryDenormalizer.afterEventUpdate(event.courseId, user._id, {
           _id: eventId,
           title: editFields.title as string,
           slug: editFields.slug as string,
@@ -398,7 +398,7 @@ export const save = ServerMethod(
     await regionsCountDenormalizer.updateCounters(event.region);
     // the assumption is that all replicas have the same course if any
     if (event.courseId) {
-      await courseNextEventDenormalizer.updateNextEvent(event.courseId);
+      await groupNextEventDenormalizer.updateNextEvent(event.courseId);
     }
 
     return eventId;
@@ -440,11 +440,11 @@ export const remove = ServerMethod(
     );
 
     if (event.courseId) {
-      await courseHistoryDenormalizer.afterEventRemove(event.courseId, operator._id, {
+      await groupHistoryDenormalizer.afterEventRemove(event.courseId, operator._id, {
         title: event.title,
         startLocal: event.startLocal,
       });
-      await courseNextEventDenormalizer.updateNextEvent(event.courseId);
+      await groupNextEventDenormalizer.updateNextEvent(event.courseId);
     }
     await regionsCountDenormalizer.updateCounters(event.region);
   },
@@ -536,18 +536,18 @@ export const addParticipant = ServerMethod(
     if (!event.courseId) {
       return;
     }
-    // if you cant load course its probably because the event doesnt have one
-    const course = await Courses.findOneAsync(event.courseId);
-    if (!course) {
+    // if you cant load course its probably because the event doesn't have one
+    const group = await Groups.findOneAsync(event.courseId);
+    if (!group) {
       return;
     }
 
-    const change = new Subscribe(course, user._id, "participant", "rsvp");
+    const change = new Subscribe(group, user._id, "participant", "rsvp");
     if (change.validFor(user)) {
       await processChange(change, { isSimulation: this.isSimulation });
     }
 
-    await courseNextEventDenormalizer.updateNextEvent(event.courseId);
+    await groupNextEventDenormalizer.updateNextEvent(event.courseId);
   },
   { simulation: false },
 );
@@ -589,11 +589,11 @@ export const removeParticipant = ServerMethod(
     if (participantId) {
       if (token) {
         if (!event.participants?.find((p) => p.user === participantId && p.removeToken === token)) {
-          throw new Meteor.Error(403, "not enough authorisation.");
+          throw new Meteor.Error(403, "not enough authorization.");
         }
       } else if (!event.editableBy(operator)) {
         // only users that have edit permissions (admin, teamOrganizationMembers, teamMembers) can remove other users.
-        throw new Meteor.Error(403, "not enough authorisation.");
+        throw new Meteor.Error(403, "not enough authorization.");
       }
     } else {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -608,7 +608,7 @@ export const removeParticipant = ServerMethod(
     if (!event.courseId) {
       return;
     }
-    await courseNextEventDenormalizer.updateNextEvent(event.courseId);
+    await groupNextEventDenormalizer.updateNextEvent(event.courseId);
   },
   { simulation: false },
 );

@@ -1,6 +1,6 @@
 import { Mongo } from "meteor/mongo";
 
-import { Courses } from "/imports/api/courses/courses";
+import { Groups } from "/imports/api/courses/courses";
 import { Events } from "/imports/api/events/events";
 import { RegionEntity, Regions } from "./regions";
 
@@ -11,7 +11,7 @@ export async function updateCounters(regionIdOrSelector: string | Mongo.Selector
     await Regions.find(regionIdOrSelector).mapAsync(async (region) => {
       const regionId = region._id;
 
-      const courseCount = await Courses.countDocuments({
+      const courseCount = await Groups.countDocuments({
         region: regionId,
         internal: { $ne: true },
         archived: { $ne: true },

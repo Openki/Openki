@@ -116,13 +116,13 @@ function Descriptions() {
 function Results({ stat }: { stat: Stat }) {
   return (
     <>
-      <td className="course-stat number">{stat.courses.total}</td>
-      <td className="course-stat number">{stat.courses.proposed}</td>
-      <td className="course-stat number">{stat.courses.resting}</td>
-      <td className="course-stat number">{stat.courses.upcoming}</td>
-      <td className="course-stat number">{stat.courses.archived}</td>
-      <td className="course-stat number">{stat.courses.enrollments}</td>
-      <td className="course-stat number">{stat.courses.users}</td>
+      <td className="course-stat number">{stat.groups.total}</td>
+      <td className="course-stat number">{stat.groups.proposed}</td>
+      <td className="course-stat number">{stat.groups.resting}</td>
+      <td className="course-stat number">{stat.groups.upcoming}</td>
+      <td className="course-stat number">{stat.groups.archived}</td>
+      <td className="course-stat number">{stat.groups.enrollments}</td>
+      <td className="course-stat number">{stat.groups.users}</td>
       <td className="event-stat number">{stat.events.total}</td>
       <td className="event-stat number">{stat.events.future}</td>
       <td className="event-stat number">{stat.events.passed}</td>

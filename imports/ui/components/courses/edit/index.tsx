@@ -4,13 +4,8 @@ import { useTranslation } from "react-i18next";
 import { uniq, chain, fromPairs, union } from "lodash-es";
 
 import * as Alert from "/imports/api/alerts/alert";
-import {
-  CourseMemberEntity,
-  CourseModel,
-  FindParams,
-  isPrivate,
-} from "/imports/api/courses/courses";
-import * as CoursesMethods from "/imports/api/courses/methods";
+import { GroupMemberEntity, GroupModel, FindParams, isPrivate } from "/imports/api/courses/courses";
+import * as GroupsMethods from "/imports/api/courses/methods";
 import { Regions } from "/imports/api/regions/regions";
 import { Roles } from "/imports/api/roles/roles";
 
@@ -24,7 +19,7 @@ import * as Analytics from "/imports/ui/lib/analytics";
 import { ButtonCancel, ButtonSave } from "../../Buttons";
 import { PricePolicy } from "../../price-policy";
 import { Tag } from "../../regions/tag";
-import { Props as CourseEditRoleProps, Role } from "./Role";
+import { Props as GroupEditRoleProps, Role } from "./Role";
 import { Title } from "./title";
 import { useFindFilter as useOrganizationsFindFilter } from "../../../../api/organizations/publications";
 import { useAll as useRegions } from "/imports/api/regions/publications";
@@ -35,7 +30,7 @@ import { useMeasureTime } from "/imports/ui/lib/useMeasureTime";
 
 import { EditCustomFields } from "../../EditCustomFields";
 import { SelectCategories } from "../SelectCategories";
-import { CourseCategories } from "../categories";
+import { GroupCategories } from "../categories";
 import { FormCheck } from "/imports/ui/components/FormCheck";
 import { RegionSelect } from "/imports/ui/components/RegionSelect";
 import { Header } from "./Header";
@@ -59,8 +54,8 @@ export type Props = {
   singleEvent?: boolean;
   hideCategories?: boolean;
   internal?: boolean;
-  coursesQuery?: ReturnType<typeof useFiltering<typeof FindParams>>["asQuery"];
-} & Partial<CourseModel>;
+  groupsQuery?: ReturnType<typeof useFiltering<typeof FindParams>>["asQuery"];
+} & Partial<GroupModel>;
 
 export function Edit(props: Props) {
   const isNew = !props._id;
@@ -83,7 +78,7 @@ export function Edit(props: Props) {
       // Visible in organization detail page (for creation) if user is in organization
       internalOption = user.organizations.includes(props.organization);
     } else {
-      // and visible on edit if course is in a organization
+      // and visible on edit if group is in a organization
       // For devs: This behavior is not consistent. But we want the creation to be as simple
       // as possible.
       internalOption = (props.organizations?.length || 0) > 0;
@@ -96,11 +91,11 @@ export function Edit(props: Props) {
   let internalInitialState;
   if (showInternalCheckbox()) {
     // Usually an "internal" checkbox is displayed so that the users of a organization can choose
-    // whether the course is internal or not.
+    // whether the group is internal or not.
     internalInitialState = props.internal;
   } else if (props.isFrame && hasTeamOrganizations) {
     // When in a frame for a organization, the `internal` query-param can be set to control whether
-    // the organization wants the entered courses to be internal.
+    // the organization wants the entered groups to be internal.
     internalInitialState = props.internal;
   }
   // Default is not internal
@@ -112,13 +107,13 @@ export function Edit(props: Props) {
     setTitle(props.name);
   }, [props.name]);
 
-  const [savedCourseId, setSavedCourseId] = useState<string | undefined>(undefined);
+  const [savedGroupId, setSavedGroupId] = useState<string | undefined>(undefined);
 
   const [selectedRegion, setSelectedRegion] = useState<string | undefined>(props.region);
   // init selected region
   useEffect(() => {
     if (!isNew) {
-      // only needed for new courses
+      // only needed for new groups
       return;
     }
 
@@ -203,7 +198,7 @@ export function Edit(props: Props) {
     });
   }
 
-  function hasRole(members: CourseMemberEntity[] | undefined, role: string) {
+  function hasRole(members: GroupMemberEntity[] | undefined, role: string) {
     return members && hasRoleUser(members, role, user?._id);
   }
 
@@ -259,7 +254,7 @@ export function Edit(props: Props) {
 
   function showRegionSelection() {
     return (
-      // Region can be set for new courses only.
+      // Region can be set for new groups only.
       isNew &&
       // For the proposal frame we hide the region selection when a region is
       // set.
@@ -285,7 +280,7 @@ export function Edit(props: Props) {
   };
 
   useEffect(() => {
-    // Show category selection right away for new courses
+    // Show category selection right away for new groups
     setEditingCategories(isNew);
     setSelectedCategories(props.categories || []);
 
@@ -333,7 +328,7 @@ export function Edit(props: Props) {
 
     return classes.join(" ");
   }
-  function courseEditRolesAttr(): CourseEditRoleProps[] {
+  function courseEditRolesAttr(): GroupEditRoleProps[] {
     return Object.entries(roles).map((r) => {
       const type = r[0];
       return {
@@ -405,7 +400,7 @@ export function Edit(props: Props) {
       internal,
       name: StringTools.sanitizeSingleline(title),
       categories: selectedCategories || [],
-    } as unknown as Required<CoursesMethods.SaveFields>;
+    } as unknown as Required<GroupsMethods.SaveFields>;
 
     if (description) {
       changes.description = description;
@@ -471,7 +466,7 @@ export function Edit(props: Props) {
         return;
       }
 
-      const courseId = await CoursesMethods.save(props._id || "", changes);
+      const groupId = await GroupsMethods.save(props._id || "", changes);
 
       Analytics.trackEvent(
         "Course creations",
@@ -481,19 +476,19 @@ export function Edit(props: Props) {
       );
 
       if (props.isFrame) {
-        setSavedCourseId(courseId);
+        setSavedGroupId(groupId);
         setSavedMessage(true);
         resetFields();
       } else {
         if (isNew) {
-          Router.go("showCourse", { _id: courseId }, { query: { nextActions: "1" } });
+          Router.go("showCourse", { _id: groupId }, { query: { nextActions: "1" } });
         } else {
           Alert.success(
             t("message.courseChangesSaved", "Your changes to {NAME} have been saved.", {
               NAME: changes.name,
             }),
           );
-          Router.go("showCourse", { _id: courseId });
+          Router.go("showCourse", { _id: groupId });
         }
       }
     } catch (err) {
@@ -507,10 +502,10 @@ export function Edit(props: Props) {
   }
 
   function handleCancel() {
-    const course = props;
+    const group = props;
 
-    if (course._id) {
-      Router.go("showCourse", course);
+    if (group._id) {
+      Router.go("showCourse", group);
     } else {
       Router.go("home");
     }
@@ -523,17 +518,17 @@ export function Edit(props: Props) {
   return (
     <div className="edit-page">
       <form noValidate onSubmit={handleSave}>
-        {props.coursesQuery ? (
-          <FindHeader {...props} coursesQuery={props.coursesQuery} />
+        {props.groupsQuery ? (
+          <FindHeader {...props} groupsQuery={props.groupsQuery} />
         ) : (
           <Header {...props} />
         )}
         <div className={`edit-page-body course-edit-body ${editBodyClasses()}`}>
           {!isNew && !!props.region && <Tag region={props.region} />}
-          {showSavedMessage() && !!savedCourseId && (
+          {showSavedMessage() && !!savedGroupId && (
             <AlertMessage
               isFrame={props.isFrame}
-              savedCourseId={savedCourseId}
+              savedGroupId={savedGroupId}
               onClose={() => setSavedMessage(false)}
             />
           )}
@@ -609,7 +604,7 @@ export function Edit(props: Props) {
               error={errors.description}
             />
           </div>
-          {hasPricePolicy() && <PricePolicy dismissable={true} wrap="mb-3" />}
+          {hasPricePolicy() && <PricePolicy dismissible={true} wrap="mb-3" />}
           <div className="row gap-3 mb-3">
             {!hideCategories() && (
               <div className="col-md">
@@ -619,7 +614,7 @@ export function Edit(props: Props) {
                   <>
                     <div className="form-label">{t("course.edit.categories", "Categories")}</div>
                     {props.categories ? (
-                      <CourseCategories categories={props.categories} />
+                      <GroupCategories categories={props.categories} />
                     ) : (
                       <div>{t("course.edit.no.categories", "No categories")}</div>
                     )}{" "}
@@ -642,8 +637,8 @@ export function Edit(props: Props) {
                 <div className="form-label">
                   {t("course.edit.needs.role", "This course might need…")}
                 </div>
-                {courseEditRolesAttr().map((courseEditRoleAttr) => (
-                  <Role key={courseEditRoleAttr.type} {...courseEditRoleAttr} />
+                {courseEditRolesAttr().map((groupEditRoleAttr) => (
+                  <Role key={groupEditRoleAttr.type} {...groupEditRoleAttr} />
                 ))}
               </div>
             )}

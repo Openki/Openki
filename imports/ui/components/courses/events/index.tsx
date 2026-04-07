@@ -7,7 +7,7 @@ import * as Analytics from "/imports/ui/lib/analytics";
 
 import * as EventsPub from "/imports/api/events/publications";
 import { Regions } from "/imports/api/regions/regions";
-import { CourseModel } from "/imports/api/courses/courses";
+import { GroupModel } from "/imports/api/courses/courses";
 import { EventModel } from "/imports/api/events/events";
 
 import { useReactiveNow } from "/imports/utils/reactive-now";
@@ -23,7 +23,7 @@ import { EventList } from "/imports/ui/components/events/list";
 import "./styles.scss";
 
 export interface Props {
-  course: CourseModel;
+  group: GroupModel;
 }
 
 function compareByStartDate(event1: EventModel, event2: EventModel) {
@@ -36,7 +36,7 @@ function compareByStartDate(event1: EventModel, event2: EventModel) {
   return 0;
 }
 
-export function Events({ course }: Props) {
+export function Events({ group }: Props) {
   const { t } = useTranslation();
   const user = useUser();
   const now = useReactiveNow();
@@ -48,7 +48,7 @@ export function Events({ course }: Props) {
   const [showAllEvents, setShowAllEvents] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const [isLoading, events] = EventsPub.useForCourse(course._id);
+  const [isLoading, events] = EventsPub.useForGroup(group._id);
 
   function haveEvents() {
     return events.sort(compareByStartDate).some((e) => e.end >= now);
@@ -73,10 +73,10 @@ export function Events({ course }: Props) {
   }
 
   function upcomingEventsCount() {
-    return course.futureEvents;
+    return group.futureEvents;
   }
   function mayAdd() {
-    return course.editableBy(user);
+    return group.editableBy(user);
   }
   function haveOngoingEvents() {
     return ongoingEvents().length > 0;
@@ -87,7 +87,7 @@ export function Events({ course }: Props) {
   function showHaveMoreEvents() {
     return haveMoreEvents() && !showAllEvents;
   }
-  function deleteCourseEventsArgs() {
+  function deleteGroupEventsArgs() {
     return {
       onShowEventsDeleteModal: () => {
         setShowModal(true);
@@ -182,8 +182,8 @@ export function Events({ course }: Props) {
 
       {mayAdd() && (
         <div className="page-component course-event-tasks">
-          <Add course={course} />
-          {haveEvents() && <DeleteEvents {...deleteCourseEventsArgs()} />}
+          <Add group={group} />
+          {haveEvents() && <DeleteEvents {...deleteGroupEventsArgs()} />}
           {showModal && <DeleteEventsModal {...deleteEventsModalArgs()} />}
         </div>
       )}
@@ -191,13 +191,13 @@ export function Events({ course }: Props) {
       {!isLoading() && haveEvents() && (
         <div className="page-component">
           <a
-            href={Router.path("calCourse", course)}
+            href={Router.path("calCourse", group)}
             target="_blank"
             onClick={() => {
               Analytics.trackEvent(
                 "Events downloads",
                 "Events downloads via course details",
-                Regions.findOne(course.region)?.nameEn,
+                Regions.findOne(group.region)?.nameEn,
               );
             }}
             rel="noreferrer"

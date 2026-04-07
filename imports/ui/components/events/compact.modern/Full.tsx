@@ -22,14 +22,14 @@ import { CustomFieldDisplay } from "../../courses/CustomFieldDisplay";
 import { ReactJoin } from "/imports/utils/ReactJoin";
 import { ImagePlaceholder } from "./ImagePlaceholder";
 
-function DisplayDiscussion({ eventId, courseId }: { eventId: string; courseId: string }) {
-  const [isLoading, course] = useDetails(courseId);
+function DisplayDiscussion({ eventId, groupId }: { eventId: string; groupId: string }) {
+  const [isLoading, group] = useDetails(groupId);
 
-  if (isLoading() || !course || !course.singleEvent) {
+  if (isLoading() || !group || !group.singleEvent) {
     return null;
   }
 
-  return <Discussion courseId={course._id} eventId={eventId} />;
+  return <Discussion groupId={group._id} eventId={eventId} />;
 }
 
 export function Full({
@@ -126,7 +126,7 @@ export function Full({
         <div className="collapse" ref={collapseElementRef}>
           <p className="card-text" dangerouslySetInnerHTML={{ __html: event.description }}></p>
           {!!event.courseId && (
-            <CustomFieldDisplay courseId={event.courseId} customClassName="card-text mb-1" />
+            <CustomFieldDisplay groupId={event.courseId} customClassName="card-text mb-1" />
           )}
 
           {event.editableBy(user) && (
@@ -186,7 +186,7 @@ export function Full({
             </p>
           )}
 
-          {!!event.courseId && <DisplayDiscussion courseId={event.courseId} eventId={event._id} />}
+          {!!event.courseId && <DisplayDiscussion groupId={event.courseId} eventId={event._id} />}
 
           {!hideCategories && !!event.categories?.length && (
             <p className="card-text">

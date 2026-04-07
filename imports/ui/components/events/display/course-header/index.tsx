@@ -2,18 +2,18 @@ import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import React from "react";
 
-import { CourseModel } from "/imports/api/courses/courses";
+import { GroupModel } from "/imports/api/courses/courses";
 
-import { CourseCategories } from "/imports/ui/components/courses/categories";
+import { GroupCategories } from "/imports/ui/components/courses/categories";
 import { Tag } from "/imports/ui/components/regions/tag";
 import { OrganizationList } from "../../../courses/display/organization-list";
 
 import "./styles.scss";
 
 export interface Props {
-  course?: CourseModel;
-  backlink?: string | undefined;
-  headerlink?: string;
+  group?: GroupModel;
+  backLink?: string | undefined;
+  headerLink?: string;
   regionId: string;
   categories: string[] | undefined;
   organizations?: string[];
@@ -21,14 +21,14 @@ export interface Props {
   image: string | undefined;
 }
 
-export function EventCourseHeader(props: Props) {
+export function EventGroupHeader(props: Props) {
   const { t } = useTranslation();
   return (
     <div
-      className={`event-course-header${props.headerlink ? " event-course-header-link" : ""}`}
+      className={`event-course-header${props.headerLink ? " event-course-header-link" : ""}`}
       onClick={() => {
-        if (props.headerlink) {
-          Router.go(props.headerlink);
+        if (props.headerLink) {
+          Router.go(props.headerLink);
         }
       }}
       style={
@@ -41,24 +41,24 @@ export function EventCourseHeader(props: Props) {
           : undefined
       }
     >
-      {!!props.backlink && (
+      {!!props.backLink && (
         <>
           <a
             className="back-to-course-overview"
-            href={props.backlink}
+            href={props.backLink}
             title={t("event.details.viewCourse")}
           >
             <i className="fa-solid fa-angle-left fa-fw" />
           </a>
-          <a href={props.backlink}>
+          <a href={props.backLink}>
             <i className="fa-solid fa-angle-left fa-fw" />
             {t("event.details.viewCourse", "To the course overview")}
           </a>
         </>
       )}
       <h2>{props.title}</h2>
-      {!!props.categories && <CourseCategories categories={props.categories} />}
-      {!!props.course && <OrganizationList course={props.course} />}
+      {!!props.categories && <GroupCategories categories={props.categories} />}
+      {!!props.group && <OrganizationList group={props.group} />}
       <Tag region={props.regionId} />
     </div>
   );
