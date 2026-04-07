@@ -12,8 +12,8 @@ import { InternalIndicator } from "/imports/ui/components/internal-indicator";
 import { SingleEventIndicator } from "/imports/ui/components/single-event-indicator";
 import { GroupCategories } from "../categories";
 import { OrganizationTag } from "../../organizations/tag";
-import { GroupCompactEvent } from "./course-compact-event";
-import { GroupCompactRoles } from "./course-compact-roles";
+import { GroupCompactEvent } from "./group-compact-event";
+import { GroupCompactRoles } from "./group-compact-roles";
 
 import "./styles.scss";
 

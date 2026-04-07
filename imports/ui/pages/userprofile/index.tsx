@@ -21,7 +21,7 @@ import { Avatar } from "../../components/avatar";
 import { Button, ButtonCancel } from "/imports/ui/components/Buttons";
 import { ButtonDelete } from "../../components/Buttons";
 import { Contribution } from "../../components/Contribution";
-import { GroupListSection } from "../../components/profiles/course-list";
+import { GroupListSection } from "../../components/profiles/group-list-section";
 import { SendMessage, Props as SendMessageProps } from "../../components/SendMessage";
 
 export interface Props {
