@@ -5,13 +5,13 @@ import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 import { GroupDiscussionEntity } from "../../../../../../api/group-discussions/group-discussions";
-import * as CourseDiscussionsMethods from "../../../../../../api/group-discussions/methods";
+import * as GroupDiscussionsMethods from "../../../../../../api/group-discussions/methods";
 import {
   EditCommentFields,
   PostCommentFields,
 } from "../../../../../../api/group-discussions/methods";
 import * as Alert from "/imports/api/alerts/alert";
-import * as Courses from "../../../../../../api/groups/publications";
+import * as Groups from "../../../../../../api/groups/publications";
 
 import { DiscussionProfileIcon } from "../profile-icon";
 import { Richtext } from "/imports/ui/components/richtext";
@@ -35,7 +35,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
   const [commentText, setCommentText] = useState(post.text);
   const [isBusy, setIsBusy] = useState(false);
 
-  const [isLoading, course] = Courses.useDetails(post.courseId);
+  const [isLoading, group] = Groups.useDetails(post.courseId);
 
   function notifyAllChecked() {
     if (!post.new) {
@@ -85,8 +85,8 @@ export function Edit({ post, onSave, onCancel }: Props) {
     }
 
     return !!(
-      course?.userHasRole(user?._id, "team") ||
-      user?.organizations.some((g) => course?.teamOrganizations.includes(g))
+      group?.userHasRole(user?._id, "team") ||
+      user?.organizations.some((o) => group?.teamOrganizations.includes(o))
     );
   }
   function richtextAttr() {
@@ -131,11 +131,11 @@ export function Edit({ post, onSave, onCancel }: Props) {
               postComment.anon = anon;
               postComment.notifyAll = notifyAll;
 
-              await CourseDiscussionsMethods.postComment(postComment);
+              await GroupDiscussionsMethods.postComment(postComment);
             } else {
               const editComment = comment as EditCommentFields;
               editComment._id = post._id;
-              await CourseDiscussionsMethods.editComment(editComment);
+              await GroupDiscussionsMethods.editComment(editComment);
             }
 
             onSave();

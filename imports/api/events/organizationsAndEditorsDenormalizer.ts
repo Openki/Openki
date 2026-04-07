@@ -17,13 +17,13 @@ export async function updateOrganizationsAndEditors(
     // If an event has a parent group, it inherits all organizations and all editors from it.
     let groupOrganizations: string[] = [];
     if (event.courseId) {
-      const course = await Groups.findOneAsync(event.courseId);
-      if (!course) {
-        throw new Error(`Missing course ${event.courseId} for event ${event._id}`);
+      const group = await Groups.findOneAsync(event.courseId);
+      if (!group) {
+        throw new Error(`Missing group ${event.courseId} for event ${event._id}`);
       }
 
-      groupOrganizations = course.organizations;
-      editors = union(editors, course.editors);
+      groupOrganizations = group.organizations;
+      editors = union(editors, group.editors);
     } else {
       editors.push(event.createdBy);
     }

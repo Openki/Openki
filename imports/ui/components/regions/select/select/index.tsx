@@ -66,7 +66,7 @@ export function Select(props: Props) {
       if (a.futureEventCount > b.futureEventCount) return -1;
       if (b.futureEventCount > a.futureEventCount) return 1;
 
-      // finally regions with more future courses
+      // finally regions with more future groups
       if (a.courseCount > b.courseCount) return -1;
       if (b.courseCount > a.courseCount) return 1;
 
@@ -112,7 +112,7 @@ export function Select(props: Props) {
     props.onClose?.();
   }
 
-  function allCourses() {
+  function allGroups() {
     return Regions.find()
       .fetch()
       .reduce((acc, region) => acc + region.courseCount, 0);
@@ -278,10 +278,10 @@ export function Select(props: Props) {
                     title={t(
                       "regions.allCourses.title",
                       "{COUNT, plural, =0{no courses} one{one course} other{# courses} } on {SITENAME}",
-                      { COUNT: allCourses(), SITENAME: siteName },
+                      { COUNT: allGroups(), SITENAME: siteName },
                     )}
                   >
-                    {allCourses()}
+                    {allGroups()}
                   </span>{" "}
                   <span
                     className="badge bg-success text-dark rounded-pill"

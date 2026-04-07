@@ -23,9 +23,9 @@ function humandistrib(prng: () => number): number {
 }
 
 /**
- * Generate events for each course
+ * Generate events for each group
  *
- * For each course, zero or more events are generated. Some will be in
+ * For each group, zero or more events are generated. Some will be in
  * the past, some in the future.
  */
 export async function generate() {
@@ -57,20 +57,20 @@ export async function generate() {
     "Moscow",
   ];
 
-  for (const course of await Groups.find().fetchAsync()) {
-    if ((await Events.countDocuments({ courseId: course._id })) > 0) {
+  for (const group of await Groups.find().fetchAsync()) {
+    if ((await Events.countDocuments({ courseId: group._id })) > 0) {
       continue;
     }
 
     const eventCount = Math.floor((prng() * 1.6) ** 10);
     for (let n = 0; n < eventCount; n += 1) {
       const event = {} as Mongo.OptionalId<EventEntity>;
-      let { description } = course;
+      let { description } = group;
       if (!description) description = "No description"; // :-(
       const words = shuffle(description.split(" "));
-      event.tenant = course.tenant;
-      event.region = course.region;
-      event.organizations = course.organizations;
+      event.tenant = group.tenant;
+      event.region = group.region;
+      event.organizations = group.organizations;
       event.teamOrganizations = [];
 
       const venue = await ensure.venue(
@@ -101,13 +101,13 @@ export async function generate() {
       event.internal = prng() < 0.07;
       event.sendReminder = PublicSettings.sendReminderPreset;
 
-      event.courseId = course._id;
-      event._id = ensure.fixedId([course._id, `${n}`]);
-      event.title = `${course.name} ${sample(words)}`;
+      event.courseId = group._id;
+      event._id = ensure.fixedId([group._id, `${n}`]);
+      event.title = `${group.name} ${sample(words)}`;
       event.description = HtmlTools.sanitizeHtml(
         words.slice(0, 10 + Math.floor(prng() * 30)).join(" "),
       );
-      event.organizations = course.organizations;
+      event.organizations = group.organizations;
 
       let relativeDate = prng() - 0.7; // put 70% in the past, linear distribution
 
@@ -140,7 +140,7 @@ export async function generate() {
       );
       event.end = regionZone.fromString(event.endLocal).toDate();
 
-      const { members } = course;
+      const { members } = group;
       const randomMember = members[Math.floor(Math.random() * members.length)];
       event.createdBy = (await ensure.user(randomMember?.user || "Serverscript", event.region))._id;
       const age = Math.floor(prng() * 10000000000);
@@ -152,5 +152,5 @@ export async function generate() {
     count += eventCount;
   }
 
-  Log.record("testdata", ["Events"], { message: `Generated ${count} course events.` });
+  Log.record("testdata", ["Events"], { message: `Generated ${count} group events.` });
 }

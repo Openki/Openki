@@ -6,7 +6,7 @@ import { Organizations } from "../api/organizations/organizations";
 import { UserModel } from "/imports/api/users/users";
 
 // The code to update the organizations and teamOrganizations field must do the same
-// thing for Courses and Events. So we parameterize the methods
+// thing for Groups and Events. So we parameterize the methods
 // with a collection passed as argument on construction.
 
 export interface OrganizationPromoterEntity {
@@ -61,7 +61,7 @@ export function promote(collection: OrganizationPromoters) {
       update.$addToSet = { organizations: organization._id };
     } else {
       // The user is allowed to remove the organization if she is part of the organization
-      // or if she has editing rights on the course
+      // or if she has editing rights on the group
       if (!mayPromote && !mayEdit) {
         throw new Meteor.Error(401, "not permitted");
       }

@@ -13,31 +13,31 @@ import { useRoleDisplay } from "../../../lib/useRoleDisplay";
 
 import "./styles.scss";
 
-export function Courselist(data: { user: UserModel; ownProfile: boolean }) {
+export function GroupListSection(data: { user: UserModel; ownProfile: boolean }) {
   const { t } = useTranslation();
   const { roleShort } = useRoleDisplay();
   const id = data.user._id;
 
-  const [isLoadingCourses, courses] = useFindFilter({
+  const [isLoadingGroups, groups] = useFindFilter({
     userInvolved: id,
     archived: false,
   });
 
-  const [isLoadingArchivedCourses, archivedCourses] = useFindFilter({
+  const [isLoadingArchivedGroups, archivedGroups] = useFindFilter({
     userInvolved: id,
     archived: true,
   });
 
-  function coursesByRole(role: string, archived: boolean) {
-    return (!archived ? courses : archivedCourses).filter((c) =>
+  function groupsByRole(role: string, archived: boolean) {
+    return (!archived ? groups : archivedGroups).filter((c) =>
       c.members.find((m) => m.user === id && m.roles.includes(role)),
     );
   }
   function roles() {
     return Roles.slice().reverse();
   }
-  function coursesByRoleCount(role: string, archived: boolean) {
-    return coursesByRole(role, archived).length;
+  function groupsByRoleCount(role: string, archived: boolean) {
+    return groupsByRole(role, archived).length;
   }
   function roleUserList(role: string) {
     return `roles.${role}.userList`;
@@ -52,7 +52,7 @@ export function Courselist(data: { user: UserModel; ownProfile: boolean }) {
     return `roles.${role}.myList.past`;
   }
   function isInvolved() {
-    return courses.length > 0 || archivedCourses.length > 0;
+    return groups.length > 0 || archivedGroups.length > 0;
   }
   function showArchived(role: RoleEntity) {
     return role.type === "team";
@@ -69,11 +69,11 @@ export function Courselist(data: { user: UserModel; ownProfile: boolean }) {
                   NAME: data.user.getDisplayName(),
                 })}
           </h3>
-          {!isLoadingCourses() && !isLoadingArchivedCourses() ? (
+          {!isLoadingGroups() && !isLoadingArchivedGroups() ? (
             <>
               <div>
                 {roles()
-                  .filter((role) => coursesByRoleCount(role.type, false))
+                  .filter((role) => groupsByRoleCount(role.type, false))
                   .map((role) => (
                     <React.Fragment key={role.type}>
                       <a
@@ -92,13 +92,13 @@ export function Courselist(data: { user: UserModel; ownProfile: boolean }) {
                       >
                         <i className={`${role.icon} fa-fw`} /> {roleShort(role.type)}
                         <i className="fa-solid fa-arrow-down fa-fw" />
-                        {coursesByRoleCount(role.type, false)}
+                        {groupsByRoleCount(role.type, false)}
                       </a>{" "}
                     </React.Fragment>
                   ))}
               </div>
               {roles()
-                .filter((role) => coursesByRoleCount(role.type, false))
+                .filter((role) => groupsByRoleCount(role.type, false))
                 .map((role) => (
                   <React.Fragment key={role.type}>
                     <h3 id={role.type}>
@@ -111,12 +111,12 @@ export function Courselist(data: { user: UserModel; ownProfile: boolean }) {
                             NAME: data.user.getDisplayName(),
                           })}
                     </h3>
-                    <GroupList groups={coursesByRole(role.type, false)} small={true} />
+                    <GroupList groups={groupsByRole(role.type, false)} small={true} />
                   </React.Fragment>
                 ))}
 
               {roles()
-                .filter((role) => coursesByRoleCount(role.type, true) && showArchived(role))
+                .filter((role) => groupsByRoleCount(role.type, true) && showArchived(role))
                 .map((role) => (
                   <React.Fragment key={role.type}>
                     <h3 id={`${role.type}_archived`}>
@@ -129,7 +129,7 @@ export function Courselist(data: { user: UserModel; ownProfile: boolean }) {
                             NAME: data.user.getDisplayName(),
                           })}
                     </h3>
-                    <GroupList groups={coursesByRole(role.type, true)} small={true} />
+                    <GroupList groups={groupsByRole(role.type, true)} small={true} />
                   </React.Fragment>
                 ))}
             </>

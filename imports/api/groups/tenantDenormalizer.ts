@@ -19,12 +19,12 @@ export async function onStartUp() {
     ),
   );
 
-  console.log(`courses.tenantDenormalizer.onStartUp: ${updated} affected groups`);
+  console.log(`groups.tenantDenormalizer.onStartUp: ${updated} affected groups`);
 }
 
 export async function beforeInsert(group: Mongo.OptionalId<GroupEntity>) {
   if (!group.region) {
-    throw new Error("Unexpected falsy: course.region");
+    throw new Error("Unexpected falsy: group.region");
   }
 
   const region = await Regions.findOneAsync(group.region);

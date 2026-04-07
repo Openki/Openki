@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { Groups } from "../../../../../../api/groups/groups";
 import { GroupDiscussionEntity } from "../../../../../../api/group-discussions/group-discussions";
-import * as CourseDiscussionsMethods from "../../../../../../api/group-discussions/methods";
+import * as GroupDiscussionsMethods from "../../../../../../api/group-discussions/methods";
 
 import * as GroupDiscussionUtils from "../../../../../../utils/group-discussion-utils";
 import * as Tooltips from "/imports/utils/Tooltips";
@@ -31,7 +31,7 @@ export function Show({ post, onEdit }: Props) {
   function mayDelete() {
     const group = Groups.findOne(post.courseId);
     if (!group) {
-      throw new Error("Unexpected falsy: course");
+      throw new Error("Unexpected falsy: group");
     }
     return GroupDiscussionUtils.mayDeletePost(user ?? undefined, group, post);
   }
@@ -43,7 +43,7 @@ export function Show({ post, onEdit }: Props) {
       async onRemove() {
         Tooltips.hide();
 
-        await CourseDiscussionsMethods.deleteComment(post._id);
+        await GroupDiscussionsMethods.deleteComment(post._id);
       },
     };
   }

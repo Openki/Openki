@@ -51,7 +51,7 @@ export interface EventEntity {
   title: string;
   slug: string;
   description: string;
-  /** (calculated) categories from the course */
+  /** (calculated) categories from the group */
   categories?: string[];
   /** String of local date & time when event starts */
   startLocal: string;
@@ -66,7 +66,7 @@ export interface EventEntity {
   time_created: Date;
 
   time_lastedit: Date;
-  /** course._id of parent course, optional */
+  /** group._id of parent group, optional */
   courseId?: string;
   /** (Events are only displayed when organization or venue-filter is active) */
   internal: boolean;
@@ -88,18 +88,18 @@ export interface EventEntity {
   /** maximum participants of event, 0 means no participant limit */
   maxParticipants: number;
   /**
-   * (calculated) list of organization._id inherited from course (if courseId is set) ("promote organizations"
-   * from course)
+   * (calculated) list of organization._id inherited from group (if groupId is set) ("promote organizations"
+   * from group)
    */
   courseOrganizations: string[];
   /**
-   * (calculated) all organizations that promote this course, both inherited from course and set on the
-   * event itself ("promote organizations" from event and course)
+   * (calculated) all organizations that promote this group, both inherited from group and set on the
+   * event itself ("promote organizations" from event and group)
    */
   allOrganizations?: string[];
   /**
    * (calculated) list of user and organization _id that are allowed to edit the event, calculated from
-   * the teamOrganizations from the event and the editors from the course
+   * the teamOrganizations from the event and the editors from the group
    */
   editors: string[];
   /**
@@ -109,9 +109,9 @@ export interface EventEntity {
   start: Date;
   /** (calculated) date object calculated from endLocal field. */
   end: Date;
-  /** (calculated) compact image from the course, scaled down to max size (width*height) 500px */
+  /** (calculated) compact image from the group, scaled down to max size (width*height) 500px */
   courseCompactImage: string;
-  /** (calculated) details image from the course, scaled down to max size (width*height) 1500px */
+  /** (calculated) details image from the group, scaled down to max size (width*height) 1500px */
   courseImage: string;
 }
 
@@ -185,7 +185,7 @@ export class OEvent {
   }
 
   /** list of organization _ids that are allowed to edit the event, calculated from
-   * the teamOrganizations from the event and the course */
+   * the teamOrganizations from the event and the group */
   allTeamOrganizations(this: EventModel) {
     return this.allOrganizations?.filter((g) => this.editors.includes(g)) || [];
   }
@@ -207,7 +207,7 @@ export const FindFilterPattern = {
    * order of events
    */
   before: Match.Maybe(Date),
-  /** only events that started before this date, (so it also includes ongoning events at this point in time) */
+  /** only events that started before this date, (so it also includes ongoing events at this point in time) */
   end: Match.Maybe(Date),
   /** only events at this venue (ID) */
   venue: Match.Maybe(String),
@@ -215,7 +215,7 @@ export const FindFilterPattern = {
   venues: Match.Maybe([String]),
   /** only events in this room (string match) */
   room: Match.Maybe(String),
-  /** only events that are not attached to a course */
+  /** only events that are not attached to a group */
   standalone: Match.Maybe(Boolean),
   /** restrict to given region */
   region: Match.Maybe(String),
@@ -231,7 +231,7 @@ export const FindFilterPattern = {
   notOrganization: Match.Maybe(String),
   /** the event must be in none of the organization (ID) */
   notOrganizations: Match.Maybe([String]),
-  /** only events for this course (ID) */
+  /** only events for this group (ID) */
   course: Match.Maybe(String),
   /** only events that are internal (if true) or public (if false), Default: Show both */
   internal: Match.Maybe(Boolean),

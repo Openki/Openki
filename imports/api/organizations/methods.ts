@@ -5,7 +5,7 @@ import { assignIn } from "lodash-es";
 
 import { Users } from "/imports/api/users/users";
 import * as timeLastEditDenormalizer from "./timeLastEditDenormalizer";
-import * as courseEditorsDenormalizer from "../groups/editorsDenormalizer";
+import * as groupEditorsDenormalizer from "../groups/editorsDenormalizer";
 import * as userOrganizationsAndBadgesDenormalizer from "../users/organizationsAndBadgesDenormalizer";
 import * as userVenuesDenormalizer from "/imports/api/users/venuesDenormalizer";
 import {
@@ -197,8 +197,8 @@ export const remove = ServerMethod("organization.remove", async (organizationId:
 
   await Organizations.removeAsync(organizationId);
 
-  // Update list of editors per course
-  await courseEditorsDenormalizer.updateEditors({ organizations: organizationId });
+  // Update list of editors per group
+  await groupEditorsDenormalizer.updateEditors({ organizations: organizationId });
   // Update List of badges per user
   await userOrganizationsAndBadgesDenormalizer.updateOrganizationsAndBadges({
     organizations: organizationId,

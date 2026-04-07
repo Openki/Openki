@@ -11,7 +11,7 @@ import { visibleTenantsAsync } from "/imports/utils/visible-tenants";
 import { serverError } from "/imports/api/log/methods";
 import { LanguagesRaw } from "/imports/api/languages/languages";
 
-function calcCoursePriority(group: GroupModel) {
+function calcGroupPriority(group: GroupModel) {
   if (group.archived) {
     return 0.0; // archived
   }
@@ -37,13 +37,13 @@ async function requestPages() {
   // start page                = 1.0
   // calender page             = 1.0
   // events (future)           = 0.8
-  // course (upcoming)         = 0.8
-  // course (proposal/resting) = 0.6
+  // group (upcoming)          = 0.8
+  // group (proposal/resting)  = 0.6
   // find page                 = 0.5
   // propose page              = 0.5
   // venues                    = 0.2
   // organizations             = 0.2
-  // course (archived)         = 0.0
+  // group (archived)          = 0.0
   // event (past/canceled)     = 0.0
 
   pages.push({
@@ -67,7 +67,7 @@ async function requestPages() {
     pages.push({
       url: Router.url("showCourse", group),
       lastmod: group.time_lastedit,
-      priority: calcCoursePriority(group),
+      priority: calcGroupPriority(group),
     });
   });
   await events.forEachAsync((event) => {

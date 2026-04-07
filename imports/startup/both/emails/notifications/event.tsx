@@ -47,8 +47,8 @@ export async function record(
     throw new Meteor.Error(`No event for ${eventId}`);
   }
 
-  // What do we do when we receive an event which is not attached to a course?
-  // For now when we don't have a course we just go through the motions but
+  // What do we do when we receive an event which is not attached to a group?
+  // For now when we don't have a group we just go through the motions but
   // the recipient list will be empty.
   let group: GroupModel | undefined;
   if (event.courseId) {
@@ -61,10 +61,10 @@ export async function record(
     replicats,
     additionalMessage,
 
-    // The list of recipients is built right away so that only course members
+    // The list of recipients is built right away so that only group members
     // at the time of event creation will get the notice even if sending is
     // delayed.
-    // The notification is sended to all members of the course and on a event change to all participants
+    // The notification is sended to all members of the group and on a event change to all participants
     recipients: uniq([...(group?.members || []), ...(event.participants || [])])?.map(
       (p) => p.user,
     ),
@@ -87,7 +87,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
     region = await Regions.findOneAsync(event.region);
   }
 
-  const replicats = await Events.find({ _id: { $in: entry.body.replicats } }).fetchAsync();
+  const replicas = await Events.find({ _id: { $in: entry.body.replicats } }).fetchAsync();
 
   return {
     accepted(actualRecipient: UserModel) {
@@ -109,7 +109,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       if (!region) {
         throw new Error("Region does not exist (0.o)");
       }
-      if (replicats.length !== entry.body.replicats.length) {
+      if (replicas.length !== entry.body.replicats.length) {
         throw new Error("Not all replicas found (0.o)");
       }
 
@@ -134,7 +134,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       const siteName = getSiteName(region);
       const emailLogo = region.custom?.emailLogo;
 
-      const courseLink = Router.url("showCourse", group, { query: { campaign } });
+      const groupLink = Router.url("showCourse", group, { query: { campaign } });
       return {
         event,
         tz,
@@ -142,13 +142,13 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         registerToEventLink: Router.url("showEvent", event, {
           query: { action: "register", campaign },
         }),
-        course: <a href={courseLink}>{group.name}</a>,
-        courseName: group.name,
-        unsubscribeFromCourseLink: Router.url("showCourse", group, {
+        group: <a href={groupLink}>{group.name}</a>,
+        groupName: group.name,
+        unsubscribeFromGroupLink: Router.url("showCourse", group, {
           query: { unsubscribe: "participant", force: 1, campaign },
         }),
         isNew: entry.body.isNew,
-        replicats,
+        replicas,
         subject,
         additionalMessage: entry.body.additionalMessage,
         customSiteUrl: Router.url("home", {}, { query: { campaign } }),

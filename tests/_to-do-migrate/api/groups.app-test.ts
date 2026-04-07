@@ -10,7 +10,7 @@ import { Default as RegionDefault } from "/imports/ui/lib/cleaned-region";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
 if (Meteor.isClient) {
-  describe("Courses", () => {
+  describe("Groups", () => {
     describe("Find by filter", () => {
       before(async function () {
         this.timeout(8000);
@@ -22,57 +22,57 @@ if (Meteor.isClient) {
         Session.set("region", RegionDefault);
       });
 
-      it("should a gast only show courses from public tenants", async function () {
+      it("should a gast only show groups from public tenants", async function () {
         this.timeout(6000);
 
-        await MeteorAsync.subscribe("Courses.findFilter");
+        await MeteorAsync.subscribe("Groups.findFilter");
 
-        const coursesAsGast = Groups.findFilter().fetch();
+        const groupsAsGast = Groups.findFilter().fetch();
 
-        assert.isNotEmpty(coursesAsGast, "shows courses");
+        assert.isNotEmpty(groupsAsGast, "shows groups");
 
         assert.isEmpty(
-          coursesAsGast.filter((c) => c.tenant && !PublicSettings.publicTenants.includes(c.tenant)),
-          "don't show courses from not public",
+          groupsAsGast.filter((c) => c.tenant && !PublicSettings.publicTenants.includes(c.tenant)),
+          "don't show groups from not public",
         );
       });
 
-      it("should allow a logged in user to see courses from his tenant", async function () {
+      it("should allow a logged in user to see groups from his tenant", async function () {
         this.timeout(6000);
 
-        await MeteorAsync.subscribe("Courses.findFilter");
+        await MeteorAsync.subscribe("Groups.findFilter");
 
-        const coursesAsGast = Groups.findFilter().fetch();
+        const groupsAsGast = Groups.findFilter().fetch();
 
         await MeteorAsync.loginWithPassword("Schufien", "greg");
         const schufien = (await Meteor.userAsync()) as UserModel;
 
         assert.ok(schufien);
 
-        const coursesAsSchufien = Groups.findFilter().fetch();
+        const groupsAsSchufien = Groups.findFilter().fetch();
 
         assert.includeMembers(
-          coursesAsSchufien.map((c) => c._id),
-          coursesAsGast.map((c) => c._id),
-          "shows public courses as logged in user",
+          groupsAsSchufien.map((c) => c._id),
+          groupsAsGast.map((c) => c._id),
+          "shows public groups as logged in user",
         );
 
         assert.isTrue(
-          coursesAsSchufien.length > coursesAsGast.length,
-          "shows private courses as logged in user",
+          groupsAsSchufien.length > groupsAsGast.length,
+          "shows private groups as logged in user",
         );
         assert.isNotEmpty(
-          coursesAsSchufien.filter(
+          groupsAsSchufien.filter(
             (c) => c.tenant && schufien.tenants.some((t) => t._id === c.tenant),
           ),
-          "shows private courses as logged in user",
+          "shows private groups as logged in user",
         );
       });
 
       it("should allow to be called with empty params", async function () {
         this.timeout(6000);
 
-        await MeteorAsync.subscribe("Courses.findFilter", {}, undefined, undefined, []);
+        await MeteorAsync.subscribe("Groups.findFilter", {}, undefined, undefined, []);
 
         Groups.findFilter({}, undefined, undefined, []).fetch();
       });

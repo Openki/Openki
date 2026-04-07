@@ -83,14 +83,14 @@ if (Meteor.isClient) {
         assert.equal(event?.description, expectedText);
       });
 
-      it("Updates time_lastedit from course", async function () {
+      it("Updates time_lastedit from group", async function () {
         this.timeout(5000);
 
         await MeteorAsync.loginWithPassword("greg", "greg");
 
         const groupId = "eb6aedecf9";
 
-        const handle = await MeteorAsync.subscribe("courseDetails", groupId);
+        const handle = await MeteorAsync.subscribe("groupDetails", groupId);
         try {
           const oldGroup = Groups.findOne(groupId);
 

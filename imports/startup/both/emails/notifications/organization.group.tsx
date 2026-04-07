@@ -24,18 +24,18 @@ interface Body {
 
 /**
  * Record the intent to send join notifications
- * @param courseId ID for the CourseDiscussions collection
+ * @param groupId ID for the GroupDiscussions collection
  */
-export async function record(courseId: string) {
-  check(courseId, String);
+export async function record(groupId: string) {
+  check(groupId, String);
 
-  const course = await Groups.findOneAsync(courseId);
-  if (!course) {
-    throw new Meteor.Error(`No course entry for ${courseId}`);
+  const group = await Groups.findOneAsync(groupId);
+  if (!group) {
+    throw new Meteor.Error(`No group entry for ${groupId}`);
   }
 
   const recipients = chain(
-    await Organizations.find({ _id: { $in: course.teamOrganizations } }).mapAsync((o) => o.members),
+    await Organizations.find({ _id: { $in: group.teamOrganizations } }).mapAsync((o) => o.members),
   )
     .flatten()
     .filter((m) => m.notify)
@@ -44,21 +44,21 @@ export async function record(courseId: string) {
     .value();
 
   const body: Body = {
-    courseId: course._id,
+    courseId: group._id,
 
     // Don't send to creator
-    recipients: recipients.filter((r) => r !== course.createdby),
+    recipients: recipients.filter((r) => r !== group.createdby),
     model: "Organization.Course",
   };
 
-  await Log.record("Notification.Send", [course._id], body);
+  await Log.record("Notification.Send", [group._id], body);
 }
 
 export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
   const group = await Groups.findOneAsync(body.courseId);
   if (!group) {
-    throw new Error("Course does not exist (0.o)");
+    throw new Error("Group does not exist (0.o)");
   }
   const organizations = await Organizations.find({
     _id: { $in: group.teamOrganizations },

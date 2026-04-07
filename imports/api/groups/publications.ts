@@ -7,7 +7,7 @@ import { FieldSort } from "/imports/utils/sort-spec";
 import { visibleTenants, visibleTenantsAsync } from "/imports/utils/visible-tenants";
 
 export const [details, useDetails] = ServerPublishOne(
-  "courseDetails",
+  "groupDetails",
   async (groupId: string) => {
     check(groupId, String);
 
@@ -17,7 +17,7 @@ export const [details, useDetails] = ServerPublishOne(
 );
 
 export const [findFilter, useFindFilter] = ServerPublishMany(
-  "Courses.findFilter",
+  "Groups.findFilter",
   async (filter?: FindFilter, limit?: number, skip?: number, sort?: FieldSort[]) =>
     Groups.findFilter({ ...filter, tenants: await visibleTenantsAsync() }, limit, skip, sort),
   (filter?, limit?, skip?, sort?) =>

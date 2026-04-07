@@ -38,8 +38,8 @@ export interface RegionEntity {
   /** description for the user */
   description: string;
   /**
-   * Number of courses in that region, calculated field (does not count internal or archived
-   * courses)
+   * Number of groups in that region, calculated field (does not count internal or archived
+   * groups)
    */
   courseCount: number;
   /**
@@ -48,9 +48,9 @@ export interface RegionEntity {
   futureEventCount: number;
   /** ID of featured organization */
   featuredOrganization: string;
-  /** Team organizations that is added to all courses on create. */
+  /** Team organizations that is added to all groups on create. */
   defaultTeamOrganizations?: string[];
-  /** Courses in this region are default single events. */
+  /** Groups in this region are default single events. */
   singleEvents?: boolean;
   /**
    * If set the calendar page jumps automatic to this date.
@@ -80,7 +80,7 @@ export interface RegionEntity {
     /** Can be a logo from the /private/* folder or a base64 encoded string. */
     emailLogo?: string;
 
-    /** Default images for courses in overviews if none is set on the course. */
+    /** Default images for groups in overviews if none is set on the group. */
     courseBackgroundImages: string[];
   };
 

@@ -148,7 +148,7 @@ export async function getRegionStats(regionId: string): Promise<Stats> {
     // calc stat for overview over all or one region
     region: calcStats(groups, events),
     organizations: [
-      // calc stat for courses and events without a organization
+      // calc stat for groups and events without a organization
       calcStats(
         groups.filter((c) => !c.organizations?.length),
         events.filter((e) => !e.organizations?.length && !e.allOrganizations?.length),
@@ -165,7 +165,7 @@ export async function getRegionStats(regionId: string): Promise<Stats> {
       })),
     ]
       // sort organizations by number of active users in events
-      //        then by number of active users in courses
+      //        then by number of active users in groups
       //        then by number of events
       //        then by number of groups
       .sort((a, b) => b.groups.total + b.groups.archived - (a.groups.total + a.groups.archived))

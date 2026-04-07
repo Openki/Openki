@@ -10,7 +10,7 @@ import { InfoPages } from "../infoPages/infoPages";
 import { Tenants } from "../tenants/tenants";
 import { GroupDiscussions } from "../group-discussions/group-discussions";
 
-import { create as coursesDataCreate } from "./groups/create";
+import { create as groupsDataCreate } from "./groups/create";
 import { create as eventsDataCreate } from "./events/create";
 import { generate as eventsDataGenerate } from "./events/generate";
 import { create as organizationsDataCreate } from "./organizations/create";
@@ -72,7 +72,7 @@ export const create = ServerMethod(
       }
 
       if ((await Groups.countDocuments()) === 0) {
-        await coursesDataCreate();
+        await groupsDataCreate();
       }
 
       if ((await Events.countDocuments()) === 0) {

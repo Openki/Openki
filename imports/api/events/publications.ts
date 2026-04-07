@@ -49,21 +49,21 @@ export const [findFilter, useFindFilter] = ServerPublishMany(
     Events.findFilter({ ...filter, tenants: visibleTenants() }, limit, skip, sort),
 );
 
-export const [forCourse, useForGroup] = ServerPublishMany(
+export const [forGroup, useForGroup] = ServerPublishMany(
   "eventsForCourse",
-  async (courseId: string) => {
-    check(courseId, String);
+  async (groupId: string) => {
+    check(groupId, String);
 
     return Events.find(
-      { courseId, tenant: { $in: await visibleTenantsAsync() } },
+      { groupId, tenant: { $in: await visibleTenantsAsync() } },
       { limit: 200, sort: [["time_created", "desc"]] }, // Hack: https://gitlab.com/Openki/Openki/-/issues/1768
     );
   },
-  (courseId) => {
-    check(courseId, String);
+  (groupId) => {
+    check(groupId, String);
 
     return Events.find(
-      { courseId, tenant: { $in: visibleTenants() } },
+      { groupId, tenant: { $in: visibleTenants() } },
       { limit: 200, sort: [["time_created", "desc"]] }, // Hack: https://gitlab.com/Openki/Openki/-/issues/1768
     );
   },

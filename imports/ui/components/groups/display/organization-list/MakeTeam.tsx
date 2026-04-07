@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import * as Alert from "/imports/api/alerts/alert";
 import { GroupModel } from "../../../../../api/groups/groups";
 import { useDetails } from "../../../../../api/organizations/publications";
-import * as CoursesMethods from "../../../../../api/groups/methods";
+import * as GroupsMethods from "../../../../../api/groups/methods";
 
 import { name } from "../../../../lib/organization-name-helpers";
 
@@ -56,7 +56,7 @@ export function MakeTeam({ group, organizationId }: Props) {
         className="btn btn-success"
         onClick={async () => {
           try {
-            await CoursesMethods.editing(group._id, organizationId, true);
+            await GroupsMethods.editing(group._id, organizationId, true);
           } catch (err) {
             Alert.serverError(
               err,

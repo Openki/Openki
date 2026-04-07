@@ -3,8 +3,8 @@ import { ensure } from "/imports/api/fixtures/ensureFixture";
 import { Prng } from "/imports/api/fixtures/Prng";
 import * as StringTools from "/imports/utils/string-tools";
 
-import { courses as coursesBase } from "./data";
-import { courses as coursesZuerichLernt } from "./zuerichlernt";
+import { groups as groupsBase } from "./data";
+import { groups as groupsZuerichLernt } from "./zuerichlernt";
 import { Log } from "../../log/log";
 import { PRNG } from "seedrandom";
 
@@ -27,13 +27,13 @@ export async function create() {
 
   await Promise.all([createBase(prng), createZuerichLernt(prng)]);
 
-  Log.record("testdata", ["Courses"], {
-    message: `Inserted ${coursesBase.length + coursesZuerichLernt.length} course fixtures.`,
+  Log.record("testdata", ["Groups"], {
+    message: `Inserted ${groupsBase.length + groupsZuerichLernt.length} group fixtures.`,
   });
 }
 
 async function createBase(prng: PRNG) {
-  for (const template of coursesBase) {
+  for (const template of groupsBase) {
     let region: string;
     if (template.region) {
       region = await ensure.region(template.region);
@@ -44,7 +44,7 @@ async function createBase(prng: PRNG) {
 
     const age = Math.floor(prng() * 80000000000);
 
-    const course = {
+    const group = {
       _id: ensure.fixedId([template.name, template.description]),
       name: template.name,
       categories: template.categories || [],
@@ -77,15 +77,15 @@ async function createBase(prng: PRNG) {
       history: [],
     } as unknown as GroupEntity;
 
-    await Groups.insertAsync(course);
+    await Groups.insertAsync(group);
   }
 }
 
 async function createZuerichLernt(prng: PRNG) {
-  for (const template of coursesZuerichLernt) {
+  for (const template of groupsZuerichLernt) {
     const age = Math.floor(prng() * 80000000000);
 
-    const course = {
+    const group = {
       _id: template._id || ensure.fixedId([template.name, template.description || ""]),
       name: template.name,
       categories: template.categories || [],
@@ -121,6 +121,6 @@ async function createZuerichLernt(prng: PRNG) {
         : [],
     } as unknown as GroupEntity;
 
-    await Groups.insertAsync(course);
+    await Groups.insertAsync(group);
   }
 }

@@ -333,7 +333,7 @@ export function Edit(props: Props) {
 
     return classes.join(" ");
   }
-  function courseEditRolesAttr(): GroupEditRoleProps[] {
+  function groupEditRolesAttr(): GroupEditRoleProps[] {
     return Object.entries(roles).map((r) => {
       const type = r[0];
       return {
@@ -474,8 +474,8 @@ export function Edit(props: Props) {
       const groupId = await GroupsMethods.save(props._id || "", changes);
 
       Analytics.trackEvent(
-        "Course creations",
-        `Course creations as ${changes.subs.length > 0 ? changes.subs.sort().join(" and ") : "participant"}`,
+        "Group creations",
+        `Group creations as ${changes.subs.length > 0 ? changes.subs.sort().join(" and ") : "participant"}`,
         Regions.findOne(changes.region)?.nameEn,
         totalFocusTime(),
       );
@@ -642,7 +642,7 @@ export function Edit(props: Props) {
                 <div className="form-label">
                   {t("course.edit.needs.role", "This course might need…")}
                 </div>
-                {courseEditRolesAttr().map((groupEditRoleAttr) => (
+                {groupEditRolesAttr().map((groupEditRoleAttr) => (
                   <Role key={groupEditRoleAttr.type} {...groupEditRoleAttr} />
                 ))}
               </div>

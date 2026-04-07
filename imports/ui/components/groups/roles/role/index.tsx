@@ -71,8 +71,8 @@ export function Role(data: Data) {
     setEnrolling(false);
 
     Analytics.trackEvent(
-      "Enrollments in courses",
-      `Enrollments in courses as ${data.role.type}`,
+      "Enrollments in groups",
+      `Enrollments in groups as ${data.role.type}`,
       Regions.findOne(data.group.region)?.nameEn,
     );
   }

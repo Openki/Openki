@@ -7,10 +7,10 @@ import { sum } from "../../utils/sum";
 export async function onStartUp() {
   const updated = sum(
     await Promise.all(
-      await Groups.find({}, { projection: { _id: 1, categories: 1 } }).mapAsync((course) =>
+      await Groups.find({}, { projection: { _id: 1, categories: 1 } }).mapAsync((group) =>
         Events.updateAsync(
-          { courseId: course._id },
-          { $set: { categories: course.categories || [] } },
+          { courseId: group._id },
+          { $set: { categories: group.categories || [] } },
           { multi: true },
         ),
       ),
@@ -23,19 +23,19 @@ export async function onStartUp() {
 export async function beforeInsert(
   event: Omit<EventEntity, "_id">,
 ): Promise<Omit<EventEntity, "_id">> {
-  // categories comes from the parent course
-  const course = await Groups.findOneAsync(event.courseId);
-  if (!course) {
-    throw new Error(`Missing course ${event.courseId} for new event`);
+  // categories comes from the parent group
+  const group = await Groups.findOneAsync(event.courseId);
+  if (!group) {
+    throw new Error(`Missing group ${event.courseId} for new event`);
   }
 
-  return { ...event, categories: course.categories };
+  return { ...event, categories: group.categories };
 }
 
-export async function afterGroupUpdateCategories(course: { _id: string; categories: string[] }) {
+export async function afterGroupUpdateCategories(group: { _id: string; categories: string[] }) {
   await Events.updateAsync(
-    { courseId: course._id },
-    { $set: { categories: course.categories } },
+    { courseId: group._id },
+    { $set: { categories: group.categories } },
     { multi: true },
   );
 }

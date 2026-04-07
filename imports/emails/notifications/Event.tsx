@@ -10,11 +10,11 @@ export interface Props {
   tz: string;
   recipientTakePart: boolean | undefined;
   registerToEventLink: string;
-  course: JSX.Element;
-  courseName: string;
-  unsubscribeFromCourseLink: string;
+  group: JSX.Element;
+  groupName: string;
+  unsubscribeFromGroupLink: string;
   isNew: boolean;
-  replicats: EventModel[];
+  replicas: EventModel[];
   subject: string;
   additionalMessage: string | undefined;
   username: string;
@@ -28,11 +28,11 @@ export function Event({
   tz,
   recipientTakePart,
   registerToEventLink,
-  course,
-  courseName,
-  unsubscribeFromCourseLink,
+  group,
+  groupName,
+  unsubscribeFromGroupLink,
   isNew,
-  replicats,
+  replicas,
   additionalMessage,
   username,
   unsubscribe,
@@ -45,7 +45,7 @@ export function Event({
     if (isNew) {
       if (!event.replicaOf) {
         return t("notification.event.mail.new", "A new event was just published for {COURSE}:", {
-          COURSE: course,
+          COURSE: group,
         });
       }
 
@@ -53,20 +53,20 @@ export function Event({
         "notification.event.mail.new.withReplicats",
         "New event(s) where just published for {COURSE}. You can see the next one below.",
         {
-          COURSE: course,
+          COURSE: group,
         },
       );
     }
-    if (replicats.length === 0) {
+    if (replicas.length === 0) {
       return t("notification.event.mail.changed", "The following event for {COURSE} changed.", {
-        COURSE: course,
+        COURSE: group,
       });
     }
 
     return t(
       "notification.event.mail.changed.withReplicats",
       "The following event for {COURSE} changed, these changes have also been applied to {NUM, plural, one{the later event} other{# later events} }.",
-      { COURSE: course, NUM: replicats.length },
+      { COURSE: group, NUM: replicas.length },
     );
   }
 
@@ -113,9 +113,9 @@ export function Event({
                 {t("notification.event.mail.notinterested", "Not interested anymore?")}
               </p>
               <p className="text-center">
-                <a href={unsubscribeFromCourseLink}>
+                <a href={unsubscribeFromGroupLink}>
                   {t("notification.event.mail.unsubscribe", "Unsubscribe from {COURSE}", {
-                    COURSE: courseName,
+                    COURSE: groupName,
                   })}
                 </a>
               </p>
@@ -127,7 +127,7 @@ export function Event({
         receiveNote={t(
           "notification.event.mail.notice",
           "You receive this e-mail because you are involved in {COURSE}.",
-          { COURSE: course },
+          { COURSE: group },
         )}
         unsubscribe={unsubscribe}
         campaign={campaign}

@@ -1,6 +1,6 @@
 // file://./../../imports/ui/components/courses/edit/index.tsx
 
-describe("courses create", () => {
+describe("groups create", () => {
   it("should show region selection if none region set", function () {
     cy.visitOpenki("/courses/propose");
     cy.get("#courses-edit-region-select").should("be.visible");

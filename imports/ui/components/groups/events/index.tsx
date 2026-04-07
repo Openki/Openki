@@ -196,7 +196,7 @@ export function Events({ group }: Props) {
             onClick={() => {
               Analytics.trackEvent(
                 "Events downloads",
-                "Events downloads via course details",
+                "Events downloads via group details",
                 Regions.findOne(group.region)?.nameEn,
               );
             }}
