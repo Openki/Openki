@@ -10,7 +10,7 @@ import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { Log } from "/imports/api/log/log";
 import { Users, UserModel } from "/imports/api/users/users";
 import { Model as NotificationModel } from "../notification";
-import { Group, Props } from "/imports/emails/notifications/Course";
+import { Group, Props } from "../../../../emails/notifications/Group";
 
 import { getSiteName } from "/imports/utils/getSiteName";
 

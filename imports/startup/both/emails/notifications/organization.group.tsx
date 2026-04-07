@@ -11,7 +11,7 @@ import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { Log } from "/imports/api/log/log";
 import { Users, UserModel } from "/imports/api/users/users";
 import { Model as NotificationModel } from "../notification";
-import { OrganizationGroup, Props } from "../../../../emails/notifications/OrganizationCourse";
+import { OrganizationGroup, Props } from "../../../../emails/notifications/OrganizationGroup";
 
 import { getSiteName } from "/imports/utils/getSiteName";
 import { ReactJoin } from "/imports/utils/ReactJoin";

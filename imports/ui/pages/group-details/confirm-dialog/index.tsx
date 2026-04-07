@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { GroupModel } from "../../../../api/groups/groups";
 
 import { Button, ButtonCancel } from "../../../components/Buttons";
-import { ButtonGroupArchive } from "../button-course-archive";
+import { ButtonGroupArchive } from "../button-group-archive";
 
 import "./styles.scss";
 
