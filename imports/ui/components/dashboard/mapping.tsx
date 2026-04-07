@@ -2,26 +2,26 @@ import React from "react";
 import { Router } from "meteor/iron:router";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
-import { Groups as GroupCollection, GroupModel } from "/imports/api/courses/courses";
+import { Groups as GroupCollection, GroupModel } from "../../../api/groups/groups";
 import { Events as EventCollection, EventModel } from "/imports/api/events/events";
 import {
   Organizations as OrganizationCollection,
   OrganizationModel,
 } from "../../../api/organizations/organizations";
-import * as Groups from "/imports/api/courses/publications";
+import * as Groups from "../../../api/groups/publications";
 import * as Events from "/imports/api/events/publications";
 import * as Organizations from "../../../api/organizations/publications";
 
 import { Filtering } from "/imports/utils/filtering";
 import { Publication } from "/imports/utils/ServerPublishReact";
-import { GroupTemplate } from "../../lib/course-template";
+import { GroupTemplate } from "../../lib/group-template";
 
-import { Edit } from "../courses/edit";
-import { GroupCompact } from "../courses/compact";
+import { Edit } from "../groups/edit";
+import { GroupCompact } from "../groups/compact";
 import { EventCompact } from "../../components/events/compact";
 import { EventCompact as EventCompactModern } from "../events/compact.modern";
 import { EventsMap } from "../../components/events/map";
-import { CompactPropose } from "../courses/CompactPropose";
+import { CompactPropose } from "../groups/CompactPropose";
 
 /** A list of entities. */
 

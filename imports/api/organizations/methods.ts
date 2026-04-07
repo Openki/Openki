@@ -5,7 +5,7 @@ import { assignIn } from "lodash-es";
 
 import { Users } from "/imports/api/users/users";
 import * as timeLastEditDenormalizer from "./timeLastEditDenormalizer";
-import * as courseEditorsDenormalizer from "../courses/editorsDenormalizer";
+import * as courseEditorsDenormalizer from "../groups/editorsDenormalizer";
 import * as userOrganizationsAndBadgesDenormalizer from "../users/organizationsAndBadgesDenormalizer";
 import * as userVenuesDenormalizer from "/imports/api/users/venuesDenormalizer";
 import {

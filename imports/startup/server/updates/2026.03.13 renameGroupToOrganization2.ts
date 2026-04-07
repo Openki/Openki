@@ -1,4 +1,4 @@
-import { GroupEntity, Groups } from "/imports/api/courses/courses";
+import { GroupEntity, Groups } from "../../../api/groups/groups";
 import { EventEntity, Events } from "/imports/api/events/events";
 import { RegionEntity, Regions } from "/imports/api/regions/regions";
 import { VenueEntity, Venues } from "/imports/api/venues/venues";

@@ -2,11 +2,8 @@ import { Mongo } from "meteor/mongo";
 import { sampleSize } from "lodash-es";
 import { PRNG } from "seedrandom";
 
-import { Groups } from "/imports/api/courses/courses";
-import {
-  GroupDiscussionEntity,
-  GroupDiscussions,
-} from "/imports/api/course-discussions/course-discussions";
+import { Groups } from "../../groups/groups";
+import { GroupDiscussionEntity, GroupDiscussions } from "../../group-discussions/group-discussions";
 import { Prng } from "/imports/api/fixtures/Prng";
 import { Users } from "/imports/api/users/users";
 

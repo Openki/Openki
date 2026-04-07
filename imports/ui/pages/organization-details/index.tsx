@@ -17,7 +17,7 @@ import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 
 import { ButtonCancel, ButtonSave } from "/imports/ui/components/Buttons";
-import { Find } from "../../components/courses/find";
+import { Find } from "../../components/groups/find";
 import { Dashboard, Props as DashboardProps } from "../../components/dashboard";
 import { VenueTag } from "../../components/venues/link";
 import { OrganizationSettings } from "../../components/organizations/settings";

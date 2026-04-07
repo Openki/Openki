@@ -1,7 +1,7 @@
-import "/imports/api/courses/methods";
-import "/imports/api/courses/publications";
-import "/imports/api/course-discussions/methods";
-import "/imports/api/course-discussions/publications";
+import "../../api/groups/methods";
+import "../../api/groups/publications";
+import "../../api/group-discussions/methods";
+import "../../api/group-discussions/publications";
 import "/imports/api/emails/methods";
 import "/imports/api/events/methods";
 import "/imports/api/events/publications";

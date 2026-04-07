@@ -5,7 +5,7 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
 import { MetaTags } from "/imports/ui/components/MetaTags";
-import { Find } from "../../components/courses/find";
+import { Find } from "../../components/groups/find";
 import { Dashboard } from "../../components/dashboard";
 
 export interface Props {

@@ -7,7 +7,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import { EventModel } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { Regions } from "/imports/api/regions/regions";
-import { useDetails } from "/imports/api/courses/publications";
+import { useDetails } from "../../../../../api/groups/publications";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
@@ -15,7 +15,7 @@ import { Props as DeleteConfirmDialogProps } from "./delete-confirm-dialog";
 import { CancelConfirmDialog, Props as CancelConfirmDialogProps } from "./cancel-confirm-dialog";
 import { EventReplication, Props as EventReplicationProps } from "../../replication";
 import { Content } from "../content";
-import { Files } from "../../../courses/Files";
+import { Files } from "../../../groups/Files";
 import { DeleteConfirmDialog } from "../../../delete-confirm-dialog";
 import { Button, ButtonDelete, ButtonEdit } from "../../../Buttons";
 

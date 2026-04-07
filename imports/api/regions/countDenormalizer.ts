@@ -1,6 +1,6 @@
 import { Mongo } from "meteor/mongo";
 
-import { Groups } from "/imports/api/courses/courses";
+import { Groups } from "../groups/groups";
 import { Events } from "/imports/api/events/events";
 import { RegionEntity, Regions } from "./regions";
 

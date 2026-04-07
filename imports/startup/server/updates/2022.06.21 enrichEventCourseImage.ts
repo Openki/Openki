@@ -1,4 +1,4 @@
-import { Groups } from "/imports/api/courses/courses";
+import { Groups } from "../../../api/groups/groups";
 import { Events } from "/imports/api/events/events";
 
 export async function update() {

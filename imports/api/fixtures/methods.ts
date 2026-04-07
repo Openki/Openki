@@ -1,16 +1,16 @@
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 
-import { Groups } from "/imports/api/courses/courses";
+import { Groups } from "../groups/groups";
 import { Events } from "/imports/api/events/events";
 import { Organizations } from "../organizations/organizations";
 import { Regions } from "/imports/api/regions/regions";
 import { Venues } from "/imports/api/venues/venues";
 import { InfoPages } from "../infoPages/infoPages";
 import { Tenants } from "../tenants/tenants";
-import { GroupDiscussions } from "../course-discussions/course-discussions";
+import { GroupDiscussions } from "../group-discussions/group-discussions";
 
-import { create as coursesDataCreate } from "./courses/create";
+import { create as coursesDataCreate } from "./groups/create";
 import { create as eventsDataCreate } from "./events/create";
 import { generate as eventsDataGenerate } from "./events/generate";
 import { create as organizationsDataCreate } from "./organizations/create";

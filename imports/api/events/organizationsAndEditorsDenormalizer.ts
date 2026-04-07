@@ -1,7 +1,7 @@
 import { Mongo } from "meteor/mongo";
 import { union } from "lodash-es";
 
-import { Groups } from "../courses/courses";
+import { Groups } from "../groups/groups";
 import { Events, EventEntity } from "/imports/api/events/events";
 
 /**

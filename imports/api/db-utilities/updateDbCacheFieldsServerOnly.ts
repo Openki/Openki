@@ -1,8 +1,8 @@
-import * as groupEditorsDenormalizer from "../courses/editorsDenormalizer";
-import * as groupNextEventDenormalizer from "../courses/nextEventDenormalizer";
-import * as groupsTenantDenormalizer from "../courses/tenantDenormalizer";
+import * as groupEditorsDenormalizer from "../groups/editorsDenormalizer";
+import * as groupNextEventDenormalizer from "../groups/nextEventDenormalizer";
+import * as groupsTenantDenormalizer from "../groups/tenantDenormalizer";
 import * as eventsCategoriesDenormalizer from "../events/categoriesDenormalizer";
-import * as eventsGroupImageDenormalizer from "../events/courseImageDenormalizer";
+import * as eventsGroupImageDenormalizer from "../events/groupImageDenormalizer";
 import * as eventsTenantDenormalizer from "../events/tenantDenormalizer";
 import * as eventsVenueDenormalizer from "../events/venueDenormalizer";
 import { Log } from "../log/log";

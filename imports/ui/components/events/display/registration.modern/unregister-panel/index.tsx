@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
 import { EventModel } from "/imports/api/events/events";
-import { useDetails } from "/imports/api/courses/publications";
+import { useDetails } from "../../../../../../api/groups/publications";
 
 import { Button, ButtonCancel } from "../../../../Buttons";
 

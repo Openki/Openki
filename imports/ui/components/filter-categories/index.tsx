@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Categories } from "/imports/api/categories/categories";
 
 import { ReactSelect2 } from "../react-select2";
-import "/imports/ui/components/courses/categories";
+import "../groups/categories";
 
 import "./styles.scss";
 

@@ -2,7 +2,7 @@ import { Mongo } from "meteor/mongo";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
 import { Users } from "/imports/api/users/users";
-import { Groups } from "/imports/api/courses/courses";
+import { Groups } from "./api/groups/groups";
 import { Events } from "/imports/api/events/events";
 import { Organizations } from "./api/organizations/organizations";
 import { Venues } from "/imports/api/venues/venues";

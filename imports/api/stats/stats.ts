@@ -1,7 +1,7 @@
 import { Mongo } from "meteor/mongo";
 import { uniq } from "lodash-es";
 
-import { GroupEntity, GroupModel, Groups } from "/imports/api/courses/courses";
+import { GroupEntity, GroupModel, Groups } from "../groups/groups";
 import { EventEntity, EventModel, Events } from "/imports/api/events/events";
 import { Organizations } from "../organizations/organizations";
 import { sum } from "../../utils/sum";
