@@ -486,14 +486,14 @@ export function Edit(props: Props) {
         resetFields();
       } else {
         if (isNew) {
-          Router.go("showCourse", { _id: groupId }, { query: { nextActions: "1" } });
+          Router.go("showGroup", { _id: groupId }, { query: { nextActions: "1" } });
         } else {
           Alert.success(
             t("message.courseChangesSaved", "Your changes to {NAME} have been saved.", {
               NAME: changes.name,
             }),
           );
-          Router.go("showCourse", { _id: groupId });
+          Router.go("showGroup", { _id: groupId });
         }
       }
     } catch (err) {
@@ -510,7 +510,7 @@ export function Edit(props: Props) {
     const group = props;
 
     if (group._id) {
-      Router.go("showCourse", group);
+      Router.go("showGroup", group);
     } else {
       Router.go("home");
     }

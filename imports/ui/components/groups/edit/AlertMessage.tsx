@@ -21,7 +21,7 @@ export function AlertMessage({
     if (isFrame) {
       const group = savedGroup;
       if (group) {
-        return Router.url("showCourse", group);
+        return Router.url("showGroup", group);
       }
     }
     return "";

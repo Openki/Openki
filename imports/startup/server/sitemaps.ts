@@ -59,13 +59,13 @@ async function requestPages() {
     priority: 0.5,
   });
   pages.push({
-    url: Router.url("proposeCourse"),
+    url: Router.url("proposeGroup"),
     priority: 0.5,
   });
 
   await groups.forEachAsync((group) => {
     pages.push({
-      url: Router.url("showCourse", group),
+      url: Router.url("showGroup", group),
       lastmod: group.time_lastedit,
       priority: calcGroupPriority(group),
     });

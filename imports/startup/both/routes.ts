@@ -237,9 +237,9 @@ RouterAsync.route("profile", {
   },
 });
 
-RouterAsync.route("proposeCourse", {
+RouterAsync.route("proposeGroup", {
   path: "courses/propose",
-  template: "courseProposePage",
+  template: "groupProposePage",
   async onRun() {
     await import("../../ui/pages/group-create");
   },
@@ -287,7 +287,7 @@ RouterAsync.route("autoLoginVisitor", {
   },
 });
 
-RouterAsync.route("showCourse", {
+RouterAsync.route("showGroup", {
   path: "course/:_id/:slug?",
   template: "groupDetailsPage",
   async action() {

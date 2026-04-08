@@ -134,7 +134,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       const siteName = getSiteName(region);
       const emailLogo = region.custom?.emailLogo;
 
-      const groupLink = Router.url("showCourse", group, { query: { campaign } });
+      const groupLink = Router.url("showGroup", group, { query: { campaign } });
       return {
         event,
         tz,
@@ -144,7 +144,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         }),
         group: <a href={groupLink}>{group.name}</a>,
         groupName: group.name,
-        unsubscribeFromGroupLink: Router.url("showCourse", group, {
+        unsubscribeFromGroupLink: Router.url("showGroup", group, {
           query: { unsubscribe: "participant", force: 1, campaign },
         }),
         isNew: entry.body.isNew,

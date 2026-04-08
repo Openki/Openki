@@ -5,7 +5,7 @@ import { MetaTags } from "/imports/ui/components/MetaTags";
 
 import { Edit, Props } from "../../components/groups/edit";
 
-export function CourseProposePage(data: Props) {
+export function GroupProposePage(data: Props) {
   const { t } = useTranslation();
 
   return (
@@ -23,4 +23,4 @@ export function CourseProposePage(data: Props) {
 
 import "./template.html";
 
-Template.registerHelper("CourseProposePage", () => CourseProposePage);
+Template.registerHelper("GroupProposePage", () => GroupProposePage);

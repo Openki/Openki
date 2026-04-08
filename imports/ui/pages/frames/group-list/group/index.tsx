@@ -65,7 +65,7 @@ export function Group({ group, hideInterested }: Props) {
           <div className="mt-2 d-grid d-sm-flex">
             <a
               className="btn btn-outline-dark"
-              href={Router.path("showCourse", group)}
+              href={Router.path("showGroup", group)}
               target="_blank"
               rel="noreferrer"
             >

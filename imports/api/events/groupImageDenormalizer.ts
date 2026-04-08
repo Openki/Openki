@@ -5,15 +5,15 @@ export async function onStartUp() {
   let updated = 0;
 
   for (const event of (await Events.find({}).fetchAsync()).filter((e) => e.courseId)) {
-    const course = await Groups.findOneAsync(event.courseId);
-    if (!course) {
+    const group = await Groups.findOneAsync(event.courseId);
+    if (!group) {
       throw new Error(`Missing course ${event.courseId} for event`);
     }
 
     const update = {
       $set: {
-        courseImage: course.image,
-        courseCompactImage: course.compactImage,
+        courseImage: group.image,
+        courseCompactImage: group.compactImage,
       },
     };
 

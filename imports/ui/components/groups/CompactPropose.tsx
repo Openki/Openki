@@ -49,7 +49,7 @@ export function CompactPropose({ organization, organizationTagEvents }: Props) {
           <form
             onSubmit={(event) => {
               event.preventDefault();
-              Router.go("proposeCourse", undefined, {
+              Router.go("proposeGroup", undefined, {
                 query: organization ? { title, organization } : { title },
               });
             }}

@@ -170,7 +170,7 @@ export function Navbar() {
                 <li className="nav-item text-center col col-lg-auto">
                   <a
                     href={Router.path("search")}
-                    className={`${currentRouteIs("search", "showCourse") ? "active" : ""} nav-link`}
+                    className={`${currentRouteIs("search", "showGroup") ? "active" : ""} nav-link`}
                     onClick={() => close()}
                   >
                     <i className="fa-regular fa-lightbulb fa-fw" /> {t("menue.Courses", "Find")}
@@ -181,8 +181,8 @@ export function Navbar() {
               {PublicSettings.nav.proposeCourse && (
                 <li className="nav-item text-center col col-lg-auto">
                   <a
-                    href={Router.path("proposeCourse")}
-                    className={`${currentRouteIs("proposeCourse", "createEvent") ? "active" : ""} nav-link `}
+                    href={Router.path("proposeGroup")}
+                    className={`${currentRouteIs("proposeGroup", "createEvent") ? "active" : ""} nav-link `}
                     onClick={() => close()}
                   >
                     <i className="fa-solid fa-pencil fa-fw" /> {t("menue.Create", "Create")}

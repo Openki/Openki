@@ -28,7 +28,7 @@ function GroupEvent({ event }: { event: WithRequired<EventModel, "courseId"> }) 
 
   function groupLink() {
     return Router.path(
-      "showCourse",
+      "showGroup",
       { _id: event.courseId, slug: group?.slug },
       group?.singleEvent ? { query: { force: "1" } } : {},
     );
