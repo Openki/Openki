@@ -2,8 +2,8 @@ beforeEach(() => {
   cy.visitOpenki("/search", { region: "9JyFCoKWkxnf8LWPh" /* Testistan */ });
 });
 
-describe("Course list component", function () {
-  it("should list 5 courses for unauthenticated user (Testistan)", async () => {
+describe("Group list component", function () {
+  it("should list 5 groups for unauthenticated user (Testistan)", async () => {
     cy.get('.group-compact-title [href="/course/c294d35055/deutschkurs"]').should("be.visible");
     cy.get('.group-compact-title [href="/course/26daa40373/schweissen"]').should("be.visible");
     cy.get('.group-compact-title [href="/course/f59a1e7855/lerne-russisch-in-2-stunden"]').should(

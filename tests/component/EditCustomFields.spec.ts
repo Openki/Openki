@@ -1,7 +1,7 @@
 // file://./../../imports/ui/components/EditCustomFields.tsx
 
 describe("EditCustomFields", () => {
-  it("should allow to edit custom field on course", function () {
+  it("should allow to edit custom field on group", function () {
     cy.visitOpenki("/course/hkS2FN5p98EztPBuM/singen-fuer-klein-gross?force=1", {
       username: "Tara",
     });
