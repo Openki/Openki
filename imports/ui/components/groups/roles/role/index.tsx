@@ -86,8 +86,8 @@ export function Role(data: Data) {
     await processChange(change);
     routerAutoscroll.cancelNext();
     Analytics.trackEvent(
-      "Unsubscribes from courses",
-      `Unsubscribes from courses as ${data.role.type}`,
+      "Unsubscribes from groups",
+      `Unsubscribes from groups as ${data.role.type}`,
       Regions.findOne(data.group.region)?.nameEn,
     );
   }
@@ -192,7 +192,7 @@ export function Role(data: Data) {
               <br />
               {t(
                 "group.roles.firstSteps.ifQuestions",
-                "Please write questions concerning the course in the discussion below.",
+                "Please write questions concerning the group in the discussion below.",
               )}
               <br />
               {t(

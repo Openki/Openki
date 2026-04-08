@@ -10,7 +10,7 @@ export function GroupProposePage(data: Props) {
 
   return (
     <>
-      <MetaTags title={t("group.propose.windowtitle", "Propose new course")} />
+      <MetaTags title={t("group.propose.windowtitle", "Propose new group")} />
 
       <div className="container mw-md">
         <Edit {...data} />

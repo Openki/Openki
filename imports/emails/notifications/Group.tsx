@@ -77,7 +77,7 @@ export function Group({
       <Footer
         receiveNote={t(
           "notification.group.mail.recpnote",
-          "You receive this message because you're the creator of this course.",
+          "You receive this message because you're the creator of this group.",
         )}
         unsubscribe={unsubscribe}
         campaign={campaign}

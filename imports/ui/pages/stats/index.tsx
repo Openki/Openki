@@ -19,7 +19,7 @@ function Header() {
   return (
     <>
       <th className="group-stat" colSpan={7} style={{ height: "4.5em" }}>
-        {t("region.stats.groups", "Courses")}
+        {t("region.stats.groups", "Groups")}
       </th>
       <th className="event-stat" colSpan={9} style={{ height: "4.5em" }}>
         {t("region.stats.events", "Events")}
@@ -37,7 +37,7 @@ function SubHeader() {
       <th className="group-stat">{t("region.stats.groups.resting", "Resting")}</th>
       <th className="group-stat">{t("region.stats.groups.upcoming", "Upcoming")}</th>
       <th className="group-stat">{t("region.stats.groups.archived", "Archived")}</th>
-      <th className="group-stat">{t("region.stats.groups.enrollments", "Course enrollments")}</th>
+      <th className="group-stat">{t("region.stats.groups.enrollments", "Group enrollments")}</th>
       <th className="group-stat">{t("region.stats.groups.users", "Users")}</th>
       <th className="event-stat">{t("region.stats.events.total", "Total")}</th>
       <th className="event-stat">{t("region.stats.events.future", "Future")}</th>

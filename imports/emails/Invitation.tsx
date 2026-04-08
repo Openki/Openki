@@ -51,7 +51,7 @@ export function Invitation({
           <p className="gap-lg text-body-secondary">
             {t(
               "invitation.email.about",
-              "{SITENAME} is a open peer-to-peer education platform where users collectively organize Courses. You can propose, discuss, develop and publish ideas and eventually meet nice people online or in real life. Enjoy sharing your experiences.",
+              "{SITENAME} is a open peer-to-peer education platform where users collectively organize Groups. You can propose, discuss, develop and publish ideas and eventually meet nice people online or in real life. Enjoy sharing your experiences.",
               { SITENAME: siteName },
             )}{" "}
             <a href={moreLink}>{t("invitation.email.more", "Find out more")}</a>

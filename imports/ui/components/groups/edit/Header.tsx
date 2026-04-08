@@ -16,14 +16,14 @@ export function Header({ _id, isFrame, organization }: Props) {
   const siteName = useSiteName();
 
   return _id ? (
-    <h2>{t("group.edit.editGroup", "Edit course")}</h2>
+    <h2>{t("group.edit.editGroup", "Edit group")}</h2>
   ) : !isFrame ? (
     <>
       <h2>
         {organization ? (
           <OrganizationHeader organizationId={organization} />
         ) : (
-          t("group.edit.propose", "Propose new course")
+          t("group.edit.propose", "Propose new group")
         )}
       </h2>
       <div className="icon-text">
@@ -33,7 +33,7 @@ export function Header({ _id, isFrame, organization }: Props) {
         <div className="icon-text-text">
           {t(
             "group.propose.GroupInfo",
-            "Start your own {SITENAME} course here. Whether as a mentor or participant, you decide what and how you want to learn. More info here:",
+            "Start your own {SITENAME} group here. Whether as a mentor or participant, you decide what and how you want to learn. More info here:",
             { SITENAME: siteName },
           )}{" "}
           <a
@@ -41,7 +41,7 @@ export function Header({ _id, isFrame, organization }: Props) {
             target="_blank"
             rel="noreferrer"
           >
-            {t("group.propose.guideLink", "How to organize my first {SITENAME} course?", {
+            {t("group.propose.guideLink", "How to organize my first {SITENAME} group?", {
               SITENAME: siteName,
             })}
           </a>

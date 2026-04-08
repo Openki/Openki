@@ -72,7 +72,7 @@ export function CompactPropose({ organization, organizationTagEvents }: Props) {
         <div className="ps-2 pe-2">
           {t(
             "group.compact.propose.description",
-            "Start your own course, whether as a mentor or participant. You decide what you want to learn.",
+            "Start your own group, whether as a mentor or participant. You decide what you want to learn.",
           )}
         </div>
       </div>

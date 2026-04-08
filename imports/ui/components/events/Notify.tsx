@@ -38,7 +38,7 @@ function GroupMembers({
         isNew
           ? t(
               "event.edit.notifyNewEvent",
-              'Send notification to all members of the "{COURSE}" course about this event.',
+              'Send notification to all members of the "{COURSE}" group about this event.',
               { COURSE: group?.name || "..." },
             )
           : t(

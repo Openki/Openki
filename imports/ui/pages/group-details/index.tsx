@@ -95,8 +95,8 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
       }
 
       Analytics.trackEvent(
-        "Course deletions",
-        `Course deletions as ${role}`,
+        "Group deletions",
+        `Group deletions as ${role}`,
         Regions.findOne(group.region)?.nameEn,
       );
 

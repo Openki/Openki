@@ -38,7 +38,7 @@ function Groups({ search }: { search: string }) {
           </button>
           {t(
             "proposedGroupsDropdown.joinExistingGroupQuestion",
-            "Maybe you would like to join an existing course?",
+            "Maybe you would like to join an existing group?",
           )}
         </h5>
       </span>
