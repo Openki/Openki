@@ -1,6 +1,6 @@
 // file://./../../../imports/ui/pages/frames/propose/index.tsx
 
-describe("Propose course via frame", function () {
+describe("Propose group via frame", function () {
   it("allows to select mentor role", () => {
     cy.visitOpenki("/frame/propose");
 

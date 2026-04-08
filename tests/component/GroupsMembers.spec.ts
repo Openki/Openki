@@ -1,4 +1,4 @@
-describe("Course members component", function () {
+describe("Group members component", function () {
   describe("Subscribe to participant role", function () {
     it("should keeps comment", () => {
       cy.visitOpenki("/course/6cac962a5f/game-design-mit-unity");

@@ -1,14 +1,14 @@
 // file://./../../../imports/ui/pages/group-details/index.tsx
 
-describe("course details page", () => {
+describe("group details page", () => {
   // https://gitlab.com/Openki/Openki/-/issues/2228
-  it("should display not found page for not existing course", () => {
+  it("should display not found page for not existing group", () => {
     cy.visitOpenki("/course/not-exists", { username: "Seee" });
 
     cy.get("h1").contains("Page not found");
   });
 
-  describe("Team organization course", function () {
+  describe("Team organization group", function () {
     beforeEach(() => {
       cy.visitOpenki("/course/e49ed1ce5d/walliserduetsch-lernen", { username: "LeOnI" });
     });
@@ -36,12 +36,12 @@ describe("course details page", () => {
     });
   });
 
-  describe("Archive course", function () {
+  describe("Archive group", function () {
     beforeEach(() => {
       cy.visitOpenki("/course/e49ed1ce5d/walliserduetsch-lernen", { username: "LeOnI" });
     });
 
-    it("should allow to archive and unarchive a course", () => {
+    it("should allow to archive and unarchive a group", () => {
       cy.get("button.btn-archive").click();
       cy.get('[data-test="group-details"] div.alert').should("have.class", "alert-archived");
       cy.get("#group-details-group-unarchive").click();
