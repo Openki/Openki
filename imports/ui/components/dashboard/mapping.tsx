@@ -173,8 +173,8 @@ const propose: StaticComponent = {
 };
 
 export const mapping = {
-  course: group,
-  courseWithoutPropose: groupWithoutPropose,
+  group,
+  groupWithoutPropose,
   event,
   eventModern,
   eventModernWithoutCategories,
