@@ -96,7 +96,7 @@ export interface RegionEntity {
   };
 
   dashboard?: {
-    entity: "organization" | "course" | "courseWithoutPropose" | "event" | "eventsMap" | "propose";
+    entity: "organization" | "group" | "groupWithoutPropose" | "event" | "eventsMap" | "propose";
     title?: string;
     query?: string;
     showAll?: { link?: string; text?: string };

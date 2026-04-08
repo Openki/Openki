@@ -65,7 +65,7 @@ export interface OrganizationMemberEntity {
 }
 
 export type OrganizationEntityDashboard = {
-  entity: "organization" | "course" | "courseWithoutPropose" | "event" | "eventsMap" | "propose";
+  entity: "organization" | "group" | "groupWithoutPropose" | "event" | "eventsMap" | "propose";
   title?: string;
   query?: string;
   showAll?: {
