@@ -2,7 +2,7 @@
 
 describe("EditCustomFields", () => {
   it("should allow to edit custom field on group", function () {
-    cy.visitOpenki("/course/hkS2FN5p98EztPBuM/singen-fuer-klein-gross?force=1", {
+    cy.visitOpenki("/group/hkS2FN5p98EztPBuM/singen-fuer-klein-gross?force=1", {
       username: "Tara",
     });
 
@@ -30,7 +30,7 @@ describe("EditCustomFields", () => {
   });
 
   it("should allow to edit option custom field", function () {
-    cy.visitOpenki("/course/40ccd81ccf/notebooks-auf-ubuntu-linux-umruesten", {
+    cy.visitOpenki("/group/40ccd81ccf/notebooks-auf-ubuntu-linux-umruesten", {
       username: "Tonya",
     });
     cy.get('[data-test="group-details"] button.btn-edit').click();
@@ -40,7 +40,7 @@ describe("EditCustomFields", () => {
   });
 
   it("should allow to edit boolean custom field", function () {
-    cy.visitOpenki("/course/40ccd81ccf/notebooks-auf-ubuntu-linux-umruesten", {
+    cy.visitOpenki("/group/40ccd81ccf/notebooks-auf-ubuntu-linux-umruesten", {
       username: "Tonya",
     });
 

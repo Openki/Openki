@@ -1,8 +1,8 @@
-// file://./../../imports/ui/components/courses/edit/index.tsx
+// file://./../../imports/ui/components/groups/edit/index.tsx
 
 describe("groups create", () => {
   it("should show region selection if none region set", function () {
-    cy.visitOpenki("/courses/propose");
+    cy.visitOpenki("/groups/propose");
     cy.get("#groups-edit-region-select").should("be.visible");
     cy.get("#groups-edit-region-select").select("h4MnI3psRr8hSljk2");
     cy.get("#group-edit-title").click();

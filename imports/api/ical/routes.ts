@@ -61,7 +61,7 @@ Router.route("calEvent", {
 });
 
 Router.route("calCourse", {
-  path: "cal/course/:_id.ics",
+  path: "cal/group/:_id.ics",
   where: "server",
   async action() {
     await sendIcal(

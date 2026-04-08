@@ -238,7 +238,7 @@ RouterAsync.route("profile", {
 });
 
 RouterAsync.route("proposeGroup", {
-  path: "courses/propose",
+  path: "groups/propose",
   template: "groupProposePage",
   async onRun() {
     await import("../../ui/pages/group-create");
@@ -288,7 +288,7 @@ RouterAsync.route("autoLoginVisitor", {
 });
 
 RouterAsync.route("showGroup", {
-  path: "course/:_id/:slug?",
+  path: "group/:_id/:slug?",
   template: "groupDetailsPage",
   async action() {
     const group = (await this.data())?.group;
@@ -600,7 +600,7 @@ RouterAsync.route("frameCalendar", {
 });
 
 RouterAsync.route("frameGroupList", {
-  path: "/frame/courselist",
+  path: "/frame/grouplist",
   template: "frameGroupListPage",
   layoutTemplate: "frameLayout",
   async onRun() {

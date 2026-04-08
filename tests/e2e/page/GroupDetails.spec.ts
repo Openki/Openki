@@ -3,14 +3,14 @@
 describe("group details page", () => {
   // https://gitlab.com/Openki/Openki/-/issues/2228
   it("should display not found page for not existing group", () => {
-    cy.visitOpenki("/course/not-exists", { username: "Seee" });
+    cy.visitOpenki("/group/not-exists", { username: "Seee" });
 
     cy.get("h1").contains("Page not found");
   });
 
   describe("Team organization group", function () {
     beforeEach(() => {
-      cy.visitOpenki("/course/e49ed1ce5d/walliserduetsch-lernen", { username: "LeOnI" });
+      cy.visitOpenki("/group/e49ed1ce5d/walliserduetsch-lernen", { username: "LeOnI" });
     });
 
     it("should allow to set a organization as team", () => {
@@ -38,7 +38,7 @@ describe("group details page", () => {
 
   describe("Archive group", function () {
     beforeEach(() => {
-      cy.visitOpenki("/course/e49ed1ce5d/walliserduetsch-lernen", { username: "LeOnI" });
+      cy.visitOpenki("/group/e49ed1ce5d/walliserduetsch-lernen", { username: "LeOnI" });
     });
 
     it("should allow to archive and unarchive a group", () => {
@@ -50,9 +50,7 @@ describe("group details page", () => {
 
   describe("Single event", function () {
     beforeEach(() => {
-      cy.visitOpenki(
-        "/course/LZCJQmLzr9d6gcrhH/hochsensibilitaet-was-ist-das-und-die-unterschiede",
-      );
+      cy.visitOpenki("/group/LZCJQmLzr9d6gcrhH/hochsensibilitaet-was-ist-das-und-die-unterschiede");
     });
 
     it("should redirect to single event page", () => {
