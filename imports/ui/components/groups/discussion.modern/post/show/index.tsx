@@ -29,7 +29,7 @@ export function Show({ post, onEdit }: Props) {
     return GroupDiscussionUtils.mayEditPost(user ?? undefined, post);
   }
   function mayDelete() {
-    const group = Groups.findOne(post.courseId);
+    const group = Groups.findOne(post.groupId);
     if (!group) {
       throw new Error("Unexpected falsy: group");
     }

@@ -20,7 +20,7 @@ export interface Props {
   value?: EventVenueEntity | undefined;
   event: {
     _id?: string | undefined;
-    courseId?: string | undefined;
+    groupId?: string | undefined;
     room?: string | undefined;
     startLocal: string;
     endLocal: string;
@@ -33,7 +33,7 @@ export function EditVenue({ region: regionId, event, value, onChange, errors }: 
   const { t } = useTranslation();
   const [autofocusOnSearch, setAutoFocusOnSearch] = useState(false);
 
-  const [isGroupLoading, group] = useGroupDetails({ when: !!event?.courseId }, event?.courseId);
+  const [isGroupLoading, group] = useGroupDetails({ when: !!event?.groupId }, event?.groupId);
   const [organizationsIsLoading, organizations] = useOrganizationsFindFilter(
     { when: !!group?.teamOrganizations },
     { ids: group?.teamOrganizations },

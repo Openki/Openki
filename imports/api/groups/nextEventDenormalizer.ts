@@ -10,13 +10,13 @@ export async function updateNextEvent(groupIdOrSelector: string | Mongo.Selector
   await Promise.all(
     await Groups.find(groupIdOrSelector).mapAsync(async (group) => {
       const futureEvents = await Events.countDocuments({
-        courseId: group._id,
+        groupId: group._id,
         start: { $gt: new Date() },
         canceled: { $ne: true },
       });
 
       const nextEvent: GroupNextEventEntity | undefined = await Events.findOneAsync(
-        { courseId: group._id, start: { $gt: new Date() }, canceled: { $ne: true } },
+        { groupId: group._id, start: { $gt: new Date() }, canceled: { $ne: true } },
         {
           sort: { start: 1 },
           projection: {
@@ -31,7 +31,7 @@ export async function updateNextEvent(groupIdOrSelector: string | Mongo.Selector
       );
 
       const lastEvent: GroupLastEventEntity | undefined = await Events.findOneAsync(
-        { courseId: group._id, start: { $lt: new Date() }, canceled: { $ne: true } },
+        { groupId: group._id, start: { $lt: new Date() }, canceled: { $ne: true } },
         {
           sort: { start: -1 },
           projection: {

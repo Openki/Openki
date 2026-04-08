@@ -18,11 +18,11 @@ import "./styles.scss";
 export function Content({ event }: { event: EventModel }) {
   const { t } = useTranslation();
 
-  const [isLoading, group] = useDetails({ when: !!event.courseId }, event.courseId);
+  const [isLoading, group] = useDetails({ when: !!event.groupId }, event.groupId);
 
   return (
     <>
-      {event.courseId ? (
+      {event.groupId ? (
         <EventHeader start={event.startLocal} end={event.endLocal} />
       ) : (
         <EventHeader regionId={event.region} start={event.startLocal} end={event.endLocal} />
@@ -46,7 +46,7 @@ export function Content({ event }: { event: EventModel }) {
                 dangerouslySetInnerHTML={{ __html: event.description }}
               ></p>
 
-              {!!event.courseId && <CustomFieldDisplay groupId={event.courseId} />}
+              {!!event.groupId && <CustomFieldDisplay groupId={event.groupId} />}
             </div>
             <div className="col-md-5">
               <div className="details-map">

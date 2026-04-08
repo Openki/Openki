@@ -342,7 +342,7 @@ export class Unsubscribe extends Change<{
     if (this.role === "team") {
       update.$pull.editors = this.userId;
       await Events.updateAsync(
-        { courseId: this.course._id },
+        { groupId: this.course._id },
         { $pull: { editors: this.userId } },
         { multi: true },
       );

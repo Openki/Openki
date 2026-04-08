@@ -69,7 +69,7 @@ export function Notify({
   const { t } = useTranslation();
   const user = useUser();
 
-  const [isGroupLoading, group] = useGroupDetails(event.courseId || "");
+  const [isGroupLoading, group] = useGroupDetails(event.groupId || "");
 
   function showAddMessage() {
     return [...(group?.members || []), ...(event.participants || [])].length > 0;
@@ -93,9 +93,9 @@ export function Notify({
 
   return (
     <>
-      {!!event.courseId && (
+      {!!event.groupId && (
         <GroupMembers
-          groupId={event.courseId}
+          groupId={event.groupId}
           isNew={isNew}
           notifyChecked={checked}
           onChange={onToggle}

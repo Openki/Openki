@@ -65,7 +65,7 @@ Router.route("calCourse", {
   where: "server",
   async action() {
     await sendIcal(
-      await Events.find({ courseId: this.params._id as string }).fetchAsync(),
+      await Events.find({ groupId: this.params._id as string }).fetchAsync(),
       this.response,
     );
   },

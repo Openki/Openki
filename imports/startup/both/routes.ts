@@ -346,7 +346,7 @@ RouterAsync.route("createEvent", {
     const group = await subs?.group?.();
     if (group) {
       event.title = group.name;
-      event.courseId = group._id;
+      event.groupId = group._id;
       event.region = group.region;
       event.description = group.description || "";
       event.internal = group.internal;

@@ -267,7 +267,7 @@ export const adminRemove = ServerMethod(
       for (const group of await Groups.find({ createdby: userId }).fetchAsync()) {
         deletedGroups.push(group);
 
-        numberOfDeletedEvents += await Events.removeAsync({ courseId: group._id });
+        numberOfDeletedEvents += await Events.removeAsync({ groupId: group._id });
       }
 
       await Groups.removeAsync({ createdby: userId });
@@ -278,12 +278,12 @@ export const adminRemove = ServerMethod(
 
     for await (const group of groups) {
       await Events.updateAsync(
-        { courseId: group._id },
+        { groupId: group._id },
         { $pull: { editors: userId } },
         { multi: true },
       );
       await Events.updateAsync(
-        { courseId: group._id },
+        { groupId: group._id },
         { $pull: { participants: { user: userId } } },
         { multi: true },
       );

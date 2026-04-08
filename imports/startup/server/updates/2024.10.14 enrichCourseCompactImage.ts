@@ -11,8 +11,8 @@ export async function update() {
     );
 
     updated += await Events.updateAsync(
-      { courseId: group._id },
-      { $set: { courseImage: group.image, courseCompactImage: group.image } },
+      { groupId: group._id },
+      { $set: { groupImage: group.image, groupCompactImage: group.image } },
       { multi: true },
     );
   }

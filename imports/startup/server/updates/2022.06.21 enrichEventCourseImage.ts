@@ -6,8 +6,8 @@ export async function update() {
 
   for (const group of await Groups.find({ image: { $exists: true } }).fetchAsync()) {
     updated += await Events.updateAsync(
-      { courseId: group._id },
-      { $set: { courseImage: group.image } },
+      { groupId: group._id },
+      { $set: { groupImage: group.image } },
       { multi: true },
     );
   }

@@ -144,8 +144,8 @@ export const remove = ServerMethod("region.remove", async (regionId: string) => 
 
   await Events.removeAsync({ region: regionId });
   // GroupDiscussionEntity do not currently have a region.
-  for (const c of await Groups.find({ region: regionId }).fetchAsync()) {
-    await GroupDiscussions.removeAsync({ courseId: c._id });
+  for (const g of await Groups.find({ region: regionId }).fetchAsync()) {
+    await GroupDiscussions.removeAsync({ groupId: g._id });
   }
   await Groups.removeAsync({ region: regionId });
   await Venues.removeAsync({ region: regionId });

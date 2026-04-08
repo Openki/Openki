@@ -142,7 +142,7 @@ export const SaveFieldPattern = {
 };
 export type SaveFields = Type<typeof SaveFieldPattern>;
 
-export const save = ServerMethod("course.save", async (groupId: string, changes: SaveFields) => {
+export const save = ServerMethod("group.save", async (groupId: string, changes: SaveFields) => {
   check(groupId, String);
   check(changes, SaveFieldPattern);
 
@@ -327,7 +327,7 @@ export const save = ServerMethod("course.save", async (groupId: string, changes:
 });
 
 export const updateImage = ServerMethod(
-  "course.update.image",
+  "group.update.image",
   async (groupId: string, file: FileStorage.UploadFile) => {
     check(groupId, String);
     check(file, FileStorage.UploadFilePattern);
@@ -377,7 +377,7 @@ export const updateImage = ServerMethod(
 );
 
 export const deleteImage = ServerMethod(
-  "course.delete.image",
+  "group.delete.image",
   async (groupId: string) => {
     check(groupId, String);
 
@@ -423,7 +423,7 @@ export const deleteImage = ServerMethod(
  *
  */
 export const promote = ServerMethod(
-  "course.promote",
+  "group.promote",
   async (groupId: string, organizationId: string, enable: boolean) => {
     await UpdateMethods.promote(Groups as unknown as OrganizationPromoters)(
       groupId,
@@ -448,7 +448,7 @@ export const promote = ServerMethod(
  *
  */
 export const editing = ServerMethod(
-  "course.editing",
+  "group.editing",
   async (groupId: string, organizationId: string, enable: boolean) => {
     await UpdateMethods.editing(Groups as unknown as OrganizationPromoters)(
       groupId,
@@ -465,7 +465,7 @@ export const editing = ServerMethod(
   },
 );
 
-export const archive = ServerMethod("course.archive", async (groupId: string) => {
+export const archive = ServerMethod("group.archive", async (groupId: string) => {
   check(groupId, String);
 
   const group = await Groups.findOneAsync({ _id: groupId });
@@ -478,7 +478,7 @@ export const archive = ServerMethod("course.archive", async (groupId: string) =>
   await Groups.updateAsync(group._id, { $set: { archived: true } });
 });
 
-export const unarchive = ServerMethod("course.unarchive", async (groupId: string) => {
+export const unarchive = ServerMethod("group.unarchive", async (groupId: string) => {
   check(groupId, String);
 
   const group = await Groups.findOneAsync({ _id: groupId });
@@ -491,7 +491,7 @@ export const unarchive = ServerMethod("course.unarchive", async (groupId: string
   await Groups.updateAsync(group._id, { $set: { archived: false } });
 });
 
-export const remove = ServerMethod("course.remove", async (groupId: string) => {
+export const remove = ServerMethod("group.remove", async (groupId: string) => {
   check(groupId, String);
 
   const group = await Groups.findOneAsync({ _id: groupId });
@@ -501,7 +501,7 @@ export const remove = ServerMethod("course.remove", async (groupId: string) => {
   if (!group.editableBy(await Meteor.userAsync())) {
     throw new Meteor.Error(401, "edit not permitted");
   }
-  await Events.removeAsync({ courseId: groupId });
-  await GroupDiscussions.removeAsync({ courseId: groupId });
+  await Events.removeAsync({ groupId });
+  await GroupDiscussions.removeAsync({ groupId });
   await Groups.removeAsync(groupId);
 });

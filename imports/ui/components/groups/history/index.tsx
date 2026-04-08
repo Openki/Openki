@@ -305,7 +305,7 @@ export function History({ group }: { group: GroupModel }) {
     // add past events
     historyEntries.push(
       ...Events.find(
-        { courseId: group._id, start: { $lt: new Date() } },
+        { groupId: group._id, start: { $lt: new Date() } },
         { limit: 100 }, // Hack: https://gitlab.com/Openki/Openki/-/issues/1768
       ).map((e) => ({
         dateTime: e.start,
