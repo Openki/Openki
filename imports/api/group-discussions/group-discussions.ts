@@ -23,7 +23,7 @@ export interface GroupDiscussionEntity {
 
 export class GroupDiscussionsCollection extends Mongo.Collection<GroupDiscussionEntity> {
   constructor() {
-    super("CourseDiscussions");
+    super("GroupDiscussions");
 
     if (Meteor.isServer) {
       this.createIndex({ groupId: 1 });

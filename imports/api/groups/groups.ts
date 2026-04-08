@@ -201,7 +201,7 @@ export const FindParams = {
 
 export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> {
   constructor() {
-    super("Courses", {
+    super("Groups", {
       transform(group) {
         const groupModel = assignIn(new Group(), group);
 
