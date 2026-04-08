@@ -48,7 +48,7 @@ export const Notification = {
   "Rsvp.Team": rsvpTeam,
   Comment: comment,
   Join: join,
-  Course: group,
-  "Organization.Course": organizationGroup,
+  Group: group,
+  "Organization.Group": organizationGroup,
   PrivateMessage: privateMessage,
 };

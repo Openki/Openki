@@ -396,7 +396,7 @@ export const save = ServerMethod(
     await venueDenormalizer.updateVenue(eventId);
     await organizationsAndEditorsDenormalizer.updateOrganizationsAndEditors(eventId);
     await regionsCountDenormalizer.updateCounters(event.region);
-    // the assumption is that all replicas have the same course if any
+    // the assumption is that all replicas have the same group if any
     if (event.groupId) {
       await groupNextEventDenormalizer.updateNextEvent(event.groupId);
     }
@@ -496,7 +496,7 @@ export const editing = ServerMethod(
 /**
  * Add current user as event-participant
  *
- * the user is also signed up for the course.
+ * the user is also signed up for the group.
  */
 export const addParticipant = ServerMethod(
   "event.addParticipant",

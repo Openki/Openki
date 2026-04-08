@@ -25,7 +25,7 @@ interface Body {
   revealSenderAddress: boolean;
   model: string;
   context: {
-    course?: string | undefined;
+    group?: string | undefined;
     event?: string | undefined;
   };
 }
@@ -37,7 +37,7 @@ interface Body {
  * @param message the message to transmit
  * @param revealSenderAddress include email-address of sender in message
  * @param sendCopyToSender send a copy of the message to the author
- * @param context dictionary with context ID (course, venue, &c.)
+ * @param context dictionary with context ID (group, venue, &c.)
  */
 export async function record(
   senderId: string,
@@ -45,7 +45,7 @@ export async function record(
   message: string,
   revealSenderAddress: boolean,
   sendCopyToSender: boolean,
-  context: { course?: string; event?: string },
+  context: { group?: string; event?: string },
 ) {
   check(senderId, String);
   check(recipientId, String);
@@ -53,7 +53,7 @@ export async function record(
   check(revealSenderAddress, Boolean);
   check(sendCopyToSender, Boolean);
   check(context, {
-    course: Match.Optional(String),
+    group: Match.Optional(String),
     event: Match.Optional(String),
   });
 
@@ -148,11 +148,11 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       let region: RegionModel | undefined;
       let regionId = actualRecipient.profile?.regionId;
 
-      const groupContextId = body.context.course;
+      const groupContextId = body.context.group;
       if (groupContextId) {
         const group = await Groups.findOneAsync(groupContextId);
         if (!group) {
-          throw new Meteor.Error(404, "course not found");
+          throw new Meteor.Error(404, "group not found");
         }
         const groupLink = Router.url("showGroup", group, {
           query: { campaign },

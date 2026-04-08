@@ -22,7 +22,7 @@ export function OrganizationList({ event }: Props) {
   const [isRegionLoading, region] = useRegionDetails(event.region);
 
   function tools(organizationId: string, event: EventModel) {
-    // Organizations may be adopted from the course, these cannot be removed
+    // Organizations may be adopted from the group, these cannot be removed
     const ownOrganization = event.organizations.includes(organizationId);
 
     return (
@@ -64,7 +64,7 @@ export function OrganizationList({ event }: Props) {
     <div className="tag-group multiline">
       {organizations?.map((organizationId) => {
         const isTeam = event.editors.includes(organizationId);
-        // Organization may be adopted from the course, these cannot be removed
+        // Organization may be adopted from the group, these cannot be removed
         const ownOrganization = event.organizations.includes(organizationId);
         return (
           <React.Fragment key={organizationId}>
