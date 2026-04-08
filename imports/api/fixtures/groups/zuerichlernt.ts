@@ -594,7 +594,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/55b7de96a8a30c84fa604fc0.jpeg",
+    image: "groups/image/55b7de96a8a30c84fa604fc0.jpeg",
   },
   {
     _id: "gbGvyRomTaTyxuqLN",
@@ -731,7 +731,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/8e20672eaf900e610aa170e7.png",
+    image: "groups/image/8e20672eaf900e610aa170e7.png",
   },
   {
     _id: "nChyx8oBz7QHi62YN",
@@ -1619,7 +1619,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/34025df4c97c23981823b90d.jpeg",
+    image: "groups/image/34025df4c97c23981823b90d.jpeg",
   },
   {
     _id: "XRpBBnic6x8bge8Lu",
@@ -3178,7 +3178,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/d96ea158534bf34bfe14a306.jpeg",
+    image: "groups/image/d96ea158534bf34bfe14a306.jpeg",
   },
   {
     _id: "4ay48xY9NYvLKBcjS",
@@ -3440,7 +3440,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/b6724becb05de2ae7b46e928.png",
+    image: "groups/image/b6724becb05de2ae7b46e928.png",
   },
   {
     _id: "JwKSbpcsoRMLTofK2",
@@ -3886,7 +3886,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/4a1b155ea53f012137e9323e.jpeg",
+    image: "groups/image/4a1b155ea53f012137e9323e.jpeg",
   },
   {
     _id: "q6SPx29NPgKLH2Xts",
@@ -4329,7 +4329,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/f840eb81fa0ad0a90019a36d.png",
+    image: "groups/image/f840eb81fa0ad0a90019a36d.png",
   },
   {
     _id: "hnKeA7pDBJp7dC8hy",
@@ -5164,7 +5164,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/b5f71b45821af24bbc8d543e.jpeg",
+    image: "groups/image/b5f71b45821af24bbc8d543e.jpeg",
   },
   {
     _id: "s9s8L4qp8ibL7Aeur",
@@ -5262,7 +5262,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Cletus",
-    image: "courses/image/cef17db66c694aba19d300e7.jpeg",
+    image: "groups/image/cef17db66c694aba19d300e7.jpeg",
     history: [
       {
         dateTime: {
@@ -5764,7 +5764,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/7f2f5bb04236a161a92ef9be.heic",
+    image: "groups/image/7f2f5bb04236a161a92ef9be.heic",
   },
   {
     _id: "ssJuNhhjPZg4wYAoD",
@@ -7108,7 +7108,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/2809fea8cdf25428bf02aa8d.webp",
+    image: "groups/image/2809fea8cdf25428bf02aa8d.webp",
   },
   {
     _id: "ugwP5oSCKDpdzXhdW",
@@ -7391,7 +7391,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/fe3802d2faa015879291f028.jpeg",
+    image: "groups/image/fe3802d2faa015879291f028.jpeg",
   },
   {
     _id: "mEwQBuF65M3AYQ8Sh",
@@ -7674,7 +7674,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/511e03d5991a69256e449b38.jpeg",
+    image: "groups/image/511e03d5991a69256e449b38.jpeg",
   },
   {
     _id: "4TGp62DsjdmwG4eDg",
@@ -8476,7 +8476,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/fd0a2185e8e63cc56ba29fdf.jpeg",
+    image: "groups/image/fd0a2185e8e63cc56ba29fdf.jpeg",
   },
   {
     _id: "xrCL9p2Fg94R3Niur",
@@ -9333,7 +9333,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/07c2498210e7ede744605456.jpeg",
+    image: "groups/image/07c2498210e7ede744605456.jpeg",
   },
   {
     _id: "7jK6fGK3mBuNk7YNc",
@@ -10288,7 +10288,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/49d74265258f19336e80953f.jpeg",
+    image: "groups/image/49d74265258f19336e80953f.jpeg",
   },
   {
     _id: "ecuPy9qGapGQEgjkc",
@@ -10445,7 +10445,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/bf075be103a19f3d9a5ec9ec.jpeg",
+    image: "groups/image/bf075be103a19f3d9a5ec9ec.jpeg",
   },
   {
     _id: "SPqAvY96eYDChsPTe",
@@ -10982,7 +10982,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/8b5357daa1932d864ace3309.jpeg",
+    image: "groups/image/8b5357daa1932d864ace3309.jpeg",
   },
   {
     _id: "qThkbTKxd3BE4xomq",
@@ -11894,7 +11894,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/3f78c25f685d63f912e7cabd.png",
+    image: "groups/image/3f78c25f685d63f912e7cabd.png",
   },
   {
     _id: "Kwdocb6GZcbkJi65T",
@@ -12575,7 +12575,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/47422aef8de0fe17487be85d.png",
+    image: "groups/image/47422aef8de0fe17487be85d.png",
   },
   {
     _id: "rXZfF6xbKQMrThhAu",
@@ -13057,7 +13057,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/b0d9f30ed9a16434af5fa403.jpeg",
+    image: "groups/image/b0d9f30ed9a16434af5fa403.jpeg",
   },
   {
     _id: "GNhys2sr4jdJ4Crax",
@@ -13566,7 +13566,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/c98d8a9658d3c93b71d0db8a.jpeg",
+    image: "groups/image/c98d8a9658d3c93b71d0db8a.jpeg",
   },
   {
     _id: "Lot8Mpx9Z5FDe8QzB",
@@ -13859,7 +13859,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/9b9297ea77f8d56459c6b487.jpeg",
+    image: "groups/image/9b9297ea77f8d56459c6b487.jpeg",
   },
   {
     _id: "kzHj227aW9crw6tDJ",
@@ -14096,7 +14096,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/de23d447bf8183778413ade4.jpeg",
+    image: "groups/image/de23d447bf8183778413ade4.jpeg",
   },
   {
     _id: "HGBwQBH8SkMcpy2cp",
@@ -15158,7 +15158,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/265b9e01d9447a849f28983c.jpeg",
+    image: "groups/image/265b9e01d9447a849f28983c.jpeg",
   },
   {
     _id: "x6ggh94EJY67w9fDF",
@@ -15508,7 +15508,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/fae457793307a91d468c25fd.jpeg",
+    image: "groups/image/fae457793307a91d468c25fd.jpeg",
   },
   {
     _id: "dqat49MNMBurXqgF8",
@@ -15862,7 +15862,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/0cb5ea9a7df0059a8442933f.png",
+    image: "groups/image/0cb5ea9a7df0059a8442933f.png",
   },
   {
     _id: "s4JBQW5BnbDwJi9eD",
@@ -16845,7 +16845,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/dc939eb3da24e8bb1160fe53.png",
+    image: "groups/image/dc939eb3da24e8bb1160fe53.png",
   },
   {
     _id: "EiTqJMdqZSfSTji5L",
@@ -17279,7 +17279,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/b51bf4c95e8c8a1bcf60c347.jpeg",
+    image: "groups/image/b51bf4c95e8c8a1bcf60c347.jpeg",
   },
   {
     _id: "vqx3jmKEcJJ7v7aDq",
@@ -17901,7 +17901,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/caa7767c18db90f117c0ed85.jpeg",
+    image: "groups/image/caa7767c18db90f117c0ed85.jpeg",
   },
   {
     _id: "LNfFqZ7udsaorMYX4",
@@ -18697,7 +18697,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/42c91a1b322e4e47898440eb.jpeg",
+    image: "groups/image/42c91a1b322e4e47898440eb.jpeg",
   },
   {
     _id: "Y5ha82o5dxcP5wWYt",
@@ -19598,7 +19598,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/2aea9411e88c635fd2a4cc44.jpeg",
+    image: "groups/image/2aea9411e88c635fd2a4cc44.jpeg",
   },
   {
     _id: "dgwkFrnLiZiAkKyxT",
@@ -20127,7 +20127,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/14096d9f1cac6e814e912140.jpeg",
+    image: "groups/image/14096d9f1cac6e814e912140.jpeg",
   },
   {
     _id: "4b94veNQF5C28BSAA",
@@ -20368,7 +20368,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/8486a934986389fe1a0c7e94.jpeg",
+    image: "groups/image/8486a934986389fe1a0c7e94.jpeg",
   },
   {
     _id: "58Ka6zGwJypmL9Fwj",
@@ -20646,7 +20646,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/65b1a3c78d30084ec7ca7d5b.jpeg",
+    image: "groups/image/65b1a3c78d30084ec7ca7d5b.jpeg",
   },
   {
     _id: "hAiZY37bbPwocBM5b",
@@ -21233,7 +21233,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/f6ca187b9434aaeb5fd2b899.jpeg",
+    image: "groups/image/f6ca187b9434aaeb5fd2b899.jpeg",
   },
   {
     _id: "fpG2aLF3XFD8Tztaa",
@@ -21331,7 +21331,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Levon",
-    image: "courses/image/a456c1daf3ab1b1e196b3cb6.jpeg",
+    image: "groups/image/a456c1daf3ab1b1e196b3cb6.jpeg",
     history: [
       {
         dateTime: {
@@ -22530,7 +22530,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/89b34bb7264e0a723cec4815.jpeg",
+    image: "groups/image/89b34bb7264e0a723cec4815.jpeg",
   },
   {
     _id: "KZcjKELPKp6QwKkGX",
@@ -22966,7 +22966,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/b0ad36763f2e7a91cd37efcf.jpeg",
+    image: "groups/image/b0ad36763f2e7a91cd37efcf.jpeg",
   },
   {
     _id: "nkfeveYRWG6WkQySz",
@@ -23319,7 +23319,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/ed3d5ac1516fdf311cf61cdc.jpeg",
+    image: "groups/image/ed3d5ac1516fdf311cf61cdc.jpeg",
   },
   {
     _id: "rhGaYLFA2923Sit2o",
@@ -23640,7 +23640,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/d1676d4c9ef90db97a7477f4.jpeg",
+    image: "groups/image/d1676d4c9ef90db97a7477f4.jpeg",
   },
   {
     _id: "9zoFbFBWq9eGLTp54",
@@ -23919,7 +23919,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/14e8b506c000457c3d3066f2.jpeg",
+    image: "groups/image/14e8b506c000457c3d3066f2.jpeg",
   },
   {
     _id: "JHiCAasJ8W7Ncj85n",
@@ -24241,7 +24241,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/2581451a48c725dd852dd0ca.jpeg",
+    image: "groups/image/2581451a48c725dd852dd0ca.jpeg",
   },
   {
     _id: "XTQQQr3jKK7jyJ7dK",
@@ -24493,7 +24493,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Renee",
-    image: "courses/image/56e068bedbe2f72a924b09db.jpeg",
+    image: "groups/image/56e068bedbe2f72a924b09db.jpeg",
     history: [
       {
         dateTime: {
@@ -24915,7 +24915,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/e379852dc5bd59b70e2cc35e.jpeg",
+    image: "groups/image/e379852dc5bd59b70e2cc35e.jpeg",
   },
   {
     _id: "5fGuaTNYtXQH56N9Y",
@@ -25008,7 +25008,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Lanita",
-    image: "courses/image/c98d562ef309973f535659de.jpeg",
+    image: "groups/image/c98d562ef309973f535659de.jpeg",
     history: [
       {
         dateTime: {
@@ -25943,7 +25943,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/b5b5ae4e4cc9a9a63ae7bc3c.jpeg",
+    image: "groups/image/b5b5ae4e4cc9a9a63ae7bc3c.jpeg",
   },
   {
     _id: "35gJDQKtsGYamx23a",
@@ -26253,7 +26253,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/70ee14d1bf2a480449a43e40.jpeg",
+    image: "groups/image/70ee14d1bf2a480449a43e40.jpeg",
   },
   {
     _id: "Fx2TZrnPXtq2mjGKY",
@@ -27252,7 +27252,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/f903550eb36d37048673d7cd.jpeg",
+    image: "groups/image/f903550eb36d37048673d7cd.jpeg",
   },
   {
     _id: "3pb3xv5QPcnXa7BAt",
@@ -27448,7 +27448,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Clerc",
-    image: "courses/image/bba0455a051eea15d6854448.jpeg",
+    image: "groups/image/bba0455a051eea15d6854448.jpeg",
     history: [
       {
         dateTime: {
@@ -28378,7 +28378,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/2333cda5595ee4f182a727a9.png",
+    image: "groups/image/2333cda5595ee4f182a727a9.png",
   },
   {
     _id: "tnTqBSr9s7LjHmE3x",
@@ -28549,7 +28549,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/9d8e976bd1a620850b512777.jpeg",
+    image: "groups/image/9d8e976bd1a620850b512777.jpeg",
   },
   {
     _id: "9znb3vY9ruR8fWPWW",
@@ -28619,7 +28619,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Boniface",
-    image: "courses/image/7f8791cf02f85e5e9561efd1.jpeg",
+    image: "groups/image/7f8791cf02f85e5e9561efd1.jpeg",
     history: [
       {
         dateTime: {
@@ -28780,7 +28780,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Paula",
-    image: "courses/image/7a69fa9429b50d8e0390016a.jpeg",
+    image: "groups/image/7a69fa9429b50d8e0390016a.jpeg",
     history: [
       {
         dateTime: {
@@ -28956,7 +28956,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Bride",
-    image: "courses/image/b85ad9a8070c78a301fa7712.jpeg",
+    image: "groups/image/b85ad9a8070c78a301fa7712.jpeg",
     history: [
       {
         dateTime: {
@@ -29627,7 +29627,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/ba59103973fb7e0c3470f7b9.jpeg",
+    image: "groups/image/ba59103973fb7e0c3470f7b9.jpeg",
   },
   {
     _id: "Yhd4zJJhTQJbtfPgX",
@@ -30134,7 +30134,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Nerissa",
-    image: "courses/image/d3f4c3fbf8b9c1463f818717.jpeg",
+    image: "groups/image/d3f4c3fbf8b9c1463f818717.jpeg",
     history: [
       {
         dateTime: {
@@ -30514,7 +30514,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/32905089c1d390e5996c66fa.jpeg",
+    image: "groups/image/32905089c1d390e5996c66fa.jpeg",
   },
   {
     _id: "Zm2kJPriPQuaAN595",
@@ -30807,7 +30807,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/14f6ddee3125a5efc9d2b9d9.jpeg",
+    image: "groups/image/14f6ddee3125a5efc9d2b9d9.jpeg",
   },
   {
     _id: "pA96if383X258KNLR",
@@ -31112,7 +31112,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/c85e829421fe0568daf36e83.jpeg",
+    image: "groups/image/c85e829421fe0568daf36e83.jpeg",
   },
   {
     _id: "NBKK6dm4nC34opCD2",
@@ -31771,7 +31771,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Gussi",
-    image: "courses/image/73f46fd99e7bde90b26113f3.jpeg",
+    image: "groups/image/73f46fd99e7bde90b26113f3.jpeg",
     history: [
       {
         dateTime: {
@@ -32049,7 +32049,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Tonya",
-    image: "courses/image/e829c12b27e9949719794b1b.jpeg",
+    image: "groups/image/e829c12b27e9949719794b1b.jpeg",
     history: [
       {
         dateTime: {
@@ -32646,7 +32646,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/6729e25b1e711271da8ef0fd.jpeg",
+    image: "groups/image/6729e25b1e711271da8ef0fd.jpeg",
   },
   {
     _id: "xtfw3TbG9PSzP8efs",
@@ -32909,7 +32909,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/94cbe66dd00bcc22c12dae7d.jpeg",
+    image: "groups/image/94cbe66dd00bcc22c12dae7d.jpeg",
   },
   {
     _id: "qBv6YLwprLoDGYTdk",
@@ -34133,7 +34133,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/4efa4b171fa45349c4e492bc.jpeg",
+    image: "groups/image/4efa4b171fa45349c4e492bc.jpeg",
   },
   {
     _id: "2iBy99atTsHcsPJt3",
@@ -35295,7 +35295,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/f6b6e1717d21f31011ab061f.png",
+    image: "groups/image/f6b6e1717d21f31011ab061f.png",
   },
   {
     _id: "jmBL7rKKnfLPNfKXw",
@@ -35476,7 +35476,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Miguelita",
-    image: "courses/image/43be466753d806e18ac0eb70.webp",
+    image: "groups/image/43be466753d806e18ac0eb70.webp",
     history: [
       {
         dateTime: {
@@ -36005,7 +36005,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Wynnie",
-    image: "courses/image/7180ca52785c246ef9f661f7.jpeg",
+    image: "groups/image/7180ca52785c246ef9f661f7.jpeg",
     history: [
       {
         dateTime: {
@@ -36474,7 +36474,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Nance",
-    image: "courses/image/6e3aa1900ce0f8a926ebf9e4.jpeg",
+    image: "groups/image/6e3aa1900ce0f8a926ebf9e4.jpeg",
     history: [
       {
         dateTime: {
@@ -36927,7 +36927,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/b9b85ce99d73c896abb8543e.jpeg",
+    image: "groups/image/b9b85ce99d73c896abb8543e.jpeg",
   },
   {
     _id: "2ioop3dqipbWxW33N",
@@ -37243,7 +37243,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/efc7ece634518358ad85268e.jpeg",
+    image: "groups/image/efc7ece634518358ad85268e.jpeg",
   },
   {
     _id: "YCYkxTa4LQpRFS8GB",
@@ -37722,7 +37722,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/57dc754ba654748e7f825b4c.jpeg",
+    image: "groups/image/57dc754ba654748e7f825b4c.jpeg",
   },
   {
     _id: "ST83fDDHEPSkKkoTu",
@@ -38062,7 +38062,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/7d4205e1a5f023cfd4e21ba7.jpeg",
+    image: "groups/image/7d4205e1a5f023cfd4e21ba7.jpeg",
   },
   {
     _id: "ExC8XLxjdhGp45nit",
@@ -38814,7 +38814,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/cf3b07a196f8453e4ec26a5c.jpeg",
+    image: "groups/image/cf3b07a196f8453e4ec26a5c.jpeg",
   },
   {
     _id: "ip6Wsc2vRjDvckjT2",
@@ -38916,7 +38916,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/dfb4bf5f18868777df7fda29.jpeg",
+    image: "groups/image/dfb4bf5f18868777df7fda29.jpeg",
   },
   {
     _id: "RLNXeDNENFwAvjkkn",
@@ -39597,7 +39597,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Lavinie",
-    image: "courses/image/c36bad238f4130e65589c58c.jpeg",
+    image: "groups/image/c36bad238f4130e65589c58c.jpeg",
     history: [
       {
         dateTime: {
@@ -40265,7 +40265,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Leela",
-    image: "courses/image/04c18b70d9c21fdb5b72b6ee.jpeg",
+    image: "groups/image/04c18b70d9c21fdb5b72b6ee.jpeg",
     history: [
       {
         dateTime: {
@@ -40636,7 +40636,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/c52f8f3f53357adace32a54b.jpeg",
+    image: "groups/image/c52f8f3f53357adace32a54b.jpeg",
   },
   {
     _id: "zGXXb5NitQ4hPYK7X",
@@ -40904,7 +40904,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/1e080f62eb3f08fe8ec7a99a.jpeg",
+    image: "groups/image/1e080f62eb3f08fe8ec7a99a.jpeg",
   },
   {
     _id: "4Qn26ZtghRHhWETqo",
@@ -41221,7 +41221,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/4373e8b6f3d143aa27520d6a.jpeg",
+    image: "groups/image/4373e8b6f3d143aa27520d6a.jpeg",
   },
   {
     _id: "f52CYW2m9P6zEfmnP",
@@ -41426,7 +41426,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Aridatha",
-    image: "courses/image/ef8b7508b9bc21598cd394fb.jpeg",
+    image: "groups/image/ef8b7508b9bc21598cd394fb.jpeg",
     history: [
       {
         dateTime: {
@@ -42072,7 +42072,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/24db9f152ff14d62ab0c4fe8.png",
+    image: "groups/image/24db9f152ff14d62ab0c4fe8.png",
   },
   {
     _id: "3Hw7tPDXRxhHn5R5B",
@@ -42170,7 +42170,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Maisey",
-    image: "courses/image/0072383560c734fd80ac976b.jpeg",
+    image: "groups/image/0072383560c734fd80ac976b.jpeg",
     history: [
       {
         dateTime: {
@@ -42629,7 +42629,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/3e63ccc4bffcb1a71fdecf5e.jpeg",
+    image: "groups/image/3e63ccc4bffcb1a71fdecf5e.jpeg",
   },
   {
     _id: "dt58TgshfGJTyXRZ4",
@@ -42884,7 +42884,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/c293b72d22e84527cc705a58.jpeg",
+    image: "groups/image/c293b72d22e84527cc705a58.jpeg",
   },
   {
     _id: "93n7gexHSGZor3ziT",
@@ -43186,7 +43186,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/8ce71ff1cc0dd13aa887c5e6.jpeg",
+    image: "groups/image/8ce71ff1cc0dd13aa887c5e6.jpeg",
   },
   {
     _id: "66QykcYd8ibTu58eD",
@@ -43320,7 +43320,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Kelbee",
-    image: "courses/image/bbb4fbaabe5abe0407bcd1d2.jpeg",
+    image: "groups/image/bbb4fbaabe5abe0407bcd1d2.jpeg",
     history: [
       {
         dateTime: {
@@ -44467,7 +44467,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/b9a293b50709ff29b2787772.heic",
+    image: "groups/image/b9a293b50709ff29b2787772.heic",
   },
   {
     _id: "tQtcacGyPAd8ZkuSG",
@@ -44604,7 +44604,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Cloris",
-    image: "courses/image/f64cf023b98c04f557249054.jpeg",
+    image: "groups/image/f64cf023b98c04f557249054.jpeg",
     history: [
       {
         dateTime: {
@@ -45197,7 +45197,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/21020de8232d0e1100600182.jpeg",
+    image: "groups/image/21020de8232d0e1100600182.jpeg",
   },
   {
     _id: "gyBZiBLLj6gupNXEt",
@@ -45481,7 +45481,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/9be468238a6be376cb8b5227.jpeg",
+    image: "groups/image/9be468238a6be376cb8b5227.jpeg",
   },
   {
     _id: "hp3mNxcdZY6KRa2fh",
@@ -45882,7 +45882,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/f93fba43cbd7edaf2c0f4617.jpeg",
+    image: "groups/image/f93fba43cbd7edaf2c0f4617.jpeg",
   },
   {
     _id: "fCnc8ee2tE3vFmEby",
@@ -46198,7 +46198,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/a6108860e1827c0703815879.jpeg",
+    image: "groups/image/a6108860e1827c0703815879.jpeg",
   },
   {
     _id: "ZBpArsf8NymCuS9vW",
@@ -47176,7 +47176,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/9567f35a9ee90f10c7344456.jpeg",
+    image: "groups/image/9567f35a9ee90f10c7344456.jpeg",
   },
   {
     _id: "BodgMc23rEhwgPowQ",
@@ -47321,7 +47321,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Phelia",
-    image: "courses/image/a2482b0e210f37eb8fb4b9ef.jpeg",
+    image: "groups/image/a2482b0e210f37eb8fb4b9ef.jpeg",
     history: [
       {
         dateTime: {
@@ -48148,7 +48148,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/f4dd359e75b24a55e2c092c7.jpeg",
+    image: "groups/image/f4dd359e75b24a55e2c092c7.jpeg",
   },
   {
     _id: "Aq587Zsn6uGrPr8Kz",
@@ -49580,7 +49580,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/590a181e431a3adb63610c97.jpeg",
+    image: "groups/image/590a181e431a3adb63610c97.jpeg",
   },
   {
     _id: "YxmR7Tz2zAZ5Rp9Hk",
@@ -50012,7 +50012,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/1fbe881f8734e6e044a06ae7.jpeg",
+    image: "groups/image/1fbe881f8734e6e044a06ae7.jpeg",
   },
   {
     _id: "rxffxyZ6m7HvYeijv",
@@ -50304,7 +50304,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/32fb538dc7769a8bef68a659.jpeg",
+    image: "groups/image/32fb538dc7769a8bef68a659.jpeg",
   },
   {
     _id: "mhoMBXPu27Fp4CPFh",
@@ -50522,7 +50522,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/cc4d8c6090a6916d160258ab.jpeg",
+    image: "groups/image/cc4d8c6090a6916d160258ab.jpeg",
   },
   {
     _id: "z6RyYeyJ5aD3JQdEP",
@@ -50635,7 +50635,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Leslie",
-    image: "courses/image/5ac105728256cc00dc8696e6.jpeg",
+    image: "groups/image/5ac105728256cc00dc8696e6.jpeg",
     history: [
       {
         dateTime: {
@@ -52300,7 +52300,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/5601688461567d20797c05ef.png",
+    image: "groups/image/5601688461567d20797c05ef.png",
   },
   {
     _id: "9qWNxqoz9fJkaeb64",
@@ -52633,7 +52633,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Grange",
-    image: "courses/image/1c643a9dd26ac49ae79018e0.jpeg",
+    image: "groups/image/1c643a9dd26ac49ae79018e0.jpeg",
     history: [
       {
         dateTime: {
@@ -53716,7 +53716,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/87a112b9a27ccd0526e48924.jpeg",
+    image: "groups/image/87a112b9a27ccd0526e48924.jpeg",
   },
   {
     _id: "pC4rpQ3fm6pPT7Noy",
@@ -55165,7 +55165,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/08f92eb380eaa76989248fc1.jpeg",
+    image: "groups/image/08f92eb380eaa76989248fc1.jpeg",
   },
   {
     _id: "GKZYpzceJxxz8yYRG",
@@ -56439,7 +56439,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Aylmer",
-    image: "courses/image/48a6157b6114f203c8ca7903.jpeg",
+    image: "groups/image/48a6157b6114f203c8ca7903.jpeg",
     history: [
       {
         dateTime: {
@@ -56596,7 +56596,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Lemmy",
-    image: "courses/image/8ee9cb320f68542a4af9bd0c.jpeg",
+    image: "groups/image/8ee9cb320f68542a4af9bd0c.jpeg",
     history: [
       {
         dateTime: {
@@ -57249,7 +57249,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/3778b2929072d6059d11bdfc.png",
+    image: "groups/image/3778b2929072d6059d11bdfc.png",
   },
   {
     _id: "bA2cDwRHK4Sbmn8Aj",
@@ -57436,7 +57436,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/1ce170ace75176ef40dc4cae.jpeg",
+    image: "groups/image/1ce170ace75176ef40dc4cae.jpeg",
   },
   {
     _id: "ECWXBvebQDurkhmR9",
@@ -58108,7 +58108,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/0c545d4a78d6ccdbd015997d.jpeg",
+    image: "groups/image/0c545d4a78d6ccdbd015997d.jpeg",
   },
   {
     _id: "GZtjPNbPSympYWdHG",
@@ -58416,7 +58416,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/e9e0381faec72eb72facccad.jpeg",
+    image: "groups/image/e9e0381faec72eb72facccad.jpeg",
   },
   {
     _id: "zPt7DWWr2SRrhbC8X",
@@ -58686,7 +58686,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/ce6891682b76be773197d004.jpeg",
+    image: "groups/image/ce6891682b76be773197d004.jpeg",
   },
   {
     _id: "bxrjD7EPozc6Pcp62",
@@ -58848,7 +58848,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/3bf38160a1a9181aa4c3368b.jpeg",
+    image: "groups/image/3bf38160a1a9181aa4c3368b.jpeg",
   },
   {
     _id: "qkw3JEM9HsXY7tJ3G",
@@ -59652,7 +59652,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/4df8cf71f567967edabd63f6.jpeg",
+    image: "groups/image/4df8cf71f567967edabd63f6.jpeg",
   },
   {
     _id: "qmaS74iGcJm7uWHNd",
@@ -60319,7 +60319,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/21233d45743022a4c2919dd7.jpeg",
+    image: "groups/image/21233d45743022a4c2919dd7.jpeg",
   },
   {
     _id: "qG94dYeCi5BjN6inW",
@@ -61250,7 +61250,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/cd6add08153116ef1e7fd246.jpeg",
+    image: "groups/image/cd6add08153116ef1e7fd246.jpeg",
   },
   {
     _id: "pAXqtBRQArNKLpYTi",
@@ -61351,7 +61351,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Yelena",
-    image: "courses/image/9fa63767f809e41a771a772c.jpeg",
+    image: "groups/image/9fa63767f809e41a771a772c.jpeg",
     history: [
       {
         dateTime: {
@@ -61733,7 +61733,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/b00ef0a9e2ea8d02c301cd7c.png",
+    image: "groups/image/b00ef0a9e2ea8d02c301cd7c.png",
   },
   {
     _id: "sgw8vzqWCjq6T4S8y",
@@ -64934,7 +64934,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/01e27db8443746eb3822e7a9.jpeg",
+    image: "groups/image/01e27db8443746eb3822e7a9.jpeg",
   },
   {
     _id: "Ycb4cP7GGbr2d4mQZ",
@@ -65112,7 +65112,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Jemmy",
-    image: "courses/image/62f655abfedc6a5303eaa488.jpeg",
+    image: "groups/image/62f655abfedc6a5303eaa488.jpeg",
     history: [
       {
         dateTime: {
@@ -66103,7 +66103,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/009a6178a5d5764ed23c6e1c.jpeg",
+    image: "groups/image/009a6178a5d5764ed23c6e1c.jpeg",
   },
   {
     _id: "auaoSLwXnrJp5oqJq",
@@ -66756,7 +66756,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/a403739435a7c9eefce72fd3.jpeg",
+    image: "groups/image/a403739435a7c9eefce72fd3.jpeg",
   },
   {
     _id: "rW9wh5sRWjGPNn8S2",
@@ -67434,7 +67434,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/d81d782d49d7b91e38f6ded6.jpeg",
+    image: "groups/image/d81d782d49d7b91e38f6ded6.jpeg",
   },
   {
     _id: "EPj4GEZfDx4APyWSw",
@@ -67800,7 +67800,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/79e0991046b90806e6712f18.jpeg",
+    image: "groups/image/79e0991046b90806e6712f18.jpeg",
   },
   {
     _id: "5jPGkvoczsda7DaSj",
@@ -70329,7 +70329,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/69e7e301a77ee8bb45a5e8f1.jpeg",
+    image: "groups/image/69e7e301a77ee8bb45a5e8f1.jpeg",
   },
   {
     _id: "w5ZDwqJdCoz9Yhg7G",
@@ -71175,7 +71175,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/513109167a3e9a6cde7954fb.png",
+    image: "groups/image/513109167a3e9a6cde7954fb.png",
   },
   {
     _id: "Fh4wNRv4xsE4FNMiL",
@@ -71476,7 +71476,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/11acb351c0c22e544a9dcc19.jpeg",
+    image: "groups/image/11acb351c0c22e544a9dcc19.jpeg",
   },
   {
     _id: "Dytc2f3yQGrDTmyyT",
@@ -71662,7 +71662,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Nanette",
-    image: "courses/image/4c124c8f129627b26586b848.jpeg",
+    image: "groups/image/4c124c8f129627b26586b848.jpeg",
     history: [
       {
         dateTime: {
@@ -72078,7 +72078,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/21a54574d0ae652a4bfa1793.jpeg",
+    image: "groups/image/21a54574d0ae652a4bfa1793.jpeg",
   },
   {
     _id: "AgMKwXtLYfxCckdMz",
@@ -72513,7 +72513,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/bc6635aa29f4f8f553ce142b.jpeg",
+    image: "groups/image/bc6635aa29f4f8f553ce142b.jpeg",
   },
   {
     _id: "rNpAJKGeksf6NzMad",
@@ -73049,7 +73049,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/2a7e12434bf3c0a9921d0c2b.jpeg",
+    image: "groups/image/2a7e12434bf3c0a9921d0c2b.jpeg",
   },
   {
     _id: "4E3A6xRSq4pXWrui6",
@@ -73404,7 +73404,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/be1dc54d8fc04eee91c69873.jpeg",
+    image: "groups/image/be1dc54d8fc04eee91c69873.jpeg",
   },
   {
     _id: "XewsrESm5QKuvQwGA",
@@ -73934,7 +73934,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/c82bbe46c66e04defbeb96dd.jpeg",
+    image: "groups/image/c82bbe46c66e04defbeb96dd.jpeg",
   },
   {
     _id: "Nq85CGazSzkM2sq4a",
@@ -74227,7 +74227,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/bc227fa6c44de7d544f9fc94.jpeg",
+    image: "groups/image/bc227fa6c44de7d544f9fc94.jpeg",
   },
   {
     _id: "MrKFJHtCZzaH3HoLa",
@@ -74389,7 +74389,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/7a5660318d3600a2efb857c0.png",
+    image: "groups/image/7a5660318d3600a2efb857c0.png",
   },
   {
     _id: "KRtKDzyquX7JLgKLB",
@@ -75045,7 +75045,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/6a4271dfa862b5dbf48b38ea.jpeg",
+    image: "groups/image/6a4271dfa862b5dbf48b38ea.jpeg",
   },
   {
     _id: "iHdn3f4pNwruQshur",
@@ -75291,7 +75291,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/03626c6722878a16b257c1b7.jpeg",
+    image: "groups/image/03626c6722878a16b257c1b7.jpeg",
   },
   {
     _id: "aezC2GRTkuaHQPKGa",
@@ -75854,7 +75854,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/11f7a3e5be15754d1f996298.jpeg",
+    image: "groups/image/11f7a3e5be15754d1f996298.jpeg",
   },
   {
     _id: "Aw3wswurPFYgFk5QK",
@@ -75988,7 +75988,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/81b2503047e24a686f728450.jpeg",
+    image: "groups/image/81b2503047e24a686f728450.jpeg",
   },
   {
     _id: "ZmEHqWgaBq7BjoxP4",
@@ -76467,7 +76467,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/4bed3e874fb9efa51ab9b635.jpeg",
+    image: "groups/image/4bed3e874fb9efa51ab9b635.jpeg",
   },
   {
     _id: "kpFYaGHiJtDdNi85T",
@@ -76870,7 +76870,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/c7460e651fcf5b7a1fe71d08.jpeg",
+    image: "groups/image/c7460e651fcf5b7a1fe71d08.jpeg",
   },
   {
     _id: "xZuyAjXYZRzC2agvG",
@@ -77062,7 +77062,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/53620ce05072349af650fb7d.jpeg",
+    image: "groups/image/53620ce05072349af650fb7d.jpeg",
   },
   {
     _id: "MoP3fdw5nM5NXHX5o",
@@ -77215,7 +77215,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/d17dc8d46b10530d88da1305.jpeg",
+    image: "groups/image/d17dc8d46b10530d88da1305.jpeg",
   },
   {
     _id: "37ECLNNQzXf43MAty",
@@ -77671,7 +77671,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/2c372fabf250988664a955a7.png",
+    image: "groups/image/2c372fabf250988664a955a7.png",
   },
   {
     _id: "7EeW3PKJSvbjezbE6",
@@ -79618,7 +79618,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/b5d55c3dcd5ae2f024d96aa1.jpeg",
+    image: "groups/image/b5d55c3dcd5ae2f024d96aa1.jpeg",
   },
   {
     _id: "2J8SX8LpQPdcF4FxS",
@@ -79972,7 +79972,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/a598b8ac40e6427d05001aa4.jpeg",
+    image: "groups/image/a598b8ac40e6427d05001aa4.jpeg",
   },
   {
     _id: "PPyBeiRB7KfC3fEdD",
@@ -80369,7 +80369,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/0356ee039299417a2a90a79c.jpeg",
+    image: "groups/image/0356ee039299417a2a90a79c.jpeg",
   },
   {
     _id: "dAdX7M2gvFwkHtYAR",
@@ -80498,7 +80498,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Amargo",
-    image: "courses/image/e523a093998bc267503bd236.jpeg",
+    image: "groups/image/e523a093998bc267503bd236.jpeg",
     history: [
       {
         dateTime: {
@@ -81149,7 +81149,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/f22efd75b5b5bd56aaea2cfb.jpeg",
+    image: "groups/image/f22efd75b5b5bd56aaea2cfb.jpeg",
   },
   {
     _id: "Ez6RKr5R2w7TxqLdh",
@@ -81222,7 +81222,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Andee",
-    image: "courses/image/defa5da6ffeb3250ef1f3a00.jpeg",
+    image: "groups/image/defa5da6ffeb3250ef1f3a00.jpeg",
     history: [
       {
         dateTime: {
@@ -81550,7 +81550,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/36cada82bd6d6996e2319c9d.jpeg",
+    image: "groups/image/36cada82bd6d6996e2319c9d.jpeg",
   },
   {
     _id: "RTad7myG9x9nBFY9r",
@@ -81907,7 +81907,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/f1262662ee1281157a80b27c.jpeg",
+    image: "groups/image/f1262662ee1281157a80b27c.jpeg",
   },
   {
     _id: "aGfcMDHLTZTr7C5nm",
@@ -82232,7 +82232,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/2966f5a6c64889c817afcfb2.jpeg",
+    image: "groups/image/2966f5a6c64889c817afcfb2.jpeg",
   },
   {
     _id: "uDTCt8MRf3BC66WzB",
@@ -82301,7 +82301,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Yolanda",
-    image: "courses/image/af4dbc959a47d8bc867a1455.jpeg",
+    image: "groups/image/af4dbc959a47d8bc867a1455.jpeg",
     history: [
       {
         dateTime: {
@@ -82879,7 +82879,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Nap",
-    image: "courses/image/4f4efaceae82aac74568cb25.jpeg",
+    image: "groups/image/4f4efaceae82aac74568cb25.jpeg",
     history: [
       {
         dateTime: {
@@ -83032,7 +83032,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Mallissa",
-    image: "courses/image/398cc1cc06128f326258c054.jpeg",
+    image: "groups/image/398cc1cc06128f326258c054.jpeg",
     history: [
       {
         dateTime: {
@@ -83340,7 +83340,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/4b3b3deb397a2bf4dfecebfa.png",
+    image: "groups/image/4b3b3deb397a2bf4dfecebfa.png",
   },
   {
     _id: "BFuEBwQS8mrkQCyLG",
@@ -83818,7 +83818,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/55fbb50a2d5ad985b471e5d1.jpeg",
+    image: "groups/image/55fbb50a2d5ad985b471e5d1.jpeg",
   },
   {
     _id: "ehWd8dxGXYJYvLn29",
@@ -83995,7 +83995,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/939a040d1d6a95ceaf221159.jpeg",
+    image: "groups/image/939a040d1d6a95ceaf221159.jpeg",
   },
   {
     _id: "ZupAwc6bH6Dj6vNAx",
@@ -84301,7 +84301,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/91e4ffc781ce44c42fab619a.jpeg",
+    image: "groups/image/91e4ffc781ce44c42fab619a.jpeg",
   },
   {
     _id: "d6e2MFZkt3GPniv7w",
@@ -84657,7 +84657,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/a6e3f4fda2f847c5259f0ec8.jpeg",
+    image: "groups/image/a6e3f4fda2f847c5259f0ec8.jpeg",
   },
   {
     _id: "cppJLjNhCn3sMAkZX",
@@ -84936,7 +84936,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/6a0264d5e52447c8136256fc.jpeg",
+    image: "groups/image/6a0264d5e52447c8136256fc.jpeg",
   },
   {
     _id: "XHDh5DxLp4MPXq7oE",
@@ -85164,7 +85164,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/e419841114e6d6d0ffa8a9b3.jpeg",
+    image: "groups/image/e419841114e6d6d0ffa8a9b3.jpeg",
   },
   {
     _id: "9mxiAFyyN7YmfFhZA",
@@ -85791,7 +85791,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/7bbfc3de1c6f70e03e9b8ed1.jpeg",
+    image: "groups/image/7bbfc3de1c6f70e03e9b8ed1.jpeg",
   },
   {
     _id: "bShsnbp4B9SNwnMzX",
@@ -86232,7 +86232,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/b1d29c45ba4f52fdfd3cb3ae.jpeg",
+    image: "groups/image/b1d29c45ba4f52fdfd3cb3ae.jpeg",
   },
   {
     _id: "izB23JSHt3nkjTP4e",
@@ -86582,7 +86582,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/ebf6ce540724fad6420687e1.jpeg",
+    image: "groups/image/ebf6ce540724fad6420687e1.jpeg",
   },
   {
     _id: "d2gSp6NRoSkN3mTzm",
@@ -86948,7 +86948,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/d09213ed545644f87ead2b7b.jpeg",
+    image: "groups/image/d09213ed545644f87ead2b7b.jpeg",
   },
   {
     _id: "dbv6MztWyZ42FZa8D",
@@ -87922,7 +87922,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/94d67a0b5440e7d1940d3401.jpeg",
+    image: "groups/image/94d67a0b5440e7d1940d3401.jpeg",
   },
   {
     _id: "pPL9MZJkxBxGxipwk",
@@ -88738,7 +88738,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/deb58d6890f9d01160fb9902.jpeg",
+    image: "groups/image/deb58d6890f9d01160fb9902.jpeg",
   },
   {
     _id: "bafNMtcp4r9oTXotS",
@@ -89413,7 +89413,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/40669f05c281dcb16c9dc90b.png",
+    image: "groups/image/40669f05c281dcb16c9dc90b.png",
   },
   {
     _id: "w8sEZwBbaJnQJ6ek3",
@@ -89782,7 +89782,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/59d52ea8024b611f2b4b5326.jpeg",
+    image: "groups/image/59d52ea8024b611f2b4b5326.jpeg",
   },
   {
     _id: "nFsdAqesEzYWb2DxP",
@@ -90594,7 +90594,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/f6def57afe600ef163d6df8b.jpeg",
+    image: "groups/image/f6def57afe600ef163d6df8b.jpeg",
   },
   {
     _id: "AmRv2m23QYZxTKr3w",
@@ -90899,7 +90899,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/a861d7cf01c4bb237c985e6f.jpeg",
+    image: "groups/image/a861d7cf01c4bb237c985e6f.jpeg",
   },
   {
     _id: "ATtCSeRuYmLgTx3vu",
@@ -91871,7 +91871,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/bd438025411b1ffeb36aca72.png",
+    image: "groups/image/bd438025411b1ffeb36aca72.png",
   },
   {
     _id: "t3TJokosJ5GokhtjT",
@@ -92310,7 +92310,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/0b738df8b36805db2a8936bb.jpeg",
+    image: "groups/image/0b738df8b36805db2a8936bb.jpeg",
   },
   {
     _id: "PZeXmumd2hECiCQxE",
@@ -92651,7 +92651,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/5de8732ce8b5325953061ab0.jpeg",
+    image: "groups/image/5de8732ce8b5325953061ab0.jpeg",
   },
   {
     _id: "gLT2btdRXvzKqD9t3",
@@ -93701,7 +93701,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/b03db05c148574105a654a8f.jpeg",
+    image: "groups/image/b03db05c148574105a654a8f.jpeg",
   },
   {
     _id: "qTmG2vmS6bzztK2pu",
@@ -94116,7 +94116,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/32e21a4ad0e6531fbcb9d159.jpeg",
+    image: "groups/image/32e21a4ad0e6531fbcb9d159.jpeg",
   },
   {
     _id: "DwQxAh4a49uLXdgze",
@@ -94880,7 +94880,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Donnie",
-    image: "courses/image/dde8f58e7308055cbcb8b7a5.jpeg",
+    image: "groups/image/dde8f58e7308055cbcb8b7a5.jpeg",
     history: [
       {
         dateTime: {
@@ -95099,7 +95099,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Ertha",
-    image: "courses/image/a9f7a4d59879b551a8e8bdfd.jpeg",
+    image: "groups/image/a9f7a4d59879b551a8e8bdfd.jpeg",
     history: [
       {
         dateTime: {
@@ -95442,7 +95442,7 @@ export const groups: {
     ],
     archived: false,
     createdby: "Hermione",
-    image: "courses/image/a6e26a5f50e1f947754f6be8.jpeg",
+    image: "groups/image/a6e26a5f50e1f947754f6be8.jpeg",
     history: [
       {
         dateTime: {
@@ -96082,7 +96082,7 @@ export const groups: {
         },
       },
     ],
-    image: "courses/image/3310ed54181b20c26df72a18.jpeg",
+    image: "groups/image/3310ed54181b20c26df72a18.jpeg",
   },
   {
     _id: "r6m8ANwjAxxcq5j3j",
