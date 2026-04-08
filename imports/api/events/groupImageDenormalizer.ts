@@ -4,16 +4,16 @@ import { Events, EventEntity } from "/imports/api/events/events";
 export async function onStartUp() {
   let updated = 0;
 
-  for (const event of (await Events.find({}).fetchAsync()).filter((e) => e.courseId)) {
-    const group = await Groups.findOneAsync(event.courseId);
+  for (const event of (await Events.find({}).fetchAsync()).filter((e) => e.groupId)) {
+    const group = await Groups.findOneAsync(event.groupId);
     if (!group) {
-      throw new Error(`Missing course ${event.courseId} for event`);
+      throw new Error(`Missing group ${event.groupId} for event`);
     }
 
     const update = {
       $set: {
-        courseImage: group.image,
-        courseCompactImage: group.compactImage,
+        groupImage: group.image,
+        groupCompactImage: group.compactImage,
       },
     };
 
@@ -27,16 +27,16 @@ export async function onStartUp() {
 export async function beforeInsert(
   event: Omit<EventEntity, "_id">,
 ): Promise<Omit<EventEntity, "_id">> {
-  if (!event.courseId) {
+  if (!event.groupId) {
     return event;
   }
 
-  const group = await Groups.findOneAsync(event.courseId);
+  const group = await Groups.findOneAsync(event.groupId);
   if (!group) {
-    throw new Error(`Missing group ${event.courseId} for new event`);
+    throw new Error(`Missing group ${event.groupId} for new event`);
   }
 
-  return { ...event, courseImage: group.image, courseCompactImage: group.compactImage };
+  return { ...event, groupImage: group.image, groupCompactImage: group.compactImage };
 }
 
 export async function afterGroupUpdateImage(
@@ -44,16 +44,16 @@ export async function afterGroupUpdateImage(
   set: { compactImage: string; image: string },
 ) {
   await Events.updateAsync(
-    { courseId: groupId },
-    { $set: { courseImage: set.image, courseCompactImage: set.compactImage } },
+    { groupId },
+    { $set: { groupImage: set.image, groupCompactImage: set.compactImage } },
     { multi: true },
   );
 }
 
 export async function afterGroupDeleteImage(groupId: string) {
   await Events.updateAsync(
-    { courseId: groupId },
-    { $set: { courseImage: "", courseCompactImage: "" } },
+    { groupId },
+    { $set: { groupImage: "", groupCompactImage: "" } },
     { multi: true },
   );
 }

@@ -98,7 +98,7 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
 
   // Sending an event notification is only possible when the event is
   // attached to a group. Otherwise there is nobody to inform.
-  const [notifyChecked, setNotifyChecked] = useState(!!event.courseId && "new" in event);
+  const [notifyChecked, setNotifyChecked] = useState(!!event.groupId && "new" in event);
   const [addNotificationMessage, setAddNotificationMessage] = useState("");
 
   function replicaDateCount() {
@@ -341,12 +341,12 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
                   maxParticipants: event.maxParticipants,
                 };
 
-                const { courseId, venue } = event;
+                const { groupId, venue } = event;
                 if (venue) {
                   replicaEvent.venue = venue;
                 }
-                if (courseId) {
-                  replicaEvent.courseId = courseId;
+                if (groupId) {
+                  replicaEvent.groupId = groupId;
                 }
 
                 try {

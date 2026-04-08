@@ -51,8 +51,8 @@ export async function record(
   // For now when we don't have a group we just go through the motions but
   // the recipient list will be empty.
   let group: GroupModel | undefined;
-  if (event.courseId) {
-    group = await Groups.findOneAsync(event.courseId);
+  if (event.groupId) {
+    group = await Groups.findOneAsync(event.groupId);
   }
 
   const body: Body = {
@@ -78,8 +78,8 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
   const event = await Events.findOneAsync(entry.body.eventId);
 
   let group: GroupModel | undefined;
-  if (event?.courseId) {
-    group = await Groups.findOneAsync(event.courseId);
+  if (event?.groupId) {
+    group = await Groups.findOneAsync(event.groupId);
   }
 
   let region: RegionModel | undefined;

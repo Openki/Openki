@@ -111,7 +111,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
   const currentRegion = useCurrentRegionId();
   const [isRegionsLoading, regions] = useRegions();
-  const [isGroupLoading, group] = useGroupDetails({ when: !!event.courseId }, event.courseId);
+  const [isGroupLoading, group] = useGroupDetails({ when: !!event.groupId }, event.groupId);
   const [selectedRegion, setSelectedRegion] = useState<string | undefined>(event.region);
   // init selected region
   useEffect(() => {
@@ -120,7 +120,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       return;
     }
 
-    if (event.courseId) {
+    if (event.groupId) {
       if (!group) {
         // wait until group is loaded
         return;
@@ -147,7 +147,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   );
   // init custom field values
   useEffect(() => {
-    if (event.courseId) {
+    if (event.groupId) {
       if (!group) {
         // wait until group is loaded
         return;
@@ -168,7 +168,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
   // Sending an event notification is only possible when the event is
   // attached to a group. Otherwise there is nobody to inform.
-  const [notifyChecked, setNotifyChecked] = useState(!!event.courseId && isNew);
+  const [notifyChecked, setNotifyChecked] = useState(!!event.groupId && isNew);
   const [addNotificationMessage, setAddNotificationMessage] = useState("");
 
   const [changes, setChanges] = useState({
@@ -324,7 +324,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       // You can select the region for events that are new
       isNew &&
       // and not associated with a group
-      !event.courseId &&
+      !event.groupId &&
       // and the session not sets the region
       !currentRegion &&
       // and when more then one region exists
@@ -340,7 +340,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       region: selectedRegion as string,
       event: {
         _id: event._id,
-        courseId: event.courseId,
+        groupId: event.groupId,
         room: changes.room,
         startLocal: changes.startLocal,
         endLocal: changes.endLocal,
@@ -388,8 +388,8 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
     if (isNew) {
       editEvent.region = selectedRegion as string;
-      if (event.courseId) {
-        editEvent.courseId = event.courseId;
+      if (event.groupId) {
+        editEvent.groupId = event.groupId;
       } else {
         // We have this 'secret' feature where you can set a organization ID
         // in the URL to assign a organization to the event on creation
@@ -427,7 +427,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           }),
         );
 
-        if (event.courseId) {
+        if (event.groupId) {
           if (!group) {
             throw new Error("Unexpected undefined: group");
           }
@@ -470,8 +470,8 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
         );
       }
 
-      if (event.courseId && customFieldValues) {
-        await GroupsMethods.save(event.courseId, { customFields: customFieldValues });
+      if (event.groupId && customFieldValues) {
+        await GroupsMethods.save(event.groupId, { customFields: customFieldValues });
       }
 
       afterSave();
@@ -505,7 +505,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             ? t("course.event.edit.add", "Create an event")
             : t("course.event.edit.edit", "Edit event")}
         </h3>
-        {isNew && !event.courseId && (
+        {isNew && !event.groupId && (
           <>
             {t(
               "course.createEventInfo",
@@ -516,7 +516,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
         )}
 
         <div className="edit-page-header event-edit">
-          {!isNew && !event.courseId && <Tag region={event.region} />}
+          {!isNew && !event.groupId && <Tag region={event.region} />}
 
           <div className="mb-3">
             <FormControl
@@ -605,9 +605,9 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             </>
           )}
 
-          {!!event.courseId && (
+          {!!event.groupId && (
             <EditGroupCustomFields
-              groupId={event.courseId}
+              groupId={event.groupId}
               values={customFieldValues}
               onChange={(values) => setCustomFieldValues(values)}
             />
@@ -673,7 +673,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             </div>
           )}
 
-          {!!event.courseId && (
+          {!!event.groupId && (
             <div className="mb-3">
               <Notify
                 event={event}

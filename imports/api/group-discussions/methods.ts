@@ -19,7 +19,7 @@ const sanitizeComment = (comment: { title?: string | undefined; text: UnsafeStri
 };
 
 export const PostCommentFieldsPattern = {
-  courseId: String,
+  groupId: String,
   eventId: Match.Optional(String),
   parentId: Match.Optional(String),
   title: Match.Optional(String),
@@ -30,7 +30,7 @@ export const PostCommentFieldsPattern = {
 export type PostCommentFields = Type<typeof PostCommentFieldsPattern>;
 
 export const postComment = ServerMethod(
-  "courseDiscussion.postComment",
+  "groupDiscussion.postComment",
   async function (comment: PostCommentFields) {
     check(comment, PostCommentFieldsPattern);
 
@@ -40,15 +40,15 @@ export const postComment = ServerMethod(
       throw new Meteor.Error(400, "Invalid comment");
     }
 
-    const group = await Groups.findOneAsync(comment.courseId);
+    const group = await Groups.findOneAsync(comment.groupId);
     if (!group) {
       throw new Meteor.Error(404, "group not found");
     }
-    saneComment.courseId = group._id;
+    saneComment.groupId = group._id;
 
     if (group.singleEvent && comment.eventId) {
       const event = await Events.findOneAsync(comment.eventId);
-      if (!event || event.courseId !== group._id) {
+      if (!event || event.groupId !== group._id) {
         throw new Meteor.Error(404, "event not found");
       }
       saneComment.eventId = event._id;
@@ -75,7 +75,7 @@ export const postComment = ServerMethod(
         throw new Meteor.Error(404, "parent comment not found");
       }
 
-      if (parentComment.courseId !== comment.courseId) {
+      if (parentComment.groupId !== comment.groupId) {
         // I could try to mend this but why should I?
         throw new Meteor.Error(400, "Group mismatch");
       }
@@ -108,7 +108,7 @@ export const EditCommentFieldsPattern = {
 export type EditCommentFields = Type<typeof EditCommentFieldsPattern>;
 
 export const editComment = ServerMethod(
-  "courseDiscussion.editComment",
+  "groupDiscussion.editComment",
   async (comment: EditCommentFields) => {
     check(comment, EditCommentFieldsPattern);
 
@@ -130,7 +130,7 @@ export const editComment = ServerMethod(
 );
 
 export const deleteComment = ServerMethod(
-  "courseDiscussion.deleteComment",
+  "groupDiscussion.deleteComment",
   async (commentId: string) => {
     check(commentId, String);
 
@@ -144,7 +144,7 @@ export const deleteComment = ServerMethod(
       throw new Meteor.Error(404, "no such comment");
     }
 
-    const group = await Groups.findOneAsync(comment.courseId);
+    const group = await Groups.findOneAsync(comment.groupId);
 
     if (!group) {
       throw new Meteor.Error(401, "delete not permitted");

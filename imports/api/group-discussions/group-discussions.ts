@@ -10,7 +10,7 @@ export interface GroupDiscussionEntity {
   text: string;
   /** users ID, undefined if anonymous comment */
   userId?: string;
-  courseId: string;
+  groupId: string;
   eventId?: string | undefined;
   notifyAll?: boolean | undefined;
 
@@ -26,7 +26,7 @@ export class GroupDiscussionsCollection extends Mongo.Collection<GroupDiscussion
     super("CourseDiscussions");
 
     if (Meteor.isServer) {
-      this.createIndex({ courseId: 1 });
+      this.createIndex({ groupId: 1 });
     }
   }
 }

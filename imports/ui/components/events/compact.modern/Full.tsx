@@ -125,8 +125,8 @@ export function Full({
         </p>
         <div className="collapse" ref={collapseElementRef}>
           <p className="card-text" dangerouslySetInnerHTML={{ __html: event.description }}></p>
-          {!!event.courseId && (
-            <CustomFieldDisplay groupId={event.courseId} customClassName="card-text mb-1" />
+          {!!event.groupId && (
+            <CustomFieldDisplay groupId={event.groupId} customClassName="card-text mb-1" />
           )}
 
           {event.editableBy(user) && (
@@ -186,7 +186,7 @@ export function Full({
             </p>
           )}
 
-          {!!event.courseId && <DisplayDiscussion groupId={event.courseId} eventId={event._id} />}
+          {!!event.groupId && <DisplayDiscussion groupId={event.groupId} eventId={event._id} />}
 
           {!hideCategories && !!event.categories?.length && (
             <p className="card-text">

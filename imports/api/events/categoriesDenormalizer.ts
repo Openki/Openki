@@ -9,7 +9,7 @@ export async function onStartUp() {
     await Promise.all(
       await Groups.find({}, { projection: { _id: 1, categories: 1 } }).mapAsync((group) =>
         Events.updateAsync(
-          { courseId: group._id },
+          { groupId: group._id },
           { $set: { categories: group.categories || [] } },
           { multi: true },
         ),
@@ -24,9 +24,9 @@ export async function beforeInsert(
   event: Omit<EventEntity, "_id">,
 ): Promise<Omit<EventEntity, "_id">> {
   // categories comes from the parent group
-  const group = await Groups.findOneAsync(event.courseId);
+  const group = await Groups.findOneAsync(event.groupId);
   if (!group) {
-    throw new Error(`Missing group ${event.courseId} for new event`);
+    throw new Error(`Missing group ${event.groupId} for new event`);
   }
 
   return { ...event, categories: group.categories };
@@ -34,7 +34,7 @@ export async function beforeInsert(
 
 export async function afterGroupUpdateCategories(group: { _id: string; categories: string[] }) {
   await Events.updateAsync(
-    { courseId: group._id },
+    { groupId: group._id },
     { $set: { categories: group.categories } },
     { multi: true },
   );

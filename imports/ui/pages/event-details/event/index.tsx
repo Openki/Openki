@@ -21,15 +21,15 @@ import "./styles.scss";
 
 type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };
 
-function GroupEvent({ event }: { event: WithRequired<EventModel, "courseId"> }) {
-  const [isLoading, group] = useDetails(event.courseId);
+function GroupEvent({ event }: { event: WithRequired<EventModel, "groupId"> }) {
+  const [isLoading, group] = useDetails(event.groupId);
 
   const user = useUser();
 
   function groupLink() {
     return Router.path(
       "showGroup",
-      { _id: event.courseId, slug: group?.slug },
+      { _id: event.groupId, slug: group?.slug },
       group?.singleEvent ? { query: { force: "1" } } : {},
     );
   }
@@ -133,20 +133,20 @@ export function Event({ event, isNew }: { event: EventModel; isNew: boolean }) {
           </div>
         )}
 
-        {!!event.courseId && <GroupEvent event={event as WithRequired<EventModel, "courseId">} />}
+        {!!event.groupId && <GroupEvent event={event as WithRequired<EventModel, "groupId">} />}
 
-        <div className={`event${event.courseId ? " group-event" : ""}`}>
+        <div className={`event${event.groupId ? " group-event" : ""}`}>
           {isEditing() ? <Edit {...eventEditAttr()} /> : <Display {...eventDisplayAttr()} />}
         </div>
-        {!mobileViewport() && !isEditing() && !!event.courseId && (
-          <DisplayDiscussion groupId={event.courseId} eventId={event._id} />
+        {!mobileViewport() && !isEditing() && !!event.groupId && (
+          <DisplayDiscussion groupId={event.groupId} eventId={event._id} />
         )}
       </div>
       {!isEditing() && (
         <div className="col-lg-4">
           <EventRegistration event={event} />
-          {mobileViewport() && !!event.courseId && (
-            <DisplayDiscussion groupId={event.courseId} eventId={event._id} />
+          {mobileViewport() && !!event.groupId && (
+            <DisplayDiscussion groupId={event.groupId} eventId={event._id} />
           )}
           <div className="page-component mt-3">
             <Report showGroupHint={true} />

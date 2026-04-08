@@ -16,10 +16,10 @@ export async function updateOrganizationsAndEditors(
 
     // If an event has a parent group, it inherits all organizations and all editors from it.
     let groupOrganizations: string[] = [];
-    if (event.courseId) {
-      const group = await Groups.findOneAsync(event.courseId);
+    if (event.groupId) {
+      const group = await Groups.findOneAsync(event.groupId);
       if (!group) {
-        throw new Error(`Missing group ${event.courseId} for event ${event._id}`);
+        throw new Error(`Missing group ${event.groupId} for event ${event._id}`);
       }
 
       groupOrganizations = group.organizations;
@@ -36,9 +36,9 @@ export async function updateOrganizationsAndEditors(
     // Past events keep their list of organizations even if it changes for the group
     const historical = event.start < new Date();
     if (historical) {
-      update.allOrganizations = union(event.organizations, event.courseOrganizations);
+      update.allOrganizations = union(event.organizations, event.groupOrganizations);
     } else {
-      update.courseOrganizations = groupOrganizations;
+      update.groupOrganizations = groupOrganizations;
       update.allOrganizations = union(event.organizations, groupOrganizations);
     }
 

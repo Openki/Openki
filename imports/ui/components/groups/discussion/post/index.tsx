@@ -60,7 +60,7 @@ export function Post({ post, responses, edit, onCancel }: Props) {
     return {
       new: true,
       parentId: post._id,
-      courseId: post.courseId,
+      groupId: post.groupId,
       eventId: post.eventId,
       userId,
       title: "",

@@ -7,5 +7,5 @@ import { ServerPublishMany } from "/imports/utils/ServerPublish";
 export const [forGroup, useForGroup] = ServerPublishMany("discussion", (groupId: string) => {
   check(groupId, String);
 
-  return GroupDiscussions.find({ courseId: groupId });
+  return GroupDiscussions.find({ groupId });
 });

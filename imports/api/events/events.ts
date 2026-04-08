@@ -67,7 +67,7 @@ export interface EventEntity {
 
   time_lastedit: Date;
   /** group._id of parent group, optional */
-  courseId?: string;
+  groupId?: string;
   /** (Events are only displayed when organization or venue-filter is active) */
   internal: boolean;
   /** Send a reminder to all attendees of an event just before the event starts */
@@ -91,7 +91,7 @@ export interface EventEntity {
    * (calculated) list of organization._id inherited from group (if groupId is set) ("promote organizations"
    * from group)
    */
-  courseOrganizations: string[];
+  groupOrganizations: string[];
   /**
    * (calculated) all organizations that promote this group, both inherited from group and set on the
    * event itself ("promote organizations" from event and group)
@@ -110,9 +110,9 @@ export interface EventEntity {
   /** (calculated) date object calculated from endLocal field. */
   end: Date;
   /** (calculated) compact image from the group, scaled down to max size (width*height) 500px */
-  courseCompactImage: string;
+  groupCompactImage: string;
   /** (calculated) details image from the group, scaled down to max size (width*height) 1500px */
-  courseImage: string;
+  groupImage: string;
 }
 
 export type EventModel = OEvent & EventEntity;
@@ -148,19 +148,19 @@ export class OEvent {
   }
 
   publicUrlForCompactImage(this: EventModel) {
-    if (!this.courseCompactImage) {
+    if (!this.groupCompactImage) {
       return undefined;
     }
 
-    return FileStorage.generatePublicUrl(this.courseCompactImage);
+    return FileStorage.generatePublicUrl(this.groupCompactImage);
   }
 
   publicUrlForDetailsImage(this: EventModel) {
-    if (!this.courseImage) {
+    if (!this.groupImage) {
       return undefined;
     }
 
-    return FileStorage.generatePublicUrl(this.courseImage);
+    return FileStorage.generatePublicUrl(this.groupImage);
   }
 
   attendedBy(this: EventModel, userId: string | null | undefined) {
@@ -232,7 +232,7 @@ export const FindFilterPattern = {
   /** the event must be in none of the organization (ID) */
   notOrganizations: Match.Maybe([String]),
   /** only events for this group (ID) */
-  course: Match.Maybe(String),
+  group: Match.Maybe(String),
   /** only events that are internal (if true) or public (if false), Default: Show both */
   internal: Match.Maybe(Boolean),
   /** only events that are canceled (if true) or not canceled (if false), Default: Show both */
@@ -243,7 +243,7 @@ export const FindFilterPattern = {
 export type FindFilter = Type<typeof FindFilterPattern>;
 
 export const FindParams = {
-  course: Predicates.id,
+  group: Predicates.id,
   region: Predicates.id,
   participant: Predicates.id,
   search: Predicates.string,
@@ -369,7 +369,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
     }
 
     if (filter.standalone) {
-      find.courseId = { $exists: false };
+      find.groupId = { $exists: false };
     }
 
     if (filter.tenants && filter.tenants.length > 0) {
@@ -410,8 +410,8 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
       find.allOrganizations = { $nin: notInOrganizations };
     }
 
-    if (filter.course) {
-      find.courseId = filter.course;
+    if (filter.group) {
+      find.groupId = filter.group;
     }
 
     if (filter.participant) {

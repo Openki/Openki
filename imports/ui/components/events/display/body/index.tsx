@@ -155,7 +155,7 @@ export function Display({
       busyButton: t("event.delete.confirm.button.busy", "Deleting event…"),
       onRemove: async () => {
         const { title, region } = event;
-        const group = event.courseId;
+        const group = event.groupId;
 
         onRemove();
         try {
@@ -246,8 +246,8 @@ export function Display({
 
   return (
     <div className="page-component">
-      {event.editableBy(user) && event.courseId ? (
-        <GroupEvent event={event} groupId={event.courseId} />
+      {event.editableBy(user) && event.groupId ? (
+        <GroupEvent event={event} groupId={event.groupId} />
       ) : (
         <Content event={event} />
       )}

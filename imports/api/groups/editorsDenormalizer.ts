@@ -23,7 +23,7 @@ export async function updateEditors(groupIdOrSelector: string | Mongo.Selector<G
     // At some point we'll have to figure out a proper caching hierarchy
 
     await eventOrganizationsAndEditorsDenormalizer.updateOrganizationsAndEditors({
-      courseId: group._id,
+      groupId: group._id,
     });
   }
 }

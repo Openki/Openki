@@ -151,11 +151,11 @@ export const Api = {
         };
       }
 
-      if (ev.courseId) {
-        const group = await Groups.findOneAsync(ev.courseId);
+      if (ev.groupId) {
+        const group = await Groups.findOneAsync(ev.groupId);
         if (group) {
           evr.group = {
-            id: ev.courseId,
+            id: ev.groupId,
             name: group.name,
             link: Router.url("showGroup", group),
             customFields: group.customFields

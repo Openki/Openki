@@ -42,7 +42,7 @@ export async function generate() {
 
     for (let n = 0; n < createCount; n += 1) {
       const comment = {} as Mongo.OptionalId<GroupDiscussionEntity>;
-      comment.courseId = group._id;
+      comment.groupId = group._id;
       comment.title = sampleSize(words, 1 + Math.floor(prng() * 3)).join(" ");
       comment.text = HtmlTools.sanitizeHtml(
         sampleSize(words, 5).join(" ") + sampleSize(words, Math.floor(prng() * 30)).join(" "),

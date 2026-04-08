@@ -38,13 +38,13 @@ export async function record(eventId: string, participantId: string) {
     throw new Meteor.Error(`No user entry for ${participantId}`);
   }
 
-  if (!event.courseId) {
-    throw new Meteor.Error(`Event has no course`);
+  if (!event.groupId) {
+    throw new Meteor.Error(`Event has no group`);
   }
 
-  const group = await Groups.findOneAsync(event.courseId);
+  const group = await Groups.findOneAsync(event.groupId);
   if (!group) {
-    throw new Meteor.Error(`No group entry for ${event.courseId}`);
+    throw new Meteor.Error(`No group entry for ${event.groupId}`);
   }
 
   const body: Body = {

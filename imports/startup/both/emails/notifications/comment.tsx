@@ -33,7 +33,7 @@ export async function record(commentId: string) {
     throw new Meteor.Error(`No GroupDiscussion entry for ${commentId}`);
   }
 
-  const group = await Groups.findOneAsync(comment.courseId);
+  const group = await Groups.findOneAsync(comment.groupId);
   if (!group) {
     throw new Meteor.Error(`No group entry for ${commentId}`);
   }
@@ -95,7 +95,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
   let commenterName: string | undefined;
 
   if (comment) {
-    group = await Groups.findOneAsync(comment.courseId);
+    group = await Groups.findOneAsync(comment.groupId);
     if (comment.userId) {
       commenter = await Users.findOneAsync(comment.userId);
     }

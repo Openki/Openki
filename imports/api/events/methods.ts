@@ -123,7 +123,7 @@ export type UpdateFields = Type<typeof UpdateFieldsPattern>;
 
 export const CreateFieldsPattern = {
   ...UpdateFieldsPattern,
-  courseId: Match.Optional(String),
+  groupId: Match.Optional(String),
   region: String,
   replicaOf: Match.Optional(String),
   organizations: Match.Optional([String]),
@@ -175,8 +175,8 @@ export const save = ServerMethod(
     let event: EventModel;
     if (isNew) {
       editFields.time_created = now;
-      if (editFields.courseId) {
-        const group = await Groups.findOneAsync(editFields.courseId);
+      if (editFields.groupId) {
+        const group = await Groups.findOneAsync(editFields.groupId);
         if (!group) {
           throw new Meteor.Error(404, "group not found");
         }
@@ -190,7 +190,7 @@ export const save = ServerMethod(
         if (!parent) {
           throw new Meteor.Error(404, "replica parent not found");
         }
-        if (parent.courseId !== editFields.courseId) {
+        if (parent.groupId !== editFields.groupId) {
           throw new Meteor.Error(400, "replica must be in same group");
         }
       }
@@ -223,7 +223,7 @@ export const save = ServerMethod(
       // Synthesize event document because the code below relies on it
       event = assignIn(new OEvent(), {
         region: editFields.region,
-        courseId: editFields.courseId,
+        groupId: editFields.groupId,
         editors: [user._id],
       }) as EventModel;
     } else {
@@ -345,15 +345,15 @@ export const save = ServerMethod(
       editFields.createdBy = user._id;
       editFields.teamOrganizations = [];
       let enrichedEvent = await groupImageDenormalizer.beforeInsert(editFields as any);
-      if (enrichedEvent.courseId) {
+      if (enrichedEvent.groupId) {
         enrichedEvent = await categoriesDenormalizer.beforeInsert(enrichedEvent);
       }
 
       eventId = await Events.insertAsync(enrichedEvent);
 
-      if (editFields.courseId) {
-        await groupTimeLastEditDenormalizer.afterEventInsert(editFields.courseId);
-        await groupHistoryDenormalizer.afterEventInsert(editFields.courseId, user._id, {
+      if (editFields.groupId) {
+        await groupTimeLastEditDenormalizer.afterEventInsert(editFields.groupId);
+        await groupHistoryDenormalizer.afterEventInsert(editFields.groupId, user._id, {
           _id: eventId,
           title: editFields.title as string,
           slug: editFields.slug as string,
@@ -374,8 +374,8 @@ export const save = ServerMethod(
         affectedReplicas = replicaSync.affected();
       }
 
-      if (event.courseId) {
-        await groupHistoryDenormalizer.afterEventUpdate(event.courseId, user._id, {
+      if (event.groupId) {
+        await groupHistoryDenormalizer.afterEventUpdate(event.groupId, user._id, {
           _id: eventId,
           title: editFields.title as string,
           slug: editFields.slug as string,
@@ -397,8 +397,8 @@ export const save = ServerMethod(
     await organizationsAndEditorsDenormalizer.updateOrganizationsAndEditors(eventId);
     await regionsCountDenormalizer.updateCounters(event.region);
     // the assumption is that all replicas have the same course if any
-    if (event.courseId) {
-      await groupNextEventDenormalizer.updateNextEvent(event.courseId);
+    if (event.groupId) {
+      await groupNextEventDenormalizer.updateNextEvent(event.groupId);
     }
 
     return eventId;
@@ -439,12 +439,12 @@ export const remove = ServerMethod(
       { multi: true },
     );
 
-    if (event.courseId) {
-      await groupHistoryDenormalizer.afterEventRemove(event.courseId, operator._id, {
+    if (event.groupId) {
+      await groupHistoryDenormalizer.afterEventRemove(event.groupId, operator._id, {
         title: event.title,
         startLocal: event.startLocal,
       });
-      await groupNextEventDenormalizer.updateNextEvent(event.courseId);
+      await groupNextEventDenormalizer.updateNextEvent(event.groupId);
     }
     await regionsCountDenormalizer.updateCounters(event.region);
   },
@@ -533,11 +533,11 @@ export const addParticipant = ServerMethod(
     // Send notification to team
     await Notification["Rsvp.Team"].record(eventId, user._id);
 
-    if (!event.courseId) {
+    if (!event.groupId) {
       return;
     }
     // if you cant load group its probably because the event doesn't have one
-    const group = await Groups.findOneAsync(event.courseId);
+    const group = await Groups.findOneAsync(event.groupId);
     if (!group) {
       return;
     }
@@ -547,7 +547,7 @@ export const addParticipant = ServerMethod(
       await processChange(change, { isSimulation: this.isSimulation });
     }
 
-    await groupNextEventDenormalizer.updateNextEvent(event.courseId);
+    await groupNextEventDenormalizer.updateNextEvent(event.groupId);
   },
   { simulation: false },
 );
@@ -605,10 +605,10 @@ export const removeParticipant = ServerMethod(
       { $pull: { participants: { user: participantId } } },
     );
 
-    if (!event.courseId) {
+    if (!event.groupId) {
       return;
     }
-    await groupNextEventDenormalizer.updateNextEvent(event.courseId);
+    await groupNextEventDenormalizer.updateNextEvent(event.groupId);
   },
   { simulation: false },
 );

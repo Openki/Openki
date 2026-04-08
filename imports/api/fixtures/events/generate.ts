@@ -58,7 +58,7 @@ export async function generate() {
   ];
 
   for (const group of await Groups.find().fetchAsync()) {
-    if ((await Events.countDocuments({ courseId: group._id })) > 0) {
+    if ((await Events.countDocuments({ groupId: group._id })) > 0) {
       continue;
     }
 
@@ -101,7 +101,7 @@ export async function generate() {
       event.internal = prng() < 0.07;
       event.sendReminder = PublicSettings.sendReminderPreset;
 
-      event.courseId = group._id;
+      event.groupId = group._id;
       event._id = ensure.fixedId([group._id, `${n}`]);
       event.title = `${group.name} ${sample(words)}`;
       event.description = HtmlTools.sanitizeHtml(

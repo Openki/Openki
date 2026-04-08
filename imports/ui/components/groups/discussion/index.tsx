@@ -53,7 +53,7 @@ export function Discussion({ select, groupId, eventId }: Props) {
     return {
       post: {
         new: true,
-        courseId: groupId,
+        groupId,
         eventId,
         userId,
         title: "",

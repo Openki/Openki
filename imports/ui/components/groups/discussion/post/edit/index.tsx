@@ -35,7 +35,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
   const [commentText, setCommentText] = useState(post.text);
   const [isBusy, setIsBusy] = useState(false);
 
-  const [isLoading, group] = Groups.useDetails(post.courseId);
+  const [isLoading, group] = Groups.useDetails(post.groupId);
 
   function notifyAllChecked() {
     if (!post.new) {
@@ -120,7 +120,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
             try {
               if (post.new) {
                 const postComment = comment as PostCommentFields;
-                postComment.courseId = post.courseId;
+                postComment.groupId = post.groupId;
                 if (post.eventId) {
                   postComment.eventId = post.eventId;
                 }

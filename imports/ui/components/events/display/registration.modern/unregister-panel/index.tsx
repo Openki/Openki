@@ -32,13 +32,13 @@ export interface Props {
 export function UnregisterPanel({ event, onUnregister }: Props) {
   const { dateFormat } = useDateTimeFormat();
 
-  const [isLoading, group] = useDetails(event.courseId || "-1");
+  const [isLoading, group] = useDetails(event.groupId || "-1");
 
   const { t } = useTranslation();
   const [unregisterDropdown, setUnregisterDropdown] = useState(false);
 
   function groupTitle() {
-    if (event.courseId) {
+    if (event.groupId) {
       return group?.name;
     }
     return undefined;
