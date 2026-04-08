@@ -12,6 +12,6 @@ export interface Template {
   members?: string[];
   createdby?: string;
   logoUrl?: string;
-  customCourseFields?: OrganizationEntityCustomGroupFields[];
+  customGroupFields?: OrganizationEntityCustomGroupFields[];
   dashboard?: OrganizationEntityDashboard;
 }

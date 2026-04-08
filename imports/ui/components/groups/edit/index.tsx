@@ -273,7 +273,7 @@ export function Edit(props: Props) {
   }
 
   const customFields = () => {
-    return organizations.flatMap((o) => o.customCourseFields || []);
+    return organizations.flatMap((o) => o.customGroupFields || []);
   };
 
   const resetFields = () => {

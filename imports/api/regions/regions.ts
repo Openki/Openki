@@ -41,7 +41,7 @@ export interface RegionEntity {
    * Number of groups in that region, calculated field (does not count internal or archived
    * groups)
    */
-  courseCount: number;
+  groupCount: number;
   /**
    * Number of future events in that region, calculated field (does not count internal events)
    */
@@ -81,7 +81,7 @@ export interface RegionEntity {
     emailLogo?: string;
 
     /** Default images for groups in overviews if none is set on the group. */
-    courseBackgroundImages: string[];
+    groupBackgroundImages: string[];
   };
 
   /** for the /api/0/xml/schedule See: https://c3voc.de/wiki/schedule#schedule_xml */

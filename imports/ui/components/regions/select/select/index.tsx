@@ -67,8 +67,8 @@ export function Select(props: Props) {
       if (b.futureEventCount > a.futureEventCount) return 1;
 
       // finally regions with more future groups
-      if (a.courseCount > b.courseCount) return -1;
-      if (b.courseCount > a.courseCount) return 1;
+      if (a.groupCount > b.groupCount) return -1;
+      if (b.groupCount > a.groupCount) return 1;
 
       // if no return happened yet, regions are equivalent
       return 0;
@@ -115,7 +115,7 @@ export function Select(props: Props) {
   function allGroups() {
     return Regions.find()
       .fetch()
-      .reduce((acc, region) => acc + region.courseCount, 0);
+      .reduce((acc, region) => acc + region.groupCount, 0);
   }
   function allUpcomingEvents() {
     return Regions.find()
