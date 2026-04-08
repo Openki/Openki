@@ -42,7 +42,7 @@ export const create = ServerMethod("region.create", async (changes: CreateFields
 
   const set = {
     tenant: changes.tenant,
-    courseCount: 0,
+    groupCount: 0,
     futureEventCount: 0,
     createdby: user._id,
     created: new Date(),

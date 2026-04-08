@@ -86,7 +86,7 @@ export interface OrganizationEntity {
   description: string;
   logoUrl?: string;
   /** Customize the inputs that the user can enter when creating and editing a group. */
-  customCourseFields?: OrganizationEntityCustomGroupFields[];
+  customGroupFields?: OrganizationEntityCustomGroupFields[];
   dashboard?: OrganizationEntityDashboard;
   /** Hide some role options in the propose new group. */
   disableCreateRoles?: string[];

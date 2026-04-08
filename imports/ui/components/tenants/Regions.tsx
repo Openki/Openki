@@ -42,7 +42,7 @@ export function Regions({ tenant }: Props) {
           <div className="col-6 responsive-table-head">
             {t("tenant.details.regions.numberOfCourses")}
           </div>
-          <div className="col-6 col-md-2">{region.courseCount}</div>
+          <div className="col-6 col-md-2">{region.groupCount}</div>
 
           <div className="col-6 responsive-table-head">
             {t("tenant.details.regions.numberOfUpcomingEvents")}

@@ -19,7 +19,7 @@ export async function create() {
       claim: template.claim,
       description: template.description,
       logoUrl: template.logoUrl,
-      customCourseFields: template.customCourseFields,
+      customGroupFields: template.customGroupFields,
       dashboard: template.dashboard,
       members: await Promise.all(
         template.members?.map(
@@ -32,7 +32,7 @@ export async function create() {
       ),
       createdby: template.createdby
         ? (await ensure.user(template.createdby))._id
-        : "ServerScript_loadingTestorganizations",
+        : "ServerScript_loadingTestOrganizations",
     } as Mongo.OptionalId<OrganizationEntity>;
 
     await Organizations.insertAsync(organization);

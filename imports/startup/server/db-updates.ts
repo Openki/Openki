@@ -30,6 +30,7 @@ import { update as update20260320moveAllS3FilesFromGroupsToOrganizations } from 
 import { update as update20260408moveAllS3FilesFromCoursesToGroups } from "./updates/2026.04.08 moveAllS3FilesFromCoursesToGroups";
 import { update as update20260408renameCourseToGroupInEventsAndDiscussions } from "./updates/2026.04.08 renameCourseToGroupInEventsAndDiscussions";
 import { update as update20260408renameCourseToGroupDbCollection } from "./updates/2026.04.08 renameCourseToGroupDbCollection";
+import { update as update20260408renameCourseToGroupInRegionAndOrganization } from "./updates/2026.04.08 renameCourseToGroupInRegionAndOrganization";
 
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
@@ -63,6 +64,7 @@ const UpdatesAvailable: Record<string, () => Promise<number>> = {
   "2026.04.08 renameCourseToGroupInEventsAndDiscussions":
     update20260408renameCourseToGroupInEventsAndDiscussions,
   "2026.04.08 renameCourseToGroupDbCollection": update20260408renameCourseToGroupDbCollection,
+  "2026.04.08 renameCourseToGroupInRegionAndOrganization": update20260408renameCourseToGroupInRegionAndOrganization,
 };
 
 interface UpdatesAppliedEntity {

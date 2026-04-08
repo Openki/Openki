@@ -447,7 +447,7 @@ export const organizations: Template[] = [
     claim: "Hier werden Wunschlektionen gesammelt",
     description:
       "<p>Alle können sich dem Wunsch anschliessen indem sie ihr Interesse daran melden.</p><p>Falls du die Fähigkeit besitzt, eine Lektion dazu zu schenken, kannst du dich als Schenkende eintragen.</p>",
-    customCourseFields: [
+    customGroupFields: [
       {
         name: "wisher",
         displayText: {
@@ -476,7 +476,7 @@ export const organizations: Template[] = [
     description:
       '<p>Mehr Wissenswertes über uns gibt es auf unserer Homepage: <a href="http://zuerich-lernt.ch" rel="nofollow">zuerich-lernt.ch</a>. </p>',
     logoUrl: "organizations/logos/b19b1c55c3c3671fad0347d4.png",
-    customCourseFields: [
+    customGroupFields: [
       {
         name: "instructor",
         displayText: { en: "Instructor", de: "Leitung" },

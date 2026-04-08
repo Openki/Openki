@@ -55,10 +55,10 @@ export function Option({
             title={t(
               "regions.courses.title",
               "{COUNT, plural, =0{no courses} one{one course} other{# courses in} } in {REGION}",
-              { COUNT: region.courseCount, REGION: region.name },
+              { COUNT: region.groupCount, REGION: region.name },
             )}
           >
-            {region.courseCount}
+            {region.groupCount}
           </span>{" "}
           <span
             className="badge bg-success text-dark rounded-pill"
