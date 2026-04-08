@@ -79,7 +79,7 @@ export function Member({ member, group }: { member: GroupMemberEntity; group: Gr
   }
 
   return (
-    <div className={`course-member ${ownUserMemberClass()}`}>
+    <div className={`group-member ${ownUserMemberClass()}`}>
       <div className="d-flex flex-wrap align-items-center">
         <div className="me-1">
           <ProfileLink userId={member.user} />
@@ -90,9 +90,9 @@ export function Member({ member, group }: { member: GroupMemberEntity; group: Gr
           {memberRoles().map((role) => (
             <div
               key={role}
-              className={`course-member-role ${getRole(role)?.proposal ? "is-proposal" : ""}`}
+              className={`group-member-role ${getRole(role)?.proposal ? "is-proposal" : ""}`}
             >
-              <span className="course-member-role-text">
+              <span className="group-member-role-text">
                 <i className={`${getRole(role)?.icon} fa-fw`} />{" "}
                 <span className="role-short">{roleShort(role)}</span>
               </span>{" "}
@@ -125,9 +125,9 @@ export function Member({ member, group }: { member: GroupMemberEntity; group: Gr
       </div>
 
       {!!showMemberComment() && (
-        <div className="course-member-comment">
-          <div className="course-member-comment-arrow"></div>
-          <div className="course-member-comment-body">
+        <div className="group-member-comment">
+          <div className="group-member-comment-arrow"></div>
+          <div className="group-member-comment-body">
             {editableMessage() && currentUser ? (
               <Editable
                 {...{

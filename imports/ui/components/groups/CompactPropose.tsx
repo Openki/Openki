@@ -39,13 +39,13 @@ export function CompactPropose({ organization, organizationTagEvents }: Props) {
 
   return (
     <div
-      className={`row mx-0 align-items-start course-compact is-proposal${
+      className={`row mx-0 align-items-start group-compact is-proposal${
         organization ? ` organization-${organization}` : ""
       }`}
       ref={elementRef}
     >
-      <div className="course-compact-content ps-2 pe-2">
-        <div className="course-compact-title mb-0">
+      <div className="group-compact-content ps-2 pe-2">
+        <div className="group-compact-title mb-0">
           <form
             onSubmit={(event) => {
               event.preventDefault();
@@ -77,7 +77,7 @@ export function CompactPropose({ organization, organizationTagEvents }: Props) {
         </div>
       </div>
       {!!organization && (
-        <div className="tag-group course-organizations">
+        <div className="tag-group group-organizations">
           {<OrganizationTag {...organizationTagAttr(organization)} />}
         </div>
       )}

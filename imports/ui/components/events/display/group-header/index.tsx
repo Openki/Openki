@@ -25,7 +25,7 @@ export function EventGroupHeader(props: Props) {
   const { t } = useTranslation();
   return (
     <div
-      className={`event-course-header${props.headerLink ? " event-course-header-link" : ""}`}
+      className={`event-group-header${props.headerLink ? " event-group-header-link" : ""}`}
       onClick={() => {
         if (props.headerLink) {
           Router.go(props.headerLink);
@@ -44,7 +44,7 @@ export function EventGroupHeader(props: Props) {
       {!!props.backLink && (
         <>
           <a
-            className="back-to-course-overview"
+            className="back-to-group-overview"
             href={props.backLink}
             title={t("event.details.viewCourse")}
           >

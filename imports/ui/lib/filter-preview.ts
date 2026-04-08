@@ -17,7 +17,7 @@ export function FilterPreview(options: {
   instance?: Blaze.TemplateInstance;
 }) {
   const instance = options.instance || false;
-  const group = instance ? instance.$(".course-compact") : $(".course-compact");
+  const group = instance ? instance.$(".group-compact") : $(".group-compact");
   const { property } = options;
 
   // build selector class

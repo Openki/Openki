@@ -128,9 +128,9 @@ export function Role(data: Data) {
 
       {data.subscribed ? (
         <>
-          <div className="course-role-enrolled">
-            <div className="course-role-title">
-              <i className={`${data.role.icon} fa-fw coursepage-role-icon`} />
+          <div className="group-role-enrolled">
+            <div className="group-role-title">
+              <i className={`${data.role.icon} fa-fw grouppage-role-icon`} />
               &nbsp;
               <span>{roleSubscribed(data.role.type)}</span>
               <button
@@ -152,7 +152,7 @@ export function Role(data: Data) {
           </div>
 
           {showFirstSteps && (
-            <div className="course-role-first-steps">
+            <div className="group-role-first-steps">
               <b>
                 {t("course.roles.firstSteps.title", "Thank you for your interest in {COURSE}.", {
                   COURSE: data.group.name,
@@ -211,15 +211,15 @@ export function Role(data: Data) {
           )}
         </>
       ) : (
-        <div className={enrolling ? "course-role-enroll" : "course-role"}>
+        <div className={enrolling ? "group-role-enroll" : "group-role"}>
           {enrolling ? (
             <>
-              <div className="course-role-title-enroll">
-                <i className={`${data.role.icon} fa-fw coursepage-role-icon`} />
+              <div className="group-role-title-enroll">
+                <i className={`${data.role.icon} fa-fw grouppage-role-icon`} />
                 &nbsp;
                 {roleSubscribe(data.role.type)}
               </div>
-              <div className="course-role-enroll-options">
+              <div className="group-role-enroll-options">
                 <div className="mb-3">
                   <label className="form-label">
                     {t(
@@ -275,7 +275,7 @@ export function Role(data: Data) {
                 </div>
                 <div className="form-actions">
                   <Button
-                    id="course-roles-join"
+                    id="group-roles-join"
                     className="btn-save"
                     onClick={handleRoleSubscribeClick}
                     needsLogin
@@ -285,7 +285,7 @@ export function Role(data: Data) {
                     {t("course.roles.join", "Join", { COURSE: data.group.name })}
                   </Button>
                   <ButtonCancel
-                    id="course-roles-join-cancel"
+                    id="group-roles-join-cancel"
                     onClick={handleRoleEnrollCancelClick}
                   />
                 </div>
@@ -294,13 +294,13 @@ export function Role(data: Data) {
           ) : (
             maySubscribe() && (
               <button
-                data-test={`course-role-enroll-${data.role.type}`}
+                data-test={`group-role-enroll-${data.role.type}`}
                 type="button"
                 className="btn btn-add text-start page-component-btn"
                 name={data.role.type}
                 onClick={handleRoleEnrollClick}
               >
-                <i className={`${data.role.icon} fa-fw coursepage-role-icon`} /> &nbsp;
+                <i className={`${data.role.icon} fa-fw grouppage-role-icon`} /> &nbsp;
                 {roleSubscribe(data.role.type)}
               </button>
             )

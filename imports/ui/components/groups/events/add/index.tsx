@@ -12,7 +12,7 @@ export function Add({ group }: Props) {
   const { t } = useTranslation();
 
   return (
-    <div id="course-event-add" className="event-caption-wrap">
+    <div id="group-event-add" className="event-caption-wrap">
       <a
         className="btn p-0"
         href={Router.path("createEvent", undefined, { query: { courseId: group._id } })}

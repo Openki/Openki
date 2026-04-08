@@ -83,7 +83,7 @@
 }
 
 .filter-caption {
-  border-color: $course-border-color;
+  border-color: $group-border-color;
   border-style: solid;
   border-width: 5px;
   font-size: large;
@@ -99,7 +99,7 @@
   }
 
   &.has-upcoming-events {
-    background-color: $course-border-color;
+    background-color: $group-border-color;
   }
 
   &.is-archived {

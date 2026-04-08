@@ -84,7 +84,7 @@ export function Members({ group }: { group: GroupModel }) {
         </h4>
       </div>
       {!!group?.members && (
-        <div className="course-members">
+        <div className="group-members">
           {sortedMembers()?.map((member) => (
             <Member key={member.user} member={member} group={group} />
           ))}

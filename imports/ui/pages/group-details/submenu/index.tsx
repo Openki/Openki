@@ -31,7 +31,7 @@ export function Submenu({ group }: { group: GroupModel }) {
 
   return (
     <>
-      <nav className="course-details-nav">
+      <nav className="group-details-nav">
         <ul className="nav nav-tabs" role="tablist">
           <li className="nav-item" role="presentation">
             <button
@@ -82,7 +82,7 @@ export function Submenu({ group }: { group: GroupModel }) {
           </li>
         </ul>
       </nav>
-      <div className="tab-content course-details-content">
+      <div className="tab-content group-details-content">
         <div
           className={`tab-pane ${!descriptionTruncated ? "mh-none overflow-visible" : "overflow-hidden"} active`}
           id="description"
@@ -90,9 +90,9 @@ export function Submenu({ group }: { group: GroupModel }) {
           aria-labelledby="description-tab"
           tabIndex={0}
         >
-          <div className="course-description-fade-wrap">
+          <div className="group-description-fade-wrap">
             <div
-              className={`course-description ${!descriptionTruncated ? "mh-none overflow-visible" : "overflow-hidden"} `}
+              className={`group-description ${!descriptionTruncated ? "mh-none overflow-visible" : "overflow-hidden"} `}
               ref={elementRef}
             >
               <Description
@@ -104,7 +104,7 @@ export function Submenu({ group }: { group: GroupModel }) {
               />
               <CustomFieldDisplay groupId={group._id} />
             </div>
-            {descriptionTruncated && <div className="course-description-fade-bottom"></div>}
+            {descriptionTruncated && <div className="group-description-fade-bottom"></div>}
           </div>
           {descriptionTruncated && (
             <div
@@ -119,7 +119,7 @@ export function Submenu({ group }: { group: GroupModel }) {
           )}
         </div>
         <div
-          className="tab-pane course-history"
+          className="tab-pane group-history"
           id="history"
           role="tabpanel"
           aria-labelledby="history-tab"
@@ -138,7 +138,7 @@ export function Submenu({ group }: { group: GroupModel }) {
             <Files group={group} />
           </div>
         )}
-        {!group.isPrivate() && <PricePolicy dismissible wrap="course-details-price-policy" />}
+        {!group.isPrivate() && <PricePolicy dismissible wrap="group-details-price-policy" />}
       </div>
     </>
   );

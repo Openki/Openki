@@ -46,7 +46,7 @@ export function Description({
   };
 
   return (
-    <div className="course-details-description" id="course-description">
+    <div className="group-details-description" id="group-description">
       {group?.editableBy(user) ? (
         <Editable {...editableDescription} onStartEditing={onStartEditing} />
       ) : (

@@ -353,7 +353,7 @@ export function History({ group }: { group: GroupModel }) {
               <div className="timeline-eventpoint"></div>
             </div>
           </div>
-          <div className="coursehistory-event col-8">
+          <div className="grouphistory-event col-8">
             <event.template {...event.data} />
           </div>
         </div>

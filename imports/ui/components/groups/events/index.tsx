@@ -118,7 +118,7 @@ export function Events({ group }: Props) {
                     {t("course.events.ongoinglist", "Ongoing events")}
                   </h4>
                 </div>
-                <div className="course-event-list">
+                <div className="group-event-list">
                   <EventList dataEvents={ongoingEvents()} />
                 </div>
               </>
@@ -137,7 +137,7 @@ export function Events({ group }: Props) {
                     )}
                   </h4>
                 </div>
-                <div className="course-event-list">
+                <div className="group-event-list">
                   <EventList dataEvents={futureEvents()} withDate={true} />
                 </div>
                 <div className="mt-2 text-center">
@@ -181,7 +181,7 @@ export function Events({ group }: Props) {
       )}
 
       {mayAdd() && (
-        <div className="page-component course-event-tasks">
+        <div className="page-component group-event-tasks">
           <Add group={group} />
           {haveEvents() && <DeleteEvents {...deleteGroupEventsArgs()} />}
           {showModal && <DeleteEventsModal {...deleteEventsModalArgs()} />}

@@ -5,7 +5,7 @@ describe("Propose course via frame", function () {
     cy.visitOpenki("/frame/propose");
 
     cy.get("label.btn-edit").click();
-    cy.get("#course-edit-title").type("Permakultur im Hausgarten");
+    cy.get("#group-edit-title").type("Permakultur im Hausgarten");
     cy.get("#courses-edit-region-select").select("9JyFCoKWkxnf8LWPh");
     cy.get("#courses-edit-save").click();
     cy.get("#account-tasks-login-frame-username").type("Seee");
@@ -13,7 +13,7 @@ describe("Propose course via frame", function () {
     cy.get("#accountTaskModal div.modal-body").click();
     cy.get("#account-tasks-login-frame-submit").click();
     cy.get("a.alert-link").invoke("removeAttr", "target").click();
-    cy.get('[data-test="course-details"] .course-member-role i').should(
+    cy.get('[data-test="group-details"] .group-member-role i').should(
       "have.class",
       "fa-graduation-cap",
     );
@@ -22,8 +22,8 @@ describe("Propose course via frame", function () {
   it("allows to add multiple organizations", () => {
     cy.visitOpenki("/frame/propose?addTeamOrganizations=cc89c5e476,573edec5d6");
 
-    cy.get("#course-edit-title").click();
-    cy.get("#course-edit-title").type("OpenStreetMap für Anfänger");
+    cy.get("#group-edit-title").click();
+    cy.get("#group-edit-title").type("OpenStreetMap für Anfänger");
     cy.get("#courses-edit-region-select").select("9JyFCoKWkxnf8LWPh");
     cy.get("#courses-edit-save").click();
     cy.get("#account-tasks-login-frame-username").type("Seee");
@@ -36,14 +36,14 @@ describe("Propose course via frame", function () {
   it("allows to set creators role via url", () => {
     cy.visitOpenki("/frame/propose?setCreatorsRoles=mentor");
 
-    cy.get("#course-edit-title").click();
-    cy.get("#course-edit-title").type("How to Openki");
+    cy.get("#group-edit-title").click();
+    cy.get("#group-edit-title").type("How to Openki");
     cy.get("#courses-edit-region-select").select("9JyFCoKWkxnf8LWPh");
     cy.get("#courses-edit-save").click();
     cy.get("#account-tasks-login-frame-username").type("Seee");
     cy.get("#account-tasks-login-frame-password").type("greg{enter}");
     cy.get("a.alert-link").invoke("removeAttr", "target").click();
-    cy.get('[data-test="course-details"] .course-member-role i').should(
+    cy.get('[data-test="group-details"] .group-member-role i').should(
       "have.class",
       "fa-graduation-cap",
     );

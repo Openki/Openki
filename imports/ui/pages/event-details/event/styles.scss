@@ -3,7 +3,7 @@
 
 $header-bg: color.adjust($blue-lighter, $lightness: -5%);
 
-.event.course-event {
+.event.group-event {
   border-color: $header-bg;
   border-style: solid;
   border-width: 0 5px 5px;

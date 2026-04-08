@@ -185,7 +185,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
             group.description
               ? {
                   text: t("message.courseCreated.addDescription", "Add a description"),
-                  href: "#course-description",
+                  href: "#group-description",
                 }
               : undefined,
             {
@@ -197,15 +197,15 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
               : undefined,
             {
               text: t("message.courseCreated.addEvent", "Create event"),
-              href: "#course-event-add",
+              href: "#group-event-add",
             },
           ]}
         >
           {t("message.courseCreated.description", "What do you wannt to do next?")}
         </ActionResult>
       )}
-      <div data-test="course-details" className="container">
-        <div className="row course-page g-3">
+      <div data-test="group-details" className="container">
+        <div className="row group-page g-3">
           <div className="col-lg-8">
             <div className="page-component">
               {group.archived && (
@@ -222,7 +222,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
                 <Edit {...group} />
               ) : (
                 <>
-                  <div className={`course-details ${groupStateClasses(group)}`}>
+                  <div className={`group-details ${groupStateClasses(group)}`}>
                     <Header group={group} />
                     <Submenu group={group} />
                   </div>
@@ -240,7 +240,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
                       <div className="actions">
                         {!expanded && (
                           <ButtonEdit
-                            id="course-details-edit"
+                            id="group-details-edit"
                             disabled={isBusy}
                             onClick={handleOnEdit}
                           />
@@ -265,7 +265,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
 
                         {!expanded && (
                           <ButtonDelete
-                            id="course-details-confirm-delete"
+                            id="group-details-confirm-delete"
                             onClick={async () => setExpanded(true)}
                           />
                         )}

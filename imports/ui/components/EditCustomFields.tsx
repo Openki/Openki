@@ -70,7 +70,7 @@ export function EditCustomFields({ type, fields, values, onChange }: Props) {
             <div key={field.name} className="mb-3">
               {!field.type || field.type === "singleLine" ? (
                 <FormControl
-                  id={`course-custom-field-${field.name}`}
+                  id={`group-custom-field-${field.name}`}
                   type="text"
                   label={getLocalizedValue(field.editText)}
                   placeholder={getLocalizedValue(field.editPlaceholder)}
@@ -79,7 +79,7 @@ export function EditCustomFields({ type, fields, values, onChange }: Props) {
                 />
               ) : field.type === "multiLine" ? (
                 <FormControl
-                  id={`course-custom-field-${field.name}`}
+                  id={`group-custom-field-${field.name}`}
                   type="textarea"
                   rows={3}
                   label={getLocalizedValue(field.editText)}
@@ -89,7 +89,7 @@ export function EditCustomFields({ type, fields, values, onChange }: Props) {
                 />
               ) : field.type === "option" ? (
                 <FormControl
-                  id={`course-custom-field-${field.name}`}
+                  id={`group-custom-field-${field.name}`}
                   type="select"
                   label={getLocalizedValue(field.editText)}
                   options={Object.fromEntries(
@@ -105,7 +105,7 @@ export function EditCustomFields({ type, fields, values, onChange }: Props) {
                 <>
                   <div className="form-label">{getLocalizedValue(field.editText)}</div>
                   <FormCheck
-                    id={`course-custom-field-${field.name}`}
+                    id={`group-custom-field-${field.name}`}
                     type="box"
                     label={getLocalizedValue(field.editDescription)}
                     checked={(value(field.name) as boolean | undefined) ?? field.defaultValue}

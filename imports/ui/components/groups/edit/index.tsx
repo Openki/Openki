@@ -528,7 +528,7 @@ export function Edit(props: Props) {
         ) : (
           <Header {...props} />
         )}
-        <div className={`edit-page-body course-edit-body ${editBodyClasses()}`}>
+        <div className={`edit-page-body group-edit-body ${editBodyClasses()}`}>
           {!isNew && !!props.region && <Tag region={props.region} />}
           {showSavedMessage() && !!savedGroupId && (
             <AlertMessage
@@ -589,7 +589,7 @@ export function Edit(props: Props) {
           />
           <div className="mb-3">
             <FormControl
-              id="course-edit-description"
+              id="group-edit-description"
               type="richtext"
               label={t("course.edit.description", "Description")}
               placeholder={t(
@@ -695,7 +695,7 @@ export function Edit(props: Props) {
             <div className="mb-3">
               <div className="form-label">{t("course.edit.intern", "Hide on front page")}</div>
               <FormCheck
-                id="course-edit-internal"
+                id="group-edit-internal"
                 type="box"
                 label={t(
                   "course.edit.internDescription",

@@ -22,14 +22,14 @@ export function GroupCompactRoles({ group }: Props) {
     const { members } = group;
 
     if (hasRoleUser(members, "participant", userId)) {
-      return "course-compact-role-occupied-by-user";
+      return "group-compact-role-occupied-by-user";
     }
 
     if (members.length) {
-      return "course-compact-role-occupied";
+      return "group-compact-role-occupied";
     }
 
-    return "course-compact-role-needed";
+    return "group-compact-role-needed";
   }
 
   function participantTooltip() {
@@ -56,7 +56,7 @@ export function GroupCompactRoles({ group }: Props) {
   }
 
   function roleStateClass(role: string) {
-    let className = "course-compact-role-";
+    let className = "group-compact-role-";
     if (!hasRole(group.members, role)) {
       className += "needed";
     } else if (hasRoleUser(group.members, role, userId)) {
@@ -104,16 +104,16 @@ export function GroupCompactRoles({ group }: Props) {
   }
 
   return (
-    <div className="course-compact-roles col">
+    <div className="group-compact-roles col">
       <div
-        className={`course-compact-role ${roleStateClass("team")}`}
+        className={`group-compact-role ${roleStateClass("team")}`}
         data-bs-title={`${roleStateTooltip("team")}`}
       >
         <RoleIcon type="team" />
       </div>
       {group.roles.includes("mentor") && (
         <div
-          className={`course-compact-role ${roleStateClass("mentor")}`}
+          className={`group-compact-role ${roleStateClass("mentor")}`}
           data-bs-title={`${roleStateTooltip("mentor")}`}
         >
           <RoleIcon type="mentor" />
@@ -121,7 +121,7 @@ export function GroupCompactRoles({ group }: Props) {
       )}
       {group.roles.includes("host") && (
         <div
-          className={`course-compact-role ${roleStateClass("host")}`}
+          className={`group-compact-role ${roleStateClass("host")}`}
           data-bs-title={`${roleStateTooltip("host")}`}
         >
           <RoleIcon type="host" />
@@ -129,7 +129,7 @@ export function GroupCompactRoles({ group }: Props) {
       )}
       {group.roles.includes("participant") && (
         <div
-          className={`course-compact-role ${participantClass()}`}
+          className={`group-compact-role ${participantClass()}`}
           data-bs-title={`${participantTooltip()}`}
         >
           <RoleIcon type="participant" />

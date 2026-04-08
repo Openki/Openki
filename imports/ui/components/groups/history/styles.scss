@@ -1,6 +1,6 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
-.course-history {
+.group-history {
   @include clearfix;
 
   padding-bottom: 10px;
@@ -64,7 +64,7 @@
   }
 }
 
-.coursehistory-event {
+.grouphistory-event {
   padding: 0;
 
   a {

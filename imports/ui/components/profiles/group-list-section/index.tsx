@@ -59,7 +59,7 @@ export function GroupListSection(data: { user: UserModel; ownProfile: boolean })
   }
 
   return (
-    <div className="page-component page-component-seperated profile-courselist">
+    <div className="page-component page-component-seperated profile-grouplist">
       {isInvolved() && (
         <>
           <h3 className="badge-title">

@@ -61,7 +61,7 @@ export function GroupCategories({
     return null;
   }
   return (
-    <div className="tag-group multiline course-categories">
+    <div className="tag-group multiline group-categories">
       {categories.map((c) => (
         <CategoryLabelLinked
           key={c}

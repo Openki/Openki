@@ -1,8 +1,8 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
-// ** Course buttons
+// ** Group buttons
 // ========================================================================================
-.course-delete-confirm {
+.group-delete-confirm {
   $background-color: tint-color($danger, 20%);
 
   background-color: $background-color;
@@ -13,11 +13,11 @@
 // ** Content
 // ========================================================================================
 
-$course-details-content-padding-horizontal: (
-  $details-header-padding-horizontal + $course-border-width
+$group-details-content-padding-horizontal: (
+  $details-header-padding-horizontal + $group-border-width
 );
 
-.course-details-content {
+.group-details-content {
   border-bottom-width: 0;
   border-color: shade-color($tab-content-bg, 5%);
   position: relative;
@@ -30,7 +30,7 @@ $course-details-content-padding-horizontal: (
     position: absolute;
     top: $tab-content-border-width * -1;
     z-index: 99;
-    width: $course-details-content-padding-horizontal;
+    width: $group-details-content-padding-horizontal;
   }
 
   &::before {
@@ -41,18 +41,18 @@ $course-details-content-padding-horizontal: (
     right: $tab-content-border-width * -1;
   }
 
-  padding: 15px $course-details-content-padding-horizontal;
+  padding: 15px $group-details-content-padding-horizontal;
 }
 
-.course-description {
+.group-description {
   max-height: 280px; // ca 300px - 1 rem
 }
 
-.course-description-fade-wrap {
+.group-description-fade-wrap {
   position: relative;
 }
 
-.course-description-fade-bottom {
+.group-description-fade-bottom {
   @include gradient-y(transparent, #ebf4f8);
   @include td-pos(left, 0);
 
@@ -64,13 +64,13 @@ $course-details-content-padding-horizontal: (
 
 // ** Price Policy
 // ========================================================================================
-.course-details-price-policy {
+.group-details-price-policy {
   margin-top: 10px;
 }
 
 // ** Sharing
 // ========================================================================================
-.course-page .sharing-wrapper {
+.group-page .sharing-wrapper {
   background-color: $tab-content-bg;
   border-color: shade-color($tab-content-bg, 5%);
   border-style: solid;

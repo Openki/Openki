@@ -1,7 +1,7 @@
 @use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
-.filter-course-role {
+.filter-group-role {
   background-color: transparent;
   border: 0;
   display: block;
@@ -22,11 +22,11 @@
   }
 }
 
-.filter-course-role + .filter-course-role {
+.filter-group-role + .filter-group-role {
   margin-top: 5px;
 }
 
-.filter-course-role-icon {
+.filter-group-role-icon {
   @include td-margin(right, 5px);
 
   background-color: $role-needed-bg;
@@ -35,10 +35,10 @@
   padding: 3px 5px;
 }
 
-.filter-course-role .checkmark {
+.filter-group-role .checkmark {
   display: none;
 }
 
-.filter-course-role.active .checkmark {
+.filter-group-role.active .checkmark {
   display: inline;
 }
