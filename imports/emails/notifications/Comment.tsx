@@ -44,13 +44,13 @@ export function Comment({
             {commenter
               ? t(
                   "notification.comment.mail.intro",
-                  "There was a comment by {USERNAME} on {COURSE}:",
-                  { USERNAME: commenterName, COURSE: group },
+                  "There was a comment by {USERNAME} on {GROUP}:",
+                  { USERNAME: commenterName, GROUP: group },
                 )
               : t(
                   "notification.comment.mail.intro.anon",
-                  "There was an anonymous comment on {COURSE}:",
-                  { COURSE: group },
+                  "There was an anonymous comment on {GROUP}:",
+                  { GROUP: group },
                 )}
           </p>
           <table className="comment-box">
@@ -83,8 +83,8 @@ export function Comment({
       <Footer
         receiveNote={
           comment.notifyAll
-            ? t("notification.event.mail.notice", { COURSE: group })
-            : t("email.base.receiveNote.groupTeam", { COURSE: group })
+            ? t("notification.event.mail.notice", { GROUP: group })
+            : t("email.base.receiveNote.groupTeam", { GROUP: group })
         }
         unsubscribe={unsubscribe}
         campaign={campaign}

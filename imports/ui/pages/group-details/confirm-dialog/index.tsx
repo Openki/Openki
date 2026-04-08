@@ -30,8 +30,8 @@ export function ConfirmDialog({
       <p>
         {t(
           "group.reallydelete",
-          "Please confirm that you would like to delete {COURSE}. This cannot be undone.",
-          { COURSE: group.name },
+          "Please confirm that you would like to delete {GROUP}. This cannot be undone.",
+          { GROUP: group.name },
         )}
       </p>
       <div className="form-actions">
@@ -53,8 +53,8 @@ export function ConfirmDialog({
           onClick={async () => onDelete()}
           busyText={t("_button.deleting")}
         >
-          {t("group.delete.confirm.button", "Delete {COURSE} and its events", {
-            COURSE: group.name,
+          {t("group.delete.confirm.button", "Delete {GROUP} and its events", {
+            GROUP: group.name,
           })}
         </Button>
         <ButtonCancel

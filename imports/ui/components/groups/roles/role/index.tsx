@@ -154,8 +154,8 @@ export function Role(data: Data) {
           {showFirstSteps && (
             <div className="group-role-first-steps">
               <b>
-                {t("group.roles.firstSteps.title", "Thank you for your interest in {COURSE}.", {
-                  COURSE: data.group.name,
+                {t("group.roles.firstSteps.title", "Thank you for your interest in {GROUP}.", {
+                  GROUP: data.group.name,
                   ROLE: roleShort(data.role.type),
                 })}
               </b>
@@ -282,7 +282,7 @@ export function Role(data: Data) {
                     visitorUserAllowed={data.role.type === "participant"}
                     busyText={t("group.roles.join.busy", "Joining…")}
                   >
-                    {t("group.roles.join", "Join", { COURSE: data.group.name })}
+                    {t("group.roles.join", "Join", { GROUP: data.group.name })}
                   </Button>
                   <ButtonCancel
                     id="group-roles-join-cancel"

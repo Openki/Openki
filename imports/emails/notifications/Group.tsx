@@ -38,8 +38,8 @@ export function Group({
           <p className="pre">
             {t(
               "notification.group.mail.intro",
-              'Congratulations, you successfully created "{COURSE}" on `{SITENAME}`.',
-              { COURSE: group, SITENAME: <a href={customSiteUrl}>{customSiteName}</a> },
+              'Congratulations, you successfully created "{GROUP}" on `{SITENAME}`.',
+              { GROUP: group, SITENAME: <a href={customSiteUrl}>{customSiteName}</a> },
             )}
           </p>
 
@@ -49,7 +49,7 @@ export function Group({
                 {t(
                   "notification.group.mail.description",
                   "Here is a copy of the description you entered:",
-                  { COURSE: group, SITENAME: <a href={customSiteUrl}>{customSiteName}</a> },
+                  { GROUP: group, SITENAME: <a href={customSiteUrl}>{customSiteName}</a> },
                 )}
               </p>
               <table className="comment-box">

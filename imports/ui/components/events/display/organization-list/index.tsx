@@ -74,7 +74,7 @@ export function OrganizationList({ event }: Props) {
                 <i
                   className="fa-solid fa-bullhorn fa-fw"
                   title={t("group.organizationList.title.organizedBy", {
-                    COURSE: event.title,
+                    GROUP: event.title,
                   })}
                 />
               </div>

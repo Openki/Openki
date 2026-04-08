@@ -38,13 +38,13 @@ function GroupMembers({
         isNew
           ? t(
               "event.edit.notifyNewEvent",
-              'Send notification to all members of the "{COURSE}" group about this event.',
-              { COURSE: group?.name || "..." },
+              'Send notification to all members of the "{GROUP}" group about this event.',
+              { GROUP: group?.name || "..." },
             )
           : t(
               "event.edit.notifyEditEvent",
-              'Send notification to all interested and participants of "{COURSE}" with the up-to-date event information.',
-              { COURSE: group?.name || "..." },
+              'Send notification to all interested and participants of "{GROUP}" with the up-to-date event information.',
+              { GROUP: group?.name || "..." },
             )
       }
     />

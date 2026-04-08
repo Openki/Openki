@@ -64,8 +64,8 @@ export function PrivateMessage({
             <p>
               {t(
                 "notification.privateMessage.mail.fromGroup",
-                "This message was sent from {COURSE}.",
-                { COURSE: group },
+                "This message was sent from {GROUP}.",
+                { GROUP: group },
               )}
             </p>
           )}

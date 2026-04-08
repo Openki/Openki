@@ -86,8 +86,8 @@ export function UnregisterPanel({ event, onUnregister }: Props) {
             <p className="pt-3 mb-0">
               {t(
                 "event.details.youStayEnrolled",
-                "Note that you will stay enrolled as interested for {COURSETITLE}.",
-                { COURSETITLE: groupTitle() },
+                "Note that you will stay enrolled as interested for {GROUPTITLE}.",
+                { GROUPTITLE: groupTitle() },
               )}
             </p>
           )}
