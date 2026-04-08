@@ -81,7 +81,7 @@ function getEvents(regionId: string) {
 /** Get all organizations that promotes groups or events */
 async function getOrganizations(groups: GroupModel[], events: EventModel[]) {
   let organizationIds = [];
-  organizationIds.push(...groups.flatMap((c) => c.organizations));
+  organizationIds.push(...groups.flatMap((g) => g.organizations));
   organizationIds.push(...events.flatMap((e) => e.organizations));
   organizationIds = uniq(organizationIds).filter((o) => o);
 
@@ -106,8 +106,8 @@ async function getOrganizations(groups: GroupModel[], events: EventModel[]) {
 function calcStats(groups: GroupModel[], events: EventModel[]): Stat {
   const now = new Date();
 
-  const notArchived = groups.filter((c) => !c.archived);
-  const members = groups.flatMap((c) => c.members);
+  const notArchived = groups.filter((g) => !g.archived);
+  const members = groups.flatMap((g) => g.members);
 
   const notCanceled = events.filter((e) => !e.canceled);
   const canceled = events.filter((e) => e.canceled);
@@ -116,10 +116,10 @@ function calcStats(groups: GroupModel[], events: EventModel[]): Stat {
     // inspired from groups.findFilter in /imports/api/groups/groups
     groups: {
       total: notArchived.length,
-      proposed: notArchived.filter((c) => !c.lastEvent && !c.futureEvents).length,
-      resting: notArchived.filter((c) => c.lastEvent && !c.futureEvents).length,
-      upcoming: notArchived.filter((c) => c.futureEvents > 0).length,
-      archived: groups.filter((c) => c.archived).length,
+      proposed: notArchived.filter((g) => !g.lastEvent && !g.futureEvents).length,
+      resting: notArchived.filter((g) => g.lastEvent && !g.futureEvents).length,
+      upcoming: notArchived.filter((g) => g.futureEvents > 0).length,
+      archived: groups.filter((g) => g.archived).length,
       enrollments: members.length,
       users: uniq(members.map((m) => m.user)).length,
     },
@@ -150,14 +150,14 @@ export async function getRegionStats(regionId: string): Promise<Stats> {
     organizations: [
       // calc stat for groups and events without a organization
       calcStats(
-        groups.filter((c) => !c.organizations?.length),
+        groups.filter((g) => !g.organizations?.length),
         events.filter((e) => !e.organizations?.length && !e.allOrganizations?.length),
       ),
       // calc stat for every organization
       ...organizations.map((o) => ({
         ...o,
         ...calcStats(
-          groups.filter((c) => c.organizations?.includes(o._id)),
+          groups.filter((g) => g.organizations?.includes(o._id)),
           events.filter(
             (e) => e.allOrganizations?.includes(o._id) || e.organizations?.includes(o._id),
           ),

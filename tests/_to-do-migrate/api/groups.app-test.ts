@@ -32,7 +32,7 @@ if (Meteor.isClient) {
         assert.isNotEmpty(groupsAsGast, "shows groups");
 
         assert.isEmpty(
-          groupsAsGast.filter((c) => c.tenant && !PublicSettings.publicTenants.includes(c.tenant)),
+          groupsAsGast.filter((g) => g.tenant && !PublicSettings.publicTenants.includes(g.tenant)),
           "don't show groups from not public",
         );
       });
@@ -52,8 +52,8 @@ if (Meteor.isClient) {
         const groupsAsSchufien = Groups.findFilter().fetch();
 
         assert.includeMembers(
-          groupsAsSchufien.map((c) => c._id),
-          groupsAsGast.map((c) => c._id),
+          groupsAsSchufien.map((g) => g._id),
+          groupsAsGast.map((g) => g._id),
           "shows public groups as logged in user",
         );
 
@@ -63,7 +63,7 @@ if (Meteor.isClient) {
         );
         assert.isNotEmpty(
           groupsAsSchufien.filter(
-            (c) => c.tenant && schufien.tenants.some((t) => t._id === c.tenant),
+            (g) => g.tenant && schufien.tenants.some((t) => t._id === g.tenant),
           ),
           "shows private groups as logged in user",
         );
