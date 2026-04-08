@@ -277,10 +277,10 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
 
     groupId = await Groups.insertAsync(enrichedSet);
 
-    await Notification.Course.record(groupId);
+    await Notification.Group.record(groupId);
 
     if (set.teamOrganizations.length > 0) {
-      await Notification["Organization.Course"].record(groupId);
+      await Notification["Organization.Group"].record(groupId);
     }
 
     // Init calculated fields

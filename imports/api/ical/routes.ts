@@ -60,7 +60,7 @@ Router.route("calEvent", {
   },
 });
 
-Router.route("calCourse", {
+Router.route("calGroup", {
   path: "cal/group/:_id.ics",
   where: "server",
   async action() {

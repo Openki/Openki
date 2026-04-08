@@ -257,8 +257,8 @@ export function Find({ query }: Props) {
 
   // Read URL state
   useEffect(() => {
-    if (query.coursesAmount) {
-      const groupsAmount = Number.parseInt(query.coursesAmount, 10);
+    if (query.groupsAmount) {
+      const groupsAmount = Number.parseInt(query.groupsAmount, 10);
       if (groupsAmount > groupBlockSize) {
         setGroupLimit(groupsAmount);
       }

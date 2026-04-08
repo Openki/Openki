@@ -158,7 +158,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
     const query: {
       edit: string;
       force?: string;
-    } = { edit: "course" };
+    } = { edit: "group" };
     const force = searchParams.force;
     if (force) {
       query.force = force;

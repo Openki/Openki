@@ -50,7 +50,7 @@ export const [findFilter, useFindFilter] = ServerPublishMany(
 );
 
 export const [forGroup, useForGroup] = ServerPublishMany(
-  "eventsForCourse",
+  "eventsForGroup",
   async (groupId: string) => {
     check(groupId, String);
 

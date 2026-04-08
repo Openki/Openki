@@ -191,7 +191,7 @@ export function Events({ group }: Props) {
       {!isLoading() && haveEvents() && (
         <div className="page-component">
           <a
-            href={Router.path("calCourse", group)}
+            href={Router.path("calGroup", group)}
             target="_blank"
             onClick={() => {
               Analytics.trackEvent(

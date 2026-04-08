@@ -35,7 +35,7 @@ export async function record(groupId: string) {
   const body: Body = {
     groupId: group._id,
     recipients: [group.createdby],
-    model: "Course",
+    model: "Group",
   };
 
   await Log.record("Notification.Send", [group._id], body);
