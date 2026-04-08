@@ -3,10 +3,10 @@
 // ** Compact
 // ========================================================================================
 
-.course-compact {
-  border-color: $course-border-color;
+.group-compact {
+  border-color: $group-border-color;
   border-style: solid;
-  border-width: $course-border-width;
+  border-width: $group-border-width;
   height: 150px;
   position: relative;
   transition-duration: 0.1s;
@@ -43,27 +43,27 @@
   }
 }
 
-.course-compact.elevate-child,
-.course-compact.elevate-child:hover {
+.group-compact.elevate-child,
+.group-compact.elevate-child:hover {
   box-shadow: none;
   transition: box-shadow $default-transition-time;
 }
 
 // ** Content
 // ========================================================================================
-.course-compact-content {
+.group-compact-content {
   background: $body-bg;
   padding-inline-start: 15px;
 }
 
-.has-upcoming-events > .course-compact-content {
+.has-upcoming-events > .group-compact-content {
   background: transparent;
   padding-inline: 15px 5px;
 }
 
 // ** Title
 // ========================================================================================
-.course-compact-title {
+.group-compact-title {
   @include ellipsis-multiline(2);
 
   font-size: 20px;
@@ -78,7 +78,7 @@
 
 // ** Categories
 // ========================================================================================
-.course-compact-content .course-categories {
+.group-compact-content .group-categories {
   height: 55px;
   margin-bottom: 0;
   overflow: hidden;
@@ -92,16 +92,16 @@
 
 // ** Organizationlist
 // ========================================================================================
-.course-organizations {
+.group-organizations {
   position: absolute;
 
   /* Move over stretched-link */
   z-index: 2;
 }
 
-.course-compact > .course-organizations {
-  bottom: $course-border-width;
-  inset-inline-end: $course-border-width;
+.group-compact > .group-organizations {
+  bottom: $group-border-width;
+  inset-inline-end: $group-border-width;
   padding: 0;
   width: auto;
 }

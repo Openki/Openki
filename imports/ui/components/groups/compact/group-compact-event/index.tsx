@@ -12,14 +12,14 @@ export function GroupCompactEvent(props: { event: GroupNextEventEntity & OEvent 
   const { dateShort, timeFormat, dateToRelativeString } = useDateTimeFormat();
 
   return (
-    <div className="course-compact-next-event col">
+    <div className="group-compact-next-event col">
       {!!event.venue?.name && (
-        <div className="course-compact-next-event-component">
+        <div className="group-compact-next-event-component">
           <i className="fa-solid fa-house fa-fw" />
           &nbsp;{event.venue.name}
         </div>
       )}
-      <div className="course-compact-next-event-component">
+      <div className="group-compact-next-event-component">
         <i className="fa-regular fa-clock fa-fw" />
         &nbsp;
         <span title={`${dateShort(event?.startLocal)} ${timeFormat(event?.startLocal)}`}>
@@ -27,7 +27,7 @@ export function GroupCompactEvent(props: { event: GroupNextEventEntity & OEvent 
         </span>
       </div>
       {!event.noRsvp && (
-        <div className="course-compact-next-event-component">
+        <div className="group-compact-next-event-component">
           <i className="fa-solid fa-user fa-fw" />
           &nbsp;
           {event?.numberOfParticipants()}

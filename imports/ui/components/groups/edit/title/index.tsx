@@ -20,7 +20,7 @@ function Groups({ search }: { search: string }) {
   ]);
 
   return !isLoading() && groups.length ? (
-    <div className="list-group proposed-courses mt-3">
+    <div className="list-group proposed-groups mt-3">
       <span className="list-group-item  border-0 border-bottom">
         <h5 className="m-0">
           <button
@@ -90,7 +90,7 @@ export function Title(props: {
   return (
     <div className="mb-3">
       <FormControl
-        id="course-edit-title"
+        id="group-edit-title"
         type="text"
         size="large"
         label={t("course.edit.title", "Title")}

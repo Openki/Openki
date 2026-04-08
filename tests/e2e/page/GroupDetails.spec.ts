@@ -1,4 +1,4 @@
-// file://./../../../imports/ui/pages/course-details/index.tsx
+// file://./../../../imports/ui/pages/group-details/index.tsx
 
 describe("course details page", () => {
   // https://gitlab.com/Openki/Openki/-/issues/2228
@@ -14,19 +14,19 @@ describe("course details page", () => {
     });
 
     it("should allow to set a organization as team", () => {
-      cy.get('[data-test="course-details"] div.addon button.dropdown-toggle').click();
-      cy.get('[data-test="course-details"] li:nth-child(4) a.btn').click();
-      cy.get('[data-test="course-details"] button.btn-success').click();
+      cy.get('[data-test="group-details"] div.addon button.dropdown-toggle').click();
+      cy.get('[data-test="group-details"] li:nth-child(4) a.btn').click();
+      cy.get('[data-test="group-details"] button.btn-success').click();
       cy.get(
-        '[data-test="course-details"] i[title="Walliserdütsch lernen is co-organized by this organization"]',
+        '[data-test="group-details"] i[title="Walliserdütsch lernen is co-organized by this organization"]',
       ).should("have.class", "fa-bullhorn");
-      cy.get('[data-test="course-details"] div.tag-btn.addon button.dropdown-toggle').click();
-      cy.get('[data-test="course-details"] a.btn-danger').click();
-      cy.get('[data-test="course-details"] div.danger button.btn').click();
+      cy.get('[data-test="group-details"] div.tag-btn.addon button.dropdown-toggle').click();
+      cy.get('[data-test="group-details"] a.btn-danger').click();
+      cy.get('[data-test="group-details"] div.danger button.btn').click();
     });
 
     it("should allow a member a team organization to send a message to all", () => {
-      cy.get('[data-test="course-details"] i.contact-members').click();
+      cy.get('[data-test="group-details"] i.contact-members').click();
       cy.get("#discussion div.richtext").type(
         "Postet mal wenn ihr Zeit habt für ein nächstes Treffen.",
       );
@@ -43,8 +43,8 @@ describe("course details page", () => {
 
     it("should allow to archive and unarchive a course", () => {
       cy.get("button.btn-archive").click();
-      cy.get('[data-test="course-details"] div.alert').should("have.class", "alert-archived");
-      cy.get("#course-details-course-unarchive").click();
+      cy.get('[data-test="group-details"] div.alert').should("have.class", "alert-archived");
+      cy.get("#group-details-group-unarchive").click();
     });
   });
 

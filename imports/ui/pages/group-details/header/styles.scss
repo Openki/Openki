@@ -2,10 +2,10 @@
 
 // ** Header
 // ========================================================================================
-.course-details > .details-header {
-  border-color: $course-border-color;
+.group-details > .details-header {
+  border-color: $group-border-color;
   border-style: solid;
-  border-width: $course-border-width $course-border-width 0;
+  border-width: $group-border-width $group-border-width 0;
 }
 
 .is-proposal > .details-header {
@@ -25,10 +25,10 @@
 }
 
 // style fixes a problem that occurs during the transition to react. This can be removed when everything is changed to react.
-.course-details > div > .details-header {
-  border-color: $course-border-color;
+.group-details > div > .details-header {
+  border-color: $group-border-color;
   border-style: solid;
-  border-width: $course-border-width $course-border-width 0;
+  border-width: $group-border-width $group-border-width 0;
 }
 
 .is-proposal > div > .details-header {
@@ -50,11 +50,11 @@
 // ** Tags
 // ========================================================================================
 .details-header-tags {
-  @include td-pos(right, -$course-border-width);
+  @include td-pos(right, -$group-border-width);
 
   max-width: 120px;
   position: absolute;
-  top: -$course-border-width;
+  top: -$group-border-width;
 }
 
 .details-header-tags > div {
@@ -73,7 +73,7 @@
 
 // ** Title
 // ========================================================================================
-.course-details-title {
+.group-details-title {
   @include editable-popout;
 
   font-size: 30px;
@@ -81,27 +81,27 @@
   margin-right: 100px;
 }
 
-.course-details-title > .editable {
+.group-details-title > .editable {
   font-size: 30px;
   padding: 0;
 }
 
-.course-details-title > .editable-controls {
+.group-details-title > .editable-controls {
   font-size: medium;
   z-index: 100;
 }
 
-.course-details-title > h2 {
+.group-details-title > h2 {
   margin-top: 0;
 }
 
 // ** Categories
 // ========================================================================================
-.course-details-categories > ul {
+.group-details-categories > ul {
   margin-bottom: 0;
 }
 
-.course-details-categories > ul > li {
+.group-details-categories > ul > li {
   margin-bottom: 10px;
 
   &:first-child {

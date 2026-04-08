@@ -73,11 +73,11 @@ export function Header({ group }: { group: GroupModel }) {
         )}
         <Tag region={group.region} />
       </div>
-      <div className="course-details-title">
+      <div className="group-details-title">
         {group?.editableBy(user) ? <Editable {...editableNameAttr} /> : <h2>{group.name}</h2>}
       </div>
       {!!group.categories && (
-        <div className="course-details-categories">
+        <div className="group-details-categories">
           <GroupCategories categories={group.categories} />
         </div>
       )}

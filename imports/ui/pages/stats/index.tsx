@@ -18,7 +18,7 @@ function Header() {
   const { t } = useTranslation();
   return (
     <>
-      <th className="course-stat" colSpan={7} style={{ height: "4.5em" }}>
+      <th className="group-stat" colSpan={7} style={{ height: "4.5em" }}>
         {t("region.stats.courses", "Courses")}
       </th>
       <th className="event-stat" colSpan={9} style={{ height: "4.5em" }}>
@@ -32,13 +32,13 @@ function SubHeader() {
   const { t } = useTranslation();
   return (
     <>
-      <th className="course-stat">{t("region.stats.courses.total", "Total")}</th>
-      <th className="course-stat">{t("region.stats.courses.proposed", "Proposed")}</th>
-      <th className="course-stat">{t("region.stats.courses.resting", "Resting")}</th>
-      <th className="course-stat">{t("region.stats.courses.upcoming", "Upcoming")}</th>
-      <th className="course-stat">{t("region.stats.courses.archived", "Archived")}</th>
-      <th className="course-stat">{t("region.stats.courses.enrollments", "Course enrollments")}</th>
-      <th className="course-stat">{t("region.stats.courses.users", "Users")}</th>
+      <th className="group-stat">{t("region.stats.courses.total", "Total")}</th>
+      <th className="group-stat">{t("region.stats.courses.proposed", "Proposed")}</th>
+      <th className="group-stat">{t("region.stats.courses.resting", "Resting")}</th>
+      <th className="group-stat">{t("region.stats.courses.upcoming", "Upcoming")}</th>
+      <th className="group-stat">{t("region.stats.courses.archived", "Archived")}</th>
+      <th className="group-stat">{t("region.stats.courses.enrollments", "Course enrollments")}</th>
+      <th className="group-stat">{t("region.stats.courses.users", "Users")}</th>
       <th className="event-stat">{t("region.stats.events.total", "Total")}</th>
       <th className="event-stat">{t("region.stats.events.future", "Future")}</th>
       <th className="event-stat">{t("region.stats.events.passed", "Passed")}</th>
@@ -116,13 +116,13 @@ function Descriptions() {
 function Results({ stat }: { stat: Stat }) {
   return (
     <>
-      <td className="course-stat number">{stat.groups.total}</td>
-      <td className="course-stat number">{stat.groups.proposed}</td>
-      <td className="course-stat number">{stat.groups.resting}</td>
-      <td className="course-stat number">{stat.groups.upcoming}</td>
-      <td className="course-stat number">{stat.groups.archived}</td>
-      <td className="course-stat number">{stat.groups.enrollments}</td>
-      <td className="course-stat number">{stat.groups.users}</td>
+      <td className="group-stat number">{stat.groups.total}</td>
+      <td className="group-stat number">{stat.groups.proposed}</td>
+      <td className="group-stat number">{stat.groups.resting}</td>
+      <td className="group-stat number">{stat.groups.upcoming}</td>
+      <td className="group-stat number">{stat.groups.archived}</td>
+      <td className="group-stat number">{stat.groups.enrollments}</td>
+      <td className="group-stat number">{stat.groups.users}</td>
       <td className="event-stat number">{stat.events.total}</td>
       <td className="event-stat number">{stat.events.future}</td>
       <td className="event-stat number">{stat.events.passed}</td>

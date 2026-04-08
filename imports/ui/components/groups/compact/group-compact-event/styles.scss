@@ -2,9 +2,9 @@
 
 // ** Event
 // ========================================================================================
-.course-compact-next-event {
-  background: $course-compact-next-event-bg;
-  color: $course-compact-next-event-color;
+.group-compact-next-event {
+  background: $group-compact-next-event-bg;
+  color: $group-compact-next-event-color;
   inset-inline-end: -7px;
   max-height: 150px;
   overflow: hidden;
@@ -17,6 +17,6 @@
   z-index: 2;
 }
 
-.course-compact-next-event-component {
+.group-compact-next-event-component {
   @include ellipsis;
 }

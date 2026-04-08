@@ -18,7 +18,7 @@ export function ButtonGroupArchive({
 
   return (
     <Button
-      id="course-details-course-archive"
+      id="group-details-group-archive"
       className={`${className}`}
       disabled={disabled}
       needsLogin

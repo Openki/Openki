@@ -27,7 +27,7 @@ export function Group({ group, hideInterested }: Props) {
   }
 
   return (
-    <div className="frame-list-item-course">
+    <div className="frame-list-item-group">
       <h4
         className="frame-list-item-header"
         onClick={(event) => {

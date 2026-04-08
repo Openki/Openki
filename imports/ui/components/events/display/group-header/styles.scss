@@ -3,7 +3,7 @@
 
 $header-bg: color.adjust($blue-lighter, $lightness: -5%);
 
-.event-course-header {
+.event-group-header {
   background-color: $header-bg;
   border-color: $header-bg;
   border-style: solid;
@@ -22,16 +22,16 @@ $header-bg: color.adjust($blue-lighter, $lightness: -5%);
   }
 }
 
-.event-course-header-link {
+.event-group-header-link {
   cursor: pointer;
 }
 
-.event-course-header > h2 {
+.event-group-header > h2 {
   margin: 0;
   padding-bottom: 5px;
 }
 
-.back-to-course-overview i {
+.back-to-group-overview i {
   align-items: center;
   color: #38829c77;
   float: right;
@@ -41,7 +41,7 @@ $header-bg: color.adjust($blue-lighter, $lightness: -5%);
   transition: transform 0.5s ease-in-out;
 }
 
-.back-to-course-overview:hover i {
+.back-to-group-overview:hover i {
   display: block;
   transform: translateX(-60px);
 }

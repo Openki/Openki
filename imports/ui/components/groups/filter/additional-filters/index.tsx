@@ -64,12 +64,12 @@ export function AdditionalFilters(props: Props) {
 
   return (
     <>
-      <div aria-label="filter-course-roles" className="col-md-3 filter-component" role="group">
+      <div aria-label="filter-group-roles" className="col-md-3 filter-component" role="group">
         <h4 className="filter-component-header">{t("find.filter.courseRoles", "Roles")}</h4>
         {roles.map((role) => (
           <button
             key={role.name}
-            className={`filter-course-role ${roleClasses(role)}`}
+            className={`filter-group-role ${roleClasses(role)}`}
             type="button"
             onMouseOver={() => {
               props.onNeedsRoleMouseOver(role.name);
@@ -81,7 +81,7 @@ export function AdditionalFilters(props: Props) {
               props.onNeedsRoleClick(role.name);
             }}
           >
-            <span className="filter-course-role-icon">
+            <span className="filter-group-role-icon">
               <i className={`${role.icon} fa-fw`} />
             </span>
             &nbsp;

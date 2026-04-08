@@ -1,15 +1,15 @@
 @use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
-.course-role-title,
-.course-role-title-enroll {
+.group-role-title,
+.group-role-title-enroll {
   font-size: 1.25rem;
   line-height: 1.1;
   padding: 13px;
   width: 100%;
 }
 
-.course-role-title {
+.group-role-title {
   padding: 8px 13px;
   background: $user-bg;
 
@@ -18,7 +18,7 @@
   }
 }
 
-.course-role-title-enroll {
+.group-role-title-enroll {
   background: $green;
 }
 
@@ -29,27 +29,27 @@
   padding: 3px 12px;
 }
 
-.course-role-enroll,
-.course-role-enrolled {
+.group-role-enroll,
+.group-role-enrolled {
   margin-top: $page-component-seperator-height;
 }
 
-.course-role-enroll-options {
+.group-role-enroll-options {
   @include clearfix;
 
-  background: $course-page-component-bg;
+  background: $group-page-component-bg;
   padding: 15px 15px 0;
 }
 
-.course-role-first-steps {
+.group-role-first-steps {
   background-color: color.adjust($user-bg, $lightness: 10%);
   padding: 15px;
 }
 
-.course-role-first-steps .btn {
+.group-role-first-steps .btn {
   margin-top: 15px;
 }
 
-.coursepage-role-icon {
-  color: $course-page-role-icon-color;
+.grouppage-role-icon {
+  color: $group-page-role-icon-color;
 }

@@ -1,8 +1,8 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
-.course-edit-body {
+.group-edit-body {
   @include media-breakpoint-up(sm) {
-    border-color: $course-border-color;
+    border-color: $group-border-color;
     border-style: $proposal-border-style;
   }
 

@@ -136,13 +136,13 @@ export function GroupCompact({ group, organizationTagEvents, categoryTagEvents }
   return (
     <div
       ref={elementRef}
-      className={`row mx-0 align-items-start course-compact ${groupStateClasses()} ${filterPreviewClasses()}`}
+      className={`row mx-0 align-items-start group-compact ${groupStateClasses()} ${filterPreviewClasses()}`}
       style={groupCss()}
     >
-      <div className="course-compact-content col-8">
+      <div className="group-compact-content col-8">
         {group.internal && <InternalIndicator />}
         {group.singleEvent && <SingleEventIndicator />}
-        <div className="course-compact-title" title={group.name}>
+        <div className="group-compact-title" title={group.name}>
           <a className="stretched-link" href={Router.path("showCourse", group)}>
             {group.name}
           </a>
@@ -168,7 +168,7 @@ export function GroupCompact({ group, organizationTagEvents, categoryTagEvents }
         <GroupCompactRoles group={group} />
       )}
       {!isRegionLoading() && (
-        <div className="tag-group course-organizations">
+        <div className="tag-group group-organizations">
           {organizations.map((organization) => (
             <OrganizationTag key={organization} {...organizationTagAttr(organization)} />
           ))}

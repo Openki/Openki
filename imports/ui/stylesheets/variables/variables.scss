@@ -42,22 +42,22 @@ $event-compact-with-date-height: 220px;
 $event-page-component-bg: tint-color($green, 65%);
 $event-trashcan-color: #bfbfbf;
 
-// ** Courses
+// ** Groups
 // ========================================================================================
-$course-border-width: 7px;
-$course-border-color: $blue-lighter;
+$group-border-width: 7px;
+$group-border-color: $blue-lighter;
 $has-upcoming-events-bg: $blue-lighter;
 $proposal-border-style: dashed;
 $has-past-events-border-style: solid;
 
-$course-page-role-icon-color: #4c4c4c;
+$group-page-role-icon-color: #4c4c4c;
 
-$course-compact-next-event-bg: $green;
-$course-compact-next-event-color: $gray-800;
+$group-compact-next-event-bg: $green;
+$group-compact-next-event-color: $gray-800;
 
-$course-page-component-bg: $blue-lighter;
+$group-page-component-bg: $blue-lighter;
 
-$course-member-comment-border-color: shade-color($blue-lighter, 40%);
+$group-member-comment-border-color: shade-color($blue-lighter, 40%);
 
 // ** Category
 // ========================================================================================

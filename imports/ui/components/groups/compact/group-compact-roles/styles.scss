@@ -1,7 +1,7 @@
 @use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
-.course-compact-roles {
+.group-compact-roles {
   inset-inline-end: -7px;
   padding: 0;
   position: relative;
@@ -11,27 +11,27 @@
   z-index: 2;
 }
 
-.course-compact-role {
+.group-compact-role {
   text-align: center;
 }
 
-.course-compact-role + .course-compact-role {
+.group-compact-role + .group-compact-role {
   margin-top: 3px;
 }
 
-.course-compact-role-needed {
+.group-compact-role-needed {
   background-color: $role-needed-bg;
   color: $role-needed-color;
 }
 
-.course-compact-role-occupied {
+.group-compact-role-occupied {
   $background-color: $green;
 
   background-color: $background-color;
   color: color.adjust(color.adjust($background-color, $lightness: -40%), $saturation: -50%);
 }
 
-.course-compact-role-occupied-by-user {
+.group-compact-role-occupied-by-user {
   background-color: $user-bg;
   color: color.adjust(color.adjust($user-bg, $lightness: -40%), $saturation: -60%);
 }

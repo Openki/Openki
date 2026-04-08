@@ -2,19 +2,19 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
 /* stylelint-disable-next-line selector-no-qualifying-type */
-.profile-courselist h3[id] {
+.profile-grouplist h3[id] {
   margin-top: 10px;
 }
 
-.profile-courselist .badge-title {
+.profile-grouplist .badge-title {
   margin-bottom: 5px;
 }
 
-.profile-courselist .badge-title + div {
+.profile-grouplist .badge-title + div {
   margin-bottom: 20px;
 }
 
-.profile-courselist .badge {
+.profile-grouplist .badge {
   background-color: $user-bg;
   color: color.adjust(color.adjust($user-bg, $lightness: -40%), $saturation: -80%);
 
@@ -23,7 +23,7 @@
   }
 }
 
-.profile-courselist .role-label {
+.profile-grouplist .role-label {
   cursor: pointer;
   transition-duration: 0.25s;
   transition-property: #{"color background box-shadow"};

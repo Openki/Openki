@@ -26,7 +26,7 @@ export function ConfirmDialog({
   const { t } = useTranslation();
 
   return (
-    <div className="course-delete-confirm">
+    <div className="group-delete-confirm">
       <p>
         {t(
           "course.reallydelete",

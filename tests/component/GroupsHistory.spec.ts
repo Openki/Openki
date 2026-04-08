@@ -4,20 +4,20 @@ describe("Group history", function () {
 
     const randomTitle = `COURSEHISTORY${1000 + Math.floor(Math.random() * 9000)}`;
 
-    cy.get("#course-edit-title");
+    cy.get("#group-edit-title");
 
     cy.login("Seee");
 
     // Create the group
-    cy.get("#course-edit-title").type(randomTitle);
+    cy.get("#group-edit-title").type(randomTitle);
     cy.get("#courses-edit-region-select").select("9JyFCoKWkxnf8LWPh");
     cy.get("#courses-edit-save").click();
 
     // We should be redirected to the created group
-    cy.get('[data-test="course-details"]');
+    cy.get('[data-test="group-details"]');
 
     cy.get("#history-tab").click();
-    cy.get("#history .coursehistory-event").should("be.visible");
+    cy.get("#history .grouphistory-event").should("be.visible");
 
     // Bases on the previous test: should show a entry for user subscribe
     cy.login("Flumsi");
@@ -28,6 +28,6 @@ describe("Group history", function () {
     cy.get("#courses-edit-save").click();
 
     cy.get("#history-tab .tab-label").click();
-    cy.get("#history div:nth-child(2) > .coursehistory-event").should("be.visible");
+    cy.get("#history div:nth-child(2) > .grouphistory-event").should("be.visible");
   });
 });

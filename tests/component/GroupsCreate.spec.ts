@@ -5,13 +5,13 @@ describe("groups create", () => {
     cy.visitOpenki("/courses/propose");
     cy.get("#courses-edit-region-select").should("be.visible");
     cy.get("#courses-edit-region-select").select("h4MnI3psRr8hSljk2");
-    cy.get("#course-edit-title").click();
-    cy.get("#course-edit-title").type("Lebensmittel einmachen");
-    cy.get("#course-custom-field-instructor").click();
-    cy.get("#course-custom-field-instructor").type("Magu");
+    cy.get("#group-edit-title").click();
+    cy.get("#group-edit-title").type("Lebensmittel einmachen");
+    cy.get("#group-custom-field-instructor").click();
+    cy.get("#group-custom-field-instructor").type("Magu");
     cy.get("#courses-edit-save").click();
     cy.get("#account-tasks-login-frame-username").type("Seee");
     cy.get("#account-tasks-login-frame-password").type("greg{enter}");
-    cy.get('[data-test="course-details"] div.region-tag').should("include.text", "Zürich (Lernt)");
+    cy.get('[data-test="group-details"] div.region-tag').should("include.text", "Zürich (Lernt)");
   });
 });

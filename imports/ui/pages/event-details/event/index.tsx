@@ -135,7 +135,7 @@ export function Event({ event, isNew }: { event: EventModel; isNew: boolean }) {
 
         {!!event.courseId && <GroupEvent event={event as WithRequired<EventModel, "courseId">} />}
 
-        <div className={`event${event.courseId ? " course-event" : ""}`}>
+        <div className={`event${event.courseId ? " group-event" : ""}`}>
           {isEditing() ? <Edit {...eventEditAttr()} /> : <Display {...eventDisplayAttr()} />}
         </div>
         {!mobileViewport() && !isEditing() && !!event.courseId && (

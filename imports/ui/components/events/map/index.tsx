@@ -98,7 +98,7 @@ export function EventsMap({ events, fullscreenControl, openLinksInNewTab }: Prop
               <h4>
                 <VenueTag venue={mark.venue as EventVenueEntity} openInNewTab={openLinksInNewTab} />
               </h4>
-              <div className="course-event-list">
+              <div className="group-event-list">
                 <EventList
                   dataEvents={mark.events}
                   withDate={true}
