@@ -81,13 +81,13 @@ export type Reason = Type<typeof ReasonPattern>;
 
 export class Subscribe extends Change<{
   change: string;
-  courseId: string;
+  groupId: string;
   userId: string | undefined;
   role: string;
   reason: Reason;
   comment: string | undefined;
 }> {
-  course: GroupModel;
+  group: GroupModel;
 
   userId: string | undefined;
 
@@ -100,7 +100,7 @@ export class Subscribe extends Change<{
   static readonly method = "Groups.Subscribe";
 
   static async read(body: {
-    courseId: string;
+    groupId: string;
     userId: string | undefined;
     role: string;
     reason: Reason;
@@ -108,7 +108,7 @@ export class Subscribe extends Change<{
   }) {
     check(body, Object);
     return new this(
-      await Groups.findOneAsync(body.courseId),
+      await Groups.findOneAsync(body.groupId),
       body.userId,
       body.role,
       body.reason,
@@ -125,7 +125,7 @@ export class Subscribe extends Change<{
   ) {
     super();
 
-    this.course = checkGroup(group);
+    this.group = checkGroup(group);
 
     check(userId, Match.Optional(String));
     this.userId = userId;
@@ -145,12 +145,12 @@ export class Subscribe extends Change<{
   }
 
   validate() {
-    if (!this.course.roles.includes(this.role)) {
+    if (!this.group.roles.includes(this.role)) {
       throw new ValidationError([], `No role ${this.role}`);
     }
 
     // Do not allow subscribing when already subscribed
-    if (this.course.userHasRole(this.userId, this.role)) {
+    if (this.group.userHasRole(this.userId, this.role)) {
       throw new ValidationError([], `Already subscribed as ${this.role}`);
     }
   }
@@ -168,17 +168,17 @@ export class Subscribe extends Change<{
     // The team role is restricted
     if (this.role === "team") {
       // If there are no team-members, anybody can join
-      if (!hasRole(this.course.members, "team")) {
+      if (!hasRole(this.group.members, "team")) {
         return operator._id === this.userId;
       }
 
       // Only members of the team can take-on other people
-      if (this.course.userHasRole(operator._id, "team")) {
+      if (this.group.userHasRole(operator._id, "team")) {
         // Only participating users can be drafted
         const candidateRoles = ["participant", "mentor", "host"];
 
         // In for a penny, in for a pound
-        if (candidateRoles.some((role) => this.course.userHasRole(this.userId, role))) {
+        if (candidateRoles.some((role) => this.group.userHasRole(this.userId, role))) {
           return true;
         }
       }
@@ -192,7 +192,7 @@ export class Subscribe extends Change<{
   dict() {
     return {
       change: "subscribe",
-      courseId: this.course._id,
+      groupId: this.group._id,
       userId: this.userId,
       role: this.role,
       reason: this.reason,
@@ -221,45 +221,45 @@ export class Subscribe extends Change<{
     // Note that the user will be created with the role already
     // filled to avoid seeing empty list of roles.
     await Groups.updateAsync(
-      { _id: this.course._id, "members.user": { $ne: this.userId } },
+      { _id: this.group._id, "members.user": { $ne: this.userId } },
       { $addToSet: { members: { user: this.userId, roles: [this.role] } } },
     );
 
     // Now that we're sure she's listed, add the role too.
     // If we just added her, this is a no-op.
     await Groups.updateAsync(
-      { _id: this.course._id, "members.user": this.userId },
+      { _id: this.group._id, "members.user": this.userId },
       { $addToSet: { "members.$.roles": this.role } },
     );
 
     if (this.comment) {
       await Groups.updateAsync(
-        { _id: this.course._id, "members.user": this.userId },
+        { _id: this.group._id, "members.user": this.userId },
         { $set: { "members.$.comment": this.comment } },
       );
     }
 
     // Update member related calculated fields
-    await interestedDenormalizer.afterSubscribe(this.course._id);
-    await editorsDenormalizer.updateEditors(this.course._id);
+    await interestedDenormalizer.afterSubscribe(this.group._id);
+    await editorsDenormalizer.updateEditors(this.group._id);
 
-    await timeLastEditDenormalizer.afterSubscribe(this.course._id);
-    await historyDenormalizer.afterSubscribe(this.course._id, this.userId, this.role);
+    await timeLastEditDenormalizer.afterSubscribe(this.group._id);
+    await historyDenormalizer.afterSubscribe(this.group._id, this.userId, this.role);
 
     if (this.reason === "interested") {
       // Send notification to team
-      await Notification.Join.record(this.course._id, this.userId, this.role, this.comment);
+      await Notification.Join.record(this.group._id, this.userId, this.role, this.comment);
     }
   }
 }
 
 export class Unsubscribe extends Change<{
   change: string;
-  courseId: string;
+  groupId: string;
   userId: string;
   role: string;
 }> {
-  course: GroupModel;
+  group: GroupModel;
 
   userId: string;
 
@@ -267,14 +267,14 @@ export class Unsubscribe extends Change<{
 
   static readonly method = "Groups.Unsubscribe";
 
-  static async read(body: { courseId: string; userId: string; role: string }) {
-    return new this(await Groups.findOneAsync(body.courseId), body.userId, body.role);
+  static async read(body: { groupId: string; userId: string; role: string }) {
+    return new this(await Groups.findOneAsync(body.groupId), body.userId, body.role);
   }
 
   constructor(group: GroupModel | undefined, userId: string | undefined | null, role: string) {
     super();
 
-    this.course = checkGroup(group);
+    this.group = checkGroup(group);
 
     check(userId, String);
     this.userId = userId;
@@ -289,7 +289,7 @@ export class Unsubscribe extends Change<{
 
   validate() {
     // Do not allow unsubscribing when not subscribed
-    const userHasRole = this.course.userHasRole(this.userId, this.role);
+    const userHasRole = this.group.userHasRole(this.userId, this.role);
     if (!userHasRole) {
       throw new ValidationError([], `not subscribed with role ${this.role}`);
     }
@@ -309,7 +309,7 @@ export class Unsubscribe extends Change<{
     if (this.role === "team") {
       // Members of the team can take-out other people
       // The nuclear option. We'll have to reconsider this!
-      return this.course.userHasRole(operator._id, "team");
+      return this.group.userHasRole(operator._id, "team");
     }
 
     // The other roles can only be unsubscribed from by the users themselves
@@ -319,7 +319,7 @@ export class Unsubscribe extends Change<{
   dict() {
     return {
       change: "unsubscribe",
-      courseId: this.course._id,
+      groupId: this.group._id,
       userId: this.userId,
       role: this.role,
     };
@@ -332,7 +332,7 @@ export class Unsubscribe extends Change<{
     },
   ) {
     rel.push(this.userId);
-    rel.push(this.course._id);
+    rel.push(this.group._id);
     Object.assign(body, this.dict());
   }
 
@@ -342,37 +342,37 @@ export class Unsubscribe extends Change<{
     if (this.role === "team") {
       update.$pull.editors = this.userId;
       await Events.updateAsync(
-        { groupId: this.course._id },
+        { groupId: this.group._id },
         { $pull: { editors: this.userId } },
         { multi: true },
       );
     }
-    await Groups.updateAsync({ _id: this.course._id, "members.user": this.userId }, update);
+    await Groups.updateAsync({ _id: this.group._id, "members.user": this.userId }, update);
 
     // Housekeeping: Remove members that have no role left
     await Groups.updateAsync(
-      { _id: this.course._id },
+      { _id: this.group._id },
       {
         $pull: { members: { roles: { $size: 0 } } },
       },
     );
 
     // Update member related calculated fields
-    await interestedDenormalizer.afterUnsubscribe(this.course._id);
-    await editorsDenormalizer.updateEditors(this.course._id);
+    await interestedDenormalizer.afterUnsubscribe(this.group._id);
+    await editorsDenormalizer.updateEditors(this.group._id);
 
-    await timeLastEditDenormalizer.afterUnsubscribe(this.course._id);
-    await historyDenormalizer.afterUnsubscribe(this.course._id, this.userId, this.role);
+    await timeLastEditDenormalizer.afterUnsubscribe(this.group._id);
+    await historyDenormalizer.afterUnsubscribe(this.group._id, this.userId, this.role);
   }
 }
 
 export class Message extends Change<{
   change: string;
-  courseId: string;
+  groupId: string;
   userId: string;
   message: string | undefined;
 }> {
-  course: GroupModel;
+  group: GroupModel;
 
   userId: string;
 
@@ -380,14 +380,14 @@ export class Message extends Change<{
 
   static readonly method = "Groups.Message";
 
-  static async read(body: { courseId: string; userId: string; message: string | undefined }) {
-    return new this(await Groups.findOneAsync(body.courseId), body.userId, body.message);
+  static async read(body: { groupId: string; userId: string; message: string | undefined }) {
+    return new this(await Groups.findOneAsync(body.groupId), body.userId, body.message);
   }
 
   constructor(group: GroupModel | undefined, userId: string, message: string | undefined) {
     super();
 
-    this.course = checkGroup(group);
+    this.group = checkGroup(group);
 
     check(userId, String);
     this.userId = userId;
@@ -416,7 +416,7 @@ export class Message extends Change<{
   dict() {
     return {
       change: "message",
-      courseId: this.course._id,
+      groupId: this.group._id,
       userId: this.userId,
       message: this.message,
     };
@@ -429,13 +429,13 @@ export class Message extends Change<{
     },
   ) {
     rel.push(this.userId);
-    rel.push(this.course._id);
+    rel.push(this.group._id);
     Object.assign(body, this.dict());
   }
 
   async apply() {
     await Groups.updateAsync(
-      { _id: this.course._id, "members.user": this.userId },
+      { _id: this.group._id, "members.user": this.userId },
       { $set: { "members.$.comment": this.message } },
     );
   }

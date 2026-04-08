@@ -17,7 +17,7 @@ import { getSiteName } from "/imports/utils/getSiteName";
 import { ReactJoin } from "/imports/utils/ReactJoin";
 
 interface Body {
-  courseId: string;
+  groupId: string;
   recipients: string[];
   model: string;
 }
@@ -44,11 +44,11 @@ export async function record(groupId: string) {
     .value();
 
   const body: Body = {
-    courseId: group._id,
+    groupId: group._id,
 
     // Don't send to creator
     recipients: recipients.filter((r) => r !== group.createdby),
-    model: "Organization.Course",
+    model: "Organization.group",
   };
 
   await Log.record("Notification.Send", [group._id], body);
@@ -56,7 +56,7 @@ export async function record(groupId: string) {
 
 export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
-  const group = await Groups.findOneAsync(body.courseId);
+  const group = await Groups.findOneAsync(body.groupId);
   if (!group) {
     throw new Error("Group does not exist (0.o)");
   }
@@ -81,7 +81,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
     async vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
-      const campaign = "organizationCourseNotify";
+      const campaign = "organizationGroupNotify";
 
       const recipientsOrganizations = organizations.filter((o) =>
         o.members.some((m) => m.user === actualRecipient._id),

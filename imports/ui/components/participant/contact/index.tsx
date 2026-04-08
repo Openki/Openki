@@ -54,7 +54,7 @@ export function ParticipantContact(props: Props) {
       onSend: async (message, options) => {
         const sendPrivateMessageOptions = options as SendPrivateMessageOptions;
         if (props.group) {
-          sendPrivateMessageOptions.courseId = props.group?._id;
+          sendPrivateMessageOptions.groupId = props.group?._id;
         }
         if (props.event) {
           sendPrivateMessageOptions.eventId = props.event?._id;

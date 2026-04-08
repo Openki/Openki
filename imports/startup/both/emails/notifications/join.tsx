@@ -17,7 +17,7 @@ import { Model as NotificationModel } from "../notification";
 import { Join, Props } from "/imports/emails/notifications/Join";
 
 interface Body {
-  courseId: string;
+  groupId: string;
   participantId: string;
   recipients: string[];
   newRole: string;
@@ -54,7 +54,7 @@ export async function record(
   }
 
   const body: Body = {
-    courseId: group._id,
+    groupId: group._id,
     participantId: participant._id,
     newRole,
     message,
@@ -72,7 +72,7 @@ export async function record(
 
 export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
-  const group = await Groups.findOneAsync(body.courseId);
+  const group = await Groups.findOneAsync(body.groupId);
   const newParticipant = await Users.findOneAsync(body.participantId);
   const recipients = await Users.find({
     _id: { $in: body.recipients.filter((r) => r !== body.participantId) },
