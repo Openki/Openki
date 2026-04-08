@@ -204,7 +204,7 @@ export function Modal(props: {
               <>
                 <div className="delete-events-list">
                   <FormCheckGroup
-                    id="courses-delete-events-list"
+                    id="groups-delete-events-list"
                     type="box"
                     options={Object.fromEntries(
                       props.upcomingEvents.map((event) => [

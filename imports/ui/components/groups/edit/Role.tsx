@@ -24,7 +24,7 @@ export function Role(props: Props) {
   return (
     <>
       <FormCheck
-        id={`courseEditRole${props.type}Check`}
+        id={`groupEditRole${props.type}Check`}
         type="box"
         label={
           <>
@@ -38,7 +38,7 @@ export function Role(props: Props) {
       {props.enabled && (
         <div className="ms-4">
           <FormCheck
-            id={`courseEditRole${props.type}EnrollCheck`}
+            id={`groupEditRole${props.type}EnrollCheck`}
             type="box"
             label={t(roleSubscription())}
             checked={props.enroll}

@@ -11,7 +11,7 @@ describe("EditCustomFields", () => {
     cy.get("#group-custom-field-email").type("tara@openki.example");
     cy.get("#group-custom-field-instructor").clear();
     cy.get("#group-custom-field-instructor").type("Tara");
-    cy.get("#courses-edit-save").click();
+    cy.get("#groups-edit-save").click();
     cy.get("#description p:nth-child(5) span.pre-line").should("have.text", "tara@openki.example");
   });
 
@@ -35,7 +35,7 @@ describe("EditCustomFields", () => {
     });
     cy.get('[data-test="group-details"] button.btn-edit').click();
     cy.get("#group-custom-field-lang").select("de");
-    cy.get("#courses-edit-save").click();
+    cy.get("#groups-edit-save").click();
     cy.get("#description p:nth-child(4)").should("have.text", "Language: German");
   });
 
@@ -48,11 +48,11 @@ describe("EditCustomFields", () => {
     cy.get('[data-test="group-details"] button.btn-edit').click();
     cy.get('[data-test="group-details"] label[for="group-custom-field-recording"]').click();
     cy.get("#group-custom-field-recording").check();
-    cy.get("#courses-edit-save").click();
+    cy.get("#groups-edit-save").click();
     cy.get("#description p:nth-child(3)").should("have.text", "Recording: Yes");
     cy.get('[data-test="group-details"] button.btn-edit').click();
     cy.get("#group-custom-field-recording").uncheck();
-    cy.get("#courses-edit-save").click();
+    cy.get("#groups-edit-save").click();
     cy.get("#description p:nth-child(3)").should("have.text", "Recording: No");
   });
 });

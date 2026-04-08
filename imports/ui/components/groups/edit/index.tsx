@@ -652,7 +652,7 @@ export function Edit(props: Props) {
                 {showRegionSelection() && (
                   <div className="mb-3">
                     <RegionSelect
-                      id="courses-edit-region-select"
+                      id="groups-edit-region-select"
                       value={selectedRegion}
                       onChange={(value) => setSelectedRegion(value)}
                       onBlur={() => checkValidity("region")}
@@ -708,9 +708,9 @@ export function Edit(props: Props) {
           )}
 
           <div className="form-actions">
-            <ButtonSave submit id="courses-edit-save" isBusy={isBusy} />
+            <ButtonSave submit id="groups-edit-save" isBusy={isBusy} />
             {!props.isFrame && (
-              <ButtonCancel id="courses-edit-cancel" onClick={handleCancel} disabled={isBusy} />
+              <ButtonCancel id="groups-edit-cancel" onClick={handleCancel} disabled={isBusy} />
             )}
           </div>
         </div>
