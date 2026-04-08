@@ -173,7 +173,7 @@ export function Navbar() {
                     className={`${currentRouteIs("search", "showGroup") ? "active" : ""} nav-link`}
                     onClick={() => close()}
                   >
-                    <i className="fa-regular fa-lightbulb fa-fw" /> {t("menue.Courses", "Find")}
+                    <i className="fa-regular fa-lightbulb fa-fw" /> {t("menue.Groups", "Find")}
                     <div className="nav-marker-caret"></div>
                   </a>
                 </li>

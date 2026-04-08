@@ -46,13 +46,13 @@ export function EventGroupHeader(props: Props) {
           <a
             className="back-to-group-overview"
             href={props.backLink}
-            title={t("event.details.viewCourse")}
+            title={t("event.details.viewGroup")}
           >
             <i className="fa-solid fa-angle-left fa-fw" />
           </a>
           <a href={props.backLink}>
             <i className="fa-solid fa-angle-left fa-fw" />
-            {t("event.details.viewCourse", "To the course overview")}
+            {t("event.details.viewGroup", "To the course overview")}
           </a>
         </>
       )}

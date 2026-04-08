@@ -105,7 +105,7 @@ export function Member({ member, group }: { member: GroupMemberEntity; group: Gr
             <button
               type="button"
               className="btn btn-sm btn-add add-to-team-btn"
-              data-bs-title={t("course.roles.maketeam", "Add to team")}
+              data-bs-title={t("group.roles.maketeam", "Add to team")}
               onClick={async () => {
                 setTimeout(() => {
                   Tooltips.hide();
@@ -140,7 +140,7 @@ export function Member({ member, group }: { member: GroupMemberEntity; group: Gr
                     },
                     onSuccess: () => {
                       Alert.success(
-                        t("courseMember.messageChanged", "Your enroll-message has been changed."),
+                        t("groupMember.messageChanged", "Your enroll-message has been changed."),
                       );
                     },
                   },

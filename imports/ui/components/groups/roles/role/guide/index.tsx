@@ -13,9 +13,9 @@ export function Guide() {
       <br />
       <br />
       <span>
-        {t("course.roles.firstSteps.guide", "Further info")}:&nbsp;
+        {t("group.roles.firstSteps.guide", "Further info")}:&nbsp;
         <a href={getLocalizedValue(PublicSettings.groupGuideLink)} target="_blank" rel="noreferrer">
-          {t("course.roles.firstSteps.guideLink", "How to organize my first {SITENAME} course?", {
+          {t("group.roles.firstSteps.guideLink", "How to organize my first {SITENAME} course?", {
             SITENAME: siteName,
           })}
         </a>

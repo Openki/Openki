@@ -115,7 +115,7 @@ export function Events({ group }: Props) {
                   <h4>
                     <i className="fa-regular fa-calendar-days fa-fw" />
                     &nbsp;
-                    {t("course.events.ongoinglist", "Ongoing events")}
+                    {t("group.events.ongoinglist", "Ongoing events")}
                   </h4>
                 </div>
                 <div className="group-event-list">
@@ -131,7 +131,7 @@ export function Events({ group }: Props) {
                     <i className="fa-regular fa-calendar-days fa-fw" />
                     &nbsp;
                     {t(
-                      "course.events.upcominglist",
+                      "group.events.upcominglist",
                       "{NUM, plural, =0{No upcoming events yet} one{1 upcoming event} other{# upcoming events} }",
                       { NUM: upcomingEventsCount() },
                     )}
@@ -149,7 +149,7 @@ export function Events({ group }: Props) {
                         setShowAllEvents(true);
                       }}
                     >
-                      {t("course.events.showAllEvents", "Show all")}
+                      {t("group.events.showAllEvents", "Show all")}
                     </button>
                   )}
                 </div>
@@ -162,7 +162,7 @@ export function Events({ group }: Props) {
               <h4>
                 <i className="fa-regular fa-calendar-days fa-fw" />
                 &nbsp;
-                {t("course.details.noEvents", "No events planned")}
+                {t("group.details.noEvents", "No events planned")}
               </h4>
             </div>
           </div>
@@ -173,7 +173,7 @@ export function Events({ group }: Props) {
             <h4>
               <i className="fa-regular fa-calendar-days fa-fw" />
               &nbsp;
-              {t("course.details.eventsLoadingHeader", "Events")}
+              {t("group.details.eventsLoadingHeader", "Events")}
             </h4>
           </div>
           <LoadingRow />
@@ -202,7 +202,7 @@ export function Events({ group }: Props) {
             }}
             rel="noreferrer"
           >
-            {t("course.download_cal", "Download events to my calendar")}
+            {t("group.download_cal", "Download events to my calendar")}
           </a>
         </div>
       )}

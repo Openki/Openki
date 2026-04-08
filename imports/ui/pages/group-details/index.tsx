@@ -80,7 +80,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
       await GroupsMethods.remove(group._id);
 
       Alert.success(
-        t("courseDetailsPage.message.courseHasBeenDeleted", "{COURSE} was deleted.", {
+        t("groupDetailsPage.message.groupHasBeenDeleted", "{COURSE} was deleted.", {
           COURSE: group.name,
         }),
       );
@@ -104,7 +104,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
     } catch (err) {
       Alert.serverError(
         err,
-        t("courseDetailsPage.message.courseHasBeenDeleted.error", "Removing went wrong"),
+        t("groupDetailsPage.message.groupHasBeenDeleted.error", "Removing went wrong"),
       );
     } finally {
       setIsBusy(false);
@@ -118,14 +118,14 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
       setExpanded(false);
 
       Alert.success(
-        t("courseDetailsPage.message.courseHasBeenArchived", "{COURSE} was archived.", {
+        t("groupDetailsPage.message.groupHasBeenArchived", "{COURSE} was archived.", {
           COURSE: group.name,
         }),
       );
     } catch (err) {
       Alert.serverError(
         err,
-        t("courseDetailsPage.message.courseHasBeenArchived.error", "Archiving went wrong"),
+        t("groupDetailsPage.message.groupHasBeenArchived.error", "Archiving went wrong"),
       );
     } finally {
       setIsBusy(false);
@@ -138,14 +138,14 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
       await GroupsMethods.unarchive(group._id);
 
       Alert.success(
-        t("courseDetailsPage.message.courseHasBeenUnarchived", "{COURSE} has been unarchived.", {
+        t("groupDetailsPage.message.groupHasBeenUnarchived", "{COURSE} has been unarchived.", {
           COURSE: group.name,
         }),
       );
     } catch (err) {
       Alert.serverError(
         err,
-        t("courseDetailsPage.message.courseHasBeenUnarchived.error", "Unarchiving went wrong"),
+        t("groupDetailsPage.message.groupHasBeenUnarchived.error", "Unarchiving went wrong"),
       );
     } finally {
       setIsBusy(false);
@@ -178,30 +178,30 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
         <ActionResult
           type="success"
           dismissible
-          title={t("message.courseCreated", "{NAME} has been created", {
+          title={t("message.groupCreated", "{NAME} has been created", {
             NAME: group.name,
           })}
           actions={[
             group.description
               ? {
-                  text: t("message.courseCreated.addDescription", "Add a description"),
+                  text: t("message.groupCreated.addDescription", "Add a description"),
                   href: "#group-description",
                 }
               : undefined,
             {
-              text: t("message.courseCreated.addImage", "Add an image"),
+              text: t("message.groupCreated.addImage", "Add an image"),
               href: "#files-tab",
             },
             mayShare(group)
-              ? { text: t("message.courseCreated.share", "Invite your friends"), href: "#share" }
+              ? { text: t("message.groupCreated.share", "Invite your friends"), href: "#share" }
               : undefined,
             {
-              text: t("message.courseCreated.addEvent", "Create event"),
+              text: t("message.groupCreated.addEvent", "Create event"),
               href: "#group-event-add",
             },
           ]}
         >
-          {t("message.courseCreated.description", "What do you wannt to do next?")}
+          {t("message.groupCreated.description", "What do you wannt to do next?")}
         </ActionResult>
       )}
       <div data-test="group-details" className="container">
@@ -211,7 +211,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
               {group.archived && (
                 <div className="alert alert-archived text-center" role="alert">
                   <strong>
-                    {t("course.archive.alert", "{COURSE} is archived and not active anymore.", {
+                    {t("group.archive.alert", "{COURSE} is archived and not active anymore.", {
                       COURSE: group.name,
                     })}
                   </strong>
@@ -259,7 +259,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
                             className="btn-archive"
                             onArchive={async () => handleOnArchive()}
                           >
-                            {t("course.archive.archiveButton.archive", "Archive")}
+                            {t("group.archive.archiveButton.archive", "Archive")}
                           </ButtonGroupArchive>
                         )}
 

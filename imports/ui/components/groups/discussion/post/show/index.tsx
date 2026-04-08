@@ -77,14 +77,14 @@ export function Show({ post, onEdit }: Props) {
           className="btn btn-add discussion-reply-btn"
           onClick={handleEditClick}
         >
-          {t("course.discussion.comment_answer", "Answer")}
+          {t("group.discussion.comment_answer", "Answer")}
         </button>
       </div>
     ) : (
       <button type="button" className="btn btn-add page-component-btn" onClick={handleEditClick}>
         <i className="fa-solid fa-pencil fa-fw" />
         &nbsp;
-        {t("course.discussion.write_comment", "Write a comment")}
+        {t("group.discussion.write_comment", "Write a comment")}
       </button>
     )
   ) : (
@@ -102,7 +102,7 @@ export function Show({ post, onEdit }: Props) {
                   className="fa-solid fa-bell"
                   data-bs-title={
                     !post.eventId
-                      ? t("course.discussion.allNotified", "All interested notified")
+                      ? t("group.discussion.allNotified", "All interested notified")
                       : t(
                           "event.discussion.allNotified",
                           "All interested and participants notified",
@@ -114,7 +114,7 @@ export function Show({ post, onEdit }: Props) {
             {hasBeenEdited() && (
               <>
                 {" "}
-                - {t("course.discussion.lastUpdate", "Last update")}:{" "}
+                - {t("group.discussion.lastUpdate", "Last update")}:{" "}
                 <span data-bs-title={dateFormat(post.time_updated)}>
                   {fromNow(post.time_updated)}
                 </span>

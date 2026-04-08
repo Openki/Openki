@@ -73,7 +73,7 @@ export function OrganizationList({ event }: Props) {
               <div className="tag organization-tag addon">
                 <i
                   className="fa-solid fa-bullhorn fa-fw"
-                  title={t("course.organizationList.title.organizedBy", {
+                  title={t("group.organizationList.title.organizedBy", {
                     COURSE: event.title,
                   })}
                 />
@@ -93,7 +93,7 @@ export function OrganizationList({ event }: Props) {
                   <ul className="dropdown-menu dialog-dropdown">
                     <li className="dropdown-header">
                       {t(
-                        "course.organizationList.dropdownTitle.editOrganization",
+                        "group.organizationList.dropdownTitle.editOrganization",
                         "Edit organization",
                       )}
                       <button type="button" className="btn-close"></button>

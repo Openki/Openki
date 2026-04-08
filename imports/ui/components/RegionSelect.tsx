@@ -24,7 +24,7 @@ export function RegionSelect({
     <FormControl
       id={id}
       type="select"
-      label={t("course.edit.region", "Region")}
+      label={t("group.edit.region", "Region")}
       prepend="fa-solid fa-location-dot"
       placeholder={t("_selection.pleaseSelect")}
       options={

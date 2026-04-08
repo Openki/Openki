@@ -71,7 +71,7 @@ export function Members({ group }: { group: GroupModel }) {
           <i className="fa-solid fa-users fa-fw" />
           &nbsp;
           {t(
-            "course.details.members.title",
+            "group.details.members.title",
             "{NUM, plural, =0{No interested yet} one{1 interested} other{# interested} }",
             { NUM: howManyEnrolled() },
           )}{" "}

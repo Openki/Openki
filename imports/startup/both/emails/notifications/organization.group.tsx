@@ -95,7 +95,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       };
 
       const subject = t(
-        "notification.organization.course.mail.subject",
+        "notification.organization.group.mail.subject",
         "{COURSE} proposed in {ORGANIZATIONS}",
         subjectvars,
       );

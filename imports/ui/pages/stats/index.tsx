@@ -19,7 +19,7 @@ function Header() {
   return (
     <>
       <th className="group-stat" colSpan={7} style={{ height: "4.5em" }}>
-        {t("region.stats.courses", "Courses")}
+        {t("region.stats.groups", "Courses")}
       </th>
       <th className="event-stat" colSpan={9} style={{ height: "4.5em" }}>
         {t("region.stats.events", "Events")}
@@ -32,13 +32,13 @@ function SubHeader() {
   const { t } = useTranslation();
   return (
     <>
-      <th className="group-stat">{t("region.stats.courses.total", "Total")}</th>
-      <th className="group-stat">{t("region.stats.courses.proposed", "Proposed")}</th>
-      <th className="group-stat">{t("region.stats.courses.resting", "Resting")}</th>
-      <th className="group-stat">{t("region.stats.courses.upcoming", "Upcoming")}</th>
-      <th className="group-stat">{t("region.stats.courses.archived", "Archived")}</th>
-      <th className="group-stat">{t("region.stats.courses.enrollments", "Course enrollments")}</th>
-      <th className="group-stat">{t("region.stats.courses.users", "Users")}</th>
+      <th className="group-stat">{t("region.stats.groups.total", "Total")}</th>
+      <th className="group-stat">{t("region.stats.groups.proposed", "Proposed")}</th>
+      <th className="group-stat">{t("region.stats.groups.resting", "Resting")}</th>
+      <th className="group-stat">{t("region.stats.groups.upcoming", "Upcoming")}</th>
+      <th className="group-stat">{t("region.stats.groups.archived", "Archived")}</th>
+      <th className="group-stat">{t("region.stats.groups.enrollments", "Course enrollments")}</th>
+      <th className="group-stat">{t("region.stats.groups.users", "Users")}</th>
       <th className="event-stat">{t("region.stats.events.total", "Total")}</th>
       <th className="event-stat">{t("region.stats.events.future", "Future")}</th>
       <th className="event-stat">{t("region.stats.events.passed", "Passed")}</th>
@@ -57,21 +57,21 @@ function Descriptions() {
   return (
     <>
       <td className="description">
-        {t("region.stats.courses.total.description", "excl. archived")}
+        {t("region.stats.groups.total.description", "excl. archived")}
       </td>
-      <td className="description">{t("region.stats.courses.proposed.description", "no events")}</td>
+      <td className="description">{t("region.stats.groups.proposed.description", "no events")}</td>
       <td className="description">
-        {t("region.stats.courses.resting.description", "only passed events")}
+        {t("region.stats.groups.resting.description", "only passed events")}
       </td>
       <td className="description">
-        {t("region.stats.courses.upcoming.description", "with planned event(s)")}
+        {t("region.stats.groups.upcoming.description", "with planned event(s)")}
       </td>
       <td className="description">&nbsp;</td>
       <td className="description">
-        {t("region.stats.courses.enrollments.description", "interested or any role, incl. creator")}
+        {t("region.stats.groups.enrollments.description", "interested or any role, incl. creator")}
       </td>
       <td className="description">
-        {t("region.stats.courses.users.description", "unique accounts enrolled")}
+        {t("region.stats.groups.users.description", "unique accounts enrolled")}
       </td>
       <td className="description">
         {t("region.stats.events.total.description", "incl. canceled")}

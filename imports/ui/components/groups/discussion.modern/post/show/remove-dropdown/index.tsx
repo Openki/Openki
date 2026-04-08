@@ -39,7 +39,7 @@ export function RemoveDropdown({ onRemove }: Props) {
               onRemove();
             }}
           >
-            {t("course.discussion.deleteCommentButton", "Delete")}
+            {t("group.discussion.deleteCommentButton", "Delete")}
           </button>
         </li>
       </ul>

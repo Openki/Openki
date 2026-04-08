@@ -37,7 +37,7 @@ function Groups({ search }: { search: string }) {
             )}
           </button>
           {t(
-            "proposedCoursesDropdown.joinExistingCourseQuestion",
+            "proposedGroupsDropdown.joinExistingGroupQuestion",
             "Maybe you would like to join an existing course?",
           )}
         </h5>
@@ -61,7 +61,7 @@ function Groups({ search }: { search: string }) {
                 setCollapsed(true);
               }}
             >
-              {t("button.proposedCourses.close", "No thanks")}
+              {t("button.proposedGroups.close", "No thanks")}
             </button>
           </span>
         </>
@@ -93,8 +93,8 @@ export function Title(props: {
         id="group-edit-title"
         type="text"
         size="large"
-        label={t("course.edit.title", "Title")}
-        placeholder={t("course.title.placeholder", "What are you interested in?")}
+        label={t("group.edit.title", "Title")}
+        placeholder={t("group.title.placeholder", "What are you interested in?")}
         value={value}
         autoComplete="off"
         onChange={(value) => {

@@ -23,20 +23,20 @@ export function Header({ group }: { group: GroupModel }) {
   const editableNameAttr: EditableProps = {
     text: group.name,
     multiline: false,
-    placeholder: t("course.title.placeholder"),
+    placeholder: t("group.title.placeholder"),
     store: {
       onSave: async (newName) => {
         await GroupsMethods.save(group._id, { name: newName });
       },
       onSuccess: (newName) => {
         Alert.success(
-          t("courseDetails.message.nameChanged", 'The name has been changed to "{NAME}".', {
+          t("groupDetails.message.nameChanged", 'The name has been changed to "{NAME}".', {
             NAME: newName,
           }),
         );
       },
       onError: (err) => {
-        Alert.serverError(err as string | Error, t("course.save.error", "Saving went wrong"));
+        Alert.serverError(err as string | Error, t("group.save.error", "Saving went wrong"));
       },
     },
   };
@@ -68,7 +68,7 @@ export function Header({ group }: { group: GroupModel }) {
         {isProposal() && (
           <div className="proposal-tag">
             <i className="fa-regular fa-lightbulb fa-fw" />
-            {t("course.details.is-proposalTag", "Proposal")}
+            {t("group.details.is-proposalTag", "Proposal")}
           </div>
         )}
         <Tag region={group.region} />

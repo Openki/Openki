@@ -44,10 +44,10 @@ export function AlertMessage({
     <div className="alert alert-success alert-dismissible fade show" role="alert">
       <h4>
         <i className="fa-solid fa-check" />{" "}
-        {t("course.edit.savedMessage", "Your proposal has been saved!")}
+        {t("group.edit.savedMessage", "Your proposal has been saved!")}
       </h4>
       <span className="pre-line">
-        {t("course.edit.linkToCourse", 'You can see your new proposal "{NAME}" on {SITENAME}', {
+        {t("group.edit.linkToGroup", 'You can see your new proposal "{NAME}" on {SITENAME}', {
           NAME: (
             <a className="alert-link" href={savedGroupLink()} target="_blank" rel="noreferrer">
               {savedGroupName()}

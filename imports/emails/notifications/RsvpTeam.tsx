@@ -49,7 +49,7 @@ export function RsvpTeam({
         </td>
       </tr>
       <Footer
-        receiveNote={t("email.base.receiveNote.courseTeam", { COURSE: group })}
+        receiveNote={t("email.base.receiveNote.groupTeam", { COURSE: group })}
         unsubscribe={unsubscribe}
         spamPrevention={true}
         campaign={campaign}

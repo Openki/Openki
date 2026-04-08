@@ -45,7 +45,7 @@ export function Submenu({ group }: { group: GroupModel }) {
               aria-selected="true"
             >
               <i className="fa-solid fa-file-lines fa-fw" />{" "}
-              <span className="tab-label">{t("course.subnav.descr", "Description")}</span>
+              <span className="tab-label">{t("group.subnav.descr", "Description")}</span>
             </button>
           </li>
           {mayEdit() && (
@@ -61,7 +61,7 @@ export function Submenu({ group }: { group: GroupModel }) {
                 aria-selected="false"
               >
                 <i className="fa-solid fa-file fa-fw" />{" "}
-                <span className="tab-label">{t("course.subnav.files", "Files")}</span>
+                <span className="tab-label">{t("group.subnav.files", "Files")}</span>
               </button>
             </li>
           )}
@@ -77,7 +77,7 @@ export function Submenu({ group }: { group: GroupModel }) {
               aria-selected="false"
             >
               <i className="fa-solid fa-clock-rotate-left fa-fw" />{" "}
-              <span className="tab-label">{t("course.subnav.history", "History")}</span>
+              <span className="tab-label">{t("group.subnav.history", "History")}</span>
             </button>
           </li>
         </ul>
@@ -114,7 +114,7 @@ export function Submenu({ group }: { group: GroupModel }) {
                 setDescriptionTruncated(false);
               }}
             >
-              — {t("courseDetails.showMore", "show more")} —
+              — {t("groupDetails.showMore", "show more")} —
             </div>
           )}
         </div>

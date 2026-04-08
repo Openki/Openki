@@ -72,7 +72,7 @@ export function Discussion({ groupId, eventId }: Props) {
   // style fixes a problem that occurs during the transition to react. This can be removed when everything is changed to react.
   return (
     <>
-      <h4 className="card-title">{t("course.title.Discussion", "Discussion")}</h4>
+      <h4 className="card-title">{t("group.title.Discussion", "Discussion")}</h4>
       {isLoading() ? (
         <LoadingRow />
       ) : (
@@ -92,7 +92,7 @@ export function Discussion({ groupId, eventId }: Props) {
               }}
             >
               <i className="fa-solid fa-chevron-down fa-fw" />
-              {t("course.discussions.showAllComment", "Show all {NUM} comments", {
+              {t("group.discussions.showAllComment", "Show all {NUM} comments", {
                 NUM: allDiscussions().length,
               })}
             </button>

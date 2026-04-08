@@ -33,7 +33,7 @@ export function MakeTeam({ group, organizationId }: Props) {
         }}
       >
         <i className="fa-solid fa-bullhorn fa-fw" />{" "}
-        {t("course.organizationList.addOrgText", "Give editing rights")}
+        {t("group.organizationList.addOrgText", "Give editing rights")}
       </a>
     );
   }
@@ -41,14 +41,14 @@ export function MakeTeam({ group, organizationId }: Props) {
   return (
     <div className="organization-tool-dialog add">
       {t(
-        "course.organizationList.confirmOrgText",
+        "group.organizationList.confirmOrgText",
         'Add members of the "{NAME}" organization as editors?',
         {
           NAME: name(organization),
         },
       )}{" "}
       {t(
-        "course.organizationList.confirmOrgNotes",
+        "group.organizationList.confirmOrgNotes",
         "All members of the organization will be able to edit the course and create new events for it.",
       )}
       <button
@@ -61,14 +61,14 @@ export function MakeTeam({ group, organizationId }: Props) {
             Alert.serverError(
               err,
               t(
-                "course.organizationList.makeTeam.membersCanEditCourse.error",
+                "group.organizationList.makeTeam.membersCanEditGroup.error",
                 "Failed to give editing rights",
               ),
             );
           }
         }}
       >
-        {t("course.organizationList.makeTeam.confimOrgButton", "Give editing rights")}
+        {t("group.organizationList.makeTeam.confimOrgButton", "Give editing rights")}
       </button>
     </div>
   );

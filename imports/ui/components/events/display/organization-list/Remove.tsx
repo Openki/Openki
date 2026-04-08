@@ -32,14 +32,14 @@ export function Remove({ event, organizationId }: Props) {
           setIsExpanded(true);
         }}
       >
-        {t("course.organizationList.remove")}
+        {t("group.organizationList.remove")}
       </button>
     );
   }
 
   return (
     <div className="organization-tool-dialog danger">
-      {t("course.organizationList.confirmRemoveText", {
+      {t("group.organizationList.confirmRemoveText", {
         NAME: name(organization),
       })}
       <button
@@ -51,12 +51,12 @@ export function Remove({ event, organizationId }: Props) {
           } catch (err) {
             Alert.serverError(
               err,
-              t("course.organizationList.remove.organizationRemoved.error", "Removing failed"),
+              t("group.organizationList.remove.organizationRemoved.error", "Removing failed"),
             );
           }
         }}
       >
-        {t("course.organizationList.remove.confirmRemoveButton")}
+        {t("group.organizationList.remove.confirmRemoveButton")}
       </button>
     </div>
   );

@@ -31,7 +31,7 @@ export function UserSubscribedHistoryEntry({ user, role }: { user: string; role:
   return (
     <>
       <RoleIcon type={role} />{" "}
-      {t("course.history.userSubscribed", "{USER} joined as {ROLE}", {
+      {t("group.history.userSubscribed", "{USER} joined as {ROLE}", {
         USER: (
           <>
             <ProfileLink userId={user} />
@@ -49,7 +49,7 @@ export function UserUnsubscribedHistoryEntry({ user, role }: { user: string; rol
   return (
     <>
       <RoleIcon type={role} />{" "}
-      {t("course.history.userUnsubscribed", "{USER} retract {ROLE}", {
+      {t("group.history.userUnsubscribed", "{USER} retract {ROLE}", {
         USER: (
           <>
             <ProfileLink userId={user} />
@@ -85,12 +85,12 @@ export function OrganizationPromoteHistoryEntry({
     <>
       {enable
         ? t(
-            "course.history.organizationPromote.added",
+            "group.history.organizationPromote.added",
             "{ORGANIZATION} got added by {USER}",
             tOptions,
           )
         : t(
-            "course.history.organizationPromote.removed",
+            "group.history.organizationPromote.removed",
             "{ORGANIZATION} got removed by {USER}",
             tOptions,
           )}
@@ -121,12 +121,12 @@ export function OrganizationTeamHistoryEntry({
     <>
       {enable
         ? t(
-            "course.history.organizationTeam.added",
+            "group.history.organizationTeam.added",
             "{ORGANIZATION} got added as coordination-organization by {USER}",
             tOptions,
           )
         : t(
-            "course.history.organizationTeam.removed",
+            "group.history.organizationTeam.removed",
             "{ORGANIZATION} got removed as coordination-organization by {USER}",
             tOptions,
           )}
@@ -153,7 +153,7 @@ export function EventInsertedHistoryEntry({
   return (
     <>
       <i className="fa-regular fa-calendar-days fa-fw" />{" "}
-      {t("course.history.eventInserted", "{EVENT} created by {USER}", {
+      {t("group.history.eventInserted", "{EVENT} created by {USER}", {
         EVENT: (
           <a href={Router.path("showEvent", { _id, slug })}>
             {dayOfWeek(startLocal)} {calendarDayShort(startLocal)} {title}
@@ -205,11 +205,11 @@ export function EventUpdatedHistoryEntry({
       <i className="fa-regular fa-calendar-days fa-fw" />{" "}
       {replicasUpdated
         ? t(
-            "course.history.eventAndRepeatsUpdated",
+            "group.history.eventAndRepeatsUpdated",
             "{EVENT} and repeats updated by {USER}",
             tOptions,
           )
-        : t("course.history.eventUpdated", "{EVENT} updated by {USER}", tOptions)}
+        : t("group.history.eventUpdated", "{EVENT} updated by {USER}", tOptions)}
     </>
   );
 }
@@ -228,7 +228,7 @@ export function EventRemovedHistoryEntry({
   return (
     <>
       <i className="fa-regular fa-calendar-days fa-fw" />{" "}
-      {t("course.history.eventRemoved", "{EVENT} removed by {USER}", {
+      {t("group.history.eventRemoved", "{EVENT} removed by {USER}", {
         EVENT: (
           <>
             {dayOfWeek(startLocal)} {calendarDayShort(startLocal)} {title}
@@ -249,7 +249,7 @@ export function UpdatedHistoryEntry({ updatedBy }: { updatedBy: string }) {
   const { t } = useTranslation();
   return (
     <>
-      {t("course.history.updated", "Updated by {USER}", {
+      {t("group.history.updated", "Updated by {USER}", {
         USER: (
           <>
             <ProfileLink userId={updatedBy} />
@@ -265,7 +265,7 @@ export function CreatedHistoryEntry({ createdby }: GroupModel) {
   const { t } = useTranslation();
   return (
     <>
-      {t("course.history.created_by", "Created by {USER}", {
+      {t("group.history.created_by", "Created by {USER}", {
         USER: (
           <>
             <ProfileLink userId={createdby} />

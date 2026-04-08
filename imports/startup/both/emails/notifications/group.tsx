@@ -68,7 +68,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         COURSE: truncate(group.name, { length: 10 }),
       };
 
-      const subject = t("notification.course.mail.subject", "Your proposed {COURSE}", subjectvars);
+      const subject = t("notification.group.mail.subject", "Your proposed {COURSE}", subjectvars);
 
       let region: RegionModel | undefined;
       if (group.region) {

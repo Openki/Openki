@@ -53,7 +53,7 @@ export function Option({
           <span
             className="badge bg-primary rounded-pill"
             title={t(
-              "regions.courses.title",
+              "regions.groups.title",
               "{COUNT, plural, =0{no courses} one{one course} other{# courses in} } in {REGION}",
               { COUNT: region.groupCount, REGION: region.name },
             )}
