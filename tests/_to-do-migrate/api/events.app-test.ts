@@ -148,7 +148,7 @@ if (Meteor.isClient) {
         assert.isNotEmpty(eventsAsGast, "shows events");
 
         assert.isEmpty(
-          eventsAsGast.filter((c) => c.tenant && !PublicSettings.publicTenants.includes(c.tenant)),
+          eventsAsGast.filter((e) => e.tenant && !PublicSettings.publicTenants.includes(e.tenant)),
           "don't show events from not public",
         );
       });
@@ -166,8 +166,8 @@ if (Meteor.isClient) {
         const eventsAsSchufien = Events.findFilter().fetch();
 
         assert.includeMembers(
-          eventsAsSchufien.map((c) => c._id),
-          eventsAsGast.map((c) => c._id),
+          eventsAsSchufien.map((e) => e._id),
+          eventsAsGast.map((e) => e._id),
           "shows public events as logged in user",
         );
 
@@ -177,7 +177,7 @@ if (Meteor.isClient) {
         );
         assert.isNotEmpty(
           eventsAsSchufien.filter(
-            (c) => c.tenant && schufien.tenants.some((t) => t._id === c.tenant),
+            (e) => e.tenant && schufien.tenants.some((t) => t._id === e.tenant),
           ),
           "shows private events as logged in user",
         );

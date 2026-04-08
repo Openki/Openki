@@ -29,8 +29,8 @@ export function GroupListSection(data: { user: UserModel; ownProfile: boolean })
   });
 
   function groupsByRole(role: string, archived: boolean) {
-    return (!archived ? groups : archivedGroups).filter((c) =>
-      c.members.find((m) => m.user === id && m.roles.includes(role)),
+    return (!archived ? groups : archivedGroups).filter((g) =>
+      g.members.find((m) => m.user === id && m.roles.includes(role)),
     );
   }
   function roles() {
