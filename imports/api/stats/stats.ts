@@ -113,7 +113,7 @@ function calcStats(groups: GroupModel[], events: EventModel[]): Stat {
   const canceled = events.filter((e) => e.canceled);
   const futureAndNotCanceled = notCanceled.filter((e) => e.start > now);
   return {
-    // inspired from groups.findFilter in /imports/api/courses/courses
+    // inspired from groups.findFilter in /imports/api/groups/groups
     groups: {
       total: notArchived.length,
       proposed: notArchived.filter((c) => !c.lastEvent && !c.futureEvents).length,

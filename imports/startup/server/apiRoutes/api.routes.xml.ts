@@ -204,7 +204,7 @@ Router.route("api.0.xml", {
               .up();
 
             function getCustomFieldValue(field: string) {
-              return event.course?.customFields?.find((f) => f.name === field)?.value;
+              return event.group?.customFields?.find((f) => f.name === field)?.value;
             }
 
             const recording = getCustomFieldValue("recording");

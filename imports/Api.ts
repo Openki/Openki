@@ -55,7 +55,7 @@ export interface ApiEvent {
     level: number | undefined;
     link: string | undefined;
   };
-  course?: {
+  group?: {
     id: string;
     name: string;
     link: string;
@@ -154,7 +154,7 @@ export const Api = {
       if (ev.courseId) {
         const group = await Groups.findOneAsync(ev.courseId);
         if (group) {
-          evr.course = {
+          evr.group = {
             id: ev.courseId,
             name: group.name,
             link: Router.url("showGroup", group),
@@ -168,7 +168,7 @@ export const Api = {
 
           const image = group.publicUrlForDetailsImage();
           if (image) {
-            evr.course.image = image;
+            evr.group.image = image;
           }
         }
       }
@@ -191,7 +191,7 @@ export const Api = {
     },
     { tenants: await visibleTenantsAsync() },
   ),
-  courses: await apiResponse(
+  groups: await apiResponse(
     Groups,
     async (originalGroup) => {
       const group = {
