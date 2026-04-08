@@ -37,7 +37,7 @@ export function Header({ _id, isFrame, organization }: Props) {
             { SITENAME: siteName },
           )}{" "}
           <a
-            href={getLocalizedValue(PublicSettings.courseGuideLink)}
+            href={getLocalizedValue(PublicSettings.groupGuideLink)}
             target="_blank"
             rel="noreferrer"
           >

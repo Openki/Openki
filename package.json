@@ -1,7 +1,7 @@
 {
   "name": "openki",
   "version": "0.10.0",
-  "description": "CourseOragnisationPlatform",
+  "description": "GroupOrganizationPlatform",
   "main": "server/main.ts",
   "directories": {
     "test": "tests"

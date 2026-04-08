@@ -49,13 +49,13 @@
 		, "visitorUser": true
 		, "rsvpWithCompanions": true
 		, "sendReminderIsEditable": true
-    , "proposeCourseBox": true
+    , "proposeGroupBox": true
     , "disable2dSphereForLocations": false
 		}
 	, "nav":
 		{ "brandLink": "/"
 		, "search": true
-		, "proposeCourse": true
+		, "proposeGroup": true
 		, "calendar": true
 		, "customEntries": [ ]
 		}
@@ -155,7 +155,7 @@
 		{ "en": "/info/faq#why-can-not-i-ask-for-a-fixed-price-as-a-mentor"
 		, "de": "/info/faq#dürfen-kurse-etwas-kosten"
 		}
-	, "courseGuideLink":
+	, "groupGuideLink":
 		{ "en": "https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf"
 		, "de": "https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf"
 		}
@@ -168,7 +168,7 @@
 			, "de": "https://about.openki.net/ueber-uns/spenden/"
 			}
 		}
-	, "courseDescriptionMax": 500
+	, "groupDescriptionMax": 500
 	, "eventDescriptionMax": 500
 	, "categories": 
 		{ "sports":

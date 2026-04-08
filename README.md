@@ -24,7 +24,7 @@ Demo playground: [sandbox.openki.net](https://sandbox.openki.net/?region=Spilist
 
 ### Core functionalities
 - Easily propose topics and events
-- Simple discussion board per course
+- Simple discussion board per group
 - Extendable participant roles
 - Categories with sub-categories
 - Regions and venue system
@@ -58,7 +58,7 @@ Demo playground: [sandbox.openki.net](https://sandbox.openki.net/?region=Spilist
     - E.g. set page name, logos and calendar start date per region
     - Feature organizations
     - Customize the start page
-    - Configure course background images
+    - Configure group background images
 
 **Roadmap & Upcoming Features**
 - :white_large_square: White-labeling per organizations, tenants and regions
