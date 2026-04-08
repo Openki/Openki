@@ -29,7 +29,7 @@ export function ConfirmDialog({
     <div className="group-delete-confirm">
       <p>
         {t(
-          "course.reallydelete",
+          "group.reallydelete",
           "Please confirm that you would like to delete {COURSE}. This cannot be undone.",
           { COURSE: group.name },
         )}
@@ -41,7 +41,7 @@ export function ConfirmDialog({
             disabled={disabled}
             onArchive={async () => onArchive()}
           >
-            {t("course.delete.confirm.archiveButton", "Rather archive")}
+            {t("group.delete.confirm.archiveButton", "Rather archive")}
           </ButtonGroupArchive>
         )}
 
@@ -53,7 +53,7 @@ export function ConfirmDialog({
           onClick={async () => onDelete()}
           busyText={t("_button.deleting")}
         >
-          {t("course.delete.confirm.button", "Delete {COURSE} and its events", {
+          {t("group.delete.confirm.button", "Delete {COURSE} and its events", {
             COURSE: group.name,
           })}
         </Button>

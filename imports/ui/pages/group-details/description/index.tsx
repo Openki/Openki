@@ -24,7 +24,7 @@ export function Description({
   const editableDescription: EditableProps = {
     text: group.description,
     multiline: true,
-    placeholder: t("course.description.placeholder"),
+    placeholder: t("group.description.placeholder"),
     maxlength: PublicSettings.groupDescriptionMax,
     store: {
       onSave: async (newDescription) => {
@@ -33,14 +33,14 @@ export function Description({
       onSuccess: () => {
         Alert.success(
           t(
-            "courseDetails.message.descriptionChanged",
+            "groupDetails.message.descriptionChanged",
             "The description of {NAME} has been changed.",
             { NAME: group.name },
           ),
         );
       },
       onError: (err) => {
-        Alert.serverError(err as string | Error, t("course.save.error"));
+        Alert.serverError(err as string | Error, t("group.save.error"));
       },
     },
   };

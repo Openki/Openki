@@ -41,7 +41,7 @@ export function Group({ group, hideInterested }: Props) {
         {!hideInterested && group.roles.includes("participant") && (
           <span
             className="frame-list-item-interested"
-            data-bs-title={t("frame.courseList.interestedPersons", "Interested people")}
+            data-bs-title={t("frame.groupList.interestedPersons", "Interested people")}
           >
             <span className="me-1">{interestedPersons()}</span> <RoleIcon type="participant" />
           </span>
@@ -69,7 +69,7 @@ export function Group({ group, hideInterested }: Props) {
               target="_blank"
               rel="noreferrer"
             >
-              {t("frame.courseList.moreAboutThisCourse", "More on {SITENAME}", {
+              {t("frame.groupList.moreAboutThisGroup", "More on {SITENAME}", {
                 SITENAME: siteName,
               })}
             </a>

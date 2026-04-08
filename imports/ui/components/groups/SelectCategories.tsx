@@ -55,7 +55,7 @@ export function SelectCategories(props: Props) {
   return (
     <>
       <label className="form-label mb-0">
-        {t("course.edit.edit_categories", "Edit Categories")}
+        {t("group.edit.edit_categories", "Edit Categories")}
       </label>
       {availableCategories().map((category) => {
         return (

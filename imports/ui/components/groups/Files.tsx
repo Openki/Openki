@@ -21,20 +21,20 @@ export function Files({ group }: { group: GroupModel }) {
       async onUpload(file: UploadImage) {
         try {
           await GroupMethods.updateImage(group._id, file);
-          Alert.success(t("course.edit.image.updated", "Image have been saved."));
+          Alert.success(t("group.edit.image.updated", "Image have been saved."));
         } catch (err) {
-          Alert.serverError(err, t("course.edit.image.updated.error", "Could not save image."));
+          Alert.serverError(err, t("group.edit.image.updated.error", "Could not save image."));
         }
       },
       onDelete: group.image
         ? async function () {
             try {
               await GroupMethods.deleteImage(group._id);
-              Alert.success(t("course.edit.image.removed", "Image have been removed."));
+              Alert.success(t("group.edit.image.removed", "Image have been removed."));
             } catch (err) {
               Alert.serverError(
                 err,
-                t("course.edit.image.removed.error", "Could not remove image."),
+                t("group.edit.image.removed.error", "Could not remove image."),
               );
             }
           }
@@ -45,9 +45,9 @@ export function Files({ group }: { group: GroupModel }) {
   return (
     <>
       <label className="form-label">
-        {t("course.edit.files.label", "Files")} (
+        {t("group.edit.files.label", "Files")} (
         {t(
-          "course.edit.files.desc",
+          "group.edit.files.desc",
           "Tip: Take your own photo of an object that is used in or symbolises your topic.",
         )}
         )

@@ -231,7 +231,7 @@ export function Edit(props: Props) {
       noTitle: {
         field: "title",
         onCheckValidity: () => StringTools.sanitizeSingleline(title).length > 0,
-        text: () => t("course.edit.error.title", "Please provide a title"),
+        text: () => t("group.edit.error.title", "Please provide a title"),
       },
       descriptionToLong: {
         field: "description",
@@ -247,7 +247,7 @@ export function Edit(props: Props) {
       noRegion: {
         field: "region",
         onCheckValidity: () => !!selectedRegion,
-        text: () => t("course.edit.error.region", "Please select a region"),
+        text: () => t("group.edit.error.region", "Please select a region"),
       },
     },
     { autoCheckFixed: true },
@@ -489,7 +489,7 @@ export function Edit(props: Props) {
           Router.go("showGroup", { _id: groupId }, { query: { nextActions: "1" } });
         } else {
           Alert.success(
-            t("message.courseChangesSaved", "Your changes to {NAME} have been saved.", {
+            t("message.groupChangesSaved", "Your changes to {NAME} have been saved.", {
               NAME: changes.name,
             }),
           );
@@ -499,7 +499,7 @@ export function Edit(props: Props) {
     } catch (err) {
       if (!addError(err.reason)) {
         // unknown error
-        Alert.serverError(err, t("message.courseChangesSaved.error", "Saving went wrong"));
+        Alert.serverError(err, t("message.groupChangesSaved.error", "Saving went wrong"));
       }
     } finally {
       setIsBusy(false);
@@ -541,7 +541,7 @@ export function Edit(props: Props) {
           {simpleRoleSelection && (
             <div className="mb-3">
               <label className="form-label" id="learnOrTeachTitle">
-                {t("course.edit.learnOrTeach", "Learn or teach?")}
+                {t("group.edit.learnOrTeach", "Learn or teach?")}
               </label>
               <div
                 className="btn-group-toggle row"
@@ -559,7 +559,7 @@ export function Edit(props: Props) {
                       onChange={handleRoleChange}
                     />
                     <i className="fa-solid fa-user fa-lg fa-fw" />{" "}
-                    {t("course.edit.iWantToLearn", "I want to learn")}
+                    {t("group.edit.iWantToLearn", "I want to learn")}
                   </label>
                 </div>
                 <div className="col d-grid">
@@ -573,7 +573,7 @@ export function Edit(props: Props) {
                       onChange={handleRoleChange}
                     />
                     <i className="fa-solid fa-graduation-cap fa-lg fa-fw" />{" "}
-                    {t("course.edit.iCanTeach", "I can teach")}
+                    {t("group.edit.iCanTeach", "I can teach")}
                   </label>
                 </div>
               </div>
@@ -591,9 +591,9 @@ export function Edit(props: Props) {
             <FormControl
               id="group-edit-description"
               type="richtext"
-              label={t("course.edit.description", "Description")}
+              label={t("group.edit.description", "Description")}
               placeholder={t(
-                "course.description.placeholder",
+                "group.description.placeholder",
                 "Describe your idea, so more people find it and know what to expect.",
               )}
               value={description || ""}
@@ -617,11 +617,11 @@ export function Edit(props: Props) {
                   <SelectCategories {...selectCategoriesAttr()} />
                 ) : (
                   <>
-                    <div className="form-label">{t("course.edit.categories", "Categories")}</div>
+                    <div className="form-label">{t("group.edit.categories", "Categories")}</div>
                     {props.categories ? (
                       <GroupCategories categories={props.categories} />
                     ) : (
-                      <div>{t("course.edit.no.categories", "No categories")}</div>
+                      <div>{t("group.edit.no.categories", "No categories")}</div>
                     )}{" "}
                     <button
                       type="button"
@@ -630,7 +630,7 @@ export function Edit(props: Props) {
                         setEditingCategories(true);
                       }}
                     >
-                      {t("course.edit.edit_categories")}
+                      {t("group.edit.edit_categories")}
                     </button>
                   </>
                 )}
@@ -640,7 +640,7 @@ export function Edit(props: Props) {
             {fullRoleSelection && availableRoles().length > 0 && (
               <div className="col-md">
                 <div className="form-label">
-                  {t("course.edit.needs.role", "This course might need…")}
+                  {t("group.edit.needs.role", "This course might need…")}
                 </div>
                 {groupEditRolesAttr().map((groupEditRoleAttr) => (
                   <Role key={groupEditRoleAttr.type} {...groupEditRoleAttr} />
@@ -693,12 +693,12 @@ export function Edit(props: Props) {
 
           {showInternalCheckbox() && (
             <div className="mb-3">
-              <div className="form-label">{t("course.edit.intern", "Hide on front page")}</div>
+              <div className="form-label">{t("group.edit.intern", "Hide on front page")}</div>
               <FormCheck
                 id="group-edit-internal"
                 type="box"
                 label={t(
-                  "course.edit.internDescription",
+                  "group.edit.internDescription",
                   "Only show when looking at a organization's courses",
                 )}
                 checked={internal}

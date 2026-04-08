@@ -121,7 +121,7 @@ export function Filter(props: Props) {
       )}
       <div className="row">
         <div className="col filter-component">
-          <h4 className="filter-component-header">{t("find.filter.courseStates", "States")}</h4>
+          <h4 className="filter-component-header">{t("find.filter.groupStates", "States")}</h4>
           <div className="row gx-3">
             {StateFilters.map((stateFilter) => (
               <div key={stateFilter.name} className="col filter-captions-column">

@@ -54,8 +54,8 @@ export function Edit({ post, onSave, onCancel }: Props) {
 
   const richtextPlaceholder = () => {
     return post.parentId
-      ? t("course.discussion.text_placeholder_answer", "Your answer")
-      : t("course.discussion.text_placeholder", "Your comment");
+      ? t("group.discussion.text_placeholder_answer", "Your answer")
+      : t("group.discussion.text_placeholder", "Your comment");
   };
 
   function showUserId() {
@@ -142,7 +142,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
           } catch (err) {
             Alert.serverError(
               err,
-              t("courseDiscussions.postComment.error", "Posting your comment went wrong"),
+              t("groupDiscussions.postComment.error", "Posting your comment went wrong"),
             );
           } finally {
             setIsBusy(false);
@@ -168,7 +168,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
                     className="fa-solid fa-bell"
                     data-bs-title={
                       !post.eventId
-                        ? t("course.discussion.allNotified", "All interested notified")
+                        ? t("group.discussion.allNotified", "All interested notified")
                         : t(
                             "event.discussion.allNotified",
                             "All interested and participants notified",
@@ -180,7 +180,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
               {hasBeenEdited() && (
                 <>
                   {" "}
-                  - {t("course.discussion.lastUpdate", "Last update")}:{" "}
+                  - {t("group.discussion.lastUpdate", "Last update")}:{" "}
                   <span data-bs-title={dateFormat(post.time_updated)}>
                     {fromNow(post.time_updated)}
                   </span>
@@ -194,7 +194,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
             <input
               className="form-control form-control-lg"
               type="text"
-              placeholder={`${t("course.discussion.title_placeholder", "Title")} ${t(
+              placeholder={`${t("group.discussion.title_placeholder", "Title")} ${t(
                 "_inputField.optional",
               )}`}
               value={commentTitle}
@@ -215,7 +215,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
                     <>
                       <i className="fa-solid fa-bell" />
                       &nbsp;
-                      {t("course.discussion.notifyAll", "Notify all")}
+                      {t("group.discussion.notifyAll", "Notify all")}
                     </>
                   }
                   checked={notifyAll}
@@ -229,7 +229,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
                   <>
                     <i className="fa-solid fa-user-secret" />
                     &nbsp;
-                    {t("course.discussion.anon", "Anonymous comment")}
+                    {t("group.discussion.anon", "Anonymous comment")}
                   </>
                 }
                 checked={anon}
@@ -248,9 +248,9 @@ export function Edit({ post, onSave, onCancel }: Props) {
               <i className="fa-solid fa-paper-plane fa-fw" />{" "}
               {post.new
                 ? post.parentId
-                  ? t("course.discussion.comment_btn.answer", "Answer")
-                  : t("course.discussion.comment_btn.write", "Write")
-                : t("course.discussion.comment_btn.update", "Update my comment")}
+                  ? t("group.discussion.comment_btn.answer", "Answer")
+                  : t("group.discussion.comment_btn.write", "Write")
+                : t("group.discussion.comment_btn.update", "Update my comment")}
             </button>{" "}
             <ButtonCancel id="post-edit-cancel" onClick={() => onCancel()} />
           </div>

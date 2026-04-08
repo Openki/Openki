@@ -37,7 +37,7 @@ export function Group({
           <h5 className="title">{t("email.base.greeting", { USERNAME: username })}</h5>
           <p className="pre">
             {t(
-              "notification.course.mail.intro",
+              "notification.group.mail.intro",
               'Congratulations, you successfully created "{COURSE}" on `{SITENAME}`.',
               { COURSE: group, SITENAME: <a href={customSiteUrl}>{customSiteName}</a> },
             )}
@@ -47,7 +47,7 @@ export function Group({
             <>
               <p>
                 {t(
-                  "notification.course.mail.description",
+                  "notification.group.mail.description",
                   "Here is a copy of the description you entered:",
                   { COURSE: group, SITENAME: <a href={customSiteUrl}>{customSiteName}</a> },
                 )}
@@ -62,13 +62,13 @@ export function Group({
 
           <p className="pre">
             {t(
-              "notification.course.mail.next",
+              "notification.group.mail.next",
               "We will inform you if people join your proposal.\nHere is the link if you want to change something or add an image... Or invite your friends",
             )}
           </p>
           <p className="text-center">
             <a className="button" href={groupLink}>
-              {t("notification.course.mail.replyButton.simple", "Visit my proposal")}
+              {t("notification.group.mail.replyButton.simple", "Visit my proposal")}
             </a>
           </p>
         </td>
@@ -76,7 +76,7 @@ export function Group({
 
       <Footer
         receiveNote={t(
-          "notification.course.mail.recpnote",
+          "notification.group.mail.recpnote",
           "You receive this message because you're the creator of this course.",
         )}
         unsubscribe={unsubscribe}

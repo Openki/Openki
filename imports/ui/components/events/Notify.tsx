@@ -108,7 +108,7 @@ export function Notify({
               id="event-edit-notify-message"
               type="textarea"
               rows={3}
-              label={t("course.event.edit.AddMessage", "Add message")}
+              label={t("group.event.edit.AddMessage", "Add message")}
               optional
               prepend="fa-solid fa-pencil fa-fw"
               placeholder={
@@ -128,7 +128,7 @@ export function Notify({
             />
           ) : (
             <div className="form-text">
-              {t("course.event.edit.onlyYouReceive", "Only you will receive this notification.")}
+              {t("group.event.edit.onlyYouReceive", "Only you will receive this notification.")}
             </div>
           )}
         </div>

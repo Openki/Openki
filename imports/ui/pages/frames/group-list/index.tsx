@@ -63,12 +63,12 @@ export function GroupListPage() {
 
   return (
     <>
-      <MetaTags title={t("course.list.windowtitle", "Courses")} />
+      <MetaTags title={t("group.list.windowtitle", "Courses")} />
       <style>{options.style.map((rule) => rule)}</style>
 
       {groups().length === 0 && (
         <h2 className="mt-5 text-center">
-          {t("frame.courselist.empty", "There is nothing here yet")}
+          {t("frame.grouplist.empty", "There is nothing here yet")}
         </h2>
       )}
       {groups().map((group) => (

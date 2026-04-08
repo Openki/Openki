@@ -50,7 +50,7 @@ function GroupEvent({ event, groupId }: { event: EventModel; groupId: string }) 
               aria-selected="true"
             >
               <i className="fa-solid fa-file-lines fa-fw" />
-              <span className="tab-label">{t("course.subnav.descr", "Description")}</span>
+              <span className="tab-label">{t("group.subnav.descr", "Description")}</span>
             </button>
           </li>
           <li className="nav-item" role="presentation">
@@ -65,7 +65,7 @@ function GroupEvent({ event, groupId }: { event: EventModel; groupId: string }) 
               aria-selected="false"
             >
               <i className="fa-solid fa-file fa-fw" />
-              <span className="tab-label">{t("course.subnav.files", "Files")}</span>
+              <span className="tab-label">{t("group.subnav.files", "Files")}</span>
             </button>
           </li>
         </ul>

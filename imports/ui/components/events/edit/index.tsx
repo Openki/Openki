@@ -502,16 +502,16 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       <div className="edit-page">
         <h3>
           {isNew
-            ? t("course.event.edit.add", "Create an event")
-            : t("course.event.edit.edit", "Edit event")}
+            ? t("group.event.edit.add", "Create an event")
+            : t("group.event.edit.edit", "Edit event")}
         </h3>
         {isNew && !event.groupId && (
           <>
             {t(
-              "course.createEventInfo",
+              "group.createEventInfo",
               "Use this form to publish a singular, one-off, already organized event. Otherwise create or propose a course here:",
             )}{" "}
-            <a href={Router.path("proposeGroup")}>{t("menue.ProposeCourse", "Propose a course")}</a>
+            <a href={Router.path("proposeGroup")}>{t("menue.ProposeGroup", "Propose a course")}</a>
           </>
         )}
 
@@ -523,7 +523,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               id="event-edit-title"
               type="text"
               size="large"
-              label={t("course.event.edit.title", "Event title")}
+              label={t("group.event.edit.title", "Event title")}
               placeholder={t("event.title.placeholder", "Write a catchy title here")}
               value={changes.title || ""}
               onChange={(value) => setChanges((changes) => ({ ...changes, title: value }))}
@@ -554,7 +554,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             <FormControl
               id="event-edit-description"
               type="richtext"
-              label={t("course.event.edit.desc", "Description")}
+              label={t("group.event.edit.desc", "Description")}
               placeholder={t(
                 "event.description.placeholder",
                 "Describe your event as accurately as possible. This helps people know how to prepare and what to expect from this meeting (e.g. level, prerequisites, activities, teaching methods, what to bring, etc.)",
@@ -594,7 +594,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                   <FormControl
                     id="event-edit-room"
                     type="text"
-                    label={t("course.event.edit.room", "Room")}
+                    label={t("group.event.edit.room", "Room")}
                     optional
                     prepend="fa-solid fa-signs-post fa-fw"
                     value={changes.room}
@@ -633,7 +633,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                 <FormControl
                   id="event-edit-max-participants"
                   type="integer"
-                  label={t("course.event.edit.maxParticipants", "maximal number of participants")}
+                  label={t("group.event.edit.maxParticipants", "maximal number of participants")}
                   optional
                   prepend="fa-solid fa-users fa-fw"
                   min={0}

@@ -9,7 +9,7 @@ export function DeleteEvents(props: { onShowEventsDeleteModal: () => void }) {
     <div className="event-caption-wrap">
       <button
         className="btn p-0"
-        title={t("course.event.edit.deleteEvents", "Delete events")}
+        title={t("group.event.edit.deleteEvents", "Delete events")}
         onClick={() => {
           props.onShowEventsDeleteModal();
         }}

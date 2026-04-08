@@ -23,7 +23,7 @@ export function ButtonGroupArchive({
       disabled={disabled}
       needsLogin
       onClick={onArchive}
-      busyText={t("course.archive.archiveButton.archiving", "Archiving…")}
+      busyText={t("group.archive.archiveButton.archiving", "Archiving…")}
     >
       {children}
     </Button>

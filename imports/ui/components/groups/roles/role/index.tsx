@@ -109,7 +109,7 @@ export function Role(data: Data) {
             if (change.validFor(user)) {
               await processChange(change);
               Alert.success(
-                t("course.roles.unsubscribed", "Unsubscribed from {NAME}", {
+                t("group.roles.unsubscribed", "Unsubscribed from {NAME}", {
                   NAME: data.group.name,
                 }),
               );
@@ -139,7 +139,7 @@ export function Role(data: Data) {
                 name={data.role.type}
                 onClick={handleRoleUnsubscribeClick}
               >
-                {t("course.roles.retract", "Retract")}
+                {t("group.roles.retract", "Retract")}
               </button>
               <button
                 type="button"
@@ -154,7 +154,7 @@ export function Role(data: Data) {
           {showFirstSteps && (
             <div className="group-role-first-steps">
               <b>
-                {t("course.roles.firstSteps.title", "Thank you for your interest in {COURSE}.", {
+                {t("group.roles.firstSteps.title", "Thank you for your interest in {COURSE}.", {
                   COURSE: data.group.name,
                   ROLE: roleShort(data.role.type),
                 })}
@@ -162,18 +162,18 @@ export function Role(data: Data) {
               <br />
               {roleIs("participant") &&
                 t(
-                  "course.roles.firstSteps.youllGetNotified",
+                  "group.roles.firstSteps.youllGetNotified",
                   "You will get an e-mail notification as soon as a next date has been fixed.",
                 )}
               {roleIs("host") &&
                 t(
-                  "course.roles.firstSteps.informAboutVenue",
+                  "group.roles.firstSteps.informAboutVenue",
                   "If not done already, please mention the venue(s) you have access to in your personal message info.",
                 )}
               {roleIs("mentor") && (
                 <>
                   {t(
-                    "course.roles.firstSteps.mentionExperience",
+                    "group.roles.firstSteps.mentionExperience",
                     "If not done already, please mention your experiences on the topic in your personal message info.",
                   )}
                   <Guide />
@@ -182,7 +182,7 @@ export function Role(data: Data) {
               {roleIs("team") && (
                 <>
                   {t(
-                    "course.roles.firstSteps.team",
+                    "group.roles.firstSteps.team",
                     "If not done already, you can start with chosing the venue and, if needed, looking for mentor(s) and then fix a date.",
                   )}
                   <Guide />
@@ -191,12 +191,12 @@ export function Role(data: Data) {
               <br />
               <br />
               {t(
-                "course.roles.firstSteps.ifQuestions",
+                "group.roles.firstSteps.ifQuestions",
                 "Please write questions concerning the course in the discussion below.",
               )}
               <br />
               {t(
-                "course.roles.firstSteps.allMembersInformed",
+                "group.roles.firstSteps.allMembersInformed",
                 "All members of the organization-team will be informed.",
               )}
               <br />
@@ -205,7 +205,7 @@ export function Role(data: Data) {
                 type="button"
                 onClick={handleFirstStepsCommentClick}
               >
-                {t("course.discussion.write_comment")}
+                {t("group.discussion.write_comment")}
               </button>
             </div>
           )}
@@ -223,7 +223,7 @@ export function Role(data: Data) {
                 <div className="mb-3">
                   <label className="form-label">
                     {t(
-                      "course.roles.leave_message",
+                      "group.roles.leave_message",
                       "You can leave a message to appear next to your name:",
                     )}
                   </label>
@@ -231,7 +231,7 @@ export function Role(data: Data) {
                     <textarea
                       className="form-control js-comment"
                       placeholder={t(
-                        "course.roles.messageInfoParticipant",
+                        "group.roles.messageInfoParticipant",
                         "an (optional) message like a greeting, wish, or interest",
                       )}
                       onChange={handleCommentChange}
@@ -243,7 +243,7 @@ export function Role(data: Data) {
                     <textarea
                       className="form-control js-comment"
                       placeholder={t(
-                        "course.roles.messageInfoHost",
+                        "group.roles.messageInfoHost",
                         "an (optional) message including info about the venue",
                       )}
                       onChange={handleCommentChange}
@@ -255,7 +255,7 @@ export function Role(data: Data) {
                     <textarea
                       className="form-control js-comment"
                       placeholder={t(
-                        "course.roles.messageInfoMentor",
+                        "group.roles.messageInfoMentor",
                         "an (optional) message including info about your experience on the topic",
                       )}
                       onChange={handleCommentChange}
@@ -266,7 +266,7 @@ export function Role(data: Data) {
                   {roleIs("team") && (
                     <textarea
                       className="form-control js-comment"
-                      placeholder={t("course.roles.messageInfoMentor")}
+                      placeholder={t("group.roles.messageInfoMentor")}
                       onChange={handleCommentChange}
                     >
                       {comment}
@@ -280,9 +280,9 @@ export function Role(data: Data) {
                     onClick={handleRoleSubscribeClick}
                     needsLogin
                     visitorUserAllowed={data.role.type === "participant"}
-                    busyText={t("course.roles.join.busy", "Joining…")}
+                    busyText={t("group.roles.join.busy", "Joining…")}
                   >
-                    {t("course.roles.join", "Join", { COURSE: data.group.name })}
+                    {t("group.roles.join", "Join", { COURSE: data.group.name })}
                   </Button>
                   <ButtonCancel
                     id="group-roles-join-cancel"

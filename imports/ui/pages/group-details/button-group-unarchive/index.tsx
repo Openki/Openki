@@ -18,9 +18,9 @@ export function ButtonGroupUnarchive({
       className="btn-primary"
       needsLogin
       onClick={onUnarchive}
-      busyText={t("course.archive.unarchiveButton.unarchiving", "Unarchiving…")}
+      busyText={t("group.archive.unarchiveButton.unarchiving", "Unarchiving…")}
     >
-      {t("course.archive.unarchiveButton", "Unarchive")}
+      {t("group.archive.unarchiveButton", "Unarchive")}
     </Button>
   );
 }

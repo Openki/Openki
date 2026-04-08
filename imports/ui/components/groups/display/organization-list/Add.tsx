@@ -37,7 +37,7 @@ function OrganizationToAdd({
           } catch (err) {
             Alert.serverError(
               err,
-              t("courses.organizationList.organizationAdded.error", "Adding failed"),
+              t("groups.organizationList.organizationAdded.error", "Adding failed"),
             );
           }
         }}
@@ -72,11 +72,11 @@ export function Add({ group }: Props) {
         data-bs-toggle="dropdown"
       >
         <i className="fa-solid fa-plus fa-fw" />
-        <span>{t("courses.organizationList.addText", "link a organization")}</span>
+        <span>{t("groups.organizationList.addText", "link a organization")}</span>
       </button>
       <ul className="dropdown-menu dialog-dropdown">
         <li className="dropdown-header">
-          {t("courses.organizationList.add.addOrganization", "Add organization")}
+          {t("groups.organizationList.add.addOrganization", "Add organization")}
           <button type="button" className="btn-close"></button>
         </li>
         <li>

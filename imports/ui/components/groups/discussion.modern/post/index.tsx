@@ -31,7 +31,7 @@ function Responses({ responses: replies }: { responses: GroupDiscussionEntity[] 
               setLimit(0);
             }}
           >
-            {t("course.discussions.showPreviousReplies", "Show all previous answers")}
+            {t("group.discussions.showPreviousReplies", "Show all previous answers")}
           </button>
         </div>
       )}

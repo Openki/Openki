@@ -119,7 +119,7 @@ export function Discussion({ select, groupId, eventId }: Props) {
         <h4>
           <i className="fa-solid fa-comments fa-fw" />
           &nbsp;
-          {t("course.title.Discussion", "Discussion")}
+          {t("group.title.Discussion", "Discussion")}
         </h4>
       </div>
 
@@ -140,7 +140,7 @@ export function Discussion({ select, groupId, eventId }: Props) {
               onClick={() => setLimit(0)}
             >
               <i className="fa-solid fa-chevron-down fa-fw" />
-              {t("course.discussions.showAllComment", "Show all {NUM} comments", {
+              {t("group.discussions.showAllComment", "Show all {NUM} comments", {
                 NUM: allDiscussions().length,
               })}
             </button>

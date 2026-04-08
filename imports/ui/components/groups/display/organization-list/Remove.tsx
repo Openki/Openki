@@ -32,7 +32,7 @@ export function Remove({ group, organizationId }: Props) {
           setIsExpanded(true);
         }}
       >
-        {t("course.organizationList.remove", "Remove")}
+        {t("group.organizationList.remove", "Remove")}
       </button>
     );
   }
@@ -40,7 +40,7 @@ export function Remove({ group, organizationId }: Props) {
   return (
     <div className="organization-tool-dialog danger">
       {t(
-        "course.organizationList.confirmRemoveText",
+        "group.organizationList.confirmRemoveText",
         'Stop listing the "{NAME}" organization as promoters?',
         {
           NAME: name(organization),
@@ -55,12 +55,12 @@ export function Remove({ group, organizationId }: Props) {
           } catch (err) {
             Alert.serverError(
               err,
-              t("course.organizationList.remove.organizationRemoved.error", "Removing failed"),
+              t("group.organizationList.remove.organizationRemoved.error", "Removing failed"),
             );
           }
         }}
       >
-        {t("course.organizationList.remove.confirmRemoveButton", "Delist")}
+        {t("group.organizationList.remove.confirmRemoveButton", "Delist")}
       </button>
     </div>
   );

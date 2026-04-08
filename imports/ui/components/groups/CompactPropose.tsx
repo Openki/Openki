@@ -58,20 +58,20 @@ export function CompactPropose({ organization, organizationTagEvents }: Props) {
               <input
                 type="text"
                 className="form-control"
-                placeholder={t("course.compact.propose.titlePlaceholder", "My proposal")}
+                placeholder={t("group.compact.propose.titlePlaceholder", "My proposal")}
                 onChange={(event) => {
                   setTitle(event.currentTarget.value);
                 }}
               />
               <button className="btn btn-success" type="submit">
-                {t("course.compact.propose.button", "Go!")}
+                {t("group.compact.propose.button", "Go!")}
               </button>
             </div>
           </form>
         </div>
         <div className="ps-2 pe-2">
           {t(
-            "course.compact.propose.description",
+            "group.compact.propose.description",
             "Start your own course, whether as a mentor or participant. You decide what you want to learn.",
           )}
         </div>

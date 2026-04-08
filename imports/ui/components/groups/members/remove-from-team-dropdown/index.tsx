@@ -23,7 +23,7 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
   }
 
   return (
-    <span className="dropdown" data-bs-title={t("course.roles.removeTeam", "Remove from team")}>
+    <span className="dropdown" data-bs-title={t("group.roles.removeTeam", "Remove from team")}>
       <button
         type="button"
         className="btn btn-sm btn-close"
@@ -39,8 +39,8 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
       <ul className="dropdown-menu dropdown-menu-end dialog-dropdown">
         <li className="dropdown-header">
           {isNotPrivilegedSelf()
-            ? t("course.details.removeTeam.self.header", "Remove yourself from the team")
-            : t("course.details.removeTeam.others.header", "Remove member from the team")}
+            ? t("group.details.removeTeam.self.header", "Remove yourself from the team")
+            : t("group.details.removeTeam.others.header", "Remove member from the team")}
           <button type="button" className="btn-close"></button>
         </li>
         <li>
@@ -49,10 +49,10 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
         <li className="dialog-dropdown-text">
           {isNotPrivilegedSelf()
             ? t(
-                "course.detail.remove.yourself.team",
+                "group.detail.remove.yourself.team",
                 "Remove yourself from the team? Only another member can add you back.",
               )
-            : t("course.detail.remove.other.team", "Remove this member from the team?")}
+            : t("group.detail.remove.other.team", "Remove this member from the team?")}
         </li>
         <li className="dialog-dropdown-btn">
           <button
@@ -65,7 +65,7 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
               onClick();
             }}
           >
-            {t("course.organizationList.remove", "Remove")}
+            {t("group.organizationList.remove", "Remove")}
           </button>
         </li>
       </ul>

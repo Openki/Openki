@@ -69,7 +69,7 @@ export function OrganizationList({ group }: Props) {
                 <i
                   className="fa-solid fa-bullhorn fa-fw"
                   title={t(
-                    "course.organizationList.title.organizedBy",
+                    "group.organizationList.title.organizedBy",
                     "{COURSE} is co-organized by this organization",
                     {
                       COURSE: group.name,
@@ -91,7 +91,7 @@ export function OrganizationList({ group }: Props) {
                 <ul className="dropdown-menu dialog-dropdown">
                   <li className="dropdown-header">
                     {t(
-                      "course.organizationList.dropdownTitle.editOrganization",
+                      "group.organizationList.dropdownTitle.editOrganization",
                       "Edit organization",
                     )}
                     <button type="button" className="btn-close"></button>

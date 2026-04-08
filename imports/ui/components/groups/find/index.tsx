@@ -320,7 +320,7 @@ export function Find({ query }: Props) {
             <div className="no-results">
               <div className="no-results-body">
                 <i className="fa-solid fa-circle-exclamation fa-fw" />{" "}
-                {t("find.no-courses-found", "No Courses found")}
+                {t("find.noGroupsFound", "No Courses found")}
               </div>
               {searchIsLimited() && (
                 <div className="btn-group">

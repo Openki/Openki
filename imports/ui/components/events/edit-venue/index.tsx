@@ -48,7 +48,7 @@ export function EditVenue({ region: regionId, event, value, onChange, errors }: 
       {!value || isEmpty(value) ? (
         <div className="mb-3">
           <label className="form-label" htmlFor="event-edit-venue-search">
-            {t("course.event.edit.location", "Venue")} <small>{t("_inputField.optional")}</small>
+            {t("group.event.edit.location", "Venue")} <small>{t("_inputField.optional")}</small>
           </label>
           <Search
             id="event-edit-venue-search"
@@ -71,14 +71,14 @@ export function EditVenue({ region: regionId, event, value, onChange, errors }: 
                 <FormControl
                   id="event-edit-venue-displayVenueAs"
                   type="text"
-                  label={t("course.event.edit.locationName", "Display venue as")}
+                  label={t("group.event.edit.locationName", "Display venue as")}
                   value={value.name}
                   onChange={(name) => onChange({ ...value, name })}
                 />
               ) : (
                 <>
                   <label className="form-label">
-                    {t("course.event.edit.selectedVenue", "Selected venue")}
+                    {t("group.event.edit.selectedVenue", "Selected venue")}
                   </label>
                   <div
                     className={`form-control d-flex align-items-center ${errors.venue || errors.startEndVenue ? "is-invalid" : ""}`}
@@ -97,7 +97,7 @@ export function EditVenue({ region: regionId, event, value, onChange, errors }: 
               <FormControl
                 id="event-edit-venue-locationAddress"
                 type="text"
-                label={t("course.event.edit.locationAddress", "Address")}
+                label={t("group.event.edit.locationAddress", "Address")}
                 value={value.address || ""}
                 onChange={!value._id ? (address) => onChange({ ...value, address }) : undefined}
                 disabled={!!value._id}
@@ -114,7 +114,7 @@ export function EditVenue({ region: regionId, event, value, onChange, errors }: 
                     setAutoFocusOnSearch(true);
                   }}
                 >
-                  {t("course.event.edit.locationResetButton", "Search other place")}
+                  {t("group.event.edit.locationResetButton", "Search other place")}
                 </Button>
               </div>
             </div>
@@ -144,7 +144,7 @@ export function EditVenue({ region: regionId, event, value, onChange, errors }: 
                   />
                   <div className="form-text text-end">
                     {t(
-                      "course.event.edit.locationMovePosition",
+                      "group.event.edit.locationMovePosition",
                       "You can drag the marker to the correct position.",
                     )}
                   </div>

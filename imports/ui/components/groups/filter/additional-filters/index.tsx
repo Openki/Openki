@@ -65,7 +65,7 @@ export function AdditionalFilters(props: Props) {
   return (
     <>
       <div aria-label="filter-group-roles" className="col-md-3 filter-component" role="group">
-        <h4 className="filter-component-header">{t("find.filter.courseRoles", "Roles")}</h4>
+        <h4 className="filter-component-header">{t("find.filter.groupRoles", "Roles")}</h4>
         {roles.map((role) => (
           <button
             key={role.name}

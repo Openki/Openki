@@ -33,7 +33,7 @@ export function OrganizationGroup({
           <h5 className="title">{t("email.base.greeting", { USERNAME: username })}</h5>
           <p>
             {t(
-              "notification.organization.course.mail.intro",
+              "notification.organization.group.mail.intro",
               "{CREATOR} just proposed {COURSE} in your organization {ORGANIZATIONS}.",
               { CREATOR: creator.getDisplayName(), COURSE: group, ORGANIZATIONS: organizations },
             )}
@@ -49,7 +49,7 @@ export function OrganizationGroup({
 
           <p>
             {t(
-              "notification.organization.course.mail.next",
+              "notification.organization.group.mail.next",
               "You can contact {CREATOR} in order to support and help organizing {COURSE}. You have the possibility to edit the description and announce events.",
               { CREATOR: creator.getDisplayName(), COURSE: group },
             )}
@@ -59,7 +59,7 @@ export function OrganizationGroup({
 
       <Footer
         receiveNote={t(
-          "notification.organization.course.mail.recpnote",
+          "notification.organization.group.mail.recpnote",
           "You receive this message because you're a member of {ORGANIZATIONS}.",
           { ORGANIZATIONS: organizations },
         )}

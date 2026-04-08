@@ -32,14 +32,14 @@ export function MakeTeam({ event, organizationId }: Props) {
           setIsExpanded(true);
         }}
       >
-        <i className="fa-solid fa-bullhorn fa-fw" /> {t("course.organizationList.addOrgText")}
+        <i className="fa-solid fa-bullhorn fa-fw" /> {t("group.organizationList.addOrgText")}
       </a>
     );
   }
 
   return (
     <div className="organization-tool-dialog add">
-      {t("course.organizationList.confirmOrgText", {
+      {t("group.organizationList.confirmOrgText", {
         NAME: name(organization),
       })}{" "}
       {t(
@@ -53,14 +53,11 @@ export function MakeTeam({ event, organizationId }: Props) {
           try {
             await EventsMethods.editing(event._id, organizationId, true);
           } catch (err) {
-            Alert.serverError(
-              err,
-              t("course.organizationList.makeTeam.membersCanEditCourse.error"),
-            );
+            Alert.serverError(err, t("group.organizationList.makeTeam.membersCanEditGroup.error"));
           }
         }}
       >
-        {t("course.organizationList.makeTeam.confimOrgButton")}
+        {t("group.organizationList.makeTeam.confimOrgButton")}
       </button>
     </div>
   );

@@ -84,7 +84,7 @@ export function Comment({
         receiveNote={
           comment.notifyAll
             ? t("notification.event.mail.notice", { COURSE: group })
-            : t("email.base.receiveNote.courseTeam", { COURSE: group })
+            : t("email.base.receiveNote.groupTeam", { COURSE: group })
         }
         unsubscribe={unsubscribe}
         campaign={campaign}

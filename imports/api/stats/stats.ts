@@ -74,14 +74,14 @@ function getEvents(regionId: string) {
   }
   return Events.find(filter, {
     // Do not load any data into the memory that is not required
-    projection: { title: 0, slug: 0, description: 0, courseImage: 0, courseCompactImage: 0 },
+    projection: { title: 0, slug: 0, description: 0, groupImage: 0, groupCompactImage: 0 },
   }).fetchAsync();
 }
 
-/** Get all organizations that promotes courses or events */
-async function getOrganizations(courses: GroupModel[], events: EventModel[]) {
+/** Get all organizations that promotes groups or events */
+async function getOrganizations(groups: GroupModel[], events: EventModel[]) {
   let organizationIds = [];
-  organizationIds.push(...courses.flatMap((c) => c.organizations));
+  organizationIds.push(...groups.flatMap((c) => c.organizations));
   organizationIds.push(...events.flatMap((e) => e.organizations));
   organizationIds = uniq(organizationIds).filter((o) => o);
 

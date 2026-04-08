@@ -33,14 +33,14 @@ export function RemoveTeam({ event, organizationId }: Props) {
         }}
       >
         <i className="fa-solid fa-xmark fa-fw" />
-        {t("course.organizationList.removeTeam.removeOrgText")}
+        {t("group.organizationList.removeTeam.removeOrgText")}
       </a>
     );
   }
 
   return (
     <div className="organization-tool-dialog danger">
-      {t("course.organizationList.removeTeam.confirmRemoveOrgText", {
+      {t("group.organizationList.removeTeam.confirmRemoveOrgText", {
         NAME: name(organization),
       })}
       <button
@@ -54,12 +54,12 @@ export function RemoveTeam({ event, organizationId }: Props) {
           } catch (err) {
             Alert.serverError(
               err,
-              t("course.organizationList.removeTeam.membersCanNoLongerEditCourse.error"),
+              t("group.organizationList.removeTeam.membersCanNoLongerEditGroup.error"),
             );
           }
         }}
       >
-        {t("course.organizationList.removeTeam.confimRemoveOrgButton")}
+        {t("group.organizationList.removeTeam.confimRemoveOrgButton")}
       </button>
     </div>
   );
