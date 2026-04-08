@@ -49,7 +49,7 @@ export function MakeTeam({ group, organizationId }: Props) {
       )}{" "}
       {t(
         "group.organizationList.confirmOrgNotes",
-        "All members of the organization will be able to edit the course and create new events for it.",
+        "All members of the organization will be able to edit the group and create new events for it.",
       )}
       <button
         type="button"

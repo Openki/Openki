@@ -37,7 +37,7 @@ function FeaturedOrganizationBody(props: { organizationId: string }) {
           <a href={Router.path("organizationDetails", featuredOrganization)}>
             {t(
               "featuredOrganization.groupsOnOpenki",
-              "Check out the courses of {ORGANIZATION} on {SITENAME}!",
+              "Check out the groups of {ORGANIZATION} on {SITENAME}!",
               {
                 ORGANIZATION: featuredOrganization.name,
                 SITENAME: siteName,

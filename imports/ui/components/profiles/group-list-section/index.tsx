@@ -64,8 +64,8 @@ export function GroupListSection(data: { user: UserModel; ownProfile: boolean })
         <>
           <h3 className="badge-title">
             {data.ownProfile
-              ? t("users.grouplist.myGroups", "I am involved in the following courses")
-              : t("users.grouplist.userGroups", "{NAME} is involved in the following courses", {
+              ? t("users.grouplist.myGroups", "I am involved in the following groups")
+              : t("users.grouplist.userGroups", "{NAME} is involved in the following groups", {
                   NAME: data.user.getDisplayName(),
                 })}
           </h3>

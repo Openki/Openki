@@ -252,7 +252,7 @@ export function Select(props: Props) {
               <div className="dropdown-addon-right">
                 <span
                   className="badge bg-primary rounded-pill"
-                  title={t("regionSelection.legend.numGroupsTitle", "Number of courses")}
+                  title={t("regionSelection.legend.numGroupsTitle", "Number of groups")}
                 >
                   # <i className="fa-solid fa-circle" />
                 </span>{" "}
@@ -277,7 +277,7 @@ export function Select(props: Props) {
                     className="badge bg-primary rounded-pill"
                     title={t(
                       "regions.allGroups.title",
-                      "{COUNT, plural, =0{no courses} one{one course} other{# courses} } on {SITENAME}",
+                      "{COUNT, plural, =0{no groups} one{one group} other{# groups} } on {SITENAME}",
                       { COUNT: allGroups(), SITENAME: siteName },
                     )}
                   >

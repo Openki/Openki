@@ -11,7 +11,7 @@ export function Propose(data: Props) {
 
   return (
     <>
-      <MetaTags title={t("group.propose.windowtitle", "Propose new course")} />
+      <MetaTags title={t("group.propose.windowtitle", "Propose new group")} />
 
       <AccountTasks />
       <Edit {...data} />

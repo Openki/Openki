@@ -3,7 +3,7 @@
 ## General
 
 ### What is Openki?
-Openki is an open education platform where courses can be proposed, discussed, developed, organized, and published. The focus is on promoting self-organization, bringing people and initiatives together, and ensuring a barrier-free exchange of experience and knowledge. The courses are accessible to all, regardless of their financial situation. The organization behind Openki is non-profit and the software is open source.
+Openki is an open education platform where groups can be proposed, discussed, developed, organized, and published. The focus is on promoting self-organization, bringing people and initiatives together, and ensuring a barrier-free exchange of experience and knowledge. The groups are accessible to all, regardless of their financial situation. The organization behind Openki is non-profit and the software is open source.
 
 Find out more about [Openki and its philosophy](https://about.openki.net/) or read about [the basic concepts behind the Openki platform](https://about.openki.net/?page_id=1216).
 
@@ -34,62 +34,62 @@ Administration and technical maintenance (addressing user issues, cleanup, bug f
 ## The Openki roles
 
 ### What is an interested User?
-A User is "interested" when they join a course. Beyond joining events and staying informed, interested can also take on the roles of Mentor, Host, or join the coordination team.
+A User is "interested" when they join a group. Beyond joining events and staying informed, interested can also take on the roles of Mentor, Host, or join the coordination team.
 
 ### What is a Mentor?
 Mentors have a certain level of knowledge and/or experience in a topic and guide participants through the learning process. They are usually responsible for preparation and follow-up.\
 Unlike teachers, mentors are typically not formally trained for this role but contribute based on their experience and knowledge.
 
 ### What is a (Coordination Team)?
-The Coordinators are responsible for coordinating inside a course (creating events, editing descriptions, making polls). The person who proposes a course automatically becomes the first member of the Coordination-Team and can add others.
+The Coordinators are responsible for coordinating inside a group (creating events, editing descriptions, making polls). The person who proposes a group automatically becomes the first member of the Coordination-Team and can add others.
 
 ### What is a host?
-A host is responsible for the venue where a course takes place. This includes access to the space, coordinating availability, acting as a contact person, and ensuring that house rules are communicated and respected.
+A host is responsible for the venue where a group takes place. This includes access to the space, coordinating availability, acting as a contact person, and ensuring that house rules are communicated and respected.
 
 ### What is an organization?
-Organizations are existing communities or associations that use Openki to organize and publish their courses. They can just promote courses and they can also help organizing them when they are granted coordination rights.
+Organizations are existing communities or associations that use Openki to organize and publish their groups. They can just promote groups and they can also help organizing them when they are granted coordination rights.
 
 
-## Courses
+## Groups
 
-### How do I organize my first Openki course meeting?
+### How do I organize my first Openki group meeting?
 You can find detailed tips and instructions in this [PDF guide](https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf).
 
-### What is an Openki course?
-An Openki course is more than just a traditional classroom setting. It involves discussions regarding content and goals, finding mentors, and organizing events. Like a ship, all participants can help steer the course and influence its direction. Formats can range from lectures and workshops to learning groups, reading circles, or alternative education projects.
+### What is an Openki group?
+An Openki group is more than just a traditional classroom setting. It involves discussions regarding content and goals, finding mentors, and organizing events. Like a ship, all participants can help steer the group and influence its direction. Formats can range from lectures and workshops to learning groups, reading circles, or alternative education projects.
 
-A course typically begins as a "suggestion" — an idea, a wish, or a question. Others can join, mentors may emerge, and a venue may be found. Once an event is scheduled, the course “takes place.” Courses can be one-time events or recurring series.
+A group typically begins as a "suggestion" — an idea, a wish, or a question. Others can join, mentors may emerge, and a venue may be found. Once an event is scheduled, the group “takes place.” Groups can be one-time events or recurring series.
 
-### What courses can be organized?
-Any topic is welcome: from cooking to nuclear physics, modern dance to literature. Courses are categorized (science, sports, music, etc.). Discriminatory content (e.g. sexist or racist) is strictly excluded.
+### What groups can be organized?
+Any topic is welcome: from cooking to nuclear physics, modern dance to literature. Groups are categorized (science, sports, music, etc.). Discriminatory content (e.g. sexist or racist) is strictly excluded.
 
-### Can courses cost something?
+### Can groups cost something?
 Yes, but prices are considered suggested contributions (donations). Participants may pay more or less. Only actual costs (materials, space, travel, etc.) may be fixed.
 
-### I want to host a course but have no space...
+### I want to host a group but have no space...
 Depending on the region, Openki has a list of available venues. All users can also list their own spaces—from factories and living rooms to gardens—to be used as venues. To use a space, contact the person listed as the host or someone who has previously organized an event at that location.
 
-### When does a course take place?
-As soon as someone proposes a course, it is published as a "suggestion" and appears with a dashed border in the course overview.\
-For a course to appear in the calendar, a member of the Coordination-Team must create an "Event". This is done after the date, time, and location have been defined.
+### When does a group take place?
+As soon as someone proposes a group, it is published as a "suggestion" and appears with a dashed border in the group overview.\
+For a group to appear in the calendar, a member of the Coordination-Team must create an "Event". This is done after the date, time, and location have been defined.
 
-### How binding is the registration for a course?
-The level of commitment required depends on the specific course and should be stated in the course description.
+### How binding is the registration for a group?
+The level of commitment required depends on the specific group and should be stated in the group description.
 
-### Where do courses take place?
-Everywhere! The Course is responsible for finding a suitable venue and a [Host](#what-is-a-host). Users are encouraged to share their own spaces. We are constantly working on expanding the list of available venues in every region.
+### Where do groups take place?
+Everywhere! The group is responsible for finding a suitable venue and a [Host](#what-is-a-host). Users are encouraged to share their own spaces. We are constantly working on expanding the list of available venues in every region.
 
-### Can I archive course materials?
-Currently, there is no dedicated system for archiving files. However, discussions and links remain visible in the course description, and past courses stay accessible.
+### Can I archive group materials?
+Currently, there is no dedicated system for archiving files. However, discussions and links remain visible in the group description, and past groups stay accessible.
 
-### In what language are the courses held? Why is the course description not translated?
-Courses are typically held in the language in which they are published. Multilingual courses will be listed as such in their descriptions.
+### In what language are the groups held? Why is the group description not translated?
+Groups are typically held in the language in which they are published. Multilingual groups will be listed as such in their descriptions.
 
-### Why are past courses still visible?
-The idea is that a topic is never truly "finished." An idea may remain relevant, and users can reactivate a course or access its documentation at any time. Active courses with upcoming events can be found in the [Calendar](https://openki.net/calendar).
+### Why are past groups still visible?
+The idea is that a topic is never truly "finished." An idea may remain relevant, and users can reactivate a group or access its documentation at any time. Active groups with upcoming events can be found in the [Calendar](https://openki.net/calendar).
 
-### I need a specific tool to organize my course!
-Many free tools are available online and can be linked directly in your course description. For example:
+### I need a specific tool to organize my group!
+Many free tools are available online and can be linked directly in your group description. For example:
 * Create a wiki: [https://www.wikispaces.com/content/classroom](https://www.wikispaces.com/content/classroom)
 * Collaborative writing: [Etherpad](https://etherpad.wikimedia.org) or [Hackpad](https://hackpad.com)
 * Simple voting/scheduling: [Dudle](https://dudle.inf.tu-dresden.de/) or [Framadate](https://framadate.org)
@@ -103,10 +103,10 @@ Many free tools are available online and can be linked directly in your course d
 See ["What is a Mentor?"](#what-is-a-mentor)
 
 ### Who can be a mentor?
-Any user can sign up to be a mentor for a course.
+Any user can sign up to be a mentor for a group.
 
-### Does a course always need a mentor?
-No. Some courses function perfectly well with all participants sharing knowledge equally without a designated mentor.
+### Does a group always need a mentor?
+No. Some groups function perfectly well with all participants sharing knowledge equally without a designated mentor.
 
 ### How do I know if a Mentor is reliable?
 If you are unsure, contact the person in advance and use your best judgment. 
@@ -123,7 +123,7 @@ Organizations can be any entity that uses Openki to help their community to coll
 ### How can we register our organization?
 Any user can create an organization profile via their account settings: [https://openki.net/organization/create](https://openki.net/organization/create)
 
-### Can we show Openki courses on our own website?
+### Can we show Openki groups on our own website?
 Yes! Embedding options (iframes links) are available in the organization settings.. More information is available in the [Openki wiki](https://gitlab.com/Openki/Openki/wikis/Frames).
 
 
@@ -132,20 +132,20 @@ Yes! Embedding options (iframes links) are available in the organization setting
 ### How is abusive behavior prevented?
 Identifying and reporting discriminatory harmful content is the responsibility of all users. The administration handles moderation and ensures transparency regarding any content that is removed.
 
-### How do I know if I'm safe attending a course?
+### How do I know if I'm safe attending a group?
 Contact the organizer in advance if you have concerns. Use common sense and, if you feel uneasy, avoid attending alone.
 
 ### How does Openki protect user privacy?
 Openki utilizes modern encryption and offers personalized privacy settings. We do not sell user data, we do not track your behavior, and we do not allow third parties to track your interests on our platform.
 
 ### How secure is the Openki website?
-Openki.net uses SSL/TLS encryption by default—the same technology used for online banking. However, your participation in courses is visible to others, so using a pseudonym is possible.
+Openki.net uses SSL/TLS encryption by default—the same technology used for online banking. However, your participation in groups is visible to others, so using a pseudonym is possible.
 
 
 ## Regions
 
 ### What is an Openki Region?
-Every course, event and venue belongs to a geographic region, such as a city or village. You can choose to browse courses in a specific region or view all regions simultaneously.
+Every group, event and venue belongs to a geographic region, such as a city or village. You can choose to browse groups in a specific region or view all regions simultaneously.
 
 ### How can I create a new Openki Region?
 Our long-term vision is for Openki to be a global platform where people can add their own regions or even self-host the software that connects with other Openki instances.\

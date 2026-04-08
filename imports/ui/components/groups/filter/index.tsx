@@ -38,19 +38,19 @@ export function Filter(props: Props) {
       name: "proposal",
       cssClass: "is-proposal",
       label: t("filterCaptions.is-proposal", "Proposal"),
-      title: t("filterCaptions.showProposal", "Show all proposed courses"),
+      title: t("filterCaptions.showProposal", "Show all proposed groups"),
     },
     {
       name: "upcomingEvent",
       cssClass: "has-upcoming-events",
       label: t("filterCaptions.upcoming.label", "Upcoming"),
-      title: t("filterCaptions.upcoming.title", "Show all courses with upcoming events"),
+      title: t("filterCaptions.upcoming.title", "Show all groups with upcoming events"),
     },
     {
       name: "resting",
       cssClass: "has-past-events",
       label: t("filterCaptions.resting.label", "Resting"),
-      title: t("filterCaptions.resting.title", "Courses with passed but without upcoming events"),
+      title: t("filterCaptions.resting.title", "Groups with passed but without upcoming events"),
     },
   ];
 
@@ -154,10 +154,7 @@ export function Filter(props: Props) {
                 <div className="filter-caption-wrap">
                   <div
                     className={`filter-caption ${archivedFilterClasses()}`}
-                    title={t(
-                      "filterCaptions.archived.title",
-                      "Show only courses that are archived",
-                    )}
+                    title={t("filterCaptions.archived.title", "Show only groups that are archived")}
                     onClick={() => {
                       props.onArchivedClick();
                     }}

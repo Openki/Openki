@@ -25,7 +25,7 @@ export function Regions({ tenant }: Props) {
       <div className="row responsive-table-head">
         <div className="col-md-2">{t("tenant.details.regions.name", "Name")}</div>
         <div className="col-md-2">
-          {t("tenant.details.regions.numberOfGroups", "Number of courses")}
+          {t("tenant.details.regions.numberOfGroups", "Number of groups")}
         </div>
         <div className="col-md-2">
           {t("tenant.details.regions.numberOfUpcomingEvents", "Number of upcoming events")}

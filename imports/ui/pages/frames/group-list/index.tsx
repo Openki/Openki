@@ -63,7 +63,7 @@ export function GroupListPage() {
 
   return (
     <>
-      <MetaTags title={t("group.list.windowtitle", "Courses")} />
+      <MetaTags title={t("group.list.windowtitle", "Groups")} />
       <style>{options.style.map((rule) => rule)}</style>
 
       {groups().length === 0 && (

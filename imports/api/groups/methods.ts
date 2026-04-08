@@ -265,7 +265,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
       {
         user: user._id,
         roles: ["participant", "team"].filter((r) => !disabledRoles.includes(r)),
-        comment: i18n("groups.creator.defaultMessage", "(has proposed this course)", {
+        comment: i18n("groups.creator.defaultMessage", "(has proposed this group)", {
           lng: user.locale,
         }),
       },

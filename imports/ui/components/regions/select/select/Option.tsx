@@ -54,7 +54,7 @@ export function Option({
             className="badge bg-primary rounded-pill"
             title={t(
               "regions.groups.title",
-              "{COUNT, plural, =0{no courses} one{one course} other{# courses in} } in {REGION}",
+              "{COUNT, plural, =0{no groups} one{one group} other{# groups in} } in {REGION}",
               { COUNT: region.groupCount, REGION: region.name },
             )}
           >

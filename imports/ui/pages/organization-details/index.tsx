@@ -264,7 +264,7 @@ export function OrganizationDetailsPage({ groupQuery, organization, showGroups }
 
             <button
               className="btn btn-link float-end ms-2"
-              data-bs-title={t("organizationDetails.removeFilter", "See all courses")}
+              data-bs-title={t("organizationDetails.removeFilter", "See all groups")}
               onClick={() => {
                 Router.go("home"); // Got a better idea?
               }}

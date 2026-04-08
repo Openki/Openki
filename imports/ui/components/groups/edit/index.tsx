@@ -640,7 +640,7 @@ export function Edit(props: Props) {
             {fullRoleSelection && availableRoles().length > 0 && (
               <div className="col-md">
                 <div className="form-label">
-                  {t("group.edit.needs.role", "This course might need…")}
+                  {t("group.edit.needs.role", "This group might need…")}
                 </div>
                 {groupEditRolesAttr().map((groupEditRoleAttr) => (
                   <Role key={groupEditRoleAttr.type} {...groupEditRoleAttr} />
@@ -699,7 +699,7 @@ export function Edit(props: Props) {
                 type="box"
                 label={t(
                   "group.edit.internDescription",
-                  "Only show when looking at a organization's courses",
+                  "Only show when looking at a organization's groups",
                 )}
                 checked={internal}
                 onChange={(checked) => setInternal(checked)}

@@ -38,7 +38,7 @@ export function FindHeader(props: Props) {
 
   return proposeFromQuery() ? (
     <h2>
-      {t("find.propose_new_course?", 'Why not propose a new course for "{TERM}"?', {
+      {t("find.proposeNewGroup?", 'Why not propose a new group for "{TERM}"?', {
         TERM: groupSearch(),
       })}
     </h2>

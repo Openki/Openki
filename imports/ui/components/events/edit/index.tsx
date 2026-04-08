@@ -509,9 +509,9 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           <>
             {t(
               "group.createEventInfo",
-              "Use this form to publish a singular, one-off, already organized event. Otherwise create or propose a course here:",
+              "Use this form to publish a singular, one-off, already organized event. Otherwise create or propose a group here:",
             )}{" "}
-            <a href={Router.path("proposeGroup")}>{t("menue.ProposeGroup", "Propose a course")}</a>
+            <a href={Router.path("proposeGroup")}>{t("menue.ProposeGroup", "Propose a group")}</a>
           </>
         )}
 

@@ -94,7 +94,7 @@ export function Introduction({ hasPricePolicy }: Props) {
                 </h2>
                 {t(
                   "introduction.2_searchNPropose",
-                  "You search if the course already exists. If not, just propose it.",
+                  "You search if the group already exists. If not, just propose it.",
                 )}
               </div>
               <div className="col">
@@ -103,7 +103,7 @@ export function Introduction({ hasPricePolicy }: Props) {
                 </h2>
                 {t(
                   "introduction.3_enrole",
-                  "Everybody can join your course as participant, mentor or host.",
+                  "Everybody can join your group as participant, mentor or host.",
                 )}
               </div>
               <div className="col">
@@ -116,7 +116,7 @@ export function Introduction({ hasPricePolicy }: Props) {
                 <h2>
                   <i className="fa-solid fa-rocket" />
                 </h2>
-                {t("introduction.5_takePlace", "The course takes place.")}
+                {t("introduction.5_takePlace", "The group takes place.")}
               </div>
               <div className="col">
                 <h2>

@@ -110,7 +110,7 @@ function UnsubscribeResultAlerts() {
           {
             description: t(
               "notifications.unsubscribeSuccess.action",
-              "If you want to unsubscribe from a specific course you can unsubscribe there. Manage your notifications settings:",
+              "If you want to unsubscribe from a specific group you can unsubscribe there. Manage your notifications settings:",
             ),
             button: <VisitProfileAction color="success" />,
           },
@@ -118,7 +118,7 @@ function UnsubscribeResultAlerts() {
       >
         {t(
           "notifications.unsubscribeSuccess.description",
-          "Are you sure? This could cause problems. You will not receive notifications about updates to courses, events, etc.",
+          "Are you sure? This could cause problems. You will not receive notifications about updates to groups, events, etc.",
         )}
       </ActionResult>
     );
