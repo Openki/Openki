@@ -44,29 +44,29 @@ export function Event({
   function intro() {
     if (isNew) {
       if (!event.replicaOf) {
-        return t("notification.event.mail.new", "A new event was just published for {COURSE}:", {
-          COURSE: group,
+        return t("notification.event.mail.new", "A new event was just published for {GROUP}:", {
+          GROUP: group,
         });
       }
 
       return t(
         "notification.event.mail.new.withReplicats",
-        "New event(s) where just published for {COURSE}. You can see the next one below.",
+        "New event(s) where just published for {GROUP}. You can see the next one below.",
         {
-          COURSE: group,
+          GROUP: group,
         },
       );
     }
     if (replicas.length === 0) {
-      return t("notification.event.mail.changed", "The following event for {COURSE} changed.", {
-        COURSE: group,
+      return t("notification.event.mail.changed", "The following event for {GROUP} changed.", {
+        GROUP: group,
       });
     }
 
     return t(
       "notification.event.mail.changed.withReplicats",
-      "The following event for {COURSE} changed, these changes have also been applied to {NUM, plural, one{the later event} other{# later events} }.",
-      { COURSE: group, NUM: replicas.length },
+      "The following event for {GROUP} changed, these changes have also been applied to {NUM, plural, one{the later event} other{# later events} }.",
+      { GROUP: group, NUM: replicas.length },
     );
   }
 
@@ -114,8 +114,8 @@ export function Event({
               </p>
               <p className="text-center">
                 <a href={unsubscribeFromGroupLink}>
-                  {t("notification.event.mail.unsubscribe", "Unsubscribe from {COURSE}", {
-                    COURSE: groupName,
+                  {t("notification.event.mail.unsubscribe", "Unsubscribe from {GROUP}", {
+                    GROUP: groupName,
                   })}
                 </a>
               </p>
@@ -126,8 +126,8 @@ export function Event({
       <Footer
         receiveNote={t(
           "notification.event.mail.notice",
-          "You receive this e-mail because you are involved in {COURSE}.",
-          { COURSE: group },
+          "You receive this e-mail because you are involved in {GROUP}.",
+          { GROUP: group },
         )}
         unsubscribe={unsubscribe}
         campaign={campaign}

@@ -42,9 +42,9 @@ export function Join({
         <td>
           <h5 className="title">{t("email.base.greeting", { USERNAME: username })}</h5>
           <p>
-            {t("notification.join.mail.intro", "{USERNAME} just joined {COURSE} as: {ROLE}.", {
+            {t("notification.join.mail.intro", "{USERNAME} just joined {GROUP} as: {ROLE}.", {
               USERNAME: newParticipant,
-              COURSE: group,
+              GROUP: group,
               ROLE: roleTitle,
               ROLETYPE: roleType,
             })}
@@ -64,8 +64,8 @@ export function Join({
             <p>
               {t(
                 "notification.join.mail.collaborationHint",
-                "If you like them to collaborate feel free to make contact. Give out rights to edit {COURSE} by adding people to its organization team by clicking the bullhorn next to a name.",
-                { COURSE: group },
+                "If you like them to collaborate feel free to make contact. Give out rights to edit {GROUP} by adding people to its organization team by clicking the bullhorn next to a name.",
+                { GROUP: group },
               )}
             </p>
           )}
@@ -83,7 +83,7 @@ export function Join({
         </td>
       </tr>
       <Footer
-        receiveNote={t("email.base.receiveNote.groupTeam", { COURSE: group })}
+        receiveNote={t("email.base.receiveNote.groupTeam", { GROUP: group })}
         unsubscribe={unsubscribe}
         spamPrevention={true}
         campaign={campaign}

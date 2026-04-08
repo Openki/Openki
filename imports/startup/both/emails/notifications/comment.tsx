@@ -123,7 +123,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
 
       const subjectvars = {
-        COURSE: truncate(group.name, { length: 10 }),
+        GROUP: truncate(group.name, { length: 10 }),
         TITLE: truncate(comment.title, { length: 50 }),
         COMMENTER: "",
       };
@@ -133,13 +133,13 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         subjectvars.COMMENTER = truncate(commenterName, { length: 20 });
         subject = t(
           "notification.comment.mail.subject",
-          "Comment on {COURSE} by {COMMENTER}: {TITLE}",
+          "Comment on {GROUP} by {COMMENTER}: {TITLE}",
           subjectvars,
         );
       } else {
         subject = t(
           "notification.comment.mail.subject.anon",
-          "Anonymous comment on {COURSE}: {TITLE}",
+          "Anonymous comment on {GROUP}: {TITLE}",
           subjectvars,
         );
       }

@@ -80,8 +80,8 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
       await GroupsMethods.remove(group._id);
 
       Alert.success(
-        t("groupDetailsPage.message.groupHasBeenDeleted", "{COURSE} was deleted.", {
-          COURSE: group.name,
+        t("groupDetailsPage.message.groupHasBeenDeleted", "{GROUP} was deleted.", {
+          GROUP: group.name,
         }),
       );
 
@@ -118,8 +118,8 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
       setExpanded(false);
 
       Alert.success(
-        t("groupDetailsPage.message.groupHasBeenArchived", "{COURSE} was archived.", {
-          COURSE: group.name,
+        t("groupDetailsPage.message.groupHasBeenArchived", "{GROUP} was archived.", {
+          GROUP: group.name,
         }),
       );
     } catch (err) {
@@ -138,8 +138,8 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
       await GroupsMethods.unarchive(group._id);
 
       Alert.success(
-        t("groupDetailsPage.message.groupHasBeenUnarchived", "{COURSE} has been unarchived.", {
-          COURSE: group.name,
+        t("groupDetailsPage.message.groupHasBeenUnarchived", "{GROUP} has been unarchived.", {
+          GROUP: group.name,
         }),
       );
     } catch (err) {
@@ -211,8 +211,8 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
               {group.archived && (
                 <div className="alert alert-archived text-center" role="alert">
                   <strong>
-                    {t("group.archive.alert", "{COURSE} is archived and not active anymore.", {
-                      COURSE: group.name,
+                    {t("group.archive.alert", "{GROUP} is archived and not active anymore.", {
+                      GROUP: group.name,
                     })}
                   </strong>
                 </div>

@@ -99,7 +99,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
       const roleTitle = t(`roles.${body.newRole}.short`);
       const subjectvars = {
-        COURSE: truncate(group.name, { length: 10 }),
+        GROUP: truncate(group.name, { length: 10 }),
         USER: truncate(newParticipant.getDisplayName(), { length: 50 }),
         ROLE: roleTitle,
         ROLETYPE: body.newRole,
@@ -107,7 +107,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
       const subject = t(
         "notification.join.mail.subject",
-        "{USER} joined {COURSE}: {ROLE}",
+        "{USER} joined {GROUP}: {ROLE}",
         subjectvars,
       );
 

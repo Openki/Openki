@@ -70,9 +70,9 @@ export function OrganizationList({ group }: Props) {
                   className="fa-solid fa-bullhorn fa-fw"
                   title={t(
                     "group.organizationList.title.organizedBy",
-                    "{COURSE} is co-organized by this organization",
+                    "{GROUP} is co-organized by this organization",
                     {
-                      COURSE: group.name,
+                      GROUP: group.name,
                     },
                   )}
                 />

@@ -2,7 +2,7 @@ describe("Group history", function () {
   it("should show a entry for group create and should show a entry for user subscribe", async () => {
     cy.visitOpenki("/groups/propose");
 
-    const randomTitle = `COURSEHISTORY${1000 + Math.floor(Math.random() * 9000)}`;
+    const randomTitle = `GROUPHISTORY${1000 + Math.floor(Math.random() * 9000)}`;
 
     cy.get("#group-edit-title");
 

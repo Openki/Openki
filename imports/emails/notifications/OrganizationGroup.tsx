@@ -34,8 +34,8 @@ export function OrganizationGroup({
           <p>
             {t(
               "notification.organization.group.mail.intro",
-              "{CREATOR} just proposed {COURSE} in your organization {ORGANIZATIONS}.",
-              { CREATOR: creator.getDisplayName(), COURSE: group, ORGANIZATIONS: organizations },
+              "{CREATOR} just proposed {GROUP} in your organization {ORGANIZATIONS}.",
+              { CREATOR: creator.getDisplayName(), GROUP: group, ORGANIZATIONS: organizations },
             )}
           </p>
 
@@ -50,8 +50,8 @@ export function OrganizationGroup({
           <p>
             {t(
               "notification.organization.group.mail.next",
-              "You can contact {CREATOR} in order to support and help organizing {COURSE}. You have the possibility to edit the description and announce events.",
-              { CREATOR: creator.getDisplayName(), COURSE: group },
+              "You can contact {CREATOR} in order to support and help organizing {GROUP}. You have the possibility to edit the description and announce events.",
+              { CREATOR: creator.getDisplayName(), GROUP: group },
             )}
           </p>
         </td>

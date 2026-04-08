@@ -88,7 +88,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       );
 
       const subjectvars = {
-        COURSE: truncate(group.name, { length: 10 }),
+        GROUP: truncate(group.name, { length: 10 }),
         ORGANIZATIONS: truncate(recipientsOrganizations.map((o) => o.short).join(", "), {
           length: 30,
         }),
@@ -96,7 +96,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
       const subject = t(
         "notification.organization.group.mail.subject",
-        "{COURSE} proposed in {ORGANIZATIONS}",
+        "{GROUP} proposed in {ORGANIZATIONS}",
         subjectvars,
       );
 
