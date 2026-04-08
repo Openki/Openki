@@ -38,7 +38,7 @@ export async function update() {
           e.entity = "groupWithoutPropose";
         });
 
-      updated += await Regions.updateAsync(organization._id, organization);
+      updated += await Organizations.updateAsync(organization._id, organization);
     }
   }
 

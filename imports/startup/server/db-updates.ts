@@ -22,14 +22,14 @@ import { update as update20241014enrichCourseCompactImage } from "./updates/2024
 import { update as update20250407enrichUserVenues } from "./updates/2025.04.07 enrichUserVenues";
 import { update as update20250723extendEventParticipants } from "./updates/2025.07.23 extendEventParticipants";
 import { update as update20251018ensureVenueAllowParallelEvents } from "./updates/2025.10.18 ensureVenueAllowParallelEventsField";
+import { update as update20260319renameGroupToOrganizationDbCollection } from "./updates/2026.03.19 renameGroupToOrganizationDbCollection";
 import { update as update20260311renameGroupToOrganization } from "./updates/2026.03.11 renameGroupToOrganization";
 import { update as update20260313renameGroupToOrganization2 } from "./updates/2026.03.13 renameGroupToOrganization2";
 import { update as update20260313renameGroupToOrganization3 } from "./updates/2026.03.13 renameGroupToOrganization3";
-import { update as update20260319renameGroupToOrganizationDbCollection } from "./updates/2026.03.19 renameGroupToOrganizationDbCollection";
 import { update as update20260320moveAllS3FilesFromGroupsToOrganizations } from "./updates/2026.03.20 moveAllS3FilesFromGroupsToOrganizations";
 import { update as update20260408moveAllS3FilesFromCoursesToGroups } from "./updates/2026.04.08 moveAllS3FilesFromCoursesToGroups";
-import { update as update20260408renameCourseToGroupInEventsAndDiscussions } from "./updates/2026.04.08 renameCourseToGroupInEventsAndDiscussions";
 import { update as update20260408renameCourseToGroupDbCollection } from "./updates/2026.04.08 renameCourseToGroupDbCollection";
+import { update as update20260408renameCourseToGroupInEventsAndDiscussions } from "./updates/2026.04.08 renameCourseToGroupInEventsAndDiscussions";
 import { update as update20260408renameCourseToGroupInDashboardSettings } from "./updates/2026.04.08 renameCourseToGroupInDashboardSettings";
 import { update as update20260408renameCourseToGroupInRegionAndOrganization } from "./updates/2026.04.08 renameCourseToGroupInRegionAndOrganization";
 
@@ -54,21 +54,21 @@ const UpdatesAvailable: Record<string, () => Promise<number>> = {
   "2025.04.07 enrichUserVenues": update20250407enrichUserVenues,
   "2025.07.23 extendEventParticipants": update20250723extendEventParticipants,
   "2025.10.18 ensureVenueAllowParallelEventsField": update20251018ensureVenueAllowParallelEvents,
+  "2026.03.19 renameGroupToOrganizationDbCollection":
+    update20260319renameGroupToOrganizationDbCollection,
   "2026.03.11 renameGroupToOrganization": update20260311renameGroupToOrganization,
   "2026.03.13 renameGroupToOrganization2": update20260313renameGroupToOrganization2,
   "2026.03.13 renameGroupToOrganization3": update20260313renameGroupToOrganization3,
-  "2026.03.19 renameGroupToOrganizationDbCollection":
-    update20260319renameGroupToOrganizationDbCollection,
   "2026.03.20 moveAllS3FilesFromGroupsToOrganizations":
     update20260320moveAllS3FilesFromGroupsToOrganizations,
   "2026.04.08 moveAllS3FilesFromCoursesToGroups": update20260408moveAllS3FilesFromCoursesToGroups,
+  "2026.04.08 renameCourseToGroupInRegionAndOrganization":
+    update20260408renameCourseToGroupInRegionAndOrganization,
   "2026.04.08 renameCourseToGroupInEventsAndDiscussions":
     update20260408renameCourseToGroupInEventsAndDiscussions,
   "2026.04.08 renameCourseToGroupDbCollection": update20260408renameCourseToGroupDbCollection,
   "2026.04.08 renameCourseToGroupInDashboardSettings":
     update20260408renameCourseToGroupInDashboardSettings,
-  "2026.04.08 renameCourseToGroupInRegionAndOrganization":
-    update20260408renameCourseToGroupInRegionAndOrganization,
 };
 
 interface UpdatesAppliedEntity {

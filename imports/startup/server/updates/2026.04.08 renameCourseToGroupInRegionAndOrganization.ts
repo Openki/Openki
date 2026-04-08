@@ -19,10 +19,10 @@ export async function update() {
     delete region.courseCount;
 
     // courseBackgroundImages => groupBackgroundImages
-    if (region.custom.courseBackgroundImages) {
+    if (region.custom?.courseBackgroundImages) {
       region.custom.groupBackgroundImages = region.custom.courseBackgroundImages;
+      delete region.custom.courseBackgroundImages;
     }
-    delete region.custom.courseBackgroundImages;
 
     updated += await Regions.updateAsync(region._id, region);
   }
