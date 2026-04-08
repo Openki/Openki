@@ -18,7 +18,7 @@ import { LocalTime } from "/imports/utils/local-time";
 
 interface Body {
   eventId: string;
-  courseId: string;
+  groupId: string;
   participantId: string;
   recipients: string[];
   model: string;
@@ -49,7 +49,7 @@ export async function record(eventId: string, participantId: string) {
 
   const body: Body = {
     eventId: event._id,
-    courseId: group._id,
+    groupId: group._id,
     participantId: participant._id,
 
     // Don't send to new member, they know
@@ -66,7 +66,7 @@ export async function record(eventId: string, participantId: string) {
 export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
   const event = await Events.findOneAsync(body.eventId);
-  const group = await Groups.findOneAsync(body.courseId);
+  const group = await Groups.findOneAsync(body.groupId);
   const newParticipant = await Users.findOneAsync(body.participantId);
 
   let region: RegionModel | undefined;

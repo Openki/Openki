@@ -15,7 +15,7 @@ import { Group, Props } from "../../../../emails/notifications/Group";
 import { getSiteName } from "/imports/utils/getSiteName";
 
 interface Body {
-  courseId: string;
+  groupId: string;
   recipients: string[];
   model: string;
 }
@@ -33,7 +33,7 @@ export async function record(groupId: string) {
   }
 
   const body: Body = {
-    courseId: group._id,
+    groupId: group._id,
     recipients: [group.createdby],
     model: "Course",
   };
@@ -43,7 +43,7 @@ export async function record(groupId: string) {
 
 export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
-  const group = await Groups.findOneAsync(body.courseId);
+  const group = await Groups.findOneAsync(body.groupId);
   if (!group) {
     throw new Error("Group does not exist (0.o)");
   }
@@ -62,7 +62,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
     async vars(locale: string, _actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
-      const campaign = "courseNotify";
+      const campaign = "groupNotify";
 
       const subjectvars = {
         COURSE: truncate(group.name, { length: 10 }),
