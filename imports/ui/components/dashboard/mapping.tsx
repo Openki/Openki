@@ -66,7 +66,7 @@ const group: ListOfEntities<GroupModel> = {
   element: ({ entity, index, params }) => (
     <React.Fragment key={entity._id}>
       {/* The sevent box should allways be the propose one, after then every 21 */}
-      {PublicSettings.feature.proposeCourseBox && (index - 6) % 21 === 0 && (
+      {PublicSettings.feature.proposeGroupBox && (index - 6) % 21 === 0 && (
         <div className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
           <CompactPropose organization={params.organization} />
         </div>

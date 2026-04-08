@@ -42,7 +42,7 @@ export function GroupList({
       {groups.map((group, index) => (
         <React.Fragment key={group._id}>
           {/* The seventh box should always be the propose one, after then every 11 */}
-          {PublicSettings.feature.proposeCourseBox &&
+          {PublicSettings.feature.proposeGroupBox &&
             !!containsPropose &&
             (index - 6) % 10 === 0 && (
               <div className="col">

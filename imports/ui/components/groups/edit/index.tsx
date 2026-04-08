@@ -236,12 +236,12 @@ export function Edit(props: Props) {
       descriptionToLong: {
         field: "description",
         onCheckValidity: () =>
-          !PublicSettings.courseDescriptionMax ||
-          numberOfCharacters <= PublicSettings.courseDescriptionMax,
+          !PublicSettings.groupDescriptionMax ||
+          numberOfCharacters <= PublicSettings.groupDescriptionMax,
         text: () =>
           t("_inputField.maxlength", {
-            MAXNUMBER: PublicSettings.courseDescriptionMax,
-            NUMBER: numberOfCharacters - (PublicSettings.courseDescriptionMax || 0),
+            MAXNUMBER: PublicSettings.groupDescriptionMax,
+            NUMBER: numberOfCharacters - (PublicSettings.groupDescriptionMax || 0),
           }),
       },
       noRegion: {

@@ -49,13 +49,13 @@
 		, "visitorUser": true
 		, "rsvpWithCompanions": true
 		, "sendReminderIsEditable": true
-    , "proposeCourseBox": true 
+    , "proposeGroupBox": true 
     , "disable2dSphereForLocations": false
 		}
 	, "nav":
 		{ "brandLink": "/" 
 		, "search": true 
-		, "proposeCourse": true
+		, "proposeGroup": true
 		, "calendar": true
 		}
 	, "footerLinks":
@@ -79,7 +79,7 @@
 	, "dataProtectionLaw": "By continuing I accept the [Privacy Policy](https://about.openki.net/en/privacy-policy/) and [Terms of Service](https://about.openki.net/terms-and-conditions/)"
 	, "faqLink": "/info/faq"
 	, "pricePolicyLink": "..."
-	, "courseGuideLink": "..."
+	, "groupGuideLink": "..."
 	, "aboutLink": "https://about.openki.net"
 	, "contribution": 
 		{ "icon": "fa-solid fa-heart"
@@ -89,7 +89,7 @@
 			, "de": "https://about.openki.net/ueber-uns/spenden/"
 			}
 		}
-	, "courseDescriptionMax": 15000
+	, "groupDescriptionMax": 15000
 	, "eventDescriptionMax": 15000
 	, "categories":
 			{ "sports":

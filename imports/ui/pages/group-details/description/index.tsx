@@ -25,7 +25,7 @@ export function Description({
     text: group.description,
     multiline: true,
     placeholder: t("course.description.placeholder"),
-    maxlength: PublicSettings.courseDescriptionMax,
+    maxlength: PublicSettings.groupDescriptionMax,
     store: {
       onSave: async (newDescription) => {
         await GroupsMethods.save(group._id, { description: newDescription });

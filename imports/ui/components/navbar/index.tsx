@@ -178,7 +178,7 @@ export function Navbar() {
                   </a>
                 </li>
               )}
-              {PublicSettings.nav.proposeCourse && (
+              {PublicSettings.nav.proposeGroup && (
                 <li className="nav-item text-center col col-lg-auto">
                   <a
                     href={Router.path("proposeGroup")}
