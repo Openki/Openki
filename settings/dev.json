@@ -60,7 +60,7 @@
 		, "customEntries": [ ]
 		}
   , "regionDashboardDefault": 
-    [ { "entity": "courseWithoutPropose"
+    [ { "entity": "groupWithoutPropose"
       , "title": "dashboard.userInvolvedIn.title"
       , "query": "userInvolved={currentUser}"
       }
@@ -68,11 +68,11 @@
       , "title": "dashboard.userRegistredFor.title"
       , "query": "participant={currentUser}&after=now&sort=start"
       }
-    , { "entity": "course"
+    , { "entity": "group"
       , "title": "dashboard.recentActivities.title"
       , "query": "internal=0"
       }
-    , { "entity": "course"
+    , { "entity": "group"
       , "title": "Chaos Computer Club Zürich"
       , "query": "organization=573edec5d6&internal=0"
       }
@@ -84,15 +84,15 @@
       , "title": "dashboard.upcomingEvents.title"
       , "query": "after=now&sort=start&internal=0&canceled=0"
       }
-    , { "entity": "course"
+    , { "entity": "group"
       , "title": "dashboard.newProposals.title"
       , "query": "state=proposal&internal=0&sort=-time_created"
       }
-    , { "entity": "courseWithoutPropose"
+    , { "entity": "groupWithoutPropose"
       , "title": "dashboard.lookingForMentors.title"
       ,  "query": "needsRole=mentor&state=proposal,resting&internal=0"
       }
-    , { "entity": "courseWithoutPropose"
+    , { "entity": "groupWithoutPropose"
       , "title": "dashboard.lookingForVenues.title"
       , "query": "needsRole=host&state=proposal,resting&internal=0"
       }
@@ -104,7 +104,7 @@
       }
     ]
   , "organizationDashboardDefault":
-    [ { "entity": "course"
+    [ { "entity": "group"
       , "title": "dashboard.recentActivities.title"
       , "query": ""
       }
@@ -112,15 +112,15 @@
       , "title": "dashboard.upcomingEvents.title"
       , "query": "after=now&sort=start&canceled=0"
       }
-    , { "entity": "course"
+    , { "entity": "group"
       , "title": "dashboard.newProposals.title"
       , "query": "state=proposal&sort=-time_created"
       }
-    , { "entity": "courseWithoutPropose"
+    , { "entity": "groupWithoutPropose"
       , "title": "dashboard.lookingForMentors.title"
       ,  "query": "needsRole=mentor&state=proposal,resting"
       }
-    , { "entity": "courseWithoutPropose"
+    , { "entity": "groupWithoutPropose"
       , "title": "dashboard.lookingForVenues.title"
       , "query": "needsRole=host&state=proposal,resting"
       }
