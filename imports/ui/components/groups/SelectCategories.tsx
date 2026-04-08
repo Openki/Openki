@@ -62,7 +62,7 @@ export function SelectCategories(props: Props) {
           <React.Fragment key={category}>
             <div className="mt-2">
               <FormCheck
-                id={`courses-select-categories-${category}`}
+                id={`groups-select-categories-${category}`}
                 type="box"
                 label={
                   <>
@@ -77,7 +77,7 @@ export function SelectCategories(props: Props) {
             {availableSubcategories(category).map((subcategory) => (
               <div className="ms-4" key={subcategory}>
                 <FormCheck
-                  id={`courses-select-subcategories-${subcategory}`}
+                  id={`groups-select-subcategories-${subcategory}`}
                   type="box"
                   label={<CategoryLabel category={subcategory} />}
                   checked={isChecked(subcategory)}

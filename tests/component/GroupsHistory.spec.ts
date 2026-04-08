@@ -10,8 +10,8 @@ describe("Group history", function () {
 
     // Create the group
     cy.get("#group-edit-title").type(randomTitle);
-    cy.get("#courses-edit-region-select").select("9JyFCoKWkxnf8LWPh");
-    cy.get("#courses-edit-save").click();
+    cy.get("#groups-edit-region-select").select("9JyFCoKWkxnf8LWPh");
+    cy.get("#groups-edit-save").click();
 
     // We should be redirected to the created group
     cy.get('[data-test="group-details"]');
@@ -25,7 +25,7 @@ describe("Group history", function () {
     cy.get("#description-tab .tab-label").click();
     cy.get('#subscribe [name="participant"]').click();
     cy.get('[data-test="navbar-login-button"]').click();
-    cy.get("#courses-edit-save").click();
+    cy.get("#groups-edit-save").click();
 
     cy.get("#history-tab .tab-label").click();
     cy.get("#history div:nth-child(2) > .grouphistory-event").should("be.visible");

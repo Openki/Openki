@@ -46,7 +46,7 @@ export function ConfirmDialog({
         )}
 
         <Button
-          id="coures-details-confirm-dialog-delete"
+          id="group-details-confirm-dialog-delete"
           className="btn-danger"
           disabled={disabled}
           needsLogin
