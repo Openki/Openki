@@ -143,7 +143,7 @@ export function GroupCompact({ group, organizationTagEvents, categoryTagEvents }
         {group.internal && <InternalIndicator />}
         {group.singleEvent && <SingleEventIndicator />}
         <div className="group-compact-title" title={group.name}>
-          <a className="stretched-link" href={Router.path("showCourse", group)}>
+          <a className="stretched-link" href={Router.path("showGroup", group)}>
             {group.name}
           </a>
         </div>

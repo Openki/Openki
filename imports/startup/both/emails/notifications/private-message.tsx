@@ -154,7 +154,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         if (!group) {
           throw new Meteor.Error(404, "course not found");
         }
-        const groupLink = Router.url("showCourse", group, {
+        const groupLink = Router.url("showGroup", group, {
           query: { campaign },
         });
         vars.group = <a href={groupLink}>{group.name}</a>;

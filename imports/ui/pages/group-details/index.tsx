@@ -163,7 +163,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
     if (force) {
       query.force = force;
     }
-    Router.go("showCourse", group, { query });
+    Router.go("showGroup", group, { query });
   }
 
   return (

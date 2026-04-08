@@ -150,10 +150,10 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);
-      const groupLink = Router.url("showCourse", group, {
+      const groupLink = Router.url("showGroup", group, {
         query: { campaign },
       });
-      const commentLink = Router.url("showCourse", group, {
+      const commentLink = Router.url("showGroup", group, {
         query: { select: comment._id, campaign },
       });
 

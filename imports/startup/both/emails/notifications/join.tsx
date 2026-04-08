@@ -125,7 +125,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);
 
-      const groupLink = Router.url("showCourse", group, { query: { campaign } });
+      const groupLink = Router.url("showGroup", group, { query: { campaign } });
       return {
         group: <a href={groupLink}>{group.name}</a>,
         newParticipant: <strong>{newParticipant.getDisplayName()}</strong>,

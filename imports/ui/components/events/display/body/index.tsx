@@ -174,7 +174,7 @@ export function Display({
           );
 
           if (group) {
-            Router.go("showCourse", { _id: group });
+            Router.go("showGroup", { _id: group });
           } else {
             Router.go("home");
           }

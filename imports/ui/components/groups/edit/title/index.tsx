@@ -48,7 +48,7 @@ function Groups({ search }: { search: string }) {
             <a
               className="list-group-item list-group-item-action border-0"
               key={group._id}
-              href={Router.path("showCourse", group)}
+              href={Router.path("showGroup", group)}
             >
               {group.name}
             </a>

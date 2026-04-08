@@ -117,7 +117,7 @@ export function Role(data: Data) {
               Alert.error(`${change} not valid for ${user}`);
             }
 
-            // After unsubscribe got to the event. Equals in route 'showCourse'.
+            // After unsubscribe got to the event. Equals in route 'showGroup'.
             const group = data.group;
             if (group?.singleEvent && group.nextEvent) {
               Router.go("showEvent", group.nextEvent, { replaceState: true });

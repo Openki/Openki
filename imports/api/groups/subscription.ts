@@ -97,7 +97,7 @@ export class Subscribe extends Change<{
 
   comment: string | undefined;
 
-  static readonly method = "Courses.Subscribe";
+  static readonly method = "Groups.Subscribe";
 
   static async read(body: {
     courseId: string;
@@ -265,7 +265,7 @@ export class Unsubscribe extends Change<{
 
   role: string;
 
-  static readonly method = "Courses.Unsubscribe";
+  static readonly method = "Groups.Unsubscribe";
 
   static async read(body: { courseId: string; userId: string; role: string }) {
     return new this(await Groups.findOneAsync(body.courseId), body.userId, body.role);
@@ -378,7 +378,7 @@ export class Message extends Change<{
 
   message: string | undefined;
 
-  static readonly method = "Courses.Message";
+  static readonly method = "Groups.Message";
 
   static async read(body: { courseId: string; userId: string; message: string | undefined }) {
     return new this(await Groups.findOneAsync(body.courseId), body.userId, body.message);

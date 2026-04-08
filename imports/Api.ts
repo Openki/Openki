@@ -157,7 +157,7 @@ export const Api = {
           evr.course = {
             id: ev.courseId,
             name: group.name,
-            link: Router.url("showCourse", group),
+            link: Router.url("showGroup", group),
             customFields: group.customFields
               ?.filter((f) => f.visibleFor === "all")
               .map((f) => ({
@@ -198,7 +198,7 @@ export const Api = {
         id: originalGroup._id,
         name: originalGroup.name,
         description: originalGroup.description,
-        link: Router.url("showCourse", originalGroup),
+        link: Router.url("showGroup", originalGroup),
         image: originalGroup.publicUrlForDetailsImage(),
         customFields: originalGroup.customFields
           ?.filter((f) => f.visibleFor === "all")
