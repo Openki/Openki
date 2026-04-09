@@ -320,6 +320,17 @@ export function GroupSettings({ group }: Props) {
           <i className="fa-solid fa-link fa-fw" />{" "}
           {t("group.linksCollection.title", "{NAME}-views", { NAME: PublicSettings.siteName })}
         </h3>
+        <p className="group-id-display">
+          <strong>{t("group.settings.groupId", "Group ID")}</strong>: <code>{group._id}</code>
+          <button
+            type="button"
+            className="btn btn-sm btn-outline-secondary group-id-display__copy-btn"
+            onClick={() => navigator.clipboard.writeText(group._id)}
+            title={t("group.settings.copyId", "Copy ID")}
+          >
+            <i className="fa-solid fa-copy fa-fw" />
+          </button>
+        </p>
         <ul className="list-unstyled">
           <li>
             Infoscreen-Link:{" "}
@@ -365,7 +376,7 @@ export function GroupSettings({ group }: Props) {
           </li>
         </ul>
 
-        {currentUser?.privileged("admin") && (
+        {group.editableBy(currentUser) && (
           <p>
             {!!group.createdby && (
               <>
