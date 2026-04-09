@@ -69,6 +69,21 @@ export const [account, useAccount] = ServerPublishOne(
   },
 );
 
+export const [verify, useVerify] = ServerPublishOne(
+  "user.verify",
+  (email: string) => {
+    check(email, String);
+
+    return Users.find(
+      { "emails.address": email },
+      { projection: { emails: { $elemMatch: { address: email } } as any } },
+    );
+  },
+  (email) => {
+    return Users.findOne({ "emails.address": email });
+  },
+);
+
 export const [details, useDetails] = ServerPublishOne(
   "user",
   async (userId: string) => {
