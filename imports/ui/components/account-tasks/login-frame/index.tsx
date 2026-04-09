@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { MeteorAsync } from "/imports/utils/promisify";
 import { useSession, useSessionEquals } from "/imports/utils/react-meteor-data";
@@ -47,6 +47,11 @@ export function LoginFrame({
     false | "Password" | "Google" | "Facebook" | "Github" | "C3"
   >(false);
   const [loginData, setLoginData] = useState({ username, password });
+
+  const [showPassword, setShowPassword] = useState(false);
+  useEffect(() => {
+    setShowPassword(false);
+  }, [username, password]);
 
   const [errors, checkValidity, addError] = useValidation({
     noUsername: {
@@ -109,6 +114,7 @@ export function LoginFrame({
     <form
       noValidate
       onSubmit={async (event) => {
+        setShowPassword(false);
         event.preventDefault();
 
         if (!checkValidity()) {
