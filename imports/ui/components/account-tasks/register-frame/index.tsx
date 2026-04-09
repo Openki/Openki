@@ -1,5 +1,5 @@
 import { Router } from "meteor/iron:router";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { PublicSettings } from "/imports/utils/PublicSettings";
@@ -35,9 +35,21 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
   const [isBusy, setIsBusy] = useState(false);
   const [registerData, setRegisterData] = useState({ username, password, email, allowNews });
 
+  // Controls password visibility toggle between plain text and masked input.
+  // Security note: password is automatically hidden again on form submit.
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  // Stores the confirmation password value separately from registerData
+  // since it is only needed for validation and not sent to the server.
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  // Reset password visibility when modal is reopened to prevent
+  // accidental exposure on shared devices.
   useEffect(() => {
     setShowPassword(false);
+    setShowConfirmPassword(false);
+    setConfirmPassword("");
   }, [username, password]);
 
   const [errors, checkValidity, addError] = useValidation({
@@ -157,22 +169,44 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
       <div className="mb-3">
         <FormControl
           id="register-frame-password"
-          type={showPassword ? ("text" as const) : ("password" as const)}
+          type={showPassword ? "text" : "password"}
           label={t("_inputField.password")}
           prepend="fa-solid fa-lock fa-fw"
           value={registerData.password}
           onChange={(value) => setRegisterData({ ...registerData, password: value })}
           error={errors.password}
           append={
-            <button
-              type="button"
-              className="btn btn-outline-secondary"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              <i
-                className={showPassword ? "fa-solid fa-eye-slash fa-fw" : "fa-solid fa-eye fa-fw"}
-              />
-            </button>
+            <span className="input-group-text p-0">
+              <button
+                type="button"
+                className="btn btn-outline-secondary text-dark"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                <i className={`fa-fw fa-solid ${showPassword ? " fa-eye-slash" : "fa-eye"}`} />
+              </button>
+            </span>
+          }
+        />
+      </div>
+      <div className="mb-3">
+        <FormControl
+          id="register-frame-confirm-password"
+          type={showConfirmPassword ? "text" : "password"}
+          label={t("register.confirmPassword", "Confirm password")}
+          prepend="fa-solid fa-lock fa-fw"
+          value={confirmPassword}
+          onChange={(value: string) => setConfirmPassword(value)}
+          error={errors.confirmPassword}
+          append={
+            <span className="input-group-text p-0">
+              <button
+                type="button"
+                className="btn btn-outline-secondary text-dark"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                <i className={`fa-fw fa-solid ${showPassword ? " fa-eye-slash" : "fa-eye"}`} />
+              </button>
+            </span>
           }
         />
       </div>

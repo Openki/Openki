@@ -361,8 +361,7 @@ function getGroupClassNames(size: Size | undefined, hasErrorMessage: boolean) {
 export function FormControl<K extends string>(props: Props<K>) {
   const { t } = useTranslation();
 
-  const { id, size, label, prepend, optional, error } = props;
-
+  const { id, size, label, prepend, append, optional, error } = props;
   const hasErrorMessage = typeof error !== "boolean" && !!error;
 
   // Create input using a factory
