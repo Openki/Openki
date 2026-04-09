@@ -38,10 +38,7 @@ function More() {
   const { t } = useTranslation();
   const { getLocalizedValue } = useLocalizedSetting();
   return (
-    <a
-      href={getLocalizedValue(PublicSettings.pricePolicyLink)}
-      className="icon-text"
-    >
+    <a href={getLocalizedValue(PublicSettings.pricePolicyLink)} className="icon-text">
       <div className="icon-text-icon">
         <i className="fa-solid fa-book fa-fw" />
       </div>
