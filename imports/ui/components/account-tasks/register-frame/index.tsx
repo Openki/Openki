@@ -173,7 +173,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
           label={t("_inputField.password")}
           prepend="fa-solid fa-lock fa-fw"
           value={registerData.password}
-          onChange={(value) => setRegisterData({ ...registerData, password: value })}
+          onChange={(value: string) => setRegisterData({ ...registerData, password: value })}
           error={errors.password}
           append={
             <span className="input-group-text p-0">
