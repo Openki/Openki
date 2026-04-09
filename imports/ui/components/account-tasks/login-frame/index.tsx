@@ -162,7 +162,7 @@ export function LoginFrame({
               prepend="fa-solid fa-lock fa-fw"
               label={t("_inputField.password")}
               value={loginData.password}
-              onChange={(value) => setLoginData({ ...loginData, password: value })}
+              onChange={(value: string) => setLoginData({ ...loginData, password: value })}
               error={errors.password}
               append={
                 <span className="input-group-text p-0">
