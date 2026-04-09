@@ -51,7 +51,11 @@ Accounts.emailTemplates.verifyEmail = {
     }
 
     // normal user account creation
-    return verify(userModel.getDisplayName(), `${url}?email=${userModel.emailAddress()}`, userModel.locale);
+    return verify(
+      userModel.getDisplayName(),
+      `${url}?email=${userModel.emailAddress()}`,
+      userModel.locale,
+    );
   },
 
   async html(user: UserModel, url: string) {
@@ -77,7 +81,11 @@ Accounts.emailTemplates.verifyEmail = {
         subject={Accounts.emailTemplates.verifyEmail.subject?.(userModel)}
         logo={await toEmailLogo(PublicSettings.emailLogo)}
       >
-        <Verify username={userModel.getDisplayName()} url={`${url}?email=${userModel.emailAddress()}`} lng={userModel.locale} />
+        <Verify
+          username={userModel.getDisplayName()}
+          url={`${url}?email=${userModel.emailAddress()}`}
+          lng={userModel.locale}
+        />
       </Root>,
     );
   },

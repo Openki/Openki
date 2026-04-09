@@ -64,7 +64,7 @@ export function InfoPage({ page }: Props) {
       const title = $(event.currentTarget);
       title.nextUntil(headerTag, contentTags).toggle();
       title.toggleClass("active");
-      history.pushState(null, '', `#${title.attr("id")}`)
+      history.pushState(null, "", `#${title.attr("id")}`);
     }
 
     const element = $(headerTag);

@@ -170,7 +170,7 @@ if (runBackgroundTasks)
     // last hours. This way, if the server should have failed for a longer time,
     // no notifications will go out.
     const gracePeriod = new Date();
-    gracePeriod.setHours(gracePeriod.getHours() - 72);
+    gracePeriod.setHours(gracePeriod.getHours() - PrivateSettings.notificationGracePeriodHours);
 
     // The Log is append-only so we only watch for additions
     await Log.find({ tr: "Notification.Send", ts: { $gte: gracePeriod } }).observeAsync({
