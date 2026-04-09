@@ -56,6 +56,7 @@ const UpdatesAvailable: Record<string, () => Promise<number>> = {
   "2025.10.18 ensureVenueAllowParallelEventsField": update20251018ensureVenueAllowParallelEvents,
   "2026.03.19 renameGroupToOrganizationDbCollection":
     update20260319renameGroupToOrganizationDbCollection,
+  "2026.04.08 renameCourseToGroupDbCollection": update20260408renameCourseToGroupDbCollection,
   "2026.03.11 renameGroupToOrganization": update20260311renameGroupToOrganization,
   "2026.03.13 renameGroupToOrganization2": update20260313renameGroupToOrganization2,
   "2026.03.13 renameGroupToOrganization3": update20260313renameGroupToOrganization3,
@@ -66,7 +67,6 @@ const UpdatesAvailable: Record<string, () => Promise<number>> = {
     update20260408renameCourseToGroupInRegionAndOrganization,
   "2026.04.08 renameCourseToGroupInEventsAndDiscussions":
     update20260408renameCourseToGroupInEventsAndDiscussions,
-  "2026.04.08 renameCourseToGroupDbCollection": update20260408renameCourseToGroupDbCollection,
   "2026.04.08 renameCourseToGroupInDashboardSettings":
     update20260408renameCourseToGroupInDashboardSettings,
 };
