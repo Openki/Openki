@@ -41,8 +41,8 @@ export async function afterSubscribe(groupId: string) {
 /**
  * Update the modification date
  */
-export async function afterUnsubscribe(groupid: string) {
-  await Groups.updateAsync(groupid, { $set: { time_lastedit: new Date() } });
+export async function afterUnsubscribe(groupId: string) {
+  await Groups.updateAsync(groupId, { $set: { time_lastedit: new Date() } });
 }
 
 /**
