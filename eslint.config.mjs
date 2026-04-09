@@ -56,9 +56,9 @@ export default tseslint.config(
           ignoreOverloadsWithDifferentJSDoc: true,
         },
       ],
-      "react-hooks/set-state-in-effect": "off",
-      "react-hooks/exhaustive-deps": "off",
-      "react-hooks/refs": "off",
+      "react-hooks/set-state-in-effect": "warn",
+      "react-hooks/exhaustive-deps": "warn",
+      "react-hooks/refs": "warn",
     },
   },
 
