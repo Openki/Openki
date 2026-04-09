@@ -159,7 +159,8 @@
 		{ "publicUrlBase": "https://984b.objectstorage.nineapis.ch/v1/AUTH_01234-xyz123/bucket-name"
 		}
 	, "apiMaxLimit": 100 // Maximum number of entities that the api returns. Default: 100. If the parameter "limit" is not set in the URL, the API always returns 100 entities whatever this setting is set to.
-	}
+	, "notificationGracePeriodHours" :72 // How many hours back notification e-mails should be sent after the server was down. This helps when there was a big problem with the server to not spam people. Default: 72 hours.
+  }
 , "siteEmail": "" // Sender e-mail address in mails
 , "replyToEmail": "" // "Reply to" adress in mails 
 , "reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net"} // Sender and recipient address for "Report problem" function
