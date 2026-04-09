@@ -38,14 +38,12 @@ function More() {
   const { t } = useTranslation();
   const { getLocalizedValue } = useLocalizedSetting();
   return (
-    <a href={getLocalizedValue(PublicSettings.pricePolicyLink)}>
-      <div className="icon-text">
-        <div className="icon-text-icon">
-          <i className="fa-solid fa-book fa-fw" />
-        </div>
-        <div className="icon-text-text">
-          {t("pricePolicy.moreAboutPricePolicy", "Read our price policy")}
-        </div>
+    <a href={getLocalizedValue(PublicSettings.pricePolicyLink)} className="icon-text">
+      <div className="icon-text-icon">
+        <i className="fa-solid fa-book fa-fw" />
+      </div>
+      <div className="icon-text-text">
+        {t("pricePolicy.moreAboutPricePolicy", "Read our price policy")}
       </div>
     </a>
   );
@@ -69,14 +67,12 @@ async function handleHideClick() {
 function Dismissable() {
   const { t } = useTranslation();
   return (
-    <a href="#" onClick={handleHideClick}>
-      <div className="icon-text">
-        <div className="icon-text-icon">
-          <i className="fa-solid fa-ban fa-fw" />
-        </div>
-        <div className="icon-text-text">
-          {t("pricePolicy.dontShowAnymore", "Don't show this anymore")}
-        </div>
+    <a href="#" onClick={handleHideClick} className="icon-text">
+      <div className="icon-text-icon">
+        <i className="fa-solid fa-ban fa-fw" />
+      </div>
+      <div className="icon-text-text">
+        {t("pricePolicy.dontShowAnymore", "Don't show this anymore")}
       </div>
     </a>
   );

@@ -14,7 +14,7 @@ import { MetaTags } from "/imports/ui/components/MetaTags";
 import "./styles.scss";
 
 export interface Props {
-  page: InfoPagesEntity;
+  page: Pick<InfoPagesEntity, "title" | "body">;
 }
 
 export function InfoPage({ page }: Props) {
@@ -64,6 +64,7 @@ export function InfoPage({ page }: Props) {
       const title = $(event.currentTarget);
       title.nextUntil(headerTag, contentTags).toggle();
       title.toggleClass("active");
+      history.pushState(null, "", `#${title.attr("id")}`);
     }
 
     const element = $(headerTag);

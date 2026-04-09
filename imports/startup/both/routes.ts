@@ -175,6 +175,25 @@ RouterAsync.route("groupDetails", {
   },
 });
 
+async function getInfoPageMarkdown(url: string) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      return undefined;
+    }
+
+    const content = await response.text();
+
+    if (!content.startsWith("# ")) {
+      return undefined;
+    }
+
+    return content;
+  } catch {
+    return undefined;
+  }
+}
+
 RouterAsync.route("info", {
   path: "info/:page_slug",
   template: "infoPage",
@@ -189,7 +208,22 @@ RouterAsync.route("info", {
   async data() {
     const page = await this.subscriptions()?.infoPage();
     if (!page) {
-      return undefined;
+      const content =
+        (await getInfoPageMarkdown(
+          `/info-pages/${this.params.page_slug}/${Session.get("locale")}.md`,
+        )) || (await getInfoPageMarkdown(`/info-pages/${this.params.page_slug}/en.md`));
+
+      if (!content) {
+        return undefined;
+      }
+
+      return {
+        page: {
+          // first line is used as title, must start with "# ..."
+          title: content.split("\n")[0].replace(/^# /, ""),
+          body: content,
+        },
+      };
     }
 
     return { page };

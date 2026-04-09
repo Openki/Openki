@@ -78,6 +78,13 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
   },
   /** Maximum number of entities that the api returns. */
   apiMaxLimit: Number,
+
+  /**
+   * How many hours back notification e-mails should be sent after the server was down.
+   * This helps when there was a big problem with the server to not spam people.
+   * Default: 72 hours
+   */
+  notificationGracePeriodHours: Number,
 });
 
 export type PrivateSettings = Type<typeof PrivateSettingsPattern>;
@@ -101,6 +108,7 @@ if (Meteor.isServer) {
     printLog: false,
     startup: { buildDbCacheAsync: false },
     apiMaxLimit: 100,
+    notificationGracePeriodHours: 72,
   };
 
   // none deep merge
