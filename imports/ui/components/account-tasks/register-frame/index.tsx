@@ -182,7 +182,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
                 className="btn btn-outline-secondary text-dark"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                <i className={`fa-fw fa-solid ${showPassword ? " fa-eye-slash" : "fa-eye"}`} />
+                <i className={`fa-fw fa-solid ${showPassword ? "fa-eye-slash" : "fa-eye"}`} />
               </button>
             </span>
           }
@@ -204,7 +204,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
                 className="btn btn-outline-secondary text-dark"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
-                <i className={`fa-fw fa-solid ${showPassword ? " fa-eye-slash" : "fa-eye"}`} />
+                <i className={`fa-fw fa-solid ${showConfirmPassword ? "fa-eye-slash" : "fa-eye"}`} />
               </button>
             </span>
           }
