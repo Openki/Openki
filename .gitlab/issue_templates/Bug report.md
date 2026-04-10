@@ -32,4 +32,4 @@ If applicable, we are happy to see screenshots or screenrcordings
 
 <!-- If you can, link to the line of code that might be responsible for the problem -->
 
-/label ~"defect::"
+/label ~"type::🐛defect" 
