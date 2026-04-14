@@ -207,12 +207,12 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     {
       noTitle: {
         field: "title",
-        onCheckValidity: () => !!changes.title,
+        isValid: () => !!changes.title,
         text: () => t("event.edit.plzProvideTitle", "Please provide a title"),
       },
       startWrongFormat: {
         field: "start",
-        onCheckValidity: () => {
+        isValid: () => {
           const start = LocalTime.fromString(changes.startLocal);
           return start.isValid();
         },
@@ -229,7 +229,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       },
       startInPast: {
         field: "start",
-        onCheckValidity: () => {
+        isValid: () => {
           if (isNew) {
             const start = LocalTime.fromString(changes.startLocal);
             if (!start.isValid()) {
@@ -249,12 +249,12 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       },
       noDescription: {
         field: "description",
-        onCheckValidity: () => !!changes.description,
+        isValid: () => !!changes.description,
         text: () => t("event.edit.plzProvideDescr", "Please provide a description"),
       },
       descriptionToLong: {
         field: "description",
-        onCheckValidity: () =>
+        isValid: () =>
           !PublicSettings.eventDescriptionMax ||
           changes.descriptionNumberOfCharacters <= PublicSettings.eventDescriptionMax,
         text: () =>
@@ -266,12 +266,12 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       },
       noRegion: {
         field: "region",
-        onCheckValidity: () => !!selectedRegion,
+        isValid: () => !!selectedRegion,
         text: () => t("event.edit.plzSelectRegion", "Please select the region for this event"),
       },
       parallelEvents: {
         field: "startEndVenue",
-        onCheckValidity: () =>
+        isValid: () =>
           venueIsLoading() || !venue || venue.allowParallelEvents || allParallelEvents.length === 0,
         text: () => (
           <>
@@ -286,7 +286,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       },
       venueRestricedUse: {
         field: "venue",
-        onCheckValidity: () => {
+        isValid: () => {
           return (
             !selectedVenue?._id ||
             !selectedVenue.restrictedUse ||

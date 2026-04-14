@@ -226,12 +226,12 @@ export function Edit(props: Props) {
     {
       noTitle: {
         field: "title",
-        onCheckValidity: () => StringTools.sanitizeSingleline(title).length > 0,
+        isValid: () => StringTools.sanitizeSingleline(title).length > 0,
         text: () => t("course.edit.error.title", "Please provide a title"),
       },
       descriptionToLong: {
         field: "description",
-        onCheckValidity: () =>
+        isValid: () =>
           !PublicSettings.courseDescriptionMax ||
           numberOfCharacters <= PublicSettings.courseDescriptionMax,
         text: () =>
@@ -242,7 +242,7 @@ export function Edit(props: Props) {
       },
       noRegion: {
         field: "region",
-        onCheckValidity: () => !!selectedRegion,
+        isValid: () => !!selectedRegion,
         text: () => t("course.edit.error.region", "Please select a region"),
       },
     },
