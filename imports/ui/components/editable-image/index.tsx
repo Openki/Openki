@@ -1,5 +1,5 @@
 import ImageBlobReduce from "image-blob-reduce";
-import mimeDb from "mime-db";
+import { extension } from "mime-types";
 import React, { ChangeEvent, DragEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -97,7 +97,7 @@ export function EditableImage(data: Data) {
       reader.onload = () => {
         let name = file.name;
         // handle if resizing changed file type
-        const fileExtension = mimeDb[resizedFile.type]?.extensions?.[0];
+        const fileExtension = extension(resizedFile.type);
         if (fileExtension) {
           name = changeExt(name, fileExtension);
         }
