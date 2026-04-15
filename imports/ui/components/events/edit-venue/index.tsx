@@ -119,8 +119,10 @@ export function EditVenue({ region: regionId, event, value, onChange, errors }: 
               </div>
             </div>
           </div>
-          {!!errors.venue && <div className="text-danger mb-3">{errors.venue}</div>}
-          {!!errors.startEndVenue && <div className="text-danger mb-3">{errors.startEndVenue}</div>}
+          {!!errors.venue && <small className="text-danger mb-3">{errors.venue}</small>}
+          {!!errors.startEndVenue && (
+            <small className="text-danger mb-3">{errors.startEndVenue}</small>
+          )}
           {!errors.venue && !errors.startEndVenue && (
             <Hints regionId={regionId} event={event} venue={value} />
           )}
