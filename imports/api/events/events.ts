@@ -29,7 +29,7 @@ export interface EventVenueEntity {
    */
   _id?: string;
   /** Descriptive name for the venue */
-  name: string;
+  name?: string;
   /** Event location in GeoJSON format */
   loc?: Geodata;
   /** Floor level for custom maps as integer */
