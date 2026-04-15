@@ -310,7 +310,7 @@ export function EditableImage(data: Data) {
       </div>
     </>
   ) : (
-    <div>
+    <div className="d-flex align-items-start">
       {data.thumbnail?.src ? (
         <img
           className="cursor-pointer img-thumbnail"
@@ -321,18 +321,16 @@ export function EditableImage(data: Data) {
       ) : (
         <i className="fa-regular fa-image fa-5x cursor-pointer" onClick={handleEditClick} />
       )}{" "}
-      <span
-        className="align-top fa-solid fa-pencil cursor-pointer"
-        onClick={handleEditClick}
-      ></span>
       {!!data.thumbnail?.src && (
         <>
           {" "}
-          <span
-            className="align-top fa-solid fa-eye cursor-pointer js-editable-image-show"
+          <button
+            className="btn btn-sm"
             data-bs-toggle="modal"
             data-bs-target={`#editable-image-${id}`}
-          ></span>
+          >
+            <span className="fa-solid fa-eye cursor-pointer js-editable-image-show fa-xl"></span>
+          </button>
           <div className="modal fade" id={`editable-image-${id}`} tabIndex={-1} aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered modal-xl">
               <div className="modal-content">
@@ -351,6 +349,14 @@ export function EditableImage(data: Data) {
             </div>
           </div>
         </>
+      )}
+      <button onClick={handleEditClick} className="btn btn-sm">
+        <span className="fa-solid fa-pencil cursor-pointer fa-xl"></span>
+      </button>
+      {deleteAllowed() && (
+        <button onClick={onDelete} className="btn btn-sm">
+          <span className="fa-solid fa-trash-can cursor-pointer fa-xl"></span>
+        </button>
       )}
     </div>
   );
