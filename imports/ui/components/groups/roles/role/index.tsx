@@ -43,10 +43,10 @@ export function Role(data: Data) {
   }
 
   function roleSubscribe(type: string) {
-    return t(`roles.${type}.subscribe`);
+    return t(`roles:${type}.subscribe`);
   }
   function roleSubscribed(type: string) {
-    return t(`roles.${type}.subscribed`);
+    return t(`roles:${type}.subscribed`);
   }
   function roleIs(type: string) {
     return data.role.type === type;

@@ -1,0 +1,30 @@
+{
+  "team.short": "team",
+  "team.subscribe": "I help organize",
+  "team.subscribed": "You are on the team",
+  "team.myList": "I am organizing",
+  "team.userList": "{NAME} is organizing",
+  "team.userList.past": "{NAME} was organizing",
+
+  "participant.short": "interested",
+  "participant.subscribe": "I am interested",
+  "participant.subscribed": "You are interested",
+  "participant.myList": "I am interested in",
+  "participant.userList": "{NAME} is interested in",
+
+  "mentor.short": "mentor",
+  "mentor.short.plural": "mentors",
+  "mentor.subscribe": "I can be a mentor",
+  "mentor.subscribed": "You are listed as mentor",
+  "mentor.description": "a mentor",
+  "mentor.myList": "I teach",
+  "mentor.userList": "{NAME} teaches",
+
+  "host.short": "host",
+  "host.short.plural": "hosts",
+  "host.subscribe": "I have a place to host this",
+  "host.subscribed": "You are listed as host",
+  "host.description": "a host that provides a place",
+  "host.myList": "I provide a place for",
+  "host.userList": "{NAME} provides a place for"
+}

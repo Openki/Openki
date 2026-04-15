@@ -15,10 +15,10 @@ export function Role(props: Props) {
   const { t } = useTranslation();
 
   function roleDescription() {
-    return `roles.${props.type}.description`;
+    return `roles:${props.type}.description`;
   }
   function roleSubscription() {
-    return `roles.${props.type}.subscribe`;
+    return `roles:${props.type}.subscribe`;
   }
 
   return (
