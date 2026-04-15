@@ -40,7 +40,6 @@
     "lodash-es": "4.17.21",
     "medium-editor": "5.23.3",
     "meteor-node-stubs": "1.2.24",
-    "mime-db": "1.54.0",
     "mime-types": "3.0.1",
     "moment": "2.30.1",
     "moment-timezone": "0.6.0",
@@ -106,7 +105,7 @@
   },
   "scripts": {
     "debug": "npm run extract-translations && npm run type-check && meteor --inspect --settings settings/dev.json",
-    "debug:ssl": "npm run extract-translations && npm run type-check && OPENKI_LOCALHOST_SSL=1 meteor --inspect --settings settings/dev.json",
+    "debug:ssl": "npm run extract-translations && npm run type-check && OPENKI_LOCALHOST_SSL=1 meteor --extra-packages storyteller:ssl --inspect --settings settings/dev.json",
     "test:ui": "start-test 'npm run test:env' :3000 'cypress open --e2e --browser electron'",
     "test": "start-test 'npm run test:env' :3000 'cypress run'",
     "test:ci": "WAIT_ON_TIMEOUT=600000 start-test 'npm run test:env -- --once' :3000 'cypress run --record'",
@@ -127,8 +126,8 @@
     "url": "git+https://gitlab.com/Openki/Openki.git"
   },
   "browserslist": [
-    "> 0.2%",
-    "not dead"
+    "defaults",
+    "> 0.2%"
   ],
   "keywords": [
     "education",

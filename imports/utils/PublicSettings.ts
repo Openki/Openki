@@ -257,7 +257,7 @@ const defaults = {
   footerLinks: [] as { link: string; key?: string; title_key?: string; text?: string }[],
   faqLink: "/info/faq",
   pricePolicyLink: {
-    en: "/info/faq#why-can-not-i-ask-for-a-fixed-price-as-a-mentor",
+    en: "/info/faq#why-cant-i-charge-a-fixed-fee-as-a-mentor",
     de: "/info/faq#dürfen-kurse-etwas-kosten",
   },
   groupGuideLink: {

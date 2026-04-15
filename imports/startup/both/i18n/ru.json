@@ -1129,7 +1129,7 @@
   "venue.edit.name": "Название",
   "venue.edit.namePlaceholder": "Полное название места проведения",
   "venue.edit.provideAdditionalInfo": "Заполните дополнительную информацию",
-  "venue.edit.restrictedUse": "Ограниченное использование",
+  "venue.edit.restrictedUse": "",
   "venue.edit.restrictedUse.label": "Это место проведения может быть выбрано только его организаторами для публикации мероприятия.",
   "venue.edit.short.placeholder": "краткое название",
   "venue.edit.shortName": "Аббревиатура",
