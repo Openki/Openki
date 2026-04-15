@@ -267,6 +267,11 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
                           <ButtonDelete
                             id="group-details-confirm-delete"
                             onClick={async () => setExpanded(true)}
+                            label={
+                              group.singleEvent
+                                ? t("group.event.edit.deleteEvent", "Delete event")
+                                : t("group.delete.button", "Delete group")
+                            }
                           />
                         )}
                       </div>
