@@ -211,14 +211,16 @@ export function ButtonSave(
   );
 }
 
-export function ButtonDelete(
-  props: {
-    id: string;
-    size?: Size | undefined;
-    block?: boolean | undefined;
-    disabled?: boolean | undefined;
-  } & (LoginProps | SubmitProps),
-) {
+export function ButtonDelete({
+  label,
+  ...props
+}: {
+  id: string;
+  size?: Size | undefined;
+  block?: boolean | undefined;
+  disabled?: boolean | undefined;
+  label?: string;
+} & (LoginProps | SubmitProps)) {
   const { t } = useTranslation();
 
   return (
@@ -228,7 +230,7 @@ export function ButtonDelete(
       className="btn-delete text-danger"
       busyText={t("_button.deleting")}
     >
-      {t("_button.delete")}
+      {label ?? t("_button.delete")}
     </Button>
   );
 }
