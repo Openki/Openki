@@ -303,9 +303,9 @@ export function EditableImage(data: Data) {
         )}
       </form>
       <div className="editable-image-controls">
-        {progress === "ready" ? (
+        {progress === "ready" && (
           <ButtonSave needsLogin id="editable-image-save" {...uploadButtonAttributes()} />
-        ) : null}{" "}
+        )}{" "}
         <ButtonCancel id="editable-image-cancel" onClick={onCancel} />
       </div>
     </>
