@@ -23,3 +23,17 @@ $group-member-bg: rgba($gray-600, 0.15);
     color.adjust($success, $lightness: -45%)
   );
 }
+
+.group-member-unit {
+  display: flex;
+  flex-wrap: nowrap;
+  min-width: max-content;
+}
+
+.tag-group.multiline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: flex-start;
+}
+
