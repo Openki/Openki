@@ -48,7 +48,9 @@ async function requestVenuesFromNominatim(
       },
       address: [
         [a.road, a.house_number].filter((v) => v).join(" "),
-        [a.postcode, a.state].filter((v) => v).join(" "),
+        [a.postcode, a.municipality || a.city || a.town || a.village || a.state]
+          .filter((v) => v)
+          .join(" "),
       ]
         .filter((v) => v)
         .join(", "),
