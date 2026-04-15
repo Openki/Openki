@@ -126,8 +126,8 @@
     "url": "git+https://gitlab.com/Openki/Openki.git"
   },
   "browserslist": [
-    "> 0.2%",
-    "not dead"
+    "defaults",
+    "> 0.2%"
   ],
   "keywords": [
     "education",
