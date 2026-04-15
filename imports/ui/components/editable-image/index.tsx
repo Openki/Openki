@@ -310,7 +310,7 @@ export function EditableImage(data: Data) {
       </div>
     </>
   ) : (
-    <div className="d-flex align-items-start">
+    <div className="d-flex align-items-start gap-1">
       {data.thumbnail?.src ? (
         <img
           className="cursor-pointer img-thumbnail"
@@ -321,43 +321,50 @@ export function EditableImage(data: Data) {
       ) : (
         <i className="fa-regular fa-image fa-5x cursor-pointer" onClick={handleEditClick} />
       )}{" "}
-      {!!data.thumbnail?.src && (
-        <>
-          {" "}
-          <button
-            className="btn btn-sm"
-            data-bs-toggle="modal"
-            data-bs-target={`#editable-image-${id}`}
-          >
-            <span className="fa-solid fa-eye cursor-pointer js-editable-image-show fa-xl"></span>
-          </button>
-          <div className="modal fade" id={`editable-image-${id}`} tabIndex={-1} aria-hidden="true">
-            <div className="modal-dialog modal-dialog-centered modal-xl">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <button
-                    type="button"
-                    className="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label={t("_button.close")}
-                  ></button>
-                </div>
-                <div className="modal-body text-center">
-                  <img className="mw-100" src={data.thumbnail.src} />
+      <div className="d-flex flex-column gap-1">
+        {!!data.thumbnail?.src && (
+          <>
+            {" "}
+            <button
+              className="btn btn-light btn-sm"
+              data-bs-toggle="modal"
+              data-bs-target={`#editable-image-${id}`}
+            >
+              <span className="fa-solid fa-eye cursor-pointer js-editable-image-show fa-xl"></span>
+            </button>
+            <div
+              className="modal fade"
+              id={`editable-image-${id}`}
+              tabIndex={-1}
+              aria-hidden="true"
+            >
+              <div className="modal-dialog modal-dialog-centered modal-xl">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <button
+                      type="button"
+                      className="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label={t("_button.close")}
+                    ></button>
+                  </div>
+                  <div className="modal-body text-center">
+                    <img className="mw-100" src={data.thumbnail.src} />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </>
-      )}
-      <button onClick={handleEditClick} className="btn btn-sm">
-        <span className="fa-solid fa-pencil cursor-pointer fa-xl"></span>
-      </button>
-      {deleteAllowed() && (
-        <button onClick={onDelete} className="btn btn-sm">
-          <span className="fa-solid fa-trash-can cursor-pointer fa-xl"></span>
+          </>
+        )}
+        <button onClick={handleEditClick} className="btn btn-light btn-sm">
+          <span className="fa-solid fa-pencil cursor-pointer fa-xl"></span>
         </button>
-      )}
+        {deleteAllowed() && (
+          <button onClick={onDelete} className="btn btn-light btn-sm">
+            <span className="fa-solid fa-trash-can cursor-pointer fa-xl"></span>
+          </button>
+        )}
+      </div>
     </div>
   );
 }
