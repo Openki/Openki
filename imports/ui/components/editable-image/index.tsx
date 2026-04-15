@@ -262,9 +262,14 @@ export function EditableImage(data: Data) {
             </div>
           ) : progress === "edit" ? (
             <>
-              <span className="btn btn-secondary">
-                {t("fileUpload.choose.text", "Choose a file")}
-              </span>
+              <div className="editable-image-actions">
+                <span className="btn btn-secondary">
+                  {deleteAllowed()
+                    ? t("fileUpload.change.text", "Change file")
+                    : t("fileUpload.choose.text", "Choose a file")}
+                </span>
+                {deleteAllowed() && <ButtonDelete id="editable-image-delete" onClick={onDelete} />}
+              </div>
               {supportsDragndrop && (
                 <>
                   <br />
@@ -290,7 +295,7 @@ export function EditableImage(data: Data) {
             <FormCheck
               id="editable-image-copyrights"
               type="box"
-              label={t("fileUpload.copyrights", "I have the copy rights to publish that file.")}
+              label={t("fileUpload.copyrights", "I have the copy rights to publish this file.")}
               checked={copyRights}
               onChange={(checked) => setCopyRights(checked)}
             />
@@ -298,16 +303,14 @@ export function EditableImage(data: Data) {
         )}
       </form>
       <div className="editable-image-controls">
-        {progress === "ready" ? (
+        {progress === "ready" && (
           <ButtonSave needsLogin id="editable-image-save" {...uploadButtonAttributes()} />
-        ) : (
-          deleteAllowed() && <ButtonDelete id="editable-image-delete" onClick={onDelete} />
         )}{" "}
         <ButtonCancel id="editable-image-cancel" onClick={onCancel} />
       </div>
     </>
   ) : (
-    <div>
+    <div className="d-flex align-items-start gap-1">
       {data.thumbnail?.src ? (
         <img
           className="cursor-pointer img-thumbnail"
@@ -318,37 +321,50 @@ export function EditableImage(data: Data) {
       ) : (
         <i className="fa-regular fa-image fa-5x cursor-pointer" onClick={handleEditClick} />
       )}{" "}
-      <span
-        className="align-top fa-solid fa-pencil cursor-pointer"
-        onClick={handleEditClick}
-      ></span>
-      {!!data.thumbnail?.src && (
-        <>
-          {" "}
-          <span
-            className="align-top fa-solid fa-eye cursor-pointer js-editable-image-show"
-            data-bs-toggle="modal"
-            data-bs-target={`#editable-image-${id}`}
-          ></span>
-          <div className="modal fade" id={`editable-image-${id}`} tabIndex={-1} aria-hidden="true">
-            <div className="modal-dialog modal-dialog-centered modal-xl">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <button
-                    type="button"
-                    className="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label={t("_button.close")}
-                  ></button>
-                </div>
-                <div className="modal-body text-center">
-                  <img className="mw-100" src={data.thumbnail.src} />
+      <div className="d-flex flex-column gap-1">
+        {!!data.thumbnail?.src && (
+          <>
+            {" "}
+            <button
+              className="btn btn-light btn-sm"
+              data-bs-toggle="modal"
+              data-bs-target={`#editable-image-${id}`}
+            >
+              <span className="fa-solid fa-eye cursor-pointer js-editable-image-show fa-xl"></span>
+            </button>
+            <div
+              className="modal fade"
+              id={`editable-image-${id}`}
+              tabIndex={-1}
+              aria-hidden="true"
+            >
+              <div className="modal-dialog modal-dialog-centered modal-xl">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <button
+                      type="button"
+                      className="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label={t("_button.close")}
+                    ></button>
+                  </div>
+                  <div className="modal-body text-center">
+                    <img className="mw-100" src={data.thumbnail.src} />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </>
-      )}
+          </>
+        )}
+        <button onClick={handleEditClick} className="btn btn-light btn-sm">
+          <span className="fa-solid fa-pencil cursor-pointer fa-xl"></span>
+        </button>
+        {deleteAllowed() && (
+          <button onClick={onDelete} className="btn btn-light btn-sm">
+            <span className="fa-solid fa-trash-can cursor-pointer fa-xl"></span>
+          </button>
+        )}
+      </div>
     </div>
   );
 }
