@@ -40,16 +40,16 @@ export function GroupListSection(data: { user: UserModel; ownProfile: boolean })
     return groupsByRole(role, archived).length;
   }
   function roleUserList(role: string) {
-    return `roles.${role}.userList`;
+    return `roles:${role}.userList`;
   }
   function roleUserListPast(role: string) {
-    return `roles.${role}.userList.past`;
+    return `roles:${role}.userList.past`;
   }
   function roleMyList(role: string) {
-    return `roles.${role}.myList`;
+    return `roles:${role}.myList`;
   }
   function roleMyListPast(role: string) {
-    return `roles.${role}.myList.past`;
+    return `roles:${role}.myList.past`;
   }
   function isInvolved() {
     return groups.length > 0 || archivedGroups.length > 0;

@@ -9,7 +9,7 @@ export function useRoleDisplay() {
       if (!type) {
         return "";
       }
-      return t(`roles.${type}.short`);
+      return t(`roles:${type}.short`);
     },
 
     roleIcon(type: string) {

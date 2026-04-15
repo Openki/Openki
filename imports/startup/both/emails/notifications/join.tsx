@@ -97,7 +97,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         throw new Error("Group does not exist (0.o)");
       }
 
-      const roleTitle = t(`roles.${body.newRole}.short`);
+      const roleTitle = t(`roles:${body.newRole}.short`);
       const subjectvars = {
         GROUP: truncate(group.name, { length: 10 }),
         USER: truncate(newParticipant.getDisplayName(), { length: 50 }),
@@ -114,7 +114,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       const figures = ["host", "mentor", "participant", "team"]
         .filter((role) => group.roles.includes(role))
         .map((role) => ({
-          role: capitalize(t(`roles.${role}.short`)),
+          role: capitalize(t(`roles:${role}.short`)),
           count: group.membersWithRole(role).length,
         }));
 

@@ -17,6 +17,7 @@ if (false) {
   // whitelist, this is needed for meteor's dynamic-import module, to allow dynamic loading of modules
   // on the client: https://docs.meteor.com/packages/dynamic-import.html#Using-import-with-dynamic-expressions
   import("/imports/startup/both/i18n/en.json");
+  import("/imports/startup/both/i18n/roles/en.json");
 
   import("/imports/startup/both/i18n/en-ccc.json");
   import("/imports/startup/both/i18n/af.json");
@@ -63,17 +64,16 @@ if (localStorageSupported) {
   backends.push(LocalStorageBackend);
 }
 
-// and only load translations we need
+// and only load translations for the languages and namespaces we need
 backends.push(
-  resourcesToBackend((language, _namespace, callback) => {
-    const fileName = PublicSettings.i18nMapping?.[language] || language;
-    import(`/imports/startup/both/i18n/${fileName}.json`)
-      .then((resources) => {
-        callback(null, resources);
-      })
-      .catch((error) => {
-        callback(error, null);
-      });
+  resourcesToBackend((language: string, namespace: string) => {
+    if (namespace === "common") {
+      // NOTE: We simulate a "common" namespace to make it consistent with newer, namespaced
+      // translations, like for example roles.
+      const fileName = PublicSettings.i18nMapping?.[language] || language;
+      return import(`/imports/startup/both/i18n/${fileName}.json`);
+    }
+    return import(`/imports/startup/both/i18n/${namespace}/${language}.json`);
   }),
 );
 
@@ -83,11 +83,14 @@ i18next
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     fallbackLng: "en",
+    ns: ["common", "roles"],
+    defaultNS: "common",
     backend: {
       backends,
       backendOptions: [
         {
-          expirationTime: 60 * 60 * 1000, // 1h   (7 * 24 * 60 * 60 * 1000 = 7 days)
+          // Disable translation caching during development
+          expirationTime: Meteor.isDevelopment ? 0 : 60 * 60 * 1000, // 1 hour
         },
       ],
     },
