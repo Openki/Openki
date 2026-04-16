@@ -69,3 +69,17 @@
 .tag + .tag-btn:not(.addon) {
   @include td-margin(left, 5px);
 }
+
+
+.group-member-unit {
+  display: flex;
+  flex-wrap: nowrap;
+  min-width: max-content;
+}
+
+.tag-group.multiline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: flex-start;
+}
