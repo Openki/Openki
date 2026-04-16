@@ -1,5 +1,5 @@
 import { Router } from "meteor/iron:router";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { PublicSettings } from "/imports/utils/PublicSettings";
@@ -34,11 +34,21 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
   const locale = useSession("locale");
   const [isBusy, setIsBusy] = useState(false);
   const [registerData, setRegisterData] = useState({ username, password, email, allowNews });
+
+  // Controls password visibility toggle between plain text and masked input.
+  // Security note: password is automatically hidden again on form submit.
+  const [showPassword, setShowPassword] = useState(false);
+  // Reset password visibility when modal is reopened to prevent
+  // accidental exposure on shared devices.
+  useEffect(() => {
+    setShowPassword(false);
+  }, [username, password]);
+
   const [errors, checkValidity, addError] = useValidation({
     noUsername: {
       text: () => t("register.warning.noUserName", "Please enter a name for your new user."),
       field: "username",
-      onCheckValidity: () => !!registerData.username,
+      isValid: () => !!registerData.username,
     },
     "Not allowed character": {
       text: () =>
@@ -58,13 +68,13 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
     noPassword: {
       text: () => t("register.warning.noPasswordProvided", "Please enter a password to register."),
       field: "password",
-      onCheckValidity: () => !!registerData.password,
+      isValid: () => !!registerData.password,
     },
     noEmail: {
       text: () =>
         t("register.warning.noEmailProvided", "Please enter an email-address to register."),
       field: "email",
-      onCheckValidity: () => !!registerData.email,
+      isValid: () => !!registerData.email,
     },
     "email invalid": {
       text: () => t("register.warning.emailNotValid"),
@@ -95,7 +105,9 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
         if (!checkValidity()) {
           return;
         }
-
+        // Hide password before submitting to prevent accidental exposure
+        // if the user leaves the page after a failed login attempt.
+        setShowPassword(false);
         setIsBusy(true);
 
         try {
@@ -143,12 +155,23 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
       <div className="mb-3">
         <FormControl
           id="register-frame-password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           label={t("_inputField.password")}
           prepend="fa-solid fa-lock fa-fw"
           value={registerData.password}
-          onChange={(value) => setRegisterData({ ...registerData, password: value })}
+          onChange={(value: string) => setRegisterData({ ...registerData, password: value })}
           error={errors.password}
+          append={
+            <span className="input-group-text p-0">
+              <button
+                type="button"
+                className="btn btn-outline-secondary text-dark"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                <i className={`fa-fw fa-solid ${showPassword ? "fa-eye-slash" : "fa-eye"}`} />
+              </button>
+            </span>
+          }
         />
       </div>
       <div className="mb-3">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { MeteorAsync } from "/imports/utils/promisify";
 import { useSession, useSessionEquals } from "/imports/utils/react-meteor-data";
@@ -48,17 +48,22 @@ export function LoginFrame({
   >(false);
   const [loginData, setLoginData] = useState({ username, password });
 
+  const [showPassword, setShowPassword] = useState(false);
+  useEffect(() => {
+    setShowPassword(false);
+  }, [username, password]);
+
   const [errors, checkValidity, addError] = useValidation({
     noUsername: {
       text: () =>
         t("login.warning.noUserName", "Please enter your username or e-mail address to log in."),
       field: "username",
-      onCheckValidity: () => !!loginData.username,
+      isValid: () => !!loginData.username,
     },
     "Incorrect password": {
       text: () => t("login.password.password_incorrect", "Incorrect password"),
       field: "password",
-      onCheckValidity: () => !!loginData.password,
+      isValid: () => !!loginData.password,
     },
     "User not found": {
       text: () => t("login.username.usr_doesnt_exist", "This user does not exist."),
@@ -109,6 +114,7 @@ export function LoginFrame({
     <form
       noValidate
       onSubmit={async (event) => {
+        setShowPassword(false);
         event.preventDefault();
 
         if (!checkValidity()) {
@@ -152,12 +158,23 @@ export function LoginFrame({
             </div>
             <FormControl
               id="account-tasks-login-frame-password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               prepend="fa-solid fa-lock fa-fw"
               label={t("_inputField.password")}
               value={loginData.password}
-              onChange={(value) => setLoginData({ ...loginData, password: value })}
+              onChange={(value: string) => setLoginData({ ...loginData, password: value })}
               error={errors.password}
+              append={
+                <span className="input-group-text p-0">
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary text-dark"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    <i className={`fa-fw fa-solid ${showPassword ? " fa-eye-slash" : "fa-eye"}`} />
+                  </button>
+                </span>
+              }
             />
             <div className="mb-3 text-end">
               <button

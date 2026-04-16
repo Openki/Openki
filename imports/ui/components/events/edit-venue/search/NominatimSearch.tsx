@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FocusEventHandler } from "react";
 import { map } from "lodash-es";
 
 import { EventVenueEntity } from "/imports/api/events/events";
@@ -48,7 +48,15 @@ async function requestVenuesFromNominatim(
       },
       address: [
         [a.road, a.house_number].filter((v) => v).join(" "),
-        [a.postcode, a.state].filter((v) => v).join(" "),
+        // Nominatim returns addresses at different granularities depending on the country.
+        // For Switzerland (and similar), `state` is the Kanton (e.g. "Zürich"), which is
+        // too coarse for postal addresses. We prefer finer-grained fields first:
+        // city → municipality → town → village, falling back to state only if nothing else is available.
+        // For Switzerland, `city` is the most relevant prop, based on this wiki page:
+        // https://wiki.openstreetmap.org/wiki/Switzerland/Map_Features#Post_code_areas_and_addresses
+        [a.postcode, a.city || a.municipality || a.town || a.village || a.state]
+          .filter((v) => v)
+          .join(" "),
       ]
         .filter((v) => v)
         .join(", "),
@@ -60,17 +68,21 @@ async function requestVenuesFromNominatim(
 export function NominatimSearch({
   id,
   autofocus,
+  className,
   region: regionId,
   venues,
   value,
   onChange,
+  onBlur,
 }: {
   id: string;
+  className?: string | undefined;
   autofocus?: boolean | undefined;
   region: string;
   venues: string[];
   value: EventVenueEntity | undefined;
   onChange: (newValue: EventVenueEntity) => void;
+  onBlur: FocusEventHandler<HTMLInputElement>;
 }) {
   const [isLoadingRegion, region] = Regions.useDetails(regionId);
 
@@ -85,12 +97,14 @@ export function NominatimSearch({
   return (
     <SearchBase
       id={id}
+      className={className}
       autofocus={autofocus}
       region={regionId}
       venues={venues}
       onRequest={handleRequest}
       value={value}
       onChange={onChange}
+      onBlur={onBlur}
     />
   );
 }
