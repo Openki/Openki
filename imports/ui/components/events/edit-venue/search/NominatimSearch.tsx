@@ -48,7 +48,13 @@ async function requestVenuesFromNominatim(
       },
       address: [
         [a.road, a.house_number].filter((v) => v).join(" "),
-        [a.postcode, a.state].filter((v) => v).join(" "),
+        // Nominatim returns addresses at different granularities depending on the country.
+        // For Switzerland (and similar), `state` is the Kanton (e.g. "Zürich"), which is
+        // too coarse for postal addresses. We prefer finer-grained fields first:
+        // municipality → city → town → village, falling back to state only if nothing else is available.
+        [a.postcode, a.municipality || a.city || a.town || a.village || a.state]
+          .filter((v) => v)
+          .join(" "),
       ]
         .filter((v) => v)
         .join(", "),
