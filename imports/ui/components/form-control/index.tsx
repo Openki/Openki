@@ -9,18 +9,18 @@ import { buildSizeClass, Size } from "/imports/ui/lib/buildSizeClass";
 
 interface CommonProps {
   id: string;
-  label: ReactNode;
+  label: Exclude<ReactNode, null | undefined>;
   size?: Size;
   /**
    * A ReactNode, string or icon prefixed as part of the control,
    * strings beginning with "fa-" are treated as icons
    */
-  prepend?: ReactNode | string | undefined;
+  prepend?: ReactNode;
   /**
    * A ReactNode, string or icon appended as part of the control (e.g. a toggle button).
    * Strings beginning with "fa-" are treated as icons, similar to prepend.
    */
-  append?: ReactNode | string | undefined;
+  append?: ReactNode;
   /**
    * shows "(optional)" in the label and
    * allow return values for number and integer to be empty
@@ -132,8 +132,8 @@ export type Props<K extends string> = CommonProps &
 function getControlClassNames(
   type: string,
   size: Size | undefined,
-  prepend: ReactNode | string | undefined,
-  append: ReactNode | string | undefined,
+  prepend: ReactNode,
+  append: ReactNode,
   isInvalid: boolean,
 ) {
   let baseClass;
@@ -161,8 +161,8 @@ function getControlClassNames(
 
 function getDescribedby(
   id: string,
-  prepend: ReactNode | string | undefined,
-  append: ReactNode | string | undefined,
+  prepend: ReactNode,
+  append: ReactNode,
   hasErrorMessage: boolean,
 ) {
   const describedby = [];
@@ -326,7 +326,7 @@ function createInputElement<K extends string>(props: Props<K>) {
   }
 }
 
-function createAddonElement(id: string, addon: ReactNode | string, inputId: string) {
+function createAddonElement(id: string, addon: ReactNode, inputId: string) {
   return typeof addon !== "string" ? (
     addon
   ) : (
