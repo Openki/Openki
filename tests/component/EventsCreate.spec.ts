@@ -8,7 +8,7 @@ describe("event create", () => {
 
   describe("should require a venue", () => {
     it("shows error message if the venue input is focused and left empty", () => {
-      cy.visitOpenki("/event/create", { region: "9JyFCoKWkxnf8LWPh" /* Testistan */ });
+      cy.visitOpenki("/event/create", { region: "h4MnI3psRr8hSljk2" /* Zürich Lernt */ });
 
       cy.get("#event-edit-venue-search").click().blur();
 
@@ -21,7 +21,7 @@ describe("event create", () => {
     });
 
     it("has no validation error after a simple location venue was added", () => {
-      cy.visitOpenki("/event/create", { region: "9JyFCoKWkxnf8LWPh" /* Testistan */ });
+      cy.visitOpenki("/event/create", { region: "h4MnI3psRr8hSljk2" /* Zürich Lernt */ });
 
       cy.get("#event-edit-venue-search").click();
       cy.get("#edit-venue-typeahead-item-1").click();
