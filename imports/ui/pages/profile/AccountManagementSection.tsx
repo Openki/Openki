@@ -34,6 +34,7 @@ export function AccountManagementSection() {
         Alert.success(t("profile.deleted", "Your account has been deleted"));
       },
       busyButton: t("profile.delete.confirm.button.busy", "Deleting profile…"),
+      deleteButtonLabel: t("profile.delete.button", "Delete Account"),
     };
   }
 
