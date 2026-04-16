@@ -233,7 +233,13 @@ export function SearchBase({
       placeholder={t("event.edit.locationNamePlaceholder", "Search address or name of venue") || ""}
       renderInput={(inputProps, props) => {
         // From https://github.com/ericgio/react-bootstrap-typeahead/blob/924627376275c78988718230c0438748ff673a6d/src/components/Typeahead/Typeahead.tsx#L229
-        const { isInvalid, isValid, size } = props as any;
+        const { isInvalid, isValid, size } = props as unknown as {
+          // From https://github.com/ericgio/react-bootstrap-typeahead/blob/main/src/components/Typeahead/Typeahead.tsx#L101
+          isInvalid: boolean;
+          isValid: boolean;
+          // From https://github.com/ericgio/react-bootstrap-typeahead/blob/main/src/constants.ts#L3
+          size: "lg" | "sm";
+        };
         const commonProps = { ...inputProps, id, isInvalid, isValid, size, className };
 
         // Add type="search" to have a clear button
