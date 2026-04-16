@@ -510,7 +510,7 @@
   "featureGroup.featureGroup": "Feature group",
   "featureGroup.groupIsFeatured": "The \"{GROUP}\" group is featured for the \"{REGION}\" region.",
   "featureGroup.saveButton": "Feature this group in the \"{REGION}\" region",
-  "fileUpload.change.text": "Change file",
+  "fileUpload.change.text": "Replace file",
   "fileUpload.choose.text": "Choose a file",
   "fileUpload.copyrights": "I have the copy rights to publish this file.",
   "fileUpload.drag.text": "or drag it here",
