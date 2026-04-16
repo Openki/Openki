@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FocusEventHandler } from "react";
 import { map } from "lodash-es";
 
 import { EventVenueEntity } from "/imports/api/events/events";
@@ -60,17 +60,21 @@ async function requestVenuesFromNominatim(
 export function NominatimSearch({
   id,
   autofocus,
+  className,
   region: regionId,
   venues,
   value,
   onChange,
+  onBlur,
 }: {
   id: string;
+  className?: string | undefined;
   autofocus?: boolean | undefined;
   region: string;
   venues: string[];
   value: EventVenueEntity | undefined;
   onChange: (newValue: EventVenueEntity) => void;
+  onBlur: FocusEventHandler<HTMLInputElement>;
 }) {
   const [isLoadingRegion, region] = Regions.useDetails(regionId);
 
@@ -85,12 +89,14 @@ export function NominatimSearch({
   return (
     <SearchBase
       id={id}
+      className={className}
       autofocus={autofocus}
       region={regionId}
       venues={venues}
       onRequest={handleRequest}
       value={value}
       onChange={onChange}
+      onBlur={onBlur}
     />
   );
 }
