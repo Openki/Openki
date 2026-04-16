@@ -219,7 +219,7 @@ export function ButtonDelete({
   size?: Size | undefined;
   block?: boolean | undefined;
   disabled?: boolean | undefined;
-  label?: string;
+  label?: string | undefined;
 } & (LoginProps | SubmitProps)) {
   const { t } = useTranslation();
 
