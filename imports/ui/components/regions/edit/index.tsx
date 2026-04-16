@@ -39,12 +39,12 @@ export function Edit(props: Props) {
     {
       noName: {
         field: "regionName",
-        onCheckValidity: () => !!changes.name,
+        isValid: () => !!changes.name,
         text: () => t("region.create.plsGiveName", "Please give your region a name"),
       },
       noLocation: {
         field: "location",
-        onCheckValidity: () => !!changes.loc,
+        isValid: () => !!changes.loc,
         text: () =>
           t(
             "region.create.plsSelectPointOnMap",

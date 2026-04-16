@@ -267,6 +267,11 @@ export function CourseDetailsPage({ edit, course, select }: Props) {
                           <ButtonDelete
                             id="course-details-confirm-delete"
                             onClick={async () => setExpanded(true)}
+                            label={
+                              course.singleEvent
+                                ? t("course.event.edit.deleteEvent", "Delete event")
+                                : t("course.delete.button", "Delete course")
+                            }
                           />
                         )}
                       </div>

@@ -37,7 +37,7 @@ export function SendMessage(props: Props) {
       messageToShort: {
         text: () => t("profile.mail.longertext", "longer text please"),
         field: "message",
-        onCheckValidity: () => message.length >= 2,
+        isValid: () => message.length >= 2,
       },
     },
     { autoCheckFixed: true },

@@ -4,7 +4,7 @@
 // the timezone might actually change when a different region is selected. We
 // wouldn't want the time or even date field to change because of this switch.
 
-import { intersection } from "lodash-es";
+import { intersection, isEmpty } from "lodash-es";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
@@ -207,12 +207,12 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     {
       noTitle: {
         field: "title",
-        onCheckValidity: () => !!changes.title,
+        isValid: () => !!changes.title,
         text: () => t("event.edit.plzProvideTitle", "Please provide a title"),
       },
       startWrongFormat: {
         field: "start",
-        onCheckValidity: () => {
+        isValid: () => {
           const start = LocalTime.fromString(changes.startLocal);
           return start.isValid();
         },
@@ -229,7 +229,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       },
       startInPast: {
         field: "start",
-        onCheckValidity: () => {
+        isValid: () => {
           if (isNew) {
             const start = LocalTime.fromString(changes.startLocal);
             if (!start.isValid()) {
@@ -249,12 +249,12 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       },
       noDescription: {
         field: "description",
-        onCheckValidity: () => !!changes.description,
+        isValid: () => !!changes.description,
         text: () => t("event.edit.plzProvideDescr", "Please provide a description"),
       },
       descriptionToLong: {
         field: "description",
-        onCheckValidity: () =>
+        isValid: () =>
           !PublicSettings.eventDescriptionMax ||
           changes.descriptionNumberOfCharacters <= PublicSettings.eventDescriptionMax,
         text: () =>
@@ -266,12 +266,12 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       },
       noRegion: {
         field: "region",
-        onCheckValidity: () => !!selectedRegion,
+        isValid: () => !!selectedRegion,
         text: () => t("event.edit.plzSelectRegion", "Please select the region for this event"),
       },
       parallelEvents: {
         field: "startEndVenue",
-        onCheckValidity: () =>
+        isValid: () =>
           venueIsLoading() || !venue || venue.allowParallelEvents || allParallelEvents.length === 0,
         text: () => (
           <>
@@ -284,9 +284,16 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           </>
         ),
       },
+      noVenue: {
+        field: "venue",
+        isValid: () => Boolean(selectedVenue && !isEmpty(selectedVenue)),
+        text() {
+          return t("event.edit.venueRequired", "Please select a venue.");
+        },
+      },
       venueRestricedUse: {
         field: "venue",
-        onCheckValidity: () => {
+        isValid: () => {
           return (
             !selectedVenue?._id ||
             !selectedVenue.restrictedUse ||
@@ -348,10 +355,11 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       value: selectedVenue,
       onChange: (newValue) => setSelectedVenue(newValue),
       errors,
+      onBlur: () => checkValidity("venue"),
     };
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.SubmitEvent) {
     e.preventDefault();
 
     if (!checkValidity()) {
@@ -597,7 +605,6 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                     id="event-edit-room"
                     type="text"
                     label={t("course.event.edit.room", "Room")}
-                    optional
                     prepend="fa-solid fa-signs-post fa-fw"
                     value={changes.room}
                     onChange={(value) => setChanges((changes) => ({ ...changes, room: value }))}
