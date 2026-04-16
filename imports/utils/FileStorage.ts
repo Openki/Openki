@@ -37,7 +37,13 @@ export const UploadFilePattern = Match.ObjectIncluding({
 export type UploadFile = Match.PatternMatch<typeof UploadFilePattern>;
 
 export function generatePublicUrl(fullFileName: string) {
-  return new URL(fullFileName, PublicSettings.s3.publicUrlBase).toString();
+  const { publicUrlBase } = PublicSettings.s3;
+  return new URL(
+    fullFileName,
+    // Make sure the base URL ends with a trailing slash
+    // so it can be resolved by the URL constructor.
+    publicUrlBase.endsWith("/") ? publicUrlBase : publicUrlBase + "/",
+  ).toString();
 }
 
 export async function upload(directoryName: string, file: UploadFile) {
