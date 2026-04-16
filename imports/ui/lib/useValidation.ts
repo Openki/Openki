@@ -5,7 +5,7 @@ export type Mapping<T extends string> = Record<
   string,
   {
     field: T;
-    onCheckValidity?: () => boolean;
+    isValid?: () => boolean;
     text: () => ReactNode;
   }
 >;
@@ -22,7 +22,7 @@ export function useValidation<T extends string>(
 
   if (options?.initialCheck) {
     Object.values(mapping)
-      .filter((m) => m.onCheckValidity && !m.onCheckValidity())
+      .filter((m) => m.isValid && !m.isValid())
       .forEach((m) => {
         initialState[m.field] = m.text();
       });
@@ -70,7 +70,7 @@ export function useValidation<T extends string>(
     if (field) {
       let validity = true;
       Object.entries(mapping).forEach(([key, m]) => {
-        if (m.field === field && m.onCheckValidity && !m.onCheckValidity()) {
+        if (m.field === field && m.isValid && !m.isValid()) {
           add(key);
           validity = false;
         }
@@ -83,7 +83,7 @@ export function useValidation<T extends string>(
     resetErrors();
     let validity = true;
     Object.entries(mapping).forEach(([key, m]) => {
-      if (m.onCheckValidity && !m.onCheckValidity()) {
+      if (m.isValid && !m.isValid()) {
         add(key);
         validity = false;
       }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type FocusEventHandler } from "react";
 
 import { EventVenueEntity } from "/imports/api/events/events";
 import * as Regions from "/imports/api/regions/publications";
@@ -9,11 +9,13 @@ import { SearchBase } from "/imports/ui/components/events/edit-venue/search/Sear
 
 export function Search(props: {
   id: string;
+  className?: string | undefined;
   autofocus?: boolean | undefined;
   region: string;
   venues: string[];
   value: EventVenueEntity | undefined;
   onChange: (newValue: EventVenueEntity) => void;
+  onBlur: FocusEventHandler<HTMLInputElement>;
 }) {
   const [isLoadingRegion, region] = Regions.useDetails(props.region);
 
