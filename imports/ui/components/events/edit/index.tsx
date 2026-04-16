@@ -4,7 +4,7 @@
 // the timezone might actually change when a different region is selected. We
 // wouldn't want the time or even date field to change because of this switch.
 
-import { intersection } from "lodash-es";
+import { intersection, isEmpty } from "lodash-es";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
@@ -284,6 +284,13 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           </>
         ),
       },
+      noVenue: {
+        field: "venue",
+        isValid: () => Boolean(selectedVenue && !isEmpty(selectedVenue)),
+        text() {
+          return t("event.edit.venueRequired", "Please select a venue.");
+        },
+      },
       venueRestricedUse: {
         field: "venue",
         isValid: () => {
@@ -348,6 +355,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       value: selectedVenue,
       onChange: (newValue) => setSelectedVenue(newValue),
       errors,
+      onBlur: () => checkValidity("venue"),
     };
   }
 
@@ -597,7 +605,6 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                     id="event-edit-room"
                     type="text"
                     label={t("course.event.edit.room", "Room")}
-                    optional
                     prepend="fa-solid fa-signs-post fa-fw"
                     value={changes.room}
                     onChange={(value) => setChanges((changes) => ({ ...changes, room: value }))}

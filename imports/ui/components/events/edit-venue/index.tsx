@@ -1,6 +1,6 @@
-import React, { ReactNode, useState } from "react";
+import React, { FocusEventHandler, ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { chain, isEmpty } from "lodash-es";
+import { isEmpty } from "lodash-es";
 
 import { EventVenueEntity } from "/imports/api/events/events";
 import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
@@ -14,6 +14,7 @@ import { Search } from "./search";
 import { Timetable } from "./Timetable";
 import { FormControl } from "/imports/ui/components/form-control";
 import { Button } from "/imports/ui/components/Buttons";
+import { GroupEntity, GroupVenueEntity } from "/imports/api/groups/groups";
 
 export interface Props {
   region: string;
@@ -27,9 +28,24 @@ export interface Props {
   };
   onChange: (newValue: EventVenueEntity | undefined) => void;
   errors: Partial<Record<"venue" | "startEndVenue", ReactNode>>;
+  onBlur: FocusEventHandler<HTMLInputElement>;
 }
 
-export function EditVenue({ region: regionId, event, value, onChange, errors }: Props) {
+function getVenueIds(groups: GroupEntity[] = []): GroupVenueEntity["_id"][] {
+  const venueIds: GroupVenueEntity["_id"][] = [];
+
+  for (const group of groups) {
+    for (const venue of group.venues ?? []) {
+      if (venue) {
+        venueIds.push(venue._id);
+      }
+    }
+  }
+
+  return venueIds;
+}
+
+export function EditVenue({ region: regionId, event, value, onChange, errors, onBlur }: Props) {
   const { t } = useTranslation();
   const [autofocusOnSearch, setAutoFocusOnSearch] = useState(false);
 
@@ -48,20 +64,19 @@ export function EditVenue({ region: regionId, event, value, onChange, errors }: 
       {!value || isEmpty(value) ? (
         <div className="mb-3">
           <label className="form-label" htmlFor="event-edit-venue-search">
-            {t("course.event.edit.location", "Venue")} <small>{t("_inputField.optional")}</small>
+            {t("course.event.edit.location", "Venue")}
           </label>
           <Search
             id="event-edit-venue-search"
             autofocus={autofocusOnSearch}
             region={regionId}
-            venues={chain(groups)
-              .flatMap((g) => g.venues)
-              .filter((v) => !!v)
-              .map((v) => v._id)
-              .value()}
+            venues={getVenueIds(groups)}
             value={value}
             onChange={onChange}
+            onBlur={onBlur}
+            className={`form-control ${errors.venue || errors.startEndVenue ? "is-invalid" : "mb-md-3"}`}
           />
+          {!!errors.venue && <small className="text-danger mb-3">{errors.venue}</small>}
         </div>
       ) : (
         <>
@@ -74,6 +89,7 @@ export function EditVenue({ region: regionId, event, value, onChange, errors }: 
                   label={t("course.event.edit.locationName", "Display venue as")}
                   value={value.name}
                   onChange={(name) => onChange({ ...value, name })}
+                  onBlur={onBlur}
                 />
               ) : (
                 <>
