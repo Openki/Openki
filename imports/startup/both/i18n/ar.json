@@ -970,5 +970,8 @@
   "warning.emailNotValid": "عنوان بريدك الإلكتروني لا يبدو صحيحًا.",
   "warning.noEmailProvided": "الرجاء إدخال عنوان البريد الإلكتروني.",
   "warning.noUserName": "الرجاء ادخال اسم المستخدم.",
-  "warning.userExists": "اسم المستخدم هذا موجود بالفعل. الرجاء اختيار آخر."
+  "warning.userExists": "اسم المستخدم هذا موجود بالفعل. الرجاء اختيار آخر.",
+  "profile": {
+    "account_managemen": "منطقة الخطر"
+  }
 }
