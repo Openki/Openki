@@ -23,7 +23,7 @@ describe("event create", () => {
     it("has no validation error after a simple location venue was added", () => {
       cy.visitOpenki("/event/create", { region: "9JyFCoKWkxnf8LWPh" /* Testistan */ });
 
-      cy.get("#event-edit-venue-search").click().wait(2000);
+      cy.get("#event-edit-venue-search").click();
       cy.get("#edit-venue-typeahead-item-1").click();
 
       cy.get("#maincontent .leaflet-marker-draggable").click();
