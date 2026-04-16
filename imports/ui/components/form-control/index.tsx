@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { FocusEventHandler, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
 import { AutoGrowTextArea } from "./AutoGrowTextArea";
@@ -27,8 +27,8 @@ interface CommonProps {
    */
   optional?: boolean | undefined;
   disabled?: boolean | undefined;
-  onFocus?: (() => void) | undefined;
-  onBlur?: (() => void) | undefined;
+  onFocus?: FocusEventHandler<HTMLElement> | undefined;
+  onBlur?: FocusEventHandler<HTMLElement> | undefined;
   /**
    * shows a error message or
    * when only a boolean is given; by true: displays the control as invalid
@@ -191,8 +191,8 @@ function createInputElement<K extends string>(props: Props<K>) {
     disabled,
     autoComplete: "autoComplete" in props ? props.autoComplete : undefined,
     required: !optional,
-    onFocus: () => onFocus?.(),
-    onBlur: () => onBlur?.(),
+    onFocus,
+    onBlur,
     "aria-describedby":
       getDescribedby(id, prepend, append, typeof error !== "boolean" && !!error).join(" ") ||
       undefined,
