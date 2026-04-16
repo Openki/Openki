@@ -60,7 +60,7 @@ export function EditVenue({ region: regionId, event, value, onChange, errors, on
   }
 
   return (
-    <>
+    <fieldset id="edit-venue">
       {!value || isEmpty(value) ? (
         <div className="mb-3">
           <label className="form-label" htmlFor="event-edit-venue-search">
@@ -178,6 +178,6 @@ export function EditVenue({ region: regionId, event, value, onChange, errors, on
           )}
         </>
       )}
-    </>
+    </fieldset>
   );
 }
