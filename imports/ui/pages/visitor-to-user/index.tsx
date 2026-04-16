@@ -30,7 +30,7 @@ export function VisitorToUserPage({ token, email }: Props) {
     noPassword: {
       text: () => t("register.warning.noPasswordProvided", "Please enter a password to register."),
       field: "password",
-      onCheckValidity: () => !!password,
+      isValid: () => !!password,
     },
   });
 

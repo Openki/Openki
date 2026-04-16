@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { FocusEventHandler, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
 import { AutoGrowTextArea } from "./AutoGrowTextArea";
@@ -9,21 +9,26 @@ import { buildSizeClass, Size } from "/imports/ui/lib/buildSizeClass";
 
 interface CommonProps {
   id: string;
-  label: ReactNode;
+  label: Exclude<ReactNode, null | undefined>;
   size?: Size;
   /**
-   * A string or icon prefixed as part of the control,
+   * A ReactNode, string or icon prefixed as part of the control,
    * strings beginning with "fa-" are treated as icons
    */
-  prepend?: string | undefined;
+  prepend?: ReactNode;
+  /**
+   * A ReactNode, string or icon appended as part of the control (e.g. a toggle button).
+   * Strings beginning with "fa-" are treated as icons, similar to prepend.
+   */
+  append?: ReactNode;
   /**
    * shows "(optional)" in the label and
    * allow return values for number and integer to be empty
    */
   optional?: boolean | undefined;
   disabled?: boolean | undefined;
-  onFocus?: (() => void) | undefined;
-  onBlur?: (() => void) | undefined;
+  onFocus?: FocusEventHandler<HTMLElement> | undefined;
+  onBlur?: FocusEventHandler<HTMLElement> | undefined;
   /**
    * shows a error message or
    * when only a boolean is given; by true: displays the control as invalid
@@ -127,7 +132,8 @@ export type Props<K extends string> = CommonProps &
 function getControlClassNames(
   type: string,
   size: Size | undefined,
-  prepend: string | undefined,
+  prepend: ReactNode,
+  append: ReactNode,
   isInvalid: boolean,
 ) {
   let baseClass;
@@ -142,8 +148,8 @@ function getControlClassNames(
 
   const className = [baseClass];
 
-  if (!prepend) {
-    // when a prepend is given then the sizing comes from input-group
+  if (!prepend || !append) {
+    // when a prepend or append is given then the sizing comes from input-group
     className.push(buildSizeClass(baseClass, size));
   }
 
@@ -153,10 +159,18 @@ function getControlClassNames(
   return className;
 }
 
-function getDescribedby(id: string, prepend: string | undefined, hasErrorMessage: boolean) {
+function getDescribedby(
+  id: string,
+  prepend: ReactNode,
+  append: ReactNode,
+  hasErrorMessage: boolean,
+) {
   const describedby = [];
-  if (prepend && !prepend.startsWith("fa-")) {
+  if (prepend && typeof prepend === "string" && !prepend.startsWith("fa-")) {
     describedby.push(id + "-prepend");
+  }
+  if (append && typeof append === "string" && !append.startsWith("fa-")) {
+    describedby.push(id + "-append");
   }
   if (hasErrorMessage) {
     describedby.push(id + "-error");
@@ -168,19 +182,20 @@ function getDescribedby(id: string, prepend: string | undefined, hasErrorMessage
  * Factory to create input elements based on `type`
  */
 function createInputElement<K extends string>(props: Props<K>) {
-  const { id, type, size, prepend, optional, disabled, onFocus, onBlur, error } = props;
+  const { id, type, size, prepend, append, optional, disabled, onFocus, onBlur, error } = props;
 
   const isInvalid = !!error;
   const commonProps = {
     id,
-    className: getControlClassNames(type, size, prepend, isInvalid).join(" "),
+    className: getControlClassNames(type, size, prepend, append, isInvalid).join(" "),
     disabled,
     autoComplete: "autoComplete" in props ? props.autoComplete : undefined,
     required: !optional,
-    onFocus: () => onFocus?.(),
-    onBlur: () => onBlur?.(),
+    onFocus,
+    onBlur,
     "aria-describedby":
-      getDescribedby(id, prepend, typeof error !== "boolean" && !!error).join(" ") || undefined,
+      getDescribedby(id, prepend, append, typeof error !== "boolean" && !!error).join(" ") ||
+      undefined,
     "aria-invalid": isInvalid,
   };
 
@@ -311,6 +326,28 @@ function createInputElement<K extends string>(props: Props<K>) {
   }
 }
 
+function createAddonElement(id: string, addon: ReactNode, inputId: string) {
+  return typeof addon !== "string" ? (
+    addon
+  ) : (
+    <span
+      className="input-group-text"
+      id={id}
+      onClick={() => document.getElementById(inputId)?.focus()}
+    >
+      {addon.startsWith("fa-") ? <i className={addon} /> : addon}
+    </span>
+  );
+}
+
+function createInvalidFeedbackElement<K extends string>(props: Props<K>) {
+  return (
+    <div id={`${props.id}-error`} className="invalid-feedback" role="alert">
+      {props.error}
+    </div>
+  );
+}
+
 function getGroupClassNames(size: Size | undefined, hasErrorMessage: boolean) {
   const className = ["input-group", buildSizeClass("input-group", size)];
 
@@ -324,34 +361,31 @@ function getGroupClassNames(size: Size | undefined, hasErrorMessage: boolean) {
 export function FormControl<K extends string>(props: Props<K>) {
   const { t } = useTranslation();
 
-  const { id, size, label, prepend, optional, error } = props;
-
+  const { id, size, label, prepend, append, optional, error } = props;
   const hasErrorMessage = typeof error !== "boolean" && !!error;
 
   // Create input using a factory
-  let inputElement = (
-    <>
-      {createInputElement(props)}
-      {hasErrorMessage && (
-        <div id={`${id}-error`} className="invalid-feedback" role="alert">
-          {error}
-        </div>
-      )}
-    </>
-  );
+  let inputElement;
 
-  if (prepend) {
+  if (prepend || append) {
+    /* When prepend or append is present, render inside input-group.
+    Error message is placed after append to prevent overlap with
+    Bootstrap's validation icon and the append button. */
     inputElement = (
       <div className={getGroupClassNames(size, hasErrorMessage).join(" ")}>
-        <span
-          className="input-group-text"
-          id={`${id}-prepend`}
-          onClick={() => document.getElementById(id)?.focus()}
-        >
-          {prepend.startsWith("fa-") ? <i className={prepend} /> : prepend}
-        </span>
-        {inputElement}
+        {prepend && createAddonElement(`${id}-prepend`, prepend, id)}
+        {createInputElement(props)}
+        {append && createAddonElement(`${id}-append`, append, id)}
+        {hasErrorMessage && createInvalidFeedbackElement(props)}
       </div>
+    );
+  } else {
+    // Default: no prepend or append
+    inputElement = (
+      <>
+        {createInputElement(props)}
+        {hasErrorMessage && createInvalidFeedbackElement(props)}
+      </>
     );
   }
 
