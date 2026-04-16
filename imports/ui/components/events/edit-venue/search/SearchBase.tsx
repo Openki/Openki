@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { FocusEventHandler, useEffect, useState } from "react";
 import { EJSON } from "meteor/ejson";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
@@ -151,14 +151,17 @@ function CustomMenu({
 }
 export function SearchBase({
   id,
+  className = "",
   autofocus,
   region,
   venues: venueIds,
   onRequest,
   value,
   onChange,
+  onBlur,
 }: {
   id: string;
+  className?: string | undefined;
   autofocus?: boolean | undefined;
   region: string;
   /** A selection of venues proposed to the user. */
@@ -166,6 +169,7 @@ export function SearchBase({
   onRequest: (query: string) => Promise<EventVenueEntity[]>;
   value: EventVenueEntity | undefined;
   onChange: (newValue: EventVenueEntity) => void;
+  onBlur: FocusEventHandler<HTMLInputElement>;
 }) {
   const { t } = useTranslation();
   const user = useUser();
@@ -229,9 +233,14 @@ export function SearchBase({
       placeholder={t("event.edit.locationNamePlaceholder", "Search address or name of venue") || ""}
       renderInput={(inputProps, props) => {
         // From https://github.com/ericgio/react-bootstrap-typeahead/blob/924627376275c78988718230c0438748ff673a6d/src/components/Typeahead/Typeahead.tsx#L229
-        // eslint-disable-next-line react/prop-types
-        const { isInvalid, isValid, size } = props as any;
-        const commonProps = { ...inputProps, id, isInvalid, isValid, size };
+        const { isInvalid, isValid, size } = props as unknown as {
+          // From https://github.com/ericgio/react-bootstrap-typeahead/blob/main/src/components/Typeahead/Typeahead.tsx#L101
+          isInvalid: boolean;
+          isValid: boolean;
+          // From https://github.com/ericgio/react-bootstrap-typeahead/blob/main/src/constants.ts#L3
+          size: "lg" | "sm";
+        };
+        const commonProps = { ...inputProps, id, isInvalid, isValid, size, className };
 
         // Add type="search" to have a clear button
         return <TypeaheadInputSingle {...commonProps} type="search" autoFocus={autofocus} />;
@@ -245,6 +254,7 @@ export function SearchBase({
         />
       )}
       onChange={(newValue) => onChange(newValue[0] as EventVenueEntity)}
+      onBlur={onBlur}
     />
   );
 }

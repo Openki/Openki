@@ -15,6 +15,12 @@
     background-color 0.15s linear;
 }
 
+.editable-image-actions {
+  display: flex;
+  margin-top: 5px;
+  gap: 3px;
+}
+
 .editable-image.is-dragover {
   background-color: $white;
   outline-color: $blue-lighter;

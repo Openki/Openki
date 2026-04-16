@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useEffect, useRef } from "react";
+import React, { FocusEventHandler, useEffect, useRef } from "react";
 import { useSession } from "/imports/utils/react-meteor-data";
 
 export function DateInput(props: {
@@ -19,8 +19,8 @@ export function DateInput(props: {
         value: string,
       ) => void)
     | undefined;
-  onFocus?: (() => void) | undefined;
-  onBlur?: (() => void) | undefined;
+  onFocus?: FocusEventHandler<HTMLElement> | undefined;
+  onBlur?: FocusEventHandler<HTMLElement> | undefined;
   "aria-describedby"?: string | undefined;
   "aria-invalid"?: boolean | undefined;
 }) {
@@ -61,7 +61,7 @@ export function DateInput(props: {
     return () => {
       $(element).datepicker("destroy");
     };
-  }, [locale]);
+  }, [locale, onChange, min, max]);
 
   return (
     <input
@@ -72,8 +72,8 @@ export function DateInput(props: {
       value={toDisplay(value)}
       required={required}
       disabled={disabled}
-      onFocus={() => onFocus?.()}
-      onBlur={() => onBlur?.()}
+      onFocus={onFocus}
+      onBlur={onBlur}
       aria-describedby={props["aria-describedby"]}
       aria-invalid={props["aria-invalid"]}
     />
