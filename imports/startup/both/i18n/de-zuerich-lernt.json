@@ -1263,5 +1263,8 @@
   "warning.emailNotValid": "Deine E-Mail Adresse scheint nicht korrekt.",
   "warning.noEmailProvided": "Bitte E-Mail Adresse eingeben.",
   "warning.noUserName": "Bitte einen Benutzernamen eingeben.",
-  "warning.userExists": "Dieser Benutzername existiert bereits. Bitte wähle einen anderen."
+  "warning.userExists": "Dieser Benutzername existiert bereits. Bitte wähle einen anderen.",
+  "profile": {
+    "account_managemen": "Gefahren-Zone"
+  }
 }
