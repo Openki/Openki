@@ -78,23 +78,23 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
     {
       noName: {
         field: "name",
-        onCheckValidity: () => !!changes.name,
+        isValid: () => !!changes.name,
         text: () => t("venue.create.plsGiveVenueName", "Please give your venue a name"),
       },
       noDescription: {
         field: "description",
-        onCheckValidity: () => !!changes.description,
+        isValid: () => !!changes.description,
         text: () =>
           t("venue.create.plsProvideDescription", "Please provide a description for your venue"),
       },
       noRegion: {
         field: "region",
-        onCheckValidity: () => !!changes.selectedRegion,
+        isValid: () => !!changes.selectedRegion,
         text: () => t("venue.create.plsSelectRegion", "Please select a region"),
       },
       noLocation: {
         field: "location",
-        onCheckValidity: () => !!changes.loc,
+        isValid: () => !!changes.loc,
         text: () => t("venue.create.plsSelectPointOnMap", "Please select a point on the map"),
       },
     },

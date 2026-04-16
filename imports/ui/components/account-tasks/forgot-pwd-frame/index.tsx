@@ -27,7 +27,7 @@ export function ForgotPwdFrame(props: Props) {
       noEmail: {
         text: () => t("forgot.notValid", "Please enter the address you signed up with."),
         field: "email",
-        onCheckValidity: () => isEmail(email),
+        isValid: () => isEmail(email),
       },
     },
     { initialCheck: !!props.email, autoCheckFixed: true },

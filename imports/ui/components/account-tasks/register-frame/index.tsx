@@ -48,7 +48,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
     noUsername: {
       text: () => t("register.warning.noUserName", "Please enter a name for your new user."),
       field: "username",
-      onCheckValidity: () => !!registerData.username,
+      isValid: () => !!registerData.username,
     },
     "Not allowed character": {
       text: () =>
@@ -68,13 +68,13 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
     noPassword: {
       text: () => t("register.warning.noPasswordProvided", "Please enter a password to register."),
       field: "password",
-      onCheckValidity: () => !!registerData.password,
+      isValid: () => !!registerData.password,
     },
     noEmail: {
       text: () =>
         t("register.warning.noEmailProvided", "Please enter an email-address to register."),
       field: "email",
-      onCheckValidity: () => !!registerData.email,
+      isValid: () => !!registerData.email,
     },
     "email invalid": {
       text: () => t("register.warning.emailNotValid"),
