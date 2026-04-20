@@ -371,7 +371,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
     const title = changes.title;
 
-    const noRsvp = isRegistrationEnabled;
+    const noRsvp = isRegistrationEnabled === false;
 
     let maxParticipants;
     if (!noRsvp) {
@@ -696,7 +696,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             </div>
           )}
 
-          {!isRegistrationEnabled && PublicSettings.feature.sendReminderIsEditable && (
+          {isRegistrationEnabled && PublicSettings.feature.sendReminderIsEditable && (
             <div className="mb-3">
               <FormCheck
                 id="event-edit-send-reminder"
