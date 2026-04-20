@@ -47,7 +47,7 @@ export function AlertMessage({
         {t("course.edit.savedMessage", "Your proposal has been saved!")}
       </h4>
       <span className="pre-line">
-        {t("course.edit.linkToCourse", 'You can see your new proposal "{NAME}" on {SITENAME}', {
+        {t("course.edit.linkToCourse", "You can see your new proposal {NAME} on {SITENAME}", {
           NAME: (
             <a className="alert-link" href={savedCourseLink()} target="_blank" rel="noreferrer">
               {savedCourseName()}
