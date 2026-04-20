@@ -371,13 +371,11 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
     const title = changes.title;
 
-    const noRsvp = isRegistrationEnabled === false;
-
     let maxParticipants;
-    if (!noRsvp) {
+    if (isRegistrationEnabled) {
       maxParticipants = changes.maxParticipants;
     } else {
-      // if no rsvp is set there is none limit for maxParticipants;
+      // Events without registration have unlimited seats
       maxParticipants = 0;
     }
 
@@ -390,7 +388,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       endLocal: changes.endLocal,
       internal: changes.internal,
       sendReminder: changes.sendReminder,
-      noRsvp,
+      noRsvp: isRegistrationEnabled === false,
       maxParticipants,
     } as SaveFields;
 
