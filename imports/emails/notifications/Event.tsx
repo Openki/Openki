@@ -9,6 +9,7 @@ export interface Props {
   event: EventModel;
   tz: string;
   recipientTakePart: boolean | undefined;
+  registrationClosed: boolean;
   registerToEventLink: string;
   course: JSX.Element;
   courseName: string;
@@ -27,6 +28,7 @@ export function Event({
   event,
   tz,
   recipientTakePart,
+  registrationClosed,
   registerToEventLink,
   course,
   courseName,
@@ -98,17 +100,21 @@ export function Event({
 
           {!event.noRsvp && !recipientTakePart && (
             <>
-              <p className="gap-md text-center">
-                {t(
-                  "notification.event.mail.informRegisterEvent",
-                  "Let us know if you participate in this event:",
-                )}
-              </p>
-              <p className="text-center">
-                <a className="button" href={registerToEventLink}>
-                  {t("notification.event.mail.registerEvent", "Yes, I take part.")}
-                </a>
-              </p>
+              {!registrationClosed && (
+                <>
+                  <p className="gap-md text-center">
+                    {t(
+                      "notification.event.mail.informRegisterEvent",
+                      "Let us know if you participate in this event:",
+                    )}
+                  </p>
+                  <p className="text-center">
+                    <a className="button" href={registerToEventLink}>
+                      {t("notification.event.mail.registerEvent", "Yes, I take part.")}
+                    </a>
+                  </p>
+                </>
+              )}
               <p className="gap-md text-center">
                 {t("notification.event.mail.notinterested", "Not interested anymore?")}
               </p>
