@@ -45,7 +45,7 @@ describe("event create", () => {
       cy.visitOpenki("/event/create", { region: "h4MnI3psRr8hSljk2" /* Zürich Lernt */ });
 
       cy.get("#event-edit-enable-registration").should("be.checked");
-      // HTML number inputs represents 0 as ''
+      // The input should be empty to indicate unlimited participants
       cy.get("#event-edit-max-participants").should("have.value", "");
     });
 
