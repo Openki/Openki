@@ -98,9 +98,9 @@ export function Event({
 
           <EventBox event={event} tz={tz} campaign={campaign} lng={lng} />
 
-          {!event.noRsvp && !recipientTakePart && (
+          {!recipientTakePart && !registrationClosed && (
             <>
-              {!registrationClosed && (
+              {!event.noRsvp && (
                 <>
                   <p className="gap-md text-center">
                     {t(
