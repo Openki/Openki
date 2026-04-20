@@ -137,7 +137,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   }, [course, currentRegion, regions]);
 
   const [selectedVenue, setSelectedVenue] = useState(event.venue);
-  const [noRsvpChecked, setNoRsvpChecked] = useState(!!event.noRsvp);
+  const [isRegistrationEnabled, setIsRegistrationEnabled] = useState(event.noRsvp ?? true);
 
   const [isBusy, setIsBusy] = useState(false);
   const { promptToLogin } = useAccountTasks();
@@ -180,7 +180,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     internal: event.internal,
     sendReminder: event.sendReminder,
     room: event.room || "",
-    maxParticipants: event.maxParticipants,
+    maxParticipants: event.maxParticipants ?? 0,
   });
   const parallelEvents = useFindParallelEvents(selectedRegion, selectedVenue?._id, {
     _id: event._id,
@@ -371,13 +371,11 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
     const title = changes.title;
 
-    const noRsvp = noRsvpChecked;
-
     let maxParticipants;
-    if (!noRsvp) {
+    if (isRegistrationEnabled) {
       maxParticipants = changes.maxParticipants;
     } else {
-      // if no rsvp is set there is none limit for maxParticipants;
+      // Events without registration have unlimited seats
       maxParticipants = 0;
     }
 
@@ -390,7 +388,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       endLocal: changes.endLocal,
       internal: changes.internal,
       sendReminder: changes.sendReminder,
-      noRsvp,
+      noRsvp: isRegistrationEnabled === false,
       maxParticipants,
     } as SaveFields;
 
@@ -623,16 +621,16 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           )}
           <div className="mb-3">
             <FormCheck
-              id="event-edit-no-rsvp"
+              id="event-edit-enable-registration"
               type="box"
-              label={t("event.edit.noRsvp", "No reservation required")}
-              checked={noRsvpChecked}
-              onChange={(checked) => setNoRsvpChecked(checked)}
+              label={t("event.edit.enableRegistration", "Enable registration")}
+              checked={isRegistrationEnabled}
+              onChange={(checked) => setIsRegistrationEnabled(checked)}
             />
 
             <div className="form-switch-text-indent">
-              {noRsvpChecked ? (
-                <div className="form-text">
+              {!isRegistrationEnabled ? (
+                <div className="form-text" id="no-rsvp-notice">
                   {t(
                     "event.edit.noRsvp.description",
                     "Registration for this event is disabled. You might want to explain why in the description.",
@@ -642,12 +640,13 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                 <FormControl
                   id="event-edit-max-participants"
                   type="integer"
-                  label={t("course.event.edit.maxParticipants", "maximal number of participants")}
+                  label={t("course.event.edit.maxParticipants", "Maximum number of participants")}
                   optional
                   prepend="fa-solid fa-users fa-fw"
                   min={0}
                   step={1}
-                  value={changes.maxParticipants || 0}
+                  placeholder={t("course.event.edit.unlimitedParticipants", "Unlimited seats")}
+                  value={changes.maxParticipants}
                   onChange={(value) =>
                     setChanges((changes) => ({ ...changes, maxParticipants: value }))
                   }
@@ -695,7 +694,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             </div>
           )}
 
-          {!noRsvpChecked && PublicSettings.feature.sendReminderIsEditable && (
+          {isRegistrationEnabled && PublicSettings.feature.sendReminderIsEditable && (
             <div className="mb-3">
               <FormCheck
                 id="event-edit-send-reminder"
