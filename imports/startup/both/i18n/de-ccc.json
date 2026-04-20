@@ -420,7 +420,6 @@
   "event.edit.internal": "Auf der Startseite nicht angzeigen",
   "event.edit.internal.description": "Nur bei Tags und Orten anzeigen",
   "event.edit.locationNamePlaceholder": "Nach Räumen und Assemblies suchen",
-  "event.edit.noRsvp": "Keine Anmeldung erforderlich",
   "event.edit.noRsvp.description": "Für diesen Event wurde die Anmeldung deaktiviert. Erkläre gegebenenfalls Details dazu in der Beschreibung des Events.",
   "event.edit.notifyEditEvent": "Eine Benachrichtigung mit den aktuellen Infos an alle Interessierten und Teilnehmenden von \"{COURSE}\" senden.",
   "event.edit.notifyNewEvent": "Eine Benachrichtigung über diese Veranstaltung an alle Interessierten senden.",
