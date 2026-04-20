@@ -447,7 +447,6 @@
   "event.edit.internal": "Auf der Startseite nicht angzeigen",
   "event.edit.internal.description": "Diese Lektion nur bei Austragungsorten und Räumlichkeiten anzeigen. (Für interne Lektionen)",
   "event.edit.locationNamePlaceholder": "Nach Name oder Adresse suchen",
-  "event.edit.noRsvp": "Für diese Lektion ist keine Anmeldung erforderlich",
   "event.edit.noRsvp.description": "Für diese Lektion ist das Anmelden deaktiviert. Erkläre gegebenenfalls Details dazu in der Beschreibung der Lektion.",
   "event.edit.notifyEditEvent": "Eine Benachrichtigung mit den aktuellen Infos an alle Interessierten und Teilnehmenden von \"{COURSE}\" senden.",
   "event.edit.notifyNewEvent": "Eine Benachrichtigung über diese Veranstaltung an alle Beteiligten senden.",
