@@ -66,12 +66,26 @@ if (localStorageSupported) {
 
 // and only load translations for the languages and namespaces we need
 backends.push(
-  resourcesToBackend((language: string, namespace: string) => {
+  resourcesToBackend(async (language: string, namespace: string) => {
     if (namespace === "common") {
       // NOTE: We simulate a "common" namespace to make it consistent with newer, namespaced
       // translations, like for example roles.
-      const fileName = PublicSettings.i18nMapping?.[language] || language;
-      return import(`/imports/startup/both/i18n/${fileName}.json`);
+      const customLanguageCode = PublicSettings.i18nMapping?.[language];
+      if (customLanguageCode) {
+        // when there is a mapping we use the original language as fallback
+        const customLanguageFile = await import(
+          `/imports/startup/both/i18n/${customLanguageCode}.json`
+        );
+        const fallbackLanguageFile = await import(`/imports/startup/both/i18n/${language}.json`);
+        return {
+          default: {
+            ...fallbackLanguageFile.default,
+            ...customLanguageFile.default,
+          },
+        };
+      } else {
+        return import(`/imports/startup/both/i18n/${language}.json`);
+      }
     }
     return import(`/imports/startup/both/i18n/${namespace}/${language}.json`);
   }),
