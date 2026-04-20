@@ -942,7 +942,7 @@
   "profile.verifyEmail.failed": "Address could not be verified. Please Try again.",
   "profile.verifyEmail.mailOnItsWay": "Verification e-mail on its way.",
   "profile.verifyEmail.success": "Your e-mail has been verified.",
-  "profile.verifyEmail.success.btw": "By the way: it had already been verified previously.",
+  "profile.verifyEmail.success.btw": "By the way: Your email address had already been verified previously.",
   "profile.verifymail": "Resend verification e-mail",
   "profile.windowtitle": "Profile of {USER}",
   "program.evening": "{DAYOFWEEK}, evening",
