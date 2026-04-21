@@ -58,12 +58,12 @@ export function LoginFrame({
       text: () =>
         t("login.warning.noUserName", "Please enter your username or e-mail address to log in."),
       field: "username",
-      onCheckValidity: () => !!loginData.username,
+      isValid: () => !!loginData.username,
     },
     "Incorrect password": {
       text: () => t("login.password.password_incorrect", "Incorrect password"),
       field: "password",
-      onCheckValidity: () => !!loginData.password,
+      isValid: () => !!loginData.password,
     },
     "User not found": {
       text: () => t("login.username.usr_doesnt_exist", "This user does not exist."),

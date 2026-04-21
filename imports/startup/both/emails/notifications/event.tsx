@@ -5,7 +5,7 @@ import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
 import { uniq } from "lodash-es";
 
-import { GroupModel, Groups } from "../../../../api/groups/groups";
+import { GroupModel, Groups } from "/imports/api/groups/groups";
 import { Events } from "/imports/api/events/events";
 import { Log } from "/imports/api/log/log";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
@@ -15,6 +15,7 @@ import { getSiteName } from "/imports/utils/getSiteName";
 import { Model as NotificationModel } from "../notification";
 import { Event, Props } from "../../../../emails/notifications/Event";
 import { getStartEndDate } from "./utils";
+import { Organizations } from "/imports/api/organizations/organizations";
 
 interface Body {
   isNew: boolean;
@@ -87,6 +88,14 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
     region = await Regions.findOneAsync(event.region);
   }
 
+  let registrationClosed = false;
+  if (event) {
+    const organizations = await Organizations.find({
+      _id: { $in: event.allTeamOrganizations() },
+    }).fetchAsync();
+    registrationClosed = organizations.some((org) => org.registrationClosed);
+  }
+
   const replicas = await Events.find({ _id: { $in: entry.body.replicats } }).fetchAsync();
 
   return {
@@ -139,6 +148,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         event,
         tz,
         recipientTakePart: event.participants?.some((p) => p.user === actualRecipient._id),
+        registrationClosed,
         registerToEventLink: Router.url("showEvent", event, {
           query: { action: "register", campaign },
         }),

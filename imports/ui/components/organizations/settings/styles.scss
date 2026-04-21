@@ -28,3 +28,25 @@ $organization-member-bg: rgba($gray-600, 0.15);
     color.adjust($success, $lightness: -45%)
   );
 }
+
+.organization-id-display {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+
+  code {
+    font-size: 0.85em;
+    background: $organization-member-bg;
+    border-radius: 4px;
+    padding: 1px 6px;
+  }
+
+  &__copy-btn {
+    padding: 1px 8px;
+    font-size: 0.8em;
+    line-height: 1.5;
+    color: rgb(37 37 37);
+  }
+}

@@ -72,7 +72,7 @@ export function EditCustomFields({ type, fields, values, onChange }: Props) {
                 <FormControl
                   id={`group-custom-field-${field.name}`}
                   type="text"
-                  label={getLocalizedValue(field.editText)}
+                  label={getLocalizedValue(field.editText) ?? ""}
                   placeholder={getLocalizedValue(field.editPlaceholder)}
                   value={value(field.name) as string}
                   onChange={handleChange(field.name)}
@@ -82,7 +82,7 @@ export function EditCustomFields({ type, fields, values, onChange }: Props) {
                   id={`group-custom-field-${field.name}`}
                   type="textarea"
                   rows={3}
-                  label={getLocalizedValue(field.editText)}
+                  label={getLocalizedValue(field.editText) ?? ""}
                   placeholder={getLocalizedValue(field.editPlaceholder)}
                   value={value(field.name) as string}
                   onChange={handleChange(field.name)}
@@ -91,7 +91,7 @@ export function EditCustomFields({ type, fields, values, onChange }: Props) {
                 <FormControl
                   id={`group-custom-field-${field.name}`}
                   type="select"
-                  label={getLocalizedValue(field.editText)}
+                  label={getLocalizedValue(field.editText) ?? ""}
                   options={Object.fromEntries(
                     Object.entries(field.options).map((option) => [
                       option[0],

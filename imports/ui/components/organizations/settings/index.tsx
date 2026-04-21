@@ -356,6 +356,18 @@ export function OrganizationSettings({ organization }: Props) {
             NAME: PublicSettings.siteName,
           })}
         </h3>
+        <p className="organization-id-display">
+          <strong>{t("organization.settings.organizationId", "Organization ID")}</strong>:{" "}
+          <code>{organization._id}</code>
+          <button
+            type="button"
+            className="btn btn-sm btn-outline-secondary organization-id-display__copy-btn"
+            onClick={() => navigator.clipboard.writeText(organization._id)}
+            title={t("organization.settings.copyId", "Copy ID")}
+          >
+            <i className="fa-solid fa-copy fa-fw" />
+          </button>
+        </p>
         <ul className="list-unstyled">
           <li>
             Infoscreen-Link:{" "}
@@ -401,7 +413,7 @@ export function OrganizationSettings({ organization }: Props) {
           </li>
         </ul>
 
-        {currentUser?.privileged("admin") && (
+        {organization.editableBy(currentUser) && (
           <p>
             {!!organization.createdby && (
               <>

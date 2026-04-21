@@ -9,4 +9,9 @@
   &.is-frame {
     margin-top: 0;
   }
+
+  .alert-link,
+  .alert-link:hover {
+    text-decoration: underline;
+  }
 }
