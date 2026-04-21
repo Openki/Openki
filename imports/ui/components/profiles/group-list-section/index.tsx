@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { uniq } from "lodash-es";
+import { uniqBy } from "lodash-es";
 
 import { RoleEntity } from "/imports/api/regions/regions";
 import { UserModel } from "/imports/api/users/users";
@@ -17,6 +17,7 @@ import "./styles.scss";
 export function GroupListSection({ user, ownProfile }: { user: UserModel; ownProfile: boolean }) {
   const { t } = useTranslation();
   const [isLoadingRoles, roles] = useRegionRoles();
+  const uniqRoles = uniqBy(roles, (r) => r.type);
   const { roleShort, roleMyList, roleUserList, roleMyListPast, roleUserListPast } =
     getRoleDisplay(t);
   const id = user._id;
@@ -63,7 +64,7 @@ export function GroupListSection({ user, ownProfile }: { user: UserModel; ownPro
           ) : (
             <>
               <div>
-                {roles
+                {uniqRoles
                   .filter((role) => groupsByRoleCount(role.type, false))
                   .map((role) => (
                     <React.Fragment key={role.type}>
@@ -88,7 +89,7 @@ export function GroupListSection({ user, ownProfile }: { user: UserModel; ownPro
                     </React.Fragment>
                   ))}
               </div>
-              {roles
+              {uniqRoles
                 .filter((role) => groupsByRoleCount(role.type, false))
                 .map((role) => (
                   <React.Fragment key={role.type}>
@@ -106,7 +107,7 @@ export function GroupListSection({ user, ownProfile }: { user: UserModel; ownPro
                   </React.Fragment>
                 ))}
 
-              {roles
+              {uniqRoles
                 .filter((role) => groupsByRoleCount(role.type, true) && showArchived(role))
                 .map((role) => (
                   <React.Fragment key={role.type}>
