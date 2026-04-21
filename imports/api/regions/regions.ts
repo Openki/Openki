@@ -24,6 +24,18 @@ export interface CustomMapConfig {
   maxZoom: number;
   attribution: string;
 }
+export interface RoleEntity {
+  /** (name of role) */
+  type: string;
+  /** icon class string from font-awesome ex: "fa-solid fa-bullhorn" */
+  icon: string;
+  /** The role appears as "proposed only". Default: false */
+  proposal?: boolean;
+  /** The role is always added on creation. Default: false */
+  preset?: boolean;
+  /** The role is editable after creation. Default: false */
+  editable?: boolean;
+}
 
 export interface RegionEntity {
   /** ID */
@@ -37,6 +49,8 @@ export interface RegionEntity {
   tz: string;
   /** description for the user */
   description: string;
+  /** Region-specific roles to override the default settings */
+  roles?: RoleEntity[];
   /**
    * Number of groups in that region, calculated field (does not count internal or archived
    * groups)

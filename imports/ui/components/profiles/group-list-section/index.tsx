@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { RoleEntity, Roles } from "/imports/api/roles/roles";
+import { RoleEntity } from "/imports/api/regions/regions";
 import { UserModel } from "/imports/api/users/users";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
@@ -10,11 +10,13 @@ import { useFindFilter } from "../../../../api/groups/publications";
 import { LoadingPage } from "/imports/ui/pages/loading";
 import { GroupList } from "../../groups/List";
 import { useRoleDisplay } from "../../../lib/useRoleDisplay";
+import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 
 import "./styles.scss";
 
 export function GroupListSection(data: { user: UserModel; ownProfile: boolean }) {
   const { t } = useTranslation();
+  const [isLoadingRoles, roles] = useRegionRoles();
   const { roleShort } = useRoleDisplay();
   const id = data.user._id;
 
@@ -33,9 +35,7 @@ export function GroupListSection(data: { user: UserModel; ownProfile: boolean })
       g.members.find((m) => m.user === id && m.roles.includes(role)),
     );
   }
-  function roles() {
-    return Roles.slice().reverse();
-  }
+
   function groupsByRoleCount(role: string, archived: boolean) {
     return groupsByRole(role, archived).length;
   }
@@ -69,10 +69,10 @@ export function GroupListSection(data: { user: UserModel; ownProfile: boolean })
                   NAME: data.user.getDisplayName(),
                 })}
           </h3>
-          {!isLoadingGroups() && !isLoadingArchivedGroups() ? (
+          {!isLoadingRoles() && !isLoadingGroups() && !isLoadingArchivedGroups() ? (
             <>
               <div>
-                {roles()
+                {roles
                   .filter((role) => groupsByRoleCount(role.type, false))
                   .map((role) => (
                     <React.Fragment key={role.type}>
@@ -97,7 +97,7 @@ export function GroupListSection(data: { user: UserModel; ownProfile: boolean })
                     </React.Fragment>
                   ))}
               </div>
-              {roles()
+              {roles
                 .filter((role) => groupsByRoleCount(role.type, false))
                 .map((role) => (
                   <React.Fragment key={role.type}>
@@ -115,7 +115,7 @@ export function GroupListSection(data: { user: UserModel; ownProfile: boolean })
                   </React.Fragment>
                 ))}
 
-              {roles()
+              {roles
                 .filter((role) => groupsByRoleCount(role.type, true) && showArchived(role))
                 .map((role) => (
                   <React.Fragment key={role.type}>

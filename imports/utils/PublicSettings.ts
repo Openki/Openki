@@ -151,6 +151,20 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
       }),
     },
   ]),
+  /** Standard for all regions, can be overwritten if the "roles" property is set in the region */
+  rolesDefault: [
+    {
+      type: String,
+      /** icon class string from font-awesome ex: "fa-solid fa-bullhorn" */
+      icon: String,
+      /** The role appears as "proposed only". Default: false */
+      proposal: Boolean,
+      /** The role is always added on creation. Default: false */
+      preset: Boolean,
+      /** The role is editable after creation. Default: false */
+      editable: Boolean,
+    },
+  ],
   footerLinks: [
     {
       link: String,

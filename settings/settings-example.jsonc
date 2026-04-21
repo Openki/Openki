@@ -108,6 +108,32 @@
 				}
 			}
 		]
+  , "rolesDefault": // Standard for all regions, can be overwritten if the "roles" property is set in the region
+	[ { "type": "participant" // icon class string from font-awesome ex: "fa-solid fa-bullhorn"
+	  , "icon": "fa-solid fa-thumbs-up" // icon class string from font-awesome ex: "fa-solid fa-bullhorn"
+	  , "proposal": false // The role appears as "proposed only". Default: false
+	  , "preset": true // The role is always added on creation. Default: false
+	  , "editable": false // The role is editable after creation. Default: false
+	  }
+	, { "type": "mentor"
+	  , "icon": "fa-solid fa-graduation-cap"
+	  , "proposal": true
+	  , "preset": false
+	  , "editable": true
+	  }
+	, { "type": "host"
+	  , "icon": "fa-solid fa-house"
+	  , "proposal": true
+	  , "preset": false
+	  , "editable": true
+	  }
+	, { "type": "team"
+	  , "icon": "fa-solid fa-bullhorn"
+	  , "proposal": false
+	  , "preset": true
+	  , "editable": false
+	  }  
+	]
 	, "footerLinks":
 		[	{ "link": "https://about.openki.net/"
 			, "key": "footer.aboutOpenki" // text from the entry. The value is a translation key from i18next it must be defined in code
