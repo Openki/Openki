@@ -13,7 +13,7 @@ import { GroupModel } from "../../../../../api/groups/groups";
 
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import * as Analytics from "/imports/ui/lib/analytics";
-import { useRoleDisplay } from "../../../../lib/useRoleDisplay";
+import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
 
 import { Button, ButtonCancel } from "../../../Buttons";
 import { Action } from "/imports/ui/components/PleaseLogin";
@@ -21,35 +21,29 @@ import { Guide } from "./guide";
 
 import "./styles.scss";
 
-export interface Data {
+export interface Props {
   role: RoleEntity;
   subscribed: boolean;
   comment: string | undefined;
   group: GroupModel;
 }
 
-export function Role(data: Data) {
+export function Role(props: Props) {
   const { t } = useTranslation();
   const user = useUser();
-  const { roleShort } = useRoleDisplay();
+  const { roleShort, roleSubscribed, roleSubscribe } = getRoleDisplay(t);
   const searchParams = useSearchParams();
   const [enrolling, setEnrolling] = useState(false);
   const [showFirstSteps, setShowFirstSteps] = useState(false);
-  const [comment, setComment] = useState(data.comment);
+  const [comment, setComment] = useState(props.comment);
 
   // Build a subscribe change
   function groupSubscribe(newComment?: string) {
-    return new Subscribe(data.group, user?._id, data.role.type, "interested", newComment);
+    return new Subscribe(props.group, user?._id, props.role.type, "interested", newComment);
   }
 
-  function roleSubscribe(type: string) {
-    return t(`roles:${type}.subscribe`);
-  }
-  function roleSubscribed(type: string) {
-    return t(`roles:${type}.subscribed`);
-  }
   function roleIs(type: string) {
-    return data.role.type === type;
+    return props.role.type === type;
   }
   function maySubscribe() {
     const operator = user;
@@ -72,8 +66,8 @@ export function Role(data: Data) {
 
     Analytics.trackEvent(
       "Enrollments in groups",
-      `Enrollments in groups as ${data.role.type}`,
-      Regions.findOne(data.group.region)?.nameEn,
+      `Enrollments in groups as ${props.role.type}`,
+      Regions.findOne(props.group.region)?.nameEn,
     );
   }
 
@@ -82,13 +76,13 @@ export function Role(data: Data) {
   }
   async function handleRoleUnsubscribeClick() {
     routerAutoscroll.cancelNext();
-    const change = new Unsubscribe(data.group, user?._id, data.role.type);
+    const change = new Unsubscribe(props.group, user?._id, props.role.type);
     await processChange(change);
     routerAutoscroll.cancelNext();
     Analytics.trackEvent(
       "Unsubscribes from groups",
-      `Unsubscribes from groups as ${data.role.type}`,
-      Regions.findOne(data.group.region)?.nameEn,
+      `Unsubscribes from groups as ${props.role.type}`,
+      Regions.findOne(props.group.region)?.nameEn,
     );
   }
   function toggleFirstStepsClick() {
@@ -100,17 +94,17 @@ export function Role(data: Data) {
 
   return (
     <>
-      {searchParams.unsubscribe === data.role.type && (
+      {searchParams.unsubscribe === props.role.type && (
         <Action
           onRender={async () => {
             // unsubscribe by email
             // HACK this is not the right place to act on router actions
-            const change = new Unsubscribe(data.group, user?._id, data.role.type);
+            const change = new Unsubscribe(props.group, user?._id, props.role.type);
             if (change.validFor(user)) {
               await processChange(change);
               Alert.success(
                 t("group.roles.unsubscribed", "Unsubscribed from {NAME}", {
-                  NAME: data.group.name,
+                  NAME: props.group.name,
                 }),
               );
             } else {
@@ -118,7 +112,7 @@ export function Role(data: Data) {
             }
 
             // After unsubscribe got to the event. Equals in route 'showGroup'.
-            const group = data.group;
+            const group = props.group;
             if (group?.singleEvent && group.nextEvent) {
               Router.go("showEvent", group.nextEvent, { replaceState: true });
             }
@@ -126,17 +120,17 @@ export function Role(data: Data) {
         />
       )}
 
-      {data.subscribed ? (
+      {props.subscribed ? (
         <>
           <div className="group-role-enrolled">
             <div className="group-role-title">
-              <i className={`${data.role.icon} fa-fw grouppage-role-icon`} />
+              <i className={`${props.role.icon} fa-fw grouppage-role-icon`} />
               &nbsp;
-              <span>{roleSubscribed(data.role.type)}</span>
+              <span>{roleSubscribed(props.role.type)}</span>
               <button
                 type="button"
                 className="role-unsubscribe-btn btn btn-cancel"
-                name={data.role.type}
+                name={props.role.type}
                 onClick={handleRoleUnsubscribeClick}
               >
                 {t("group.roles.retract", "Retract")}
@@ -155,8 +149,8 @@ export function Role(data: Data) {
             <div className="group-role-first-steps">
               <b>
                 {t("group.roles.firstSteps.title", "Thank you for your interest in {GROUP}.", {
-                  GROUP: data.group.name,
-                  ROLE: roleShort(data.role.type),
+                  GROUP: props.group.name,
+                  ROLE: roleShort(props.role.type),
                 })}
               </b>
               <br />
@@ -215,9 +209,9 @@ export function Role(data: Data) {
           {enrolling ? (
             <>
               <div className="group-role-title-enroll">
-                <i className={`${data.role.icon} fa-fw grouppage-role-icon`} />
+                <i className={`${props.role.icon} fa-fw grouppage-role-icon`} />
                 &nbsp;
-                {roleSubscribe(data.role.type)}
+                {roleSubscribe(props.role.type)}
               </div>
               <div className="group-role-enroll-options">
                 <div className="mb-3">
@@ -279,10 +273,10 @@ export function Role(data: Data) {
                     className="btn-save"
                     onClick={handleRoleSubscribeClick}
                     needsLogin
-                    visitorUserAllowed={data.role.type === "participant"}
+                    visitorUserAllowed={roleIs("participant")}
                     busyText={t("group.roles.join.busy", "Joining…")}
                   >
-                    {t("group.roles.join", "Join", { GROUP: data.group.name })}
+                    {t("group.roles.join", "Join", { GROUP: props.group.name })}
                   </Button>
                   <ButtonCancel
                     id="group-roles-join-cancel"
@@ -294,14 +288,14 @@ export function Role(data: Data) {
           ) : (
             maySubscribe() && (
               <button
-                data-test={`group-role-enroll-${data.role.type}`}
+                data-test={`group-role-enroll-${props.role.type}`}
                 type="button"
                 className="btn btn-add text-start page-component-btn"
-                name={data.role.type}
+                name={props.role.type}
                 onClick={handleRoleEnrollClick}
               >
-                <i className={`${data.role.icon} fa-fw grouppage-role-icon`} /> &nbsp;
-                {roleSubscribe(data.role.type)}
+                <i className={`${props.role.icon} fa-fw grouppage-role-icon`} /> &nbsp;
+                {roleSubscribe(props.role.type)}
               </button>
             )
           )}

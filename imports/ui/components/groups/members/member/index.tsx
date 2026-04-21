@@ -17,7 +17,7 @@ import { Contribution } from "../../../Contribution";
 import { ParticipantContact } from "/imports/ui/components/participant/contact";
 import { RemoveFromTeamDropdown } from "../remove-from-team-dropdown";
 import { Editable } from "/imports/ui/components/editable";
-import { useRoleDisplay } from "../../../../lib/useRoleDisplay";
+import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 import { RoleIcon } from "/imports/ui/components/RoleIcon";
 
@@ -26,7 +26,7 @@ import "./styles.scss";
 export function Member({ member, group }: { member: GroupMemberEntity; group: GroupModel }) {
   const { t } = useTranslation();
   const currentUser = useUser();
-  const { roleShort } = useRoleDisplay();
+  const { roleShort } = getRoleDisplay(t);
 
   const [isLoading, roles] = useRegionRoles(group.region);
 

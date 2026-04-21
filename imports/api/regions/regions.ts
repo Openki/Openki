@@ -24,6 +24,7 @@ export interface CustomMapConfig {
   maxZoom: number;
   attribution: string;
 }
+
 export interface RoleEntity {
   /** (name of role) */
   type: string;
