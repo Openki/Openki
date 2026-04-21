@@ -98,10 +98,8 @@ export function GroupListSection({ user, ownProfile }: { user: UserModel; ownPro
                         <i className={`${role.icon} fa-fw`} />
                       </div>{" "}
                       {ownProfile
-                        ? t(roleMyList(role.type))
-                        : t(roleUserList(role.type), {
-                            NAME: user.getDisplayName(),
-                          })}
+                        ? roleMyList(role.type)
+                        : roleUserList(role.type, user.getDisplayName())}
                     </h3>
                     <GroupList groups={groupsByRole(role.type, false)} small={true} />
                   </React.Fragment>
@@ -116,10 +114,8 @@ export function GroupListSection({ user, ownProfile }: { user: UserModel; ownPro
                         <i className={`${role.icon} fa-fw`} />
                       </div>{" "}
                       {ownProfile
-                        ? t(roleMyListPast(role.type))
-                        : t(roleUserListPast(role.type), {
-                            NAME: user.getDisplayName(),
-                          })}
+                        ? roleMyListPast(role.type)
+                        : roleUserListPast(role.type, user.getDisplayName())}
                     </h3>
                     <GroupList groups={groupsByRole(role.type, true)} small={true} />
                   </React.Fragment>
