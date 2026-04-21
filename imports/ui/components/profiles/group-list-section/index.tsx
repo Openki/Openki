@@ -14,11 +14,11 @@ import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 
 import "./styles.scss";
 
-export function GroupListSection(data: { user: UserModel; ownProfile: boolean }) {
+export function GroupListSection({ user, ownProfile }: { user: UserModel; ownProfile: boolean }) {
   const { t } = useTranslation();
   const [isLoadingRoles, roles] = useRegionRoles();
   const { roleShort } = useRoleDisplay();
-  const id = data.user._id;
+  const id = user._id;
 
   const [isLoadingGroups, groups] = useFindFilter({
     userInvolved: id,
@@ -63,10 +63,10 @@ export function GroupListSection(data: { user: UserModel; ownProfile: boolean })
       {isInvolved() && (
         <>
           <h3 className="badge-title">
-            {data.ownProfile
+            {ownProfile
               ? t("users.grouplist.myGroups", "I am involved in the following groups")
               : t("users.grouplist.userGroups", "{NAME} is involved in the following groups", {
-                  NAME: data.user.getDisplayName(),
+                  NAME: user.getDisplayName(),
                 })}
           </h3>
           {!isLoadingRoles() && !isLoadingGroups() && !isLoadingArchivedGroups() ? (
@@ -105,10 +105,10 @@ export function GroupListSection(data: { user: UserModel; ownProfile: boolean })
                       <div className="badge">
                         <i className={`${role.icon} fa-fw`} />
                       </div>{" "}
-                      {data.ownProfile
+                      {ownProfile
                         ? t(roleMyList(role.type))
                         : t(roleUserList(role.type), {
-                            NAME: data.user.getDisplayName(),
+                            NAME: user.getDisplayName(),
                           })}
                     </h3>
                     <GroupList groups={groupsByRole(role.type, false)} small={true} />
@@ -123,10 +123,10 @@ export function GroupListSection(data: { user: UserModel; ownProfile: boolean })
                       <div className="badge is-archived">
                         <i className={`${role.icon} fa-fw`} />
                       </div>{" "}
-                      {data.ownProfile
+                      {ownProfile
                         ? t(roleMyListPast(role.type))
                         : t(roleUserListPast(role.type), {
-                            NAME: data.user.getDisplayName(),
+                            NAME: user.getDisplayName(),
                           })}
                     </h3>
                     <GroupList groups={groupsByRole(role.type, true)} small={true} />
