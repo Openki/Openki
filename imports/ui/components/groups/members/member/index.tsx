@@ -2,7 +2,6 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { getRole } from "/imports/api/roles/roles";
 import {
   Subscribe,
   Unsubscribe,
@@ -12,7 +11,6 @@ import {
 import { GroupMemberEntity, GroupModel } from "../../../../../api/groups/groups";
 
 import * as Tooltips from "/imports/utils/Tooltips";
-
 import { useUser } from "/imports/utils/react-meteor-data";
 import { ProfileLink } from "/imports/ui/components/profile-link";
 import { Contribution } from "../../../Contribution";
@@ -20,6 +18,8 @@ import { ParticipantContact } from "/imports/ui/components/participant/contact";
 import { RemoveFromTeamDropdown } from "../remove-from-team-dropdown";
 import { Editable } from "/imports/ui/components/editable";
 import { useRoleDisplay } from "../../../../lib/useRoleDisplay";
+import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { RoleIcon } from "/imports/ui/components/RoleIcon";
 
 import "./styles.scss";
 
@@ -27,6 +27,8 @@ export function Member({ member, group }: { member: GroupMemberEntity; group: Gr
   const { t } = useTranslation();
   const currentUser = useUser();
   const { roleShort } = useRoleDisplay();
+
+  const [isLoading, roles] = useRegionRoles(group.region);
 
   function subscribeToTeam() {
     return new Subscribe(group, member.user, "team", "interested");
@@ -87,20 +89,21 @@ export function Member({ member, group }: { member: GroupMemberEntity; group: Gr
         </div>
         <ParticipantContact participant={member.user} group={group} />
         <div className="ms-auto d-flex flex-wrap align-items-center">
-          {memberRoles().map((role) => (
-            <div
-              key={role}
-              className={`group-member-role ${getRole(role)?.proposal ? "is-proposal" : ""}`}
-            >
-              <span className="group-member-role-text">
-                <i className={`${getRole(role)?.icon} fa-fw`} />{" "}
-                <span className="role-short">{roleShort(role)}</span>
-              </span>{" "}
-              {mayUnsubscribeFromTeam(role) && (
-                <RemoveFromTeamDropdown {...removeFromTeamDropdownAttr()} />
-              )}
-            </div>
-          ))}
+          {!isLoading() &&
+            memberRoles().map((role) => (
+              <div
+                key={role}
+                className={`group-member-role ${roles.find((r) => r.type === role)?.proposal ? "is-proposal" : ""}`}
+              >
+                <span className="group-member-role-text">
+                  <RoleIcon type={role} regionId={group.region} />{" "}
+                  <span className="role-short">{roleShort(role)}</span>
+                </span>{" "}
+                {mayUnsubscribeFromTeam(role) && (
+                  <RemoveFromTeamDropdown {...removeFromTeamDropdownAttr()} />
+                )}
+              </div>
+            ))}
           {maySubscribeToTeam() && (
             <button
               type="button"

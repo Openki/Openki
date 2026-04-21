@@ -109,14 +109,14 @@ export function GroupCompactRoles({ group }: Props) {
         className={`group-compact-role ${roleStateClass("team")}`}
         data-bs-title={`${roleStateTooltip("team")}`}
       >
-        <RoleIcon type="team" />
+        <RoleIcon type="team" regionId={group.region} />
       </div>
       {group.roles.includes("mentor") && (
         <div
           className={`group-compact-role ${roleStateClass("mentor")}`}
           data-bs-title={`${roleStateTooltip("mentor")}`}
         >
-          <RoleIcon type="mentor" />
+          <RoleIcon type="mentor" regionId={group.region} />
         </div>
       )}
       {group.roles.includes("host") && (
@@ -124,7 +124,7 @@ export function GroupCompactRoles({ group }: Props) {
           className={`group-compact-role ${roleStateClass("host")}`}
           data-bs-title={`${roleStateTooltip("host")}`}
         >
-          <RoleIcon type="host" />
+          <RoleIcon type="host" regionId={group.region} />
         </div>
       )}
       {group.roles.includes("participant") && (
@@ -132,7 +132,7 @@ export function GroupCompactRoles({ group }: Props) {
           className={`group-compact-role ${participantClass()}`}
           data-bs-title={`${participantTooltip()}`}
         >
-          <RoleIcon type="participant" />
+          <RoleIcon type="participant" regionId={group.region} />
           &nbsp;
           {group.members.filter((m) => m.roles.includes("participant")).length}
         </div>

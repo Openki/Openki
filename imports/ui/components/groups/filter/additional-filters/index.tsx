@@ -1,9 +1,9 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { Roles } from "/imports/api/roles/roles";
-
 import { FilterCategories } from "/imports/ui/components/filter-categories";
+import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 
 import "./styles.scss";
 
@@ -25,6 +25,9 @@ interface Role {
 
 export function AdditionalFilters(props: Props) {
   const { t } = useTranslation();
+  const currentRegionId = useCurrentRegionId();
+
+  const [isLoading, regionRoles] = useRegionRoles(currentRegionId);
 
   const roles = [
     {
@@ -41,7 +44,7 @@ export function AdditionalFilters(props: Props) {
     },
   ].map(
     // add icon from Roles collection to role object
-    (role) => ({ ...role, icon: Roles.find((r) => r.type === role.name)?.icon }),
+    (role) => ({ ...role, icon: regionRoles.find((r) => r.type === role.name)?.icon }),
   );
 
   function roleClasses(role: Role) {
@@ -60,6 +63,10 @@ export function AdditionalFilters(props: Props) {
       onAdd: props.onCategoryAdd,
       onRemove: props.onCategoryRemove,
     };
+  }
+
+  if (isLoading()) {
+    return null;
   }
 
   return (

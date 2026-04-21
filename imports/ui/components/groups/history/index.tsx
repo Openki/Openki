@@ -1,11 +1,12 @@
 import React from "react";
-
 import { Router } from "meteor/iron:router";
+import { useTranslation } from "react-i18next";
+
 import { EventModel, Events } from "/imports/api/events/events";
 import { GroupModel } from "../../../../api/groups/groups";
-import { useTranslation } from "react-i18next";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { RegionEntity } from "/imports/api/regions/regions";
 
+import { useUser } from "/imports/utils/react-meteor-data";
 import { useRoleDisplay } from "../../../lib/useRoleDisplay";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
@@ -25,12 +26,20 @@ export function EventHeldHistoryEntry({ _id, title, slug }: EventModel) {
   );
 }
 
-export function UserSubscribedHistoryEntry({ user, role }: { user: string; role: string }) {
+export function UserSubscribedHistoryEntry({
+  user,
+  role,
+  regionId,
+}: {
+  user: string;
+  role: string;
+  regionId: RegionEntity["_id"];
+}) {
   const { t } = useTranslation();
   const { roleShort } = useRoleDisplay();
   return (
     <>
-      <RoleIcon type={role} />{" "}
+      <RoleIcon type={role} regionId={regionId} />{" "}
       {t("group.history.userSubscribed", "{USER} joined as {ROLE}", {
         USER: (
           <>
@@ -43,12 +52,20 @@ export function UserSubscribedHistoryEntry({ user, role }: { user: string; role:
     </>
   );
 }
-export function UserUnsubscribedHistoryEntry({ user, role }: { user: string; role: string }) {
+export function UserUnsubscribedHistoryEntry({
+  user,
+  role,
+  regionId,
+}: {
+  user: string;
+  role: string;
+  regionId: RegionEntity["_id"];
+}) {
   const { t } = useTranslation();
   const { roleShort } = useRoleDisplay();
   return (
     <>
-      <RoleIcon type={role} />{" "}
+      <RoleIcon type={role} regionId={regionId} />{" "}
       {t("group.history.userUnsubscribed", "{USER} retract {ROLE}", {
         USER: (
           <>
@@ -319,8 +336,8 @@ export function History({ group }: { group: GroupModel }) {
       ...(history?.map((e) => ({
         dateTime: e.dateTime,
         template: (map as any)[e.type],
-        data: e.data,
-      })) || []),
+        data: { ...e.data, regionId: group.region },
+      })) ?? []),
     );
 
     // and with the group creation

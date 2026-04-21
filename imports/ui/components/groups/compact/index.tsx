@@ -2,11 +2,11 @@ import React, { useRef } from "react";
 import { Router } from "meteor/iron:router";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { Roles } from "/imports/api/roles/roles";
 import { GroupModel } from "../../../../api/groups/groups";
 import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 
 import { hasRole } from "../../../../utils/group-role-utils";
+import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 
 import { InternalIndicator } from "/imports/ui/components/internal-indicator";
 import { SingleEventIndicator } from "/imports/ui/components/single-event-indicator";
@@ -40,6 +40,7 @@ export function GroupCompact({ group, organizationTagEvents, categoryTagEvents }
   const user = useUser();
 
   const [isRegionLoading, region] = useRegionDetails(group?.region);
+  const [isRegionRolesLoading, regionRoles] = useRegionRoles(group?.region);
 
   function groupCss() {
     if (!group.nextEvent) {
@@ -80,7 +81,7 @@ export function GroupCompact({ group, organizationTagEvents, categoryTagEvents }
   function filterPreviewClasses() {
     const classes = [];
 
-    const roles = Roles.map((role) => role.type);
+    const roles = regionRoles.map((role) => role.type);
 
     roles.forEach((role) => {
       const roleDisengaged = !hasRole(group.members, role);
@@ -132,6 +133,10 @@ export function GroupCompact({ group, organizationTagEvents, categoryTagEvents }
         )
       ),
   );
+
+  if (isRegionRolesLoading()) {
+    return null;
+  }
 
   return (
     <div

@@ -8,7 +8,7 @@ import { User, UserModel } from "/imports/api/users/users";
 import * as Alert from "/imports/api/alerts/alert";
 import { Subscribe, Unsubscribe, processChange } from "../../../../../api/groups/subscription";
 import { Regions } from "/imports/api/regions/regions";
-import { RoleEntity } from "/imports/api/roles/roles";
+import { RoleEntity } from "/imports/api/regions/regions";
 import { GroupModel } from "../../../../../api/groups/groups";
 
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";

@@ -12,7 +12,6 @@ import {
 } from "../../../../api/groups/groups";
 import * as GroupsMethods from "../../../../api/groups/methods";
 import { Regions } from "/imports/api/regions/regions";
-import { Roles } from "/imports/api/roles/roles";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { hasRoleUser } from "../../../../utils/group-role-utils";
@@ -43,6 +42,7 @@ import { FindHeader } from "./FindHeader";
 import { AlertMessage } from "./AlertMessage";
 import { FormControl } from "/imports/ui/components/form-control";
 import { useFiltering } from "/imports/utils/filtering";
+import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 
 import "./styles.scss";
 
@@ -134,6 +134,8 @@ export function Edit(props: Props) {
     }
   }, [props, currentRegion, regions]);
 
+  const [isLoadingRegionRoles, regionRoles] = useRegionRoles(selectedRegion);
+
   function getOrganizations() {
     const organizations = [];
 
@@ -188,7 +190,7 @@ export function Edit(props: Props) {
       .uniq()
       .value();
 
-    return Roles.filter((role) => {
+    return regionRoles.filter((role) => {
       // Roles that are always on are not selectable here
       if (role.preset) {
         return false;
@@ -516,7 +518,7 @@ export function Edit(props: Props) {
     }
   }
 
-  if (regionsIsLoading() || organizationsIsLoading()) {
+  if (regionsIsLoading() || isLoadingRegionRoles() || organizationsIsLoading()) {
     return null;
   }
 

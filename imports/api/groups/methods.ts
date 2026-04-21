@@ -9,7 +9,6 @@ import { Events } from "/imports/api/events/events";
 import { Organizations } from "../organizations/organizations";
 import { Regions } from "/imports/api/regions/regions";
 import { GroupDiscussions } from "../group-discussions/group-discussions";
-import { Roles } from "/imports/api/roles/roles";
 import * as UpdateMethods from "/imports/utils/update-methods";
 import * as historyDenormalizer from "./historyDenormalizer";
 import * as timeLastEditDenormalizer from "./timeLastEditDenormalizer";
@@ -32,6 +31,7 @@ import * as FileStorage from "/imports/utils/FileStorage";
 import { HtmlString, StringEnum, Type } from "/imports/utils/CustomChecks";
 import { OrganizationPromoters } from "/imports/utils/update-methods";
 import { resizeImage } from "../../utils/resize-image";
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
 export interface Method<T> {
   method: string;
@@ -100,6 +100,15 @@ async function loadGroup(groupId: string) {
   return group;
 }
 
+async function loadRoles(regionId: string) {
+  const region = await Regions.findOneAsync({ _id: regionId });
+  if (!region) {
+    throw new Meteor.Error(404, "Region not found");
+  }
+
+  return region.roles ?? PublicSettings.rolesDefault;
+}
+
 async function loadDisabledRoles(organizationIds: string[]) {
   const organizations = await Promise.all(
     uniq(organizationIds).map(async (organizationId) => {
@@ -163,8 +172,11 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
   const disabledRoles = await loadDisabledRoles(changes.organizations || []);
 
   if (changes.roles) {
+    // on creation the changes.region is set; on change group.region is set
+    const roles = await loadRoles((group.region || changes.region) as string);
+
     await Promise.all(
-      Roles.map(async (role) => {
+      roles.map(async (role) => {
         const { type } = role;
 
         if (group.isNew()) {
