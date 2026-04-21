@@ -15,12 +15,11 @@ export function RoleIcon({
   if (isLoading()) {
     return null;
   }
+  const role = roles.find((r) => r.type === type);
 
-  const icon = roles.find((r) => r.type === type);
-
-  if (!icon) {
+  if (!role) {
     return null;
   }
 
-  return <i className={`${icon} fa-fw`} />;
+  return <i className={`${role.icon} fa-fw`} />;
 }

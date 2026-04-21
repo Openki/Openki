@@ -1,15 +1,15 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { uniq } from "lodash-es";
 
 import { RoleEntity } from "/imports/api/regions/regions";
 import { UserModel } from "/imports/api/users/users";
+import { useFindFilter } from "/imports/api/groups/publications";
+import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
-
-import { useFindFilter } from "../../../../api/groups/publications";
 import { LoadingPage } from "/imports/ui/pages/loading";
-import { GroupList } from "../../groups/List";
-import { useRoleDisplay } from "../../../lib/useRoleDisplay";
+import { GroupList } from "/imports/ui/components/groups/List";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 
 import "./styles.scss";
@@ -17,7 +17,8 @@ import "./styles.scss";
 export function GroupListSection({ user, ownProfile }: { user: UserModel; ownProfile: boolean }) {
   const { t } = useTranslation();
   const [isLoadingRoles, roles] = useRegionRoles();
-  const { roleShort } = useRoleDisplay();
+  const { roleShort, roleMyList, roleUserList, roleMyListPast, roleUserListPast } =
+    getRoleDisplay(t);
   const id = user._id;
 
   const [isLoadingGroups, groups] = useFindFilter({
@@ -39,18 +40,6 @@ export function GroupListSection({ user, ownProfile }: { user: UserModel; ownPro
   function groupsByRoleCount(role: string, archived: boolean) {
     return groupsByRole(role, archived).length;
   }
-  function roleUserList(role: string) {
-    return `roles:${role}.userList`;
-  }
-  function roleUserListPast(role: string) {
-    return `roles:${role}.userList.past`;
-  }
-  function roleMyList(role: string) {
-    return `roles:${role}.myList`;
-  }
-  function roleMyListPast(role: string) {
-    return `roles:${role}.myList.past`;
-  }
   function isInvolved() {
     return groups.length > 0 || archivedGroups.length > 0;
   }
@@ -69,7 +58,9 @@ export function GroupListSection({ user, ownProfile }: { user: UserModel; ownPro
                   NAME: user.getDisplayName(),
                 })}
           </h3>
-          {!isLoadingRoles() && !isLoadingGroups() && !isLoadingArchivedGroups() ? (
+          {isLoadingRoles() || isLoadingGroups() || isLoadingArchivedGroups() ? (
+            <LoadingPage />
+          ) : (
             <>
               <div>
                 {roles
@@ -133,8 +124,6 @@ export function GroupListSection({ user, ownProfile }: { user: UserModel; ownPro
                   </React.Fragment>
                 ))}
             </>
-          ) : (
-            <LoadingPage />
           )}
         </>
       )}

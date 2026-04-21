@@ -15,6 +15,7 @@ import { getSiteName } from "/imports/utils/getSiteName";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { Model as NotificationModel } from "../notification";
 import { Join, Props } from "/imports/emails/notifications/Join";
+import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
 
 interface Body {
   groupId: string;
@@ -88,6 +89,8 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
     async vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
+      const { roleShort } = getRoleDisplay(t);
+
       const campaign = "joinNotify";
 
       if (!newParticipant) {
@@ -97,11 +100,10 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         throw new Error("Group does not exist (0.o)");
       }
 
-      const roleTitle = t(`roles:${body.newRole}.short`);
       const subjectvars = {
         GROUP: truncate(group.name, { length: 10 }),
         USER: truncate(newParticipant.getDisplayName(), { length: 50 }),
-        ROLE: roleTitle,
+        ROLE: roleShort(body.newRole),
         ROLETYPE: body.newRole,
       };
 
@@ -114,7 +116,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       const figures = ["host", "mentor", "participant", "team"]
         .filter((role) => group.roles.includes(role))
         .map((role) => ({
-          role: capitalize(t(`roles:${role}.short`)),
+          role: capitalize(roleShort(role)),
           count: group.membersWithRole(role).length,
         }));
 
@@ -130,7 +132,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         group: <a href={groupLink}>{group.name}</a>,
         newParticipant: <strong>{newParticipant.getDisplayName()}</strong>,
         subject,
-        roleTitle,
+        roleShort: roleShort(body.newRole),
         roleType: body.newRole,
         email: <span style={{ color: "blue" }}>{PrivateSettings.siteEmail}</span>,
         message: body.message ? HtmlTools.plainToHtml(body.message) : undefined,

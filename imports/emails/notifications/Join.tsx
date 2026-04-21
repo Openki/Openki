@@ -6,7 +6,7 @@ import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 export interface Props {
   group: JSX.Element;
   newParticipant: JSX.Element;
-  roleTitle: string;
+  roleShort: string;
   roleType: string;
   message: string | undefined;
   appendCollaborationHint: boolean;
@@ -24,7 +24,7 @@ export interface Props {
 export function Join({
   group,
   newParticipant,
-  roleTitle,
+  roleShort,
   roleType,
   message,
   appendCollaborationHint,
@@ -45,7 +45,7 @@ export function Join({
             {t("notification.join.mail.intro", "{USERNAME} just joined {GROUP} as: {ROLE}.", {
               USERNAME: newParticipant,
               GROUP: group,
-              ROLE: roleTitle,
+              ROLE: roleShort,
               ROLETYPE: roleType,
             })}
           </p>
