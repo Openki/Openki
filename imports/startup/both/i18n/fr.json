@@ -242,7 +242,6 @@
   "event.edit.internal": "Interne",
   "event.edit.internal.description": "Afficher cet événement uniquement sur les pages consacrées aux groupes et aux lieux",
   "event.edit.locationNamePlaceholder": "L'adresse ou le nom du lieu",
-  "event.edit.noRsvp": "Aucune réservation requise",
   "event.edit.noRsvp.description": "L'inscription à cet événement est désactivée. Tu devrais expliquer pourquoi dans la description.",
   "event.edit.notifyEditEvent": "Envoyez une notification à toutes les personnes intéressées et aux participants du « {GROUP} » avec les dernières informations à propos de l'événement.",
   "event.edit.notifyNewEvent": "Envoyer une notification à tous les membres du cours « {GROUP} » à propos de cet événement.",

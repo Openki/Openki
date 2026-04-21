@@ -193,7 +193,6 @@
   "event.edit.internal": "Nascondi in prima pagina",
   "event.edit.internal.description": "Mostralo solo nelle pagine di gruppo e di sede",
   "event.edit.locationNamePlaceholder": "Indirizzo o nome della sede",
-  "event.edit.noRsvp": "Nessuna prenotazione richiesta",
   "event.edit.noRsvp.description": "La registrazione per questo evento è disabilitata. Potresti voler spiegare il motivo nella descrizione.",
   "event.edit.notifyEditEvent": "Notifica a tutti i membri del corso \"{GROUP}\" le modifiche apportate.",
   "event.edit.notifyNewEvent": "Notifica a tutti i membri del corso \"{GROUP}\" questo evento.",
