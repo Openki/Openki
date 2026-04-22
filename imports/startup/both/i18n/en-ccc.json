@@ -1209,5 +1209,8 @@
   "warning.emailNotValid": "Your e-mail address seems to have an error.",
   "warning.noEmailProvided": "Please enter an e-mail address.",
   "warning.noUserName": "Please enter a name for your user.",
-  "warning.userExists": "This username is already in use. Please choose another one."
+  "warning.userExists": "This username is already in use. Please choose another one.",
+  "profile": {
+    "account_managemen": "Danger zone"
+  }
 }

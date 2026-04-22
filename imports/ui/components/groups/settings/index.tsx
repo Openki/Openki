@@ -253,7 +253,7 @@ export function GroupSettings({ group }: Props) {
             </h3>
             <div className="tag-group multiline">
               {group.members.map((member) => (
-                <React.Fragment key={member.user}>
+               <div key={member.user} className="group-member-unit"> 
                   <RemoveMember {...member} onRemove={handleMemberRemove} />
 
                   {currentUser?._id === member.user &&
@@ -293,7 +293,7 @@ export function GroupSettings({ group }: Props) {
                       <i className="fa-solid fa-user fa-fw" />
                     </a>
                   </div>
-                </React.Fragment>
+                </div>
               ))}
             </div>
             <div className="mb-3">

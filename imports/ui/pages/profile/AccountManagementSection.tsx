@@ -7,7 +7,7 @@ import * as usersMethods from "/imports/api/users/methods";
 import { AccountsAsync } from "/imports/utils/promisify";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-export function DangerZoneSection() {
+export function AccountManagementSection() {
   const { t } = useTranslation();
   const [changingPassword, setChangingPassword] = useState(false);
   const [oldPassword, setOldPassword] = useState("");
@@ -34,6 +34,7 @@ export function DangerZoneSection() {
         Alert.success(t("profile.deleted", "Your account has been deleted"));
       },
       busyButton: t("profile.delete.confirm.button.busy", "Deleting profile…"),
+      deleteButtonLabel: t("profile.delete.button", "Delete Account"),
     };
   }
 
@@ -67,7 +68,7 @@ export function DangerZoneSection() {
 
   return (
     <div className="page-component page-component-seperated">
-      <h3>{t("profile.danger_zone", "Danger zone")}</h3>
+      <h3>{t("profile.account_managemen", "Danger zone")}</h3>
 
       {!isVisitor() && (
         <div className="mb-3">
@@ -130,7 +131,7 @@ export function DangerZoneSection() {
                 </div>
                 <div className="d-flex gap-2 justify-content-end">
                   <Button
-                    id="profile-dangerZone-changingPasswort-save"
+                    id="profile-accountManagement-changingPasswort-save"
                     submit
                     className="btn-cancel"
                     isBusy={isBusy}
@@ -139,7 +140,7 @@ export function DangerZoneSection() {
                     {t("_button.save")}
                   </Button>
                   <ButtonCancel
-                    id="profile-dangerZone-changingPasswort-cancel"
+                    id="profile-accountManagement-changingPasswort-cancel"
                     onClick={() => setChangingPassword(false)}
                     disabled={isBusy}
                   />
