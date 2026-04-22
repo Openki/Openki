@@ -112,19 +112,19 @@
 	[ { "type": "participant" // icon class string from font-awesome ex: "fa-solid fa-bullhorn"
 	  , "icon": "fa-solid fa-thumbs-up" // icon class string from font-awesome ex: "fa-solid fa-bullhorn"
 	  , "proposal": false // The role appears as "proposed only". Default: false
-	  , "preset": true // The role is always added on creation. Default: false
-	  , "editable": false // The role is editable after creation. Default: false
+	  , "preset": true // The role is always added on group creation. Default: false
+	  , "editable": false // The role is editable by the editors of a group. Default: false
 	  }
 	, { "type": "mentor"
 	  , "icon": "fa-solid fa-graduation-cap"
 	  , "proposal": true
-	  , "preset": false
+	  , "preset": true
 	  , "editable": true
 	  }
 	, { "type": "host"
 	  , "icon": "fa-solid fa-house"
 	  , "proposal": true
-	  , "preset": false
+	  , "preset": true
 	  , "editable": true
 	  }
 	, { "type": "team"

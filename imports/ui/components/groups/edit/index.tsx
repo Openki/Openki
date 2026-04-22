@@ -11,7 +11,7 @@ import {
   isPrivate,
 } from "../../../../api/groups/groups";
 import * as GroupsMethods from "../../../../api/groups/methods";
-import { Regions } from "/imports/api/regions/regions";
+import { Regions, RoleEntity } from "/imports/api/regions/regions";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { hasRoleUser } from "../../../../utils/group-role-utils";
@@ -191,15 +191,14 @@ export function Edit(props: Props) {
       .value();
 
     return regionRoles.filter((role) => {
-      // Roles that are always on are not selectable here
-      if (role.preset) {
+      // Skip non-editable, preset roles
+      if (!role.editable && role.preset) {
         return false;
       }
 
-      if (isNew)
-        if (disableCreateRoles.includes(role.type)) {
-          return false;
-        }
+      if (isNew && disableCreateRoles.includes(role.type)) {
+        return false;
+      }
 
       return true;
     });
@@ -213,6 +212,16 @@ export function Edit(props: Props) {
     Record<string, { icon: string; enabled: boolean; enroll: boolean }>
   >({});
 
+  function isRoleEnabled(role: RoleEntity) {
+    if (props.roles) {
+      return props.roles.includes(role.type);
+    } else if (isNew) {
+      const regionRole = regionRoles.find((regionRole) => regionRole.type === role.type);
+      return regionRole?.preset ?? false;
+    }
+    return false;
+  }
+
   useEffect(() => {
     setRoles(
       fromPairs(
@@ -220,13 +229,13 @@ export function Edit(props: Props) {
           r.type,
           {
             icon: r.icon,
-            enabled: props.roles?.includes(r.type) || false,
-            enroll: hasRole(props.members, r.type) || false,
+            enabled: isRoleEnabled(r),
+            enroll: hasRole(props.members, r.type) ?? false,
           },
         ]),
       ),
     );
-  }, [organizations]);
+  }, [organizations, regionRoles]);
 
   const [errors, checkValidity, addError] = useValidation(
     {

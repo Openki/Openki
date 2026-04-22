@@ -7,7 +7,6 @@ import { SortSpec } from "/imports/utils/sort-spec";
 // import * as UrlTools from "/imports/utils/url-tools";
 import * as Tooltips from "/imports/utils/Tooltips";
 
-import { GroupTemplate } from "../../../lib/group-template";
 import * as RegionSelection from "/imports/utils/region-selection";
 import { FilterPreview } from "/imports/ui/lib/filter-preview";
 // import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
@@ -17,7 +16,7 @@ import { Filter, VisibleFilters, type Props as FilterProps } from "../filter";
 import { useTranslation } from "react-i18next";
 import { SearchField } from "/imports/ui/components/search-field";
 import { GroupList } from "../List";
-import { Edit } from "../edit";
+import { Edit, Props as GroupEditProps } from "../edit";
 import { useFindFilter } from "../../../../api/groups/publications";
 import { FindParams } from "../../../../api/groups/groups";
 import { LoadingPage } from "/imports/ui/pages/loading";
@@ -158,7 +157,7 @@ export function Find({ query }: Props) {
   }
 
   function newGroup() {
-    const group = GroupTemplate();
+    const group: Partial<GroupEditProps> = {};
     const search = filter.asQuery["search"];
     if (search) {
       group.name = search;

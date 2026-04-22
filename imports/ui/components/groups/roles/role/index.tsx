@@ -175,13 +175,13 @@ export function Role(props: Props) {
               {roleIs("host") &&
                 t(
                   "group.roles.firstSteps.informAboutVenue",
-                  "If not done already, please mention the venue(s) you have access to in your personal message info.",
+                  "If not done already, please mention the venue(s) you have access to in your personal message.",
                 )}
               {roleIs("mentor") && (
                 <>
                   {t(
                     "group.roles.firstSteps.mentionExperience",
-                    "If not done already, please mention your experiences on the topic in your personal message info.",
+                    "If not done already, please mention your experiences on the topic in your personal message.",
                   )}
                   <Guide />
                 </>
