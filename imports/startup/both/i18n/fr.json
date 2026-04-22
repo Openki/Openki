@@ -753,6 +753,9 @@
   "privilege.removed": "Droits supprimés",
   "privilege.removed.error": "Échec du retrait du privilège",
   "privileges.title": "Modifier les privilèges",
+  "profile": {
+    "account_managemen": "Zone dangereuse"
+  },
   "profile.account.delete.confirm.button": "Supprimer complètement l'utilisateur",
   "profile.account.delete.confirm.button.busy": "Suppression du profil…",
   "profile.account.delete.header": "Est-ce un spammeur ?",
@@ -769,7 +772,6 @@
   "profile.createNewVenue.button": "Créer un nouveau lieu",
   "profile.createNewVenue.linkText": "Définissez un lieu qui est visible aux autres et peut être réutilisé.",
   "profile.createNewVenue.question": "Es-tu la·le responsable de ce lieu ?",
-  "profile.danger_zone": "Zone dangereuse",
   "profile.delete.confirm.button": "Supprimer mon utilisateur et tout son profil",
   "profile.delete.confirm.button.busy": "Suppression du profil…",
   "profile.deleted": "Ton compte a été supprimé",
@@ -1061,8 +1063,5 @@
   "warning.emailNotValid": "Ton e-mail semble contenir une erreur.",
   "warning.noEmailProvided": "Entre ton adresse e-mail.",
   "warning.noUserName": "Entrez un nom d'utilisateur.",
-  "warning.userExists": "Ce nom d'utilisateur existe déjà. Merci d'en choisir un autre.",
-  "profile": {
-    "account_managemen": "Zone dangereuse"
-  }
+  "warning.userExists": "Ce nom d'utilisateur existe déjà. Merci d'en choisir un autre."
 }
