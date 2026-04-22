@@ -62,7 +62,7 @@ export function GroupList({ course }: Props) {
       {groups.map((groupId) => {
         const isOrganizer = course.groupOrganizers.includes(groupId);
         return (
-          <React.Fragment key={groupId}>
+          <div key={groupId} className="tag-group-addon-unit">
             <GroupTag groupId={groupId} isOrganizer={isOrganizer} />
             {isOrganizer && (
               <div className="tag group-tag addon">
@@ -96,7 +96,7 @@ export function GroupList({ course }: Props) {
                 </ul>
               </div>
             )}
-          </React.Fragment>
+          </div>
         );
       })}
 
