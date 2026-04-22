@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { FocusEventHandler, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useSession, useSessionEquals } from "/imports/utils/react-meteor-data";
 
@@ -17,8 +17,8 @@ export interface Props {
         /** number of visible characters */ numberOfCharacters: number,
       ) => void)
     | undefined;
-  onFocus: (() => void) | undefined;
-  onBlur: (() => void) | undefined;
+  onFocus: FocusEventHandler<HTMLElement> | undefined;
+  onBlur: FocusEventHandler<HTMLElement> | undefined;
   "aria-labelledby": string | undefined;
   "aria-describedby": string | undefined;
   "aria-invalid": boolean;
@@ -116,8 +116,8 @@ export function Richtext(props: Props) {
       className={`form-control ${className} ${disabled ? "bg-secondary" : ""}`}
       style={{ minHeight: "100px" }}
       ref={elementRef}
-      onFocus={!disabled ? () => onFocus?.() : undefined}
-      onBlur={!disabled ? () => onBlur?.() : undefined}
+      onFocus={!disabled ? onFocus : undefined}
+      onBlur={!disabled ? onBlur : undefined}
       // for accessibility
       aria-labelledby={props["aria-labelledby"]}
       aria-describedby={props["aria-describedby"]}
