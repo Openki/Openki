@@ -21,6 +21,7 @@ node_modules/
 
 .vscode/
 .idea/
+.zed/
 
 tsconfig.tsbuildinfo
 jsconfig.json
