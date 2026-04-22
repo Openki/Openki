@@ -265,7 +265,7 @@ export function EditableImage(data: Data) {
               <div className="editable-image-actions">
                 <span className="btn btn-secondary">
                   {deleteAllowed()
-                    ? t("fileUpload.change.text", "Change file")
+                    ? t("fileUpload.change.text", "Replace file")
                     : t("fileUpload.choose.text", "Choose a file")}
                 </span>
                 {deleteAllowed() && <ButtonDelete id="editable-image-delete" onClick={onDelete} />}

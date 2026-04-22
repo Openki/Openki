@@ -65,7 +65,12 @@ function VerifyEmailAlerts() {
           type="success"
           title={t("profile.verifyEmail.success", "Your e-mail has been verified.")}
           actions={[{ button: <VisitProfileAction key={1} color="success" /> }]}
-        />
+        >
+          {t(
+            "profile.verifyEmail.success.btw",
+            "By the way: Your email address had already been verified previously.",
+          )}
+        </ActionResult>
       );
     }
 

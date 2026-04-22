@@ -37,17 +37,17 @@ export function TenantCreatePage(props: Props) {
     {
       noTenantName: {
         field: "tenantName",
-        onCheckValidity: () => !!changes.tenantName,
+        isValid: () => !!changes.tenantName,
         text: () => t("tenant.create.plsGiveName", "Please give a name"),
       },
       noRegionName: {
         field: "regionName",
-        onCheckValidity: () => !!changes.name,
+        isValid: () => !!changes.name,
         text: () => t("tenant.region.create.plsGiveName", "Please give your region a name"),
       },
       noLocation: {
         field: "location",
-        onCheckValidity: () => !!changes.loc,
+        isValid: () => !!changes.loc,
         text: () =>
           t(
             "tenant.region.create.plsSelectPointOnMap",

@@ -38,25 +38,17 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
   // Controls password visibility toggle between plain text and masked input.
   // Security note: password is automatically hidden again on form submit.
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  // Stores the confirmation password value separately from registerData
-  // since it is only needed for validation and not sent to the server.
-  const [confirmPassword, setConfirmPassword] = useState("");
-
   // Reset password visibility when modal is reopened to prevent
   // accidental exposure on shared devices.
   useEffect(() => {
     setShowPassword(false);
-    setShowConfirmPassword(false);
-    setConfirmPassword("");
   }, [username, password]);
 
   const [errors, checkValidity, addError] = useValidation({
     noUsername: {
       text: () => t("register.warning.noUserName", "Please enter a name for your new user."),
       field: "username",
-      onCheckValidity: () => !!registerData.username,
+      isValid: () => !!registerData.username,
     },
     "Not allowed character": {
       text: () =>
@@ -76,18 +68,13 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
     noPassword: {
       text: () => t("register.warning.noPasswordProvided", "Please enter a password to register."),
       field: "password",
-      onCheckValidity: () => !!registerData.password,
-    },
-    passwordMismatch: {
-      text: () => t("register.warning.passwordMismatch", "Passwords do not match."),
-      field: "confirmPassword",
-      onCheckValidity: () => registerData.password === confirmPassword,
+      isValid: () => !!registerData.password,
     },
     noEmail: {
       text: () =>
         t("register.warning.noEmailProvided", "Please enter an email-address to register."),
       field: "email",
-      onCheckValidity: () => !!registerData.email,
+      isValid: () => !!registerData.email,
     },
     "email invalid": {
       text: () => t("register.warning.emailNotValid"),
@@ -121,7 +108,6 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
         // Hide password before submitting to prevent accidental exposure
         // if the user leaves the page after a failed login attempt.
         setShowPassword(false);
-        setShowConfirmPassword(false);
         setIsBusy(true);
 
         try {
@@ -182,29 +168,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
                 className="btn btn-outline-secondary text-dark"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                <i className={`fa-fw fa-solid ${showPassword ? " fa-eye-slash" : "fa-eye"}`} />
-              </button>
-            </span>
-          }
-        />
-      </div>
-      <div className="mb-3">
-        <FormControl
-          id="register-frame-confirm-password"
-          type={showConfirmPassword ? "text" : "password"}
-          label={t("register.confirmPassword", "Confirm password")}
-          prepend="fa-solid fa-lock fa-fw"
-          value={confirmPassword}
-          onChange={(value: string) => setConfirmPassword(value)}
-          error={errors.confirmPassword}
-          append={
-            <span className="input-group-text p-0">
-              <button
-                type="button"
-                className="btn btn-outline-secondary text-dark"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              >
-                <i className={`fa-fw fa-solid ${showPassword ? " fa-eye-slash" : "fa-eye"}`} />
+                <i className={`fa-fw fa-solid ${showPassword ? "fa-eye-slash" : "fa-eye"}`} />
               </button>
             </span>
           }

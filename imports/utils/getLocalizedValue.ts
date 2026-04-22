@@ -3,7 +3,7 @@ import { Session } from "meteor/session";
 import { useTranslation } from "react-i18next";
 import { useSession } from "./react-meteor-data";
 
-/** allows localised value eg. with `getLocalizedValue(...)` to have a string per language. */
+/** allows localized value eg. with `getLocalizedValue(...)` to have a string per language. */
 export const LocalizedValuePattern = Match.OneOf(
   String,
   Match.ObjectIncluding<Record<string, string | undefined>>({}),
@@ -12,7 +12,7 @@ export const LocalizedValuePattern = Match.OneOf(
 export type LocalizedValue = Match.PatternMatch<typeof LocalizedValuePattern>;
 
 /**
- * Returns a loacalised value based on the current set locale. 
+ * Returns a localized value based on the current set locale. 
  * @example {
 			"en": "https://about.openki.net/en/ueber-uns/spenden/",
 			"de": "https://about.openki.net/ueber-uns/spenden/"
@@ -31,7 +31,7 @@ export function getLocalizedValue(
   }
 
   if (setting[locale]) {
-    // excact match found
+    // exact match found
     return setting[locale];
   }
 
