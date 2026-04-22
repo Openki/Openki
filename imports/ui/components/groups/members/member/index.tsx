@@ -28,10 +28,16 @@ export function Member({ member, group }: { member: GroupMemberEntity; group: Gr
   const currentUser = useUser();
   const { roleShort } = getRoleDisplay(t);
 
-  const [isLoading, roles] = useRegionRoles(group.region);
+  const [isRolesLoading, roles] = useRegionRoles(group.region);
 
   function subscribeToTeam() {
-    return new Subscribe(group, member.user, "team", "interested");
+    return new Subscribe(
+      group,
+      roles.map((r) => r.type),
+      member.user,
+      "team",
+      "interested",
+    );
   }
 
   function removeFromTeam() {
@@ -89,7 +95,7 @@ export function Member({ member, group }: { member: GroupMemberEntity; group: Gr
         </div>
         <ParticipantContact participant={member.user} group={group} />
         <div className="ms-auto d-flex flex-wrap align-items-center">
-          {!isLoading() &&
+          {!isRolesLoading() &&
             memberRoles().map((role) => (
               <div
                 key={role}

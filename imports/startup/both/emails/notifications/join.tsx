@@ -113,12 +113,10 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         subjectvars,
       );
 
-      const figures = ["host", "mentor", "participant", "team"]
-        .filter((role) => group.roles.includes(role))
-        .map((role) => ({
-          role: capitalize(roleShort(role)),
-          count: group.membersWithRole(role).length,
-        }));
+      const roleCounts = group.roles.map((role) => ({
+        role: capitalize(roleShort(role)),
+        count: group.membersWithRole(role).length,
+      }));
 
       let region: RegionModel | undefined;
       if (group.region) {
@@ -139,7 +137,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         // For Team members when a mentor joins, add a hint for possible collaboration or
         // invite into team
         appendCollaborationHint: body.newRole === "mentor",
-        figures,
+        roleCounts,
         otherRecipients: recipients
           .filter((r) => r._id !== actualRecipient._id)
           .map((r) => r.getDisplayName())

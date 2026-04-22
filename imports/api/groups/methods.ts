@@ -31,7 +31,7 @@ import * as FileStorage from "/imports/utils/FileStorage";
 import { HtmlString, StringEnum, Type } from "/imports/utils/CustomChecks";
 import { OrganizationPromoters } from "/imports/utils/update-methods";
 import { resizeImage } from "../../utils/resize-image";
-import { PublicSettings } from "/imports/utils/PublicSettings";
+import { loadRoles } from "/imports/api/regions/loadRoles";
 
 export interface Method<T> {
   method: string;
@@ -98,15 +98,6 @@ async function loadGroup(groupId: string) {
     throw new Meteor.Error(404, "Group not found");
   }
   return group;
-}
-
-async function loadRoles(regionId: string) {
-  const region = await Regions.findOneAsync({ _id: regionId });
-  if (!region) {
-    throw new Meteor.Error(404, "Region not found");
-  }
-
-  return region.roles ?? PublicSettings.rolesDefault;
 }
 
 async function loadDisabledRoles(organizationIds: string[]) {
@@ -314,9 +305,21 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
 
   if (changes.subs) {
     const changedGroup = await Groups.findOneAsync(groupId);
+    if (!changedGroup) {
+      throw new Error("changedGroup is not defined");
+    }
+
+    const roles = await loadRoles(changedGroup.region);
+
     await Promise.all(
       changes.subs.map(async (role) => {
-        const change = new Subscribe(changedGroup, user._id, role, "interested");
+        const change = new Subscribe(
+          changedGroup,
+          roles.map((r) => r.type),
+          user._id,
+          role,
+          "interested",
+        );
         if (change.validFor(user)) {
           await change.apply();
         }
