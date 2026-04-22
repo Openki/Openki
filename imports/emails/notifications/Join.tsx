@@ -10,7 +10,7 @@ export interface Props {
   roleType: string;
   message: string | undefined;
   appendCollaborationHint: boolean;
-  figures: {
+  roleCounts: {
     role: string;
     count: number;
   }[];
@@ -28,7 +28,7 @@ export function Join({
   roleType,
   message,
   appendCollaborationHint,
-  figures,
+  roleCounts,
   otherRecipients,
   username,
   unsubscribe,
@@ -64,7 +64,7 @@ export function Join({
             <p>
               {t(
                 "notification.join.mail.collaborationHint",
-                "If you like them to collaborate feel free to make contact. Give out rights to edit {GROUP} by adding people to its organization team by clicking the bullhorn next to a name.",
+                "If you like them to collaborate feel free to make contact. You can give them rights to edit {GROUP} and make them part of the organizing team by clicking the megaphone next to a name.",
                 { GROUP: group },
               )}
             </p>
@@ -73,9 +73,9 @@ export function Join({
             {t("notification.join.mail.statsOverview", "Overview over participants:")}
           </strong>
           <p>
-            {figures.map((figure) => (
+            {roleCounts.map(({ role, count }) => (
               <>
-                {figure.role}: {figure.count}
+                {role}: {count}
                 <br />
               </>
             ))}
