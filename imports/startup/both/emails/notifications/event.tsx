@@ -10,6 +10,7 @@ import { Events } from "/imports/api/events/events";
 import { Log } from "/imports/api/log/log";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { UserModel } from "/imports/api/users/users";
+import { Groups } from "/imports/api/groups/groups";
 
 import { getSiteName } from "/imports/utils/getSiteName";
 import { Model as NotificationModel } from "../notification";
@@ -87,6 +88,12 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
     region = await Regions.findOneAsync(event.region);
   }
 
+  let registrationClosed = false;
+  if (event) {
+    const groups = await Groups.find({ _id: { $in: event.allGroupOrganizers() } }).fetchAsync();
+    registrationClosed = groups.some((g) => g.registrationClosed);
+  }
+
   const replicats = await Events.find({ _id: { $in: entry.body.replicats } }).fetchAsync();
 
   return {
@@ -139,6 +146,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         event,
         tz,
         recipientTakePart: event.participants?.some((p) => p.user === actualRecipient._id),
+        registrationClosed,
         registerToEventLink: Router.url("showEvent", event, {
           query: { action: "register", campaign },
         }),

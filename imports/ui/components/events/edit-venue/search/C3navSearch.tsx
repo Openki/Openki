@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type FocusEventHandler } from "react";
 import { filter, chain } from "lodash-es";
 import useSWR from "swr";
 
@@ -32,20 +32,24 @@ const fetcher = (input: URL | RequestInfo) =>
 
 export function C3navSearch({
   id,
+  className,
   autofocus,
   region,
   venues,
   apiUrl,
   value,
   onChange,
+  onBlur,
 }: {
   id: string;
+  className?: string | undefined;
   autofocus?: boolean | undefined;
   region: string;
   venues: string[];
   apiUrl: string;
   value: EventVenueEntity | undefined;
   onChange: (newValue: EventVenueEntity) => void;
+  onBlur: FocusEventHandler<HTMLInputElement>;
 }) {
   const { data: locations } = useSWR(apiUrl + "/map/locations/", fetcher);
 
@@ -56,12 +60,14 @@ export function C3navSearch({
   return (
     <SearchBase
       id={id}
+      className={className}
       autofocus={autofocus}
       region={region}
       venues={venues}
       onRequest={handleRequest}
       value={value}
       onChange={onChange}
+      onBlur={onBlur}
     />
   );
 }

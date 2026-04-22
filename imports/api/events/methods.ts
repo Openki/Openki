@@ -123,6 +123,7 @@ export type UpdateFields = Type<typeof UpdateFieldsPattern>;
 
 export const CreateFieldsPattern = {
   ...UpdateFieldsPattern,
+  venue: EventVenuePattern,
   courseId: Match.Optional(String),
   region: String,
   replicaOf: Match.Optional(String),
