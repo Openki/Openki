@@ -82,12 +82,14 @@ export type Reason = Type<typeof ReasonPattern>;
 export class Subscribe extends Change<{
   change: string;
   groupId: string;
+  regionRoles: string[];
   userId: string | undefined;
   role: string;
   reason: Reason;
-  comment: string | undefined;
+  comment?: string | undefined;
 }> {
   group: GroupModel;
+  regionRoles: string[];
 
   userId: string | undefined;
 
@@ -101,6 +103,7 @@ export class Subscribe extends Change<{
 
   static async read(body: {
     groupId: string;
+    regionRoles: string[];
     userId: string | undefined;
     role: string;
     reason: Reason;
@@ -109,6 +112,7 @@ export class Subscribe extends Change<{
     check(body, Object);
     return new this(
       await Groups.findOneAsync(body.groupId),
+      body.regionRoles,
       body.userId,
       body.role,
       body.reason,
@@ -118,6 +122,7 @@ export class Subscribe extends Change<{
 
   constructor(
     group: GroupModel | undefined,
+    regionRoles: string[],
     userId: string | undefined,
     role: string,
     reason: Reason,
@@ -126,6 +131,9 @@ export class Subscribe extends Change<{
     super();
 
     this.group = checkGroup(group);
+
+    check(regionRoles, [String]);
+    this.regionRoles = regionRoles;
 
     check(userId, Match.Optional(String));
     this.userId = userId;
@@ -175,7 +183,7 @@ export class Subscribe extends Change<{
       // Only members of the team can take-on other people
       if (this.group.userHasRole(operator._id, "team")) {
         // Only participating users can be drafted
-        const candidateRoles = ["participant", "mentor", "host"];
+        const candidateRoles = this.regionRoles.filter((r) => r !== "team");
 
         // In for a penny, in for a pound
         if (candidateRoles.some((role) => this.group.userHasRole(this.userId, role))) {
@@ -192,6 +200,7 @@ export class Subscribe extends Change<{
   dict() {
     return {
       change: "subscribe",
+      regionRoles: this.regionRoles,
       groupId: this.group._id,
       userId: this.userId,
       role: this.role,

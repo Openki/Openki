@@ -14,6 +14,7 @@ import { GroupModel } from "../../../../../api/groups/groups";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
+import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 
 import { Button, ButtonCancel } from "../../../Buttons";
 import { Action } from "/imports/ui/components/PleaseLogin";
@@ -36,10 +37,18 @@ export function Role(props: Props) {
   const [enrolling, setEnrolling] = useState(false);
   const [showFirstSteps, setShowFirstSteps] = useState(false);
   const [comment, setComment] = useState(props.comment);
+  const [isRolesLoading, roles] = useRegionRoles(props.group.region);
 
   // Build a subscribe change
   function groupSubscribe(newComment?: string) {
-    return new Subscribe(props.group, user?._id, props.role.type, "interested", newComment);
+    return new Subscribe(
+      props.group,
+      roles.map((r) => r.type),
+      user?._id,
+      props.role.type,
+      "interested",
+      newComment,
+    );
   }
 
   function roleIs(type: string) {
@@ -90,6 +99,10 @@ export function Role(props: Props) {
   }
   function handleFirstStepsCommentClick() {
     document.getElementById("discussion")?.dispatchEvent(new Event("writeComment"));
+  }
+
+  if (!isRolesLoading()) {
+    return null;
   }
 
   return (
