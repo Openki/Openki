@@ -76,7 +76,7 @@ function FoundUsers({
   return (
     <>
       {users.map((user) => (
-        <React.Fragment key={user._id}>
+        <div key={user._id} className="tag-group-addon-unit">
           <div className="tag tag-btn group-member-tag-btn-add ">
             <button
               title={t("group.settings.addMember", "add as member")}
@@ -91,7 +91,7 @@ function FoundUsers({
               <i className="fa-solid fa-user fa-fw" />
             </a>
           </div>
-        </React.Fragment>
+        </div>
       ))}
     </>
   );
@@ -253,7 +253,7 @@ export function GroupSettings({ group }: Props) {
             </h3>
             <div className="tag-group multiline">
               {group.members.map((member) => (
-               <div key={member.user} className="group-member-unit"> 
+                <div key={member.user} className="tag-group-addon-unit">
                   <RemoveMember {...member} onRemove={handleMemberRemove} />
 
                   {currentUser?._id === member.user &&
