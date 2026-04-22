@@ -29,7 +29,7 @@ export function Create({ tenant }: Props) {
             "Some of the e-mail addresses are invalid.",
           ),
         field: "emails",
-        onCheckValidity: () => {
+        isValid: () => {
           const emails = getLines();
           return emails.length > 0 && emails.every((e) => isEmail(e));
         },

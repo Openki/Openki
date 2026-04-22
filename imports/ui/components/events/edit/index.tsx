@@ -4,7 +4,7 @@
 // the timezone might actually change when a different region is selected. We
 // wouldn't want the time or even date field to change because of this switch.
 
-import { intersection } from "lodash-es";
+import { intersection, isEmpty } from "lodash-es";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
@@ -137,7 +137,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   }, [course, currentRegion, regions]);
 
   const [selectedVenue, setSelectedVenue] = useState(event.venue);
-  const [noRsvpChecked, setNoRsvpChecked] = useState(!!event.noRsvp);
+  const [isRegistrationEnabled, setIsRegistrationEnabled] = useState(event.noRsvp ?? true);
 
   const [isBusy, setIsBusy] = useState(false);
   const { promptToLogin } = useAccountTasks();
@@ -180,7 +180,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     internal: event.internal,
     sendReminder: event.sendReminder,
     room: event.room || "",
-    maxParticipants: event.maxParticipants,
+    maxParticipants: event.maxParticipants ?? 0,
   });
   const parallelEvents = useFindParallelEvents(selectedRegion, selectedVenue?._id, {
     _id: event._id,
@@ -207,12 +207,12 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     {
       noTitle: {
         field: "title",
-        onCheckValidity: () => !!changes.title,
+        isValid: () => !!changes.title,
         text: () => t("event.edit.plzProvideTitle", "Please provide a title"),
       },
       startWrongFormat: {
         field: "start",
-        onCheckValidity: () => {
+        isValid: () => {
           const start = LocalTime.fromString(changes.startLocal);
           return start.isValid();
         },
@@ -229,7 +229,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       },
       startInPast: {
         field: "start",
-        onCheckValidity: () => {
+        isValid: () => {
           if (isNew) {
             const start = LocalTime.fromString(changes.startLocal);
             if (!start.isValid()) {
@@ -249,12 +249,12 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       },
       noDescription: {
         field: "description",
-        onCheckValidity: () => !!changes.description,
+        isValid: () => !!changes.description,
         text: () => t("event.edit.plzProvideDescr", "Please provide a description"),
       },
       descriptionToLong: {
         field: "description",
-        onCheckValidity: () =>
+        isValid: () =>
           !PublicSettings.eventDescriptionMax ||
           changes.descriptionNumberOfCharacters <= PublicSettings.eventDescriptionMax,
         text: () =>
@@ -266,12 +266,12 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       },
       noRegion: {
         field: "region",
-        onCheckValidity: () => !!selectedRegion,
+        isValid: () => !!selectedRegion,
         text: () => t("event.edit.plzSelectRegion", "Please select the region for this event"),
       },
       parallelEvents: {
         field: "startEndVenue",
-        onCheckValidity: () =>
+        isValid: () =>
           venueIsLoading() || !venue || venue.allowParallelEvents || allParallelEvents.length === 0,
         text: () => (
           <>
@@ -284,9 +284,16 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           </>
         ),
       },
+      noVenue: {
+        field: "venue",
+        isValid: () => Boolean(selectedVenue && !isEmpty(selectedVenue)),
+        text() {
+          return t("event.edit.venueRequired", "Please select a venue.");
+        },
+      },
       venueRestricedUse: {
         field: "venue",
-        onCheckValidity: () => {
+        isValid: () => {
           return (
             !selectedVenue?._id ||
             !selectedVenue.restrictedUse ||
@@ -348,10 +355,11 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       value: selectedVenue,
       onChange: (newValue) => setSelectedVenue(newValue),
       errors,
+      onBlur: () => checkValidity("venue"),
     };
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.SubmitEvent) {
     e.preventDefault();
 
     if (!checkValidity()) {
@@ -363,13 +371,11 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
     const title = changes.title;
 
-    const noRsvp = noRsvpChecked;
-
     let maxParticipants;
-    if (!noRsvp) {
+    if (isRegistrationEnabled) {
       maxParticipants = changes.maxParticipants;
     } else {
-      // if no rsvp is set there is none limit for maxParticipants;
+      // Events without registration have unlimited seats
       maxParticipants = 0;
     }
 
@@ -382,7 +388,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       endLocal: changes.endLocal,
       internal: changes.internal,
       sendReminder: changes.sendReminder,
-      noRsvp,
+      noRsvp: isRegistrationEnabled === false,
       maxParticipants,
     } as SaveFields;
 
@@ -597,7 +603,6 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                     id="event-edit-room"
                     type="text"
                     label={t("course.event.edit.room", "Room")}
-                    optional
                     prepend="fa-solid fa-signs-post fa-fw"
                     value={changes.room}
                     onChange={(value) => setChanges((changes) => ({ ...changes, room: value }))}
@@ -616,16 +621,16 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           )}
           <div className="mb-3">
             <FormCheck
-              id="event-edit-no-rsvp"
+              id="event-edit-enable-registration"
               type="box"
-              label={t("event.edit.noRsvp", "No reservation required")}
-              checked={noRsvpChecked}
-              onChange={(checked) => setNoRsvpChecked(checked)}
+              label={t("event.edit.enableRegistration", "Enable registration")}
+              checked={isRegistrationEnabled}
+              onChange={(checked) => setIsRegistrationEnabled(checked)}
             />
 
             <div className="form-switch-text-indent">
-              {noRsvpChecked ? (
-                <div className="form-text">
+              {!isRegistrationEnabled ? (
+                <div className="form-text" id="no-rsvp-notice">
                   {t(
                     "event.edit.noRsvp.description",
                     "Registration for this event is disabled. You might want to explain why in the description.",
@@ -635,12 +640,13 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                 <FormControl
                   id="event-edit-max-participants"
                   type="integer"
-                  label={t("course.event.edit.maxParticipants", "maximal number of participants")}
+                  label={t("course.event.edit.maxParticipants", "Maximum number of participants")}
                   optional
                   prepend="fa-solid fa-users fa-fw"
                   min={0}
                   step={1}
-                  value={changes.maxParticipants || 0}
+                  placeholder={t("course.event.edit.unlimitedParticipants", "Unlimited seats")}
+                  value={changes.maxParticipants}
                   onChange={(value) =>
                     setChanges((changes) => ({ ...changes, maxParticipants: value }))
                   }
@@ -688,7 +694,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             </div>
           )}
 
-          {!noRsvpChecked && PublicSettings.feature.sendReminderIsEditable && (
+          {isRegistrationEnabled && PublicSettings.feature.sendReminderIsEditable && (
             <div className="mb-3">
               <FormCheck
                 id="event-edit-send-reminder"

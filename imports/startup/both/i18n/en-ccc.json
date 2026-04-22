@@ -420,7 +420,6 @@
   "event.edit.internal": "Hide on front page",
   "event.edit.internal.description": "Show it only on tag and venue pages",
   "event.edit.locationNamePlaceholder": "Search Room, Stage or Assembly",
-  "event.edit.noRsvp": "No reservation required",
   "event.edit.noRsvp.description": "Registration for this event is disabled. You might want to explain why in the description.",
   "event.edit.notifyEditEvent": "Send notification to all interested and participants of \"{COURSE}\" with the up-to-date event information.",
   "event.edit.notifyNewEvent": "Send notification to all members of the session \"{COURSE}\" about this event.",
