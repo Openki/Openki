@@ -45,17 +45,3 @@ $group-member-bg: rgba($gray-600, 0.15);
     color: rgb(37 37 37);
   }
 }
-
-.group-member-unit {
-  display: flex;
-  flex-wrap: nowrap;
-  min-width: max-content;
-}
-
-.tag-group.multiline {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  align-items: flex-start;
-}
-
