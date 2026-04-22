@@ -141,12 +141,24 @@
     , { "type": "mentor"
       , "icon": "fa-solid fa-graduation-cap"
       , "proposal": true
+      , "preset": true
+      , "editable": true
+      }
+    , { "type": "moderator"
+      , "icon": "fa-solid fa-circle-nodes"
+      , "proposal": true
       , "preset": false
       , "editable": true
       }
     , { "type": "host"
       , "icon": "fa-solid fa-house"
       , "proposal": true
+      , "preset": true
+      , "editable": true
+      }
+    , { "type": "donator"
+      , "icon": "fa-solid fa-money-bill-1-wave"
+      , "proposal": false
       , "preset": false
       , "editable": true
       }
