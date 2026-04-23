@@ -10,5 +10,8 @@ export async function loadRoles(regionId: string) {
     throw new Meteor.Error(404, "Region not found");
   }
 
-  return region.roles ?? PublicSettings.rolesDefault;
+  // NOTE: The system expects a `team` role to exist, so we always need to add it.
+  const [teamRole] = PublicSettings.rolesDefault.filter((r) => r.type === "team");
+
+  return region.roles?.length ? [...region.roles, teamRole] : PublicSettings.rolesDefault;
 }
