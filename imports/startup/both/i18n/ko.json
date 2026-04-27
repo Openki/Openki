@@ -996,6 +996,6 @@
   "warning.noUserName": "사용할 사용자 이름을 입력해주세요.",
   "warning.userExists": "이미 사용 중인 사용자 이름입니다. 다시 입력해주세요.",
   "profile": {
-    "account_managemen": "-주의-"
+    "accountManagement": "-주의-"
   }
 }

@@ -1211,6 +1211,6 @@
   "warning.noUserName": "Please enter a name for your user.",
   "warning.userExists": "This username is already in use. Please choose another one.",
   "profile": {
-    "account_managemen": "Danger zone"
+    "accountManagement": "Danger zone"
   }
 }
