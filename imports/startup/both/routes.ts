@@ -1065,8 +1065,8 @@ RouterAsync.route("log", {
   },
 });
 
-RouterAsync.route("resetPasswortEmail", {
-  path: "/profile/reset-passwort",
+RouterAsync.route("resetPasswordEmail", {
+  path: "/profile/reset-password",
   async action() {
     const email = this.params.query.email as string;
 
