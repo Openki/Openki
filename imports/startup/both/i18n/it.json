@@ -1013,6 +1013,6 @@
   "warning.noUserName": "Per favore inserisci un nome per il tuo utente.",
   "warning.userExists": "Nome utente già in uso. Per favore scegline un altro.",
   "profile": {
-    "account_managemen": "Zona pericolosa"
+    "accountManagement": "Zona pericolosa"
   }
 }

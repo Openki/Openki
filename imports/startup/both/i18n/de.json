@@ -1264,6 +1264,6 @@
   "warning.noUserName": "Bitte einen Benutzernamen eingeben.",
   "warning.userExists": "Dieser Benutzername existiert bereits. Bitte wähle einen anderen.",
   "profile": {
-    "account_managemen": "Gefahren-Zone"
+    "accountManagement": "Gefahren-Zone"
   }
 }
