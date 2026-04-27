@@ -5,6 +5,7 @@ import { GroupModel } from "../../../../../api/groups/groups";
 import { RoleEntity } from "/imports/api/regions/regions";
 
 import { hasRole, hasRoleUser } from "../../../../../utils/group-role-utils";
+import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { useUserId } from "/imports/utils/react-meteor-data";
 
 import { RoleIcon } from "../../../RoleIcon";
@@ -69,10 +70,20 @@ export function GroupCompactRoles({ group }: Props) {
     return className;
   }
 
-  function roleStateTooltip(role: RoleEntity["type"]) {
-    let tooltip;
+  const { groupListRoleNeeded, groupListRoleOccupied, groupListRoleOccupiedByUser } =
+    getRoleDisplay(t);
 
-    const tooltips: Record<
+  const tooltips = ["team", "mentor", "host"].reduce(
+    (tooltips, type) => {
+      tooltips[type] = {
+        needed: groupListRoleNeeded(type),
+        occupied: groupListRoleOccupied(type),
+        occupiedByUser: groupListRoleOccupiedByUser(type),
+      };
+
+      return tooltips;
+    },
+    {} as Record<
       string,
       | {
           needed: string;
@@ -80,36 +91,17 @@ export function GroupCompactRoles({ group }: Props) {
           occupiedByUser: string;
         }
       | undefined
-    > = {
-      team: {
-        needed: t("group.list.status_titles.needs_team", "Needs a coordination-team"),
-        occupied: t("group.list.status_titles.has_team", "Has a coordination-team"),
-        occupiedByUser: t(
-          "group.list.status_titles.u_are_team",
-          "You are part of the coordination-team",
-        ),
-      },
-      mentor: {
-        needed: t("group.list.status_titles.needs_mentor", "Needs a mentor"),
-        occupied: t("group.list.status_titles.has_mentor", "Has a mentor"),
-        occupiedByUser: t("group.list.status_titles.u_are_mentor", "You are mentor"),
-      },
-      host: {
-        needed: t("group.list.status_titles.needs_host", "Needs a host"),
-        occupied: t("group.list.status_titles.has_host", "Has a host"),
-        occupiedByUser: t("group.list.status_titles.u_are_host", "You are host"),
-      },
-    };
+    >,
+  );
 
+  function roleStateTooltip(role: RoleEntity["type"]) {
     if (!hasRole(group.members, role)) {
-      tooltip = tooltips[role]?.needed;
+      return tooltips[role]?.needed;
     } else if (hasRoleUser(group.members, role, userId)) {
-      tooltip = tooltips[role]?.occupiedByUser;
+      return tooltips[role]?.occupiedByUser;
     } else {
-      tooltip = tooltips[role]?.occupied;
+      return tooltips[role]?.occupied;
     }
-
-    return tooltip;
   }
 
   return (

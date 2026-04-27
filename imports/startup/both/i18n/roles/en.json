@@ -6,6 +6,9 @@
   "team.userList": "{NAME} is organizing",
   "team.userList.past": "{NAME} was organizing",
   "team.find.roleNeeded": "Looking for a coordinator",
+  "team.groupList.statusTitle.roleNeeded": "Needs a coordination team",
+  "team.groupList.statusTitle.roleOccupied": "Has a coordination-team",
+  "team.groupList.statusTitle.roleOccupiedByUser": "You are part of the coordination team",
 
   "participant.short": "interested",
   "participant.subscribe": "I am interested",
@@ -21,6 +24,9 @@
   "mentor.myList": "I teach",
   "mentor.userList": "{NAME} teaches",
   "mentor.find.roleNeeded": "Looking for a mentor",
+  "mentor.groupList.statusTitle.roleNeeded": "Needs a mentor",
+  "mentor.groupList.statusTitle.roleOccupied": "Has a mentor",
+  "mentor.groupList.statusTitle.roleOccupiedByUser": "You are a mentor",
 
   "host.short": "host",
   "host.short.plural": "hosts",
@@ -29,5 +35,8 @@
   "host.description": "a host that provides a place",
   "host.myList": "I provide a place for",
   "host.userList": "{NAME} provides a place for",
-  "host.find.roleNeeded": "Looking for a host"
+  "host.find.roleNeeded": "Looking for a host",
+  "host.groupList.statusTitle.roleNeeded": "Needs a host",
+  "host.groupList.statusTitle.roleOccupied": "Has a host",
+  "host.groupList.statusTitle.roleOccupiedByUser": "You are host"
 }

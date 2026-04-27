@@ -38,5 +38,17 @@ export function getRoleDisplay(t: TFunction) {
     roleNeeded(type: RoleEntity["type"]) {
       return t(`roles:${type}.find.roleNeeded`);
     },
+
+    groupListRoleNeeded(type: RoleEntity["type"]) {
+      return t(`roles:${type}.groupList.statusTitle.roleNeeded`);
+    },
+
+    groupListRoleOccupied(type: RoleEntity["type"]) {
+      return t(`roles:${type}.groupList.statusTitle.roleOccupied`);
+    },
+
+    groupListRoleOccupiedByUser(type: RoleEntity["type"]) {
+      return t(`roles:${type}.groupList.statusTitle.roleOccupiedByUser`);
+    },
   };
 }
