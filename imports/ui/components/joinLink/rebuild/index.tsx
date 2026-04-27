@@ -18,7 +18,7 @@ export function JoinLinkRebuild({ tenantId }: Props) {
   if (!confirm) {
     return (
       <button
-        className="btn btn-add"
+        className="btn btn-primary"
         type="button"
         onClick={() => {
           setConfirm(true);
@@ -39,7 +39,7 @@ export function JoinLinkRebuild({ tenantId }: Props) {
       </p>
       <div className="form-actions">
         <button
-          className="btn btn-add"
+          className="btn btn-primary"
           type="button"
           onClick={async () => {
             await JoinLinks.create(tenantId);

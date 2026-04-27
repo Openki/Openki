@@ -33,6 +33,15 @@ export function JoinLink({ tenant }: Props) {
     };
   }
 
+  function getUrl() {
+    if (!joinLink) return "";
+    return Router.url("join", { token: joinLink.token }, { query: { tenant: joinLink.tenant } });
+  }
+
+  function copyLink() {
+    navigator.clipboard.writeText(getUrl());
+  }
+
   if (isLoading()) {
     return null;
   }
@@ -52,18 +61,23 @@ export function JoinLink({ tenant }: Props) {
         <JoinLinkCreate tenantId={tenant._id} />
       ) : (
         <>
-          <input
-            className="form-control mb-3"
-            type="text"
-            value={Router.url(
-              "join",
-              { token: joinLink.token },
-              { query: { tenant: joinLink.tenant } },
-            )}
-            readOnly
-          />
-
+          <div className="input-group mb-3">
+            <input className="form-control" type="text" value={getUrl()} readOnly />
+            <button
+              className="btn btn-add"
+              type="button"
+              onClick={copyLink}
+              title={t("joinLink.copy", "Copy link")}
+            >
+              <i className="fa-regular fa-copy" />
+            </button>
+          </div>
           <form className="row g-2 mb-2">
+            <div className="col-auto">
+              <button className="btn btn-add" type="button" onClick={copyLink}>
+                {t("joinLink.copy", "Copy link")}
+              </button>
+            </div>
             <div className="col-auto">
               <JoinLinkRebuild tenantId={tenant._id} />
             </div>
