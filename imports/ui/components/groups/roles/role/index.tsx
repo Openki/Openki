@@ -101,7 +101,7 @@ export function Role(props: Props) {
     document.getElementById("discussion")?.dispatchEvent(new Event("writeComment"));
   }
 
-  if (!isRolesLoading()) {
+  if (isRolesLoading()) {
     return null;
   }
 
