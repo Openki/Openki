@@ -34,5 +34,9 @@ export function getRoleDisplay(t: TFunction) {
     roleSubscribed(type: RoleEntity["type"]) {
       return t(`roles:${type}.subscribed`);
     },
+
+    roleNeeded(type: RoleEntity["type"]) {
+      return t(`roles:${type}.find.roleNeeded`);
+    },
   };
 }
