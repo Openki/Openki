@@ -129,7 +129,7 @@ export function Edit(props: Props) {
       //  If the session sets the region, we use it.
       setSelectedRegion(currentRegion);
     } else if (regions.length === 1) {
-      // There is only one region
+      // Auto-select the region if there is only one available.
       setSelectedRegion(regions[0]._id);
     }
   }, [props, currentRegion, regions]);
@@ -402,7 +402,7 @@ export function Edit(props: Props) {
     setSimpleSelectedRole(event.target.value);
   };
 
-  async function handleSave(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSave(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (!checkValidity()) {
@@ -648,16 +648,6 @@ export function Edit(props: Props) {
               </div>
             )}
 
-            {fullRoleSelection && availableRoles().length > 0 && (
-              <div className="col-md">
-                <div className="form-label">
-                  {t("group.edit.needs.role", "This group might need…")}
-                </div>
-                {groupEditRolesAttr().map((groupEditRoleAttr) => (
-                  <Role key={groupEditRoleAttr.type} {...groupEditRoleAttr} />
-                ))}
-              </div>
-            )}
             {showMoreInfo() && (
               <div className="col-md">
                 {showRegionSelection() && (
@@ -692,6 +682,17 @@ export function Edit(props: Props) {
                   values={customFieldValues}
                   onChange={(values) => setCustomFieldValues(values)}
                 />
+              </div>
+            )}
+
+            {fullRoleSelection && availableRoles().length > 0 && (
+              <div className="col-md">
+                <div className="form-label">
+                  {t("group.edit.needs.role", "This group might need…")}
+                </div>
+                {groupEditRolesAttr().map((groupEditRoleAttr) => (
+                  <Role key={groupEditRoleAttr.type} {...groupEditRoleAttr} />
+                ))}
               </div>
             )}
           </div>
