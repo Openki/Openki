@@ -662,6 +662,9 @@
   "privilege.removed": "تمت إزالة الإذن",
   "privilege.removed.error": "غير قادر على إزالة الامتياز",
   "privileges.title": "تحرير الأذونات",
+  "profile": {
+    "account_managemen": "منطقة الخطر"
+  },
   "profile.account.delete.confirm.button": "حذف المستخدم وجميع آثاره",
   "profile.account.delete.confirm.button.busy": "جاري حذف الملف الشخصي…",
   "profile.account.delete.header": "هل هذا مرسل رسائل غير مرغوب فيها؟",
@@ -678,7 +681,6 @@
   "profile.createNewVenue.button": "إنشاء مكان جديد",
   "profile.createNewVenue.linkText": "قم بإعداد مكان مرئي للآخرين ويمكن إعادة استخدامه.",
   "profile.createNewVenue.question": "هل أنت مسؤول عن هذا المكان؟",
-  "profile.danger_zone": "منطقة الخطر",
   "profile.delete.confirm.button": "حذف المستخدم والملف الشخصي الخاص بي",
   "profile.delete.confirm.button.busy": "جاري حذف الملف الشخصي…",
   "profile.deleted": "تم حذف حسابك",
