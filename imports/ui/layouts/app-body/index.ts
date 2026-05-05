@@ -20,7 +20,7 @@ import "/imports/ui/components/footer";
 import "/imports/ui/components/introduction";
 import "/imports/ui/components/kiosk-link";
 import "/imports/ui/components/navbar";
-import "../../components/reset-password-email-sended";
+import "/imports/ui/components/reset-password-email-sended";
 import "/imports/ui/components/regions/splash";
 
 import "./template.html";
@@ -42,8 +42,8 @@ template.helpers({
     );
   },
 
-  resetPasswortEmailIsSended() {
-    return Router.current().params.query?.action === "resetPasswortEmailSended";
+  resetPasswordEmailIsSended() {
+    return Router.current().params.query?.action === "resetPasswordEmailSended";
   },
 
   hasPricePolicy() {

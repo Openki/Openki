@@ -71,12 +71,12 @@ function Task({
   activeTask,
   onSwitch,
   onLogin,
-  onResetPasswort,
+  onResetPassword,
 }: {
   activeTask: string;
   onSwitch: (task: string) => void;
   onLogin: () => void;
-  onResetPasswort: () => void;
+  onResetPassword: () => void;
 }) {
   const [transferData, setTransferData] = useState({
     username: "",
@@ -124,8 +124,8 @@ function Task({
     return {
       ...transferData,
       onForgotPwd() {
-        Router.go("home", {}, { query: { action: "resetPasswortEmailSended" } });
-        onResetPasswort();
+        Router.go("home", {}, { query: { action: "resetPasswordEmailSended" } });
+        onResetPassword();
       },
       onClose() {
         onSwitch("login");
@@ -303,7 +303,7 @@ export function AccountTasks() {
                       Modal.getOrCreateInstance(elementModalRef.current).hide();
                     }
                   }}
-                  onResetPasswort={() => {
+                  onResetPassword={() => {
                     if (elementModalRef.current) {
                       Modal.getOrCreateInstance(elementModalRef.current).hide();
                     }

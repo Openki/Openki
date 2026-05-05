@@ -69,7 +69,7 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
         <div className="pre-line">
           {t("register.warning.emailExists")}
           <br />
-          <a href={Router.path("resetPasswortEmail", {}, { query: { email: registerData.email } })}>
+          <a href={Router.path("resetPasswordEmail", {}, { query: { email: registerData.email } })}>
             {t("register.warning.emailExists.sendEmail")}
           </a>
         </div>
