@@ -820,6 +820,7 @@
   "privilege.removed": "Berechtigung entfernt",
   "privilege.removed.error": "Berechtigung konnte nicht entfernt werden",
   "privileges.title": "Berechtigungen bearbeiten",
+  "profile.accountManagement": "Account Management",
   "profile.account.delete.confirm.button": "Benutzer löschen und alle Spuren beseitigen",
   "profile.account.delete.confirm.button.busy": "Profil wird gelöscht…",
   "profile.account.delete.header": "Ist das ein_e Spammer_in?",
@@ -852,7 +853,6 @@
   "profile.createUser.button": "Sende mir eine E-Mail zur Kontoerstellung",
   "profile.createUser.description": "Du bist momentan als Gast User hier. Falls du dich zukünftig mit einem Passwort einloggen willst oder alle Funktionen der Plattform nutzen willst, kannst du hier einen User Account erstellen. Dazu senden wir dir eine E-Mail mit einem Link um dein Passwort zu setzten.",
   "profile.createUser.title": "Benutzer erstellen",
-  "profile.danger_zone": "Gefahren-Zone",
   "profile.delete.confirm.button": "Lösche meinen Benutzer und mein Profil",
   "profile.delete.confirm.button.busy": "Lösche Profil…",
   "profile.deleted": "Dein Konto wurde gelöscht",
@@ -1211,8 +1211,5 @@
   "warning.emailNotValid": "Deine E-Mail Adresse scheint nicht korrekt.",
   "warning.noEmailProvided": "Bitte E-Mail Adresse eingeben.",
   "warning.noUserName": "Bitte einen Benutzernamen eingeben.",
-  "warning.userExists": "Dieser Benutzername existiert bereits. Bitte wähle einen anderen.",
-  "profile": {
-    "accountManagement": "Gefahren-Zone"
-  }
+  "warning.userExists": "Dieser Benutzername existiert bereits. Bitte wähle einen anderen."
 }

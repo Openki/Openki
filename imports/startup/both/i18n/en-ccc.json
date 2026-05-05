@@ -818,6 +818,7 @@
   "privilege.removed": "Removed privilege",
   "privilege.removed.error": "Unable to remove privilege",
   "privileges.title": "Edit Privileges",
+  "profile.accountManagement": "Account Management",
   "profile.account.delete.confirm.button": "Delete user and all his traces",
   "profile.account.delete.confirm.button.busy": "Deleting profile…",
   "profile.account.delete.header": "Is this a spammer?",
@@ -850,7 +851,6 @@
   "profile.createUser.button": "Send me an account creation email",
   "profile.createUser.description": "You are currently here as a guest user. If you want to be able to log in with a password and use all features of this plattform, you can create a normal user account here. For this, we will send you an email with the instructions and a link to set a password for your account.",
   "profile.createUser.title": "Create user",
-  "profile.danger_zone": "Danger zone",
   "profile.delete.confirm.button": "Delete my user and all its profile",
   "profile.delete.confirm.button.busy": "Deleting profile…",
   "profile.deleted": "Your account has been deleted",
@@ -1209,8 +1209,5 @@
   "warning.emailNotValid": "Your e-mail address seems to have an error.",
   "warning.noEmailProvided": "Please enter an e-mail address.",
   "warning.noUserName": "Please enter a name for your user.",
-  "warning.userExists": "This username is already in use. Please choose another one.",
-  "profile": {
-    "accountManagement": "Danger zone"
-  }
+  "warning.userExists": "This username is already in use. Please choose another one."
 }
