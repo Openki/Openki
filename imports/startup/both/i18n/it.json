@@ -703,6 +703,9 @@
   "privilege.removed": "Privilegio rimosso",
   "privilege.removed.error": "Impossibile rimuovere il privilegio",
   "privileges.title": "Modifica Privilegi",
+  "profile": {
+    "account_managemen": "Zona pericolosa"
+  },
   "profile.account.delete.confirm.button": "Elimina utente e tutti i suoi dati",
   "profile.account.delete.confirm.button.busy": "Eliminazione profilo…",
   "profile.account.delete.header": "È uno spammer?",
@@ -719,7 +722,6 @@
   "profile.createNewVenue.button": "Crea un nuovo luogo",
   "profile.createNewVenue.linkText": "Imposta un luogo visibile agli altri e riutilizzabile.",
   "profile.createNewVenue.question": "Sei responsabile di questo luogo?",
-  "profile.danger_zone": "Zona pericolosa",
   "profile.delete.confirm.button": "Elimina il mio utente e tutti i suoi dati",
   "profile.delete.confirm.button.busy": "Eliminazione profilo…",
   "profile.deleted": "Il tuo account è stato eliminato",
