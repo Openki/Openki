@@ -820,9 +820,6 @@
   "privilege.removed": "Berechtigung entfernt",
   "privilege.removed.error": "Berechtigung konnte nicht entfernt werden",
   "privileges.title": "Berechtigungen bearbeiten",
-  "profile": {
-    "account_managemen": "Gefahren-Zone"
-  },
   "profile.account.delete.confirm.button": "Benutzer löschen und alle Spuren beseitigen",
   "profile.account.delete.confirm.button.busy": "Profil wird gelöscht…",
   "profile.account.delete.header": "Ist das ein_e Spammer_in?",
@@ -1213,8 +1210,5 @@
   "warning.emailNotValid": "Deine E-Mail Adresse scheint nicht korrekt.",
   "warning.noEmailProvided": "Bitte E-Mail Adresse eingeben.",
   "warning.noUserName": "Bitte einen Benutzernamen eingeben.",
-  "warning.userExists": "Dieser Benutzername existiert bereits. Bitte wähle einen anderen.",
-  "profile": {
-    "accountManagement": "Gefahren-Zone"
-  }
+  "warning.userExists": "Dieser Benutzername existiert bereits. Bitte wähle einen anderen."
 }

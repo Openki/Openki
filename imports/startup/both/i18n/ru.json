@@ -807,9 +807,6 @@
   "privilege.removed": "Разрешение удалено",
   "privilege.removed.error": "Невозможно удалить разрешение",
   "privileges.title": "Изменить права",
-  "profile": {
-    "account_managemen": "Опасная зона"
-  },
   "profile.account.delete.confirm.button": "Удалить пользователя и все его следы",
   "profile.account.delete.confirm.button.busy": "Удаление профиля…",
   "profile.account.delete.header": "Это спамер?",
@@ -1195,8 +1192,5 @@
   "warning.emailNotValid": "Возможно, в вашем адресе электронной почты есть ошибка.",
   "warning.noEmailProvided": "Введите адрес электронной почты.",
   "warning.noUserName": "Введите имя пользователя.",
-  "warning.userExists": "Это имя пользователя уже используется. Выберите другое.",
-  "profile": {
-    "accountManagement": "Опасная зона"
-  }
+  "warning.userExists": "Это имя пользователя уже используется. Выберите другое."
 }
