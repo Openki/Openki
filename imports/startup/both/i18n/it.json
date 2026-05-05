@@ -709,7 +709,6 @@
   "profile.account.deleted": "Il profilo è stato eliminato",
   "profile.account.reallydelete": "Eliminare definitivamente il profilo utente \"{NAME}\"? Saranno rimossi anche {COURSES, number} Corsi creati da questo utente (con {INTERESTED, number} Partecipanti e {EVENTS, number} eventi imminenti).",
   "profile.account.reason.placeholder": "Motivo per cui si elimina questo utente",
-  "profile.accountManagement": "Zona pericolosa",
   "profile.admin.remove.reason.longertext": "testo più lungo per favore",
   "profile.administration.button": "Visita pannello di amministrazione",
   "profile.administration.link": "Sei un amministratore di {SITENAME}",

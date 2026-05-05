@@ -692,7 +692,6 @@
   "profile.account.deleted": "해당 계정은 삭제되었습니다",
   "profile.account.reallydelete": "정말로 \"{NAME}\" 프로필을 영구적으로 삭제할까요? 해당 계정에서 생성한 {COURSES, number}({INTERESTED, number}명이 관심 등록하고 {EVENTS, number}개의 이벤트가 예정됨)개 코스가 함께 삭제됩니다.",
   "profile.account.reason.placeholder": "계정 삭제 이유",
-  "profile.accountManagement": "-주의-",
   "profile.admin.remove.reason.longertext": "더 길게 적어주세요",
   "profile.administration.button": "관리 창으로 이동",
   "profile.administration.link": "당신은 {SITENAME}의 관리자입니다",
