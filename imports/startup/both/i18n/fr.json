@@ -759,6 +759,7 @@
   "profile.account.deleted": "Ce compte a été supprimé",
   "profile.account.reallydelete": "Supprimer le profile utilisateur \"{NAME}\" définitivement ? {COURSES, number} cours ont été créés par cet utilisateur (avec {INTERESTED, number} participants et {EVENTS, number} événements à venir) seront aussi supprimés.",
   "profile.account.reason.placeholder": "La raison pour supprimer cet utilisateur",
+  "profile.accountManagement": "Zone dangereuse",
   "profile.admin.remove.reason.longertext": "entre un texte plus long",
   "profile.administration.button": "Aller au panneau d'administration",
   "profile.administration.link": "Tu es administrateur de {SITENAME}",
