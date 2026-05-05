@@ -753,9 +753,6 @@
   "privilege.removed": "Droits supprimés",
   "privilege.removed.error": "Échec du retrait du privilège",
   "privileges.title": "Modifier les privilèges",
-  "profile": {
-    "account_managemen": "Zone dangereuse"
-  },
   "profile.account.delete.confirm.button": "Supprimer complètement l'utilisateur",
   "profile.account.delete.confirm.button.busy": "Suppression du profil…",
   "profile.account.delete.header": "Est-ce un spammeur ?",
@@ -1063,8 +1060,5 @@
   "warning.emailNotValid": "Ton e-mail semble contenir une erreur.",
   "warning.noEmailProvided": "Entre ton adresse e-mail.",
   "warning.noUserName": "Entrez un nom d'utilisateur.",
-  "warning.userExists": "Ce nom d'utilisateur existe déjà. Merci d'en choisir un autre.",
-  "profile": {
-    "accountManagement": "Zone dangereuse"
-  }
+  "warning.userExists": "Ce nom d'utilisateur existe déjà. Merci d'en choisir un autre."
 }

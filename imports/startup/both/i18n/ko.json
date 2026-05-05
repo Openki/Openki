@@ -686,9 +686,6 @@
   "privilege.removed": "권한 삭제됨",
   "privilege.removed.error": "권한을 삭제하는데 실패했습니다",
   "privileges.title": "권한 수정",
-  "profile": {
-    "account_managemen": "-주의-"
-  },
   "profile.account.delete.confirm.button": "사용자 및 모든 기록 삭제",
   "profile.account.delete.confirm.button.busy": "계정 삭제 중…",
   "profile.account.delete.header": "스팸인가요?",
@@ -996,8 +993,5 @@
   "warning.emailNotValid": "사용 가능한 이메일 주소가 아닙니다.",
   "warning.noEmailProvided": "이메일 주소를 입력해주세요.",
   "warning.noUserName": "사용할 사용자 이름을 입력해주세요.",
-  "warning.userExists": "이미 사용 중인 사용자 이름입니다. 다시 입력해주세요.",
-  "profile": {
-    "accountManagement": "-주의-"
-  }
+  "warning.userExists": "이미 사용 중인 사용자 이름입니다. 다시 입력해주세요."
 }
