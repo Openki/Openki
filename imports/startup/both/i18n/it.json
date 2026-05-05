@@ -1013,5 +1013,8 @@
   "warning.emailNotValid": "Il tuo indirizzo e-mail sembra avere un errore.",
   "warning.noEmailProvided": "Per favore inserisci un indirizzo e-mail.",
   "warning.noUserName": "Per favore inserisci un nome per il tuo utente.",
-  "warning.userExists": "Nome utente già in uso. Per favore scegline un altro."
+  "warning.userExists": "Nome utente già in uso. Per favore scegline un altro.",
+  "profile": {
+    "accountManagement": "Zona pericolosa"
+  }
 }
