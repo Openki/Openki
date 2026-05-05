@@ -819,7 +819,7 @@
   "privilege.removed.error": "Unable to remove privilege",
   "privileges.title": "Edit Privileges",
   "profile": {
-    "account_managemen": "Danger zone"
+    "accountManagement": "Danger zone"
   },
   "profile.account.delete.confirm.button": "Delete user and all his traces",
   "profile.account.delete.confirm.button.busy": "Deleting profile…",
@@ -827,6 +827,7 @@
   "profile.account.deleted": "The account has been deleted",
   "profile.account.reallydelete": "Remove the user profile \"{NAME}\" permanently? {COURSES, number} Courses created by this user (with {INTERESTED, number} Participants and {EVENTS, number} upcoming events) will also be removed.",
   "profile.account.reason.placeholder": "Reason for deleting this user",
+  "profile.accountManagement": "Danger zone",
   "profile.admin.remove.reason.longertext": "longer text please",
   "profile.administration.button": "Visit admin panel",
   "profile.administration.link": "You are an administrator of {SITENAME}",
@@ -1211,8 +1212,5 @@
   "warning.emailNotValid": "Your e-mail address seems to have an error.",
   "warning.noEmailProvided": "Please enter an e-mail address.",
   "warning.noUserName": "Please enter a name for your user.",
-  "warning.userExists": "This username is already in use. Please choose another one.",
-  "profile": {
-    "accountManagement": "Danger zone"
-  }
+  "warning.userExists": "This username is already in use. Please choose another one."
 }

@@ -844,7 +844,7 @@
   "privilege.removed.error": "Berechtigung konnte nicht entfernt werden",
   "privileges.title": "Berechtigungen bearbeiten",
   "profile": {
-    "account_managemen": "Gefahren-Zone"
+    "accountManagement": "Gefahren-Zone"
   },
   "profile.account.delete.confirm.button": "Benutzer löschen und alle Spuren beseitigen",
   "profile.account.delete.confirm.button.busy": "Profil wird gelöscht…",
@@ -852,6 +852,7 @@
   "profile.account.deleted": "Das Konto wurde gelöscht",
   "profile.account.reallydelete": "Benutzer_in \"{NAME}\" dauerhaft löschen? {COURSES, number} Kurse, die von diesem/dieser Benutzer_in erstellt wurden (mit {INTERESTED, number} Teilnehmer_innen und {EVENTS, number} anstehenden Veranstaltungen) werden ebenfalls entfernt.",
   "profile.account.reason.placeholder": "Grund für die Löschung dieses Users",
+  "profile.accountManagement": "Gefahren-Zone",
   "profile.admin.remove.reason.longertext": "Bitte längerer Text",
   "profile.administration.button": "Zum Admin-Bereich",
   "profile.administration.link": "Du bist ein_e Administrator_in von {SITENAME}",
@@ -1264,8 +1265,5 @@
   "warning.emailNotValid": "Deine E-Mail Adresse scheint nicht korrekt.",
   "warning.noEmailProvided": "Bitte E-Mail Adresse eingeben.",
   "warning.noUserName": "Bitte einen Benutzernamen eingeben.",
-  "warning.userExists": "Dieser Benutzername existiert bereits. Bitte wähle einen anderen.",
-  "profile": {
-    "accountManagement": "Gefahren-Zone"
-  }
+  "warning.userExists": "Dieser Benutzername existiert bereits. Bitte wähle einen anderen."
 }
