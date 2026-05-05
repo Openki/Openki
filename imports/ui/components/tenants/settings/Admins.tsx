@@ -62,7 +62,9 @@ export function Admins({ tenant }: { tenant: TenantModel }) {
   return (
     <div className="tag-group multiline">
       {tenant.admins.map((admin) => (
-        <Admin key={admin} tenant={tenant} adminId={admin} />
+        <div key={admin} className="tag-group-addon-unit">
+          <Admin tenant={tenant} adminId={admin} />
+        </div>
       ))}
     </div>
   );

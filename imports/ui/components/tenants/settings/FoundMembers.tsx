@@ -41,7 +41,7 @@ export function FoundMembers({ tenant, userSearch }: { tenant: TenantModel; user
   return (
     <div className="tag-group multiline">
       {foundMembers.map((member) => (
-        <React.Fragment key={member._id}>
+        <div key={member._id} className="tag-group-addon-unit">
           <div className="tag tag-btn tenant-member-tag-btn-add">
             <button
               data-test={`tenant-setting-member-add-button-${member.getDisplayName()}`}
@@ -62,7 +62,7 @@ export function FoundMembers({ tenant, userSearch }: { tenant: TenantModel; user
               <i className="fa-solid fa-user fa-fw" />
             </a>
           </div>
-        </React.Fragment>
+        </div>
       ))}
     </div>
   );
