@@ -807,9 +807,6 @@
   "privilege.removed": "Разрешение удалено",
   "privilege.removed.error": "Невозможно удалить разрешение",
   "privileges.title": "Изменить права",
-  "profile": {
-    "accountManagement": "Опасная зона"
-  },
   "profile.account.delete.confirm.button": "Удалить пользователя и все его следы",
   "profile.account.delete.confirm.button.busy": "Удаление профиля…",
   "profile.account.delete.header": "Это спамер?",

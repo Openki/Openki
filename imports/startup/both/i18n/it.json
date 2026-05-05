@@ -703,9 +703,6 @@
   "privilege.removed": "Privilegio rimosso",
   "privilege.removed.error": "Impossibile rimuovere il privilegio",
   "privileges.title": "Modifica Privilegi",
-  "profile": {
-    "accountManagement": "Zona pericolosa"
-  },
   "profile.account.delete.confirm.button": "Elimina utente e tutti i suoi dati",
   "profile.account.delete.confirm.button.busy": "Eliminazione profilo…",
   "profile.account.delete.header": "È uno spammer?",
