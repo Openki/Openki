@@ -843,9 +843,6 @@
   "privilege.removed": "Berechtigung entfernt",
   "privilege.removed.error": "Berechtigung konnte nicht entfernt werden",
   "privileges.title": "Berechtigungen bearbeiten",
-  "profile": {
-    "accountManagement": "Gefahren-Zone"
-  },
   "profile.account.delete.confirm.button": "Benutzer löschen und alle Spuren beseitigen",
   "profile.account.delete.confirm.button.busy": "Profil wird gelöscht…",
   "profile.account.delete.header": "Ist das ein_e Spammer_in?",
