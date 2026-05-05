@@ -284,6 +284,7 @@
   "privilege.addedAdmin": "Privilegios de administrador concedidos",
   "privilege.remove": "Remover privilegio",
   "privilege.removed": "Privilegio removido",
+  "profile.accountManagement": "Gestión de cuentas",
   "profile.changePass": "Cambiar mi contraseña",
   "profile.delete.confirm.button": "Borrar mi usário y todos sus pérfiles",
   "profile.group.draft": "Agregar al grupo",
