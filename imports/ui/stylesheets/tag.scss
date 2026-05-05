@@ -48,6 +48,12 @@
   margin-bottom: 5px;
 }
 
+.tag-group-addon-unit {
+  display: flex;
+  flex-wrap: nowrap;
+  min-width: max-content;
+}
+
 .tag.addon {
   margin-left: 0;
 }
@@ -69,3 +75,5 @@
 .tag + .tag-btn:not(.addon) {
   @include td-margin(left, 5px);
 }
+
+
