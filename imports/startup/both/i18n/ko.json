@@ -996,5 +996,8 @@
   "warning.emailNotValid": "사용 가능한 이메일 주소가 아닙니다.",
   "warning.noEmailProvided": "이메일 주소를 입력해주세요.",
   "warning.noUserName": "사용할 사용자 이름을 입력해주세요.",
-  "warning.userExists": "이미 사용 중인 사용자 이름입니다. 다시 입력해주세요."
+  "warning.userExists": "이미 사용 중인 사용자 이름입니다. 다시 입력해주세요.",
+  "profile": {
+    "accountManagement": "-주의-"
+  }
 }
