@@ -687,7 +687,7 @@
   "privilege.removed.error": "권한을 삭제하는데 실패했습니다",
   "privileges.title": "권한 수정",
   "profile": {
-    "account_managemen": "-주의-"
+    "accountManagement": "-주의-"
   },
   "profile.account.delete.confirm.button": "사용자 및 모든 기록 삭제",
   "profile.account.delete.confirm.button.busy": "계정 삭제 중…",
@@ -695,6 +695,7 @@
   "profile.account.deleted": "해당 계정은 삭제되었습니다",
   "profile.account.reallydelete": "정말로 \"{NAME}\" 프로필을 영구적으로 삭제할까요? 해당 계정에서 생성한 {COURSES, number}({INTERESTED, number}명이 관심 등록하고 {EVENTS, number}개의 이벤트가 예정됨)개 코스가 함께 삭제됩니다.",
   "profile.account.reason.placeholder": "계정 삭제 이유",
+  "profile.accountManagement": "-주의-",
   "profile.admin.remove.reason.longertext": "더 길게 적어주세요",
   "profile.administration.button": "관리 창으로 이동",
   "profile.administration.link": "당신은 {SITENAME}의 관리자입니다",
@@ -996,8 +997,5 @@
   "warning.emailNotValid": "사용 가능한 이메일 주소가 아닙니다.",
   "warning.noEmailProvided": "이메일 주소를 입력해주세요.",
   "warning.noUserName": "사용할 사용자 이름을 입력해주세요.",
-  "warning.userExists": "이미 사용 중인 사용자 이름입니다. 다시 입력해주세요.",
-  "profile": {
-    "accountManagement": "-주의-"
-  }
+  "warning.userExists": "이미 사용 중인 사용자 이름입니다. 다시 입력해주세요."
 }

@@ -754,7 +754,7 @@
   "privilege.removed.error": "Échec du retrait du privilège",
   "privileges.title": "Modifier les privilèges",
   "profile": {
-    "account_managemen": "Zone dangereuse"
+    "accountManagement": "Zone dangereuse"
   },
   "profile.account.delete.confirm.button": "Supprimer complètement l'utilisateur",
   "profile.account.delete.confirm.button.busy": "Suppression du profil…",
@@ -762,6 +762,7 @@
   "profile.account.deleted": "Ce compte a été supprimé",
   "profile.account.reallydelete": "Supprimer le profile utilisateur \"{NAME}\" définitivement ? {COURSES, number} cours ont été créés par cet utilisateur (avec {INTERESTED, number} participants et {EVENTS, number} événements à venir) seront aussi supprimés.",
   "profile.account.reason.placeholder": "La raison pour supprimer cet utilisateur",
+  "profile.accountManagement": "Zone dangereuse",
   "profile.admin.remove.reason.longertext": "entre un texte plus long",
   "profile.administration.button": "Aller au panneau d'administration",
   "profile.administration.link": "Tu es administrateur de {SITENAME}",
@@ -1063,8 +1064,5 @@
   "warning.emailNotValid": "Ton e-mail semble contenir une erreur.",
   "warning.noEmailProvided": "Entre ton adresse e-mail.",
   "warning.noUserName": "Entrez un nom d'utilisateur.",
-  "warning.userExists": "Ce nom d'utilisateur existe déjà. Merci d'en choisir un autre.",
-  "profile": {
-    "accountManagement": "Zone dangereuse"
-  }
+  "warning.userExists": "Ce nom d'utilisateur existe déjà. Merci d'en choisir un autre."
 }
