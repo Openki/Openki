@@ -138,7 +138,7 @@ export function Submenu({ course }: { course: CourseModel }) {
             <Files course={course} />
           </div>
         )}
-        {!course.isPrivate() && <PricePolicy dismissable wrap="course-details-price-policy" />}
+        {!course.isPrivate() && <PricePolicy dismissible wrap="course-details-price-policy" />}
       </div>
     </>
   );
