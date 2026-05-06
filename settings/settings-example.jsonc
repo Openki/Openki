@@ -1,4 +1,4 @@
-//This file descripts all configurations and customization options. Remove the comment at the end of the line to make it work or start from a copy of the file "dev.json in the same folder
+// This file describes all configurations and customization options. Remove the comment at the end of the line to make it work or start from a copy of the file "productive-basic.json in the same folder
 
 { "admins": ["greg"] // User administrator accounts that are created with the test data
 , "prng": "" // Pseudo-Random Number Generator. Use "static" as value to use static seed for test data. Result: After test data generation, entity ids, amount of events, comment content, region assignment of groups, etc will stay identical. Except ids from users. Default: "" (random seed)
@@ -43,10 +43,11 @@
 	, "sendReminderPreset": true // Should a reminder be sent by default or not. Default is true
 	, "feature":
 		{ "login": // toggle visibility of login services
-			{ "email": false
-			, "google": true
-			, "facebook": true
-			, "github": true
+			{ "email": true
+			, "google": false
+			, "facebook": false
+			, "github": false
+			, "c3": false
 			}
 		, "visitorUser": true // allow user without name and password, Default: false
 		, "rsvpWithCompanions": true // allow rsvp with +1 / for two seats, Default: false
@@ -142,24 +143,22 @@
 	, "groupDescriptionMax": 15000 // Max characters allowed for the description-field of groups. Default: 15000
 	, "eventDescriptionMax": 15000 // Max characters allowed for the description-field of events. Default: 15000
 	, "categories": // Categories for groups, main and/or sub categories
-			{ "sports":
-				[ "martialarts"
-				, "teamsport"
-				, "artistry"
-				]
-		, "handicraft":
-				[
-				]
-		, "[categoryname]":
-				[ "subcategoryname1"
-				, "subcategoryname2"
-				]
+    { "sports":
+      [ "martialarts"
+      , "teamsport"
+      , "artistry"
+      ]
+  , "handicraft":
+      [
+      ]
+  , "[categoryname]":
+      [ "subcategoryname1"
+      , "subcategoryname2"
+      ]
 		}
 	, "s3": // file storage (public part)
 		{ "publicUrlBase": "https://984b.objectstorage.nineapis.ch/v1/AUTH_01234-xyz123/bucket-name"
 		}
-	, "apiMaxLimit": 100 // Maximum number of entities that the api returns. Default: 100. If the parameter "limit" is not set in the URL, the API always returns 100 entities whatever this setting is set to.
-	, "notificationGracePeriodHours" :72 // How many hours back notification e-mails should be sent after the server was down. This helps when there was a big problem with the server to not spam people. Default: 72 hours.
   }
 , "siteEmail": "" // Sender e-mail address in mails
 , "replyToEmail": "" // "Reply to" address in mails 
@@ -183,13 +182,22 @@
 		{ "clientId": "01234-xyz123.apps.googleusercontent.com"
 		, "secret": "XYz_123"
 		}
+	, "c3": 
+      { "clientId": ""
+      , "secret": ""
+      , "authorizeUrl": ""
+      , "tokenUrl": ""
+      , "userInfoUrl": ""
+      }
 	}
-	, "s3": // file storage, private part
+, "s3": // file storage, private part
 	{ "region": "nine-cz42"
 	, "bucketEndpoint": "https://984b.objectstorage.nineapis.ch/bucket-name"
 	, "accessKeyId": "abcd1234"
 	, "secretAccessKey": "123abcd"
 	}
+, "apiMaxLimit": 100 // Maximum number of entities that the api returns. Default: 100. If the parameter "limit" is not set in the URL, the API always returns 100 entities whatever this setting is set to.
+, "notificationGracePeriodHours": 72 // How many hours back notification e-mails should be sent after the server was down. This helps when there was a big problem with the server to not spam people. Default: 72 hours.
 , "PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" } // That web pages are pre-rendered for webcrawlers on the server side so that no client code has to be executed. See: https://guide.meteor.com/deployment.html#seo
 , "startup": { "buildDbCacheAsync": true } // Build the cache in the db async or sync. For larger databases it takes a long time until all fields are updated, during this time the startup is blocked. The users cannot use the website. Because in a normal startup the database already has these fields, this task can also be done async every sunnday at 22:30.
 , "scrub": // Delete entries from the log or remove critical information, The log can be viewed via .../log
