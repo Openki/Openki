@@ -42,15 +42,17 @@
 	, "feature":
 		{ "login":
 			{ "email": true
-      , "google": true
+			, "google": true
 			, "facebook": true
-			, "github": true
+			, "github": false
+			, "c3": true
 			}
 		, "visitorUser": true
 		, "rsvpWithCompanions": true
-		, "sendReminderIsEditable": true
-    , "proposeCourseBox": true
+		, "sendReminderIsEditable": false
+		, "proposeCourseBox": true
     , "disable2dSphereForLocations": false
+		, "socialMediaButtons": ["email", "telegram", "whatsapp", "bluesky", "fediverse", "linkedin", "mastodon", "reddit", "facebook", "copy-url"]
 		}
 	, "nav":
 		{ "brandLink": "/"
@@ -161,7 +163,7 @@
 		}
 	, "aboutLink": "https://about.openki.net"
 	, "contribution":
-	    { "icon": "fa-solid fa-heart"
+	  { "icon": "fa-solid fa-heart"
 		, "forbiddenChars": ["🖤", "💖", "💔", "💚", "💜", "❤️", "🧡", "💕", "💛", "💝"]
 		, "link":
 			{ "en": "https://about.openki.net/en/ueber-uns/spenden/"
@@ -231,14 +233,29 @@
 , "siteEmail": "HMMM@legit.example"
 , "replyToEmail": "HMMM@legit.example"
 , "reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net" }
-, "robots": false
+, "robots": false 
+, "hideProfiles": false
 , "printLog": true
+, "service":
+	{ "facebook": { "appId": "", "secret": "" }
+	, "github":	{ "clientId": "", "secret": "" }
+	, "google": { "clientId": "", "secret": "" }
+	, "c3": 
+      { "clientId": ""
+      , "secret": ""
+      , "authorizeUrl": ""
+      , "tokenUrl": ""
+      , "userInfoUrl": ""
+      }
+	}
 , "s3":
 	{ "region": "us-east-1"
 	, "bucketEndpoint": "https://cz42.objects.nineapis.ch/bucket-openkitest2"
 	, "accessKeyId": "63551d5ecx68qL2XqU7eQX-9hxxKs5CK"
 	, "secretAccessKey": "srnyHWbj9ZhDFlTQyY40vxBIBs8MVYgp"
-}
+  }
+, "apiMaxLimit": 500
+, "notificationGracePeriodHours": 72
 , "PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" }
 , "startup": { "buildDbCacheAsync": true }
 }
