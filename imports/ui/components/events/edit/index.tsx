@@ -580,7 +580,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             />
           </div>
 
-          {!(!isNew && event.isPrivate()) && <PricePolicy dismissable wrap="mb-3" />}
+          {!(!isNew && event.isPrivate()) && <PricePolicy dismissible wrap="mb-3" />}
 
           {!isRegionsLoading() && showRegionSelection() && (
             <div className="mb-3">

@@ -605,7 +605,7 @@ export function Edit(props: Props) {
               error={errors.description}
             />
           </div>
-          {hasPricePolicy() && <PricePolicy dismissable={true} wrap="mb-3" />}
+          {hasPricePolicy() && <PricePolicy dismissible wrap="mb-3" />}
           <div className="row gap-3 mb-3">
             {!hideCategories() && (
               <div className="col-md">

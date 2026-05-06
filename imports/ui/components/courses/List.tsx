@@ -1,9 +1,12 @@
 import React from "react";
+
 import { PublicSettings } from "/imports/utils/PublicSettings";
+import { cx } from "/imports/utils/cx";
+
+import { CourseModel } from "/imports/api/courses/courses";
 
 import { CourseCompact } from "/imports/ui/components/courses/compact";
 import { CompactPropose } from "/imports/ui/components/courses/CompactPropose";
-import { CourseModel } from "/imports/api/courses/courses";
 
 export interface Props {
   courses: CourseModel[];
@@ -37,7 +40,7 @@ export function CourseList({
 }: Props) {
   return (
     <div
-      className={`row g-2 row-cols-1 row-cols-sm-2 row-cols-lg-3 ${!small ? "row-cols-xl-4" : ""}`}
+      className={cx("row g-2 row-cols-1 row-cols-sm-2 row-cols-lg-3", !small && "row-cols-xl-4")}
     >
       {courses.map((course, index) => (
         <React.Fragment key={course._id}>
