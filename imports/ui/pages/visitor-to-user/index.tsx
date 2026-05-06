@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { MetaTags } from "/imports/ui/components/MetaTags";
 import { AccountsAsync } from "/imports/utils/promisify";
+import { cx } from "/imports/utils/cx";
 
 import * as Alert from "/imports/api/alerts/alert";
 import * as UsersMethods from "/imports/api/users/methods";
@@ -86,7 +87,7 @@ export function VisitorToUserPage({ token, email }: Props) {
                 <i className="fa-solid fa-user fa-fw" />
               </span>
               <input
-                className={`form-control`}
+                className="form-control"
                 type="text"
                 placeholder={t("frame.login.username", "Username")}
                 value={user?.getDisplayName()}
@@ -103,7 +104,7 @@ export function VisitorToUserPage({ token, email }: Props) {
                     <i className="fa-solid fa-envelope fa-fw" />
                   </span>
                   <input
-                    className={`form-control`}
+                    className="form-control"
                     placeholder={t("frame.login.email", "E-Mail")}
                     type="email"
                     value={user?.emailAddress()}
@@ -121,12 +122,12 @@ export function VisitorToUserPage({ token, email }: Props) {
             </div>
           </div>
           <div className="mb-3">
-            <div className={`input-group ${errors.password ? "has-validation" : ""}`}>
+            <div className={cx("input-group", !!errors.password && "has-validation")}>
               <span className="input-group-text">
                 <i className="fa-solid fa-lock fa-fw" />
               </span>
               <input
-                className={`form-control ${errors.password ? "is-invalid" : ""}`}
+                className={cx("form-control", !!errors.password && "is-invalid")}
                 placeholder={t("_inputField.password")}
                 type="password"
                 autoFocus

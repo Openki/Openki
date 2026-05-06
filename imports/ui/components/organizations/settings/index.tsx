@@ -80,7 +80,7 @@ function FoundUsers({
   return (
     <>
       {users.map((user) => (
-        <React.Fragment key={user._id}>
+        <div key={user._id} className="tag-group-addon-unit">
           <div className="tag tag-btn organization-member-tag-btn-add ">
             <button
               title={t("organizations.settings.addMember", "add as member")}
@@ -98,7 +98,7 @@ function FoundUsers({
               <i className="fa-solid fa-user fa-fw" />
             </a>
           </div>
-        </React.Fragment>
+        </div>
       ))}
     </>
   );
@@ -277,7 +277,7 @@ export function OrganizationSettings({ organization }: Props) {
             </h3>
             <div className="tag-group multiline">
               {organization.members.map((member) => (
-                <React.Fragment key={member.user}>
+                <div key={member.user} className="tag-group-addon-unit">
                   <RemoveMember {...member} onRemove={handleMemberRemove} />
 
                   {currentUser?._id === member.user &&
@@ -317,7 +317,7 @@ export function OrganizationSettings({ organization }: Props) {
                       <i className="fa-solid fa-user fa-fw" />
                     </a>
                   </div>
-                </React.Fragment>
+                </div>
               ))}
             </div>
             <div className="mb-3">

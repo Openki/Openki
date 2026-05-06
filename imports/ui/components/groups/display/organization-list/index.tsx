@@ -62,7 +62,7 @@ export function OrganizationList({ group }: Props) {
       {organizations.map((organizationId) => {
         const isTeam = group.teamOrganizations.includes(organizationId);
         return (
-          <React.Fragment key={organizationId}>
+          <div key={organizationId} className="tag-group-addon-unit">
             <OrganizationTag organizationId={organizationId} isTeam={isTeam} />
             {isTeam && (
               <div className="tag organization-tag addon">
@@ -103,7 +103,7 @@ export function OrganizationList({ group }: Props) {
                 </ul>
               </div>
             )}
-          </React.Fragment>
+          </div>
         );
       })}
 

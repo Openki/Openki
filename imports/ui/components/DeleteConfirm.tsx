@@ -8,14 +8,25 @@ export interface Props {
   confirmButton: string;
   onRemove: () => Promise<void>;
   busyButton: string;
+  deleteButtonLabel?: string;
 }
 
-export function DeleteConfirm({ confirmText, confirmButton, onRemove, busyButton }: Props) {
+export function DeleteConfirm({
+  confirmText,
+  confirmButton,
+  onRemove,
+  busyButton,
+  deleteButtonLabel,
+}: Props) {
   const [isConfirm, setIsConfirm] = useState(false);
 
   if (!isConfirm) {
     return (
-      <ButtonDelete id="delete-confirm-confirmDelete" onClick={async () => setIsConfirm(true)} />
+      <ButtonDelete
+        id="delete-confirm-confirmDelete"
+        onClick={async () => setIsConfirm(true)}
+        {...(deleteButtonLabel ? { label: deleteButtonLabel } : {})}
+      />
     );
   }
   return (

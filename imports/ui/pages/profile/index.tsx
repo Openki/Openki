@@ -18,7 +18,7 @@ import { AdminSection } from "./AdminSection";
 import { Appearance } from "./Appearance";
 import { CalendarSection } from "./CalendarSection";
 import { CreateUserSection } from "./CreateUserSection";
-import { DangerZoneSection } from "./DangerZoneSection";
+import { AccountManagementSection } from "./AccountManagementSection";
 import { EmailSection } from "./EmailSection";
 import { OrganizationSection } from "./OrganizationSection";
 import { ProfileSection } from "./ProfileSection";
@@ -249,7 +249,7 @@ function LoggedIn({ user }: { user: UserModel }) {
           <CalendarSection />
         </>
       )}
-      <DangerZoneSection />
+      <AccountManagementSection />
     </>
   );
 }
