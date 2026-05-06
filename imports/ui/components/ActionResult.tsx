@@ -1,7 +1,9 @@
 import React, { JSX, ReactNode, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import scrollIntoView from "scroll-into-view-if-needed";
+
 import { MeteorAsync } from "/imports/utils/promisify";
+import { cx } from "/imports/utils/cx";
 
 import { Report } from "/imports/ui/components/report";
 
@@ -43,7 +45,7 @@ export function ActionResult({ type, dismissible, icon, title, children, actions
   }
 
   if (typeof icon === "string" && icon.startsWith("fa-")) {
-    icon = <i className={`${icon} fa-fw`} />;
+    icon = <i className={cx(icon, "fa-fw")} />;
   }
 
   actions = (actions || []).filter((a) => a);
@@ -95,7 +97,10 @@ export function ActionResult({ type, dismissible, icon, title, children, actions
     <div className="container collapse show" id="action-result">
       <div className="pt-3 pb-5">
         <div
-          className={`mb-0 alert alert-${type === "success" ? "success" : "danger"} ${dismissible ? "alert-dismissible" : ""}`}
+          className={cx(
+            `mb-0 alert alert-${type === "success" ? "success" : "danger"}`,
+            dismissible && "alert-dismissible",
+          )}
           role="alert"
         >
           {!!dismissible && (
@@ -114,11 +119,11 @@ export function ActionResult({ type, dismissible, icon, title, children, actions
           <h1 className="alert-heading d-flex align-items-center">
             <span className="flex-shrink-0 me-2">{icon}</span> {title}
           </h1>
-          {!!children && <p className={"lead" + (!actions?.length ? " mb-0" : "")}>{children}</p>}
+          {!!children && <p className={cx("lead", !actions?.length && "mb-0")}>{children}</p>}
           {!!actions?.length && (
             <>
               <hr className="border border-black" />
-              <div className={`d-flex ${stacked ? "flex-column" : "flex-row flex-wrap"} gap-3`}>
+              <div className={cx("d-flex gap-3", stacked ? "flex-column" : "flex-row flex-wrap")}>
                 {(actions as Action[]).map((action, index) => (
                   <div key={index} className="lead">
                     {"description" in action ? <>{action.description} </> : ""}
