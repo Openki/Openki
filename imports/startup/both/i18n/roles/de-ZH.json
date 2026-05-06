@@ -1,0 +1,28 @@
+{
+  "host.find.roleNeeded": "Suecht no en Gaschgeber_in",
+  "mentor.find.roleNeeded": "Suecht no en Mentor_in",
+
+  "team.groupList.statusTitle.roleOccupied": "Hät es Organisationsteam",
+  "mentor.groupList.statusTitle.roleNeeded": "Bruucht no en Mentor",
+  "team.groupList.statusTitle.roleNeeded": "Bruucht no en Organisator",
+  "host.groupList.statusTitle.roleOccupiedByUser": "Du bisch de Gaschtgeber",
+  "mentor.groupList.statusTitle.roleOccupiedByUser": "Du bisch Mentor",
+  "team.groupList.statusTitle.roleOccupiedByUser": "Du bisch Organisator/in",
+
+  "host.description": "En Host wo en Ruum cha zur Verfüegig stelle",
+  "host.subscribe": "Ich han en Ort, zum de Aalass z mache",
+  "host.subscribed": "Du bisch als Host ufgfüert",
+  "mentor.description": "en Mentor",
+  "mentor.short": "Mentor",
+  "mentor.subscribe": "Ich chönnt Mentor sii",
+  "mentor.subscribed": "Du bisch als Mentor ufgfüert",
+
+  "participant.myList": "Ich bi intressiert a",
+  "participant.short": "intressiert",
+  "participant.subscribe": "Ich bi intressiert",
+  "participant.subscribed": "Du bisch intressiert",
+  "participant.userList": "De/d'{NAME} isch intressiert a",
+  "team.short": "Team",
+  "team.subscribe": "Ich hilf z'organisiere",
+  "team.subscribed": "Du bisch im Team"
+}

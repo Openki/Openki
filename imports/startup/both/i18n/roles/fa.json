@@ -1,0 +1,12 @@
+{
+  "host.short": "برگذار کننده ",
+  "host.subscribe": "من یک اطاق برای برگذاری دارم",
+  "host.subscribed": "شما به حیث برگذار کننده تعین شدید",
+  "mentor.description": "استاد (مشاور)",
+  "mentor.short": "مشاور",
+  "mentor.subscribe": "من میتوانم مشاور باشم",
+  "mentor.subscribed": "شما به حیث مشاور (استاد) تعین شدید",
+  "team.short": "گروه",
+  "team.subscribe": "من میخواهم به سازمان کمک کنم",
+  "team.subscribed": "شما به گروه داخل شدید"
+}
