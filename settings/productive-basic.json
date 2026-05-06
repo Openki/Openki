@@ -1,6 +1,6 @@
 { "admins": []
-, "prng": ""
 , "testdata": false
+, "prng": ""
 , "public":
 	{ "siteName": "Openki-clone"
 	, "siteStage": "beta"
@@ -41,22 +41,25 @@
 	, "sendReminderPreset": true
 	, "feature":
 		{ "login":
-			{ "google": false
+			{ "email": true
+			, "google": false
 			, "facebook": false
 			, "github": false 
-
+			, "c3": false
 			}
 		, "visitorUser": true
 		, "rsvpWithCompanions": true
 		, "sendReminderIsEditable": true
-    , "proposeCourseBox": true 
+    , "proposeCourseBox": true
     , "disable2dSphereForLocations": false
+		, "socialMediaButtons": ["email", "telegram", "whatsapp", "bluesky", "fediverse", "linkedin", "mastodon", "reddit", "facebook", "copy-url"]
 		}
 	, "nav":
-		{ "brandLink": "/" 
-		, "search": true 
+		{ "brandLink": "/"
+		, "search": true
 		, "proposeCourse": true
 		, "calendar": true
+		, "customEntries": [ ]
 		}
 	, "footerLinks":
 		[	{ "link": "https://about.openki.net/"
@@ -81,10 +84,10 @@
 	, "pricePolicyLink": "..."
 	, "courseGuideLink": "..."
 	, "aboutLink": "https://about.openki.net"
-	, "contribution": 
+	, "contribution":
 		{ "icon": "fa-solid fa-heart"
 		, "forbiddenChars": ["🖤", "💖", "💔", "💚", "💜", "❤️", "🧡", "💕", "💛", "💝"]
-		, "link": 
+		, "link":
 			{ "en": "https://about.openki.net/en/ueber-uns/spenden/"
 			, "de": "https://about.openki.net/ueber-uns/spenden/"
 			}
@@ -129,13 +132,22 @@
 		{ "clientId": "01234-xyz123.apps.googleusercontent.com"
 		, "secret": "XYz_123"
 		}
+	, "c3": 
+      { "clientId": ""
+      , "secret": ""
+      , "authorizeUrl": ""
+      , "tokenUrl": ""
+      , "userInfoUrl": ""
+      }
 	}
-	, "s3":
-	{ "region": "nine-cz42"
-	, "bucketEndpoint": "https://linkto.objectstorage.example.com/bucket-name"
-	, "accessKeyId": "abcd1234"
-	, "secretAccessKey": "123abcd"
-	}
+, "s3":
+  { "region": "nine-cz42"
+  , "bucketEndpoint": "https://linkto.objectstorage.example.com/bucket-name"
+  , "accessKeyId": "abcd1234"
+  , "secretAccessKey": "123abcd"
+  }
+, "apiMaxLimit": 100
+, "notificationGracePeriodHours": 72
 , "PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" }
 , "startup": { "buildDbCacheAsync": true } 
 , "scrub": 
