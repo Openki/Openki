@@ -1,5 +1,7 @@
 import React from "react";
+
 import { PublicSettings } from "/imports/utils/PublicSettings";
+import { cx } from "/imports/utils/cx";
 
 import { GroupCompact } from "./compact";
 import { CompactPropose } from "./CompactPropose";
@@ -37,7 +39,7 @@ export function GroupList({
 }: Props) {
   return (
     <div
-      className={`row g-2 row-cols-1 row-cols-sm-2 row-cols-lg-3 ${!small ? "row-cols-xl-4" : ""}`}
+      className={cx("row g-2 row-cols-1 row-cols-sm-2 row-cols-lg-3", !small && "row-cols-xl-4")}
     >
       {groups.map((group, index) => (
         <React.Fragment key={group._id}>

@@ -1,8 +1,10 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { cx } from "/imports/utils/cx";
 
 import { FilterOrganizations, Props as FilterOrganizationsProps } from "../../FilterOrganizations";
 import { FilterCategories, Props as FilterCategoriesProps } from "../../filter-categories";
@@ -104,7 +106,10 @@ export function Day(props: Props) {
         </div>
         {!!currentUser && (
           <div
-            className={`${props.availableOrganizations ? "offset-md-4 offset-lg-2 " : ""}col-md-8 col-lg-4 p-1`}
+            className={cx(
+              props.availableOrganizations && "offset-md-4 offset-lg-2",
+              "col-md-8 col-lg-4 p-1",
+            )}
           >
             <FormCheck
               id="filter-own-events"

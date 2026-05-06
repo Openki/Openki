@@ -3,15 +3,16 @@ import { Meteor } from "meteor/meteor";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useTracker } from "meteor/react-meteor-data";
+
 import { useSessionEquals, useUser } from "/imports/utils/react-meteor-data";
-
-import * as usersMethods from "/imports/api/users/methods";
-import { Regions } from "/imports/api/regions/regions";
-
+import { cx } from "/imports/utils/cx";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { getSiteName } from "/imports/utils/getSiteName";
+
+import * as usersMethods from "/imports/api/users/methods";
+import { Regions } from "/imports/api/regions/regions";
 
 import "./styles.scss";
 
@@ -145,24 +146,13 @@ function Content(props: { dismissible?: boolean | undefined }) {
   );
 }
 
-function classNames(props: Props) {
-  const classes = [];
-  if (props.dismissible) {
-    classes.push("is-dismissible");
-  }
-  if (props.wrap) {
-    classes.push(props.wrap);
-  }
-  return classes.join(" ");
-}
-
 export function PricePolicy(props: Props) {
   if (!useShown(props)) {
     return null;
   }
 
   return (
-    <div className={`price-policy ${classNames(props)}`}>
+    <div className={cx("price-policy", props.wrap, props.dismissible && "is-dismissible")}>
       <div className="price-policy-content">
         <Content dismissible={props.dismissible} />
       </div>
