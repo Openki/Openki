@@ -177,7 +177,7 @@
   "event.details.want-to-register": "{DATE}에 열리는 이벤트 \"{EVENTTITLE}\"에 {USERNAME}로 참가 등록할까요? 참가 등록은 하나의 약속입니다!",
   "event.details.want-to-withdraw": "{DATE}에 열리는 이벤트 \"{EVENTTITLE}\"에 대한 참가 등록을 취소하시겠습니까?",
   "event.details.withdraw-registration": "참가 등록 취소하기",
-  "event.details.youStayEnrolled": "{GROUPTITLE}에 관심 등록 상태로 있을 것을 적어주세요.",
+  "event.details.youStayEnrolled": "{GROUP}에 관심 등록 상태로 있을 것을 적어주세요.",
   "event.edit.additionalMessage": "코스의 멤버들이 알아야 하는 내용들을 추가로 작성할 수 있습니다. (이 메시지는 관심 등록한 사용자들에게만 보내지며 이후 이벤트 설명에서는 보이지 않습니다.)",
   "event.edit.changedReplicas.body": "기본적으로 {NUM, plural, one{이 복사본은} other{이 복사본들은} } 원본 이벤트와 다른 시간 설정이 되어있기 때문에 {NUM, plural, one{그대로} other{그대로} } 업데이트 되지 않습니다:",
   "event.edit.changedReplicas.heading": "다른 시간으로 설정된 {NUM, plural, one{1개의 복사본} other{#개의 복사본} } 이벤트가 있습니다",

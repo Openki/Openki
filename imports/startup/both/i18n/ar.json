@@ -170,7 +170,7 @@
   "event.details.want-to-register": "هل تريد حجز مكان باسم {USERNAME} للحدث \"{EVENTTITLE}\" في {DATE}؟ حجزك ملزم.",
   "event.details.want-to-withdraw": "هل تريد إلغاء الاشتراك في الحدث \"{EVENTTITLE}\" بتاريخ {DATE}؟",
   "event.details.withdraw-registration": "إلغاء تسجيلي",
-  "event.details.youStayEnrolled": "لاحظ أنك ستظل مسجلا في \"{GROUPTITLE}\" كمهتم.",
+  "event.details.youStayEnrolled": "لاحظ أنك ستظل مسجلا في \"{GROUP}\" كمهتم.",
   "event.edit.additionalMessage": "أخبرنا بما يجب أن يعرفه المشاركون في الدورة. (سيتم إرسال هذه الرسالة فقط إلى المستخدمين المهتمين ولن تكون مرئية في الحدث بعد ذلك)",
   "event.edit.changedReplicas.body": "بشكل افتراضي لن يتم تحديث {NUM, plural, one{ هذه النسخة} other{ هذه النسخ} } , لأن {NUM, plural, one{ أحد أخر قام} other {أخرون قاموا} } بتعيين وقت مختلف عن الحدث الأصلي:",
   "event.edit.changedReplicas.heading": "تم العثور على {NUM, plural, one{نسخة, مختلفة} other{# نسخ, مختلفة} } في الوقت الحالي",

@@ -252,7 +252,7 @@
   "event.details.want-to-withdraw": "Willst du dich für die Lektion \"{EVENTTITLE}\" am {DATE} wieder abmelden?",
   "event.details.withdraw-registration": "Meine Anmeldung zurückziehen",
   "event.details.youAreRegistered": "Du bist jetzt angemeldet.",
-  "event.details.youStayEnrolled": "Beachte, dass du weiterhin an der Lektion \"{GROUPTITLE}\" als interessiert gemeldet bleibst.",
+  "event.details.youStayEnrolled": "Beachte, dass du weiterhin an der Lektion \"{GROUP}\" als interessiert gemeldet bleibst.",
   "event.details.yourAreTeam": "Du bist Organisator_in",
   "event.discussion.allNotified": "Alle Interessierten und Teilnehmenden wurden benachrichtigt",
   "event.edit.additionalMessage": "Z.B.: \"Ich musste die Zeit aufgrund der Raumverfügbarkeit auf 17:00 Uhr anpassen.\" / \"Ich habe noch in der Beschreibung hinzugefügt, dass das Mitbringen eines eigenen Laptops notwendig ist.\" / \"Ich freue mich, euch bald zu sehen.\"\n(Diese Nachricht wird nur den beteiligten Usern gesendet und ist anschließend in der Veranstaltungsbeschreibung nicht sichtbar)",
