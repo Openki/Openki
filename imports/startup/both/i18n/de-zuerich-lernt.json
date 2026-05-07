@@ -625,6 +625,7 @@
   "grouplist.addgroups.header": "Füge eine Austragungsort hinzu",
   "grouplist.editgroup.header": "Austragungsort bearbeiten",
   "grouplist.organizer.title": "Die Lektion wird von diesem Austragungsort mitorganisiert",
+  "ical.event.canceled": "Abgesagt: {EVENT}",
   "introduction.1_teachOrLearn": "Du willst etwas lernen, oder anderen etwas beibringen.",
   "introduction.2_searchNPropose": "Du suchst, ob es das Thema schon gibt. Wenn nicht, schlage es einfach vor.",
   "introduction.3_enrole": "Alle können mitmachen.",
