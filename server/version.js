@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 if (Meteor.isDevelopment) {
   /**
    * DEV ONLY:
