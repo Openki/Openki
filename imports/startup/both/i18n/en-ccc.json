@@ -232,7 +232,7 @@
   "event.details.want-to-withdraw": "Do you want to withdraw your registration for the event \"{EVENTTITLE}\" on the {DATE}?",
   "event.details.withdraw-registration": "Withdraw my registration",
   "event.details.youAreRegistered": "You are now registered.",
-  "event.details.youStayEnrolled": "Note that you will stay enrolled as interested for {GROUPTITLE}.",
+  "event.details.youStayEnrolled": "Note that you will stay enrolled as interested for {GROUP}.",
   "event.details.yourAreTeam": "You are organizer",
   "event.discussion.allNotified": "All interested and participants notified",
   "event.edit.additionalMessage": "e.g. I had to change the time to 5pm because of room availabilities. I added bringing your own laptop is mandatory in the description. Lookin forward to see you all there. (This message is only sent to the involved users and will not be visible in the event description afterwards.)",

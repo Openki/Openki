@@ -232,7 +232,7 @@
   "event.details.want-to-withdraw": "Veux-tu annuler ton inscription à l'événement \"{EVENTTITLE}\" le {DATE} ?",
   "event.details.withdraw-registration": "Annuler ma réservation",
   "event.details.youAreRegistered": "Tu es désormais inscrit.",
-  "event.details.youStayEnrolled": "Note que tu resteras inscrit(e) comme étant intéressé(e) pour {GROUPTITLE}.",
+  "event.details.youStayEnrolled": "Note que tu resteras inscrit(e) comme étant intéressé(e) pour {GROUP}.",
   "event.details.yourAreTeam": "Tu es organisateur",
   "event.discussion.allNotified": "Toutes les personnes intéressées et les participants ont été informés",
   "event.edit.additionalMessage": "Par exemple, j'ai dû changer l'heure à 17h en raison de la disponibilité des salles. J'ai ajouté dans la description qu'il est obligatoire d'apporter son propre ordinateur portable. Au plaisir de de te voir tous là-bas. (Ce message est uniquement envoyé aux utilisateurs concernés et ne sera pas visible dans la description de l'événement par la suite.)",

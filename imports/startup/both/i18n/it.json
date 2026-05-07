@@ -185,7 +185,7 @@
   "event.details.want-to-register": "Vuoi prenotare un posto come {USERNAME} per l'evento \"{EVENTTITLE}\" il {DATE}? La tua prenotazione è vincolante.",
   "event.details.want-to-withdraw": "Vuoi ritirare la tua registrazione per l'evento \"{EVENTTITLE}\" il {DATE}?",
   "event.details.withdraw-registration": "Ritira la mia registrazione",
-  "event.details.youStayEnrolled": "Nota che resterai iscritto come interessato per {GROUPTITLE}.",
+  "event.details.youStayEnrolled": "Nota che resterai iscritto come interessato per {GROUP}.",
   "event.edit.additionalMessage": "Se ti senti di farlo, descrivi ciò che i membri del corso dovrebbero sapere. (Questo messaggio è inviato solo agli utenti interessati e non sarà visibile nella descrizione dell'evento in seguito.)",
   "event.edit.changedReplicas.body": "Per impostazione predefinita {NUM, plural, one{questa copia} other{queste copie} } non saranno aggiornate poiché {NUM, plural, one{ha} other{hanno} } un altro orario rispetto all'evento originale:",
   "event.edit.changedReplicas.heading": "Trovato {NUM, plural, one{una copia che varia} other{# copie che variano} } nel tempo",
