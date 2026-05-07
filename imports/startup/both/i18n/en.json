@@ -563,6 +563,7 @@
   "groups.organizationList.add.addOrganization": "Add organization",
   "groups.organizationList.addText": "link a organization",
   "groups.organizationList.organizationAdded.error": "Adding failed",
+  "ical.event.canceled": "Canceled: {EVENT}",
   "introduction.1_teachOrLearn": "You want to learn something, or teach others.",
   "introduction.2_searchNPropose": "You search if the group already exists. If not, just propose it.",
   "introduction.3_enrole": "Everybody can join your group as participant, mentor or host.",
