@@ -822,7 +822,7 @@
   "notification.rsvp.mail.attending": "Du nimmst an folgender Lektion teil:",
   "notification.rsvp.mail.intro": "Wir freuen uns, {COMPANIONS, plural, =0{dich} other{dich und deine Begleitung} } am {DATE} zu sehen. {COMPANIONS, plural, =0{Dein Platz ist} other{Eure Plätze sind} } reserviert. Falls {COMPANIONS, plural, =0{du nicht teilnehmen kannst} other{ihr nicht teilnehmen könnt} }, lass dies die Organisierenden wissen, indem du {COMPANIONS, plural, =0{deine} other{eure} } Anmeldung zurückziehst.",
   "notification.rsvp.mail.subject": "Bestätigung {DATE} {TITLE}",
-  "notification.rsvp.team.mail.intro": "{COMPANIONS, plural, =0{{USERNAME} hat } other{{USERNAME} und Begleitung haben } }sich gerade eben für die Lektion {EVENT} angemeldet.",
+  "notification.rsvp.team.mail.intro": "{COMPANIONS, plural, =0{{USERNAME} hat } other{{USERNAME} und Begleitung haben } }sich gerade eben für die Lektion {EVENT} angemeldet. (Bitte beachte: Wenn sich jemand abmeldet, wird dir keine E-Mail gesendet)",
   "notification.rsvp.team.mail.statsOverview": "Total Teilnehmende aktuell: {PARTICIPANTS}",
   "notification.rsvp.team.mail.subject": "Neue Anmeldung für eure Lektion {TITLE} am {DATE}",
   "notification.rsvp.team.mail.title": "{DATE} — {EVENT}",
