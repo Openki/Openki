@@ -16,6 +16,7 @@ export function Files({ course }: { course: CourseModel }) {
 
   function imageUploadArgs(): EditableImageData {
     return {
+      fullImage: { src: course.publicUrlForDetailsImage(), maxSize: 1500 },
       thumbnail: { src: course.publicUrlForCompactImage(), maxSize: 150 },
       maxSize: 5000, // scale the image to max width/height. Note: image scaling also happens on the server
       async onUpload(file: UploadImage) {
