@@ -723,8 +723,6 @@
   "notification.group.mail.recpnote": "You receive this message because you're the creator of this group.",
   "notification.group.mail.replyButton.simple": "Visit my proposal",
   "notification.group.mail.subject": "Your proposed {GROUP}",
-  "notification.join.mail.collaborationHint": "If you like them to collaborate feel free to make contact. You can give them rights to edit {GROUP} and make them part of the organizing team by clicking the megaphone next to a name.",
-  "notification.join.mail.intro": "{USERNAME} just joined {GROUP} as: {ROLE}.",
   "notification.join.mail.message": "They left this message:",
   "notification.join.mail.statsOverview": "Overview over participants:",
   "notification.join.mail.subject": "{USER} joined {GROUP}: {ROLE}",

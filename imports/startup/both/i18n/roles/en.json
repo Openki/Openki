@@ -9,12 +9,14 @@
   "team.groupList.statusTitle.roleNeeded": "Needs a coordination team",
   "team.groupList.statusTitle.roleOccupied": "Has a coordination-team",
   "team.groupList.statusTitle.roleOccupiedByUser": "You are part of the coordination team",
+  "team.notification.join.mail.intro": "{USERNAME} just joined {GROUP} as team",
 
   "participant.short": "interested",
   "participant.subscribe": "I am interested",
   "participant.subscribed": "You are interested",
   "participant.myList": "I am interested in",
   "participant.userList": "{NAME} is interested in",
+  "participant.notification.join.mail.intro": "{USERNAME} just joined {GROUP}.",
 
   "mentor.short": "mentor",
   "mentor.short.plural": "mentors",
@@ -27,6 +29,7 @@
   "mentor.groupList.statusTitle.roleNeeded": "Needs a mentor",
   "mentor.groupList.statusTitle.roleOccupied": "Has a mentor",
   "mentor.groupList.statusTitle.roleOccupiedByUser": "You are a mentor",
+  "mentor.notification.join.mail.intro": "{USERNAME} just joined {GROUP} as mentor\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
 
   "host.short": "host",
   "host.short.plural": "hosts",
@@ -38,5 +41,6 @@
   "host.find.roleNeeded": "Looking for a host",
   "host.groupList.statusTitle.roleNeeded": "Needs a host",
   "host.groupList.statusTitle.roleOccupied": "Has a host",
-  "host.groupList.statusTitle.roleOccupiedByUser": "You are host"
+  "host.groupList.statusTitle.roleOccupiedByUser": "You are host",
+  "host.notification.join.mail.intro": "{USERNAME} just joined {GROUP} as host"
 }
