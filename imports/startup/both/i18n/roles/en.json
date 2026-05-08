@@ -10,6 +10,7 @@
   "team.groupList.statusTitle.roleOccupied": "Has a coordination-team",
   "team.groupList.statusTitle.roleOccupiedByUser": "You are part of the coordination team",
   "team.notification.join.mail.intro": "{USERNAME} just joined {GROUP} as team",
+  "team.group.firstSteps": "If not done already, you can start with chosing the venue and, if needed, looking for mentor(s) and then fix a date.\n\n{COORDINATION_GUIDE}",
 
   "participant.short": "interested",
   "participant.subscribe": "I am interested",
@@ -17,6 +18,7 @@
   "participant.myList": "I am interested in",
   "participant.userList": "{NAME} is interested in",
   "participant.notification.join.mail.intro": "{USERNAME} just joined {GROUP}.",
+  "participant.group.firstSteps": "You will get an e-mail notification as soon as a next date has been fixed.",
 
   "mentor.short": "mentor",
   "mentor.short.plural": "mentors",
@@ -30,6 +32,7 @@
   "mentor.groupList.statusTitle.roleOccupied": "Has a mentor",
   "mentor.groupList.statusTitle.roleOccupiedByUser": "You are a mentor",
   "mentor.notification.join.mail.intro": "{USERNAME} just joined {GROUP} as mentor\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
+  "mentor.group.firstSteps": "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
 
   "facilitator.short": "facilitator",
   "facilitator.short.plural": "facilitators",
@@ -55,5 +58,6 @@
   "host.groupList.statusTitle.roleNeeded": "Needs a host",
   "host.groupList.statusTitle.roleOccupied": "Has a host",
   "host.groupList.statusTitle.roleOccupiedByUser": "You are host",
-  "host.notification.join.mail.intro": "{USERNAME} just joined {GROUP} as host"
+  "host.notification.join.mail.intro": "{USERNAME} just joined {GROUP} as host",
+  "host.group.firstSteps": "If not done already, please mention the venue(s) you have access to in your personal message."
 }
