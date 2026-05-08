@@ -412,7 +412,6 @@
   "roles.mentor.subscribe": "Jag kan vara en mentor",
   "roles.mentor.subscribed": "Du är uppskriven som en mentor",
   "roles.mentor.userList": "{NAME} lär ut ",
-  "roles.message.placeholder": "Mina intressen…",
   "roles.participant.myList": "Jag är intresserad av ",
   "roles.participant.short": "intresserad",
   "roles.participant.subscribe": "Jag är intresserad ",
@@ -479,5 +478,6 @@
   "venueDetails.coordinates": "Koordinater:",
   "venues.list.noneFound": "Inga lokaler funna.",
   "venues.list.title": "Lokaler/plats ",
-  "venues.list.titleForRegion": "Lokaler i region {REGION}"
+  "venues.list.titleForRegion": "Lokaler i region {REGION}",
+  "groupMember.message.placeholder": "Mina intressen…"
 }

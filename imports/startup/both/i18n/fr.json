@@ -902,7 +902,6 @@
   "roles.mentor.subscribe": "Je peux être un mentor",
   "roles.mentor.subscribed": "Tu es inscrit en tant que mentor",
   "roles.mentor.userList": "{NAME} enseigne",
-  "roles.message.placeholder": "Mes intérêts…",
   "roles.participant.myList": "Je suis intéressé(e) dans",
   "roles.participant.short": "intéressé",
   "roles.participant.subscribe": "Je suis intéressé.e",
@@ -1054,5 +1053,6 @@
   "warning.emailNotValid": "Ton e-mail semble contenir une erreur.",
   "warning.noEmailProvided": "Entre ton adresse e-mail.",
   "warning.noUserName": "Entrez un nom d'utilisateur.",
-  "warning.userExists": "Ce nom d'utilisateur existe déjà. Merci d'en choisir un autre."
+  "warning.userExists": "Ce nom d'utilisateur existe déjà. Merci d'en choisir un autre.",
+  "groupMember.message.placeholder": "Mes intérêts…"
 }

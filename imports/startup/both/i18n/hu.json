@@ -71,5 +71,5 @@
   "roles.mentor.description": "egy mentor",
   "roles.mentor.short": "mentor",
   "roles.mentor.subscribe": "Lehetnék mentor",
-  "roles.message.placeholder": "Érdeklődési köreim..."
+  "groupMember.message.placeholder": "Érdeklődési köreim..."
 }

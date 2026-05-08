@@ -1014,7 +1014,6 @@
   "roles.mentor.subscribe": "я могу быть наставником",
   "roles.mentor.subscribed": "вы указаны как наставник",
   "roles.mentor.userList": "{NAME} обучает",
-  "roles.message.placeholder": "Мои интересы…",
   "roles.participant.myList": "мне интересно",
   "roles.participant.short": "интересно",
   "roles.participant.subscribe": "мне интересно",
@@ -1186,5 +1185,6 @@
   "warning.emailNotValid": "Возможно, в вашем адресе электронной почты есть ошибка.",
   "warning.noEmailProvided": "Введите адрес электронной почты.",
   "warning.noUserName": "Введите имя пользователя.",
-  "warning.userExists": "Это имя пользователя уже используется. Выберите другое."
+  "warning.userExists": "Это имя пользователя уже используется. Выберите другое.",
+  "groupMember.message.placeholder": "Мои интересы…"
 }

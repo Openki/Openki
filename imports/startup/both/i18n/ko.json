@@ -844,7 +844,6 @@
   "roles.mentor.subscribe": "나는 멘토가 될 수 있습니다",
   "roles.mentor.subscribed": "멘토로 등록되어 있습니다",
   "roles.mentor.userList": "{NAME}(이)가 가르치는 것",
-  "roles.message.placeholder": "내 관심사…",
   "roles.participant.myList": "내 관심 분야는",
   "roles.participant.short": "관심 등록 중",
   "roles.participant.subscribe": "관심 등록 중입니다",
@@ -985,5 +984,6 @@
   "warning.emailNotValid": "사용 가능한 이메일 주소가 아닙니다.",
   "warning.noEmailProvided": "이메일 주소를 입력해주세요.",
   "warning.noUserName": "사용할 사용자 이름을 입력해주세요.",
-  "warning.userExists": "이미 사용 중인 사용자 이름입니다. 다시 입력해주세요."
+  "warning.userExists": "이미 사용 중인 사용자 이름입니다. 다시 입력해주세요.",
+  "groupMember.message.placeholder": "내 관심사…"
 }

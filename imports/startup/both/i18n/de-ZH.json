@@ -281,7 +281,6 @@
   "roles.mentor.short": "Mentor",
   "roles.mentor.subscribe": "Ich chönnt Mentor sii",
   "roles.mentor.subscribed": "Du bisch als Mentor ufgfüert",
-  "roles.message.placeholder": "Mini Interässe…",
   "roles.participant.myList": "Ich bi intressiert a",
   "roles.participant.short": "intressiert",
   "roles.participant.subscribe": "Ich bi intressiert",
@@ -295,5 +294,6 @@
   "userprofile.organizations.header": "Gruppene",
   "userprofile.sendmail-btn": "E-Mail schickä",
   "userprofile.sendmail-btn.busy": "Schickt s'Mail…",
-  "venue.map.windowtitle": "Charte vom Verahstaltigsort"
+  "venue.map.windowtitle": "Charte vom Verahstaltigsort",
+  "groupMember.message.placeholder": "Mini Interässe…"
 }
