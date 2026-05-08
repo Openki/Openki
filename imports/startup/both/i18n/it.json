@@ -861,7 +861,6 @@
   "roles.mentor.subscribe": "Posso essere un relatore/relatrice",
   "roles.mentor.subscribed": "Sei elencato come relatore/relatrice",
   "roles.mentor.userList": "{NAME} insegna",
-  "roles.message.placeholder": "I miei interessi…",
   "roles.participant.myList": "Sono interessato a",
   "roles.participant.short": "interessato",
   "roles.participant.subscribe": "Sono interessato",
@@ -1002,5 +1001,6 @@
   "warning.emailNotValid": "Il tuo indirizzo e-mail sembra avere un errore.",
   "warning.noEmailProvided": "Per favore inserisci un indirizzo e-mail.",
   "warning.noUserName": "Per favore inserisci un nome per il tuo utente.",
-  "warning.userExists": "Nome utente già in uso. Per favore scegline un altro."
+  "warning.userExists": "Nome utente già in uso. Per favore scegline un altro.",
+  "groupMember.message.placeholder": "I miei interessi…"
 }

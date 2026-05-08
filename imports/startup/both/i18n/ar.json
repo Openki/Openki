@@ -820,7 +820,6 @@
   "roles.mentor.subscribe": "أنا يمكن أن اكون معلم/ة",
   "roles.mentor.subscribed": "أنت مسجل كمرشد/ة",
   "roles.mentor.userList": "{NAME} يعلم",
-  "roles.message.placeholder": "اهتماماتي…",
   "roles.participant.myList": "أنا مهتم ب",
   "roles.participant.short": "مهتم",
   "roles.participant.subscribe": "أنا مهتم",
@@ -961,5 +960,6 @@
   "warning.emailNotValid": "عنوان بريدك الإلكتروني لا يبدو صحيحًا.",
   "warning.noEmailProvided": "الرجاء إدخال عنوان البريد الإلكتروني.",
   "warning.noUserName": "الرجاء ادخال اسم المستخدم.",
-  "warning.userExists": "اسم المستخدم هذا موجود بالفعل. الرجاء اختيار آخر."
+  "warning.userExists": "اسم المستخدم هذا موجود بالفعل. الرجاء اختيار آخر.",
+  "groupMember.message.placeholder": "اهتماماتي…"
 }

@@ -141,7 +141,7 @@ export function Member({ member, group }: { member: GroupMemberEntity; group: Gr
               <Editable
                 {...{
                   multiline: false,
-                  placeholderText: t("roles.message.placeholder", "My interests…"),
+                  placeholderText: t("groupMember.message.placeholder", "My interests…"),
                   store: {
                     onSave: async (newMessage) => {
                       const change = new Message(group, currentUser._id, newMessage);

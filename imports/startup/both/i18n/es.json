@@ -308,7 +308,6 @@
   "resetPassword.title": "Restablece tu contraseña",
   "roles.host.subscribe": "Tengo un lugar para ofrecer",
   "roles.mentor.subscribe": "Puedo ser mentor",
-  "roles.message.placeholder": "Mis intereses…",
   "roles.team.subscribe": "Ayudo en organizarlo",
   "userprofile.organizations.header": "Grupos",
   "userprofile.sendmail-btn": "Enviar e-mail",
@@ -323,5 +322,6 @@
   "warning.emailNotValid": "Su dirección de correo electrónico parece tener un error.",
   "warning.noEmailProvided": "Por favor escribe una dirección de correo electrónico.",
   "warning.noUserName": "Por favor escribe un nombre para tu usuario.",
-  "warning.userExists": "Este nombre de usuario ya está en uso. Por favor escoge otro."
+  "warning.userExists": "Este nombre de usuario ya está en uso. Por favor escoge otro.",
+  "groupMember.message.placeholder": "Mis intereses…"
 }
