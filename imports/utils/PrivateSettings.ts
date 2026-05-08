@@ -8,7 +8,7 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
   admins: [String],
   /** Pseudo-Random Number Generator */
   prng: StringEnum("", "static"),
-  /** Generates test data, is not needed for the productive system */
+  /** Generates test data, is not needed for the production environment */
   testdata: Boolean,
   /** Sender e-mail address in mails */
   siteEmail: String,
@@ -16,7 +16,7 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
   replyToEmail: Match.Maybe(String),
   /**
    * Sender and recipient address for "Report problem" function. The recipient is also
-   * visible in e-mail that are send to users.
+   * visible in e-mails sent to users.
    */
   reporter: {
     /**
