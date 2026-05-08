@@ -2,14 +2,13 @@ import React, { JSX } from "react";
 import { useTranslation } from "react-i18next";
 import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
+import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
 
 export interface Props {
   group: JSX.Element;
   newParticipant: JSX.Element;
-  roleShort: string;
   roleType: string;
   message: string | undefined;
-  appendCollaborationHint: boolean;
   roleCounts: {
     role: string;
     count: number;
@@ -24,10 +23,8 @@ export interface Props {
 export function Join({
   group,
   newParticipant,
-  roleShort,
   roleType,
   message,
-  appendCollaborationHint,
   roleCounts,
   otherRecipients,
   username,
@@ -36,17 +33,17 @@ export function Join({
   lng,
 }: Props) {
   const { t } = useTranslation(undefined, { lng });
+  const { roleNotificationJoinEmail } = getRoleDisplay(t);
+
   return (
     <>
       <tr>
         <td>
           <h5 className="title">{t("email.base.greeting", { USERNAME: username })}</h5>
-          <p>
-            {t("notification.join.mail.intro", "{USERNAME} just joined {GROUP} as: {ROLE}.", {
+          <p className="pre">
+            {roleNotificationJoinEmail(roleType, {
               USERNAME: newParticipant,
               GROUP: group,
-              ROLE: roleShort,
-              ROLETYPE: roleType,
             })}
           </p>
 
@@ -59,15 +56,6 @@ export function Join({
                 </tr>
               </table>
             </>
-          )}
-          {appendCollaborationHint && (
-            <p>
-              {t(
-                "notification.join.mail.collaborationHint",
-                "If you like them to collaborate feel free to make contact. You can give them rights to edit {GROUP} and make them part of the organizing team by clicking the megaphone next to a name.",
-                { GROUP: group },
-              )}
-            </p>
           )}
           <strong>
             {t("notification.join.mail.statsOverview", "Overview over participants:")}

@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import { TFunction } from "i18next";
 import { RoleEntity } from "/imports/api/regions/regions";
 
@@ -49,6 +50,13 @@ export function getRoleDisplay(t: TFunction) {
 
     groupListRoleOccupiedByUser(type: RoleEntity["type"]) {
       return t(`roles:${type}.groupList.statusTitle.roleOccupiedByUser`);
+    },
+
+    roleNotificationJoinEmail(
+      type: RoleEntity["type"],
+      variables: { USERNAME: JSX.Element | string; GROUP: JSX.Element | string },
+    ) {
+      return t(`roles:${type}.notification.join.mail.intro`, variables);
     },
   };
 }

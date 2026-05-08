@@ -130,13 +130,9 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         group: <a href={groupLink}>{group.name}</a>,
         newParticipant: <strong>{newParticipant.getDisplayName()}</strong>,
         subject,
-        roleShort: roleShort(body.newRole),
         roleType: body.newRole,
         email: <span style={{ color: "blue" }}>{PrivateSettings.siteEmail}</span>,
         message: body.message ? HtmlTools.plainToHtml(body.message) : undefined,
-        // For Team members when a mentor joins, add a hint for possible collaboration or
-        // invite into team
-        appendCollaborationHint: body.newRole === "mentor",
         roleCounts,
         otherRecipients: recipients
           .filter((r) => r._id !== actualRecipient._id)
