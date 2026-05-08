@@ -20,7 +20,7 @@ Router.prototype.configureBodyParsers = function () {
  * Add the router to the server connect handlers.
  */
 Router.prototype.start = function () {
-  WebApp.connectHandlers.use(this);
+  WebApp.handlders.use(this);
   this.configureBodyParsers();
 };
 
@@ -44,7 +44,7 @@ Router.prototype.dispatch = function (url, context, done) {
     var msg;
 
     if (err) {
-      if (res.statusCode < 400) 
+      if (res.statusCode < 400)
         res.statusCode = 500;
 
       if (err.status)
