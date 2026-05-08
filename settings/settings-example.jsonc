@@ -2,7 +2,7 @@
 
 { "admins": ["greg"] // User administrator accounts that are created with the test data
 , "prng": "" // Pseudo-Random Number Generator. Use "static" as value to use static seed for test data. Result: After test data generation, entity ids, amount of events, comment content, region assignment of groups, etc will stay identical. Except ids from users. Default: "" (random seed)
-, "testdata": true // Generates test data, is not needed for the productive system
+, "testdata": true // Generates test data, is not needed for the production environment
 , "public":
 	{ "siteName": "Openki-clone"
 	, "siteStage": "beta" // The text top left at the logo
@@ -162,7 +162,7 @@
   }
 , "siteEmail": "" // Sender e-mail address in mails
 , "replyToEmail": "" // "Reply to" address in mails 
-, "reporter": // Sender and recipient address for "Report problem" function
+, "reporter": // Sender and recipient address for "Report problem" function. The recipient is also visible in e-mails sent to users.
   { "sender": "pingpong@mail.openki.net" // The e-mail address of the sender. All e-mail addresses can be plain 'sender@server.com' or formatted 'Sender Name sender@server.com'
   , "recipient": "badabuff@openki.net" // Comma separated list of recipients e-mail addresses that will appear on the To: field
   }
