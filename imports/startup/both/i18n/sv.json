@@ -134,7 +134,7 @@
   "find.needsMentor": "Letar efter en mentor",
   "find.needsTeam": "Letar efter en organisatör",
   "find.noGroupsFound": "Inga kurser hittade.",
-  "find.proposeNewGroup": "Varför inte föreslå en ny kurs för \"{TERM}\"?",
+  "find.proposeNewGroup?": "Varför inte föreslå en ny kurs för \"{TERM}\"?",
   "find.searchAllRegions": "Sök överallt ",
   "find.searchCategories.placeholder": "Välj kategorier",
   "find.search_filter.title": "Sök med filter",

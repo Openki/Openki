@@ -254,7 +254,7 @@
   "find.needsMentor": "멘토 구하는 중",
   "find.needsTeam": "기획자 구하는 중",
   "find.noGroupsFound": "조건에 맞는 코스가 없습니다",
-  "find.proposeNewGroup": "\"{TERM}\"에 대해 새로운 코스를 제안하는 것이 어떤가요?",
+  "find.proposeNewGroup?": "\"{TERM}\"에 대해 새로운 코스를 제안하는 것이 어떤가요?",
   "find.searchAllRegions": "모든 지역에서 검색",
   "find.searchCategories.placeholder": "카테고리 선택",
   "find.search_filter.title": "필터 검색",

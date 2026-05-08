@@ -320,7 +320,7 @@
   "find.needsMentor": "Ищу наставника",
   "find.needsTeam": "Ищу организатора",
   "find.noGroupsFound": "Курсы не найдены",
-  "find.proposeNewGroup": "Почему бы не предложить новый курс для \"{TERM}\"?",
+  "find.proposeNewGroup?": "Почему бы не предложить новый курс для \"{TERM}\"?",
   "find.searchAllRegions": "Искать во всех регионах",
   "find.searchCategories.placeholder": "Выбрать категории",
   "find.search_filter.title": "Фильтрованный поиск",

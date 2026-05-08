@@ -353,7 +353,7 @@
   "find.needsMentor": "Noch ohne Mentor_in",
   "find.needsTeam": "Suche nach Organisator_in",
   "find.noGroupsFound": "Kein Kurs gefunden",
-  "find.proposeNewGroup": "Wieso nicht einen neuen Kurs \"{TERM}\" erstellen?",
+  "find.proposeNewGroup?": "Wieso nicht einen neuen Kurs \"{TERM}\" erstellen?",
   "find.searchAllRegions": "In allen Regionen suchen",
   "find.searchCategories.placeholder": "Kategorien wählen",
   "find.search_filter.title": "Suche filtern",
