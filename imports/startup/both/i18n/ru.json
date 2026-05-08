@@ -504,7 +504,7 @@
   "group.roles.messageInfoParticipant": "(необязательно) сообщение, например, приветствие, пожелание или интерес",
   "group.roles.removeTeam": "Удалить из команды",
   "group.roles.retract": "Отменить подписку",
-  "group.roles.unsubscribed": "Отписался от {NAME}",
+  "group.roles.unsubscribed": "Отписался от {GROUP}",
   "group.save.error": "Сохранение прошло неудачно",
   "group.subnav.descr": "Описание",
   "group.subnav.files": "Файлы",

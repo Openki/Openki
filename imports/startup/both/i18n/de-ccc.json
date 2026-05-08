@@ -511,7 +511,7 @@
   "group.roles.messageInfoParticipant": "ein (optionaler) Text mit z. B. Wünschen, Grüßen oder Interessen",
   "group.roles.removeTeam": "Aus dem Team ausschliessen",
   "group.roles.retract": "Zurückziehen",
-  "group.roles.unsubscribed": "Bei {NAME} abgemeldet",
+  "group.roles.unsubscribed": "Bei {GROUP} abgemeldet",
   "group.save.error": "Konnte nicht gespeichert werden",
   "group.subnav.descr": "Beschreibung",
   "group.subnav.files": "Dateien",

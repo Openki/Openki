@@ -512,7 +512,7 @@
   "group.roles.messageInfoParticipant": "un message (facultatif) comme une salutation, un souhait ou un intérêt",
   "group.roles.removeTeam": "Supprimer de l'équipe",
   "group.roles.retract": "Retirer",
-  "group.roles.unsubscribed": "Désinscrit de {NAME}",
+  "group.roles.unsubscribed": "Désinscrit de {GROUP}",
   "group.save.error": "L'enregistrement a échoué",
   "group.subnav.descr": "Description",
   "group.subnav.files": "Fichiers",
