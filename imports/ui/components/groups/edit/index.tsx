@@ -17,6 +17,7 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { hasRoleUser } from "../../../../utils/group-role-utils";
 import * as StringTools from "/imports/utils/string-tools";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
+import { cx } from "/imports/utils/cx";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
@@ -560,7 +561,7 @@ export function Edit(props: Props) {
                 aria-labelledby="learnOrTeachTitle"
               >
                 <div className="col d-grid">
-                  <label className={`btn btn-lg ${simpleRoleActiveClass("participant")}`}>
+                  <label className={cx("btn btn-lg", simpleRoleActiveClass("participant"))}>
                     <input
                       className="d-none"
                       type="radio"
@@ -574,7 +575,7 @@ export function Edit(props: Props) {
                   </label>
                 </div>
                 <div className="col d-grid">
-                  <label className={`btn btn-lg ${simpleRoleActiveClass("mentor")}`}>
+                  <label className={cx("btn btn-lg", simpleRoleActiveClass("mentor"))}>
                     <input
                       className="d-none"
                       type="radio"

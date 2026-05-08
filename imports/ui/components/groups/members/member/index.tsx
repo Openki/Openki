@@ -12,13 +12,15 @@ import { GroupMemberEntity, GroupModel } from "../../../../../api/groups/groups"
 
 import * as Tooltips from "/imports/utils/Tooltips";
 import { useUser } from "/imports/utils/react-meteor-data";
+import { cx } from "/imports/utils/cx";
+import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
+import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+
 import { ProfileLink } from "/imports/ui/components/profile-link";
 import { Contribution } from "../../../Contribution";
 import { ParticipantContact } from "/imports/ui/components/participant/contact";
 import { RemoveFromTeamDropdown } from "../remove-from-team-dropdown";
 import { Editable } from "/imports/ui/components/editable";
-import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
-import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 import { RoleIcon } from "/imports/ui/components/RoleIcon";
 
 import "./styles.scss";
@@ -44,12 +46,6 @@ export function Member({ member, group }: { member: GroupMemberEntity; group: Gr
     return new Unsubscribe(group, member.user, "team");
   }
 
-  function ownUserMemberClass() {
-    if (member.user === currentUser?._id) {
-      return "is-own-user";
-    }
-    return "";
-  }
   function memberRoles() {
     return member.roles.filter((role) => role !== "participant");
   }
@@ -87,7 +83,7 @@ export function Member({ member, group }: { member: GroupMemberEntity; group: Gr
   }
 
   return (
-    <div className={`group-member ${ownUserMemberClass()}`}>
+    <div className={cx("group-member", member.user === currentUser?._id && "is-own-user")}>
       <div className="d-flex flex-wrap align-items-center">
         <div className="me-1">
           <ProfileLink userId={member.user} />
@@ -99,7 +95,10 @@ export function Member({ member, group }: { member: GroupMemberEntity; group: Gr
             memberRoles().map((role) => (
               <div
                 key={role}
-                className={`group-member-role ${roles.find((r) => r.type === role)?.proposal ? "is-proposal" : ""}`}
+                className={cx(
+                  "group-member-role",
+                  roles.find((r) => r.type === role)?.proposal && "is-proposal",
+                )}
               >
                 <span className="group-member-role-text">
                   <RoleIcon type={role} regionId={group.region} />{" "}
@@ -126,7 +125,7 @@ export function Member({ member, group }: { member: GroupMemberEntity; group: Gr
                 await processChange(change);
               }}
             >
-              <i className={`fa-solid fa-plus ${member.user}`} />{" "}
+              <i className={cx("fa-solid fa-plus", member.user)} />{" "}
               <i className="fa-solid fa-bullhorn fa-fw" />
             </button>
           )}
