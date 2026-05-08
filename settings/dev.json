@@ -146,7 +146,7 @@
       , "preset": true
       , "editable": true
       }
-    , { "type": "moderator"
+    , { "type": "facilitator"
       , "icon": "fa-solid fa-circle-nodes"
       , "proposal": true
       , "preset": false
