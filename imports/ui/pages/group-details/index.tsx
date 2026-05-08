@@ -311,7 +311,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
             {mobileViewport() && <Discussion groupId={group._id} select={select} />}
 
             <div className="page-component mt-3">
-              <Report showGroupHint={true} />
+              <Report showGroupHint />
             </div>
           </div>
         </div>

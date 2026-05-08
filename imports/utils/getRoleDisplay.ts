@@ -65,5 +65,9 @@ export function getRoleDisplay(t: TFunction) {
     ) {
       return t(`roles:${type}.group.firstSteps`, variables);
     },
+
+    roleGroupMessageInfo(type: RoleEntity["type"]) {
+      return t(`roles:${type}.group.messageInfo`);
+    },
   };
 }
