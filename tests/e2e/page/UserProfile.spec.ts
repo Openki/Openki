@@ -2,7 +2,7 @@
 
 beforeEach(() => {
   // User ids are not static, so we need a little trick to find a user profile page
-  cy.visitOpenki("/course/e49ed1ce5d/walliserduetsch-lernen");
+  cy.visitOpenki("/group/e49ed1ce5d/walliserduetsch-lernen");
   cy.get(".profilelink").contains("Sandro").click();
 });
 

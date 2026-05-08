@@ -10,7 +10,7 @@
   margin: 7px 0;
 }
 
-.frame-list-item-course {
+.frame-list-item-group {
   background-color: $blue-lighter;
 }
 
@@ -25,7 +25,7 @@
   background-size: contain;
 }
 
-.frame-list-item-course + .frame-list-item-course,
+.frame-list-item-group + .frame-list-item-group,
 .frame-list-item-event + .frame-list-item-event {
   margin-top: 5px;
 }

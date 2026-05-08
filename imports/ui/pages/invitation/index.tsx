@@ -60,7 +60,7 @@ export function InvitationPage({
             <p className="fs-4">
               {t(
                 "invitation.join.text",
-                "Become part of {TENANT} and propose, discuss, develop, organize and publish courses with {INVITER} and other nice people in {TENANT}.",
+                "Become part of {TENANT} and propose, discuss, develop, organize and publish groups with {INVITER} and other nice people in {TENANT}.",
                 { TENANT: tenant.name, INVITER: userName },
               )}
             </p>

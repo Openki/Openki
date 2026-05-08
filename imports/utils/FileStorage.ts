@@ -12,10 +12,9 @@ function getBucket() {
   return PrivateSettings.s3.bucketEndpoint;
 }
 
-function createS3Client() {
+async function createS3Client() {
   if (Meteor.isServer) {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { S3 } = require("@aws-sdk/client-s3");
+    const { S3 } = await import("@aws-sdk/client-s3");
 
     return new S3({
       region: PrivateSettings.s3.region,
@@ -27,6 +26,8 @@ function createS3Client() {
       },
     });
   }
+
+  return undefined;
 }
 
 export const UploadFilePattern = Match.ObjectIncluding({
@@ -53,10 +54,9 @@ export async function upload(directoryName: string, file: UploadFile) {
   );
 
   if (Meteor.isServer) {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { Upload } = require("@aws-sdk/lib-storage");
+    const { Upload } = await import("@aws-sdk/lib-storage");
 
-    const s3 = createS3Client();
+    const s3 = await createS3Client();
 
     const params: PutObjectCommandInput = {
       Bucket: getBucket(),
@@ -67,7 +67,10 @@ export async function upload(directoryName: string, file: UploadFile) {
     };
 
     await new Upload({
-      client: s3,
+      // s3 is only undefined when not on server we check that already so it is
+      // not a problem, so wie can ignore undefined at this place
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      client: s3!,
       params,
     }).done();
   }
@@ -75,8 +78,51 @@ export async function upload(directoryName: string, file: UploadFile) {
   return { fullFileName: fullKey, publicUrl: generatePublicUrl(fullKey) };
 }
 
-export function remove(fullFileName: string) {
-  return createS3Client().deleteObject({
+export async function renameDirectory(oldPrefix: string, newPrefix: string) {
+  if (Meteor.isServer) {
+    const { ListObjectsV2Command, CopyObjectCommand, DeleteObjectCommand } =
+      await import("@aws-sdk/client-s3");
+
+    const s3 = await createS3Client();
+
+    if (!s3) {
+      return;
+    }
+
+    const bucket = getBucket();
+
+    const listRes = await s3.send(new ListObjectsV2Command({ Bucket: bucket, Prefix: oldPrefix }));
+
+    const objects = listRes.Contents || [];
+
+    for (const obj of objects) {
+      if (!obj.Key) continue;
+
+      const newKey = obj.Key.replace(oldPrefix, newPrefix);
+
+      // 1. Copy object
+      await s3.send(
+        new CopyObjectCommand({
+          Bucket: bucket,
+          CopySource: `${bucket}/${obj.Key}`,
+          Key: newKey,
+          ACL: "public-read",
+        }),
+      );
+
+      // 2. Delete old object
+      await s3.send(
+        new DeleteObjectCommand({
+          Bucket: bucket,
+          Key: obj.Key,
+        }),
+      );
+    }
+  }
+}
+
+export async function remove(fullFileName: string) {
+  return (await createS3Client())?.deleteObject({
     Bucket: getBucket(),
     Key: fullFileName,
   });

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import { RegionSelection } from "../selection/selection";
+import { Select } from "../select/select";
 
 import { Modal } from "/imports/startup/client/bootstrap";
 
@@ -53,27 +53,28 @@ export function Splash() {
               {t("regionsSplash.plsChooseRegion", "Please choose a region")}
             </h5>
             <div className="regions-splash-selection">
-              <RegionSelection
-                isSplash={true}
+              <Select
                 onSelect={() => {
                   if (!elementRef.current) {
                     return;
                   }
                   Modal.getOrCreateInstance(elementRef.current).hide();
                 }}
+                append={
+                  <button
+                    className="btn btn-primary"
+                    type="button"
+                    onClick={() => {
+                      if (!elementRef.current) {
+                        return;
+                      }
+                      Modal.getOrCreateInstance(elementRef.current).hide();
+                    }}
+                  >
+                    {t("regionSplash.ok", "Go!")}
+                  </button>
+                }
               />
-              <button
-                className="btn btn-primary"
-                type="button"
-                onClick={() => {
-                  if (!elementRef.current) {
-                    return;
-                  }
-                  Modal.getOrCreateInstance(elementRef.current).hide();
-                }}
-              >
-                {t("regionSplash.ok", "Go!")}
-              </button>
             </div>
             <div className="regions-splash-login">
               <button

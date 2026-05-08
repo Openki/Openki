@@ -84,18 +84,18 @@ export function WeekPage(data: Record<string, string>) {
         filter.add("after", newDate.startOf("week").toISOString());
         update();
       },
-      availableGroups: new Filtering({
-        filterGroups: Predicates.ids,
+      availableOrganizations: new Filtering({
+        filterOrganizations: Predicates.ids,
       })
         .read(data)
-        .get("filterGroups"),
-      selectedGroups: filter.get("groups"),
-      onAddGroup: (group) => {
-        filter.add("groups", group);
+        .get("filterOrganizations"),
+      selectedOrganizations: filter.get("organizations"),
+      onAddOrganization: (organization) => {
+        filter.add("organizations", organization);
         update();
       },
-      onRemoveGroup: (group) => {
-        filter.remove("groups", group);
+      onRemoveOrganization: (organization) => {
+        filter.remove("organizations", organization);
         update();
       },
       categories: filter.get("categories"),
@@ -154,10 +154,10 @@ export function WeekPage(data: Record<string, string>) {
     } else {
       delete filterParams.hideSwitches;
     }
-    if (data.filterGroups) {
-      filterParams.filterGroups = data.filterGroups;
+    if (data.filterOrganizations) {
+      filterParams.filterOrganizations = data.filterOrganizations;
     } else {
-      delete filterParams.filterGroups;
+      delete filterParams.filterOrganizations;
     }
     delete filterParams.region; // HACK region is kept in the session (for bad reasons)
     const queryString = UrlTools.paramsToQueryString(filterParams);

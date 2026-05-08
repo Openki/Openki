@@ -12,7 +12,7 @@ export interface Props {
   recipientName: string;
   siteName: string | undefined;
   fromAddress: string;
-  course: JSX.Element | undefined;
+  group: JSX.Element | undefined;
   event: JSX.Element | undefined;
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
   campaign: string;
@@ -27,7 +27,7 @@ export function PrivateMessage({
   recipientName,
   siteName,
   fromAddress,
-  course,
+  group,
   event,
   unsubscribe,
   campaign,
@@ -60,12 +60,12 @@ export function PrivateMessage({
               </>
             )}
           </p>
-          {!!course && (
+          {!!group && (
             <p>
               {t(
-                "notification.privateMessage.mail.fromCourse",
-                "This message was sent from {COURSE}.",
-                { COURSE: course },
+                "notification.privateMessage.mail.fromGroup",
+                "This message was sent from {GROUP}.",
+                { GROUP: group },
               )}
             </p>
           )}

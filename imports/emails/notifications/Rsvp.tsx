@@ -36,7 +36,7 @@ export function Rsvp({
           <p>
             {t(
               "notification.rsvp.mail.intro",
-              "We are looking forward to see {COMPANIONS, plural, =0{you} other{you and your companion} } on {DATE}. Your {COMPANIONS, plural, =0{seat is} other{seats are} } reserved. If you can not join the event, please let the organizers know by withdrawing your registration.",
+              "We are looking forward to see {COMPANIONS, plural, =0{you} other{you and your companion} } on {DATE}. Your {COMPANIONS, plural, =0{seat is} other{seats are} } reserved. If you can not join the event, please let the coordinators know by withdrawing your registration.",
               { DATE: eventDate, COMPANIONS: companions },
             )}
           </p>

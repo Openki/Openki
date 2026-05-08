@@ -2,27 +2,30 @@ import React from "react";
 import { Router } from "meteor/iron:router";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
-import { Courses as CourseCollection, CourseModel } from "/imports/api/courses/courses";
+import { Groups as GroupCollection, GroupModel } from "../../../api/groups/groups";
 import { Events as EventCollection, EventModel } from "/imports/api/events/events";
-import { Groups as GroupCollection, GroupModel } from "/imports/api/groups/groups";
-import * as Courses from "/imports/api/courses/publications";
+import {
+  Organizations as OrganizationCollection,
+  OrganizationModel,
+} from "../../../api/organizations/organizations";
+import * as Groups from "../../../api/groups/publications";
 import * as Events from "/imports/api/events/publications";
-import * as Groups from "/imports/api/groups/publications";
+import * as Organizations from "../../../api/organizations/publications";
 
 import { Filtering } from "/imports/utils/filtering";
 import { Publication } from "/imports/utils/ServerPublishReact";
-import { CourseTemplate } from "../../lib/course-template";
+import { GroupTemplate } from "../../lib/group-template";
 
-import { Edit } from "../courses/edit";
-import { CourseCompact } from "../courses/compact";
+import { Edit } from "../groups/edit";
+import { GroupCompact } from "../groups/compact";
 import { EventCompact } from "../../components/events/compact";
 import { EventCompact as EventCompactModern } from "../events/compact.modern";
 import { EventsMap } from "../../components/events/map";
-import { CompactPropose } from "../courses/CompactPropose";
+import { CompactPropose } from "../groups/CompactPropose";
 
-/** A list of entites. */
+/** A list of entities. */
 
-export type ListOfEntitesElementComponent<T> = React.FC<{
+export type ListOfEntitiesElementComponent<T> = React.FC<{
   entity: T;
   index: number;
   params: Record<string, string>;
@@ -32,11 +35,11 @@ export interface ListOfEntities<T> {
   showAll?: { text?: string } | false;
   filter: () => Filtering<any>;
   find: Publication<any[], T[]>;
-  element: ListOfEntitesElementComponent<T>;
+  element: ListOfEntitiesElementComponent<T>;
 }
 
 /** A static component with entites eg. like eventMap */
-export type ComponentWithEntitesComponent<T> = React.FC<{
+export type ComponentWithEntitiesComponent<T> = React.FC<{
   entities: T[];
   params: Record<string, string>;
 }>;
@@ -45,7 +48,7 @@ export interface ComponentWithEntities<T> {
   showAll?: { text?: string } | false;
   filter: () => Filtering<any>;
   find: Publication<any[], T[]>;
-  component: ComponentWithEntitesComponent<T>;
+  component: ComponentWithEntitiesComponent<T>;
 }
 
 /** A static component eg. like propose */
@@ -56,32 +59,32 @@ export interface StaticComponent {
   component: StaticComponentComponent;
 }
 
-const course: ListOfEntities<CourseModel> = {
+const group: ListOfEntities<GroupModel> = {
   route: "search",
-  filter: CourseCollection.Filtering,
-  find: Courses.useFindFilter,
+  filter: GroupCollection.Filtering,
+  find: Groups.useFindFilter,
   element: ({ entity, index, params }) => (
     <React.Fragment key={entity._id}>
       {/* The sevent box should allways be the propose one, after then every 21 */}
-      {PublicSettings.feature.proposeCourseBox && (index - 6) % 21 === 0 && (
+      {PublicSettings.feature.proposeGroupBox && (index - 6) % 21 === 0 && (
         <div className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
-          <CompactPropose group={params.group} />
+          <CompactPropose organization={params.organization} />
         </div>
       )}
       <div className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
-        <CourseCompact course={entity} />
+        <GroupCompact group={entity} />
       </div>
     </React.Fragment>
   ),
 };
 
-const courseWithoutPropose: ListOfEntities<CourseModel> = {
+const groupWithoutPropose: ListOfEntities<GroupModel> = {
   route: "search",
-  filter: CourseCollection.Filtering,
-  find: Courses.useFindFilter,
+  filter: GroupCollection.Filtering,
+  find: Groups.useFindFilter,
   element: ({ entity }) => (
     <div key={entity._id} className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
-      <CourseCompact course={entity} />
+      <GroupCompact group={entity} />
     </div>
   ),
 };
@@ -126,16 +129,19 @@ function bodyStyle(imageUrl: string) {
     backgroundSize: "cover",
   };
 }
-const group: ListOfEntities<GroupModel> = {
-  route: "exploreGroups",
-  filter: GroupCollection.Filtering,
-  find: Groups.useFindFilter,
+const organization: ListOfEntities<OrganizationModel> = {
+  route: "exploreOrganizations",
+  filter: OrganizationCollection.Filtering,
+  find: Organizations.useFindFilter,
   element: ({ entity }) => (
     <div key={entity._id} className="me-2">
-      <div className="card card-group border-0 rounded-0" style={bodyStyle(entity.publicLogoUrl())}>
+      <div
+        className="card card-organization border-0 rounded-0"
+        style={bodyStyle(entity.publicLogoUrl())}
+      >
         <div className="card-body">
           <h5 className="card-title">
-            <a className="stretched-link" href={Router.path("groupDetails", entity)}>
+            <a className="stretched-link" href={Router.path("organizationDetails", entity)}>
               {entity.name}
             </a>
           </h5>
@@ -161,18 +167,18 @@ const eventsMap: ComponentWithEntities<EventModel> = {
 const propose: StaticComponent = {
   component: ({ params }) => (
     <div className="container mw-md">
-      <Edit {...CourseTemplate()} {...params} />
+      <Edit {...GroupTemplate()} {...params} />
     </div>
   ),
 };
 
 export const mapping = {
-  course,
-  courseWithoutPropose,
+  group,
+  groupWithoutPropose,
   event,
   eventModern,
   eventModernWithoutCategories,
-  group,
+  organization,
   eventsMap,
   propose,
 } as const;

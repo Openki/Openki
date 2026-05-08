@@ -1,0 +1,26 @@
+@import "{}/imports/ui/stylesheets/variables/index";
+
+.group-event-tasks {
+  position: relative;
+}
+
+.delete-events-modal .panel {
+  margin: 0;
+}
+
+.delete-events-list,
+.selected-events {
+  overflow: auto;
+}
+
+.delete-events-list {
+  border: 1px solid $blue-lighter;
+  margin-bottom: 15px;
+  max-height: 350px;
+  padding: 0 10px;
+}
+
+.selected-events {
+  max-height: 300px;
+  overflow: auto;
+}

@@ -3,20 +3,20 @@ import { Router } from "meteor/iron:router";
 import { SitemapStream } from "sitemap";
 import { createGzip } from "zlib";
 
-import { CourseModel, Courses } from "/imports/api/courses/courses";
+import { GroupModel, Groups } from "../../api/groups/groups";
 import { Events } from "/imports/api/events/events";
 import { Venues } from "/imports/api/venues/venues";
-import { Groups } from "/imports/api/groups/groups";
+import { Organizations } from "../../api/organizations/organizations";
 import { visibleTenantsAsync } from "/imports/utils/visible-tenants";
 import { serverError } from "/imports/api/log/methods";
 import { LanguagesRaw } from "/imports/api/languages/languages";
 
-function calcCoursePriority(course: CourseModel) {
-  if (course.archived) {
+function calcGroupPriority(group: GroupModel) {
+  if (group.archived) {
     return 0.0; // archived
   }
 
-  if (course.futureEvents > 0) {
+  if (group.futureEvents > 0) {
     return 0.8; // upcoming
   }
 
@@ -25,26 +25,26 @@ function calcCoursePriority(course: CourseModel) {
 
 async function requestPages() {
   const pages: { url: string; lastmod?: Date | undefined; priority: number }[] = [];
-  const courses = Courses.findFilter({ tenants: await visibleTenantsAsync(), internal: false });
+  const groups = Groups.findFilter({ tenants: await visibleTenantsAsync(), internal: false });
   const events = Events.findFilter({ tenants: await visibleTenantsAsync(), internal: false });
   const venues = Venues.find();
-  const groups = Groups.find();
+  const organizations = Organizations.find();
 
   const now = new Date();
 
   // Priorities
   // ==========
-  // start page               = 1.0
-  // calender page            = 1.0
-  // events (future)          = 0.8
-  // course (upcoming)        = 0.8
-  // course (proposal/resting) = 0.6
-  // find page                = 0.5
-  // propose page             = 0.5
-  // venues                   = 0.2
-  // groups                   = 0.2
-  // course (archived)        = 0.0
-  // event (past/canceled)    = 0.0
+  // start page                = 1.0
+  // calender page             = 1.0
+  // events (future)           = 0.8
+  // group (upcoming)          = 0.8
+  // group (proposal/resting)  = 0.6
+  // find page                 = 0.5
+  // propose page              = 0.5
+  // venues                    = 0.2
+  // organizations             = 0.2
+  // group (archived)          = 0.0
+  // event (past/canceled)     = 0.0
 
   pages.push({
     url: Router.url("home"),
@@ -59,15 +59,15 @@ async function requestPages() {
     priority: 0.5,
   });
   pages.push({
-    url: Router.url("proposeCourse"),
+    url: Router.url("proposeGroup"),
     priority: 0.5,
   });
 
-  await courses.forEachAsync((course) => {
+  await groups.forEachAsync((group) => {
     pages.push({
-      url: Router.url("showCourse", course),
-      lastmod: course.time_lastedit,
-      priority: calcCoursePriority(course),
+      url: Router.url("showGroup", group),
+      lastmod: group.time_lastedit,
+      priority: calcGroupPriority(group),
     });
   });
   await events.forEachAsync((event) => {
@@ -84,10 +84,10 @@ async function requestPages() {
       priority: 0.2,
     });
   });
-  await groups.forEachAsync((group) => {
+  await organizations.forEachAsync((organization) => {
     pages.push({
-      url: Router.url("groupDetails", group),
-      lastmod: group.time_lastedit,
+      url: Router.url("organizationDetails", organization),
+      lastmod: organization.time_lastedit,
       priority: 0.2,
     });
   });

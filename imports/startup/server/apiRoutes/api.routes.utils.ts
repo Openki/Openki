@@ -3,7 +3,7 @@ import { SortSpec } from "/imports/utils/sort-spec";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { Api, ApiEvent } from "/imports/Api";
 
-type HandlerType = "groups" | "venues" | "events" | "courses";
+type HandlerType = "organizations" | "venues" | "events" | "groups";
 
 export class NoActionError {
   message: string;

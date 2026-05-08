@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 
-import * as Groups from "/imports/api/groups/publications";
+import * as Organizations from "../../../api/organizations/publications";
 import * as Tenants from "/imports/api/tenants/publications";
 import { UserModel } from "/imports/api/users/users";
 import * as Venues from "/imports/api/venues/publications";
@@ -20,7 +20,7 @@ import { CalendarSection } from "./CalendarSection";
 import { CreateUserSection } from "./CreateUserSection";
 import { AccountManagementSection } from "./AccountManagementSection";
 import { EmailSection } from "./EmailSection";
-import { GroupSection } from "./GroupSection";
+import { OrganizationSection } from "./OrganizationSection";
 import { ProfileSection } from "./ProfileSection";
 import { TenantSection } from "./TenantSection";
 import { VenuesSection } from "./VenuesSection";
@@ -133,7 +133,7 @@ function UnsubscribeResultAlerts() {
           {
             description: t(
               "notifications.unsubscribeSuccess.action",
-              "If you want to unsubscribe from a specific course you can unsubscribe there. Manage your notifications settings:",
+              "If you want to unsubscribe from a specific group you can unsubscribe there. Manage your notifications settings:",
             ),
             button: <VisitProfileAction color="success" />,
           },
@@ -141,7 +141,7 @@ function UnsubscribeResultAlerts() {
       >
         {t(
           "notifications.unsubscribeSuccess.description",
-          "Are you sure? This could cause problems. You will not receive notifications about updates to courses, events, etc.",
+          "Are you sure? This could cause problems. You will not receive notifications about updates to groups, events, etc.",
         )}
       </ActionResult>
     );
@@ -218,7 +218,7 @@ function NotLoggedIn() {
 function LoggedIn({ user }: { user: UserModel }) {
   const [tenantsAreLoading, tenants] = Tenants.useFindFilter({ adminOf: true });
   const [venuesAreLoading, venues] = Venues.useFindFilter({ editor: user._id });
-  const [groupsAreLoading, groups] = Groups.useFindFilter({ own: true });
+  const [organizationsAreLoading, organizations] = Organizations.useFindFilter({ own: true });
 
   function isVisitor() {
     return !!user?.privileged("visitor");
@@ -240,7 +240,7 @@ function LoggedIn({ user }: { user: UserModel }) {
           <CalendarSection />
           {isAdmin() && <AdminSection />}
           {!tenantsAreLoading() && hasTenants() && <TenantSection tenants={tenants} />}
-          {!groupsAreLoading() && <GroupSection groups={groups} />}
+          {!organizationsAreLoading() && <OrganizationSection organizations={organizations} />}
           {!venuesAreLoading() && <VenuesSection venues={venues} />}
         </>
       ) : (

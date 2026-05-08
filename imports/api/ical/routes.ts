@@ -60,12 +60,12 @@ Router.route("calEvent", {
   },
 });
 
-Router.route("calCourse", {
-  path: "cal/course/:_id.ics",
+Router.route("calGroup", {
+  path: "cal/group/:_id.ics",
   where: "server",
   async action() {
     await sendIcal(
-      await Events.find({ courseId: this.params._id as string }).fetchAsync(),
+      await Events.find({ groupId: this.params._id as string }).fetchAsync(),
       this.response,
     );
   },

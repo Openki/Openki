@@ -121,7 +121,7 @@ async function send(
                 ...vars,
                 // For everything that is global use siteName from global settings, eg. unsubscribe
                 siteName,
-                // For everything context specifig us customSiteName from the region, eg. courses
+                // For everything context specific us customSiteName from the region, eg. groups
                 customSiteUrl: vars.customSiteUrl || siteUrl,
                 customSiteName: vars.customSiteName || siteName,
                 username,

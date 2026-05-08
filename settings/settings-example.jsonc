@@ -1,7 +1,7 @@
 // This file describes all configurations and customization options. Remove the comment at the end of the line to make it work or start from a copy of the file "productive-basic.json in the same folder
 
 { "admins": ["greg"] // User administrator accounts that are created with the test data
-, "prng": "" // Pseudo-Random Number Generator. Use "static" as value to use static seed for test data. Result: After test data generation, entity ids, amount of events, comment content, region assignment of courses, etc will stay identical. Except ids from users. Default: "" (random seed)
+, "prng": "" // Pseudo-Random Number Generator. Use "static" as value to use static seed for test data. Result: After test data generation, entity ids, amount of events, comment content, region assignment of groups, etc will stay identical. Except ids from users. Default: "" (random seed)
 , "testdata": true // Generates test data, is not needed for the productive system
 , "public":
 	{ "siteName": "Openki-clone"
@@ -24,7 +24,7 @@
 	, "theme": // Theming the ui
 		{ "brand": "#38829c"
 		}
-	, "publicTenants": ["8410c099a7"] // IDs of the tenants that should be displayed publically, choose at least one
+	, "publicTenants": ["8410c099a7"] // IDs of the tenants that should be displayed publicly, choose at least one
 	, "regionSelection":
 		{ "minNumber": 5 // The minimum number of regions displayed in the Regions selection. Default: 5
 		, "aboutLink": // A link to a page that explains regions, if not set then none link is shown.
@@ -52,8 +52,8 @@
 		, "visitorUser": true // allow user without name and password, Default: false
 		, "rsvpWithCompanions": true // allow rsvp with +1 / for two seats, Default: false
 		, "sendReminderIsEditable": true // allow to edit whether to remind or not, Default: true
-		, "proposeCourseBox": true // show a "empty" course box to propose a new course, Default: true
-		, "disable2dSphereForLocations": false // disable the creation of 2dSphere indexes for db entites, this allow to save non geo location in db, used for CustomMapConfig, Default: false
+		, "proposeGroupBox": true // show a "empty" group box to propose a new group, Default: true
+		, "disable2dSphereForLocations": false // disable the creation of 2dSphere indexes for db entities, this allow to save non geo location in db, used for CustomMapConfig, Default: false
 		, "socialMediaButtons": [ // which social media buttons should be displayed, when web share api is not supported from the browser
 		"bluesky",
 		"facebook",
@@ -79,7 +79,7 @@
 	, "nav":
 		{ "brandLink": "/" // target link when clicking on the logo Default: "/"
 		, "search": true // show/hide find/search item in navbar Default: true
-		, "proposeCourse": true // show/hide propose item in navbar Default: true
+		, "proposeGroup": true // show/hide propose item in navbar Default: true
 		, "calendar": true // show/hide calendar item in navbar Default: true
 		, "customEntries": [
 				{ "link": "https://about.openki.net/"
@@ -90,7 +90,7 @@
 			]
 		}
 	, "regionDashboardDefault": // Standard for all regions, can be overwritten if the "dashboard" property is set in the region, if not set, the ‘find’ page is displayed, default: undefined
-		[	{ "entity": "" // The entity to show: "course", "courseWithoutPropose", "event", "group", "eventsMap", "propose" are supported
+		[	{ "entity": "" // The entity to show: "group", "groupWithoutPropose", "event", "organization", "eventsMap", "propose" are supported
 			, "title": "" // Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 			, "query": "" // Query how the data should be filtered and sorted, all options and filters can be found in the wiki, can be an empty string "". The entities are filtered by region.
 			, "showAll": // Overwrite the standard showAll button (Optional)
@@ -99,8 +99,8 @@
 				}
 			}
 		]
-	, "groupDashboardDefault": // Standard for all groups, can be overwritten if the "dashboard" property is set in the group, if not set, the ‘find’ page is displayed, default: undefined
-		[	{ "entity": "" // The entity to show: "course", "courseWithoutPropose", "event", "group", "eventsMap", "propose" are supported
+	, "organizationDashboardDefault": // Standard for all organizations, can be overwritten if the "dashboard" property is set in the organization, if not set, the ‘find’ page is displayed, default: undefined
+		[	{ "entity": "" // The entity to show: "group", "groupWithoutPropose", "event", "organization", "eventsMap", "propose" are supported
 			, "title": "" // Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 			, "query": "" // Query how the data should be filtered and sorted, all options and filters can be found in the wiki, can be an empty string "". The entities are filtered by region and group.
 			, "showAll": // Overwrite the standard showAll button (Optional)
@@ -130,7 +130,7 @@
 	, "dataProtectionLaw": "By continuing I accept the [Privacy Policy](https://about.openki.net/en/privacy-policy/) and [Terms of Service](https://about.openki.net/terms-and-conditions/)" // Text displayed in the registration form to link to the Privacy Policy and Terms and Conditions. Can be markdown. Default: undefined (not shown). This setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 	, "faqLink": "/info/faq" // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 	, "pricePolicyLink": "..." // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
-	, "courseGuideLink": "..." // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+	, "groupGuideLink": "..." // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 	, "aboutLink": "https://about.openki.net" // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 	, "contribution": // Contribution to the plattform, a admin can set in the userprofile that a user has contributed. This shows a icon next to the username. Remove this setting to disable this feature.
 		{ "icon": "fa-solid fa-heart"
@@ -140,9 +140,9 @@
 			, "de": "https://about.openki.net/ueber-uns/spenden/"
 			}
 		}
-	, "courseDescriptionMax": 15000 // Max characters allowed for the description-field of courses. Default: 15000
+	, "groupDescriptionMax": 15000 // Max characters allowed for the description-field of groups. Default: 15000
 	, "eventDescriptionMax": 15000 // Max characters allowed for the description-field of events. Default: 15000
-	, "categories": // Categories for courses, main and/or sub categories
+	, "categories": // Categories for groups, main and/or sub categories
     { "sports":
       [ "martialarts"
       , "teamsport"
@@ -161,8 +161,11 @@
 		}
   }
 , "siteEmail": "" // Sender e-mail address in mails
-, "replyToEmail": "" // "Reply to" adress in mails 
-, "reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net"} // Sender and recipient address for "Report problem" function
+, "replyToEmail": "" // "Reply to" address in mails 
+, "reporter": // Sender and recipient address for "Report problem" function
+  { "sender": "pingpong@mail.openki.net" // The e-mail address of the sender. All e-mail addresses can be plain 'sender@server.com' or formatted 'Sender Name sender@server.com'
+  , "recipient": "badabuff@openki.net" // Comma separated list of recipients e-mail addresses that will appear on the To: field
+  }
 , "robots": false // Tells robots/crawlers whether to index the website or not
 , "hideProfiles": false // Tells robots/crawlers not to index user profiles (/user/*)
 , "printLog": false // Print the log on the server in the console, usually only for development

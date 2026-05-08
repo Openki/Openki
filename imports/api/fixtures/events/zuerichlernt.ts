@@ -18,8 +18,8 @@ export const events: {
   time_created: {
     $date: string;
   };
-  groups?: string[];
-  courseId?: string;
+  organizations?: string[];
+  groupId?: string;
   internal?: boolean;
   sendReminder?: boolean;
   canceled?: boolean;
@@ -43,14 +43,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 7,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "Z86tuADrPGtBfM9NG",
+    groupId: "Z86tuADrPGtBfM9NG",
     time_lastedit: {
       $date: "2024-05-31T14:38:08.205+0000",
     },
     time_created: {
       $date: "2024-05-30T15:21:55.226+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T07:30:00.000+0000",
     },
@@ -101,14 +101,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 6,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "MoP3fdw5nM5NXHX5o",
+    groupId: "MoP3fdw5nM5NXHX5o",
     time_lastedit: {
       $date: "2024-06-04T11:41:08.278+0000",
     },
     time_created: {
       $date: "2024-05-30T13:34:23.358+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T08:00:00.000+0000",
     },
@@ -139,14 +139,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "2iBy99atTsHcsPJt3",
+    groupId: "2iBy99atTsHcsPJt3",
     time_lastedit: {
       $date: "2024-05-02T13:58:47.005+0000",
     },
     time_created: {
       $date: "2024-05-02T13:58:47.005+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T10:15:00.000+0000",
     },
@@ -241,14 +241,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 7,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "58Ka6zGwJypmL9Fwj",
+    groupId: "58Ka6zGwJypmL9Fwj",
     time_lastedit: {
       $date: "2024-04-12T13:00:47.486+0000",
     },
     time_created: {
       $date: "2024-04-12T13:00:47.486+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T12:00:00.000+0000",
     },
@@ -303,14 +303,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 14,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "37ECLNNQzXf43MAty",
+    groupId: "37ECLNNQzXf43MAty",
     time_lastedit: {
       $date: "2024-05-30T13:57:13.472+0000",
     },
     time_created: {
       $date: "2024-05-30T13:57:13.472+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T12:00:00.000+0000",
     },
@@ -384,14 +384,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 18,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "v5LLXQ2jpo8eu8Nqk",
+    groupId: "v5LLXQ2jpo8eu8Nqk",
     time_lastedit: {
       $date: "2024-09-11T14:44:42.410+0000",
     },
     time_created: {
       $date: "2024-05-31T05:02:21.029+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T14:00:00.000+0000",
     },
@@ -479,14 +479,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 30,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "39wbim3bXkHndR9iX",
+    groupId: "39wbim3bXkHndR9iX",
     time_lastedit: {
       $date: "2024-07-11T09:09:43.210+0000",
     },
     time_created: {
       $date: "2024-07-11T09:09:43.210+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T14:50:00.000+0000",
     },
@@ -592,14 +592,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "J6xq5P4sWG72GPbLk",
+    groupId: "J6xq5P4sWG72GPbLk",
     time_lastedit: {
       $date: "2024-06-28T12:17:21.544+0000",
     },
     time_created: {
       $date: "2024-03-14T13:06:15.970+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T15:00:00.000+0000",
     },
@@ -666,14 +666,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 30,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "dqat49MNMBurXqgF8",
+    groupId: "dqat49MNMBurXqgF8",
     time_lastedit: {
       $date: "2024-04-09T15:10:48.714+0000",
     },
     time_created: {
       $date: "2024-04-09T15:05:55.203+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T15:00:00.000+0000",
     },
@@ -752,14 +752,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 18,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "7YPYWFSg2huyxXkvn",
+    groupId: "7YPYWFSg2huyxXkvn",
     time_lastedit: {
       $date: "2024-05-28T11:41:26.241+0000",
     },
     time_created: {
       $date: "2024-05-28T11:41:26.241+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T15:00:00.000+0000",
     },
@@ -854,14 +854,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 8,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "d2gSp6NRoSkN3mTzm",
+    groupId: "d2gSp6NRoSkN3mTzm",
     time_lastedit: {
       $date: "2024-06-30T07:53:06.937+0000",
     },
     time_created: {
       $date: "2024-06-01T17:43:44.967+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T15:00:00.000+0000",
     },
@@ -900,14 +900,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 8,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "4wZ9QuyZ7oGpbNy2S",
+    groupId: "4wZ9QuyZ7oGpbNy2S",
     time_lastedit: {
       $date: "2024-07-04T11:20:29.049+0000",
     },
     time_created: {
       $date: "2024-05-02T12:11:37.321+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:00:00.000+0000",
     },
@@ -954,14 +954,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 15,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "4SyHviTjwe6Swrvpe",
+    groupId: "4SyHviTjwe6Swrvpe",
     time_lastedit: {
       $date: "2024-05-02T14:09:00.407+0000",
     },
     time_created: {
       $date: "2024-05-02T14:09:00.407+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:00:00.000+0000",
     },
@@ -1040,14 +1040,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 15,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "EiTqJMdqZSfSTji5L",
+    groupId: "EiTqJMdqZSfSTji5L",
     time_lastedit: {
       $date: "2024-06-25T09:58:22.508+0000",
     },
     time_created: {
       $date: "2024-05-21T10:21:45.879+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:00:00.000+0000",
     },
@@ -1126,14 +1126,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "GKZYpzceJxxz8yYRG",
+    groupId: "GKZYpzceJxxz8yYRG",
     time_lastedit: {
       $date: "2024-09-16T09:50:59.276+0000",
     },
     time_created: {
       $date: "2024-05-24T15:12:44.233+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:00:00.000+0000",
     },
@@ -1232,14 +1232,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "JHiCAasJ8W7Ncj85n",
+    groupId: "JHiCAasJ8W7Ncj85n",
     time_lastedit: {
       $date: "2024-05-26T08:44:33.266+0000",
     },
     time_created: {
       $date: "2024-05-26T08:44:33.266+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:00:00.000+0000",
     },
@@ -1314,14 +1314,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "E8xSXB6avR8aR6uid",
+    groupId: "E8xSXB6avR8aR6uid",
     time_lastedit: {
       $date: "2024-05-30T10:09:58.994+0000",
     },
     time_created: {
       $date: "2024-05-30T10:09:58.994+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:00:00.000+0000",
     },
@@ -1379,14 +1379,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 13,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "pQrZK8rAbjFFDEmFn",
+    groupId: "pQrZK8rAbjFFDEmFn",
     time_lastedit: {
       $date: "2024-09-06T08:13:13.907+0000",
     },
     time_created: {
       $date: "2024-05-30T16:30:51.523+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:00:00.000+0000",
     },
@@ -1466,14 +1466,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 25,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "qmaS74iGcJm7uWHNd",
+    groupId: "qmaS74iGcJm7uWHNd",
     time_lastedit: {
       $date: "2024-06-07T13:56:09.739+0000",
     },
     time_created: {
       $date: "2024-05-31T11:45:37.874+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:00:00.000+0000",
     },
@@ -1508,14 +1508,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 6,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "aGfcMDHLTZTr7C5nm",
+    groupId: "aGfcMDHLTZTr7C5nm",
     time_lastedit: {
       $date: "2024-06-30T07:55:16.693+0000",
     },
     time_created: {
       $date: "2024-06-03T12:16:48.100+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:00:00.000+0000",
     },
@@ -1565,14 +1565,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 31,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "9mxiAFyyN7YmfFhZA",
+    groupId: "9mxiAFyyN7YmfFhZA",
     time_lastedit: {
       $date: "2024-09-13T07:58:04.636+0000",
     },
     time_created: {
       $date: "2024-05-31T13:57:52.192+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:30:00.000+0000",
     },
@@ -1671,14 +1671,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 30,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "9NuuA7h2EoCvznGF9",
+    groupId: "9NuuA7h2EoCvznGF9",
     time_lastedit: {
       $date: "2024-06-03T09:44:11.112+0000",
     },
     time_created: {
       $date: "2024-06-03T08:54:23.768+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:30:00.000+0000",
     },
@@ -1811,14 +1811,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "5fGuaTNYtXQH56N9Y",
+    groupId: "5fGuaTNYtXQH56N9Y",
     time_lastedit: {
       $date: "2024-08-31T10:11:20.036+0000",
     },
     time_created: {
       $date: "2024-04-09T17:35:07.334+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T16:45:00.000+0000",
     },
@@ -1862,14 +1862,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "iZkhzzMMP4kB3xZvW",
+    groupId: "iZkhzzMMP4kB3xZvW",
     time_lastedit: {
       $date: "2024-09-01T09:09:43.964+0000",
     },
     time_created: {
       $date: "2024-06-04T11:32:38.388+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T17:00:00.000+0000",
     },
@@ -1895,14 +1895,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 30,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "d6e2MFZkt3GPniv7w",
+    groupId: "d6e2MFZkt3GPniv7w",
     time_lastedit: {
       $date: "2024-06-26T06:04:55.358+0000",
     },
     time_created: {
       $date: "2024-05-31T13:27:16.410+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T17:15:00.000+0000",
     },
@@ -1945,14 +1945,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "vn5j2TpLz5nffRRGs",
+    groupId: "vn5j2TpLz5nffRRGs",
     time_lastedit: {
       $date: "2024-05-26T08:46:37.168+0000",
     },
     time_created: {
       $date: "2024-05-26T08:46:37.168+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-16T18:00:00.000+0000",
     },
@@ -1995,14 +1995,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "bShsnbp4B9SNwnMzX",
+    groupId: "bShsnbp4B9SNwnMzX",
     time_lastedit: {
       $date: "2024-06-30T08:03:22.652+0000",
     },
     time_created: {
       $date: "2024-06-01T18:14:07.683+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T07:00:00.000+0000",
     },
@@ -2069,14 +2069,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 15,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "6C6FznmcjWMKhBbTW",
+    groupId: "6C6FznmcjWMKhBbTW",
     time_lastedit: {
       $date: "2024-08-22T12:48:52.437+0000",
     },
     time_created: {
       $date: "2024-05-23T12:00:02.601+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T10:00:00.000+0000",
     },
@@ -2146,14 +2146,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 18,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "Kwdocb6GZcbkJi65T",
+    groupId: "Kwdocb6GZcbkJi65T",
     time_lastedit: {
       $date: "2024-09-12T09:46:01.182+0000",
     },
     time_created: {
       $date: "2024-04-09T15:15:50.403+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T10:30:00.000+0000",
     },
@@ -2233,14 +2233,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "vqx3jmKEcJJ7v7aDq",
+    groupId: "vqx3jmKEcJJ7v7aDq",
     time_lastedit: {
       $date: "2024-09-11T14:50:57.416+0000",
     },
     time_created: {
       $date: "2024-03-24T19:35:33.668+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T12:00:00.000+0000",
     },
@@ -2328,14 +2328,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 19,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "dgwkFrnLiZiAkKyxT",
+    groupId: "dgwkFrnLiZiAkKyxT",
     time_lastedit: {
       $date: "2024-08-27T10:44:02.708+0000",
     },
     time_created: {
       $date: "2024-04-09T15:10:15.887+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T12:00:00.000+0000",
     },
@@ -2435,14 +2435,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "eHsEN9xRhghsvEq3A",
+    groupId: "eHsEN9xRhghsvEq3A",
     time_lastedit: {
       $date: "2024-07-05T14:12:44.874+0000",
     },
     time_created: {
       $date: "2024-05-28T07:31:21.119+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T12:00:00.000+0000",
     },
@@ -2522,14 +2522,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "PZeXmumd2hECiCQxE",
+    groupId: "PZeXmumd2hECiCQxE",
     time_lastedit: {
       $date: "2024-07-02T16:13:07.537+0000",
     },
     time_created: {
       $date: "2024-07-02T14:11:56.078+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T12:00:00.000+0000",
     },
@@ -2595,14 +2595,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "nChyx8oBz7QHi62YN",
+    groupId: "nChyx8oBz7QHi62YN",
     time_lastedit: {
       $date: "2024-08-13T19:57:16.696+0000",
     },
     time_created: {
       $date: "2024-05-16T14:04:14.631+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T13:00:00.000+0000",
     },
@@ -2661,14 +2661,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "LLMSg9So939Gm5toT",
+    groupId: "LLMSg9So939Gm5toT",
     time_lastedit: {
       $date: "2024-08-27T14:11:20.688+0000",
     },
     time_created: {
       $date: "2024-05-31T09:50:48.927+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T14:00:00.000+0000",
     },
@@ -2731,14 +2731,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 6,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "ZupAwc6bH6Dj6vNAx",
+    groupId: "ZupAwc6bH6Dj6vNAx",
     time_lastedit: {
       $date: "2024-06-06T12:33:17.453+0000",
     },
     time_created: {
       $date: "2024-05-31T12:41:31.209+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T14:30:00.000+0000",
     },
@@ -2785,14 +2785,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "QtRJQdNauCz4ecKg3",
+    groupId: "QtRJQdNauCz4ecKg3",
     time_lastedit: {
       $date: "2024-07-05T14:13:27.732+0000",
     },
     time_created: {
       $date: "2024-05-21T09:02:26.329+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T15:00:00.000+0000",
     },
@@ -2859,14 +2859,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "4Qn26ZtghRHhWETqo",
+    groupId: "4Qn26ZtghRHhWETqo",
     time_lastedit: {
       $date: "2024-05-30T13:30:22.393+0000",
     },
     time_created: {
       $date: "2024-05-30T13:30:22.393+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T15:00:00.000+0000",
     },
@@ -2941,14 +2941,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "fp8Rw8jh3PdTaQweY",
+    groupId: "fp8Rw8jh3PdTaQweY",
     time_lastedit: {
       $date: "2024-05-28T19:03:54.315+0000",
     },
     time_created: {
       $date: "2024-05-27T06:18:06.473+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T15:30:00.000+0000",
     },
@@ -3016,14 +3016,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 15,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "hp3mNxcdZY6KRa2fh",
+    groupId: "hp3mNxcdZY6KRa2fh",
     time_lastedit: {
       $date: "2024-09-03T11:23:39.188+0000",
     },
     time_created: {
       $date: "2024-05-24T07:17:14.513+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T16:00:00.000+0000",
     },
@@ -3097,14 +3097,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "46EJ8r56uj2RKXpha",
+    groupId: "46EJ8r56uj2RKXpha",
     time_lastedit: {
       $date: "2024-05-24T12:02:21.502+0000",
     },
     time_created: {
       $date: "2024-05-24T12:02:21.502+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T16:00:00.000+0000",
     },
@@ -3155,14 +3155,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "Nq85CGazSzkM2sq4a",
+    groupId: "Nq85CGazSzkM2sq4a",
     time_lastedit: {
       $date: "2024-06-10T12:41:14.745+0000",
     },
     time_created: {
       $date: "2024-05-30T08:33:05.145+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T16:00:00.000+0000",
     },
@@ -3209,14 +3209,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 25,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "w5ZDwqJdCoz9Yhg7G",
+    groupId: "w5ZDwqJdCoz9Yhg7G",
     time_lastedit: {
       $date: "2024-06-03T08:56:38.224+0000",
     },
     time_created: {
       $date: "2024-05-31T11:50:49.500+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T16:00:00.000+0000",
     },
@@ -3318,14 +3318,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 16,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "Brsy8BuEup6yh6dfx",
+    groupId: "Brsy8BuEup6yh6dfx",
     time_lastedit: {
       $date: "2024-05-23T09:22:29.132+0000",
     },
     time_created: {
       $date: "2024-03-13T08:50:01.807+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T16:30:00.000+0000",
     },
@@ -3368,14 +3368,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 6,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "zu4Pks4FfHa9oPApF",
+    groupId: "zu4Pks4FfHa9oPApF",
     time_lastedit: {
       $date: "2024-04-17T15:43:20.285+0000",
     },
     time_created: {
       $date: "2024-04-17T15:43:20.285+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T17:00:00.000+0000",
     },
@@ -3414,14 +3414,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 8,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "mhoMBXPu27Fp4CPFh",
+    groupId: "mhoMBXPu27Fp4CPFh",
     time_lastedit: {
       $date: "2024-07-09T06:19:52.553+0000",
     },
     time_created: {
       $date: "2024-05-19T10:06:33.792+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T17:00:00.000+0000",
     },
@@ -3472,14 +3472,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 30,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "KRtKDzyquX7JLgKLB",
+    groupId: "KRtKDzyquX7JLgKLB",
     time_lastedit: {
       $date: "2024-05-31T12:17:01.413+0000",
     },
     time_created: {
       $date: "2024-05-30T09:18:42.472+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T17:00:00.000+0000",
     },
@@ -3598,14 +3598,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "w8sEZwBbaJnQJ6ek3",
+    groupId: "w8sEZwBbaJnQJ6ek3",
     time_lastedit: {
       $date: "2024-09-05T09:28:41.424+0000",
     },
     time_created: {
       $date: "2024-07-04T06:41:33.053+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T17:00:00.000+0000",
     },
@@ -3672,14 +3672,14 @@ export const events: {
     noRsvp: true,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "X4d9xYtPFX7QdokHx",
+    groupId: "X4d9xYtPFX7QdokHx",
     time_lastedit: {
       $date: "2024-05-21T10:51:42.662+0000",
     },
     time_created: {
       $date: "2024-05-21T10:24:13.751+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T17:30:00.000+0000",
     },
@@ -3703,14 +3703,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "5u5dD7Lg3XgZZSpA8",
+    groupId: "5u5dD7Lg3XgZZSpA8",
     time_lastedit: {
       $date: "2024-06-04T11:40:30.781+0000",
     },
     time_created: {
       $date: "2024-05-21T11:04:20.694+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T17:30:00.000+0000",
     },
@@ -3849,14 +3849,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "SLbxJaCFGHjPm84cm",
+    groupId: "SLbxJaCFGHjPm84cm",
     time_lastedit: {
       $date: "2024-05-28T19:04:57.149+0000",
     },
     time_created: {
       $date: "2024-05-26T08:50:43.471+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T17:30:00.000+0000",
     },
@@ -3921,14 +3921,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "qThkbTKxd3BE4xomq",
+    groupId: "qThkbTKxd3BE4xomq",
     time_lastedit: {
       $date: "2024-09-11T12:04:37.201+0000",
     },
     time_created: {
       $date: "2024-03-16T07:29:14.235+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T17:40:00.000+0000",
     },
@@ -3980,14 +3980,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "q2mT73hH9RZQZdHTz",
+    groupId: "q2mT73hH9RZQZdHTz",
     time_lastedit: {
       $date: "2024-05-30T08:47:57.427+0000",
     },
     time_created: {
       $date: "2024-05-01T07:25:06.079+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-17T18:00:00.000+0000",
     },
@@ -4050,14 +4050,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 6,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "22oFbq7Kith6QbruQ",
+    groupId: "22oFbq7Kith6QbruQ",
     time_lastedit: {
       $date: "2024-05-29T12:57:01.869+0000",
     },
     time_created: {
       $date: "2024-05-29T11:45:28.537+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T07:30:00.000+0000",
     },
@@ -4108,14 +4108,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 14,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "ZBpArsf8NymCuS9vW",
+    groupId: "ZBpArsf8NymCuS9vW",
     time_lastedit: {
       $date: "2024-06-25T15:44:31.634+0000",
     },
     time_created: {
       $date: "2024-05-16T13:35:30.866+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T08:00:00.000+0000",
     },
@@ -4186,14 +4186,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 15,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "5uMbzJoS2Y4RTvTMK",
+    groupId: "5uMbzJoS2Y4RTvTMK",
     time_lastedit: {
       $date: "2024-07-10T06:25:36.253+0000",
     },
     time_created: {
       $date: "2024-05-21T13:55:10.670+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T08:00:00.000+0000",
     },
@@ -4263,14 +4263,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "c9THx6givyKg5v9L4",
+    groupId: "c9THx6givyKg5v9L4",
     time_lastedit: {
       $date: "2024-09-17T09:08:54.736+0000",
     },
     time_created: {
       $date: "2024-03-21T14:19:37.567+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T10:30:00.000+0000",
     },
@@ -4345,14 +4345,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "fpG2aLF3XFD8Tztaa",
+    groupId: "fpG2aLF3XFD8Tztaa",
     time_lastedit: {
       $date: "2024-04-03T14:19:47.722+0000",
     },
     time_created: {
       $date: "2024-04-03T14:19:47.722+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T11:00:00.000+0000",
     },
@@ -4397,14 +4397,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "JYG3dLgNhqziEMaky",
+    groupId: "JYG3dLgNhqziEMaky",
     time_lastedit: {
       $date: "2024-04-18T09:37:20.940+0000",
     },
     time_created: {
       $date: "2024-04-18T09:37:20.940+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T12:00:00.000+0000",
     },
@@ -4446,14 +4446,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 15,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "ExC8XLxjdhGp45nit",
+    groupId: "ExC8XLxjdhGp45nit",
     time_lastedit: {
       $date: "2024-08-28T06:19:23.528+0000",
     },
     time_created: {
       $date: "2024-05-13T12:39:25.474+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T12:00:00.000+0000",
     },
@@ -4527,14 +4527,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "mEwQBuF65M3AYQ8Sh",
+    groupId: "mEwQBuF65M3AYQ8Sh",
     time_lastedit: {
       $date: "2024-05-14T12:47:47.455+0000",
     },
     time_created: {
       $date: "2024-05-14T12:47:47.455+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T12:00:00.000+0000",
     },
@@ -4585,14 +4585,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "6ssiq6nYb2nQujyF7",
+    groupId: "6ssiq6nYb2nQujyF7",
     time_lastedit: {
       $date: "2024-05-22T13:43:51.745+0000",
     },
     time_created: {
       $date: "2024-05-22T13:43:51.745+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T12:00:00.000+0000",
     },
@@ -4655,14 +4655,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "iHdn3f4pNwruQshur",
+    groupId: "iHdn3f4pNwruQshur",
     time_lastedit: {
       $date: "2024-05-31T08:05:17.972+0000",
     },
     time_created: {
       $date: "2024-05-31T08:05:17.972+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T12:00:00.000+0000",
     },
@@ -4721,14 +4721,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 23,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "ZmEHqWgaBq7BjoxP4",
+    groupId: "ZmEHqWgaBq7BjoxP4",
     time_lastedit: {
       $date: "2024-09-13T12:58:34.237+0000",
     },
     time_created: {
       $date: "2024-05-31T08:48:20.740+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T12:00:00.000+0000",
     },
@@ -4807,14 +4807,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 16,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "unWM5Q8SBPT2TNCqJ",
+    groupId: "unWM5Q8SBPT2TNCqJ",
     time_lastedit: {
       $date: "2024-06-04T12:39:30.485+0000",
     },
     time_created: {
       $date: "2024-05-22T10:00:38.812+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T13:00:00.000+0000",
     },
@@ -4893,14 +4893,14 @@ export const events: {
     noRsvp: true,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "zWnDJivQFCmz6EHPb",
+    groupId: "zWnDJivQFCmz6EHPb",
     time_lastedit: {
       $date: "2024-06-27T14:14:14.568+0000",
     },
     time_created: {
       $date: "2024-06-03T10:55:06.919+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T13:00:00.000+0000",
     },
@@ -4925,14 +4925,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "AgMKwXtLYfxCckdMz",
+    groupId: "AgMKwXtLYfxCckdMz",
     time_lastedit: {
       $date: "2024-06-03T19:14:41.430+0000",
     },
     time_created: {
       $date: "2024-06-03T19:11:56.744+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T13:00:00.000+0000",
     },
@@ -4987,14 +4987,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "XTQQQr3jKK7jyJ7dK",
+    groupId: "XTQQQr3jKK7jyJ7dK",
     time_lastedit: {
       $date: "2024-05-27T07:07:19.493+0000",
     },
     time_created: {
       $date: "2024-05-26T08:52:11.914+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T14:00:00.000+0000",
     },
@@ -5030,14 +5030,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 22,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "rNpAJKGeksf6NzMad",
+    groupId: "rNpAJKGeksf6NzMad",
     time_lastedit: {
       $date: "2024-09-17T12:03:46.880+0000",
     },
     time_created: {
       $date: "2024-05-30T07:44:50.318+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T14:00:00.000+0000",
     },
@@ -5132,14 +5132,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 16,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "Aq587Zsn6uGrPr8Kz",
+    groupId: "Aq587Zsn6uGrPr8Kz",
     time_lastedit: {
       $date: "2024-09-05T23:15:22.281+0000",
     },
     time_created: {
       $date: "2024-05-21T16:51:18.817+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T14:30:00.000+0000",
     },
@@ -5222,14 +5222,14 @@ export const events: {
     sendReminder: true,
     maxParticipants: 30,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "CHwdkQsAuAgNM9Q9x",
+    groupId: "CHwdkQsAuAgNM9Q9x",
     time_lastedit: {
       $date: "2024-09-06T10:58:26.408+0000",
     },
     time_created: {
       $date: "2024-03-18T07:34:07.575+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T15:00:00.000+0000",
     },
@@ -5372,14 +5372,14 @@ export const events: {
     sendReminder: true,
     maxParticipants: 30,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "HGBwQBH8SkMcpy2cp",
+    groupId: "HGBwQBH8SkMcpy2cp",
     time_lastedit: {
       $date: "2024-04-09T15:14:22.694+0000",
     },
     time_created: {
       $date: "2024-04-09T15:14:22.694+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T15:00:00.000+0000",
     },
@@ -5506,14 +5506,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 22,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "d83TJkZCYkriyeq6c",
+    groupId: "d83TJkZCYkriyeq6c",
     time_lastedit: {
       $date: "2024-09-17T09:36:17.101+0000",
     },
     time_created: {
       $date: "2024-05-31T07:24:13.936+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T15:00:00.000+0000",
     },
@@ -5628,14 +5628,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 8,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "Ez6RKr5R2w7TxqLdh",
+    groupId: "Ez6RKr5R2w7TxqLdh",
     time_lastedit: {
       $date: "2024-05-31T18:03:45.802+0000",
     },
     time_created: {
       $date: "2024-05-31T10:41:21.003+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T15:00:00.000+0000",
     },
@@ -5662,14 +5662,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 15,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "2J8SX8LpQPdcF4FxS",
+    groupId: "2J8SX8LpQPdcF4FxS",
     time_lastedit: {
       $date: "2024-06-04T07:06:09.814+0000",
     },
     time_created: {
       $date: "2024-06-04T07:04:22.335+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T15:00:00.000+0000",
     },
@@ -5744,14 +5744,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "g6TQCyNbeMDxG9eYf",
+    groupId: "g6TQCyNbeMDxG9eYf",
     time_lastedit: {
       $date: "2024-05-02T14:16:24.210+0000",
     },
     time_created: {
       $date: "2024-05-02T14:16:24.210+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T15:30:00.000+0000",
     },
@@ -5795,14 +5795,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 30,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "s4JBQW5BnbDwJi9eD",
+    groupId: "s4JBQW5BnbDwJi9eD",
     time_lastedit: {
       $date: "2024-06-26T15:18:31.455+0000",
     },
     time_created: {
       $date: "2024-05-14T12:38:31.099+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T15:30:00.000+0000",
     },
@@ -5941,14 +5941,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "vk7HpQCkko7PTxNM5",
+    groupId: "vk7HpQCkko7PTxNM5",
     time_lastedit: {
       $date: "2024-08-23T17:22:31.034+0000",
     },
     time_created: {
       $date: "2024-05-21T13:58:03.448+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T15:30:00.000+0000",
     },
@@ -6007,14 +6007,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 15,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "wLa2KdWYjqzpNtHmR",
+    groupId: "wLa2KdWYjqzpNtHmR",
     time_lastedit: {
       $date: "2024-07-10T11:39:41.913+0000",
     },
     time_created: {
       $date: "2024-07-02T14:07:41.593+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T15:30:00.000+0000",
     },
@@ -6046,14 +6046,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "r6m8ANwjAxxcq5j3j",
+    groupId: "r6m8ANwjAxxcq5j3j",
     time_lastedit: {
       $date: "2024-09-10T13:11:32.282+0000",
     },
     time_created: {
       $date: "2024-09-10T10:35:59.533+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T15:30:00.000+0000",
     },
@@ -6104,14 +6104,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 8,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "kzHj227aW9crw6tDJ",
+    groupId: "kzHj227aW9crw6tDJ",
     time_lastedit: {
       $date: "2024-05-29T11:27:45.289+0000",
     },
     time_created: {
       $date: "2024-04-26T09:24:22.268+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:00:00.000+0000",
     },
@@ -6170,14 +6170,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "2ioop3dqipbWxW33N",
+    groupId: "2ioop3dqipbWxW33N",
     time_lastedit: {
       $date: "2024-08-16T07:21:11.131+0000",
     },
     time_created: {
       $date: "2024-05-21T13:50:30.889+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:00:00.000+0000",
     },
@@ -6244,14 +6244,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "bHsf9MnxGYfTZGdAZ",
+    groupId: "bHsf9MnxGYfTZGdAZ",
     time_lastedit: {
       $date: "2024-05-23T12:56:50.560+0000",
     },
     time_created: {
       $date: "2024-05-23T12:56:50.560+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:00:00.000+0000",
     },
@@ -6277,14 +6277,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "tQtcacGyPAd8ZkuSG",
+    groupId: "tQtcacGyPAd8ZkuSG",
     time_lastedit: {
       $date: "2024-06-25T12:52:27.403+0000",
     },
     time_created: {
       $date: "2024-05-23T16:15:32.387+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:00:00.000+0000",
     },
@@ -6358,14 +6358,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 5,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "rW9wh5sRWjGPNn8S2",
+    groupId: "rW9wh5sRWjGPNn8S2",
     time_lastedit: {
       $date: "2024-08-23T08:11:55.900+0000",
     },
     time_created: {
       $date: "2024-05-28T16:54:45.029+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:00:00.000+0000",
     },
@@ -6412,14 +6412,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "izB23JSHt3nkjTP4e",
+    groupId: "izB23JSHt3nkjTP4e",
     time_lastedit: {
       $date: "2024-06-11T06:00:40.338+0000",
     },
     time_created: {
       $date: "2024-06-01T18:18:48.301+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:00:00.000+0000",
     },
@@ -6490,14 +6490,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 6,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "dt58TgshfGJTyXRZ4",
+    groupId: "dt58TgshfGJTyXRZ4",
     time_lastedit: {
       $date: "2024-06-04T07:14:12.527+0000",
     },
     time_created: {
       $date: "2024-05-21T15:45:49.536+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:15:00.000+0000",
     },
@@ -6543,14 +6543,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "bAM9mqpsgmbn3cS3K",
+    groupId: "bAM9mqpsgmbn3cS3K",
     time_lastedit: {
       $date: "2024-04-04T12:08:00.898+0000",
     },
     time_created: {
       $date: "2024-04-04T12:07:33.367+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:30:00.000+0000",
     },
@@ -6631,14 +6631,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "k4yBoCmv9fXxy4ZMq",
+    groupId: "k4yBoCmv9fXxy4ZMq",
     time_lastedit: {
       $date: "2024-07-04T11:22:07.138+0000",
     },
     time_created: {
       $date: "2024-04-16T06:35:53.682+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:30:00.000+0000",
     },
@@ -6702,14 +6702,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 7,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "MTSGDXQdHJ3oWAKom",
+    groupId: "MTSGDXQdHJ3oWAKom",
     time_lastedit: {
       $date: "2024-05-06T07:35:37.860+0000",
     },
     time_created: {
       $date: "2024-05-06T07:35:37.860+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:30:00.000+0000",
     },
@@ -6764,14 +6764,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "t8tJ2BuzBNQ66pQxP",
+    groupId: "t8tJ2BuzBNQ66pQxP",
     time_lastedit: {
       $date: "2024-05-23T16:02:34.618+0000",
     },
     time_created: {
       $date: "2024-05-22T15:24:31.062+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:30:00.000+0000",
     },
@@ -6818,14 +6818,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 25,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "d5yJgTZapQSfjJazW",
+    groupId: "d5yJgTZapQSfjJazW",
     time_lastedit: {
       $date: "2024-05-31T14:22:58.282+0000",
     },
     time_created: {
       $date: "2024-05-24T08:11:47.916+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:30:00.000+0000",
     },
@@ -6916,14 +6916,14 @@ export const events: {
     noRsvp: true,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "uDTCt8MRf3BC66WzB",
+    groupId: "uDTCt8MRf3BC66WzB",
     time_lastedit: {
       $date: "2024-05-31T09:22:34.516+0000",
     },
     time_created: {
       $date: "2024-05-31T09:22:34.516+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T16:30:00.000+0000",
     },
@@ -6947,14 +6947,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "94GjGifEB5YeiN4Lt",
+    groupId: "94GjGifEB5YeiN4Lt",
     time_lastedit: {
       $date: "2024-07-05T09:24:17.354+0000",
     },
     time_created: {
       $date: "2024-04-16T14:34:52.870+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T17:00:00.000+0000",
     },
@@ -6992,14 +6992,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 6,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "9znb3vY9ruR8fWPWW",
+    groupId: "9znb3vY9ruR8fWPWW",
     time_lastedit: {
       $date: "2024-04-17T10:07:06.847+0000",
     },
     time_created: {
       $date: "2024-04-17T10:02:35.168+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T17:00:00.000+0000",
     },
@@ -7025,14 +7025,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 30,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "mgtzCuu5KjMyKc3Gk",
+    groupId: "mgtzCuu5KjMyKc3Gk",
     time_lastedit: {
       $date: "2024-05-26T13:40:29.106+0000",
     },
     time_created: {
       $date: "2024-05-21T14:32:14.591+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T17:00:00.000+0000",
     },
@@ -7083,14 +7083,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 40,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "hQCAgM6nbEgBd5QCv",
+    groupId: "hQCAgM6nbEgBd5QCv",
     time_lastedit: {
       $date: "2024-09-12T09:31:33.814+0000",
     },
     time_created: {
       $date: "2024-05-22T07:15:39.949+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T17:00:00.000+0000",
     },
@@ -7193,14 +7193,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "MnEWD5mKC8iFDD7Se",
+    groupId: "MnEWD5mKC8iFDD7Se",
     time_lastedit: {
       $date: "2024-05-31T08:22:13.560+0000",
     },
     time_created: {
       $date: "2024-05-31T07:59:37.354+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T17:00:00.000+0000",
     },
@@ -7263,14 +7263,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "AmRv2m23QYZxTKr3w",
+    groupId: "AmRv2m23QYZxTKr3w",
     time_lastedit: {
       $date: "2024-09-18T06:58:43.642+0000",
     },
     time_created: {
       $date: "2024-06-24T12:20:41.118+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T17:00:00.000+0000",
     },
@@ -7333,14 +7333,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 8,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "RLNXeDNENFwAvjkkn",
+    groupId: "RLNXeDNENFwAvjkkn",
     time_lastedit: {
       $date: "2024-06-07T13:48:41.990+0000",
     },
     time_created: {
       $date: "2024-05-26T08:55:28.082+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T17:30:00.000+0000",
     },
@@ -7387,14 +7387,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "K2biTuZDkyMzLz9sA",
+    groupId: "K2biTuZDkyMzLz9sA",
     time_lastedit: {
       $date: "2024-07-10T11:05:44.682+0000",
     },
     time_created: {
       $date: "2024-05-21T07:00:07.382+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-18T18:00:00.000+0000",
     },
@@ -7464,14 +7464,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 7,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "Re7TJtCrboQ73suBJ",
+    groupId: "Re7TJtCrboQ73suBJ",
     time_lastedit: {
       $date: "2024-06-03T13:52:02.832+0000",
     },
     time_created: {
       $date: "2024-03-22T13:57:36.024+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T07:00:00.000+0000",
     },
@@ -7527,14 +7527,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "RF6CEnDFMjj6c7HXA",
+    groupId: "RF6CEnDFMjj6c7HXA",
     time_lastedit: {
       $date: "2024-09-04T12:54:35.186+0000",
     },
     time_created: {
       $date: "2024-09-03T12:40:20.441+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T07:00:00.000+0000",
     },
@@ -7569,14 +7569,14 @@ export const events: {
     noRsvp: true,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "hkS2FN5p98EztPBuM",
+    groupId: "hkS2FN5p98EztPBuM",
     time_lastedit: {
       $date: "2024-06-04T15:05:30.298+0000",
     },
     time_created: {
       $date: "2024-05-30T09:57:53.111+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T07:30:00.000+0000",
     },
@@ -7601,14 +7601,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 15,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "ecuPy9qGapGQEgjkc",
+    groupId: "ecuPy9qGapGQEgjkc",
     time_lastedit: {
       $date: "2024-06-27T14:15:05.757+0000",
     },
     time_created: {
       $date: "2024-04-30T15:36:03.826+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T08:00:00.000+0000",
     },
@@ -7634,14 +7634,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "gLT2btdRXvzKqD9t3",
+    groupId: "gLT2btdRXvzKqD9t3",
     time_lastedit: {
       $date: "2024-07-04T08:29:32.116+0000",
     },
     time_created: {
       $date: "2024-07-04T08:29:32.116+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T08:00:00.000+0000",
     },
@@ -7720,14 +7720,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "XWnAgYmE4w98vpKvg",
+    groupId: "XWnAgYmE4w98vpKvg",
     time_lastedit: {
       $date: "2024-09-04T12:55:23.072+0000",
     },
     time_created: {
       $date: "2024-09-03T12:45:07.033+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T08:00:00.000+0000",
     },
@@ -7785,14 +7785,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "24bALLRMvjCpeQmZ6",
+    groupId: "24bALLRMvjCpeQmZ6",
     time_lastedit: {
       $date: "2024-06-27T14:12:10.622+0000",
     },
     time_created: {
       $date: "2024-04-11T16:39:31.271+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T08:30:00.000+0000",
     },
@@ -7856,14 +7856,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 7,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "cfkq4oWQr7EhuQBGn",
+    groupId: "cfkq4oWQr7EhuQBGn",
     time_lastedit: {
       $date: "2024-06-03T13:51:18.857+0000",
     },
     time_created: {
       $date: "2024-06-03T13:50:16.398+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T09:00:00.000+0000",
     },
@@ -7918,14 +7918,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 8,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "xrCL9p2Fg94R3Niur",
+    groupId: "xrCL9p2Fg94R3Niur",
     time_lastedit: {
       $date: "2024-08-30T18:31:01.237+0000",
     },
     time_created: {
       $date: "2024-04-26T07:28:43.244+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T10:15:00.000+0000",
     },
@@ -7980,14 +7980,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 14,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "3Hw7tPDXRxhHn5R5B",
+    groupId: "3Hw7tPDXRxhHn5R5B",
     time_lastedit: {
       $date: "2024-05-21T15:09:38.623+0000",
     },
     time_created: {
       $date: "2024-05-21T15:09:38.623+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T12:00:00.000+0000",
     },
@@ -8034,14 +8034,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 17,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "t3TJokosJ5GokhtjT",
+    groupId: "t3TJokosJ5GokhtjT",
     time_lastedit: {
       $date: "2024-09-12T09:07:13.347+0000",
     },
     time_created: {
       $date: "2024-07-09T09:27:06.606+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T12:00:00.000+0000",
     },
@@ -8128,14 +8128,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "FQX8kE7sLHt9Xg3Jq",
+    groupId: "FQX8kE7sLHt9Xg3Jq",
     time_lastedit: {
       $date: "2024-09-10T13:22:10.336+0000",
     },
     time_created: {
       $date: "2024-09-03T12:49:26.155+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T12:00:00.000+0000",
     },
@@ -8238,14 +8238,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "azMeiz4iKxpSHdWQn",
+    groupId: "azMeiz4iKxpSHdWQn",
     time_lastedit: {
       $date: "2024-05-29T12:40:22.893+0000",
     },
     time_created: {
       $date: "2024-05-29T12:27:47.593+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T12:15:00.000+0000",
     },
@@ -8312,14 +8312,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "DdKu2EGexFYzP6XCa",
+    groupId: "DdKu2EGexFYzP6XCa",
     time_lastedit: {
       $date: "2024-09-25T12:52:02.127+0000",
     },
     time_created: {
       $date: "2024-05-29T13:10:32.335+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T13:00:00.000+0000",
     },
@@ -8381,14 +8381,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "ugwP5oSCKDpdzXhdW",
+    groupId: "ugwP5oSCKDpdzXhdW",
     time_lastedit: {
       $date: "2024-05-14T12:49:35.804+0000",
     },
     time_created: {
       $date: "2024-05-14T12:49:35.804+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T14:00:00.000+0000",
     },
@@ -8431,14 +8431,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "AgMKwXtLYfxCckdMz",
+    groupId: "AgMKwXtLYfxCckdMz",
     time_lastedit: {
       $date: "2024-09-18T08:06:58.480+0000",
     },
     time_created: {
       $date: "2024-09-18T08:06:58.480+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T14:30:00.000+0000",
     },
@@ -8463,14 +8463,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 15,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "x6ggh94EJY67w9fDF",
+    groupId: "x6ggh94EJY67w9fDF",
     time_lastedit: {
       $date: "2024-04-09T15:18:02.666+0000",
     },
     time_created: {
       $date: "2024-04-09T15:18:02.666+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T15:00:00.000+0000",
     },
@@ -8552,14 +8552,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 25,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "DtkhBogFxYYt8oxo6",
+    groupId: "DtkhBogFxYYt8oxo6",
     time_lastedit: {
       $date: "2024-04-09T15:19:26.636+0000",
     },
     time_created: {
       $date: "2024-04-09T15:19:26.636+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T15:00:00.000+0000",
     },
@@ -8638,14 +8638,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "pgeTwB7NkYjZp3bJF",
+    groupId: "pgeTwB7NkYjZp3bJF",
     time_lastedit: {
       $date: "2024-05-28T13:59:13.518+0000",
     },
     time_created: {
       $date: "2024-05-23T16:09:25.111+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T15:00:00.000+0000",
     },
@@ -8696,14 +8696,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "YCYkxTa4LQpRFS8GB",
+    groupId: "YCYkxTa4LQpRFS8GB",
     time_lastedit: {
       $date: "2024-08-16T07:21:54.809+0000",
     },
     time_created: {
       $date: "2024-05-24T07:37:48.187+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T15:00:00.000+0000",
     },
@@ -8770,14 +8770,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 6,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "9qWNxqoz9fJkaeb64",
+    groupId: "9qWNxqoz9fJkaeb64",
     time_lastedit: {
       $date: "2024-05-26T08:57:51.273+0000",
     },
     time_created: {
       $date: "2024-05-26T08:57:51.273+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T15:00:00.000+0000",
     },
@@ -8828,14 +8828,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 50,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "bafNMtcp4r9oTXotS",
+    groupId: "bafNMtcp4r9oTXotS",
     time_lastedit: {
       $date: "2024-06-03T09:43:50.757+0000",
     },
     time_created: {
       $date: "2024-06-03T07:53:32.817+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T15:00:00.000+0000",
     },
@@ -8882,14 +8882,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 30,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "6qhywjHRoWDfxDPiL",
+    groupId: "6qhywjHRoWDfxDPiL",
     time_lastedit: {
       $date: "2024-09-05T08:53:17.047+0000",
     },
     time_created: {
       $date: "2024-05-28T08:58:06.906+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T15:30:00.000+0000",
     },
@@ -9020,14 +9020,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "ECWXBvebQDurkhmR9",
+    groupId: "ECWXBvebQDurkhmR9",
     time_lastedit: {
       $date: "2024-06-25T08:44:20.644+0000",
     },
     time_created: {
       $date: "2024-05-28T13:46:53.522+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T15:30:00.000+0000",
     },
@@ -9110,14 +9110,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "mXcpXcrKpuiQpPt45",
+    groupId: "mXcpXcrKpuiQpPt45",
     time_lastedit: {
       $date: "2024-07-01T09:52:03.786+0000",
     },
     time_created: {
       $date: "2024-05-31T09:06:04.248+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T15:30:00.000+0000",
     },
@@ -9153,14 +9153,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "qTmG2vmS6bzztK2pu",
+    groupId: "qTmG2vmS6bzztK2pu",
     time_lastedit: {
       $date: "2024-07-11T11:11:18.969+0000",
     },
     time_created: {
       $date: "2024-07-08T09:53:26.050+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T15:30:00.000+0000",
     },
@@ -9231,14 +9231,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 30,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "EWipQQ6G87BQZnKm7",
+    groupId: "EWipQQ6G87BQZnKm7",
     time_lastedit: {
       $date: "2024-07-18T16:55:10.879+0000",
     },
     time_created: {
       $date: "2024-05-13T13:35:18.679+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:00:00.000+0000",
     },
@@ -9262,14 +9262,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 8,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "EPj4GEZfDx4APyWSw",
+    groupId: "EPj4GEZfDx4APyWSw",
     time_lastedit: {
       $date: "2024-08-13T19:42:11.301+0000",
     },
     time_created: {
       $date: "2024-05-28T19:48:29.523+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:00:00.000+0000",
     },
@@ -9324,14 +9324,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "gyBZiBLLj6gupNXEt",
+    groupId: "gyBZiBLLj6gupNXEt",
     time_lastedit: {
       $date: "2024-05-29T12:52:53.137+0000",
     },
     time_created: {
       $date: "2024-05-29T12:52:53.137+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:00:00.000+0000",
     },
@@ -9394,14 +9394,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "xnrdaamNHhCXRq4vr",
+    groupId: "xnrdaamNHhCXRq4vr",
     time_lastedit: {
       $date: "2024-06-04T06:03:44.980+0000",
     },
     time_created: {
       $date: "2024-05-31T13:09:05.297+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:00:00.000+0000",
     },
@@ -9500,14 +9500,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "zKh9EFayDN83AwSEP",
+    groupId: "zKh9EFayDN83AwSEP",
     time_lastedit: {
       $date: "2024-06-03T12:40:43.095+0000",
     },
     time_created: {
       $date: "2024-06-03T12:40:43.095+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:00:00.000+0000",
     },
@@ -9573,14 +9573,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "Lot8Mpx9Z5FDe8QzB",
+    groupId: "Lot8Mpx9Z5FDe8QzB",
     time_lastedit: {
       $date: "2024-05-23T12:49:11.016+0000",
     },
     time_created: {
       $date: "2024-03-18T09:22:08.248+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:30:00.000+0000",
     },
@@ -9648,14 +9648,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 8,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "xFDbPBabmwdvyjJed",
+    groupId: "xFDbPBabmwdvyjJed",
     time_lastedit: {
       $date: "2024-07-04T11:13:07.846+0000",
     },
     time_created: {
       $date: "2024-05-02T12:00:33.900+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:30:00.000+0000",
     },
@@ -9710,14 +9710,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 8,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "qg9H8qGBXyNBjhCqf",
+    groupId: "qg9H8qGBXyNBjhCqf",
     time_lastedit: {
       $date: "2024-08-30T08:57:01.645+0000",
     },
     time_created: {
       $date: "2024-05-22T14:31:09.806+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:30:00.000+0000",
     },
@@ -9773,14 +9773,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "zPt7DWWr2SRrhbC8X",
+    groupId: "zPt7DWWr2SRrhbC8X",
     time_lastedit: {
       $date: "2024-05-24T12:14:46.661+0000",
     },
     time_created: {
       $date: "2024-05-24T12:14:46.661+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:30:00.000+0000",
     },
@@ -9839,14 +9839,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "T7zoh7b7fQSaZC9dK",
+    groupId: "T7zoh7b7fQSaZC9dK",
     time_lastedit: {
       $date: "2024-05-28T09:01:53.764+0000",
     },
     time_created: {
       $date: "2024-05-28T09:01:53.764+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:30:00.000+0000",
     },
@@ -9928,14 +9928,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "XewsrESm5QKuvQwGA",
+    groupId: "XewsrESm5QKuvQwGA",
     time_lastedit: {
       $date: "2024-09-17T16:07:18.734+0000",
     },
     time_created: {
       $date: "2024-05-30T08:13:06.571+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:30:00.000+0000",
     },
@@ -10026,14 +10026,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 25,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "qBv6YLwprLoDGYTdk",
+    groupId: "qBv6YLwprLoDGYTdk",
     time_lastedit: {
       $date: "2024-06-01T07:58:43.492+0000",
     },
     time_created: {
       $date: "2024-05-31T11:35:28.400+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T16:30:00.000+0000",
     },
@@ -10144,14 +10144,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "9abbe8nQvjNQ2m7eF",
+    groupId: "9abbe8nQvjNQ2m7eF",
     time_lastedit: {
       $date: "2024-05-31T08:41:41.307+0000",
     },
     time_created: {
       $date: "2024-05-31T08:20:32.132+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T17:00:00.000+0000",
     },
@@ -10186,14 +10186,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "yikxTBasmBptTRxob",
+    groupId: "yikxTBasmBptTRxob",
     time_lastedit: {
       $date: "2024-05-26T13:04:22.557+0000",
     },
     time_created: {
       $date: "2024-05-26T09:07:54.772+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T17:30:00.000+0000",
     },
@@ -10240,14 +10240,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "JwKSbpcsoRMLTofK2",
+    groupId: "JwKSbpcsoRMLTofK2",
     time_lastedit: {
       $date: "2024-05-31T14:39:24.500+0000",
     },
     time_created: {
       $date: "2024-05-08T19:55:57.316+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-19T18:00:00.000+0000",
     },
@@ -10334,14 +10334,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "jvoqzi2hm8XXteN2n",
+    groupId: "jvoqzi2hm8XXteN2n",
     time_lastedit: {
       $date: "2024-06-30T08:01:53.603+0000",
     },
     time_created: {
       $date: "2024-05-31T10:52:24.310+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T07:00:00.000+0000",
     },
@@ -10384,14 +10384,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "HRnksJszxjnCGtkMW",
+    groupId: "HRnksJszxjnCGtkMW",
     time_lastedit: {
       $date: "2024-09-04T12:52:33.620+0000",
     },
     time_created: {
       $date: "2024-09-03T12:52:02.993+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T07:00:00.000+0000",
     },
@@ -10445,14 +10445,14 @@ export const events: {
     noRsvp: true,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "Aw3wswurPFYgFk5QK",
+    groupId: "Aw3wswurPFYgFk5QK",
     time_lastedit: {
       $date: "2024-06-04T15:02:33.360+0000",
     },
     time_created: {
       $date: "2024-05-30T10:05:46.793+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T07:30:00.000+0000",
     },
@@ -10477,14 +10477,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 7,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "rxffxyZ6m7HvYeijv",
+    groupId: "rxffxyZ6m7HvYeijv",
     time_lastedit: {
       $date: "2024-06-03T07:11:04.324+0000",
     },
     time_created: {
       $date: "2024-05-30T14:42:20.973+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T07:30:00.000+0000",
     },
@@ -10535,14 +10535,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 8,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "hnKeA7pDBJp7dC8hy",
+    groupId: "hnKeA7pDBJp7dC8hy",
     time_lastedit: {
       $date: "2024-06-30T08:02:32.368+0000",
     },
     time_created: {
       $date: "2024-05-31T10:59:17.195+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T08:00:00.000+0000",
     },
@@ -10601,14 +10601,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 7,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "MrKFJHtCZzaH3HoLa",
+    groupId: "MrKFJHtCZzaH3HoLa",
     time_lastedit: {
       $date: "2024-07-09T06:23:16.835+0000",
     },
     time_created: {
       $date: "2024-05-31T11:07:51.609+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T08:00:00.000+0000",
     },
@@ -10639,14 +10639,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 30,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "aezC2GRTkuaHQPKGa",
+    groupId: "aezC2GRTkuaHQPKGa",
     time_lastedit: {
       $date: "2024-07-11T12:06:49.974+0000",
     },
     time_created: {
       $date: "2024-06-17T09:56:13.571+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T08:00:00.000+0000",
     },
@@ -10729,14 +10729,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "u6Ky5n8p5ksc4E7Nx",
+    groupId: "u6Ky5n8p5ksc4E7Nx",
     time_lastedit: {
       $date: "2024-06-04T10:54:43.867+0000",
     },
     time_created: {
       $date: "2024-05-30T09:28:21.742+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T09:00:00.000+0000",
     },
@@ -10835,14 +10835,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 13,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "ATtCSeRuYmLgTx3vu",
+    groupId: "ATtCSeRuYmLgTx3vu",
     time_lastedit: {
       $date: "2024-09-19T10:50:59.203+0000",
     },
     time_created: {
       $date: "2024-07-11T16:02:58.343+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T09:00:00.000+0000",
     },
@@ -10904,14 +10904,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 9,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "ST83fDDHEPSkKkoTu",
+    groupId: "ST83fDDHEPSkKkoTu",
     time_lastedit: {
       $date: "2024-05-22T09:17:32.715+0000",
     },
     time_created: {
       $date: "2024-05-21T10:50:01.474+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T11:30:00.000+0000",
     },
@@ -10974,14 +10974,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "YWeaWtCgeKbCJvenc",
+    groupId: "YWeaWtCgeKbCJvenc",
     time_lastedit: {
       $date: "2024-06-06T12:41:09.708+0000",
     },
     time_created: {
       $date: "2024-05-23T14:49:28.671+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T11:30:00.000+0000",
     },
@@ -11021,14 +11021,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 8,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "LFcDK4B96AFCY6KcN",
+    groupId: "LFcDK4B96AFCY6KcN",
     time_lastedit: {
       $date: "2024-05-16T06:25:41.774+0000",
     },
     time_created: {
       $date: "2024-05-07T15:47:44.922+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T12:00:00.000+0000",
     },
@@ -11087,14 +11087,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "GZtjPNbPSympYWdHG",
+    groupId: "GZtjPNbPSympYWdHG",
     time_lastedit: {
       $date: "2024-07-05T14:40:42.886+0000",
     },
     time_created: {
       $date: "2024-05-24T12:09:58.256+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T12:00:00.000+0000",
     },
@@ -11157,14 +11157,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 8,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "Fh4wNRv4xsE4FNMiL",
+    groupId: "Fh4wNRv4xsE4FNMiL",
     time_lastedit: {
       $date: "2024-05-30T16:47:27.688+0000",
     },
     time_created: {
       $date: "2024-05-29T14:06:09.714+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T12:00:00.000+0000",
     },
@@ -11219,14 +11219,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "BFuEBwQS8mrkQCyLG",
+    groupId: "BFuEBwQS8mrkQCyLG",
     time_lastedit: {
       $date: "2024-05-31T12:37:03.304+0000",
     },
     time_created: {
       $date: "2024-05-31T12:36:42.028+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T12:00:00.000+0000",
     },
@@ -11273,14 +11273,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "h4JYZYFSQMTPEnkTv",
+    groupId: "h4JYZYFSQMTPEnkTv",
     time_lastedit: {
       $date: "2024-08-28T07:10:56.705+0000",
     },
     time_created: {
       $date: "2024-06-05T07:07:20.267+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T12:00:00.000+0000",
     },
@@ -11367,14 +11367,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 7,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "xKFiGoihbtBMgsJkz",
+    groupId: "xKFiGoihbtBMgsJkz",
     time_lastedit: {
       $date: "2024-05-02T10:47:49.097+0000",
     },
     time_created: {
       $date: "2024-05-02T10:47:49.097+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T12:30:00.000+0000",
     },
@@ -11429,14 +11429,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 16,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "bA2cDwRHK4Sbmn8Aj",
+    groupId: "bA2cDwRHK4Sbmn8Aj",
     time_lastedit: {
       $date: "2024-05-28T08:06:08.682+0000",
     },
     time_created: {
       $date: "2024-05-28T08:06:08.682+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T12:30:00.000+0000",
     },
@@ -11487,14 +11487,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 8,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "cppJLjNhCn3sMAkZX",
+    groupId: "cppJLjNhCn3sMAkZX",
     time_lastedit: {
       $date: "2024-05-31T13:38:55.904+0000",
     },
     time_created: {
       $date: "2024-05-31T13:38:49.497+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T13:00:00.000+0000",
     },
@@ -11545,14 +11545,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "Ew5zYCcNbSCpoZqAZ",
+    groupId: "Ew5zYCcNbSCpoZqAZ",
     time_lastedit: {
       $date: "2024-06-03T07:46:48.904+0000",
     },
     time_created: {
       $date: "2024-06-03T07:46:48.904+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T13:00:00.000+0000",
     },
@@ -11578,14 +11578,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "zGXXb5NitQ4hPYK7X",
+    groupId: "zGXXb5NitQ4hPYK7X",
     time_lastedit: {
       $date: "2024-06-06T12:44:22.190+0000",
     },
     time_created: {
       $date: "2024-05-25T11:26:29.193+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T13:30:00.000+0000",
     },
@@ -11632,14 +11632,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 7,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "xtfw3TbG9PSzP8efs",
+    groupId: "xtfw3TbG9PSzP8efs",
     time_lastedit: {
       $date: "2024-05-02T10:53:24.840+0000",
     },
     time_created: {
       $date: "2024-05-02T10:52:08.194+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T14:00:00.000+0000",
     },
@@ -11690,14 +11690,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 8,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "4NjkgddjQNRrdZgHs",
+    groupId: "4NjkgddjQNRrdZgHs",
     time_lastedit: {
       $date: "2024-05-16T06:29:56.362+0000",
     },
     time_created: {
       $date: "2024-05-16T06:29:56.362+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T14:00:00.000+0000",
     },
@@ -11752,14 +11752,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "tsMnLqFz69ia9TKAP",
+    groupId: "tsMnLqFz69ia9TKAP",
     time_lastedit: {
       $date: "2024-09-12T13:59:05.888+0000",
     },
     time_created: {
       $date: "2024-05-23T15:54:42.206+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T14:00:00.000+0000",
     },
@@ -11854,14 +11854,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 8,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "YqvAm7LoZEvT5Nwqg",
+    groupId: "YqvAm7LoZEvT5Nwqg",
     time_lastedit: {
       $date: "2024-05-30T12:25:04.481+0000",
     },
     time_created: {
       $date: "2024-05-29T15:12:18.719+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T14:00:00.000+0000",
     },
@@ -11892,14 +11892,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 8,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "RTad7myG9x9nBFY9r",
+    groupId: "RTad7myG9x9nBFY9r",
     time_lastedit: {
       $date: "2024-09-17T09:10:53.050+0000",
     },
     time_created: {
       $date: "2024-05-31T12:52:31.973+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T14:00:00.000+0000",
     },
@@ -11954,14 +11954,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "aZBRbGgBNo9oBem4s",
+    groupId: "aZBRbGgBNo9oBem4s",
     time_lastedit: {
       $date: "2024-06-03T07:49:40.226+0000",
     },
     time_created: {
       $date: "2024-06-03T07:49:40.226+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T14:00:00.000+0000",
     },
@@ -12000,14 +12000,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 11,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "gadyfBbHEgz3HRRQq",
+    groupId: "gadyfBbHEgz3HRRQq",
     time_lastedit: {
       $date: "2024-09-17T18:43:18.366+0000",
     },
     time_created: {
       $date: "2024-06-03T13:28:49.464+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T14:00:00.000+0000",
     },
@@ -12062,14 +12062,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 6,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "cYMXbTvWsg7Ts627i",
+    groupId: "cYMXbTvWsg7Ts627i",
     time_lastedit: {
       $date: "2024-09-19T20:44:36.941+0000",
     },
     time_created: {
       $date: "2024-07-04T11:12:27.379+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T14:00:00.000+0000",
     },
@@ -12119,14 +12119,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "ssJuNhhjPZg4wYAoD",
+    groupId: "ssJuNhhjPZg4wYAoD",
     time_lastedit: {
       $date: "2024-04-09T15:27:13.321+0000",
     },
     time_created: {
       $date: "2024-04-09T15:27:13.321+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T14:30:00.000+0000",
     },
@@ -12197,14 +12197,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "EtfhcrwmYYWbaqT96",
+    groupId: "EtfhcrwmYYWbaqT96",
     time_lastedit: {
       $date: "2024-05-31T09:23:51.721+0000",
     },
     time_created: {
       $date: "2024-05-31T09:19:43.011+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T14:30:00.000+0000",
     },
@@ -12229,14 +12229,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 25,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "D4JYwcsqpvFfRbQvm",
+    groupId: "D4JYwcsqpvFfRbQvm",
     time_lastedit: {
       $date: "2024-09-19T08:33:54.435+0000",
     },
     time_created: {
       $date: "2024-05-31T13:36:14.961+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T14:30:00.000+0000",
     },
@@ -12274,14 +12274,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "q6SPx29NPgKLH2Xts",
+    groupId: "q6SPx29NPgKLH2Xts",
     time_lastedit: {
       $date: "2024-08-13T19:54:16.749+0000",
     },
     time_created: {
       $date: "2024-05-13T10:56:43.863+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T15:00:00.000+0000",
     },
@@ -12344,14 +12344,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 9,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "MDeqWEyrnsvocCkYF",
+    groupId: "MDeqWEyrnsvocCkYF",
     time_lastedit: {
       $date: "2024-05-28T09:18:26.487+0000",
     },
     time_created: {
       $date: "2024-05-23T16:13:20.979+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T15:00:00.000+0000",
     },
@@ -12406,14 +12406,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 15,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "4E3A6xRSq4pXWrui6",
+    groupId: "4E3A6xRSq4pXWrui6",
     time_lastedit: {
       $date: "2024-08-20T14:38:48.864+0000",
     },
     time_created: {
       $date: "2024-05-30T07:35:25.141+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T15:00:00.000+0000",
     },
@@ -12484,14 +12484,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 40,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "jmBL7rKKnfLPNfKXw",
+    groupId: "jmBL7rKKnfLPNfKXw",
     time_lastedit: {
       $date: "2024-06-06T12:43:36.308+0000",
     },
     time_created: {
       $date: "2024-05-23T15:15:52.052+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T15:30:00.000+0000",
     },
@@ -12606,14 +12606,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "pA96if383X258KNLR",
+    groupId: "pA96if383X258KNLR",
     time_lastedit: {
       $date: "2024-05-31T08:51:14.670+0000",
     },
     time_created: {
       $date: "2024-05-29T14:13:21.370+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T15:30:00.000+0000",
     },
@@ -12656,14 +12656,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "PPyBeiRB7KfC3fEdD",
+    groupId: "PPyBeiRB7KfC3fEdD",
     time_lastedit: {
       $date: "2024-06-05T12:44:11.724+0000",
     },
     time_created: {
       $date: "2024-06-05T12:44:11.724+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T15:30:00.000+0000",
     },
@@ -12726,14 +12726,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 50,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "f52CYW2m9P6zEfmnP",
+    groupId: "f52CYW2m9P6zEfmnP",
     time_lastedit: {
       $date: "2024-08-18T15:23:19.295+0000",
     },
     time_created: {
       $date: "2024-05-13T12:35:00.544+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T16:00:00.000+0000",
     },
@@ -12856,14 +12856,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 30,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "mSpnbZtMtQm9DGtTd",
+    groupId: "mSpnbZtMtQm9DGtTd",
     time_lastedit: {
       $date: "2024-05-23T15:50:20.913+0000",
     },
     time_created: {
       $date: "2024-05-23T15:47:31.768+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T16:00:00.000+0000",
     },
@@ -12926,14 +12926,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "ZQYJfdvNmjrmFpsAa",
+    groupId: "ZQYJfdvNmjrmFpsAa",
     time_lastedit: {
       $date: "2024-05-28T19:09:21.984+0000",
     },
     time_created: {
       $date: "2024-05-27T06:15:50.053+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T16:00:00.000+0000",
     },
@@ -12973,14 +12973,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 18,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "YxmR7Tz2zAZ5Rp9Hk",
+    groupId: "YxmR7Tz2zAZ5Rp9Hk",
     time_lastedit: {
       $date: "2024-08-21T15:39:33.194+0000",
     },
     time_created: {
       $date: "2024-05-29T15:13:05.652+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T16:00:00.000+0000",
     },
@@ -13043,14 +13043,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "siX2dBNzsxgWJi299",
+    groupId: "siX2dBNzsxgWJi299",
     time_lastedit: {
       $date: "2024-05-31T08:21:23.042+0000",
     },
     time_created: {
       $date: "2024-05-30T14:11:32.662+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T16:00:00.000+0000",
     },
@@ -13129,14 +13129,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 5,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "ehWd8dxGXYJYvLn29",
+    groupId: "ehWd8dxGXYJYvLn29",
     time_lastedit: {
       $date: "2024-05-31T12:58:53.138+0000",
     },
     time_created: {
       $date: "2024-05-31T12:58:53.138+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T16:00:00.000+0000",
     },
@@ -13175,14 +13175,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "So5gjCg26PPseyAcF",
+    groupId: "So5gjCg26PPseyAcF",
     time_lastedit: {
       $date: "2024-06-05T13:07:23.009+0000",
     },
     time_created: {
       $date: "2024-06-05T13:07:23.009+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T16:00:00.000+0000",
     },
@@ -13245,14 +13245,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 8,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "sgw8vzqWCjq6T4S8y",
+    groupId: "sgw8vzqWCjq6T4S8y",
     time_lastedit: {
       $date: "2024-07-04T11:20:51.992+0000",
     },
     time_created: {
       $date: "2024-07-01T08:16:50.091+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T16:00:00.000+0000",
     },
@@ -13305,14 +13305,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 25,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "GNhys2sr4jdJ4Crax",
+    groupId: "GNhys2sr4jdJ4Crax",
     time_lastedit: {
       $date: "2024-08-13T20:19:56.971+0000",
     },
     time_created: {
       $date: "2024-04-14T08:17:58.335+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T16:30:00.000+0000",
     },
@@ -13400,14 +13400,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "s9s8L4qp8ibL7Aeur",
+    groupId: "s9s8L4qp8ibL7Aeur",
     time_lastedit: {
       $date: "2024-09-14T12:09:03.965+0000",
     },
     time_created: {
       $date: "2024-05-23T12:39:27.500+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T16:30:00.000+0000",
     },
@@ -13450,14 +13450,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 16,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "KZcjKELPKp6QwKkGX",
+    groupId: "KZcjKELPKp6QwKkGX",
     time_lastedit: {
       $date: "2024-09-20T10:10:09.530+0000",
     },
     time_created: {
       $date: "2024-05-31T13:46:18.888+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T16:30:00.000+0000",
     },
@@ -13519,14 +13519,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 6,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "PKR2C7auxB9WPmtSy",
+    groupId: "PKR2C7auxB9WPmtSy",
     time_lastedit: {
       $date: "2024-04-17T10:15:43.025+0000",
     },
     time_created: {
       $date: "2024-04-17T10:14:29.342+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T17:00:00.000+0000",
     },
@@ -13561,14 +13561,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 8,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "MTXcaXyC2CCBQ78jq",
+    groupId: "MTXcaXyC2CCBQ78jq",
     time_lastedit: {
       $date: "2024-05-21T11:57:58.183+0000",
     },
     time_created: {
       $date: "2024-05-21T11:57:58.183+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T17:00:00.000+0000",
     },
@@ -13623,14 +13623,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 15,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "Yhd4zJJhTQJbtfPgX",
+    groupId: "Yhd4zJJhTQJbtfPgX",
     time_lastedit: {
       $date: "2024-08-20T14:39:22.589+0000",
     },
     time_created: {
       $date: "2024-05-30T08:41:15.680+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T17:00:00.000+0000",
     },
@@ -13701,14 +13701,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 25,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "a2cKAu3Y7BnxYsEms",
+    groupId: "a2cKAu3Y7BnxYsEms",
     time_lastedit: {
       $date: "2024-05-31T14:26:05.084+0000",
     },
     time_created: {
       $date: "2024-05-31T11:32:21.342+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T17:00:00.000+0000",
     },
@@ -13816,14 +13816,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "SC87qf9dQtxXhaYye",
+    groupId: "SC87qf9dQtxXhaYye",
     time_lastedit: {
       $date: "2024-07-09T06:24:13.518+0000",
     },
     time_created: {
       $date: "2024-05-31T14:05:03.791+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T17:00:00.000+0000",
     },
@@ -13866,14 +13866,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "gLG5TtxFJR8ysi3AZ",
+    groupId: "gLG5TtxFJR8ysi3AZ",
     time_lastedit: {
       $date: "2024-06-03T09:06:49.256+0000",
     },
     time_created: {
       $date: "2024-06-03T09:06:05.663+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T17:00:00.000+0000",
     },
@@ -13920,14 +13920,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 11,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "YYDoTsWD3jw5YQgdk",
+    groupId: "YYDoTsWD3jw5YQgdk",
     time_lastedit: {
       $date: "2024-09-20T11:02:13.980+0000",
     },
     time_created: {
       $date: "2024-05-26T09:19:39.051+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T17:30:00.000+0000",
     },
@@ -13990,14 +13990,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 14,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "auaoSLwXnrJp5oqJq",
+    groupId: "auaoSLwXnrJp5oqJq",
     time_lastedit: {
       $date: "2024-08-30T22:47:44.155+0000",
     },
     time_created: {
       $date: "2024-05-30T08:35:24.460+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-20T18:00:00.000+0000",
     },
@@ -14068,14 +14068,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "rhGaYLFA2923Sit2o",
+    groupId: "rhGaYLFA2923Sit2o",
     time_lastedit: {
       $date: "2024-05-23T09:40:29.305+0000",
     },
     time_created: {
       $date: "2024-05-22T15:15:05.706+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T07:00:00.000+0000",
     },
@@ -14138,14 +14138,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 30,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "jdtxLiTBqQKeJBx34",
+    groupId: "jdtxLiTBqQKeJBx34",
     time_lastedit: {
       $date: "2024-05-24T16:28:39.367+0000",
     },
     time_created: {
       $date: "2024-05-24T16:28:20.701+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T07:00:00.000+0000",
     },
@@ -14188,14 +14188,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "6dfu7rnnjk6PEcFwL",
+    groupId: "6dfu7rnnjk6PEcFwL",
     time_lastedit: {
       $date: "2024-09-17T12:21:07.860+0000",
     },
     time_created: {
       $date: "2024-05-14T13:20:34.266+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T07:30:00.000+0000",
     },
@@ -14257,14 +14257,14 @@ export const events: {
     sendReminder: true,
     maxParticipants: 9,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "rXZfF6xbKQMrThhAu",
+    groupId: "rXZfF6xbKQMrThhAu",
     time_lastedit: {
       $date: "2024-04-20T14:01:39.419+0000",
     },
     time_created: {
       $date: "2024-03-17T09:45:02.638+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T08:00:00.000+0000",
     },
@@ -14315,14 +14315,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "Y5ha82o5dxcP5wWYt",
+    groupId: "Y5ha82o5dxcP5wWYt",
     time_lastedit: {
       $date: "2024-09-06T09:15:57.208+0000",
     },
     time_created: {
       $date: "2024-04-26T11:57:59.954+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T08:00:00.000+0000",
     },
@@ -14369,14 +14369,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "B9jYWeFYxAMjjnKdS",
+    groupId: "B9jYWeFYxAMjjnKdS",
     time_lastedit: {
       $date: "2024-09-02T07:09:28.245+0000",
     },
     time_created: {
       $date: "2024-05-02T07:47:16.730+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T08:00:00.000+0000",
     },
@@ -14447,14 +14447,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "bxrjD7EPozc6Pcp62",
+    groupId: "bxrjD7EPozc6Pcp62",
     time_lastedit: {
       $date: "2024-06-24T20:40:01.115+0000",
     },
     time_created: {
       $date: "2024-05-24T16:19:14.126+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T08:00:00.000+0000",
     },
@@ -14494,14 +14494,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "5jPGkvoczsda7DaSj",
+    groupId: "5jPGkvoczsda7DaSj",
     time_lastedit: {
       $date: "2024-08-26T13:10:15.019+0000",
     },
     time_created: {
       $date: "2024-05-29T09:24:23.466+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T08:00:00.000+0000",
     },
@@ -14536,14 +14536,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 16,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "3BLxzcaGzwfHSih6t",
+    groupId: "3BLxzcaGzwfHSih6t",
     time_lastedit: {
       $date: "2024-06-03T08:49:53.863+0000",
     },
     time_created: {
       $date: "2024-05-31T11:03:42.523+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T08:00:00.000+0000",
     },
@@ -14606,7 +14606,7 @@ export const events: {
       "<p>Was bedeutet es für dich, an einem Ort zuhause zu sein?<br />Im Austausch mit Maria entwirfst du ein Zeichen, das für dein Gefühl von zuhause Sein steht. Du lernst verschiedene Sticktechniken und wendest sie an, indem du dein Zeichen auf eine Stoffinstallation stickst, die in Leimbach ausgestellt wird.<br /></p>",
     room: "Kleiner Kursraum (im UG des GZ)",
     region: "h4MnI3psRr8hSljk2",
-    groups: [],
+    organizations: [],
     internal: false,
     sendReminder: false,
     noRsvp: false,
@@ -14615,7 +14615,7 @@ export const events: {
       name: "GZ Leimbach",
       _id: "MeLMDkkw9LWrv7zzq",
     },
-    courseId: "BFuEBwQS8mrkQCyLG",
+    groupId: "BFuEBwQS8mrkQCyLG",
     time_lastedit: {
       $date: "2024-05-31T12:45:38.568+0000",
     },
@@ -14648,7 +14648,7 @@ export const events: {
       "<p>Wie kann ich eine Wohung suchen? Wo kann ich suchen? Wie kann ich mich bewerben? Was für Unterlagen brauche ich? Wo finde ich Hilfe?<br />Das WOHNMOBIL vermittelt Informationen zur Wohnungssuche. Anschliessend hast du Gelegenheit, an deinen Unterlagen zu arbeiten und dich für Wohnungen zu bewerben. <br /></p>",
     room: "Kursraum",
     region: "h4MnI3psRr8hSljk2",
-    groups: [],
+    organizations: [],
     internal: false,
     sendReminder: false,
     noRsvp: false,
@@ -14657,7 +14657,7 @@ export const events: {
       name: "GZ Leimbach",
       _id: "MeLMDkkw9LWrv7zzq",
     },
-    courseId: "RTad7myG9x9nBFY9r",
+    groupId: "RTad7myG9x9nBFY9r",
     time_lastedit: {
       $date: "2024-05-31T12:54:05.687+0000",
     },
@@ -14698,14 +14698,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "dje3auKH2Ct8yxYLy",
+    groupId: "dje3auKH2Ct8yxYLy",
     time_lastedit: {
       $date: "2024-07-08T09:57:35.698+0000",
     },
     time_created: {
       $date: "2024-07-08T09:30:26.081+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T08:00:00.000+0000",
     },
@@ -14795,14 +14795,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "wbMAPp7NFjjxunzRi",
+    groupId: "wbMAPp7NFjjxunzRi",
     time_lastedit: {
       $date: "2024-05-29T09:43:10.360+0000",
     },
     time_created: {
       $date: "2024-04-09T15:28:27.746+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T08:15:00.000+0000",
     },
@@ -14869,14 +14869,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "d9psYJ7r3QKWQ2LMC",
+    groupId: "d9psYJ7r3QKWQ2LMC",
     time_lastedit: {
       $date: "2024-06-27T14:12:55.660+0000",
     },
     time_created: {
       $date: "2024-03-25T13:45:17.156+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T08:30:00.000+0000",
     },
@@ -14944,14 +14944,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 15,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "P53jh9enTEJi6Puxm",
+    groupId: "P53jh9enTEJi6Puxm",
     time_lastedit: {
       $date: "2024-05-07T16:03:59.368+0000",
     },
     time_created: {
       $date: "2024-05-07T16:03:59.368+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T08:30:00.000+0000",
     },
@@ -15018,14 +15018,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "93n7gexHSGZor3ziT",
+    groupId: "93n7gexHSGZor3ziT",
     time_lastedit: {
       $date: "2024-05-16T06:19:58.697+0000",
     },
     time_created: {
       $date: "2024-05-16T06:19:58.697+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T08:30:00.000+0000",
     },
@@ -15084,14 +15084,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "hAiZY37bbPwocBM5b",
+    groupId: "hAiZY37bbPwocBM5b",
     time_lastedit: {
       $date: "2024-06-03T12:08:27.122+0000",
     },
     time_created: {
       $date: "2024-05-31T10:05:00.390+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T09:00:00.000+0000",
     },
@@ -15174,14 +15174,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "9zoFbFBWq9eGLTp54",
+    groupId: "9zoFbFBWq9eGLTp54",
     time_lastedit: {
       $date: "2024-05-23T09:40:16.672+0000",
     },
     time_created: {
       $date: "2024-05-22T15:18:45.190+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T10:00:00.000+0000",
     },
@@ -15244,14 +15244,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 30,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "4b94veNQF5C28BSAA",
+    groupId: "4b94veNQF5C28BSAA",
     time_lastedit: {
       $date: "2024-06-06T12:41:37.613+0000",
     },
     time_created: {
       $date: "2024-05-29T13:49:03.026+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T10:00:00.000+0000",
     },
@@ -15290,14 +15290,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 6,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "gQMkCkMKawqJaP56d",
+    groupId: "gQMkCkMKawqJaP56d",
     time_lastedit: {
       $date: "2024-07-08T08:26:27.690+0000",
     },
     time_created: {
       $date: "2024-07-08T08:26:27.690+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T10:00:00.000+0000",
     },
@@ -15339,14 +15339,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "vhDjgn9uBtCDabCoL",
+    groupId: "vhDjgn9uBtCDabCoL",
     time_lastedit: {
       $date: "2024-09-16T15:42:24.072+0000",
     },
     time_created: {
       $date: "2024-03-13T08:38:39.420+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T11:00:00.000+0000",
     },
@@ -15410,14 +15410,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "xZuyAjXYZRzC2agvG",
+    groupId: "xZuyAjXYZRzC2agvG",
     time_lastedit: {
       $date: "2024-05-30T12:00:49.809+0000",
     },
     time_created: {
       $date: "2024-05-30T12:00:49.809+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T11:00:00.000+0000",
     },
@@ -15460,14 +15460,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 15,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "JBY4mb8syXnqkYSui",
+    groupId: "JBY4mb8syXnqkYSui",
     time_lastedit: {
       $date: "2024-07-12T07:16:15.048+0000",
     },
     time_created: {
       $date: "2024-07-12T07:16:15.048+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T11:00:00.000+0000",
     },
@@ -15497,14 +15497,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 18,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "RiSSEBbDz5DXNdMFN",
+    groupId: "RiSSEBbDz5DXNdMFN",
     time_lastedit: {
       $date: "2024-05-24T15:16:19.322+0000",
     },
     time_created: {
       $date: "2024-05-21T16:36:29.490+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T11:30:00.000+0000",
     },
@@ -15547,14 +15547,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "w8yC8AbAmWSTqdhQL",
+    groupId: "w8yC8AbAmWSTqdhQL",
     time_lastedit: {
       $date: "2024-09-19T13:14:10.012+0000",
     },
     time_created: {
       $date: "2024-05-26T10:21:37.802+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T11:30:00.000+0000",
     },
@@ -15605,14 +15605,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "KpFrcvQ55tRF8EvAj",
+    groupId: "KpFrcvQ55tRF8EvAj",
     time_lastedit: {
       $date: "2024-06-03T12:09:53.862+0000",
     },
     time_created: {
       $date: "2024-05-31T07:33:39.756+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T11:30:00.000+0000",
     },
@@ -15679,14 +15679,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 15,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "pAXqtBRQArNKLpYTi",
+    groupId: "pAXqtBRQArNKLpYTi",
     time_lastedit: {
       $date: "2024-05-31T07:35:45.776+0000",
     },
     time_created: {
       $date: "2024-05-31T07:35:45.776+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T11:30:00.000+0000",
     },
@@ -15733,14 +15733,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 15,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "wWH5jp6WmecSegkNY",
+    groupId: "wWH5jp6WmecSegkNY",
     time_lastedit: {
       $date: "2024-08-15T08:10:41.137+0000",
     },
     time_created: {
       $date: "2024-05-31T12:07:57.132+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T11:30:00.000+0000",
     },
@@ -15807,14 +15807,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "CkTDPPxqx3jzotdve",
+    groupId: "CkTDPPxqx3jzotdve",
     time_lastedit: {
       $date: "2024-08-20T14:31:53.637+0000",
     },
     time_created: {
       $date: "2024-07-30T15:43:46.530+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T11:30:00.000+0000",
     },
@@ -15868,14 +15868,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "FHrWpv6KA5eP4wfBo",
+    groupId: "FHrWpv6KA5eP4wfBo",
     time_lastedit: {
       $date: "2024-05-29T14:30:34.596+0000",
     },
     time_created: {
       $date: "2024-04-09T15:30:47.044+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T12:00:00.000+0000",
     },
@@ -15951,14 +15951,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "fCnc8ee2tE3vFmEby",
+    groupId: "fCnc8ee2tE3vFmEby",
     time_lastedit: {
       $date: "2024-06-03T10:39:14.534+0000",
     },
     time_created: {
       $date: "2024-05-16T11:15:40.264+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T12:00:00.000+0000",
     },
@@ -16009,14 +16009,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 25,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "6RMdppjzyB686ezxk",
+    groupId: "6RMdppjzyB686ezxk",
     time_lastedit: {
       $date: "2024-06-07T13:37:40.575+0000",
     },
     time_created: {
       $date: "2024-05-31T11:39:05.115+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T12:00:00.000+0000",
     },
@@ -16103,7 +16103,7 @@ export const events: {
       "<p>Was bedeutet es für dich, an einem Ort zuhause zu sein?<br />Im Austausch mit Maria entwirfst du ein Zeichen, das für dein Gefühl von zuhause Sein steht. Du lernst verschiedene Sticktechniken und wendest sie an, indem du dein Zeichen auf eine Stoffinstallation stickst, die in Leimbach ausgestellt wird.<br /></p>",
     room: "Kleiner Kursraum (im UG des GZ)",
     region: "h4MnI3psRr8hSljk2",
-    groups: [],
+    organizations: [],
     internal: false,
     sendReminder: false,
     noRsvp: false,
@@ -16112,7 +16112,7 @@ export const events: {
       name: "GZ Leimbach",
       _id: "MeLMDkkw9LWrv7zzq",
     },
-    courseId: "BFuEBwQS8mrkQCyLG",
+    groupId: "BFuEBwQS8mrkQCyLG",
     time_lastedit: {
       $date: "2024-05-31T12:46:46.557+0000",
     },
@@ -16152,14 +16152,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "kpFYaGHiJtDdNi85T",
+    groupId: "kpFYaGHiJtDdNi85T",
     time_lastedit: {
       $date: "2024-07-18T15:40:48.753+0000",
     },
     time_created: {
       $date: "2024-06-07T20:57:33.640+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T12:00:00.000+0000",
     },
@@ -16194,14 +16194,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "7EeW3PKJSvbjezbE6",
+    groupId: "7EeW3PKJSvbjezbE6",
     time_lastedit: {
       $date: "2024-06-10T13:32:47.263+0000",
     },
     time_created: {
       $date: "2024-06-10T13:32:47.263+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T12:00:00.000+0000",
     },
@@ -16263,14 +16263,14 @@ export const events: {
     sendReminder: true,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "35gJDQKtsGYamx23a",
+    groupId: "35gJDQKtsGYamx23a",
     time_lastedit: {
       $date: "2024-09-19T08:14:13.298+0000",
     },
     time_created: {
       $date: "2024-04-11T17:41:40.275+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T12:30:00.000+0000",
     },
@@ -16317,14 +16317,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 14,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "LNfFqZ7udsaorMYX4",
+    groupId: "LNfFqZ7udsaorMYX4",
     time_lastedit: {
       $date: "2024-07-11T12:05:02.886+0000",
     },
     time_created: {
       $date: "2024-03-28T12:36:11.665+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T13:00:00.000+0000",
     },
@@ -16392,14 +16392,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 16,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "38wGNTdvRGhD4RxQN",
+    groupId: "38wGNTdvRGhD4RxQN",
     time_lastedit: {
       $date: "2024-05-15T10:58:27.004+0000",
     },
     time_created: {
       $date: "2024-05-08T09:49:58.200+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T13:00:00.000+0000",
     },
@@ -16470,14 +16470,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 12,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "nkfeveYRWG6WkQySz",
+    groupId: "nkfeveYRWG6WkQySz",
     time_lastedit: {
       $date: "2024-05-24T12:33:17.098+0000",
     },
     time_created: {
       $date: "2024-05-22T15:21:42.922+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T13:00:00.000+0000",
     },
@@ -16540,14 +16540,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 30,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "dxsQ7hkMYm649cYeH",
+    groupId: "dxsQ7hkMYm649cYeH",
     time_lastedit: {
       $date: "2024-09-18T06:53:34.162+0000",
     },
     time_created: {
       $date: "2024-05-30T12:06:05.936+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T13:00:00.000+0000",
     },
@@ -16658,14 +16658,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 16,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "aENnmvSTturxL5NKk",
+    groupId: "aENnmvSTturxL5NKk",
     time_lastedit: {
       $date: "2024-05-31T18:09:01.252+0000",
     },
     time_created: {
       $date: "2024-05-31T10:24:08.761+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T13:30:00.000+0000",
     },
@@ -16699,14 +16699,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "jxEBW7oDav8447Qrd",
+    groupId: "jxEBW7oDav8447Qrd",
     time_lastedit: {
       $date: "2024-04-12T14:48:04.383+0000",
     },
     time_created: {
       $date: "2024-04-12T13:39:53.223+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T14:00:00.000+0000",
     },
@@ -16781,14 +16781,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 16,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "SAz4Tt3bEhRfGdLvo",
+    groupId: "SAz4Tt3bEhRfGdLvo",
     time_lastedit: {
       $date: "2024-05-31T10:29:58.953+0000",
     },
     time_created: {
       $date: "2024-05-31T10:29:58.953+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T14:30:00.000+0000",
     },
@@ -16815,14 +16815,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "dbv6MztWyZ42FZa8D",
+    groupId: "dbv6MztWyZ42FZa8D",
     time_lastedit: {
       $date: "2024-07-17T08:41:18.618+0000",
     },
     time_created: {
       $date: "2024-06-02T12:56:48.995+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T14:30:00.000+0000",
     },
@@ -16947,14 +16947,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 5,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "tnTqBSr9s7LjHmE3x",
+    groupId: "tnTqBSr9s7LjHmE3x",
     time_lastedit: {
       $date: "2024-05-30T10:37:49.587+0000",
     },
     time_created: {
       $date: "2024-04-17T09:46:27.892+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T15:00:00.000+0000",
     },
@@ -16981,14 +16981,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "66QykcYd8ibTu58eD",
+    groupId: "66QykcYd8ibTu58eD",
     time_lastedit: {
       $date: "2024-05-17T08:29:07.587+0000",
     },
     time_created: {
       $date: "2024-05-17T08:29:07.587+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T15:00:00.000+0000",
     },
@@ -17055,14 +17055,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "vwJTDTe8k3KYqzkvj",
+    groupId: "vwJTDTe8k3KYqzkvj",
     time_lastedit: {
       $date: "2024-05-28T13:42:03.309+0000",
     },
     time_created: {
       $date: "2024-05-22T08:22:18.464+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T16:00:00.000+0000",
     },
@@ -17121,14 +17121,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 0,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "BodgMc23rEhwgPowQ",
+    groupId: "BodgMc23rEhwgPowQ",
     time_lastedit: {
       $date: "2024-07-17T08:21:50.152+0000",
     },
     time_created: {
       $date: "2024-05-31T07:46:06.503+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T16:00:00.000+0000",
     },
@@ -17211,14 +17211,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 16,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "dAdX7M2gvFwkHtYAR",
+    groupId: "dAdX7M2gvFwkHtYAR",
     time_lastedit: {
       $date: "2024-05-31T18:06:49.704+0000",
     },
     time_created: {
       $date: "2024-05-31T09:58:03.482+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T16:30:00.000+0000",
     },
@@ -17285,14 +17285,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 14,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "z6RyYeyJ5aD3JQdEP",
+    groupId: "z6RyYeyJ5aD3JQdEP",
     time_lastedit: {
       $date: "2024-09-10T11:39:31.450+0000",
     },
     time_created: {
       $date: "2024-05-19T10:26:21.070+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-21T17:00:00.000+0000",
     },
@@ -17351,14 +17351,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "LZCJQmLzr9d6gcrhH",
+    groupId: "LZCJQmLzr9d6gcrhH",
     time_lastedit: {
       $date: "2024-08-22T15:39:34.109+0000",
     },
     time_created: {
       $date: "2024-05-22T08:40:39.675+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T06:30:00.000+0000",
     },
@@ -17437,14 +17437,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 8,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "XHDh5DxLp4MPXq7oE",
+    groupId: "XHDh5DxLp4MPXq7oE",
     time_lastedit: {
       $date: "2024-05-31T13:53:30.850+0000",
     },
     time_created: {
       $date: "2024-05-31T13:53:30.850+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T08:00:00.000+0000",
     },
@@ -17491,14 +17491,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 28,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "pC4rpQ3fm6pPT7Noy",
+    groupId: "pC4rpQ3fm6pPT7Noy",
     time_lastedit: {
       $date: "2024-09-20T18:09:09.215+0000",
     },
     time_created: {
       $date: "2024-05-21T13:57:45.510+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T08:30:00.000+0000",
     },
@@ -17597,14 +17597,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 6,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "DrtM86uwM4pwty3qb",
+    groupId: "DrtM86uwM4pwty3qb",
     time_lastedit: {
       $date: "2024-08-13T19:49:56.959+0000",
     },
     time_created: {
       $date: "2024-05-27T12:30:00.031+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T09:00:00.000+0000",
     },
@@ -17647,14 +17647,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 15,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "Ba2YBpXjRjEW63EYk",
+    groupId: "Ba2YBpXjRjEW63EYk",
     time_lastedit: {
       $date: "2024-09-14T08:52:32.447+0000",
     },
     time_created: {
       $date: "2024-05-29T14:47:03.198+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T09:00:00.000+0000",
     },
@@ -17705,14 +17705,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 10,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "Q5JWbP5ePME9kpGzk",
+    groupId: "Q5JWbP5ePME9kpGzk",
     time_lastedit: {
       $date: "2024-05-28T13:20:04.901+0000",
     },
     time_created: {
       $date: "2024-05-28T13:20:04.901+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T11:00:00.000+0000",
     },
@@ -17775,14 +17775,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 20,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "qG94dYeCi5BjN6inW",
+    groupId: "qG94dYeCi5BjN6inW",
     time_lastedit: {
       $date: "2024-05-29T13:16:31.621+0000",
     },
     time_created: {
       $date: "2024-05-28T16:35:10.099+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T11:00:00.000+0000",
     },
@@ -17865,14 +17865,14 @@ export const events: {
       "<p>Jeden Sommer lassen sich mehrere tausend Gummiboote die Limmat hinunter treiben. <br />Beim Höngger Wehr wird es dann aber lebensgefährlich !<br /><br />Wir erklären das Wehr und üben gemeinsam, wie man Unfälle verhindert und wie man Personen aus der tödlichen Wasserwalze rettet. </p>",
     room: "",
     region: "h4MnI3psRr8hSljk2",
-    groups: [],
+    organizations: [],
     internal: false,
     sendReminder: false,
     maxParticipants: 10,
     venue: {
       name: "GZ Höngg - Lektion beim Höngger Wehr",
     },
-    courseId: "Fx2TZrnPXtq2mjGKY",
+    groupId: "Fx2TZrnPXtq2mjGKY",
     time_lastedit: {
       $date: "2024-08-13T19:49:28.161+0000",
     },
@@ -17946,14 +17946,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 8,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "Zm2kJPriPQuaAN595",
+    groupId: "Zm2kJPriPQuaAN595",
     time_lastedit: {
       $date: "2024-08-20T12:44:31.871+0000",
     },
     time_created: {
       $date: "2024-05-26T09:23:43.018+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T12:30:00.000+0000",
     },
@@ -18003,14 +18003,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 36,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "Ycb4cP7GGbr2d4mQZ",
+    groupId: "Ycb4cP7GGbr2d4mQZ",
     time_lastedit: {
       $date: "2024-09-11T12:28:11.275+0000",
     },
     time_created: {
       $date: "2024-05-28T12:00:37.119+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T12:30:00.000+0000",
     },
@@ -18116,14 +18116,14 @@ export const events: {
     sendReminder: false,
     maxParticipants: 15,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "AMTbH83dza37w4jRC",
+    groupId: "AMTbH83dza37w4jRC",
     time_lastedit: {
       $date: "2024-09-16T06:52:49.703+0000",
     },
     time_created: {
       $date: "2024-04-04T12:09:17.911+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T13:30:00.000+0000",
     },
@@ -18211,14 +18211,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 40,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "qkw3JEM9HsXY7tJ3G",
+    groupId: "qkw3JEM9HsXY7tJ3G",
     time_lastedit: {
       $date: "2024-09-12T09:34:17.824+0000",
     },
     time_created: {
       $date: "2024-05-29T12:15:48.781+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T13:30:00.000+0000",
     },
@@ -18297,14 +18297,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 13,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "vhpSqZZtHaXRQj5AR",
+    groupId: "vhpSqZZtHaXRQj5AR",
     time_lastedit: {
       $date: "2024-08-28T06:20:35.011+0000",
     },
     time_created: {
       $date: "2024-07-08T09:54:21.691+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T14:00:00.000+0000",
     },
@@ -18371,14 +18371,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 32,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "y6NxSjXCJ7qbbNFQo",
+    groupId: "y6NxSjXCJ7qbbNFQo",
     time_lastedit: {
       $date: "2024-09-06T20:12:42.656+0000",
     },
     time_created: {
       $date: "2024-05-29T08:44:17.086+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T15:30:00.000+0000",
     },
@@ -18509,14 +18509,14 @@ export const events: {
     noRsvp: false,
     maxParticipants: 21,
     region: "h4MnI3psRr8hSljk2",
-    courseId: "pPL9MZJkxBxGxipwk",
+    groupId: "pPL9MZJkxBxGxipwk",
     time_lastedit: {
       $date: "2024-08-25T18:57:55.195+0000",
     },
     time_created: {
       $date: "2024-06-04T15:49:50.023+0000",
     },
-    groups: [],
+    organizations: [],
     start: {
       $date: "2024-09-22T17:30:00.000+0000",
     },

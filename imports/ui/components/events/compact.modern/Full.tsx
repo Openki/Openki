@@ -12,24 +12,24 @@ import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 import { RegistrationParticipants } from "../display/registration.modern";
-import { Discussion } from "../../courses/discussion.modern";
+import { Discussion } from "../../groups/discussion.modern";
 import { Display } from "../../location/display";
 
-import { GroupName } from "./GroupName";
-import { useDetails } from "/imports/api/courses/publications";
+import { OrganizationName } from "./OrganizationName";
+import { useDetails } from "../../../../api/groups/publications";
 import { StatePanel } from "./StatePanel";
-import { CustomFieldDisplay } from "../../courses/CustomFieldDisplay";
+import { CustomFieldDisplay } from "../../groups/CustomFieldDisplay";
 import { ReactJoin } from "/imports/utils/ReactJoin";
 import { ImagePlaceholder } from "./ImagePlaceholder";
 
-function DisplayDiscussion({ eventId, courseId }: { eventId: string; courseId: string }) {
-  const [isLoading, course] = useDetails(courseId);
+function DisplayDiscussion({ eventId, groupId }: { eventId: string; groupId: string }) {
+  const [isLoading, group] = useDetails(groupId);
 
-  if (isLoading() || !course || !course.singleEvent) {
+  if (isLoading() || !group || !group.singleEvent) {
     return null;
   }
 
-  return <Discussion courseId={course._id} eventId={eventId} />;
+  return <Discussion groupId={group._id} eventId={eventId} />;
 }
 
 export function Full({
@@ -60,20 +60,22 @@ export function Full({
   }, [animation]);
 
   const [isRegionLoading, region] = useRegionDetails(event.region);
-  const visibleGroups = event.allGroups?.filter(
-    (groupId) =>
+  const visibleOrganizations = event.allOrganizations?.filter(
+    (organizationId) =>
       !(
-        // hide group where are from the region set
+        // hide organization where are from the region set
         (
-          region?.defaultTeamGroups?.includes(groupId) &&
-          // when user ist not member of the group or a admin
-          !user?.mayPromoteWith(groupId) &&
+          region?.defaultTeamOrganizations?.includes(organizationId) &&
+          // when user is not member of the organization or a admin
+          !user?.mayPromoteWith(organizationId) &&
           !event.editableBy(user)
         )
       ),
   );
 
-  const organizedByGroups = visibleGroups?.filter((group) => event.editors.includes(group));
+  const organizedByOrganizations = visibleOrganizations?.filter((organization) =>
+    event.editors.includes(organization),
+  );
   const locationPreview = [event.venue?.name, event.venue?.address].filter((v) => v)[0];
 
   return (
@@ -123,13 +125,13 @@ export function Full({
         </p>
         <div className="collapse" ref={collapseElementRef}>
           <p className="card-text" dangerouslySetInnerHTML={{ __html: event.description }}></p>
-          {!!event.courseId && (
-            <CustomFieldDisplay courseId={event.courseId} customClassName="card-text mb-1" />
+          {!!event.groupId && (
+            <CustomFieldDisplay groupId={event.groupId} customClassName="card-text mb-1" />
           )}
 
           {event.editableBy(user) && (
             <h4 className="card-title mt-3">
-              {t("event.details.yourAreOrganizer", "You are organizer")}{" "}
+              {t("event.details.yourAreTeam", "You are part of the coordination-team")}{" "}
               <a
                 className="btn btn-sm btn-secondary"
                 href={Router.path("showEvent", event, { query: { edit: "1" } })}
@@ -173,14 +175,18 @@ export function Full({
             </>
           )}
 
-          {!isRegionLoading() && !!organizedByGroups?.length && (
+          {!isRegionLoading() && !!organizedByOrganizations?.length && (
             <p className="card-text">
               <strong>{t("event.details.organziedBy", "Organized by:")}</strong>{" "}
-              {ReactJoin(organizedByGroups.map((group) => <GroupName key={group} id={group} />))}
+              {ReactJoin(
+                organizedByOrganizations.map((organization) => (
+                  <OrganizationName key={organization} id={organization} />
+                )),
+              )}
             </p>
           )}
 
-          {!!event.courseId && <DisplayDiscussion courseId={event.courseId} eventId={event._id} />}
+          {!!event.groupId && <DisplayDiscussion groupId={event.groupId} eventId={event._id} />}
 
           {!hideCategories && !!event.categories?.length && (
             <p className="card-text">

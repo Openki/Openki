@@ -43,7 +43,7 @@ export function EditStartEnd({
           <FormControl
             id="event-edit-start-date"
             type="date"
-            label={t("course.event.edit.date_start", "Date")}
+            label={t("group.event.edit.date_start", "Date")}
             prepend="fa-regular fa-calendar-days fa-fw"
             min={dateFormat(LocalTime.now())}
             value={startLocal}
@@ -62,7 +62,7 @@ export function EditStartEnd({
           <FormControl
             id="events-edit-start-end-startTime"
             type="time"
-            label={t("course.event.edit.time_start", "Time start")}
+            label={t("group.event.edit.time_start", "Time start")}
             prepend="fa-solid fa-hourglass-start fa-fw"
             error={!!errors.start}
             step={300}
@@ -85,11 +85,11 @@ export function EditStartEnd({
               type="time"
               label={
                 <>
-                  {t("course.event.edit.time_end", "Time end")}
+                  {t("group.event.edit.time_end", "Time end")}
                   <button
                     type="button"
                     className="btn-icon"
-                    data-bs-title={t("course.event.edit.swich_duration", "Switch to duration")}
+                    data-bs-title={t("group.event.edit.swich_duration", "Switch to duration")}
                     onClick={() => {
                       setDurationEdit(true);
                     }}
@@ -126,11 +126,11 @@ export function EditStartEnd({
               type="integer"
               label={
                 <>
-                  {t("course.event.edit.duration", "Duration (in minutes)")}
+                  {t("group.event.edit.duration", "Duration (in minutes)")}
                   <button
                     type="button"
                     className="btn-icon"
-                    data-bs-title={t("course.event.edit.switch_time_end", "Switch to end time")}
+                    data-bs-title={t("group.event.edit.switch_time_end", "Switch to end time")}
                     onClick={() => setDurationEdit(false)}
                   >
                     <i className="fa-solid fa-right-left" />

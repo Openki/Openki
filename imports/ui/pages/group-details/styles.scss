@@ -1,101 +1,78 @@
-@use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
-/* stylelint-disable scss/at-extend-no-missing-placeholder */
+// ** Group buttons
+// ========================================================================================
+.group-delete-confirm {
+  $background-color: tint-color($danger, 20%);
 
-.group-details .editable {
-  background-color: none;
+  background-color: $background-color;
+  border: 1px solid shade-color($background-color, 20%);
+  padding: 15px 15px 0;
 }
 
-.group-details-header {
-  background-color: color.adjust($group-bg, $lightness: -20%);
-  font-size: x-large;
-  padding: 0 10px 10px;
+// ** Content
+// ========================================================================================
 
-  &.has-logo {
-    padding-left: 23px;
-    padding-top: 10px;
-  }
-
-  .editable {
-    font-size: x-large;
-  }
-}
-
-.group-details-titlebar {
-  background-color: color.adjust($group-bg, $lightness: -20%);
-  padding: 15px 15px 0 23px;
-}
-
-.group-details-logo > img {
-  @include td-margin(right, 5px);
-
-  vertical-align: middle;
-  width: 50px;
-}
-
-.group-details-name,
-.group-details-short,
-.group-details-claim,
-.group-details-description {
-  @include editable-form-control;
-}
-
-.group-details-name,
-.group-details-short,
-.group-details-claim,
-.group-details-description,
-.group-details-venues {
-  padding: 8px 13px;
-
-  .editable {
-    margin: -8px 0 -8px -13px;
-  }
-}
-
-.group-details-name {
-  padding-right: 0;
-
-  .editable {
-    margin-right: 0;
-  }
-}
-
-.group-details-short {
-  padding-left: 0;
-
-  .editable {
-    margin-left: 0;
-  }
-}
-
-.group-details-logo,
-.group-details-name,
-.group-details-short {
-  display: inline-block;
-  vertical-align: top;
-}
+$group-details-content-padding-horizontal: (
+  $details-header-padding-horizontal + $group-border-width
+);
 
 .group-details-content {
-  padding: 10px;
-}
+  border-bottom-width: 0;
+  border-color: shade-color($tab-content-bg, 5%);
+  position: relative;
 
-.group-details-body {
-  background: color.adjust($group-bg, $lightness: 10%);
-}
-
-.group-details-claim {
-  font-size: large;
-
-  .editable {
-    font-size: large;
+  &::before,
+  &::after {
+    border-top: $tab-content-border-width solid $blue;
+    content: "";
+    height: 100%;
+    position: absolute;
+    top: $tab-content-border-width * -1;
+    z-index: 99;
+    width: $group-details-content-padding-horizontal;
   }
+
+  &::before {
+    left: $tab-content-border-width * -1;
+  }
+
+  &::after {
+    right: $tab-content-border-width * -1;
+  }
+
+  padding: 15px $group-details-content-padding-horizontal;
 }
 
-.group-details-description {
-  height: auto;
+.group-description {
+  max-height: 280px; // ca 300px - 1 rem
 }
 
-.group-details-claim + .group-details-description {
-  margin-top: 4px;
+.group-description-fade-wrap {
+  position: relative;
+}
+
+.group-description-fade-bottom {
+  @include gradient-y(transparent, #ebf4f8);
+  @include td-pos(left, 0);
+
+  bottom: 0;
+  height: 60px;
+  position: absolute;
+  width: 100%;
+}
+
+// ** Price Policy
+// ========================================================================================
+.group-details-price-policy {
+  margin-top: 10px;
+}
+
+// ** Sharing
+// ========================================================================================
+.group-page .sharing-wrapper {
+  background-color: $tab-content-bg;
+  border-color: shade-color($tab-content-bg, 5%);
+  border-style: solid;
+  border-width: 0 1px 1px;
 }

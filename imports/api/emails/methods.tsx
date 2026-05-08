@@ -33,7 +33,7 @@ export const sendVerificationEmail = ServerMethod(
 export const SendPrivateMessageOptionsPattern = {
   revealAddress: Boolean,
   sendCopy: Boolean,
-  courseId: Match.Optional(String),
+  groupId: Match.Optional(String),
   eventId: Match.Optional(String),
 };
 export type SendPrivateMessageOptions = Type<typeof SendPrivateMessageOptionsPattern>;
@@ -58,9 +58,9 @@ export const sendPrivateMessage = ServerMethod(
       throw new Meteor.Error(401, "this user does not accept direct messages from users");
     }
 
-    const context: { course?: string; event?: string } = {};
-    if (options.courseId) {
-      context.course = options.courseId;
+    const context: { group?: string; event?: string } = {};
+    if (options.groupId) {
+      context.group = options.groupId;
     }
     if (options.eventId) {
       context.event = options.eventId;

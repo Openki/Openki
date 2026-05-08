@@ -15,7 +15,7 @@ import "/imports/ui/layouts/root.html";
 import "/imports/ui/components/account-tasks";
 import "/imports/ui/components/alerts";
 import "/imports/ui/components/email-validation";
-import "/imports/ui/components/featured-group";
+import "../../components/featured-organization";
 import "/imports/ui/components/footer";
 import "/imports/ui/components/introduction";
 import "/imports/ui/components/kiosk-link";
