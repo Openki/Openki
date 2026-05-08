@@ -32,7 +32,7 @@ export interface Props {
 export function Role(props: Props) {
   const { t } = useTranslation();
   const user = useUser();
-  const { roleShort, roleSubscribed, roleSubscribe } = getRoleDisplay(t);
+  const { roleShort, roleSubscribed, roleSubscribe, roleGroupFirstSteps } = getRoleDisplay(t);
   const searchParams = useSearchParams();
   const [enrolling, setEnrolling] = useState(false);
   const [showFirstSteps, setShowFirstSteps] = useState(false);
@@ -160,41 +160,16 @@ export function Role(props: Props) {
 
           {showFirstSteps && (
             <div className="group-role-first-steps">
-              <b>
+              <span className="fw-bold">
                 {t("group.roles.firstSteps.title", "Thank you for your interest in {GROUP}.", {
                   GROUP: props.group.name,
                   ROLE: roleShort(props.role.type),
                 })}
-              </b>
+              </span>
               <br />
-              {roleIs("participant") &&
-                t(
-                  "group.roles.firstSteps.youllGetNotified",
-                  "You will get an e-mail notification as soon as a next date has been fixed.",
-                )}
-              {roleIs("host") &&
-                t(
-                  "group.roles.firstSteps.informAboutVenue",
-                  "If not done already, please mention the venue(s) you have access to in your personal message.",
-                )}
-              {roleIs("mentor") && (
-                <>
-                  {t(
-                    "group.roles.firstSteps.mentionExperience",
-                    "If not done already, please mention your experiences on the topic in your personal message.",
-                  )}
-                  <Guide />
-                </>
-              )}
-              {roleIs("team") && (
-                <>
-                  {t(
-                    "group.roles.firstSteps.team",
-                    "If not done already, you can start with chosing the venue and, if needed, looking for mentor(s) and then fix a date.",
-                  )}
-                  <Guide />
-                </>
-              )}
+              <span className="pre-line">
+                {roleGroupFirstSteps(props.role.type, { COORDINATION_GUIDE: <Guide /> })}
+              </span>
               <br />
               <br />
               {t(
@@ -204,7 +179,7 @@ export function Role(props: Props) {
               <br />
               {t(
                 "group.roles.firstSteps.allMembersInformed",
-                "All members of the organization-team will be informed.",
+                "All members of the coordination team will be informed.",
               )}
               <br />
               <button

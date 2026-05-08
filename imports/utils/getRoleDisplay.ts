@@ -58,5 +58,12 @@ export function getRoleDisplay(t: TFunction) {
     ) {
       return t(`roles:${type}.notification.join.mail.intro`, variables);
     },
+
+    roleGroupFirstSteps(
+      type: RoleEntity["type"],
+      variables: { COORDINATION_GUIDE: JSX.Element | string },
+    ) {
+      return t(`roles:${type}.group.firstSteps`, variables);
+    },
   };
 }
