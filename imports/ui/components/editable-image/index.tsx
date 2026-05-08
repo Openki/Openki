@@ -323,7 +323,7 @@ export function EditableImage(data: Data) {
         <i className="fa-regular fa-image fa-5x cursor-pointer" onClick={handleEditClick} />
       )}{" "}
       <div className="d-flex flex-column gap-1">
-        {!!data.thumbnail?.src && (
+        {!!data.fullImage?.src && (
           <>
             {" "}
             <button
@@ -350,7 +350,7 @@ export function EditableImage(data: Data) {
                     ></button>
                   </div>
                   <div className="modal-body text-center">
-                    <img className="mw-100" src={data.fullImage?.src} />
+                    <img className="mw-100" src={data.fullImage.src} />
                   </div>
                 </div>
               </div>
