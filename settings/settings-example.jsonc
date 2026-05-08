@@ -132,7 +132,7 @@
 	, "pricePolicyLink": "..." // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 	, "groupGuideLink": "..." // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 	, "aboutLink": "https://about.openki.net" // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
-	, "contribution": // Contribution to the plattform, a admin can set in the userprofile that a user has contributed. This shows a icon next to the username. Remove this setting to disable this feature.
+	, "contribution": // Contribution to the platform, a admin can set in the userprofile that a user has contributed. This shows a icon next to the username. Remove this setting to disable this feature.
 		{ "icon": "fa-solid fa-heart"
 		, "forbiddenChars": ["🖤", "💖", "💔", "💚", "💜", "❤️", "🧡", "💕", "💛", "💝"] // forbidden chars in username
 		, "link": // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
