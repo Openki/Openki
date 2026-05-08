@@ -16,6 +16,7 @@ import * as Analytics from "/imports/ui/lib/analytics";
 import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 
+import { FormControl } from "../../../form-control";
 import { Button, ButtonCancel } from "../../../Buttons";
 import { Action } from "/imports/ui/components/PleaseLogin";
 import { Guide } from "./guide";
@@ -32,11 +33,12 @@ export interface Props {
 export function Role(props: Props) {
   const { t } = useTranslation();
   const user = useUser();
-  const { roleShort, roleSubscribed, roleSubscribe, roleGroupFirstSteps } = getRoleDisplay(t);
+  const { roleShort, roleSubscribed, roleSubscribe, roleGroupFirstSteps, roleGroupMessageInfo } =
+    getRoleDisplay(t);
   const searchParams = useSearchParams();
   const [enrolling, setEnrolling] = useState(false);
   const [showFirstSteps, setShowFirstSteps] = useState(false);
-  const [comment, setComment] = useState(props.comment);
+  const [comment, setComment] = useState(props.comment ?? "");
   const [isRolesLoading, roles] = useRegionRoles(props.group.region);
 
   // Build a subscribe change
@@ -59,8 +61,8 @@ export function Role(props: Props) {
     return groupSubscribe().validFor(operator || (new User() as UserModel));
   }
 
-  function handleCommentChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
-    setComment(event.currentTarget.value.trim());
+  function handleCommentChange(value: string) {
+    setComment(value.trim());
   }
   function handleRoleEnrollClick() {
     setEnrolling(true);
@@ -203,57 +205,24 @@ export function Role(props: Props) {
               </div>
               <div className="group-role-enroll-options">
                 <div className="mb-3">
-                  <label className="form-label">
-                    {t(
+                  {/*<form onSubmit={(event) => const formData = Object.fromEntries(new FormData(event.currentTarget).entries());}>
+                    <input type="text" name="comment"></input>
+                    <input type="submit">Submit</input>
+                  </form>*/}
+
+                  <FormControl
+                    id="role-comment"
+                    label={t(
                       "group.roles.leave_message",
                       "You can leave a message to appear next to your name:",
                     )}
-                  </label>
-                  {roleIs("participant") && (
-                    <textarea
-                      className="form-control js-comment"
-                      placeholder={t(
-                        "group.roles.messageInfoParticipant",
-                        "an (optional) message like a greeting, wish, or interest",
-                      )}
-                      onChange={handleCommentChange}
-                    >
-                      {comment}
-                    </textarea>
-                  )}
-                  {roleIs("host") && (
-                    <textarea
-                      className="form-control js-comment"
-                      placeholder={t(
-                        "group.roles.messageInfoHost",
-                        "an (optional) message including info about the venue",
-                      )}
-                      onChange={handleCommentChange}
-                    >
-                      {comment}
-                    </textarea>
-                  )}
-                  {roleIs("mentor") && (
-                    <textarea
-                      className="form-control js-comment"
-                      placeholder={t(
-                        "group.roles.messageInfoMentor",
-                        "an (optional) message including info about your experience on the topic",
-                      )}
-                      onChange={handleCommentChange}
-                    >
-                      {comment}
-                    </textarea>
-                  )}
-                  {roleIs("team") && (
-                    <textarea
-                      className="form-control js-comment"
-                      placeholder={t("group.roles.messageInfoMentor")}
-                      onChange={handleCommentChange}
-                    >
-                      {comment}
-                    </textarea>
-                  )}
+                    onChange={handleCommentChange}
+                    type="text"
+                    autoFocus
+                    optional
+                    value={comment}
+                    placeholder={roleGroupMessageInfo(props.role.type)}
+                  />
                 </div>
                 <div className="form-actions">
                   <Button
