@@ -1,0 +1,30 @@
+@import "{}/imports/ui/stylesheets/variables/index";
+
+.organization-tag {
+  @include tag($organization-bg, $organization-label-color);
+}
+
+.organization-tag-btn {
+  @include tag-btn($organization-bg, $organization-label-color);
+}
+
+.organization-tag-is-team {
+  border-left: 2px solid rgb(150 197 149 / 50%);
+}
+
+.organization-tool-dialog {
+  padding: 10px;
+
+  &.add {
+    background-color: rgba($success, 0.35);
+  }
+
+  &.danger {
+    background-color: rgba($danger, 0.2);
+  }
+}
+
+.organization-tool-dialog > .btn {
+  margin-top: 10px;
+  width: 100%;
+}

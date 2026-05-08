@@ -42,7 +42,7 @@ export function EventCanceled({
           <p>
             {t(
               "notification.event.canceled.mail.personalMessage",
-              "The Organizer has left the following message for you:",
+              "A coordinator has left the following message for you:",
             )}
           </p>
           <table className="comment-box">

@@ -46,7 +46,7 @@ export function Day(data: {
       ) : (
         <>
           <br />
-          {t("calendar.noCoursesThisDay", "There are no events on this day")}
+          {t("calendar.noGroupsThisDay", "There are no events on this day")}
         </>
       )}
     </>

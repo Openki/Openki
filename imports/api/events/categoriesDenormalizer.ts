@@ -1,5 +1,5 @@
 import { EventEntity, Events } from "/imports/api/events/events";
-import { Courses } from "/imports/api/courses/courses";
+import { Groups } from "../groups/groups";
 import { sum } from "../../utils/sum";
 
 // Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers
@@ -7,10 +7,10 @@ import { sum } from "../../utils/sum";
 export async function onStartUp() {
   const updated = sum(
     await Promise.all(
-      await Courses.find({}, { projection: { _id: 1, categories: 1 } }).mapAsync((course) =>
+      await Groups.find({}, { projection: { _id: 1, categories: 1 } }).mapAsync((group) =>
         Events.updateAsync(
-          { courseId: course._id },
-          { $set: { categories: course.categories || [] } },
+          { groupId: group._id },
+          { $set: { categories: group.categories || [] } },
           { multi: true },
         ),
       ),
@@ -23,19 +23,19 @@ export async function onStartUp() {
 export async function beforeInsert(
   event: Omit<EventEntity, "_id">,
 ): Promise<Omit<EventEntity, "_id">> {
-  // categories comes from the parent course
-  const course = await Courses.findOneAsync(event.courseId);
-  if (!course) {
-    throw new Error(`Missing course ${event.courseId} for new event`);
+  // categories comes from the parent group
+  const group = await Groups.findOneAsync(event.groupId);
+  if (!group) {
+    throw new Error(`Missing group ${event.groupId} for new event`);
   }
 
-  return { ...event, categories: course.categories };
+  return { ...event, categories: group.categories };
 }
 
-export async function afterCourseUpdateCategories(course: { _id: string; categories: string[] }) {
+export async function afterGroupUpdateCategories(group: { _id: string; categories: string[] }) {
   await Events.updateAsync(
-    { courseId: course._id },
-    { $set: { categories: course.categories } },
+    { groupId: group._id },
+    { $set: { categories: group.categories } },
     { multi: true },
   );
 }

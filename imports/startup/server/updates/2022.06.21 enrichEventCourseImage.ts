@@ -1,13 +1,13 @@
-import { Courses } from "/imports/api/courses/courses";
+import { Groups } from "../../../api/groups/groups";
 import { Events } from "/imports/api/events/events";
 
 export async function update() {
   let updated = 0;
 
-  for (const course of await Courses.find({ image: { $exists: true } }).fetchAsync()) {
+  for (const group of await Groups.find({ image: { $exists: true } }).fetchAsync()) {
     updated += await Events.updateAsync(
-      { courseId: course._id },
-      { $set: { courseImage: course.image } },
+      { groupId: group._id },
+      { $set: { groupImage: group.image } },
       { multi: true },
     );
   }

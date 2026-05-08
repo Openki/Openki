@@ -12,8 +12,8 @@ import {
   OEvent,
   FindParams as EventParamPredicates,
 } from "/imports/api/events/events";
-import { Group, GroupModel } from "/imports/api/groups/groups";
-import * as Groups from "/imports/api/groups/publications";
+import { Organization, OrganizationModel } from "../../api/organizations/organizations";
+import * as Organizations from "../../api/organizations/publications";
 import { Region, RegionModel } from "/imports/api/regions/regions";
 import * as Regions from "/imports/api/regions/publications";
 import * as InfoPages from "/imports/api/infoPages/publications";
@@ -22,7 +22,7 @@ import { Venue, VenueModel, FindParams as VenueParamPredicates } from "/imports/
 import * as Venues from "/imports/api/venues/publications";
 import * as Events from "/imports/api/events/publications";
 import * as Tenants from "/imports/api/tenants/publications";
-import * as Courses from "/imports/api/courses/publications";
+import * as Groups from "../../api/groups/publications";
 import * as Invitations from "/imports/api/invitations/publications";
 import * as JoinLinks from "/imports/api/joinLinks/publications";
 import * as Users from "/imports/api/users/publications";
@@ -37,9 +37,9 @@ import * as RouterAsync from "/imports/utils/RouterAsync";
 import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
 
 import * as Analytics from "/imports/ui/lib/analytics";
-import { CourseTemplate } from "/imports/ui/lib/course-template";
+import { GroupTemplate } from "../../ui/lib/group-template";
 
-import type { Data as GroupDetailsData } from "/imports/ui/pages/group-details";
+import type { Data as OrganizationDetailsData } from "../../ui/pages/organization-details";
 import type { Data as VenuesMapData } from "/imports/ui/pages/venues-map";
 import type { Data as EventsMapData } from "/imports/ui/pages/events-map";
 import type { Data as AdminTenantsData } from "/imports/ui/pages/admin/tenants";
@@ -86,7 +86,7 @@ RouterAsync.route("home", {
   path: "/",
   template: "dashboardPage",
   yieldRegions: {
-    featuredGroup: { to: "aboveContent" },
+    featuredOrganization: { to: "aboveContent" },
   },
   async onRun() {
     await import("/imports/ui/pages/dashboard");
@@ -105,7 +105,7 @@ RouterAsync.route("search", {
   path: "search",
   template: "findPage",
   yieldRegions: {
-    featuredGroup: { to: "aboveContent" },
+    featuredOrganization: { to: "aboveContent" },
   },
   async onRun() {
     await import("/imports/ui/pages/find");
@@ -131,46 +131,46 @@ RouterAsync.route("calendar", {
   },
 });
 
-RouterAsync.route("exploreGroups", {
-  path: "/explore/groups",
-  template: "exploreGroupsPage",
+RouterAsync.route("exploreOrganizations", {
+  path: "/explore/organizations",
+  template: "exploreOrganizationsPage",
   async onRun() {
-    await import("/imports/ui/pages/explore/groups");
+    await import("../../ui/pages/explore/organizations");
   },
 });
 
-RouterAsync.route("groupDetails", {
-  path: "group/:_id/:short?",
-  template: "groupDetailsPage",
+RouterAsync.route("organizationDetails", {
+  path: "organization/:_id/:short?",
+  template: "organizationDetailsPage",
   async onRun() {
-    await import("/imports/ui/pages/group-details");
+    await import("../../ui/pages/organization-details");
   },
   subscriptions() {
-    return { details: Groups.details.subscribe(this.params._id as string) };
+    return { details: Organizations.details.subscribe(this.params._id as string) };
   },
-  async data(): Promise<GroupDetailsData | undefined> {
-    let group: GroupModel | undefined;
+  async data(): Promise<OrganizationDetailsData | undefined> {
+    let organization: OrganizationModel | undefined;
     const isNew = this.params._id === "create";
     if (isNew) {
-      group = new Group() as GroupModel;
+      organization = new Organization() as OrganizationModel;
     } else {
-      group = await this.subscriptions()?.details();
+      organization = await this.subscriptions()?.details();
     }
 
-    if (!group) {
+    if (!organization) {
       return undefined;
     }
 
-    const courseQuery = {
+    const groupQuery = {
       ...this.params.query,
-      group: group._id,
+      organization: organization._id,
       region: Session.get("region"),
     };
 
     return {
-      courseQuery,
-      group,
-      showCourses: !isNew,
+      groupQuery,
+      organization,
+      showGroups: !isNew,
     };
   },
 });
@@ -208,10 +208,9 @@ RouterAsync.route("info", {
   async data() {
     const page = await this.subscriptions()?.infoPage();
     if (!page) {
-      const content =
-        (await getInfoPageMarkdown(
-          `/info-pages/${this.params.page_slug}/${Session.get("locale")}.md`,
-        )) || (await getInfoPageMarkdown(`/info-pages/${this.params.page_slug}/en.md`));
+      const content = await getInfoPageMarkdown(
+        `/info-pages/${this.params.page_slug}/${Session.get("locale")}.md`,
+      );
 
       if (!content) {
         return undefined;
@@ -238,20 +237,20 @@ RouterAsync.route("profile", {
   },
 });
 
-RouterAsync.route("proposeCourse", {
-  path: "courses/propose",
-  template: "courseProposePage",
+RouterAsync.route("proposeGroup", {
+  path: "groups/propose",
+  template: "groupProposePage",
   async onRun() {
-    await import("/imports/ui/pages/course-create");
+    await import("../../ui/pages/group-create");
   },
   data() {
     const { query } = this.params;
 
-    const course = CourseTemplate();
+    const group = GroupTemplate();
 
-    course.name = query.title || "";
+    group.name = query.title || "";
 
-    return { ...course, group: query.group, singleEvent: query.singleEvent === "1" };
+    return { ...group, organization: query.organization, singleEvent: query.singleEvent === "1" };
   },
 });
 
@@ -288,34 +287,34 @@ RouterAsync.route("autoLoginVisitor", {
   },
 });
 
-RouterAsync.route("showCourse", {
-  path: "course/:_id/:slug?",
-  template: "courseDetailsPage",
+RouterAsync.route("showGroup", {
+  path: "group/:_id/:slug?",
+  template: "groupDetailsPage",
   async action() {
-    const course = (await this.data())?.course;
-    if (course?.singleEvent && course.nextEvent && this.params.query.force !== "1") {
-      this.redirect("showEvent", course.nextEvent, { replaceState: true });
+    const group = (await this.data())?.group;
+    if (group?.singleEvent && group.nextEvent && this.params.query.force !== "1") {
+      this.redirect("showEvent", group.nextEvent, { replaceState: true });
     } else {
       this.render();
     }
   },
 
   async onRun() {
-    await import("/imports/ui/pages/course-details");
+    await import("../../ui/pages/group-details");
   },
   subscriptions() {
-    return { courses: Courses.details.subscribe(this.params._id as string) };
+    return { groups: Groups.details.subscribe(this.params._id as string) };
   },
   async data() {
-    const course = await this.subscriptions()?.courses();
+    const group = await this.subscriptions()?.groups();
 
-    if (!course) {
+    if (!group) {
       return undefined;
     }
 
     return {
       edit: !!this.params.query.edit,
-      course,
+      group,
       select: this.params.query.select,
     };
   },
@@ -328,9 +327,9 @@ RouterAsync.route("createEvent", {
     await import("/imports/ui/pages/event-details");
   },
   subscriptions() {
-    const { courseId } = this.params.query;
-    if (courseId) {
-      return { course: Courses.details.subscribe(courseId) };
+    const { groupId } = this.params.query;
+    if (groupId) {
+      return { group: Groups.details.subscribe(groupId) };
     }
     return {};
   },
@@ -344,13 +343,13 @@ RouterAsync.route("createEvent", {
       sendReminder: PublicSettings.sendReminderPreset,
     }) as EventModel;
 
-    const course = await subs?.course?.();
-    if (course) {
-      event.title = course.name;
-      event.courseId = course._id;
-      event.region = course.region;
-      event.description = course.description || "";
-      event.internal = course.internal;
+    const group = await subs?.group?.();
+    if (group) {
+      event.title = group.name;
+      event.groupId = group._id;
+      event.region = group.region;
+      event.description = group.description || "";
+      event.internal = group.internal;
     }
 
     return { event, isNew: true };
@@ -600,12 +599,12 @@ RouterAsync.route("frameCalendar", {
   },
 });
 
-RouterAsync.route("frameCourselist", {
-  path: "/frame/courselist",
-  template: "frameCourselistPage",
+RouterAsync.route("frameGroupList", {
+  path: "/frame/grouplist",
+  template: "frameGroupListPage",
   layoutTemplate: "frameLayout",
   async onRun() {
-    await import("/imports/ui/pages/frames/courselist");
+    await import("../../ui/pages/frames/group-list");
   },
 });
 
@@ -634,7 +633,7 @@ RouterAsync.route("framePropose", {
   data() {
     const predicates = {
       region: Predicates.id,
-      addTeamGroups: Predicates.ids,
+      addTeamOrganizations: Predicates.ids,
       neededRoles: Predicates.ids,
       setCreatorsRoles: Predicates.ids,
       internal: Predicates.flag,
@@ -644,11 +643,11 @@ RouterAsync.route("framePropose", {
     };
     const query = new Filtering(predicates).read(this.params.query).toQuery() as any;
 
-    if (query.addTeamGroups) {
-      // For security reasons only 5 groups are allowed
-      query.teamGroups = query.addTeamGroups.slice(0, 5);
+    if (query.addTeamOrganizations) {
+      // For security reasons only 5 organizations are allowed
+      query.teamOrganizations = query.addTeamOrganizations.slice(0, 5);
     }
-    delete query.addTeamGroups;
+    delete query.addTeamOrganizations;
 
     if (!query.neededRoles) {
       query.neededRoles = ["mentor"];
@@ -964,11 +963,11 @@ RouterAsync.route("adminPanel", {
   },
 });
 
-RouterAsync.route("featureGroup", {
-  path: "admin/feature-group",
-  template: "adminFeatureGroupPage",
+RouterAsync.route("featureOrganization", {
+  path: "admin/feature-organization",
+  template: "adminFeatureOrganizationPage",
   async onRun() {
-    await import("/imports/ui/pages/admin/feature-group");
+    await import("../../ui/pages/admin/feature-organization");
   },
 });
 

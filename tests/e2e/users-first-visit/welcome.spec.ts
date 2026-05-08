@@ -7,6 +7,6 @@ describe("Users first visit", () => {
     cy.get(".modal-title").should("have.text", "Welcome to Hmmm!");
     cy.get(".dropdown-toggle").click();
     cy.get('[title="Spilistan"]').click();
-    cy.get('[data-test="region-selection-display"]').should("contain.text", "Spilistan");
+    cy.get('[data-test="region-select-display"]').should("contain.text", "Spilistan");
   });
 });

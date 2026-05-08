@@ -1,0 +1,22 @@
+@import "{}/imports/ui/stylesheets/variables/index";
+
+// ** Event
+// ========================================================================================
+.group-compact-next-event {
+  background: $group-compact-next-event-bg;
+  color: $group-compact-next-event-color;
+  inset-inline-end: -7px;
+  max-height: 150px;
+  overflow: hidden;
+  padding: 5px;
+  position: relative;
+  text-align: center;
+  top: -7px;
+
+  /* Move over stretched-link */
+  z-index: 2;
+}
+
+.group-compact-next-event-component {
+  @include ellipsis;
+}

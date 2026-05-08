@@ -11,25 +11,25 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { MetaTags } from "/imports/ui/components/MetaTags";
 
 import "./styles.scss";
-import { useDetails as useGroupDetails } from "/imports/api/groups/publications";
+import { useDetails as useOrganizationDetails } from "../../../../api/organizations/publications";
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 import { List } from "./List";
 import { Router } from "meteor/iron:router";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { LanguageSelection } from "/imports/ui/components/language-selection";
 
-function Group({ groupId }: { groupId: string }) {
-  const [isLoading, group] = useGroupDetails(groupId);
+function Organization({ organizationId }: { organizationId: string }) {
+  const [isLoading, organization] = useOrganizationDetails(organizationId);
 
-  function groupLogo() {
-    if (group) {
-      return group.publicLogoUrl();
+  function logo() {
+    if (organization) {
+      return organization.publicLogoUrl();
     }
     return "";
   }
-  function groupName() {
-    if (group) {
-      return group.name;
+  function name() {
+    if (organization) {
+      return organization.name;
     }
     return "";
   }
@@ -38,10 +38,10 @@ function Group({ groupId }: { groupId: string }) {
   }
 
   return (
-    <a href={Router.path("groupDetails", group)}>
-      {!!groupLogo() && <img className="kiosk-logo kiosk-logo-group" src={groupLogo()} />}
+    <a href={Router.path("organizationDetails", organization)}>
+      {!!logo() && <img className="kiosk-logo kiosk-logo-organization" src={logo()} />}
 
-      {groupName()}
+      {name()}
     </a>
   );
 }
@@ -130,8 +130,8 @@ export function KioskEventsPage({
       <div className="kiosk container-fluid">
         <div className="page-component">
           <div className="kiosk-heading">
-            {filter.group ? (
-              <Group groupId={filter.group} />
+            {filter.organization ? (
+              <Organization organizationId={filter.organization} />
             ) : filter.venue ? (
               <Venue venueId={filter.venue} />
             ) : (

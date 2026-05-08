@@ -14,7 +14,7 @@ import { useSiteName } from "/imports/utils/getSiteName";
 import { Introduction } from "../../lib/introduction";
 
 import { Collapse } from "/imports/startup/client/bootstrap";
-import { RegionSelectionWrap } from "/imports/ui/components/regions/selection";
+import { RegionSelectWrap } from "../regions/select";
 import { LanguageSelection } from "/imports/ui/components/language-selection";
 import { TestWarningTicker } from "./TestWarningTicker";
 import { UserFrame } from "./user-frame";
@@ -170,19 +170,19 @@ export function Navbar() {
                 <li className="nav-item text-center col col-lg-auto">
                   <a
                     href={Router.path("search")}
-                    className={`${currentRouteIs("search", "showCourse") ? "active" : ""} nav-link`}
+                    className={`${currentRouteIs("search", "showGroup") ? "active" : ""} nav-link`}
                     onClick={() => close()}
                   >
-                    <i className="fa-regular fa-lightbulb fa-fw" /> {t("menue.Courses", "Find")}
+                    <i className="fa-regular fa-lightbulb fa-fw" /> {t("menue.Groups", "Find")}
                     <div className="nav-marker-caret"></div>
                   </a>
                 </li>
               )}
-              {PublicSettings.nav.proposeCourse && (
+              {PublicSettings.nav.proposeGroup && (
                 <li className="nav-item text-center col col-lg-auto">
                   <a
-                    href={Router.path("proposeCourse")}
-                    className={`${currentRouteIs("proposeCourse", "createEvent") ? "active" : ""} nav-link `}
+                    href={Router.path("proposeGroup")}
+                    className={`${currentRouteIs("proposeGroup", "createEvent") ? "active" : ""} nav-link `}
                     onClick={() => close()}
                   >
                     <i className="fa-solid fa-pencil fa-fw" /> {t("menue.Create", "Create")}
@@ -213,11 +213,11 @@ export function Navbar() {
               ))}
             </ul>
             <ul className="navbar-nav flex-row" data-bs-theme="light">
-              <RegionSelectionWrap
-                inNavbar
-                onSelect={() => {
-                  close();
-                }}
+              <RegionSelectWrap
+                className="nav-item text-center col col-lg-auto"
+                autoFocus
+                size="small"
+                onSelect={() => close()}
               />
               <LanguageSelection
                 inNavbar

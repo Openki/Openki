@@ -1,341 +1,325 @@
 import React, { useState } from "react";
+import { intersection } from "lodash-es";
 import { Router } from "meteor/iron:router";
-import { useUser } from "meteor/react-meteor-accounts";
 import { useTranslation } from "react-i18next";
-import { useValidation } from "../../lib/useValidation";
-import { PublicSettings } from "/imports/utils/PublicSettings";
+import { useViewportSize } from "../../lib/useViewportSize";
+import { useUser } from "/imports/utils/react-meteor-data";
+import { useSearchParams } from "/imports/utils/react-meteor-router";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { GroupModel } from "/imports/api/groups/groups";
-import * as GroupsMethods from "/imports/api/groups/methods";
+import { GroupModel } from "../../../api/groups/groups";
+import * as GroupsMethods from "../../../api/groups/methods";
+import { Regions } from "/imports/api/regions/regions";
 
 import * as Analytics from "/imports/ui/lib/analytics";
-import { Store } from "/imports/ui/lib/editable";
+import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { MetaTags } from "/imports/ui/components/MetaTags";
-import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
-import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
-
-import { ButtonCancel, ButtonSave } from "/imports/ui/components/Buttons";
-import { Find } from "../../components/courses/find";
-import { Dashboard, Props as DashboardProps } from "../../components/dashboard";
-import { VenueTag } from "../../components/venues/link";
-import { GroupSettings } from "/imports/ui/components/groups/settings";
+import { ButtonDelete, ButtonEdit } from "../../components/Buttons";
+import { Discussion } from "../../components/groups/discussion";
+import { Edit } from "../../components/groups/edit";
+import { mayShare } from "../../components/groups/edit/mayShare";
+import { Events } from "../../components/groups/events";
+import { Members } from "../../components/groups/members";
+import { Roles } from "../../components/groups/roles";
+import { Sharing } from "../../components/sharing";
+import { ButtonGroupArchive } from "./button-group-archive";
+import { ButtonGroupUnarchive } from "./button-group-unarchive";
+import { ConfirmDialog } from "./confirm-dialog";
+import { Header } from "./header";
+import { Submenu } from "./submenu";
+import { ActionResult } from "/imports/ui/components/ActionResult";
+import { Report } from "/imports/ui/components/report";
 
 import "./styles.scss";
 
-function allSet(group: {
-  name: string | undefined;
-  short: string | undefined;
-  claim: string | undefined;
-  description: string | undefined;
-}): group is {
-  name: string;
-  short: string;
-  claim: string;
-  description: string;
-} {
-  return Object.values(group).every((u) => u);
-}
-
-export interface Data {
-  courseQuery: Record<string, string | undefined> & {
-    group: string;
-    region: string | undefined;
-  };
+export interface Props {
+  edit: boolean;
   group: GroupModel;
-  showCourses: boolean;
+  select: string;
 }
 
-export function GroupDetailsPage({ courseQuery, group, showCourses }: Data) {
+export function GroupDetailsPage({ edit, group, select }: Props) {
   const { t } = useTranslation();
-  const region = useCurrentRegion();
-  const [editingSettings, setEditingSettings] = useState(false);
-  const [isBusy, setIsBusy] = useState(false);
-  const [errors, , addError, resetErrors] = useValidation({
-    emptyField: {
-      text: () => t("group.details.error.allMandatory", "All four fields are mandatory."),
-      field: "all",
-    },
-  });
-  const [newGroup, setNewGroup] = useState<{
-    name: string | undefined;
-    short: string | undefined;
-    claim: string | undefined;
-    description: string | undefined;
-  }>({ name: undefined, short: undefined, claim: undefined, description: undefined });
-
   const user = useUser();
+  const viewport = useViewportSize();
+  const searchParams = useSearchParams();
+  const [isBusy, setIsBusy] = useState(false);
 
-  const mayEdit = group.editableBy(user);
+  const [expanded, setExpanded] = useState(false);
 
-  function isFeatured() {
-    return !!region && !group.isNew() && region.featuredGroup === group._id;
+  function mayEdit(group: GroupModel) {
+    return group?.editableBy(user);
   }
-  function headerClasses() {
+
+  function groupStateClasses(group: GroupModel) {
     const classes = [];
-    if (group.logoUrl) {
-      classes.push("has-logo");
+
+    if (group?.nextEvent) {
+      classes.push("has-upcoming-events");
+    } else if (group?.lastEvent) {
+      classes.push("has-past-events");
+    } else {
+      classes.push("is-proposal");
     }
-    if (mayEdit) {
-      classes.push("is-editable");
+
+    if (group?.archived) {
+      classes.push("is-archived");
     }
+
     return classes.join(" ");
   }
-
-  function allowEditingSettings() {
-    return mayEdit && !group.isNew() && editingSettings;
-  }
-  function dashboardAttr(): DashboardProps {
-    return {
-      list: group.dashboard || PublicSettings.groupDashboardDefault || [],
-      defaultRegion: region?._id || "",
-      defaultGroup: group._id,
-    };
+  function mobileViewport() {
+    return viewport.width <= ScssVars.screenMD;
   }
 
-  const handleSaving: Store = {
-    clientValidations: {
-      all: {
-        check: (text) => !!text,
-        errorMessage: () => t("group.details.error.allMandatory"),
-      },
-    },
-    onSuccess: () => {
-      Alert.success(
-        t("groupDetails.changesSaved", 'Changes to the "{GROUP}" group have been saved.', {
-          GROUP: group.name,
-        }),
-      );
-    },
-    onError: (err) => {
-      Alert.serverError(
-        err as string | Error,
-        t("groupDetails.saveError", 'Could not save the "{GROUP}" group', {
-          GROUP: group.name,
-        }),
-      );
-    },
-  };
-
-  const handleSave = async () => {
-    resetErrors();
-
-    if (!allSet(newGroup)) {
-      addError("emptyField");
-      return;
-    }
-
+  async function handleOnDelete() {
     setIsBusy(true);
+
     try {
-      const groupId = await GroupsMethods.save("", newGroup);
+      await GroupsMethods.remove(group._id);
 
       Alert.success(
-        t("groupDetails.groupCreated", 'The "{GROUP}" group was created.', {
-          GROUP: newGroup.name,
+        t("groupDetailsPage.message.groupHasBeenDeleted", "{GROUP} was deleted.", {
+          GROUP: group.name,
         }),
       );
 
-      Analytics.trackEvent("Group creations", "Group creations");
+      let role;
+      if (intersection(user?.badges || [], group.editors).length > 0) {
+        role = "team";
+      } else if (user?.privileged("admin")) {
+        role = "admin";
+      } else {
+        role = "unknown";
+      }
 
-      Router.go("groupDetails", { _id: groupId, short: newGroup.short });
+      Analytics.trackEvent(
+        "Group deletions",
+        `Group deletions as ${role}`,
+        Regions.findOne(group.region)?.nameEn,
+      );
+
+      Router.go("home");
     } catch (err) {
-      Alert.serverError(err, t("groupDetails.saveError", { GROUP: newGroup.name }));
+      Alert.serverError(
+        err,
+        t("groupDetailsPage.message.groupHasBeenDeleted.error", "Removing went wrong"),
+      );
     } finally {
       setIsBusy(false);
     }
-  };
+  }
 
-  const handleCancel = () => {
-    Router.go("profile"); // Got a better idea?
-  };
+  async function handleOnArchive() {
+    setIsBusy(true);
+    try {
+      await GroupsMethods.archive(group._id);
+      setExpanded(false);
 
-  const showControls = !group.isNew();
+      Alert.success(
+        t("groupDetailsPage.message.groupHasBeenArchived", "{GROUP} was archived.", {
+          GROUP: group.name,
+        }),
+      );
+    } catch (err) {
+      Alert.serverError(
+        err,
+        t("groupDetailsPage.message.groupHasBeenArchived.error", "Archiving went wrong"),
+      );
+    } finally {
+      setIsBusy(false);
+    }
+  }
 
-  const editableNameAttr: EditableProps = {
-    text: group.name,
-    multiline: false,
-    placeholder: t(
-      "group.name.placeholder",
-      "Name of your group, institution, community or program",
-    ),
-    store: showControls
-      ? {
-          ...handleSaving,
-          onSave: async (newName) => {
-            await GroupsMethods.save(group._id, { name: newName });
-          },
-        }
-      : undefined,
-    onChange: (newName) => {
-      setNewGroup((state) => ({ ...state, name: newName }));
-    },
-  };
+  async function handleUnarchive() {
+    setIsBusy(true);
+    try {
+      await GroupsMethods.unarchive(group._id);
 
-  const editableShortAttr: EditableProps = {
-    text: group.short,
-    multiline: false,
-    placeholder: t("group.short.placeholder", "Abbreviation"),
-    store: showControls
-      ? {
-          ...handleSaving,
-          onSave: async (newShort) => {
-            await GroupsMethods.save(group._id, { short: newShort });
-          },
-        }
-      : undefined,
-    onChange: (newText) => {
-      setNewGroup((state) => ({ ...state, short: newText }));
-    },
-  };
+      Alert.success(
+        t("groupDetailsPage.message.groupHasBeenUnarchived", "{GROUP} has been unarchived.", {
+          GROUP: group.name,
+        }),
+      );
+    } catch (err) {
+      Alert.serverError(
+        err,
+        t("groupDetailsPage.message.groupHasBeenUnarchived.error", "Unarchiving went wrong"),
+      );
+    } finally {
+      setIsBusy(false);
+    }
+  }
 
-  const editableClaimAttr: EditableProps = {
-    text: group.claim,
-    multiline: false,
-    placeholder: t("group.claim.placeholder", "The core idea"),
-    store: showControls
-      ? {
-          ...handleSaving,
-          onSave: async (newClaim) => {
-            await GroupsMethods.save(group._id, { claim: newClaim });
-          },
-        }
-      : undefined,
-    onChange: (newClaim) => {
-      setNewGroup((state) => ({ ...state, claim: newClaim }));
-    },
-  };
+  function handleOnEdit() {
+    setExpanded(false);
 
-  const editableDescriptionAttr: EditableProps = {
-    text: group.description,
-    multiline: true,
-    placeholder: t(
-      "group.description.placeholder",
-      "Describe the audience, the interests and activities of your group.",
-    ),
-    store: showControls
-      ? {
-          ...handleSaving,
-          onSave: async (newDescription) => {
-            await GroupsMethods.save(group._id, { description: newDescription });
-          },
-        }
-      : undefined,
-    onChange: (newDescription) => {
-      setNewGroup((state) => ({ ...state, description: newDescription }));
-    },
-  };
-
-  const title = group.name || t("group.windowtitle.create", "Create group");
+    const query: {
+      edit: string;
+      force?: string;
+    } = { edit: "group" };
+    const force = searchParams.force;
+    if (force) {
+      query.force = force;
+    }
+    Router.go("showGroup", group, { query });
+  }
 
   return (
     <>
-      <MetaTags title={title} description={group.claim} image={group.publicLogoUrl()} />
+      <MetaTags
+        title={group.name}
+        description={group.description}
+        image={group.publicUrlForDetailsImage()}
+      />
 
-      <div className="container mb-4">
-        {group.isNew() && <h2>{t("group.details.titleNew", "Create new group")}</h2>}
-        <div className="page-component group-details">
-          <div className="group-details-titlebar clearfix">
-            {t("group.details.group", "Group")}
-
-            {isFeatured() && (
-              <>
-                {" "}
-                <i
-                  title={t("group.details.isFeatured", "This group is featured")}
-                  className="fa-solid fa-star fa-fw"
-                />
-              </>
-            )}
-
-            <button
-              className="btn btn-link float-end ms-2"
-              data-bs-title={t("group.page.removeFilter", "See all courses")}
-              onClick={() => {
-                Router.go("home"); // Got a better idea?
-              }}
-            >
-              <i className="fa-solid fa-xmark fa-lg" />
-            </button>
-            {!group.isNew() && mayEdit && (
-              <button
-                className="btn btn-link float-end ms-2"
-                data-bs-title={t("group.settings.title")}
-                onClick={() => {
-                  setEditingSettings(!editingSettings);
-                }}
-              >
-                <i className="fa-solid fa-gear fa-lg" />
-              </button>
-            )}
-          </div>
-          <div className={`details-header group-details-header clearfix ${headerClasses()}`}>
-            {!!group.publicLogoUrl() && (
-              <div className="group-details-logo">
-                <img src={group.publicLogoUrl()} />
-              </div>
-            )}
-            <div className="group-details-name">
-              {mayEdit ? <Editable {...editableNameAttr} /> : group.name}
-            </div>{" "}
-            <div className="group-details-short">
-              {mayEdit ? <Editable {...editableShortAttr} /> : group.short}
-            </div>
-          </div>
-          <div className="details-body group-details-body">
-            <div
-              className={`details-content group-details-content ${errors.all ? "has-error" : ""}`}
-            >
-              <div className="group-details-claim">
-                {mayEdit ? <Editable {...editableClaimAttr} /> : group.claim}
-              </div>
-
-              <div className="group-details-description">
-                {mayEdit ? (
-                  <Editable {...editableDescriptionAttr} />
-                ) : (
-                  <span dangerouslySetInnerHTML={{ __html: group.description }}></span>
-                )}
-              </div>
-
-              {!!errors.all && <span className="form-text d-block">{errors.all}</span>}
-
-              {!!(group.venues && group.venues.length > 0) && (
-                <div className="group-details-venues">
-                  {t("group.details.venues", "{NUM, plural, one{Venue:} other{Venues:} }", {
-                    NUM: group.venues.length,
-                  })}{" "}
-                  <span className="tag-group">
-                    {group.venues.map((v) => (
-                      <VenueTag key={v._id} venue={v} />
-                    ))}
-                  </span>
+      {searchParams.nextActions === "1" && (
+        <ActionResult
+          type="success"
+          dismissible
+          title={t("message.groupCreated", "{NAME} has been created", {
+            NAME: group.name,
+          })}
+          actions={[
+            group.description
+              ? {
+                  text: t("message.groupCreated.addDescription", "Add a description"),
+                  href: "#group-description",
+                }
+              : undefined,
+            {
+              text: t("message.groupCreated.addImage", "Add an image"),
+              href: "#files-tab",
+            },
+            mayShare(group)
+              ? { text: t("message.groupCreated.share", "Invite your friends"), href: "#share" }
+              : undefined,
+            {
+              text: t("message.groupCreated.addEvent", "Create event"),
+              href: "#group-event-add",
+            },
+          ]}
+        >
+          {t("message.groupCreated.description", "What do you wannt to do next?")}
+        </ActionResult>
+      )}
+      <div data-test="group-details" className="container">
+        <div className="row group-page g-3">
+          <div className="col-lg-8">
+            <div className="page-component">
+              {group.archived && (
+                <div className="alert alert-archived text-center" role="alert">
+                  <strong>
+                    {t("group.archive.alert", "{GROUP} is archived and not active anymore.", {
+                      GROUP: group.name,
+                    })}
+                  </strong>
                 </div>
               )}
+
+              {edit ? (
+                <Edit {...group} />
+              ) : (
+                <>
+                  <div className={`group-details ${groupStateClasses(group)}`}>
+                    <Header group={group} />
+                    <Submenu group={group} />
+                  </div>
+
+                  {mayShare(group) && (
+                    <div className="p-3 sharing-wrapper text-end" id="share">
+                      <h4>
+                        {t("sharing.title", "Invite your friends")} <Sharing />
+                      </h4>
+                    </div>
+                  )}
+
+                  {mayEdit(group) && (
+                    <>
+                      <div className="actions">
+                        {!expanded && (
+                          <ButtonEdit
+                            id="group-details-edit"
+                            disabled={isBusy}
+                            onClick={handleOnEdit}
+                          />
+                        )}
+
+                        {group.archived && (
+                          <ButtonGroupUnarchive
+                            disabled={isBusy}
+                            onUnarchive={async () => handleUnarchive()}
+                          />
+                        )}
+
+                        {!expanded && !group.archived && (
+                          <ButtonGroupArchive
+                            disabled={isBusy}
+                            className="btn-archive"
+                            onArchive={async () => handleOnArchive()}
+                          >
+                            {t("group.archive.archiveButton.archive", "Archive")}
+                          </ButtonGroupArchive>
+                        )}
+
+                        {!expanded && (
+                          <ButtonDelete
+                            id="group-details-confirm-delete"
+                            onClick={async () => setExpanded(true)}
+                            label={
+                              group.singleEvent
+                                ? t("group.event.edit.deleteEvent", "Delete event")
+                                : t("group.delete.button", "Delete group")
+                            }
+                          />
+                        )}
+                      </div>
+
+                      {expanded && (
+                        <ConfirmDialog
+                          archiveButton={!group.archived}
+                          disabled={isBusy}
+                          group={group}
+                          onArchive={async () => handleOnArchive()}
+                          onDelete={handleOnDelete}
+                          onCancel={() => setExpanded(false)}
+                        />
+                      )}
+                    </>
+                  )}
+
+                  <Roles group={group} />
+                </>
+              )}
+            </div>
+
+            {mobileViewport() ? (
+              <Events group={group} />
+            ) : (
+              <Discussion groupId={group._id} select={select} />
+            )}
+          </div>
+
+          <div className="col-lg-4">
+            {!mobileViewport() && <Events group={group} />}
+
+            <div className="page-component">
+              <Members group={group} />
+            </div>
+
+            {mobileViewport() && <Discussion groupId={group._id} select={select} />}
+
+            <div className="page-component mt-3">
+              <Report showGroupHint={true} />
             </div>
           </div>
-          {group.isNew() && (
-            <div className="actions">
-              <ButtonSave
-                id="group-details-save"
-                needsLogin
-                onClick={handleSave}
-                disabled={isBusy}
-              />
-              <ButtonCancel id="group-details-cancel" onClick={handleCancel} disabled={isBusy} />
-            </div>
-          )}
-          {allowEditingSettings() && <GroupSettings group={group} />}
         </div>
-        {!dashboardAttr().list.length && showCourses && <Find query={courseQuery} />}
       </div>
-      {!!dashboardAttr().list.length && showCourses && <Dashboard {...dashboardAttr()} />}
     </>
   );
 }
 
 // for Blaze
-
 import "./template.html";
-
 Template.registerHelper("GroupDetailsPage", () => GroupDetailsPage);

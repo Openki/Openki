@@ -1,14 +1,14 @@
-import * as courseGroupsDenormalizer from "../courses/groupsDenormalizer";
-import * as courseNextEventDenormalizer from "../courses/nextEventDenormalizer";
-import * as coursesTenantDenormalizer from "../courses/tenantDenormalizer";
+import * as groupEditorsDenormalizer from "../groups/editorsDenormalizer";
+import * as groupNextEventDenormalizer from "../groups/nextEventDenormalizer";
+import * as groupsTenantDenormalizer from "../groups/tenantDenormalizer";
 import * as eventsCategoriesDenormalizer from "../events/categoriesDenormalizer";
-import * as eventsCourseImageDenormalizer from "../events/courseImageDenormalizer";
+import * as eventsGroupImageDenormalizer from "../events/groupImageDenormalizer";
 import * as eventsTenantDenormalizer from "../events/tenantDenormalizer";
 import * as eventsVenueDenormalizer from "../events/venueDenormalizer";
 import { Log } from "../log/log";
 import { serverError } from "../log/methods";
 import * as regionsCountDenormalizer from "../regions/countDenormalizer";
-import * as userBadgesDenormalizer from "../users/groupsAndBadgesDenormalizer";
+import * as userOrganizationsAndBadgesDenormalizer from "../users/organizationsAndBadgesDenormalizer";
 import * as usersTenantsDenormalizer from "../users/tenantsDenormalizer";
 import * as usersVenuesDenormalizer from "../users/venuesDenormalizer";
 
@@ -17,19 +17,19 @@ export async function updateDbCacheFieldsServerOnly() {
 
   try {
     await Promise.all([
-      eventsCourseImageDenormalizer.onStartUp(),
+      eventsGroupImageDenormalizer.onStartUp(),
       // Resync location cache in events
       eventsVenueDenormalizer.updateVenue({}),
 
-      // Update list of organizers per course, triggers updateGroups from events
-      courseGroupsDenormalizer.updateGroups({}),
+      // Update list of team (users & organizations) per group, triggers updateOrganizations from events
+      groupEditorsDenormalizer.updateEditors({}),
 
       eventsCategoriesDenormalizer.onStartUp(),
 
       // Update List of badges per user
-      userBadgesDenormalizer.updateGroupsAndBadges({}),
+      userOrganizationsAndBadgesDenormalizer.updateOrganizationsAndBadges({}),
 
-      coursesTenantDenormalizer.onStartUp(),
+      groupsTenantDenormalizer.onStartUp(),
       eventsTenantDenormalizer.onStartUp(),
       usersTenantsDenormalizer.onStartUp(),
 
@@ -37,7 +37,7 @@ export async function updateDbCacheFieldsServerOnly() {
 
       // Keep the nextEvent entry updated
       // On startup do a full scan to catch stragglers
-      courseNextEventDenormalizer.updateNextEvent({}),
+      groupNextEventDenormalizer.updateNextEvent({}),
       regionsCountDenormalizer.updateCounters({}),
     ]);
   } catch (error) {

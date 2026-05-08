@@ -5,7 +5,7 @@ import { Mongo } from "meteor/mongo";
 import { Regions } from "/imports/api/regions/regions";
 import { VenueEntity, Venues } from "/imports/api/venues/venues";
 import * as userVenuesDenormalizer from "../users/venuesDenormalizer";
-import * as groupVenuesDenormalizer from "/imports/api/groups/venuesDenormalizer";
+import * as organizationVenuesDenormalizer from "../organizations/venuesDenormalizer";
 import * as eventVenueDenormalizer from "/imports/api/events/venueDenormalizer";
 
 import { HtmlString, StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";
@@ -147,7 +147,7 @@ export const save = ServerMethod(
       await Venues.updateAsync({ _id: venueId }, { $set: set });
 
       await eventVenueDenormalizer.updateVenue({ "venue._id": venueId });
-      await groupVenuesDenormalizer.afterVenueUpdate(venueId);
+      await organizationVenuesDenormalizer.afterVenueUpdate(venueId);
     }
 
     return venueId;
@@ -161,7 +161,7 @@ export const remove = ServerMethod("venue.remove", async (venueId: string) => {
   const venue = await checkEditAllowed(venueId);
 
   await userVenuesDenormalizer.beforeVenueRemove(venue);
-  await groupVenuesDenormalizer.beforeVenueRemove(venue);
+  await organizationVenuesDenormalizer.beforeVenueRemove(venue);
 
   const result = await Venues.removeAsync(venueId);
 
@@ -170,31 +170,37 @@ export const remove = ServerMethod("venue.remove", async (venueId: string) => {
   return result;
 });
 
-export const addEditGroup = ServerMethod(
-  "venue.editGroup.add",
-  async (venueId: string, groupId: string) => {
+export const addEditOrganization = ServerMethod(
+  "venue.editOrganization.add",
+  async (venueId: string, organizationId: string) => {
     check(venueId, String);
-    check(groupId, String);
+    check(organizationId, String);
 
     const venue = await checkEditAllowed(venueId);
 
-    await Venues.updateAsync(venueId, { $set: { editGroup: groupId } });
+    await Venues.updateAsync(venueId, { $set: { editOrganization: organizationId } });
 
-    await userVenuesDenormalizer.afterVenueAddEditGroup(venue._id, groupId);
-    await groupVenuesDenormalizer.afterVenueAddEditGroup(venue, groupId);
+    await userVenuesDenormalizer.afterVenueAddEditOrganization(venue._id, organizationId);
+    await organizationVenuesDenormalizer.afterVenueAddEditOrganization(venue, organizationId);
   },
 );
 
-export const removeEditGroup = ServerMethod("venue.editGroup.remove", async (venueId: string) => {
-  check(venueId, String);
+export const removeEditOrganization = ServerMethod(
+  "venue.editOrganization.remove",
+  async (venueId: string) => {
+    check(venueId, String);
 
-  const venue = await checkEditAllowed(venueId);
-  const groupId = venue.editGroup;
+    const venue = await checkEditAllowed(venueId);
+    const organizationId = venue.editOrganization;
 
-  await Venues.updateAsync(venueId, { $unset: { editGroup: true } });
+    await Venues.updateAsync(venueId, { $unset: { editOrganization: true } });
 
-  if (groupId) {
-    await userVenuesDenormalizer.afterVenueRemoveEditGroup(venueId, groupId);
-    await groupVenuesDenormalizer.afterVenueRemoveEditGroup(venueId, groupId);
-  }
-});
+    if (organizationId) {
+      await userVenuesDenormalizer.afterVenueRemoveEditOrganization(venueId, organizationId);
+      await organizationVenuesDenormalizer.afterVenueRemoveEditOrganization(
+        venueId,
+        organizationId,
+      );
+    }
+  },
+);

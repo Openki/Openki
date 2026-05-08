@@ -4,14 +4,14 @@ import { useTranslation } from "react-i18next";
 import { MetaTags } from "/imports/ui/components/MetaTags";
 
 import { AccountTasks } from "/imports/ui/components/account-tasks";
-import { Edit, Props } from "/imports/ui/components/courses/edit";
+import { Edit, Props } from "../../../components/groups/edit";
 
 export function Propose(data: Props) {
   const { t } = useTranslation();
 
   return (
     <>
-      <MetaTags title={t("course.propose.windowtitle", "Propose new course")} />
+      <MetaTags title={t("group.propose.windowtitle", "Propose new group")} />
 
       <AccountTasks />
       <Edit {...data} />

@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { Tenants } from "/imports/api/tenants/tenants";
 import { Regions } from "/imports/api/regions/regions";
-import { Courses } from "/imports/api/courses/courses";
+import { Groups } from "../../../api/groups/groups";
 import { Events } from "/imports/api/events/events";
 import { Users } from "/imports/api/users/users";
 
@@ -16,7 +16,7 @@ export async function update() {
   updated += 1;
 
   updated += await Regions.updateAsync({}, { $set: { tenant: tenantId } }, { multi: true });
-  updated += await Courses.updateAsync({}, { $set: { tenant: tenantId } }, { multi: true });
+  updated += await Groups.updateAsync({}, { $set: { tenant: tenantId } }, { multi: true });
   updated += await Events.updateAsync({}, { $set: { tenant: tenantId } }, { multi: true });
   updated += await Users.updateAsync({}, { $set: { tenants: [] } }, { multi: true });
 

@@ -104,12 +104,12 @@ export interface UserEntity extends Meteor.User {
   };
   theme?: "light" | "system" | "dark";
   /**
-   * (calculated) union of user's id and group ids for permission checking, calculated by
+   * (calculated) union of user's id and organization ids for permission checking, calculated by
    * updateBadges()
    */
   badges: string[];
-  /** (calculated) List of groups the user is a member of, calculated by updateBadges() */
-  groups: string[];
+  /** (calculated) List of organizations the user is a member of, calculated by updateBadges() */
+  organizations: string[];
 
   /** (calculated) List of venues the user is a editor of */
   venues: string[];
@@ -130,16 +130,16 @@ export class User {
   }
 
   /**
-   * Check whether the user may promote things with the given group.
-   * The user must be a member of the group to be allowed to promote things with it.
+   * Check whether the user may promote things with the given organization.
+   * The user must be a member of the organization to be allowed to promote things with it.
    *
-   * @param groupId The group to check
+   * @param organizationId The organization to check
    */
-  mayPromoteWith(this: UserModel, groupId: string) {
-    if (!groupId || !this.groups) {
+  mayPromoteWith(this: UserModel, organizationId: string) {
+    if (!organizationId || !this.organizations) {
       return false;
     }
-    return this.groups.includes(groupId);
+    return this.organizations.includes(organizationId);
   }
 
   hasVerifiedEmail(this: UserModel) {

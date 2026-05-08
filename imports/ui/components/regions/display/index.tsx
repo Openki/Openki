@@ -31,7 +31,7 @@ export function Display({ region, onEdit, onDelete }: Props) {
     return {
       confirmText: t(
         "region.reallydelete",
-        "Please confirm that you would like to delete this region with all courses, events and venues. This cannot be undone.",
+        "Please confirm that you would like to delete this region with all groups, events and venues. This cannot be undone.",
       ),
       confirmButton: t("region.detail.remove", "Remove this region"),
       busyButton: t("region.detail.remove.busy", "Deleting region…"),

@@ -64,9 +64,9 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
     rsvpWithCompanions: Boolean,
     /** allow to edit whether to remind or not, Default: true */
     sendReminderIsEditable: Boolean,
-    /** show a "empty" course box to propose a new course, Default: true */
-    proposeCourseBox: Boolean,
-    /** disable the creation of 2dSphere indexes for db entites, this allow to save non geo location in db, used for CustomMapConfig, Default: false */
+    /** show a "empty" group box to propose a new group, Default: true */
+    proposeGroupBox: Boolean,
+    /** disable the creation of 2dSphere indexes for db entities, this allow to save non geo location in db, used for CustomMapConfig, Default: false */
     disable2dSphereForLocations: Boolean,
     socialMediaButtons: [
       StringEnum(
@@ -98,7 +98,7 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
     /** show/hide find/search item in navbar Default: true */
     search: Boolean,
     /** show/hide propose item in navbar Default: true */
-    proposeCourse: Boolean,
+    proposeGroup: Boolean,
     /** show/hide calendar item in navbar Default: true */
     calendar: Boolean,
     customEntries: [
@@ -118,7 +118,7 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
   /** Standard for all regions, can be overwritten if the "dashboard" property is set in the region, if not set, the ‘find’ page is displayed, default: undefined */
   regionDashboardDefault: Match.Maybe([
     {
-      /** The entity to show: "course", "courseWithoutPropose", "event", "group", "eventsMap", "propose" are supported */
+      /** The entity to show: "group", "groupWithoutPropose", "event", "organization", "eventsMap", "propose" are supported */
       entity: String,
       /** Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }` */
       title: Match.Maybe(LocalizedValuePattern),
@@ -133,10 +133,10 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
       }),
     },
   ]),
-  /** Standard for all groups, can be overwritten if the "dashboard" property is set in the group, if not set, the ‘find’ page is displayed, default: undefined */
-  groupDashboardDefault: Match.Maybe([
+  /** Standard for all organizations, can be overwritten if the "dashboard" property is set in the organization, if not set, the ‘find’ page is displayed, default: undefined */
+  organizationDashboardDefault: Match.Maybe([
     {
-      /** The entity to show: "course", "courseWithoutPropose", "event", "group", "eventsMap", "propose" are supported */
+      /** The entity to show: "group", "groupWithoutPropose", "event", "organization", "eventsMap", "propose" are supported */
       entity: String,
       /** Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }` */
       title: Match.Maybe(LocalizedValuePattern),
@@ -169,9 +169,9 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
   dataProtectionLaw: Match.Maybe(LocalizedValuePattern),
   faqLink: LocalizedValuePattern,
   pricePolicyLink: LocalizedValuePattern,
-  courseGuideLink: LocalizedValuePattern,
+  groupGuideLink: LocalizedValuePattern,
   aboutLink: LocalizedValuePattern,
-  /** Contribution to the plattform. */
+  /** Contribution to the platform. */
   contribution: Match.Maybe({
     icon: String,
     /** forbidden chars in username */
@@ -182,11 +182,11 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
     forbiddenChars: string[];
     link: LocalizedValue;
   }>,
-  /** Max characters allowed for the description-field of courses. */
-  courseDescriptionMax: Match.Maybe(Number),
+  /** Max characters allowed for the description-field of groups. */
+  groupDescriptionMax: Match.Maybe(Number),
   /** Max characters allowed for the description-field of events. */
   eventDescriptionMax: Match.Maybe(Number),
-  /**  Categories for courses, main and/or sub categories */
+  /**  Categories for groups, main and/or sub categories */
   categories: Record([String]),
   /** file storage */
   s3: {
@@ -222,7 +222,7 @@ const defaults = {
     visitorUser: false,
     rsvpWithCompanions: false,
     sendReminderIsEditable: true,
-    proposeCourseBox: true,
+    proposeGroupBox: true,
     disable2dSphereForLocations: false,
     socialMediaButtons: [
       "bluesky",
@@ -249,7 +249,7 @@ const defaults = {
   nav: {
     brandLink: "/",
     search: true,
-    proposeCourse: true,
+    proposeGroup: true,
     calendar: true,
     customEntries: [] as { link: string; icon: string; key?: string; text?: string }[],
   },
@@ -260,12 +260,12 @@ const defaults = {
     en: "/info/faq#why-cant-i-charge-a-fixed-fee-as-a-mentor",
     de: "/info/faq#dürfen-kurse-etwas-kosten",
   },
-  courseGuideLink: {
+  groupGuideLink: {
     en: "https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf",
     de: "https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf",
   },
   aboutLink: "https://about.openki.net",
-  courseDescriptionMax: 15000,
+  groupDescriptionMax: 15000,
   eventDescriptionMax: 15000,
   categories: {},
 };

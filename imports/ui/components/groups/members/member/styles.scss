@@ -1,0 +1,93 @@
+@use "sass:color";
+@import "{}/imports/ui/stylesheets/variables/index";
+
+.group-member {
+  background: $group-page-component-bg;
+  padding: 10px ($grid-gutter-width * 0.5);
+
+  &.is-own-user {
+    background: $user-bg;
+  }
+}
+
+.group-member + .group-member {
+  margin-top: $page-component-seperator-height;
+}
+
+.group-member-roles {
+  float: right;
+  list-style: none;
+  margin: 0;
+
+  &:hover {
+    cursor: default;
+  }
+}
+
+.group-member-role-text {
+  color: $white;
+  font-size: small;
+  font-weight: bold;
+}
+
+.group-member-role {
+  background: $blue;
+  margin-left: 3px;
+  padding: 3px 6px 5px;
+  vertical-align: middle;
+
+  &.is-proposal {
+    background-color: transparent;
+    border: 3px dashed #a7c9d5;
+    padding: 0 3px 2px;
+
+    .group-member-role-text {
+      color: #6d9daf;
+    }
+  }
+}
+
+.team .group-member-role {
+  padding-right: 0;
+}
+
+.role-short {
+  text-transform: uppercase;
+}
+
+.add-to-team-btn {
+  @include td-margin(left, 6px);
+
+  margin-top: 2px;
+  padding: 2px 6px;
+}
+
+.group-member-comment {
+  @include clearfix;
+
+  padding-top: 10px;
+  position: relative;
+}
+
+.group-member-comment-arrow {
+  border: 5px solid;
+  border-color: transparent transparent $group-member-comment-border-color;
+  height: 0;
+  left: 8.5px;
+  position: absolute;
+  top: 0;
+  width: 0;
+}
+
+.group-member-comment-body {
+  @include td-float(left);
+  @include break-word;
+
+  background-color: color.adjust($blue-lighter, $lightness: 6%);
+  border: 1px solid $group-member-comment-border-color;
+  border-radius: 3px;
+  font-size: $font-size-base;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 5px 10px;
+}

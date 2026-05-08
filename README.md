@@ -24,11 +24,11 @@ Demo playground: [sandbox.openki.net](https://sandbox.openki.net/?region=Spilist
 
 ### Core functionalities
 - Easily propose topics and events
-- Simple discussion board per course
+- Simple discussion board per group
 - Extendable participant roles
 - Categories with sub-categories
 - Regions and venue system
-- Groups-, community- and program functionality with filters
+- Organizations-, community- and program functionality with filters
 
 
 ### Features not visible at first sight
@@ -53,15 +53,15 @@ Demo playground: [sandbox.openki.net](https://sandbox.openki.net/?region=Spilist
 - :ghost: Customizability and some white-labeling
   - Single event mode ([docs](https://gitlab.com/Openki/Openki/-/wikis/singleEvent))
   - Startpage dashboard ([docs](https://gitlab.com/Openki/Openki/-/wikis/Dashboard-Settings))
-  - Custom fields and roles for groups ([docs](https://gitlab.com/Openki/Openki/-/wikis/Group-Settings))
+  - Custom fields and roles for organizations ([docs](https://gitlab.com/Openki/Openki/-/wikis/Organization-Settings))
   - White-labeling per region ([docs](https://gitlab.com/Openki/Openki/-/wikis/Region-Settings))
     - E.g. set page name, logos and calendar start date per region
-    - Feature groups
+    - Feature organizations
     - Customize the start page
-    - Configure course background images
+    - Configure group background images
 
 **Roadmap & Upcoming Features**
-- :white_large_square: White-labeling per groups, organizations and regions
+- :white_large_square: White-labeling per organizations, tenants and regions
 - :chart_with_upwards_trend: Visual statistics
 - :closed_lock_with_key: More privacy settings
 - :heavy_check_mark: Voting-/polling-system, fix-a-date schedules
@@ -73,7 +73,7 @@ Demo playground: [sandbox.openki.net](https://sandbox.openki.net/?region=Spilist
 
 # Contribution
 → _Please upvote features you would like to see or propose new ones in our [issue tracker](https://gitlab.com/Openki/Openki/-/issues/?sort=milestone&state=opened)._  
-Code submissions are warmly welcome, please check out our [Code of Conduct](https://gitlab.com/Openki/Openki/wikis/Code-of-Conduct)💜.  
+Code submissions are warmly welcome, please check out our [Code of Conduct](https://gitlab.com/Openki/Openki/wikis/Code-of-Conduct).  
 Free software built with love and care. We use [Meteor.js](https://meteor.com) and [React](https://react.dev/).
 
 ### Installation (Linux, OSX and Windows)

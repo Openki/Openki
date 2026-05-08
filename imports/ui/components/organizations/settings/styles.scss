@@ -1,0 +1,52 @@
+@use "sass:color";
+@import "{}/imports/ui/stylesheets/variables/index";
+
+$organization-member-bg: rgba($gray-600, 0.15);
+
+.organization-member-tag-profile {
+  @include tag($organization-member-bg, $body-color, $organization-member-bg, $primary);
+}
+
+.organization-member-tag-notify {
+  @include tag-btn($organization-member-bg, $primary, $organization-member-bg, $primary);
+}
+
+.organization-member-tag-btn-remove {
+  @include tag-btn(
+    $organization-member-bg,
+    $body-color,
+    $danger,
+    color.adjust($danger, $lightness: -30%)
+  );
+}
+
+.organization-member-tag-btn-add {
+  @include tag-btn(
+    color.adjust($organization-member-bg, $lightness: -10%),
+    $body-color,
+    $success,
+    color.adjust($success, $lightness: -45%)
+  );
+}
+
+.organization-id-display {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+
+  code {
+    font-size: 0.85em;
+    background: $organization-member-bg;
+    border-radius: 4px;
+    padding: 1px 6px;
+  }
+
+  &__copy-btn {
+    padding: 1px 8px;
+    font-size: 0.8em;
+    line-height: 1.5;
+    color: rgb(37 37 37);
+  }
+}

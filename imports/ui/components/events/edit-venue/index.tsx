@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import { isEmpty } from "lodash-es";
 
 import { EventVenueEntity } from "/imports/api/events/events";
-import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
-import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
+import { useFindFilter as useOrganizationsFindFilter } from "/imports/api/organizations/publications";
+import { useDetails as useGroupDetails } from "../../../../api/groups/publications";
 
 import { Display } from "../../location/display";
 import { VenueTag } from "../../venues/link";
@@ -14,14 +14,17 @@ import { Search } from "./search";
 import { Timetable } from "./Timetable";
 import { FormControl } from "/imports/ui/components/form-control";
 import { Button } from "/imports/ui/components/Buttons";
-import { GroupEntity, GroupVenueEntity } from "/imports/api/groups/groups";
+import {
+  OrganizationEntity,
+  OrganizationVenueEntity,
+} from "/imports/api/organizations/organizations";
 
 export interface Props {
   region: string;
   value?: EventVenueEntity | undefined;
   event: {
     _id?: string | undefined;
-    courseId?: string | undefined;
+    groupId?: string | undefined;
     room?: string | undefined;
     startLocal: string;
     endLocal: string;
@@ -31,8 +34,8 @@ export interface Props {
   onBlur: FocusEventHandler<HTMLInputElement>;
 }
 
-function getVenueIds(groups: GroupEntity[] = []): GroupVenueEntity["_id"][] {
-  const venueIds: GroupVenueEntity["_id"][] = [];
+function getVenueIds(groups: OrganizationEntity[] = []): OrganizationVenueEntity["_id"][] {
+  const venueIds: OrganizationVenueEntity["_id"][] = [];
 
   for (const group of groups) {
     for (const venue of group.venues ?? []) {
@@ -49,13 +52,13 @@ export function EditVenue({ region: regionId, event, value, onChange, errors, on
   const { t } = useTranslation();
   const [autofocusOnSearch, setAutoFocusOnSearch] = useState(false);
 
-  const [isCourseLoading, course] = useCourseDetails({ when: !!event?.courseId }, event?.courseId);
-  const [groupsIsLoading, groups] = useGroupsFindFilter(
-    { when: !!course?.groupOrganizers },
-    { ids: course?.groupOrganizers },
+  const [isGroupLoading, group] = useGroupDetails({ when: !!event?.groupId }, event?.groupId);
+  const [organizationsIsLoading, organizations] = useOrganizationsFindFilter(
+    { when: !!group?.teamOrganizations },
+    { ids: group?.teamOrganizations },
   );
 
-  if (isCourseLoading() || groupsIsLoading()) {
+  if (isGroupLoading() || organizationsIsLoading()) {
     return null;
   }
 
@@ -64,13 +67,13 @@ export function EditVenue({ region: regionId, event, value, onChange, errors, on
       {!value || isEmpty(value) ? (
         <div className="mb-3">
           <label className="form-label" htmlFor="event-edit-venue-search">
-            {t("course.event.edit.location", "Venue")}
+            {t("group.event.edit.location", "Venue")}
           </label>
           <Search
             id="event-edit-venue-search"
             autofocus={autofocusOnSearch}
             region={regionId}
-            venues={getVenueIds(groups)}
+            venues={getVenueIds(organizations)}
             value={value}
             onChange={onChange}
             onBlur={onBlur}
@@ -86,7 +89,7 @@ export function EditVenue({ region: regionId, event, value, onChange, errors, on
                 <FormControl
                   id="event-edit-venue-displayVenueAs"
                   type="text"
-                  label={t("course.event.edit.locationName", "Display venue as")}
+                  label={t("group.event.edit.locationName", "Display venue as")}
                   value={value.name}
                   onChange={(name) => onChange({ ...value, name })}
                   onBlur={onBlur}
@@ -94,7 +97,7 @@ export function EditVenue({ region: regionId, event, value, onChange, errors, on
               ) : (
                 <>
                   <label className="form-label">
-                    {t("course.event.edit.selectedVenue", "Selected venue")}
+                    {t("group.event.edit.selectedVenue", "Selected venue")}
                   </label>
                   <div
                     className={`form-control d-flex align-items-center ${errors.venue || errors.startEndVenue ? "is-invalid" : ""}`}
@@ -113,7 +116,7 @@ export function EditVenue({ region: regionId, event, value, onChange, errors, on
               <FormControl
                 id="event-edit-venue-locationAddress"
                 type="text"
-                label={t("course.event.edit.locationAddress", "Address")}
+                label={t("group.event.edit.locationAddress", "Address")}
                 value={value.address || ""}
                 onChange={!value._id ? (address) => onChange({ ...value, address }) : undefined}
                 disabled={!!value._id}
@@ -130,7 +133,7 @@ export function EditVenue({ region: regionId, event, value, onChange, errors, on
                     setAutoFocusOnSearch(true);
                   }}
                 >
-                  {t("course.event.edit.locationResetButton", "Search other place")}
+                  {t("group.event.edit.locationResetButton", "Search other place")}
                 </Button>
               </div>
             </div>
@@ -162,7 +165,7 @@ export function EditVenue({ region: regionId, event, value, onChange, errors, on
                   />
                   <div className="form-text text-end">
                     {t(
-                      "course.event.edit.locationMovePosition",
+                      "group.event.edit.locationMovePosition",
                       "You can drag the marker to the correct position.",
                     )}
                   </div>
