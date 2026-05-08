@@ -263,7 +263,7 @@
   "find.needsMentor": "Cercando un relatore/relatrice",
   "find.needsTeam": "Cercando un organizzatore",
   "find.noGroupsFound": "Nessun corso trovato",
-  "find.proposeNewGroup": "Perché non proporre un nuovo corso per \"{TERM}\"?",
+  "find.proposeNewGroup?": "Perché non proporre un nuovo corso per \"{TERM}\"?",
   "find.searchAllRegions": "Cerca in tutte le località",
   "find.searchCategories.placeholder": "Scegli categorie",
   "find.search_filter.title": "Filtra ricerca",

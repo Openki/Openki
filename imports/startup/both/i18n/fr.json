@@ -328,7 +328,7 @@
   "find.needsMentor": "Cherche un mentor",
   "find.needsTeam": "Cherche un organisateur",
   "find.noGroupsFound": "Aucun cours trouvé",
-  "find.proposeNewGroup": "Pourquoi ne pas proposer un nouveau cours sur \"{TERM}\" ?",
+  "find.proposeNewGroup?": "Pourquoi ne pas proposer un nouveau cours sur \"{TERM}\" ?",
   "find.searchAllRegions": "Rechercher dans toutes les régions",
   "find.searchCategories.placeholder": "Choisir une catégorie",
   "find.search_filter.title": "Recherche par filtre",

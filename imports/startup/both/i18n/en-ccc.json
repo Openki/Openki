@@ -328,7 +328,7 @@
   "find.needsMentor": "Looking for a mentor",
   "find.needsTeam": "Looking for an organizer",
   "find.noGroupsFound": "No Courses found",
-  "find.proposeNewGroup": "Why not propose a new session for \"{TERM}\"?",
+  "find.proposeNewGroup?": "Why not propose a new session for \"{TERM}\"?",
   "find.searchAllRegions": "Search in all regions",
   "find.searchCategories.placeholder": "Choose categories",
   "find.search_filter.title": "Filter search",

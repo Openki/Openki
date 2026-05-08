@@ -245,7 +245,7 @@
   "find.needsMentor": "أبحث عن مرشد",
   "find.needsTeam": "أبحث عن منظم",
   "find.noGroupsFound": "لم يتم العثور على دورة",
-  "find.proposeNewGroup": "لماذا لا تنشئ دورة جديدة \"{TERM}\"؟",
+  "find.proposeNewGroup?": "لماذا لا تنشئ دورة جديدة \"{TERM}\"؟",
   "find.searchAllRegions": "بحث في جميع المناطق",
   "find.searchCategories.placeholder": "اختر الفئات",
   "find.search_filter.title": "تخصيص البحث",

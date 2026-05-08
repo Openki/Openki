@@ -129,7 +129,7 @@
   "find.needsMentor": "Procurando por um mentor",
   "find.needsTeam": "Procurando por um organziador",
   "find.noGroupsFound": "Nenhun curso encontrado.",
-  "find.proposeNewGroup": "Por que não propor um curso por \"{TERM}\"?",
+  "find.proposeNewGroup?": "Por que não propor um curso por \"{TERM}\"?",
   "find.searchAllRegions": "Pesquisar em todas as regiões",
   "find.search_filter.title": "Filtro de busca",
   "find.search_go": "Procurar!",
