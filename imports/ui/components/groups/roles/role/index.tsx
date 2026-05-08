@@ -116,8 +116,8 @@ export function Role(props: Props) {
             if (change.validFor(user)) {
               await processChange(change);
               Alert.success(
-                t("group.roles.unsubscribed", "Unsubscribed from {NAME}", {
-                  NAME: props.group.name,
+                t("group.roles.unsubscribed", "Unsubscribed from {GROUP}", {
+                  GROUP: props.group.name,
                 }),
               );
             } else {

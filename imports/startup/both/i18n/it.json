@@ -432,7 +432,7 @@
   "group.roles.messageInfoParticipant": "un messaggio (facoltativo) come un saluto, un desiderio o un interesse",
   "group.roles.removeTeam": "Rimuovi dal team",
   "group.roles.retract": "Ritira",
-  "group.roles.unsubscribed": "Cancellato da {NAME}",
+  "group.roles.unsubscribed": "Cancellato da {GROUP}",
   "group.save.error": "Salvataggio fallito",
   "group.subnav.descr": "Descrizione",
   "group.subnav.files": "File",

@@ -542,7 +542,7 @@
   "group.roles.messageInfoParticipant": "ein (optionaler) Text mit z. B. Wünschen, Grüßen oder Interessen",
   "group.roles.removeTeam": "Aus dem Team ausschliessen",
   "group.roles.retract": "Nicht mehr",
-  "group.roles.unsubscribed": "Bei der {NAME} Lektion abgemeldet",
+  "group.roles.unsubscribed": "Bei der {GROUP} Lektion abgemeldet",
   "group.save.error": "Die Lektion konnte nicht gespeichert werden",
   "group.subnav.descr": "Beschreibung",
   "group.subnav.files": "Dateien",

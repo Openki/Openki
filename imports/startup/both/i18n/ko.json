@@ -419,7 +419,7 @@
   "group.roles.messageInfoParticipant": "인사말, 바람, 관심사 등 자유로운 (선택적) 메시지",
   "group.roles.removeTeam": "팀에서 방출하기",
   "group.roles.retract": "되돌리기",
-  "group.roles.unsubscribed": "{NAME}이(가) 구독 해지",
+  "group.roles.unsubscribed": "{GROUP}이(가) 구독 해지",
   "group.save.error": "저장 실패",
   "group.subnav.descr": "설명",
   "group.subnav.files": "파일",

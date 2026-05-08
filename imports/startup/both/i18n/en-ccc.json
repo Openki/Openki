@@ -512,7 +512,7 @@
   "group.roles.messageInfoParticipant": "an (optional) message like a greeting, wish, or interest",
   "group.roles.removeTeam": "Remove from team",
   "group.roles.retract": "Retract",
-  "group.roles.unsubscribed": "Unsubscribed from {NAME}",
+  "group.roles.unsubscribed": "Unsubscribed from {GROUP}",
   "group.save.error": "Saving went wrong",
   "group.subnav.descr": "Description",
   "group.subnav.files": "Files",

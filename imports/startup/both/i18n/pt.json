@@ -232,7 +232,7 @@
   "group.roles.messageInfoParticipant": "alguma messagem (opcional) como boas vindas, expectativas ou interesses",
   "group.roles.removeTeam": "Remover do grupo",
   "group.roles.retract": "Retirar",
-  "group.roles.unsubscribed": "Desinscrito do curso {NAME}",
+  "group.roles.unsubscribed": "Desinscrito do curso {GROUP}",
   "group.subnav.descr": "Descrição",
   "group.subnav.history": "História",
   "group.title.Discussion": "Discussão",
