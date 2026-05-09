@@ -5,6 +5,7 @@ import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { FilterCategories } from "/imports/ui/components/filter-categories";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
 
@@ -56,7 +57,7 @@ export function AdditionalFilters(props: Props) {
           {roles.map((role) => (
             <button
               key={role.type}
-              className={`filter-group-role ${props.needsRole?.includes(role.type) ? "active" : ""}`}
+              className={cx("filter-group-role", props.needsRole?.includes(role.type) && "active")}
               type="button"
               onMouseOver={() => {
                 props.onNeedsRoleMouseOver(role.type);
