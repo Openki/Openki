@@ -41,6 +41,7 @@ export function Role(props: Props) {
   const [showFirstSteps, setShowFirstSteps] = useState(false);
   const [comment, setComment] = useState(props.comment ?? "");
   const [isRolesLoading, roles] = useRegionRoles(props.group.region);
+  const [isBusy, setIsBusy] = useState(false);
 
   // Build a subscribe change
   function groupSubscribe(newComment?: string) {
@@ -68,19 +69,26 @@ export function Role(props: Props) {
   function handleRoleEnrollClick() {
     setEnrolling(true);
   }
-  async function handleRoleSubscribeClick() {
-    routerAutoscroll.cancelNext();
+  async function handleRoleSubscribeSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
 
-    await processChange(groupSubscribe(comment));
     routerAutoscroll.cancelNext();
-    setShowFirstSteps(true);
-    setEnrolling(false);
+    setIsBusy(true);
+    try {
+      await processChange(groupSubscribe(comment));
 
-    Analytics.trackEvent(
-      "Enrollments in groups",
-      `Enrollments in groups as ${props.role.type}`,
-      Regions.findOne(props.group.region)?.nameEn,
-    );
+      setShowFirstSteps(true);
+      setEnrolling(false);
+
+      Analytics.trackEvent(
+        "Enrollments in groups",
+        `Enrollments in groups as ${props.role.type}`,
+        Regions.findOne(props.group.region)?.nameEn,
+      );
+    } finally {
+      setIsBusy(false);
+      routerAutoscroll.cancelNext();
+    }
   }
 
   function handleRoleEnrollCancelClick() {
@@ -91,6 +99,7 @@ export function Role(props: Props) {
     const change = new Unsubscribe(props.group, user?._id, props.role.type);
     await processChange(change);
     routerAutoscroll.cancelNext();
+
     Analytics.trackEvent(
       "Unsubscribes from groups",
       `Unsubscribes from groups as ${props.role.type}`,
@@ -205,42 +214,40 @@ export function Role(props: Props) {
                 {roleSubscribe(props.role.type)}
               </div>
               <div className="group-role-enroll-options">
-                <div className="mb-3">
-                  {/*<form onSubmit={(event) => const formData = Object.fromEntries(new FormData(event.currentTarget).entries());}>
-                    <input type="text" name="comment"></input>
-                    <input type="submit">Submit</input>
-                  </form>*/}
-
-                  <FormControl
-                    id="role-comment"
-                    label={t(
-                      "group.roles.leave_message",
-                      "You can leave a message to appear next to your name:",
-                    )}
-                    onChange={handleCommentChange}
-                    type="text"
-                    autoFocus
-                    optional
-                    value={comment}
-                    placeholder={roleGroupMessageInfo(props.role.type)}
-                  />
-                </div>
-                <div className="form-actions">
-                  <Button
-                    id="group-roles-join"
-                    className="btn-save"
-                    onClick={handleRoleSubscribeClick}
-                    needsLogin
-                    visitorUserAllowed={roleIs("participant")}
-                    busyText={t("group.roles.join.busy", "Joining…")}
-                  >
-                    {t("group.roles.join", "Join", { GROUP: props.group.name })}
-                  </Button>
-                  <ButtonCancel
-                    id="group-roles-join-cancel"
-                    onClick={handleRoleEnrollCancelClick}
-                  />
-                </div>
+                <form noValidate onSubmit={handleRoleSubscribeSubmit}>
+                  <div className="mb-3">
+                    <FormControl
+                      id="role-comment"
+                      label={t(
+                        "group.roles.leave_message",
+                        "You can leave a message to appear next to your name:",
+                      )}
+                      onChange={handleCommentChange}
+                      type="text"
+                      autoFocus
+                      optional
+                      value={comment}
+                      placeholder={roleGroupMessageInfo(props.role.type)}
+                    />
+                  </div>
+                  <div className="form-actions">
+                    <Button
+                      submit
+                      id="group-roles-join"
+                      className="btn-save"
+                      needsLogin
+                      visitorUserAllowed={roleIs("participant")}
+                      isBusy={isBusy}
+                      busyText={t("group.roles.join.busy", "Joining…")}
+                    >
+                      {t("group.roles.join", "Join", { GROUP: props.group.name })}
+                    </Button>
+                    <ButtonCancel
+                      id="group-roles-join-cancel"
+                      onClick={handleRoleEnrollCancelClick}
+                    />
+                  </div>
+                </form>
               </div>
             </>
           ) : (
