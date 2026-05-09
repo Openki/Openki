@@ -218,16 +218,12 @@ export function Role(props: Props) {
                   <div className="mb-3">
                     <FormControl
                       id="role-comment"
-                      label={t(
-                        "group.roles.leave_message",
-                        "You can leave a message to appear next to your name:",
-                      )}
+                      label={roleGroupMessageInfo(props.role.type)}
                       onChange={handleCommentChange}
                       type="text"
                       autoFocus
                       optional
                       value={comment}
-                      placeholder={roleGroupMessageInfo(props.role.type)}
                     />
                   </div>
                   <div className="form-actions">

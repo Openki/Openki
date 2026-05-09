@@ -515,7 +515,6 @@
   "group.roles.firstSteps.title": "Thank you for your interest in {GROUP}.",
   "group.roles.join": "Join",
   "group.roles.join.busy": "Joining…",
-  "group.roles.leave_message": "You can leave a message to appear next to your name:",
   "group.roles.maketeam": "Add to team",
   "group.roles.removeTeam": "Remove from team",
   "group.roles.retract": "Retract",
