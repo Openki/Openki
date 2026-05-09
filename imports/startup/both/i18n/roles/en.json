@@ -10,7 +10,7 @@
   "team.groupList.statusTitle.roleOccupied": "Has a coordination-team",
   "team.groupList.statusTitle.roleOccupiedByUser": "You are part of the coordination team",
   "team.notification.join.mail.intro": "{USERNAME} just joined {GROUP} as team",
-  "team.group.firstSteps": "If not done already, you can start with chosing the venue and, if needed, looking for mentor(s) and then fix a date.\n\n{COORDINATION_GUIDE}",
+  "team.group.firstSteps": "If not done already, you can start with choosing the venue and, if needed, looking for mentor(s) and then fix a date.\n\n{COORDINATION_GUIDE}",
   "team.group.messageInfo": "A message about your experience on the topic.",
 
   "participant.short": "interested",
@@ -18,6 +18,9 @@
   "participant.subscribed": "You are interested",
   "participant.myList": "I am interested in",
   "participant.userList": "{NAME} is interested in",
+  "participant.groupList.statusTitle.roleNeeded": "Nobody is interested",
+  "participant.groupList.statusTitle.roleOccupied": "{NUM, plural, one{One person is} other{# persons are} } interested",
+  "participant.groupList.statusTitle.roleOccupiedByUser": "{NUM, plural, one{You are interested} other{# persons are interested and you are one of them} }",
   "participant.notification.join.mail.intro": "{USERNAME} just joined {GROUP}.",
   "participant.group.firstSteps": "You will get an e-mail notification as soon as a next date has been fixed.",
   "participant.group.messageInfo": "A message, for example a greeting, wish or your interest.",

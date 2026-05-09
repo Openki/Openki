@@ -44,12 +44,12 @@ export function getRoleDisplay(t: TFunction) {
       return t(`roles:${type}.groupList.statusTitle.roleNeeded`);
     },
 
-    groupListRoleOccupied(type: RoleEntity["type"]) {
-      return t(`roles:${type}.groupList.statusTitle.roleOccupied`);
+    groupListRoleOccupied(type: RoleEntity["type"], variables: { NUM: number }) {
+      return t(`roles:${type}.groupList.statusTitle.roleOccupied`, variables);
     },
 
-    groupListRoleOccupiedByUser(type: RoleEntity["type"]) {
-      return t(`roles:${type}.groupList.statusTitle.roleOccupiedByUser`);
+    groupListRoleOccupiedByUser(type: RoleEntity["type"], variables: { NUM: number }) {
+      return t(`roles:${type}.groupList.statusTitle.roleOccupiedByUser`, variables);
     },
 
     roleNotificationJoinEmail(
