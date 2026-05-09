@@ -25,7 +25,6 @@ These are the keys used for roles translations:
 ```json
 {
   "x.short": "mentor",
-  "x.short.plural": "mentors",
   "x.subscribe": "I can be a mentor",
   "x.subscribed": "You are listed as mentor",
   "x.description": "a mentor",
