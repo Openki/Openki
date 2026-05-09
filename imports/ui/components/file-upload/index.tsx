@@ -1,6 +1,8 @@
 import { useTranslation } from "react-i18next";
 import React, { useState } from "react";
 
+import { cx } from "/imports/utils/cx";
+
 import { ButtonCancel, ButtonSave } from "../Buttons";
 
 import "./styles.scss";
@@ -39,8 +41,12 @@ export function FileUpload({ accept, onUpload, onCancel }: Props) {
     <>
       <form
         encType="multipart/form-data"
-        noValidate={true}
-        className={`text-center file-upload${supportsDragndrop ? " supports-dragndrop" : ""}${dragover ? " is-dragover" : ""}`}
+        noValidate
+        className={cx(
+          "text-center file-upload",
+          supportsDragndrop && "supports-dragndrop",
+          dragover && "is-dragover",
+        )}
         onDragOver={() => {
           setDragover(true);
         }}
@@ -84,11 +90,7 @@ export function FileUpload({ accept, onUpload, onCancel }: Props) {
                 <>
                   <strong>{t("fileUpload.choose.text", "Choose a file")}</strong>
 
-                  {supportsDragndrop && (
-                    <span className="file-upload-dragndrop">
-                      {t("fileUpload.drag.text", "or drag it here")}
-                    </span>
-                  )}
+                  {supportsDragndrop && t("fileUpload.drag.text", "or drag it here")}
                 </>
               )}
               {progress === "uploading" && (

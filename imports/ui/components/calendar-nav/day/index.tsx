@@ -72,7 +72,7 @@ export function Day(props: Props) {
 
   return (
     <div
-      className={`calendar-nav-container${covering ? " calendar-nav-container-covering" : ""}`}
+      className={cx("calendar-nav-container", covering && " calendar-nav-container-covering")}
       style={{ display: "block" }}
     >
       <div className="row align-items-center p-1">

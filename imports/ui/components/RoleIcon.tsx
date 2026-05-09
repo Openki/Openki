@@ -1,7 +1,9 @@
 import React from "react";
 
-import { useRegionRoles } from "../lib/useRegionRoles";
 import { RegionEntity, RoleEntity } from "/imports/api/regions/regions";
+
+import { useRegionRoles } from "../lib/useRegionRoles";
+import { cx } from "/imports/utils/cx";
 
 export function RoleIcon({
   type,
@@ -21,5 +23,5 @@ export function RoleIcon({
     return null;
   }
 
-  return <i className={`${role.icon} fa-fw`} />;
+  return <i className={cx(role.icon, "fa-fw")} />;
 }
