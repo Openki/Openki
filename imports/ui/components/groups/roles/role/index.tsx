@@ -149,7 +149,7 @@ export function Role(props: Props) {
         <>
           <div className="group-role-enrolled">
             <div className="group-role-title">
-              <i className={cx(props.role.icon, "fa-fw groupPage-role-icon")} />
+              <i className={cx(props.role.icon, "fa-fw grouppage-role-icon")} />
               &nbsp;
               <span>{roleSubscribed(props.role.type)}</span>
               <button
@@ -209,7 +209,7 @@ export function Role(props: Props) {
           {enrolling ? (
             <>
               <div className="group-role-title-enroll">
-                <i className={cx(props.role.icon, "fa-fw groupPage-role-icon")} />
+                <i className={cx(props.role.icon, "fa-fw grouppage-role-icon")} />
                 &nbsp;
                 {roleSubscribe(props.role.type)}
               </div>
@@ -255,7 +255,7 @@ export function Role(props: Props) {
                 name={props.role.type}
                 onClick={handleRoleEnrollClick}
               >
-                <i className={cx(props.role.icon, "fa-fw groupPage-role-icon")} /> &nbsp;
+                <i className={cx(props.role.icon, "fa-fw grouppage-role-icon")} /> &nbsp;
                 {roleSubscribe(props.role.type)}
               </button>
             )
