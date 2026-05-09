@@ -62,7 +62,7 @@ export function RemoveTeam({ group, organizationId }: Props) {
           }
         }}
       >
-        {t("group.organizationList.removeTeam.confimRemoveOrgButton", "Take away editing rights")}
+        {t("group.organizationList.removeTeam.confirmRemoveOrgButton", "Take away editing rights")}
       </button>
     </div>
   );

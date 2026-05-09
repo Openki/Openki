@@ -57,7 +57,7 @@ export function MakeTeam({ event, organizationId }: Props) {
           }
         }}
       >
-        {t("group.organizationList.makeTeam.confimOrgButton")}
+        {t("group.organizationList.makeTeam.confirmOrgButton")}
       </button>
     </div>
   );

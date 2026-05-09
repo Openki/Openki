@@ -291,7 +291,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           return t("event.edit.venueRequired", "Please select a venue.");
         },
       },
-      venueRestricedUse: {
+      venueRestrictedUse: {
         field: "venue",
         isValid: () => {
           return (
@@ -304,7 +304,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
         },
         text: () =>
           t(
-            "event.edit.venueRestricedUse",
+            "event.edit.venueRestrictedUse",
             "Please use a other venue than {VENUE} or ask its hosts to create your event.",
             { VENUE: selectedVenue?.name },
           ),
