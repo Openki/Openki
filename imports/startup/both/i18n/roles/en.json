@@ -26,7 +26,6 @@
   "participant.group.messageInfo": "Leave a message, for example a greeting, wish or your interest. The message will appear next to your name.",
 
   "mentor.short": "mentor",
-  "mentor.short.plural": "mentors",
   "mentor.subscribe": "I can be a mentor",
   "mentor.subscribed": "You are listed as mentor",
   "mentor.description": "a mentor",
@@ -41,7 +40,6 @@
   "mentor.group.messageInfo": "Leave a message about your experience on the topic. The message will appear next to your name.",
 
   "facilitator.short": "facilitator",
-  "facilitator.short.plural": "facilitators",
   "facilitator.subscribe": "I can be a facilitator",
   "facilitator.subscribed": "You are listed as facilitator",
   "facilitator.description": "a facilitator",
@@ -56,7 +54,6 @@
   "facilitator.group.messageInfo": "Leave a message about your experience on the topic. The message will appear next to your name.",
 
   "host.short": "host",
-  "host.short.plural": "hosts",
   "host.subscribe": "I have a place to host this",
   "host.subscribed": "You are listed as host",
   "host.description": "a host that provides a place",
