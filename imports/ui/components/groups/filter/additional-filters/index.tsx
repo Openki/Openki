@@ -9,6 +9,43 @@ import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
 
+function RolesButton(props: {
+  needsRole: string[];
+  onNeedsRoleClick: (role: string) => void;
+  onNeedsRoleMouseOver: (role: string) => void;
+  onNeedsRoleMouseOut: (role: string) => void;
+}) {
+  const { t } = useTranslation();
+  const currentRegionId = useCurrentRegionId();
+  const { roleNeeded } = getRoleDisplay(t);
+  const [isLoading, regionRoles] = useRegionRoles(currentRegionId);
+
+  if (isLoading()) {
+    return null;
+  }
+
+  return regionRoles
+    .filter((role) => role.type !== "participant")
+    .map((role) => (
+      <button
+        key={role.type}
+        className={cx("filter-group-role", props.needsRole?.includes(role.type) && "active")}
+        type="button"
+        onMouseOver={() => props.onNeedsRoleMouseOver(role.type)}
+        onMouseOut={() => props.onNeedsRoleMouseOut(role.type)}
+        onClick={() => props.onNeedsRoleClick(role.type)}
+      >
+        <span className="filter-group-role-icon">
+          <i className={cx(role.icon, "fa-fw")} />
+        </span>
+        &nbsp;
+        {roleNeeded(role.type)}
+        &nbsp;
+        <i className="fa-solid fa-check" />
+      </button>
+    ));
+}
+
 export interface Props {
   categories: string[];
   onCategoryAdd: (category: string) => void;
@@ -22,26 +59,6 @@ export interface Props {
 export function AdditionalFilters(props: Props) {
   const { t } = useTranslation();
   const currentRegionId = useCurrentRegionId();
-  const { roleNeeded } = getRoleDisplay(t);
-  const [isLoading, regionRoles] = useRegionRoles(currentRegionId);
-
-  const roles = ["team", "mentor", "host"].map((type) => ({
-    type,
-    label: roleNeeded(type),
-    icon: regionRoles.find((r) => r.type === type)?.icon,
-  }));
-
-  function filterCategoriesAttr() {
-    return {
-      categories: props.categories,
-      onAdd: props.onCategoryAdd,
-      onRemove: props.onCategoryRemove,
-    };
-  }
-
-  if (isLoading()) {
-    return null;
-  }
 
   return (
     <>
@@ -54,35 +71,21 @@ export function AdditionalFilters(props: Props) {
       {Boolean(currentRegionId) && (
         <div aria-label="filter-group-roles" className="col-md-3 filter-component" role="group">
           <h4 className="filter-component-header">{t("find.filter.groupRoles", "Roles")}</h4>
-          {roles.map((role) => (
-            <button
-              key={role.type}
-              className={cx("filter-group-role", props.needsRole?.includes(role.type) && "active")}
-              type="button"
-              onMouseOver={() => {
-                props.onNeedsRoleMouseOver(role.type);
-              }}
-              onMouseOut={() => {
-                props.onNeedsRoleMouseOut(role.type);
-              }}
-              onClick={() => {
-                props.onNeedsRoleClick(role.type);
-              }}
-            >
-              <span className="filter-group-role-icon">
-                <i className={`${role.icon} fa-fw`} />
-              </span>
-              &nbsp;
-              {role.label}
-              &nbsp;
-              <i className="fa-solid fa-check" />
-            </button>
-          ))}
+          <RolesButton
+            needsRole={props.needsRole}
+            onNeedsRoleClick={props.onNeedsRoleClick}
+            onNeedsRoleMouseOver={props.onNeedsRoleMouseOver}
+            onNeedsRoleMouseOut={props.onNeedsRoleMouseOut}
+          />
         </div>
       )}
       <div className="col-md-3 filter-component">
         <h4 className="filter-component-header">{t("find.filter.categories", "Categories")}</h4>
-        <FilterCategories {...filterCategoriesAttr()} />
+        <FilterCategories
+          categories={props.categories}
+          onAdd={props.onCategoryAdd}
+          onRemove={props.onCategoryRemove}
+        />
       </div>
     </>
   );
