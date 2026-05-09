@@ -80,7 +80,7 @@ export function EventParticipants({ event }: Props) {
     <>
       <h4 className="card-title">
         {t(
-          "event.details.paticipants.title",
+          "event.details.participants.title",
           "{NUM, plural, =0{No participants yet} one{1 Participant} other{# Participants} }",
           { NUM: event.numberOfParticipants() },
         )}

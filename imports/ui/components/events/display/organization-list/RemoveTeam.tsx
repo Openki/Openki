@@ -59,7 +59,7 @@ export function RemoveTeam({ event, organizationId }: Props) {
           }
         }}
       >
-        {t("group.organizationList.removeTeam.confimRemoveOrgButton")}
+        {t("group.organizationList.removeTeam.confirmRemoveOrgButton")}
       </button>
     </div>
   );

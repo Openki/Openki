@@ -167,7 +167,7 @@ export function EventParticipants({ event }: Props) {
           <i className="fa-solid fa-users fa-fw" />
           &nbsp;
           {t(
-            "event.details.paticipants.title",
+            "event.details.participants.title",
             "{NUM, plural, =0{No participants yet} one{1 Participant} other{# Participants} }",
             { NUM: event.numberOfParticipants() },
           )}

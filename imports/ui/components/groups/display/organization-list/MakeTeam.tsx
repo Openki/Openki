@@ -68,7 +68,7 @@ export function MakeTeam({ group, organizationId }: Props) {
           }
         }}
       >
-        {t("group.organizationList.makeTeam.confimOrgButton", "Give editing rights")}
+        {t("group.organizationList.makeTeam.confirmOrgButton", "Give editing rights")}
       </button>
     </div>
   );

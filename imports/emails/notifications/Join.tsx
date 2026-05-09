@@ -58,7 +58,7 @@ export function Join({
             </>
           )}
           <strong>
-            {t("notification.join.mail.statsOverview", "Overview over participants:")}
+            {t("notification.join.mail.statsOverview", "Overview over the interested:")}
           </strong>
           <p>
             {roleCounts.map(({ role, count }) => (
