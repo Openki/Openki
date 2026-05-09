@@ -210,7 +210,7 @@ export function LoginFrame({
                   <div className="col">
                     <Button
                       block
-                      id={"acctount-tasks-login-frame-login-with-" + service.name}
+                      id={"account-tasks-login-frame-login-with-" + service.name}
                       className={`btn-${service.key}`}
                       disabled={!!isBusy}
                       onClick={async () => {
@@ -292,7 +292,7 @@ export function LoginFrame({
             <div className="d-grid gap-3">
               {PublicSettings.feature.login.email && (
                 <Button
-                  id="acctount-tasks-login-frame-register"
+                  id="account-tasks-login-frame-register"
                   className="btn-add"
                   onClick={() => onRegisterOpen(loginData)}
                 >
@@ -301,7 +301,7 @@ export function LoginFrame({
               )}
               {PublicSettings.feature.visitorUser && visitorUserAllowed && (
                 <Button
-                  id="acctount-tasks-login-frame-visitor"
+                  id="account-tasks-login-frame-visitor"
                   className="btn-add"
                   onClick={() => onVisitorOpen(loginData)}
                 >
