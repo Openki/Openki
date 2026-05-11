@@ -8,7 +8,6 @@ import { Users } from "/imports/api/users/users";
 import { Log } from "/imports/api/log/log";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
@@ -48,7 +47,6 @@ async function sendInvitation(invitation: InvitationEntity) {
         invitationLink={Router.url("invitation", invitation, {
           query: { tenant: invitation.tenant, campaign: "invitationEmail" },
         })}
-        moreLink={getLocalizedValue(PublicSettings.aboutLink, locale)}
         reportEmail={
           <a href={`mailto:${PrivateSettings.reporter.recipient}`}>
             {PrivateSettings.reporter.recipient}

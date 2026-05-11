@@ -38,6 +38,7 @@ function Disclaimer() {
 function More() {
   const { t } = useTranslation();
   const { getLocalizedValue } = useLocalizedSetting();
+  
   return (
     <a href={getLocalizedValue(PublicSettings.pricePolicyLink)} className="icon-text">
       <div className="icon-text-icon">
