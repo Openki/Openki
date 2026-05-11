@@ -5,8 +5,39 @@ import merge from "deepmerge";
 import { Record, StringEnum, Type } from "/imports/utils/CustomChecks";
 import { LocalizedValue, LocalizedValuePattern } from "/imports/utils/getLocalizedValue";
 
-// See settings-example.json.md for full documentation
+export const RoleEntityPattern = {
+  /** (name of role) */
+  type: String,
+  /** icon class string from font-awesome ex: "fa-solid fa-bullhorn" */
+  icon: String,
+  /** The role appears as "proposed only" in the member list. Default: false */
+  proposal: Match.Maybe(Boolean),
+  /** The role is always added to the group on creation. Default: false */
+  preset: Match.Maybe(Boolean),
+  /** The role can be edited (added/removed to the group) after a group has been created. Default: false */
+  editable: Match.Maybe(Boolean),
+  translations: Match.Maybe({
+    short: Match.Maybe(LocalizedValuePattern),
+    subscribe: Match.Maybe(LocalizedValuePattern),
+    subscribed: Match.Maybe(LocalizedValuePattern),
+    description: Match.Maybe(LocalizedValuePattern),
+    myList: Match.Maybe(LocalizedValuePattern),
+    "myList.past": Match.Maybe(LocalizedValuePattern),
+    userList: Match.Maybe(LocalizedValuePattern),
+    "userList.past": Match.Maybe(LocalizedValuePattern),
+    "find.roleNeeded": Match.Maybe(LocalizedValuePattern),
+    "groupList.statusTitle.roleNeeded": Match.Maybe(LocalizedValuePattern),
+    "groupList.statusTitle.roleOccupied": Match.Maybe(LocalizedValuePattern),
+    "groupList.statusTitle.roleOccupiedByUser": Match.Maybe(LocalizedValuePattern),
+    "notification.join.mail.intro": Match.Maybe(LocalizedValuePattern),
+    "group.firstSteps": Match.Maybe(LocalizedValuePattern),
+    "group.messageInfo": Match.Maybe(LocalizedValuePattern),
+  }),
+};
 
+export type RoleEntity = Type<typeof RoleEntityPattern>;
+
+/** See `settings-example.jsonc` for full documentation */
 export const PublicSettingsPattern = Match.ObjectIncluding({
   siteName: String,
   /** The text top left at the logo */
@@ -152,19 +183,7 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
     },
   ]),
   /** Standard for all regions, can be overwritten if the "roles" property is set in the region */
-  rolesDefault: [
-    {
-      type: String,
-      /** icon class string from font-awesome ex: "fa-solid fa-bullhorn" */
-      icon: String,
-      /** The role appears as "proposed only". Default: false */
-      proposal: Boolean,
-      /** The role is always added on creation. Default: false */
-      preset: Boolean,
-      /** The role is editable after creation. Default: false */
-      editable: Boolean,
-    },
-  ],
+  rolesDefault: [RoleEntityPattern],
   footerLinks: [
     {
       link: String,

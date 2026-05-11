@@ -8,7 +8,7 @@ import { UserModel } from "/imports/api/users/users";
 
 import * as Predicates from "/imports/utils/predicates";
 import { Filtering } from "/imports/utils/filtering";
-import { PublicSettings } from "/imports/utils/PublicSettings";
+import { PublicSettings, RoleEntity } from "/imports/utils/PublicSettings";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { Type } from "/imports/utils/CustomChecks";
 import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
@@ -23,19 +23,6 @@ export interface CustomMapConfig {
   center: Geodata;
   maxZoom: number;
   attribution: string;
-}
-
-export interface RoleEntity {
-  /** (name of role) */
-  type: string;
-  /** icon class string from font-awesome ex: "fa-solid fa-bullhorn" */
-  icon: string;
-  /** The role appears as "proposed only". Default: false */
-  proposal?: boolean;
-  /** The role is always added on creation. Default: false */
-  preset?: boolean;
-  /** The role is editable after creation. Default: false */
-  editable?: boolean;
 }
 
 export interface RegionEntity {
