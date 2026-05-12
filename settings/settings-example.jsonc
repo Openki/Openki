@@ -1,246 +1,326 @@
 // This file describes all configurations and customization options. Remove the comment at the end of the line to make it work or start from a copy of the file "productive-basic.json in the same folder
-
-{ "admins": ["greg"] // User administrator accounts that are created with the test data
-, "prng": "" // Pseudo-Random Number Generator. Use "static" as value to use static seed for test data. Result: After test data generation, entity ids, amount of events, comment content, region assignment of groups, etc will stay identical. Except ids from users. Default: "" (random seed)
-, "testdata": true // Generates test data, is not needed for the productive system
-, "public":
-	{ "siteName": "Openki-clone"
-	, "siteStage": "beta" // The text top left at the logo
-	, "testWarning": true // Shows a banner saying that this is only for testing
-	, "headerLogo": // The logo in the top left corner. Can be a logo from the /public/logo/* folder, from our s3 file storage (must start with the "publicUrlBase" setting) or a base64 encoded string.
-		{ "src": "openki-logo-web-2020.svg"
-		, "alt": "Openki Logo"
-		}
-	, "headerLogoKiosk": // The logo in the top left corner from the /kiosk/events/ page. Can be a logo from the /public/logo/* folder, from our s3 file storage (must start with the "publicUrlBase" setting) or a base64 encoded string.
-		{ "src": "openki-logo-kiosk-2020.svg"
-		, "alt": "Openki Logo"
-		}
-	, "avatarLogo": // The default image used for avatars (color is changed using the CSS filter 'hue-rotate').
-		{ "src": "openki-logo-web-avatar-2020.svg"
-		, "alt": "User Avatar" // The "alt" setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
-		}
-	, "ogLogo": { "src": "openki_logo_2018.png"} // The image to be shown in social media. Can be a logo from the /public/logo/* folder or from our s3 file storage (must start with the "publicUrlBase" setting).
-	, "emailLogo": "emails/openki.png" // Can be a logo from the /private/* folder, from our s3 file storage (must start with the "publicUrlBase" setting) or a base64 encoded string.
-	, "theme": // Theming the ui
-		{ "brand": "#38829c"
-		}
-	, "publicTenants": ["8410c099a7"] // IDs of the tenants that should be displayed publicly, choose at least one
-	, "regionSelection":
-		{ "minNumber": 5 // The minimum number of regions displayed in the Regions selection. Default: 5
-		, "aboutLink": // A link to a page that explains regions, if not set then none link is shown.
-			{ "en": "/info/faq#what-is-an-openki-region" // This setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
-			, "de": "..."
-			}
-		}
-	, "i18nHelpLink": "https://gitlab.com/Openki/Openki/-/wikis/translation" // A link to a page that give instructions how to translate. Default: "https://gitlab.com/Openki/Openki/-/wikis/translation", Set this value to "" to hide the link in the UI. This setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
-	, "i18nMapping": { "de": "de-zuerich-lernt" } // Define alternative translation files
-	, "matomo":
-		{ "url": "https://analytics.mydomain.com/"
-		, "site": 1 // Matomo id
-		}
-	, "pricePolicyEnabled": true // by true, show only indicative prices (DE: Richtpreise), default is true
-	, "askNewsletterConsent": true // by true, ask user to receive newsletter on account registration, default is true
-	, "sendReminderPreset": true // Should a reminder be sent by default or not. Default is true
-	, "feature":
-		{ "login": // toggle visibility of login services
-			{ "email": true
-			, "google": false
-			, "facebook": false
-			, "github": false
-			, "c3": false
-			}
-		, "visitorUser": true // allow user without name and password, Default: false
-		, "rsvpWithCompanions": true // allow rsvp with +1 / for two seats, Default: false
-		, "sendReminderIsEditable": true // allow to edit whether to remind or not, Default: true
-		, "proposeGroupBox": true // show a "empty" group box to propose a new group, Default: true
-		, "disable2dSphereForLocations": false // disable the creation of 2dSphere indexes for db entities, this allow to save non geo location in db, used for CustomMapConfig, Default: false
-		, "socialMediaButtons": [ // which social media buttons should be displayed, when web share api is not supported from the browser
-		"bluesky",
-		"facebook",
-		"fediverse",
-		"hackernews",
-		"linkedin",
-		"mastodon",
-		"odnoklassniki",
-		"pinterest",
-		"pocket",
-		"reddit",
-		"teams",
-		"telegram",
-		"tumblr",
-		"twitter",
-		"viber",
-		"vkontakte",
-		"whatsapp",
-		"copy-url",
-		"email"
-		]
-		}
-	, "nav":
-		{ "brandLink": "/" // target link when clicking on the logo Default: "/"
-		, "search": true // show/hide find/search item in navbar Default: true
-		, "proposeGroup": true // show/hide propose item in navbar Default: true
-		, "calendar": true // show/hide calendar item in navbar Default: true
-		, "customEntries": [
-				{ "link": "https://about.openki.net/"
-				, "icon": "fa-solid fa-pen" // icon from fontawesome free
-				, "key": "..." // text from the entry. The value is a translation key from i18next it must be defined in code
-				, "text": "..." // as a alternative for "key" you can set "text" for the text from the entry - this setting can be a string or a object with key & values for every language `{ "en": "Edit", "de": "Bearbeiten", ... }`
-				}
-			]
-		}
-	, "regionDashboardDefault": // Standard for all regions, can be overwritten if the "dashboard" property is set in the region, if not set, the ‘find’ page is displayed, default: undefined
-		[	{ "entity": "" // The entity to show: "group", "groupWithoutPropose", "event", "organization", "eventsMap", "propose" are supported
-			, "title": "" // Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
-			, "query": "" // Query how the data should be filtered and sorted, all options and filters can be found in the wiki, can be an empty string "". The entities are filtered by region.
-			, "showAll": // Overwrite the standard showAll button (Optional)
-				{ "link": "" // The target to which the button links.
-				, "text": "" // The text to display. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
-				}
-			}
-		]
-	, "organizationDashboardDefault": // Standard for all organizations, can be overwritten if the "dashboard" property is set in the organization, if not set, the ‘find’ page is displayed, default: undefined
-		[	{ "entity": "" // The entity to show: "group", "groupWithoutPropose", "event", "organization", "eventsMap", "propose" are supported
-			, "title": "" // Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
-			, "query": "" // Query how the data should be filtered and sorted, all options and filters can be found in the wiki, can be an empty string "". The entities are filtered by region and group.
-			, "showAll": // Overwrite the standard showAll button (Optional)
-				{ "link": "" // The target to which the button links.
-				, "text": "" // The text to display. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
-				}
-			}
-		]
-  , "rolesDefault": // Standard for all regions, can be overwritten if the "roles" property is set in the region
-	[ { "type": "participant" // icon class string from font-awesome ex: "fa-solid fa-bullhorn"
-	  , "icon": "fa-solid fa-thumbs-up" // icon class string from font-awesome ex: "fa-solid fa-bullhorn"
-	  , "proposal": false // The role appears as "proposed only". Default: false
-	  , "preset": true // The role is always added on group creation. Default: false
-	  , "editable": false // The role is editable by the editors of a group. Default: false
-	  }
-	, { "type": "mentor"
-	  , "icon": "fa-solid fa-graduation-cap"
-	  , "proposal": true
-	  , "preset": true
-	  , "editable": true
-	  }
-	, { "type": "host"
-	  , "icon": "fa-solid fa-house"
-	  , "proposal": true
-	  , "preset": true
-	  , "editable": true
-	  }
-	, { "type": "team"
-	  , "icon": "fa-solid fa-bullhorn"
-	  , "proposal": false
-	  , "preset": true
-	  , "editable": false
-	  }  
-	]
-	, "footerLinks":
-		[	{ "link": "https://about.openki.net/"
-			, "key": "footer.aboutOpenki" // text from the entry. The value is a translation key from i18next it must be defined in code
-			, "title_key": "navigation.footer.about.title" // text that is shown on hover the entry. The value is a translation key from i18next it must be defined in code
-			, "text": "..." // as a alternative for "key" you can set "text" for the text from the link - this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
-			}
-		,	{ "link": "/info/faq"
-			, "text": "FAQ"
-			}
-		,	{ "link": "https://gitlab.com/Openki/Openki/"
-			, "key": "navigation.footer.powerdByOpenki"
-			, "title_key": "navigation.footer.codeOnGitLab"
-			}
-		,	{ "link": "https://about.openki.net/privacy-policy/"
-			, "key": "main.privacyPolicy"
-			, "title_key": "main.privacyPolicy.tooltip"
-			}
-		]
-	, "dataProtectionLaw": "By continuing I accept the [Privacy Policy](https://about.openki.net/en/privacy-policy/) and [Terms of Service](https://about.openki.net/terms-and-conditions/)" // Text displayed in the registration form to link to the Privacy Policy and Terms and Conditions. Can be markdown. Default: undefined (not shown). This setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
-	, "faqLink": "/info/faq" // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
-	, "pricePolicyLink": "..." // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
-	, "groupGuideLink": "..." // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
-	, "aboutLink": "https://about.openki.net" // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
-	, "contribution": // Contribution to the plattform, a admin can set in the userprofile that a user has contributed. This shows a icon next to the username. Remove this setting to disable this feature.
-		{ "icon": "fa-solid fa-heart"
-		, "forbiddenChars": ["🖤", "💖", "💔", "💚", "💜", "❤️", "🧡", "💕", "💛", "💝"] // forbidden chars in username
-		, "link": // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
-			{ "en": "https://about.openki.net/en/ueber-uns/spenden/"
-			, "de": "https://about.openki.net/ueber-uns/spenden/"
-			}
-		}
-	, "groupDescriptionMax": 15000 // Max characters allowed for the description-field of groups. Default: 15000
-	, "eventDescriptionMax": 15000 // Max characters allowed for the description-field of events. Default: 15000
-	, "categories": // Categories for groups, main and/or sub categories
-    { "sports":
-      [ "martialarts"
-      , "teamsport"
-      , "artistry"
-      ]
-  , "handicraft":
-      [
-      ]
-  , "[categoryname]":
-      [ "subcategoryname1"
-      , "subcategoryname2"
-      ]
-		}
-	, "s3": // file storage (public part)
-		{ "publicUrlBase": "https://984b.objectstorage.nineapis.ch/v1/AUTH_01234-xyz123/bucket-name"
-		}
-  }
-, "siteEmail": "" // Sender e-mail address in mails
-, "replyToEmail": "" // "Reply to" address in mails 
-, "reporter": // Sender and recipient address for "Report problem" function
-  { "sender": "pingpong@mail.openki.net" // The e-mail address of the sender. All e-mail addresses can be plain 'sender@server.com' or formatted 'Sender Name sender@server.com'
-  , "recipient": "badabuff@openki.net" // Comma separated list of recipients e-mail addresses that will appear on the To: field
-  }
-, "robots": false // Tells robots/crawlers whether to index the website or not
-, "hideProfiles": false // Tells robots/crawlers not to index user profiles (/user/*)
-, "printLog": false // Print the log on the server in the console, usually only for development
-, "service": // OAuth
-	{ "facebook":
-		{ "appId": "567890"
-		, "secret": "123abcd"
-		}
-	, "github":
-		{ "clientId": "1234cdef"
-		, "secret": "abcd1234"
-		}
-	, "google":
-		{ "clientId": "01234-xyz123.apps.googleusercontent.com"
-		, "secret": "XYz_123"
-		}
-	, "c3": 
-      { "clientId": ""
-      , "secret": ""
-      , "authorizeUrl": ""
-      , "tokenUrl": ""
-      , "userInfoUrl": ""
-      }
-	}
-, "s3": // file storage, private part
-	{ "region": "nine-cz42"
-	, "bucketEndpoint": "https://984b.objectstorage.nineapis.ch/bucket-name"
-	, "accessKeyId": "abcd1234"
-	, "secretAccessKey": "123abcd"
-	}
-, "apiMaxLimit": 100 // Maximum number of entities that the api returns. Default: 100. If the parameter "limit" is not set in the URL, the API always returns 100 entities whatever this setting is set to.
-, "notificationGracePeriodHours": 72 // How many hours back notification e-mails should be sent after the server was down. This helps when there was a big problem with the server to not spam people. Default: 72 hours.
-, "PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" } // That web pages are pre-rendered for webcrawlers on the server side so that no client code has to be executed. See: https://guide.meteor.com/deployment.html#seo
-, "startup": { "buildDbCacheAsync": true } // Build the cache in the db async or sync. For larger databases it takes a long time until all fields are updated, during this time the startup is blocked. The users cannot use the website. Because in a normal startup the database already has these fields, this task can also be done async every sunday at 22:30. Default: false
-, "scrub": // Delete entries from the log or remove critical information, The log can be viewed via .../log
-	[ 	{ "name": "scrub client-errors", "comment": "client-side errors may contain sensitive data, drop them quickly"
-		, "grace": 7, "select": { "tr": "clientError" }, "remove": true // "grace": 7 means: After 7 days it will be removed
-		}
-
-	, 	{ "name": "drop resume-logins", "comment": "Resume-Logins are not very interesting"
-		, "grace": 7, "select": { "tr": "Login.Success", "body": {"type": "resume"}}, "remove": true // "remove": true means: The whole entry is removed
-		}
-
-	, 	{ "name": "scrub logins", "comment": "We want to remember user logins but not the details"
-		, "grace": 8, "select": { "tr": "Login.Success"}, "unset": [ "connection", "username" ] // "unset": [ "field1", "field2", ... ] means: Individual fields are removed
-		}
-
-		, 	{ "name": "drop send-results", "comment": "We keep notification send results for troublehooting"
-			, "grace": 61, "select": { "tr": "Notification.SendResult"}, "remove": true
-		}
-	]
+{
+  "admins": [
+    "greg"
+  ], // User administrator accounts that are created with the test data
+  "prng": "", // Pseudo-Random Number Generator. Use "static" as value to use static seed for test data. Result: After test data generation, entity ids, amount of events, comment content, region assignment of groups, etc will stay identical. Except ids from users. Default: "" (random seed)
+  "testdata": true, // Generates test data, is not needed for the productive system
+  "public": {
+    "siteName": "Openki-clone",
+    "siteStage": "beta", // The text top left at the logo
+    "testWarning": true, // Shows a banner saying that this is only for testing
+    // The logo in the top left corner. Can be a logo from the /public/logo/* folder, from our s3 file storage (must start with the "publicUrlBase" setting) or a base64 encoded string.
+    "headerLogo": {
+      "src": "openki-logo-web-2020.svg",
+      "alt": "Openki Logo"
+    },
+    // The logo in the top left corner from the /kiosk/events/ page. Can be a logo from the /public/logo/* folder, from our s3 file storage (must start with the "publicUrlBase" setting) or a base64 encoded string.
+    "headerLogoKiosk": {
+      "src": "openki-logo-kiosk-2020.svg",
+      "alt": "Openki Logo"
+    },
+    // The default image used for avatars (color is changed using the CSS filter 'hue-rotate').
+    "avatarLogo": {
+      "src": "openki-logo-web-avatar-2020.svg",
+      "alt": "User Avatar", // The "alt" setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+    },
+    "ogLogo": {
+      "src": "openki_logo_2018.png"
+    }, // The image to be shown in social media. Can be a logo from the /public/logo/* folder or from our s3 file storage (must start with the "publicUrlBase" setting).
+    "emailLogo": "emails/openki.png", // Can be a logo from the /private/* folder, from our s3 file storage (must start with the "publicUrlBase" setting) or a base64 encoded string.
+    // Theming the ui
+    "theme": {
+      "brand": "#38829c"
+    },
+    "publicTenants": [
+      "8410c099a7"
+    ], // IDs of the tenants that should be displayed publicly, choose at least one
+    "regionSelection": {
+      "minNumber": 5, // The minimum number of regions displayed in the Regions selection. Default: 5
+      // A link to a page that explains regions, if not set then none link is shown.
+      "aboutLink": {
+        "en": "/info/faq#what-is-an-openki-region", // This setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+        "de": "...",
+      },
+    },
+    "i18nHelpLink": "https://gitlab.com/Openki/Openki/-/wikis/translation", // A link to a page that give instructions how to translate. Default: "https://gitlab.com/Openki/Openki/-/wikis/translation", Set this value to "" to hide the link in the UI. This setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+    "i18nMapping": {
+      "de": "de-zuerich-lernt"
+    }, // Define alternative translation files
+    "matomo": {
+      "url": "https://analytics.mydomain.com/",
+      "site": 1, // Matomo id
+    },
+    "pricePolicyEnabled": true, // by true, show only indicative prices (DE: Richtpreise), default is true
+    "askNewsletterConsent": true, // by true, ask user to receive newsletter on account registration, default is true
+    "sendReminderPreset": true, // Should a reminder be sent by default or not. Default is true
+    "feature": {
+      // toggle visibility of login services
+      "login": {
+        "email": true,
+        "google": false,
+        "facebook": false,
+        "github": false,
+        "c3": false
+      },
+      "visitorUser": true, // allow user without name and password, Default: false
+      "rsvpWithCompanions": true, // allow rsvp with +1 / for two seats, Default: false
+      "sendReminderIsEditable": true, // allow to edit whether to remind or not, Default: true
+      "proposeGroupBox": true, // show a "empty" group box to propose a new group, Default: true
+      "disable2dSphereForLocations": false, // disable the creation of 2dSphere indexes for db entities, this allow to save non geo location in db, used for CustomMapConfig, Default: false
+      "socialMediaButtons": [
+        // which social media buttons should be displayed, when web share api is not supported from the browser
+        "bluesky",
+        "facebook",
+        "fediverse",
+        "hackernews",
+        "linkedin",
+        "mastodon",
+        "odnoklassniki",
+        "pinterest",
+        "pocket",
+        "reddit",
+        "teams",
+        "telegram",
+        "tumblr",
+        "twitter",
+        "viber",
+        "vkontakte",
+        "whatsapp",
+        "copy-url",
+        "email",
+      ],
+    },
+    "nav": {
+      "brandLink": "/", // target link when clicking on the logo Default: "/"
+      "search": true, // show/hide find/search item in navbar Default: true
+      "proposeGroup": true, // show/hide propose item in navbar Default: true
+      "calendar": true, // show/hide calendar item in navbar Default: true
+      "customEntries": [
+        {
+          "link": "https://about.openki.net/",
+          "icon": "fa-solid fa-pen", // icon from fontawesome free
+          "key": "...", // text from the entry. The value is a translation key from i18next it must be defined in code
+          "text": "...", // as a alternative for "key" you can set "text" for the text from the entry - this setting can be a string or a object with key & values for every language `{ "en": "Edit", "de": "Bearbeiten", ... }`
+        },
+      ],
+    },
+    // Standard for all regions, can be overwritten if the "dashboard" property is set in the region, if not set, the ‘find’ page is displayed, default: undefined
+    "regionDashboardDefault": [
+      {
+        "entity": "", // The entity to show: "group", "groupWithoutPropose", "event", "organization", "eventsMap", "propose" are supported
+        "title": "", // Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+        "query": "", // Query how the data should be filtered and sorted, all options and filters can be found in the wiki, can be an empty string "". The entities are filtered by region.
+        // Overwrite the standard showAll button (Optional)
+        "showAll": {
+          "link": "", // The target to which the button links.
+          "text": "", // The text to display. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+        },
+      },
+    ],
+    // Standard for all organizations, can be overwritten if the "dashboard" property is set in the organization, if not set, the ‘find’ page is displayed, default: undefined
+    "organizationDashboardDefault": [
+      {
+        "entity": "", // The entity to show: "group", "groupWithoutPropose", "event", "organization", "eventsMap", "propose" are supported
+        "title": "", // Title to display over the row. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+        "query": "", // Query how the data should be filtered and sorted, all options and filters can be found in the wiki, can be an empty string "". The entities are filtered by region and group.
+        // Overwrite the standard showAll button (Optional)
+        "showAll": {
+          "link": "", // The target to which the button links.
+          "text": "", // The text to display. The value can be a translation key from i18next defined in code, a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+        },
+      },
+    ],
+    // Standard for all regions, can be overwritten if the "roles" property is set in the region
+    "rolesDefault": [
+      {
+        "type": "participant", // icon class string from font-awesome ex: "fa-solid fa-bullhorn"
+        "icon": "fa-solid fa-thumbs-up", // icon class string from font-awesome ex: "fa-solid fa-bullhorn"
+        "proposal": false, // The role appears as "proposed only". Default: false
+        "preset": true, // The role is always added on group creation. Default: false
+        "editable": false, // The role is editable by the editors of a group. Default: false
+      },
+      {
+        "type": "mentor",
+        "icon": "fa-solid fa-graduation-cap",
+        "proposal": true,
+        "preset": true,
+        "editable": true,
+      },
+      {
+        "type": "host",
+        "icon": "fa-solid fa-house",
+        "proposal": true,
+        "preset": true,
+        "editable": true,
+      },
+      {
+        "type": "team",
+        "icon": "fa-solid fa-bullhorn",
+        "proposal": false,
+        "preset": true,
+        "editable": false,
+      },
+    ],
+    "footerLinks": [
+      {
+        "link": "https://about.openki.net/",
+        "key": "footer.aboutOpenki", // text from the entry. The value is a translation key from i18next it must be defined in code
+        "title_key": "navigation.footer.about.title", // text that is shown on hover the entry. The value is a translation key from i18next it must be defined in code
+        "text": "...", // as a alternative for "key" you can set "text" for the text from the link - this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+      },
+      {
+        "link": "/info/faq",
+        "text": "FAQ"
+      },
+      {
+        "link": "https://gitlab.com/Openki/Openki/",
+        "key": "navigation.footer.powerdByOpenki",
+        "title_key": "navigation.footer.codeOnGitLab",
+      },
+      {
+        "link": "https://about.openki.net/privacy-policy/",
+        "key": "main.privacyPolicy",
+        "title_key": "main.privacyPolicy.tooltip",
+      },
+    ],
+    "dataProtectionLaw": "By continuing I accept the [Privacy Policy](https://about.openki.net/en/privacy-policy/) and [Terms of Service](https://about.openki.net/terms-and-conditions/)", // Text displayed in the registration form to link to the Privacy Policy and Terms and Conditions. Can be markdown. Default: undefined (not shown). This setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+    "faqLink": "/info/faq", // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+    "pricePolicyLink": "...", // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+    "groupGuideLink": "...", // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+    "aboutLink": "https://about.openki.net", // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+    // Contribution to the plattform, a admin can set in the userprofile that a user has contributed. This shows a icon next to the username. Remove this setting to disable this feature.
+    "contribution": {
+      "icon": "fa-solid fa-heart",
+      "forbiddenChars": [
+        "🖤",
+        "💖",
+        "💔",
+        "💚",
+        "💜",
+        "❤️",
+        "🧡",
+        "💕",
+        "💛",
+        "💝"
+      ], // forbidden chars in username
+      // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+      "link": {
+        "en": "https://about.openki.net/en/ueber-uns/spenden/",
+        "de": "https://about.openki.net/ueber-uns/spenden/",
+      },
+    },
+    "groupDescriptionMax": 15000, // Max characters allowed for the description-field of groups. Default: 15000
+    "eventDescriptionMax": 15000, // Max characters allowed for the description-field of events. Default: 15000
+    // Categories for groups, main and/or sub categories
+    "categories": {
+      "sports": [
+        "martialarts",
+        "teamsport",
+        "artistry"
+      ],
+      "handicraft": [],
+      "[categoryname]": [
+        "subcategoryname1",
+        "subcategoryname2"
+      ],
+    },
+    // file storage (public part)
+    "s3": {
+      "publicUrlBase": "https://984b.objectstorage.nineapis.ch/v1/AUTH_01234-xyz123/bucket-name",
+    },
+  },
+  "siteEmail": "", // Sender e-mail address in mails
+  "replyToEmail": "", // "Reply to" address in mails
+  // Sender and recipient address for "Report problem" function
+  "reporter": {
+    "sender": "pingpong@mail.openki.net", // The e-mail address of the sender. All e-mail addresses can be plain 'sender@server.com' or formatted 'Sender Name sender@server.com'
+    "recipient": "badabuff@openki.net", // Comma separated list of recipients e-mail addresses that will appear on the To: field
+  },
+  "robots": false, // Tells robots/crawlers whether to index the website or not
+  "hideProfiles": false, // Tells robots/crawlers not to index user profiles (/user/*)
+  "printLog": false, // Print the log on the server in the console, usually only for development
+  // OAuth
+  "service": {
+    "facebook": {
+      "appId": "567890",
+      "secret": "123abcd"
+    },
+    "github": {
+      "clientId": "1234cdef",
+      "secret": "abcd1234"
+    },
+    "google": {
+      "clientId": "01234-xyz123.apps.googleusercontent.com",
+      "secret": "XYz_123"
+    },
+    "c3": {
+      "clientId": "",
+      "secret": "",
+      "authorizeUrl": "",
+      "tokenUrl": "",
+      "userInfoUrl": ""
+    },
+  },
+  // file storage, private part
+  "s3": {
+    "region": "nine-cz42",
+    "bucketEndpoint": "https://984b.objectstorage.nineapis.ch/bucket-name",
+    "accessKeyId": "abcd1234",
+    "secretAccessKey": "123abcd",
+  },
+  "apiMaxLimit": 100, // Maximum number of entities that the api returns. Default: 100. If the parameter "limit" is not set in the URL, the API always returns 100 entities whatever this setting is set to.
+  "notificationGracePeriodHours": 72, // How many hours back notification e-mails should be sent after the server was down. This helps when there was a big problem with the server to not spam people. Default: 72 hours.
+  "PrerenderIO": {
+    "serviceUrl": "http://localhost:3033/",
+    "token": "mytoken"
+  }, // That web pages are pre-rendered for webcrawlers on the server side so that no client code has to be executed. See: https://guide.meteor.com/deployment.html#seo
+  "startup": {
+    "buildDbCacheAsync": true
+  }, // Build the cache in the db async or sync. For larger databases it takes a long time until all fields are updated, during this time the startup is blocked. The users cannot use the website. Because in a normal startup the database already has these fields, this task can also be done async every sunday at 22:30. Default: false
+  // Delete entries from the log or remove critical information, The log can be viewed via .../log
+  "scrub": [
+    {
+      "name": "scrub client-errors",
+      "comment": "client-side errors may contain sensitive data, drop them quickly",
+      "grace": 7,
+      "select": {
+        "tr": "clientError"
+      },
+      "remove": true, // "grace": 7 means: After 7 days it will be removed
+    },
+    {
+      "name": "drop resume-logins",
+      "comment": "Resume-Logins are not very interesting",
+      "grace": 7,
+      "select": {
+        "tr": "Login.Success",
+        "body": {
+          "type": "resume"
+        }
+      },
+      "remove": true, // "remove": true means: The whole entry is removed
+    },
+    {
+      "name": "scrub logins",
+      "comment": "We want to remember user logins but not the details",
+      "grace": 8,
+      "select": {
+        "tr": "Login.Success"
+      },
+      "unset": [
+        "connection",
+        "username"
+      ], // "unset": [ "field1", "field2", ... ] means: Individual fields are removed
+    },
+    {
+      "name": "drop send-results",
+      "comment": "We keep notification send results for troublehooting",
+      "grace": 61,
+      "select": {
+        "tr": "Notification.SendResult"
+      },
+      "remove": true,
+    },
+  ],
 }

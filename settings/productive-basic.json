@@ -1,170 +1,210 @@
-{ "admins": []
-, "testdata": false
-, "prng": ""
-, "public":
-	{ "siteName": "Openki-clone"
-	, "siteStage": "beta"
-	, "testWarning": false
-	, "headerLogo":
-		{ "src": "openki-logo-web-2020.svg"
-		, "alt": "Openki Logo"
-		}
-	, "headerLogoKiosk":
-		{ "src": "openki-logo-kiosk-2020.svg"
-		, "alt": "Openki Logo"
-		}
-	, "avatarLogo":
-		{ "src": "openki-logo-web-avatar-2020.svg"
-		, "alt": "User Avatar"
-		}
-	, "ogLogo": { "src": "openki_logo_2018.png"}
-	, "emailLogo": "emails/openki.png"
-	, "theme":
-		{ "brand": "#f7cd1f"  
-		}
-	, "publicTenants": ["z8eHgw4Lleo04Jhp6"]
-	, "regionSelection":
-		{ "minNumber": 3
-		, "aboutLink":
-			{ "en": "..."
-			, "de": "..."
-			}
-		}
-	, "i18nHelpLink": "https://gitlab.com/Openki/Openki/-/wikis/translation"
-
-	, "matomo":
-		{ "url": "..."
-		, "site": 1
-		}
-	, "pricePolicyEnabled": true
-  , "askNewsletterConsent": true
-	, "sendReminderPreset": true
-	, "feature":
-		{ "login":
-			{ "email": true
-			, "google": false
-			, "facebook": false
-			, "github": false 
-			, "c3": false
-			}
-		, "visitorUser": true
-		, "rsvpWithCompanions": true
-		, "sendReminderIsEditable": true
-    , "proposeGroupBox": true
-    , "disable2dSphereForLocations": false
-		, "socialMediaButtons": ["email", "telegram", "whatsapp", "bluesky", "fediverse", "linkedin", "mastodon", "reddit", "facebook", "copy-url"]
-		}
-	, "nav":
-		{ "brandLink": "/"
-		, "search": true
-		, "proposeGroup": true
-		, "calendar": true
-		, "customEntries": [ ]
-		}
-	, "footerLinks":
-		[	{ "link": "https://about.openki.net/"
-			, "key": "footer.aboutOpenki"
-			, "title_key": "navigation.footer.about.title"
-			, "text": "..."
-			}
-		,	{ "link": "/info/faq"
-			, "text": "FAQ"
-			}
-		,	{ "link": "https://gitlab.com/Openki/Openki/"
-			, "key": "navigation.footer.powerdByOpenki"
-			, "title_key": "navigation.footer.codeOnGitLab"
-			}
-		,	{ "link": "https://about.openki.net/privacy-policy/"
-			, "key": "main.privacyPolicy"
-			, "title_key": "main.privacyPolicy.tooltip"
-			}
-		]
-	, "dataProtectionLaw": "By continuing I accept the [Privacy Policy](https://about.openki.net/en/privacy-policy/) and [Terms of Service](https://about.openki.net/terms-and-conditions/)"
-	, "faqLink": "/info/faq"
-	, "pricePolicyLink": "..."
-	, "groupGuideLink": "..."
-	, "aboutLink": "https://about.openki.net"
-	, "contribution":
-		{ "icon": "fa-solid fa-heart"
-		, "forbiddenChars": ["🖤", "💖", "💔", "💚", "💜", "❤️", "🧡", "💕", "💛", "💝"]
-		, "link":
-			{ "en": "https://about.openki.net/en/ueber-uns/spenden/"
-			, "de": "https://about.openki.net/ueber-uns/spenden/"
-			}
-		}
-	, "groupDescriptionMax": 15000
-	, "eventDescriptionMax": 15000
-	, "categories":
-			{ "sports":
-				[ "martialarts"
-				, "teamsport"
-				, "artistry"
-				]
-		, "handicraft":
-				[
-				]
-		, "[categoryname]":
-				[ "subcategoryname1"
-				, "subcategoryname2"
-				]
-		}
-	, "s3":
-		{ "publicUrlBase": "https://linkto.objectstorage.example.com/v1/AUTH_01234-xyz123/bucket-name"
-		}
-	, "apiMaxLimit": 100
-	}
-, "siteEmail": ""
-, "replyToEmail": "" 
-, "reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net"}
-, "robots": true 
-, "hideProfiles": true
-, "printLog": false
-, "service":
-	{ "facebook":
-		{ "appId": "567890"
-		, "secret": "123abcd"
-		}
-	, "github":
-		{ "clientId": "1234cdef"
-		, "secret": "abcd1234"
-		}
-	, "google":
-		{ "clientId": "01234-xyz123.apps.googleusercontent.com"
-		, "secret": "XYz_123"
-		}
-	, "c3": 
-      { "clientId": ""
-      , "secret": ""
-      , "authorizeUrl": ""
-      , "tokenUrl": ""
-      , "userInfoUrl": ""
+{
+  "admins": [],
+  "testdata": false,
+  "prng": "",
+  "public": {
+    "siteName": "Openki-clone",
+    "siteStage": "beta",
+    "testWarning": false,
+    "headerLogo": {
+      "src": "openki-logo-web-2020.svg",
+      "alt": "Openki Logo"
+    },
+    "headerLogoKiosk": {
+      "src": "openki-logo-kiosk-2020.svg",
+      "alt": "Openki Logo"
+    },
+    "avatarLogo": {
+      "src": "openki-logo-web-avatar-2020.svg",
+      "alt": "User Avatar"
+    },
+    "ogLogo": {
+      "src": "openki_logo_2018.png"
+    },
+    "emailLogo": "emails/openki.png",
+    "theme": {
+      "brand": "#f7cd1f"
+    },
+    "publicTenants": ["z8eHgw4Lleo04Jhp6"],
+    "regionSelection": {
+      "minNumber": 3,
+      "aboutLink": {
+        "en": "...",
+        "de": "..."
       }
-	}
-, "s3":
-  { "region": "nine-cz42"
-  , "bucketEndpoint": "https://linkto.objectstorage.example.com/bucket-name"
-  , "accessKeyId": "abcd1234"
-  , "secretAccessKey": "123abcd"
-  }
-, "apiMaxLimit": 100
-, "notificationGracePeriodHours": 72
-, "PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" }
-, "startup": { "buildDbCacheAsync": true } 
-, "scrub": 
-	[ 	{ "name": "scrub client-errors", "comment": "client-side errors may contain sensitive data, drop them quickly"
-		, "grace": 7, "select": { "tr": "clientError" }, "remove": true 
-		}
-
-	, 	{ "name": "drop resume-logins",  "comment": "Resume-Logins are not very interesting"
-		, "grace": 7, "select": { "tr": "Login.Success", "body": {"type": "resume"}}, "remove": true
-		}
-
-	, 	{ "name": "scrub logins", "comment": "We want to remember user logins but not the details"
-		, "grace": 8, "select": { "tr": "Login.Success"}, "unset": [ "connection", "username" ]
-		}
-
-    , 	{ "name": "drop send-results", "comment": "We keep notification send results for troublehooting"
-	  	, "grace": 61, "select": { "tr": "Notification.SendResult"}, "remove": true
-		}
-	]
+    },
+    "i18nHelpLink": "https://gitlab.com/Openki/Openki/-/wikis/translation",
+    "matomo": {
+      "url": "...",
+      "site": 1
+    },
+    "pricePolicyEnabled": true,
+    "askNewsletterConsent": true,
+    "sendReminderPreset": true,
+    "feature": {
+      "login": {
+        "email": true,
+        "google": false,
+        "facebook": false,
+        "github": false,
+        "c3": false
+      },
+      "visitorUser": true,
+      "rsvpWithCompanions": true,
+      "sendReminderIsEditable": true,
+      "proposeGroupBox": true,
+      "disable2dSphereForLocations": false,
+      "socialMediaButtons": [
+        "email",
+        "telegram",
+        "whatsapp",
+        "bluesky",
+        "fediverse",
+        "linkedin",
+        "mastodon",
+        "reddit",
+        "facebook",
+        "copy-url"
+      ]
+    },
+    "nav": {
+      "brandLink": "/",
+      "search": true,
+      "proposeGroup": true,
+      "calendar": true,
+      "customEntries": []
+    },
+    "footerLinks": [
+      {
+        "link": "https://about.openki.net/",
+        "key": "footer.aboutOpenki",
+        "title_key": "navigation.footer.about.title",
+        "text": "..."
+      },
+      {
+        "link": "/info/faq",
+        "text": "FAQ"
+      },
+      {
+        "link": "https://gitlab.com/Openki/Openki/",
+        "key": "navigation.footer.powerdByOpenki",
+        "title_key": "navigation.footer.codeOnGitLab"
+      },
+      {
+        "link": "https://about.openki.net/privacy-policy/",
+        "key": "main.privacyPolicy",
+        "title_key": "main.privacyPolicy.tooltip"
+      }
+    ],
+    "dataProtectionLaw": "By continuing I accept the [Privacy Policy](https://about.openki.net/en/privacy-policy/) and [Terms of Service](https://about.openki.net/terms-and-conditions/)",
+    "faqLink": "/info/faq",
+    "pricePolicyLink": "...",
+    "groupGuideLink": "...",
+    "aboutLink": "https://about.openki.net",
+    "contribution": {
+      "icon": "fa-solid fa-heart",
+      "forbiddenChars": ["🖤", "💖", "💔", "💚", "💜", "❤️", "🧡", "💕", "💛", "💝"],
+      "link": {
+        "en": "https://about.openki.net/en/ueber-uns/spenden/",
+        "de": "https://about.openki.net/ueber-uns/spenden/"
+      }
+    },
+    "groupDescriptionMax": 15000,
+    "eventDescriptionMax": 15000,
+    "categories": {
+      "sports": ["martialarts", "teamsport", "artistry"],
+      "handicraft": [],
+      "[categoryname]": ["subcategoryname1", "subcategoryname2"]
+    },
+    "s3": {
+      "publicUrlBase": "https://linkto.objectstorage.example.com/v1/AUTH_01234-xyz123/bucket-name"
+    },
+    "apiMaxLimit": 100
+  },
+  "siteEmail": "",
+  "replyToEmail": "",
+  "reporter": {
+    "sender": "pingpong@mail.openki.net",
+    "recipient": "badabuff@openki.net"
+  },
+  "robots": true,
+  "hideProfiles": true,
+  "printLog": false,
+  "service": {
+    "facebook": {
+      "appId": "567890",
+      "secret": "123abcd"
+    },
+    "github": {
+      "clientId": "1234cdef",
+      "secret": "abcd1234"
+    },
+    "google": {
+      "clientId": "01234-xyz123.apps.googleusercontent.com",
+      "secret": "XYz_123"
+    },
+    "c3": {
+      "clientId": "",
+      "secret": "",
+      "authorizeUrl": "",
+      "tokenUrl": "",
+      "userInfoUrl": ""
+    }
+  },
+  "s3": {
+    "region": "nine-cz42",
+    "bucketEndpoint": "https://linkto.objectstorage.example.com/bucket-name",
+    "accessKeyId": "abcd1234",
+    "secretAccessKey": "123abcd"
+  },
+  "apiMaxLimit": 100,
+  "notificationGracePeriodHours": 72,
+  "PrerenderIO": {
+    "serviceUrl": "http://localhost:3033/",
+    "token": "mytoken"
+  },
+  "startup": {
+    "buildDbCacheAsync": true
+  },
+  "scrub": [
+    {
+      "name": "scrub client-errors",
+      "comment": "client-side errors may contain sensitive data, drop them quickly",
+      "grace": 7,
+      "select": {
+        "tr": "clientError"
+      },
+      "remove": true
+    },
+    {
+      "name": "drop resume-logins",
+      "comment": "Resume-Logins are not very interesting",
+      "grace": 7,
+      "select": {
+        "tr": "Login.Success",
+        "body": {
+          "type": "resume"
+        }
+      },
+      "remove": true
+    },
+    {
+      "name": "scrub logins",
+      "comment": "We want to remember user logins but not the details",
+      "grace": 8,
+      "select": {
+        "tr": "Login.Success"
+      },
+      "unset": ["connection", "username"]
+    },
+    {
+      "name": "drop send-results",
+      "comment": "We keep notification send results for troublehooting",
+      "grace": 61,
+      "select": {
+        "tr": "Notification.SendResult"
+      },
+      "remove": true
+    }
+  ]
 }
