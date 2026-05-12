@@ -193,6 +193,8 @@ export function Edit(props: Props) {
       .uniq()
       .value();
 
+    if (isLoadingRegionRoles()) return [];
+
     return regionRoles.filter((role) => {
       // Skip non-editable, preset roles
       if (!role.editable && role.preset) {
