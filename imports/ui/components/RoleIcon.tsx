@@ -1,6 +1,7 @@
 import React from "react";
 
-import { RegionEntity, RoleEntity } from "/imports/api/regions/regions";
+import { RegionEntity } from "/imports/api/regions/regions";
+import { RoleEntity } from "/imports/utils/PublicSettings";
 
 import { useRegionRoles } from "../lib/useRegionRoles";
 import { cx } from "/imports/utils/cx";

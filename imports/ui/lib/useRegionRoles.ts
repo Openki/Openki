@@ -1,6 +1,6 @@
 import { useAll } from "/imports/api/regions/publications";
-import { RegionEntity, RoleEntity } from "/imports/api/regions/regions";
-import { PublicSettings } from "/imports/utils/PublicSettings";
+import { RegionEntity } from "/imports/api/regions/regions";
+import { PublicSettings, RoleEntity } from "/imports/utils/PublicSettings";
 
 export function useRegionRoles(regionId?: RegionEntity["_id"] | undefined) {
   const [isLoading, regions] = useAll();
@@ -12,7 +12,6 @@ export function useRegionRoles(regionId?: RegionEntity["_id"] | undefined) {
     if (!region) {
       throw new Error(`Could not find region: ${regionId}`);
     }
-
     roles = region.roles ?? PublicSettings.rolesDefault;
   } else {
     roles = regions.flatMap((r) => r.roles ?? PublicSettings.rolesDefault);

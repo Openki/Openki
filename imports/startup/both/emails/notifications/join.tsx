@@ -16,6 +16,8 @@ import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { Model as NotificationModel } from "../notification";
 import { Join, Props } from "/imports/emails/notifications/Join";
 import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
+import { loadRoles } from "/imports/api/regions/loadRoles";
+import { RoleEntity } from "/imports/utils/PublicSettings";
 
 interface Body {
   groupId: string;
@@ -80,6 +82,11 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
     notifications: true,
   }).fetchAsync();
 
+  let roles: RoleEntity[];
+  if (group?.region) {
+    roles = await loadRoles(group?.region);
+  }
+
   return {
     accepted(actualRecipient: UserModel) {
       if (actualRecipient.notifications === false) {
@@ -89,7 +96,8 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
     async vars(locale: string, actualRecipient: UserModel, unsubToken: string) {
       const t = i18next.getFixedT(locale);
-      const { roleShort } = getRoleDisplay(t);
+
+      const { roleShort, roleNotificationJoinEmail } = getRoleDisplay(i18next, roles);
 
       const campaign = "joinNotify";
 
@@ -98,6 +106,9 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       }
       if (!group) {
         throw new Error("Group does not exist (0.o)");
+      }
+      if (!roles) {
+        throw new Error("Roles could not be loaded (0.o)");
       }
 
       const subjectvars = {
@@ -126,11 +137,15 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       const siteName = getSiteName(region);
 
       const groupLink = Router.url("showGroup", group, { query: { campaign } });
+      const groupName = <a href={groupLink}>{group.name}</a>;
+      const roleIntroduction = roleNotificationJoinEmail(body.newRole, {
+        USERNAME: <strong>{newParticipant.getDisplayName()}</strong>,
+        GROUP: groupName,
+      });
       return {
-        group: <a href={groupLink}>{group.name}</a>,
-        newParticipant: <strong>{newParticipant.getDisplayName()}</strong>,
+        group: groupName,
+        roleIntroduction,
         subject,
-        roleType: body.newRole,
         email: <span style={{ color: "blue" }}>{PrivateSettings.siteEmail}</span>,
         message: body.message ? HtmlTools.plainToHtml(body.message) : undefined,
         roleCounts,

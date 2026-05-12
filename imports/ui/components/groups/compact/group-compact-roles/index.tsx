@@ -1,13 +1,12 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
 
 import { GroupModel } from "/imports/api/groups/groups";
-import { RoleEntity } from "/imports/api/regions/regions";
 
 import { hasRole, hasRoleUser } from "../../../../../utils/group-role-utils";
-import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
+import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { useUserId } from "/imports/utils/react-meteor-data";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { RoleEntity } from "/imports/utils/PublicSettings";
 import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
@@ -18,11 +17,10 @@ export interface Props {
 
 export function GroupCompactRoles({ group }: Props) {
   const userId = useUserId();
-  const { t } = useTranslation();
   const [isLoading, roles] = useRegionRoles(group.region);
 
   const { groupListRoleNeeded, groupListRoleOccupied, groupListRoleOccupiedByUser } =
-    getRoleDisplay(t);
+    useRoleDisplay(roles);
 
   function roleStateClass(role: RoleEntity["type"]) {
     if (!hasRole(group.members, role)) {

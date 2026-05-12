@@ -1,73 +1,103 @@
-import type { JSX } from "react";
-import { TFunction } from "i18next";
-import { RoleEntity } from "/imports/api/regions/regions";
+import type { JSX, ReactNode } from "react";
+import { i18n } from "i18next";
+import { useTranslation } from "react-i18next";
 
-export function getRoleDisplay(t: TFunction) {
+import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
+import { RoleEntity } from "/imports/utils/PublicSettings";
+
+export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
+  function getTranslation(
+    role: RoleEntity["type"],
+    key: keyof NonNullable<RoleEntity["translations"]>,
+    variables?: Record<string, ReactNode> | undefined,
+  ) {
+    const translation = getLocalizedValue(
+      i18n,
+      roles.find((r) => r.type === role)?.translations?.[key],
+      variables,
+    );
+    if (translation) {
+      return translation;
+    }
+
+    if (i18n.exists(`roles:${role}.${key}`)) {
+      return variables ? i18n.t(`roles:${role}.${key}`, variables) : i18n.t(`roles:${role}.${key}`);
+    }
+
+    return i18n.t(`roles:translationNotFound`, { KEY: key, ROLE: role });
+  }
+
   return {
     roleDescription(type: RoleEntity["type"]) {
-      return t(`roles:${type}.description`);
+      return getTranslation(type, "description");
     },
 
     roleShort(type: RoleEntity["type"]) {
-      return t(`roles:${type}.short`);
+      return getTranslation(type, "short");
     },
 
     roleUserList(type: RoleEntity["type"], name: string) {
-      return t(`roles:${type}.userList`, { NAME: name });
+      return getTranslation(type, "userList", { NAME: name });
     },
 
     roleUserListPast(type: RoleEntity["type"], name: string) {
-      return t(`roles:${type}.userList.past`, { NAME: name });
+      return getTranslation(type, "userList.past", { NAME: name });
     },
 
     roleMyList(type: RoleEntity["type"]) {
-      return t(`roles:${type}.myList`);
+      return getTranslation(type, "myList");
     },
 
     roleMyListPast(type: RoleEntity["type"]) {
-      return t(`roles:${type}.myList.past`);
+      return getTranslation(type, "myList.past");
     },
 
     roleSubscribe(type: RoleEntity["type"]) {
-      return t(`roles:${type}.subscribe`);
+      return getTranslation(type, "subscribe");
     },
 
     roleSubscribed(type: RoleEntity["type"]) {
-      return t(`roles:${type}.subscribed`);
+      return getTranslation(type, "subscribed");
     },
 
     roleNeeded(type: RoleEntity["type"]) {
-      return t(`roles:${type}.find.roleNeeded`);
+      return getTranslation(type, "find.roleNeeded");
     },
 
     groupListRoleNeeded(type: RoleEntity["type"]) {
-      return t(`roles:${type}.groupList.statusTitle.roleNeeded`);
+      return getTranslation(type, "groupList.statusTitle.roleNeeded");
     },
 
     groupListRoleOccupied(type: RoleEntity["type"], variables: { NUM: number }) {
-      return t(`roles:${type}.groupList.statusTitle.roleOccupied`, variables);
+      return getTranslation(type, "groupList.statusTitle.roleOccupied", variables);
     },
 
     groupListRoleOccupiedByUser(type: RoleEntity["type"], variables: { NUM: number }) {
-      return t(`roles:${type}.groupList.statusTitle.roleOccupiedByUser`, variables);
+      return getTranslation(type, "groupList.statusTitle.roleOccupiedByUser", variables);
     },
 
     roleNotificationJoinEmail(
       type: RoleEntity["type"],
       variables: { USERNAME: JSX.Element | string; GROUP: JSX.Element | string },
     ) {
-      return t(`roles:${type}.notification.join.mail.intro`, variables);
+      return getTranslation(type, "notification.join.mail.intro", variables);
     },
 
     roleGroupFirstSteps(
       type: RoleEntity["type"],
       variables: { COORDINATION_GUIDE: JSX.Element | string },
     ) {
-      return t(`roles:${type}.group.firstSteps`, variables);
+      return getTranslation(type, "group.firstSteps", variables);
     },
 
     roleGroupMessageInfo(type: RoleEntity["type"]) {
-      return t(`roles:${type}.group.messageInfo`);
+      return getTranslation(type, "group.messageInfo");
     },
   };
+}
+
+export function useRoleDisplay(roles: RoleEntity[]) {
+  const { i18n } = useTranslation();
+
+  return getRoleDisplay(i18n, roles);
 }
