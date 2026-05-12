@@ -36,13 +36,13 @@
      */
     "siteStage": "beta",
 
-    /**
+    /*
      * Shows a banner saying that this is only for testing
      * Default: false
      */
     "testWarning": true,
 
-    /**
+    /*
      * The logo in the top left corner. Can be a logo from the `/public/logo/*` folder,
      * from our s3 file storage (must start with the "publicUrlBase" setting) or
      * a base64 encoded string.
@@ -52,7 +52,7 @@
       "alt": "Openki Logo",
     },
 
-    /**
+    /*
      * The logo in the top left corner from the `/kiosk/events/` page. Can be a logo
      * from the `/public/logo/*` folder, from our s3 file storage (must start with
      * the "publicUrlBase" setting) or a base64 encoded string.
@@ -109,7 +109,7 @@
       },
     },
 
-    /**
+    /*
      * A link to a page that give instructions how to translate.
      * Default: "https://gitlab.com/Openki/Openki/-/wikis/translation"
      * Note: This setting can be a string or a object with key & values for every language
@@ -127,19 +127,19 @@
       "site": 1, // Matomo id
     },
 
-    /**
+    /*
      * Show only indicative prices (DE: Richtpreise)
      * Default: true
      */
     "pricePolicyEnabled": true,
 
-    /**
+    /*
      * Ask user to receive newsletter on account registration.
      * Default: true
      */
     "askNewsletterConsent": true,
 
-    /**
+    /*
      * Should a reminder be sent by default or not.
      * Default: true
      */
@@ -159,38 +159,39 @@
         /* Default: false */
         "c3": false,
       },
-      /**
+
+      /*
        * Allow user without password.
        * Default: false
        */
       "visitorUser": true,
 
-      /**
+      /*
        * Allow rsvp with +1 / for two seats.
        * Default: false
        */
       "rsvpWithCompanions": true,
 
-      /**
+      /*
        * Allow to edit whether to remind or not.
        * Default: true
        */
       "sendReminderIsEditable": true,
 
-      /**
+      /*
        * Show a "empty" group box to propose a new group.
        * Default: true
        */
       "proposeGroupBox": true,
 
-      /**
+      /*
        * Disable the creation of 2dSphere indexes for db entities, this allow to
        * save non geo location in db, used for CustomMapConfig.
        * Default: false
        */
       "disable2dSphereForLocations": false,
 
-      /**
+      /*
        * Which social media buttons should be displayed, when web share api is not
        * supported from the browser.
        */
@@ -218,25 +219,25 @@
     },
 
     "nav": {
-      /**
+      /*
        * Target link when clicking on the logo
        * Default: "/"
        */
       "brandLink": "/",
 
-      /**
+      /*
        * Show/hide find/search item in navbar
        * Default: true
        */
       "search": true,
 
-      /**
+      /*
        * Show/hide propose item in navbar
        * Default: true
        */
       "proposeGroup": true,
 
-      /**
+      /*
        * Show/hide calendar item in navbar
        * Default: true
        */ "calendar": true,
@@ -247,40 +248,42 @@
           "link": "https://about.openki.net/",
           /* icon from fontawesome free */
           "icon": "fa-solid fa-pen",
-          /**
-           * Text from the link. The value is a translation key from i18next it must be
-           * defined in code
-           */
-          "key": "...",
-          /**
-           * As a alternative for "key" you can set "text" for the text from the link
-           * This setting can be a string or a object with key & values for every language
-           * eg. `{ "en": "Edit", "de": "Bearbeiten", ... }`
+          /*
+           * The text from the link.
+           * The value can be a translation key from i18next defined in code, a string or a object
+           * with key & values for every language eg. `{ "en": "Edit", "de": "Bearbeiten", ... }`
            */
           "text": "...",
+
+          /*
+           * Text from the link. The value is a translation key from i18next it must be
+           * defined in code
+           * Deprecated: use text instate (May 2026)
+           */
+          "key": "...",
         },
       ],
     },
 
-    /**
+    /*
      * Standard for all regions, can be overwritten if the "dashboard" property is
      * set in the region, if not set, the ‘find’ page is displayed
      * Default: undefined
      */
     "regionDashboardDefault": [
       {
-        /**
+        /*
          * The entity to show: "group", "groupWithoutPropose", "event", "organization",
          * "eventsMap", "propose" are supported
          */
         "entity": "",
-        /**
+        /*
          * Title to display over the row. The value can be a translation key from
          * i18next defined in code, a string or a object with key & values for
          * every language eg. `{ "en": "...", "de": "...", ... }`
          */
         "title": "",
-        /**
+        /*
          * Query how the data should be filtered and sorted, all options and filters
          * can be found in the wiki, can be an empty string "". The entities are
          * filtered by region.
@@ -290,7 +293,7 @@
         "showAll": {
           /* The target to which the button links. */
           "link": "",
-          /**
+          /*
            * The text to display. The value can be a translation key from i18next
            * defined in code, a string or a object with key & values for every language
            * eg. `{ "en": "...", "de": "...", ... }`
@@ -300,25 +303,25 @@
       },
     ],
 
-    /**
+    /*
      * Standard for all organizations, can be overwritten if the "dashboard" property
      * is set in the organization, if not set, the "find" page is displayed.
      * Default: undefined
      */
     "organizationDashboardDefault": [
       {
-        /**
+        /*
          * The entity to show: "group", "groupWithoutPropose", "event", "organization",
          * "eventsMap", "propose" are supported
          */
         "entity": "",
-        /**
+        /*
          * Title to display over the row. The value can be a translation key from i18next defined
          * in code, a string or a object with key & values for every language
          * eg. `{ "en": "...", "de": "...", ... }`
          */
         "title": "",
-        /**
+        /*
          * Query how the data should be filtered and sorted, all options and filters can be found in
          * the wiki, can be an empty string "". The entities are filtered by region and group.
          */
@@ -326,11 +329,12 @@
         /* Overwrite the standard showAll button (optional) */
         "showAll": {
           /* The target to which the button links. */
-          "link": "" /**
+          "link": "",
+          /*
            * The text to display. The value can be a translation key from i18next defined in code,
            * a string or a object with key & values for every language
            * eg. `{ "en": "...", "de": "...", ... }`
-           */,
+           */
           "text": "",
         },
       },
@@ -340,19 +344,21 @@
     "rolesDefault": [
       {
         "type": "participant",
-        /* icon class string from font-awesome ex: "fa-solid fa-bullhorn" */
+        /* Icon class string from font-awesome ex: "fa-solid fa-bullhorn" */
         "icon": "fa-solid fa-thumbs-up",
         /*
-         * The role appears as "proposed only"
+         * The role appears as "proposed only" in the member list.
          * Default: false
          */
         "proposal": false,
         /*
-         * The role is always added on group creation.
+         * The role is always added to the group on creation.
          * Default: false
          */
         "preset": true,
-        /* The role is editable by the editors of a group.
+        /*
+         * The role can be edited (added/removed to the group) after a group has been created
+         * by the editors of a group.
          * Default: false
          */
         "editable": false,
@@ -384,22 +390,30 @@
     "footerLinks": [
       {
         "link": "https://about.openki.net/",
+        /*
+         * The text from the link.
+         * The value can be a translation key from i18next defined in code, a string or a object
+         * with key & values for every language eg. `{ "en": "Edit", "de": "Bearbeiten", ... }`
+         */
+        "text": "footer.aboutOpenki",
+        /**
+         * Text that is shown on hover the link.
+         * The value can be a translation key from i18next defined in code, a string or a object
+         * with key & values for every language eg. `{ "en": "Edit", "de": "Bearbeiten", ... }`
+         */
+        "title": "navigation.footer.about.title",
+
         /**
          * Text from the link. The value is a translation key from i18next it must be
          * defined in code
+         * Deprecated: use text instate (May 2026)
          */
         "key": "footer.aboutOpenki",
         /**
-         * Text that is shown on hover the link. The value is a translation key from i18next it
-         * must be defined in code
+         * text that is shown on hover the link
+         * @deprecated: use title instead (May 2026)
          */
         "title_key": "navigation.footer.about.title",
-        /*
-         * As a alternative for "key" you can set "text" for the text from the link.
-         * This setting can be a string or a object with key & values for every language
-         * eg. `{ "en": "...", "de": "...", ... }`
-         */
-        "text": "...",
       },
       {
         "link": "/info/faq",
@@ -407,13 +421,13 @@
       },
       {
         "link": "https://gitlab.com/Openki/Openki/",
-        "key": "navigation.footer.powerdByOpenki",
-        "title_key": "navigation.footer.codeOnGitLab",
+        "text": "navigation.footer.powerdByOpenki",
+        "title": "navigation.footer.codeOnGitLab",
       },
       {
         "link": "https://about.openki.net/privacy-policy/",
-        "key": "main.privacyPolicy",
-        "title_key": "main.privacyPolicy.tooltip",
+        "text": "main.privacyPolicy",
+        "title": "main.privacyPolicy.tooltip",
       },
     ],
 
@@ -426,14 +440,14 @@
      */
     "dataProtectionLaw": "By continuing I accept the [Privacy Policy](https://about.openki.net/en/privacy-policy/) and [Terms of Service](https://about.openki.net/terms-and-conditions/)",
 
-    /**
+    /*
      * This setting can be a string or a object with key & values for every language
      * eg. `{ "en": "...", "de": "...", ... }`
      * Default: "/info/faq"
      */
     "faqLink": "/info/faq",
 
-    /**
+    /*
      * This setting can be a string or a object with key & values for every language
      * eg. `{ "en": "...", "de": "...", ... }`
      * Default: `{
@@ -443,7 +457,7 @@
      */
     "pricePolicyLink": "...",
 
-    /**
+    /*
      * This setting can be a string or a object with key & values for every language
      * eg. `{ "en": "...", "de": "...", ... }`
      * Default: `{
@@ -453,14 +467,14 @@
      */
     "groupGuideLink": "...",
 
-    /**
+    /*
      * This setting can be a string or a object with key & values for every language
      * eg. `{ "en": "...", "de": "...", ... }`
      * Default: "https://about.openki.net"
      */
     "aboutLink": "https://about.openki.net",
 
-    /**
+    /*
      * Contribution to the platform. A admin can set in the userprofile that a user has contributed.
      * This shows a icon next to the username. Remove this setting to disable this feature.
      */
@@ -468,7 +482,7 @@
       "icon": "fa-solid fa-heart",
       /* forbidden chars in username */
       "forbiddenChars": ["🖤", "💖", "💔", "💚", "💜", "❤️", "🧡", "💕", "💛", "💝"],
-      /**
+      /*
        * This setting can be a string or a object with key & values for every language
        * eg. `{ "en": "...", "de": "...", ... }`
        */
@@ -478,19 +492,19 @@
       },
     },
 
-    /**
+    /*
      * Max characters allowed for the description-field of groups.
      * Default: 15000
      */
     "groupDescriptionMax": 15000,
 
-    /**
+    /*
      * Max characters allowed for the description-field of events.
      * Default: 15000
      */
     "eventDescriptionMax": 15000,
 
-    /**
+    /*
      * Categories for groups, main and/or sub categories
      * Default: {}
      */
@@ -506,7 +520,7 @@
     },
   },
 
-  /**
+  /*
    * Sender e-mail address in mails
    * Default: ""
    */
@@ -520,32 +534,32 @@
    * visible in e-mails sent to users.
    */
   "reporter": {
-    /**
+    /*
      * The e-mail address of the sender. All e-mail addresses can be plain "sender@server.com"
      * or formatted "Sender Name <sender@server.com>"
      * Default: "reporter@mail.openki.net"
      */
     "sender": "pingpong@mail.openki.net",
-    /**
+    /*
      * Comma separated list of recipients e-mail addresses that will appear on the "To:" field
      * Default: "admins@openki.net"
      */
     "recipient": "badabuff@openki.net",
   },
 
-  /**
+  /*
    * Tells robots/crawlers whether to index the website or not
    * Default: true
    */
   "robots": false,
 
-  /**
+  /*
    * Tells robots/crawlers not to index user profiles (`/user/*`)
    * Default: false
    */
   "hideProfiles": false,
 
-  /**
+  /*
    * Print the log on the server in the console, usually only for development
    * Default: false
    */
@@ -582,7 +596,7 @@
     "secretAccessKey": "123abcd",
   },
 
-  /**
+  /*
    * Maximum number of entities that the api returns. If the parameter `limit`
    * is not set in the URL, the API always returns 100 entities whatever this
    * setting is set to.
@@ -590,7 +604,7 @@
    */
   "apiMaxLimit": 100,
 
-  /**
+  /*
    * How many hours back notification e-mails should be sent after the server was down.
    * This helps when there was a big problem with the server to not spam people.
    * Default: 72
@@ -598,7 +612,7 @@
   "notificationGracePeriodHours": 72,
 
   "startup": {
-    /**
+    /*
      * Build the cache in the db async or sync. For larger databases it takes a
      * long time until all fields are updated, during this time the startup is blocked.
      * The users cannot use the website. Because in a normal startup the database

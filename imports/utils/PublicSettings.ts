@@ -8,13 +8,23 @@ import { LocalizedValue, LocalizedValuePattern } from "/imports/utils/getLocaliz
 export const RoleEntityPattern = {
   /** (name of role) */
   type: String,
-  /** icon class string from font-awesome ex: "fa-solid fa-bullhorn" */
+  /** Icon class string from font-awesome ex: "fa-solid fa-bullhorn" */
   icon: String,
-  /** The role appears as "proposed only" in the member list. Default: false */
+  /**
+   * The role appears as "proposed only" in the member list.
+   * @default false
+   */
   proposal: Match.Maybe(Boolean),
-  /** The role is always added to the group on creation. Default: false */
+  /**
+   * The role is always added to the group on creation.
+   * @default false
+   */
   preset: Match.Maybe(Boolean),
-  /** The role can be edited (added/removed to the group) after a group has been created. Default: false */
+  /**
+   * The role can be edited (added/removed to the group) after a group has been created
+   * by the editors of a group.
+   * @default false
+   */
   editable: Match.Maybe(Boolean),
   translations: Match.Maybe({
     short: Match.Maybe(LocalizedValuePattern),
@@ -59,14 +69,14 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
    * from our s3 file storage (must start with the "publicUrlBase" setting) or
    * a base64 encoded string.
    */
-  headerLogo: { src: String, alt: String },
+  headerLogo: { src: String, alt: LocalizedValuePattern },
 
   /**
    * The logo in the top left corner from the `/kiosk/events/` page. Can be a logo
    * from the `/public/logo/*` folder, from our s3 file storage (must start with
    * the "publicUrlBase" setting) or a base64 encoded string.
    */
-  headerLogoKiosk: { src: String, alt: String },
+  headerLogoKiosk: { src: String, alt: LocalizedValuePattern },
 
   /** The default image used for avatars (color is changed using the CSS filter 'hue-rotate'). */
   avatarLogo: { src: String, alt: LocalizedValuePattern },
@@ -253,16 +263,18 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
         /** icon from fontawesome free */
         icon: String,
         /**
-         * Text from the link. The value is a translation key from i18next it must be
-         * defined in code
-         */
-        key: Match.Maybe(String),
-        /**
-         * As a alternative for "key" you can set "text" for the text from the link
-         * This setting can be a string or a object with key & values for every language
-         * eg. `{ "en": "Edit", "de": "Bearbeiten", ... }`
+         * The text from the link.
+         * The value can be a translation key from i18next defined in code, a string or a object
+         * with key & values for every language eg. `{ "en": "Edit", "de": "Bearbeiten", ... }`
          */
         text: Match.Maybe(LocalizedValuePattern),
+
+        /**
+         * Text from the link. The value is a translation key from i18next it must be
+         * defined in code
+         * @deprecated use text instate (May 2026)
+         */
+        key: Match.Maybe(String),
       },
     ],
   },
@@ -278,7 +290,14 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
        * The entity to show: "group", "groupWithoutPropose", "event", "organization",
        * "eventsMap", "propose" are supported
        */
-      entity: String,
+      entity: StringEnum(
+        "group",
+        "groupWithoutPropose",
+        "event",
+        "organization",
+        "eventsMap",
+        "propose",
+      ),
       /**
        * Title to display over the row. The value can be a translation key from
        * i18next defined in code, a string or a object with key & values for
@@ -316,7 +335,14 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
        * The entity to show: "group", "groupWithoutPropose", "event", "organization",
        * "eventsMap", "propose" are supported
        */
-      entity: String,
+      entity: StringEnum(
+        "group",
+        "groupWithoutPropose",
+        "event",
+        "organization",
+        "eventsMap",
+        "propose",
+      ),
       /**
        * Title to display over the row. The value can be a translation key from i18next defined
        * in code, a string or a object with key & values for every language
@@ -341,6 +367,7 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
       }),
     },
   ]),
+
   /** Standard for all regions, can be overwritten if the "roles" property is set in the region */
   rolesDefault: [RoleEntityPattern],
 
@@ -349,23 +376,32 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
     {
       link: String,
       /**
+       * The text from the link.
+       * The value can be a translation key from i18next defined in code, a string or a object
+       * with key & values for every language eg. `{ "en": "Edit", "de": "Bearbeiten", ... }`
+       */
+      text: Match.Maybe(LocalizedValuePattern),
+      /**
+       * Text that is shown on hover the link.
+       * The value can be a translation key from i18next defined in code, a string or a object
+       * with key & values for every language eg. `{ "en": "Edit", "de": "Bearbeiten", ... }`
+       */
+      title: Match.Maybe(LocalizedValuePattern),
+
+      /**
        * Text from the link. The value is a translation key from i18next it must be
        * defined in code
+       * @deprecated use text instate (May 2026)
        */
       key: Match.Maybe(String),
       /**
-       * Text that is shown on hover the link. The value is a translation key from i18next it
-       * must be defined in code
+       * text that is shown on hover the link
+       * @deprecated use title instead (May 2026)
        */
       title_key: Match.Maybe(String),
-      /**
-       * As a alternative for "key" you can set "text" for the text from the link.
-       * This setting can be a string or a object with key & values for every language
-       * eg. `{ "en": "...", "de": "...", ... }`
-       */
-      text: Match.Maybe(LocalizedValuePattern),
     },
   ],
+
   /*
    * Text displayed in the registration form to link to the Privacy Policy and Terms and
    * Conditions. Can be markdown.
