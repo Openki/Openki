@@ -113,7 +113,7 @@
     "test:env": "BABEL_ENV=test DISABLE_REACT_FAST_REFRESH=1 meteor --settings settings/ci.json --port 3000",
     "lint": "eslint . && stylelint '**/*.scss' && prettier --check '**/*.{ts,tsx,scss,json*,js,mjs}'",
     "lint:fix": "eslint . --fix && stylelint '**/*.scss' --fix && prettier --write '**/*.{ts,tsx,scss,json*,js,mjs}' | grep -v \"(unchanged)\" && html-beautify '{client,imports,private,public,server}/**/*.html' -r | grep -v \"unchanged\"",
-    "reset": "meteor reset --db && rm -rf node_modules package-lock.json && meteor npm install --verbose",
+    "reset": "meteor reset --db && rm -rf node_modules && meteor npm install --verbose",
     "type-check": "meteor lint && tsc",
     "extract-translations": "rm -f imports/startup/both/i18n/en.json && npx i18next"
   },
