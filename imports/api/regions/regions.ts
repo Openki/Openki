@@ -38,19 +38,19 @@ export interface RegionEntity {
   /** description for the user */
   description: string;
   /**
-   * Number of courses in that region, calculated field (does not count internal or archived
-   * courses)
+   * Number of groups in that region, calculated field (does not count internal or archived
+   * groups)
    */
-  courseCount: number;
+  groupCount: number;
   /**
    * Number of future events in that region, calculated field (does not count internal events)
    */
   futureEventCount: number;
-  /** ID of featured group */
-  featuredGroup: string;
-  /** Team groups that is added to all courses on create. */
-  defaultTeamGroups?: string[];
-  /** Courses in this region are default single events. */
+  /** ID of featured organization */
+  featuredOrganization: string;
+  /** Team organizations that is added to all groups on create. */
+  defaultTeamOrganizations?: string[];
+  /** Groups in this region are default single events. */
   singleEvents?: boolean;
   /**
    * If set the calendar page jumps automatic to this date.
@@ -80,8 +80,8 @@ export interface RegionEntity {
     /** Can be a logo from the /private/* folder or a base64 encoded string. */
     emailLogo?: string;
 
-    /** Default images for courses in overviews if none is set on the course. */
-    courseBackgroundImages: string[];
+    /** Default images for groups in overviews if none is set on the group. */
+    groupBackgroundImages: string[];
   };
 
   /** for the /api/0/xml/schedule See: https://c3voc.de/wiki/schedule#schedule_xml */
@@ -96,7 +96,7 @@ export interface RegionEntity {
   };
 
   dashboard?: {
-    entity: "group" | "course" | "courseWithoutPropose" | "event" | "eventsMap" | "propose";
+    entity: "organization" | "group" | "groupWithoutPropose" | "event" | "eventsMap" | "propose";
     title?: string;
     query?: string;
     showAll?: { link?: string; text?: string };

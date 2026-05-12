@@ -5,7 +5,7 @@ import moment from "moment";
 import { Events } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { MeteorAsync } from "/imports/utils/promisify";
-import { CourseModel, Courses } from "/imports/api/courses/courses";
+import { GroupModel, Groups } from "../../../imports/api/groups/groups";
 import { UserModel } from "/imports/api/users/users";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { Default as RegionDefault } from "/imports/ui/lib/cleaned-region";
@@ -83,16 +83,16 @@ if (Meteor.isClient) {
         assert.equal(event?.description, expectedText);
       });
 
-      it("Updates time_lastedit from course", async function () {
+      it("Updates time_lastedit from group", async function () {
         this.timeout(5000);
 
         await MeteorAsync.loginWithPassword("greg", "greg");
 
-        const courseId = "eb6aedecf9";
+        const groupId = "eb6aedecf9";
 
-        const handle = await MeteorAsync.subscribe("courseDetails", courseId);
+        const handle = await MeteorAsync.subscribe("groupDetails", groupId);
         try {
-          const oldCourse = Courses.findOne(courseId);
+          const oldGroup = Groups.findOne(groupId);
 
           const theFuture = new Date();
           theFuture.setHours(1000);
@@ -103,7 +103,7 @@ if (Meteor.isClient) {
           const regionId = "9JyFCoKWkxnf8LWPh"; // Testistan
 
           const newEvent = {
-            courseId,
+            groupId,
             title: "Intentionally clever title for a generated test-event",
             description: "Nothing special here.",
             venue: { name: "Undisclosed place where heavy testing takes place" },
@@ -115,11 +115,11 @@ if (Meteor.isClient) {
 
           await EventsMethods.save("", newEvent);
 
-          const newCourse = Courses.findOne(courseId);
+          const newGroup = Groups.findOne(groupId);
 
           assert.isAbove(
-            (newCourse as CourseModel).time_lastedit.getTime(),
-            (oldCourse as CourseModel).time_lastedit.getTime(),
+            (newGroup as GroupModel).time_lastedit.getTime(),
+            (oldGroup as GroupModel).time_lastedit.getTime(),
           );
         } finally {
           handle.stop();
@@ -148,7 +148,7 @@ if (Meteor.isClient) {
         assert.isNotEmpty(eventsAsGast, "shows events");
 
         assert.isEmpty(
-          eventsAsGast.filter((c) => c.tenant && !PublicSettings.publicTenants.includes(c.tenant)),
+          eventsAsGast.filter((e) => e.tenant && !PublicSettings.publicTenants.includes(e.tenant)),
           "don't show events from not public",
         );
       });
@@ -166,8 +166,8 @@ if (Meteor.isClient) {
         const eventsAsSchufien = Events.findFilter().fetch();
 
         assert.includeMembers(
-          eventsAsSchufien.map((c) => c._id),
-          eventsAsGast.map((c) => c._id),
+          eventsAsSchufien.map((e) => e._id),
+          eventsAsGast.map((e) => e._id),
           "shows public events as logged in user",
         );
 
@@ -177,7 +177,7 @@ if (Meteor.isClient) {
         );
         assert.isNotEmpty(
           eventsAsSchufien.filter(
-            (c) => c.tenant && schufien.tenants.some((t) => t._id === c.tenant),
+            (e) => e.tenant && schufien.tenants.some((t) => t._id === e.tenant),
           ),
           "shows private events as logged in user",
         );

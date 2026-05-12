@@ -1,13 +1,13 @@
 import { Mongo } from "meteor/mongo";
 import { uniq } from "lodash-es";
 
-import { CourseEntity, CourseModel, Courses } from "/imports/api/courses/courses";
+import { GroupEntity, GroupModel, Groups } from "../groups/groups";
 import { EventEntity, EventModel, Events } from "/imports/api/events/events";
-import { Groups } from "../groups/groups";
+import { Organizations } from "../organizations/organizations";
 import { sum } from "../../utils/sum";
 
 export interface Stat {
-  courses: {
+  groups: {
     /** excl. archived */
     total: number;
     /** no events */
@@ -17,7 +17,7 @@ export interface Stat {
     /** only passed events */
     resting: number;
     archived: number;
-    /** interested or any role, incl. creater */
+    /** interested or any role, incl. creator */
     enrollments: number;
     /** unique accounts enrolled */
     users: number;
@@ -44,7 +44,7 @@ export interface Stat {
   };
 }
 
-export interface GroupStat extends Stat {
+export interface OrganizationStat extends Stat {
   _id?: string | undefined;
   name?: string | undefined;
   short?: string | undefined;
@@ -53,15 +53,15 @@ export interface GroupStat extends Stat {
 
 export interface Stats {
   region: Stat;
-  groups: GroupStat[];
+  organizations: OrganizationStat[];
 }
 
-function getCourses(regionId: string) {
-  const filter: Mongo.Selector<CourseEntity> = {};
+function getGroups(regionId: string) {
+  const filter: Mongo.Selector<GroupEntity> = {};
   if (regionId && regionId !== "all") {
     filter.region = regionId;
   }
-  return Courses.find(filter, {
+  return Groups.find(filter, {
     // Do not load any data into the memory that is not required
     projection: { name: 0, slug: 0, description: 0, image: 0, customFields: 0, history: 0 },
   }).fetchAsync();
@@ -74,52 +74,52 @@ function getEvents(regionId: string) {
   }
   return Events.find(filter, {
     // Do not load any data into the memory that is not required
-    projection: { title: 0, slug: 0, description: 0, courseImage: 0, courseCompactImage: 0 },
+    projection: { title: 0, slug: 0, description: 0, groupImage: 0, groupCompactImage: 0 },
   }).fetchAsync();
 }
 
-/** Get all groups that promotes courses or events */
-async function getGroups(courses: CourseModel[], events: EventModel[]) {
-  let groupIds = [];
-  groupIds.push(...courses.flatMap((c) => c.groups));
-  groupIds.push(...events.flatMap((e) => e.groups));
-  groupIds = uniq(groupIds).filter((g) => g);
+/** Get all organizations that promotes groups or events */
+async function getOrganizations(groups: GroupModel[], events: EventModel[]) {
+  let organizationIds = [];
+  organizationIds.push(...groups.flatMap((g) => g.organizations));
+  organizationIds.push(...events.flatMap((e) => e.organizations));
+  organizationIds = uniq(organizationIds).filter((o) => o);
 
-  const groupEntities = await Groups.find(
+  const organizationEntities = await Organizations.find(
     {},
     {
       projection: { _id: 1, name: 1, short: 1, members: 1 },
     },
   ).fetchAsync();
 
-  return groupIds.map((g) => {
-    const group = groupEntities.find((e) => e._id === g);
+  return organizationIds.map((o) => {
+    const organization = organizationEntities.find((e) => e._id === o);
     return {
-      _id: g,
-      name: group?.name,
-      short: group?.short,
-      members: group?.members.length,
+      _id: o,
+      name: organization?.name,
+      short: organization?.short,
+      members: organization?.members.length,
     };
   });
 }
 
-function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
+function calcStats(groups: GroupModel[], events: EventModel[]): Stat {
   const now = new Date();
 
-  const notArchived = courses.filter((c) => !c.archived);
-  const members = courses.flatMap((c) => c.members);
+  const notArchived = groups.filter((g) => !g.archived);
+  const members = groups.flatMap((g) => g.members);
 
   const notCanceled = events.filter((e) => !e.canceled);
   const canceled = events.filter((e) => e.canceled);
   const futureAndNotCanceled = notCanceled.filter((e) => e.start > now);
   return {
-    // inspired from courses.findFilter in /imports/api/courses/courses
-    courses: {
+    // inspired from groups.findFilter in /imports/api/groups/groups
+    groups: {
       total: notArchived.length,
-      proposed: notArchived.filter((c) => !c.lastEvent && !c.futureEvents).length,
-      resting: notArchived.filter((c) => c.lastEvent && !c.futureEvents).length,
-      upcoming: notArchived.filter((c) => c.futureEvents > 0).length,
-      archived: courses.filter((c) => c.archived).length,
+      proposed: notArchived.filter((g) => !g.lastEvent && !g.futureEvents).length,
+      resting: notArchived.filter((g) => g.lastEvent && !g.futureEvents).length,
+      upcoming: notArchived.filter((g) => g.futureEvents > 0).length,
+      archived: groups.filter((g) => g.archived).length,
       enrollments: members.length,
       users: uniq(members.map((m) => m.user)).length,
     },
@@ -139,36 +139,38 @@ function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
 }
 
 export async function getRegionStats(regionId: string): Promise<Stats> {
-  // load data into memorie
-  const courses = await getCourses(regionId);
+  // load data into memory
+  const groups = await getGroups(regionId);
   const events = await getEvents(regionId);
-  const groups = await getGroups(courses, events);
+  const organizations = await getOrganizations(groups, events);
 
   return {
     // calc stat for overview over all or one region
-    region: calcStats(courses, events),
-    groups: [
-      // calc stat for ungrouped
+    region: calcStats(groups, events),
+    organizations: [
+      // calc stat for groups and events without a organization
       calcStats(
-        courses.filter((c) => !c.groups?.length),
-        events.filter((e) => !e.groups?.length && !e.allGroups?.length),
+        groups.filter((g) => !g.organizations?.length),
+        events.filter((e) => !e.organizations?.length && !e.allOrganizations?.length),
       ),
-      // calc stat for every group
-      ...groups.map((g) => ({
-        ...g,
+      // calc stat for every organization
+      ...organizations.map((o) => ({
+        ...o,
         ...calcStats(
-          courses.filter((c) => c.groups?.includes(g._id)),
-          events.filter((e) => e.allGroups?.includes(g._id) || e.groups?.includes(g._id)),
+          groups.filter((g) => g.organizations?.includes(o._id)),
+          events.filter(
+            (e) => e.allOrganizations?.includes(o._id) || e.organizations?.includes(o._id),
+          ),
         ),
       })),
     ]
-      // sort groups by number of active users in events
-      //        then by number of active users in courses
+      // sort organizations by number of active users in events
+      //        then by number of active users in groups
       //        then by number of events
-      //        then by number of courses
-      .sort((a, b) => b.courses.total + b.courses.archived - (a.courses.total + a.courses.archived))
+      //        then by number of groups
+      .sort((a, b) => b.groups.total + b.groups.archived - (a.groups.total + a.groups.archived))
       .sort((a, b) => b.events.total - a.events.total)
-      .sort((a, b) => b.courses.users - a.courses.users)
+      .sort((a, b) => b.groups.users - a.groups.users)
       .sort((a, b) => b.events.users - a.events.users),
   };
 }

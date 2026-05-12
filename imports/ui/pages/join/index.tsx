@@ -66,7 +66,7 @@ export function JoinPage({ joinLink }: Props) {
             <p className="fs-4">
               {t(
                 "joinPage.text",
-                "Become part of {TENANT} and propose, discuss, develop, organize and publish courses with {INVITER} and other nice people in {TENANT}.",
+                "Become part of {TENANT} and propose, discuss, develop, organize and publish groups with {INVITER} and other nice people in {TENANT}.",
                 {
                   TENANT: tenant?.name,
                   INVITER: inviter?.getDisplayName(),

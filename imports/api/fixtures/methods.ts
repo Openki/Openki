@@ -1,22 +1,22 @@
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 
-import { Courses } from "/imports/api/courses/courses";
+import { Groups } from "../groups/groups";
 import { Events } from "/imports/api/events/events";
-import { Groups } from "/imports/api/groups/groups";
+import { Organizations } from "../organizations/organizations";
 import { Regions } from "/imports/api/regions/regions";
 import { Venues } from "/imports/api/venues/venues";
 import { InfoPages } from "../infoPages/infoPages";
 import { Tenants } from "../tenants/tenants";
-import { CourseDiscussions } from "../course-discussions/course-discussions";
+import { GroupDiscussions } from "../group-discussions/group-discussions";
 
-import { create as coursesDataCreate } from "./courses/create";
+import { create as groupsDataCreate } from "./groups/create";
 import { create as eventsDataCreate } from "./events/create";
 import { generate as eventsDataGenerate } from "./events/generate";
-import { create as groupsDataCreate } from "./groups/create";
-import { create as regionsDataCreate } from "./regions/create";
+import { create as organizationsDataCreate } from "./organizations/create";
 import { create as venuesDataCreate } from "./venues/create";
 import { generate as commentsDataGenerate } from "./comments/generate";
+import { create as regionsDataCreate } from "./regions/create";
 import { usersCreate as usersDataCreate } from "./usersCreate";
 import { serverError } from "../log/methods";
 import { Invitations } from "../invitations/invitations";
@@ -30,15 +30,15 @@ export const clean = ServerMethod(
     }
     try {
       await Promise.all([
-        CourseDiscussions.removeAsync({}),
+        GroupDiscussions.removeAsync({}),
         Events.removeAsync({}),
-        Courses.removeAsync({}),
+        Groups.removeAsync({}),
         Venues.removeAsync({}),
         Regions.removeAsync({}),
         Invitations.removeAsync({}),
         JoinLinks.removeAsync({}),
         Tenants.removeAsync({}),
-        Groups.removeAsync({}),
+        Organizations.removeAsync({}),
         InfoPages.removeAsync({}),
       ]);
     } catch (e) {
@@ -59,8 +59,8 @@ export const create = ServerMethod(
     try {
       await usersDataCreate();
 
-      if ((await Groups.countDocuments()) === 0) {
-        await groupsDataCreate();
+      if ((await Organizations.countDocuments()) === 0) {
+        await organizationsDataCreate();
       }
 
       if ((await Regions.countDocuments()) === 0) {
@@ -71,8 +71,8 @@ export const create = ServerMethod(
         await venuesDataCreate();
       }
 
-      if ((await Courses.countDocuments()) === 0) {
-        await coursesDataCreate();
+      if ((await Groups.countDocuments()) === 0) {
+        await groupsDataCreate();
       }
 
       if ((await Events.countDocuments()) === 0) {
@@ -80,7 +80,7 @@ export const create = ServerMethod(
         await eventsDataGenerate();
       }
 
-      if ((await CourseDiscussions.countDocuments()) === 0) {
+      if ((await GroupDiscussions.countDocuments()) === 0) {
         await commentsDataGenerate();
       }
     } catch (e) {

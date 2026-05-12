@@ -2,8 +2,8 @@ import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { Match, check } from "meteor/check";
 
-import { Courses } from "/imports/api/courses/courses";
-import { CourseDiscussions } from "/imports/api/course-discussions/course-discussions";
+import { Groups } from "../groups/groups";
+import { GroupDiscussions } from "../group-discussions/group-discussions";
 import { Events } from "/imports/api/events/events";
 import { RegionEntity, Regions } from "./regions";
 import { Venues } from "/imports/api/venues/venues";
@@ -42,7 +42,7 @@ export const create = ServerMethod("region.create", async (changes: CreateFields
 
   const set = {
     tenant: changes.tenant,
-    courseCount: 0,
+    groupCount: 0,
     futureEventCount: 0,
     createdby: user._id,
     created: new Date(),
@@ -59,7 +59,7 @@ export const create = ServerMethod("region.create", async (changes: CreateFields
   set.tz = changes.tz.trim().substring(0, 40);
 
   set.description = changes.description.trim().substring(0, 1000);
-  // Todo: check this already when the user writes into the textarea? is there a limit for course descriptions?
+  // Todo: check this already when the user writes into the textarea? is there a limit for group descriptions?
 
   return Regions.insertAsync(set);
 });
@@ -135,38 +135,38 @@ export const remove = ServerMethod("region.remove", async (regionId: string) => 
 
   await checkEditAllowed(regionId);
 
-  if ((await Courses.countDocuments({ region: regionId })) > 20) {
+  if ((await Groups.countDocuments({ region: regionId })) > 20) {
     throw new Meteor.Error(
       401,
-      "Deleting regions with more than 20 courses is not allowed. Delete courses or contact an administrator. For safety reasons. So that an active region is not deleted by mistake.",
+      "Deleting regions with more than 20 groups is not allowed. Delete groups or contact an administrator. For safety reasons. So that an active region is not deleted by mistake.",
     );
   }
 
   await Events.removeAsync({ region: regionId });
-  // CourseDiscussionEntity do not currently have a region.
-  for (const c of await Courses.find({ region: regionId }).fetchAsync()) {
-    await CourseDiscussions.removeAsync({ courseId: c._id });
+  // GroupDiscussionEntity do not currently have a region.
+  for (const g of await Groups.find({ region: regionId }).fetchAsync()) {
+    await GroupDiscussions.removeAsync({ groupId: g._id });
   }
-  await Courses.removeAsync({ region: regionId });
+  await Groups.removeAsync({ region: regionId });
   await Venues.removeAsync({ region: regionId });
   await Regions.removeAsync(regionId);
 });
 
-export const featureGroup = ServerMethod(
-  "region.featureGroup",
-  async (regionId: string, groupId: string) => {
+export const featureOrganization = ServerMethod(
+  "region.featureOrganization",
+  async (regionId: string, organizationId: string) => {
     check(regionId, String);
-    check(groupId, String);
+    check(organizationId, String);
 
-    await Regions.updateAsync(regionId, { $set: { featuredGroup: groupId } });
+    await Regions.updateAsync(regionId, { $set: { featuredOrganization: organizationId } });
   },
 );
 
-export const unsetFeaturedGroup = ServerMethod(
-  "region.unsetFeaturedGroup",
+export const unsetFeaturedOrganization = ServerMethod(
+  "region.unsetFeaturedOrganization",
   async (regionId: string) => {
     check(regionId, String);
 
-    await Regions.updateAsync(regionId, { $set: { featuredGroup: "" } });
+    await Regions.updateAsync(regionId, { $set: { featuredOrganization: "" } });
   },
 );

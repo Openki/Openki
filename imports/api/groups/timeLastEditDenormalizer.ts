@@ -1,5 +1,5 @@
 import { Mongo } from "meteor/mongo";
-import { GroupEntity } from "./groups";
+import { GroupEntity, Groups } from "./groups";
 
 // Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers
 
@@ -20,13 +20,34 @@ export function beforeUpdate(group: Mongo.OptionalId<GroupEntity>) {
 /**
  * Enrich the group entity with the modification date
  */
-export function beforeUpdateLogo(update: { logoUrl: string }) {
+export function beforeUpdateImage(update: { image: string; compactImage: string }) {
   return { ...update, time_lastedit: new Date() };
 }
 
 /**
  * Enrich the group entity with the modification date
  */
-export function beforeDeleteLogo() {
+export function beforeDeleteImage() {
   return { time_lastedit: new Date() };
+}
+
+/**
+ * Update the modification date
+ */
+export async function afterSubscribe(groupId: string) {
+  await Groups.updateAsync(groupId, { $set: { time_lastedit: new Date() } });
+}
+
+/**
+ * Update the modification date
+ */
+export async function afterUnsubscribe(groupId: string) {
+  await Groups.updateAsync(groupId, { $set: { time_lastedit: new Date() } });
+}
+
+/**
+ * Update the modification date of the group
+ */
+export async function afterEventInsert(groupId: string) {
+  await Groups.updateAsync(groupId, { $set: { time_lastedit: new Date() } });
 }

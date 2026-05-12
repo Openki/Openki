@@ -13,7 +13,7 @@ if (Meteor.isServer) {
   const requestContext = new AsyncLocalStorage();
 
   // save the request context for later to have access to the cookies
-  WebApp.rawConnectHandlers.use("/_oauth/c3", (request, _response, next) => {
+  WebApp.handlers.use("/_oauth/c3", (request, _response, next) => {
     requestContext.run({ request }, () => next());
   });
 

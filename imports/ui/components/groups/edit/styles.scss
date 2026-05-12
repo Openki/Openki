@@ -1,0 +1,17 @@
+@import "{}/imports/ui/stylesheets/variables/index";
+
+.group-edit-body {
+  @include media-breakpoint-up(sm) {
+    border-color: $group-border-color;
+    border-style: $proposal-border-style;
+  }
+
+  &.is-frame {
+    margin-top: 0;
+  }
+
+  .alert-link,
+  .alert-link:hover {
+    text-decoration: underline;
+  }
+}

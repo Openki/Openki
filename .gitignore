@@ -16,11 +16,11 @@ dump/
 .npm
 
 settings.json
-server/version.js
 node_modules/
 
 .vscode/
 .idea/
+.zed/
 
 tsconfig.tsbuildinfo
 jsconfig.json

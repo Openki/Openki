@@ -1,0 +1,38 @@
+@use "sass:color";
+@import "{}/imports/ui/stylesheets/variables/index";
+
+$featured-organization-bg: color.adjust($green, $lightness: 10%);
+
+.featured-organization {
+  background-color: $featured-organization-bg;
+  border: 1px solid color.adjust($featured-organization-bg, $lightness: -5%);
+  margin-top: 15px;
+}
+
+.featured-organization-header,
+.featured-organization-body {
+  padding: 15px;
+}
+
+.featured-organization-header {
+  background-color: color.adjust($featured-organization-bg, $lightness: -5%);
+  border-bottom: 1px solid color.adjust($featured-organization-bg, $lightness: -10%);
+}
+
+.featured-organization-logo {
+  width: 65px;
+}
+
+.featured-organization-body-logo,
+.featured-organization-body-content {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.featured-organization-body-logo + .featured-organization-body-content {
+  margin-left: 10px;
+}
+
+.featured-organization-name {
+  font-weight: bold;
+}

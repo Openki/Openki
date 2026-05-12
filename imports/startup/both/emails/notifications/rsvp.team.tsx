@@ -4,7 +4,7 @@ import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
 
-import { Courses } from "/imports/api/courses/courses";
+import { Groups } from "../../../../api/groups/groups";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { Log } from "/imports/api/log/log";
 import { UserModel, Users } from "/imports/api/users/users";
@@ -18,7 +18,7 @@ import { LocalTime } from "/imports/utils/local-time";
 
 interface Body {
   eventId: string;
-  courseId: string;
+  groupId: string;
   participantId: string;
   recipients: string[];
   model: string;
@@ -38,35 +38,35 @@ export async function record(eventId: string, participantId: string) {
     throw new Meteor.Error(`No user entry for ${participantId}`);
   }
 
-  if (!event.courseId) {
-    throw new Meteor.Error(`Event has no course`);
+  if (!event.groupId) {
+    throw new Meteor.Error(`Event has no group`);
   }
 
-  const course = await Courses.findOneAsync(event.courseId);
-  if (!course) {
-    throw new Meteor.Error(`No course entry for ${event.courseId}`);
+  const group = await Groups.findOneAsync(event.groupId);
+  if (!group) {
+    throw new Meteor.Error(`No group entry for ${event.groupId}`);
   }
 
   const body: Body = {
     eventId: event._id,
-    courseId: course._id,
+    groupId: group._id,
     participantId: participant._id,
 
     // Don't send to new member, they know
-    recipients: course
+    recipients: group
       .membersWithRole("team")
       .map((m) => m.user)
       .filter((r) => r !== participantId),
     model: "Rsvp.Team",
   };
 
-  await Log.record("Notification.Send", [course._id, event._id, participant._id], body);
+  await Log.record("Notification.Send", [group._id, event._id, participant._id], body);
 }
 
 export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
   const { body } = entry;
   const event = await Events.findOneAsync(body.eventId);
-  const course = await Courses.findOneAsync(body.courseId);
+  const group = await Groups.findOneAsync(body.groupId);
   const newParticipant = await Users.findOneAsync(body.participantId);
 
   let region: RegionModel | undefined;
@@ -88,8 +88,8 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       if (!newParticipant) {
         throw new Error("New participant does not exist (0.o)");
       }
-      if (!course) {
-        throw new Error("Course does not exist (0.o)");
+      if (!group) {
+        throw new Error("Group does not exist (0.o)");
       }
       if (!event) {
         throw new Error("Event does not exist (0.o)");
@@ -131,7 +131,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
       const eventTitle = <a href={eventUrl}>{eventFullTitle}</a>;
       return {
-        course: course.name,
+        group: group.name,
         event: eventTitle,
         newParticipant: <strong>{newParticipant.getDisplayName()}</strong>,
         companionsOfNewParticipant:

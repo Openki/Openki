@@ -4,18 +4,18 @@ import { assignIn } from "lodash-es";
 import moment from "moment";
 import { Random } from "meteor/random";
 
-import { Courses } from "/imports/api/courses/courses";
-import { Subscribe, processChange } from "/imports/api/courses/subscription";
-import * as courseHistoryDenormalizer from "/imports/api/courses/historyDenormalizer";
-import * as courseTimeLastEditDenormalizer from "/imports/api/courses/timeLastEditDenormalizer";
-import * as courseImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
+import { Groups } from "../groups/groups";
+import { Subscribe, processChange } from "../groups/subscription";
+import * as groupHistoryDenormalizer from "../groups/historyDenormalizer";
+import * as groupTimeLastEditDenormalizer from "../groups/timeLastEditDenormalizer";
+import * as groupImageDenormalizer from "./groupImageDenormalizer";
 import * as categoriesDenormalizer from "/imports/api/events/categoriesDenormalizer";
-import * as groupsDenormalizer from "/imports/api/events/groupsDenormalizer";
+import * as organizationsAndEditorsDenormalizer from "./organizationsAndEditorsDenormalizer";
 import * as venueDenormalizer from "/imports/api/events/venueDenormalizer";
-import * as courseNextEventDenormalizer from "/imports/api/courses/nextEventDenormalizer";
+import * as groupNextEventDenormalizer from "../groups/nextEventDenormalizer";
 import * as regionsCountDenormalizer from "/imports/api/regions/countDenormalizer";
 import { EventEntity, EventModel, Events, OEvent } from "/imports/api/events/events";
-import { Groups } from "/imports/api/groups/groups";
+import { Organizations } from "../organizations/organizations";
 import { Regions } from "/imports/api/regions/regions";
 
 import { Notification } from "../../startup/both/emails/notification";
@@ -26,7 +26,7 @@ import * as StringTools from "/imports/utils/string-tools";
 import * as UpdateMethods from "/imports/utils/update-methods";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { HtmlString, Type } from "/imports/utils/CustomChecks";
-import { GroupPromoters } from "/imports/utils/update-methods";
+import { OrganizationPromoters } from "/imports/utils/update-methods";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { Venues } from "../venues/venues";
 import { UserModel } from "../users/users";
@@ -124,10 +124,10 @@ export type UpdateFields = Type<typeof UpdateFieldsPattern>;
 export const CreateFieldsPattern = {
   ...UpdateFieldsPattern,
   venue: EventVenuePattern,
-  courseId: Match.Optional(String),
+  groupId: Match.Optional(String),
   region: String,
   replicaOf: Match.Optional(String),
-  groups: Match.Optional([String]),
+  organizations: Match.Optional([String]),
 };
 export type CreateFields = Type<typeof CreateFieldsPattern>;
 
@@ -176,12 +176,12 @@ export const save = ServerMethod(
     let event: EventModel;
     if (isNew) {
       editFields.time_created = now;
-      if (editFields.courseId) {
-        const course = await Courses.findOneAsync(editFields.courseId);
-        if (!course) {
-          throw new Meteor.Error(404, "course not found");
+      if (editFields.groupId) {
+        const group = await Groups.findOneAsync(editFields.groupId);
+        if (!group) {
+          throw new Meteor.Error(404, "group not found");
         }
-        if (!course.editableBy(user)) {
+        if (!group.editableBy(user)) {
           throw new Meteor.Error(401, "not permitted");
         }
       }
@@ -191,8 +191,8 @@ export const save = ServerMethod(
         if (!parent) {
           throw new Meteor.Error(404, "replica parent not found");
         }
-        if (parent.courseId !== editFields.courseId) {
-          throw new Meteor.Error(400, "replica must be in same course");
+        if (parent.groupId !== editFields.groupId) {
+          throw new Meteor.Error(400, "replica must be in same group");
         }
       }
 
@@ -200,16 +200,16 @@ export const save = ServerMethod(
         throw new Meteor.Error(400, "Event date not provided");
       }
 
-      const testedGroups = await Promise.all(
-        editFields.groups?.map(async (groupId) => {
-          const group = await Groups.findOneAsync(groupId);
-          if (!group) {
-            throw new Meteor.Error(404, `no group with id ${groupId}`);
+      const testedOrganizations = await Promise.all(
+        editFields.organizations?.map(async (organizationId) => {
+          const organization = await Organizations.findOneAsync(organizationId);
+          if (!organization) {
+            throw new Meteor.Error(404, `no organization with id ${organizationId}`);
           }
-          return group._id;
+          return organization._id;
         }) || [],
       );
-      editFields.groups = testedGroups;
+      editFields.organizations = testedOrganizations;
 
       // Coerce faulty end dates
       if (!editFields.endLocal || editFields.endLocal < editFields.startLocal) {
@@ -224,7 +224,7 @@ export const save = ServerMethod(
       // Synthesize event document because the code below relies on it
       event = assignIn(new OEvent(), {
         region: editFields.region,
-        courseId: editFields.courseId,
+        groupId: editFields.groupId,
         editors: [user._id],
       }) as EventModel;
     } else {
@@ -344,17 +344,17 @@ export const save = ServerMethod(
     let affectedReplicas: string[] = [];
     if (isNew) {
       editFields.createdBy = user._id;
-      editFields.groupOrganizers = [];
-      let enrichedEvent = await courseImageDenormalizer.beforeInsert(editFields as any);
-      if (enrichedEvent.courseId) {
+      editFields.teamOrganizations = [];
+      let enrichedEvent = await groupImageDenormalizer.beforeInsert(editFields as any);
+      if (enrichedEvent.groupId) {
         enrichedEvent = await categoriesDenormalizer.beforeInsert(enrichedEvent);
       }
 
       eventId = await Events.insertAsync(enrichedEvent);
 
-      if (editFields.courseId) {
-        await courseTimeLastEditDenormalizer.afterEventInsert(editFields.courseId);
-        await courseHistoryDenormalizer.afterEventInsert(editFields.courseId, user._id, {
+      if (editFields.groupId) {
+        await groupTimeLastEditDenormalizer.afterEventInsert(editFields.groupId);
+        await groupHistoryDenormalizer.afterEventInsert(editFields.groupId, user._id, {
           _id: eventId,
           title: editFields.title as string,
           slug: editFields.slug as string,
@@ -375,8 +375,8 @@ export const save = ServerMethod(
         affectedReplicas = replicaSync.affected();
       }
 
-      if (event.courseId) {
-        await courseHistoryDenormalizer.afterEventUpdate(event.courseId, user._id, {
+      if (event.groupId) {
+        await groupHistoryDenormalizer.afterEventUpdate(event.groupId, user._id, {
           _id: eventId,
           title: editFields.title as string,
           slug: editFields.slug as string,
@@ -395,11 +395,11 @@ export const save = ServerMethod(
     }
 
     await venueDenormalizer.updateVenue(eventId);
-    await groupsDenormalizer.updateGroups(eventId);
+    await organizationsAndEditorsDenormalizer.updateOrganizationsAndEditors(eventId);
     await regionsCountDenormalizer.updateCounters(event.region);
-    // the assumption is that all replicas have the same course if any
-    if (event.courseId) {
-      await courseNextEventDenormalizer.updateNextEvent(event.courseId);
+    // the assumption is that all replicas have the same group if any
+    if (event.groupId) {
+      await groupNextEventDenormalizer.updateNextEvent(event.groupId);
     }
 
     return eventId;
@@ -440,12 +440,12 @@ export const remove = ServerMethod(
       { multi: true },
     );
 
-    if (event.courseId) {
-      await courseHistoryDenormalizer.afterEventRemove(event.courseId, operator._id, {
+    if (event.groupId) {
+      await groupHistoryDenormalizer.afterEventRemove(event.groupId, operator._id, {
         title: event.title,
         startLocal: event.startLocal,
       });
-      await courseNextEventDenormalizer.updateNextEvent(event.courseId);
+      await groupNextEventDenormalizer.updateNextEvent(event.groupId);
     }
     await regionsCountDenormalizer.updateCounters(event.region);
   },
@@ -453,35 +453,43 @@ export const remove = ServerMethod(
 );
 
 /**
- * Add or remove a group from the groups list
+ * Add or remove a organization from the organization list
  *
  * @param eventId The event to update
- * @param groupId The group to add or remove
- * @param add Whether to add or remove the group
+ * @param organizationId The organization to add or remove
+ * @param add Whether to add or remove the organization
  *
  */
 export const promote = ServerMethod(
   "event.promote",
-  async (eventId: string, groupId: string, enable: boolean) => {
-    await UpdateMethods.promote(Events as unknown as GroupPromoters)(eventId, groupId, enable);
-    await groupsDenormalizer.updateGroups(eventId);
+  async (eventId: string, organizationId: string, enable: boolean) => {
+    await UpdateMethods.promote(Events as unknown as OrganizationPromoters)(
+      eventId,
+      organizationId,
+      enable,
+    );
+    await organizationsAndEditorsDenormalizer.updateOrganizationsAndEditors(eventId);
   },
   { simulation: false },
 );
 
 /**
- * Add or remove a group from the groupOrganizers list
+ * Add or remove a organization from the teamOrganizations list
  *
  * @param eventId The event to update
- * @param groupId The group to add or remove
- * @param add Whether to add or remove the group
+ * @param organizationId The organization to add or remove
+ * @param add Whether to add or remove the organization
  *
  */
 export const editing = ServerMethod(
   "event.editing",
-  async (eventId: string, groupId: string, enable: boolean) => {
-    await UpdateMethods.editing(Events as unknown as GroupPromoters)(eventId, groupId, enable);
-    await groupsDenormalizer.updateGroups(eventId);
+  async (eventId: string, organizationId: string, enable: boolean) => {
+    await UpdateMethods.editing(Events as unknown as OrganizationPromoters)(
+      eventId,
+      organizationId,
+      enable,
+    );
+    await organizationsAndEditorsDenormalizer.updateOrganizationsAndEditors(eventId);
   },
   { simulation: false },
 );
@@ -489,7 +497,7 @@ export const editing = ServerMethod(
 /**
  * Add current user as event-participant
  *
- * the user is also signed up for the course.
+ * the user is also signed up for the group.
  */
 export const addParticipant = ServerMethod(
   "event.addParticipant",
@@ -526,21 +534,21 @@ export const addParticipant = ServerMethod(
     // Send notification to team
     await Notification["Rsvp.Team"].record(eventId, user._id);
 
-    if (!event.courseId) {
+    if (!event.groupId) {
       return;
     }
-    // if you cant load course its probably because the event doesnt have one
-    const course = await Courses.findOneAsync(event.courseId);
-    if (!course) {
+    // if you cant load group its probably because the event doesn't have one
+    const group = await Groups.findOneAsync(event.groupId);
+    if (!group) {
       return;
     }
 
-    const change = new Subscribe(course, user._id, "participant", "rsvp");
+    const change = new Subscribe(group, user._id, "participant", "rsvp");
     if (change.validFor(user)) {
       await processChange(change, { isSimulation: this.isSimulation });
     }
 
-    await courseNextEventDenormalizer.updateNextEvent(event.courseId);
+    await groupNextEventDenormalizer.updateNextEvent(event.groupId);
   },
   { simulation: false },
 );
@@ -582,11 +590,11 @@ export const removeParticipant = ServerMethod(
     if (participantId) {
       if (token) {
         if (!event.participants?.find((p) => p.user === participantId && p.removeToken === token)) {
-          throw new Meteor.Error(403, "not enough authorisation.");
+          throw new Meteor.Error(403, "not enough authorization.");
         }
       } else if (!event.editableBy(operator)) {
-        // only users that have edit permissions (admin, group-orga-members, orga-team) can remove other users.
-        throw new Meteor.Error(403, "not enough authorisation.");
+        // only users that have edit permissions (admin, teamOrganizationMembers, teamMembers) can remove other users.
+        throw new Meteor.Error(403, "not enough authorization.");
       }
     } else {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -598,10 +606,10 @@ export const removeParticipant = ServerMethod(
       { $pull: { participants: { user: participantId } } },
     );
 
-    if (!event.courseId) {
+    if (!event.groupId) {
       return;
     }
-    await courseNextEventDenormalizer.updateNextEvent(event.courseId);
+    await groupNextEventDenormalizer.updateNextEvent(event.groupId);
   },
   { simulation: false },
 );

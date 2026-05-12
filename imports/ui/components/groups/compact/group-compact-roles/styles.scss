@@ -1,0 +1,37 @@
+@use "sass:color";
+@import "{}/imports/ui/stylesheets/variables/index";
+
+.group-compact-roles {
+  inset-inline-end: -7px;
+  padding: 0;
+  position: relative;
+  top: -7px;
+
+  /* Move over stretched-link */
+  z-index: 2;
+}
+
+.group-compact-role {
+  text-align: center;
+}
+
+.group-compact-role + .group-compact-role {
+  margin-top: 3px;
+}
+
+.group-compact-role-needed {
+  background-color: $role-needed-bg;
+  color: $role-needed-color;
+}
+
+.group-compact-role-occupied {
+  $background-color: $green;
+
+  background-color: $background-color;
+  color: color.adjust(color.adjust($background-color, $lightness: -40%), $saturation: -50%);
+}
+
+.group-compact-role-occupied-by-user {
+  background-color: $user-bg;
+  color: color.adjust(color.adjust($user-bg, $lightness: -40%), $saturation: -60%);
+}

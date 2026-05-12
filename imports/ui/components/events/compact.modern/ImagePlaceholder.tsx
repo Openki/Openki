@@ -12,7 +12,7 @@ export function ImagePlaceholder({
 }) {
   const [isLoading, region] = useDetails(regionId);
 
-  if (isLoading() || !region || !region.custom?.courseBackgroundImages) {
+  if (isLoading() || !region || !region.custom?.groupBackgroundImages) {
     return (
       <div className="position-relative card-header card-header-img bg-img-cover border-bottom">
         {children}
@@ -20,9 +20,9 @@ export function ImagePlaceholder({
     );
   }
 
-  const images = region.custom.courseBackgroundImages;
+  const images = region.custom.groupBackgroundImages;
 
-  // "random" chooses of a image from the regions courseBackgroundImages setting
+  // "random" chooses of a image from the regions groupBackgroundImages setting
   let imageIndex = 0;
   for (let i = 0; i < seed.length; i++) {
     imageIndex = (imageIndex + seed.charCodeAt(i)) % images.length;

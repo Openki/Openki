@@ -13,11 +13,16 @@
     border-right: 1px solid $input-border-color;
   }
 
-  > .input-group-text,
-  > .form-control,
-  > .btn.dropdown-toggle {
+  > .input-group-text:not(:first-child),
+  > .form-control:not(:first-child),
+  > .btn.dropdown-toggle:not(:first-child) {
     border-left: 0;
-    border-right: 0;
+  }
+
+  > .input-group-text:not(:last-child),
+  > .form-control:not(:last-child),
+  > .btn.dropdown-toggle:not(:last-child) {
+    border-left: 0;
   }
 
   > .input-group-text:first-child,

@@ -5,7 +5,7 @@ import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useTranslation } from "react-i18next";
 
 import { Control } from "./Control";
-import { FilterGroups } from "../../FilterGroups";
+import { FilterOrganizations } from "../../FilterOrganizations";
 import { Direction } from "../Arrow";
 import { SearchField } from "../../search-field";
 import { FilterCategories } from "../../filter-categories";
@@ -19,10 +19,10 @@ export interface Props {
   onChangeSearch: (newValue: string) => void;
   date: moment.Moment;
   onChangeDate: (newDate: moment.Moment) => void;
-  availableGroups: string[];
-  selectedGroups: string[];
-  onAddGroup: (group: string) => void;
-  onRemoveGroup: (group: string) => void;
+  availableOrganizations: string[];
+  selectedOrganizations: string[];
+  onAddOrganization: (organization: string) => void;
+  onRemoveOrganization: (organization: string) => void;
   categories: string[];
   onAddCategory: (category: string) => void;
   onRemoveCategory: (category: string) => void;
@@ -31,7 +31,7 @@ export interface Props {
 }
 
 export function CalendarNavWeek(props: Props) {
-  const { hideSwitches, date, availableGroups } = props;
+  const { hideSwitches, date, availableOrganizations } = props;
   const { t } = useTranslation();
   const currentUser = useUser();
   const { weekNr, dateLong, dateShort } = useDateTimeFormat();
@@ -57,12 +57,12 @@ export function CalendarNavWeek(props: Props) {
   function searchFieldAttr() {
     return { search: props.search, onChange: props.onChangeSearch };
   }
-  function filterGroupsAttr() {
+  function filterOrganizationsAttr() {
     return {
-      availableGroups: props.availableGroups,
-      selectedGroups: props.selectedGroups,
-      onAdd: props.onAddGroup,
-      onRemove: props.onRemoveGroup,
+      availableOrganizations: props.availableOrganizations,
+      selectedOrganizations: props.selectedOrganizations,
+      onAdd: props.onAddOrganization,
+      onRemove: props.onRemoveOrganization,
     };
   }
   function filterCategoriesAttr() {
@@ -112,10 +112,10 @@ export function CalendarNavWeek(props: Props) {
           </div>
         </div>
         <div className="row align-items-center">
-          {availableGroups ? (
+          {availableOrganizations ? (
             <>
               <div className="col-md-3 col-lg-2 p-1">
-                <FilterGroups {...filterGroupsAttr()} />
+                <FilterOrganizations {...filterOrganizationsAttr()} />
               </div>
               <div className="col-md-3 col-lg-2 p-1">
                 <FilterCategories {...filterCategoriesAttr()} />

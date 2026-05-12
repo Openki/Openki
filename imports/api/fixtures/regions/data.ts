@@ -5,7 +5,7 @@ export const regions: {
   loc?: [number, number];
   tz: string;
   calendarStartDate?: true;
-  defaultTeamGroups?: string[];
+  defaultTeamOrganizations?: string[];
   singleEvents?: boolean;
   country?: string;
   region?: string;
@@ -18,7 +18,7 @@ export const regions: {
     emailLogo?: string;
   };
   dashboard?: {
-    entity: "group" | "course" | "courseWithoutPropose" | "event" | "eventsMap" | "propose";
+    entity: "organization" | "group" | "groupWithoutPropose" | "event" | "eventsMap" | "propose";
     title?: string;
     query?: string;
     showAll?: { link?: string; text?: string };
@@ -48,7 +48,7 @@ export const regions: {
     tz: "Europe/Andorra",
     dashboard: [
       {
-        entity: "course",
+        entity: "group",
         title: "dashboard.userInvolvedIn.title",
         query: "userInvolved={currentUser}",
       },
@@ -57,24 +57,24 @@ export const regions: {
         title: "dashboard.userRegistredFor.title",
         query: "participant={currentUser}&after=now&sort=start",
       },
-      { entity: "course", title: "dashboard.recentActivities.title", query: "internal=0" },
+      { entity: "group", title: "dashboard.recentActivities.title", query: "internal=0" },
       {
         entity: "event",
         title: "dashboard.upcomingEvents.title",
         query: "after=now&sort=start&internal=0&canceled=0",
       },
       {
-        entity: "course",
+        entity: "group",
         title: "dashboard.newProposals.title",
         query: "state=proposal&internal=0&sort=-time_created",
       },
       {
-        entity: "course",
+        entity: "group",
         title: "dashboard.lookingForMentors.title",
         query: "needsRole=mentor&state=proposal,resting&internal=0",
       },
       {
-        entity: "course",
+        entity: "group",
         title: "dashboard.lookingForVenues.title",
         query: "needsRole=host&state=proposal,resting&internal=0",
       },
@@ -152,7 +152,7 @@ export const regions: {
     loc: [47.3784, 8.5257],
     tz: "Europe/Zurich",
     calendarStartDate: true,
-    defaultTeamGroups: ["Hx7iiRX5Fg3Pf2xne"],
+    defaultTeamOrganizations: ["Hx7iiRX5Fg3Pf2xne"],
     singleEvents: true,
     tenant: "Zuerich Lernt",
     admin: "Support",
@@ -162,11 +162,11 @@ export const regions: {
     },
     dashboard: [
       {
-        entity: "course",
+        entity: "group",
         title: "dashboard.newProposals.title",
         query: "state=proposal&internal=0&sort=-time_created",
       },
-      { entity: "course", title: "dashboard.recentActivities.title", query: "" },
+      { entity: "group", title: "dashboard.recentActivities.title", query: "" },
       {
         entity: "event",
         title: "dashboard.upcomingEvents.title",

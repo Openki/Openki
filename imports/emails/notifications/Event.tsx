@@ -11,11 +11,11 @@ export interface Props {
   recipientTakePart: boolean | undefined;
   registrationClosed: boolean;
   registerToEventLink: string;
-  course: JSX.Element;
-  courseName: string;
-  unsubscribeFromCourseLink: string;
+  group: JSX.Element;
+  groupName: string;
+  unsubscribeFromGroupLink: string;
   isNew: boolean;
-  replicats: EventModel[];
+  replicas: EventModel[];
   subject: string;
   additionalMessage: string | undefined;
   username: string;
@@ -30,11 +30,11 @@ export function Event({
   recipientTakePart,
   registrationClosed,
   registerToEventLink,
-  course,
-  courseName,
-  unsubscribeFromCourseLink,
+  group,
+  groupName,
+  unsubscribeFromGroupLink,
   isNew,
-  replicats,
+  replicas,
   additionalMessage,
   username,
   unsubscribe,
@@ -46,29 +46,29 @@ export function Event({
   function intro() {
     if (isNew) {
       if (!event.replicaOf) {
-        return t("notification.event.mail.new", "A new event was just published for {COURSE}:", {
-          COURSE: course,
+        return t("notification.event.mail.new", "A new event was just published for {GROUP}:", {
+          GROUP: group,
         });
       }
 
       return t(
         "notification.event.mail.new.withReplicats",
-        "New event(s) where just published for {COURSE}. You can see the next one below.",
+        "New event(s) where just published for {GROUP}. You can see the next one below.",
         {
-          COURSE: course,
+          GROUP: group,
         },
       );
     }
-    if (replicats.length === 0) {
-      return t("notification.event.mail.changed", "The following event for {COURSE} changed.", {
-        COURSE: course,
+    if (replicas.length === 0) {
+      return t("notification.event.mail.changed", "The following event for {GROUP} changed.", {
+        GROUP: group,
       });
     }
 
     return t(
       "notification.event.mail.changed.withReplicats",
-      "The following event for {COURSE} changed, these changes have also been applied to {NUM, plural, one{the later event} other{# later events} }.",
-      { COURSE: course, NUM: replicats.length },
+      "The following event for {GROUP} changed, these changes have also been applied to {NUM, plural, one{the later event} other{# later events} }.",
+      { GROUP: group, NUM: replicas.length },
     );
   }
 
@@ -83,7 +83,7 @@ export function Event({
               <p>
                 {t(
                   "notification.event.mail.personalMessage",
-                  "The organizer left a message for you:",
+                  "A coordinator left a message for you:",
                 )}
               </p>
               <table className="comment-box">
@@ -119,9 +119,9 @@ export function Event({
                 {t("notification.event.mail.notinterested", "Not interested anymore?")}
               </p>
               <p className="text-center">
-                <a href={unsubscribeFromCourseLink}>
-                  {t("notification.event.mail.unsubscribe", "Unsubscribe from {COURSE}", {
-                    COURSE: courseName,
+                <a href={unsubscribeFromGroupLink}>
+                  {t("notification.event.mail.unsubscribe", "Unsubscribe from {GROUP}", {
+                    GROUP: groupName,
                   })}
                 </a>
               </p>
@@ -132,8 +132,8 @@ export function Event({
       <Footer
         receiveNote={t(
           "notification.event.mail.notice",
-          "You receive this e-mail because you are involved in {COURSE}.",
-          { COURSE: course },
+          "You receive this e-mail because you are involved in {GROUP}.",
+          { GROUP: group },
         )}
         unsubscribe={unsubscribe}
         campaign={campaign}

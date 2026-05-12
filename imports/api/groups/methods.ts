@@ -1,21 +1,91 @@
+import { Match, check } from "meteor/check";
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import { Match, check } from "meteor/check";
-import { assignIn } from "lodash-es";
+import { i18n } from "/imports/startup/both/i18next";
+import { uniq } from "lodash-es";
 
-import { Users } from "/imports/api/users/users";
-import * as timeLastEditDenormalizer from "/imports/api/groups/timeLastEditDenormalizer";
-import * as courseGroupsDenormalizer from "/imports/api/courses/groupsDenormalizer";
-import * as userGroupsAndBadgesDenormalizer from "../users/groupsAndBadgesDenormalizer";
-import * as userVenuesDenormalizer from "/imports/api/users/venuesDenormalizer";
-import { Group, GroupEntity, GroupModel, Groups } from "./groups";
+import { Groups, Group, GroupEntity, GroupModel } from "./groups";
+import { Events } from "/imports/api/events/events";
+import { Organizations } from "../organizations/organizations";
+import { Regions } from "/imports/api/regions/regions";
+import { GroupDiscussions } from "../group-discussions/group-discussions";
+import { Roles } from "/imports/api/roles/roles";
+import * as UpdateMethods from "/imports/utils/update-methods";
+import * as historyDenormalizer from "./historyDenormalizer";
+import * as timeLastEditDenormalizer from "./timeLastEditDenormalizer";
+import * as nextEventDenormalizer from "./nextEventDenormalizer";
+import * as eventsCategoriesDenormalizer from "/imports/api/events/categoriesDenormalizer";
+import * as eventsGroupImageDenormalizer from "../events/groupImageDenormalizer";
+import { Log } from "/imports/api/log/log";
+import { UserModel } from "/imports/api/users/users";
+import * as editorsDenormalizer from "./editorsDenormalizer";
 
-import * as HtmlTools from "/imports/utils/html-tools";
+import { Subscribe, Unsubscribe, Message } from "./subscription";
+
+import { Notification } from "../../startup/both/emails/notification";
+
 import { ServerMethod } from "/imports/utils/ServerMethod";
+import * as StringTools from "/imports/utils/string-tools";
+import * as HtmlTools from "/imports/utils/html-tools";
+import { LocalizedValuePattern } from "/imports/utils/getLocalizedValue";
 import * as FileStorage from "/imports/utils/FileStorage";
-import { UploadFilePattern } from "/imports/utils/FileStorage";
-import { HtmlString, Type } from "/imports/utils/CustomChecks";
+import { HtmlString, StringEnum, Type } from "/imports/utils/CustomChecks";
+import { OrganizationPromoters } from "/imports/utils/update-methods";
 import { resizeImage } from "../../utils/resize-image";
+
+export interface Method<T> {
+  method: string;
+  read: (params: T) => Promise<{
+    validate(): void;
+    permitted: (user: UserModel | undefined | null) => boolean;
+    provide(
+      rel: string[],
+      body: {
+        operatorId: string | undefined;
+      },
+    ): void;
+    apply(): Promise<void>;
+  }>;
+}
+
+function registerMethod<T>(method: Method<T>): void {
+  const apply = async function (params: T) {
+    const change = await method.read(params);
+    try {
+      change.validate();
+    } catch (message) {
+      throw new Meteor.Error("invalid", `Invalid change ${change}:${message}`, message);
+    }
+
+    const operator = await Meteor.userAsync();
+
+    if (!change.permitted(operator)) {
+      throw new Meteor.Error(
+        "not-permitted",
+        `Change not permitted: ${change}`,
+        `operator: ${operator?._id}`,
+      );
+    }
+
+    const rel = [operator?._id as string];
+    const body = { operatorId: operator?._id };
+    change.provide(rel, body);
+    const result = await Log.record(method.method, rel, body);
+    try {
+      await change.apply();
+    } catch (message) {
+      await result.error(message);
+      throw new Meteor.Error(
+        "error-applying",
+        `Error applying change ${change}: ${message}`,
+        message,
+      );
+    }
+    await result.success();
+  };
+
+  Meteor.methods({ [method.method]: apply });
+}
 
 async function loadGroup(groupId: string) {
   // new!
@@ -30,11 +100,45 @@ async function loadGroup(groupId: string) {
   return group;
 }
 
+async function loadDisabledRoles(organizationIds: string[]) {
+  const organizations = await Promise.all(
+    uniq(organizationIds).map(async (organizationId) => {
+      const organization = await Organizations.findOneAsync(organizationId);
+      if (!organization) {
+        throw new Meteor.Error(404, `no organization with id ${organizationId}`);
+      }
+      return organization;
+    }),
+  );
+
+  return organizations.flatMap((o) => o.disableCreateRoles).filter((r) => r) as string[];
+}
+
+registerMethod(Subscribe);
+registerMethod(Unsubscribe);
+registerMethod(Message);
+
+export const CustomFieldPattern = {
+  name: String,
+  displayText: LocalizedValuePattern,
+  value: Match.OneOf(String, Boolean),
+  displayValue: Match.Optional(LocalizedValuePattern),
+  visibleFor: StringEnum("all", "editors"),
+};
+export type CustomField = Type<typeof CustomFieldPattern>;
+
 export const SaveFieldPattern = {
-  short: Match.Optional(String),
-  name: Match.Optional(String),
-  claim: Match.Optional(String),
   description: Match.Optional(HtmlString()),
+  categories: Match.Optional([String]),
+  name: Match.Optional(String),
+  region: Match.Optional(String),
+  customFields: Match.Optional([CustomFieldPattern]),
+  roles: Match.Optional(Match.ObjectIncluding<Record<string, boolean>>({})),
+  subs: Match.Optional([String]),
+  unsubs: Match.Optional([String]),
+  organizations: Match.Optional([String]),
+  internal: Match.Optional(Boolean),
+  singleEvent: Match.Optional(Boolean),
 };
 export type SaveFields = Type<typeof SaveFieldPattern>;
 
@@ -44,74 +148,195 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
 
   const user = await Meteor.userAsync();
   if (!user) {
-    throw new Meteor.Error(401, "please log-in");
+    throw new Meteor.Error(401, "please log in");
   }
 
-  // Load group from DB
   const group = await loadGroup(groupId);
 
   if (!group.editableBy(user)) {
-    throw new Meteor.Error(401, "Denied");
+    throw new Meteor.Error(401, "edit not permitted");
   }
 
-  let updates = {} as Mongo.OptionalId<GroupEntity>;
+  /* Changes we want to perform */
+  const set = {} as Mongo.OptionalId<GroupEntity>;
+
+  const disabledRoles = await loadDisabledRoles(changes.organizations || []);
+
+  if (changes.roles) {
+    await Promise.all(
+      Roles.map(async (role) => {
+        const { type } = role;
+
+        if (group.isNew()) {
+          const shouldHave =
+            !!(role.preset || changes.roles?.[type]) && !disabledRoles.includes(type);
+
+          if (shouldHave) {
+            set.roles = set.roles || [];
+            set.roles.push(type);
+          }
+        } else if (role.editable) {
+          const shouldHave = !!changes.roles?.[type];
+          const have = group.roles.includes(type);
+          if (have && !shouldHave) {
+            await Groups.updateAsync({ _id: groupId }, { $pull: { roles: type } });
+
+            // HACK
+            // due to a mongo limitation we can't { $pull { 'members.roles': type } }
+            // so we keep removing one by one until there are none left
+            while (
+              await Groups.updateAsync(
+                { _id: groupId, "members.roles": type },
+                { $pull: { "members.$.roles": type } },
+              )
+            );
+          }
+          if (!have && shouldHave) {
+            await Groups.updateAsync({ _id: groupId }, { $addToSet: { roles: type } });
+          }
+        }
+      }),
+    );
+  }
+
+  if (changes.description) {
+    set.description = HtmlTools.sanitizeHtml(changes.description);
+  }
+
+  if (changes.categories) {
+    set.categories = changes.categories.slice(0, 20);
+  }
+  if (changes.name) {
+    set.name = StringTools.sanitizeSingleline(changes.name, 1000);
+    set.slug = StringTools.slug(set.name);
+  }
+  if (changes.customFields) {
+    set.customFields = changes.customFields.map((i) => {
+      const result = {
+        name: i.name.substring(0, 50),
+        displayText: i.displayText,
+        value: typeof i.value === "string" ? i.value.substring(0, 2000) : i.value,
+        visibleFor: i.visibleFor,
+      };
+
+      if (!i.displayValue) {
+        return result;
+      }
+
+      return { ...result, displayValue: i.displayValue };
+    });
+  }
+  if (changes.internal !== undefined) {
+    set.internal = changes.internal;
+  }
+
+  if (changes.singleEvent !== undefined) {
+    set.singleEvent = changes.singleEvent;
+  }
 
   if (group.isNew()) {
-    // Saving user is added as first member of the group and as creater
-    group.members.push({ user: user._id, notify: true });
-    updates.createdby = user._id;
-    updates.time_created = new Date();
-    updates = timeLastEditDenormalizer.beforeInsert(updates);
-  }
-  if (changes.short !== undefined) {
-    let short = changes.short.trim();
-    if (short.length === 0) {
-      short = `${group.name || changes.name}`;
+    // You can add newly created groups to any organization
+    let organizations = changes.organizations || [];
+    organizations = uniq(organizations);
+    organizations = await Promise.all(
+      organizations.map(async (organizationId) => {
+        const organization = await Organizations.findOneAsync(organizationId);
+        if (!organization) {
+          throw new Meteor.Error(404, `no organization with id ${organizationId}`);
+        }
+        return organization._id;
+      }),
+    );
+    set.organizations = organizations;
+    set.teamOrganizations = organizations;
+
+    /* region cannot be changed */
+    if (!changes.region) {
+      throw new Meteor.Error(404, "region missing");
     }
-    updates.short = short.substring(0, 7);
-  }
-  if (changes.name !== undefined) {
-    updates.name = changes.name.substring(0, 50);
-  }
-  if (changes.claim !== undefined) {
-    updates.claim = changes.claim.substring(0, 1000);
-  }
-  if (changes.description !== undefined) {
-    updates.description = HtmlTools.sanitizeHtml(changes.description);
-  }
+    const region = await Regions.findOneAsync({ _id: changes.region });
+    if (!region) {
+      throw new Meteor.Error(404, "region missing");
+    }
+    set.region = region._id;
 
-  // Don't update nothing
-  if (Object.keys(updates).length === 0) {
-    return undefined;
-  }
+    /* When a group is created, the creator is automatically added as sole member of the team */
+    set.members = [
+      {
+        user: user._id,
+        roles: ["participant", "team"].filter((r) => !disabledRoles.includes(r)),
+        comment: i18n("groups.creator.defaultMessage", "(has proposed this group)", {
+          lng: user.locale,
+        }),
+      },
+    ];
+    set.archived = false;
+    set.createdby = user._id;
+    set.time_created = new Date();
+    const enrichedSet = timeLastEditDenormalizer.beforeInsert(set);
 
-  if (Object.values(updates).some((u) => !u)) {
-    throw new Meteor.Error("The name, short, claim and description fields are mandatory.");
-  }
+    groupId = await Groups.insertAsync(enrichedSet);
 
-  if (group.isNew()) {
-    groupId = await Groups.insertAsync(assignIn(group, updates));
-    await userGroupsAndBadgesDenormalizer.updateGroupsAndBadges(user._id);
+    await Notification.Group.record(groupId);
+
+    if (set.teamOrganizations.length > 0) {
+      await Notification["Organization.Group"].record(groupId);
+    }
+
+    // Init calculated fields
+    await nextEventDenormalizer.updateNextEvent(groupId);
+    await editorsDenormalizer.updateEditors(groupId);
   } else {
-    updates = timeLastEditDenormalizer.beforeUpdate(updates);
-    await Groups.updateAsync(group._id, { $set: updates });
+    const enrichedSet = timeLastEditDenormalizer.beforeUpdate(set);
+    await Groups.updateAsync({ _id: groupId }, { $set: enrichedSet });
+
+    await historyDenormalizer.afterUpdate(groupId, user._id);
+    if (changes.categories) {
+      // if categories are update, update those from the event
+      await eventsCategoriesDenormalizer.afterGroupUpdateCategories({
+        _id: groupId,
+        categories: changes.categories,
+      });
+    }
+  }
+
+  if (changes.subs) {
+    const changedGroup = await Groups.findOneAsync(groupId);
+    await Promise.all(
+      changes.subs.map(async (role) => {
+        const change = new Subscribe(changedGroup, user._id, role, "interested");
+        if (change.validFor(user)) {
+          await change.apply();
+        }
+      }),
+    );
+  }
+  if (changes.unsubs) {
+    const changedGroup = await Groups.findOneAsync(groupId);
+    await Promise.all(
+      changes.unsubs.map(async (role) => {
+        const change = new Unsubscribe(changedGroup, user._id, role);
+        if (change.validFor(user)) {
+          await change.apply();
+        }
+      }),
+    );
   }
 
   return groupId;
 });
 
-export const updateLogo = ServerMethod(
-  "group.update.logo",
+export const updateImage = ServerMethod(
+  "group.update.image",
   async (groupId: string, file: FileStorage.UploadFile) => {
     check(groupId, String);
-    check(file, UploadFilePattern);
+    check(file, FileStorage.UploadFilePattern);
 
     const user = await Meteor.userAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log-in");
     }
 
-    // Load group from DB
     const group = await loadGroup(groupId);
 
     if (group.isNew() || !group.editableBy(user)) {
@@ -122,26 +347,37 @@ export const updateLogo = ServerMethod(
       return undefined;
     }
 
-    if (group.logoUrl && !group.logoUrl.startsWith("https://")) {
-      FileStorage.remove(group.logoUrl);
+    if (group.image && !group.image.startsWith("https://")) {
+      FileStorage.remove(group.image);
+    }
+
+    if (group.compactImage && !group.compactImage.startsWith("https://")) {
+      FileStorage.remove(group.compactImage);
     }
 
     // Note: image scaling also happens on the client
-    const resizedImage = await resizeImage(file, 600);
-    const result = await FileStorage.upload("groups/logos/", resizedImage);
+    const resizedCompactImage = await resizeImage(file, 500);
+    const compactResult = await FileStorage.upload("groups/image/compact", resizedCompactImage);
+    const resizedDetailsImage = await resizeImage(file, 2000, 5000);
+    const detailsResult = await FileStorage.upload("groups/image/details", resizedDetailsImage);
 
-    const update = { logoUrl: result.fullFileName };
+    const update = {
+      compactImage: compactResult.fullFileName,
+      image: detailsResult.fullFileName,
+    };
 
-    const enrichedSet = timeLastEditDenormalizer.beforeUpdateLogo(update);
+    const enrichedSet = timeLastEditDenormalizer.beforeUpdateImage(update);
     await Groups.updateAsync(group._id, { $set: enrichedSet });
+    await historyDenormalizer.afterUpdateImage(groupId, user._id);
+    await eventsGroupImageDenormalizer.afterGroupUpdateImage(groupId, enrichedSet);
 
     return groupId;
   },
   { simulation: false },
 );
 
-export const deleteLogo = ServerMethod(
-  "group.delete.logo",
+export const deleteImage = ServerMethod(
+  "group.delete.image",
   async (groupId: string) => {
     check(groupId, String);
 
@@ -150,124 +386,122 @@ export const deleteLogo = ServerMethod(
       throw new Meteor.Error(401, "please log-in");
     }
 
-    // Load group from DB
     const group = await loadGroup(groupId);
 
     if (group.isNew() || !group.editableBy(user)) {
       throw new Meteor.Error(401, "Denied");
     }
 
-    if (group.logoUrl && !group.logoUrl.startsWith("https://")) {
-      FileStorage.remove(group.logoUrl);
+    if (group.image && !group.image.startsWith("https://")) {
+      FileStorage.remove(group.image);
     }
 
-    const update: Mongo.Modifier<GroupEntity> = { $unset: { logoUrl: "" } };
+    if (group.compactImage && !group.compactImage.startsWith("https://")) {
+      FileStorage.remove(group.compactImage);
+    }
 
-    const set = timeLastEditDenormalizer.beforeDeleteLogo();
-    await Groups.updateAsync(group._id, { ...update, $set: set });
+    const update = { image: "", compactImage: "" };
+
+    const set = timeLastEditDenormalizer.beforeDeleteImage();
+    await Groups.updateAsync(group._id, {
+      $unset: update,
+      $set: set,
+    } as Mongo.Modifier<GroupEntity>);
+    await historyDenormalizer.afterDeleteImage(groupId, user._id);
+    await eventsGroupImageDenormalizer.afterGroupDeleteImage(groupId);
 
     return groupId;
   },
   { simulation: false },
 );
 
-export const remove = ServerMethod("group.remove", async (groupId: string) => {
-  check(groupId, String);
-
-  const user = await Meteor.userAsync();
-  if (!user) {
-    throw new Meteor.Error(401, "please log in");
-  }
-
-  const group = await Groups.findOneAsync(groupId);
-  if (!group) {
-    throw new Meteor.Error(404, "No such group");
-  }
-
-  if (!group.editableBy(user)) {
-    throw new Meteor.Error(401, "not permitted");
-  }
-
-  await userVenuesDenormalizer.beforeGroupRemove(group);
-
-  await Groups.removeAsync(groupId);
-
-  // Update list of organizers per course
-  await courseGroupsDenormalizer.updateGroups({ groups: groupId });
-  // Update List of badges per user
-  await userGroupsAndBadgesDenormalizer.updateGroupsAndBadges({ groups: groupId });
-});
-
-export const updateMembership = ServerMethod(
-  "group.updateMembership",
-  async (userId: string, groupId: string, join: boolean) => {
-    check(userId, String);
-    check(groupId, String);
-
-    const sender = await Meteor.userAsync();
-    if (!sender) {
-      throw new Meteor.Error(401, "please log-in");
-    }
-
-    // Load group from DB
-    const group = await loadGroup(groupId);
-
-    if (group.isNew() || !group.editableBy(sender)) {
-      throw new Meteor.Error(401, "Denied");
-    }
-
-    const user = await Users.findOneAsync({ _id: userId });
-    if (!user) {
-      throw new Meteor.Error(404, "User not found");
-    }
-
-    let update;
-    if (join) {
-      update = { $addToSet: { members: { user: user._id, notify: true } } };
-    } else {
-      update = { $pull: { members: { user: user._id } } };
-    }
-
-    // By using the restrictive selector that checks group membership we can
-    // avoid the unlikely race condition where a user is not member anymore
-    // but can still add somebody else to the group.
-    await Groups.updateAsync(group._id, update);
-
-    if (join) {
-      await userVenuesDenormalizer.afterGroupAddMember(userId, group);
-    } else {
-      await userVenuesDenormalizer.afterGroupRemoveMember(userId, group);
-    }
-
-    await userGroupsAndBadgesDenormalizer.updateGroupsAndBadges(user._id);
-  },
-);
-export const toggleMemberNotify = ServerMethod(
-  "group.toggleMemberNotify",
-  async (groupId: string) => {
-    check(groupId, String);
-
-    const sender = await Meteor.userAsync();
-    if (!sender) {
-      throw new Meteor.Error(401, "please log-in");
-    }
-
-    // Load group from DB
-    const group = await loadGroup(groupId);
-
-    if (group.isNew()) {
-      throw new Meteor.Error(401, "Denied");
-    }
-
-    const groupMember = group.members.find((m) => m.user === sender._id);
-
-    if (!groupMember) {
-      throw new Meteor.Error(401, "Denied");
-    }
-
-    await Groups.updateAsync(
-      { _id: group._id, "members.user": groupMember.user },
-      { $set: { "members.$.notify": !groupMember.notify } },
+/**
+ * Add or remove a organization from the organizations list
+ * @param groupId The group to update
+ * @param organizationId The organization to add or remove
+ * @param add Whether to add or remove the organization
+ *
+ */
+export const promote = ServerMethod(
+  "group.promote",
+  async (groupId: string, organizationId: string, enable: boolean) => {
+    await UpdateMethods.promote(Groups as unknown as OrganizationPromoters)(
+      groupId,
+      organizationId,
+      enable,
+    );
+    await editorsDenormalizer.updateEditors(groupId);
+    await historyDenormalizer.afterOrganizationPromoteUpdate(
+      groupId,
+      organizationId,
+      enable,
+      Meteor.userId() as string,
     );
   },
 );
+
+/**
+ * Add or remove a organization from the teamOrganizations list
+ * @param groupId The group to update
+ * @param organizationId The organization to add or remove
+ * @param add Whether to add or remove the organization
+ *
+ */
+export const editing = ServerMethod(
+  "group.editing",
+  async (groupId: string, organizationId: string, enable: boolean) => {
+    await UpdateMethods.editing(Groups as unknown as OrganizationPromoters)(
+      groupId,
+      organizationId,
+      enable,
+    );
+    await editorsDenormalizer.updateEditors(groupId);
+    await historyDenormalizer.afterOrganizationTeamUpdate(
+      groupId,
+      organizationId,
+      enable,
+      Meteor.userId() as string,
+    );
+  },
+);
+
+export const archive = ServerMethod("group.archive", async (groupId: string) => {
+  check(groupId, String);
+
+  const group = await Groups.findOneAsync({ _id: groupId });
+  if (!group) {
+    throw new Meteor.Error(404, "no such group");
+  }
+  if (!group.editableBy(await Meteor.userAsync())) {
+    throw new Meteor.Error(401, "edit not permitted");
+  }
+  await Groups.updateAsync(group._id, { $set: { archived: true } });
+});
+
+export const unarchive = ServerMethod("group.unarchive", async (groupId: string) => {
+  check(groupId, String);
+
+  const group = await Groups.findOneAsync({ _id: groupId });
+  if (!group) {
+    throw new Meteor.Error(404, "no such group");
+  }
+  if (!group.editableBy(await Meteor.userAsync())) {
+    throw new Meteor.Error(401, "edit not permitted");
+  }
+  await Groups.updateAsync(group._id, { $set: { archived: false } });
+});
+
+export const remove = ServerMethod("group.remove", async (groupId: string) => {
+  check(groupId, String);
+
+  const group = await Groups.findOneAsync({ _id: groupId });
+  if (!group) {
+    throw new Meteor.Error(404, "no such group");
+  }
+  if (!group.editableBy(await Meteor.userAsync())) {
+    throw new Meteor.Error(401, "edit not permitted");
+  }
+  await Events.removeAsync({ groupId });
+  await GroupDiscussions.removeAsync({ groupId });
+  await Groups.removeAsync(groupId);
+});

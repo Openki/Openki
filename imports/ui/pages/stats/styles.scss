@@ -33,7 +33,7 @@
   }
 }
 
-.stats .course-stat::after {
+.stats .group-stat::after {
   background-color: color.adjust($blue-lighter, $lightness: 5%);
   content: "";
   height: 100%;

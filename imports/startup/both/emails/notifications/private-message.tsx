@@ -5,7 +5,7 @@ import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
 import { truncate } from "lodash-es";
 
-import { Courses } from "/imports/api/courses/courses";
+import { Groups } from "../../../../api/groups/groups";
 import { Log } from "/imports/api/log/log";
 import { UserModel, Users } from "/imports/api/users/users";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
@@ -25,7 +25,7 @@ interface Body {
   revealSenderAddress: boolean;
   model: string;
   context: {
-    course?: string | undefined;
+    group?: string | undefined;
     event?: string | undefined;
   };
 }
@@ -37,7 +37,7 @@ interface Body {
  * @param message the message to transmit
  * @param revealSenderAddress include email-address of sender in message
  * @param sendCopyToSender send a copy of the message to the author
- * @param context dictionary with context ID (course, venue, &c.)
+ * @param context dictionary with context ID (group, venue, &c.)
  */
 export async function record(
   senderId: string,
@@ -45,7 +45,7 @@ export async function record(
   message: string,
   revealSenderAddress: boolean,
   sendCopyToSender: boolean,
-  context: { course?: string; event?: string },
+  context: { group?: string; event?: string },
 ) {
   check(senderId, String);
   check(recipientId, String);
@@ -53,7 +53,7 @@ export async function record(
   check(revealSenderAddress, Boolean);
   check(sendCopyToSender, Boolean);
   check(context, {
-    course: Match.Optional(String),
+    group: Match.Optional(String),
     event: Match.Optional(String),
   });
 
@@ -131,7 +131,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         customSiteName: undefined as string | undefined,
         customEmailLogo: undefined as string | undefined,
         fromAddress: "",
-        course: undefined as JSX.Element | undefined,
+        group: undefined as JSX.Element | undefined,
         event: undefined as JSX.Element | undefined,
         unsubscribe: { type: "privateMessage" as const, token: unsubToken },
         campaign,
@@ -148,18 +148,18 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       let region: RegionModel | undefined;
       let regionId = actualRecipient.profile?.regionId;
 
-      const courseContextId = body.context.course;
-      if (courseContextId) {
-        const course = await Courses.findOneAsync(courseContextId);
-        if (!course) {
-          throw new Meteor.Error(404, "course not found");
+      const groupContextId = body.context.group;
+      if (groupContextId) {
+        const group = await Groups.findOneAsync(groupContextId);
+        if (!group) {
+          throw new Meteor.Error(404, "group not found");
         }
-        const courseLink = Router.url("showCourse", course, {
+        const groupLink = Router.url("showGroup", group, {
           query: { campaign },
         });
-        vars.course = <a href={courseLink}>{course.name}</a>;
+        vars.group = <a href={groupLink}>{group.name}</a>;
 
-        regionId = course.region;
+        regionId = group.region;
       }
 
       const eventContextId = body.context.event;

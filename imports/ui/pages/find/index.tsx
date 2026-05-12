@@ -3,7 +3,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { MetaTags } from "/imports/ui/components/MetaTags";
 
-import { Find } from "/imports/ui/components/courses/find";
+import { Find } from "../../components/groups/find";
 
 export interface Props {
   query: Record<string, string | undefined>;

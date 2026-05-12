@@ -2,11 +2,8 @@ import { Mongo } from "meteor/mongo";
 import { sampleSize } from "lodash-es";
 import { PRNG } from "seedrandom";
 
-import { Courses } from "/imports/api/courses/courses";
-import {
-  CourseDiscussionEntity,
-  CourseDiscussions,
-} from "/imports/api/course-discussions/course-discussions";
+import { Groups } from "../../groups/groups";
+import { GroupDiscussionEntity, GroupDiscussions } from "../../group-discussions/group-discussions";
 import { Prng } from "/imports/api/fixtures/Prng";
 import { Users } from "/imports/api/users/users";
 
@@ -36,26 +33,26 @@ export async function generate() {
   let count = 0;
 
   const userCount = await Users.countDocuments();
-  for (const course of await Courses.find().fetchAsync()) {
+  for (const group of await Groups.find().fetchAsync()) {
     const createCount = Math.floor((prng() * 2) ** 4);
-    const courseMembers = course.members.length;
-    let { description } = course;
+    const groupMembers = group.members.length;
+    let { description } = group;
     if (!description) description = "No description"; // :-(
     const words = description.split(" ");
 
     for (let n = 0; n < createCount; n += 1) {
-      const comment = {} as Mongo.OptionalId<CourseDiscussionEntity>;
-      comment.courseId = course._id;
+      const comment = {} as Mongo.OptionalId<GroupDiscussionEntity>;
+      comment.groupId = group._id;
       comment.title = sampleSize(words, 1 + Math.floor(prng() * 3)).join(" ");
       comment.text = HtmlTools.sanitizeHtml(
         sampleSize(words, 5).join(" ") + sampleSize(words, Math.floor(prng() * 30)).join(" "),
       );
 
-      comment.time_created = sometimesAfter(prng, course.time_created);
+      comment.time_created = sometimesAfter(prng, group.time_created);
       comment.time_updated =
         prng() < 0.9 ? comment.time_created : sometimesAfter(prng, comment.time_created);
 
-      if (!courseMembers || prng() < 0.2) {
+      if (!groupMembers || prng() < 0.2) {
         // Leave some anonymous comments
         if (prng() < 0.7) {
           const user = await Users.findOneAsync({}, { skip: Math.floor(prng() * userCount) });
@@ -65,15 +62,15 @@ export async function generate() {
           comment.userId = user._id;
         }
       } else {
-        const commenter = course.members[Math.floor(prng() * courseMembers)];
+        const commenter = group.members[Math.floor(prng() * groupMembers)];
         comment.userId = commenter.user;
       }
 
-      await CourseDiscussions.insertAsync(comment);
+      await GroupDiscussions.insertAsync(comment);
     }
 
     count += createCount;
   }
 
-  Log.record("testdata", ["CourseDiscussions"], { message: `Generated ${count} course comments.` });
+  Log.record("testdata", ["GroupDiscussions"], { message: `Generated ${count} group comments.` });
 }
