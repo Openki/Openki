@@ -3,7 +3,7 @@ import { WebApp } from "meteor/webapp";
 import { FilteringReadError } from "/imports/utils/filtering";
 import { NoActionError, orderedResults } from "./api.routes.utils";
 
-WebApp.rawConnectHandlers.use("/api", (_req, res, next) => {
+WebApp.rawHandlers.use("/api", (_req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   return next();
 });

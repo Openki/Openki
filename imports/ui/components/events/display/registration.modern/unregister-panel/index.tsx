@@ -37,11 +37,8 @@ export function UnregisterPanel({ event, onUnregister }: Props) {
   const { t } = useTranslation();
   const [unregisterDropdown, setUnregisterDropdown] = useState(false);
 
-  function groupTitle() {
-    if (event.groupId) {
-      return group?.name;
-    }
-    return undefined;
+  function getGroupName() {
+    return event.groupId && group?.name;
   }
 
   return (
@@ -85,12 +82,12 @@ export function UnregisterPanel({ event, onUnregister }: Props) {
               />
             </div>
           </div>
-          {!isLoading() && !!groupTitle() && (
+          {!isLoading() && !!getGroupName() && (
             <p className="pt-3 mb-0">
               {t(
                 "event.details.youStayEnrolled",
-                "Note that you will stay enrolled as interested for {GROUPTITLE}.",
-                { GROUPTITLE: groupTitle() },
+                "Note that you will stay enrolled as interested for {GROUP}.",
+                { GROUP: getGroupName() },
               )}
             </p>
           )}

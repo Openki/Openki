@@ -16,6 +16,7 @@ export function Files({ group }: { group: GroupModel }) {
 
   function imageUploadArgs(): EditableImageData {
     return {
+      fullImage: { src: group.publicUrlForDetailsImage(), maxSize: 1500 },
       thumbnail: { src: group.publicUrlForCompactImage(), maxSize: 150 },
       maxSize: 5000, // scale the image to max width/height. Note: image scaling also happens on the server
       async onUpload(file: UploadImage) {

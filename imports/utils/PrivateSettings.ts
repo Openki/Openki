@@ -4,35 +4,72 @@ import { StringEnum, Type } from "./CustomChecks";
 import { C3SettingsPattern } from "/imports/startup/both/C3OAuth/settings";
 
 export const PrivateSettingsPattern = Match.ObjectIncluding({
-  /** User Administrator Accounts */
+  /**
+   * User administrator accounts
+   * @default []
+   */
   admins: [String],
-  /** Pseudo-Random Number Generator */
+
+  /**
+   * Pseudo-Random Number Generator. Use "static" as value to use static seed
+   * for test data. Result: After test data generation, entity ids, amount of
+   * events, comment content, region assignment of groups, etc will stay
+   * identical. Except ids from users.
+   * @default "" (random seed)
+   */
   prng: StringEnum("", "static"),
-  /** Generates test data, is not needed for the productive system */
+
+  /**
+   * Generates test data, is not needed for the production environment.
+   * @default false
+   */
   testdata: Boolean,
-  /** Sender e-mail address in mails */
+
+  /**
+   * Sender e-mail address in mails
+   * @default ""
+   */
   siteEmail: String,
+
   /** "Reply to" address in mails */
   replyToEmail: Match.Maybe(String),
+
   /**
    * Sender and recipient address for "Report problem" function. The recipient is also
-   * visible in e-mail that are send to users.
+   * visible in e-mails sent to users.
    */
   reporter: {
     /**
-     * The e-mail address of the sender. All e-mail addresses can be plain 'sender@server.com'
-     * or formatted 'Sender Name sender@server.com'
+     * The e-mail address of the sender. All e-mail addresses can be plain "sender@server.com"
+     * or formatted "Sender Name <sender@server.com>"
+     * @default "reporter@mail.openki.net"
      */
     sender: String,
-    /** Comma separated list of recipients e-mail addresses that will appear on the To: field */
+    /**
+     * Comma separated list of recipients e-mail addresses that will appear on the "To:" field
+     * @default "admins@openki.net"
+     */
     recipient: String,
   },
-  /** Tells robots/crawlers whether to index the website or not */
+
+  /**
+   * Tells robots/crawlers whether to index the website or not
+   * @default true
+   */
   robots: Boolean,
-  /** Tells robots/crawlers not to index user profiles (/user/*) */
+
+  /**
+   * Tells robots/crawlers not to index user profiles (`/user/*`)
+   * @default false
+   */
   hideProfiles: Boolean,
-  /** Print the log on the server in the console, usually only for development */
+
+  /**
+   * Print the log on the server in the console, usually only for development
+   * @default false
+   */
   printLog: Boolean,
+
   /** OAuth */
   service: Match.Maybe({
     facebook: {
@@ -49,7 +86,42 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
     },
     c3: C3SettingsPattern,
   }),
-  /** Delete entries from the log or remove critical information */
+
+  /** file storage */
+  s3: {
+    region: String,
+    bucketEndpoint: String,
+    accessKeyId: String,
+    secretAccessKey: String,
+  },
+
+  /**
+   * Maximum number of entities that the api returns. If the parameter `limit`
+   * is not set in the URL, the API always returns 100 entities whatever this
+   * setting is set to.
+   * @default 100
+   */
+  apiMaxLimit: Number,
+
+  /**
+   * How many hours back notification e-mails should be sent after the server was down.
+   * This helps when there was a big problem with the server to not spam people.
+   * @default 72
+   */
+  notificationGracePeriodHours: Number,
+
+  startup: {
+    /**
+     * Build the cache in the db async or sync. For larger databases it takes a
+     * long time until all fields are updated, during this time the startup is blocked.
+     * The users cannot use the website. Because in a normal startup the database
+     * already has these fields, this task can also be done async every sunday at 22:30.
+     * @default false
+     */
+    buildDbCacheAsync: Boolean,
+  },
+
+  /** Delete entries from the log or remove critical information. The log can be viewed via `.../log` */
   scrub: Match.Maybe([
     {
       name: String,
@@ -60,31 +132,6 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
       unset: Match.Maybe([String]),
     },
   ]),
-  /** file storage */
-  s3: {
-    region: String,
-    bucketEndpoint: String,
-    accessKeyId: String,
-    secretAccessKey: String,
-  },
-  startup: {
-    /**
-     * Build the cache in the db async or sync. For larger databases it takes a
-     * long time until all fields are updated, during this time the startup is blocked.
-     * The users cannot use the website. Because in a normal startup the database
-     * already has these fields, this task can also be done async every sunday at 22:30.
-     */
-    buildDbCacheAsync: Boolean,
-  },
-  /** Maximum number of entities that the api returns. */
-  apiMaxLimit: Number,
-
-  /**
-   * How many hours back notification e-mails should be sent after the server was down.
-   * This helps when there was a big problem with the server to not spam people.
-   * Default: 72 hours
-   */
-  notificationGracePeriodHours: Number,
 });
 
 export type PrivateSettings = Type<typeof PrivateSettingsPattern>;
@@ -106,9 +153,9 @@ if (Meteor.isServer) {
     robots: true,
     hideProfiles: false,
     printLog: false,
-    startup: { buildDbCacheAsync: false },
     apiMaxLimit: 100,
     notificationGracePeriodHours: 72,
+    startup: { buildDbCacheAsync: false },
   };
 
   // none deep merge
