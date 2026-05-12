@@ -678,7 +678,6 @@
   "privilege.removed": "권한 삭제됨",
   "privilege.removed.error": "권한을 삭제하는데 실패했습니다",
   "privileges.title": "권한 수정",
-  "profile.accountManagement": "계정 관리",
   "profile.account.delete.confirm.button": "사용자 및 모든 기록 삭제",
   "profile.account.delete.confirm.button.busy": "계정 삭제 중…",
   "profile.account.delete.header": "스팸인가요?",
