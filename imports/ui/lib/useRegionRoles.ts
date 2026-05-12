@@ -12,9 +12,9 @@ export function useRegionRoles(regionId?: RegionEntity["_id"] | undefined) {
     if (!region) {
       throw new Error(`Could not find region: ${regionId}`);
     }
-    roles = region.roles ?? PublicSettings.rolesDefault;
+    roles = region.roles ?? PublicSettings.defaultRoles;
   } else {
-    roles = regions.flatMap((r) => r.roles ?? PublicSettings.rolesDefault);
+    roles = regions.flatMap((r) => r.roles ?? PublicSettings.defaultRoles);
   }
 
   return [isLoading, roles] as const;

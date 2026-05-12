@@ -341,7 +341,7 @@
     ],
 
     /* Standard for all regions, can be overwritten if the "roles" property is set in the region */
-    "rolesDefault": [
+    "defaultRoles": [
       {
         "type": "participant",
         /* Icon class string from font-awesome ex: "fa-solid fa-bullhorn" */
