@@ -39,6 +39,7 @@ export interface Data {
   /** max allowed image size max*max */
   maxSize?: number | undefined;
   thumbnail?: { src?: string | undefined; maxSize?: number | undefined } | undefined;
+  fullImage?: { src?: string | undefined; maxSize?: number | undefined } | undefined;
   onUpload: (file: UploadImage) => void;
   onDelete?: (() => void) | undefined;
 }
@@ -324,7 +325,7 @@ export function EditableImage(data: Data) {
         <i className="fa-regular fa-image fa-5x cursor-pointer" onClick={handleEditClick} />
       )}{" "}
       <div className="d-flex flex-column gap-1">
-        {!!data.thumbnail?.src && (
+        {!!data.fullImage?.src && (
           <>
             {" "}
             <button
@@ -351,7 +352,7 @@ export function EditableImage(data: Data) {
                     ></button>
                   </div>
                   <div className="modal-body text-center">
-                    <img className="mw-100" src={data.thumbnail.src} />
+                    <img className="mw-100" src={data.fullImage.src} />
                   </div>
                 </div>
               </div>

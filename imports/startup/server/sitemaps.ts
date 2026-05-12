@@ -100,7 +100,7 @@ function appendLanguage(urlStr: string, languageCode: string) {
   return url.toString();
 }
 
-WebApp.connectHandlers.use("/sitemap.xml", async (_req, res) => {
+WebApp.handlers.use("/sitemap.xml", async (_req, res) => {
   res.setHeader("Content-Type", "application/xml");
   res.setHeader("Content-Encoding", "gzip");
 
