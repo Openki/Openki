@@ -654,7 +654,6 @@
   "privilege.removed": "تمت إزالة الإذن",
   "privilege.removed.error": "غير قادر على إزالة الامتياز",
   "privileges.title": "تحرير الأذونات",
-  "profile.accountManagement": "إدارة الحساب",
   "profile.account.delete.confirm.button": "حذف المستخدم وجميع آثاره",
   "profile.account.delete.confirm.button.busy": "جاري حذف الملف الشخصي…",
   "profile.account.delete.header": "هل هذا مرسل رسائل غير مرغوب فيها؟",
