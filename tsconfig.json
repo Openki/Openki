@@ -43,8 +43,5 @@
     "skipLibCheck": true // because of a error in ./node_modules/i18next-chained-backend/ and ./node_modules/i18next-localstorage-backend/
   },
   "include": ["./", "./node_modules/@types", "./types"],
-  "exclude": [
-    "./.meteor/**",
-    "./packages/**"
-  ]
+  "exclude": ["./.meteor/**", "./packages/**"]
 }
