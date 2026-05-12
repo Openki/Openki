@@ -184,6 +184,7 @@
   "privilege.add.admin": "Tildel administrator-rettigheder",
   "privilege.has.admin": "Administrator-rettigheder tildelt",
   "privilege.remove": "Fjern rettighed",
+  "profile.accountManagement": "Kontostyring",
   "profile.changePass": "Opdater mit kodeord",
   "profile.delete.confirm.button": "Slet min bruger og hele dens profil",
   "profile.input.newPassword": "Nyt kodeord",
