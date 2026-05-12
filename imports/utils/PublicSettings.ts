@@ -369,7 +369,7 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
   ]),
 
   /** Standard for all regions, can be overwritten if the "roles" property is set in the region */
-  rolesDefault: [RoleEntityPattern],
+  defaultRoles: [RoleEntityPattern],
 
   /** @default [] */
   footerLinks: [

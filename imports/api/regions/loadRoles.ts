@@ -11,12 +11,12 @@ export async function loadRoles(regionId: string) {
   }
 
   if (!region.roles?.length) {
-    return PublicSettings.rolesDefault;
+    return PublicSettings.defaultRoles;
   }
 
   if (!region.roles.some((r) => r.type === "team")) {
     // NOTE: The system expects a `team` role to exist, so we always need to add it.
-    const [teamRole] = PublicSettings.rolesDefault.filter((r) => r.type === "team");
+    const [teamRole] = PublicSettings.defaultRoles.filter((r) => r.type === "team");
 
     return [...region.roles, teamRole];
   }
