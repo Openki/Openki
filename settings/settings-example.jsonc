@@ -340,9 +340,10 @@
       },
     ],
 
-    /* Standard for all regions, can be overwritten if the "roles" property is set in the region */
+    /* Default roles for all regions. Can be overwritten per region by setting the `Region.roles` property */
     "defaultRoles": [
       {
+        /* A unique name for the role, e.g. "team". This key is used to connect the role with i18n strings */
         "type": "participant",
         /* Icon class string from font-awesome ex: "fa-solid fa-bullhorn" */
         "icon": "fa-solid fa-thumbs-up",
@@ -453,7 +454,7 @@
      * Default: `{
                    en: "/info/faq#why-cant-i-charge-a-fixed-fee-as-a-mentor",
                    de: "/info/faq#dürfen-kurse-etwas-kosten",
-                 }`  
+                 }`
      */
     "pricePolicyLink": "...",
 

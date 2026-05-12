@@ -6,7 +6,7 @@ import { Record, StringEnum, Type } from "/imports/utils/CustomChecks";
 import { LocalizedValue, LocalizedValuePattern } from "/imports/utils/getLocalizedValue";
 
 export const RoleEntityPattern = {
-  /** (name of role) */
+  /** A unique name for the role, e.g. "team". This is used to connect the role with i18n strings */
   type: String,
   /** Icon class string from font-awesome ex: "fa-solid fa-bullhorn" */
   icon: String,
@@ -367,8 +367,7 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
       }),
     },
   ]),
-
-  /** Standard for all regions, can be overwritten if the "roles" property is set in the region */
+  /** Default roles for all regions which can be overwritten per region via the `Region.roles` property */
   defaultRoles: [RoleEntityPattern],
 
   /** @default [] */
@@ -547,7 +546,15 @@ const defaults = {
     calendar: true,
     customEntries: [] as { link: string; icon: string; key?: string; text?: string }[],
   },
-
+  defaultRoles: [
+    {
+      type: "team",
+      icon: "fa-solid fa-bullhorn",
+      proposal: false,
+      preset: true,
+      editable: false,
+    },
+  ],
   footerLinks: [] as { link: string; key?: string; title_key?: string; text?: string }[],
   faqLink: "/info/faq",
   pricePolicyLink: {
@@ -572,6 +579,17 @@ publicSettings.matomo = { ...defaults.matomo, ...Meteor.settings.public.matomo }
 // override default from socialMediaButtons
 publicSettings.feature.socialMediaButtons =
   Meteor.settings.public.feature.socialMediaButtons || defaults.feature.socialMediaButtons;
+
+if (
+  !publicSettings.defaultRoles?.some(
+    (role: PublicSettings["defaultRoles"][number]) => role.type === "team",
+  )
+) {
+  throw new Error(
+    "The `team` role is missing in PublicSettings.defaultRoles, and is required by the system" +
+      JSON.stringify(publicSettings.defaultRoles),
+  );
+}
 
 /**
  * Get access to some settings from the `Meteor.settings.public` enriched with default values.
