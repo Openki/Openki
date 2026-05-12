@@ -61,11 +61,10 @@ export function Navbar() {
     return `/logo/${headerLogo}`;
   }
   function headerAlt() {
-    if (currentRegion?.custom?.headerLogo?.alt) {
-      return currentRegion.custom.headerLogo.alt;
-    }
-
-    return PublicSettings.headerLogo.alt;
+    return (
+      getLocalizedValue(currentRegion?.custom?.headerLogo?.alt) ||
+      getLocalizedValue(PublicSettings.headerLogo.alt)
+    );
   }
   function siteStage() {
     if (currentRegion?.custom?.siteStage) {
@@ -78,7 +77,7 @@ export function Navbar() {
     return PublicSettings.nav.customEntries.map((entry) => ({
       link: entry.link,
       icon: entry.icon,
-      text: entry.key ? t(entry.key, { SITENAME: siteName }) : getLocalizedValue(entry.text),
+      text: getLocalizedValue(entry.key || entry.text, { SITENAME: siteName }),
     }));
   }
   function currentRouteIs(...routeNames: string[]) {

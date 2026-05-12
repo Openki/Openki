@@ -6,12 +6,25 @@
     "siteName": "Hmmm",
     "siteStage": "DEV",
     "testWarning": false,
-    "headerLogo": { "src": "openki-logo-web-2020.svg", "alt": "Openki Logo" },
-    "headerLogoKiosk": { "src": "openki-logo-kiosk-2020.svg", "alt": "Openki Logo" },
-    "avatarLogo": { "src": "openki-logo-web-avatar-2020.svg", "alt": "User Avatar" },
-    "ogLogo": { "src": "openki_logo_2018.png" },
+    "headerLogo": {
+      "src": "openki-logo-web-2020.svg",
+      "alt": "Openki Logo"
+    },
+    "headerLogoKiosk": {
+      "src": "openki-logo-kiosk-2020.svg",
+      "alt": "Openki Logo"
+    },
+    "avatarLogo": {
+      "src": "openki-logo-web-avatar-2020.svg",
+      "alt": "User Avatar"
+    },
+    "ogLogo": {
+      "src": "openki_logo_2018.png"
+    },
     "emailLogo": "emails/openki.png",
-    "theme": { "brand": "#9c3838" },
+    "theme": {
+      "brand": "#9c3838"
+    },
     "publicTenants": ["8410c099a7", "6815333b85", "defb99e69a"],
     "regionSelection": {
       "minNumber": 5,
@@ -21,13 +34,24 @@
       }
     },
     "i18nHelpLink_commented": "https://gitlab.com/Openki/Openki/-/wikis/translation",
-    "i18nMapping_commented": { "de": "de-zuerich-lernt" },
-    "matomo_commented": { "url": "https://analytics.mydomain.com/", "site": 0 },
+    "i18nMapping_commented": {
+      "de": "de-zuerich-lernt"
+    },
+    "matomo_commented": {
+      "url": "https://analytics.mydomain.com/",
+      "site": 0
+    },
     "pricePolicyEnabled": true,
     "askNewsletterConsent": true,
     "sendReminderPreset": true,
     "feature": {
-      "login": { "email": true, "google": true, "facebook": true, "github": false, "c3": true },
+      "login": {
+        "email": true,
+        "google": true,
+        "facebook": true,
+        "github": false,
+        "c3": true
+      },
       "visitorUser": true,
       "rsvpWithCompanions": true,
       "sendReminderIsEditable": true,
@@ -64,7 +88,11 @@
         "title": "dashboard.userRegistredFor.title",
         "query": "participant={currentUser}&after=now&sort=start"
       },
-      { "entity": "group", "title": "dashboard.recentActivities.title", "query": "internal=0" },
+      {
+        "entity": "group",
+        "title": "dashboard.recentActivities.title",
+        "query": "internal=0"
+      },
       {
         "entity": "group",
         "title": "Chaos Computer Club Zürich",
@@ -100,10 +128,16 @@
         "title": "dashboard.eventsMap.title",
         "query": "after=now&internal=0&canceled=0"
       },
-      { "entity": "propose" }
+      {
+        "entity": "propose"
+      }
     ],
     "organizationDashboardDefault": [
-      { "entity": "group", "title": "dashboard.recentActivities.title", "query": "" },
+      {
+        "entity": "group",
+        "title": "dashboard.recentActivities.title",
+        "query": ""
+      },
       {
         "entity": "event",
         "title": "dashboard.upcomingEvents.title",
@@ -124,25 +158,35 @@
         "title": "dashboard.lookingForVenues.title",
         "query": "needsRole=host&state=proposal,resting"
       },
-      { "entity": "eventsMap", "title": "dashboard.eventsMap.title", "query": "after=now" },
-      { "entity": "propose" }
+      {
+        "entity": "eventsMap",
+        "title": "dashboard.eventsMap.title",
+        "query": "after=now"
+      },
+      {
+        "entity": "propose"
+      }
     ],
     "footerLinks": [
       {
         "link": "https://about.openki.net/",
-        "key": "footer.aboutOpenki",
-        "title_key": "navigation.footer.about.title"
+        "text": "footer.aboutOpenki",
+        "title": "navigation.footer.about.title"
       },
-      { "link": "/info/faq", "key": "main.faq_link", "title_key": "navigation.footer.faq.title" },
+      {
+        "link": "/info/faq",
+        "text": "main.faq_link",
+        "title": "navigation.footer.faq.title"
+      },
       {
         "link": "https://gitlab.com/Openki/Openki/",
-        "key": "navigation.footer.sourceCode",
-        "title_key": "navigation.footer.codeOnGitLab"
+        "text": "navigation.footer.sourceCode",
+        "title": "navigation.footer.codeOnGitLab"
       },
       {
         "link": "https://about.openki.net/privacy-policy/",
-        "key": "main.privacyPolicy",
-        "title_key": "main.privacyPolicy.tooltip"
+        "text": "main.privacyPolicy",
+        "title": "main.privacyPolicy.tooltip"
       }
     ],
     "dataProtectionLaw": "By continuing I accept the [Privacy Policy](https://about.openki.net/en/privacy-policy/) and [Terms of Service](https://about.openki.net/terms-and-conditions/)",
@@ -186,19 +230,39 @@
       "computer": ["internet", "programming", "operating"],
       "misc": ["♥undefined♥", "experimental", "spiritual", "education", "ecology"]
     },
-    "s3": { "publicUrlBase": "https://cz42.objects.nineapis.ch/bucket-openkitest2" }
+    "s3": {
+      "publicUrlBase": "https://cz42.objects.nineapis.ch/bucket-openkitest2"
+    }
   },
   "siteEmail": "HMMM@legit.example",
   "replyToEmail": "HMMM@legit.example",
-  "reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net" },
+  "reporter": {
+    "sender": "pingpong@mail.openki.net",
+    "recipient": "badabuff@openki.net"
+  },
   "robots": false,
   "hideProfiles": false,
   "printLog": true,
   "service": {
-    "facebook": { "appId": "", "secret": "" },
-    "github": { "clientId": "", "secret": "" },
-    "google": { "clientId": "", "secret": "" },
-    "c3": { "clientId": "", "secret": "", "authorizeUrl": "", "tokenUrl": "", "userInfoUrl": "" }
+    "facebook": {
+      "appId": "",
+      "secret": ""
+    },
+    "github": {
+      "clientId": "",
+      "secret": ""
+    },
+    "google": {
+      "clientId": "",
+      "secret": ""
+    },
+    "c3": {
+      "clientId": "",
+      "secret": "",
+      "authorizeUrl": "",
+      "tokenUrl": "",
+      "userInfoUrl": ""
+    }
   },
   "s3": {
     "region": "us-east-1",
@@ -208,6 +272,11 @@
   },
   "apiMaxLimit": 500,
   "notificationGracePeriodHours": 72,
-  "PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" },
-  "startup": { "buildDbCacheAsync": true }
+  "PrerenderIO": {
+    "serviceUrl": "http://localhost:3033/",
+    "token": "mytoken"
+  },
+  "startup": {
+    "buildDbCacheAsync": true
+  }
 }

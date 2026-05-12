@@ -1,7 +1,7 @@
 import { Match } from "meteor/check";
 import { useTranslation } from "react-i18next";
 import IntlMessageFormat from "intl-messageformat";
- import { i18n } from "i18next";
+import { i18n } from "i18next";
 
 /** allows localized value eg. with `getLocalizedValue(...)` to have a string per language. */
 export const LocalizedValuePattern = Match.OneOf(
