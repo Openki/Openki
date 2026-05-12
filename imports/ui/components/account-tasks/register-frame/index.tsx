@@ -88,7 +88,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
             "This email is already in use. We can send you an email to login.",
           )}
           <br />
-          <a href={Router.path("resetPasswortEmail", {}, { query: { email: registerData.email } })}>
+          <a href={Router.path("resetPasswordEmail", {}, { query: { email: registerData.email } })}>
             {t("register.warning.emailExists.sendEmail", "Ok, send me an email")}
           </a>
         </div>

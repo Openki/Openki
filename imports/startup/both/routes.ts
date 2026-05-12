@@ -1064,8 +1064,8 @@ RouterAsync.route("log", {
   },
 });
 
-RouterAsync.route("resetPasswortEmail", {
-  path: "/profile/reset-passwort",
+RouterAsync.route("resetPasswordEmail", {
+  path: "/profile/reset-password",
   async action() {
     const email = this.params.query.email as string;
 
@@ -1077,7 +1077,7 @@ RouterAsync.route("resetPasswortEmail", {
     }
 
     this.response.writeHead(302, {
-      Location: Router.url("home", {}, { query: { action: "resetPasswortEmailSended" } }),
+      Location: Router.url("home", {}, { query: { action: "resetPasswordEmailSended" } }),
     });
 
     this.response.end();

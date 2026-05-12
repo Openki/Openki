@@ -17,7 +17,7 @@ export function CreateUserSection({ user }: { user: UserModel }) {
 
       <a
         className="button btn btn-primary"
-        href={Router.path("resetPasswortEmail", undefined, {
+        href={Router.path("resetPasswordEmail", undefined, {
           query: { email: user.emailAddress() },
         })}
       >

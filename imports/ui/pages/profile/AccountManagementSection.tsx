@@ -131,7 +131,7 @@ export function AccountManagementSection() {
                 </div>
                 <div className="d-flex gap-2 justify-content-end">
                   <Button
-                    id="profile-accountManagement-changingPasswort-save"
+                    id="profile-accountManagement-changingPassword-save"
                     submit
                     className="btn-cancel"
                     isBusy={isBusy}
@@ -140,7 +140,7 @@ export function AccountManagementSection() {
                     {t("_button.save")}
                   </Button>
                   <ButtonCancel
-                    id="profile-accountManagement-changingPasswort-cancel"
+                    id="profile-accountManagement-changingPassword-cancel"
                     onClick={() => setChangingPassword(false)}
                     disabled={isBusy}
                   />
