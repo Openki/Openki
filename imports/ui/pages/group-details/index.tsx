@@ -10,6 +10,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import { GroupModel } from "/imports/api/groups/groups";
 import * as GroupsMethods from "/imports/api/groups/methods";
 import { Regions } from "/imports/api/regions/regions";
+import * as EventsPub from "/imports/api/events/publications";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
@@ -63,6 +64,12 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
   const [isBusy, setIsBusy] = useState(false);
 
   const [expanded, setExpanded] = useState(false);
+
+  // load all events id for this group to count past and future
+  const now = new Date();
+  const [isLoading, events] = EventsPub.useForGroup(group._id);
+  const pastEventCount = isLoading()? 0: events.filter((e) => e.startLocal < now.toISOString()).length;
+  const futureEventCount = isLoading()? 0: events.filter((e) => e.startLocal >= now.toISOString()).length;
 
   function groupStateClasses(group: GroupModel) {
     const classes = [];
@@ -305,6 +312,8 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
                           archiveButton={!group.archived}
                           disabled={isBusy}
                           group={group}
+                          futureEventCount={futureEventCount} // count future events
+                          pastEventCount={pastEventCount} // count past events
                           onArchive={async () => handleOnArchive()}
                           onDelete={handleOnDelete}
                           onCancel={() => setExpanded(false)}
