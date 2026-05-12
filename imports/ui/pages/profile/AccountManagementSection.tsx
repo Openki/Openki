@@ -17,6 +17,10 @@ export function AccountManagementSection() {
 
   const [isBusy, setIsBusy] = useState(false);
 
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showNewPasswordConfirm, setShowNewPasswordConfirm] = useState(false);
+
   function isVisitor() {
     return user?.privileged("visitor");
   }
@@ -66,6 +70,16 @@ export function AccountManagementSection() {
     }
   }
 
+  function eyeToggle(show: boolean, onToggle: () => void) {
+    return (
+      <span className="input-group-text p-0">
+        <button type="button" className="btn btn-outline-secondary text-dark" onClick={onToggle}>
+          <i className={`fa-fw fa-solid ${show ? "fa-eye-slash" : "fa-eye"}`} />
+        </button>
+      </span>
+    );
+  }
+
   return (
     <div className="page-component page-component-seperated">
       <h3>{t("profile.accountManagement", "Account Management")}</h3>
@@ -88,15 +102,16 @@ export function AccountManagementSection() {
                     {t("profile.input.oldPassword", "Your current password")}
                   </label>
                   <div className="col-sm-8">
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="oldpassword"
-                      value={oldPassword}
-                      onChange={(event) => {
-                        setOldPassword(event.currentTarget.value);
-                      }}
-                    />
+                    <div className="input-group">
+                      <input
+                        type={showOldPassword ? "text" : "password"}
+                        className="form-control"
+                        id="oldpassword"
+                        value={oldPassword}
+                        onChange={(e) => setOldPassword(e.currentTarget.value)}
+                      />
+                      {eyeToggle(showOldPassword, () => setShowOldPassword((v) => !v))}
+                    </div>
                   </div>
                 </div>
                 <div className="row mb-2">
@@ -104,15 +119,16 @@ export function AccountManagementSection() {
                     {t("profile.input.newPassword", "New password")}
                   </label>
                   <div className="col-sm-8">
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="newpassword"
-                      value={newPassword}
-                      onChange={(event) => {
-                        setNewPassword(event.currentTarget.value);
-                      }}
-                    />
+                    <div className="input-group">
+                      <input
+                        type={showNewPassword ? "text" : "password"}
+                        className="form-control"
+                        id="newpassword"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.currentTarget.value)}
+                      />
+                      {eyeToggle(showNewPassword, () => setShowNewPassword((v) => !v))}
+                    </div>
                   </div>
                 </div>
                 <div className="row mb-2">
@@ -120,13 +136,18 @@ export function AccountManagementSection() {
                     {t("profile.input.repeatPassword", "Repeat new password")}
                   </label>
                   <div className="col-sm-8">
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="newpassword_confirm"
-                      value={newPasswordConfirm}
-                      onChange={(event) => setNewPasswordConfirm(event.currentTarget.value)}
-                    />
+                    <div className="input-group">
+                      <input
+                        type={showNewPasswordConfirm ? "text" : "password"}
+                        className="form-control"
+                        id="newpassword_confirm"
+                        value={newPasswordConfirm}
+                        onChange={(e) => setNewPasswordConfirm(e.currentTarget.value)}
+                      />
+                      {eyeToggle(showNewPasswordConfirm, () =>
+                        setShowNewPasswordConfirm((v) => !v),
+                      )}
+                    </div>
                   </div>
                 </div>
                 <div className="d-flex gap-2 justify-content-end">
