@@ -13,7 +13,7 @@ import { GroupMemberEntity, GroupModel } from "../../../../../api/groups/groups"
 import * as Tooltips from "/imports/utils/Tooltips";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { cx } from "/imports/utils/cx";
-import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
+import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 
 import { ProfileLink } from "/imports/ui/components/profile-link";
@@ -28,9 +28,9 @@ import "./styles.scss";
 export function Member({ member, group }: { member: GroupMemberEntity; group: GroupModel }) {
   const { t } = useTranslation();
   const currentUser = useUser();
-  const { roleShort } = getRoleDisplay(t);
 
   const [isRolesLoading, roles] = useRegionRoles(group.region);
+  const { roleShort } = useRoleDisplay(roles);
 
   function subscribeToTeam() {
     return new Subscribe(

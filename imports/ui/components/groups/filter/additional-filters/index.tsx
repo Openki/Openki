@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
-import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
+import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { FilterCategories } from "/imports/ui/components/filter-categories";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 import { cx } from "/imports/utils/cx";
@@ -15,10 +15,9 @@ function RolesButton(props: {
   onNeedsRoleMouseOver: (role: string) => void;
   onNeedsRoleMouseOut: (role: string) => void;
 }) {
-  const { t } = useTranslation();
   const currentRegionId = useCurrentRegionId();
-  const { roleNeeded } = getRoleDisplay(t);
   const [isLoading, regionRoles] = useRegionRoles(currentRegionId);
+  const { roleNeeded } = useRoleDisplay(regionRoles);
 
   if (isLoading()) {
     return null;

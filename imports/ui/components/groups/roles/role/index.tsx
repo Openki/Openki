@@ -8,12 +8,12 @@ import { User, UserModel } from "/imports/api/users/users";
 import * as Alert from "/imports/api/alerts/alert";
 import { Subscribe, Unsubscribe, processChange } from "../../../../../api/groups/subscription";
 import { Regions } from "/imports/api/regions/regions";
-import { RoleEntity } from "/imports/api/regions/regions";
 import { GroupModel } from "../../../../../api/groups/groups";
+import { RoleEntity } from "/imports/utils/PublicSettings";
 
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import * as Analytics from "/imports/ui/lib/analytics";
-import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
+import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 import { cx } from "/imports/utils/cx";
 
@@ -34,13 +34,13 @@ export interface Props {
 export function Role(props: Props) {
   const { t } = useTranslation();
   const user = useUser();
-  const { roleShort, roleSubscribed, roleSubscribe, roleGroupFirstSteps, roleGroupMessageInfo } =
-    getRoleDisplay(t);
   const searchParams = useSearchParams();
+  const [isRolesLoading, roles] = useRegionRoles(props.group.region);
+  const { roleShort, roleSubscribed, roleSubscribe, roleGroupFirstSteps, roleGroupMessageInfo } =
+    useRoleDisplay(roles);
   const [enrolling, setEnrolling] = useState(false);
   const [showFirstSteps, setShowFirstSteps] = useState(false);
   const [comment, setComment] = useState(props.comment ?? "");
-  const [isRolesLoading, roles] = useRegionRoles(props.group.region);
   const [isBusy, setIsBusy] = useState(false);
 
   // Build a subscribe change

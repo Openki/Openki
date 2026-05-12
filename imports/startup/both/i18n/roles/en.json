@@ -65,5 +65,7 @@
   "host.groupList.statusTitle.roleOccupiedByUser": "You are host",
   "host.notification.join.mail.intro": "{USERNAME} just joined {GROUP} as host",
   "host.group.firstSteps": "If not done already, please mention the venue(s) you have access to in your personal message.",
-  "host.group.messageInfo": "Leave a message about the venue. The message will appear next to your name."
+  "host.group.messageInfo": "Leave a message about the venue. The message will appear next to your name.",
+
+  "translationNotFound": "No translation found for {ROLE} and {KEY}. Please add it to the role settings or contact your administrator to add one."
 }

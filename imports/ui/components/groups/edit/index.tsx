@@ -11,9 +11,9 @@ import {
   isPrivate,
 } from "../../../../api/groups/groups";
 import * as GroupsMethods from "../../../../api/groups/methods";
-import { Regions, RoleEntity } from "/imports/api/regions/regions";
+import { Regions } from "/imports/api/regions/regions";
 
-import { PublicSettings } from "/imports/utils/PublicSettings";
+import { PublicSettings, RoleEntity } from "/imports/utils/PublicSettings";
 import { hasRoleUser } from "../../../../utils/group-role-utils";
 import * as StringTools from "/imports/utils/string-tools";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
@@ -44,6 +44,7 @@ import { AlertMessage } from "./AlertMessage";
 import { FormControl } from "/imports/ui/components/form-control";
 import { useFiltering } from "/imports/utils/filtering";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 
 import "./styles.scss";
 
@@ -136,6 +137,7 @@ export function Edit(props: Props) {
   }, [props, currentRegion, regions]);
 
   const [isLoadingRegionRoles, regionRoles] = useRegionRoles(selectedRegion);
+  const { roleDescription, roleSubscribe } = useRoleDisplay(regionRoles);
 
   function getOrganizations() {
     const organizations = [];
@@ -210,7 +212,16 @@ export function Edit(props: Props) {
   }
 
   const [roles, setRoles] = useState<
-    Record<string, { icon: string; enabled: boolean; enroll: boolean }>
+    Record<
+      string,
+      {
+        icon: string;
+        description: string;
+        subscribeLabel: string;
+        enabled: boolean;
+        enroll: boolean;
+      }
+    >
   >({});
 
   function isRoleEnabled(role: RoleEntity) {
@@ -226,12 +237,14 @@ export function Edit(props: Props) {
   useEffect(() => {
     setRoles(
       fromPairs(
-        availableRoles().map((r) => [
-          r.type,
+        availableRoles().map((role) => [
+          role.type,
           {
-            icon: r.icon,
-            enabled: isRoleEnabled(r),
-            enroll: hasRole(props.members, r.type) ?? false,
+            icon: role.icon,
+            description: roleDescription(role.type),
+            subscribeLabel: roleSubscribe(role.type),
+            enabled: isRoleEnabled(role),
+            enroll: hasRole(props.members, role.type) ?? false,
           },
         ]),
       ),
@@ -346,15 +359,14 @@ export function Edit(props: Props) {
     return classes.join(" ");
   }
   function groupEditRolesAttr(): GroupEditRoleProps[] {
-    return Object.entries(roles).map((r) => {
-      const type = r[0];
+    return Object.entries(roles).map(([type, role]) => {
       return {
         type,
-        ...r[1],
+        ...role,
         onRole(checked: boolean) {
           const newRoles = { ...roles };
           newRoles[type] = {
-            ...r[1],
+            ...role,
             enabled: checked,
           };
           setRoles(newRoles);
@@ -362,7 +374,7 @@ export function Edit(props: Props) {
         onEnroll(checked: boolean) {
           const newRoles = { ...roles };
           newRoles[type] = {
-            ...r[1],
+            ...role,
             enroll: checked,
           };
           setRoles(newRoles);

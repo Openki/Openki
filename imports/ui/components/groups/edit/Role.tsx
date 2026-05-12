@@ -1,23 +1,30 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
 
-import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
+import { cx } from "/imports/utils/cx";
 
 import { FormCheck } from "/imports/ui/components/FormCheck";
 
 export interface Props {
   type: string;
   icon: string;
+  description: string;
+  subscribeLabel: string;
   enabled: boolean;
   enroll: boolean;
   onRole: (checked: boolean) => void;
   onEnroll: (checked: boolean) => void;
 }
 
-export function Role({ type, icon, enabled, enroll, onRole, onEnroll }: Props) {
-  const { t } = useTranslation();
-  const { roleDescription, roleSubscribe } = getRoleDisplay(t);
-
+export function Role({
+  type,
+  icon,
+  description,
+  subscribeLabel,
+  enabled,
+  enroll,
+  onRole,
+  onEnroll,
+}: Props) {
   return (
     <>
       <FormCheck
@@ -25,7 +32,7 @@ export function Role({ type, icon, enabled, enroll, onRole, onEnroll }: Props) {
         type="box"
         label={
           <>
-            <i className={`${icon} fa-fw`} /> {roleDescription(type)}
+            <i className={cx(icon, "fa-fw")} /> {description}
           </>
         }
         checked={enabled}
@@ -37,7 +44,7 @@ export function Role({ type, icon, enabled, enroll, onRole, onEnroll }: Props) {
           <FormCheck
             id={`groupEditRole${type}EnrollCheck`}
             type="box"
-            label={roleSubscribe(type)}
+            label={subscribeLabel}
             checked={enroll}
             onChange={(checked) => onEnroll(checked)}
           />

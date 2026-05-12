@@ -2,12 +2,11 @@ import React, { JSX } from "react";
 import { useTranslation } from "react-i18next";
 import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
-import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
 
 export interface Props {
   group: JSX.Element;
-  newParticipant: JSX.Element;
-  roleType: string;
+
+  roleIntroduction: JSX.Element;
   message: string | undefined;
   roleCounts: {
     role: string;
@@ -22,8 +21,7 @@ export interface Props {
 
 export function Join({
   group,
-  newParticipant,
-  roleType,
+  roleIntroduction,
   message,
   roleCounts,
   otherRecipients,
@@ -33,19 +31,13 @@ export function Join({
   lng,
 }: Props) {
   const { t } = useTranslation(undefined, { lng });
-  const { roleNotificationJoinEmail } = getRoleDisplay(t);
 
   return (
     <>
       <tr>
         <td>
           <h5 className="title">{t("email.base.greeting", { USERNAME: username })}</h5>
-          <p className="pre">
-            {roleNotificationJoinEmail(roleType, {
-              USERNAME: newParticipant,
-              GROUP: group,
-            })}
-          </p>
+          <p className="pre">{roleIntroduction}</p>
 
           {!!message && (
             <>

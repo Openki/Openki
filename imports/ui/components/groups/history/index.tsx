@@ -7,8 +7,9 @@ import { GroupModel } from "../../../../api/groups/groups";
 import { RegionEntity } from "/imports/api/regions/regions";
 
 import { useUser } from "/imports/utils/react-meteor-data";
-import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
+import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 
 import { ProfileLink } from "../../profile-link";
 import { Contribution } from "../../Contribution";
@@ -36,7 +37,13 @@ export function UserSubscribedHistoryEntry({
   regionId: RegionEntity["_id"];
 }) {
   const { t } = useTranslation();
-  const { roleShort } = getRoleDisplay(t);
+  const [isLoading, roles] = useRegionRoles(regionId);
+  const { roleShort } = useRoleDisplay(roles);
+
+  if (isLoading()) {
+    return null;
+  }
+
   return (
     <>
       <RoleIcon type={role} regionId={regionId} />{" "}
@@ -62,7 +69,13 @@ export function UserUnsubscribedHistoryEntry({
   regionId: RegionEntity["_id"];
 }) {
   const { t } = useTranslation();
-  const { roleShort } = getRoleDisplay(t);
+  const [isLoading, roles] = useRegionRoles(regionId);
+  const { roleShort } = useRoleDisplay(roles);
+
+  if (isLoading()) {
+    return null;
+  }
+
   return (
     <>
       <RoleIcon type={role} regionId={regionId} />{" "}

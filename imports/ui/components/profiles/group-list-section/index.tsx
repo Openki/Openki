@@ -2,10 +2,10 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { uniqBy } from "lodash-es";
 
-import { RoleEntity } from "/imports/api/regions/regions";
 import { UserModel } from "/imports/api/users/users";
 import { useFindFilter } from "/imports/api/groups/publications";
-import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
+import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
+import { RoleEntity } from "/imports/utils/PublicSettings";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { LoadingPage } from "/imports/ui/pages/loading";
@@ -19,7 +19,7 @@ export function GroupListSection({ user, ownProfile }: { user: UserModel; ownPro
   const [isLoadingRoles, roles] = useRegionRoles();
   const uniqRoles = uniqBy(roles, (r) => r.type);
   const { roleShort, roleMyList, roleUserList, roleMyListPast, roleUserListPast } =
-    getRoleDisplay(t);
+    useRoleDisplay(roles);
   const id = user._id;
 
   const [isLoadingGroups, groups] = useFindFilter({
