@@ -167,6 +167,36 @@
         "entity": "propose"
       }
     ],
+    "defaultRoles": [
+      {
+        "type": "participant",
+        "icon": "fa-solid fa-thumbs-up",
+        "proposal": false,
+        "preset": true,
+        "editable": false
+      },
+      {
+        "type": "mentor",
+        "icon": "fa-solid fa-graduation-cap",
+        "proposal": true,
+        "preset": true,
+        "editable": true
+      },
+      {
+        "type": "host",
+        "icon": "fa-solid fa-house",
+        "proposal": true,
+        "preset": true,
+        "editable": true
+      },
+      {
+        "type": "team",
+        "icon": "fa-solid fa-bullhorn",
+        "proposal": false,
+        "preset": true,
+        "editable": false
+      }
+    ],
     "footerLinks": [
       {
         "link": "https://about.openki.net/",
