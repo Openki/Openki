@@ -68,7 +68,7 @@ export function AccountManagementSection() {
 
   return (
     <div className="page-component page-component-seperated">
-      <h3>{t("profile.accountManagement", "Danger zone")}</h3>
+      <h3>{t("profile.accountManagement", "Account Management")}</h3>
 
       {!isVisitor() && (
         <div className="mb-3">
