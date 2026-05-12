@@ -734,7 +734,6 @@
   "privilege.removed": "Droits supprimés",
   "privilege.removed.error": "Échec du retrait du privilège",
   "privileges.title": "Modifier les privilèges",
-  "profile.accountManagement": "Gestion des comptes",
   "profile.account.delete.confirm.button": "Supprimer complètement l'utilisateur",
   "profile.account.delete.confirm.button.busy": "Suppression du profil…",
   "profile.account.delete.header": "Est-ce un spammeur ?",
