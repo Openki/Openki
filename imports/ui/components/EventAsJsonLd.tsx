@@ -61,8 +61,7 @@ function addOffersToJsonLd() {
   return undefined;
 }
 /**
- * Add performer information to jsonLd. use groups as perfomers,
- * if no groups are present createdby is assumed as performer.
+ * Add performer information to jsonLd.
  *
  * @return jsonLd-fragment for performer
  */

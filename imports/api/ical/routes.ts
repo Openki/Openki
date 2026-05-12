@@ -43,7 +43,7 @@ Router.route("cal", {
     const filter = Events.Filtering();
     const query = (this.params.query as Record<string, unknown>) || {};
 
-    filter.add("start", moment()).read(query);
+    filter.add("start", moment().add(-2, "years")).read(query);
 
     await sendIcal(await Events.findFilter(filter.toQuery()).fetchAsync(), this.response);
   },
@@ -60,12 +60,12 @@ Router.route("calEvent", {
   },
 });
 
-Router.route("calCourse", {
-  path: "cal/course/:_id.ics",
+Router.route("calGroup", {
+  path: "cal/group/:_id.ics",
   where: "server",
   async action() {
     await sendIcal(
-      await Events.find({ courseId: this.params._id as string }).fetchAsync(),
+      await Events.find({ groupId: this.params._id as string }).fetchAsync(),
       this.response,
     );
   },

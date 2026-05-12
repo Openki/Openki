@@ -7,7 +7,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import { EventModel } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { Regions } from "/imports/api/regions/regions";
-import { useDetails } from "/imports/api/courses/publications";
+import { useDetails } from "../../../../../api/groups/publications";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
@@ -15,19 +15,19 @@ import { Props as DeleteConfirmDialogProps } from "./delete-confirm-dialog";
 import { CancelConfirmDialog, Props as CancelConfirmDialogProps } from "./cancel-confirm-dialog";
 import { EventReplication, Props as EventReplicationProps } from "../../replication";
 import { Content } from "../content";
-import { Files } from "../../../courses/Files";
+import { Files } from "../../../groups/Files";
 import { DeleteConfirmDialog } from "../../../delete-confirm-dialog";
 import { Button, ButtonDelete, ButtonEdit } from "../../../Buttons";
 
 import "./styles.scss";
 
-function CourseEvent({ event, courseId }: { event: EventModel; courseId: string }) {
+function GroupEvent({ event, groupId }: { event: EventModel; groupId: string }) {
   const { t } = useTranslation();
 
-  const [isLoading, course] = useDetails(courseId);
+  const [isLoading, group] = useDetails(groupId);
 
   function singleEvent() {
-    return course?.singleEvent;
+    return group?.singleEvent;
   }
 
   if (isLoading()) {
@@ -50,7 +50,7 @@ function CourseEvent({ event, courseId }: { event: EventModel; courseId: string 
               aria-selected="true"
             >
               <i className="fa-solid fa-file-lines fa-fw" />
-              <span className="tab-label">{t("course.subnav.descr", "Description")}</span>
+              <span className="tab-label">{t("group.subnav.descr", "Description")}</span>
             </button>
           </li>
           <li className="nav-item" role="presentation">
@@ -65,7 +65,7 @@ function CourseEvent({ event, courseId }: { event: EventModel; courseId: string 
               aria-selected="false"
             >
               <i className="fa-solid fa-file fa-fw" />
-              <span className="tab-label">{t("course.subnav.files", "Files")}</span>
+              <span className="tab-label">{t("group.subnav.files", "Files")}</span>
             </button>
           </li>
         </ul>
@@ -80,7 +80,7 @@ function CourseEvent({ event, courseId }: { event: EventModel; courseId: string 
         >
           <Content event={event} />
         </div>
-        {!!course && (
+        {!!group && (
           <div
             className="tab-pane mh-none"
             id="files"
@@ -89,7 +89,7 @@ function CourseEvent({ event, courseId }: { event: EventModel; courseId: string 
             tabIndex={0}
           >
             <div className="p-3">
-              <Files course={course} />
+              <Files group={group} />
             </div>
           </div>
         )}
@@ -155,7 +155,7 @@ export function Display({
       busyButton: t("event.delete.confirm.button.busy", "Deleting event…"),
       onRemove: async () => {
         const { title, region } = event;
-        const course = event.courseId;
+        const group = event.groupId;
 
         onRemove();
         try {
@@ -173,8 +173,8 @@ export function Display({
             Regions.findOne(region)?.nameEn,
           );
 
-          if (course) {
-            Router.go("showCourse", { _id: course });
+          if (group) {
+            Router.go("showGroup", { _id: group });
           } else {
             Router.go("home");
           }
@@ -246,8 +246,8 @@ export function Display({
 
   return (
     <div className="page-component">
-      {event.editableBy(user) && event.courseId ? (
-        <CourseEvent event={event} courseId={event.courseId} />
+      {event.editableBy(user) && event.groupId ? (
+        <GroupEvent event={event} groupId={event.groupId} />
       ) : (
         <Content event={event} />
       )}

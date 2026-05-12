@@ -3,15 +3,16 @@ import { Meteor } from "meteor/meteor";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useTracker } from "meteor/react-meteor-data";
+
 import { useSessionEquals, useUser } from "/imports/utils/react-meteor-data";
-
-import * as usersMethods from "/imports/api/users/methods";
-import { Regions } from "/imports/api/regions/regions";
-
+import { cx } from "/imports/utils/cx";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { getSiteName } from "/imports/utils/getSiteName";
+
+import * as usersMethods from "/imports/api/users/methods";
+import { Regions } from "/imports/api/regions/regions";
 
 import "./styles.scss";
 
@@ -64,7 +65,7 @@ async function handleHideClick() {
   Analytics.trackEvent("price", "hide policy");
 }
 
-function Dismissable() {
+function Dismissible() {
   const { t } = useTranslation();
   return (
     <a href="#" onClick={handleHideClick} className="icon-text">
@@ -79,7 +80,7 @@ function Dismissable() {
 }
 
 interface Props {
-  dismissable?: boolean | undefined;
+  dismissible?: boolean | undefined;
   wrap?: string | undefined;
 }
 
@@ -109,14 +110,14 @@ function useShown(props: Props) {
     return false;
   }
 
-  if (props.dismissable) {
+  if (props.dismissible) {
     return !dismissed;
   }
   return true;
 }
 
-function Content(props: { dismissable?: boolean | undefined }) {
-  if (props.dismissable) {
+function Content(props: { dismissible?: boolean | undefined }) {
+  if (props.dismissible) {
     return (
       <>
         <div>
@@ -127,7 +128,7 @@ function Content(props: { dismissable?: boolean | undefined }) {
             <More />
           </div>
           <div className="col-12 col-sm-6">
-            <Dismissable />
+            <Dismissible />
           </div>
         </div>
       </>
@@ -145,26 +146,15 @@ function Content(props: { dismissable?: boolean | undefined }) {
   );
 }
 
-function classNames(props: Props) {
-  const classes = [];
-  if (props.dismissable) {
-    classes.push("is-dismissable");
-  }
-  if (props.wrap) {
-    classes.push(props.wrap);
-  }
-  return classes.join(" ");
-}
-
 export function PricePolicy(props: Props) {
   if (!useShown(props)) {
     return null;
   }
 
   return (
-    <div className={`price-policy ${classNames(props)}`}>
+    <div className={cx("price-policy", props.wrap, props.dismissible && "is-dismissible")}>
       <div className="price-policy-content">
-        <Content dismissable={props.dismissable} />
+        <Content dismissible={props.dismissible} />
       </div>
     </div>
   );

@@ -39,13 +39,14 @@
   margin-left: 5px;
 }
 
-/* Fix: Temporarily until completely switched to react. */
-.tag-group > div:not(.tag) {
-  display: inline-block;
-}
-
 .tag-group.multiline .tag {
   margin-bottom: 5px;
+}
+
+.tag-group-addon-unit {
+  display: flex;
+  flex-wrap: nowrap;
+  min-width: max-content;
 }
 
 .tag.addon {

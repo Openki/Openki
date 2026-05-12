@@ -20,15 +20,15 @@ import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
 
 import * as Alert from "/imports/api/alerts/alert";
-import * as CoursesMethods from "/imports/api/courses/methods";
+import * as GroupsMethods from "../../../../api/groups/methods";
 import { EventModel, OEvent } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { SaveFields } from "/imports/api/events/methods";
-import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
-import { useDetails as useCourseDetails } from "/imports/api/courses/publications";
+import { useFindFilter as useOrganizationsFindFilter } from "/imports/api/organizations/publications";
+import { useDetails as useGroupDetails } from "../../../../api/groups/publications";
 import { useAll as useRegions } from "/imports/api/regions/publications";
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
-import { CourseCustomField } from "/imports/api/courses/courses";
+import { GroupCustomField } from "../../../../api/groups/groups";
 
 import { ButtonCancel, ButtonSave } from "../../Buttons";
 import { EditCustomFields } from "../../EditCustomFields";
@@ -48,26 +48,26 @@ import { useFindExternalParallelEvents } from "/imports/ui/components/events/edi
 
 import "./styles.scss";
 
-function EditCourseCustomFields({
-  courseId,
+function EditGroupCustomFields({
+  groupId,
   values,
   onChange,
 }: {
-  courseId: string;
-  values: CourseCustomField[] | undefined;
-  onChange: (values: CourseCustomField[]) => void;
+  groupId: string;
+  values: GroupCustomField[] | undefined;
+  onChange: (values: GroupCustomField[]) => void;
 }) {
-  const [isCourseLoading, course] = useCourseDetails(courseId);
-  const [groupsIsLoading, groups] = useGroupsFindFilter(
-    { when: !!course?.groupOrganizers },
-    { ids: course?.groupOrganizers },
+  const [isGroupLoading, group] = useGroupDetails(groupId);
+  const [organizationsIsLoading, organizations] = useOrganizationsFindFilter(
+    { when: !!group?.teamOrganizations },
+    { ids: group?.teamOrganizations },
   );
 
-  if (isCourseLoading() || groupsIsLoading()) {
+  if (isGroupLoading() || organizationsIsLoading()) {
     return null;
   }
 
-  const customFields = groups?.flatMap((g) => g.customCourseFields || []);
+  const customFields = organizations?.flatMap((o) => o.customGroupFields || []);
 
   return (
     <>
@@ -111,7 +111,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
   const currentRegion = useCurrentRegionId();
   const [isRegionsLoading, regions] = useRegions();
-  const [isCourseLoading, course] = useCourseDetails({ when: !!event.courseId }, event.courseId);
+  const [isGroupLoading, group] = useGroupDetails({ when: !!event.groupId }, event.groupId);
   const [selectedRegion, setSelectedRegion] = useState<string | undefined>(event.region);
   // init selected region
   useEffect(() => {
@@ -120,13 +120,13 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       return;
     }
 
-    if (event.courseId) {
-      if (!course) {
-        // wait until course is loaded
+    if (event.groupId) {
+      if (!group) {
+        // wait until group is loaded
         return;
       }
-      // The region is the same as in course
-      setSelectedRegion(course.region);
+      // The region is the same as in group
+      setSelectedRegion(group.region);
     } else if (currentRegion) {
       //  If the session sets the region, we use it.
       setSelectedRegion(currentRegion);
@@ -134,7 +134,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       // There is only one region
       setSelectedRegion(regions[0]._id);
     }
-  }, [course, currentRegion, regions]);
+  }, [group, currentRegion, regions]);
 
   const [selectedVenue, setSelectedVenue] = useState(event.venue);
   const [isRegistrationEnabled, setIsRegistrationEnabled] = useState(event.noRsvp ?? true);
@@ -142,19 +142,19 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   const [isBusy, setIsBusy] = useState(false);
   const { promptToLogin } = useAccountTasks();
 
-  const [customFieldValues, setCustomFieldValues] = useState<CourseCustomField[] | undefined>(
+  const [customFieldValues, setCustomFieldValues] = useState<GroupCustomField[] | undefined>(
     undefined,
   );
   // init custom field values
   useEffect(() => {
-    if (event.courseId) {
-      if (!course) {
-        // wait until course is loaded
+    if (event.groupId) {
+      if (!group) {
+        // wait until group is loaded
         return;
       }
-      setCustomFieldValues(course.customFields);
+      setCustomFieldValues(group.customFields);
     }
-  }, [course]);
+  }, [group]);
 
   const [venueIsLoading, venue] = useVenueDetails({ when: !!selectedVenue }, selectedVenue?._id);
 
@@ -167,8 +167,8 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   const [timeChanged, setTimeChanged] = useState(false);
 
   // Sending an event notification is only possible when the event is
-  // attached to a course. Otherwise there is nobody to inform.
-  const [notifyChecked, setNotifyChecked] = useState(!!event.courseId && isNew);
+  // attached to a group. Otherwise there is nobody to inform.
+  const [notifyChecked, setNotifyChecked] = useState(!!event.groupId && isNew);
   const [addNotificationMessage, setAddNotificationMessage] = useState("");
 
   const [changes, setChanges] = useState({
@@ -330,8 +330,8 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     return (
       // You can select the region for events that are new
       isNew &&
-      // and not associated with a course
-      !event.courseId &&
+      // and not associated with a group
+      !event.groupId &&
       // and the session not sets the region
       !currentRegion &&
       // and when more then one region exists
@@ -347,7 +347,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       region: selectedRegion as string,
       event: {
         _id: event._id,
-        courseId: event.courseId,
+        groupId: event.groupId,
         room: changes.room,
         startLocal: changes.startLocal,
         endLocal: changes.endLocal,
@@ -379,7 +379,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       maxParticipants = 0;
     }
 
-    const editevent = {
+    const editEvent = {
       title,
       description: changes.description,
       venue: selectedVenue || {},
@@ -393,14 +393,14 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     } as SaveFields;
 
     if (isNew) {
-      editevent.region = selectedRegion as string;
-      if (event.courseId) {
-        editevent.courseId = event.courseId;
+      editEvent.region = selectedRegion as string;
+      if (event.groupId) {
+        editEvent.groupId = event.groupId;
       } else {
-        // We have this 'secret' feature where you can set a group ID
-        // in the URL to assign a group to the event on creation
-        if (searchParams.group) {
-          editevent.groups = [searchParams.group];
+        // We have this 'secret' feature where you can set a organization ID
+        // in the URL to assign a organization to the event on creation
+        if (searchParams.organization) {
+          editEvent.organizations = [searchParams.organization];
         }
       }
     }
@@ -418,7 +418,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
 
       const eventId = await EventsMethods.save(
         event._id || "",
-        editevent,
+        editEvent,
         updateReplicas.infos,
         newUpdateReplicasTime,
         newUpdateReplicasTime && updateReplicas.timeOfChangedReplicas,
@@ -429,16 +429,16 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       if (isNew) {
         Alert.success(
           t("message.eventCreated", 'The event "{TITLE}" has been created!', {
-            TITLE: editevent.title,
+            TITLE: editEvent.title,
           }),
         );
 
-        if (event.courseId) {
-          if (!course) {
-            throw new Error("Unexpected undefined: course");
+        if (event.groupId) {
+          if (!group) {
+            throw new Error("Unexpected undefined: group");
           }
           let role;
-          if (intersection(user.badges, course.editors).length > 0) {
+          if (intersection(user.badges, group.editors).length > 0) {
             role = "team";
           } else if (user.privileged("admin")) {
             role = "admin";
@@ -448,9 +448,9 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
           Analytics.trackEvent(
             "Event creations",
             `Event creations as ${role}`,
-            regions.find((r) => r._id === course.region)?.nameEn,
+            regions.find((r) => r._id === group.region)?.nameEn,
             Math.round(
-              (new Date().getTime() - course.time_created.getTime()) /
+              (new Date().getTime() - group.time_created.getTime()) /
                 1000 /
                 60 /
                 60 /
@@ -458,12 +458,12 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             ),
           );
         } else {
-          Analytics.trackEvent("Event creations", `Event creations without course`);
+          Analytics.trackEvent("Event creations", `Event creations without group`);
         }
       } else {
         Alert.success(
           t("message.eventChangesSaved", 'Your changes to the event "{TITLE}" have been saved.', {
-            TITLE: editevent.title,
+            TITLE: editEvent.title,
           }),
         );
       }
@@ -471,13 +471,13 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       if (updateReplicas.infos || updateReplicas.time) {
         Alert.success(
           t("eventEdit.replicatesUpdated", 'Replicas of "{TITLE}" have also been updated.', {
-            TITLE: editevent.title,
+            TITLE: editEvent.title,
           }),
         );
       }
 
-      if (event.courseId && customFieldValues) {
-        await CoursesMethods.save(event.courseId, { customFields: customFieldValues });
+      if (event.groupId && customFieldValues) {
+        await GroupsMethods.save(event.groupId, { customFields: customFieldValues });
       }
 
       afterSave();
@@ -499,7 +499,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
     }
   }
 
-  if (isCourseLoading()) {
+  if (isGroupLoading()) {
     return null;
   }
 
@@ -508,30 +508,28 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
       <div className="edit-page">
         <h3>
           {isNew
-            ? t("course.event.edit.add", "Create an event")
-            : t("course.event.edit.edit", "Edit event")}
+            ? t("group.event.edit.add", "Create an event")
+            : t("group.event.edit.edit", "Edit event")}
         </h3>
-        {isNew && !event.courseId && (
+        {isNew && !event.groupId && (
           <>
             {t(
-              "course.createEventInfo",
-              "Use this form to publish a singular, one-off, already organized event. Otherwise create or propose a course here:",
+              "group.createEventInfo",
+              "Use this form to publish a singular, one-off, already organized event. Otherwise create or propose a group here:",
             )}{" "}
-            <a href={Router.path("proposeCourse")}>
-              {t("menue.ProposeCourse", "Propose a course")}
-            </a>
+            <a href={Router.path("proposeGroup")}>{t("menue.ProposeGroup", "Propose a group")}</a>
           </>
         )}
 
         <div className="edit-page-header event-edit">
-          {!isNew && !event.courseId && <Tag region={event.region} />}
+          {!isNew && !event.groupId && <Tag region={event.region} />}
 
           <div className="mb-3">
             <FormControl
               id="event-edit-title"
               type="text"
               size="large"
-              label={t("course.event.edit.title", "Event title")}
+              label={t("group.event.edit.title", "Event title")}
               placeholder={t("event.title.placeholder", "Write a catchy title here")}
               value={changes.title || ""}
               onChange={(value) => setChanges((changes) => ({ ...changes, title: value }))}
@@ -562,7 +560,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             <FormControl
               id="event-edit-description"
               type="richtext"
-              label={t("course.event.edit.desc", "Description")}
+              label={t("group.event.edit.desc", "Description")}
               placeholder={t(
                 "event.description.placeholder",
                 "Describe your event as accurately as possible. This helps people know how to prepare and what to expect from this meeting (e.g. level, prerequisites, activities, teaching methods, what to bring, etc.)",
@@ -580,7 +578,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             />
           </div>
 
-          {!(!isNew && event.isPrivate()) && <PricePolicy dismissable wrap="mb-3" />}
+          {!(!isNew && event.isPrivate()) && <PricePolicy dismissible wrap="mb-3" />}
 
           {!isRegionsLoading() && showRegionSelection() && (
             <div className="mb-3">
@@ -602,7 +600,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                   <FormControl
                     id="event-edit-room"
                     type="text"
-                    label={t("course.event.edit.room", "Room")}
+                    label={t("group.event.edit.room", "Room")}
                     prepend="fa-solid fa-signs-post fa-fw"
                     value={changes.room}
                     onChange={(value) => setChanges((changes) => ({ ...changes, room: value }))}
@@ -612,9 +610,9 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             </>
           )}
 
-          {!!event.courseId && (
-            <EditCourseCustomFields
-              courseId={event.courseId}
+          {!!event.groupId && (
+            <EditGroupCustomFields
+              groupId={event.groupId}
               values={customFieldValues}
               onChange={(values) => setCustomFieldValues(values)}
             />
@@ -640,12 +638,12 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
                 <FormControl
                   id="event-edit-max-participants"
                   type="integer"
-                  label={t("course.event.edit.maxParticipants", "Maximum number of participants")}
+                  label={t("group.event.edit.maxParticipants", "Maximum number of participants")}
                   optional
                   prepend="fa-solid fa-users fa-fw"
                   min={0}
                   step={1}
-                  placeholder={t("course.event.edit.unlimitedParticipants", "Unlimited seats")}
+                  placeholder={t("group.event.edit.unlimitedParticipants", "Unlimited seats")}
                   value={changes.maxParticipants}
                   onChange={(value) =>
                     setChanges((changes) => ({ ...changes, maxParticipants: value }))
@@ -662,7 +660,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
               label={t("event.edit.internal", "Hide on front page")}
               additionalInformation={t(
                 "event.edit.internal.description",
-                "Show it only on group and venue pages",
+                "Show it only on organization and venue pages",
               )}
               checked={changes.internal}
               onChange={(checked) => setChanges((changes) => ({ ...changes, internal: checked }))}
@@ -681,7 +679,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
             </div>
           )}
 
-          {!!event.courseId && (
+          {!!event.groupId && (
             <div className="mb-3">
               <Notify
                 event={event}

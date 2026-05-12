@@ -14,6 +14,10 @@ function handleFrameHeightChange(event) {
     throw new Error("iFrame not found.");
   }
 
+  if (Math.abs(iframe.clientHeight - event.data.height) < 3) {
+    return;
+  }
+
   iframe.style.height = `${event.data.height}px`;
 }
 

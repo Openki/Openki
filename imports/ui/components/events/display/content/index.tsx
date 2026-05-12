@@ -1,16 +1,16 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { useDetails } from "/imports/api/courses/publications";
+import { useDetails } from "../../../../../api/groups/publications";
 import { EventModel } from "/imports/api/events/events";
 
-import { CustomFieldDisplay } from "../../../courses/CustomFieldDisplay";
+import { CustomFieldDisplay } from "../../../groups/CustomFieldDisplay";
 import { InternalIndicator } from "../../../internal-indicator";
 import { Display } from "../../../location/display";
 import { PricePolicy } from "../../../price-policy";
 import { Sharing } from "../../../sharing";
 import { VenueLink } from "../../../venues/link";
-import { GroupList } from "../group-list";
+import { OrganizationList } from "../organization-list";
 import { EventHeader } from "../header";
 
 import "./styles.scss";
@@ -18,11 +18,11 @@ import "./styles.scss";
 export function Content({ event }: { event: EventModel }) {
   const { t } = useTranslation();
 
-  const [isLoading, course] = useDetails({ when: !!event.courseId }, event.courseId);
+  const [isLoading, group] = useDetails({ when: !!event.groupId }, event.groupId);
 
   return (
     <>
-      {event.courseId ? (
+      {event.groupId ? (
         <EventHeader start={event.startLocal} end={event.endLocal} />
       ) : (
         <EventHeader regionId={event.region} start={event.startLocal} end={event.endLocal} />
@@ -34,10 +34,10 @@ export function Content({ event }: { event: EventModel }) {
 
           <div className="row">
             <div className="col-md-7">
-              {!isLoading() && !course?.singleEvent && (
+              {!isLoading() && !group?.singleEvent && (
                 <>
                   <h3>{event.title}</h3>
-                  <GroupList event={event} />
+                  <OrganizationList event={event} />
                 </>
               )}
 
@@ -46,7 +46,7 @@ export function Content({ event }: { event: EventModel }) {
                 dangerouslySetInnerHTML={{ __html: event.description }}
               ></p>
 
-              {!!event.courseId && <CustomFieldDisplay courseId={event.courseId} />}
+              {!!event.groupId && <CustomFieldDisplay groupId={event.groupId} />}
             </div>
             <div className="col-md-5">
               <div className="details-map">
@@ -73,7 +73,7 @@ export function Content({ event }: { event: EventModel }) {
         </div>
         {!event.isPrivate() && (
           <>
-            <PricePolicy dismissable wrap="event-details-price-policy" />
+            <PricePolicy dismissible wrap="event-details-price-policy" />
             <div className="p-3 text-end" id="share">
               <h4>
                 {t("sharing.title", "Invite your friends")} <Sharing />

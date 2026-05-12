@@ -18,8 +18,8 @@ function Header() {
   const { t } = useTranslation();
   return (
     <>
-      <th className="course-stat" colSpan={7} style={{ height: "4.5em" }}>
-        {t("region.stats.courses", "Courses")}
+      <th className="group-stat" colSpan={7} style={{ height: "4.5em" }}>
+        {t("region.stats.groups", "Groups")}
       </th>
       <th className="event-stat" colSpan={9} style={{ height: "4.5em" }}>
         {t("region.stats.events", "Events")}
@@ -32,13 +32,13 @@ function SubHeader() {
   const { t } = useTranslation();
   return (
     <>
-      <th className="course-stat">{t("region.stats.courses.total", "Total")}</th>
-      <th className="course-stat">{t("region.stats.courses.proposed", "Proposed")}</th>
-      <th className="course-stat">{t("region.stats.courses.resting", "Resting")}</th>
-      <th className="course-stat">{t("region.stats.courses.upcoming", "Upcoming")}</th>
-      <th className="course-stat">{t("region.stats.courses.archived", "Archived")}</th>
-      <th className="course-stat">{t("region.stats.courses.enrollments", "Course enrollments")}</th>
-      <th className="course-stat">{t("region.stats.courses.users", "Users")}</th>
+      <th className="group-stat">{t("region.stats.groups.total", "Total")}</th>
+      <th className="group-stat">{t("region.stats.groups.proposed", "Proposed")}</th>
+      <th className="group-stat">{t("region.stats.groups.resting", "Resting")}</th>
+      <th className="group-stat">{t("region.stats.groups.upcoming", "Upcoming")}</th>
+      <th className="group-stat">{t("region.stats.groups.archived", "Archived")}</th>
+      <th className="group-stat">{t("region.stats.groups.enrollments", "Group enrollments")}</th>
+      <th className="group-stat">{t("region.stats.groups.users", "Users")}</th>
       <th className="event-stat">{t("region.stats.events.total", "Total")}</th>
       <th className="event-stat">{t("region.stats.events.future", "Future")}</th>
       <th className="event-stat">{t("region.stats.events.passed", "Passed")}</th>
@@ -57,21 +57,21 @@ function Descriptions() {
   return (
     <>
       <td className="description">
-        {t("region.stats.courses.total.description", "excl. archived")}
+        {t("region.stats.groups.total.description", "excl. archived")}
       </td>
-      <td className="description">{t("region.stats.courses.proposed.description", "no events")}</td>
+      <td className="description">{t("region.stats.groups.proposed.description", "no events")}</td>
       <td className="description">
-        {t("region.stats.courses.resting.description", "only passed events")}
+        {t("region.stats.groups.resting.description", "only passed events")}
       </td>
       <td className="description">
-        {t("region.stats.courses.upcoming.description", "with planned event(s)")}
+        {t("region.stats.groups.upcoming.description", "with planned event(s)")}
       </td>
       <td className="description">&nbsp;</td>
       <td className="description">
-        {t("region.stats.courses.enrollments.description", "interested or any role, incl. creater")}
+        {t("region.stats.groups.enrollments.description", "interested or any role, incl. creator")}
       </td>
       <td className="description">
-        {t("region.stats.courses.users.description", "unique accounts enrolled")}
+        {t("region.stats.groups.users.description", "unique accounts enrolled")}
       </td>
       <td className="description">
         {t("region.stats.events.total.description", "incl. canceled")}
@@ -116,13 +116,13 @@ function Descriptions() {
 function Results({ stat }: { stat: Stat }) {
   return (
     <>
-      <td className="course-stat number">{stat.courses.total}</td>
-      <td className="course-stat number">{stat.courses.proposed}</td>
-      <td className="course-stat number">{stat.courses.resting}</td>
-      <td className="course-stat number">{stat.courses.upcoming}</td>
-      <td className="course-stat number">{stat.courses.archived}</td>
-      <td className="course-stat number">{stat.courses.enrollments}</td>
-      <td className="course-stat number">{stat.courses.users}</td>
+      <td className="group-stat number">{stat.groups.total}</td>
+      <td className="group-stat number">{stat.groups.proposed}</td>
+      <td className="group-stat number">{stat.groups.resting}</td>
+      <td className="group-stat number">{stat.groups.upcoming}</td>
+      <td className="group-stat number">{stat.groups.archived}</td>
+      <td className="group-stat number">{stat.groups.enrollments}</td>
+      <td className="group-stat number">{stat.groups.users}</td>
       <td className="event-stat number">{stat.events.total}</td>
       <td className="event-stat number">{stat.events.future}</td>
       <td className="event-stat number">{stat.events.passed}</td>
@@ -218,16 +218,16 @@ export function StatsPage() {
             </tbody>
           </table>
           <div className="mt-5">
-            <h2>{t("regions.stats.header", "Group statistics")}</h2>
+            <h2>{t("regions.stats.header", "Organization statistics")}</h2>
             <table className="table-hover-vertical stats">
               <thead>
                 <tr>
-                  <th colSpan={2}>{t("region.stats.group", "Group")}</th>
+                  <th colSpan={2}>{t("region.stats.organization", "Organization")}</th>
                   <Header />
                 </tr>
                 <tr>
                   <th>&nbsp;</th>
-                  <th>{t("region.stats.group.members", "Members")}</th>
+                  <th>{t("region.stats.organization.members", "Members")}</th>
                   <SubHeader />
                 </tr>
               </thead>
@@ -237,20 +237,20 @@ export function StatsPage() {
                   <td>&nbsp;</td>
                   <Descriptions />
                 </tr>
-                {stats.groups.map((group, index) => {
+                {stats.organizations.map((organization, index) => {
                   return (
                     <tr key={index}>
                       <td>
-                        {group._id ? (
-                          <a href={Router.path("groupDetails", group)}>
-                            {group.name || t("group.missing")}
+                        {organization._id ? (
+                          <a href={Router.path("organizationDetails", organization)}>
+                            {organization.name || t("organization.missing")}
                           </a>
                         ) : (
-                          t("region.stats.ungrouped", "Ungrouped")
+                          t("region.stats.noOrganization", "Not assigned to any organization")
                         )}
                       </td>
-                      <td>{group.members}</td>
-                      <Results stat={group} />
+                      <td>{organization.members}</td>
+                      <Results stat={organization} />
                     </tr>
                   );
                 })}

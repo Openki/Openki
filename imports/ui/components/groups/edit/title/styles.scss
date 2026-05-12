@@ -1,0 +1,7 @@
+@import "{}/imports/ui/stylesheets/variables/index";
+
+.proposed-groups {
+  border: 1px solid $primary;
+  max-height: 200px;
+  overflow: auto;
+}

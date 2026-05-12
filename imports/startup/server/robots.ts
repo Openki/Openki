@@ -3,7 +3,7 @@ import { WebApp } from "meteor/webapp";
 
 import { serverError } from "/imports/api/log/methods";
 
-WebApp.connectHandlers.use("/robots.txt", (_req, res) => {
+WebApp.handlers.use("/robots.txt", (_req, res) => {
   try {
     res.writeHead(200, { "Content-Type": "text/plain" });
 

@@ -1,7 +1,7 @@
 {
   "name": "openki",
   "version": "0.10.0",
-  "description": "CourseOragnisationPlatform",
+  "description": "GroupOrganizationPlatform",
   "main": "server/main.ts",
   "directories": {
     "test": "tests"
@@ -87,7 +87,7 @@
     "@types/tinycolor2": "1.4.6",
     "@types/uuid": "10.0.0",
     "autoprefixer": "10.4.21",
-    "cypress": "15.3.0",
+    "cypress": "15.12.0",
     "eslint": "9.32.0",
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "7.0.1",
@@ -99,18 +99,20 @@
     "start-server-and-test": "2.1.0",
     "stylelint": "17.3.0",
     "stylelint-config-standard-scss": "17.0.0",
-    "typescript": "5.6.3",
-    "typescript-eslint": "8.38.0"
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.57.1"
   },
   "scripts": {
-    "debug": "npm run extract-translations && npm run type-check && meteor --inspect --settings settings/dev.json",
-    "debug:ssl": "npm run extract-translations && npm run type-check && OPENKI_LOCALHOST_SSL=1 meteor --extra-packages storyteller:ssl --inspect --settings settings/dev.json",
+    "predebug": "npm run extract-translations && npm run type-check",
+    "debug": "npm run predebug && npm run debug:dev",
+    "debug:dev": "meteor --inspect --settings settings/dev.json",
+    "debug:ssl": "npm run predebug && OPENKI_LOCALHOST_SSL=1 meteor --extra-packages storyteller:ssl --inspect --settings settings/dev.json",
     "test:ui": "start-test 'npm run test:env' :3000 'cypress open --e2e --browser electron'",
     "test": "start-test 'npm run test:env' :3000 'cypress run'",
     "test:ci": "WAIT_ON_TIMEOUT=600000 start-test 'npm run test:env -- --once' :3000 'cypress run --record'",
     "test:env": "BABEL_ENV=test DISABLE_REACT_FAST_REFRESH=1 meteor --settings settings/ci.json --port 3000",
-    "lint": "eslint . && stylelint '**/*.scss' && prettier --check '**/*.{ts,tsx,scss}'",
-    "lint:fix": "eslint . --fix && stylelint '**/*.scss' --fix && prettier --write '**/*.{ts,tsx,scss}' && html-beautify '{client,imports,private,public,server}/**/*.html' -r",
+    "lint": "eslint . && stylelint '**/*.scss' && prettier --check '**/*.{ts,tsx,scss,json*,js,mjs}'",
+    "lint:fix": "eslint . --fix && stylelint '**/*.scss' --fix && prettier --write '**/*.{ts,tsx,scss,json*,js,mjs}' | grep -v \"(unchanged)\" && html-beautify '{client,imports,private,public,server}/**/*.html' -r | grep -v \"unchanged\"",
     "reset": "meteor reset --db && rm -rf node_modules package-lock.json && meteor npm install --verbose",
     "type-check": "meteor lint && tsc",
     "extract-translations": "rm -f imports/startup/both/i18n/en.json && npx i18next"

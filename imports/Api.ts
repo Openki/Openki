@@ -2,9 +2,9 @@ import { Mongo } from "meteor/mongo";
 import { Router } from "meteor/iron:router";
 import moment from "moment";
 import { Users } from "/imports/api/users/users";
-import { Courses } from "/imports/api/courses/courses";
+import { Groups } from "./api/groups/groups";
 import { Events } from "/imports/api/events/events";
-import { Groups } from "/imports/api/groups/groups";
+import { Organizations } from "./api/organizations/organizations";
 import { Venues } from "/imports/api/venues/venues";
 import { Regions } from "/imports/api/regions/regions";
 import { Geodata } from "/imports/api/Geodata";
@@ -55,14 +55,14 @@ export interface ApiEvent {
     level: number | undefined;
     link: string | undefined;
   };
-  course?: {
+  group?: {
     id: string;
     name: string;
     link: string;
     image?: string;
     customFields?: { name: string; value: string | boolean }[];
   };
-  groups: {
+  organizations: {
     id: string;
     name: string;
     short: string;
@@ -99,10 +99,12 @@ function maybeUrl(route: string, context: { _id?: string } | undefined) {
 }
 
 export const Api = {
-  groups: await apiResponse(Groups, async (originalGroup) => {
-    const group = { ...originalGroup } as typeof originalGroup & { link: string };
-    group.link = Router.url("groupDetails", group);
-    return group;
+  organizations: await apiResponse(Organizations, async (originalOrganization) => {
+    const organization = { ...originalOrganization } as typeof originalOrganization & {
+      link: string;
+    };
+    organization.link = Router.url("organizationDetails", organization);
+    return organization;
   }),
   venues: await apiResponse(Venues, async (originalVenue) => {
     const venue = { ...originalVenue } as typeof originalVenue & { link: string };
@@ -149,14 +151,14 @@ export const Api = {
         };
       }
 
-      if (ev.courseId) {
-        const course = await Courses.findOneAsync(ev.courseId);
-        if (course) {
-          evr.course = {
-            id: ev.courseId,
-            name: course.name,
-            link: Router.url("showCourse", course),
-            customFields: course.customFields
+      if (ev.groupId) {
+        const group = await Groups.findOneAsync(ev.groupId);
+        if (group) {
+          evr.group = {
+            id: ev.groupId,
+            name: group.name,
+            link: Router.url("showGroup", group),
+            customFields: group.customFields
               ?.filter((f) => f.visibleFor === "all")
               .map((f) => ({
                 name: f.name,
@@ -164,23 +166,23 @@ export const Api = {
               })),
           };
 
-          const image = course.publicUrlForDetailsImage();
+          const image = group.publicUrlForDetailsImage();
           if (image) {
-            evr.course.image = image;
+            evr.group.image = image;
           }
         }
       }
 
-      evr.groups = [];
-      const groups = ev.allGroups || [];
-      for (const groupId of groups) {
-        const group = await Groups.findOneAsync(groupId);
-        if (group) {
-          evr.groups.push({
-            id: group._id,
-            name: group.name,
-            short: group.short,
-            link: Router.url("groupDetails", group),
+      evr.organizations = [];
+      const organizations = ev.allOrganizations || [];
+      for (const organizationId of organizations) {
+        const organization = await Organizations.findOneAsync(organizationId);
+        if (organization) {
+          evr.organizations.push({
+            id: organization._id,
+            name: organization.name,
+            short: organization.short,
+            link: Router.url("organizationDetails", organization),
           });
         }
       }
@@ -189,23 +191,23 @@ export const Api = {
     },
     { tenants: await visibleTenantsAsync() },
   ),
-  courses: await apiResponse(
-    Courses,
-    async (orginalCourse) => {
-      const course = {
-        id: orginalCourse._id,
-        name: orginalCourse.name,
-        description: orginalCourse.description,
-        link: Router.url("showCourse", orginalCourse),
-        image: orginalCourse.publicUrlForDetailsImage(),
-        customFields: orginalCourse.customFields
+  groups: await apiResponse(
+    Groups,
+    async (originalGroup) => {
+      const group = {
+        id: originalGroup._id,
+        name: originalGroup.name,
+        description: originalGroup.description,
+        link: Router.url("showGroup", originalGroup),
+        image: originalGroup.publicUrlForDetailsImage(),
+        customFields: originalGroup.customFields
           ?.filter((f) => f.visibleFor === "all")
           .map((f) => ({
             name: f.name,
             value: f.value,
           })),
-        internal: orginalCourse.internal,
-        interested: orginalCourse.interested,
+        internal: originalGroup.internal,
+        interested: originalGroup.interested,
       } as {
         id: string;
         name: string;
@@ -223,7 +225,7 @@ export const Api = {
           id: string;
           name: string;
         };
-        groups: {
+        organizations: {
           id: string;
           name: string;
           short: string;
@@ -231,37 +233,37 @@ export const Api = {
         }[];
       };
 
-      const region = await Regions.findOneAsync(orginalCourse.region);
+      const region = await Regions.findOneAsync(originalGroup.region);
       if (region) {
-        course.region = {
+        group.region = {
           id: region._id,
           name: region.name,
         };
       }
 
-      const creator = await Users.findOneAsync(orginalCourse.createdby);
+      const creator = await Users.findOneAsync(originalGroup.createdby);
       if (creator) {
-        course.createdBy = {
+        group.createdBy = {
           id: creator._id,
           name: creator.getDisplayName(),
         };
       }
 
-      course.groups = [];
-      const groups = orginalCourse.groups || [];
-      groups.forEach(async (groupId) => {
-        const group = await Groups.findOneAsync(groupId);
-        if (group) {
-          course.groups.push({
-            id: group._id,
-            name: group.name,
-            short: group.short,
-            link: Router.url("groupDetails", group),
+      group.organizations = [];
+      const organizations = originalGroup.organizations || [];
+      organizations.forEach(async (organizationId) => {
+        const organization = await Organizations.findOneAsync(organizationId);
+        if (organization) {
+          group.organizations.push({
+            id: organization._id,
+            name: organization.name,
+            short: organization.short,
+            link: Router.url("organizationDetails", organization),
           });
         }
       });
 
-      return course;
+      return group;
     },
     { tenants: await visibleTenantsAsync() },
   ),

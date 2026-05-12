@@ -91,7 +91,7 @@ export function Schedule() {
   const [isLoading, events] = useFindFilter(filter, 500);
 
   // Track repeating events so we know how often they occur.
-  // The key to this dict is a combination of courseId, weekday and start time.
+  // The key to this dict is a combination of groupId, weekday and start time.
   const repetitionCount: Record<string, number> = {};
   const repetitionCountDay: Record<string, number> = {};
 
@@ -106,13 +106,13 @@ export function Schedule() {
     const event = { ...originalEvent } as EventViewModel;
     const eventStart = LocalTime.fromString(event.startLocal);
 
-    // Build key that is the same for events of the same course that
+    // Build key that is the same for events of the same group that
     // start on the same time.
     let repKey = `${eventStart.hour()}-${eventStart.minute()}-`;
 
-    // If there is no courseId, we fall back to replicationId, then _id.
-    if (event.courseId) {
-      repKey += event.courseId;
+    // If there is no groupId, we fall back to replicationId, then _id.
+    if (event.groupId) {
+      repKey += event.groupId;
     } else if (event.replicaOf) {
       repKey += event.replicaOf;
     } else {

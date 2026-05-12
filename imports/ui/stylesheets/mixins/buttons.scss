@@ -20,8 +20,6 @@
     $font-size-large,
     $btn-border-radius-large
   );
-
-  border-radius: 0;
 }
 
 @mixin btn-sm {
@@ -33,15 +31,5 @@
       $line-height-small,
       $btn-border-radius-small
     );
-  }
-}
-
-@mixin icon-btn-remove {
-  color: color.adjust($brand-danger, $lightness: 20%);
-  cursor: pointer;
-  transition: color $default-transition-time;
-
-  &:hover {
-    color: $brand-danger;
   }
 }

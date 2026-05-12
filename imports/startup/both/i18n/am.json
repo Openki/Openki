@@ -1,7 +1,7 @@
 {
-	"_button.cancel": "ሰርዝ",
-	"_button.save": "አስቀምጥ",
-	"menue.Calendar": "ቀን መቁጠሪያ",
-	"menue.Courses": "ፈልግ",
-	"menue.Create": "ፈጠረ"
+  "_button.cancel": "ሰርዝ",
+  "_button.save": "አስቀምጥ",
+  "menue.Calendar": "ቀን መቁጠሪያ",
+  "menue.Create": "ፈጠረ",
+  "menue.Groups": "ፈልግ"
 }

@@ -46,7 +46,7 @@ export function EventReminder({
           <p className="gap-md text-center">
             {t(
               "notification.event.reminder.informUnregisterEvent",
-              "In case you can not make it, it's important to let the organizers know now:",
+              "In case you can not make it, it's important to let the coordinators know now:",
             )}
           </p>
           <p className="text-center">

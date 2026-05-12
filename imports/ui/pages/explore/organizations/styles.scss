@@ -1,0 +1,18 @@
+@import "{}/imports/ui/stylesheets/variables/index";
+
+.card-organization {
+  background-color: $organization-bg;
+  block-size: 120px;
+  inline-size: 200px;
+  max-block-size: 120px;
+  max-inline-size: 100%;
+
+  .card-title,
+  .card-text {
+    @include ellipsis-multiline(2);
+  }
+
+  a {
+    color: $gray-700;
+  }
+}

@@ -18,7 +18,7 @@ export const regionDependentRoutes = [
   "calendar",
   "venuesMap",
   "eventsMap",
-  "groupDetails",
+  "organizationDetails",
 ];
 
 function persistRegion(region: string) {

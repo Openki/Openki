@@ -1,0 +1,87 @@
+@import "{}/imports/ui/stylesheets/variables/index";
+
+.group-history {
+  @include clearfix;
+
+  padding-bottom: 10px;
+}
+
+.timeline-pre,
+.timeline-post {
+  height: 30px;
+}
+
+.timeline-start,
+.timeline-end {
+  height: 100%;
+  margin: auto;
+  width: 1px;
+}
+
+.timeline-start {
+  @include gradient-y($blue-lighter, $primary);
+}
+
+.timeline-end {
+  @include gradient-y($primary, $blue-lighter, 0%, 100%);
+}
+
+.timeline-eventdate {
+  @include ellipsis;
+
+  color: rgb(109 112 112);
+  padding: 0;
+  text-align: end;
+
+  &.active {
+    color: $gray-800;
+  }
+}
+
+.timeline-eventline-container {
+  padding: 0;
+}
+
+.timeline-eventline {
+  background: $primary;
+  height: 100%;
+  margin: auto;
+  width: 1px;
+}
+
+.timeline-eventpoint {
+  background: $primary;
+  border-radius: 50%;
+  display: inline-block;
+  height: 7px;
+  left: -3px;
+  position: relative;
+  transition: background-color 0.25s;
+  width: 7px;
+
+  &.active {
+    background: $danger;
+  }
+}
+
+.grouphistory-event {
+  padding: 0;
+
+  a {
+    color: $primary;
+    overflow-wrap: normal;
+  }
+
+  &:hover a {
+    color: $gray-800;
+    /* stylelint-disable-next-line max-nesting-depth */
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  h4 {
+    padding-top: 10px;
+    text-align: center;
+  }
+}

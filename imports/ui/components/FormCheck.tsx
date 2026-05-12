@@ -1,5 +1,8 @@
 import React, { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+
+import { cx } from "/imports/utils/cx";
+
 import { ToggleTip } from "/imports/ui/components/ToggleTip";
 
 interface CommonProps {
@@ -28,7 +31,7 @@ export function FormCheck(props: Props) {
   const { t } = useTranslation();
 
   return (
-    <div className={`form-check${type === "switch" ? " form-switch" : ""}`}>
+    <div className={cx("form-check", type === "switch" && "form-switch")}>
       <input
         id={id}
         name={"name" in props ? props.name : undefined}

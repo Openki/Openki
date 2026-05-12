@@ -3,7 +3,7 @@ import crypto from "crypto";
 import { Mongo } from "meteor/mongo";
 
 import { Prng } from "/imports/api/fixtures/Prng";
-import { Groups } from "/imports/api/groups/groups";
+import { Organizations } from "../organizations/organizations";
 import { Tenants } from "/imports/api/tenants/tenants";
 import { RegionEntity, Regions } from "/imports/api/regions/regions";
 import { VenueEntity, Venues } from "/imports/api/venues/venues";
@@ -155,26 +155,26 @@ export const ensure = {
     return id;
   },
 
-  async group(short: string) {
-    const group = await Groups.findOneAsync({ short });
-    if (group) {
-      return group._id;
+  async organization(short: string) {
+    const organization = await Organizations.findOneAsync({ short });
+    if (organization) {
+      return organization._id;
     }
 
     const id = ensure.fixedId([short]);
-    await Groups.insertAsync({
+    await Organizations.insertAsync({
       _id: id,
       name: short,
       short,
       claim: "",
       members: [{ user: (await ensure.user("Ed Dillinger"))._id, notify: true }],
-      description: "Fixture group",
+      description: "Fixture organization",
       createdby: (await ensure.user("Ed Dillinger"))._id,
       time_created: new Date(),
       time_lastedit: new Date(),
     });
 
-    console.log(`Added fixture group '${short}' id: ${id}`);
+    console.log(`Added fixture organization '${short}' id: ${id}`);
 
     return id;
   },
