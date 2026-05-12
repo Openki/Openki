@@ -578,7 +578,9 @@ publicSettings.matomo = { ...defaults.matomo, ...Meteor.settings.public.matomo }
 
 // override default from socialMediaButtons
 publicSettings.feature.socialMediaButtons =
-  Meteor.settings.public.feature.socialMediaButtons || defaults.feature.socialMediaButtons;
+  Meteor.settings.public.feature.socialMediaButtons ?? defaults.feature.socialMediaButtons;
+
+publicSettings.defaultRoles = Meteor.settings.public.defaultRoles ?? defaults.defaultRoles;
 
 if (
   !publicSettings.defaultRoles?.some(

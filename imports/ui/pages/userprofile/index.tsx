@@ -12,6 +12,7 @@ import * as OrganizationsMethods from "../../../api/organizations/methods";
 import * as Organizations from "../../../api/organizations/publications";
 import * as usersMethods from "/imports/api/users/methods";
 import { UserModel } from "/imports/api/users/users";
+import { regions } from "/imports/api/fixtures/regions/data";
 
 import { checkContribution } from "/imports/utils/checkContribution";
 import { MetaTags } from "/imports/ui/components/MetaTags";
@@ -358,11 +359,13 @@ export function UserprofilePage({ user }: Props) {
           </div>
         )}
 
-        <GroupListSection user={user} ownProfile={false} />
+        {regions.map((region) => (
+          <GroupListSection key={region._id} regionId={region._id} user={user} ownProfile={false} />
+        ))}
 
         {alterPrivileges && (
           <>
-            <h3 className="text-danger">
+            <h3 className="text-danger mt-3">
               {t("profile.account.delete.header", "Is this a spammer?")}
             </h3>
             {!verifyUserDelete ? (
