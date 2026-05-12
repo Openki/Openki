@@ -1,20 +1,32 @@
-import { useAll } from "/imports/api/regions/publications";
+import { useDetails } from "/imports/api/regions/publications";
 import { RegionEntity } from "/imports/api/regions/regions";
 import { PublicSettings, RoleEntity } from "/imports/utils/PublicSettings";
-
-export function useRegionRoles(regionId?: RegionEntity["_id"] | undefined) {
-  const [isLoading, regions] = useAll();
+/**
+ * Load the region roles on the client side
+ */
+export function useRegionRoles(regionId?: RegionEntity["_id"]) {
+  const [isLoading, region] = useDetails({ when: !!regionId }, regionId);
 
   let roles: RoleEntity[] = [];
 
-  if (regionId) {
-    const region = regions.find((r) => r._id === regionId);
-    if (!region) {
-      throw new Error(`Could not find region: ${regionId}`);
-    }
-    roles = region.roles ?? PublicSettings.defaultRoles;
+  if (isLoading()) {
+    return [isLoading, roles] as const;
+  }
+
+  if (!region) {
+    throw new Error(`Could not find region: "${regionId}"`);
+  }
+
+  if (!region.roles) {
+    return [isLoading, PublicSettings.defaultRoles] as const;
+  }
+
+  if (region.roles.some((role) => role.type === "team")) {
+    roles = region.roles;
   } else {
-    roles = regions.flatMap((r) => r.roles ?? PublicSettings.defaultRoles);
+    // NOTE: The system expects a `team` role to exist, so we always need to add it.
+    const [teamRole] = PublicSettings.defaultRoles.filter((r) => r.type === "team");
+    roles = [...region.roles, teamRole] as const;
   }
 
   return [isLoading, roles] as const;

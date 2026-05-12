@@ -1,11 +1,11 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { uniqBy } from "lodash-es";
 
 import { UserModel } from "/imports/api/users/users";
 import { useFindFilter } from "/imports/api/groups/publications";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { RoleEntity } from "/imports/utils/PublicSettings";
+import { useDetails } from "/imports/api/regions/publications";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { LoadingPage } from "/imports/ui/pages/loading";
@@ -14,20 +14,31 @@ import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 
 import "./styles.scss";
 
-export function GroupListSection({ user, ownProfile }: { user: UserModel; ownProfile: boolean }) {
+export function GroupListSection({
+  regionId,
+  user,
+  ownProfile,
+}: {
+  regionId: string;
+  user: UserModel;
+  ownProfile: boolean;
+}) {
   const { t } = useTranslation();
-  const [isLoadingRoles, roles] = useRegionRoles();
-  const uniqRoles = uniqBy(roles, (r) => r.type);
+  const [isLoadingRegion, region] = useDetails(regionId);
+  const [isLoadingRoles, roles] = useRegionRoles(regionId);
+
   const { roleShort, roleMyList, roleUserList, roleMyListPast, roleUserListPast } =
     useRoleDisplay(roles);
   const id = user._id;
 
   const [isLoadingGroups, groups] = useFindFilter({
+    region: regionId,
     userInvolved: id,
     archived: false,
   });
 
   const [isLoadingArchivedGroups, archivedGroups] = useFindFilter({
+    region: regionId,
     userInvolved: id,
     archived: true,
   });
@@ -48,10 +59,15 @@ export function GroupListSection({ user, ownProfile }: { user: UserModel; ownPro
     return role.type === "team";
   }
 
+  if (isLoadingRegion()) {
+    return null;
+  }
+
   return (
-    <div className="page-component page-component-seperated profile-grouplist">
-      {isInvolved() && (
+    isInvolved() && (
+      <div className="page-component page-component-seperated profile-grouplist">
         <>
+          <h2>{region?.name}</h2>
           <h3 className="badge-title">
             {ownProfile
               ? t("users.grouplist.myGroups", "I am involved in the following groups")
@@ -64,7 +80,7 @@ export function GroupListSection({ user, ownProfile }: { user: UserModel; ownPro
           ) : (
             <>
               <div>
-                {uniqRoles
+                {roles
                   .filter((role) => groupsByRoleCount(role.type, false))
                   .map((role) => (
                     <React.Fragment key={role.type}>
@@ -89,7 +105,7 @@ export function GroupListSection({ user, ownProfile }: { user: UserModel; ownPro
                     </React.Fragment>
                   ))}
               </div>
-              {uniqRoles
+              {roles
                 .filter((role) => groupsByRoleCount(role.type, false))
                 .map((role) => (
                   <React.Fragment key={role.type}>
@@ -105,7 +121,7 @@ export function GroupListSection({ user, ownProfile }: { user: UserModel; ownPro
                   </React.Fragment>
                 ))}
 
-              {uniqRoles
+              {roles
                 .filter((role) => groupsByRoleCount(role.type, true) && showArchived(role))
                 .map((role) => (
                   <React.Fragment key={role.type}>
@@ -123,7 +139,7 @@ export function GroupListSection({ user, ownProfile }: { user: UserModel; ownPro
             </>
           )}
         </>
-      )}
-    </div>
+      </div>
+    )
   );
 }

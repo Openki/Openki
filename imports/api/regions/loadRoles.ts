@@ -4,6 +4,9 @@ import { Regions } from "/imports/api/regions/regions";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
+/**
+ * Server-side loading of roles
+ */
 export async function loadRoles(regionId: string) {
   const region = await Regions.findOneAsync({ _id: regionId });
   if (!region) {

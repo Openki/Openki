@@ -25,7 +25,7 @@ type RecursiveUndefinedToOptional<T> = UndefinedToOptional<{
           : T[P];
 }>;
 
-/** Match.Optional and Match.Maybe behaves diffrent when the pattern is a property of a object or not. */
+/** Match.Optional and Match.Maybe behaves different when the pattern is a property of a object or not. */
 type BaseOrObjectMatchHelper<T> = T extends object ? RecursiveUndefinedToOptional<T> : T;
 
 /** Convert a meteor/check Match.Pattern to a typescript type */
