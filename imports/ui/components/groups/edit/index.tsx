@@ -249,7 +249,7 @@ export function Edit(props: Props) {
 
   useEffect(() => {
     // Show category selection right away for new groups
-    setEditingCategories(isNew);
+    setEditingCategories(false);
     setSelectedCategories(props.categories || []);
 
     if (props.isFrame) {
@@ -554,20 +554,22 @@ export function Edit(props: Props) {
                   <SelectCategories {...selectCategoriesAttr()} />
                 ) : (
                   <>
-                    <div className="form-label">{t("group.edit.categories", "Categories")}</div>
-                    {props.categories ? (
+                    {!isNew && (
+                      <div className="form-label">
+                        {t("group.edit.categoriesOptional", "Categories (optional)")}
+                      </div>
+                    )}
+                    {!isNew && props.categories && props.categories.length > 0 && (
                       <GroupCategories categories={props.categories} />
-                    ) : (
-                      <div>{t("group.edit.no.categories", "No categories")}</div>
-                    )}{" "}
+                    )}
                     <button
                       type="button"
                       className="btn btn-edit"
-                      onClick={() => {
-                        setEditingCategories(true);
-                      }}
+                      onClick={() => setEditingCategories(true)}
                     >
-                      {t("group.edit.edit_categories")}
+                      {isNew
+                        ? t("group.edit.addCategories", "Add categories")
+                        : t("group.edit.editCategories")}
                     </button>
                   </>
                 )}
