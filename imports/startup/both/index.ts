@@ -1,7 +1,6 @@
 import "./ical";
 import "./i18next";
 import "./routes";
-import "./C3OAuth/accounts-c3";
 
 // import locale file(s)
 import "moment/locale/ar";
