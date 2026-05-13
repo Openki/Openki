@@ -1,3 +1,4 @@
+import { Meteor } from "meteor/meteor";
 import { ServiceConfiguration, ConfigError } from "meteor/service-configuration";
 import { Random } from "meteor/random";
 import { Cookies } from "meteor/ostrio:cookies";
@@ -13,8 +14,8 @@ const cookies = new Cookies();
 /** Base64 encode the given Uint8Array and return a string */
 function base64Encode(data: Uint8Array<ArrayBuffer>) {
   let str = "";
-  for (let i = 0; i < data.length; i++) {
-    str += String.fromCharCode(data[i]);
+  for (const byte of data) {
+    str += byte;
   }
   return btoa(str);
 }
