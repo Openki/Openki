@@ -10,7 +10,7 @@ if (LocalhostSsl) {
   OAuth._checkRedirectUrlOrigin = () => false;
 }
 
-const requestContext = new AsyncLocalStorage();
+const requestContext = new AsyncLocalStorage<{ request: { cookies: Record<string, string> } }>();
 
 // save the request context for later to have access to the cookies
 WebApp.handlers.use("/_oauth/c3", (request, _response, next) => {
