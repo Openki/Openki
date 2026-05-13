@@ -11,6 +11,7 @@ import "./templates";
 import "./template-helpers";
 import "./translations.html";
 import "./useraccounts-configuration";
+import "./c3-oauth_client";
 
 import * as RegionSelection from "/imports/utils/region-selection";
 import * as Theme from "/imports/utils/theme";

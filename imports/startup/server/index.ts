@@ -15,6 +15,7 @@ import "./apiRoutes/api.routes.xml";
 import "./emails";
 import "./login";
 import "./useraccounts-configuration";
+import "./c3-oauth_server";
 import "./version";
 import "./event-reminder";
 import "./scrub";
