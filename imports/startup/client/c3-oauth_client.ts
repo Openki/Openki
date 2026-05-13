@@ -1,6 +1,5 @@
 import { ServiceConfiguration, ConfigError } from "meteor/service-configuration";
 import { Random } from "meteor/random";
-import crypto from "node:crypto";
 import { Cookies } from "meteor/ostrio:cookies";
 import { Accounts } from "meteor/accounts-base";
 
@@ -11,14 +10,20 @@ const cookies = new Cookies();
 
 // Some code are inspired from the voc/infobeamer-cms See: https://github.com/voc/infobeamer-cms/blob/6a133e66290d5ec86c9e9cf078f525a0b4d3b9bf/frontend.py#L188
 
-function generateCodeChallenge(verifier: string): string {
-  return crypto
-    .createHash("sha256")
-    .update(verifier, "utf8")
-    .digest("base64")
-    .replace(/\+/g, "-")
-    .replace(/\//g, "_")
-    .replace(/=+$/, "");
+/** Base64 encode the given Uint8Array and return a string */
+function base64Encode(data: Uint8Array<ArrayBuffer>) {
+  let str = "";
+  for (let i = 0; i < data.length; i++) {
+    str += String.fromCharCode(data[i]);
+  }
+  return btoa(str);
+}
+
+async function generateCodeChallenge(verifier: string): Promise<string> {
+  return crypto.subtle.digest("SHA-256", new TextEncoder().encode(verifier)).then((hash) =>
+    // Convert to base64url encoding
+    base64Encode(new Uint8Array(hash)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""),
+  );
 }
 
 // Request C3 credentials for the user
