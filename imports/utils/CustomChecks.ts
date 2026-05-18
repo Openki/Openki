@@ -102,5 +102,5 @@ export function Deprecated<T extends Match.Pattern>(pattern: T, text: string) {
 
     // Then always reject with a clear deprecation message
     throw new (Match as any).Error(`Deprecated: ${text}`);
-  }) as Match.Matcher<Match.Pattern>;
+  }) as Match.Matcher<Match.PatternMatch<T>>;
 }
