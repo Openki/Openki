@@ -19,6 +19,7 @@ if (false) {
   import("/imports/startup/both/i18n/en.json");
   import("/imports/startup/both/i18n/roles/en.json");
 
+  // common namespace
   import("/imports/startup/both/i18n/en-ccc.json");
   import("/imports/startup/both/i18n/af.json");
   import("/imports/startup/both/i18n/am.json");
@@ -45,6 +46,27 @@ if (false) {
   import("/imports/startup/both/i18n/tr.json");
   import("/imports/startup/both/i18n/zh-CN.json");
   import("/imports/startup/both/i18n/zh-TW.json");
+
+  // roles namespace
+  import("/imports/startup/both/i18n/roles/en-ccc.json");
+  import("/imports/startup/both/i18n/roles/ar.json");
+  import("/imports/startup/both/i18n/roles/da.json");
+  import("/imports/startup/both/i18n/roles/de.json");
+  import("/imports/startup/both/i18n/roles/de-ccc.json");
+  import("/imports/startup/both/i18n/roles/de-ZH.json");
+  import("/imports/startup/both/i18n/roles/de-zuerich-lernt.json");
+  import("/imports/startup/both/i18n/roles/el.json");
+  import("/imports/startup/both/i18n/roles/es.json");
+  import("/imports/startup/both/i18n/roles/fa.json");
+  import("/imports/startup/both/i18n/roles/fr.json");
+  import("/imports/startup/both/i18n/roles/hu.json");
+  import("/imports/startup/both/i18n/roles/it.json");
+  import("/imports/startup/both/i18n/roles/ko.json");
+  import("/imports/startup/both/i18n/roles/nb.json");
+  import("/imports/startup/both/i18n/roles/pt.json");
+  import("/imports/startup/both/i18n/roles/ru.json");
+  import("/imports/startup/both/i18n/roles/sv.json");
+  import("/imports/startup/both/i18n/roles/tr.json");
 }
 
 let localStorageSupported;
