@@ -14,7 +14,7 @@ import { Type } from "/imports/utils/CustomChecks";
 
 export type OrganizationEntityCustomGroupFields =
   | {
-      /** For internal us, must be unique in the list. */
+      /** For internal use, must be unique in the list. */
       name: string;
       /** Used when the value is edited. */
       editText: LocalizedValue;
@@ -28,7 +28,7 @@ export type OrganizationEntityCustomGroupFields =
       type?: "singleLine" | "multiLine";
     }
   | {
-      /** For internal us, must be unique in the list. */
+      /** For internal use, must be unique in the list. */
       name: string;
       /** Used when the value is edited. */
       editText: LocalizedValue;
@@ -43,7 +43,7 @@ export type OrganizationEntityCustomGroupFields =
       defaultValue?: string;
     }
   | {
-      /** For internal us, must be unique in the list. */
+      /** For internal use, must be unique in the list. */
       name: string;
       /** Used when the value is edited. */
       editText: LocalizedValue;
