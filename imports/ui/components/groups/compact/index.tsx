@@ -139,7 +139,7 @@ export function GroupCompact({ group, organizationTagEvents, categoryTagEvents }
       className={`row mx-0 align-items-start group-compact ${groupStateClasses()} ${filterPreviewClasses()}`}
       style={groupCss()}
     >
-      <div className="group-compact-content col-10">
+      <div className="group-compact-content col-8">
         {group.internal && <InternalIndicator />}
         {group.singleEvent && <SingleEventIndicator />}
         <div className="group-compact-title" title={group.name}>
