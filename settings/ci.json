@@ -44,13 +44,6 @@
         "type": "mentor",
         "icon": "fa-solid fa-graduation-cap",
         "proposal": true,
-        "preset": true,
-        "editable": true
-      },
-      {
-        "type": "facilitator",
-        "icon": "fa-solid fa-circle-nodes",
-        "proposal": true,
         "preset": false,
         "editable": true
       },
@@ -58,7 +51,7 @@
         "type": "host",
         "icon": "fa-solid fa-house",
         "proposal": true,
-        "preset": true,
+        "preset": false,
         "editable": true
       },
       {
