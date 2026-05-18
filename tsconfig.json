@@ -2,7 +2,7 @@
   "compilerOptions": {
     /* Basic Options */
     "target": "es2018",
-    "module": "node16",
+    "module": "esnext",
     "lib": ["esnext", "dom"],
     "jsx": "preserve",
     "incremental": true,
@@ -33,7 +33,7 @@
       /* Using Core Types */
       "meteor/*": ["./node_modules/@types/meteor/*", "./.meteor/local/types/packages.d.ts"]
     },
-    "moduleResolution": "node16",
+    "moduleResolution": "node",
     "allowUmdGlobalAccess": true, // Needed for leaflet meteor package
     "resolveJsonModule": true,
     "esModuleInterop": true,
