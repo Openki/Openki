@@ -258,7 +258,7 @@
           /*
            * Text from the link. The value is a translation key from i18next it must be
            * defined in code
-           * Deprecated: use text instate (May 2026)
+           * Deprecated: use "text" field instead (May 2026)
            */
           "key": "...",
         },
@@ -407,12 +407,12 @@
         /**
          * Text from the link. The value is a translation key from i18next it must be
          * defined in code
-         * Deprecated: use text instate (May 2026)
+         * Deprecated: use "text" field instead (May 2026)
          */
         "key": "footer.aboutOpenki",
         /**
          * text that is shown on hover the link
-         * @deprecated: use title instead (May 2026)
+         * Deprecated: use "title" field instead (May 2026)
          */
         "title_key": "navigation.footer.about.title",
       },
