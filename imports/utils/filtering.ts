@@ -1,7 +1,8 @@
 import { Tracker } from "meteor/tracker";
-import { ParamWrapper, Predicate } from "imports/utils/predicates";
 import { useEffect, useMemo } from "react";
 import { useTracker } from "meteor/react-meteor-data";
+
+import { ParamWrapper, Predicate } from "/imports/utils/predicates";
 
 export class FilteringReadError {
   constructor(

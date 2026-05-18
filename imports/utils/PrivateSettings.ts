@@ -1,7 +1,7 @@
 import { Match } from "meteor/check";
 import { Meteor } from "meteor/meteor";
 import { StringEnum, Type } from "./CustomChecks";
-import { C3SettingsPattern } from "/imports/startup/both/C3OAuth/settings";
+import { C3SettingsPattern } from "/imports/startup/both/c3-oauth-settings";
 
 export const PrivateSettingsPattern = Match.ObjectIncluding({
   /**
