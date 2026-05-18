@@ -7,10 +7,12 @@ export default defineConfig({
     // we use cypress e2e environment for all kinds of test
     specPattern: "tests/{unit,component,api,e2e}/**/*.spec.ts",
     supportFile: "tests/support/index.ts",
-    experimentalStudio: true,
-    experimentalRunAllSpecs: true,
+    // Running multiple tests at the same time with `experimentalRunAllSpecs` can be unreliable
+    // and cause tests to fail in weird ways.
+    // experimentalRunAllSpecs: true,
     screenshotsFolder: "tests/screenshots",
     videosFolder: "tests/videos",
+    allowCypressEnv: false,
     video: false,
     retries: {
       runMode: 2,

@@ -1,10 +1,11 @@
 import { Subscription } from "meteor/meteor";
 import { EJSON } from "meteor/ejson";
 import { Mongo } from "meteor/mongo";
-import { useFind, useSubscribe, useTracker } from "meteor/react-meteor-data";
-import { publish, QueryBuilder } from "./ServerPublishUtils";
 import { useUserId } from "./react-meteor-data";
 import { isObject, slice } from "lodash-es";
+import { useFind, useSubscribe, useTracker } from "meteor/react-meteor-data";
+
+import { publish, QueryBuilder } from "./ServerPublishUtils";
 import { getStack } from "/imports/utils/getStack";
 
 type DeepPartial<T> = T extends object
@@ -37,11 +38,11 @@ export function createPublicationMany<A extends any[], T>(
     const hasCondition = isObject(args[0]) && "when" in args[0];
 
     if (Meteor.isDevelopment && Meteor.isClient) {
-      console.groupCollapsed(
-        `useSubscribe("${name}",${JSON.stringify(args)}), hasCondition: ${hasCondition}${hasCondition ? `, when: ${!args[0].when}` : ""}`,
-      );
-      console.debug(getStack());
-      console.groupEnd();
+      console.debug(`useSubscribe("${name}", ${JSON.stringify(args)})`, {
+        hasCondition,
+        ...(hasCondition ? { when: !args[0].when } : {}),
+        stack: { full: getStack() },
+      });
     }
 
     // add error logging on client
@@ -49,12 +50,12 @@ export function createPublicationMany<A extends any[], T>(
       onStop: (error?: Error) => {
         if (error) {
           // An error occurs on the server during execution on the server side.
-          console.groupCollapsed(
-            `%cError on useSubscribe("${name}",${JSON.stringify(args)}), hasCondition: ${hasCondition}${hasCondition ? `, when: ${!args[0].when}` : ""}`,
+          console.debug(
+            `%cError on useSubscribe("${name}", ${JSON.stringify(args)})`,
+            { hasCondition, ...(hasCondition ? { when: !args[0].when } : {}) },
             "color: red",
           );
           console.error(error);
-          console.groupEnd();
         }
       },
     };
@@ -78,9 +79,8 @@ export function createPublicationMany<A extends any[], T>(
           return queryBuilder.call({ userId }, ...(hasCondition ? slice(args, 1) : args));
         } catch (error) {
           // An error occurs on the server during execution on the server side.
-          console.groupCollapsed(`%cError in ${name}(${JSON.stringify(args)})`, "color: red");
+          console.debug(`%cError in ${name}(${JSON.stringify(args)})`, "color: red");
           console.error(error);
-          console.groupEnd();
           throw error;
         }
       }, [EJSON.stringify(args as any), userId]),
@@ -96,11 +96,11 @@ export function createPublicationOne<A extends any[], T>(
     const hasCondition = isObject(args[0]) && "when" in args[0];
 
     if (Meteor.isDevelopment && Meteor.isClient) {
-      console.groupCollapsed(
-        `useSubscribe("${name}",${JSON.stringify(args)}), hasCondition: ${hasCondition}${hasCondition ? `, when: ${!args[0].when}` : ""}`,
-      );
-      console.debug(getStack());
-      console.groupEnd();
+      console.debug(`useSubscribe("${name}", ${JSON.stringify(args)})`, {
+        hasCondition,
+        ...(hasCondition ? { when: !args[0].when } : {}),
+        stack: { full: getStack() },
+      });
     }
 
     // add error logging on client
@@ -108,12 +108,15 @@ export function createPublicationOne<A extends any[], T>(
       onStop: (error?: Error) => {
         if (error) {
           // An error occurs on the server during execution on the server side.
-          console.groupCollapsed(
-            `%cError on useSubscribe("${name}",${JSON.stringify(args)}), hasCondition: ${hasCondition}${hasCondition ? `, when: ${!args[0].when}` : ""}`,
+          console.debug(
+            `%cError on useSubscribe("${name}", ${JSON.stringify(args)})`,
+            {
+              hasCondition,
+              ...(hasCondition ? { when: !args[0].when } : {}),
+            },
             "color: red",
           );
           console.error(error);
-          console.groupEnd();
         }
       },
     };
@@ -139,9 +142,8 @@ export function createPublicationOne<A extends any[], T>(
           return queryBuilder.call({ userId }, ...(hasCondition ? slice(args, 1) : args));
         } catch (error) {
           // An error occurs on the server during execution on the server side.
-          console.groupCollapsed(`%cError in ${name}(${JSON.stringify(args)})`, "color: red");
+          console.debug(`%cError in ${name}(${JSON.stringify(args)})`, "color: red");
           console.error(error);
-          console.groupEnd();
           throw error;
         }
       }, [EJSON.stringify(args as any), userId]),

@@ -1,7 +1,8 @@
 import React from "react";
+
 import { useUserId } from "/imports/utils/react-meteor-data";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
-
+import { cx } from "/imports/utils/cx";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import * as Users from "/imports/api/users/publications";
@@ -13,7 +14,7 @@ function Anom({ className }: { className?: string | undefined }) {
 
   return (
     <img
-      className={`avatar-image ${className} placeholder-rainbow`}
+      className={cx("avatar-image", className, "placeholder-rainbow")}
       src={`/logo/${PublicSettings.avatarLogo.src}`}
       alt={getLocalizedValue(PublicSettings.avatarLogo.alt)}
     />
@@ -44,7 +45,7 @@ function UserAvatar(props: {
 
   return (
     <img
-      className={`avatar-image ${props.className}`}
+      className={cx("avatar-image", props.className)}
       style={{ filter: `hue-rotate(-${color()}deg)` }}
       src={`/logo/${PublicSettings.avatarLogo.src}`}
       alt={getLocalizedValue(PublicSettings.avatarLogo.alt)}
@@ -59,9 +60,9 @@ export interface Props {
 }
 
 export function Avatar(props: Props) {
-  const currenctUserId = useUserId();
+  const currentUserId = useUserId();
 
-  const userId = props.userId || currenctUserId;
+  const userId = props.userId || currentUserId;
 
   if (!userId) {
     return <Anom className={props.className} />;

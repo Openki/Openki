@@ -9,7 +9,6 @@ import { Events } from "/imports/api/events/events";
 import { Organizations } from "../organizations/organizations";
 import { Regions } from "/imports/api/regions/regions";
 import { GroupDiscussions } from "../group-discussions/group-discussions";
-import { Roles } from "/imports/api/roles/roles";
 import * as UpdateMethods from "/imports/utils/update-methods";
 import * as historyDenormalizer from "./historyDenormalizer";
 import * as timeLastEditDenormalizer from "./timeLastEditDenormalizer";
@@ -32,6 +31,7 @@ import * as FileStorage from "/imports/utils/FileStorage";
 import { HtmlString, StringEnum, Type } from "/imports/utils/CustomChecks";
 import { OrganizationPromoters } from "/imports/utils/update-methods";
 import { resizeImage } from "../../utils/resize-image";
+import { loadRoles } from "/imports/api/regions/loadRoles";
 
 export interface Method<T> {
   method: string;
@@ -163,8 +163,11 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
   const disabledRoles = await loadDisabledRoles(changes.organizations || []);
 
   if (changes.roles) {
+    // on creation the changes.region is set; on change group.region is set
+    const roles = await loadRoles((group.region || changes.region) as string);
+
     await Promise.all(
-      Roles.map(async (role) => {
+      roles.map(async (role) => {
         const { type } = role;
 
         if (group.isNew()) {
@@ -302,9 +305,21 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
 
   if (changes.subs) {
     const changedGroup = await Groups.findOneAsync(groupId);
+    if (!changedGroup) {
+      throw new Error("changedGroup is not defined");
+    }
+
+    const roles = await loadRoles(changedGroup.region);
+
     await Promise.all(
       changes.subs.map(async (role) => {
-        const change = new Subscribe(changedGroup, user._id, role, "interested");
+        const change = new Subscribe(
+          changedGroup,
+          roles.map((r) => r.type),
+          user._id,
+          role,
+          "interested",
+        );
         if (change.validFor(user)) {
           await change.apply();
         }

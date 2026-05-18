@@ -12,12 +12,12 @@ import {
 } from "../../../../api/groups/groups";
 import * as GroupsMethods from "../../../../api/groups/methods";
 import { Regions } from "/imports/api/regions/regions";
-import { Roles } from "/imports/api/roles/roles";
 
-import { PublicSettings } from "/imports/utils/PublicSettings";
+import { PublicSettings, RoleEntity } from "/imports/utils/PublicSettings";
 import { hasRoleUser } from "../../../../utils/group-role-utils";
 import * as StringTools from "/imports/utils/string-tools";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
+import { cx } from "/imports/utils/cx";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
@@ -43,6 +43,8 @@ import { FindHeader } from "./FindHeader";
 import { AlertMessage } from "./AlertMessage";
 import { FormControl } from "/imports/ui/components/form-control";
 import { useFiltering } from "/imports/utils/filtering";
+import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 
 import "./styles.scss";
 
@@ -129,10 +131,13 @@ export function Edit(props: Props) {
       //  If the session sets the region, we use it.
       setSelectedRegion(currentRegion);
     } else if (regions.length === 1) {
-      // There is only one region
+      // Auto-select the region if there is only one available.
       setSelectedRegion(regions[0]._id);
     }
   }, [props, currentRegion, regions]);
+
+  const [isLoadingRegionRoles, regionRoles] = useRegionRoles(selectedRegion);
+  const { roleDescription, roleSubscribe } = useRoleDisplay(regionRoles);
 
   function getOrganizations() {
     const organizations = [];
@@ -188,16 +193,17 @@ export function Edit(props: Props) {
       .uniq()
       .value();
 
-    return Roles.filter((role) => {
-      // Roles that are always on are not selectable here
-      if (role.preset) {
+    if (isLoadingRegionRoles()) return [];
+
+    return regionRoles.filter((role) => {
+      // Skip non-editable, preset roles
+      if (!role.editable && role.preset) {
         return false;
       }
 
-      if (isNew)
-        if (disableCreateRoles.includes(role.type)) {
-          return false;
-        }
+      if (isNew && disableCreateRoles.includes(role.type)) {
+        return false;
+      }
 
       return true;
     });
@@ -208,23 +214,44 @@ export function Edit(props: Props) {
   }
 
   const [roles, setRoles] = useState<
-    Record<string, { icon: string; enabled: boolean; enroll: boolean }>
+    Record<
+      string,
+      {
+        icon: string;
+        description: string;
+        subscribeLabel: string;
+        enabled: boolean;
+        enroll: boolean;
+      }
+    >
   >({});
+
+  function isRoleEnabled(role: RoleEntity) {
+    if (props.roles) {
+      return props.roles.includes(role.type);
+    } else if (isNew) {
+      const regionRole = regionRoles.find((regionRole) => regionRole.type === role.type);
+      return regionRole?.preset ?? false;
+    }
+    return false;
+  }
 
   useEffect(() => {
     setRoles(
       fromPairs(
-        availableRoles().map((r) => [
-          r.type,
+        availableRoles().map((role) => [
+          role.type,
           {
-            icon: r.icon,
-            enabled: props.roles?.includes(r.type) || false,
-            enroll: hasRole(props.members, r.type) || false,
+            icon: role.icon,
+            description: roleDescription(role.type),
+            subscribeLabel: roleSubscribe(role.type),
+            enabled: isRoleEnabled(role),
+            enroll: hasRole(props.members, role.type) ?? false,
           },
         ]),
       ),
     );
-  }, [organizations]);
+  }, [organizations, regionRoles]);
 
   const [errors, checkValidity, addError] = useValidation(
     {
@@ -334,15 +361,14 @@ export function Edit(props: Props) {
     return classes.join(" ");
   }
   function groupEditRolesAttr(): GroupEditRoleProps[] {
-    return Object.entries(roles).map((r) => {
-      const type = r[0];
+    return Object.entries(roles).map(([type, role]) => {
       return {
         type,
-        ...r[1],
+        ...role,
         onRole(checked: boolean) {
           const newRoles = { ...roles };
           newRoles[type] = {
-            ...r[1],
+            ...role,
             enabled: checked,
           };
           setRoles(newRoles);
@@ -350,7 +376,7 @@ export function Edit(props: Props) {
         onEnroll(checked: boolean) {
           const newRoles = { ...roles };
           newRoles[type] = {
-            ...r[1],
+            ...role,
             enroll: checked,
           };
           setRoles(newRoles);
@@ -391,7 +417,7 @@ export function Edit(props: Props) {
     setSimpleSelectedRole(event.target.value);
   };
 
-  async function handleSave(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSave(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (!checkValidity()) {
@@ -516,7 +542,7 @@ export function Edit(props: Props) {
     }
   }
 
-  if (regionsIsLoading() || organizationsIsLoading()) {
+  if (regionsIsLoading() || isLoadingRegionRoles() || organizationsIsLoading()) {
     return null;
   }
 
@@ -549,7 +575,7 @@ export function Edit(props: Props) {
                 aria-labelledby="learnOrTeachTitle"
               >
                 <div className="col d-grid">
-                  <label className={`btn btn-lg ${simpleRoleActiveClass("participant")}`}>
+                  <label className={cx("btn btn-lg", simpleRoleActiveClass("participant"))}>
                     <input
                       className="d-none"
                       type="radio"
@@ -563,7 +589,7 @@ export function Edit(props: Props) {
                   </label>
                 </div>
                 <div className="col d-grid">
-                  <label className={`btn btn-lg ${simpleRoleActiveClass("mentor")}`}>
+                  <label className={cx("btn btn-lg", simpleRoleActiveClass("mentor"))}>
                     <input
                       className="d-none"
                       type="radio"
@@ -637,16 +663,6 @@ export function Edit(props: Props) {
               </div>
             )}
 
-            {fullRoleSelection && availableRoles().length > 0 && (
-              <div className="col-md">
-                <div className="form-label">
-                  {t("group.edit.needs.role", "This group might need…")}
-                </div>
-                {groupEditRolesAttr().map((groupEditRoleAttr) => (
-                  <Role key={groupEditRoleAttr.type} {...groupEditRoleAttr} />
-                ))}
-              </div>
-            )}
             {showMoreInfo() && (
               <div className="col-md">
                 {showRegionSelection() && (
@@ -681,6 +697,17 @@ export function Edit(props: Props) {
                   values={customFieldValues}
                   onChange={(values) => setCustomFieldValues(values)}
                 />
+              </div>
+            )}
+
+            {fullRoleSelection && availableRoles().length > 0 && (
+              <div className="col-md">
+                <div className="form-label">
+                  {t("group.edit.needs.role", "This group might need…")}
+                </div>
+                {groupEditRolesAttr().map((groupEditRoleAttr) => (
+                  <Role key={groupEditRoleAttr.type} {...groupEditRoleAttr} />
+                ))}
               </div>
             )}
           </div>

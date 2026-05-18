@@ -9,7 +9,7 @@ import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 import * as RegionSelectionUtils from "/imports/utils/region-selection";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
+import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 import { useSiteName } from "/imports/utils/getSiteName";
 
 import { Option } from "./Option";
@@ -34,6 +34,7 @@ export function Select(props: Props) {
   const searchElementRef = useRef<HTMLInputElement>(null);
   const dropdownToggleElementRef = useRef<HTMLButtonElement>(null);
   const currentRouteName = useCurrentRouteName();
+  const { getLocalizedValue } = useLocalizedSetting();
 
   const currentRegion = useCurrentRegion();
   const siteName = useSiteName();

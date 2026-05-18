@@ -1,8 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useDetails } from "../../../api/groups/publications";
-import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 import { useUser } from "/imports/utils/react-meteor-data";
+import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
 export function CustomFieldDisplay({
   groupId,
@@ -12,6 +12,7 @@ export function CustomFieldDisplay({
   customClassName?: string | undefined;
 }) {
   const { t } = useTranslation();
+  const { getLocalizedValue } = useLocalizedSetting();
   const [isLoading, group] = useDetails(groupId);
   const user = useUser();
 

@@ -177,7 +177,7 @@ export function Full({
 
           {!isRegionLoading() && !!organizedByOrganizations?.length && (
             <p className="card-text">
-              <strong>{t("event.details.organziedBy", "Organized by:")}</strong>{" "}
+              <strong>{t("event.details.organizedBy", "Organized by:")}</strong>{" "}
               {ReactJoin(
                 organizedByOrganizations.map((organization) => (
                   <OrganizationName key={organization} id={organization} />

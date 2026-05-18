@@ -222,10 +222,10 @@
   "group.organizationList.confirmOrgText": "Lägg till grupp \"{NAME}\" som redigerare?",
   "group.organizationList.confirmRemoveText": "Sluta lista grupp \"{NAME}\" som promotor?",
   "group.organizationList.dropdownTitle.editOrganization": "Ändra grupp",
-  "group.organizationList.makeTeam.confimOrgButton": "Ge rättigheter till att redigera",
+  "group.organizationList.makeTeam.confirmOrgButton": "Ge rättigheter till att redigera",
   "group.organizationList.remove": "Ta bort",
   "group.organizationList.remove.confirmRemoveButton": "Stryk ifrån lista",
-  "group.organizationList.removeTeam.confimRemoveOrgButton": "Ta bort rättigheter till att redigera",
+  "group.organizationList.removeTeam.confirmRemoveOrgButton": "Ta bort rättigheter till att redigera",
   "group.organizationList.removeTeam.confirmRemoveOrgText": "Ta bort alla rättigheter till att redigera ifrån gruppen \"{NAME}\"?",
   "group.organizationList.removeTeam.removeOrgText": "Förflytta redigeringsrättigheter",
   "group.propose.windowtitle": "Föreslå en ny kurs",
@@ -413,7 +413,6 @@
   "roles.mentor.subscribe": "Jag kan vara en mentor",
   "roles.mentor.subscribed": "Du är uppskriven som en mentor",
   "roles.mentor.userList": "{NAME} lär ut ",
-  "roles.message.placeholder": "Mina intressen…",
   "roles.participant.myList": "Jag är intresserad av ",
   "roles.participant.short": "intresserad",
   "roles.participant.subscribe": "Jag är intresserad ",
@@ -480,5 +479,6 @@
   "venueDetails.coordinates": "Koordinater:",
   "venues.list.noneFound": "Inga lokaler funna.",
   "venues.list.title": "Lokaler/plats ",
-  "venues.list.titleForRegion": "Lokaler i region {REGION}"
+  "venues.list.titleForRegion": "Lokaler i region {REGION}",
+  "groupMember.message.placeholder": "Mina intressen…"
 }

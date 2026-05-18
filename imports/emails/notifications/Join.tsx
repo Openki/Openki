@@ -5,12 +5,10 @@ import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 
 export interface Props {
   group: JSX.Element;
-  newParticipant: JSX.Element;
-  roleTitle: string;
-  roleType: string;
+
+  roleIntroduction: JSX.Element;
   message: string | undefined;
-  appendCollaborationHint: boolean;
-  figures: {
+  roleCounts: {
     role: string;
     count: number;
   }[];
@@ -23,12 +21,9 @@ export interface Props {
 
 export function Join({
   group,
-  newParticipant,
-  roleTitle,
-  roleType,
+  roleIntroduction,
   message,
-  appendCollaborationHint,
-  figures,
+  roleCounts,
   otherRecipients,
   username,
   unsubscribe,
@@ -36,19 +31,13 @@ export function Join({
   lng,
 }: Props) {
   const { t } = useTranslation(undefined, { lng });
+
   return (
     <>
       <tr>
         <td>
           <h5 className="title">{t("email.base.greeting", { USERNAME: username })}</h5>
-          <p>
-            {t("notification.join.mail.intro", "{USERNAME} just joined {GROUP} as: {ROLE}.", {
-              USERNAME: newParticipant,
-              GROUP: group,
-              ROLE: roleTitle,
-              ROLETYPE: roleType,
-            })}
-          </p>
+          <p className="pre">{roleIntroduction}</p>
 
           {!!message && (
             <>
@@ -60,22 +49,13 @@ export function Join({
               </table>
             </>
           )}
-          {appendCollaborationHint && (
-            <p>
-              {t(
-                "notification.join.mail.collaborationHint",
-                "If you like them to collaborate feel free to make contact. Give out rights to edit {GROUP} by adding people to its organization team by clicking the bullhorn next to a name.",
-                { GROUP: group },
-              )}
-            </p>
-          )}
           <strong>
-            {t("notification.join.mail.statsOverview", "Overview over participants:")}
+            {t("notification.join.mail.statsOverview", "Overview over the interested:")}
           </strong>
           <p>
-            {figures.map((figure) => (
+            {roleCounts.map(({ role, count }) => (
               <>
-                {figure.role}: {figure.count}
+                {role}: {count}
                 <br />
               </>
             ))}

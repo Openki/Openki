@@ -1,48 +1,52 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
+
+import { cx } from "/imports/utils/cx";
+
 import { FormCheck } from "/imports/ui/components/FormCheck";
 
 export interface Props {
   type: string;
   icon: string;
+  description: string;
+  subscribeLabel: string;
   enabled: boolean;
   enroll: boolean;
   onRole: (checked: boolean) => void;
   onEnroll: (checked: boolean) => void;
 }
 
-export function Role(props: Props) {
-  const { t } = useTranslation();
-
-  function roleDescription() {
-    return `roles.${props.type}.description`;
-  }
-  function roleSubscription() {
-    return `roles.${props.type}.subscribe`;
-  }
-
+export function Role({
+  type,
+  icon,
+  description,
+  subscribeLabel,
+  enabled,
+  enroll,
+  onRole,
+  onEnroll,
+}: Props) {
   return (
     <>
       <FormCheck
-        id={`groupEditRole${props.type}Check`}
+        id={`groupEditRole${type}Check`}
         type="box"
         label={
           <>
-            <i className={`${props.icon} fa-fw`} /> {t(roleDescription())}
+            <i className={cx(icon, "fa-fw")} /> {description}
           </>
         }
-        checked={props.enabled}
-        onChange={(checked) => props.onRole(checked)}
+        checked={enabled}
+        onChange={(checked) => onRole(checked)}
       />
 
-      {props.enabled && (
+      {enabled && (
         <div className="ms-4">
           <FormCheck
-            id={`groupEditRole${props.type}EnrollCheck`}
+            id={`groupEditRole${type}EnrollCheck`}
             type="box"
-            label={t(roleSubscription())}
-            checked={props.enroll}
-            onChange={(checked) => props.onEnroll(checked)}
+            label={subscribeLabel}
+            checked={enroll}
+            onChange={(checked) => onEnroll(checked)}
           />
         </div>
       )}

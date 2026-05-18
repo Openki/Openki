@@ -8,11 +8,12 @@ import { UserModel } from "/imports/api/users/users";
 
 import * as Predicates from "/imports/utils/predicates";
 import { Filtering } from "/imports/utils/filtering";
-import { PublicSettings } from "/imports/utils/PublicSettings";
+import { PublicSettings, RoleEntity } from "/imports/utils/PublicSettings";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { Type } from "/imports/utils/CustomChecks";
 import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
 import { Geodata } from "/imports/api/Geodata";
+import { LocalizedValue } from "/imports/utils/getLocalizedValue";
 
 export interface CustomMapConfig {
   crs?: "Simple";
@@ -37,6 +38,8 @@ export interface RegionEntity {
   tz: string;
   /** description for the user */
   description: string;
+  /** Region-specific roles to override the default settings */
+  roles?: RoleEntity[];
   /**
    * Number of groups in that region, calculated field (does not count internal or archived
    * groups)
@@ -59,23 +62,23 @@ export interface RegionEntity {
   custom?: {
     siteName?: string;
     siteStage?: string;
+    /**
+     * The logo in the top left corner. Can be a logo from the /public/logo/* folder, from
+     * our s3 file storage (must start with the "publicUrlBase" setting) or a base64 encoded
+     * string.
+     */
     headerLogo?: {
-      /**
-       * The logo in the top left corner. Can be a logo from the /public/logo/* folder, from
-       * our s3 file storage (must start with the "publicUrlBase" setting) or a base64 encoded
-       * string.
-       */
       src: string;
-      alt: string;
+      alt: LocalizedValue;
     };
+    /**
+     * The logo in the top left corner from the /kiosk/events/ page. Can be a logo from the
+     * /public/logo/* folder, from our s3 file storage (must start with the "publicUrlBase"
+     * setting) or a base64 encoded string.
+     */
     headerLogoKiosk?: {
-      /**
-       * The logo in the top left corner from the /kiosk/events/ page. Can be a logo from the
-       * /public/logo/* folder, from our s3 file storage (must start with the "publicUrlBase"
-       * setting) or a base64 encoded string.
-       */
       src: string;
-      alt: string;
+      alt: LocalizedValue;
     };
     /** Can be a logo from the /private/* folder or a base64 encoded string. */
     emailLogo?: string;
@@ -97,9 +100,9 @@ export interface RegionEntity {
 
   dashboard?: {
     entity: "organization" | "group" | "groupWithoutPropose" | "event" | "eventsMap" | "propose";
-    title?: string;
+    title?: LocalizedValue;
     query?: string;
-    showAll?: { link?: string; text?: string };
+    showAll?: { link?: string; text?: LocalizedValue };
   }[];
 
   map?: CustomMapConfig;

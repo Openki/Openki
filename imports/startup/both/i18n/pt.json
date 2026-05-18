@@ -211,10 +211,10 @@
   "group.organizationList.confirmOrgNotes": "Tod@s membr@s do grupo terão a possibilidade de editr o curso e poderão criar novos eventos",
   "group.organizationList.confirmOrgText": "Adicionar grupo \"{NAME}\" como editor@s?",
   "group.organizationList.confirmRemoveText": "Deixar de listar grupo \"{NAME}\" como promotor@s?",
-  "group.organizationList.makeTeam.confimOrgButton": "Dar direitos de edição",
+  "group.organizationList.makeTeam.confirmOrgButton": "Dar direitos de edição",
   "group.organizationList.remove": "Remover",
   "group.organizationList.remove.confirmRemoveButton": "Apagar",
-  "group.organizationList.removeTeam.confimRemoveOrgButton": "Tirar direitos de edição",
+  "group.organizationList.removeTeam.confirmRemoveOrgButton": "Tirar direitos de edição",
   "group.organizationList.removeTeam.confirmRemoveOrgText": "Tirar todos direitos de edição do grupo \"{NAME}\"?",
   "group.organizationList.removeTeam.removeOrgText": "Remover direitos de edição",
   "group.propose.windowtitle": "Propor novo curso",
@@ -232,7 +232,7 @@
   "group.roles.messageInfoParticipant": "alguma messagem (opcional) como boas vindas, expectativas ou interesses",
   "group.roles.removeTeam": "Remover do grupo",
   "group.roles.retract": "Retirar",
-  "group.roles.unsubscribed": "Desinscrito do curso {NAME}",
+  "group.roles.unsubscribed": "Desinscrito do curso {GROUP}",
   "group.subnav.descr": "Descrição",
   "group.subnav.history": "História",
   "group.title.Discussion": "Discussão",
@@ -349,7 +349,6 @@
   "roles.mentor.subscribe": "Eu posso ser um mentor",
   "roles.mentor.subscribed": "Você está listado como mentor",
   "roles.mentor.userList": "{NAME} ensina",
-  "roles.message.placeholder": "Meus interesses…",
   "roles.participant.myList": "Eu sou interessado em",
   "roles.participant.short": "interessado",
   "roles.participant.subscribe": "Eu estou interessado",
@@ -429,5 +428,6 @@
   "warning.emailNotValid": "Seu email parece conter um erro.",
   "warning.noEmailProvided": "Por favor, digite seu email.",
   "warning.noUserName": "Por favor, digite seu nome de usuário.",
-  "warning.userExists": "Este nome de usuário já existe. Por favor escolha outro."
+  "warning.userExists": "Este nome de usuário já existe. Por favor escolha outro.",
+  "groupMember.message.placeholder": "Meus interesses…"
 }

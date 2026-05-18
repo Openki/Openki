@@ -244,10 +244,10 @@
   "group.organizationList.confirmOrgNotes": "Todos los miembros del grupo podrán editar el curso y crear nuevos eventos para él.",
   "group.organizationList.confirmOrgText": "¿Añadir los miembros del grupo \"{NAME}\" como editores?",
   "group.organizationList.confirmRemoveText": "¿Dejar de incluir al grupo \"{NAME}\" entre los promotores?",
-  "group.organizationList.makeTeam.confimOrgButton": "Otorgar derechos de edición",
+  "group.organizationList.makeTeam.confirmOrgButton": "Otorgar derechos de edición",
   "group.organizationList.remove": "Eliminar",
   "group.organizationList.remove.confirmRemoveButton": "Eliminar de la lista",
-  "group.organizationList.removeTeam.confimRemoveOrgButton": "Quitar derechos de edición",
+  "group.organizationList.removeTeam.confirmRemoveOrgButton": "Quitar derechos de edición",
   "group.organizationList.removeTeam.confirmRemoveOrgText": "¿Revocar todos los derechos de edición del grupo \"{NAME}\"?",
   "group.organizationList.removeTeam.removeOrgText": "Eliminar derechos de edición",
   "group.roles.maketeam": "Agregar al equipo",
@@ -309,7 +309,6 @@
   "resetPassword.title": "Restablece tu contraseña",
   "roles.host.subscribe": "Tengo un lugar para ofrecer",
   "roles.mentor.subscribe": "Puedo ser mentor",
-  "roles.message.placeholder": "Mis intereses…",
   "roles.team.subscribe": "Ayudo en organizarlo",
   "userprofile.organizations.header": "Grupos",
   "userprofile.sendmail-btn": "Enviar e-mail",
@@ -324,5 +323,6 @@
   "warning.emailNotValid": "Su dirección de correo electrónico parece tener un error.",
   "warning.noEmailProvided": "Por favor escribe una dirección de correo electrónico.",
   "warning.noUserName": "Por favor escribe un nombre para tu usuario.",
-  "warning.userExists": "Este nombre de usuario ya está en uso. Por favor escoge otro."
+  "warning.userExists": "Este nombre de usuario ya está en uso. Por favor escoge otro.",
+  "groupMember.message.placeholder": "Mis intereses…"
 }

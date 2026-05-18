@@ -3,6 +3,8 @@ import { extension } from "mime-types";
 import React, { ChangeEvent, DragEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { cx } from "/imports/utils/cx";
+
 import * as Alert from "/imports/api/alerts/alert";
 
 import { ButtonDelete, ButtonCancel, ButtonSave } from "../Buttons";
@@ -220,7 +222,7 @@ export function EditableImage(data: Data) {
     onDrop(file);
   }
 
-  function handleEditClick(event: any) {
+  function handleEditClick<T>(event: React.MouseEvent<T, MouseEvent>) {
     event.preventDefault();
 
     setProgress("edit");
@@ -231,9 +233,11 @@ export function EditableImage(data: Data) {
       <form
         encType="multipart/form-data"
         noValidate
-        className={`text-center editable-image${supportsDragndrop ? " supports-dragndrop" : ""}${
-          dragover ? " is-dragover" : ""
-        }`}
+        className={cx(
+          "text-center editable-image",
+          supportsDragndrop && "supports-dragndrop",
+          dragover && "is-dragover",
+        )}
         onDragOver={handleDragOver}
         onDragEnter={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -274,9 +278,7 @@ export function EditableImage(data: Data) {
               {supportsDragndrop && (
                 <>
                   <br />
-                  <span className="editable-image-dragndrop">
-                    {t("fileUpload.drag.text", "or drag it here")}
-                  </span>
+                  {t("fileUpload.drag.text", "or drag it here")}
                 </>
               )}
             </>

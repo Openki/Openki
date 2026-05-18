@@ -1,0 +1,25 @@
+{
+  "host.find.roleNeeded": "Ser etter en vert",
+  "mentor.find.roleNeeded": "Ser etter en mentor",
+  "team.find.roleNeeded": "Ser etter en organisator",
+
+  "host.groupList.statusTitle.roleOccupied": "Har en vert",
+  "mentor.groupList.statusTitle.roleOccupied": "Har en mentor",
+  "team.groupList.statusTitle.roleOccupied": "Har et organisatorlag",
+  "host.groupList.statusTitle.roleNeeded": "Trenger en vert",
+  "mentor.groupList.statusTitle.roleNeeded": "Trenger en mentor",
+  "team.groupList.statusTitle.roleNeeded": "Trenger en organisator",
+  "host.groupList.statusTitle.roleOccupiedByUser": "Du er vert",
+  "mentor.groupList.statusTitle.roleOccupiedByUser": "Du er mentor",
+  "team.groupList.statusTitle.roleOccupiedByUser": "Du er organisator",
+
+  "host.short.plural": "verter",
+  "mentor.short": "mentor",
+  "mentor.short.plural": "mentorer",
+  "participant.short": "interessert",
+  "participant.subscribe": "Jeg er interessert",
+  "participant.subscribed": "Du er interessert",
+  "team.myList": "Jeg organiserer",
+  "team.short": "lag",
+  "team.subscribe": "Jeg hjelper til å organisere"
+}

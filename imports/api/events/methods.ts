@@ -17,6 +17,7 @@ import * as regionsCountDenormalizer from "/imports/api/regions/countDenormalize
 import { EventEntity, EventModel, Events, OEvent } from "/imports/api/events/events";
 import { Organizations } from "../organizations/organizations";
 import { Regions } from "/imports/api/regions/regions";
+import { loadRoles } from "/imports/api/regions/loadRoles";
 
 import { Notification } from "../../startup/both/emails/notification";
 import { AffectedReplicaSelectors } from "/imports/utils/affected-replica-selectors";
@@ -543,7 +544,14 @@ export const addParticipant = ServerMethod(
       return;
     }
 
-    const change = new Subscribe(group, user._id, "participant", "rsvp");
+    const roles = await loadRoles(group.region);
+    const change = new Subscribe(
+      group,
+      roles.map((r) => r.type),
+      user._id,
+      "participant",
+      "rsvp",
+    );
     if (change.validFor(user)) {
       await processChange(change, { isSimulation: this.isSimulation });
     }

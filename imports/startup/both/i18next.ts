@@ -17,7 +17,9 @@ if (false) {
   // whitelist, this is needed for meteor's dynamic-import module, to allow dynamic loading of modules
   // on the client: https://docs.meteor.com/packages/dynamic-import.html#Using-import-with-dynamic-expressions
   import("/imports/startup/both/i18n/en.json");
+  import("/imports/startup/both/i18n/roles/en.json");
 
+  // common namespace
   import("/imports/startup/both/i18n/en-ccc.json");
   import("/imports/startup/both/i18n/af.json");
   import("/imports/startup/both/i18n/am.json");
@@ -44,6 +46,27 @@ if (false) {
   import("/imports/startup/both/i18n/tr.json");
   import("/imports/startup/both/i18n/zh-CN.json");
   import("/imports/startup/both/i18n/zh-TW.json");
+
+  // roles namespace
+  import("/imports/startup/both/i18n/roles/en-ccc.json");
+  import("/imports/startup/both/i18n/roles/ar.json");
+  import("/imports/startup/both/i18n/roles/da.json");
+  import("/imports/startup/both/i18n/roles/de.json");
+  import("/imports/startup/both/i18n/roles/de-ccc.json");
+  import("/imports/startup/both/i18n/roles/de-ZH.json");
+  import("/imports/startup/both/i18n/roles/de-zuerich-lernt.json");
+  import("/imports/startup/both/i18n/roles/el.json");
+  import("/imports/startup/both/i18n/roles/es.json");
+  import("/imports/startup/both/i18n/roles/fa.json");
+  import("/imports/startup/both/i18n/roles/fr.json");
+  import("/imports/startup/both/i18n/roles/hu.json");
+  import("/imports/startup/both/i18n/roles/it.json");
+  import("/imports/startup/both/i18n/roles/ko.json");
+  import("/imports/startup/both/i18n/roles/nb.json");
+  import("/imports/startup/both/i18n/roles/pt.json");
+  import("/imports/startup/both/i18n/roles/ru.json");
+  import("/imports/startup/both/i18n/roles/sv.json");
+  import("/imports/startup/both/i18n/roles/tr.json");
 }
 
 let localStorageSupported;
@@ -63,17 +86,30 @@ if (localStorageSupported) {
   backends.push(LocalStorageBackend);
 }
 
-// and only load translations we need
+// and only load translations for the languages and namespaces we need
 backends.push(
-  resourcesToBackend((language, _namespace, callback) => {
-    const fileName = PublicSettings.i18nMapping?.[language] || language;
-    import(`/imports/startup/both/i18n/${fileName}.json`)
-      .then((resources) => {
-        callback(null, resources);
-      })
-      .catch((error) => {
-        callback(error, null);
-      });
+  resourcesToBackend(async (language: string, namespace: string) => {
+    if (namespace === "common") {
+      // NOTE: We simulate a "common" namespace to make it consistent with newer, namespaced
+      // translations, like for example roles.
+      const customLanguageCode = PublicSettings.i18nMapping?.[language];
+      if (customLanguageCode) {
+        // when there is a mapping we use the original language as fallback
+        const customLanguageFile = await import(
+          `/imports/startup/both/i18n/${customLanguageCode}.json`
+        );
+        const fallbackLanguageFile = await import(`/imports/startup/both/i18n/${language}.json`);
+        return {
+          default: {
+            ...fallbackLanguageFile.default,
+            ...customLanguageFile.default,
+          },
+        };
+      } else {
+        return import(`/imports/startup/both/i18n/${language}.json`);
+      }
+    }
+    return import(`/imports/startup/both/i18n/${namespace}/${language}.json`);
   }),
 );
 
@@ -83,11 +119,14 @@ i18next
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     fallbackLng: "en",
+    ns: ["common", "roles"],
+    defaultNS: "common",
     backend: {
       backends,
       backendOptions: [
         {
-          expirationTime: 60 * 60 * 1000, // 1h   (7 * 24 * 60 * 60 * 1000 = 7 days)
+          // Disable translation caching during development
+          expirationTime: Meteor.isDevelopment ? 0 : 60 * 60 * 1000, // 1 hour
         },
       ],
     },

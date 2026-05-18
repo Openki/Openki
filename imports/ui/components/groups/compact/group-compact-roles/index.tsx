@@ -1,12 +1,13 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
 
-import { GroupModel } from "../../../../../api/groups/groups";
+import { GroupModel } from "/imports/api/groups/groups";
 
 import { hasRole, hasRoleUser } from "../../../../../utils/group-role-utils";
+import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { useUserId } from "/imports/utils/react-meteor-data";
-
-import { RoleIcon } from "../../../RoleIcon";
+import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { RoleEntity } from "/imports/utils/PublicSettings";
+import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
 
@@ -16,127 +17,57 @@ export interface Props {
 
 export function GroupCompactRoles({ group }: Props) {
   const userId = useUserId();
-  const { t } = useTranslation();
+  const [isLoading, roles] = useRegionRoles(group.region);
 
-  function participantClass() {
-    const { members } = group;
+  const { groupListRoleNeeded, groupListRoleOccupied, groupListRoleOccupiedByUser } =
+    useRoleDisplay(roles);
 
-    if (hasRoleUser(members, "participant", userId)) {
-      return "group-compact-role-occupied-by-user";
-    }
-
-    if (members.length) {
-      return "group-compact-role-occupied";
-    }
-
-    return "group-compact-role-needed";
-  }
-
-  function participantTooltip() {
-    let tooltip;
-    const numMembers = group.interested;
-    const isParticipant = hasRoleUser(group.members, "participant", userId);
-
-    if (numMembers === 1 && isParticipant) {
-      tooltip = t("group.compact.youAreInterested", "You are interested");
-    } else {
-      tooltip = t(
-        "group.compact.interestedCount",
-        "{NUM, plural, =0{Nobody is} one{One person is} other{# persons are} } interested",
-        { NUM: numMembers },
-      );
-
-      if (numMembers > 1 && isParticipant) {
-        tooltip += " ";
-        tooltip += t("group.compact.interestedCountOwn", "and you are one of them");
-      }
-    }
-
-    return tooltip;
-  }
-
-  function roleStateClass(role: string) {
-    let className = "group-compact-role-";
+  function roleStateClass(role: RoleEntity["type"]) {
     if (!hasRole(group.members, role)) {
-      className += "needed";
+      return "needed";
     } else if (hasRoleUser(group.members, role, userId)) {
-      className += "occupied-by-user";
+      return "occupied-by-user";
     } else {
-      className += "occupied";
+      return "occupied";
     }
-
-    return className;
   }
 
-  function roleStateTooltip(role: "team" | "mentor" | "host") {
-    let tooltip;
-
-    const tooltips = {
-      team: {
-        needed: t("group.list.status_titles.needs_team", "Needs a coordination-team"),
-        occupied: t("group.list.status_titles.has_team", "Has a coordination-team"),
-        occupiedByUser: t(
-          "group.list.status_titles.u_are_team",
-          "You are part of the coordination-team",
-        ),
-      },
-      mentor: {
-        needed: t("group.list.status_titles.needs_mentor", "Needs a mentor"),
-        occupied: t("group.list.status_titles.has_mentor", "Has a mentor"),
-        occupiedByUser: t("group.list.status_titles.u_are_mentor", "You are mentor"),
-      },
-      host: {
-        needed: t("group.list.status_titles.needs_host", "Needs a host"),
-        occupied: t("group.list.status_titles.has_host", "Has a host"),
-        occupiedByUser: t("group.list.status_titles.u_are_host", "You are host"),
-      },
-    };
-
+  function roleStateTooltip(role: RoleEntity["type"], numberOf: number) {
     if (!hasRole(group.members, role)) {
-      tooltip = tooltips[role].needed;
+      return groupListRoleNeeded(role);
     } else if (hasRoleUser(group.members, role, userId)) {
-      tooltip = tooltips[role].occupiedByUser;
+      return groupListRoleOccupiedByUser(role, { NUM: numberOf });
     } else {
-      tooltip = tooltips[role].occupied;
+      return groupListRoleOccupied(role, { NUM: numberOf });
     }
-
-    return tooltip;
   }
 
   return (
     <div className="group-compact-roles col">
-      <div
-        className={`group-compact-role ${roleStateClass("team")}`}
-        data-bs-title={`${roleStateTooltip("team")}`}
-      >
-        <RoleIcon type="team" />
-      </div>
-      {group.roles.includes("mentor") && (
-        <div
-          className={`group-compact-role ${roleStateClass("mentor")}`}
-          data-bs-title={`${roleStateTooltip("mentor")}`}
-        >
-          <RoleIcon type="mentor" />
-        </div>
-      )}
-      {group.roles.includes("host") && (
-        <div
-          className={`group-compact-role ${roleStateClass("host")}`}
-          data-bs-title={`${roleStateTooltip("host")}`}
-        >
-          <RoleIcon type="host" />
-        </div>
-      )}
-      {group.roles.includes("participant") && (
-        <div
-          className={`group-compact-role ${participantClass()}`}
-          data-bs-title={`${participantTooltip()}`}
-        >
-          <RoleIcon type="participant" />
-          &nbsp;
-          {group.members.filter((m) => m.roles.includes("participant")).length}
-        </div>
-      )}
+      {!isLoading() &&
+        roles
+          .filter((role) => group.roles.includes(role.type))
+          .map((role) => {
+            const numberOf = group.members.filter((member) =>
+              member.roles.includes(role.type),
+            ).length;
+
+            return (
+              <div
+                key={role.type}
+                className={cx("group-compact-role", roleStateClass(role.type))}
+                data-bs-title={roleStateTooltip(role.type, numberOf)}
+              >
+                <i className={cx(role.icon, "fa-fw")} />
+                {role.type === "participant" && (
+                  <>
+                    &nbsp;
+                    {numberOf}
+                  </>
+                )}
+              </div>
+            );
+          })}
     </div>
   );
 }

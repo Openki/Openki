@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { OrganizationHeader } from "./OrganizationHeader";
-import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
+import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
@@ -14,6 +14,7 @@ interface Props {
 export function Header({ _id, isFrame, organization }: Props) {
   const { t } = useTranslation();
   const siteName = useSiteName();
+  const { getLocalizedValue } = useLocalizedSetting();
 
   return _id ? (
     <h2>{t("group.edit.editGroup", "Edit group")}</h2>

@@ -1,7 +1,7 @@
 import { Match } from "meteor/check";
-import { Session } from "meteor/session";
 import { useTranslation } from "react-i18next";
-import { useSession } from "./react-meteor-data";
+import IntlMessageFormat from "intl-messageformat";
+import { i18n } from "i18next";
 
 /** allows localized value eg. with `getLocalizedValue(...)` to have a string per language. */
 export const LocalizedValuePattern = Match.OneOf(
@@ -12,69 +12,66 @@ export const LocalizedValuePattern = Match.OneOf(
 export type LocalizedValue = Match.PatternMatch<typeof LocalizedValuePattern>;
 
 /**
- * Returns a localized value based on the current set locale. 
+ * Returns a localized value based on the locale. It is also supported to give a 
+ * key from the translation files. 
  * @example {
 			"en": "https://about.openki.net/en/ueber-uns/spenden/",
 			"de": "https://about.openki.net/ueber-uns/spenden/"
 		}
+ * @example "donate.linkText"
  */
 export function getLocalizedValue(
+  i18n: i18n,
   setting: LocalizedValue | undefined | null,
-  locale: string = Session.get("locale"),
+  variables?: Record<string, any> | undefined,
 ) {
+  const locale = i18n.resolvedLanguage || "en";
+
   if (!setting) {
     return undefined;
   }
 
+  function format(value: string | undefined) {
+    if (typeof value !== "string") {
+      return undefined;
+    }
+    return new IntlMessageFormat(value, locale).format(variables);
+  }
+
   if (typeof setting === "string") {
-    return setting;
+    // check if translated key exist otherwise use setting
+    if (i18n.exists(setting)) {
+      return variables ? i18n.t(setting, variables) : i18n.t(setting);
+    }
+    return format(setting);
   }
 
   if (setting[locale]) {
     // exact match found
-    return setting[locale];
+    return format(setting[locale]);
   }
-
   const parts = locale.split("-");
   if (parts.length > 1) {
-    if (setting[parts[0]]) {
+    const translation = setting[parts[0]];
+    if (translation) {
       // found eg. "de" for "de-CH"
-      return setting[locale];
+      return format(translation);
     }
   }
-
   // fallback take first
-  return setting[Object.keys(setting)[0]];
+  const translation = setting[Object.keys(setting)[0]];
+  return format(translation);
 }
 
 export function useLocalizedSetting() {
-  const sessionLocale = useSession("locale");
-  const { t } = useTranslation();
+  const { i18n } = useTranslation();
+
   return {
     getLocalizedValue: (
       setting: LocalizedValue | undefined | null,
-      locale: string = sessionLocale,
+      variables?: Record<string, any> | undefined,
     ) => {
-      if (!setting) {
-        return undefined;
-      }
-      if (typeof setting === "string") {
-        // check if translated key exist otherwise use setting
-        return t(setting) || setting;
-      }
-      if (setting[locale]) {
-        // excact match found
-        return setting[locale];
-      }
-      const parts = locale.split("-");
-      if (parts.length > 1) {
-        if (setting[parts[0]]) {
-          // found eg. "de" for "de-CH"
-          return setting[locale];
-        }
-      }
-      // fallback take first
-      return setting[Object.keys(setting)[0]];
+      return getLocalizedValue(i18n, setting, variables);
     },
   };
 }

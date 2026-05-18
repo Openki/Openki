@@ -8,7 +8,7 @@ import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { MarkedName } from "/imports/utils/marked-name";
-import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
+import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
 import "./styles.scss";
 
@@ -21,6 +21,7 @@ export interface Props {
 export function Selection(props: Props) {
   const { t } = useTranslation();
   const locale = useSession("locale");
+  const { getLocalizedValue } = useLocalizedSetting();
   const [search, setSearch] = useState("");
   const [searchHasFocus, setSearchHasFocus] = useState(true);
   const searchElementRef = useRef<HTMLInputElement>(null);

@@ -4,19 +4,21 @@ import moment from "moment";
 import { useSession } from "/imports/utils/react-meteor-data";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 import { useTranslation } from "react-i18next";
-
-import { EventEntity, EventModel, FindFilter } from "/imports/api/events/events";
+import { Router } from "meteor/iron:router";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { MetaTags } from "/imports/ui/components/MetaTags";
+import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
+import { useSiteName } from "/imports/utils/getSiteName";
 
-import "./styles.scss";
+import { EventEntity, EventModel, FindFilter } from "/imports/api/events/events";
 import { useDetails as useOrganizationDetails } from "../../../../api/organizations/publications";
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
+
+import { MetaTags } from "/imports/ui/components/MetaTags";
 import { List } from "./List";
-import { Router } from "meteor/iron:router";
-import { useSiteName } from "/imports/utils/getSiteName";
 import { LanguageSelection } from "/imports/ui/components/language-selection";
+
+import "./styles.scss";
 
 function Organization({ organizationId }: { organizationId: string }) {
   const [isLoading, organization] = useOrganizationDetails(organizationId);
@@ -74,6 +76,7 @@ export function KioskEventsPage({
   filter: FindFilter;
 }) {
   const { t } = useTranslation();
+  const { getLocalizedValue } = useLocalizedSetting();
 
   const currentRegion = useCurrentRegion();
   const siteName = useSiteName();
@@ -116,11 +119,10 @@ export function KioskEventsPage({
   }
 
   function headerAlt() {
-    if (currentRegion?.custom?.headerLogoKiosk?.alt) {
-      return currentRegion.custom.headerLogoKiosk.alt;
-    }
-
-    return PublicSettings.headerLogoKiosk.alt;
+    return (
+      getLocalizedValue(currentRegion?.custom?.headerLogoKiosk?.alt) ||
+      getLocalizedValue(PublicSettings.headerLogoKiosk.alt)
+    );
   }
 
   return (

@@ -13,3 +13,24 @@ Please see [Naming and Syntax Convention](https://gitlab.com/Openki/Openki/-/wik
 If translations are not immediately changing after updating a file or after deployment, they could be still stored in the local storage of your browser. The preset storage time is 1 hour (backendOptions:expirationTime in imports/startup/both/i18next.ts). Clearing browser cache and cookies do not always remove local-storage.
 
 Here is the [guide for our Translators](https://gitlab.com/Openki/Openki/-/wikis/i18n-howto)
+
+## Namespaces
+
+We have some translations split into separate namespaces, for example roles. The reason for using several smaller namespaces for translations is because this allows Openki instances to customize how their roles are translated, while using the default translations in most cases for the general UI. This reduces unnecessary duplication and makes instance-specific translations more focused.
+
+## Roles
+
+These are the keys used for roles translations:
+
+```json
+{
+  "x.short": "mentor",
+  "x.subscribe": "I can be a mentor",
+  "x.subscribed": "You are listed as mentor",
+  "x.description": "a mentor",
+  "x.userList": "{NAME} is teaching",
+  "x.userList.past": "{NAME} was teaching",
+  "x.myList": "I teach",
+  "x.myList.past": "I was teaching"
+}
+```

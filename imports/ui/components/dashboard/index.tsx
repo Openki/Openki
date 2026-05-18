@@ -5,7 +5,7 @@ import { useUserId } from "/imports/utils/react-meteor-data";
 import { take } from "lodash-es";
 
 import { SortSpec } from "/imports/utils/sort-spec";
-import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
+import { LocalizedValue, useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 
 import { ScrollContainer } from "./ScrollContainer";
 
@@ -15,9 +15,9 @@ import "./styles.scss";
 
 export interface ComponentSettings {
   entity: keyof typeof mapping;
-  title?: string;
+  title?: LocalizedValue;
   query?: string;
-  showAll?: { link?: string; text?: string } | false;
+  showAll?: { link?: string; text?: LocalizedValue } | false;
 }
 
 export interface Props {
@@ -38,8 +38,8 @@ function EntitiesComponent<T>({
 }: {
   params: Record<string, string>;
   handler: ListOfEntities<T> | ComponentWithEntities<T>;
-  showAll: { link: string | undefined; text: string | undefined } | false;
-  title?: string | undefined;
+  showAll: { link: string | undefined; text: LocalizedValue | undefined } | false;
+  title?: LocalizedValue | undefined;
   limit?: number | undefined;
   fluid?: boolean | undefined;
 }) {
@@ -67,7 +67,7 @@ function EntitiesComponent<T>({
     <div className={`${fluid ? "container-fluid" : "container"} position-relative mb-4`}>
       {showAll !== false && !!showAll?.link && data.length > limit && (
         <a className="btn btn-sm btn-success float-end" href={showAll.link}>
-          {showAll.text}
+          {getLocalizedValue(showAll.text)}
         </a>
       )}
       {!!title && <h2>{getLocalizedValue(title)}</h2>}
