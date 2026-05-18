@@ -2,7 +2,7 @@ import { Match } from "meteor/check";
 import { Meteor } from "meteor/meteor";
 import merge from "deepmerge";
 
-import { Record, StringEnum, Type } from "/imports/utils/CustomChecks";
+import { Deprecated, Record, StringEnum, Type } from "/imports/utils/CustomChecks";
 import { LocalizedValue, LocalizedValuePattern } from "/imports/utils/getLocalizedValue";
 
 export const RoleEntityPattern = {
@@ -272,9 +272,9 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
         /**
          * Text from the link. The value is a translation key from i18next it must be
          * defined in code
-         * @deprecated use text instate (May 2026)
+         * @deprecated use `text` instead (May 2026)
          */
-        key: Match.Maybe(String),
+        key: Match.Maybe(Deprecated(String, 'use "text" field instead')),
       },
     ],
   },
@@ -390,14 +390,14 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
       /**
        * Text from the link. The value is a translation key from i18next it must be
        * defined in code
-       * @deprecated use text instate (May 2026)
+       * @deprecated use `text` field instead (May 2026)
        */
-      key: Match.Maybe(String),
+      key: Match.Maybe(Deprecated(String, 'use "text" field instead')),
       /**
        * text that is shown on hover the link
-       * @deprecated use title instead (May 2026)
+       * @deprecated use `title` field instead (May 2026)
        */
-      title_key: Match.Maybe(String),
+      title_key: Match.Maybe(Deprecated(String, 'use "title" field instead')),
     },
   ],
 

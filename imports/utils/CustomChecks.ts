@@ -94,3 +94,13 @@ export function Record<T extends Match.Pattern>(type: T) {
     return true;
   }) as Match.Matcher<Record<string, Match.PatternMatch<T>>>;
 }
+
+export function Deprecated<T extends Match.Pattern>(pattern: T, text: string) {
+  return Match.Where((value) => {
+    // First ensure the value still matches the legacy shape
+    check(value, pattern);
+
+    // Then always reject with a clear deprecation message
+    throw new (Match as any).Error(`Deprecated: ${text}`);
+  }) as Match.Matcher<Match.Pattern>;
+}
