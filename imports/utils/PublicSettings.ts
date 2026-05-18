@@ -5,8 +5,49 @@ import merge from "deepmerge";
 import { Record, StringEnum, Type } from "/imports/utils/CustomChecks";
 import { LocalizedValue, LocalizedValuePattern } from "/imports/utils/getLocalizedValue";
 
-// See settings-example.json.md for full documentation
+export const RoleEntityPattern = {
+  /** A unique name for the role, e.g. "team". This is used to connect the role with i18n strings */
+  type: String,
+  /** Icon class string from font-awesome ex: "fa-solid fa-bullhorn" */
+  icon: String,
+  /**
+   * The role appears as "proposed only" in the member list.
+   * @default false
+   */
+  proposal: Match.Maybe(Boolean),
+  /**
+   * The role is always added to the group on creation.
+   * @default false
+   */
+  preset: Match.Maybe(Boolean),
+  /**
+   * The role can be edited (added/removed to the group) after a group has been created
+   * by the editors of a group.
+   * @default false
+   */
+  editable: Match.Maybe(Boolean),
+  translations: Match.Maybe({
+    short: Match.Maybe(LocalizedValuePattern),
+    subscribe: Match.Maybe(LocalizedValuePattern),
+    subscribed: Match.Maybe(LocalizedValuePattern),
+    description: Match.Maybe(LocalizedValuePattern),
+    myList: Match.Maybe(LocalizedValuePattern),
+    "myList.past": Match.Maybe(LocalizedValuePattern),
+    userList: Match.Maybe(LocalizedValuePattern),
+    "userList.past": Match.Maybe(LocalizedValuePattern),
+    "find.roleNeeded": Match.Maybe(LocalizedValuePattern),
+    "groupList.statusTitle.roleNeeded": Match.Maybe(LocalizedValuePattern),
+    "groupList.statusTitle.roleOccupied": Match.Maybe(LocalizedValuePattern),
+    "groupList.statusTitle.roleOccupiedByUser": Match.Maybe(LocalizedValuePattern),
+    "notification.join.mail.intro": Match.Maybe(LocalizedValuePattern),
+    "group.firstSteps": Match.Maybe(LocalizedValuePattern),
+    "group.messageInfo": Match.Maybe(LocalizedValuePattern),
+  }),
+};
 
+export type RoleEntity = Type<typeof RoleEntityPattern>;
+
+/** See `settings-example.jsonc` for full documentation */
 export const PublicSettingsPattern = Match.ObjectIncluding({
   /** @default "Hmmm" */
   siteName: String,
@@ -28,14 +69,14 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
    * from our s3 file storage (must start with the "publicUrlBase" setting) or
    * a base64 encoded string.
    */
-  headerLogo: { src: String, alt: String },
+  headerLogo: { src: String, alt: LocalizedValuePattern },
 
   /**
    * The logo in the top left corner from the `/kiosk/events/` page. Can be a logo
    * from the `/public/logo/*` folder, from our s3 file storage (must start with
    * the "publicUrlBase" setting) or a base64 encoded string.
    */
-  headerLogoKiosk: { src: String, alt: String },
+  headerLogoKiosk: { src: String, alt: LocalizedValuePattern },
 
   /** The default image used for avatars (color is changed using the CSS filter 'hue-rotate'). */
   avatarLogo: { src: String, alt: LocalizedValuePattern },
@@ -222,16 +263,18 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
         /** icon from fontawesome free */
         icon: String,
         /**
-         * Text from the link. The value is a translation key from i18next it must be
-         * defined in code
-         */
-        key: Match.Maybe(String),
-        /**
-         * As a alternative for "key" you can set "text" for the text from the link
-         * This setting can be a string or a object with key & values for every language
-         * eg. `{ "en": "Edit", "de": "Bearbeiten", ... }`
+         * The text from the link.
+         * The value can be a translation key from i18next defined in code, a string or a object
+         * with key & values for every language eg. `{ "en": "Edit", "de": "Bearbeiten", ... }`
          */
         text: Match.Maybe(LocalizedValuePattern),
+
+        /**
+         * Text from the link. The value is a translation key from i18next it must be
+         * defined in code
+         * @deprecated use text instate (May 2026)
+         */
+        key: Match.Maybe(String),
       },
     ],
   },
@@ -247,7 +290,14 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
        * The entity to show: "group", "groupWithoutPropose", "event", "organization",
        * "eventsMap", "propose" are supported
        */
-      entity: String,
+      entity: StringEnum(
+        "group",
+        "groupWithoutPropose",
+        "event",
+        "organization",
+        "eventsMap",
+        "propose",
+      ),
       /**
        * Title to display over the row. The value can be a translation key from
        * i18next defined in code, a string or a object with key & values for
@@ -285,7 +335,14 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
        * The entity to show: "group", "groupWithoutPropose", "event", "organization",
        * "eventsMap", "propose" are supported
        */
-      entity: String,
+      entity: StringEnum(
+        "group",
+        "groupWithoutPropose",
+        "event",
+        "organization",
+        "eventsMap",
+        "propose",
+      ),
       /**
        * Title to display over the row. The value can be a translation key from i18next defined
        * in code, a string or a object with key & values for every language
@@ -310,29 +367,40 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
       }),
     },
   ]),
+  /** Default roles for all regions which can be overwritten per region via the `Region.roles` property */
+  defaultRoles: [RoleEntityPattern],
 
   /** @default [] */
   footerLinks: [
     {
       link: String,
       /**
+       * The text from the link.
+       * The value can be a translation key from i18next defined in code, a string or a object
+       * with key & values for every language eg. `{ "en": "Edit", "de": "Bearbeiten", ... }`
+       */
+      text: Match.Maybe(LocalizedValuePattern),
+      /**
+       * Text that is shown on hover the link.
+       * The value can be a translation key from i18next defined in code, a string or a object
+       * with key & values for every language eg. `{ "en": "Edit", "de": "Bearbeiten", ... }`
+       */
+      title: Match.Maybe(LocalizedValuePattern),
+
+      /**
        * Text from the link. The value is a translation key from i18next it must be
        * defined in code
+       * @deprecated use text instate (May 2026)
        */
       key: Match.Maybe(String),
       /**
-       * Text that is shown on hover the link. The value is a translation key from i18next it
-       * must be defined in code
+       * text that is shown on hover the link
+       * @deprecated use title instead (May 2026)
        */
       title_key: Match.Maybe(String),
-      /**
-       * As a alternative for "key" you can set "text" for the text from the link.
-       * This setting can be a string or a object with key & values for every language
-       * eg. `{ "en": "...", "de": "...", ... }`
-       */
-      text: Match.Maybe(LocalizedValuePattern),
     },
   ],
+
   /*
    * Text displayed in the registration form to link to the Privacy Policy and Terms and
    * Conditions. Can be markdown.
@@ -478,7 +546,15 @@ const defaults = {
     calendar: true,
     customEntries: [] as { link: string; icon: string; key?: string; text?: string }[],
   },
-
+  defaultRoles: [
+    {
+      type: "team",
+      icon: "fa-solid fa-bullhorn",
+      proposal: false,
+      preset: true,
+      editable: false,
+    },
+  ],
   footerLinks: [] as { link: string; key?: string; title_key?: string; text?: string }[],
   faqLink: "/info/faq",
   pricePolicyLink: {
@@ -502,7 +578,20 @@ publicSettings.matomo = { ...defaults.matomo, ...Meteor.settings.public.matomo }
 
 // override default from socialMediaButtons
 publicSettings.feature.socialMediaButtons =
-  Meteor.settings.public.feature.socialMediaButtons || defaults.feature.socialMediaButtons;
+  Meteor.settings.public.feature.socialMediaButtons ?? defaults.feature.socialMediaButtons;
+
+publicSettings.defaultRoles = Meteor.settings.public.defaultRoles ?? defaults.defaultRoles;
+
+if (
+  !publicSettings.defaultRoles?.some(
+    (role: PublicSettings["defaultRoles"][number]) => role.type === "team",
+  )
+) {
+  throw new Error(
+    "The `team` role is missing in PublicSettings.defaultRoles, and is required by the system" +
+      JSON.stringify(publicSettings.defaultRoles),
+  );
+}
 
 /**
  * Get access to some settings from the `Meteor.settings.public` enriched with default values.

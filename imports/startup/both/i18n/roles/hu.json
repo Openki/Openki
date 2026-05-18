@@ -1,0 +1,8 @@
+{
+  "host.description": "egy vendéglátó aki rendelkezésre állít egy helyiséget",
+  "host.short": "házigazda",
+  "host.subscribe": "Helyiséget biztosítok",
+  "mentor.description": "egy mentor",
+  "mentor.short": "mentor",
+  "mentor.subscribe": "Lehetnék mentor"
+}

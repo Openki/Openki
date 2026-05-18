@@ -34,7 +34,6 @@
       }
     },
     "i18nHelpLink": "https://gitlab.com/Openki/Openki/-/wikis/translation",
-
     "matomo": {
       "url": "...",
       "site": 1
@@ -78,20 +77,22 @@
     "footerLinks": [
       {
         "link": "https://about.openki.net/",
-        "key": "footer.aboutOpenki",
-        "title_key": "navigation.footer.about.title",
-        "text": "..."
+        "text": "footer.aboutOpenki",
+        "title": "navigation.footer.about.title"
       },
-      { "link": "/info/faq", "text": "FAQ" },
+      {
+        "link": "/info/faq",
+        "text": "FAQ"
+      },
       {
         "link": "https://gitlab.com/Openki/Openki/",
-        "key": "navigation.footer.powerdByOpenki",
-        "title_key": "navigation.footer.codeOnGitLab"
+        "text": "navigation.footer.powerdByOpenki",
+        "title": "navigation.footer.codeOnGitLab"
       },
       {
         "link": "https://about.openki.net/privacy-policy/",
-        "key": "main.privacyPolicy",
-        "title_key": "main.privacyPolicy.tooltip"
+        "text": "main.privacyPolicy",
+        "title": "main.privacyPolicy.tooltip"
       }
     ],
     "dataProtectionLaw": "By continuing I accept the [Privacy Policy](https://about.openki.net/en/privacy-policy/) and [Terms of Service](https://about.openki.net/terms-and-conditions/)",

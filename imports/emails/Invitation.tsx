@@ -2,6 +2,8 @@ import React, { JSX } from "react";
 import { useTranslation } from "react-i18next";
 import { TenantModel } from "../api/tenants/tenants";
 import { UserModel } from "../api/users/users";
+import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
 export interface Props {
   siteName: string;
@@ -9,7 +11,6 @@ export interface Props {
   inviter: UserModel;
   recipient: UserModel | undefined;
   invitationLink: string;
-  moreLink: string | undefined;
   reportEmail: JSX.Element;
   lng: string;
 }
@@ -20,11 +21,10 @@ export function Invitation({
   inviter,
   recipient,
   invitationLink,
-  moreLink,
   reportEmail,
   lng,
 }: Props) {
-  const { t } = useTranslation(undefined, { lng });
+  const { t, i18n } = useTranslation(undefined, { lng });
   return (
     <>
       <tr>
@@ -54,7 +54,9 @@ export function Invitation({
               "{SITENAME} is a open peer-to-peer education platform where users collectively organize Groups. You can propose, discuss, develop and publish ideas and eventually meet nice people online or in real life. Enjoy sharing your experiences.",
               { SITENAME: siteName },
             )}{" "}
-            <a href={moreLink}>{t("invitation.email.more", "Find out more")}</a>
+            <a href={getLocalizedValue(i18n, PublicSettings.aboutLink)}>
+              {t("invitation.email.more", "Find out more")}
+            </a>
           </p>
         </td>
       </tr>

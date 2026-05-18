@@ -14,7 +14,6 @@ import * as Organizations from "../../../api/organizations/publications";
 
 import { Filtering } from "/imports/utils/filtering";
 import { Publication } from "/imports/utils/ServerPublishReact";
-import { GroupTemplate } from "../../lib/group-template";
 
 import { Edit } from "../groups/edit";
 import { GroupCompact } from "../groups/compact";
@@ -167,7 +166,7 @@ const eventsMap: ComponentWithEntities<EventModel> = {
 const propose: StaticComponent = {
   component: ({ params }) => (
     <div className="container mw-md">
-      <Edit {...GroupTemplate()} {...params} />
+      <Edit {...params} />
     </div>
   ),
 };

@@ -1,29 +1,44 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { RoleEntity, Roles } from "/imports/api/roles/roles";
 import { UserModel } from "/imports/api/users/users";
+import { useFindFilter } from "/imports/api/groups/publications";
+import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
+import { RoleEntity } from "/imports/utils/PublicSettings";
+import { useDetails } from "/imports/api/regions/publications";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
-
-import { useFindFilter } from "../../../../api/groups/publications";
 import { LoadingPage } from "/imports/ui/pages/loading";
-import { GroupList } from "../../groups/List";
-import { useRoleDisplay } from "../../../lib/useRoleDisplay";
+import { GroupList } from "/imports/ui/components/groups/List";
+import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 
 import "./styles.scss";
 
-export function GroupListSection(data: { user: UserModel; ownProfile: boolean }) {
+export function GroupListSection({
+  regionId,
+  user,
+  ownProfile,
+}: {
+  regionId: string;
+  user: UserModel;
+  ownProfile: boolean;
+}) {
   const { t } = useTranslation();
-  const { roleShort } = useRoleDisplay();
-  const id = data.user._id;
+  const [isLoadingRegion, region] = useDetails(regionId);
+  const [isLoadingRoles, roles] = useRegionRoles(regionId);
+
+  const { roleShort, roleMyList, roleUserList, roleMyListPast, roleUserListPast } =
+    useRoleDisplay(roles);
+  const id = user._id;
 
   const [isLoadingGroups, groups] = useFindFilter({
+    region: regionId,
     userInvolved: id,
     archived: false,
   });
 
   const [isLoadingArchivedGroups, archivedGroups] = useFindFilter({
+    region: regionId,
     userInvolved: id,
     archived: true,
   });
@@ -33,23 +48,9 @@ export function GroupListSection(data: { user: UserModel; ownProfile: boolean })
       g.members.find((m) => m.user === id && m.roles.includes(role)),
     );
   }
-  function roles() {
-    return Roles.slice().reverse();
-  }
+
   function groupsByRoleCount(role: string, archived: boolean) {
     return groupsByRole(role, archived).length;
-  }
-  function roleUserList(role: string) {
-    return `roles.${role}.userList`;
-  }
-  function roleUserListPast(role: string) {
-    return `roles.${role}.userList.past`;
-  }
-  function roleMyList(role: string) {
-    return `roles.${role}.myList`;
-  }
-  function roleMyListPast(role: string) {
-    return `roles.${role}.myList.past`;
   }
   function isInvolved() {
     return groups.length > 0 || archivedGroups.length > 0;
@@ -58,21 +59,28 @@ export function GroupListSection(data: { user: UserModel; ownProfile: boolean })
     return role.type === "team";
   }
 
+  if (isLoadingRegion()) {
+    return null;
+  }
+
   return (
-    <div className="page-component page-component-seperated profile-grouplist">
-      {isInvolved() && (
+    isInvolved() && (
+      <div className="page-component page-component-seperated profile-grouplist">
         <>
+          <h2>{region?.name}</h2>
           <h3 className="badge-title">
-            {data.ownProfile
+            {ownProfile
               ? t("users.grouplist.myGroups", "I am involved in the following groups")
               : t("users.grouplist.userGroups", "{NAME} is involved in the following groups", {
-                  NAME: data.user.getDisplayName(),
+                  NAME: user.getDisplayName(),
                 })}
           </h3>
-          {!isLoadingGroups() && !isLoadingArchivedGroups() ? (
+          {isLoadingRoles() || isLoadingGroups() || isLoadingArchivedGroups() ? (
+            <LoadingPage />
+          ) : (
             <>
               <div>
-                {roles()
+                {roles
                   .filter((role) => groupsByRoleCount(role.type, false))
                   .map((role) => (
                     <React.Fragment key={role.type}>
@@ -97,7 +105,7 @@ export function GroupListSection(data: { user: UserModel; ownProfile: boolean })
                     </React.Fragment>
                   ))}
               </div>
-              {roles()
+              {roles
                 .filter((role) => groupsByRoleCount(role.type, false))
                 .map((role) => (
                   <React.Fragment key={role.type}>
@@ -105,17 +113,15 @@ export function GroupListSection(data: { user: UserModel; ownProfile: boolean })
                       <div className="badge">
                         <i className={`${role.icon} fa-fw`} />
                       </div>{" "}
-                      {data.ownProfile
-                        ? t(roleMyList(role.type))
-                        : t(roleUserList(role.type), {
-                            NAME: data.user.getDisplayName(),
-                          })}
+                      {ownProfile
+                        ? roleMyList(role.type)
+                        : roleUserList(role.type, user.getDisplayName())}
                     </h3>
                     <GroupList groups={groupsByRole(role.type, false)} small={true} />
                   </React.Fragment>
                 ))}
 
-              {roles()
+              {roles
                 .filter((role) => groupsByRoleCount(role.type, true) && showArchived(role))
                 .map((role) => (
                   <React.Fragment key={role.type}>
@@ -123,21 +129,17 @@ export function GroupListSection(data: { user: UserModel; ownProfile: boolean })
                       <div className="badge is-archived">
                         <i className={`${role.icon} fa-fw`} />
                       </div>{" "}
-                      {data.ownProfile
-                        ? t(roleMyListPast(role.type))
-                        : t(roleUserListPast(role.type), {
-                            NAME: data.user.getDisplayName(),
-                          })}
+                      {ownProfile
+                        ? roleMyListPast(role.type)
+                        : roleUserListPast(role.type, user.getDisplayName())}
                     </h3>
                     <GroupList groups={groupsByRole(role.type, true)} small={true} />
                   </React.Fragment>
                 ))}
             </>
-          ) : (
-            <LoadingPage />
           )}
         </>
-      )}
-    </div>
+      </div>
+    )
   );
 }

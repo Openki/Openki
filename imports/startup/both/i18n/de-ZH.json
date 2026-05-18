@@ -163,9 +163,9 @@
   "group.list.status_titles.u_are_team": "Du bisch Organisator/in",
   "group.organizationList.addOrgText": "Gib d Rächt zum bearbeite",
   "group.organizationList.confirmOrgNotes": "Alli Teilnähmer vode Gruppä chönd de Kurs bearbeite und noii Veraschtaltige erstelle.",
-  "group.organizationList.makeTeam.confimOrgButton": "Bearbeitigsrächt geh",
+  "group.organizationList.makeTeam.confirmOrgButton": "Bearbeitigsrächt geh",
   "group.organizationList.remove": "Lösche",
-  "group.organizationList.removeTeam.confimRemoveOrgButton": "Bearbeitigsrächt wegneh",
+  "group.organizationList.removeTeam.confirmRemoveOrgButton": "Bearbeitigsrächt wegneh",
   "group.organizationList.removeTeam.removeOrgText": "D Bearbeitigsrächt wägneh",
   "group.reallydelete": "Bitte tuen bestätige dass du de Kurs lösche wotsch. Das cha mer nüme rückgängig mache.",
   "group.roles.firstSteps.allMembersInformed": "Alli, wo im Organisationsteam sind, wärded informiert.",
@@ -281,7 +281,6 @@
   "roles.mentor.short": "Mentor",
   "roles.mentor.subscribe": "Ich chönnt Mentor sii",
   "roles.mentor.subscribed": "Du bisch als Mentor ufgfüert",
-  "roles.message.placeholder": "Mini Interässe…",
   "roles.participant.myList": "Ich bi intressiert a",
   "roles.participant.short": "intressiert",
   "roles.participant.subscribe": "Ich bi intressiert",
@@ -295,5 +294,6 @@
   "userprofile.organizations.header": "Gruppene",
   "userprofile.sendmail-btn": "E-Mail schickä",
   "userprofile.sendmail-btn.busy": "Schickt s'Mail…",
-  "venue.map.windowtitle": "Charte vom Verahstaltigsort"
+  "venue.map.windowtitle": "Charte vom Verahstaltigsort",
+  "groupMember.message.placeholder": "Mini Interässe…"
 }

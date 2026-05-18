@@ -20,7 +20,7 @@ Router.prototype.configureBodyParsers = function () {
  * Add the router to the server connect handlers.
  */
 Router.prototype.start = function () {
-  WebApp.handlders.use(this);
+  WebApp.handlers.use(this);
   this.configureBodyParsers();
 };
 

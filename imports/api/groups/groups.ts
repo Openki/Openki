@@ -179,7 +179,7 @@ export const FindFilterPattern = {
   search: Match.Maybe(String),
   state: Match.Maybe([StringEnum("proposal", "resting", "upcomingEvent")]),
   categories: Match.Maybe([String]),
-  needsRole: Match.Maybe([StringEnum("host", "mentor", "team")]),
+  needsRole: Match.Maybe([String]),
   internal: Match.Maybe(Boolean),
   archived: Match.Maybe(Boolean),
   userInvolved: Match.Maybe(String),
@@ -193,7 +193,7 @@ export const FindParams = {
   search: Predicates.string,
   state: Predicates.createEnumsPredicate("proposal", "resting", "upcomingEvent"),
   categories: Predicates.ids,
-  needsRole: Predicates.createEnumsPredicate("host", "mentor", "team"),
+  needsRole: Predicates.ids,
   internal: Predicates.flag,
   archived: Predicates.flag,
   userInvolved: Predicates.string,
@@ -304,20 +304,8 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
 
     const { needsRole } = filter;
     if (needsRole) {
-      if (needsRole.includes("host")) {
-        missingRoles.push("host");
-        mustHaveRoles.push("host");
-      }
-
-      if (needsRole.includes("mentor")) {
-        missingRoles.push("mentor");
-        mustHaveRoles.push("mentor");
-      }
-
-      if (needsRole.includes("team")) {
-        missingRoles.push("team");
-        // All groups have the team role so we don't need to restrict to those having it
-      }
+      missingRoles.push(...needsRole);
+      mustHaveRoles.push(...needsRole);
     }
 
     if (filter.userInvolved) {

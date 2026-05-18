@@ -2,7 +2,6 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { getRole } from "/imports/api/roles/roles";
 import {
   Subscribe,
   Unsubscribe,
@@ -12,36 +11,41 @@ import {
 import { GroupMemberEntity, GroupModel } from "../../../../../api/groups/groups";
 
 import * as Tooltips from "/imports/utils/Tooltips";
-
 import { useUser } from "/imports/utils/react-meteor-data";
+import { cx } from "/imports/utils/cx";
+import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
+import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+
 import { ProfileLink } from "/imports/ui/components/profile-link";
 import { Contribution } from "../../../Contribution";
 import { ParticipantContact } from "/imports/ui/components/participant/contact";
 import { RemoveFromTeamDropdown } from "../remove-from-team-dropdown";
 import { Editable } from "/imports/ui/components/editable";
-import { useRoleDisplay } from "../../../../lib/useRoleDisplay";
+import { RoleIcon } from "/imports/ui/components/RoleIcon";
 
 import "./styles.scss";
 
 export function Member({ member, group }: { member: GroupMemberEntity; group: GroupModel }) {
   const { t } = useTranslation();
   const currentUser = useUser();
-  const { roleShort } = useRoleDisplay();
+
+  const [isRolesLoading, roles] = useRegionRoles(group.region);
+  const { roleShort } = useRoleDisplay(roles);
 
   function subscribeToTeam() {
-    return new Subscribe(group, member.user, "team", "interested");
+    return new Subscribe(
+      group,
+      roles.map((r) => r.type),
+      member.user,
+      "team",
+      "interested",
+    );
   }
 
   function removeFromTeam() {
     return new Unsubscribe(group, member.user, "team");
   }
 
-  function ownUserMemberClass() {
-    if (member.user === currentUser?._id) {
-      return "is-own-user";
-    }
-    return "";
-  }
   function memberRoles() {
     return member.roles.filter((role) => role !== "participant");
   }
@@ -79,7 +83,7 @@ export function Member({ member, group }: { member: GroupMemberEntity; group: Gr
   }
 
   return (
-    <div className={`group-member ${ownUserMemberClass()}`}>
+    <div className={cx("group-member", member.user === currentUser?._id && "is-own-user")}>
       <div className="d-flex flex-wrap align-items-center">
         <div className="me-1">
           <ProfileLink userId={member.user} />
@@ -87,20 +91,24 @@ export function Member({ member, group }: { member: GroupMemberEntity; group: Gr
         </div>
         <ParticipantContact participant={member.user} group={group} />
         <div className="ms-auto d-flex flex-wrap align-items-center">
-          {memberRoles().map((role) => (
-            <div
-              key={role}
-              className={`group-member-role ${getRole(role)?.proposal ? "is-proposal" : ""}`}
-            >
-              <span className="group-member-role-text">
-                <i className={`${getRole(role)?.icon} fa-fw`} />{" "}
-                <span className="role-short">{roleShort(role)}</span>
-              </span>{" "}
-              {mayUnsubscribeFromTeam(role) && (
-                <RemoveFromTeamDropdown {...removeFromTeamDropdownAttr()} />
-              )}
-            </div>
-          ))}
+          {!isRolesLoading() &&
+            memberRoles().map((role) => (
+              <div
+                key={role}
+                className={cx(
+                  "group-member-role",
+                  roles.find((r) => r.type === role)?.proposal && "is-proposal",
+                )}
+              >
+                <span className="group-member-role-text">
+                  <RoleIcon type={role} regionId={group.region} />{" "}
+                  <span className="role-short">{roleShort(role)}</span>
+                </span>{" "}
+                {mayUnsubscribeFromTeam(role) && (
+                  <RemoveFromTeamDropdown {...removeFromTeamDropdownAttr()} />
+                )}
+              </div>
+            ))}
           {maySubscribeToTeam() && (
             <button
               type="button"
@@ -117,7 +125,7 @@ export function Member({ member, group }: { member: GroupMemberEntity; group: Gr
                 await processChange(change);
               }}
             >
-              <i className={`fa-solid fa-plus ${member.user}`} />{" "}
+              <i className={cx("fa-solid fa-plus", member.user)} />{" "}
               <i className="fa-solid fa-bullhorn fa-fw" />
             </button>
           )}
@@ -132,7 +140,7 @@ export function Member({ member, group }: { member: GroupMemberEntity; group: Gr
               <Editable
                 {...{
                   multiline: false,
-                  placeholderText: t("roles.message.placeholder", "My interests…"),
+                  placeholderText: t("groupMember.message.placeholder", "My interests…"),
                   store: {
                     onSave: async (newMessage) => {
                       const change = new Message(group, currentUser._id, newMessage);

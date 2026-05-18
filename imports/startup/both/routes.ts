@@ -37,7 +37,7 @@ import * as RouterAsync from "/imports/utils/RouterAsync";
 import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
 
 import * as Analytics from "/imports/ui/lib/analytics";
-import { GroupTemplate } from "../../ui/lib/group-template";
+import type { Props as GroupEditProps } from "/imports/ui/components/groups/edit";
 
 import type { Data as OrganizationDetailsData } from "../../ui/pages/organization-details";
 import type { Data as VenuesMapData } from "/imports/ui/pages/venues-map";
@@ -246,7 +246,7 @@ RouterAsync.route("proposeGroup", {
   data() {
     const { query } = this.params;
 
-    const group = GroupTemplate();
+    const group = {} as Partial<GroupEditProps>;
 
     group.name = query.title || "";
 

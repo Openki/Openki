@@ -180,9 +180,9 @@
   "group.organizationList.addOrgText": "Δώσε δικαιώματα επεξεργασίας",
   "group.organizationList.confirmOrgNotes": "Όλα τα μέλη της ομάδας θα μπορούν να επεξεργαστούν το μάθημα και να δημιουργήσουν συναντήσεις",
   "group.organizationList.dropdownTitle.editOrganization": "Επεξεργασία ομάδας",
-  "group.organizationList.makeTeam.confimOrgButton": "Δώσε δικαιώματα επεξεργασίας",
+  "group.organizationList.makeTeam.confirmOrgButton": "Δώσε δικαιώματα επεξεργασίας",
   "group.organizationList.remove": "Αφαίρεση",
-  "group.organizationList.removeTeam.confimRemoveOrgButton": "Αφαίρεσε δικαιώματα επεξεργασίας",
+  "group.organizationList.removeTeam.confirmRemoveOrgButton": "Αφαίρεσε δικαιώματα επεξεργασίας",
   "group.organizationList.removeTeam.removeOrgText": "Αφαίρεση δικαιωμάτων επεξεργασίας",
   "group.propose.windowtitle": "Πρότεινε νέο μάθημα",
   "group.roles.maketeam": "Προσθήκη σε ομάδα",
@@ -300,7 +300,6 @@
   "roles.mentor.subscribe": "Μπορώ να γίνω μέντορας",
   "roles.mentor.subscribed": "Είσαι ο μέντορας",
   "roles.mentor.userList": "{NAME} διδάσκει",
-  "roles.message.placeholder": "Τα ενδιαφέροντα μου…",
   "roles.participant.myList": "Ενδιαφέρομαι για",
   "roles.participant.short": "ενδιαφερόμενος",
   "roles.participant.subscribe": "Ενδιαφέρομαι",
@@ -348,5 +347,6 @@
   "venue.map.windowtitle": "Χάρτης χώρων",
   "venues.list.noneFound": "Δεν βρέθηκαν χώροι",
   "venues.list.title": "Χώροι",
-  "venues.list.titleForRegion": "Χώροι στην περιοχή {REGION}"
+  "venues.list.titleForRegion": "Χώροι στην περιοχή {REGION}",
+  "groupMember.message.placeholder": "Τα ενδιαφέροντα μου…"
 }

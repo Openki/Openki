@@ -17,16 +17,13 @@ import "./styles.scss";
 
 function Links() {
   const { getLocalizedValue } = useLocalizedSetting();
-  const { t } = useTranslation();
   const siteName = useSiteName();
 
   function links() {
     return PublicSettings.footerLinks.map((linkSpec) => ({
       link: linkSpec.link,
-      text: linkSpec.key
-        ? t(linkSpec.key, { SITENAME: siteName })
-        : getLocalizedValue(linkSpec.text),
-      title: linkSpec.title_key ? t(linkSpec.title_key, { SITENAME: siteName }) : "",
+      text: getLocalizedValue(linkSpec.key || linkSpec.text, { SITENAME: siteName }),
+      title: getLocalizedValue(linkSpec.title_key || linkSpec.title, { SITENAME: siteName }),
     }));
   }
 
