@@ -49,6 +49,7 @@
   "group.organizationList.confirmOrgNotes": "A csoport összes tagja szerkesztheti a tanfolyamot és kezdeményezhet eseményeket a tanfolyam keretében.",
   "group.roles.maketeam": "Hozzáadás a csapathoz",
   "group.subnav.descr": "Leírás",
+  "groupMember.message.placeholder": "Érdeklődési köreim...",
   "main.faq_link": "Gyakori kérdések",
   "menue.All regions": "Összes régió",
   "menue.Calendar": "Naptár",
@@ -64,12 +65,5 @@
   "profile.organizations": "Csoportjaim:",
   "profile.passwordChangedSuccess": "Jeleszavad sikeresen megváltoztattad.",
   "profile.users_profile_page": "{NAME} profilja",
-  "report.confirm": "Jelentésed el lett küldve. Egy emeri lény meg fog próbálni találni egy megfelelő megoldást.",
-  "roles.host.description": "egy vendéglátó aki rendelkezésre állít egy helyiséget",
-  "roles.host.short": "házigazda",
-  "roles.host.subscribe": "Helyiséget biztosítok",
-  "roles.mentor.description": "egy mentor",
-  "roles.mentor.short": "mentor",
-  "roles.mentor.subscribe": "Lehetnék mentor",
-  "groupMember.message.placeholder": "Érdeklődési köreim..."
+  "report.confirm": "Jelentésed el lett küldve. Egy emeri lény meg fog próbálni találni egy megfelelő megoldást."
 }

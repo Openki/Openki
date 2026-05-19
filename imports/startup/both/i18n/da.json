@@ -209,16 +209,5 @@
   "report.placeholder": "Min luftpudebåd er fuld af ål.",
   "report.report": "Send rapport",
   "report.sending": "Rapport er ved at blive sendt…",
-  "roles.host.description": "en vært der stiller et lokale til rådighed",
-  "roles.host.short": "vært",
-  "roles.host.subscribe": "Jeg har et lokale til at have for dette møde i",
-  "roles.host.subscribed": "Du er sat på som vært",
-  "roles.mentor.description": "en mentor",
-  "roles.mentor.short": "mentor",
-  "roles.mentor.subscribe": "Jeg kan være mentor",
-  "roles.mentor.subscribed": "Du er sat på som mentor",
-  "roles.team.short": "hold",
-  "roles.team.subscribe": "Jeg hjælper med at organisere",
-  "roles.team.subscribed": "Du er på holdet",
   "userprofile.sendmail-btn": "Send e-mail"
 }

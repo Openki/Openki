@@ -14,15 +14,5 @@
   "menue.All regions": "تمام مناطق",
   "menue.Calendar": "تقویم",
   "menue.Create": "ایجاد",
-  "menue.Groups": "جستجو",
-  "roles.host.short": "برگذار کننده ",
-  "roles.host.subscribe": "من یک اطاق برای برگذاری دارم",
-  "roles.host.subscribed": "شما به حیث برگذار کننده تعین شدید",
-  "roles.mentor.description": "استاد (مشاور)",
-  "roles.mentor.short": "مشاور",
-  "roles.mentor.subscribe": "من میتوانم مشاور باشم",
-  "roles.mentor.subscribed": "شما به حیث مشاور (استاد) تعین شدید",
-  "roles.team.short": "گروه",
-  "roles.team.subscribe": "من میخواهم به سازمان کمک کنم",
-  "roles.team.subscribed": "شما به گروه داخل شدید"
+  "menue.Groups": "جستجو"
 }
