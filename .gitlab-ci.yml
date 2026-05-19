@@ -1,5 +1,17 @@
 image: registry.gitlab.com/openki/sysadmin/docker-ci-container:latest
 
+# -------------------------------------------------------------------
+# Global pipeline rules
+#
+# Run pipelines for:
+# - Merge Requests
+# - Branch pushes
+# -------------------------------------------------------------------
+workflow:
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+    - if: $CI_COMMIT_BRANCH
+
 stages:
   - lint
   - cleanup
@@ -14,23 +26,29 @@ cache:
 
 variables:
   DISPLAY: ":99.0"
+
   # Reduce git traffic
   GIT_DEPTH: "10"
+
   METEOR_ALLOW_SUPERUSER: "true"
+
+  # Increase Node.js memory limit
   TOOL_NODE_FLAGS: "--max_old_space_size=4096"
 
+# Cleanup generated/cached dependencies
 cleanup:
   stage: cleanup
   script:
     - rm -rf .meteor/ .npm/ node_modules/
 
+# Static analysis / formatting checks
 lint:
   stage: lint
   tags:
     - gitlab-org
   script: ./ci/lint.sh
 
-# tests unit, e2e, ...
+# Unit / E2E / integration tests
 test:
   stage: test
   tags:
@@ -38,84 +56,107 @@ test:
   variables:
     CYPRESS_RECORD_KEY: $CYPRESS_RECORD_KEY
   script: ./ci/test.sh
+
+  # Do not fail the entire pipeline if tests fail.
+  # Useful for unstable/flaky E2E tests.
   allow_failure: true
   timeout: 50m
 
-# Code Quality by "Code Climate" and SAST
+# -------------------------------------------------------------------
+# GitLab built-in code quality and SAST templates
+# - Code Quality: runs Code Climate analysis
+# - SAST: static application security testing
+# -------------------------------------------------------------------
 include:
   - template: Code-Quality.gitlab-ci.yml
   - template: Jobs/SAST.gitlab-ci.yml
 
+# Code Quality configuration
 code_quality:
   rules:
+    # Disable job completely if CODE_QUALITY_DISABLED is set
     - if: $CODE_QUALITY_DISABLED
       when: never
+
+    # Run only for merge requests targeting the "dev" branch
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"
 
-semgrep-sast:                                          # More settings here: https://gitlab.com/Openki/Openki/-/security/configuration/sast
+# Semgrep SAST configuration
+# - Additional SAST settings: https://gitlab.com/Openki/Openki/-/security/configuration/sast
+semgrep-sast:
   rules:
+    # Run security scanning only on the "dev" branch
     - if: $CI_COMMIT_BRANCH == "dev"
 
+# Global SAST settings
 sast:
   variables:
+    # Exclude generated/vendor directories from scanning
     SAST_EXCLUDED_PATHS: "$DEFAULT_SAST_EXCLUDED_PATHS,.meteor/*,packages/*"
 
-#   Verify/Browser-Performance.gitlab-ci.yml
+# -------------------------------------------------------------------
+# Deployment jobs
+# -------------------------------------------------------------------
 
-#browser_performance:
-#  stage: test
-#  variables:
-#    URL: https://dev.openki.net
-
-# auto deploy triggers
+# Deploy dev branch
 deploy_dev:
   stage: deploy
-  needs: [] #don't wait for another stage to finish, could be change to [lint]
+
+  # Start immediately after lint testing
+  needs: [lint]
+
   variables:
     SOURCE_BRANCH: dev
     TARGET_HOST: dev
-  only:
-    - dev
+
+  rules:
+    - if: $CI_COMMIT_BRANCH == "dev"
+
   when: always
+
   trigger: Openki/sysadmin/deploy-config
 
+# Deploy staging branch
 deploy_staging:
   stage: deploy
+
   variables:
     SOURCE_BRANCH: staging
     TARGET_HOST: openki-staging
-  only:
-    - staging
+
+  rules:
+    - if: $CI_COMMIT_BRANCH == "staging"
+
   when: always
+
   trigger: Openki/sysadmin/deploy-config
 
+# Deploy NLNet development branch
 deploy_dev2:
   stage: deploy
+
   variables:
     SOURCE_BRANCH: nlnet-dev
     TARGET_HOST: dev2
-  only:
-    - nlnet-dev
+
+  rules:
+    - if: $CI_COMMIT_BRANCH == "nlnet-dev"
+
   when: always
+
   trigger: Openki/sysadmin/deploy-config
 
+# Deploy main branch to sandbox
 deploy_sandbox:
   stage: deploy
+
   variables:
     SOURCE_BRANCH: main
     TARGET_HOST: sandbox
-  only:
-    - main
-  when: always
-  trigger: Openki/sysadmin/deploy-config
 
-## Not possible yet: https://gitlab.com/gitlab-org/gitlab-ce/issues/27818
-#deploy_prod:
-#  stage: deploy
-#  variables:
-#    SOURCE_BRANCH: main
-#    TARGET_HOST: live
-#  only:
-#  - main
-#  trigger: Openki/sysadmin/deploy-config
-#
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+
+  when: always
+
+  trigger: Openki/sysadmin/deploy-config
