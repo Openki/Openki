@@ -72,9 +72,22 @@ Demo playground: [sandbox.openki.net](https://sandbox.openki.net/?region=Spilist
 ---
 
 # Contribution
-→ _Please upvote features you would like to see or propose new ones in our [issue tracker](https://gitlab.com/Openki/Openki/-/issues/?sort=milestone&state=opened)._  
+→ _Please upvote features you would like to see or propose new ones in our [issue tracker](https://gitlab.com/Openki/Openki/-/issues/?sort=milestone&state=opened)._
 Code submissions are warmly welcome, please check out our [Code of Conduct](https://gitlab.com/Openki/Openki/wikis/Code-of-Conduct).  
-Free software built with love and care. We use [Meteor.js](https://meteor.com) and [React](https://react.dev/).
+
+## Tech Stack
+Free software built with love and care. We use:
+- [Meteor.js](https://docs.meteor.com/about/what-is.html) (full-stack JavaScript framework)
+- Node.js (runtime internally used by Meteor)
+- [npm](https://www.npmjs.com/) + Meteor package system
+- [MongoDB](https://www.mongodb.com/docs/) (database)
+- [TypeScript](https://www.typescriptlang.org/docs/) (front- and backend)
+- [React](https://react.dev/reference/react) (frontend UI library)
+- [HTML5 / CSS3](https://developer.mozilla.org/en/docs/Web) (frontend)
+- [Bootstrap 5](https://getbootstrap.com/docs/) (frontend framework)
+- [Font Awesome 6](https://fontawesome.com/v6/search)
+- [Cypress](https://docs.cypress.io/) (test suite)
+- [Matomo](https://matomo.org/help/) (web analytics, formerly Piwik)
 
 ### Installation (Linux, OSX and Windows)
 1) To install Meteor, run: `curl https://install.meteor.com | sh` (or download the [installer for Windows](https://install.meteor.com/windows))
