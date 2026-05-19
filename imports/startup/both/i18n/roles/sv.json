@@ -32,5 +32,6 @@
   "team.short": "team",
   "team.subscribe": "Jag hjälper till att organisera",
   "team.subscribed": "Du är med i teamet ",
-  "team.userList": "{NAME} organiserar"
+  "team.userList": "{NAME} organiserar",
+  "team.userList.past": "{NAME} organiserade"
 }
