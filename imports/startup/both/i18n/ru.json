@@ -795,7 +795,6 @@
   "profile.account.deleted": "Учётная запись удалена",
   "profile.account.reallydelete": "Удалить профиль пользователя \"{NAME}\" навсегда? {GROUPS, number} Курсы, созданные этим пользователем (с количеством участников {INTERESTED, number} и количеством предстоящих мероприятий {EVENTS, number}), также будут удалены.",
   "profile.account.reason.placeholder": "Причина удаления пользователя",
-  "profile.accountManagement": "Опасная зона",
   "profile.admin.remove.reason.longertext": "Укажите более длинный текст",
   "profile.administration.button": "Перейти в панель администратора",
   "profile.administration.link": "Вы являетесь администратором {SITENAME}",

@@ -661,7 +661,6 @@
   "profile.account.deleted": "تم حذف الحساب",
   "profile.account.reallydelete": "حذف المستخدم \"{NAME}\" نهائيا؟ {GROUPS, number} ستتم أيضا إزالة الدورات التدريبية التي أنشأها هذا المستخدم (مع المشاركين {INTERESTED, number} و {EVENTS, number} الأحداث القادمة).",
   "profile.account.reason.placeholder": "سبب حذف هذا المستخدم",
-  "profile.accountManagement": "منطقة الخطر",
   "profile.admin.remove.reason.longertext": "نص أطول من فضلك",
   "profile.administration.button": "قم بزيارة لوحة الإدارة",
   "profile.administration.link": "أنت تدير عن {SITENAME}",
