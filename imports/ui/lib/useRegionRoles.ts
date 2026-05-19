@@ -4,8 +4,8 @@ import { PublicSettings, RoleEntity } from "/imports/utils/PublicSettings";
 /**
  * Load the region roles on the client side
  */
-export function useRegionRoles(regionId?: RegionEntity["_id"]) {
-  const [isLoading, region] = useDetails({ when: !!regionId }, regionId);
+export function useRegionRoles(regionId: RegionEntity["_id"]) {
+  const [isLoading, region] = useDetails(regionId);
 
   let roles: RoleEntity[] = [];
 

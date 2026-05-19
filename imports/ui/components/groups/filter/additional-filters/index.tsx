@@ -9,14 +9,16 @@ import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
 
-function RolesButton(props: {
+interface RolesButtonProps {
   needsRole: string[];
   onNeedsRoleClick: (role: string) => void;
   onNeedsRoleMouseOver: (role: string) => void;
   onNeedsRoleMouseOut: (role: string) => void;
-}) {
-  const currentRegionId = useCurrentRegionId();
-  const [isLoading, regionRoles] = useRegionRoles(currentRegionId);
+  currentRegionId: string;
+}
+
+function RolesButton(props: RolesButtonProps) {
+  const [isLoading, regionRoles] = useRegionRoles(props.currentRegionId);
   const { roleNeeded } = useRoleDisplay(regionRoles);
 
   if (isLoading()) {
@@ -67,10 +69,11 @@ export function AdditionalFilters(props: Props) {
         We need a better UI to filter by roles and until we fix this properly, we hide the
         role-based filtering when "All regions is selected".
       */}
-      {Boolean(currentRegionId) && (
+      {!!currentRegionId && (
         <div aria-label="filter-group-roles" className="col-md-3 filter-component" role="group">
           <h4 className="filter-component-header">{t("find.filter.groupRoles", "Roles")}</h4>
           <RolesButton
+            currentRegionId={currentRegionId}
             needsRole={props.needsRole}
             onNeedsRoleClick={props.onNeedsRoleClick}
             onNeedsRoleMouseOver={props.onNeedsRoleMouseOver}
