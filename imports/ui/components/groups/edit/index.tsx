@@ -1,5 +1,5 @@
 import { Router } from "meteor/iron:router";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { uniq, union, chain } from "lodash-es";
 
@@ -449,6 +449,13 @@ export function Edit(props: Props) {
     }
   }
 
+  const disabledCreateRoles = useMemo(() => {
+    return chain(organizations)
+      .flatMap(({ disableCreateRoles }) => disableCreateRoles ?? [])
+      .uniq()
+      .value();
+  }, [organizations]);
+
   if (regionsIsLoading() || organizationsIsLoading()) {
     return null;
   }
@@ -618,10 +625,7 @@ export function Edit(props: Props) {
                   props.members?.find((member) => member.user === user?._id)?.roles
                 }
                 fullRoleSelection={fullRoleSelection}
-                disabledCreateRoles={chain(organizations)
-                  .flatMap((o) => o.disableCreateRoles ?? [])
-                  .uniq()
-                  .value()}
+                disabledCreateRoles={disabledCreateRoles}
               />
             )}
           </div>
