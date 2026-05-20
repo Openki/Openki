@@ -6,6 +6,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import * as usersMethods from "/imports/api/users/methods";
 import { AccountsAsync } from "/imports/utils/promisify";
 import { useUser } from "/imports/utils/react-meteor-data";
+import { cx } from "/imports/utils/cx";
 
 export function AccountManagementSection() {
   const { t } = useTranslation();
@@ -69,16 +70,15 @@ export function AccountManagementSection() {
       }
     }
   }
-
-  function eyeToggle(show: boolean, onToggle: () => void) {
-    return (
-      <span className="input-group-text p-0">
-        <button type="button" className="btn btn-outline-secondary text-dark" onClick={onToggle}>
-          <i className={`fa-fw fa-solid ${show ? "fa-eye-slash" : "fa-eye"}`} />
-        </button>
-      </span>
-    );
-  }
+  function EyeToggle({ show, onToggle }: { show: boolean; onToggle: () => void }) {
+  return (
+    <span className="input-group-text p-0">
+      <button type="button" className="btn btn-outline-secondary text-dark" onClick={onToggle}>
+        <i className={cx("fa-fw fa-solid", show ? "fa-eye-slash" : "fa-eye")} />
+      </button>
+    </span>
+  );
+}
 
   return (
     <div className="page-component page-component-seperated">
@@ -110,7 +110,10 @@ export function AccountManagementSection() {
                         value={oldPassword}
                         onChange={(e) => setOldPassword(e.currentTarget.value)}
                       />
-                      {eyeToggle(showOldPassword, () => setShowOldPassword((v) => !v))}
+                      <EyeToggle
+                        show={showOldPassword}
+                        onToggle={() => setShowOldPassword((v) => !v)}
+                      />
                     </div>
                   </div>
                 </div>
@@ -127,7 +130,10 @@ export function AccountManagementSection() {
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.currentTarget.value)}
                       />
-                      {eyeToggle(showNewPassword, () => setShowNewPassword((v) => !v))}
+                      <EyeToggle
+                        show={showNewPassword}
+                        onToggle={() => setShowNewPassword((v) => !v)}
+                      />
                     </div>
                   </div>
                 </div>
@@ -144,9 +150,10 @@ export function AccountManagementSection() {
                         value={newPasswordConfirm}
                         onChange={(e) => setNewPasswordConfirm(e.currentTarget.value)}
                       />
-                      {eyeToggle(showNewPasswordConfirm, () =>
-                        setShowNewPasswordConfirm((v) => !v),
-                      )}
+                      <EyeToggle
+                        show={showNewPasswordConfirm}
+                        onToggle={() => setShowNewPasswordConfirm((v) => !v)}
+                      />
                     </div>
                   </div>
                 </div>
