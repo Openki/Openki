@@ -8,7 +8,7 @@ import { GroupModel, FindParams, isPrivate } from "../../../../api/groups/groups
 import * as GroupsMethods from "../../../../api/groups/methods";
 import { Regions } from "/imports/api/regions/regions";
 
-import { PublicSettings } from "/imports/utils/PublicSettings";
+import { PublicSettings, RoleEntity } from "/imports/utils/PublicSettings";
 import * as StringTools from "/imports/utils/string-tools";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
 import { cx } from "/imports/utils/cx";
@@ -180,12 +180,9 @@ export function Edit(props: Props) {
 
   const [savedMessage, setSavedMessage] = useState(false);
 
-  // TODO: This would be a better way to track state:
-  // In the RoleSelect component, we could track state for enabled and enroll separately
-  // const [roles, setRoles] = useState<string[] | undefined>(props.roles);
   const [roles, setRoles] = useState<
     Record<
-      string,
+      RoleEntity["type"],
       {
         enabled: boolean;
         enroll: boolean;

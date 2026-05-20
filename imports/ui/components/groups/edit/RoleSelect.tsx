@@ -115,9 +115,6 @@ export function RoleSelect({
         availableRoles().map((role) => [
           role.type,
           {
-            icon: role.icon,
-            description: roleDescription(role.type),
-            subscribeLabel: roleSubscribe(role.type),
             enabled: isRoleEnabled(role),
             enroll: defaultUsersRoles?.includes(role.type) ?? false,
           },
