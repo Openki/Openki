@@ -1,20 +1,14 @@
 import { Router } from "meteor/iron:router";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { uniq, chain, fromPairs, union } from "lodash-es";
+import { uniq, union, chain } from "lodash-es";
 
 import * as Alert from "/imports/api/alerts/alert";
-import {
-  GroupMemberEntity,
-  GroupModel,
-  FindParams,
-  isPrivate,
-} from "../../../../api/groups/groups";
+import { GroupModel, FindParams, isPrivate } from "../../../../api/groups/groups";
 import * as GroupsMethods from "../../../../api/groups/methods";
 import { Regions } from "/imports/api/regions/regions";
 
 import { PublicSettings, RoleEntity } from "/imports/utils/PublicSettings";
-import { hasRoleUser } from "../../../../utils/group-role-utils";
 import * as StringTools from "/imports/utils/string-tools";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
 import { cx } from "/imports/utils/cx";
@@ -24,7 +18,6 @@ import * as Analytics from "/imports/ui/lib/analytics";
 import { ButtonCancel, ButtonSave } from "../../Buttons";
 import { PricePolicy } from "../../price-policy";
 import { Tag } from "../../regions/tag";
-import { Props as GroupEditRoleProps, Role } from "./Role";
 import { Title } from "./title";
 import { useFindFilter as useOrganizationsFindFilter } from "../../../../api/organizations/publications";
 import { useAll as useRegions } from "/imports/api/regions/publications";
@@ -43,8 +36,7 @@ import { FindHeader } from "./FindHeader";
 import { AlertMessage } from "./AlertMessage";
 import { FormControl } from "/imports/ui/components/form-control";
 import { useFiltering } from "/imports/utils/filtering";
-import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
-import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
+import { RoleSelect } from "/imports/ui/components/groups/edit/RoleSelect";
 
 import "./styles.scss";
 
@@ -136,9 +128,6 @@ export function Edit(props: Props) {
     }
   }, [props, currentRegion, regions]);
 
-  const [isLoadingRegionRoles, regionRoles] = useRegionRoles(selectedRegion);
-  const { roleDescription, roleSubscribe } = useRoleDisplay(regionRoles);
-
   function getOrganizations() {
     const organizations = [];
 
@@ -177,6 +166,10 @@ export function Edit(props: Props) {
 
   const [editingCategories, setEditingCategories] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  /**
+   * fullRoleSelection is used in the group edit view.
+   * When disabled, a simpler view is shown. This is used in /frame/propose
+   */
   const [fullRoleSelection, setFullRoleSelection] = useState(true);
   // For iframes: On true shows a simple role selection like: [I want to learn] [I can teach]
   const [simpleRoleSelection, setSimpleRoleSelection] = useState(false);
@@ -187,71 +180,15 @@ export function Edit(props: Props) {
 
   const [savedMessage, setSavedMessage] = useState(false);
 
-  function availableRoles() {
-    const disableCreateRoles = chain(organizations)
-      .flatMap((o) => o.disableCreateRoles)
-      .uniq()
-      .value();
-
-    if (isLoadingRegionRoles()) return [];
-
-    return regionRoles.filter((role) => {
-      // Skip non-editable, preset roles
-      if (!role.editable && role.preset) {
-        return false;
-      }
-
-      if (isNew && disableCreateRoles.includes(role.type)) {
-        return false;
-      }
-
-      return true;
-    });
-  }
-
-  function hasRole(members: GroupMemberEntity[] | undefined, role: string) {
-    return members && hasRoleUser(members, role, user?._id);
-  }
-
   const [roles, setRoles] = useState<
     Record<
-      string,
+      RoleEntity["type"],
       {
-        icon: string;
-        description: string;
-        subscribeLabel: string;
         enabled: boolean;
         enroll: boolean;
       }
     >
   >({});
-
-  function isRoleEnabled(role: RoleEntity) {
-    if (props.roles) {
-      return props.roles.includes(role.type);
-    } else if (isNew) {
-      const regionRole = regionRoles.find((regionRole) => regionRole.type === role.type);
-      return regionRole?.preset ?? false;
-    }
-    return false;
-  }
-
-  useEffect(() => {
-    setRoles(
-      fromPairs(
-        availableRoles().map((role) => [
-          role.type,
-          {
-            icon: role.icon,
-            description: roleDescription(role.type),
-            subscribeLabel: roleSubscribe(role.type),
-            enabled: isRoleEnabled(role),
-            enroll: hasRole(props.members, role.type) ?? false,
-          },
-        ]),
-      ),
-    );
-  }, [organizations, regionRoles]);
 
   const [errors, checkValidity, addError] = useValidation(
     {
@@ -288,8 +225,7 @@ export function Edit(props: Props) {
     return (
       // Region can be set for new groups only.
       isNew &&
-      // For the proposal frame we hide the region selection when a region is
-      // set.
+      // For the proposal frame we hide the region selection when a region is set.
       !(props.isFrame && props.region) &&
       // if the session sets the region we hide the region selection
       !currentRegion &&
@@ -351,39 +287,7 @@ export function Edit(props: Props) {
     }
     return false;
   }
-  function editBodyClasses() {
-    const classes: string[] = [];
 
-    if (props.isFrame) {
-      classes.push("is-frame");
-    }
-
-    return classes.join(" ");
-  }
-  function groupEditRolesAttr(): GroupEditRoleProps[] {
-    return Object.entries(roles).map(([type, role]) => {
-      return {
-        type,
-        ...role,
-        onRole(checked: boolean) {
-          const newRoles = { ...roles };
-          newRoles[type] = {
-            ...role,
-            enabled: checked,
-          };
-          setRoles(newRoles);
-        },
-        onEnroll(checked: boolean) {
-          const newRoles = { ...roles };
-          newRoles[type] = {
-            ...role,
-            enroll: checked,
-          };
-          setRoles(newRoles);
-        },
-      };
-    });
-  }
   function hasPricePolicy() {
     const { hidePricePolicy } = props;
 
@@ -542,7 +446,14 @@ export function Edit(props: Props) {
     }
   }
 
-  if (regionsIsLoading() || isLoadingRegionRoles() || organizationsIsLoading()) {
+  const disabledCreateRoles = useMemo(() => {
+    return chain(organizations)
+      .flatMap(({ disableCreateRoles }) => disableCreateRoles ?? [])
+      .uniq()
+      .value();
+  }, [organizations]);
+
+  if (regionsIsLoading() || organizationsIsLoading()) {
     return null;
   }
 
@@ -554,7 +465,7 @@ export function Edit(props: Props) {
         ) : (
           <Header {...props} />
         )}
-        <div className={`edit-page-body group-edit-body ${editBodyClasses()}`}>
+        <div className={cx("edit-page-body group-edit-body", props.isFrame && "is-frame")}>
           {!isNew && !!props.region && <Tag region={props.region} />}
           {showSavedMessage() && !!savedGroupId && (
             <AlertMessage
@@ -700,15 +611,19 @@ export function Edit(props: Props) {
               </div>
             )}
 
-            {fullRoleSelection && availableRoles().length > 0 && (
-              <div className="col-md">
-                <div className="form-label">
-                  {t("group.edit.needs.role", "This group might need…")}
-                </div>
-                {groupEditRolesAttr().map((groupEditRoleAttr) => (
-                  <Role key={groupEditRoleAttr.type} {...groupEditRoleAttr} />
-                ))}
-              </div>
+            {!!selectedRegion && (
+              <RoleSelect
+                selectedRegion={selectedRegion}
+                value={roles}
+                onChange={setRoles}
+                isNewGroup={isNew}
+                defaultRoles={props.roles}
+                defaultUsersRoles={
+                  props.members?.find((member) => member.user === user?._id)?.roles
+                }
+                fullRoleSelection={fullRoleSelection}
+                disabledCreateRoles={disabledCreateRoles}
+              />
             )}
           </div>
           <EditCustomFields

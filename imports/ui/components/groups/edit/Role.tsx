@@ -36,7 +36,7 @@ export function Role({
           </>
         }
         checked={enabled}
-        onChange={(checked) => onRole(checked)}
+        onChange={onRole}
       />
 
       {enabled && (
@@ -46,7 +46,7 @@ export function Role({
             type="box"
             label={subscribeLabel}
             checked={enroll}
-            onChange={(checked) => onEnroll(checked)}
+            onChange={onEnroll}
           />
         </div>
       )}
