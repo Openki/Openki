@@ -283,6 +283,16 @@ export function Editable({
     setReadonly(true);
   };
 
+  const onEditEmptyText = () => {
+    const element = elementRef.current;
+    if (!element) {
+      return;
+    }
+    if (element.innerText.trim() === "") {
+      handleEdit();
+    }
+  };
+
   const handleCancel = () => {
     const element = elementRef.current;
     if (!element) {
@@ -303,6 +313,7 @@ export function Editable({
         className={`editable-wrap ${wrapClasses()}`}
         onClick={() => {
           onStartEditing?.();
+          onEditEmptyText();
         }}
       >
         <div
@@ -335,7 +346,16 @@ export function Editable({
           !!errors.input && <div className="invalid-feedback">{errors.input}</div>
         )}
 
-        {!showControls() && <i className="fa-solid fa-pencil editable-icon" onClick={handleEdit} />}
+        {!showControls() && (
+          <button
+            onClick={handleEdit}
+            className="btn btn-sm editable-icon-container"
+            data-bs-title={t("_button.edit", "Edit")}
+          >
+            {" "}
+            <i className="fa-solid fa-pencil editable-icon" />{" "}
+          </button>
+        )}
       </div>
       {showControls() && (
         <div className="editable-controls">
