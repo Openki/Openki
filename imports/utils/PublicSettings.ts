@@ -26,6 +26,12 @@ export const RoleEntityPattern = {
    * @default false
    */
   editable: Match.Maybe(Boolean),
+  /**
+   * Each role can have custom translations.
+   * You only need to include the keys you want to change.
+   * If a key is not defined in your overrides, the default translation from
+   * `i18n/roles/*.json` will be used instead.
+   */
   translations: Match.Maybe({
     short: Match.Maybe(LocalizedValuePattern),
     subscribe: Match.Maybe(LocalizedValuePattern),

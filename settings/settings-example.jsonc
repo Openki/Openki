@@ -363,6 +363,20 @@
          * Default: false
          */
         "editable": false,
+        /**
+         * Each role can have custom translations.
+         * You only need to include the keys you want to change.
+         * If a key is not defined in your overrides, the default translation from
+         * `i18n/roles/*.json` will be used instead.
+         */
+        "translations": {
+          // In this case, only the short form will be using the custom translation
+          "short": {
+            "en": "participant",
+            "de": "teilnehmer",
+            "sv": "deltagare",
+          },
+        },
       },
       {
         "type": "mentor",
