@@ -11,6 +11,11 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
     key: keyof NonNullable<RoleEntity["translations"]>,
     variables?: Record<string, ReactNode> | undefined,
   ) {
+    // First, check if the current role has a custom translation for the given key
+    // These can be defined in multiple places:
+    // 1) In the instance settings.json
+    // 2) As part of Region.roles in the DB, allowing custom roles and custom translations for each region.
+    // NOTE: However, there potential bug with fallback translations here. See https://gitlab.com/Openki/Openki/-/work_items/2417 for more details.
     const translation = getLocalizedValue(
       i18n,
       roles.find((r) => r.type === role)?.translations?.[key],
@@ -20,6 +25,7 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
       return translation;
     }
 
+    //  Translations for common default roles exist in the roles namespace.
     if (i18n.exists(`roles:${role}.${key}`)) {
       return variables ? i18n.t(`roles:${role}.${key}`, variables) : i18n.t(`roles:${role}.${key}`);
     }
