@@ -48,6 +48,12 @@ export async function generate() {
         sampleSize(words, 5).join(" ") + sampleSize(words, Math.floor(prng() * 30)).join(" "),
       );
 
+      // TODO: Why is `group.time_created` sometimes undefined?
+      if (!group.time_created) {
+        const { name, _id, time_created } = group;
+        console.dir({ group: { name, _id, time_created } });
+        throw new Error("Missing group.time_created: ", group.time_created);
+      }
       comment.time_created = sometimesAfter(prng, group.time_created);
       comment.time_updated =
         prng() < 0.9 ? comment.time_created : sometimesAfter(prng, comment.time_created);
