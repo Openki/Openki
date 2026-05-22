@@ -209,4 +209,11 @@ export const regions: {
       attribution: "&copy; <a href='https://github.com/c3nav'>c3nav</a>",
     },
   },
+  {
+    _id: "5JyFCoKwkxnf8LWoh",
+    name: "Projectistan",
+    nameEn: "Projectistan",
+    loc: [47.1375, 7.2472],
+    tz: "Europe/Zurich",
+  },
 ];
