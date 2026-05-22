@@ -1,5 +1,3 @@
-import { type RoleEntity } from "/imports/utils/PublicSettings";
-
 export const regions: {
   _id: string;
   name: string;
@@ -34,7 +32,18 @@ export const regions: {
     maxZoom: number;
     attribution: string;
   };
-  roles?: RoleEntity;
+  roles?: {
+    type: string;
+    icon: string;
+    proposal: boolean;
+    preset: boolean;
+    editable: boolean;
+    translations?: {
+      [key: string]: {
+        [language: string]: string;
+      };
+    };
+  }[];
 }[] = [
   {
     _id: "9JyFCoKWkxnf8LWPh",
