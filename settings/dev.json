@@ -195,6 +195,774 @@
         "proposal": false,
         "preset": true,
         "editable": false
+      },
+      {
+        "type": "facilitator",
+        "icon": "fa-solid circle-user",
+        "proposal": true,
+        "preset": false,
+        "editable": true,
+        "translations": {
+          "short": {
+            "en": "facilitator"
+          },
+          "subscribe": {
+            "en": "I can be a facilitator"
+          },
+          "subscribed": {
+            "en": "You are listed as facilitator"
+          },
+          "description": {
+            "en": "a facilitator"
+          },
+          "myList": {
+            "en": "I teach"
+          },
+          "userList": {
+            "en": "{NAME} teaches"
+          },
+          "find.roleNeeded": {
+            "en": "Looking for a facilitator"
+          },
+          "groupList.statusTitle.roleNeeded": {
+            "en": "Needs a facilitator"
+          },
+          "groupList.statusTitle.roleOccupied": {
+            "en": "Has a facilitator"
+          },
+          "groupList.statusTitle.roleOccupiedByUser": {
+            "en": "You are a facilitator"
+          },
+          "notification.join.mail.intro": {
+            "en": "{USERNAME} just joined {GROUP} as facilitator\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name."
+          },
+          "group.firstSteps": {
+            "en": "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}"
+          },
+          "group.messageInfo": {
+            "en": "Leave a message about your experience on the topic. The message will appear next to your name."
+          }
+        }
+      },
+      {
+        "type": "builder",
+        "icon": "fa-solid circle-user",
+        "proposal": true,
+        "preset": false,
+        "editable": true,
+        "translations": {
+          "short": {
+            "en": "builder"
+          },
+          "subscribe": {
+            "en": "I can be a builder"
+          },
+          "subscribed": {
+            "en": "You are listed as builder"
+          },
+          "description": {
+            "en": "a builder"
+          },
+          "myList": {
+            "en": "I build"
+          },
+          "userList": {
+            "en": "{NAME} bubilds"
+          },
+          "find.roleNeeded": {
+            "en": "Looking for a builder"
+          },
+          "groupList.statusTitle.roleNeeded": {
+            "en": "Needs a builder"
+          },
+          "groupList.statusTitle.roleOccupied": {
+            "en": "Has a builder"
+          },
+          "groupList.statusTitle.roleOccupiedByUser": {
+            "en": "You are a builder"
+          },
+          "notification.join.mail.intro": {
+            "en": "{USERNAME} just joined {GROUP} as builder\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name."
+          },
+          "group.firstSteps": {
+            "en": "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}"
+          },
+          "group.messageInfo": {
+            "en": "Leave a message about your experience on the topic. The message will appear next to your name."
+          }
+        }
+      },
+      {
+        "type": "researcher",
+        "icon": "fa-solid circle-user",
+        "proposal": true,
+        "preset": false,
+        "editable": true,
+        "translations": {
+          "short": {
+            "en": "researcher"
+          },
+          "subscribe": {
+            "en": "I can be a researcher"
+          },
+          "subscribed": {
+            "en": "You are listed as researcher"
+          },
+          "description": {
+            "en": "a researcher"
+          },
+          "myList": {
+            "en": "I research"
+          },
+          "userList": {
+            "en": "{NAME} researches"
+          },
+          "find.roleNeeded": {
+            "en": "Looking for a researcher"
+          },
+          "groupList.statusTitle.roleNeeded": {
+            "en": "Needs a researcher"
+          },
+          "groupList.statusTitle.roleOccupied": {
+            "en": "Has a researcher"
+          },
+          "groupList.statusTitle.roleOccupiedByUser": {
+            "en": "You are a researcher"
+          },
+          "notification.join.mail.intro": {
+            "en": "{USERNAME} just joined {GROUP} as researcher\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name."
+          },
+          "group.firstSteps": {
+            "en": "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}"
+          },
+          "group.messageInfo": {
+            "en": "Leave a message about your experience on the topic. The message will appear next to your name."
+          }
+        }
+      },
+      {
+        "type": "editor",
+        "icon": "fa-solid circle-user",
+        "proposal": true,
+        "preset": false,
+        "editable": true,
+        "translations": {
+          "short": {
+            "en": "editor"
+          },
+          "subscribe": {
+            "en": "I can be a editor"
+          },
+          "subscribed": {
+            "en": "You are listed as editor"
+          },
+          "description": {
+            "en": "a editor"
+          },
+          "myList": {
+            "en": "I edit"
+          },
+          "userList": {
+            "en": "{NAME} edits"
+          },
+          "find.roleNeeded": {
+            "en": "Looking for a editor"
+          },
+          "groupList.statusTitle.roleNeeded": {
+            "en": "Needs a editor"
+          },
+          "groupList.statusTitle.roleOccupied": {
+            "en": "Has a editor"
+          },
+          "groupList.statusTitle.roleOccupiedByUser": {
+            "en": "You are a editor"
+          },
+          "notification.join.mail.intro": {
+            "en": "{USERNAME} just joined {GROUP} as editor\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name."
+          },
+          "group.firstSteps": {
+            "en": "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}"
+          },
+          "group.messageInfo": {
+            "en": "Leave a message about your experience on the topic. The message will appear next to your name."
+          }
+        }
+      },
+      {
+        "type": "organizer",
+        "icon": "fa-solid circle-user",
+        "proposal": true,
+        "preset": false,
+        "editable": true,
+        "translations": {
+          "short": {
+            "en": "organizer"
+          },
+          "subscribe": {
+            "en": "I can be a organizer"
+          },
+          "subscribed": {
+            "en": "You are listed as organizer"
+          },
+          "description": {
+            "en": "a organizer"
+          },
+          "myList": {
+            "en": "I organize"
+          },
+          "userList": {
+            "en": "{NAME} organizes"
+          },
+          "find.roleNeeded": {
+            "en": "Looking for a organizer"
+          },
+          "groupList.statusTitle.roleNeeded": {
+            "en": "Needs a organizer"
+          },
+          "groupList.statusTitle.roleOccupied": {
+            "en": "Has a organizer"
+          },
+          "groupList.statusTitle.roleOccupiedByUser": {
+            "en": "You are a organizer"
+          },
+          "notification.join.mail.intro": {
+            "en": "{USERNAME} just joined {GROUP} as organizer\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name."
+          },
+          "group.firstSteps": {
+            "en": "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}"
+          },
+          "group.messageInfo": {
+            "en": "Leave a message about your experience on the topic. The message will appear next to your name."
+          }
+        }
+      },
+      {
+        "type": "developer",
+        "icon": "fa-solid circle-user",
+        "proposal": true,
+        "preset": false,
+        "editable": true,
+        "translations": {
+          "short": {
+            "en": "developer"
+          },
+          "subscribe": {
+            "en": "I can be a developer"
+          },
+          "subscribed": {
+            "en": "You are listed as developer"
+          },
+          "description": {
+            "en": "a developer"
+          },
+          "myList": {
+            "en": "I develop"
+          },
+          "userList": {
+            "en": "{NAME} develops"
+          },
+          "find.roleNeeded": {
+            "en": "Looking for a developer"
+          },
+          "groupList.statusTitle.roleNeeded": {
+            "en": "Needs a developer"
+          },
+          "groupList.statusTitle.roleOccupied": {
+            "en": "Has a developer"
+          },
+          "groupList.statusTitle.roleOccupiedByUser": {
+            "en": "You are a developer"
+          },
+          "notification.join.mail.intro": {
+            "en": "{USERNAME} just joined {GROUP} as developer\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name."
+          },
+          "group.firstSteps": {
+            "en": "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}"
+          },
+          "group.messageInfo": {
+            "en": "Leave a message about your experience on the topic. The message will appear next to your name."
+          }
+        }
+      },
+      {
+        "type": "tester",
+        "icon": "fa-solid circle-user",
+        "proposal": true,
+        "preset": false,
+        "editable": true,
+        "translations": {
+          "short": {
+            "en": "tester"
+          },
+          "subscribe": {
+            "en": "I can be a tester"
+          },
+          "subscribed": {
+            "en": "You are listed as tester"
+          },
+          "description": {
+            "en": "a tester"
+          },
+          "myList": {
+            "en": "I test"
+          },
+          "userList": {
+            "en": "{NAME} tests"
+          },
+          "find.roleNeeded": {
+            "en": "Looking for a tester"
+          },
+          "groupList.statusTitle.roleNeeded": {
+            "en": "Needs a tester"
+          },
+          "groupList.statusTitle.roleOccupied": {
+            "en": "Has a tester"
+          },
+          "groupList.statusTitle.roleOccupiedByUser": {
+            "en": "You are a tester"
+          },
+          "notification.join.mail.intro": {
+            "en": "{USERNAME} just joined {GROUP} as tester\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name."
+          },
+          "group.firstSteps": {
+            "en": "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}"
+          },
+          "group.messageInfo": {
+            "en": "Leave a message about your experience on the topic. The message will appear next to your name."
+          }
+        }
+      },
+      {
+        "type": "producer",
+        "icon": "fa-solid circle-user",
+        "proposal": true,
+        "preset": false,
+        "editable": true,
+        "translations": {
+          "short": {
+            "en": "producer"
+          },
+          "subscribe": {
+            "en": "I can be a producer"
+          },
+          "subscribed": {
+            "en": "You are listed as producer"
+          },
+          "description": {
+            "en": "a producer"
+          },
+          "myList": {
+            "en": "I produce"
+          },
+          "userList": {
+            "en": "{NAME} produces"
+          },
+          "find.roleNeeded": {
+            "en": "Looking for a producer"
+          },
+          "groupList.statusTitle.roleNeeded": {
+            "en": "Needs a producer"
+          },
+          "groupList.statusTitle.roleOccupied": {
+            "en": "Has a producer"
+          },
+          "groupList.statusTitle.roleOccupiedByUser": {
+            "en": "You are a producer"
+          },
+          "notification.join.mail.intro": {
+            "en": "{USERNAME} just joined {GROUP} as producer\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name."
+          },
+          "group.firstSteps": {
+            "en": "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}"
+          },
+          "group.messageInfo": {
+            "en": "Leave a message about your experience on the topic. The message will appear next to your name."
+          }
+        }
+      },
+      {
+        "type": "moderator",
+        "icon": "fa-solid circle-user",
+        "proposal": true,
+        "preset": false,
+        "editable": true,
+        "translations": {
+          "short": {
+            "en": "moderator"
+          },
+          "subscribe": {
+            "en": "I can be a moderator"
+          },
+          "subscribed": {
+            "en": "You are listed as moderator"
+          },
+          "description": {
+            "en": "a moderator"
+          },
+          "myList": {
+            "en": "I moderate"
+          },
+          "userList": {
+            "en": "{NAME} moderates"
+          },
+          "find.roleNeeded": {
+            "en": "Looking for a moderator"
+          },
+          "groupList.statusTitle.roleNeeded": {
+            "en": "Needs a moderator"
+          },
+          "groupList.statusTitle.roleOccupied": {
+            "en": "Has a moderator"
+          },
+          "groupList.statusTitle.roleOccupiedByUser": {
+            "en": "You are a moderator"
+          },
+          "notification.join.mail.intro": {
+            "en": "{USERNAME} just joined {GROUP} as moderator\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name."
+          },
+          "group.firstSteps": {
+            "en": "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}"
+          },
+          "group.messageInfo": {
+            "en": "Leave a message about your experience on the topic. The message will appear next to your name."
+          }
+        }
+      },
+      {
+        "type": "planner",
+        "icon": "fa-solid circle-user",
+        "proposal": true,
+        "preset": false,
+        "editable": true,
+        "translations": {
+          "short": {
+            "en": "planner"
+          },
+          "subscribe": {
+            "en": "I can be a planner"
+          },
+          "subscribed": {
+            "en": "You are listed as planner"
+          },
+          "description": {
+            "en": "a planner"
+          },
+          "myList": {
+            "en": "I plan"
+          },
+          "userList": {
+            "en": "{NAME} plans"
+          },
+          "find.roleNeeded": {
+            "en": "Looking for a planner"
+          },
+          "groupList.statusTitle.roleNeeded": {
+            "en": "Needs a planner"
+          },
+          "groupList.statusTitle.roleOccupied": {
+            "en": "Has a planner"
+          },
+          "groupList.statusTitle.roleOccupiedByUser": {
+            "en": "You are a planner"
+          },
+          "notification.join.mail.intro": {
+            "en": "{USERNAME} just joined {GROUP} as planner\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name."
+          },
+          "group.firstSteps": {
+            "en": "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}"
+          },
+          "group.messageInfo": {
+            "en": "Leave a message about your experience on the topic. The message will appear next to your name."
+          }
+        }
+      },
+      {
+        "type": "curator",
+        "icon": "fa-solid circle-user",
+        "proposal": true,
+        "preset": false,
+        "editable": true,
+        "translations": {
+          "short": {
+            "en": "curator"
+          },
+          "subscribe": {
+            "en": "I can be a curator"
+          },
+          "subscribed": {
+            "en": "You are listed as curator"
+          },
+          "description": {
+            "en": "a curator"
+          },
+          "myList": {
+            "en": "I curate"
+          },
+          "userList": {
+            "en": "{NAME} curates"
+          },
+          "find.roleNeeded": {
+            "en": "Looking for a curator"
+          },
+          "groupList.statusTitle.roleNeeded": {
+            "en": "Needs a curator"
+          },
+          "groupList.statusTitle.roleOccupied": {
+            "en": "Has a curator"
+          },
+          "groupList.statusTitle.roleOccupiedByUser": {
+            "en": "You are a curator"
+          },
+          "notification.join.mail.intro": {
+            "en": "{USERNAME} just joined {GROUP} as curator\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name."
+          },
+          "group.firstSteps": {
+            "en": "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}"
+          },
+          "group.messageInfo": {
+            "en": "Leave a message about your experience on the topic. The message will appear next to your name."
+          }
+        }
+      },
+      {
+        "type": "cook",
+        "icon": "fa-solid circle-user",
+        "proposal": true,
+        "preset": false,
+        "editable": true,
+        "translations": {
+          "short": {
+            "en": "cook"
+          },
+          "subscribe": {
+            "en": "I can be a cook"
+          },
+          "subscribed": {
+            "en": "You are listed as cook"
+          },
+          "description": {
+            "en": "a cook"
+          },
+          "myList": {
+            "en": "I cook"
+          },
+          "userList": {
+            "en": "{NAME} cooks"
+          },
+          "find.roleNeeded": {
+            "en": "Looking for a cook"
+          },
+          "groupList.statusTitle.roleNeeded": {
+            "en": "Needs a cook"
+          },
+          "groupList.statusTitle.roleOccupied": {
+            "en": "Has a cook"
+          },
+          "groupList.statusTitle.roleOccupiedByUser": {
+            "en": "You are a cook"
+          },
+          "notification.join.mail.intro": {
+            "en": "{USERNAME} just joined {GROUP} as cook\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name."
+          },
+          "group.firstSteps": {
+            "en": "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}"
+          },
+          "group.messageInfo": {
+            "en": "Leave a message about your experience on the topic. The message will appear next to your name."
+          }
+        }
+      },
+      {
+        "type": "designer",
+        "icon": "fa-solid circle-user",
+        "proposal": true,
+        "preset": false,
+        "editable": true,
+        "translations": {
+          "short": {
+            "en": "designer"
+          },
+          "subscribe": {
+            "en": "I can be a designer"
+          },
+          "subscribed": {
+            "en": "You are listed as designer"
+          },
+          "description": {
+            "en": "a designer"
+          },
+          "myList": {
+            "en": "I design"
+          },
+          "userList": {
+            "en": "{NAME} designs"
+          },
+          "find.roleNeeded": {
+            "en": "Looking for a designer"
+          },
+          "groupList.statusTitle.roleNeeded": {
+            "en": "Needs a designer"
+          },
+          "groupList.statusTitle.roleOccupied": {
+            "en": "Has a designer"
+          },
+          "groupList.statusTitle.roleOccupiedByUser": {
+            "en": "You are a designer"
+          },
+          "notification.join.mail.intro": {
+            "en": "{USERNAME} just joined {GROUP} as designer\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name."
+          },
+          "group.firstSteps": {
+            "en": "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}"
+          },
+          "group.messageInfo": {
+            "en": "Leave a message about your experience on the topic. The message will appear next to your name."
+          }
+        }
+      },
+      {
+        "type": "technician",
+        "icon": "fa-solid circle-user",
+        "proposal": true,
+        "preset": false,
+        "editable": true,
+        "translations": {
+          "short": {
+            "en": "technician"
+          },
+          "subscribe": {
+            "en": "I can be a technician"
+          },
+          "subscribed": {
+            "en": "You are listed as technician"
+          },
+          "description": {
+            "en": "a technician"
+          },
+          "myList": {
+            "en": "I am a technician"
+          },
+          "userList": {
+            "en": "{NAME} is a technician"
+          },
+          "find.roleNeeded": {
+            "en": "Looking for a technician"
+          },
+          "groupList.statusTitle.roleNeeded": {
+            "en": "Needs a technician"
+          },
+          "groupList.statusTitle.roleOccupied": {
+            "en": "Has a technician"
+          },
+          "groupList.statusTitle.roleOccupiedByUser": {
+            "en": "You are a technician"
+          },
+          "notification.join.mail.intro": {
+            "en": "{USERNAME} just joined {GROUP} as technician\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name."
+          },
+          "group.firstSteps": {
+            "en": "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}"
+          },
+          "group.messageInfo": {
+            "en": "Leave a message about your experience on the topic. The message will appear next to your name."
+          }
+        }
+      },
+      {
+        "type": "guide",
+        "icon": "fa-solid circle-user",
+        "proposal": true,
+        "preset": false,
+        "editable": true,
+        "translations": {
+          "short": {
+            "en": "guide"
+          },
+          "subscribe": {
+            "en": "I can be a guide"
+          },
+          "subscribed": {
+            "en": "You are listed as guide"
+          },
+          "description": {
+            "en": "a guide"
+          },
+          "myList": {
+            "en": "I guide"
+          },
+          "userList": {
+            "en": "{NAME} guides"
+          },
+          "find.roleNeeded": {
+            "en": "Looking for a guide"
+          },
+          "groupList.statusTitle.roleNeeded": {
+            "en": "Needs a guide"
+          },
+          "groupList.statusTitle.roleOccupied": {
+            "en": "Has a guide"
+          },
+          "groupList.statusTitle.roleOccupiedByUser": {
+            "en": "You are a guide"
+          },
+          "notification.join.mail.intro": {
+            "en": "{USERNAME} just joined {GROUP} as guide\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name."
+          },
+          "group.firstSteps": {
+            "en": "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}"
+          },
+          "group.messageInfo": {
+            "en": "Leave a message about your experience on the topic. The message will appear next to your name."
+          }
+        }
+      },
+      {
+        "type": "archivist",
+        "icon": "fa-solid circle-user",
+        "proposal": true,
+        "preset": false,
+        "editable": true,
+        "translations": {
+          "short": {
+            "en": "archivist"
+          },
+          "subscribe": {
+            "en": "I can be a archivist"
+          },
+          "subscribed": {
+            "en": "You are listed as archivist"
+          },
+          "description": {
+            "en": "a archivist"
+          },
+          "myList": {
+            "en": "I archive"
+          },
+          "userList": {
+            "en": "{NAME} archives"
+          },
+          "find.roleNeeded": {
+            "en": "Looking for a archivist"
+          },
+          "groupList.statusTitle.roleNeeded": {
+            "en": "Needs a archivist"
+          },
+          "groupList.statusTitle.roleOccupied": {
+            "en": "Has a archivist"
+          },
+          "groupList.statusTitle.roleOccupiedByUser": {
+            "en": "You are a archivist"
+          },
+          "notification.join.mail.intro": {
+            "en": "{USERNAME} just joined {GROUP} as archivist\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name."
+          },
+          "group.firstSteps": {
+            "en": "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}"
+          },
+          "group.messageInfo": {
+            "en": "Leave a message about your experience on the topic. The message will appear next to your name."
+          }
+        }
       }
     ],
     "footerLinks": [
