@@ -351,13 +351,13 @@
             "en": "editor"
           },
           "subscribe": {
-            "en": "I can be a editor"
+            "en": "I can be an editor"
           },
           "subscribed": {
             "en": "You are listed as editor"
           },
           "description": {
-            "en": "a editor"
+            "en": "an editor"
           },
           "myList": {
             "en": "I edit"
@@ -366,16 +366,16 @@
             "en": "{NAME} edits"
           },
           "find.roleNeeded": {
-            "en": "Looking for a editor"
+            "en": "Looking for an editor"
           },
           "groupList.statusTitle.roleNeeded": {
-            "en": "Needs a editor"
+            "en": "Needs an editor"
           },
           "groupList.statusTitle.roleOccupied": {
-            "en": "Has a editor"
+            "en": "Has an editor"
           },
           "groupList.statusTitle.roleOccupiedByUser": {
-            "en": "You are a editor"
+            "en": "You are an editor"
           },
           "notification.join.mail.intro": {
             "en": "{USERNAME} just joined {GROUP} as editor\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name."
@@ -399,13 +399,13 @@
             "en": "organizer"
           },
           "subscribe": {
-            "en": "I can be a organizer"
+            "en": "I can be an organizer"
           },
           "subscribed": {
             "en": "You are listed as organizer"
           },
           "description": {
-            "en": "a organizer"
+            "en": "an organizer"
           },
           "myList": {
             "en": "I organize"
@@ -414,16 +414,16 @@
             "en": "{NAME} organizes"
           },
           "find.roleNeeded": {
-            "en": "Looking for a organizer"
+            "en": "Looking for an organizer"
           },
           "groupList.statusTitle.roleNeeded": {
-            "en": "Needs a organizer"
+            "en": "Needs an organizer"
           },
           "groupList.statusTitle.roleOccupied": {
-            "en": "Has a organizer"
+            "en": "Has an organizer"
           },
           "groupList.statusTitle.roleOccupiedByUser": {
-            "en": "You are a organizer"
+            "en": "You are an organizer"
           },
           "notification.join.mail.intro": {
             "en": "{USERNAME} just joined {GROUP} as organizer\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name."
@@ -927,13 +927,13 @@
             "en": "archivist"
           },
           "subscribe": {
-            "en": "I can be a archivist"
+            "en": "I can be an archivist"
           },
           "subscribed": {
             "en": "You are listed as archivist"
           },
           "description": {
-            "en": "a archivist"
+            "en": "an archivist"
           },
           "myList": {
             "en": "I archive"
@@ -942,16 +942,16 @@
             "en": "{NAME} archives"
           },
           "find.roleNeeded": {
-            "en": "Looking for a archivist"
+            "en": "Looking for an archivist"
           },
           "groupList.statusTitle.roleNeeded": {
-            "en": "Needs a archivist"
+            "en": "Needs an archivist"
           },
           "groupList.statusTitle.roleOccupied": {
-            "en": "Has a archivist"
+            "en": "Has an archivist"
           },
           "groupList.statusTitle.roleOccupiedByUser": {
-            "en": "You are a archivist"
+            "en": "You are an archivist"
           },
           "notification.join.mail.intro": {
             "en": "{USERNAME} just joined {GROUP} as archivist\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name."
