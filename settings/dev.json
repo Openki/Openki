@@ -198,7 +198,7 @@
       },
       {
         "type": "facilitator",
-        "icon": "fa-solid circle-user",
+        "icon": "fa-solid fa-circle-user",
         "proposal": true,
         "preset": false,
         "editable": true,
@@ -246,7 +246,7 @@
       },
       {
         "type": "builder",
-        "icon": "fa-solid circle-user",
+        "icon": "fa-solid fa-circle-user",
         "proposal": true,
         "preset": false,
         "editable": true,
@@ -294,7 +294,7 @@
       },
       {
         "type": "researcher",
-        "icon": "fa-solid circle-user",
+        "icon": "fa-solid fa-circle-user",
         "proposal": true,
         "preset": false,
         "editable": true,
@@ -342,7 +342,7 @@
       },
       {
         "type": "editor",
-        "icon": "fa-solid circle-user",
+        "icon": "fa-solid fa-circle-user",
         "proposal": true,
         "preset": false,
         "editable": true,
@@ -390,7 +390,7 @@
       },
       {
         "type": "organizer",
-        "icon": "fa-solid circle-user",
+        "icon": "fa-solid fa-circle-user",
         "proposal": true,
         "preset": false,
         "editable": true,
@@ -438,7 +438,7 @@
       },
       {
         "type": "developer",
-        "icon": "fa-solid circle-user",
+        "icon": "fa-solid fa-circle-user",
         "proposal": true,
         "preset": false,
         "editable": true,
@@ -486,7 +486,7 @@
       },
       {
         "type": "tester",
-        "icon": "fa-solid circle-user",
+        "icon": "fa-solid fa-circle-user",
         "proposal": true,
         "preset": false,
         "editable": true,
@@ -534,7 +534,7 @@
       },
       {
         "type": "producer",
-        "icon": "fa-solid circle-user",
+        "icon": "fa-solid fa-circle-user",
         "proposal": true,
         "preset": false,
         "editable": true,
@@ -582,7 +582,7 @@
       },
       {
         "type": "moderator",
-        "icon": "fa-solid circle-user",
+        "icon": "fa-solid fa-circle-user",
         "proposal": true,
         "preset": false,
         "editable": true,
@@ -630,7 +630,7 @@
       },
       {
         "type": "planner",
-        "icon": "fa-solid circle-user",
+        "icon": "fa-solid fa-circle-user",
         "proposal": true,
         "preset": false,
         "editable": true,
@@ -678,7 +678,7 @@
       },
       {
         "type": "curator",
-        "icon": "fa-solid circle-user",
+        "icon": "fa-solid fa-circle-user",
         "proposal": true,
         "preset": false,
         "editable": true,
@@ -726,7 +726,7 @@
       },
       {
         "type": "cook",
-        "icon": "fa-solid circle-user",
+        "icon": "fa-solid fa-circle-user",
         "proposal": true,
         "preset": false,
         "editable": true,
@@ -774,7 +774,7 @@
       },
       {
         "type": "designer",
-        "icon": "fa-solid circle-user",
+        "icon": "fa-solid fa-circle-user",
         "proposal": true,
         "preset": false,
         "editable": true,
@@ -822,7 +822,7 @@
       },
       {
         "type": "technician",
-        "icon": "fa-solid circle-user",
+        "icon": "fa-solid fa-circle-user",
         "proposal": true,
         "preset": false,
         "editable": true,
@@ -870,7 +870,7 @@
       },
       {
         "type": "guide",
-        "icon": "fa-solid circle-user",
+        "icon": "fa-solid fa-circle-user",
         "proposal": true,
         "preset": false,
         "editable": true,
@@ -918,7 +918,7 @@
       },
       {
         "type": "archivist",
-        "icon": "fa-solid circle-user",
+        "icon": "fa-solid fa-circle-user",
         "proposal": true,
         "preset": false,
         "editable": true,
