@@ -30,7 +30,9 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
       return variables ? i18n.t(`roles:${role}.${key}`, variables) : i18n.t(`roles:${role}.${key}`);
     }
 
-    return i18n.t(`roles:translationNotFound`, { KEY: key, ROLE: role });
+    const missingTranslationMessage = i18n.t(`roles:translationNotFound`, { KEY: key, ROLE: role });
+    console.error(`Missing translation "${role}.${key}":`, missingTranslationMessage);
+    return missingTranslationMessage;
   }
 
   return {
