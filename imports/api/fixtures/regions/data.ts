@@ -38,11 +38,8 @@ export const regions: {
     proposal: boolean;
     preset: boolean;
     editable: boolean;
-    translations?: {
-      [key: string]: {
-        [language: string]: string;
-      };
-    };
+    /** UI strings in the same format as `RoleEntity["translations"]` */
+    translations?: Record<string, Record<string, string>>;
   }[];
 }[] = [
   {
