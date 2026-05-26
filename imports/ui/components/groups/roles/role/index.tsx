@@ -62,13 +62,6 @@ export function Role(props: Props) {
     const operator = user;
     return groupSubscribe().validFor(operator || (new User() as UserModel));
   }
-
-  function handleCommentChange(value: string) {
-    setComment(value);
-  }
-  function handleRoleEnrollClick() {
-    setEnrolling(true);
-  }
   async function handleRoleSubscribeSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -91,9 +84,6 @@ export function Role(props: Props) {
     }
   }
 
-  function handleRoleEnrollCancelClick() {
-    setEnrolling(false);
-  }
   async function handleRoleUnsubscribeClick() {
     routerAutoscroll.cancelNext();
     const change = new Unsubscribe(props.group, user?._id, props.role.type);
@@ -219,7 +209,7 @@ export function Role(props: Props) {
                     <FormControl
                       id="role-comment"
                       label={roleGroupMessageInfo(props.role.type)}
-                      onChange={handleCommentChange}
+                      onChange={(value) => setComment(value)}
                       type="text"
                       autoFocus
                       optional
@@ -240,7 +230,7 @@ export function Role(props: Props) {
                     </Button>
                     <ButtonCancel
                       id="group-roles-join-cancel"
-                      onClick={handleRoleEnrollCancelClick}
+                      onClick={() => setEnrolling(false)}
                     />
                   </div>
                 </form>
@@ -253,7 +243,7 @@ export function Role(props: Props) {
                 type="button"
                 className="btn btn-add text-start page-component-btn"
                 name={props.role.type}
-                onClick={handleRoleEnrollClick}
+                onClick={() => setEnrolling(true)}
               >
                 <i className={cx(props.role.icon, "fa-fw grouppage-role-icon")} /> &nbsp;
                 {roleSubscribe(props.role.type)}
