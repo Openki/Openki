@@ -74,7 +74,7 @@ fixing, and improvements) are handled by a volunteer-based collective. Our goal
 is to establish similar local admin collectives for each region where Openki is
 active.
 
-## The Openki roles
+## Die Rollen auf Openki
 
 ### What is an interested User?
 
