@@ -64,7 +64,7 @@ export function Role(props: Props) {
   }
 
   function handleCommentChange(value: string) {
-    setComment(value.trim());
+    setComment(value);
   }
   function handleRoleEnrollClick() {
     setEnrolling(true);
@@ -75,7 +75,7 @@ export function Role(props: Props) {
     routerAutoscroll.cancelNext();
     setIsBusy(true);
     try {
-      await processChange(groupSubscribe(comment));
+      await processChange(groupSubscribe(comment.trim()));
 
       setShowFirstSteps(true);
       setEnrolling(false);
