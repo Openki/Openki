@@ -325,7 +325,7 @@ export const regions: {
       },
       {
         type: "curator",
-        icon: "fa-solid fa-valut",
+        icon: "fa-solid fa-vault",
         proposal: true,
         preset: false,
         editable: true,
