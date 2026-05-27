@@ -38,11 +38,8 @@ export interface RegionEntity {
   tz: string;
   /** description for the user */
   description: string;
-  /**
-   * Region-specific roles to override the default settings.
-   * UI strings for custom roles should be defined in the instance settings.
-   */
-  roles?: Omit<RoleEntity, "translations">[];
+  /** Region-specific roles to override the default settings */
+  roles?: RoleEntity[];
   /**
    * Number of groups in that region, calculated field (does not count internal or archived
    * groups)
