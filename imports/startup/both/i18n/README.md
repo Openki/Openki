@@ -20,17 +20,4 @@ We have some translations split into separate namespaces, for example roles. The
 
 ## Roles
 
-These are the keys used for roles translations:
-
-```json
-{
-  "x.short": "mentor",
-  "x.subscribe": "I can be a mentor",
-  "x.subscribed": "You are listed as mentor",
-  "x.description": "a mentor",
-  "x.userList": "{NAME} is teaching",
-  "x.userList.past": "{NAME} was teaching",
-  "x.myList": "I teach",
-  "x.myList.past": "I was teaching"
-}
-```
+There are some role-specific translataions. Read more about how [roles](https://gitlab.com/Openki/Openki/-/wikis/Roles) work and how to translate them in the wiki.
