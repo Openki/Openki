@@ -23,6 +23,7 @@ import { Action } from "/imports/ui/components/PleaseLogin";
 import { Guide } from "./guide";
 
 import "./styles.scss";
+import { useAccountTasks } from "/imports/utils/useAccountTasks";
 
 export interface Props {
   role: RoleEntity;
@@ -42,13 +43,14 @@ export function Role(props: Props) {
   const [showFirstSteps, setShowFirstSteps] = useState(false);
   const [comment, setComment] = useState(props.comment ?? "");
   const [isBusy, setIsBusy] = useState(false);
+  const { promptToLogin } = useAccountTasks();
 
   // Build a subscribe change
-  function groupSubscribe(newComment?: string) {
+  function groupSubscribe(newComment?: string, currentUser: UserModel | null = user) {
     return new Subscribe(
       props.group,
       roles.map((r) => r.type),
-      user?._id,
+      currentUser?._id,
       props.role.type,
       "interested",
       newComment,
@@ -68,7 +70,11 @@ export function Role(props: Props) {
     routerAutoscroll.cancelNext();
     setIsBusy(true);
     try {
-      await processChange(groupSubscribe(comment.trim()));
+      const currentUser = await promptToLogin(props.role.type === "participant");
+      if (!currentUser) {
+        return;
+      }
+      await processChange(groupSubscribe(comment.trim(), currentUser));
 
       setShowFirstSteps(true);
       setEnrolling(false);
