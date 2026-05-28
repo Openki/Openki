@@ -34,7 +34,7 @@ export function SendMessage(props: Props) {
 
   const [errors, checkValidity] = useValidation(
     {
-      messageToShort: {
+      messageTooShort: {
         text: () => t("profile.mail.longertext", "longer text please"),
         field: "message",
         isValid: () => message.length >= 2,

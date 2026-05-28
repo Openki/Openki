@@ -2,3 +2,6 @@
 declare namespace JSX {
   type IntrinsicElements = React.JSX.IntrinsicElements;
 }
+
+// Silence TypeScript errors for SCSS imports.
+declare module "*.scss";

@@ -32,6 +32,15 @@ export const regions: {
     maxZoom: number;
     attribution: string;
   };
+  roles?: {
+    type: string;
+    icon: string;
+    proposal: boolean;
+    preset: boolean;
+    editable: boolean;
+    /** UI strings in the same format as `RoleEntity["translations"]` */
+    translations?: Record<string, Record<string, string>>;
+  }[];
 }[] = [
   {
     _id: "9JyFCoKWkxnf8LWPh",
@@ -208,5 +217,154 @@ export const regions: {
       defaultLevel: 1,
       attribution: "&copy; <a href='https://github.com/c3nav'>c3nav</a>",
     },
+  },
+  {
+    _id: "5JyFCoKwkxnf8LWoh",
+    name: "Projectistan",
+    nameEn: "Projectistan",
+    loc: [47.1375, 7.2472],
+    tz: "Europe/Zurich",
+    roles: [
+      {
+        type: "participant",
+        icon: "fa-solid fa-thumbs-up",
+        proposal: false,
+        preset: true,
+        editable: false,
+      },
+      {
+        type: "mentor",
+        icon: "fa-solid fa-graduation-cap",
+        proposal: true,
+        preset: false,
+        editable: true,
+      },
+      {
+        type: "host",
+        icon: "fa-solid fa-house",
+        proposal: true,
+        preset: false,
+        editable: true,
+      },
+      {
+        type: "team",
+        icon: "fa-solid fa-bullhorn",
+        proposal: false,
+        preset: true,
+        editable: false,
+      },
+      {
+        type: "facilitator",
+        icon: "fa-solid fa-chalkboard-user",
+        proposal: true,
+        preset: false,
+        editable: true,
+      },
+      {
+        type: "builder",
+        icon: "fa-solid fa-hammer",
+        proposal: true,
+        preset: false,
+        editable: true,
+      },
+      {
+        type: "researcher",
+        icon: "fa-solid fa-microscope",
+        proposal: true,
+        preset: false,
+        editable: true,
+      },
+      {
+        type: "editor",
+        icon: "fa-solid fa-pen-to-square",
+        proposal: true,
+        preset: false,
+        editable: true,
+      },
+      {
+        type: "organizer",
+        icon: "fa-solid fa-sitemap",
+        proposal: true,
+        preset: false,
+        editable: true,
+      },
+      {
+        type: "developer",
+        icon: "fa-solid fa-code",
+        proposal: true,
+        preset: false,
+        editable: true,
+      },
+      {
+        type: "tester",
+        icon: "fa-solid fa-vial",
+        proposal: true,
+        preset: false,
+        editable: true,
+      },
+      {
+        type: "producer",
+        icon: "fa-solid fa-clapperboard",
+        proposal: true,
+        preset: false,
+        editable: true,
+      },
+      {
+        type: "moderator",
+        icon: "fa-solid fa-shield-halved",
+        proposal: true,
+        preset: false,
+        editable: true,
+      },
+      {
+        type: "planner",
+        icon: "fa-solid fa-calendar-days",
+        proposal: true,
+        preset: false,
+        editable: true,
+      },
+      {
+        type: "curator",
+        icon: "fa-solid fa-vault",
+        proposal: true,
+        preset: false,
+        editable: true,
+      },
+      {
+        type: "cook",
+        icon: "fa-solid fa-utensils",
+        proposal: true,
+        preset: false,
+        editable: true,
+      },
+      {
+        type: "designer",
+        icon: "fa-solid fa-palette",
+        proposal: true,
+        preset: false,
+        editable: true,
+      },
+      {
+        type: "technician",
+        icon: "fa-solid fa-screwdriver-wrench",
+        proposal: true,
+        preset: false,
+        editable: true,
+      },
+      {
+        type: "guide",
+        icon: "fa-solid fa-compass",
+        proposal: true,
+        preset: false,
+        editable: true,
+      },
+      {
+        type: "archivist",
+        icon: "fa-solid fa-box-archive",
+        proposal: true,
+        preset: false,
+        editable: true,
+      },
+    ],
   },
 ];

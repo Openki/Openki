@@ -12,7 +12,7 @@ import * as OrganizationsMethods from "../../../api/organizations/methods";
 import * as Organizations from "../../../api/organizations/publications";
 import * as usersMethods from "/imports/api/users/methods";
 import { UserModel } from "/imports/api/users/users";
-import { regions } from "/imports/api/fixtures/regions/data";
+import * as Regions from "/imports/api/regions/publications";
 
 import { checkContribution } from "/imports/utils/checkContribution";
 import { MetaTags } from "/imports/ui/components/MetaTags";
@@ -37,6 +37,7 @@ export function UserprofilePage({ user }: Props) {
 
   const [isLoadingOrganizations, inviteOrganizations] = Organizations.useFindFilter({ own: true });
   const [isLoading, groupsCreatedBy] = Groups.useFindFilter({ createdby: user?._id || "-1" });
+  const [isLoadingRegions, regions] = Regions.useFindFilter();
 
   // What privileges the user has
   const privileges = (["admin"] as const).reduce<Record<string, boolean>>((originalPs, p) => {
@@ -204,7 +205,7 @@ export function UserprofilePage({ user }: Props) {
     }
   }
 
-  if (isLoading() || !user._id) {
+  if (isLoading() || !user._id || isLoadingRegions()) {
     return null;
   }
 

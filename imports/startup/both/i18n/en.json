@@ -789,7 +789,7 @@
   "organizations.settings.timeLastEdit": "Last edit at",
   "organizations.settings.title": "Settings",
   "organizations.settings.title.Members": "Members",
-  "organizationTag.showGroups": "{NAME}, show all their groups",
+  "organizationTag.showGroups": "Show all groups for {NAME}",
   "participantContact.sendMessage.placeholder": "Hi {USER}. I wanted to tell you…",
   "participantContactModal.writeMessageTo": "Write a message to {USER}",
   "participantContactModal.writeMessageToAllAttendees": "Write a message to all participants",
