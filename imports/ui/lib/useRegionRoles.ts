@@ -1,6 +1,7 @@
 import { useDetails } from "/imports/api/regions/publications";
 import { RegionEntity } from "/imports/api/regions/regions";
 import { PublicSettings, RoleEntity } from "/imports/utils/PublicSettings";
+
 /**
  * Load the region roles on the client side
  */
@@ -14,7 +15,7 @@ export function useRegionRoles(regionId: RegionEntity["_id"]) {
   }
 
   if (!region) {
-    throw new Error(`Could not find region: "${regionId}"`);
+    throw new Error(`The current user can not view the regionId: "${regionId}"`);
   }
 
   if (!region.roles) {
