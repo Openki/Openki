@@ -20,4 +20,4 @@ We have some translations split into separate namespaces, for example roles. The
 
 ## Roles
 
-There are some role-specific translataions. Read more about how [roles](https://gitlab.com/Openki/Openki/-/wikis/Roles) work and how to translate them in the wiki.
+There are some role-specific translations. Read more about how [roles](https://gitlab.com/Openki/Openki/-/wikis/Roles) work and how to translate them in the wiki.

@@ -1,7 +1,8 @@
 import { Template } from "./Template";
 
-// Organizations represent institutions, virtual or real institutes, departments or bodies
-
+/**
+ * Organizations represent institutions, virtual or real institutes, departments or bodies
+ */
 export const organizations: Template[] = [
   {
     name: "Dynamo",
