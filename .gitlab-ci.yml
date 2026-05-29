@@ -13,10 +13,8 @@ workflow:
     - if: $CI_COMMIT_BRANCH
 
 stages:
-  - lint
-  - cleanup
-  - test
-  - deploy
+  - build
+
 
 cache:
   paths:
@@ -35,128 +33,20 @@ variables:
   # Increase Node.js memory limit
   TOOL_NODE_FLAGS: "--max_old_space_size=4096"
 
-# Cleanup generated/cached dependencies
-cleanup:
-  stage: cleanup
+
+build_and_push_docker:
+  stage: build  # <-- Matches the new stage above
+  image: docker:24.0.9
+  services:
+    - docker:24.0.9-dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - rm -rf .meteor/ .npm/ node_modules/
-
-# Static analysis / formatting checks
-lint:
-  stage: lint
-  tags:
-    - gitlab-org
-  script: ./ci/lint.sh
-
-# Unit / E2E / integration tests
-test:
-  stage: test
-  tags:
-    - gitlab-org-docker
-  variables:
-    CYPRESS_RECORD_KEY: $CYPRESS_RECORD_KEY
-  script: ./ci/test.sh
-
-  # Do not fail the entire pipeline if tests fail.
-  # Useful for unstable/flaky E2E tests.
-  allow_failure: true
-  timeout: 50m
-
-# -------------------------------------------------------------------
-# GitLab built-in code quality and SAST templates
-# - Code Quality: runs Code Climate analysis
-# - SAST: static application security testing
-# -------------------------------------------------------------------
-include:
-  - template: Code-Quality.gitlab-ci.yml
-  - template: Jobs/SAST.gitlab-ci.yml
-
-# Code Quality configuration
-code_quality:
+    - docker build -t "$CI_REGISTRY_IMAGE:test" .
+    - docker push "$CI_REGISTRY_IMAGE:test"
   rules:
-    # Disable job completely if CODE_QUALITY_DISABLED is set
-    - if: $CODE_QUALITY_DISABLED
-      when: never
-
-    # Run only for merge requests targeting the "dev" branch
-    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"
-
-# Semgrep SAST configuration
-# - Additional SAST settings: https://gitlab.com/Openki/Openki/-/security/configuration/sast
-semgrep-sast:
-  rules:
-    # Run security scanning only on the "dev" branch
-    - if: $CI_COMMIT_BRANCH == "dev"
-
-# Global SAST settings
-sast:
-  variables:
-    # Exclude generated/vendor directories from scanning
-    SAST_EXCLUDED_PATHS: "$DEFAULT_SAST_EXCLUDED_PATHS,.meteor/*,packages/*"
-
-# -------------------------------------------------------------------
-# Deployment jobs
-# -------------------------------------------------------------------
-
-# Deploy dev branch
-deploy_dev:
-  stage: deploy
-
-  # Start immediately after lint testing
-  needs: [lint]
-
-  variables:
-    SOURCE_BRANCH: dev
-    TARGET_HOST: dev
-
-  rules:
-    - if: $CI_COMMIT_BRANCH == "dev"
-
-  when: always
-
-  trigger: Openki/sysadmin/deploy-config
-
-# Deploy staging branch
-deploy_staging:
-  stage: deploy
-
-  variables:
-    SOURCE_BRANCH: staging
-    TARGET_HOST: openki-staging
-
-  rules:
-    - if: $CI_COMMIT_BRANCH == "staging"
-
-  when: always
-
-  trigger: Openki/sysadmin/deploy-config
-
-# Deploy NLNet development branch
-deploy_dev2:
-  stage: deploy
-
-  variables:
-    SOURCE_BRANCH: nlnet-dev
-    TARGET_HOST: dev2
-
-  rules:
-    - if: $CI_COMMIT_BRANCH == "nlnet-dev"
-
-  when: always
-
-  trigger: Openki/sysadmin/deploy-config
-
-# Deploy main branch to sandbox
-deploy_sandbox:
-  stage: deploy
-
-  variables:
-    SOURCE_BRANCH: main
-    TARGET_HOST: sandbox
-
-  rules:
-    - if: $CI_COMMIT_BRANCH == "main"
-
-  when: always
-
-  trigger: Openki/sysadmin/deploy-config
+    - if: '$CI_COMMIT_BRANCH == "server-config-21-docker-simple-setup"'
+      when: always
+    - when: never
