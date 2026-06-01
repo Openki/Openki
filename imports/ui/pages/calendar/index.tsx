@@ -85,7 +85,7 @@ export function CalendarPage(data: Record<string, string>) {
         }}
       />
       <div className="container calendar-container">
-        <div className="page-component">
+        <div className="page-component mt-4">
           {!isLoading() ? (
             days().map((day) => (
               <React.Fragment key={day.date.toISOString()}>

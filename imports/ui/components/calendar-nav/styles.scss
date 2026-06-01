@@ -6,8 +6,7 @@
   background-color: rgba($calendar-nav-bg, 0.97);
   display: none;
   padding: 0 10px;
-  position: sticky;
-  margin-top: -32px;
+  position: fixed;
   top: $navbar-height;
   transition: box-shadow 0.25s;
   width: 100%;
