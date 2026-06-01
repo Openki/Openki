@@ -74,9 +74,8 @@ export function Add({ venue }: Props) {
   const searchUpperCase = search.toUpperCase();
 
   let filteredOrganizations = organizations.filter(
-    (organization) =>
-      organization.name.toUpperCase().includes(searchUpperCase) ||
-      organization.short.toUpperCase().includes(searchUpperCase),
+    ({ name, short }) =>
+      name.toUpperCase().includes(searchUpperCase) || short.toUpperCase().includes(searchUpperCase),
   );
 
   const usersOrganization = filteredOrganizations.filter((organization) =>
