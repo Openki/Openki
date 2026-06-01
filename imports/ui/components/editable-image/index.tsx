@@ -1,6 +1,6 @@
 import ImageBlobReduce from "image-blob-reduce";
 import { extension } from "mime-types";
-import React, { ChangeEvent, DragEvent, useState } from "react";
+import React, { ChangeEvent, DragEvent, useId, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { cx } from "/imports/utils/cx";
@@ -21,10 +21,6 @@ const supportsDragndrop = (function () {
   const div = document.createElement("div");
   return "draggable" in div || ("ondragstart" in div && "ondrop" in div);
 })();
-
-function createId() {
-  return Date.now().toString(36) + Math.random().toString(36).substring(2);
-}
 
 export interface UploadImage {
   lastModified: Date;
@@ -67,7 +63,7 @@ export function EditableImage(data: Data) {
   const [dragover, setDragover] = useState(false);
   const [preview, setPreview] = useState<string | undefined>(undefined);
 
-  const id = createId();
+  const id = useId();
 
   async function onDrop(file: File) {
     if (!SupportedMimeList.some((type) => type === file.type.toLowerCase())) {
