@@ -94,8 +94,8 @@ export const updateUsername = ServerMethod(
     }
 
     let username = StringTools.sanitizeSingleline(unsafeUsername, 200);
-    ((PublicSettings.contribution?.forbiddenChars || []) as string[]).forEach((c) => {
-      username = username.replace(RegExp(c, "g"), "");
+    PublicSettings.contribution?.forbiddenChars?.forEach((c) => {
+      username = username.replaceAll(c, "");
     });
     username = username.trim();
 
