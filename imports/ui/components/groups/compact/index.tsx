@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { Router } from "meteor/iron:router";
 import { useUser } from "/imports/utils/react-meteor-data";
+import { cx } from "/imports/utils/cx";
 
 import { GroupModel } from "../../../../api/groups/groups";
 import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
@@ -144,7 +145,7 @@ export function GroupCompact({ group, organizationTagEvents, categoryTagEvents }
       className={`row mx-0 align-items-start group-compact ${groupStateClasses()} ${filterPreviewClasses()}`}
       style={groupCss()}
     >
-      <div className="group-compact-content col-8">
+      <div className={cx("group-compact-content", !group.nextEvent ? "col-10" : "col-8")}>
         {group.internal && <InternalIndicator />}
         {group.singleEvent && <SingleEventIndicator />}
         <div className="group-compact-title" title={group.name}>
