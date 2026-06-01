@@ -3,14 +3,14 @@ import { useTranslation } from "react-i18next";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 import { take } from "lodash-es";
 
-import { Groups, FindFilter } from "../../../../api/groups/groups";
+import { Groups, FindFilter } from "/imports/api/groups/groups";
 
 import { MetaTags } from "/imports/ui/components/MetaTags";
 import { CssFromQuery } from "/imports/ui/lib/css-from-query";
 import { SortSpec } from "/imports/utils/sort-spec";
 
 import { LoadingRow } from "../../loading";
-import { useFindFilter } from "../../../../api/groups/publications";
+import { useFindFilter } from "/imports/api/groups/publications";
 import { Group } from "./group";
 
 function useOptions() {

@@ -2,13 +2,8 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
-import {
-  Subscribe,
-  Unsubscribe,
-  Message,
-  processChange,
-} from "../../../../../api/groups/subscription";
-import { GroupMemberEntity, GroupModel } from "../../../../../api/groups/groups";
+import { Subscribe, Unsubscribe, Message, processChange } from "/imports/api/groups/subscription";
+import { GroupMemberEntity, GroupModel } from "/imports/api/groups/groups";
 
 import * as Tooltips from "/imports/utils/Tooltips";
 import { useUser } from "/imports/utils/react-meteor-data";

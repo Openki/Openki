@@ -1,11 +1,11 @@
 import React from "react";
-import { GroupModel } from "../../../../api/groups/groups";
+import { GroupModel } from "/imports/api/groups/groups";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
-import * as GroupsMethods from "../../../../api/groups/methods";
+import * as GroupsMethods from "/imports/api/groups/methods";
 
 import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 

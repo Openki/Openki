@@ -1,5 +1,5 @@
 import { i18n } from "/imports/startup/both/i18next";
-import { OrganizationModel } from "../../api/organizations/organizations";
+import { OrganizationModel } from "/imports/api/organizations/organizations";
 
 export function name(organization: OrganizationModel | undefined) {
   if (!organization) {

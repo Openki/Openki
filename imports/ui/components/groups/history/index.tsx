@@ -3,7 +3,7 @@ import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 
 import { EventModel, Events } from "/imports/api/events/events";
-import { GroupModel } from "../../../../api/groups/groups";
+import { GroupModel } from "/imports/api/groups/groups";
 import { RegionEntity } from "/imports/api/regions/regions";
 
 import { useUser } from "/imports/utils/react-meteor-data";

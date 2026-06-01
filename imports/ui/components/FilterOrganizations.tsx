@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import React from "react";
 
-import { useDetails } from "../../api/organizations/publications";
+import { useDetails } from "/imports/api/organizations/publications";
 
 import { ReactSelect2 } from "/imports/ui/components/react-select2";
 

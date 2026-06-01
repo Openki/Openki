@@ -5,7 +5,7 @@ import { useUser } from "/imports/utils/react-meteor-data";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { VenueModel } from "/imports/api/venues/venues";
-import { useDetails, useFindFilter } from "../../../../../api/organizations/publications";
+import { useDetails, useFindFilter } from "/imports/api/organizations/publications";
 import * as VenuesMethods from "/imports/api/venues/methods";
 
 import { name } from "../../../../lib/organization-name-helpers";
@@ -74,9 +74,8 @@ export function Add({ venue }: Props) {
   const searchUpperCase = search.toUpperCase();
 
   let filteredOrganizations = organizations.filter(
-    (organization) =>
-      organization.name.toUpperCase().includes(searchUpperCase) ||
-      organization.short.toUpperCase().includes(searchUpperCase),
+    ({ name, short }) =>
+      name.toUpperCase().includes(searchUpperCase) || short.toUpperCase().includes(searchUpperCase),
   );
 
   const usersOrganization = filteredOrganizations.filter((organization) =>

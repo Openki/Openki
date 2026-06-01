@@ -7,7 +7,7 @@ import * as Analytics from "/imports/ui/lib/analytics";
 
 import * as EventsPub from "/imports/api/events/publications";
 import { Regions } from "/imports/api/regions/regions";
-import { GroupModel } from "../../../../api/groups/groups";
+import { GroupModel } from "/imports/api/groups/groups";
 import { EventModel } from "/imports/api/events/events";
 
 import { useReactiveNow } from "/imports/utils/reactive-now";

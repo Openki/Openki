@@ -1,4 +1,4 @@
-import { Organizations } from "../../../api/organizations/organizations";
+import { Organizations } from "/imports/api/organizations/organizations";
 
 export async function update() {
   let updated = 0;

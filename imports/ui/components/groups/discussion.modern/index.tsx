@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useUserId } from "/imports/utils/react-meteor-data";
 
-import * as GroupDiscussions from "../../../../api/group-discussions/publications";
+import * as GroupDiscussions from "/imports/api/group-discussions/publications";
 
 import { LoadingRow } from "/imports/ui/pages/loading";
 import { Post } from "./post";

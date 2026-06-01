@@ -4,7 +4,7 @@ import { useSessionEquals } from "/imports/utils/react-meteor-data";
 import { useSiteName } from "/imports/utils/getSiteName";
 
 import { Regions } from "/imports/api/regions/regions";
-import { GroupModel } from "../../../../../api/groups/groups";
+import { GroupModel } from "/imports/api/groups/groups";
 import { Router } from "meteor/iron:router";
 import { RoleIcon } from "../../../../components/RoleIcon";
 

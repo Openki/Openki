@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { useDetails } from "../../../../../api/groups/publications";
+import { useDetails } from "/imports/api/groups/publications";
 import { EventModel } from "/imports/api/events/events";
 
 import { CustomFieldDisplay } from "../../../groups/CustomFieldDisplay";

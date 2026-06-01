@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Modal } from "/imports/startup/client/bootstrap";
 import { useUserId } from "/imports/utils/react-meteor-data";
 
-import { GroupModel } from "../../../../api/groups/groups";
+import { GroupModel } from "/imports/api/groups/groups";
 import * as emailMethods from "/imports/api/emails/methods";
 import { SendPrivateMessageOptions } from "/imports/api/emails/methods";
 import { EventModel } from "/imports/api/events/events";

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { GroupModel } from "../../../../api/groups/groups";
+import { GroupModel } from "/imports/api/groups/groups";
 
 import { Description } from "../description";
 import { History } from "../../../components/groups/history";

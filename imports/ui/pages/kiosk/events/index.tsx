@@ -11,7 +11,7 @@ import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 import { useSiteName } from "/imports/utils/getSiteName";
 
 import { EventEntity, EventModel, FindFilter } from "/imports/api/events/events";
-import { useDetails as useOrganizationDetails } from "../../../../api/organizations/publications";
+import { useDetails as useOrganizationDetails } from "/imports/api/organizations/publications";
 import { useDetails as useVenueDetails } from "/imports/api/venues/publications";
 
 import { MetaTags } from "/imports/ui/components/MetaTags";

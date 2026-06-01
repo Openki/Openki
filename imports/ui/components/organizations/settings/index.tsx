@@ -11,8 +11,8 @@ import {
   OrganizationModel,
   Organizations,
   OrganizationMemberEntity,
-} from "../../../../api/organizations/organizations";
-import * as OrganizationsMethods from "../../../../api/organizations/methods";
+} from "/imports/api/organizations/organizations";
+import * as OrganizationsMethods from "/imports/api/organizations/methods";
 import { UserModel } from "/imports/api/users/users";
 import { useFindFilter } from "/imports/api/users/publications";
 

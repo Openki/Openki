@@ -59,7 +59,6 @@ export const create = ServerMethod("region.create", async (changes: CreateFields
   set.tz = changes.tz.trim().substring(0, 40);
 
   set.description = changes.description.trim().substring(0, 1000);
-  // Todo: check this already when the user writes into the textarea? is there a limit for group descriptions?
 
   return Regions.insertAsync(set);
 });

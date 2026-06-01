@@ -11,6 +11,7 @@ import * as RegionSelectionUtils from "/imports/utils/region-selection";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 import { useSiteName } from "/imports/utils/getSiteName";
+import { cx } from "/imports/utils/cx";
 
 import { Option } from "./Option";
 
@@ -217,12 +218,13 @@ export function Select(props: Props) {
   }
 
   return (
-    <li className={`region-select ${props.className}`}>
+    <li className={cx("region-select", props.className)}>
       <form className="d-flex region-search-form" tabIndex={0} onSubmit={handleSubmit}>
         <div
-          className={`input-group input-group-outline ${
-            props.size === "small" ? "input-group-sm p-2" : ""
-          }`}
+          className={cx(
+            "input-group input-group-outline",
+            props.size === "small" && "input-group-sm p-2",
+          )}
         >
           <span className="input-group-text">
             <i className="fa-solid fa-location-dot fa-fw" />

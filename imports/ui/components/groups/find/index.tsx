@@ -17,8 +17,8 @@ import { useTranslation } from "react-i18next";
 import { SearchField } from "/imports/ui/components/search-field";
 import { GroupList } from "../List";
 import { Edit, Props as GroupEditProps } from "../edit";
-import { useFindFilter } from "../../../../api/groups/publications";
-import { FindParams } from "../../../../api/groups/groups";
+import { useFindFilter } from "/imports/api/groups/publications";
+import { FindParams } from "/imports/api/groups/groups";
 import { LoadingPage } from "/imports/ui/pages/loading";
 import { useFiltering } from "/imports/utils/filtering";
 

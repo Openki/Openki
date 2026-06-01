@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import React from "react";
 import { Template } from "meteor/templating";
 
-import { useDetails } from "../../../api/organizations/publications";
+import { useDetails } from "/imports/api/organizations/publications";
 
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 import { useSiteName } from "/imports/utils/getSiteName";

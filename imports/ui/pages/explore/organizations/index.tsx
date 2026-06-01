@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 
-import * as Organizations from "../../../../api/organizations/publications";
+import * as Organizations from "/imports/api/organizations/publications";
 
 import { MetaTags } from "/imports/ui/components/MetaTags";
 

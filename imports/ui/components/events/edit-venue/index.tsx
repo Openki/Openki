@@ -4,7 +4,7 @@ import { isEmpty } from "lodash-es";
 
 import { EventVenueEntity } from "/imports/api/events/events";
 import { useFindFilter as useOrganizationsFindFilter } from "/imports/api/organizations/publications";
-import { useDetails as useGroupDetails } from "../../../../api/groups/publications";
+import { useDetails as useGroupDetails } from "/imports/api/groups/publications";
 
 import { Display } from "../../location/display";
 import { VenueTag } from "../../venues/link";

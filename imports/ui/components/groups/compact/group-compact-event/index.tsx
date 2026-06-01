@@ -2,7 +2,7 @@ import React from "react";
 
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
-import { GroupNextEventEntity } from "../../../../../api/groups/groups";
+import { GroupNextEventEntity } from "/imports/api/groups/groups";
 import { OEvent } from "/imports/api/events/events";
 
 import "./styles.scss";

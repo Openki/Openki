@@ -1,8 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { GroupModel } from "../../../api/groups/groups";
-import * as GroupMethods from "../../../api/groups/methods";
+import { GroupModel } from "/imports/api/groups/groups";
+import * as GroupMethods from "/imports/api/groups/methods";
 import * as Alert from "/imports/api/alerts/alert";
 
 import {

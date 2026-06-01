@@ -3,10 +3,10 @@ import { Router } from "meteor/iron:router";
 import { SitemapStream } from "sitemap";
 import { createGzip } from "zlib";
 
-import { GroupModel, Groups } from "../../api/groups/groups";
+import { GroupModel, Groups } from "/imports/api/groups/groups";
 import { Events } from "/imports/api/events/events";
 import { Venues } from "/imports/api/venues/venues";
-import { Organizations } from "../../api/organizations/organizations";
+import { Organizations } from "/imports/api/organizations/organizations";
 import { visibleTenantsAsync } from "/imports/utils/visible-tenants";
 import { serverError } from "/imports/api/log/methods";
 import { LanguagesRaw } from "/imports/api/languages/languages";

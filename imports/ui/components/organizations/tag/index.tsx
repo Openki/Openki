@@ -2,8 +2,8 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 
-import { OrganizationModel } from "../../../../api/organizations/organizations";
-import { useDetails } from "../../../../api/organizations/publications";
+import { OrganizationModel } from "/imports/api/organizations/organizations";
+import { useDetails } from "/imports/api/organizations/publications";
 
 import { name } from "../../../lib/organization-name-helpers";
 

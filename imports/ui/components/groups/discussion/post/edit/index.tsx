@@ -4,14 +4,11 @@ import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { GroupDiscussionEntity } from "../../../../../../api/group-discussions/group-discussions";
-import * as GroupDiscussionsMethods from "../../../../../../api/group-discussions/methods";
-import {
-  EditCommentFields,
-  PostCommentFields,
-} from "../../../../../../api/group-discussions/methods";
+import { GroupDiscussionEntity } from "/imports/api/group-discussions/group-discussions";
+import * as GroupDiscussionsMethods from "/imports/api/group-discussions/methods";
+import { EditCommentFields, PostCommentFields } from "/imports/api/group-discussions/methods";
 import * as Alert from "/imports/api/alerts/alert";
-import * as Groups from "../../../../../../api/groups/publications";
+import * as Groups from "/imports/api/groups/publications";
 
 import { DiscussionProfileIcon } from "../profile-icon";
 import { DiscussionProfileLink } from "../profile-link";

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { GroupMemberEntity, GroupModel } from "../../../../api/groups/groups";
+import { GroupMemberEntity, GroupModel } from "/imports/api/groups/groups";
 
 import { useUserId } from "/imports/utils/react-meteor-data";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";

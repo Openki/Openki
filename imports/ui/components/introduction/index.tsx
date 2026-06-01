@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import React, { useEffect } from "react";
+import React from "react";
 import { Template } from "meteor/templating";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
@@ -9,10 +9,8 @@ import {
   useShownIntro,
 } from "/imports/ui/lib/introduction";
 import { getSiteName } from "/imports/utils/getSiteName";
-import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 import { PricePolicy } from "/imports/ui/components/price-policy";
-import { useViewportSize } from "/imports/ui/lib/useViewportSize";
 import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 
 import "./styles.scss";
@@ -24,18 +22,9 @@ export interface Props {
 export function Introduction({ hasPricePolicy }: Props) {
   const { t } = useTranslation();
   const { getLocalizedValue } = useLocalizedSetting();
-  const viewportSize = useViewportSize();
   const routeName = useCurrentRouteName();
   const shownIntro = useShownIntro();
   const openedIntro = useOpenedIntro();
-
-  useEffect(() => {
-    // use $screen-xxs (from scss) to compare with the width of window
-    const { screenXXS } = ScssVars;
-    if (viewportSize.width < screenXXS) {
-      IntroductionUtil.closeIntro();
-    }
-  });
 
   function isInCalendar() {
     return routeName === "calendar";

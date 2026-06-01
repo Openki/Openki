@@ -3,7 +3,7 @@ import { Router } from "meteor/iron:router";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 
-import { GroupModel } from "../../../../api/groups/groups";
+import { GroupModel } from "/imports/api/groups/groups";
 import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 
 import { hasRole } from "../../../../utils/group-role-utils";

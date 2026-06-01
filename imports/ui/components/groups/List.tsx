@@ -5,7 +5,7 @@ import { cx } from "/imports/utils/cx";
 
 import { GroupCompact } from "./compact";
 import { CompactPropose } from "./CompactPropose";
-import { GroupModel } from "../../../api/groups/groups";
+import { GroupModel } from "/imports/api/groups/groups";
 
 export interface Props {
   groups: GroupModel[];

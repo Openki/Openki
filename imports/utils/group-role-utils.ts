@@ -1,4 +1,4 @@
-import { GroupMemberEntity } from "../api/groups/groups";
+import { GroupMemberEntity } from "/imports/api/groups/groups";
 
 /**
  * Determine whether there is a member with the given role

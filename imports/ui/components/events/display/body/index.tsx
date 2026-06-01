@@ -7,7 +7,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import { EventModel } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 import { Regions } from "/imports/api/regions/regions";
-import { useDetails } from "../../../../../api/groups/publications";
+import { useDetails } from "/imports/api/groups/publications";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 

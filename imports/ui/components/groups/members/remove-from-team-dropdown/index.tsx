@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { GroupMemberEntity } from "../../../../../api/groups/groups";
+import { GroupMemberEntity } from "/imports/api/groups/groups";
 
 import * as Tooltips from "/imports/utils/Tooltips";
 

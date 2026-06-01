@@ -7,8 +7,8 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { GroupModel } from "../../../api/groups/groups";
-import * as GroupsMethods from "../../../api/groups/methods";
+import { GroupModel } from "/imports/api/groups/groups";
+import * as GroupsMethods from "/imports/api/groups/methods";
 import { Regions } from "/imports/api/regions/regions";
 
 import * as Analytics from "/imports/ui/lib/analytics";

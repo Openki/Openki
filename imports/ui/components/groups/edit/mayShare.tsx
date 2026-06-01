@@ -1,4 +1,4 @@
-import { GroupModel } from "../../../../api/groups/groups";
+import { GroupModel } from "/imports/api/groups/groups";
 
 export function mayShare(group: GroupModel) {
   if (group.isPrivate()) {
