@@ -85,7 +85,7 @@ Free software built with love and care. We use:
 - [React](https://react.dev/reference/react) (frontend UI library)
 - [HTML5 / CSS3](https://developer.mozilla.org/en/docs/Web) (frontend)
 - [Bootstrap 5](https://getbootstrap.com/docs/) (frontend framework)
-- [Font Awesome 6](https://fontawesome.com/v6/search)
+- [Font Awesome 6](https://fontawesome.com/v6/search?ic=free-collection)
 - [Cypress](https://docs.cypress.io/) (test suite)
 - [Matomo](https://matomo.org/help/) (web analytics, formerly Piwik)
 
