@@ -54,8 +54,7 @@ export async function record(groupId: string) {
   await Log.record("Notification.Send", [group._id], body);
 }
 
-export async function Model(entry: { body: Body }): Promise<NotificationModel<Props>> {
-  const { body } = entry;
+export async function Model({ body }: { body: Body }): Promise<NotificationModel<Props>> {
   const group = await Groups.findOneAsync(body.groupId);
   if (!group) {
     throw new Error("Group does not exist (0.o)");
@@ -83,13 +82,13 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       const t = i18next.getFixedT(locale);
       const campaign = "organizationGroupNotify";
 
-      const recipientsOrganizations = organizations.filter((o) =>
-        o.members.some((m) => m.user === actualRecipient._id),
+      const recipientsOrganizations = organizations.filter(({ members }) =>
+        members.some(({ user }) => user === actualRecipient._id),
       );
 
       const subjectvars = {
         GROUP: truncate(group.name, { length: 10 }),
-        ORGANIZATIONS: truncate(recipientsOrganizations.map((o) => o.short).join(", "), {
+        ORGANIZATIONS: truncate(recipientsOrganizations.map(({ short }) => short).join(", "), {
           length: 30,
         }),
       };
@@ -112,14 +111,14 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         group: <a href={groupLink}>{group.name}</a>,
         groupDescription: group.description || "",
         organizations: ReactJoin(
-          recipientsOrganizations.map((o) => (
+          recipientsOrganizations.map((organization) => (
             <a
-              key={o._id}
-              href={Router.url("organizationDetails", o, {
+              key={organization._id}
+              href={Router.url("organizationDetails", organization, {
                 query: { campaign },
               })}
             >
-              {o.name}
+              {organization.name}
             </a>
           )),
           <>&quot;, &quot;</>,
