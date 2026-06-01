@@ -93,7 +93,7 @@ export function Alerts() {
   const alerts = useTracker(() => AlertsCollection.find().fetch());
 
   return (
-    <>
+    Boolean(alerts.length) && (
       <div className="container mt-2">
         {alerts.map((a) => (
           <Alert
@@ -106,7 +106,7 @@ export function Alerts() {
           />
         ))}
       </div>
-    </>
+    )
   );
 }
 
