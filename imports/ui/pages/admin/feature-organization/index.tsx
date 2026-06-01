@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
-import * as Organizations from "../../../../api/organizations/publications";
+import * as Organizations from "/imports/api/organizations/publications";
 import * as RegionsMethods from "/imports/api/regions/methods";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 

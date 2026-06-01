@@ -5,7 +5,7 @@ import { useUser } from "/imports/utils/react-meteor-data";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { VenueModel } from "/imports/api/venues/venues";
-import { useDetails, useFindFilter } from "../../../../../api/organizations/publications";
+import { useDetails, useFindFilter } from "/imports/api/organizations/publications";
 import * as VenuesMethods from "/imports/api/venues/methods";
 
 import { name } from "../../../../lib/organization-name-helpers";

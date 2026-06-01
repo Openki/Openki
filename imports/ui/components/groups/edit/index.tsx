@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import { uniq, union, chain } from "lodash-es";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { GroupModel, FindParams, isPrivate } from "../../../../api/groups/groups";
-import * as GroupsMethods from "../../../../api/groups/methods";
+import { GroupModel, FindParams, isPrivate } from "/imports/api/groups/groups";
+import * as GroupsMethods from "/imports/api/groups/methods";
 import { Regions } from "/imports/api/regions/regions";
 
 import { PublicSettings, RoleEntity } from "/imports/utils/PublicSettings";
@@ -19,7 +19,7 @@ import { ButtonCancel, ButtonSave } from "../../Buttons";
 import { PricePolicy } from "../../price-policy";
 import { Tag } from "../../regions/tag";
 import { Title } from "./title";
-import { useFindFilter as useOrganizationsFindFilter } from "../../../../api/organizations/publications";
+import { useFindFilter as useOrganizationsFindFilter } from "/imports/api/organizations/publications";
 import { useAll as useRegions } from "/imports/api/regions/publications";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useValidation } from "/imports/ui/lib/useValidation";

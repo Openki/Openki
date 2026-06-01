@@ -12,8 +12,8 @@ import {
   OEvent,
   FindParams as EventParamPredicates,
 } from "/imports/api/events/events";
-import { Organization, OrganizationModel } from "../../api/organizations/organizations";
-import * as Organizations from "../../api/organizations/publications";
+import { Organization, OrganizationModel } from "/imports/api/organizations/organizations";
+import * as Organizations from "/imports/api/organizations/publications";
 import { Region, RegionModel } from "/imports/api/regions/regions";
 import * as Regions from "/imports/api/regions/publications";
 import * as InfoPages from "/imports/api/infoPages/publications";
@@ -22,7 +22,7 @@ import { Venue, VenueModel, FindParams as VenueParamPredicates } from "/imports/
 import * as Venues from "/imports/api/venues/publications";
 import * as Events from "/imports/api/events/publications";
 import * as Tenants from "/imports/api/tenants/publications";
-import * as Groups from "../../api/groups/publications";
+import * as Groups from "/imports/api/groups/publications";
 import * as Invitations from "/imports/api/invitations/publications";
 import * as JoinLinks from "/imports/api/joinLinks/publications";
 import * as Users from "/imports/api/users/publications";

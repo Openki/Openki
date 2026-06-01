@@ -1,5 +1,5 @@
 import React from "react";
-import { useDetails } from "../../../../api/organizations/publications";
+import { useDetails } from "/imports/api/organizations/publications";
 
 export function OrganizationName({ id }: { id: string }) {
   const [isLoading, organization] = useDetails(id);

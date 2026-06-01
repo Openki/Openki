@@ -1,7 +1,7 @@
 import React from "react";
 
-import { GroupCustomField } from "../../api/groups/groups";
-import { OrganizationEntityCustomGroupFields } from "../../api/organizations/organizations";
+import { GroupCustomField } from "/imports/api/groups/groups";
+import { OrganizationEntityCustomGroupFields } from "/imports/api/organizations/organizations";
 
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
 

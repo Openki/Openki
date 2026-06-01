@@ -2,9 +2,9 @@ import React from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 
-import { Groups } from "../../../../../../api/groups/groups";
-import { GroupDiscussionEntity } from "../../../../../../api/group-discussions/group-discussions";
-import * as GroupDiscussionsMethods from "../../../../../../api/group-discussions/methods";
+import { Groups } from "/imports/api/groups/groups";
+import { GroupDiscussionEntity } from "/imports/api/group-discussions/group-discussions";
+import * as GroupDiscussionsMethods from "/imports/api/group-discussions/methods";
 
 import * as GroupDiscussionUtils from "../../../../../../utils/group-discussion-utils";
 import * as Tooltips from "/imports/utils/Tooltips";

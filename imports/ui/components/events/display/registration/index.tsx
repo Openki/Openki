@@ -9,7 +9,7 @@ import * as Analytics from "/imports/ui/lib/analytics";
 import * as Alert from "/imports/api/alerts/alert";
 import { EventModel } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
-import { useFindFilter as useOrganizationsFindFilter } from "../../../../../api/organizations/publications";
+import { useFindFilter as useOrganizationsFindFilter } from "/imports/api/organizations/publications";
 import { Regions } from "/imports/api/regions/regions";
 
 import { RegisterPanel } from "./register-panel";

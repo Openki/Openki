@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { VenueModel } from "/imports/api/venues/venues";
 import * as Alert from "/imports/api/alerts/alert";
-import { useDetails } from "../../../../../api/organizations/publications";
+import { useDetails } from "/imports/api/organizations/publications";
 import * as VenuesMethods from "/imports/api/venues/methods";
 
 import { name } from "../../../../lib/organization-name-helpers";

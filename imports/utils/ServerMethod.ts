@@ -1,5 +1,5 @@
 import { Meteor } from "meteor/meteor";
-import { serverError } from "../api/log/methods";
+import { serverError } from "/imports/api/log/methods";
 import { getStack } from "/imports/utils/getStack";
 
 /**

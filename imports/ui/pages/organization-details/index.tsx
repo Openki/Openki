@@ -6,8 +6,8 @@ import { useValidation } from "../../lib/useValidation";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { OrganizationModel } from "../../../api/organizations/organizations";
-import * as OrganizationsMethods from "../../../api/organizations/methods";
+import { OrganizationModel } from "/imports/api/organizations/organizations";
+import * as OrganizationsMethods from "/imports/api/organizations/methods";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 import { Store } from "/imports/ui/lib/editable";

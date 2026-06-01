@@ -2,15 +2,15 @@ import React from "react";
 import { Router } from "meteor/iron:router";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
-import { Groups as GroupCollection, GroupModel } from "../../../api/groups/groups";
+import { Groups as GroupCollection, GroupModel } from "/imports/api/groups/groups";
 import { Events as EventCollection, EventModel } from "/imports/api/events/events";
 import {
   Organizations as OrganizationCollection,
   OrganizationModel,
-} from "../../../api/organizations/organizations";
-import * as Groups from "../../../api/groups/publications";
+} from "/imports/api/organizations/organizations";
+import * as Groups from "/imports/api/groups/publications";
 import * as Events from "/imports/api/events/publications";
-import * as Organizations from "../../../api/organizations/publications";
+import * as Organizations from "/imports/api/organizations/publications";
 
 import { Filtering } from "/imports/utils/filtering";
 import { Publication } from "/imports/utils/ServerPublishReact";

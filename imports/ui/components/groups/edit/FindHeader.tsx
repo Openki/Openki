@@ -1,10 +1,10 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { useFindFilter as useGroupsFindFilter } from "../../../../api/groups/publications";
+import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
 import { Header } from "./Header";
 import { useFiltering } from "/imports/utils/filtering";
-import { FindParams } from "../../../../api/groups/groups";
+import { FindParams } from "/imports/api/groups/groups";
 
 export interface Props {
   _id?: string;

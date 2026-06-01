@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useDetails } from "../../../../api/organizations/publications";
+import { useDetails } from "/imports/api/organizations/publications";
 
 export function OrganizationHeader({ organizationId }: { organizationId: string }) {
   const { t } = useTranslation();

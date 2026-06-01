@@ -1,4 +1,4 @@
-import { EventModel } from "../../../../api/events/events";
+import { EventModel } from "/imports/api/events/events";
 import { LocalTime, Zone } from "../../../../utils/local-time";
 
 export async function getStartEndDate(event: EventModel, locale: string) {

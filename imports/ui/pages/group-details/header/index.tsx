@@ -3,8 +3,8 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
-import * as GroupsMethods from "../../../../api/groups/methods";
-import { GroupModel } from "../../../../api/groups/groups";
+import * as GroupsMethods from "/imports/api/groups/methods";
+import { GroupModel } from "/imports/api/groups/groups";
 
 import { Editable, Props as EditableProps } from "/imports/ui/components/editable";
 import { InternalIndicator } from "/imports/ui/components/internal-indicator";

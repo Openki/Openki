@@ -1,7 +1,7 @@
 import React, { JSX } from "react";
 import { useTranslation } from "react-i18next";
-import { TenantModel } from "../api/tenants/tenants";
-import { UserModel } from "../api/users/users";
+import { TenantModel } from "/imports/api/tenants/tenants";
+import { UserModel } from "/imports/api/users/users";
 import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 

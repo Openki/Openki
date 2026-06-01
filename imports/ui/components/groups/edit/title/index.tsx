@@ -2,7 +2,7 @@ import { debounce } from "lodash-es";
 import { Router } from "meteor/iron:router";
 import React, { ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useFindFilter } from "../../../../../api/groups/publications";
+import { useFindFilter } from "/imports/api/groups/publications";
 import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 
 import { FormControl } from "/imports/ui/components/form-control";

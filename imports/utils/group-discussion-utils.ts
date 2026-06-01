@@ -1,4 +1,4 @@
-import { GroupMemberEntity } from "../api/groups/groups";
+import { GroupMemberEntity } from "/imports/api/groups/groups";
 import { UserModel } from "/imports/api/users/users";
 import { hasRoleUser } from "./group-role-utils";
 

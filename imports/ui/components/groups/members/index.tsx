@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 
-import { GroupModel } from "../../../../api/groups/groups";
+import { GroupModel } from "/imports/api/groups/groups";
 
 import { Member } from "./member";
 

@@ -6,9 +6,9 @@ import { useSearchParams } from "/imports/utils/react-meteor-router";
 
 import { User, UserModel } from "/imports/api/users/users";
 import * as Alert from "/imports/api/alerts/alert";
-import { Subscribe, Unsubscribe, processChange } from "../../../../../api/groups/subscription";
+import { Subscribe, Unsubscribe, processChange } from "/imports/api/groups/subscription";
 import { Regions } from "/imports/api/regions/regions";
-import { GroupModel } from "../../../../../api/groups/groups";
+import { GroupModel } from "/imports/api/groups/groups";
 import { RoleEntity } from "/imports/utils/PublicSettings";
 
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";

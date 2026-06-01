@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import schedule from "node-schedule";
 
-import * as groupNextEventDenormalizer from "../../api/groups/nextEventDenormalizer";
+import * as groupNextEventDenormalizer from "/imports/api/groups/nextEventDenormalizer";
 import * as regionsCountDenormalizer from "/imports/api/regions/countDenormalizer";
 
 import { PrivateSettings } from "/imports/utils/PrivateSettings";

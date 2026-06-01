@@ -2,7 +2,7 @@ import { Router } from "meteor/iron:router";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { OrganizationTag } from "../../components/organizations/tag";
-import { OrganizationModel } from "../../../api/organizations/organizations";
+import { OrganizationModel } from "/imports/api/organizations/organizations";
 
 export function OrganizationSection({ organizations }: { organizations: OrganizationModel[] }) {
   const { t } = useTranslation();

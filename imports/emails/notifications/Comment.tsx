@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { GroupDiscussionEntity } from "../../api/group-discussions/group-discussions";
+import { GroupDiscussionEntity } from "/imports/api/group-discussions/group-discussions";
 import { UserModel } from "/imports/api/users/users";
 import { useTranslation } from "react-i18next";
 import { Footer } from "./components/Footer";

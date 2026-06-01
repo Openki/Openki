@@ -5,8 +5,8 @@ import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
 import { chain, truncate } from "lodash-es";
 
-import { Groups } from "../../../../api/groups/groups";
-import { Organizations } from "../../../../api/organizations/organizations";
+import { Groups } from "/imports/api/groups/groups";
+import { Organizations } from "/imports/api/organizations/organizations";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { Log } from "/imports/api/log/log";
 import { Users, UserModel } from "/imports/api/users/users";

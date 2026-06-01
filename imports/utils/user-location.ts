@@ -1,4 +1,4 @@
-import { Geodata } from "../api/Geodata";
+import { Geodata } from "/imports/api/Geodata";
 import { Regions } from "/imports/api/regions/regions";
 
 /**

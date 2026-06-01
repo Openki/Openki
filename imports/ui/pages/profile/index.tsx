@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 
-import * as Organizations from "../../../api/organizations/publications";
+import * as Organizations from "/imports/api/organizations/publications";
 import * as Tenants from "/imports/api/tenants/publications";
 import { UserModel } from "/imports/api/users/users";
 import * as Venues from "/imports/api/venues/publications";

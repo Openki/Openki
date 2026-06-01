@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useParams, useSearchParams } from "/imports/utils/react-meteor-router";
 
 import { EventModel } from "/imports/api/events/events";
-import { useDetails } from "../../../../api/groups/publications";
+import { useDetails } from "/imports/api/groups/publications";
 
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useViewportSize } from "/imports/ui/lib/useViewportSize";

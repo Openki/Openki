@@ -5,11 +5,11 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useUser } from "/imports/utils/react-meteor-data";
 
 import * as Alert from "/imports/api/alerts/alert";
-import * as Groups from "../../../api/groups/publications";
+import * as Groups from "/imports/api/groups/publications";
 import * as emailMethods from "/imports/api/emails/methods";
-import { OrganizationEntity } from "../../../api/organizations/organizations";
-import * as OrganizationsMethods from "../../../api/organizations/methods";
-import * as Organizations from "../../../api/organizations/publications";
+import { OrganizationEntity } from "/imports/api/organizations/organizations";
+import * as OrganizationsMethods from "/imports/api/organizations/methods";
+import * as Organizations from "/imports/api/organizations/publications";
 import * as usersMethods from "/imports/api/users/methods";
 import { UserModel } from "/imports/api/users/users";
 import * as Regions from "/imports/api/regions/publications";

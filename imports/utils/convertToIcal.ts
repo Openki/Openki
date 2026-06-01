@@ -3,7 +3,7 @@ import { isEmpty, omitBy } from "lodash-es";
 import { i18n } from "/imports/startup/both/i18next";
 import { ICalEventData, ICalEventStatus } from "ical-generator";
 
-import { EventModel } from "../api/events/events";
+import { EventModel } from "/imports/api/events/events";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { isOnCustomMap } from "./isOnCustomMap";
 

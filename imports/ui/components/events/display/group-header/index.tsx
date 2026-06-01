@@ -2,7 +2,7 @@ import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import React from "react";
 
-import { GroupModel } from "../../../../../api/groups/groups";
+import { GroupModel } from "/imports/api/groups/groups";
 
 import { GroupCategories } from "../../../groups/categories";
 import { Tag } from "/imports/ui/components/regions/tag";
