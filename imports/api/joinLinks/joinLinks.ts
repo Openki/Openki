@@ -5,6 +5,7 @@ import { Match, check } from "meteor/check";
 import { Filtering } from "/imports/utils/filtering";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { Type } from "/imports/utils/CustomChecks";
+import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
 /** DB-Model */
 export interface JoinLinkEntity {
@@ -27,7 +28,7 @@ export class JoinLinksCollection extends Mongo.Collection<JoinLinkEntity> {
   constructor() {
     super("JoinLinks");
 
-    if (Meteor.isServer) {
+    if (Meteor.isServer && runBackgroundTasks) {
       this.createIndex({ tenant: 1, token: 1 });
     }
   }

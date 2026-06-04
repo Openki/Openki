@@ -12,6 +12,7 @@ import * as Predicates from "/imports/utils/predicates";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { Type } from "/imports/utils/CustomChecks";
 import { Geodata } from "/imports/api/Geodata";
+import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
 export type FacilityOption = (typeof Venues.facilityOptions)[number];
 
@@ -128,7 +129,7 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
       },
     });
 
-    if (Meteor.isServer) {
+    if (Meteor.isServer && runBackgroundTasks) {
       this.createIndex({ region: 1 });
       if (!PublicSettings.feature.disable2dSphereForLocations) {
         this.createIndex({ loc: "2dsphere" });

@@ -1,5 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
+import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
 /** DB-Model */
 
@@ -25,7 +26,7 @@ export class GroupDiscussionsCollection extends Mongo.Collection<GroupDiscussion
   constructor() {
     super("GroupDiscussions");
 
-    if (Meteor.isServer) {
+    if (Meteor.isServer && runBackgroundTasks) {
       this.createIndex({ groupId: 1 });
     }
   }

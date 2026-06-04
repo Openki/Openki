@@ -5,6 +5,7 @@ import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { Type } from "/imports/utils/CustomChecks";
+import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
 // ======== DB-Model: ========
 export interface Resolution {
@@ -88,7 +89,7 @@ export class LogCollection extends Mongo.Collection<LogEntity> {
   constructor(name: string | null) {
     super(name);
 
-    if (name && Meteor.isServer) {
+    if (name && Meteor.isServer && runBackgroundTasks) {
       this.createIndex({ tr: 1, ts: 1 });
       this.createIndex({ ts: 1 });
       this.createIndex({ rel: 1 });

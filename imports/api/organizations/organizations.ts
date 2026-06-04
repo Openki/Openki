@@ -11,6 +11,7 @@ import * as FileStorage from "/imports/utils/FileStorage";
 import { LocalizedValue } from "/imports/utils/getLocalizedValue";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { Type } from "/imports/utils/CustomChecks";
+import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
 export type OrganizationEntityCustomGroupFields =
   | {
@@ -157,7 +158,7 @@ export class OrganizationsCollection extends Mongo.Collection<
       },
     });
 
-    if (Meteor.isServer) {
+    if (Meteor.isServer && runBackgroundTasks) {
       this.createIndex({ members: 1 });
     }
   }

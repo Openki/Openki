@@ -15,6 +15,7 @@ import * as FileStorage from "/imports/utils/FileStorage";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { FieldSort, FieldSortPattern, Sort } from "/imports/utils/sort-spec";
 import { Tuple, Type } from "/imports/utils/CustomChecks";
+import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
 export interface EventParticipantEntity {
   user: string;
@@ -271,7 +272,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
       },
     });
 
-    if (Meteor.isServer) {
+    if (Meteor.isServer && runBackgroundTasks) {
       this.createIndex({ tenant: 1, region: 1, start: 1 });
       this.createIndex({ tenant: 1, region: 1, end: 1 });
       this.createIndex({ tenant: 1, region: 1, "venue._id": 1 });

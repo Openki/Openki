@@ -1,5 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
+import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
 /** DB-Model */
 export interface InfoPagesEntity {
@@ -33,7 +34,7 @@ export class InfoPagesCollection extends Mongo.Collection<InfoPagesEntity> {
   constructor() {
     super("InfoPages");
 
-    if (Meteor.isServer) {
+    if (Meteor.isServer && runBackgroundTasks) {
       this.createIndex({ slug: 1, locale: 1, accuracy: -1 });
     }
   }

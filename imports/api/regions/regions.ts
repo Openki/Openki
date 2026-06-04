@@ -14,6 +14,7 @@ import { Type } from "/imports/utils/CustomChecks";
 import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
 import { Geodata } from "/imports/api/Geodata";
 import { LocalizedValue } from "/imports/utils/getLocalizedValue";
+import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
 export interface CustomMapConfig {
   crs?: "Simple";
@@ -150,7 +151,7 @@ export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionMode
       },
     });
 
-    if (Meteor.isServer) {
+    if (Meteor.isServer && runBackgroundTasks) {
       this.createIndex({ tenant: 1 });
       if (!PublicSettings.feature.disable2dSphereForLocations) {
         this.createIndex({ loc: "2dsphere" });

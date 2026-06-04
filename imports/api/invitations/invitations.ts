@@ -6,6 +6,7 @@ import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { Type, StringEnum } from "/imports/utils/CustomChecks";
+import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
 export const StatusPattern = StringEnum("created", "send", "accepted", "failed");
 
@@ -37,7 +38,7 @@ export class InvitationsCollection extends Mongo.Collection<InvitationEntity> {
   constructor() {
     super("Invitations");
 
-    if (Meteor.isServer) {
+    if (Meteor.isServer && runBackgroundTasks) {
       this.createIndex({ tenant: 1 });
       this.createIndex({ token: 1, to: 1 });
     }

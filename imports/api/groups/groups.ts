@@ -17,6 +17,7 @@ import { OrganizationEntityCustomGroupFields } from "../organizations/organizati
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { StringEnum, Type } from "/imports/utils/CustomChecks";
 import { LocalizedValue } from "/imports/utils/getLocalizedValue";
+import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
 export interface GroupMemberEntity {
   user: string;
@@ -217,7 +218,7 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
       },
     });
 
-    if (Meteor.isServer) {
+    if (Meteor.isServer && runBackgroundTasks) {
       this.createIndex({ tenant: 1, archived: 1, region: 1, time_lastedit: 1, organizations: 1 });
     }
   }
