@@ -7,6 +7,7 @@ export async function update() {
     const event = { ...originalEvent } as EventEntity & {
       courseGroups?: EventEntity["groupOrganizations"];
       allGroups?: EventEntity["allOrganizations"];
+      courseCompactImage?: EventEntity["groupCompactImage"];
     };
 
     // courseGroups => groupOrganizations
@@ -20,6 +21,12 @@ export async function update() {
       event.allOrganizations = event.allGroups;
     }
     delete event.allGroups;
+
+    // courseCompactImage => groupCompactImage
+    if (event.courseCompactImage) {
+      event.groupCompactImage = event.courseCompactImage;
+    }
+    delete event.courseCompactImage;
 
     updated += await Events.updateAsync(event._id, event);
   }

@@ -11,7 +11,6 @@ export async function update() {
     const event = { ...originalEvent } as EventEntity & {
       courseId?: EventEntity["groupId"];
       courseOrganizations?: EventEntity["groupOrganizations"];
-      courseCompactImage?: EventEntity["groupCompactImage"];
       courseImage?: EventEntity["groupImage"];
     };
 

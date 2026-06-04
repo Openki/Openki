@@ -70,8 +70,7 @@ const UpdatesAvailable: Record<string, () => Promise<number>> = {
     update20260408renameCourseToGroupInEventsAndDiscussions,
   "2026.04.08 renameCourseToGroupInDashboardSettings":
     update20260408renameCourseToGroupInDashboardSettings,
-  "2026.06.04 renameGroupToOrganizationInEvents":
-    update20260604renameGroupToOrganizationInEvents,
+  "2026.06.04 renameGroupToOrganizationInEvents": update20260604renameGroupToOrganizationInEvents,
 };
 
 interface UpdatesAppliedEntity {
