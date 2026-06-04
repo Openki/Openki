@@ -32,7 +32,7 @@ Demo playground: [sandbox.openki.net](https://sandbox.openki.net/?region=Spilist
 
 
 ### Features not visible at first sight
-<details><summary>    Click to see</summary>
+<details><summary>Click to see</summary>
 
 **Integrations:**
 - :computer: Kiosk screen views with upcoming events ([docs](https://gitlab.com/Openki/Openki/wikis/InfoScreens))
