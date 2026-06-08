@@ -843,7 +843,7 @@ export const regions: {
       },
       {
         type: "producer",
-        icon: "fa-solid clapperboard",
+        icon: "fa-solid fa-clapperboard",
         proposal: true,
         preset: false,
         editable: true,
