@@ -81,7 +81,7 @@ export function JoinLink({ tenant }: Props) {
             <div className="col-auto">
               <JoinLinkRebuild tenantId={tenant._id} />
             </div>
-            <div className="col-auto">
+            <div className="col-auto flex-grow-1">
               <DeleteConfirm {...deleteConfirmAttr()} />
             </div>
           </form>
