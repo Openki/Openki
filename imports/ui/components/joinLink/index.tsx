@@ -64,7 +64,7 @@ export function JoinLink({ tenant }: Props) {
           <div className="input-group mb-3">
             <input className="form-control" type="text" value={getUrl()} readOnly />
             <button
-              className="btn btn-add"
+              className="btn btn-secondary"
               type="button"
               onClick={copyLink}
               aria-label={t("joinLink.copy", "Copy link")}
