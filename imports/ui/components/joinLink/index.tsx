@@ -67,7 +67,7 @@ export function JoinLink({ tenant }: Props) {
               className="btn btn-secondary"
               type="button"
               onClick={copyLink}
-              aria-label={t("joinLink.copy", "Copy link")}
+              data-bs-title={t("joinLink.copy", "Copy link")}
             >
               <i className="fa-regular fa-copy" />
             </button>
