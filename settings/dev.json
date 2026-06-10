@@ -307,6 +307,6 @@
     "token": "mytoken"
   },
   "startup": {
-    "buildDbCacheAsync": true
+    "buildDbCacheAsync": false
   }
 }
