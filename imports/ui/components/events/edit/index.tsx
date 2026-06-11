@@ -137,7 +137,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
   }, [group, currentRegion, regions]);
 
   const [selectedVenue, setSelectedVenue] = useState(event.venue);
-  const [isRegistrationEnabled, setIsRegistrationEnabled] = useState(event.noRsvp ?? true);
+  const [isRegistrationEnabled, setIsRegistrationEnabled] = useState(!event.noRsvp);
 
   const [isBusy, setIsBusy] = useState(false);
   const { promptToLogin } = useAccountTasks();
