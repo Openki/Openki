@@ -139,7 +139,7 @@ export type PrivateSettings = Type<typeof PrivateSettingsPattern>;
 let privateSettings;
 
 if (Meteor.isServer) {
-  // See settings-example.json.md for full documentation
+  // See settings-example.jsonc for full documentation
 
   const defaults = {
     admins: [] as string[],
