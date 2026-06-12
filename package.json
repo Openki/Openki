@@ -66,7 +66,6 @@
   "devDependencies": {
     "@babel/preset-env": "7.28.3",
     "@eslint/js": "9.32.0",
-    "@poliklot/prettier-plugin-handlebars": "^0.2.15",
     "@types/bootstrap": "5.2.10",
     "@types/bootstrap-datepicker": "1.10.0",
     "@types/es6-promisify": "6.0.4",
@@ -112,7 +111,7 @@
     "test:ci": "WAIT_ON_TIMEOUT=600000 start-test 'npm run test:env -- --once' :3000 'cypress run --record'",
     "test:env": "BABEL_ENV=test DISABLE_REACT_FAST_REFRESH=1 meteor --settings settings/ci.json --port 3000",
     "lint": "eslint . && stylelint '**/*.scss' && prettier --check '**/*.{ts,tsx,scss,json*,js,mjs}'",
-    "lint:fix": "eslint . --fix && stylelint '**/*.scss' --fix && prettier --write --list-different '**/*.{ts,tsx,scss,json*,js,mjs}' && prettier --write --list-different --plugin @poliklot/prettier-plugin-handlebars --parser handlebars '{client,imports,private,public,server}/**/*.html'",
+    "lint:fix": "eslint . --fix && stylelint '**/*.scss' --fix && prettier --write --list-different '**/*.{ts,tsx,scss,json*,js,mjs}'",
     "reset": "meteor reset --db && rm -rf node_modules && meteor npm install --verbose",
     "type-check": "meteor lint && tsc",
     "extract-translations": "rm -f imports/startup/both/i18n/en.json && npx i18next"
