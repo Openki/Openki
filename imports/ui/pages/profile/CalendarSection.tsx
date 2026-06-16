@@ -22,6 +22,12 @@ export function CalendarSection() {
   return (
     <div id="my-events" className="page-component page-component-seperated">
       <h3>{t("profile.calendar", "My events")}</h3>
+      <p>
+        {t(
+          "profile.calendar.description",
+          "Events added to your calendar will be automatically updated, when changed here.",
+        )}
+      </p>
       <div className="dropdown">
         <button
           className="btn btn-secondary dropdown-toggle"

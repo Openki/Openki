@@ -832,6 +832,7 @@
   "profile.calendar": "My events",
   "profile.calendar.add": "Add my events to my calendar",
   "profile.calendar.copyUrl": "Copy url to clipboard",
+  "profile.calendar.description": "Events added to your calendar will be automatically updated, when changed here.",
   "profile.calendar.google": "Google Kalender (Web)",
   "profile.calendar.iCal": "Into app on my local device",
   "profile.calendar.iCal.message": "Your calendar app should now appear. If not, try an other option.",
