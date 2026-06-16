@@ -520,15 +520,30 @@ export const addParticipant = ServerMethod(
       return;
     }
 
-    // dont allow participant-mutations if event has passed
+    // don't allow participant-mutations if event has passed
     if (moment().isAfter(event.end)) {
       throw new Meteor.Error(401, "cannot register, event has already passed");
     }
 
-    await Events.updateAsync(
-      { _id: eventId },
-      { $addToSet: { participants: { user: user._id, companions, removeToken: Random.secret() } } },
+    const updated = await Events.updateAsync(
+      {
+        _id: eventId,
+        "participants.user": { $ne: user._id },
+      },
+      {
+        $push: {
+          participants: {
+            user: user._id,
+            companions,
+            removeToken: Random.secret(),
+          },
+        },
+      },
     );
+
+    if (updated === 0) {
+      throw new Meteor.Error("already-participating", "User is already a participant");
+    }
 
     // Send notifications to user
     await Notification.Rsvp.record(eventId, user._id);
