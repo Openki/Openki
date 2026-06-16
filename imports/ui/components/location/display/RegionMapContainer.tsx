@@ -73,7 +73,7 @@ export function RegionMapContainer({
             checked={level !== undefined ? level === l.level : map.defaultLevel === l.level}
             name={l.name}
           >
-            <TileLayer attribution={map.attribution} url={l.tileUrl} />
+            <TileLayer attribution={map.attribution} url={l.tileUrl} noWrap />
           </LayersControl.BaseLayer>
         ))}
       </LayersControl>
