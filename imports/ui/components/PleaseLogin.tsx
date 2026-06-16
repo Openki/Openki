@@ -1,4 +1,4 @@
-import React, { FormEvent, ReactNode, useLayoutEffect, useState } from "react";
+import React, { SubmitEvent, ReactNode, useLayoutEffect, useState } from "react";
 
 import { useSessionEquals, useUserId } from "/imports/utils/react-meteor-data";
 import { Content } from "/imports/ui/components/Buttons";
@@ -106,7 +106,7 @@ export function Form(
     }
   }, [actionActive, userId, openedLogin, notPleaseLogin, props]);
 
-  async function handleEvent(event: FormEvent<HTMLFormElement>) {
+  async function handleEvent(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (props.beforeSubmit?.() === false) {

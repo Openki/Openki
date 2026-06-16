@@ -56,7 +56,7 @@ export function Create({ tenant }: Props) {
     return getLines().filter((e) => isEmail(e));
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.SubmitEvent) {
     e.preventDefault();
 
     if (!checkValidity()) {

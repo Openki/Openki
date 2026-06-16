@@ -141,7 +141,7 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
     return showRegionSelection() || !!changes.selectedRegion;
   }
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!checkValidity()) {
       setTimeout(() => {

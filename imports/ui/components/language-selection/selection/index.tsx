@@ -124,7 +124,7 @@ export function Selection(props: Props) {
     setSearchHasFocus(false);
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (languages()[0]) {

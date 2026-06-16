@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import React, { SubmitEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 
@@ -43,7 +43,7 @@ export function ResetPasswordPage({ token, email }: Props) {
     }
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsBusy("saving");
 

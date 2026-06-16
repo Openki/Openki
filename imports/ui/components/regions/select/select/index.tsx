@@ -204,7 +204,7 @@ export function Select(props: Props) {
     setSearchHasFocus(true);
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (search !== "") {

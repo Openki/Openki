@@ -36,7 +36,7 @@ export function EmailSection() {
     return null;
   }
 
-  async function handleEmailChange(event: React.FormEvent<HTMLFormElement>) {
+  async function handleEmailChange(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     resetErrors();
     setIsBusy(true);

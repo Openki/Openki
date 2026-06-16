@@ -38,7 +38,7 @@ export function AccountManagementSection() {
     };
   }
 
-  async function handleChangePassword(event: React.FormEvent<HTMLFormElement>) {
+  async function handleChangePassword(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const old = oldPassword;
     const pass = newPassword;
