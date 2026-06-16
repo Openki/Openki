@@ -10,7 +10,7 @@ import { Editable, Props as EditableProps } from "/imports/ui/components/editabl
 import { InternalIndicator } from "/imports/ui/components/internal-indicator";
 import { SingleEventIndicator } from "/imports/ui/components/single-event-indicator";
 import { Tag } from "/imports/ui/components/regions/tag";
-import { GroupCategories } from "../../../components/groups/categories";
+
 import { OrganizationList } from "../../../components/groups/display/organization-list";
 
 import "./styles.scss";
@@ -76,11 +76,6 @@ export function Header({ group }: { group: GroupModel }) {
       <div className="group-details-title">
         {group?.editableBy(user) ? <Editable {...editableNameAttr} /> : <h2>{group.name}</h2>}
       </div>
-      {!!group.categories && (
-        <div className="group-details-categories">
-          <GroupCategories categories={group.categories} />
-        </div>
-      )}
       <OrganizationList group={group} />
     </div>
   );
