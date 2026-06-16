@@ -65,7 +65,7 @@ export async function record(
     // The list of recipients is built right away so that only group members
     // at the time of event creation will get the notice even if sending is
     // delayed.
-    // The notification is sended to all members of the group and on a event change to all participants
+    // The notification is sent to all members of the group and on a event change to all participants
     recipients: uniq([...(group?.members || []), ...(event.participants || [])])?.map(
       (p) => p.user,
     ),

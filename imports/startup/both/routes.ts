@@ -1077,7 +1077,7 @@ RouterAsync.route("resetPasswordEmail", {
     }
 
     this.response.writeHead(302, {
-      Location: Router.url("home", {}, { query: { action: "resetPasswordEmailSended" } }),
+      Location: Router.url("home", {}, { query: { action: "resetPasswordEmailSent" } }),
     });
 
     this.response.end();

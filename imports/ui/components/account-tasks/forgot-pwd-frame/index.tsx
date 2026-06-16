@@ -47,7 +47,7 @@ export function ForgotPwdFrame(props: Props) {
         try {
           await AccountsAsync.forgotPassword({ email });
 
-          Router.go("home", {}, { query: { action: "resetPasswordEmailSended" } });
+          Router.go("home", {}, { query: { action: "resetPasswordEmailSent" } });
 
           onForgotPwd();
         } catch (err) {

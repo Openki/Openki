@@ -124,7 +124,7 @@ function Task({
     return {
       ...transferData,
       onForgotPwd() {
-        Router.go("home", {}, { query: { action: "resetPasswordEmailSended" } });
+        Router.go("home", {}, { query: { action: "resetPasswordEmailSent" } });
         onResetPassword();
       },
       onClose() {

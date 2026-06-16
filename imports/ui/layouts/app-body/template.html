@@ -1,6 +1,6 @@
 <template name="layout">
   {{> root}}
-  {{#unless resetPasswordEmailIsSended}}
+  {{#unless isResetPasswordEmailSent}}
     {{#if showRegionSplash}}
       {{> regionSplash}}
     {{/if}}
@@ -14,9 +14,9 @@
 
       {{> yield region='aboveContent'}}
 
-      {{#if resetPasswordEmailIsSended}}
+      {{#if isResetPasswordEmailSent}}
         <div id="maincontent">
-          {{> resetPasswordEmailSended}}
+          {{> resetPasswordEmailSent}}
         </div>
       {{else}}
 

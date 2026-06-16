@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { ActionResult } from "../ActionResult";
 
-export function ResetPasswordEmailSended() {
+export function ResetPasswordEmailSent() {
   const { t } = useTranslation();
 
   return (
@@ -24,4 +24,4 @@ export function ResetPasswordEmailSended() {
 
 import "./template.html";
 
-Template.registerHelper("ResetPasswordEmailSended", () => ResetPasswordEmailSended);
+Template.registerHelper("ResetPasswordEmailSent", () => ResetPasswordEmailSent);
