@@ -33,35 +33,25 @@ function persistRegion(region: string) {
 /**
  * @param tenantId the tenant where the region should be.
  */
-function useAsRegion(regions: RegionModel[], regionIdOrName: string, tenantId?: string) {
+function useAsRegion(regions: RegionModel[], regionIdOrName: string) {
   if (!regionIdOrName) {
     return false;
   }
 
   // Special case 'all'
-  if (!tenantId && regionIdOrName === "all") {
+  if (regionIdOrName === "all") {
     persistRegion(regionIdOrName);
     return true;
   }
 
   // Normal case region ID
-  if (
-    regions.some(
-      tenantId
-        ? (r) => r.tenant === tenantId && r._id === regionIdOrName
-        : (r) => r._id === regionIdOrName,
-    )
-  ) {
+  if (regions.some((r) => r._id === regionIdOrName)) {
     persistRegion(regionIdOrName);
     return true;
   }
 
   // Special case by name so you can do ?region=Spilistan
-  const region = regions.find(
-    tenantId
-      ? (r) => r.tenant === tenantId && r.name === regionIdOrName
-      : (r) => r.name === regionIdOrName,
-  );
+  const region = regions.find((r) => r.name === regionIdOrName);
   if (region) {
     persistRegion(region._id);
     return true;
@@ -71,11 +61,7 @@ function useAsRegion(regions: RegionModel[], regionIdOrName: string, tenantId?: 
   return false;
 }
 
-/**
- * @param preferredTenant On set: Prefer a particular tenant when detection.
- * @param confirmAutodectionByUser On true: Let the user approve the automatic region selection/detection.
- */
-export async function subscribe(preferredTenant?: string, confirmAutodectionByUser = true) {
+export async function subscribe() {
   const findFilter = Regions.findFilter.subscribe(async () => {
     const selectors = [
       Session.get("region"),
@@ -84,33 +70,6 @@ export async function subscribe(preferredTenant?: string, confirmAutodectionByUs
     ].filter(Boolean) as string[];
 
     const regions = await (await findFilter()).fetchAsync();
-    if (preferredTenant) {
-      // check if we can find a region for a preferred tenant
-
-      if (selectors.some((s) => useAsRegion(regions, s, preferredTenant))) {
-        return;
-      }
-
-      let preferredTenantRegion;
-
-      try {
-        preferredTenantRegion = await UserLocation.detect(preferredTenant);
-      } catch (err) {
-        console.error(`Region autodetection error: ${err}`);
-      }
-
-      preferredTenantRegion =
-        preferredTenantRegion || regions.find((r) => r.tenant === preferredTenant);
-      if (preferredTenantRegion && useAsRegion(regions, preferredTenantRegion._id)) {
-        // found a region for the preferred tenant
-        if (confirmAutodectionByUser) {
-          Session.set("showRegionSplash", true);
-        }
-        return;
-      }
-
-      // none region found for the preferred tenant use the normal region choose handling
-    }
 
     // If any of these regions are usable we stop here
     if (selectors.some((s) => useAsRegion(regions, s))) {
@@ -140,9 +99,8 @@ export async function subscribe(preferredTenant?: string, confirmAutodectionByUs
       useAsRegion(regions, "all");
     }
 
-    if (confirmAutodectionByUser) {
-      Session.set("showRegionSplash", true);
-    }
+    // Have the user confirm the automatically detected region by displaying the splash-screen.
+    Session.set("showRegionSplash", true);
   });
 }
 
