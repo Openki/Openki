@@ -1135,7 +1135,7 @@
   "venue.details.address": "Adresse:",
   "venue.details.allowParallelEvents.description": "In diesem Veranstaltungsort sind überschneidende Veranstaltungen erlaubt.",
   "venue.details.availableInfrastructure": "Verfügbare Infrastruktur:",
-  "venue.details.bookingIcal.isNotSet": "Es ist keine Verknüpfung zu bestehenden Buchungen vorhanden. Füge einen iCalendar-Link hinzu, um anderen Nutzer_innen anzuzeigen, wann Ihr Veranstaltungsort belegt oder frei ist.",
+  "venue.details.bookingIcal.isNotSet": "Es ist keine Verknüpfung zu bestehenden Buchungen vorhanden. Füge einen iCalendar-Link hinzu, um anderen Nutzer_innen anzuzeigen, wann dein Veranstaltungsort belegt oder frei ist.",
   "venue.details.bookingIcal.isSet": "Es ist ein Link zu bestehenden Buchungen vorhanden.",
   "venue.details.max_ppl": "Max. Personen:",
   "venue.details.max_workplaces": "Max. Arbeitsplätze:",
