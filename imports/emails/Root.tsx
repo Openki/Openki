@@ -31,11 +31,8 @@ export function Root({
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{subject}</title>
-        <style
-          type="text/css"
-          dangerouslySetInnerHTML={{
-            __html: `
-          /* Add some styling for emails. For best practice we compile it inline with juice(...).  */
+        {/* Add some styling for emails. For best practice we compile it inline with juice(...). */}
+        <style type="text/css">{`
           body {
             background-color: #f0f3f4;
             font-size: 16px;
@@ -105,7 +102,7 @@ export function Root({
             padding-bottom: 20px !important;
           }
 
-          .alert + tr > td { 
+          .alert + tr > td {
             padding-top: 20px;
           }
 
@@ -272,9 +269,7 @@ export function Root({
             color: #666 !important;
             text-decoration: underline;
           }
-`,
-          }}
-        ></style>
+`}</style>
       </head>
 
       <body>
