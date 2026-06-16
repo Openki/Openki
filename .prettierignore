@@ -2,3 +2,6 @@
 .meteor/
 node_modules/
 packages/
+
+# Preserve formatting for readability
+imports/startup/client/translations.html
