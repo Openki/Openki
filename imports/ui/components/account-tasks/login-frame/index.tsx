@@ -23,7 +23,7 @@ import "./styles.scss";
 export interface Props {
   username: string;
   password: string;
-  onForgotPassword: (loginData: { username: string; password: string }) => void;
+  onForgotPassword: (loginData: { username: string }) => void;
   onVisitorOpen: (loginData: { username: string }) => void;
   onRegisterOpen: (loginData: { username: string; password: string }) => void;
   onLogin: () => void;
