@@ -30,9 +30,6 @@ function persistRegion(region: string) {
   Session.set("region", region);
 }
 
-/**
- * @param tenantId the tenant where the region should be.
- */
 function useAsRegion(regions: RegionModel[], regionIdOrName: string) {
   if (!regionIdOrName) {
     return false;
