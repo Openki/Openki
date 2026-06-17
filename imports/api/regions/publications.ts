@@ -1,4 +1,5 @@
 import { Meteor } from "meteor/meteor";
+import { check } from "meteor/check";
 
 import { FindFilter, Regions } from "/imports/api/regions/regions";
 import { ServerPublishMany, ServerPublishOne } from "/imports/utils/ServerPublish";
