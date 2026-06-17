@@ -1,20 +1,13 @@
 image: registry.gitlab.com/openki/sysadmin/docker-ci-container:latest
 
-# -------------------------------------------------------------------
-# Global pipeline rules
-#
-# Run pipelines for:
-# - Merge Requests
-# - Branch pushes
-# -------------------------------------------------------------------
 workflow:
   rules:
     - if: $CI_MERGE_REQUEST_ID
     - if: $CI_COMMIT_BRANCH
 
 stages:
+  - prepare
   - build
-
 
 cache:
   paths:
@@ -24,28 +17,53 @@ cache:
 
 variables:
   DISPLAY: ":99.0"
-
-  # Reduce git traffic
-  GIT_DEPTH: "10"
-
+  GIT_DEPTH: "0"           # Full history needed for git describe / git log
   METEOR_ALLOW_SUPERUSER: "true"
-
-  # Increase Node.js memory limit
   TOOL_NODE_FLAGS: "--max_old_space_size=4096"
 
 
+# -------------------------------------------------------------------
+# Stage: prepare
+# Runs update_version.sh, writes server/version.js and build.env
+# -------------------------------------------------------------------
+prepare_version:
+  stage: prepare
+  before_script:
+    - git fetch --tags   # Required for git describe to find annotated tags
+  script:
+    - bash update_version.sh
+  artifacts:
+    reports:
+      dotenv: build.env  # Exposes IMAGE_TAG to downstream jobs
+    paths:
+      - server/version.js
+    expire_in: 1 hour
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "server-config-21-docker-simple-setup"'
+      when: always
+    - when: never
+
+
+# -------------------------------------------------------------------
+# Stage: build
+# Builds and pushes the Docker image using the tag from prepare
+# -------------------------------------------------------------------
 build_and_push_docker:
-  stage: build  # <-- Matches the new stage above
+  stage: build
   image: docker:24.0.9
   services:
     - docker:24.0.9-dind
   variables:
     DOCKER_TLS_CERTDIR: "/certs"
+  needs:
+    - job: prepare_version
+      artifacts: true      # Pulls in server/version.js + IMAGE_TAG
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - docker build -t "$CI_REGISTRY_IMAGE:test" .
-    - docker push "$CI_REGISTRY_IMAGE:test"
+    - echo "Building image with tag $IMAGE_TAG"
+    - docker build -t "$CI_REGISTRY_IMAGE:$IMAGE_TAG" .
+    - docker push "$CI_REGISTRY_IMAGE:$IMAGE_TAG"
   rules:
     - if: '$CI_COMMIT_BRANCH == "server-config-21-docker-simple-setup"'
       when: always
