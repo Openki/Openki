@@ -1,7 +1,7 @@
 import { Mongo } from "meteor/mongo";
 import { GroupEntity, Groups } from "./groups";
 
-// Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers
+// Based on the guide from meteor: https://docs.meteor.com/tutorials/collections/collections.html#abstracting-denormalizers
 
 /**
  * Enrich the group entity with the modification date

@@ -3,7 +3,7 @@ import { sum } from "../../utils/sum";
 import { VenueModel, Venues } from "../venues/venues";
 import { OrganizationModel, Organizations } from "../organizations/organizations";
 
-// Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers
+// Based on the guide from meteor: https://docs.meteor.com/tutorials/collections/collections.html#abstracting-denormalizers
 
 async function updateAll() {
   const venues = await Venues.find(

@@ -2,7 +2,7 @@ import { Tenants } from "/imports/api/tenants/tenants";
 import { Users } from "./users";
 import { sum } from "../../utils/sum";
 
-// Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers
+// Based on the guide from meteor: https://docs.meteor.com/tutorials/collections/collections.html#abstracting-denormalizers
 
 export async function onStartUp() {
   const tenants = await Tenants.find(

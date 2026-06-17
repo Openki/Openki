@@ -4,7 +4,7 @@ import { Regions } from "/imports/api/regions/regions";
 import { GroupEntity, Groups } from "./groups";
 import { sum } from "../../utils/sum";
 
-// Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers
+// Based on the guide from meteor: https://docs.meteor.com/tutorials/collections/collections.html#abstracting-denormalizers
 
 export async function onStartUp() {
   const updated = sum(
