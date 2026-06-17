@@ -19,9 +19,9 @@ import { runBackgroundTasks } from "/imports/utils/background-tasks";
 export interface CustomMapConfig {
   crs?: "Simple";
   api?: "c3nav";
-  /** 
-   * We support the c3nav v2 api. 
-   * @example "https://38c3.c3nav.de/api/v2" 
+  /**
+   * We support the c3nav v2 api.
+   * @example "https://38c3.c3nav.de/api/v2"
    */
   apiUrl?: string;
   layers: { name: string; level: number; tileUrl: string }[];
