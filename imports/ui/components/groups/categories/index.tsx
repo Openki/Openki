@@ -61,22 +61,24 @@ export function GroupCategories({
     return null;
   }
   return (
-    <div className="tag-group multiline group-categories">
-      {categories.map((c) => (
-        <CategoryLabelLinked
-          key={c}
-          category={c}
-          onMouseOver={async () => {
-            await onMouseOver?.(c);
-          }}
-          onMouseOut={async () => {
-            await onMouseOut?.(c);
-          }}
-          onClick={async () => {
-            await onClick?.(c);
-          }}
-        />
-      ))}
+    <div className="group-categories">
+      <div className="tag-group multiline">
+        {categories.map((c) => (
+          <CategoryLabelLinked
+            key={c}
+            category={c}
+            onMouseOver={async () => {
+              await onMouseOver?.(c);
+            }}
+            onMouseOut={async () => {
+              await onMouseOut?.(c);
+            }}
+            onClick={async () => {
+              await onClick?.(c);
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 }

@@ -34,6 +34,11 @@
   margin-left: -5px;
 }
 
+.tag-group.multiline {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .tag-group .tag {
   font-size: $font-size-base;
   margin-left: 5px;
