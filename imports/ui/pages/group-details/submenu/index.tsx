@@ -19,7 +19,7 @@ export function Submenu({ group }: { group: GroupModel }) {
   const [descriptionTruncated, setDescriptionTruncated] = useState(true);
   const elementRef = useRef<HTMLDivElement>(null);
 
-  function mayEdit() {
+  function canEdit() {
     return group.editableBy(user);
   }
 
@@ -49,7 +49,7 @@ export function Submenu({ group }: { group: GroupModel }) {
               <span className="tab-label">{t("group.subnav.descr", "Description")}</span>
             </button>
           </li>
-          {mayEdit() && (
+          {canEdit() && (
             <li className="nav-item" role="presentation">
               <button
                 className="nav-link"
@@ -134,7 +134,7 @@ export function Submenu({ group }: { group: GroupModel }) {
         >
           <History group={group} />
         </div>
-        {mayEdit() && (
+        {canEdit() && (
           <div
             className="tab-pane mh-none"
             id="files"

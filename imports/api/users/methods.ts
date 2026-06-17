@@ -320,7 +320,7 @@ export const addPrivilege = ServerMethod(
 
     const operator = await Meteor.userAsync();
     if (!operator?.privileged("admin")) {
-      // At the moment, only admins may hand out privileges, so this is easy
+      // At the moment, only admins can hand out privileges, so this is easy
       return;
     }
 

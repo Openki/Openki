@@ -2,7 +2,7 @@ import { GroupMemberEntity } from "/imports/api/groups/groups";
 import { UserModel } from "/imports/api/users/users";
 import { hasRoleUser } from "./group-role-utils";
 
-export function mayDeletePost(
+export function canDeletePost(
   user: UserModel | undefined | null,
   group: { members: GroupMemberEntity[] },
   post: { userId?: string },
@@ -17,7 +17,7 @@ export function mayDeletePost(
   );
 }
 
-export function mayEditPost(user: { _id: string } | undefined | null, post: { userId?: string }) {
+export function canEditPost(user: { _id: string } | undefined | null, post: { userId?: string }) {
   if (!user || !post.userId) {
     return false;
   }

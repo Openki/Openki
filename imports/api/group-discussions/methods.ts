@@ -119,7 +119,7 @@ export const editComment = ServerMethod(
       throw new Meteor.Error(404, "no such comment");
     }
 
-    if (!GroupDiscussionUtils.mayEditPost(await Meteor.userAsync(), originalComment)) {
+    if (!GroupDiscussionUtils.canEditPost(await Meteor.userAsync(), originalComment)) {
       throw new Meteor.Error(401, "you cant");
     }
 
@@ -150,7 +150,7 @@ export const deleteComment = ServerMethod(
       throw new Meteor.Error(401, "delete not permitted");
     }
 
-    if (!GroupDiscussionUtils.mayDeletePost(user, group, comment)) {
+    if (!GroupDiscussionUtils.canDeletePost(user, group, comment)) {
       throw new Meteor.Error(401, "delete not permitted");
     }
 

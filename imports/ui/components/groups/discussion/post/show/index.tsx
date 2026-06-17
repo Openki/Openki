@@ -36,15 +36,15 @@ export function Show({ post, onEdit }: Props) {
 
     return classes.join(" ");
   }
-  function mayEdit() {
-    return GroupDiscussionUtils.mayEditPost(user ?? undefined, post);
+  function canEdit() {
+    return GroupDiscussionUtils.canEditPost(user ?? undefined, post);
   }
-  function mayDelete() {
+  function canDelete() {
     const group = Groups.findOne(post.groupId);
     if (!group) {
       throw new Error("Unexpected falsy: group");
     }
-    return GroupDiscussionUtils.mayDeletePost(user ?? undefined, group, post);
+    return GroupDiscussionUtils.canDeletePost(user ?? undefined, group, post);
   }
   function hasBeenEdited() {
     return moment(post.time_updated).isAfter(post.time_created);
@@ -122,12 +122,12 @@ export function Show({ post, onEdit }: Props) {
             )}
           </span>
           <span className="discussion-buttons">
-            {mayEdit() && (
+            {canEdit() && (
               <button type="button" className="discussion-edit-btn" onClick={handleEditClick}>
                 <i className="fa-solid fa-pen-to-square" />
               </button>
             )}
-            {mayDelete() && <RemoveDropdown {...removeDropdownAttr()} />}
+            {canDelete() && <RemoveDropdown {...removeDropdownAttr()} />}
           </span>
         </div>
         <div className="discussion-post-body">

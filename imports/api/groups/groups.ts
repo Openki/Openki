@@ -131,14 +131,14 @@ export class Group {
   }
 
   /**
-   * Check whether a user may edit the group.
+   * Check whether a user can edit the group.
    */
   editableBy(this: GroupModel, user: UserModel | null | undefined) {
     if (!user) {
       return false;
     }
     return (
-      this.isNew() /* Anybody may create a new group */ ||
+      this.isNew() /* Anyone can create a new group */ ||
       user.privileged("admin") /* Admins can edit all groups */ ||
       intersection(user.badges, this.editors).length > 0
     );

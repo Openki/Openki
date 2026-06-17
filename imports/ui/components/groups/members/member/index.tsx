@@ -44,16 +44,16 @@ export function Member({ member, group }: { member: GroupMemberEntity; group: Gr
   function memberRoles() {
     return member.roles.filter((role) => role !== "participant");
   }
-  function maySubscribeToTeam() {
+  function canSubscribeToTeam() {
     const change = subscribeToTeam();
     return change?.validFor(currentUser);
   }
 
   function editableMessage() {
-    const mayChangeComment = member.user === currentUser?._id;
-    return mayChangeComment;
+    const canChangeComment = member.user === currentUser?._id;
+    return canChangeComment;
   }
-  function mayUnsubscribeFromTeam(label: string) {
+  function canUnsubscribeFromTeam(label: string) {
     if (label !== "team") {
       return false;
     }
@@ -61,8 +61,8 @@ export function Member({ member, group }: { member: GroupMemberEntity; group: Gr
     return change && change.validFor(currentUser);
   }
   function showMemberComment() {
-    const mayChangeComment = member.user === currentUser?._id;
-    return member.comment || mayChangeComment;
+    const canChangeComment = member.user === currentUser?._id;
+    return member.comment || canChangeComment;
   }
   function removeFromTeamDropdownAttr() {
     return {
@@ -99,12 +99,12 @@ export function Member({ member, group }: { member: GroupMemberEntity; group: Gr
                   <RoleIcon type={role} regionId={group.region} />{" "}
                   <span className="role-short">{roleShort(role)}</span>
                 </span>{" "}
-                {mayUnsubscribeFromTeam(role) && (
+                {canUnsubscribeFromTeam(role) && (
                   <RemoveFromTeamDropdown {...removeFromTeamDropdownAttr()} />
                 )}
               </div>
             ))}
-          {maySubscribeToTeam() && (
+          {canSubscribeToTeam() && (
             <button
               type="button"
               className="btn btn-sm btn-add add-to-team-btn"

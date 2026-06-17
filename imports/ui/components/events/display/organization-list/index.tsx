@@ -22,12 +22,12 @@ export function OrganizationList({ event }: Props) {
   const [isRegionLoading, region] = useRegionDetails(event.region);
 
   function tools(organizationId: string, event: EventModel) {
-    // Organizations may be adopted from the group, these cannot be removed
+    // Organizations can be adopted from the group, these cannot be removed
     const ownOrganization = event.organizations.includes(organizationId);
 
     return (
       <>
-        {ownOrganization && (!!user?.mayPromoteWith(organizationId) || event.editableBy(user)) && (
+        {ownOrganization && (!!user?.canPromoteWith(organizationId) || event.editableBy(user)) && (
           <li className="dialog-dropdown-btn">
             <Remove event={event} organizationId={organizationId} />
           </li>
@@ -54,7 +54,7 @@ export function OrganizationList({ event }: Props) {
         (
           region?.defaultTeamOrganizations?.includes(organizationId) &&
           // when user ist not member of the organization or a admin
-          !user?.mayPromoteWith(organizationId) &&
+          !user?.canPromoteWith(organizationId) &&
           !event.editableBy(user)
         )
       ),
@@ -64,7 +64,7 @@ export function OrganizationList({ event }: Props) {
     <div className="tag-group multiline">
       {organizations?.map((organizationId) => {
         const isTeam = event.editors.includes(organizationId);
-        // Organization may be adopted from the group, these cannot be removed
+        // Organization can be adopted from the group, these cannot be removed
         const ownOrganization = event.organizations.includes(organizationId);
         return (
           <React.Fragment key={organizationId}>
@@ -81,7 +81,7 @@ export function OrganizationList({ event }: Props) {
             )}
 
             {ownOrganization &&
-              (!!user?.mayPromoteWith(organizationId) || event.editableBy(user)) && (
+              (!!user?.canPromoteWith(organizationId) || event.editableBy(user)) && (
                 <div className="btn-group tag-btn organization-tag-btn addon align-top">
                   <button
                     type="button"

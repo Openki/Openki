@@ -60,7 +60,7 @@ export function Role(props: Props) {
   function roleIs(type: string) {
     return props.role.type === type;
   }
-  function maySubscribe() {
+  function canSubscribe() {
     const operator = user;
     return groupSubscribe().validFor(operator || (new User() as UserModel));
   }
@@ -243,7 +243,7 @@ export function Role(props: Props) {
               </div>
             </>
           ) : (
-            maySubscribe() && (
+            canSubscribe() && (
               <button
                 data-test={`group-role-enroll-${props.role.type}`}
                 type="button"

@@ -75,7 +75,7 @@ export function Events({ group }: Props) {
   function upcomingEventsCount() {
     return group.futureEvents;
   }
-  function mayAdd() {
+  function canAdd() {
     return group.editableBy(user);
   }
   function haveOngoingEvents() {
@@ -180,7 +180,7 @@ export function Events({ group }: Props) {
         </div>
       )}
 
-      {mayAdd() && (
+      {canAdd() && (
         <div className="page-component group-event-tasks">
           <Add group={group} />
           {haveEvents() && <DeleteEvents {...deleteGroupEventsArgs()} />}

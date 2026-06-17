@@ -130,12 +130,12 @@ export class User {
   }
 
   /**
-   * Check whether the user may promote things with the given organization.
+   * Check whether the user can promote things with the given organization.
    * The user must be a member of the organization to be allowed to promote things with it.
    *
    * @param organizationId The organization to check
    */
-  mayPromoteWith(this: UserModel, organizationId: string) {
+  canPromoteWith(this: UserModel, organizationId: string) {
     if (!organizationId || !this.organizations) {
       return false;
     }

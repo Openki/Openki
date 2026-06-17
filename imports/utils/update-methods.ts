@@ -49,20 +49,20 @@ export function promote(collection: OrganizationPromoters) {
       throw new Meteor.Error(401, "not permitted");
     }
 
-    const mayPromote = user.mayPromoteWith(organization._id);
-    const mayEdit = doc.editableBy(user);
+    const canPromote = user.canPromoteWith(organization._id);
+    const canEdit = doc.editableBy(user);
 
     const update: Mongo.Modifier<OrganizationPromoterEntity> = {};
     if (enable) {
       // The user is allowed to add the organization if she is part of the organization
-      if (!mayPromote) {
+      if (!canPromote) {
         throw new Meteor.Error(401, "not permitted");
       }
       update.$addToSet = { organizations: organization._id };
     } else {
       // The user is allowed to remove the organization if she is part of the organization
       // or if she has editing rights on the group
-      if (!mayPromote && !mayEdit) {
+      if (!canPromote && !canEdit) {
         throw new Meteor.Error(401, "not permitted");
       }
       update.$pull = { organizations: organization._id, teamOrganizations: organization._id };

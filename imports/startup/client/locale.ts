@@ -58,7 +58,7 @@ Meteor.startup(() => {
     }
   }
 
-  // Here we ask for the browser UI language which may not be what the visitor
+  // Here we ask for the browser UI language which can not be what the visitor
   // wanted. Oh well.
   if (setLocale(navigator.language)) {
     return;

@@ -129,7 +129,7 @@ export function GroupCompact({ group, organizationTagEvents, categoryTagEvents }
         (
           region?.defaultTeamOrganizations?.includes(organizationId) &&
           // when user ist not member of the organization or a admin
-          !user?.mayPromoteWith(organizationId) &&
+          !user?.canPromoteWith(organizationId) &&
           !group.editableBy(user)
         )
       ),

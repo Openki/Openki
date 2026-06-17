@@ -67,7 +67,7 @@ export function Full({
         (
           region?.defaultTeamOrganizations?.includes(organizationId) &&
           // when user is not member of the organization or a admin
-          !user?.mayPromoteWith(organizationId) &&
+          !user?.canPromoteWith(organizationId) &&
           !event.editableBy(user)
         )
       ),

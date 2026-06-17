@@ -16,7 +16,7 @@ async function tenantMutationPreconditionCheck(tenantId: string) {
     throw new Meteor.Error(401, "Not permitted");
   }
 
-  // Only current tenant admins (or instance admins) may draft other people into it
+  // Only current tenant admins (or instance admins) can draft other people into it
   if (!tenant.editableBy(await Meteor.userAsync())) {
     throw new Meteor.Error(401, "Not permitted");
   }

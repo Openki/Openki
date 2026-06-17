@@ -24,7 +24,7 @@ export function OrganizationList({ group }: Props) {
   function tools(organizationId: string, group: GroupModel) {
     return (
       <>
-        {(!!user?.mayPromoteWith(organizationId) || group.editableBy(user)) && (
+        {(!!user?.canPromoteWith(organizationId) || group.editableBy(user)) && (
           <li className="dialog-dropdown-btn">
             <Remove group={group} organizationId={organizationId} />
           </li>
@@ -51,7 +51,7 @@ export function OrganizationList({ group }: Props) {
         (
           region?.defaultTeamOrganizations?.includes(organizationId) &&
           // when user ist not member of the organization or a admin
-          !user?.mayPromoteWith(organizationId) &&
+          !user?.canPromoteWith(organizationId) &&
           !group.editableBy(user)
         )
       ),
@@ -79,7 +79,7 @@ export function OrganizationList({ group }: Props) {
               </div>
             )}
 
-            {(!!user?.mayPromoteWith(organizationId) || group.editableBy(user)) && (
+            {(!!user?.canPromoteWith(organizationId) || group.editableBy(user)) && (
               <div className="btn-group tag-btn organization-tag-btn addon align-top">
                 <button
                   type="button"

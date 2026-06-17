@@ -81,7 +81,7 @@ export class Venue {
   public allowParallelEvents = true;
 
   /**
-   * Check whether a user may edit the venue.
+   * Check whether a user can edit the venue.
    */
   editableBy(this: VenueModel, user: UserModel | undefined | null) {
     if (!user) {
@@ -89,7 +89,7 @@ export class Venue {
     }
     const isNew = !this._id;
     return (
-      isNew /* Anybody may create a new location */ ||
+      isNew /* Anyone can create a new location */ ||
       user._id === this.editor ||
       (this.editOrganization && user.organizations.includes(this.editOrganization)) ||
       user.privileged("admin") // Admins can edit all venues

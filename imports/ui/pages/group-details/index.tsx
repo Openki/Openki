@@ -18,7 +18,6 @@ import { MetaTags } from "/imports/ui/components/MetaTags";
 import { ButtonDelete, ButtonEdit } from "../../components/Buttons";
 import { Discussion } from "../../components/groups/discussion";
 import { Edit } from "../../components/groups/edit";
-import { mayShare } from "../../components/groups/edit/mayShare";
 import { Events } from "../../components/groups/events";
 import { Members } from "../../components/groups/members";
 import { Roles } from "../../components/groups/roles";
@@ -39,6 +38,28 @@ export interface Props {
   select: string;
 }
 
+function canShare(group: GroupModel) {
+  if (group.isPrivate()) {
+    return false;
+  }
+
+  // only show share a group if there is a role to subscribe
+  if (
+    !(
+      group.roles.some((r) => r !== "team") ||
+      (group.roles.includes("team") && !group.members.some((m) => m.roles.includes("team")))
+    )
+  ) {
+    return false;
+  }
+
+  return true;
+}
+
+function canEdit(group: GroupModel, user: UserModel | null) {
+  return group?.editableBy(user);
+}
+
 export function GroupDetailsPage({ edit, group, select }: Props) {
   const { t } = useTranslation();
   const user = useUser();
@@ -47,10 +68,6 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
   const [isBusy, setIsBusy] = useState(false);
 
   const [expanded, setExpanded] = useState(false);
-
-  function mayEdit(group: GroupModel) {
-    return group?.editableBy(user);
-  }
 
   function groupStateClasses(group: GroupModel) {
     const classes = [];
@@ -192,7 +209,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
               text: t("message.groupCreated.addImage", "Add an image"),
               href: "#files-tab",
             },
-            mayShare(group)
+            canShare(group)
               ? { text: t("message.groupCreated.share", "Invite your friends"), href: "#share" }
               : undefined,
             {
@@ -227,7 +244,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
                     <Submenu group={group} />
                   </div>
 
-                  {mayShare(group) && (
+                  {canShare(group) && (
                     <div className="p-3 sharing-wrapper text-end" id="share">
                       <h4>
                         {t("sharing.title", "Invite your friends")} <Sharing />
@@ -235,7 +252,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
                     </div>
                   )}
 
-                  {mayEdit(group) && (
+                  {canEdit(group, user) && (
                     <>
                       <div className="actions">
                         {!expanded && (
@@ -322,4 +339,5 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
 
 // for Blaze
 import "./template.html";
+import { UserModel } from "/imports/api/users/users";
 Template.registerHelper("GroupDetailsPage", () => GroupDetailsPage);

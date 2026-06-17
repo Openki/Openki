@@ -23,7 +23,7 @@ export type TenantModel = Tenant & TenantEntity;
 
 export class Tenant {
   /**
-   * Check whether a user may edit the tenant.
+   * Check whether a user can edit the tenant.
    */
   editableBy(this: TenantModel, user: UserModel | undefined | null) {
     if (!user) {

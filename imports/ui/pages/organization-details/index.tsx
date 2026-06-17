@@ -67,7 +67,7 @@ export function OrganizationDetailsPage({ groupQuery, organization, showGroups }
 
   const user = useUser();
 
-  const mayEdit = organization.editableBy(user);
+  const canEdit = organization.editableBy(user);
 
   function isFeatured() {
     return !!region && !organization.isNew() && region.featuredOrganization === organization._id;
@@ -77,14 +77,14 @@ export function OrganizationDetailsPage({ groupQuery, organization, showGroups }
     if (organization.logoUrl) {
       classes.push("has-logo");
     }
-    if (mayEdit) {
+    if (canEdit) {
       classes.push("is-editable");
     }
     return classes.join(" ");
   }
 
   function allowEditingSettings() {
-    return mayEdit && !organization.isNew() && editingSettings;
+    return canEdit && !organization.isNew() && editingSettings;
   }
   function dashboardAttr(): DashboardProps {
     return {
@@ -271,7 +271,7 @@ export function OrganizationDetailsPage({ groupQuery, organization, showGroups }
             >
               <i className="fa-solid fa-xmark fa-lg" />
             </button>
-            {!organization.isNew() && mayEdit && (
+            {!organization.isNew() && canEdit && (
               <button
                 className="btn btn-link float-end ms-2"
                 data-bs-title={t("organizations.settings.title")}
@@ -290,10 +290,10 @@ export function OrganizationDetailsPage({ groupQuery, organization, showGroups }
               </div>
             )}
             <div className="organization-details-name">
-              {mayEdit ? <Editable {...editableNameAttr} /> : organization.name}
+              {canEdit ? <Editable {...editableNameAttr} /> : organization.name}
             </div>{" "}
             <div className="organization-details-short">
-              {mayEdit ? <Editable {...editableShortAttr} /> : organization.short}
+              {canEdit ? <Editable {...editableShortAttr} /> : organization.short}
             </div>
           </div>
           <div className="details-body organization-details-body">
@@ -301,11 +301,11 @@ export function OrganizationDetailsPage({ groupQuery, organization, showGroups }
               className={`details-content organization-details-content ${errors.all ? "has-error" : ""}`}
             >
               <div className="organization-details-claim">
-                {mayEdit ? <Editable {...editableClaimAttr} /> : organization.claim}
+                {canEdit ? <Editable {...editableClaimAttr} /> : organization.claim}
               </div>
 
               <div className="organization-details-description">
-                {mayEdit ? (
+                {canEdit ? (
                   <Editable {...editableDescriptionAttr} />
                 ) : (
                   <span dangerouslySetInnerHTML={{ __html: organization.description }}></span>

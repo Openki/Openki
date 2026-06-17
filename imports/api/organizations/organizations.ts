@@ -116,14 +116,14 @@ export class Organization {
   }
 
   /**
-   * Check whether a user may edit the organization.
+   * Check whether a user can edit the organization.
    */
   editableBy(this: OrganizationModel, user: UserModel | null | undefined) {
     if (!user) {
       return false;
     }
     return (
-      this.isNew() /* Anybody may create a new organization */ ||
+      this.isNew() /* Anyone can create a new organization */ ||
       user.privileged("admin") /* Admins can edit all organizations */ ||
       this.members?.some(
         (m) => m.user === user._id,
