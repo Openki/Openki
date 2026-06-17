@@ -24,7 +24,7 @@ services:
     environment:
       ROOT_URL: http://localhost:3000
       PORT : 3000
-      MONGO_URL: mongodb://mongo:27017/db
+      MONGO_URL: mongodb://mongo:27017/mongodb
       METEOR_SETTINGS: ${METEOR_SETTINGS}
     networks:
       - app-network
