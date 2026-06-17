@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 
 import { clean, create } from "/imports/api/fixtures/methods";
 import * as Alert from "/imports/api/alerts/alert";
-import { updateDbCacheFields } from "/imports/api/db-utilities/updateDbCacheFields";
 
 import { Button } from "../../../components/Buttons";
 
@@ -35,7 +34,6 @@ export function TestdataPage() {
           try {
             await clean();
             await create();
-            await updateDbCacheFields();
             Alert.success(t("testdata.finish", "Finish!"));
           } catch (e) {
             Alert.error(e);

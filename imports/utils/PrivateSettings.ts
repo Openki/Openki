@@ -110,17 +110,6 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
    */
   notificationGracePeriodHours: Number,
 
-  startup: {
-    /**
-     * Build the cache in the db async or sync. For larger databases it takes a
-     * long time until all fields are updated, during this time the startup is blocked.
-     * The users cannot use the website. Because in a normal startup the database
-     * already has these fields, this task can also be done async every sunday at 22:30.
-     * @default false
-     */
-    buildDbCacheAsync: Boolean,
-  },
-
   /** Delete entries from the log or remove critical information. The log can be viewed via `.../log` */
   scrub: Match.Maybe([
     {
@@ -155,7 +144,6 @@ if (Meteor.isServer) {
     printLog: false,
     apiMaxLimit: 100,
     notificationGracePeriodHours: 72,
-    startup: { buildDbCacheAsync: false },
   };
 
   // none deep merge

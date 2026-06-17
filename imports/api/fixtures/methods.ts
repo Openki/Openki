@@ -21,6 +21,7 @@ import { usersCreate as usersDataCreate } from "./usersCreate";
 import { serverError } from "../log/methods";
 import { Invitations } from "../invitations/invitations";
 import { JoinLinks } from "../joinLinks/joinLinks";
+import { updateDbCacheFieldsServerOnly } from "../db-utilities/updateDbCacheFieldsServerOnly";
 
 export const clean = ServerMethod(
   "fixtures.clean",
@@ -59,29 +60,49 @@ export const create = ServerMethod(
     try {
       await usersDataCreate();
 
+      /**
+       * We only need to update the DB cache if the fixture data has changed.
+       *
+       * NOTE: The user fixtures might change and will currently not cause the DB cache to update.
+       * This should be unlikely though, since most of the time, the other DB collections are changing.
+       * If you need to enure the fixtures are fully re-created and the DB cache is fully updated,
+       * you can reset the DB and thereby re-create all fixtures (including users).
+       */
+      let shouldUpdateDBCache = false;
+
       if ((await Organizations.countDocuments()) === 0) {
         await organizationsDataCreate();
+        shouldUpdateDBCache = true;
       }
 
       if ((await Regions.countDocuments()) === 0) {
         await regionsDataCreate();
+        shouldUpdateDBCache = true;
       }
 
       if ((await Venues.countDocuments()) === 0) {
         await venuesDataCreate();
+        shouldUpdateDBCache = true;
       }
 
       if ((await Groups.countDocuments()) === 0) {
         await groupsDataCreate();
+        shouldUpdateDBCache = true;
       }
 
       if ((await Events.countDocuments()) === 0) {
         await eventsDataCreate();
         await eventsDataGenerate();
+        shouldUpdateDBCache = true;
       }
 
       if ((await GroupDiscussions.countDocuments()) === 0) {
         await commentsDataGenerate();
+        shouldUpdateDBCache = true;
+      }
+
+      if (shouldUpdateDBCache) {
+        await updateDbCacheFieldsServerOnly();
       }
     } catch (e) {
       serverError(e);

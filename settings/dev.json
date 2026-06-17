@@ -305,8 +305,5 @@
   "PrerenderIO": {
     "serviceUrl": "http://localhost:3033/",
     "token": "mytoken"
-  },
-  "startup": {
-    "buildDbCacheAsync": false
   }
 }

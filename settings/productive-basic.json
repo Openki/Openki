@@ -162,9 +162,6 @@
     "serviceUrl": "http://localhost:3033/",
     "token": "mytoken"
   },
-  "startup": {
-    "buildDbCacheAsync": true
-  },
   "scrub": [
     {
       "name": "scrub client-errors",
