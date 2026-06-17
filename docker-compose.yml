@@ -4,7 +4,7 @@ services:
   # MongoDB
   # ─────────────────────────────────────────────
   mongo:
-    image: mongodb/mongodb-community-server:latest
+    image: mongodb/mongodb-community-server:8.0-ubuntu2204
     restart: unless-stopped
     ports:
       - "27017:27017"
@@ -15,7 +15,7 @@ services:
   # Meteor app
   # ─────────────────────────────────────────────
   app:
-    image: openki-app:1.1.0
+    image: openki-app:2.0.0
     restart: unless-stopped
     depends_on:
       - mongo
