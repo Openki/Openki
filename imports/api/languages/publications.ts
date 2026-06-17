@@ -57,7 +57,7 @@ export const [findFilter, useFindFilter] = ServerPublishMany(
     });
     return undefined;
   },
-  (filter: FindFilter) => {
+  (filter) => {
     check(filter, Match.Maybe(FindFilterPattern));
 
     const selector: Mongo.Selector<LanguageEntity> = filter.code
