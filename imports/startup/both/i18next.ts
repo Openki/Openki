@@ -142,14 +142,16 @@ if (Meteor.isServer) {
 
 /**
  * A reactive store that changed after a lang has changed and is ready (eg. after resource loading).
- * It is used to update string in the ui after without reloading the page
+ * It is used to update strings in the ui after without reloading the page.
+ *
+ * This does not store the current language, and is only used to force updates.
  */
-const reactiveLang = new ReactiveVar(Math.random());
+const reactiveLang = new ReactiveVar(Date.now());
 i18next.on("languageChanged", function () {
-  reactiveLang.set(Math.random());
+  reactiveLang.set(Date.now());
 });
 i18next.on("loaded", function () {
-  reactiveLang.set(Math.random());
+  reactiveLang.set(Date.now());
 });
 
 /**
