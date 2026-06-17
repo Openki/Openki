@@ -4,7 +4,7 @@ services:
   # MongoDB
   # ─────────────────────────────────────────────
   mongo:
-    image: mongodb/mongodb-community-server:8.0-ubuntu2204
+    image: mongodb/mongodb-community-server:8.3-ubuntu2204-slim
     restart: unless-stopped
     ports:
       - "27017:27017"
