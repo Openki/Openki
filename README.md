@@ -12,17 +12,20 @@ Openki is an interactive web platform that provides barrier‑free access to edu
 <div align="right"> (★ Star us if you like the idea)</div>
 
 ## Try it!
+
 Live version: [openki.net](https://openki.net)  
-Demo playground: [sandbox.openki.net](https://sandbox.openki.net/?region=Spilistan "running here")  
+Demo playground: [sandbox.openki.net](https://sandbox.openki.net/?region=Spilistan "running here")
 
 ---
 
 ## Why choose Openki?
+
 **Community‑driven** – anyone can propose topics, host events, and join discussions.  
 **Multilingual & extensible** – built‑in i18n, custom roles, and plug‑in‑friendly architecture.  
-**Various use cases** – works for long‑term public installations **and** ad‑hoc setups such as unconferences, BarCamps or festivals.  
+**Various use cases** – works for long‑term public installations **and** ad‑hoc setups such as unconferences, BarCamps or festivals.
 
 ### Core functionalities
+
 - Easily propose topics and events
 - Simple discussion board per group
 - Extendable participant roles
@@ -30,11 +33,12 @@ Demo playground: [sandbox.openki.net](https://sandbox.openki.net/?region=Spilist
 - Regions and venue system
 - Organizations-, community- and program functionality with filters
 
-
 ### Features not visible at first sight
+
 <details><summary>Click to see</summary>
 
 **Integrations:**
+
 - :computer: Kiosk screen views with upcoming events ([docs](https://gitlab.com/Openki/Openki/wikis/InfoScreens))
 - :pager: Iframe-URLs to dynamically embed views into other pages ([docs](https://gitlab.com/Openki/Openki/wikis/Frames))
 - :date: Calendar and iCal exports ([docs](https://gitlab.com/Openki/Openki/wikis/calendar-export))
@@ -43,6 +47,7 @@ Demo playground: [sandbox.openki.net](https://sandbox.openki.net/?region=Spilist
 - :electric_plug: JSON API for read-only access ([docs](https://gitlab.com/Openki/Openki/-/wikis/JSON-API))
 
 **Further:**
+
 - :envelope: Email notifications
 - :mailbox: Private messaging
 - :open_file_folder: File upload
@@ -61,6 +66,7 @@ Demo playground: [sandbox.openki.net](https://sandbox.openki.net/?region=Spilist
     - Configure group background images
 
 **Roadmap & Upcoming Features**
+
 - :white_large_square: White-labeling per organizations, tenants and regions
 - :chart_with_upwards_trend: Visual statistics
 - :closed_lock_with_key: More privacy settings
@@ -72,11 +78,14 @@ Demo playground: [sandbox.openki.net](https://sandbox.openki.net/?region=Spilist
 ---
 
 # Contribution
+
 → _Please upvote features you would like to see or propose new ones in our [issue tracker](https://gitlab.com/Openki/Openki/-/issues/?sort=milestone&state=opened)._
-Code submissions are warmly welcome, please check out our [Code of Conduct](https://gitlab.com/Openki/Openki/wikis/Code-of-Conduct).  
+Code submissions are warmly welcome, please check out our [Code of Conduct](https://gitlab.com/Openki/Openki/wikis/Code-of-Conduct).
 
 ## Tech Stack
+
 Free software built with love and care. We use:
+
 - [Meteor.js](https://docs.meteor.com/about/what-is.html) (full-stack JavaScript framework)
 - Node.js (runtime internally used by Meteor)
 - [npm](https://www.npmjs.com/) + Meteor package system
@@ -89,13 +98,14 @@ Free software built with love and care. We use:
 - [Cypress](https://docs.cypress.io/) (test suite)
 - [Matomo](https://matomo.org/help/) (web analytics, formerly Piwik)
 
-### Installation (Linux, OSX and Windows)
-1) To install Meteor, run: `curl https://install.meteor.com | sh` (or download the [installer for Windows](https://install.meteor.com/windows))
-1) [Download and unzip](https://gitlab.com/Openki/Openki/-/archive/main/Openki-main.zip) or `git clone https://gitlab.com/Openki/Openki.git` Openki repository into `/some/path`.
-1) `cd /some/path/Openki`
-1) `meteor npm install -verbose` (sometimes twice)
-1) Run `meteor npm run debug -verbose` (We support server side debugging. For help, see: https://nodejs.org/en/docs/inspector)
-1) Find Openki running on [http://localhost:3000](http://localhost:3000/)
+### Installation (Linux, macOS and Windows)
+
+1. To install Meteor, run: `curl https://install.meteor.com | sh` (or download the [installer for Windows](https://install.meteor.com/windows))
+1. [Download and unzip](https://gitlab.com/Openki/Openki/-/archive/main/Openki-main.zip) or `git clone https://gitlab.com/Openki/Openki.git` Openki repository into `/some/path`.
+1. `cd /some/path/Openki`
+1. `meteor npm install -verbose` (sometimes twice)
+1. Run `meteor npm run debug -verbose` (We support server side debugging. For help, see: https://nodejs.org/en/docs/inspector)
+1. Find Openki running on [http://localhost:3000](http://localhost:3000/)
 
 Log in: User `greg` is admin and has password: `greg`. Any other visible user has password `greg` as well.  
 Further reading in our [docs for devs](https://gitlab.com/Openki/Openki/-/wikis/Docs%20for%20developers).
@@ -112,20 +122,19 @@ Openki uses Weblate for crowdsourced translations.
 [![Graphical translation status box from Weblate](https://hosted.weblate.org/widget/openki/287x66-grey.png)](https://hosted.weblate.org/engage/openki/)  
 To help translating, please continue to our [translation guide](https://gitlab.com/Openki/Openki/-/wikis/translation).
 
-
 # Documentation
 
 - **Technical docs** – detailed architecture, API, and deployment guides: [GitLab Wiki](https://gitlab.com/Openki/Openki/wikis/home)
-- **User guide** – walkthrough of core features and UI: [How-to Openki](https://howto.openki.net/?page_id=181)  
+- **User guide** – walkthrough of core features and UI: [How-to Openki](https://howto.openki.net/?page_id=181)
 - **Further info** - more documentation can be found on our [about page](https://about.openki.net/?page_id=1043)
 
-
 # Support & Contacts
+
 - Technical Support: [support_ät_openki.net](mailto:support_ät_openki.net "write us")
 - Region assistance: [regions_ät_openki.net](mailto:regions_ät_openki.net "write us")
 - Community Support (rooms, mentors, communication, etc): [community_ät_openki.net](mailto:community_ät_openki.net "write us")
 - Security Reports: [security_ät_openki.net](mailto:security_ät_openki.net "write us") (see our [security policy](https://gitlab.com/Openki/Openki/-/wikis/security))
 
-
 # License
+
 - [AGPL](https://gitlab.com/Openki/Openki/-/blob/dev/LICENSE) – GNU Affero General Public License 3.0
