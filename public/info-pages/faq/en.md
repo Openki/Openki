@@ -12,9 +12,11 @@ Find out more about [Openki and its philosophy](https://about.openki.net/) or re
 
 Openki is a Ukrainian word (опеньки) referring to a type of fungus commonly known as the honey fungus or [_Armillaria mellea_](https://en.wikipedia.org/wiki/Armillaria_mellea).
 The name refers specifically to the [mycelium](https://en.wikipedia.org/wiki/Mycelium), the part of a fungus that is usually not visible when we think of a “mushroom.” It consists of thousands of thin threads forming a dense underground network, which in the case of Openki can span several square kilometers and weigh hundreds of tons.
-Many plants are connected through these mycelial networks, relying on them for germination, nutrient exchange, and even communication. Above the surface, the mushrooms—the "fruiting bodies"—pop up unexpectedly and unpredictably.
+Many plants are connected through these mycelial networks, relying on them for germination, nutrient exchange, and even communication. Above the surface, the mushrooms—the "fruiting bodies"—pop up unexpectedly and unpredictably, and always in groups.
 
 Openki (the fungus) feeds on both living shrubs and dead organic material. Philosophically, the mycelium serves as a metaphor for a transformation to an alternative model of education: it composts the hierarchical branch-and-root structure of the "ancient Greek tree of knowledge"—where disciplines are separated and subordinated—and connects them into a horizontal interconnected network of knowledge.
+
+Openki is occasionally misspelled as OpenKI. The correct spelling is Openki.
 
 ### Who owns Openki?
 
