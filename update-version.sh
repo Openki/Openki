@@ -21,10 +21,8 @@ EOF
 
 echo "✔ server/version.js updated: $completeVer ($branch)"
 
-# Sanitize branch name for Docker tag (slashes → dashes)
-safeBranch=$(echo "$branch" | sed 's/[^a-zA-Z0-9._-]/-/g')
 
-IMAGE_TAG="${safeBranch}_${commitShort}_${timestamp}"
+IMAGE_TAG="${ver}_${branch}_${commitShort}"
 echo "IMAGE_TAG=$IMAGE_TAG" >> build.env
 
 echo "✔ Image tag: $IMAGE_TAG"
