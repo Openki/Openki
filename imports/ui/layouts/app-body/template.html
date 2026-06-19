@@ -20,13 +20,13 @@
         </div>
       {{else}}
 
-        {{> introduction hasPricePolicy=hasPricePolicy}}
 
         {{> alerts}}
 
         {{> emailValidation}}
 
         <div id="maincontent">
+        {{> introduction hasPricePolicy=hasPricePolicy}}
           {{#if isAdminPage}}
             <div class="container mw-md">
               <h1>{{i18n 'adminPanel.heading' 'Admin panel'}}</h1>
