@@ -854,6 +854,8 @@
   "profile.email": "E-mail",
   "profile.email_settings": "E-mail settings",
   "profile.email_settings.hint": "Add your email address to get notifications.",
+  "profile.email.unverified_indication": "Unverified",
+  "profile.email.verified_indication": "Verified",
   "profile.gotoProfile": "Visit your profile",
   "profile.input.newPassword": "New password",
   "profile.input.oldPassword": "Your current password",

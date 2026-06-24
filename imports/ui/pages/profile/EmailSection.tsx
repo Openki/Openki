@@ -126,7 +126,22 @@ export function EmailSection() {
               </Button>
             </div>
           </form>
-          {user.emailAddress() && !user.verifiedEmailAddress() && !isBusy && <VerifyEmail />}
+          {user.emailAddress() &&
+            !isBusy &&
+            (user.verifiedEmailAddress() ? (
+              <span className="badge text-bg-success mt-1">
+                {t("profile.email.verified_indication", "Verified")}
+              </span>
+            ) : (
+              <>
+                <span className="badge text-bg-danger mt-1">
+                  {t("profile.email.unverified_indication", "Unverified")}
+                </span>
+                <span className="ms-3">
+                  <VerifyEmail />
+                </span>
+              </>
+            ))}
         </div>
         <div className="col-sm-6">
           <div className="mb-2">
