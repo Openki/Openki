@@ -26,7 +26,8 @@ consists of thousands of thin threads forming a dense underground network, which
 in the case of Openki can span several square kilometers and weigh hundreds of
 tons. Many plants are connected through these mycelial networks, relying on them
 for germination, nutrient exchange, and even communication. Above the surface,
-the mushrooms—the "fruiting bodies"—pop up unexpectedly and unpredictably.
+the mushrooms—the "fruiting bodies"—pop up unexpectedly and unpredictably, and
+always in groups.
 
 Openki (the fungus) feeds on both living shrubs and dead organic material.
 Philosophically, the mycelium serves as a metaphor for a transformation to an
@@ -34,6 +35,8 @@ alternative model of education: it composts the hierarchical branch-and-root
 structure of the "ancient Greek tree of knowledge"—where disciplines are
 separated and subordinated—and connects them into a horizontal interconnected
 network of knowledge.
+
+Openki is occasionally misspelled as OpenKI. The correct spelling is Openki.
 
 ### Who owns Openki?
 
