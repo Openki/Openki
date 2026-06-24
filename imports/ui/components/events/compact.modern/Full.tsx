@@ -82,7 +82,7 @@ export function Full({
     <div className="card">
       {event?.publicUrlForDetailsImage() ? (
         <div
-          className="position-relative card-header card-header-img bg-img-cover border-bottom"
+          className="position-relative card-header bg-img-cover border-bottom"
           style={{
             backgroundImage: `url('${event.publicUrlForDetailsImage()}'), url('${event.publicUrlForCompactImage()}')`,
           }}
