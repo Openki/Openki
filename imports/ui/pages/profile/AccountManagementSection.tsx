@@ -8,6 +8,16 @@ import { AccountsAsync } from "/imports/utils/promisify";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { cx } from "/imports/utils/cx";
 
+function EyeToggle({ show, onToggle }: { show: boolean; onToggle: () => void }) {
+  return (
+    <span className="input-group-text p-0">
+      <button type="button" className="btn btn-outline-secondary text-dark" onClick={onToggle}>
+        <i className={cx("fa-fw fa-solid", show ? "fa-eye-slash" : "fa-eye")} />
+      </button>
+    </span>
+  );
+}
+
 export function AccountManagementSection() {
   const { t } = useTranslation();
   const [changingPassword, setChangingPassword] = useState(false);
@@ -70,15 +80,6 @@ export function AccountManagementSection() {
       }
     }
   }
-  function EyeToggle({ show, onToggle }: { show: boolean; onToggle: () => void }) {
-  return (
-    <span className="input-group-text p-0">
-      <button type="button" className="btn btn-outline-secondary text-dark" onClick={onToggle}>
-        <i className={cx("fa-fw fa-solid", show ? "fa-eye-slash" : "fa-eye")} />
-      </button>
-    </span>
-  );
-}
 
   return (
     <div className="page-component page-component-seperated">
