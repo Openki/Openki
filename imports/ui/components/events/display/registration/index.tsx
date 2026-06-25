@@ -114,7 +114,7 @@ export function EventRegistration({ event }: Props) {
               <strong>{t("event.details.noRsvp", "Registration not required.")}</strong>
             </div>
           ) : registrationClosed ? (
-            <div className="page-component pre-line">
+            <div className="page-component whitespace-pre-line">
               <strong>
                 {t(
                   "event.details.registrationClosed",

@@ -66,7 +66,7 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
     },
     "Email already exists.": {
       text: () => (
-        <div className="pre-line">
+        <div className="whitespace-pre-line">
           {t("register.warning.emailExists")}
           <br />
           <a href={Router.path("resetPasswordEmail", {}, { query: { email: registerData.email } })}>

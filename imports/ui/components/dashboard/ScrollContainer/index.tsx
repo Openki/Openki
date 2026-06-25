@@ -32,7 +32,7 @@ export function ScrollContainer({ children }: { children: ReactNode }) {
 
   return (
     <div
-      className="scroll-container d-flex flex-row flex-nowrap pb-3 overflow-x-auto"
+      className="scroll-container d-flex align-items-stretch flex-row flex-nowrap pb-3 overflow-x-auto"
       style={{ scrollBehavior: "smooth" }}
       ref={elementRef}
       onScroll={() => {

@@ -48,7 +48,8 @@ export function CustomFieldDisplay({
     <>
       {customFields.map((info, index) => (
         <p className={customClassName} key={index}>
-          <strong>{info.displayText}</strong>: <span className="pre-line">{info.displayValue}</span>
+          <strong>{info.displayText}</strong>:{" "}
+          <span className="whitespace-pre-line">{info.displayValue}</span>
         </p>
       ))}
     </>

@@ -44,7 +44,7 @@ $group-details-content-padding-horizontal: (
   padding: 15px $group-details-content-padding-horizontal;
 }
 
-.group-description {
+.group-description:not(.max-h-none) {
   max-height: 280px; // ca 300px - 1 rem
 }
 
