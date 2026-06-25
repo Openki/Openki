@@ -16,6 +16,7 @@ import { Edit } from "../groups/edit";
 import { GroupCompact } from "../groups/compact";
 import { EventCompact } from "../events/compact";
 import { EventCompact as EventCompactModern } from "../events/compact.modern";
+import { GroupCompact as GroupCompactModern } from "../groups/compact.modern";
 import { EventsMap } from "../events/map";
 import { CompactPropose } from "../groups/CompactPropose";
 import { ListOfEntities, ComponentWithEntities, StaticComponent } from "./ComponentBaseTypes";
@@ -37,6 +38,21 @@ const group: ListOfEntities<GroupModel> = {
       <div className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
         <GroupCompact group={entity} />
       </div>
+    </React.Fragment>
+  ),
+};
+
+const groupModern: ListOfEntities<GroupModel> = {
+  route: "search",
+  filter: GroupCollection.Filtering,
+  find: Groups.useFindFilter,
+  element: ({ entity, index, params }) => (
+    <React.Fragment key={entity._id}>
+      {/* The seventh box should always be the propose one, after then every 21 */}
+      {PublicSettings.feature.proposeGroupBox && (index - 6) % 21 === 0 && (
+        <CompactModernPropose organization={params.organization} />
+      )}
+      <GroupCompactModern group={entity} />
     </React.Fragment>
   ),
 };
@@ -137,6 +153,7 @@ const propose: StaticComponent = {
 
 export const mapping = {
   group,
+  groupModern,
   groupWithoutPropose,
   event,
   eventModern,
