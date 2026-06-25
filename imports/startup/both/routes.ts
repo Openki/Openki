@@ -40,6 +40,7 @@ import * as Analytics from "/imports/ui/lib/analytics";
 import type { Props as GroupEditProps } from "/imports/ui/components/groups/edit";
 
 import type { Data as OrganizationDetailsData } from "../../ui/pages/organization-details";
+import type { Props as KioskDashboardData } from "../../ui/pages/kiosk/dashboard";
 import type { Data as VenuesMapData } from "/imports/ui/pages/venues-map";
 import type { Data as EventsMapData } from "/imports/ui/pages/events-map";
 import type { Data as AdminTenantsData } from "/imports/ui/pages/admin/tenants";
@@ -951,6 +952,33 @@ RouterAsync.route("timetable", {
       hours: Object.values(hours),
       grouped,
       future_length: events.length,
+    };
+  },
+});
+
+RouterAsync.route("kioskDashboard", {
+  path: "kiosk/dashboard",
+  template: "kioskDashboardPage",
+  layoutTemplate: "kioskLayout",
+  async onRun() {
+    await import("../../ui/pages/kiosk/dashboard");
+  },
+  data(): KioskDashboardData | undefined {
+    const organization = this.params.query.organization;
+
+    if (!organization) {
+      return undefined;
+    }
+
+    const groupQuery = {
+      ...this.params.query,
+      organization,
+      region: Session.get("region"),
+    };
+
+    return {
+      groupQuery,
+      organizationId: organization,
     };
   },
 });
