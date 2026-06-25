@@ -110,18 +110,6 @@ a:focus,
   padding: 0.7em;
 }
 
-h3.min-h-2l {
-  /* font-size + line-height */
-  min-height: calc((1.3rem + 0.6vw) * 1.2 * 2);
-}
-
-@media (width >= 1200px) {
-  h3.min-h-2l {
-    /* font-size + line-height */
-    min-height: calc(1.75rem * 1.2 * 2);
-  }
-}
-
 /* Avoid double lines; sometimes they occur for programming reasons. */
 hr + hr {
   display: none;

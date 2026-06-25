@@ -95,7 +95,7 @@ export function Full({
         </ImagePlaceholder>
       )}
       <div className="card-body">
-        <h3 className="card-title min-h-2l fw-bold">{event.title}</h3>
+        <h3 className="card-title min-h-[2lh] fw-bold">{event.title}</h3>
         <p className="card-text">
           <div className="panel-calendar">
             <i className="fa-regular fa-fw fa-calendar" /> {dateFormat(event.startLocal)}

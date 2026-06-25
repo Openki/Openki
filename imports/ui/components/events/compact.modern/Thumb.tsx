@@ -31,7 +31,7 @@ export function Thumb({ event }: { event: EventModel }) {
         </ImagePlaceholder>
       )}
       <div className="card-body">
-        <h3 className="card-title line-clamp-2 min-h-2l fw-bold">{event.title}</h3>
+        <h3 className="card-title line-clamp-2 min-h-[2lh] fw-bold">{event.title}</h3>
         <p className="card-text text-truncate">
           <i className="fa-regular fa-fw fa-clock" /> {timeFormat(event.startLocal)} -{" "}
           {timeFormat(event.endLocal)}
