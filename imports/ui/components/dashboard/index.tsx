@@ -126,9 +126,7 @@ function DashboardComponent({
         ("route" in config && config.route
           ? Router.path(config.route, undefined, { query: urlParams.toString() })
           : undefined),
-      text:
-        getLocalizedValue(config.showAll?.text || config.showAll?.text) ||
-        t("dashboard.showAll", "Show all >"),
+      text: getLocalizedValue(config.showAll?.text) || t("dashboard.showAll", "Show all >"),
     };
   }
 
@@ -142,10 +140,10 @@ function DashboardComponent({
   const queryString = (settings.query || "").replaceAll("{currentUser}", currentUserId || "");
 
   const urlParams = new URLSearchParams(queryString);
-  if (defaultRegion) {
+  if (defaultRegion && !urlParams.has("region")) {
     urlParams.append("region", defaultRegion);
   }
-  if (defaultOrganization) {
+  if (defaultOrganization && !urlParams.has("organization")) {
     urlParams.append("organization", defaultOrganization);
   }
 
