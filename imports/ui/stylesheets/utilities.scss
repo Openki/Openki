@@ -23,3 +23,12 @@
 .line-clamp-2 {
   @include ellipsis-multiline(2);
 }
+
+.line-clamp-3 {
+  @include ellipsis-multiline(3);
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.min-h-\[2lh\] {
+  min-height: 2lh;
+}
