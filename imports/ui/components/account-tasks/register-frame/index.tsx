@@ -82,7 +82,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
     },
     "Email already exists.": {
       text: () => (
-        <div className="pre-line">
+        <div className="whitespace-pre-line">
           {t(
             "register.warning.emailExists",
             "This email is already in use. We can send you an email to login.",

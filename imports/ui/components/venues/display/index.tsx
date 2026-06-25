@@ -84,7 +84,7 @@ export function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => vo
                     <div className="venue-property-title">
                       {t("venue.details.route", "How to go there:")}
                     </div>
-                    <span className="pre-line">{venue.route}</span>
+                    <span className="whitespace-pre-line">{venue.route}</span>
                   </p>
                 )}
                 {!!venue.maxPeople && (

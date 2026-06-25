@@ -1,0 +1,25 @@
+/* Utilities (named like in Tailwind CSS) */
+
+.border-dashed {
+  border-style: dashed;
+}
+
+.max-h-none {
+  max-height: none;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.border-none {
+  border: none;
+}
+
+.whitespace-pre-line {
+  white-space: pre-line;
+}
+
+.line-clamp-2 {
+  @include ellipsis-multiline(2);
+}

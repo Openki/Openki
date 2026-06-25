@@ -72,7 +72,7 @@ function GroupEvent({ event, groupId }: { event: EventModel; groupId: string }) 
       </nav>
       <div className="tab-content border-none">
         <div
-          className="tab-pane mh-none overflow-visible active"
+          className="tab-pane max-h-none overflow-visible active"
           id="description"
           role="tabpanel"
           aria-labelledby="description-tab"
@@ -82,7 +82,7 @@ function GroupEvent({ event, groupId }: { event: EventModel; groupId: string }) 
         </div>
         {!!group && (
           <div
-            className="tab-pane mh-none"
+            className="tab-pane max-h-none"
             id="files"
             role="tabpanel"
             aria-labelledby="files-tab"

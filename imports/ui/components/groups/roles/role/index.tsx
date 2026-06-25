@@ -175,7 +175,7 @@ export function Role(props: Props) {
                 })}
               </span>
               <br />
-              <span className="pre-line">
+              <span className="whitespace-pre-line">
                 {roleGroupFirstSteps(props.role.type, { COORDINATION_GUIDE: <Guide /> })}
               </span>
               <br />

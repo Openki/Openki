@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
+import { cx } from "/imports/utils/cx";
 
 import { GroupModel } from "/imports/api/groups/groups";
 
@@ -85,7 +86,10 @@ export function Submenu({ group }: { group: GroupModel }) {
       </nav>
       <div className="tab-content group-details-content">
         <div
-          className={`tab-pane ${!descriptionTruncated ? "mh-none overflow-visible" : "overflow-hidden"} active`}
+          className={cx(
+            "tab-pane active",
+            !descriptionTruncated ? "max-h-none overflow-visible" : "overflow-hidden",
+          )}
           id="description"
           role="tabpanel"
           aria-labelledby="description-tab"
@@ -93,7 +97,10 @@ export function Submenu({ group }: { group: GroupModel }) {
         >
           <div className="group-description-fade-wrap">
             <div
-              className={`group-description ${!descriptionTruncated ? "mh-none overflow-visible" : "overflow-hidden"} `}
+              className={cx(
+                "group-description",
+                !descriptionTruncated ? "max-h-none overflow-visible" : "overflow-hidden",
+              )}
               ref={elementRef}
             >
               <Description
@@ -136,7 +143,7 @@ export function Submenu({ group }: { group: GroupModel }) {
         </div>
         {canEdit() && (
           <div
-            className="tab-pane mh-none"
+            className="tab-pane max-h-none"
             id="files"
             role="tabpanel"
             aria-labelledby="files-tab"

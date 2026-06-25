@@ -12,7 +12,10 @@ describe("EditCustomFields", () => {
     cy.get("#group-custom-field-instructor").clear();
     cy.get("#group-custom-field-instructor").type("Tara");
     cy.get("#groups-edit-save").click();
-    cy.get("#description p:nth-child(5) span.pre-line").should("have.text", "tara@openki.example");
+    cy.get("#description p:nth-child(5) span.whitespace-pre-line").should(
+      "have.text",
+      "tara@openki.example",
+    );
   });
 
   it("should allow to edit custom field on event", function () {
