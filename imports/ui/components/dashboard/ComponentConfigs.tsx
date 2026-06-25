@@ -52,7 +52,37 @@ const groupModern: ListOfEntities<GroupModel> = {
       {PublicSettings.feature.proposeGroupBox && (index - 6) % 21 === 0 && (
         <CompactModernPropose organization={params.organization} />
       )}
-      <GroupCompactModern group={entity} />
+      <GroupCompactModern group={entity} showHowToGetInvolved />
+    </React.Fragment>
+  ),
+};
+
+const groupModernWithDescription: ListOfEntities<GroupModel> = {
+  route: "search",
+  filter: GroupCollection.Filtering,
+  find: Groups.useFindFilter,
+  element: ({ entity, index, params }) => (
+    <React.Fragment key={entity._id}>
+      {/* The seventh box should always be the propose one, after then every 21 */}
+      {PublicSettings.feature.proposeGroupBox && (index - 6) % 21 === 0 && (
+        <CompactModernPropose organization={params.organization} />
+      )}
+      <GroupCompactModern group={entity} showDescription />
+    </React.Fragment>
+  ),
+};
+
+const groupModernNeeds: ListOfEntities<GroupModel> = {
+  route: "search",
+  filter: GroupCollection.Filtering,
+  find: Groups.useFindFilter,
+  element: ({ entity, index, params }) => (
+    <React.Fragment key={entity._id}>
+      {/* The seventh box should always be the propose one, after then every 21 */}
+      {PublicSettings.feature.proposeGroupBox && (index - 6) % 21 === 0 && (
+        <CompactModernPropose organization={params.organization} />
+      )}
+      <GroupCompactModern group={entity} showNeededRoles  />
     </React.Fragment>
   ),
 };
@@ -154,6 +184,8 @@ const propose: StaticComponent = {
 export const mapping = {
   group,
   groupModern,
+  groupModernWithDescription,
+  groupModernNeeds,
   groupWithoutPropose,
   event,
   eventModern,
