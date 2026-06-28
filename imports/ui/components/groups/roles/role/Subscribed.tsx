@@ -41,9 +41,6 @@ export function Subscribed({ roleType, group, showFirstSteps, onToggle }: Props)
   function toggleFirstStepsClick() {
     onToggle(!showFirstSteps);
   }
-  function handleFirstStepsCommentClick() {
-    document.getElementById("discussion")?.dispatchEvent(new Event("writeComment"));
-  }
 
   if (isRolesLoading()) {
     return null;
@@ -96,10 +93,6 @@ export function Subscribed({ roleType, group, showFirstSteps, onToggle }: Props)
             "group.roles.firstSteps.allMembersInformed",
             "All members of the coordination team will be informed.",
           )}
-          <br />
-          <button className="btn btn-link p-0" type="button" onClick={handleFirstStepsCommentClick}>
-            {t("group.discussion.write_comment")}
-          </button>
         </div>
       )}
     </>
