@@ -78,6 +78,8 @@ build_and_push_docker:
 deploy:
   stage: deploy
   needs:
+    - job: prepare_version
+      artifacts: true  
     - job: build_and_push_docker
       artifacts: true
   trigger:
