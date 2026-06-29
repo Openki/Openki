@@ -78,7 +78,7 @@ export function Members({ group }: { group: GroupModel }) {
           {canNotifyAll() && (
             <i
               className="fa-solid fa-envelope contact-members"
-              title="Notify All"
+              title={t("group.details.members.contact-members", "Notify All")}
               onClick={handleContactMembersClick}
             />
           )}
