@@ -8,6 +8,7 @@ workflow:
 stages:
   - prepare
   - build
+  - deploy
 
 cache:
   paths:
@@ -68,3 +69,19 @@ build_and_push_docker:
     - if: '$CI_COMMIT_BRANCH == "server-config-21-docker-simple-setup"'
       when: always
     - when: never
+
+
+# -------------------------------------------------------------------
+# Stage: Deploy
+# -------------------------------------------------------------------
+
+deploy:
+  stage: deploy
+  needs:
+    - job: prepare_version
+      artifacts: true
+  trigger:
+    project: Openki/sysadmin/deploy
+    strategy: depend
+  variables:
+    IMAGE_TAG: $IMAGE_TAG
