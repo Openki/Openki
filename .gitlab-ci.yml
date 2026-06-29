@@ -78,10 +78,14 @@ build_and_push_docker:
 deploy:
   stage: deploy
   needs:
-    - job: prepare_version
+    - job: build_and_push_docker
       artifacts: true
   trigger:
     project: Openki/sysadmin/deploy
     strategy: depend
   variables:
     IMAGE_TAG: $IMAGE_TAG
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "server-config-21-docker-simple-setup"'
+      when: always
+    - when: never
