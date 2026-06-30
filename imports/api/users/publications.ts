@@ -99,7 +99,7 @@ export const [details, useDetails] = ServerPublishOne(
     };
 
     // Admins can see other's privileges
-    if ((await Meteor.userAsync())?.privileged("admin")) {
+    if ((await Meteor.userAsync())?.hasPrivilige("admin")) {
       projection.privileges = 1;
     }
 
@@ -116,7 +116,7 @@ export const [details, useDetails] = ServerPublishOne(
     };
 
     // Admins can see other's privileges
-    if (Meteor.user()?.privileged("admin")) {
+    if (Meteor.user()?.hasPrivilige("admin")) {
       projection.privileges = 1;
     }
 
