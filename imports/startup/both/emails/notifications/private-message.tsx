@@ -110,13 +110,13 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       await sendAlert(
         "Alert: A user sent many messages",
         <>
-          The User <a href={Router.url("userprofile", sender)}>{sender?.getDisplayName()}</a> sent too many messages
-          in a hour. Further messages are not sent to the recipients.
+          The User <a href={Router.url("userprofile", sender)}>{sender?.getDisplayName()}</a> sent
+          too many messages in a hour. Further messages are not sent to the recipients.
           <br />
           Check if it&apos;s SPAM, and potentially block and remove the user.
           <br />
-          If the messages are legitimate, wait for 1h and then remove the &quot;Notification.SendResult&quot;
-          entry from the Log in the DB.
+          If the messages are legitimate, wait for 1h and then remove the
+          &quot;Notification.SendResult&quot; entry from the Log in the DB.
         </>,
       );
     }
