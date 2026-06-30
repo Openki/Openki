@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import { GroupModel } from "/imports/api/groups/groups";
 import { Subscribe, processChange } from "/imports/api/groups/subscription";
 import { Regions } from "/imports/api/regions/regions";
-import { UserModel, User } from "/imports/api/users/users";
-import { Button, ButtonCancel } from "/imports/ui/components/Buttons";
+import { UserModel } from "/imports/api/users/users";
+import { Button } from "/imports/ui/components/Buttons";
 import { FormControl } from "/imports/ui/components/form-control";
 import { RoleIcon } from "/imports/ui/components/RoleIcon";
 import * as Analytics from "/imports/ui/lib/analytics";
@@ -21,19 +21,14 @@ export interface Props {
   afterSubscribe: () => void;
 }
 
-export function Enrolling({
-  group,
-  roleType,
-  afterSubscribe,
-}: Props) {
+export function Enrolling({ group, roleType, afterSubscribe }: Props) {
   const { t } = useTranslation();
   const [isRolesLoading, roles] = useRegionRoles(group.region);
   const { roleSubscribe, roleGroupMessageInfo } = useRoleDisplay(roles);
+  const { promptToLogin } = useAccountTasks();
   const user = useUser();
 
-  const [enrolling, setEnrolling] = useState(false);
   const [isBusy, setIsBusy] = useState(false);
-  const { promptToLogin } = useAccountTasks();
 
   const member = group.members?.find((m) => m.user === user?._id);
   const [comment, setComment] = useState(member?.comment ?? "");
@@ -50,11 +45,6 @@ export function Enrolling({
     );
   }
 
-  function canSubscribe() {
-    const operator = user;
-    return groupSubscribe().validFor(operator || (new User() as UserModel));
-  }
-
   async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -66,8 +56,6 @@ export function Enrolling({
         return;
       }
       await processChange(groupSubscribe(comment.trim(), currentUser));
-
-      setEnrolling(false);
 
       Analytics.trackEvent(
         "Enrollments in groups",
@@ -86,59 +74,64 @@ export function Enrolling({
     return null;
   }
 
+  const name = `group-role-enroll-${roleType}-content`;
+
   return (
-    <div className={enrolling ? "group-role-enroll" : "group-role"}>
-      {enrolling ? (
-        <>
-          <div className="group-role-title-enroll">
-            <RoleIcon type={roleType} regionId={group.region} className="grouppage-role-icon" />
-            &nbsp;
-            {roleSubscribe(roleType)}
+    <>
+      <button
+        data-test={`group-role-enroll-${roleType}`}
+        className="btn btn-success page-component-btn collapsed"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target={`#${name}`}
+        aria-expanded="false"
+        aria-controls={name}
+      >
+        <RoleIcon type={roleType} regionId={group.region} className="grouppage-role-icon" />
+        &nbsp;
+        {roleSubscribe(roleType)}
+        <span className="btn btn-link">
+          <i className="fa-solid fa-circle-info" />
+        </span>
+      </button>
+      <div className="group-role-enroll-options collapse" id={name}>
+        <form noValidate onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <FormControl
+              id="role-comment"
+              label={roleGroupMessageInfo(roleType)}
+              onChange={(value) => setComment(value)}
+              type="text"
+              autoFocus
+              optional
+              value={comment}
+            />
           </div>
-          <div className="group-role-enroll-options">
-            <form noValidate onSubmit={handleSubmit}>
-              <div className="mb-3">
-                <FormControl
-                  id="role-comment"
-                  label={roleGroupMessageInfo(roleType)}
-                  onChange={(value) => setComment(value)}
-                  type="text"
-                  autoFocus
-                  optional
-                  value={comment}
-                />
-              </div>
-              <div className="form-actions">
-                <Button
-                  submit
-                  id="group-roles-join"
-                  className="btn-save"
-                  needsLogin
-                  visitorUserAllowed={roleType === "participant"}
-                  isBusy={isBusy}
-                  busyText={t("group.roles.join.busy", "Joining…")}
-                >
-                  {t("group.roles.join", "Join", { GROUP: group.name })}
-                </Button>
-                <ButtonCancel id="group-roles-join-cancel" onClick={() => setEnrolling(false)} />
-              </div>
-            </form>
+          <div className="form-actions">
+            <Button
+              submit
+              id="group-roles-join"
+              className="btn-save"
+              needsLogin
+              visitorUserAllowed={roleType === "participant"}
+              isBusy={isBusy}
+              busyText={t("group.roles.join.busy", "Joining…")}
+            >
+              {t("group.roles.join", "Join", { GROUP: group.name })}
+            </Button>
+            <button
+              type="reset"
+              className="btn btn-cancel collapsed"
+              data-bs-toggle="collapse"
+              data-bs-target={`#${name}`}
+              aria-expanded="false"
+              aria-controls={name}
+            >
+              {t("_button.cancel")}
+            </button>
           </div>
-        </>
-      ) : (
-        canSubscribe() && (
-          <button
-            data-test={`group-role-enroll-${roleType}`}
-            type="button"
-            className="btn btn-add text-start page-component-btn"
-            name={roleType}
-            onClick={() => setEnrolling(true)}
-          >
-            <RoleIcon type={roleType} regionId={group.region} className="grouppage-role-icon" />
-            {roleSubscribe(roleType)}
-          </button>
-        )
-      )}
-    </div>
+        </form>
+      </div>
+    </>
   );
 }
