@@ -51,12 +51,19 @@ export function PrivateMessage({
         <td>
           <h5 className="title">{t("email.base.greeting", { USERNAME: recipientName })}</h5>
           <p>
-            {t("notification.privateMessage.mail.intro", "You got a direct message from")}{" "}
-            <strong>
-              {sender.hasPrivilige("admin")
-                ? t("notification.privateMessage.mail.fromAdmin", "an admin")
-                : t("notification.privateMessage.mail.fromUser", "a regular user")}
-            </strong>
+            {t(
+              "notification.privateMessage.mail.intro",
+              "You got a direct message from {USERTYPE}",
+              {
+                USERTYPE: (
+                  <strong>
+                    {sender.hasPrivilige("admin")
+                      ? t("notification.privateMessage.mail.fromAdmin", "an admin")
+                      : t("notification.privateMessage.mail.fromUser", "a regular user")}
+                  </strong>
+                ),
+              },
+            )}
             .
           </p>
           {!sender.hasPrivilige("admin") && (
@@ -68,16 +75,19 @@ export function PrivateMessage({
             </p>
           )}
           <p>
-            <span>
-              <a href={senderLink}>{sender.getDisplayName()}</a>
-              {!!fromAddress && (
+            {t("notification.privateMessage.mail.userWrote", "{USERNAME} wrote:", {
+              USERNAME: (
                 <>
-                  {" "}
-                  (<a href={`mailto:${fromAddress}`}>{fromAddress}</a>)
+                  <a href={senderLink}>{sender.getDisplayName()}</a>
+                  {!!fromAddress && (
+                    <>
+                      {" "}
+                      (<a href={`mailto:${fromAddress}`}>{fromAddress}</a>)
+                    </>
+                  )}
                 </>
-              )}{" "}
-              {t("notification.privateMessage.mail.userWrote", "wrote")}:
-            </span>
+              ),
+            })}
           </p>
           <table className="comment-box">
             <tr>
