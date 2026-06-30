@@ -562,6 +562,12 @@
     "recipient": "badabuff@openki.net",
   },
 
+  /**
+   * How many private messages are allowed to send per user and hour. Before the messages get blocked and an alert is send. Not set or 0 means no limit.
+   * Default: 0
+   */
+  "numberOfPrivateMessagesPerHour": 10,
+
   /*
    * Tells robots/crawlers whether to index the website or not
    * Default: true
