@@ -53,7 +53,7 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
   },
 
   /**
-   * How many private messages are allowed to send per user and hour. Before the messages get blocked and an alert is send. Not set or 0 means no limit.
+   * How many private messages each user can send per hour. If the limit is reached, the messages get blocked and an alert to is sent to the instance admins. Unless a explicit number is set, this defaults to `0` which means no limit.
    * @default: 0
    */
   numberOfPrivateMessagesPerHour: Number,
