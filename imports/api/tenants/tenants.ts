@@ -31,7 +31,7 @@ export class Tenant {
     }
 
     return (
-      user.privileged("admin") /* Admins can edit all regions */ ||
+      user.hasPrivilige("admin") /* Admins can edit all regions */ ||
       user.isTenantAdmin(this._id) /* or admins of a tenant */
     );
   }
@@ -92,7 +92,7 @@ export class TenantsCollection extends Mongo.Collection<TenantEntity, TenantMode
     const options: Mongo.Options<TenantEntity> = { sort };
 
     // Only members of a tenant or admins can see a tenant
-    if (!me.privileged("admin")) {
+    if (!me.hasPrivilige("admin")) {
       find.members = me._id;
     }
 

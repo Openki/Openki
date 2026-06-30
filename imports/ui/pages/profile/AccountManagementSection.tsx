@@ -33,7 +33,7 @@ export function AccountManagementSection() {
   const [showNewPasswordConfirm, setShowNewPasswordConfirm] = useState(false);
 
   function isVisitor() {
-    return user?.privileged("visitor");
+    return user?.hasPrivilige("visitor");
   }
 
   function deleteConfirmAttr() {

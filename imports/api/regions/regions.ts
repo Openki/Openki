@@ -135,7 +135,7 @@ export class Region {
     }
 
     return (
-      user.privileged("admin") /* Admins can edit all regions */ ||
+      user.hasPrivilige("admin") /* Admins can edit all regions */ ||
       user.isTenantAdmin(this.tenant) /* or admins of a tenant */
     );
   }

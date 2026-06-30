@@ -139,7 +139,7 @@ export class Group {
     }
     return (
       this.isNew() /* Anyone can create a new group */ ||
-      user.privileged("admin") /* Admins can edit all groups */ ||
+      user.hasPrivilige("admin") /* Admins can edit all groups */ ||
       intersection(user.badges, this.editors).length > 0
     );
   }

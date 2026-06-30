@@ -17,7 +17,7 @@ export const [details, useDetails] = ServerPublishOne(
     } else {
       const user = await Meteor.userAsync();
 
-      if (!user || !(user.privileged("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
+      if (!user || !(user.hasPrivilige("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
         return JoinLinks.find({ _id: "-1" }) as Mongo.Cursor<JoinLinkEntity>;
       }
 
@@ -30,7 +30,7 @@ export const [details, useDetails] = ServerPublishOne(
     } else {
       const user = Meteor.user();
 
-      if (!user || !(user.privileged("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
+      if (!user || !(user.hasPrivilige("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
         return undefined;
       }
 
