@@ -51,35 +51,34 @@ export function PrivateMessage({
         <td>
           <h5 className="title">{t("email.base.greeting", { USERNAME: recipientName })}</h5>
           <p>
-            {t("notification.privateMessage.mail.intro", "You got a direct message from: ")}
-            <a href={senderLink}>{sender.getDisplayName()}</a>
-            {!!fromAddress && (
-              <>
-                {" "}
-                (<a href={`mailto:${fromAddress}`}>{fromAddress}</a>)
-              </>
-            )}
+            {t("notification.privateMessage.mail.intro", "You got a direct message from")}{" "}
+            <strong>
+              {sender.hasPrivilige("admin")
+                ? t("notification.privateMessage.mail.fromAdmin", "an admin")
+                : t("notification.privateMessage.mail.fromUser", "a regular user")}
+            </strong>
+            .
           </p>
-          {!!group && (
+          {!sender.hasPrivilige("admin") && (
             <p>
               {t(
-                "notification.privateMessage.mail.fromGroup",
-                "This message was sent from {GROUP}.",
-                { GROUP: group },
+                "notification.privateMessage.mail.warning",
+                "Please make sure you trust this user, and be careful to check links before you open them.",
               )}
             </p>
           )}
-
-          {!!event && (
-            <p>
-              {t(
-                "notification.privateMessage.mail.fromEvent",
-                "This message was sent from {EVENT}.",
-                { EVENT: event },
-              )}
-            </p>
-          )}
-
+          <p>
+            <span>
+              <a href={senderLink}>{sender.getDisplayName()}</a>
+              {!!fromAddress && (
+                <>
+                  {" "}
+                  (<a href={`mailto:${fromAddress}`}>{fromAddress}</a>)
+                </>
+              )}{" "}
+              {t("notification.privateMessage.mail.userWrote", "wrote")}:
+            </span>
+          </p>
           <table className="comment-box">
             <tr>
               <td dangerouslySetInnerHTML={{ __html: message }}></td>
@@ -108,6 +107,25 @@ export function PrivateMessage({
               <a className="button" href={senderLink}>
                 {t("notification.privateMessage.mail.replyButton.simple", "Reply")}
               </a>
+            </p>
+          )}
+
+          {!!group && (
+            <p>
+              {t(
+                "notification.privateMessage.mail.fromGroup",
+                "This message was sent from {GROUP}.",
+                { GROUP: group },
+              )}
+            </p>
+          )}
+          {!!event && (
+            <p>
+              {t(
+                "notification.privateMessage.mail.fromEvent",
+                "This message was sent from {EVENT}.",
+                { EVENT: event },
+              )}
             </p>
           )}
         </td>
