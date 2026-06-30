@@ -51,7 +51,7 @@ export function PrivateMessage({
         <td>
           <h5 className="title">{t("email.base.greeting", { USERNAME: recipientName })}</h5>
           <p>
-            {t("notification.privateMessage.mail.intro", "You got a direct message from:")}
+            {t("notification.privateMessage.mail.intro", "You got a direct message from: ")}
             <a href={senderLink}>{sender.getDisplayName()}</a>
             {!!fromAddress && (
               <>
