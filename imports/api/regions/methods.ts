@@ -34,7 +34,7 @@ export const create = ServerMethod("region.create", async (changes: CreateFields
   }
 
   if (
-    !user.privileged("admin") /* Admins can add regions */ &&
+    !user.hasPrivilige("admin") /* Admins can add regions */ &&
     !user.isTenantAdmin(changes.tenant) /* or admins of a tenant */
   ) {
     throw new Meteor.Error(401, "not permitted");

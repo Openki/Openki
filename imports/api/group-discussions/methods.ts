@@ -59,7 +59,7 @@ export const postComment = ServerMethod(
       saneComment.userId = user._id;
       saneComment.notifyAll =
         comment.notifyAll &&
-        (user.privileged("admin") ||
+        (user.hasPrivilige("admin") ||
           group.userHasRole(user._id, "team") ||
           user.organizations.some((g) => group?.teamOrganizations.includes(g)));
     }

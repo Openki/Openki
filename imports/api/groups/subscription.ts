@@ -169,7 +169,7 @@ export class Subscribe extends Change<{
     }
 
     // Admins can subscribe to all roles
-    if (operator.privileged("admin")) {
+    if (operator.hasPrivilige("admin")) {
       return true;
     }
 
@@ -310,7 +310,7 @@ export class Unsubscribe extends Change<{
     }
 
     // Admins can do anything
-    if (operator.privileged("admin")) {
+    if (operator.hasPrivilige("admin")) {
       return true;
     }
 

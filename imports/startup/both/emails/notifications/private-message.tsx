@@ -91,7 +91,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
   return {
     accepted(actualRecipient: UserModel) {
-      if (!actualRecipient.allowPrivateMessages && !sender?.privileged("admin")) {
+      if (!actualRecipient.allowPrivateMessages && !sender?.hasPrivilige("admin")) {
         throw new Error("User wishes to not receive private messages from users");
       }
     },
