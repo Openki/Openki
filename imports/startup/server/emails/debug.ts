@@ -5,7 +5,7 @@ import { normalize } from "node:path";
 import { mkdir } from "fs/promises";
 
 if (Meteor.isDevelopment) {
-  const debugEmailDir = `${process.env.PWD}/.temp/`
+  const debugEmailDir = `${process.env.PWD}/.temp/`;
   await mkdir(debugEmailDir, { recursive: true });
 
   Email.customTransport = () => {
