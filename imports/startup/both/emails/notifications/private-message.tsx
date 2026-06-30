@@ -16,8 +16,10 @@ import { getSiteName } from "/imports/utils/getSiteName";
 import { Model as NotificationModel } from "../notification";
 import { PrivateMessage, Props } from "/imports/emails/notifications/PrivateMessage";
 import { LocalTime } from "/imports/utils/local-time";
+import { PrivateSettings } from "/imports/utils/PrivateSettings";
+import { sendAlert } from "../lib/sendAlert";
 
-interface Body {
+export interface Body {
   message: string;
   sender: string;
   recipients: string[];
@@ -88,6 +90,43 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
   const { body } = entry;
   const sender = await Users.findOneAsync(body.sender);
   const targetRecipient = await Users.findOneAsync(body.targetRecipient);
+
+  if (PrivateSettings.numberOfPrivateMessagesPerHour) {
+    // check how many messages a user has send and block if are to many
+    const observePeriod = new Date();
+    observePeriod.setHours(observePeriod.getHours() - 1);
+    const numberOfMessages = await Log.find(
+      {
+        tr: "Notification.Send",
+        ts: { $gte: observePeriod },
+        "body.model": "PrivateMessage",
+        "body.sender": body.sender,
+      },
+      // take one more so we only send once a email when the limit is reached
+      { limit: PrivateSettings.numberOfPrivateMessagesPerHour + 1 },
+    ).countAsync();
+
+    if (numberOfMessages === PrivateSettings.numberOfPrivateMessagesPerHour) {
+      sendAlert(
+        "Alert: One user send many messages",
+        <>
+          The User &quot;{sender?.getDisplayName()}&quot; (ID: {sender?._id}) sends to many messages
+          in a hour. The message are not send.
+          <br />
+          Check if it SPAM, block the IP and remove the user.
+          <br />
+          To send the messages wait for 1h and then remove the &quot;Notification.SendResult&quot;
+          entry from the Log in the DB.
+        </>,
+      );
+    }
+
+    if (numberOfMessages >= PrivateSettings.numberOfPrivateMessagesPerHour) {
+      throw new Error(
+        "The User sends to many messages in a hour. The message are not send. To send it remove this 'Notification.SendResult' entry from the Log in the DB.",
+      );
+    }
+  }
 
   return {
     accepted(actualRecipient: UserModel) {
