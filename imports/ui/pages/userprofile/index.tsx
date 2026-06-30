@@ -42,11 +42,11 @@ export function UserprofilePage({ user }: Props) {
   // What privileges the user has
   const privileges = (["admin"] as const).reduce<Record<string, boolean>>((originalPs, p) => {
     const ps = { ...originalPs };
-    ps[p] = user.privileged(p);
+    ps[p] = user.hasPrivilige(p);
     return ps;
   }, {});
 
-  const alterPrivileges = currentUser?.privileged("admin") || false;
+  const alterPrivileges = currentUser?.hasPrivilige("admin") || false;
   const showPrivileges = alterPrivileges || !!user.privileges?.length;
 
   /**
@@ -59,7 +59,7 @@ export function UserprofilePage({ user }: Props) {
     return checkContribution(user.contribution);
   }
   function allowPrivateMessages() {
-    return user.allowPrivateMessages || !!currentUser?.privileged("admin");
+    return user.allowPrivateMessages || !!currentUser?.hasPrivilige("admin");
   }
   function organizationMember(organization: OrganizationEntity, user: UserModel) {
     return !!(user && organization?.members?.some((m) => m.user === user._id));

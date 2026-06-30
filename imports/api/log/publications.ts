@@ -12,7 +12,7 @@ export const [findFilter, useFindFilter] = ServerPublishMany(
     check(limit, Match.Integer);
 
     // Non-admins get an empty list
-    if (!(await Meteor.userAsync())?.privileged("admin")) {
+    if (!(await Meteor.userAsync())?.hasPrivilige("admin")) {
       return Log.findFilter({}, 0);
     }
 
@@ -22,7 +22,7 @@ export const [findFilter, useFindFilter] = ServerPublishMany(
     check(limit, Match.Integer);
 
     // Non-admins get an empty list
-    if (!Meteor.user()?.privileged("admin")) {
+    if (!Meteor.user()?.hasPrivilige("admin")) {
       return Log.findFilter({}, 0);
     }
 

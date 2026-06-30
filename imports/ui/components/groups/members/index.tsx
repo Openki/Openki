@@ -22,7 +22,7 @@ export function Members({ group }: { group: GroupModel }) {
     return group.members.length;
   }
   function canNotifyAll() {
-    if (user?.privileged("admin")) {
+    if (user?.hasPrivilige("admin")) {
       return true;
     }
 

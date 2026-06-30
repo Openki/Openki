@@ -59,7 +59,7 @@ export function LogPage({
   }
 
   function privileged() {
-    return user?.privileged("admin");
+    return user?.hasPrivilige("admin");
   }
   function dateFilter() {
     const { start } = filter.toParams();
