@@ -1,20 +1,15 @@
 @use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
-.group-role-title,
-.group-role-title-enroll {
-  font-size: 1.25rem;
-  line-height: 1.1;
-  padding: 13px;
-  width: 100%;
-}
-
 .group-role-title {
-  padding: 8px 13px;
   background: $user-bg;
 
-  > span {
-    vertical-align: middle;
+  &.btn:hover {
+    background: tint-color($user-bg, $btn-hover-bg-tint-amount);
+  }
+
+  &.btn:active {
+    background: tint-color($user-bg, $btn-active-bg-tint-amount);
   }
 }
 
@@ -29,7 +24,6 @@
   padding: 3px 12px;
 }
 
-.group-role-enroll,
 .group-role-enrolled {
   margin-top: $page-component-seperator-height;
 }
