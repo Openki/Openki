@@ -12,18 +12,18 @@ import { Users, UserModel } from "/imports/api/users/users";
 import { Model as NotificationModel } from "../notification";
 import { Rsvp, Props } from "../../../../emails/notifications/Rsvp";
 import { getSiteName } from "/imports/utils/getSiteName";
-import { getStartEndDate } from "./utils";
+import { getStartEndDate } from "../utils/getStartEndDate";
 import * as StringTools from "/imports/utils/string-tools";
 import moment from "moment";
 
 import ical, { ICalCalendarMethod } from "ical-generator";
 import { convertToIcal } from "/imports/utils/convertToIcal";
 
-interface Body {
+export interface Body {
   eventId: string;
   participantId: string;
   recipients: string[];
-  model: string;
+  model: "Rsvp";
 }
 
 export async function record(eventId: string, participantId: string) {

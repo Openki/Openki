@@ -25,7 +25,7 @@ export interface Body {
   recipients: string[];
   targetRecipient: string;
   revealSenderAddress: boolean;
-  model: string;
+  model: "PrivateMessage";
   context: {
     group?: string | undefined;
     event?: string | undefined;
