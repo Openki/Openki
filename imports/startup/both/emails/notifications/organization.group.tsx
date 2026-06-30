@@ -16,10 +16,10 @@ import { OrganizationGroup, Props } from "../../../../emails/notifications/Organ
 import { getSiteName } from "/imports/utils/getSiteName";
 import { ReactJoin } from "/imports/utils/ReactJoin";
 
-interface Body {
+export interface Body {
   groupId: string;
   recipients: string[];
-  model: string;
+  model: "Organization.group";
 }
 
 /**

@@ -13,12 +13,12 @@ import { Events } from "/imports/api/events/events";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { Model as NotificationModel } from "../notification";
 import { EventReminder, Props } from "/imports/emails/notifications/EventReminder";
-import { getStartEndDate } from "./utils";
+import { getStartEndDate } from "../utils/getStartEndDate";
 
-interface Body {
+export interface Body {
   event: string;
   recipients: string[];
-  model: string;
+  model: "Event.Reminder";
 }
 
 /**

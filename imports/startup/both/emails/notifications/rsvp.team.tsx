@@ -16,12 +16,12 @@ import { getSiteName } from "/imports/utils/getSiteName";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { LocalTime } from "/imports/utils/local-time";
 
-interface Body {
+export interface Body {
   eventId: string;
   groupId: string;
   participantId: string;
   recipients: string[];
-  model: string;
+  model: "Rsvp.Team";
 }
 
 export async function record(eventId: string, participantId: string) {

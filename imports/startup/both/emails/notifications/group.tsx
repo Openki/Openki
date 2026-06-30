@@ -14,10 +14,10 @@ import { Group, Props } from "../../../../emails/notifications/Group";
 
 import { getSiteName } from "/imports/utils/getSiteName";
 
-interface Body {
+export interface Body {
   groupId: string;
   recipients: string[];
-  model: string;
+  model: "Group";
 }
 
 /**

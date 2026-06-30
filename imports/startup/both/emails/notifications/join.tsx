@@ -19,13 +19,13 @@ import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { loadRoles } from "/imports/api/regions/loadRoles";
 import { RoleEntity } from "/imports/utils/PublicSettings";
 
-interface Body {
+export interface Body {
   groupId: string;
   participantId: string;
   recipients: string[];
   newRole: string;
   message: string | undefined;
-  model: string;
+  model: "Join";
 }
 
 /**

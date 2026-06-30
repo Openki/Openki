@@ -153,7 +153,7 @@ async function send(
     }
   } catch (e) {
     let reason = e;
-    if (typeof e === "object" && "toJSON" in e) {
+    if (e && typeof e === "object" && "toJSON" in e && typeof e.toJSON === "function") {
       reason = e.toJSON();
     }
 

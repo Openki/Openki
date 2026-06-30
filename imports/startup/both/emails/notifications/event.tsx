@@ -14,16 +14,16 @@ import { UserModel } from "/imports/api/users/users";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { Model as NotificationModel } from "../notification";
 import { Event, Props } from "../../../../emails/notifications/Event";
-import { getStartEndDate } from "./utils";
+import { getStartEndDate } from "../utils/getStartEndDate";
 import { Organizations } from "/imports/api/organizations/organizations";
 
-interface Body {
+export interface Body {
   isNew: boolean;
   eventId: string;
   replicats: string[];
   additionalMessage: string | undefined;
   recipients: string[];
-  model: string;
+  model: "Event";
 }
 
 /**
