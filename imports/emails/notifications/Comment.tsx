@@ -45,7 +45,7 @@ export function Comment({
               ? t(
                   "notification.comment.mail.intro",
                   "There was a comment by {USERNAME} on {GROUP}:",
-                  { USERNAME: commenterName, GROUP: group },
+                  { USERNAME: <a href={commenterLink}>{commenterName}</a>, GROUP: group },
                 )
               : t(
                   "notification.comment.mail.intro.anon",
