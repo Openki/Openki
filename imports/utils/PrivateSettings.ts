@@ -36,7 +36,8 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
 
   /**
    * Sender and recipient address for "Report problem" function. The recipient is also
-   * visible in e-mails sent to users.
+   * visible in e-mails sent to users. The recipient is also used for alert emails
+   * to instance admins.
    */
   reporter: {
     /**
@@ -51,6 +52,14 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
      */
     recipient: String,
   },
+
+  /**
+   * How many private messages each user can send per hour. If the limit is reached, the messages
+   * get blocked and an alert to is sent to the reporter.recipient address. Unless a explicit number
+   * is set, this defaults to `0` which means no limit.
+   * @default: 0
+   */
+  numberOfPrivateMessagesPerHour: Number,
 
   /**
    * Tells robots/crawlers whether to index the website or not
@@ -139,6 +148,7 @@ if (Meteor.isServer) {
       sender: "reporter@mail.openki.net",
       recipient: "admins@openki.net",
     },
+    numberOfPrivateMessagesPerHour: 0,
     robots: true,
     hideProfiles: false,
     printLog: false,

@@ -19,13 +19,13 @@ import {
   Props,
 } from "/imports/emails/notifications/EventContactParticipants";
 
-interface Body {
+export interface Body {
   sender: string;
   message: string;
   event: string;
   recipients: string[];
   revealSenderAddress: boolean;
-  model: string;
+  model: "Event.ContactParticipants";
 }
 
 /**

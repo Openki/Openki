@@ -16,14 +16,16 @@ import { getSiteName } from "/imports/utils/getSiteName";
 import { Model as NotificationModel } from "../notification";
 import { PrivateMessage, Props } from "/imports/emails/notifications/PrivateMessage";
 import { LocalTime } from "/imports/utils/local-time";
+import { PrivateSettings } from "/imports/utils/PrivateSettings";
+import { sendAlert } from "../lib/sendAlert";
 
-interface Body {
+export interface Body {
   message: string;
   sender: string;
   recipients: string[];
   targetRecipient: string;
   revealSenderAddress: boolean;
-  model: string;
+  model: "PrivateMessage";
   context: {
     group?: string | undefined;
     event?: string | undefined;
@@ -88,6 +90,43 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
   const { body } = entry;
   const sender = await Users.findOneAsync(body.sender);
   const targetRecipient = await Users.findOneAsync(body.targetRecipient);
+
+  if (PrivateSettings.numberOfPrivateMessagesPerHour) {
+    // Check how many messages a user has sent and block if there are too many
+    const observePeriod = new Date();
+    observePeriod.setHours(observePeriod.getHours() - 1);
+    const numberOfMessages = await Log.find(
+      {
+        tr: "Notification.Send",
+        ts: { $gte: observePeriod },
+        "body.model": "PrivateMessage",
+        "body.sender": body.sender,
+      },
+      // Take one more so we only send the alert email when the limit has been reached
+      { limit: PrivateSettings.numberOfPrivateMessagesPerHour + 1 },
+    ).countAsync();
+
+    if (numberOfMessages === PrivateSettings.numberOfPrivateMessagesPerHour) {
+      await sendAlert(
+        "Alert: A user sent many messages",
+        <>
+          The User <a href={Router.url("userprofile", sender)}>{sender?.getDisplayName()}</a> sent
+          too many messages in a hour. Further messages are not sent to the recipients.
+          <br />
+          Check if it&apos;s SPAM, and potentially block and remove the user.
+          <br />
+          If the messages are legitimate, wait for 1h and then remove the
+          &quot;Notification.SendResult&quot; entry from the Log in the DB.
+        </>,
+      );
+    }
+
+    if (numberOfMessages >= PrivateSettings.numberOfPrivateMessagesPerHour) {
+      throw new Error(
+        "The User sent too many messages in the last hour. The message are not sent to recipients. If the messages were legitimate, remove this 'Notification.SendResult' entry from the Log in the DB.",
+      );
+    }
+  }
 
   return {
     accepted(actualRecipient: UserModel) {

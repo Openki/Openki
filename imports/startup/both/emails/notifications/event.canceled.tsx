@@ -13,19 +13,19 @@ import { Events } from "/imports/api/events/events";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { Model as NotificationModel } from "../notification";
 import { EventCanceled, Props } from "/imports/emails/notifications/EventCanceled";
-import { getStartEndDate } from "./utils";
+import { getStartEndDate } from "../utils/getStartEndDate";
 import * as StringTools from "/imports/utils/string-tools";
 import moment from "moment";
 
 import ical, { ICalCalendarMethod } from "ical-generator";
 import { convertToIcal } from "/imports/utils/convertToIcal";
 
-interface Body {
+export interface Body {
   sender: string;
   event: string;
   message: string;
   recipients: string[];
-  model: string;
+  model: "Event.Canceled";
 }
 
 /**
