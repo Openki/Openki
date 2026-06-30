@@ -21,6 +21,8 @@
   margin-top: 10px;
 }
 
-.group-event-tasks {
-  position: relative;
+.event-display-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

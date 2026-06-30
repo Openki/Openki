@@ -126,7 +126,7 @@ export function Events({ group }: Props) {
 
             {haveFutureEvents() && (
               <>
-                <div className="page-component-header">
+                <div className="page-component-header event-display-container">
                   <h4>
                     <i className="fa-regular fa-calendar-days fa-fw" />
                     &nbsp;
@@ -136,6 +136,10 @@ export function Events({ group }: Props) {
                       { NUM: upcomingEventsCount() },
                     )}
                   </h4>
+                  <div>
+                    {haveEvents() && <DeleteEvents {...deleteGroupEventsArgs()} />}
+                    {showModal && <DeleteEventsModal {...deleteEventsModalArgs()} />}
+                  </div>
                 </div>
                 <div className="group-event-list">
                   <EventList dataEvents={futureEvents()} withDate={true} />
@@ -181,11 +185,9 @@ export function Events({ group }: Props) {
       )}
 
       {canAdd() && (
-        <div className="page-component group-event-tasks">
+        <div className="page-component">
           <Add group={group} />
-          {haveEvents() && <DeleteEvents {...deleteGroupEventsArgs()} />}
-          {showModal && <DeleteEventsModal {...deleteEventsModalArgs()} />}
-        </div>
+       </div>
       )}
 
       {!isLoading() && haveEvents() && (

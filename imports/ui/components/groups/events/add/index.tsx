@@ -12,25 +12,18 @@ export function Add({ group }: Props) {
   const { t } = useTranslation();
 
   return (
+
     <div id="group-event-add" className="event-caption-wrap">
       <a
-        className="btn p-0"
+        className="btn btn-add text-center page-component-btn"
         href={Router.path("createEvent", undefined, { query: { groupId: group._id } })}
-        title={t("group.event.edit.add")}
+        data-bs-title={t("group.event.edit.add")}
       >
-        <div className="event-caption event-caption-placeholder event-caption-action event-caption-add">
-          <div className="event-caption-header-wrap">
-            <div className="event-caption-header">
-              <div className="event-caption-pseudoborder"></div>
-            </div>
-          </div>
-          <div className="event-caption-body-wrap">
-            <div className="event-caption-body"></div>
-          </div>
-          <span className="event-caption-icon">
-            <i className="fa-solid fa-plus fa-2x" />
-          </span>
-        </div>
+        <h4 className="fw-bold">
+        <i className="fa-regular fa-calendar-plus" />
+        &nbsp;
+        {t("group.event.edit.add", "Create Event")}
+        </h4>
       </a>
     </div>
   );
