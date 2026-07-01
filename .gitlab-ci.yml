@@ -6,8 +6,8 @@ workflow:
 
 stages:
   - lint
-  - prepare
   - cleanup
+  - prepare
   - test
   - build
   - deploy
@@ -23,6 +23,7 @@ variables:
   GIT_DEPTH: "0"           # Full history needed for git describe / git log
   METEOR_ALLOW_SUPERUSER: "true"
   TOOL_NODE_FLAGS: "--max_old_space_size=4096"
+  TARGET_BRANCH: "server-config-21-docker-simple-setup"
 
 # Static analysis / formatting checks
 lint:
@@ -31,6 +32,11 @@ lint:
     - gitlab-org
   script: ./ci/lint.sh
 
+# Cleanup generated/cached dependencies
+cleanup:
+  stage: cleanup
+  script:
+    - rm -rf .meteor/ .npm/ node_modules/
 
 # -------------------------------------------------------------------
 # Stage: prepare
@@ -49,15 +55,8 @@ prepare_version:
       - server/version.js
     expire_in: 1 hour
   rules:
-    - if: '$CI_COMMIT_BRANCH == "server-config-21-docker-simple-setup"'
+    - if: '$CI_COMMIT_BRANCH == $TARGET_BRANCH'
       when: always
-    - when: never
-
-# Cleanup generated/cached dependencies
-cleanup:
-  stage: cleanup
-  script:
-    - rm -rf .meteor/ .npm/ node_modules/
 
 # Unit / E2E / integration tests
 test:
@@ -90,14 +89,18 @@ code_quality:
       when: never
 
     # Run only for merge requests targeting the "dev" branch
-    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "server-config-21-docker-simple-setup"
+    #- if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"
+    # We let it running here for testing
+    - if: '$CI_COMMIT_BRANCH == $TARGET_BRANCH'
+      when: always 
 
 # Semgrep SAST configuration
 # - Additional SAST settings: https://gitlab.com/Openki/Openki/-/security/configuration/sast
 semgrep-sast:
   rules:
     # Run security scanning only on the "server-config-21-docker-simple-setup" branch
-    - if: $CI_COMMIT_BRANCH == "server-config-21-docker-simple-setup"
+    - if: '$CI_COMMIT_BRANCH == $TARGET_BRANCH'
+      when: always
 
 # Global SAST settings
 sast:
@@ -127,15 +130,13 @@ build_and_push_docker:
     - docker build -t "$CI_REGISTRY_IMAGE:$IMAGE_TAG" .
     - docker push "$CI_REGISTRY_IMAGE:$IMAGE_TAG"
   rules:
-    - if: '$CI_COMMIT_BRANCH == "server-config-21-docker-simple-setup"'
+    - if: '$CI_COMMIT_BRANCH == $TARGET_BRANCH'
       when: always
-    - when: never
 
 
 # -------------------------------------------------------------------
 # Stage: Deploy
 # -------------------------------------------------------------------
-
 # Deploy to dev3
 deploy_docker:
   stage: deploy
@@ -150,24 +151,18 @@ deploy_docker:
   variables:
     IMAGE_TAG: $IMAGE_TAG
   rules:
-    - if: '$CI_COMMIT_BRANCH == "server-config-21-docker-simple-setup"'
+    - if: '$CI_COMMIT_BRANCH == $TARGET_BRANCH'
       when: always
-    - when: never
   
 # Deploy legacy
 deploy_legacy:
   stage: deploy
-
   # Start immediately after lint testing
   needs: [lint]
-
   variables:
     SOURCE_BRANCH: dev
     TARGET_HOST: dev
-
   rules:
-    - if: $CI_COMMIT_BRANCH == "server-config-21-docker-simple-setup"
-
-  when: always
-
+    - if: '$CI_COMMIT_BRANCH == $TARGET_BRANCH'
+      when: always
   trigger: Openki/sysadmin/deploy-config
