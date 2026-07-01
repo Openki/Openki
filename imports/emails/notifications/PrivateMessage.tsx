@@ -34,6 +34,10 @@ export function PrivateMessage({
   lng,
 }: Props) {
   const { t } = useTranslation(undefined, { lng });
+  const shouldShowDMWarning =
+    !sender.hasPrivilige("admin") &&
+    sender.createdAt.getTime() >= Date.now() - 10 * 24 * 60 * 60 * 1000;
+
   return (
     <>
       {senderCopy && (
@@ -66,7 +70,7 @@ export function PrivateMessage({
             )}
             .
           </p>
-          {!sender.hasPrivilige("admin") && (
+          {shouldShowDMWarning && (
             <p>
               {t(
                 "notification.privateMessage.mail.warning",
