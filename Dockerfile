@@ -10,7 +10,7 @@ WORKDIR /app
 COPY . .
 
 # Install Meteor packages
-RUN meteor npm install
+RUN meteor npm ci
 
 # Build the production bundle
 # Output goes to /build as a standard Node app
