@@ -20,7 +20,6 @@
     "@popperjs/core": "2.11.8",
     "bootstrap": "5.3.7",
     "bootstrap-datepicker": "1.10.0",
-    "core-js": "3.45.0",
     "deepmerge": "4.3.1",
     "es6-promisify": "7.0.0",
     "i18next": "25.5.2",
