@@ -2,7 +2,6 @@ image: registry.gitlab.com/openki/sysadmin/docker-ci-container:latest
 
 workflow:
   rules:
-    - if: $CI_MERGE_REQUEST_ID
     - if: $CI_COMMIT_BRANCH
 
 stages:
