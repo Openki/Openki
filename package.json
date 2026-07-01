@@ -81,7 +81,7 @@
     "@types/moment-timezone": "0.5.30",
     "@types/node-schedule": "2.1.8",
     "@types/react-dom": "19.2.0",
-    "@types/sanitize-html": "2.16.0",
+    "@types/sanitize-html": "2.16.1",
     "@types/seedrandom": "3.0.8",
     "@types/select2": "4.0.57",
     "@types/tinycolor2": "1.4.6",
