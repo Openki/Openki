@@ -43,11 +43,13 @@ export function Tuple<T extends readonly Match.Pattern[]>(...pattern: [...T]) {
       check(value, pattern[index]);
     });
     return true;
-  }) as unknown as Match.Matcher<{
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    [K in keyof T]: Match.PatternMatch<T[K]>;
-  }>;
+  }) as unknown as Match.Matcher<
+    {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      [K in keyof T]: Match.PatternMatch<T[K]>;
+    }
+  >;
 }
 
 /** String without HTML. */

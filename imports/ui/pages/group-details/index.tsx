@@ -44,12 +44,10 @@ function canShare(group: GroupModel) {
   }
 
   // only show share a group if there is a role to subscribe
-  if (
-    !(
-      group.roles.some((r) => r !== "team") ||
-      (group.roles.includes("team") && !group.members.some((m) => m.roles.includes("team")))
-    )
-  ) {
+  if (!(
+    group.roles.some((r) => r !== "team") ||
+    (group.roles.includes("team") && !group.members.some((m) => m.roles.includes("team")))
+  )) {
     return false;
   }
 
