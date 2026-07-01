@@ -12,6 +12,7 @@ export interface Props {
   recipientName: string;
   siteName: string | undefined;
   fromAddress: string;
+  shouldShowPMWarning: boolean;
   group: JSX.Element | undefined;
   event: JSX.Element | undefined;
   unsubscribe: Omit<UnsubscribeLinkProps, "lng">;
@@ -27,6 +28,7 @@ export function PrivateMessage({
   recipientName,
   siteName,
   fromAddress,
+  shouldShowPMWarning,
   group,
   event,
   unsubscribe,
@@ -34,9 +36,6 @@ export function PrivateMessage({
   lng,
 }: Props) {
   const { t } = useTranslation(undefined, { lng });
-  const shouldShowDMWarning =
-    !sender.hasPrivilige("admin") &&
-    sender.createdAt.getTime() >= Date.now() - 10 * 24 * 60 * 60 * 1000;
 
   return (
     <>
@@ -70,7 +69,7 @@ export function PrivateMessage({
             )}
             .
           </p>
-          {shouldShowDMWarning && (
+          {shouldShowPMWarning && (
             <p>
               {t(
                 "notification.privateMessage.mail.warning",
