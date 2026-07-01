@@ -76,7 +76,6 @@
     "@types/lodash-es": "4.17.12",
     "@types/medium-editor": "5.0.8",
     "@types/meteor-mdg-validation-error": "0.5.4",
-    "@types/mime-db": "1.43.6",
     "@types/mime-types": "3.0.1",
     "@types/moment-timezone": "0.5.30",
     "@types/node-schedule": "2.1.8",
