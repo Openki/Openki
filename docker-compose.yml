@@ -1,0 +1,33 @@
+services:
+  # ─────────────────────────────────────────────
+  # MongoDB
+  # ─────────────────────────────────────────────
+  mongo:
+    image: mongodb/mongodb-community-server:8.0-ubuntu2204-slim
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+
+  # ─────────────────────────────────────────────
+  # Meteor app
+  # ─────────────────────────────────────────────
+  app:
+    image: openki-app:latest
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    ports:
+      - "3000:3000"
+    environment:
+      ROOT_URL: http://localhost:3000
+      PORT: 3000
+      MONGO_URL: mongodb://mongo:27017/openki
+      METEOR_SETTINGS: ${METEOR_SETTINGS}
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
