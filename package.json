@@ -113,7 +113,7 @@
     "lint:fix": "eslint . --quiet --fix && stylelint '**/*.scss' --fix && prettier --write --list-different '**/*.{ts,tsx,scss,json*,js,mjs}'",
     "reset": "meteor reset --db && rm -rf node_modules && meteor npm install --verbose",
     "type-check": "meteor lint && tsc",
-    "extract-translations": "rm -f imports/startup/both/i18n/en.json && npx i18next"
+    "extract-translations": "rm -f imports/startup/both/i18n/en.json && npx i18next --silent"
   },
   "meteor": {
     "modern": {
