@@ -86,6 +86,7 @@
     "@types/tinycolor2": "1.4.6",
     "@types/uuid": "10.0.0",
     "autoprefixer": "10.5.2",
+    "core-js": "3.49.0",
     "cypress": "15.18.0",
     "eslint": "9.39.4",
     "eslint-plugin-react": "7.37.5",
