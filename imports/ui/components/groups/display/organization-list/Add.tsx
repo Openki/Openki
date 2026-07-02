@@ -72,7 +72,7 @@ export function Add({ group }: Props) {
         data-bs-toggle="dropdown"
       >
         <i className="fa-solid fa-plus fa-fw" />
-        <span>{t("groups.organizationList.addText", "link a organization")}</span>
+        <span>{t("groups.organizationList.addText", "Link organization")}</span>
       </button>
       <ul className="dropdown-menu dialog-dropdown">
         <li className="dropdown-header">
