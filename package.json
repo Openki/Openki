@@ -45,7 +45,7 @@
     "react": "19.2.7",
     "react-bootstrap-typeahead": "6.4.1",
     "react-dom": "19.2.7",
-    "react-i18next": "16.0.0",
+    "react-i18next": "17.0.8",
     "react-leaflet": "5.0.0",
     "react-markdown": "8.0.7",
     "sanitize-html": "2.17.5",
