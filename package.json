@@ -60,6 +60,11 @@
     "uuid": "11.1.0",
     "xmlbuilder2": "3.1.1"
   },
+  "overrides": {
+    "@jimp/core": {
+      "file-type": "21.3.4"
+    }
+  },
   "devDependencies": {
     "@babel/preset-env": "7.28.3",
     "@eslint/js": "9.32.0",
