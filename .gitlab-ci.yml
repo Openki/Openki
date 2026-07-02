@@ -136,7 +136,7 @@ build_and_push_docker:
 # -------------------------------------------------------------------
 # Stage: Deploy
 # -------------------------------------------------------------------
-# Deploy to dev3
+# Deploy docker
 deploy_docker:
   stage: deploy
   needs:
@@ -153,8 +153,8 @@ deploy_docker:
     - if: '$CI_COMMIT_BRANCH == $TARGET_BRANCH'
       when: always
   
-# Deploy legacy
-deploy_legacy:
+#Deploy branch dev
+deploy_dev:
   stage: deploy
   # Start immediately after lint testing
   needs: [lint]
@@ -164,4 +164,37 @@ deploy_legacy:
   rules:
     - if: '$CI_COMMIT_BRANCH == $TARGET_BRANCH'
       when: always
+  trigger: Openki/sysadmin/deploy-config
+
+# Deploy staging branch
+deploy_staging:
+  stage: deploy
+  variables:
+    SOURCE_BRANCH: staging
+    TARGET_HOST: openki-staging
+  rules:
+    - if: $CI_COMMIT_BRANCH == "staging"
+  when: always
+  trigger: Openki/sysadmin/deploy-config
+
+# Deploy NLNet development branch
+deploy_dev2:
+  stage: deploy
+  variables:
+    SOURCE_BRANCH: nlnet-dev
+    TARGET_HOST: dev2
+  rules:
+    - if: $CI_COMMIT_BRANCH == "nlnet-dev"
+  when: always
+  trigger: Openki/sysadmin/deploy-config
+
+# Deploy main branch to sandbox
+deploy_sandbox:
+  stage: deploy
+  variables:
+    SOURCE_BRANCH: main
+    TARGET_HOST: sandbox
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+  when: always
   trigger: Openki/sysadmin/deploy-config
