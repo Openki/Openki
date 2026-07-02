@@ -2,6 +2,7 @@ image: registry.gitlab.com/openki/sysadmin/docker-ci-container:latest
 
 workflow:
   rules:
+    - if: $CI_MERGE_REQUEST_ID
     - if: $CI_COMMIT_BRANCH
 
 stages:
@@ -23,7 +24,7 @@ variables:
   GIT_DEPTH: "0"           # Full history needed for git describe / git log
   METEOR_ALLOW_SUPERUSER: "true"
   TOOL_NODE_FLAGS: "--max_old_space_size=4096"
-  TARGET_BRANCH: "server-config-21-docker-simple-setup"
+  TARGET_BRANCH: "dev"
 
 # Static analysis / formatting checks
 lint:
@@ -89,9 +90,7 @@ code_quality:
       when: never
 
     # Run only for merge requests targeting the "dev" branch
-    #- if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"
-    # We let it running here for testing
-    - if: '$CI_COMMIT_BRANCH == $TARGET_BRANCH'
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $TARGET_BRANCH
       when: always 
 
 # Semgrep SAST configuration
