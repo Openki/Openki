@@ -174,7 +174,7 @@ deploy_staging:
     TARGET_HOST: openki-staging
   rules:
     - if: $CI_COMMIT_BRANCH == "staging"
-  when: always
+      when: always
   trigger: Openki/sysadmin/deploy-config
 
 # Deploy NLNet development branch
@@ -185,7 +185,7 @@ deploy_dev2:
     TARGET_HOST: dev2
   rules:
     - if: $CI_COMMIT_BRANCH == "nlnet-dev"
-  when: always
+      when: always
   trigger: Openki/sysadmin/deploy-config
 
 # Deploy main branch to sandbox
@@ -196,5 +196,5 @@ deploy_sandbox:
     TARGET_HOST: sandbox
   rules:
     - if: $CI_COMMIT_BRANCH == "main"
-  when: always
+      when: always
   trigger: Openki/sysadmin/deploy-config
