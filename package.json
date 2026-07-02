@@ -18,7 +18,7 @@
     "@jimp/js-png": "1.6.0",
     "@jimp/plugin-resize": "1.6.0",
     "@popperjs/core": "2.11.8",
-    "bootstrap": "5.3.7",
+    "bootstrap": "5.3.8",
     "bootstrap-datepicker": "1.10.0",
     "deepmerge": "4.3.1",
     "es6-promisify": "7.0.0",
@@ -68,7 +68,7 @@
   "devDependencies": {
     "@babel/preset-env": "7.28.3",
     "@eslint/js": "9.32.0",
-    "@types/bootstrap": "5.2.10",
+    "@types/bootstrap": "5.2.11",
     "@types/bootstrap-datepicker": "1.10.0",
     "@types/es6-promisify": "6.0.4",
     "@types/jquery": "3.5.16",
