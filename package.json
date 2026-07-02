@@ -22,7 +22,7 @@
     "bootstrap-datepicker": "1.10.0",
     "deepmerge": "4.3.1",
     "es6-promisify": "7.0.0",
-    "i18next": "25.5.2",
+    "i18next": "26.3.4",
     "i18next-chained-backend": "4.6.2",
     "i18next-icu": "2.4.4",
     "i18next-localstorage-backend": "4.2.0",
