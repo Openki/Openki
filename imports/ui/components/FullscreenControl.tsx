@@ -2,15 +2,15 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useMap } from "react-leaflet";
 
-import "leaflet.fullscreen";
-import "leaflet.fullscreen/Control.FullScreen.css";
+import FullScreen from "leaflet.fullscreen";
+import "leaflet.fullscreen/dist/Control.FullScreen.css";
 
 export function FullscreenControl() {
   const map = useMap();
   const { t } = useTranslation();
 
   useEffect(() => {
-    const fullscreenControl = L.control.fullscreen({
+    const fullscreenControl = new FullScreen({
       position: "topleft",
       title: t("fullscreen.show", "Full screen"),
       titleCancel: t("fullscreen.exit", "Exit full screen"),
@@ -37,7 +37,7 @@ export function FullscreenControl() {
       map.off("enterFullscreen", handleEnterFullscreen);
       map.off("exitFullscreen", handleExitFullscreen);
     };
-  });
+  }, [map]);
 
   return null;
 }
