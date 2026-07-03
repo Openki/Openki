@@ -1,19 +1,24 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+
 import { GroupModel } from "/imports/api/groups/groups";
 import { Subscribe, processChange } from "/imports/api/groups/subscription";
 import { Regions } from "/imports/api/regions/regions";
 import { UserModel } from "/imports/api/users/users";
+
+import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
+import { RoleEntity } from "/imports/utils/PublicSettings";
+import { useUser } from "/imports/utils/react-meteor-data";
+import { useAccountTasks } from "/imports/utils/useAccountTasks";
+import { useEventListener } from "/imports/utils/useEventListener";
+import { cx } from "/imports/utils/cx";
 import { Button } from "/imports/ui/components/Buttons";
+
 import { FormControl } from "/imports/ui/components/form-control";
 import { RoleIcon } from "/imports/ui/components/RoleIcon";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
-import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
-import { RoleEntity } from "/imports/utils/PublicSettings";
-import { useUser } from "/imports/utils/react-meteor-data";
-import { useAccountTasks } from "/imports/utils/useAccountTasks";
 
 export interface Props {
   group: GroupModel;
@@ -26,6 +31,8 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
   const [isRolesLoading, roles] = useRegionRoles(group.region);
   const { roleSubscribe, roleGroupMessageInfo } = useRoleDisplay(roles);
   const { promptToLogin } = useAccountTasks();
+  const collapseRef = useRef<HTMLDivElement>(null);
+  const [isCollapsed, setIsCollapsed] = useState(true);
   const user = useUser();
 
   const [isBusy, setIsBusy] = useState(false);
@@ -70,6 +77,14 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
     }
   }
 
+  useEventListener(collapseRef, "show.bs.collapse", () => {
+    setIsCollapsed(false);
+  });
+
+  useEventListener(collapseRef, "hide.bs.collapse", () => {
+    setIsCollapsed(true);
+  });
+
   if (isRolesLoading()) {
     return null;
   }
@@ -80,7 +95,7 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
     <>
       <button
         data-test={`group-role-enroll-${roleType}`}
-        className="btn btn-success page-component-btn collapsed"
+        className="btn btn-success page-component-btn collapsed d-flex flex-row align-items-center gap-1"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target={`#${name}`}
@@ -90,11 +105,11 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
         <RoleIcon type={roleType} regionId={group.region} className="grouppage-role-icon" />
         &nbsp;
         {roleSubscribe(roleType)}
-        <span className="btn btn-link">
-          <i className="fa-solid fa-circle-info" />
-        </span>
+        <i
+          className={cx("fa-solid fa-fw ms-auto", isCollapsed ? "fa-angle-down" : "fa-angle-up")}
+        />
       </button>
-      <div className="group-role-enroll-options collapse" id={name}>
+      <div ref={collapseRef} className="group-role-enroll-options collapse" id={name}>
         <form noValidate onSubmit={handleSubmit}>
           <div className="mb-3">
             <FormControl

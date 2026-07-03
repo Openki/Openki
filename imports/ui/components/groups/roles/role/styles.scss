@@ -5,10 +5,12 @@
   background: $user-bg;
 
   &.btn:hover {
+    border-color: tint-color($user-bg, $btn-hover-border-tint-amount);
     background: tint-color($user-bg, $btn-hover-bg-tint-amount);
   }
 
   &.btn:active {
+    border-color: tint-color($user-bg, $btn-active-border-tint-amount);
     background: tint-color($user-bg, $btn-active-bg-tint-amount);
   }
 }
@@ -18,10 +20,7 @@
 }
 
 .role-unsubscribe-btn {
-  @include td-margin(left, 5px);
-
-  font-size: medium;
-  padding: 3px 12px;
+  margin: -2px 0;
 }
 
 .group-role-enrolled {

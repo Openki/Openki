@@ -50,9 +50,18 @@
   padding: 10px 12px;
   text-align: start;
   width: 100%;
+  transition:
+    border-top-left-radius 0.35s ease,
+    border-top-right-radius 0.35s ease;
 
-  &[data-bs-toggle='collapse']:not(.collapsed) {
+  &[data-bs-toggle="collapse"]:not(.collapsed) {
     border-radius: 0;
+  }
+
+  &[data-bs-toggle="collapse"].collapsed {
+    transition:
+      border-bottom-left-radius 0s ease 0.35s,
+      border-bottom-right-radius 0s ease 0.35s;
   }
 }
 
