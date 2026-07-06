@@ -84,7 +84,10 @@ export function ParticipantContact(props: Props) {
                     setShowModal(true);
                   }}
                 >
-                  <i className="fa-solid fa-envelope fa-fw" />
+                  <i
+                    className="fa-solid fa-envelope fa-fw"
+                    data-bs-title={t("user.privateMessage", "Contact directly")}
+                  />
                 </button>
               ) : (
                 <button className="btn btn-link p-0 disabled" type="button" disabled>
