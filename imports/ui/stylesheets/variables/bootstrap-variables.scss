@@ -55,6 +55,7 @@ $form-label-color: shade-color($blue, 20%);
 $form-group-margin-bottom: 15px !default;
 $form-check-input-checked-bg-color: color.adjust($blue, $lightness: 5%);
 $form-check-input-indeterminate-bg-color: color.adjust($blue, $lightness: 5%);
+$input-placeholder-color: $gray;
 
 // Dropdowns
 
