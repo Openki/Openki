@@ -106,10 +106,10 @@
     "test:ci": "WAIT_ON_TIMEOUT=600000 start-test 'npm run test:env -- --once' :3000 'cypress run --record'",
     "test:env": "BABEL_ENV=test DISABLE_REACT_FAST_REFRESH=1 meteor --settings settings/ci.json --port 3000",
     "lint": "eslint . && stylelint '**/*.scss' && prettier --check '**/*.{ts,tsx,scss,json*,js,mjs}'",
-    "lint:fix": "eslint . --quiet --fix && stylelint '**/*.scss' --fix && prettier --write --list-different '**/*.{ts,tsx,scss,json*,js,mjs}'",
+    "lint:fix": "eslint . --fix && stylelint '**/*.scss' --fix && prettier --write --list-different '**/*.{ts,tsx,scss,json*,js,mjs}'",
     "reset": "meteor reset --db && rm -rf node_modules && meteor npm install --verbose",
-    "type-check": "meteor lint && tsc",
-    "extract-translations": "rm -f imports/startup/both/i18n/en.json && npx i18next --silent"
+    "type-check": "echo 'Linting and checking types...' && meteor lint && tsc",
+    "extract-translations": "echo 'Extracting translations...' && rm -f imports/startup/both/i18n/en.json && npx i18next --silent"
   },
   "meteor": {
     "modern": {
