@@ -404,7 +404,7 @@
   "group.detail.remove.yourself.team": "Remove yourself from the team? Only another member can add you back.",
   "group.details.eventsLoadingHeader": "Events",
   "group.details.is-proposalTag": "Proposal",
-  "group.details.members.contact-members": "Notify All",
+  "group.details.members.contact-members": "Contact all members",
   "group.details.members.title": "{NUM, plural, =0{No interested yet} one{1 interested} other{# interested} }",
   "group.details.noEvents": "No events planned",
   "group.details.removeTeam.others.header": "Remove member from the team",

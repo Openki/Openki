@@ -86,7 +86,7 @@ export function ParticipantContact(props: Props) {
                 >
                   <i
                     className="fa-solid fa-envelope fa-fw"
-                    title={t("user.privateMessage", "Contact directly")}
+                    data-bs-title={t("user.privateMessage", "Contact directly")}
                   />
                 </button>
               ) : (
