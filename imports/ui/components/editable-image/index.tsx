@@ -1,5 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore NOTE: The type definitions for image-blob-reduce are incorrect are OK to ignore for now. This should hopefully be fixed as part of the upstream issue https://github.com/nodeca/image-blob-reduce/issues/48
 import imageBlobReduce, { pica } from "image-blob-reduce";
 import { extension } from "mime-types";
 import React, { ChangeEvent, DragEvent, useId, useState } from "react";
