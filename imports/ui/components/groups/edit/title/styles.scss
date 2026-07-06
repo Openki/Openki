@@ -1,10 +1,5 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
-#group-edit-title::placeholder {
-  color: #B5B5B5;
-  font-weight: 200;
-}
-
 .proposed-groups {
   border: 1px solid $primary;
   max-height: 200px;
