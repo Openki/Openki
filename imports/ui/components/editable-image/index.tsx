@@ -1,4 +1,4 @@
-import ImageBlobReduce from "image-blob-reduce";
+import imageBlobReduce, { pica } from "image-blob-reduce";
 import { extension } from "mime-types";
 import React, { ChangeEvent, DragEvent, useId, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -78,8 +78,8 @@ export function EditableImage(data: Data) {
     let resizedFile: Blob;
     if (data.maxSize) {
       try {
-        resizedFile = await new ImageBlobReduce({
-          pica: ImageBlobReduce.pica({ features: ["js", "wasm"] }),
+        resizedFile = await imageBlobReduce({
+          pica: pica({ features: ["js", "wasm"] }),
         }).toBlob(file, { max: data.maxSize });
       } catch (ex) {
         console.info(
