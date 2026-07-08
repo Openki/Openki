@@ -74,6 +74,10 @@ export function Edit(props: Props) {
       organizations.push(...defaultTeamOrganizations);
     }
 
+    if (props.organization) {
+      organizations.push(props.organization);
+    }
+
     // remove double organizations
     return uniq(organizations);
   }
