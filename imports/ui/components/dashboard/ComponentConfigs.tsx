@@ -13,6 +13,7 @@ import * as Events from "/imports/api/events/publications";
 import * as Organizations from "/imports/api/organizations/publications";
 
 import { Edit } from "../groups/edit";
+import { Edit as EditModern } from "../groups/edit.modern";
 import { GroupCompact } from "../groups/compact";
 import { EventCompact } from "../events/compact";
 import { EventCompact as EventCompactModern } from "../events/compact.modern";
@@ -151,6 +152,14 @@ const propose: StaticComponent = {
   ),
 };
 
+const proposeModern: StaticComponent = {
+  component: ({ params }) => (
+    <div className="container mw-md mb-4">
+      <EditModern {...params} />
+    </div>
+  ),
+};
+
 export const mapping = {
   group,
   groupModern,
@@ -161,4 +170,5 @@ export const mapping = {
   organization,
   eventsMap,
   propose,
+  proposeModern,
 } as const;

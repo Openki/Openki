@@ -62,11 +62,7 @@ export function GetInvolved({ group }: { group: GroupModel }) {
   );
 }
 
-export function GroupCompact({
-  group,
-}: {
-    group: GroupModel;
-}) {
+export function GroupCompact({ group }: { group: GroupModel }) {
   const viewport = useViewportSize();
   const isMobileScreen = viewport.width <= ScssVars.screenSM;
 
@@ -84,11 +80,12 @@ export function GroupCompact({
         <ImagePlaceholder seed={group._id} regionId={group.region} />
       )}
       <div className="card-body">
-        <h3 className="card-title line-clamp-2 min-h-[2lh] fw-bold text-body">
-          {group.name}
-        </h3>
+        <h3 className="card-title line-clamp-2 min-h-[2lh] fw-bold text-body">{group.name}</h3>
 
-        <a className="stretched-link icon-link icon-link-hover fs-4 text-dark" href={Router.path("showGroup", group)}>
+        <a
+          className="stretched-link icon-link icon-link-hover fs-4 text-dark"
+          href={Router.path("showGroup", group)}
+        >
           <i className="fa-solid fa-arrow-right-long bi"></i>
         </a>
       </div>
