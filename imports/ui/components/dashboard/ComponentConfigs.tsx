@@ -180,6 +180,4 @@ export const mapping = {
   organization,
   eventsMap,
   propose,
-  proposeModern,
-  proposeQrCode,
 } as const;
