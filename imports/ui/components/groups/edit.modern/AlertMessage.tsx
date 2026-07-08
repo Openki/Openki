@@ -43,7 +43,12 @@ export function AlertMessage({
       <span className="whitespace-pre-line">
         {t("group.edit.linkToGroup", "You can see your new proposal {NAME} on {SITENAME}", {
           NAME: (
-            <a className="alert-link" href={savedGroupLink()} target="_blank" rel="noreferrer">
+            <a
+              className="alert-link text-decoration-none"
+              href={savedGroupLink()}
+              target="_blank"
+              rel="noreferrer"
+            >
               {savedGroupName()}
             </a>
           ),

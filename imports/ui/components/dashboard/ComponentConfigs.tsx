@@ -154,8 +154,10 @@ const propose: StaticComponent = {
 
 const proposeModern: StaticComponent = {
   component: ({ params }) => (
-    <div className="container mw-md mb-4">
-      <EditModern {...params} />
+    <div className="container my-5">
+      <div className="mw-md">
+        <EditModern {...params} />
+      </div>
     </div>
   ),
 };

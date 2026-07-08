@@ -5,15 +5,15 @@ import { uniq } from "lodash-es";
 import * as Alert from "/imports/api/alerts/alert";
 import * as GroupsMethods from "/imports/api/groups/methods";
 import { Regions } from "/imports/api/regions/regions";
+import { GroupCustomField } from "/imports/api/groups/groups";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import * as StringTools from "/imports/utils/string-tools";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
-import { cx } from "/imports/utils/cx";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
-import { ButtonSave } from "../../Buttons";
+import { Button } from "../../Buttons";
 import { Title } from "./title";
 import { useFindFilter as useOrganizationsFindFilter } from "/imports/api/organizations/publications";
 import { useAll as useRegions } from "/imports/api/regions/publications";
@@ -34,7 +34,7 @@ export interface Props {
 }
 
 /**
- * This Group propose view is intented to be used for creating new groups inside of dashboard views.
+ * This Group propose view is intended to be used for creating new groups inside of dashboard views.
  */
 export function Edit(props: Props) {
   const { t } = useTranslation();
@@ -91,9 +91,9 @@ export function Edit(props: Props) {
     time: totalFocusTime,
   } = useMeasureTime();
 
-  const [customFieldValues, setCustomFieldValues] = useState<
-    Required<GroupsMethods.SaveFields>["customFields"]
-  >({} as Required<GroupsMethods.SaveFields>["customFields"]);
+  const [customFieldValues, setCustomFieldValues] = useState<GroupCustomField[] | undefined>(
+    undefined,
+  );
 
   const [savedMessage, setSavedMessage] = useState(false);
 
@@ -226,7 +226,7 @@ export function Edit(props: Props) {
   return (
     <div className="edit-page">
       <form noValidate onSubmit={handleSave}>
-        <div className={cx("edit-page-body group-edit-body is-frame")}>
+        <div className="edit-page-body group-edit-body mt-0">
           {savedMessage && !!savedGroupId && (
             <AlertMessage savedGroupId={savedGroupId} onClose={() => setSavedMessage(false)} />
           )}
@@ -306,7 +306,15 @@ export function Edit(props: Props) {
           />
 
           <div className="form-actions">
-            <ButtonSave submit id="groups-edit-save" isBusy={isBusy} />
+            <Button
+              submit
+              id="groups-edit-save"
+              className="btn-save"
+              isBusy={isBusy}
+              busyText={t("group.publishing", "Publishing…")}
+            >
+              {t("group.publish", "Publish")}
+            </Button>
           </div>
         </div>
       </form>
