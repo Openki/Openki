@@ -151,10 +151,7 @@ export function EventPage({ event, isNew }: { event: EventModel; isNew: boolean 
             },
           ]}
         >
-          {t(
-            "event.details.registration.alertNextActions.message",
-            "What do you want to do next?",
-          )}
+          {t("event.details.registration.alertNextActions.message", "What do you want to do next?")}
         </ActionResult>
       )}
       <div className="container">
