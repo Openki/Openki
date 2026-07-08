@@ -162,6 +162,14 @@ const proposeModern: StaticComponent = {
   ),
 };
 
+const proposeQrCode: StaticComponent = {
+  component: ({ params }) => (
+    <div className="container my-5">
+      <QrCodeForPropose {...params} />
+    </div>
+  ),
+};
+
 export const mapping = {
   group,
   groupModern,
@@ -173,4 +181,5 @@ export const mapping = {
   eventsMap,
   propose,
   proposeModern,
+  proposeQrCode,
 } as const;
