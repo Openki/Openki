@@ -82,7 +82,7 @@ export function Show({ post, onEdit }: Props) {
       </div>
     ) : (
       <button type="button" className="btn btn-add page-component-btn" onClick={handleEditClick}>
-        <i className="fa-solid fa-pencil fa-fw" />
+        <i className="fa-solid fa-comment fa-fw" />
         &nbsp;
         {t("group.discussion.write_comment", "Write a comment")}
       </button>

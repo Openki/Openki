@@ -47,6 +47,8 @@
 
 .editable-wrap {
   position: relative;
+  display: flex;
+  align-items: baseline;
 }
 
 .editable {
@@ -63,20 +65,21 @@
     background: $body-bg;
   }
 
-  &:not(.readonly) + .editable-icon,
-  &:focus + .editable-icon,
-  &.editable-changed + .editable-icon {
+  &:not(.readonly) + .editable-icon-container,
+  &:focus + .editable-icon-container,
+  &.editable-changed + .editable-icon-container {
     display: none;
   }
 }
 
 .editable-wrap-multiline .editable {
   min-height: 100px;
+  padding: 8px;
 }
 
 .editable-wrap-singleline .editable {
   display: inline-block;
-  min-width: 8em;
+  min-width: 2em;
   width: auto;
 
   &:not(.readonly),
@@ -91,6 +94,7 @@
   color: $gray-600;
   cursor: default;
   padding: 0.2em;
+  font-size: small;
   transition: color 0.25s;
 
   /* stylelint-disable-next-line no-descending-specificity */
@@ -99,16 +103,37 @@
   }
 }
 
+.editable-icon-container {
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+  padding: 5px;
+  align-self: center;
+
+  &:hover {
+    background-color: rgb(0 0 0 / 6%);
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 1px solid $gray-600;
+    outline-offset: 1px;
+  }
+}
+
 .editable-wrap:hover .editable-icon {
   color: $gray-800;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
-.editable-wrap-multiline .editable-icon {
-  @include td-pos(right, 0);
+.editable-wrap-multiline .editable-icon-container {
+  @include td-pos(right, -14px);
 
   position: absolute;
-  top: 0;
+  top: -12px;
 }
 
 .editable:focus + .editable-icon,
