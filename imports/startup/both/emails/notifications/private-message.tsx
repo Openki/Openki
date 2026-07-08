@@ -169,6 +169,9 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         customSiteUrl: Router.url("home", {}, { query: { campaign } }),
         customSiteName: undefined as string | undefined,
         customEmailLogo: undefined as string | undefined,
+        shouldShowPMWarning:
+          !sender.hasPrivilige("admin") &&
+          sender.createdAt.getTime() >= Date.now() - 10 * 24 * 60 * 60 * 1000, // 10 days
         fromAddress: "",
         group: undefined as JSX.Element | undefined,
         event: undefined as JSX.Element | undefined,
