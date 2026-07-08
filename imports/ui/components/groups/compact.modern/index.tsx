@@ -64,14 +64,8 @@ export function GetInvolved({ group }: { group: GroupModel }) {
 
 export function GroupCompact({
   group,
-  showDescription,
-  showNeededRoles,
-  showHowToGetInvolved,
 }: {
-  group: GroupModel;
-  showDescription?: boolean | undefined;
-  showNeededRoles?: boolean | undefined;
-  showHowToGetInvolved?: boolean | undefined;
+    group: GroupModel;
 }) {
   const viewport = useViewportSize();
   const isMobileScreen = viewport.width <= ScssVars.screenSM;
@@ -90,23 +84,13 @@ export function GroupCompact({
         <ImagePlaceholder seed={group._id} regionId={group.region} />
       )}
       <div className="card-body">
-        <h3 className="card-title line-clamp-2 min-h-[2lh] fw-bold">
-          <a className="stretched-link text-body" href={Router.path("showGroup", group)}>
-            {group.name}
-          </a>
+        <h3 className="card-title line-clamp-2 min-h-[2lh] fw-bold text-body">
+          {group.name}
         </h3>
-        {showDescription && (
-          <p
-            className="card-text line-clamp-3"
-            dangerouslySetInnerHTML={{ __html: group.description || "" }}
-          />
-        )}
-        {showNeededRoles && (
-          <p className="card-text text-transparent">
-            <Roles group={group} />
-          </p>
-        )}
-        {showHowToGetInvolved && <GetInvolved group={group} />}
+
+        <a className="stretched-link icon-link icon-link-hover fs-4 text-dark" href={Router.path("showGroup", group)}>
+          <i className="fa-solid fa-arrow-right-long bi"></i>
+        </a>
       </div>
     </div>
   );
