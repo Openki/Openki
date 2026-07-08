@@ -218,7 +218,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
             },
           ]}
         >
-          {t("message.groupCreated.description", "What do you wannt to do next?")}
+          {t("message.groupCreated.description", "What do you want to do next?")}
         </ActionResult>
       )}
       <div data-test="group-details" className="container">

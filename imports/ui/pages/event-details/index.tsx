@@ -153,7 +153,7 @@ export function EventPage({ event, isNew }: { event: EventModel; isNew: boolean 
         >
           {t(
             "event.details.registration.alertNextActions.message",
-            "What do you wannt to do next?",
+            "What do you want to do next?",
           )}
         </ActionResult>
       )}
