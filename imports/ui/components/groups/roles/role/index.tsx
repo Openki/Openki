@@ -11,10 +11,10 @@ import { GroupModel } from "/imports/api/groups/groups";
 import { RoleEntity } from "/imports/utils/PublicSettings";
 
 import { Action } from "/imports/ui/components/PleaseLogin";
-
-import "./styles.scss";
 import { Enrolling } from "/imports/ui/components/groups/roles/role/Enrolling";
 import { Subscribed } from "/imports/ui/components/groups/roles/role/Subscribed";
+
+import "./styles.scss";
 
 export interface Props {
   group: GroupModel;
