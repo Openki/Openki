@@ -85,13 +85,15 @@ export function Subscribed({ roleType, group, showFirstSteps, onToggle }: Props)
         >
           <RoleIcon type={roleType} regionId={group.region} className="grouppage-role-icon" />
           {roleSubscribed(roleType)}
-          <button
-            type="button"
-            className="role-unsubscribe-btn btn btn-sm btn-cancel"
-            onClick={handleRoleUnsubscribeClick}
-          >
-            {t("group.roles.retract", "Retract")}
-          </button>
+          {!showFirstSteps && (
+            <button
+              type="button"
+              className="role-unsubscribe-btn btn btn-sm btn-cancel"
+              onClick={handleRoleUnsubscribeClick}
+            >
+              {t("group.roles.retract", "Retract")}
+            </button>
+          )}
           <i
             className={cx(
               "fa-solid fa-fw ms-auto",
@@ -123,6 +125,13 @@ export function Subscribed({ roleType, group, showFirstSteps, onToggle }: Props)
           "group.roles.firstSteps.allMembersInformed",
           "All members of the coordination team will be informed.",
         )}
+        <div className="text-end mt-1">
+          {showFirstSteps && (
+            <button type="button" className="btn btn-cancel" onClick={handleRoleUnsubscribeClick}>
+              {t("group.roles.retract", "Retract")}
+            </button>
+          )}
+        </div>
       </div>
     </>
   );
