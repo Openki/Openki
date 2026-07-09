@@ -7,9 +7,11 @@ import { useRegionRoles } from "../lib/useRegionRoles";
 import { cx } from "/imports/utils/cx";
 
 export function RoleIcon({
+  className,
   type,
   regionId,
 }: {
+  className?: string | undefined;
   type: RoleEntity["type"];
   regionId: RegionEntity["_id"];
 }) {
@@ -24,5 +26,5 @@ export function RoleIcon({
     return null;
   }
 
-  return <i className={cx(role.icon, "fa-fw")} />;
+  return <i className={cx(role.icon, "fa-fw", className)} />;
 }

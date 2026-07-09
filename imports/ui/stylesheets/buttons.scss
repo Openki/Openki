@@ -78,6 +78,10 @@
   }
 }
 
+.btn-user {
+  @include button-variant($user-bg, $user-bg);
+}
+
 $external-servies: (
   google: #4285f4,
   facebook: #3b5998,
