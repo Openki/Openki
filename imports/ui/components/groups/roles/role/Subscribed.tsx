@@ -103,7 +103,8 @@ export function Subscribed({ roleType, group, showFirstSteps, onToggle }: Props)
         </button>
       </div>
 
-      <div className="group-role-first-steps collapse" id={name} ref={collapseRef}>
+      <div className="collapse" id={name} ref={collapseRef}>
+        <div className="group-role-first-steps">
         <span className="fw-bold">
           {t("group.roles.firstSteps.title", "Thank you for your interest in {GROUP}.", {
             GROUP: group.name,
@@ -131,6 +132,7 @@ export function Subscribed({ roleType, group, showFirstSteps, onToggle }: Props)
               {t("group.roles.retract", "Retract")}
             </button>
           )}
+          </div>
         </div>
       </div>
     </>

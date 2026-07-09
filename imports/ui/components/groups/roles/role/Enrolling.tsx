@@ -109,43 +109,45 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
           className={cx("fa-solid fa-fw ms-auto", isCollapsed ? "fa-angle-down" : "fa-angle-up")}
         />
       </button>
-      <div ref={collapseRef} className="group-role-enroll-options collapse" id={name}>
-        <form noValidate onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <FormControl
-              id="role-comment"
-              label={roleGroupMessageInfo(roleType)}
-              onChange={(value) => setComment(value)}
-              type="text"
-              autoFocus
-              optional
-              value={comment}
-            />
-          </div>
-          <div className="form-actions">
-            <Button
-              submit
-              id="group-roles-join"
-              className="btn-save"
-              needsLogin
-              visitorUserAllowed={roleType === "participant"}
-              isBusy={isBusy}
-              busyText={t("group.roles.join.busy", "Joining…")}
-            >
-              {t("group.roles.join", "Join", { GROUP: group.name })}
-            </Button>
-            <button
-              type="reset"
-              className="btn btn-cancel collapsed"
-              data-bs-toggle="collapse"
-              data-bs-target={`#${name}`}
-              aria-expanded="false"
-              aria-controls={name}
-            >
-              {t("_button.cancel")}
-            </button>
-          </div>
-        </form>
+      <div ref={collapseRef} className="collapse" id={name}>
+        <div className="group-role-enroll-options">
+          <form noValidate onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <FormControl
+                id="role-comment"
+                label={roleGroupMessageInfo(roleType)}
+                onChange={(value) => setComment(value)}
+                type="text"
+                autoFocus
+                optional
+                value={comment}
+              />
+            </div>
+            <div className="form-actions">
+              <Button
+                submit
+                id="group-roles-join"
+                className="btn-save"
+                needsLogin
+                visitorUserAllowed={roleType === "participant"}
+                isBusy={isBusy}
+                busyText={t("group.roles.join.busy", "Joining…")}
+              >
+                {t("group.roles.join", "Join", { GROUP: group.name })}
+              </Button>
+              <button
+                type="reset"
+                className="btn btn-cancel collapsed"
+                data-bs-toggle="collapse"
+                data-bs-target={`#${name}`}
+                aria-expanded="false"
+                aria-controls={name}
+              >
+                {t("_button.cancel")}
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </>
   );
