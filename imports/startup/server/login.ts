@@ -19,8 +19,11 @@ const registerAttempt =
       }
     }
 
-    // Too much (secret) info in the user object
+    // Delete sensitive data that should never be stored in the log.
+    // 1) User object contains too much (secret) info
     delete (body as any).user;
+    // 2) Details about the login attempt
+    delete (body as any).methodArguments;
 
     const rel = [];
     if (body.userId) {
