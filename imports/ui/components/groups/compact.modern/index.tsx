@@ -1,61 +1,26 @@
-import React, { Fragment } from "react";
-import { ImagePlaceholder } from "./ImagePlaceholder";
-import { ScssVars } from "/imports/ui/lib/scss-vars";
-import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import React, { useState } from "react";
+
 import { GroupModel } from "/imports/api/groups/groups";
-import { Router } from "meteor/iron:router";
-import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
-import { hasRole } from "/imports/utils/group-role-utils";
-import { cx } from "/imports/utils/cx";
-import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 
-export function Roles({ group }: { group: GroupModel }) {
-  const [isLoading, roles] = useRegionRoles(group.region);
+import { Panel } from "../../panel";
+import { Full } from "./Full";
+import { Thumb } from "./Thumb";
 
-  const { roleNeeded } = useRoleDisplay(roles);
-
-  return (
-    <>
-      {!isLoading() &&
-        roles
-          .filter((role) => group.roles.includes(role.type) && !hasRole(group.members, role.type))
-          .map((role) => (
-            <Fragment key={role.type}>
-              <i className={cx(role.icon, "fa-fw")} /> {roleNeeded(role.type)}
-              <br />
-            </Fragment>
-          ))}
-    </>
-  );
+export interface Props {
+  group: GroupModel;
 }
 
-export function GroupCompact({ group }: { group: GroupModel }) {
-  const viewport = useViewportSize();
-  const isMobileScreen = viewport.width <= ScssVars.screenSM;
+export function GroupCompact({ group }: Props) {
+  const [view, setView] = useState("");
 
   return (
-    <div
-      className="card me-1"
-      style={isMobileScreen ? { width: 270, minWidth: 270 } : { width: 320, minWidth: 320 }}
-    >
-      {group?.publicUrlForCompactImage() ? (
-        <div
-          className="position-relative card-header bg-img-cover border-bottom"
-          style={{ backgroundImage: `url('${group.publicUrlForCompactImage()}')`, height: "160px" }}
-        />
-      ) : (
-        <ImagePlaceholder seed={group._id} regionId={group.region} />
-      )}
-      <div className="card-body">
-        <h3 className="card-title line-clamp-2 min-h-[2lh] fw-bold text-body">{group.name}</h3>
-
-        <a
-          className="stretched-link icon-link icon-link-hover fs-4 text-dark"
-          href={Router.path("showGroup", group)}
-        >
-          <i className="fa-solid fa-arrow-right-long bi"></i>
-        </a>
-      </div>
-    </div>
+    <Panel
+      id={group._id}
+      onChange={(view) => {
+        setView(view);
+      }}
+      thumb={<Thumb group={group} />}
+      full={<Full group={group} animation={view === "full" ? "show" : "hide"} />}
+    />
   );
 }
