@@ -34,6 +34,7 @@ const registerAttempt =
     // This allows storing details about created users for example.
     for (const argument of body.methodArguments) {
       delete argument?.password;
+      delete argument?.oauth;
     }
 
     const rel = [];
