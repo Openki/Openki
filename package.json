@@ -62,7 +62,6 @@
   },
   "devDependencies": {
     "@babel/preset-env": "8.0.2",
-    "@babel/runtime": "8.0.0",
     "@eslint/js": "9.32.0",
     "@types/bootstrap": "5.2.11",
     "@types/bootstrap-datepicker": "1.10.1",
