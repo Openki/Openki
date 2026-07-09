@@ -919,6 +919,7 @@
   "program.evening": "{DAYOFWEEK}, evening",
   "program.morningAfternoon": "{DAYOFWEEK}, morning & afternoon",
   "proposedGroupsDropdown.joinExistingGroupQuestion": "Maybe you would like to join an existing group?",
+  "qrCodeForPropose.title": "Dein Vorschlag",
   "region.create.plsGiveName": "Please give your region a name",
   "region.create.plsSelectPointOnMap": "Please add a marker on the map by clicking on the \"+\" sign.",
   "region.deleting.error": "Deleting the region went wrong",
@@ -1230,6 +1231,5 @@
   "warning.emailNotValid": "Your e-mail address seems to have an error.",
   "warning.noEmailProvided": "Please enter an e-mail address.",
   "warning.noUserName": "Please enter a name for your user.",
-  "warning.userExists": "This username is already in use. Please choose another one.",
-  "qrCodeForPropose.title": "Dein Vorschlag"
+  "warning.userExists": "This username is already in use. Please choose another one."
 }
