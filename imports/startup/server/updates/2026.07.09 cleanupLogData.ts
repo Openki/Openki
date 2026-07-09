@@ -5,17 +5,25 @@ export async function update() {
   let updated = 0;
 
   const logEntries = (await Log.find({
-    tr: { $eq: "Login.Success" },
-    body: {
-      type: { $eq: "password" },
+    tr: {
+      $in: ["Login.Success", "Login.Failure"],
     },
-  }).fetchAsync()) as (LogEntity & { body: { type: string } })[];
+    body: { methodArguments: { $exists: true } },
+  }).fetchAsync()) as (LogEntity & {
+    body: { type: string; methodArguments: Record<any, any>[] };
+  })[];
 
   for (const logEntry of logEntries) {
-    if (logEntry.body?.type === "password") {
+    if (Array.isArray(logEntry.body?.methodArguments)) {
       const updatedLogEntry = {
         ...logEntry,
-        body: { ...logEntry.body, $unset: { methodArguments: "" } },
+        body: {
+          ...logEntry.body,
+          methodArguments: logEntry.body.methodArguments.map((argument) => {
+            delete argument?.password;
+            delete argument?.oauth;
+          }),
+        },
       };
       updated += await Log.updateAsync(logEntry._id, updatedLogEntry);
     }
