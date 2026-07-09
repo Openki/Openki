@@ -30,11 +30,13 @@ const registerAttempt =
     // 1) User object contains too much (secret) info
     delete (body as any).user;
 
-    // 2) Delete any sensitive arguments, but preserve the non-sensitive details.
-    // This allows storing details about created users for example.
-    for (const argument of body.methodArguments) {
-      delete argument?.password;
-      delete argument?.oauth;
+    if (Array.isArray(body.methodArguments)) {
+      // 2) Delete any sensitive arguments, but preserve the non-sensitive details.
+      // This allows storing details about created users for example.
+      for (const argument of body?.methodArguments) {
+        delete argument?.password;
+        delete argument?.oauth;
+      }
     }
 
     const rel = [];
