@@ -1,30 +1,11 @@
 @use "sass:color";
 @import "{}/imports/ui/stylesheets/variables/index";
 
-.group-role-title {
-  background: $user-bg;
 
-  &.btn:hover {
-    border-color: tint-color($user-bg, $btn-hover-border-tint-amount);
-    background: tint-color($user-bg, $btn-hover-bg-tint-amount);
-  }
 
-  &.btn:active {
-    border-color: tint-color($user-bg, $btn-active-border-tint-amount);
-    background: tint-color($user-bg, $btn-active-bg-tint-amount);
-  }
-}
-
-.group-role-title-enroll {
-  background: $green;
-}
 
 .role-unsubscribe-btn {
   margin: -2px 0;
-}
-
-.group-role-enrolled {
-  margin-top: $page-component-seperator-height;
 }
 
 .group-role-enroll-options {

@@ -68,13 +68,13 @@ export function Subscribed({ roleType, group, showFirstSteps, onToggle }: Props)
     return null;
   }
 
-  const name = `group-role-enrolled-${roleType}-content`;
+  const name = `group-${group._id}-role-enrolled-${roleType}-content`;
   return (
     <>
-      <div className={`group-role-enrolled-${roleType} `}>
+      <div>
         <button
           className={cx(
-            "group-role-title btn page-component-btn d-flex flex-row align-items-center gap-1",
+            "btn btn-user page-component-btn d-flex flex-row align-items-center gap-1",
             !showFirstSteps && "collapsed",
           )}
           type="button"
@@ -105,33 +105,33 @@ export function Subscribed({ roleType, group, showFirstSteps, onToggle }: Props)
 
       <div className="collapse" id={name} ref={collapseRef}>
         <div className="group-role-first-steps">
-        <span className="fw-bold">
-          {t("group.roles.firstSteps.title", "Thank you for your interest in {GROUP}.", {
-            GROUP: group.name,
-            ROLE: roleShort(roleType),
-          })}
-        </span>
-        <br />
-        <span className="pre-line">
-          {roleGroupFirstSteps(roleType, { COORDINATION_GUIDE: <Guide /> })}
-        </span>
-        <br />
-        <br />
-        {t(
-          "group.roles.firstSteps.ifQuestions",
-          "Please write questions concerning the group in the discussion below.",
-        )}
-        <br />
-        {t(
-          "group.roles.firstSteps.allMembersInformed",
-          "All members of the coordination team will be informed.",
-        )}
-        <div className="text-end mt-1">
-          {showFirstSteps && (
-            <button type="button" className="btn btn-cancel" onClick={handleRoleUnsubscribeClick}>
-              {t("group.roles.retract", "Retract")}
-            </button>
+          <span className="fw-bold">
+            {t("group.roles.firstSteps.title", "Thank you for your interest in {GROUP}.", {
+              GROUP: group.name,
+              ROLE: roleShort(roleType),
+            })}
+          </span>
+          <br />
+          <span className="pre-line">
+            {roleGroupFirstSteps(roleType, { COORDINATION_GUIDE: <Guide /> })}
+          </span>
+          <br />
+          <br />
+          {t(
+            "group.roles.firstSteps.ifQuestions",
+            "Please write questions concerning the group in the discussion below.",
           )}
+          <br />
+          {t(
+            "group.roles.firstSteps.allMembersInformed",
+            "All members of the coordination team will be informed.",
+          )}
+          <div className="text-end mt-1">
+            {showFirstSteps && (
+              <button type="button" className="btn btn-cancel" onClick={handleRoleUnsubscribeClick}>
+                {t("group.roles.retract", "Retract")}
+              </button>
+            )}
           </div>
         </div>
       </div>
