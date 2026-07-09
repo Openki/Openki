@@ -84,10 +84,6 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
       return getTranslation(type, "groupList_statusTitle_roleNeeded");
     },
 
-    roleGetInvolved(type: RoleEntity["type"]) {
-      return getTranslation(type, "getInvolved");
-    },
-
     groupListRoleOccupied(type: RoleEntity["type"], variables: { NUM: number }) {
       return getTranslation(type, "groupList_statusTitle_roleOccupied", variables);
     },

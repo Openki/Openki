@@ -8,7 +8,6 @@ import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { hasRole } from "/imports/utils/group-role-utils";
 import { cx } from "/imports/utils/cx";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
-import { ReactJoin } from "/imports/utils/ReactJoin";
 
 export function Roles({ group }: { group: GroupModel }) {
   const [isLoading, roles] = useRegionRoles(group.region);
@@ -27,38 +26,6 @@ export function Roles({ group }: { group: GroupModel }) {
             </Fragment>
           ))}
     </>
-  );
-}
-
-export function GetInvolved({ group }: { group: GroupModel }) {
-  const [isLoading, roles] = useRegionRoles(group.region);
-
-  const { roleGetInvolved } = useRoleDisplay(roles);
-
-  return (
-    <div className="d-flex flex-wrap gap-1 justify-content-center align-items-center">
-      {!isLoading() &&
-        ReactJoin(
-          [
-            <a key="participant" href="#" className="btn btn-info">
-              {roleGetInvolved("participant")}
-            </a>,
-            roles
-              .filter(
-                (role) =>
-                  role.type !== "participant" &&
-                  group.roles.includes(role.type) &&
-                  !hasRole(group.members, role.type),
-              )
-              .map((role) => (
-                <a key={role.type} href="#" className="btn btn-info">
-                  {roleGetInvolved(role.type)}
-                </a>
-              ))[0],
-          ],
-          <>or</>,
-        )}
-    </div>
   );
 }
 

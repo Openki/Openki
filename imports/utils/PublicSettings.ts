@@ -42,7 +42,6 @@ export const RoleEntityPattern = {
     userList: Match.Maybe(LocalizedValuePattern),
     userListPast: Match.Maybe(LocalizedValuePattern),
     find_roleNeeded: Match.Maybe(LocalizedValuePattern),
-    getInvolved: Match.Maybe(LocalizedValuePattern),
     groupList_statusTitle_roleNeeded: Match.Maybe(LocalizedValuePattern),
     groupList_statusTitle_roleOccupied: Match.Maybe(LocalizedValuePattern),
     groupList_statusTitle_roleOccupiedByUser: Match.Maybe(LocalizedValuePattern),
