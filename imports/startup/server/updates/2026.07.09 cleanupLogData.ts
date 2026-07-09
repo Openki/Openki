@@ -8,7 +8,6 @@ export async function update() {
     tr: {
       $in: ["Login.Success", "Login.Failure"],
     },
-    body: { methodArguments: { $exists: true } },
   }).fetchAsync()) as (LogEntity & {
     body: { type: string; methodArguments: Record<any, any>[] };
   })[];
