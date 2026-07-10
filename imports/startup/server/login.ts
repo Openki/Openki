@@ -10,6 +10,7 @@ import { LogEntity } from "/imports/api/log/factory";
 const registerAttempt =
   (track: LogEntity["tr"]) => async (attempt: { user: { _id: string; username: string } }) => {
     const body = { ...attempt } as unknown as {
+      user?: (typeof attempt)["user"];
       userId: string;
       username?: string;
       visitor?: boolean;
@@ -28,12 +29,12 @@ const registerAttempt =
 
     // Delete sensitive data that should never be stored in the log.
     // 1) User object contains too much (secret) info
-    delete (body as any).user;
+    delete body.user;
 
-    if (Array.isArray(body.methodArguments)) {
+    if (body && Array.isArray(body.methodArguments)) {
       // 2) Delete any sensitive arguments, but preserve the non-sensitive details.
       // This allows storing details about created users for example.
-      for (const argument of body?.methodArguments) {
+      for (const argument of body.methodArguments) {
         delete argument?.password;
         delete argument?.oauth;
       }
