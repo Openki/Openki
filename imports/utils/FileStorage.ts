@@ -1,5 +1,4 @@
 import path from "path";
-import type { PutObjectCommandInput } from "@aws-sdk/client-s3";
 import mime from "mime-types";
 import { Mongo } from "meteor/mongo";
 import { Match } from "meteor/check";
@@ -56,21 +55,20 @@ export async function upload(directoryName: string, file: UploadFile) {
   if (Meteor.isServer) {
     const { Upload } = await import("@aws-sdk/lib-storage");
 
-    const s3 = await createS3Client();
+    // s3 is always defined here because we run within the Meteor.isServer block
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const s3 = (await createS3Client())!;
 
-    const params: PutObjectCommandInput = {
+    const params = /** @type {import("@aws-sdk/client-s3").PutObjectCommandInput} */ {
       Bucket: getBucket(),
       Key: fullKey,
       ContentType: file.mimeType,
       ACL: "public-read",
       Body: Buffer.from(file.content, "base64url"),
-    };
+    } as const;
 
     await new Upload({
-      // s3 is only undefined when not on server we check that already so it is
-      // not a problem, so wie can ignore undefined at this place
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      client: s3!,
+      client: s3,
       params,
     }).done();
   }
