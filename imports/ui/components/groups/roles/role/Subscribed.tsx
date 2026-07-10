@@ -71,37 +71,32 @@ export function Subscribed({ roleType, group, showFirstSteps, onToggle }: Props)
   const name = `group-${group._id}-role-enrolled-${roleType}-content`;
   return (
     <>
-      <div>
-        <button
-          className={cx(
-            "btn btn-user page-component-btn d-flex flex-row align-items-center gap-1",
-            !showFirstSteps && "collapsed",
-          )}
-          type="button"
-          data-bs-toggle="collapse"
-          aria-expanded={showFirstSteps}
-          aria-controls={name}
-          onClick={() => onToggle(!showFirstSteps)}
-        >
-          <RoleIcon type={roleType} regionId={group.region} className="grouppage-role-icon" />
-          {roleSubscribed(roleType)}
-          {!showFirstSteps && (
-            <button
-              type="button"
-              className="role-unsubscribe-btn btn btn-sm btn-cancel"
-              onClick={handleRoleUnsubscribeClick}
-            >
-              {t("group.roles.retract", "Retract")}
-            </button>
-          )}
-          <i
-            className={cx(
-              "fa-solid fa-fw ms-auto",
-              showFirstSteps ? "fa-angle-up" : "fa-angle-down",
-            )}
-          />
-        </button>
-      </div>
+      <button
+        className={cx(
+          "btn btn-user page-component-btn d-flex flex-row align-items-center gap-1",
+          !showFirstSteps && "collapsed",
+        )}
+        type="button"
+        data-bs-toggle="collapse"
+        aria-expanded={showFirstSteps}
+        aria-controls={name}
+        onClick={() => onToggle(!showFirstSteps)}
+      >
+        <RoleIcon type={roleType} regionId={group.region} className="grouppage-role-icon" />
+        {roleSubscribed(roleType)}
+        {!showFirstSteps && (
+          <button
+            type="button"
+            className="role-unsubscribe-btn btn btn-sm btn-cancel"
+            onClick={handleRoleUnsubscribeClick}
+          >
+            {t("group.roles.retract", "Retract")}
+          </button>
+        )}
+        <i
+          className={cx("fa-solid fa-fw ms-auto", showFirstSteps ? "fa-angle-up" : "fa-angle-down")}
+        />
+      </button>
 
       <div className="collapse" id={name} ref={collapseRef}>
         <div className="group-role-first-steps">
