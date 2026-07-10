@@ -18,7 +18,7 @@ describe("Organization edit", () => {
       cy.logout();
 
       cy.visitOpenki("/organization/fd3a8d98d4", { username: "Normalo" });
-      cy.get('a[href*="gewaltfreihe-kommunikation-lernen"]').click();
+      cy.get('a[href*="gewaltfreihe-kommunikation-lernen"]').first().click();
       cy.get('[data-test="group-details"] button.btn-edit').should("be.enabled");
       cy.get("#group-details-confirm-delete").click();
       cy.get("#group-details-confirm-dialog-delete").click();
