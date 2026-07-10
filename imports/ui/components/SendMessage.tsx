@@ -81,7 +81,7 @@ export function SendMessage(props: Props) {
           placeholder={props.placeholder}
           value={message}
           onChange={(value) => setMessage(value)}
-          onBlur={() => checkValidity("message")}
+          onBlur={() => message.length && checkValidity("message")}
           error={errors.message}
         />
       </div>
