@@ -32,7 +32,6 @@ blaze-html-templates            # Compile .html files into Meteor Blaze views
 reactive-var@1.0.13             # Reactive variable for tracker
 leonardoventurini:scss
 jquery
-markdown
 react-meteor-data@4.0.0         # React higher-order component for reactively tracking Meteor data
 react-template-helper
 react-meteor-accounts
