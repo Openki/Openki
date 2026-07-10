@@ -4,7 +4,6 @@ import { GroupModel } from "/imports/api/groups/groups";
 import { Unsubscribe, processChange } from "/imports/api/groups/subscription";
 import { Regions } from "/imports/api/regions/regions";
 import { Guide } from "/imports/ui/components/groups/roles/role/Guide";
-import { RoleIcon } from "/imports/ui/components/RoleIcon";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
@@ -70,41 +69,35 @@ export function Subscribed({ roleType, group, showFirstSteps, onToggle }: Props)
 
   const name = `group-${group._id}-role-enrolled-${roleType}-content`;
   return (
-    <>
-      <div>
-        <button
-          className={cx(
-            "btn btn-user page-component-btn d-flex flex-row align-items-center gap-1",
-            !showFirstSteps && "collapsed",
-          )}
-          type="button"
-          data-bs-toggle="collapse"
-          aria-expanded={showFirstSteps}
-          aria-controls={name}
-          onClick={() => onToggle(!showFirstSteps)}
-        >
-          <RoleIcon type={roleType} regionId={group.region} className="grouppage-role-icon" />
-          {roleSubscribed(roleType)}
-          {!showFirstSteps && (
-            <button
-              type="button"
-              className="role-unsubscribe-btn btn btn-sm btn-cancel"
-              onClick={handleRoleUnsubscribeClick}
-            >
-              {t("group.roles.retract", "Retract")}
-            </button>
-          )}
-          <i
-            className={cx(
-              "fa-solid fa-fw ms-auto",
-              showFirstSteps ? "fa-angle-up" : "fa-angle-down",
-            )}
-          />
-        </button>
-      </div>
+    <div className="d-grid">
+      <button
+        className={cx(
+          "group-role-btn btn btn-user btn-lg d-flex flex-row align-items-center gap-1",
+          !showFirstSteps && "collapsed",
+        )}
+        type="button"
+        data-bs-toggle="collapse"
+        aria-expanded={showFirstSteps}
+        aria-controls={name}
+        onClick={() => onToggle(!showFirstSteps)}
+      >
+        <strong>{roleSubscribed(roleType)}</strong>
+        {!showFirstSteps && (
+          <button
+            type="button"
+            className="role-unsubscribe-btn btn btn-sm btn-cancel"
+            onClick={handleRoleUnsubscribeClick}
+          >
+            {t("group.roles.retract", "Retract")}
+          </button>
+        )}
+        <i
+          className={cx("fa-solid fa-fw ms-auto", showFirstSteps ? "fa-angle-up" : "fa-angle-down")}
+        />
+      </button>
 
       <div className="collapse" id={name} ref={collapseRef}>
-        <div className="group-role-first-steps">
+        <div className="border border-top-0 border-user rounded-bottom-3 bg-user-subtle p-3">
           <span className="fw-bold">
             {t("group.roles.firstSteps.title", "Thank you for your interest in {GROUP}.", {
               GROUP: group.name,
@@ -135,6 +128,6 @@ export function Subscribed({ roleType, group, showFirstSteps, onToggle }: Props)
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

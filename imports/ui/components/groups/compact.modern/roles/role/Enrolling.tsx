@@ -15,7 +15,6 @@ import { cx } from "/imports/utils/cx";
 import { Button } from "/imports/ui/components/Buttons";
 
 import { FormControl } from "/imports/ui/components/form-control";
-import { RoleIcon } from "/imports/ui/components/RoleIcon";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
@@ -89,32 +88,30 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
     return null;
   }
 
-  const name = `group-role-enroll-${roleType}-content`;
+  const name = `group-${group._id}-role-enroll-${roleType}-content`;
 
   return (
-    <>
+    <div className="d-grid">
       <button
-        data-test={`group-role-enroll-${roleType}`}
-        className="btn btn-success page-component-btn collapsed d-flex flex-row align-items-center gap-1"
+        data-test={`group-${group._id}-role-enroll-${roleType}`}
+        className="group-role-btn btn btn-add btn-lg text-start collapsed d-flex flex-row align-items-center gap-1"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target={`#${name}`}
         aria-expanded="false"
         aria-controls={name}
       >
-        <RoleIcon type={roleType} regionId={group.region} className="grouppage-role-icon" />
-        &nbsp;
-        {roleSubscribe(roleType)}
+        <strong>{roleSubscribe(roleType)}</strong>
         <i
           className={cx("fa-solid fa-fw ms-auto", isCollapsed ? "fa-angle-down" : "fa-angle-up")}
         />
       </button>
       <div ref={collapseRef} className="collapse" id={name}>
-        <div className="group-role-enroll-options">
+        <div className="border border-top-0 border-success rounded-bottom-3 bg-success-subtle p-3">
           <form noValidate onSubmit={handleSubmit}>
             <div className="mb-3">
               <FormControl
-                id="role-comment"
+                id={`group-${group._id}-role-comment`}
                 label={roleGroupMessageInfo(roleType)}
                 onChange={(value) => setComment(value)}
                 type="text"
@@ -126,7 +123,7 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
             <div className="form-actions">
               <Button
                 submit
-                id="group-roles-join"
+                id={`group-${group._id}-roles-join`}
                 className="btn-save"
                 needsLogin
                 visitorUserAllowed={roleType === "participant"}
@@ -149,6 +146,6 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
           </form>
         </div>
       </div>
-    </>
+    </div>
   );
 }

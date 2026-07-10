@@ -14,7 +14,7 @@ export function Roles({ group }: { group: GroupModel }) {
   }
 
   return (
-    <div id="subscribe">
+    <div className="d-grid gap-1">
       {regionRoles
         .filter((role) => group.roles?.includes(role.type))
         .map((role) => (

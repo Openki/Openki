@@ -14,6 +14,7 @@ import { Discussion } from "../../groups/discussion.modern";
 import { CustomFieldDisplay } from "../../groups/CustomFieldDisplay";
 import { ImagePlaceholder } from "/imports/ui/components/ImagePlaceholder";
 import { OrganizationName } from "/imports/ui/components/OrganizationName";
+import { Roles } from "./roles";
 
 export function Full({ group, animation }: { group: GroupModel; animation: "show" | "hide" }) {
   const { t } = useTranslation();
@@ -78,6 +79,8 @@ export function Full({ group, animation }: { group: GroupModel; animation: "show
               {group.categories.map((category) => t(`category.${category}`)).join(", ")}
             </p>
           )}
+
+          <Roles group={group} />
 
           {group.editableBy(user) && (
             <h4 className="card-title mt-3">

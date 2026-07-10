@@ -9,6 +9,7 @@ import { Dashboard } from "/imports/ui/components/dashboard";
 import { Find } from "/imports/ui/components/groups/find";
 import { NotFound } from "/imports/ui/pages/not-found";
 import { LoadingPage } from "/imports/ui/pages/loading";
+import { AccountTasks } from "/imports/ui/components/account-tasks";
 
 export interface Props {
   organizationId: string;
@@ -43,6 +44,7 @@ export function KioskDashboardPage({ organizationId, groupQuery }: Props) {
         description={organization.claim}
         image={organization.publicLogoUrl()}
       />
+      <AccountTasks />
 
       <div className="container my-3">
         <div className="d-flex">
