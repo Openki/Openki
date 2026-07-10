@@ -18,6 +18,7 @@ install:
     meteor npm install
 
 # Start the development server
+[no-exit-message]
 dev:
     meteor npm run debug
 
