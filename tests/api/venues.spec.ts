@@ -17,7 +17,12 @@ describe("Venue save", () => {
       .then((venueId) => {
         // Try saving it again with a change
         const updatedVenue = { ...venue, name: venue.name + "!" };
-        cy.callMethod("venue.save", venueId, updatedVenue);
+        cy.callMethod("venue.save", venueId, updatedVenue)
+          .should("be.a", "string")
+          .then((venueId) => {
+            // Finally, remove the venue to avoid influencing other tests
+            cy.callMethod("venue.remove", venueId);
+          });
       });
   });
 });
