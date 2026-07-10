@@ -1,13 +1,21 @@
 import { Accounts } from "meteor/accounts-base";
 import { Log } from "/imports/api/log/log";
+import { LogEntity } from "/imports/api/log/factory";
 
-// Record a login attempt in the log
+/**
+ * Record a login attempt in the log
+ *
+ * @param track The Log track. @see {LogEntity.tr}
+ */
 const registerAttempt =
-  (track: string) => async (attempt: { user: { _id: string; username: string } }) => {
+  (track: LogEntity["tr"]) => async (attempt: { user: { _id: string; username: string } }) => {
     const body = { ...attempt } as unknown as {
+      user?: (typeof attempt)["user"];
       userId: string;
       username?: string;
       visitor?: boolean;
+      methodName: string;
+      methodArguments: Record<string, unknown>[];
     };
     if (attempt.user) {
       body.userId = attempt.user._id;
@@ -19,8 +27,18 @@ const registerAttempt =
       }
     }
 
-    // Too much (secret) info in the user object
-    delete (body as any).user;
+    // Delete sensitive data that should never be stored in the log.
+    // 1) User object contains too much (secret) info
+    delete body.user;
+
+    if (body && Array.isArray(body.methodArguments)) {
+      // 2) Delete any sensitive arguments, but preserve the non-sensitive details.
+      // This allows storing details about created users for example.
+      for (const argument of body.methodArguments) {
+        delete argument?.password;
+        delete argument?.oauth;
+      }
+    }
 
     const rel = [];
     if (body.userId) {
