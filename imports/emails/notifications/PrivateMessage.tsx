@@ -59,11 +59,11 @@ export function PrivateMessage({
               "You got a direct message from {USERTYPE}",
               {
                 USERTYPE: (
-                  <strong>
+                  <span className="fw-bold">
                     {sender.hasPrivilige("admin")
                       ? t("notification.privateMessage.mail.fromAdmin", "an admin")
                       : t("notification.privateMessage.mail.fromUser", "a regular user")}
-                  </strong>
+                  </span>
                 ),
               },
             )}

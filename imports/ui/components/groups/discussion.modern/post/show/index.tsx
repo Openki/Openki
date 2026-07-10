@@ -73,13 +73,13 @@ export function Show({ post, onEdit }: Props) {
       <div className="flex-grow-1">
         <div className="d-flex justify-content-between">
           <p>
-            <strong>
+            <span className="fw-bold">
               {post.userId ? (
                 <UserName userId={post.userId} />
               ) : (
                 t("discussion.anonymous", "Anonymous")
               )}
-            </strong>{" "}
+            </span>{" "}
             <span data-bs-title={dateFormat(post.time_created)}>{fromNow(post.time_created)}</span>
             {!!post.notifyAll && (
               <>

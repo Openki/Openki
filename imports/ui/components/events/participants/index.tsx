@@ -42,12 +42,12 @@ function EventParticipant({
       <ParticipantContact participant={participant.user} event={event} />
       <div className="ms-auto d-flex flex-wrap align-items-center">
         {!!participant.companions && (
-          <strong
-            className="p-1 bg-primary text-light"
+          <span
+            className="p-1 bg-primary text-light fw-bold"
             data-bs-title={t("eventParticipant.iBringCompanions", "Brings companion.")}
           >
             +{participant.companions} <i className="fa-solid fa-user fa-fw" />
-          </strong>
+          </span>
         )}
 
         {!!user && user._id !== participant.user && event.editableBy(user) && (

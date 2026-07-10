@@ -133,7 +133,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       return {
         group: group.name,
         event: eventTitle,
-        newParticipant: <strong>{newParticipant.getDisplayName()}</strong>,
+        newParticipant: <span className="fw-bold">{newParticipant.getDisplayName()}</span>,
         companionsOfNewParticipant:
           event.participants?.find((p) => p.user === newParticipant._id)?.companions || 0,
         subject,

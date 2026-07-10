@@ -13,12 +13,12 @@ export function DiscussionProfileLink({ userId }: Props) {
 
   return userId ? (
     <>
-      <strong>
+      <span className="fw-bold">
         <ProfileLink userId={userId} />
-      </strong>
+      </span>
       <Contribution userId={userId} />
     </>
   ) : (
-    <strong>{t("comment.profileLink.anonymous", "Anonymous")}</strong>
+    <span className="fw-bold">{t("comment.profileLink.anonymous", "Anonymous")}</span>
   );
 }

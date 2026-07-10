@@ -55,9 +55,7 @@ export function Group({ group, hideInterested }: Props) {
       {isExpanded && (
         <div className="p-2">
           <div className="row">
-            <div className="col-sm-2">
-              <strong>{t("frame.eventsList.description")}</strong>
-            </div>
+            <div className="col-sm-2 fw-bold">{t("frame.eventsList.description")}</div>
             <div
               className="col-sm-10"
               dangerouslySetInnerHTML={{ __html: group.description || "" }}

@@ -72,7 +72,7 @@ export function Hints({
   if (venue) {
     return (
       <>
-        {venue.allowParallelEvents && allParallelEvents.length > 0 && (
+        {venue.allowParallelEvents && allParallelEvents.length > 1 && (
           <div
             data-test="events-edit-venue-hint-parallel-events"
             className="alert alert-warning p-2"

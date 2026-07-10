@@ -19,7 +19,7 @@ export function MarkedName({ search, name }: Props) {
         {parts.map((p, i) => (
           <React.Fragment key={i}>
             {p}
-            {i + 1 < parts.length && <strong>{term}</strong>}
+            {i + 1 < parts.length && <span className="fw-bold">{term}</span>}
           </React.Fragment>
         ))}
       </>

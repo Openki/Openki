@@ -13,7 +13,9 @@ export function VerifyEmail() {
   if (sending) {
     return (
       <div className="alert alert-success" role="alert">
-        <strong>{t("profile.verifyEmail.mailOnItsWay", "Verification e-mail on its way.")}</strong>
+        <span className="fw-bold">
+          {t("profile.verifyEmail.mailOnItsWay", "Verification e-mail on its way.")}
+        </span>
         <br />
         {t(
           "profile.sendingVerificationMail",

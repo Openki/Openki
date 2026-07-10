@@ -88,7 +88,7 @@ export function FileUpload({ accept, onUpload, onCancel }: Props) {
             <>
               {progress === "start" && (
                 <>
-                  <strong>{t("fileUpload.choose.text", "Choose a file")}</strong>
+                  <span className="fw-bold">{t("fileUpload.choose.text", "Choose a file")}</span>
 
                   {supportsDragndrop && t("fileUpload.drag.text", "or drag it here")}
                 </>

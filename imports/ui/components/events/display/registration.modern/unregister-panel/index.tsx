@@ -15,11 +15,11 @@ function ButtonUnregister(props: { onClick: () => void | Promise<void> }) {
       id="event-details-unregister-withdraw"
       block
       size="large"
-      className="btn-danger"
+      className="btn-danger fw-bold"
       onClick={props.onClick}
       busyText={t("_button.unregistering", "Unregistering…")}
     >
-      <strong>{t("event.details.unregister-withdraw", "Withdraw")}</strong>
+      {t("event.details.unregister-withdraw", "Withdraw")}
     </Button>
   );
 }

@@ -81,7 +81,10 @@ function CustomMenu({
               className="bg-venue text-truncate"
             >
               <i className="fa-solid fa-house-user fa-fw" />{" "}
-              {ReactJoin([!!venue.name && <strong>{venue.name}</strong>, venue.address])}
+              {ReactJoin([
+                !!venue.name && <span className="fw-bold">{venue.name}</span>,
+                venue.address,
+              ])}
             </MenuItem>
           ))}
           <Menu.Divider />
@@ -110,7 +113,7 @@ function CustomMenu({
               {ReactJoin([
                 !!venue.name && (
                   <>
-                    <strong>{venue.name}</strong>
+                    <span className="fw-bold">{venue.name}</span>
                     {!!venue.restrictedUse && (
                       <> {t("location.link.restrictedUse", "(only restricted use)")}</>
                     )}

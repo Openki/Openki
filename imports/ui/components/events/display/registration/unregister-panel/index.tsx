@@ -14,13 +14,13 @@ function ButtonUnregister(props: { onClick: () => void | Promise<void> }) {
     <Button
       id="event-details-unregister-withdraw"
       block
-      className="btn-danger"
+      className="btn-danger fw-bold"
       size="large"
       onClick={props.onClick}
       needsLogin
       busyText={t("_button.unregistering", "Unregistering…")}
     >
-      <strong>{t("event.details.unregister-withdraw", "Withdraw")}</strong>
+      {t("event.details.unregister-withdraw", "Withdraw")}
     </Button>
   );
 }
@@ -47,12 +47,12 @@ export function UnregisterPanel({ event, onUnregister }: Props) {
       {!unregisterDropdown ? (
         <button
           type="button"
-          className="btn btn-add btn-lg"
+          className="btn btn-add btn-lg fw-bold"
           onClick={() => {
             setUnregisterDropdown(true);
           }}
         >
-          <strong>{t("event.details.withdraw-registration", "Withdraw my registration")}</strong>
+          {t("event.details.withdraw-registration", "Withdraw my registration")}
         </button>
       ) : (
         <div className="p-3 event-detail-register-dropdown">

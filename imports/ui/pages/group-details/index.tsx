@@ -224,12 +224,10 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
           <div className="col-lg-8">
             <div className="page-component">
               {group.archived && (
-                <div className="alert alert-archived text-center" role="alert">
-                  <strong>
-                    {t("group.archive.alert", "{GROUP} is archived and not active anymore.", {
-                      GROUP: group.name,
-                    })}
-                  </strong>
+                <div className="alert alert-archived text-center fw-bold" role="alert">
+                  {t("group.archive.alert", "{GROUP} is archived and not active anymore.", {
+                    GROUP: group.name,
+                  })}
                 </div>
               )}
 

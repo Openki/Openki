@@ -39,12 +39,12 @@ export function EventBox({
       <tr>
         <td className="event-header">
           <a href={eventLink}>
-            <strong>
+            <span className="fw-bold">
               {eventDate}
               <br />
               {eventStart}
               {!!eventEnd && ` - ${eventEnd}`}
-            </strong>
+            </span>
             {!!venueLine && (
               <>
                 <br />
@@ -60,8 +60,8 @@ export function EventBox({
             <td className="event-gap"></td>
           </tr>
           <tr>
-            <td className="event-canceled text-center">
-              <strong>{t("notification.mail.event.canceled", "This event got canceled")}</strong>
+            <td className="event-canceled text-center fw-bold">
+              {t("notification.mail.event.canceled", "This event got canceled")}
             </td>
           </tr>
           <tr>
