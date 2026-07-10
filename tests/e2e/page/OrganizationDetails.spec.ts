@@ -4,7 +4,7 @@ describe("Organization edit", () => {
       cy.visitOpenki("/organization/fd3a8d98d4", { username: "Seee" });
 
       cy.get("#group-edit-title").type("Gewaltfreihe Kommunikation lernen");
-      cy.get("#groupEditRolementorEnrollCheck").check();
+      cy.get("#groupEditRolementorCheck").check();
       cy.get("#groups-edit-save").click();
       cy.get(".alert-success").should("be.visible");
       cy.get('[data-test="organization-tag-fd3a8d98d4"] a').should("be.visible");
