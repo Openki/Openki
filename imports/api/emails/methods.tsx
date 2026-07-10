@@ -50,6 +50,10 @@ export const sendPrivateMessage = ServerMethod(
       throw new Meteor.Error(401, "please log in");
     }
 
+    if (!operator.hasVerifiedEmail()) {
+      throw new Meteor.Error(403, "please verify your email");
+    }
+
     const recipient = await Users.findOneAsync(userId);
     if (!recipient) {
       throw new Meteor.Error(404, "no such user");
