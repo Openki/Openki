@@ -1,9 +1,11 @@
 import React from "react";
-import { ImagePlaceholder } from "./ImagePlaceholder";
+
+import { GroupModel } from "/imports/api/groups/groups";
+
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useViewportSize } from "/imports/ui/lib/useViewportSize";
-import { GroupModel } from "/imports/api/groups/groups";
-import { Router } from "meteor/iron:router";
+
+import { ImagePlaceholder } from "/imports/ui/components/ImagePlaceholder";
 
 export interface Props {
   group: GroupModel;
@@ -21,20 +23,14 @@ export function Thumb({ group }: Props) {
       {group?.publicUrlForCompactImage() ? (
         <div
           className="position-relative card-header bg-img-cover border-bottom"
-          style={{ backgroundImage: `url('${group.publicUrlForCompactImage()}')`, height: "160px" }}
+          style={{ backgroundImage: `url('${group.publicUrlForCompactImage()}')` }}
         />
       ) : (
         <ImagePlaceholder seed={group._id} regionId={group.region} />
       )}
       <div className="card-body">
-        <h3 className="card-title line-clamp-2 min-h-[2lh] fw-bold text-body">{group.name}</h3>
-
-        <a
-          className="stretched-link icon-link icon-link-hover fs-4 text-dark"
-          href={Router.path("showGroup", group)}
-        >
-          <i className="fa-solid fa-arrow-right-long bi"></i>
-        </a>
+        <h3 className="card-title line-clamp-2 min-h-[2lh] fw-bold">{group.name}</h3>
+        <i className="fs-4 fa-solid fa-arrow-right-long" />
       </div>
     </div>
   );

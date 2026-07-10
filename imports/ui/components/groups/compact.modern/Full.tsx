@@ -11,21 +11,9 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { ReactJoin } from "/imports/utils/ReactJoin";
 
 import { Discussion } from "../../groups/discussion.modern";
-
-import { OrganizationName } from "./OrganizationName";
-import { useDetails } from "/imports/api/groups/publications";
 import { CustomFieldDisplay } from "../../groups/CustomFieldDisplay";
-import { ImagePlaceholder } from "./ImagePlaceholder";
-
-function DisplayDiscussion({ groupId }: { groupId: string }) {
-  const [isLoading, group] = useDetails(groupId);
-
-  if (isLoading() || !group || !group.singleEvent) {
-    return null;
-  }
-
-  return <Discussion groupId={group._id} />;
-}
+import { ImagePlaceholder } from "/imports/ui/components/ImagePlaceholder";
+import { OrganizationName } from "/imports/ui/components/OrganizationName";
 
 export function Full({ group, animation }: { group: GroupModel; animation: "show" | "hide" }) {
   const { t } = useTranslation();
@@ -69,9 +57,9 @@ export function Full({ group, animation }: { group: GroupModel; animation: "show
           style={{
             backgroundImage: `url('${group.publicUrlForDetailsImage()}'), url('${group.publicUrlForCompactImage()}')`,
           }}
-        ></div>
+        />
       ) : (
-        <ImagePlaceholder seed={group._id} regionId={group.region}></ImagePlaceholder>
+        <ImagePlaceholder seed={group._id} regionId={group.region} />
       )}
       <div className="card-body">
         <h3 className="card-title min-h-[2lh] fw-bold">{group.name}</h3>
@@ -84,16 +72,23 @@ export function Full({ group, animation }: { group: GroupModel; animation: "show
             <CustomFieldDisplay groupId={group._id} customClassName="card-text mb-1" />
           )}
 
+          {!!group.categories?.length && (
+            <p className="card-text">
+              <strong>{t("groups.details.categories", "Categories:")}</strong>{" "}
+              {group.categories.map((category) => t(`category.${category}`)).join(", ")}
+            </p>
+          )}
+
           {group.editableBy(user) && (
             <h4 className="card-title mt-3">
-              {t("event.details.yourAreTeam", "You are part of the coordination-team")}{" "}
+              {t("groups.details.yourAreTeam", "You are part of the coordination-team")}{" "}
               <a
                 className="btn btn-sm btn-secondary"
-                href={Router.path("showEvent", group, { query: { edit: "1" } })}
+                href={Router.path("showGroup", group, { query: { edit: "1" } })}
                 target="_blank"
                 rel="noreferrer"
               >
-                {t("frame.program.editMode", "Edit mode", {
+                {t("groups.details.editMode", "Edit mode", {
                   SITENAME: siteName,
                 })}{" "}
                 <i className="fa-fw fa-solid fa-arrow-up-right-from-square" />
@@ -103,10 +98,9 @@ export function Full({ group, animation }: { group: GroupModel; animation: "show
 
           <hr className="hr-flush border-dark" />
 
-     
           {!isRegionLoading() && !!organizedByOrganizations?.length && (
             <p className="card-text">
-              <strong>{t("event.details.organizedBy", "Organized by:")}</strong>{" "}
+              <strong>{t("groups.details.organizedBy", "Organized by:")}</strong>{" "}
               {ReactJoin(
                 organizedByOrganizations.map((organization) => (
                   <OrganizationName key={organization} id={organization} />
@@ -115,25 +109,18 @@ export function Full({ group, animation }: { group: GroupModel; animation: "show
             </p>
           )}
 
-          {!!group._id && <DisplayDiscussion groupId={group._id} />}
-
-          {!!group.categories?.length && (
-            <p className="card-text">
-              <strong>{t("event.details.categories", "Categories:")}</strong>{" "}
-              {group.categories.map((category) => t(`category.${category}`)).join(", ")}
-            </p>
-          )}
+          <Discussion groupId={group._id} />
 
           <hr className="hr-flush border-dark" />
 
           <p className="card-text text-center mb-0">
             <a
               className="btn btn-secondary"
-              href={Router.path("showEvent", group)}
+              href={Router.path("showGroup", group)}
               target="_blank"
               rel="noreferrer"
             >
-              {t("frame.calendar.moreAboutThisEvent", "More about this event on {SITENAME}", {
+              {t("groups.details.moreAboutThisGroup", "More about this group on {SITENAME}", {
                 SITENAME: siteName,
               })}{" "}
               <i className="fa-fw fa-solid fa-arrow-up-right-from-square" />

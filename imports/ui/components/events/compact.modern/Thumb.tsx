@@ -2,7 +2,7 @@ import React from "react";
 import { StatePanel } from "./StatePanel";
 import { EventModel } from "/imports/api/events/events";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
-import { ImagePlaceholder } from "./ImagePlaceholder";
+import { ImagePlaceholder } from "../../ImagePlaceholder";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useViewportSize } from "/imports/ui/lib/useViewportSize";
 

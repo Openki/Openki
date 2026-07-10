@@ -14,12 +14,7 @@ export function ImagePlaceholder({
 
   if (isLoading() || !region || !region.custom?.groupBackgroundImages) {
     return (
-      <div
-        className="position-relative card-header bg-img-cover border-bottom"
-        style={{ height: "160px" }}
-      >
-        {children}
-      </div>
+      <div className="position-relative card-header bg-img-cover border-bottom">{children}</div>
     );
   }
 
@@ -34,7 +29,7 @@ export function ImagePlaceholder({
   return (
     <div
       className="position-relative card-header bg-img-cover border-bottom"
-      style={{ backgroundImage: `url('${images[imageIndex]}')`, height: "160px" }}
+      style={{ backgroundImage: `url('${images[imageIndex]}')` }}
     >
       {children}
     </div>
