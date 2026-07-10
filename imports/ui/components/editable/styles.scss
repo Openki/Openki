@@ -48,6 +48,7 @@
 .editable-wrap {
   position: relative;
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
 }
 
@@ -75,6 +76,7 @@
 .editable-wrap-multiline .editable {
   min-height: 100px;
   padding: 8px;
+  width: 100%;
 }
 
 .editable-wrap-singleline .editable {
