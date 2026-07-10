@@ -59,7 +59,7 @@ export function UserprofilePage({ user }: Props) {
     return checkContribution(user.contribution);
   }
   function allowPrivateMessages() {
-    return user.allowPrivateMessages || !!currentUser?.hasPrivilige("admin");
+    return user.allowPrivateMessages || Boolean(currentUser?.hasPrivilige("admin"));
   }
   function organizationMember(organization: OrganizationEntity, user: UserModel) {
     return !!(user && organization?.members?.some((m) => m.user === user._id));
