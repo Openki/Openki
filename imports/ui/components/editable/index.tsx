@@ -334,7 +334,7 @@ export function Editable({
           <div className="invalid-feedback">
             {showControls()
               ? t("_inputField.maxlength", {
-                  NUMBER: removeNumberOfCharacters,
+                  NUMBER: removeNumberOfCharacters(),
                   MAXNUMBER: maxlength,
                 })
               : t(
