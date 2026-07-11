@@ -37,3 +37,7 @@ check:
 [no-exit-message]
 test-ui:
     meteor npm run test:ui
+
+# Run all tests with a headless browser
+test:
+    meteor npm run test
