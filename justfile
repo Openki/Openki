@@ -25,6 +25,10 @@ dev:
 fix:
     meteor npm run lint:fix
 
+# Extract translations into i18n files
+translations:
+    meteor npm run extract-translations
+
 # Run linting and type checking
 check:
     meteor npm run type-check
