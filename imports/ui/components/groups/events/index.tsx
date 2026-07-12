@@ -187,7 +187,7 @@ export function Events({ group }: Props) {
       {canAdd() && (
         <div className="page-component">
           <Add group={group} />
-       </div>
+        </div>
       )}
 
       {!isLoading() && haveEvents() && (

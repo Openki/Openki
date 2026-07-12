@@ -12,7 +12,6 @@ export function Add({ group }: Props) {
   const { t } = useTranslation();
 
   return (
-
     <div id="group-event-add" className="event-caption-wrap">
       <a
         className="btn btn-add text-center page-component-btn"
@@ -20,9 +19,9 @@ export function Add({ group }: Props) {
         data-bs-title={t("group.event.edit.add")}
       >
         <h4 className="fw-bold">
-        <i className="fa-regular fa-calendar-plus" />
-        &nbsp;
-        {t("group.event.edit.add", "Create Event")}
+          <i className="fa-regular fa-calendar-plus" />
+          &nbsp;
+          {t("group.event.edit.add", "Create Event")}
         </h4>
       </a>
     </div>
