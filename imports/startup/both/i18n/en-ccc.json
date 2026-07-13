@@ -286,7 +286,7 @@
   "event.edit.venue.parallelEvents.otherEventInRoom": "There is the event \"{TITLE}\" in room \"{ROOM}\".",
   "event.edit.venue.parallelEvents.pleaseChange": "Please change place or time.",
   "event.edit.venue.parallelEvents.sameRoom": "Your event seem to be in same room as an other event.",
-  "event.edit.venueRequired": "Bitte einen Veranstaltungsort auswählen.",
+  "event.edit.venueRequired": "Please select a venue.",
   "event.edit.venueRestrictedUse": "Please use a other venue than {VENUE} or ask its hosts to create your event.",
   "event.editVenue.pleaseContactHost": "Make sure you have contacted the host of this venue for availability.",
   "event.editVenue.restrictedUse": "This venue can only be chosen by its hosts to publish an event.",
