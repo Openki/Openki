@@ -11,7 +11,6 @@ import { Button } from "/imports/ui/components/Buttons";
 import { FormControl } from "/imports/ui/components/form-control";
 import { useValidation } from "/imports/ui/lib/useValidation";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
-import { cx } from "/imports/utils/cx";
 
 export interface Props {
   autoFocus?: boolean | undefined;
@@ -128,7 +127,7 @@ export function SendMessage(props: Props) {
         <Button
           submit
           id="send-message-submit"
-          className={cx("btn-save", !hasVerifiedEmail && "disabled")}
+          className="btn-save"
           busyText={t("userprofile.sendmail-btn.busy", "Sending e-mail…")}
           isBusy={isBusy}
           disabled={!hasVerifiedEmail}

@@ -10,7 +10,6 @@ import { EventModel } from "/imports/api/events/events";
 import * as Users from "/imports/api/users/publications";
 
 import { SendMessage, Props as SendMessageProps } from "../../SendMessage";
-import { cx } from "/imports/utils/cx";
 
 export interface Props {
   participant: string;
@@ -94,7 +93,7 @@ export function ParticipantContact(props: Props) {
                   }
                 >
                   <button
-                    className={cx("btn btn-link p-0", !userHasVerifiedEmail && "disabled")}
+                    className="btn btn-link p-0"
                     type="button"
                     disabled={!userHasVerifiedEmail}
                     onClick={() => {
@@ -114,7 +113,7 @@ export function ParticipantContact(props: Props) {
                     "User does not accept direct messages from users",
                   )}
                 >
-                  <button className="btn btn-link p-0 disabled" type="button" disabled>
+                  <button className="btn btn-link p-0" type="button" disabled>
                     <i className="fa-solid fa-envelope fa-fw" />
                   </button>
                 </span>
