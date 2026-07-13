@@ -138,6 +138,10 @@ export function Root({
             margin: 0;
           }
 
+          .fw-bold {
+            font-weight: bold;
+          }
+
           p,
           .p {
             margin: 1em 0;
