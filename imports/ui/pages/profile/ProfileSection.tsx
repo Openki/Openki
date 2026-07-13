@@ -80,7 +80,7 @@ export function ProfileSection() {
           <h2 className="mt-4">
             <Editable {...editableNameAttr} />
           </h2>
-          <div>
+          <div className="mb-3">
             <Editable {...editableDescriptionAttr} />
           </div>
           <a className="btn btn-primary" href={Router.path("userprofile", user)}>
