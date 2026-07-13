@@ -54,10 +54,6 @@ function canShare(group: GroupModel) {
   return true;
 }
 
-function canEdit(group: GroupModel, user: UserModel | null) {
-  return group?.editableBy(user);
-}
-
 export function GroupDetailsPage({ edit, group, select }: Props) {
   const { t } = useTranslation();
   const user = useUser();
@@ -248,7 +244,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
                     </div>
                   )}
 
-                  {canEdit(group, user) && (
+                  {!!group?.editableBy(user) && (
                     <>
                       <div className="actions">
                         {!expanded && (
@@ -335,5 +331,5 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
 
 // for Blaze
 import "./template.html";
-import { UserModel } from "/imports/api/users/users";
+
 Template.registerHelper("GroupDetailsPage", () => GroupDetailsPage);

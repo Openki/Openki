@@ -20,19 +20,20 @@
         </div>
       {{else}}
 
-
         {{> alerts}}
 
         {{> emailValidation}}
 
         <div id="maincontent">
-        {{> introduction hasPricePolicy=hasPricePolicy}}
+
+          {{> introduction hasPricePolicy=hasPricePolicy}}
+
           {{#if isAdminPage}}
             <div class="container mw-md">
               <h1>{{i18n 'adminPanel.heading' 'Admin panel'}}</h1>
               {{#if isAdmin}}
                 {{#if isNotAdminPanel}}
-                  <a href="{{pathFor 'adminPanel'}}" class="admin-back-to-dashboard">
+                  <a href="{{pathFor 'adminPanel'}}">
                     <i class="fa-solid fa-chevron-left fa-fw"></i>
                     {{i18n 'adminPanel.backToDashboard' 'Go back to dashboard'}}
                   </a>

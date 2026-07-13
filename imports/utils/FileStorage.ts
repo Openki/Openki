@@ -1,4 +1,5 @@
 import path from "path";
+import type { PutObjectCommandInput } from "@aws-sdk/client-s3";
 import mime from "mime-types";
 import { Mongo } from "meteor/mongo";
 import { Match } from "meteor/check";
@@ -59,7 +60,7 @@ export async function upload(directoryName: string, file: UploadFile) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const s3 = (await createS3Client())!;
 
-    const params = /** @type {import("@aws-sdk/client-s3").PutObjectCommandInput} */ {
+    const params: PutObjectCommandInput = {
       Bucket: getBucket(),
       Key: fullKey,
       ContentType: file.mimeType,

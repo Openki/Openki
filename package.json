@@ -18,7 +18,7 @@
     "@jimp/js-png": "1.6.0",
     "@jimp/plugin-resize": "1.6.0",
     "@popperjs/core": "2.11.8",
-    "@swc/helpers": "^0.5.23",
+    "@swc/helpers": "0.5.23",
     "bootstrap": "5.3.8",
     "bootstrap-datepicker": "1.10.1",
     "deepmerge": "4.3.1",

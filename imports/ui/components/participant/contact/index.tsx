@@ -18,21 +18,26 @@ export interface Props {
 }
 
 export function ParticipantContact(props: Props) {
-  const modalRef = useRef(null);
+  const modalRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const user = useUser();
   const [isLoading, participant] = Users.useDetails(props.participant);
 
   useEffect(() => {
-    const element = modalRef.current as unknown as Element;
+    const element = modalRef.current;
     if (!showModal || !element) {
       return;
     }
     Modal.getOrCreateInstance(element).show();
-    element.addEventListener("hidden.bs.modal", () => {
+
+    function hide() {
       setShowModal(false);
-    });
+    }
+    element.addEventListener("hidden.bs.modal", hide);
+    return () => {
+      element.removeEventListener("hidden.bs.modal", hide);
+    };
   });
 
   function showParticipantContact() {
@@ -66,8 +71,10 @@ export function ParticipantContact(props: Props) {
           message,
           sendPrivateMessageOptions,
         );
-        const element = modalRef.current as unknown as Element;
-        Modal.getOrCreateInstance(element).hide();
+        const element = modalRef.current;
+        if (element) {
+          Modal.getOrCreateInstance(element).hide();
+        }
       },
     };
   }
@@ -96,9 +103,7 @@ export function ParticipantContact(props: Props) {
                     className="btn btn-link p-0"
                     type="button"
                     disabled={!userHasVerifiedEmail}
-                    onClick={() => {
-                      setShowModal(true);
-                    }}
+                    onClick={() => setShowModal(true)}
                   >
                     <i className="fa-solid fa-envelope fa-fw" />
                   </button>

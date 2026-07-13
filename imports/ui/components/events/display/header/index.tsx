@@ -17,7 +17,7 @@ export function EventHeader(props: Props) {
   const { dayOfWeek, calendarDayShort, timeFormat } = useDateTimeFormat();
   return (
     <div className="details-header event-details-header">
-      {props.regionId ? <Tag region={props.regionId} /> : undefined}
+      {!!props.regionId && <Tag region={props.regionId} />}
 
       <p className="h3">
         <i className="fa-regular fa-calendar-days fa-fw" /> {dayOfWeek(props.start)}{" "}

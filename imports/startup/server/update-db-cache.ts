@@ -10,9 +10,10 @@ import { updateDbCacheFieldsServerOnly } from "/imports/api/db-utilities/updateD
 
 if (runBackgroundTasks)
   Meteor.startup(async () => {
-    /* Initialize cache-fields on startup (Also called calculated fields or denormalized data) */
-
-    // Run every week at sunday at 22:30
+    // Update db cache fields every week at sunday at 22:30. That shouldn’t actually be necessary,
+    // as the cache – or the calculated field – is usually denormalised when the database is updated.
+    // However, there are exceptions, for example, if the data has been modified directly by
+    // an administrator using an external tool.
     schedule.scheduleJob(
       { hour: 22, minute: 30, dayOfWeek: 0 /* Sunday */ },
       Meteor.bindEnvironment(async () => {
