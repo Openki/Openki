@@ -24,7 +24,7 @@ variables:
   GIT_DEPTH: "0"           # Full history needed for git describe / git log
   METEOR_ALLOW_SUPERUSER: "true"
   TOOL_NODE_FLAGS: "--max_old_space_size=4096"
-  TARGET_BRANCH: "dev"
+  TARGET_BRANCH: "ServerConfig59/setup-CI-CD-with-new-docker"
 
 # Static analysis / formatting checks
 lint:
