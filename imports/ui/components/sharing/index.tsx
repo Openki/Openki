@@ -12,7 +12,7 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 export function Sharing({
   title = document.title,
   text = "",
-  url = location.href.replace(location.search, ""),
+  url = location.href,
 }: {
   title?: string | undefined;
   text?: string | undefined;

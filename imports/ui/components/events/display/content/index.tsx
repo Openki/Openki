@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { Router } from "meteor/iron:router";
 
 import { useDetails } from "/imports/api/groups/publications";
 import { EventModel } from "/imports/api/events/events";
@@ -76,7 +77,8 @@ export function Content({ event }: { event: EventModel }) {
             <PricePolicy dismissible wrap="event-details-price-policy" />
             <div className="p-3 text-end" id="share">
               <h4>
-                {t("sharing.title", "Invite your friends")} <Sharing />
+                {t("sharing.title", "Invite your friends")}{" "}
+                <Sharing url={Router.url("showEvent", event)} />
               </h4>
             </div>
           </>

@@ -239,7 +239,8 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
                   {canShare(group) && (
                     <div className="p-3 sharing-wrapper text-end" id="share">
                       <h4>
-                        {t("sharing.title", "Invite your friends")} <Sharing />
+                        {t("sharing.title", "Invite your friends")}{" "}
+                        <Sharing url={Router.url("showGroup", group)} />
                       </h4>
                     </div>
                   )}

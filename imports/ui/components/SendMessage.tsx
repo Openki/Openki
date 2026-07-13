@@ -114,7 +114,7 @@ export function SendMessage(props: Props) {
               <p>
                 {t(
                   "userprofile.infoForUnverifiedMail",
-                  "Verify your e-mail address to send personal messages.",
+                  "Verify your e-mail address to send direct messages.",
                 )}
               </p>
               <VerifyEmail />

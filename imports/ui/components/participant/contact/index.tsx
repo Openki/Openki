@@ -95,7 +95,7 @@ export function ParticipantContact(props: Props) {
                       ? t("user.privateMessage", "Contact directly")
                       : t(
                           "user.privateMessage.verifyEmail",
-                          "Verify your email to send personal messages",
+                          "Verify your email to send direct messages",
                         )
                   }
                 >
