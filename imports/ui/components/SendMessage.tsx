@@ -45,6 +45,8 @@ export function SendMessage(props: Props) {
 
   const { promptToLogin } = useAccountTasks();
 
+  const hasVerifiedEmail = user?.hasVerifiedEmail();
+
   return (
     <form
       noValidate
@@ -81,11 +83,12 @@ export function SendMessage(props: Props) {
           placeholder={props.placeholder}
           value={message}
           onChange={(value) => setMessage(value)}
-          onBlur={() => checkValidity("message")}
+          onBlur={() => message.length && checkValidity("message")}
           error={errors.message}
+          disabled={!hasVerifiedEmail}
         />
       </div>
-      {user?.hasVerifiedEmail() ? (
+      {hasVerifiedEmail ? (
         <>
           <FormCheck
             type="box"
@@ -103,15 +106,15 @@ export function SendMessage(props: Props) {
       ) : (
         !!user && (
           <div className="card mb-3">
-            <div className="card-header bg-warning">
-              <i className="fa-regular fa-circle-check" />{" "}
+            <div className="card-header bg-warning fw-bold">
+              <i className="fa-regular fa-circle-check pe-1" />
               {t("sendMessage.plsVerifyEmail", "Please verify your e-mail address")}
             </div>
             <div className="card-body p-3">
               <p>
                 {t(
                   "userprofile.infoForUnverifiedMail",
-                  "Verify your e-mail address to receive a copy or to attach it to the message.",
+                  "Verify your e-mail address to send personal messages.",
                 )}
               </p>
               <VerifyEmail />
@@ -127,6 +130,7 @@ export function SendMessage(props: Props) {
           className="btn-save"
           busyText={t("userprofile.sendmail-btn.busy", "Sending e-mail…")}
           isBusy={isBusy}
+          disabled={!hasVerifiedEmail}
         >
           <i className="fa-solid fa-paper-plane fa-fw" />
           &nbsp;

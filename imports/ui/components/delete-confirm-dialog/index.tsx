@@ -31,7 +31,7 @@ export function DeleteConfirmDialog(props: Props) {
             {props.confirmButton}
           </button>
         ) : (
-          <button type="button" className="btn btn-danger text-nowrap" disabled={true}>
+          <button type="button" className="btn btn-danger text-nowrap" disabled>
             <i className="fa-solid fa-circle-notch fa-spin fa-fw" />
             {props.busyButton}
           </button>

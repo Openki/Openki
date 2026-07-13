@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Modal } from "/imports/startup/client/bootstrap";
-import { useUserId } from "/imports/utils/react-meteor-data";
+import { useUser } from "/imports/utils/react-meteor-data";
 
 import { GroupModel } from "/imports/api/groups/groups";
 import * as emailMethods from "/imports/api/emails/methods";
@@ -21,7 +21,7 @@ export function ParticipantContact(props: Props) {
   const modalRef = useRef(null);
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
-  const userId = useUserId();
+  const user = useUser();
   const [isLoading, participant] = Users.useDetails(props.participant);
 
   useEffect(() => {
@@ -36,12 +36,14 @@ export function ParticipantContact(props: Props) {
   });
 
   function showParticipantContact() {
-    if (!userId) {
+    if (!user) {
       return false;
     }
 
-    return userId !== props.participant;
+    return user._id !== props.participant;
   }
+
+  const userHasVerifiedEmail = Boolean(user?.hasVerifiedEmail());
 
   function sendMessageAttr(): SendMessageProps {
     return {
@@ -77,28 +79,44 @@ export function ParticipantContact(props: Props) {
           <div className="d-inline-block">
             {!isLoading() &&
               (participant?.allowPrivateMessages ? (
-                <button
-                  className="btn btn-link p-0"
-                  type="button"
-                  onClick={() => {
-                    setShowModal(true);
-                  }}
+                <span
+                  className="d-inline-block"
+                  tabIndex={0}
+                  data-bs-toggle="tooltip"
+                  data-bs-title={
+                    userHasVerifiedEmail
+                      ? t("user.privateMessage", "Contact directly")
+                      : t(
+                          "user.privateMessage.verifyEmail",
+                          "Verify your email to send personal messages",
+                        )
+                  }
                 >
-                  <i
-                    className="fa-solid fa-envelope fa-fw"
-                    data-bs-title={t("user.privateMessage", "Contact directly")}
-                  />
-                </button>
+                  <button
+                    className="btn btn-link p-0"
+                    type="button"
+                    disabled={!userHasVerifiedEmail}
+                    onClick={() => {
+                      setShowModal(true);
+                    }}
+                  >
+                    <i className="fa-solid fa-envelope fa-fw" />
+                  </button>
+                </span>
               ) : (
-                <button className="btn btn-link p-0 disabled" type="button" disabled>
-                  <i
-                    className="fa-solid fa-envelope fa-fw"
-                    title={t(
-                      "user.acceptsPrivateMessages.false",
-                      "User does not accept direct messages from users",
-                    )}
-                  />
-                </button>
+                <span
+                  className="d-inline-block"
+                  tabIndex={0}
+                  data-bs-toggle="tooltip"
+                  data-bs-title={t(
+                    "user.acceptsPrivateMessages.false",
+                    "User does not accept direct messages from users",
+                  )}
+                >
+                  <button className="btn btn-link p-0" type="button" disabled>
+                    <i className="fa-solid fa-envelope fa-fw" />
+                  </button>
+                </span>
               ))}
           </div>
           {showModal && (
