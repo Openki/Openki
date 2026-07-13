@@ -1,11 +1,12 @@
 import React, { FocusEventHandler, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
+import { buildSizeClass, Size } from "/imports/ui/lib/buildSizeClass";
+import { cx } from "/imports/utils/cx";
+
 import { AutoGrowTextArea } from "./AutoGrowTextArea";
 import { DateInput } from "./DateInput";
 import { Richtext } from "./Richtext";
-
-import { buildSizeClass, Size } from "/imports/ui/lib/buildSizeClass";
 
 interface CommonProps {
   id: string;
@@ -348,15 +349,6 @@ function createInvalidFeedbackElement<K extends string>(props: Props<K>) {
   );
 }
 
-function getGroupClassNames(size: Size | undefined, hasErrorMessage: boolean) {
-  const className = ["input-group", buildSizeClass("input-group", size)];
-
-  if (hasErrorMessage) {
-    className.push("has-validation");
-  }
-  return className;
-}
-
 /** Form control with label, validation message, etc. it makes it easy to follow standards for accessibility */
 export function FormControl<K extends string>(props: Props<K>) {
   const { t } = useTranslation();
@@ -372,7 +364,13 @@ export function FormControl<K extends string>(props: Props<K>) {
     Error message is placed after append to prevent overlap with
     Bootstrap's validation icon and the append button. */
     inputElement = (
-      <div className={getGroupClassNames(size, hasErrorMessage).join(" ")}>
+      <div
+        className={cx(
+          "input-group",
+          buildSizeClass("input-group", size),
+          hasErrorMessage && "has-validation",
+        )}
+      >
         {prepend && createAddonElement(`${id}-prepend`, prepend, id)}
         {createInputElement(props)}
         {append && createAddonElement(`${id}-append`, append, id)}

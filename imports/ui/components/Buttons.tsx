@@ -1,7 +1,9 @@
 import React, { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { cx } from "/imports/utils/cx";
 import { buildSizeClass, Size } from "../lib/buildSizeClass";
+
 import { Button as NeedsLoginButton } from "/imports/ui/components/PleaseLogin";
 
 interface CommonProps {
@@ -117,9 +119,7 @@ function ControlledButton(props: CommonProps & LoginProps) {
 export function Button(props: Props) {
   const { id, className, size, block, disabled, children, busyText } = props;
 
-  const fullClassName = ["btn", buildSizeClass("btn", size), !block ? "text-nowrap" : "", className]
-    .filter((v) => v)
-    .join(" ");
+  const fullClassName = cx("btn", buildSizeClass("btn", size), !block && "text-nowrap", className);
 
   const button =
     "onClick" in props ? (

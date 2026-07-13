@@ -18,7 +18,7 @@ function ButtonRegister(props: { forTwo: boolean; onClick: () => Promise<void> }
       needsLogin
       visitorUserAllowed
       size="large"
-      className="btn btn-add fw-bold"
+      className="btn-add fw-bold"
       onClick={props.onClick}
       busyText={t("_button.registering", "Registering…")}
     >
