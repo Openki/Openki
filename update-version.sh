@@ -43,6 +43,7 @@ echo "✔ server/version.js updated: $completeVer ($branch)"
 
 
 IMAGE_TAG="${ver}_${branch}_${commitShort}_${pipeline_id}"
-echo "IMAGE_TAG=$IMAGE_TAG" >> build.env
+CLEANED_TAG=$(echo "$IMAGE_TAG" | sed 's/[^a-zA-Z0-9._-]/-/g')
+echo "IMAGE_TAG=$CLEANED_TAG" >> build.env
 
 echo "✔ Image tag: $IMAGE_TAG"
