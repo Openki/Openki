@@ -4,7 +4,7 @@ describe("Organization edit", () => {
       cy.visitOpenki("/organization/fd3a8d98d4", { username: "Seee" });
 
       cy.get("#group-edit-title").type("Gewaltfreihe Kommunikation lernen");
-      cy.get("#groupEditRolementorEnrollCheck").check();
+      cy.get("#groupEditRolementorCheck").check();
       cy.get("#groups-edit-save").click();
       cy.get(".alert-success").should("be.visible");
       cy.get('[data-test="organization-tag-fd3a8d98d4"] a').should("be.visible");
@@ -18,7 +18,7 @@ describe("Organization edit", () => {
       cy.logout();
 
       cy.visitOpenki("/organization/fd3a8d98d4", { username: "Normalo" });
-      cy.get('a[href*="gewaltfreihe-kommunikation-lernen"]').click();
+      cy.get('a[href*="gewaltfreihe-kommunikation-lernen"]').first().click();
       cy.get('[data-test="group-details"] button.btn-edit').should("be.enabled");
       cy.get("#group-details-confirm-delete").click();
       cy.get("#group-details-confirm-dialog-delete").click();
@@ -31,7 +31,7 @@ describe("Organization edit", () => {
       cy.get('#maincontent label[for="group-edit-internal"]').click();
       cy.get("#group-edit-internal").check();
       cy.get("#groupEditRolehostCheck").uncheck();
-      cy.get("#maincontent i.fa-angle-down").click();
+      cy.get(".introduction a:first-of-type").click();
       cy.get("#groups-select-categories-misc").check();
       cy.get("#groups-select-subcategories-♥undefined♥").check();
       cy.get("#groups-edit-save").click();

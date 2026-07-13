@@ -357,8 +357,10 @@ export function OrganizationSettings({ organization }: Props) {
           })}
         </h3>
         <p className="organization-id-display">
-          <strong>{t("organization.settings.organizationId", "Organization ID")}</strong>:{" "}
-          <code>{organization._id}</code>
+          <span className="fw-bold">
+            {t("organization.settings.organizationId", "Organization ID")}
+          </span>
+          : <code>{organization._id}</code>
           <button
             type="button"
             className="btn btn-sm btn-outline-secondary organization-id-display__copy-btn"
@@ -417,23 +419,29 @@ export function OrganizationSettings({ organization }: Props) {
           <p>
             {!!organization.createdby && (
               <>
-                <strong>{t("organizations.settings.createdBy", "Created by")}</strong>:{" "}
-                <ProfileLink userId={organization.createdby} />
+                <span className="fw-bold">
+                  {t("organizations.settings.createdBy", "Created by")}
+                </span>
+                : <ProfileLink userId={organization.createdby} />
                 <br />
               </>
             )}
             {!!organization.time_created && (
               <>
-                <strong>{t("organizations.settings.timeCreated", "Created at")}</strong>:{" "}
-                {calendarDayFormat(organization.time_created)}
+                <span className="fw-bold">
+                  {t("organizations.settings.timeCreated", "Created at")}
+                </span>
+                : {calendarDayFormat(organization.time_created)}
                 <br />
               </>
             )}
 
             {!!organization.time_lastedit && (
               <>
-                <strong>{t("organizations.settings.timeLastEdit", "Last edit at")}</strong>:{" "}
-                {calendarDayFormat(organization.time_lastedit)}
+                <span className="fw-bold">
+                  {t("organizations.settings.timeLastEdit", "Last edit at")}
+                </span>
+                : {calendarDayFormat(organization.time_lastedit)}
               </>
             )}
           </p>

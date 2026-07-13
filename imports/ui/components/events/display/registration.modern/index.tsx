@@ -24,8 +24,12 @@ function ButtonRegistrationClosed() {
   const { t } = useTranslation();
 
   return (
-    <button type="button" id="event-details-isFullyBooked" className="btn btn-warning btn-lg">
-      <strong>{t("event.details.isFullyBooked", "The event is fully booked")}</strong>
+    <button
+      type="button"
+      id="event-details-isFullyBooked"
+      className="btn btn-warning btn-lg fw-bold"
+    >
+      {t("event.details.isFullyBooked", "The event is fully booked")}
     </button>
   );
 }
@@ -93,18 +97,20 @@ function Registration({ event }: { event: EventModel }) {
                   <br />
                 </>
               )}
-              <strong>
+              <span className="fw-bold">
                 {t(
                   "event.details.i-participate-no",
                   "Let it be known you are participating in this event. Your registration is binding.",
                 )}
-              </strong>
+              </span>
             </>
           ))
         ) : (
           <>
             <i className="fa-solid fa-check fa-fw text-success" />{" "}
-            <strong>{t("event.details.youAreRegistered", "You are now registered.")}</strong>
+            <span className="fw-bold">
+              {t("event.details.youAreRegistered", "You are now registered.")}
+            </span>
           </>
         )}
       </p>
@@ -179,19 +185,14 @@ export function RegistrationParticipants({ event }: Props) {
         <>
           <h4 className="card-title">{t("event.details.registration", "Registration")}</h4>
           {event.noRsvp ? (
-            <p className="card-text">
-              <strong>{t("event.details.noRsvp", "Registration not required.")}</strong>
+            <p className="card-text fw-bold">
+              {t("event.details.noRsvp", "Registration not required.")}
             </p>
           ) : !registrationClosed ? (
             <Registration event={event} />
           ) : (
-            <p className="card-text">
-              <strong>
-                {t(
-                  "event.details.registrationClosed",
-                  "The registration for this event is closed.",
-                )}
-              </strong>
+            <p className="card-text fw-bold">
+              {t("event.details.registrationClosed", "The registration for this event is closed.")}
             </p>
           )}
         </>

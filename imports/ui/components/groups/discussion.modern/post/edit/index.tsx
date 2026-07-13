@@ -150,7 +150,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
           {showUserId() && post.userId ? (
             <UserName userId={post.userId} />
           ) : (
-            <strong>{t("discussion.anonymous", "Anonymous")}</strong>
+            <span className="fw-bold">{t("discussion.anonymous", "Anonymous")}</span>
           )}
           {!post.new && (
             <span>

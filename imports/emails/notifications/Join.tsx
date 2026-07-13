@@ -49,9 +49,9 @@ export function Join({
               </table>
             </>
           )}
-          <strong>
+          <span className="fw-bold">
             {t("notification.join.mail.statsOverview", "Overview over the interested:")}
-          </strong>
+          </span>
           <p>
             {roleCounts.map(({ role, count }) => (
               <>

@@ -39,12 +39,10 @@ export function RsvpTeam({
               { USERNAME: newParticipant, COMPANIONS: companionsOfNewParticipant, EVENT: event },
             )}
           </p>
-          <p>
-            <strong>
-              {t("notification.rsvp.team.mail.statsOverview", "Attendees now: {PARTICIPANTS}", {
-                PARTICIPANTS: participantsCount,
-              })}
-            </strong>
+          <p className="fw-bold">
+            {t("notification.rsvp.team.mail.statsOverview", "Attendees now: {PARTICIPANTS}", {
+              PARTICIPANTS: participantsCount,
+            })}
           </p>
         </td>
       </tr>

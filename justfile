@@ -26,10 +26,19 @@ dev:
 fix:
     meteor npm run lint:fix
 
+# Extract translations into i18n files
+translations:
+    meteor npm run extract-translations
+
 # Run linting and type checking
 check:
     meteor npm run type-check
 
 # Start the Cypress UI for running tests
+[no-exit-message]
 test-ui:
     meteor npm run test:ui
+
+# Run all tests with a headless browser
+test:
+    meteor npm run test

@@ -16,7 +16,7 @@ describe("group details page", () => {
     it("should allow to set a organization as team", () => {
       cy.get('[data-test="group-details"] div.addon button.dropdown-toggle').click();
       cy.get('[data-test="group-details"] li:nth-child(4) a.btn').click();
-      cy.get('[data-test="group-details"] button.btn-success').click();
+      cy.get('[data-test="group-details"] .organization-tool-dialog button.btn-success').click();
       cy.get(
         '[data-test="group-details"] i[title="Walliserdütsch lernen is co-organized by this organization"]',
       ).should("have.class", "fa-bullhorn");

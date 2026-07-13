@@ -75,7 +75,7 @@ export function Event({ event, hideRsvp }: Props) {
           <span className={`frame-list-item-time ${isExpanded ? "hidden" : ""}`}>
             {timeFormat(event.start)}
           </span>
-          <strong>{event.title}</strong>
+          <span className="fw-bold">{event.title}</span>
           {allRegions && (
             <span className="badge bg-primary frame-list-item-region">{regionName()}</span>
           )}
@@ -84,17 +84,13 @@ export function Event({ event, hideRsvp }: Props) {
       {isExpanded && (
         <div className="p-2">
           <div className="row">
-            <div className="col-4 col-sm-2">
-              <strong>{t("frame.eventsList.when", "When:")}</strong>
-            </div>
+            <div className="col-4 col-sm-2 fw-bold">{t("frame.eventsList.when", "When:")}</div>
             <div className="col-8 col-sm-10">
               {timeFormat(event.start)} - {timeFormat(event.end)}
             </div>
           </div>
           <div className="row">
-            <div className="col-4 col-sm-2">
-              <strong>{t("frame.eventsList.where", "Where:")}</strong>
-            </div>
+            <div className="col-4 col-sm-2 fw-bold">{t("frame.eventsList.where", "Where:")}</div>
             <div className="col-8 col-sm-10">
               {event.venue?._id ? (
                 <a href={Router.path("venueDetails", event.venue)} target="_blank" rel="noreferrer">
@@ -107,8 +103,8 @@ export function Event({ event, hideRsvp }: Props) {
             </div>
           </div>
           <div className="row">
-            <div className="col-sm-2">
-              <strong>{t("frame.eventsList.description", "Description:")}</strong>
+            <div className="col-sm-2 fw-bold">
+              {t("frame.eventsList.description", "Description:")}
             </div>
             <div
               className="col-sm-10"

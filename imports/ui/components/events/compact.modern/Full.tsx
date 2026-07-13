@@ -175,7 +175,7 @@ export function Full({
 
           {!isRegionLoading() && !!organizedByOrganizations?.length && (
             <p className="card-text">
-              <strong>{t("event.details.organizedBy", "Organized by:")}</strong>{" "}
+              <span className="fw-bold">{t("event.details.organizedBy", "Organized by:")}</span>{" "}
               {ReactJoin(
                 organizedByOrganizations.map((organization) => (
                   <OrganizationName key={organization} id={organization} />
@@ -188,7 +188,7 @@ export function Full({
 
           {!hideCategories && !!event.categories?.length && (
             <p className="card-text">
-              <strong>{t("event.details.categories", "Categories:")}</strong>{" "}
+              <span className="fw-bold">{t("event.details.categories", "Categories:")}</span>{" "}
               {event.categories.map((category) => t(`category.${category}`)).join(", ")}
             </p>
           )}

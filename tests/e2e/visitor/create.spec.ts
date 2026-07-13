@@ -1,9 +1,15 @@
 beforeEach(() => {
-  cy.visitOpenki("/event/2c50c4c7c5");
+  // NOTE: The event URL might not be reliable since events in the testdata get regenerated
+  // from time to time.
+  //
+  // If this test fails in the future again, we could consider navigating to
+  // `cy.visitOpenki("/calendar")` and then click the first available event, trying to reserve a seat
+  // or navigating back and trying the next event until we find an event which has registrations enabled
+  cy.visitOpenki("/event/37f529104a", { region: "" });
 });
 
 describe("Visitor", () => {
-  it("should be able to rsvp a event", () => {
+  it("should be able to RSVP to an event", () => {
     cy.get("#register-panel-reserve").click();
     cy.get("#events-display-registration").click();
     cy.get("#account-tasks-login-frame-visitor").click();

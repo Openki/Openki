@@ -233,7 +233,7 @@ export function UserprofilePage({ user }: Props) {
               </h1>
 
               {ownUser() ? (
-                <em>({t("profile.its_you", "It's you.")})</em>
+                <span className="fst-italic">({t("profile.its_you", "It's you.")})</span>
               ) : (
                 alterPrivileges &&
                 PublicSettings.contribution &&

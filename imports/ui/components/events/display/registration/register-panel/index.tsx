@@ -18,15 +18,13 @@ function ButtonRegister(props: { forTwo: boolean; onClick: () => Promise<void> }
       needsLogin
       visitorUserAllowed
       size="large"
-      className="btn btn-add"
+      className="btn btn-add fw-bold"
       onClick={props.onClick}
       busyText={t("_button.registering", "Registering…")}
     >
-      <strong>
-        {!props.forTwo
-          ? t("event.details.register-register", "Register")
-          : t("event.details.register-registerForTwo", "Register for 2 seats")}
-      </strong>
+      {!props.forTwo
+        ? t("event.details.register-register", "Register")
+        : t("event.details.register-registerForTwo", "Register for 2 seats")}
     </Button>
   );
 }
@@ -49,10 +47,10 @@ export function RegisterPanel({ event, onRegister }: Props) {
         <button
           id="register-panel-reserve"
           type="button"
-          className="btn btn-add btn-lg"
+          className="btn btn-add btn-lg fw-bold"
           onClick={() => setRegisterDropdown(true)}
         >
-          <strong>{t("event.details.reserve-a-seat", "Reserve a seat")}</strong>
+          {t("event.details.reserve-a-seat", "Reserve a seat")}
         </button>
       ) : (
         <div className="p-3 event-detail-register-dropdown">
@@ -64,7 +62,7 @@ export function RegisterPanel({ event, onRegister }: Props) {
                   {
                     USERNAME: user.getDisplayName(),
                     EVENTTITLE: event.title,
-                    DATE: <strong>{dateFormat(event.startLocal)}</strong>,
+                    DATE: <span className="fw-bold">{dateFormat(event.startLocal)}</span>,
                   },
                 )
               : t(
@@ -72,7 +70,7 @@ export function RegisterPanel({ event, onRegister }: Props) {
                   'Do you want to reserve a seat for the event "{EVENTTITLE}" on the {DATE}? Your reservation is binding.',
                   {
                     EVENTTITLE: event.title,
-                    DATE: <strong>{dateFormat(event.startLocal)}</strong>,
+                    DATE: <span className="fw-bold">{dateFormat(event.startLocal)}</span>,
                   },
                 )}
           </p>

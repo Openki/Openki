@@ -124,12 +124,10 @@ export function Event({ event, isNew }: { event: EventModel; isNew: boolean }) {
         {!!event.canceled && (
           <div
             data-test="event-details-canceled"
-            className="alert alert-canceled text-center"
+            className="alert alert-canceled text-center fw-bold"
             role="alert"
           >
-            <strong>
-              {t("event.canceled.alert", "{EVENT} got canceled.", { EVENT: event.title })}
-            </strong>
+            {t("event.canceled.alert", "{EVENT} got canceled.", { EVENT: event.title })}
           </div>
         )}
 

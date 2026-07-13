@@ -23,8 +23,12 @@ function ButtonRegistrationClosed() {
   const { t } = useTranslation();
 
   return (
-    <button type="button" id="event-details-isfullyBooked" className="btn btn-warning btn-lg">
-      <strong>{t("event.details.isFullyBooked", "The event is fully booked")}</strong>
+    <button
+      type="button"
+      id="event-details-isfullyBooked"
+      className="btn btn-warning btn-lg fw-bold"
+    >
+      {t("event.details.isFullyBooked", "The event is fully booked")}
     </button>
   );
 }
@@ -101,41 +105,32 @@ export function EventRegistration({ event }: Props) {
             </div>
           </div>
           {event.canceled ? (
-            <div className="page-component">
-              <strong>
-                {t(
-                  "event.details.canceled",
-                  "The event has been canceled. Registration is therefore closed.",
-                )}
-              </strong>
+            <div className="page-component fw-bold">
+              {t(
+                "event.details.canceled",
+                "The event has been canceled. Registration is therefore closed.",
+              )}
             </div>
           ) : event.noRsvp ? (
-            <div className="page-component">
-              <strong>{t("event.details.noRsvp", "Registration not required.")}</strong>
+            <div className="page-component fw-bold">
+              {t("event.details.noRsvp", "Registration not required.")}
             </div>
           ) : registrationClosed ? (
-            <div className="page-component whitespace-pre-line">
-              <strong>
-                {t(
-                  "event.details.registrationClosed",
-                  "The registration for this event is closed.",
-                )}
-              </strong>
+            <div className="page-component whitespace-pre-line fw-bold">
+              {t("event.details.registrationClosed", "The registration for this event is closed.")}
             </div>
           ) : (
             <>
-              <div className="page-component">
-                <b>
-                  {!event.attendedBy(user?._id)
-                    ? t(
-                        "event.details.i-participate-no",
-                        "Let it be known you are participating in this event. Your registration is binding.",
-                      )
-                    : t(
-                        "event.details.i-participate-yes",
-                        "You are now registered.\nYour registration is binding.",
-                      )}
-                </b>
+              <div className="page-component fw-bold">
+                {!event.attendedBy(user?._id)
+                  ? t(
+                      "event.details.i-participate-no",
+                      "Let it be known you are participating in this event. Your registration is binding.",
+                    )
+                  : t(
+                      "event.details.i-participate-yes",
+                      "You are now registered.\nYour registration is binding.",
+                    )}
               </div>
               <div className="page-component">
                 {!event.attendedBy(user?._id) ? (

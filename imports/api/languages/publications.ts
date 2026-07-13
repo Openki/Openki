@@ -18,6 +18,14 @@ if (Meteor.isServer) {
       const response = await fetch(
         "https://hosted.weblate.org/api/components/openki/openki/statistics/?format=json",
       );
+
+      if (!response.ok) {
+        // During development, we often get rate-limited due to too frequent requests.
+        // Related issue: https://gitlab.com/Openki/Openki/-/work_items/2465
+        console.log("Failed to load Weblate statistics: ", await response.text());
+        return;
+      }
+
       const stats = (await response.json()) as {
         results: {
           code: string;
@@ -36,7 +44,7 @@ if (Meteor.isServer) {
       });
     } catch (ex) {
       // ignore it
-      console.info("Could not load weblate statistics: " + JSON.stringify(ex));
+      console.info("Failed to load Weblate statistics: " + JSON.stringify(ex));
     }
   })();
 }
