@@ -28,7 +28,7 @@ export function Report({
   }
 
   moment.locale("en");
-  let versionElement = <></>;
+  let versionElement;
   if (version) {
     const fullVersion = version.basic + (version.branch !== "main" ? ` ${version.branch}` : "");
     const commit = version.commitShort;

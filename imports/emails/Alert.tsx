@@ -13,7 +13,7 @@ export function Alert({
   const { siteName } = Accounts.emailTemplates;
 
   moment.locale("en");
-  let versionElement = <></>;
+  let versionElement;
   if (version) {
     const fullVersion = version.basic + (version.branch !== "main" ? ` ${version.branch}` : "");
     const commit = version.commitShort;
