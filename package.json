@@ -49,7 +49,7 @@
     "react-i18next": "17.0.8",
     "react-leaflet": "5.0.0",
     "react-markdown": "8.0.7",
-    "sanitize-html": "2.17.5",
+    "sanitize-html": "2.17.6",
     "seedrandom": "3.0.5",
     "select2": "4.0.13",
     "select2-theme-bootstrap5": "0.1.1",
