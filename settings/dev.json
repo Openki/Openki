@@ -270,6 +270,7 @@
     "sender": "pingpong@mail.openki.net",
     "recipient": "badabuff@openki.net"
   },
+  "allowedPrivateMessagesPerHour": 3,
   "robots": false,
   "hideProfiles": false,
   "printLog": true,
