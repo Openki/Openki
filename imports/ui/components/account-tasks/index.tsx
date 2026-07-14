@@ -291,9 +291,7 @@ export function AccountTasks() {
               <div className="modal-body">
                 <Task
                   activeTask={activeTask}
-                  onSwitch={(task) => {
-                    setActiveTask(task);
-                  }}
+                  onSwitch={(task) => setActiveTask(task)}
                   onLogin={() => {
                     if (viewport.width <= ScssVars.gridFloatBreakpoint) {
                       $("#bs-navbar-collapse").collapse("hide");
