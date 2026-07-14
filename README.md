@@ -101,6 +101,7 @@ Free software built with love and care. We use:
 ### Installation (Linux, macOS and Windows)
 
 1. To install Meteor, run: `curl https://install.meteor.com | sh` (or download the [installer for Windows](https://install.meteor.com/windows))
+1. If you use Windows: We recommend using [Git Bash](https://about.gitlab.com/blog/git-command-line-on-windows-with-git-bash/) as your terminal for development.
 1. [Download and unzip](https://gitlab.com/Openki/Openki/-/archive/main/Openki-main.zip) or `git clone https://gitlab.com/Openki/Openki.git` Openki repository into `/some/path`.
 1. `cd /some/path/Openki`
 1. `meteor npm install -verbose` (sometimes twice)
