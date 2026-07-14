@@ -66,7 +66,7 @@ export async function upload(directoryName: string, file: UploadFile) {
       ContentType: file.mimeType,
       ACL: "public-read",
       Body: Buffer.from(file.content, "base64url"),
-    } as const;
+    };
 
     await new Upload({
       client: s3,
