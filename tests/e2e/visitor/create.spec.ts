@@ -5,7 +5,7 @@ beforeEach(() => {
   // If this test fails in the future again, we could consider navigating to
   // `cy.visitOpenki("/calendar")` and then click the first available event, trying to reserve a seat
   // or navigating back and trying the next event until we find an event which has registrations enabled
-  cy.visitOpenki("/event/37f529104a", { region: "" });
+  cy.visitOpenki("/event/eb386e8309/Schweissen", { region: "" });
 });
 
 describe("Visitor", () => {
