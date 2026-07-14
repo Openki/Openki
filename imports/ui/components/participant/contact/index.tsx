@@ -86,33 +86,33 @@ export function ParticipantContact(props: Props) {
           <div className="d-inline-block">
             {!isLoading() &&
               (participant?.allowPrivateMessages ? (
-                <span
-                  className="d-inline-block"
-                  tabIndex={0}
-                  data-bs-toggle="tooltip"
-                  data-bs-title={
-                    userHasVerifiedEmail
-                      ? t("user.privateMessage", "Contact directly")
-                      : t(
-                          "user.privateMessage.verifyEmail",
-                          "Verify your email to send direct messages",
-                        )
-                  }
-                >
+                userHasVerifiedEmail ? (
                   <button
                     className="btn btn-link p-0"
                     type="button"
-                    disabled={!userHasVerifiedEmail}
+                    data-bs-title={t("user.privateMessage", "Contact directly")}
                     onClick={() => setShowModal(true)}
                   >
                     <i className="fa-solid fa-envelope fa-fw" />
                   </button>
-                </span>
+                ) : (
+                  <span
+                    className="d-inline-block"
+                    tabIndex={0}
+                    data-bs-title={t(
+                      "user.privateMessage.verifyEmail",
+                      "Verify your email to send direct messages",
+                    )}
+                  >
+                    <button className="btn btn-link p-0" type="button" disabled>
+                      <i className="fa-solid fa-envelope fa-fw" />
+                    </button>
+                  </span>
+                )
               ) : (
                 <span
                   className="d-inline-block"
                   tabIndex={0}
-                  data-bs-toggle="tooltip"
                   data-bs-title={t(
                     "user.acceptsPrivateMessages.false",
                     "User does not accept direct messages from users",
