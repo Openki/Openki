@@ -1,5 +1,4 @@
 import * as HtmlTools from "/imports/utils/html-tools";
-import sanitizeHtml from "sanitize-html";
 
 describe("Converting Text to HTML", () => {
   it("turns linebreak into break-tag", () => {
@@ -14,16 +13,12 @@ describe("Converting Text to HTML", () => {
     assert.include(html, "href");
     assert.include(html, url);
   });
-  it("hyperlinks valid", () => {
-    const html = HtmlTools.plainToHtml("https://openki.net");
-    const options = {
-      allowedTags: ["a"],
-      allowedAttributes: {
-        a: ["href"],
-      },
-    };
-    const sanehtml = sanitizeHtml(html, options);
-    assert.include(sanehtml, "href");
+  it(`sanitized hyperlinks are valid and include rel="nofollow"`, () => {
+    const link = "https://openki.net";
+    const html = HtmlTools.plainToHtml(link);
+
+    assert.include(HtmlTools.sanitizeHtml(html), `href="${link}"`);
+    assert.include(HtmlTools.sanitizeHtml(html), 'rel="nofollow"');
   });
   it("hyperlinks ampersand url", () => {
     const url = "https://openki.net/?&";
