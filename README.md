@@ -100,12 +100,12 @@ Free software built with love and care. We use:
 
 ### Installation (Linux, macOS and Windows)
 
-1. To install Meteor, run: `curl https://install.meteor.com | sh` (or download the [installer for Windows](https://install.meteor.com/windows))
-1. If you use Windows: We recommend using [Git Bash](https://about.gitlab.com/blog/git-command-line-on-windows-with-git-bash/) as your terminal for development.
+1. To install Meteor, run: `curl https://install.meteor.com | sh`  
+  (In case you use Windows: download the [Meteor for Windows](https://install.meteor.com/windows) and we recomend using  [Git Bash](https://about.gitlab.com/blog/git-command-line-on-windows-with-git-bash/) as your terminal for development)
 1. [Download and unzip](https://gitlab.com/Openki/Openki/-/archive/main/Openki-main.zip) or `git clone https://gitlab.com/Openki/Openki.git` Openki repository into `/some/path`.
 1. `cd /some/path/Openki`
 1. `meteor npm install -verbose` (sometimes twice)
-1. Run `meteor npm run debug -verbose` (We support server side debugging. For help, see: https://nodejs.org/en/docs/inspector)
+1. Run `meteor npm run debug -verbose` (We support server side debugging. For help, see [the docs](https://nodejs.org/learn/getting-started/debugging))
 1. Find Openki running on [http://localhost:3000](http://localhost:3000/)
 
 Log in: User `greg` is admin and has password: `greg`. Any other visible user has password `greg` as well.  
