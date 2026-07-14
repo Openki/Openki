@@ -54,12 +54,13 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
   },
 
   /**
-   * How many private messages each user can send per hour. If the limit is reached, the messages
-   * get blocked and an alert to is sent to the reporter.recipient address. Unless a explicit number
-   * is set, this defaults to `0` which means no limit.
+   * How many private messages each user can send to different users per hour.
+   * If the limit is reached, the messages get blocked and an alert to is sent
+   * to the reporter.recipient address.
+   * Unless a explicit number is set this defaults to `0` which means no limit.
    * @default: 0
    */
-  numberOfPrivateMessagesPerHour: Number,
+  allowedPrivateMessagesPerHour: Number,
 
   /**
    * Tells robots/crawlers whether to index the website or not
@@ -148,7 +149,7 @@ if (Meteor.isServer) {
       sender: "reporter@mail.openki.net",
       recipient: "admins@openki.net",
     },
-    numberOfPrivateMessagesPerHour: 0,
+    allowedPrivateMessagesPerHour: 0,
     robots: true,
     hideProfiles: false,
     printLog: false,

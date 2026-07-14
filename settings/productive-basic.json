@@ -126,6 +126,7 @@
     "sender": "pingpong@mail.openki.net",
     "recipient": "badabuff@openki.net"
   },
+  "allowedPrivateMessagesPerHour": 30,
   "robots": true,
   "hideProfiles": true,
   "printLog": false,

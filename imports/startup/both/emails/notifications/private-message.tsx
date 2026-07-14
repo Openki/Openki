@@ -3,7 +3,7 @@ import { Match, check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import i18next from "i18next";
-import { truncate } from "lodash-es";
+import { chain, truncate } from "lodash-es";
 
 import { Groups } from "/imports/api/groups/groups";
 import { Log } from "/imports/api/log/log";
@@ -91,22 +91,23 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
   const sender = await Users.findOneAsync(body.sender);
   const targetRecipient = await Users.findOneAsync(body.targetRecipient);
 
-  if (PrivateSettings.numberOfPrivateMessagesPerHour) {
+  if (!sender?.hasPrivilige("admin") && PrivateSettings.allowedPrivateMessagesPerHour) {
     // Check how many messages a user has sent and block if there are too many
     const observePeriod = new Date();
     observePeriod.setHours(observePeriod.getHours() - 1);
-    const numberOfMessages = await Log.find(
-      {
+    const recipient = chain(
+      await Log.find({
         tr: "Notification.Send",
         ts: { $gte: observePeriod },
         "body.model": "PrivateMessage",
         "body.sender": body.sender,
-      },
-      // Take one more so we only send the alert email when the limit has been reached
-      { limit: PrivateSettings.numberOfPrivateMessagesPerHour + 1 },
-    ).countAsync();
+      }).fetchAsync(),
+    )
+      .map((m) => (m.body as { targetRecipient: string }).targetRecipient)
+      .uniq()
+      .value();
 
-    if (numberOfMessages === PrivateSettings.numberOfPrivateMessagesPerHour) {
+    if (recipient.length === PrivateSettings.allowedPrivateMessagesPerHour + 1) {
       await sendAlert(
         "Alert: A user sent many messages",
         <>
@@ -121,7 +122,10 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       );
     }
 
-    if (numberOfMessages >= PrivateSettings.numberOfPrivateMessagesPerHour) {
+    if (
+      recipient.indexOf(body.targetRecipient) >
+      PrivateSettings.allowedPrivateMessagesPerHour - 1
+    ) {
       throw new Error(
         "The User sent too many messages in the last hour. The message are not sent to recipients. If the messages were legitimate, remove this 'Notification.SendResult' entry from the Log in the DB.",
       );

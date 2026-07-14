@@ -563,12 +563,13 @@
   },
 
   /**
-   * How many private messages each user can send per hour. If the limit is reached, the messages
-   * get blocked and an alert to is sent to the reporter.recipient address. Unless a explicit number
-   * is set, this defaults to `0` which means no limit.
+   * How many private messages each user can send to different users per hour.
+   * If the limit is reached, the messages get blocked and an alert to is sent
+   * to the reporter.recipient address.
+   * Unless a explicit number is set this defaults to `0` which means no limit.
    * Default: 0
    */
-  "numberOfPrivateMessagesPerHour": 10,
+  "allowedPrivateMessagesPerHour": 30,
 
   /*
    * Tells robots/crawlers whether to index the website or not
