@@ -73,6 +73,21 @@ $group-details-content-padding-horizontal: (
 .group-page .sharing-wrapper {
   background-color: $tab-content-bg;
   border-color: shade-color($tab-content-bg, 5%);
-  border-style: solid;
-  border-width: 0 1px 1px;
+
+  h4 {
+    margin: 0;
+  }
+}
+
+.bottom-panel {
+  display: flex;
+  justify-content: space-between;
+  background-color: $tab-content-bg;
+  padding-left: 22px;
+  padding-top: 30px;
+  align-items: center;
+
+  .group-details-categories {
+    padding: 14px 14px 14px 8px;
+  }
 }
