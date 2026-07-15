@@ -29,6 +29,7 @@ import { Header } from "./header";
 import { Submenu } from "./submenu";
 import { ActionResult } from "/imports/ui/components/ActionResult";
 import { Report } from "/imports/ui/components/report";
+import { GroupCategories } from "/imports/ui/components/groups/categories";
 
 import "./styles.scss";
 
@@ -235,15 +236,22 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
                     <Header group={group} />
                     <Submenu group={group} />
                   </div>
+                  <div className="bottom-panel">
+                    {!!group.categories?.length && (
+                      <div className="group-details-categories me-auto">
+                        <GroupCategories categories={group.categories} />
+                      </div>
+                    )}
 
-                  {canShare(group) && (
-                    <div className="p-3 sharing-wrapper text-end" id="share">
-                      <h4>
-                        {t("sharing.title", "Invite your friends")}{" "}
-                        <Sharing url={Router.url("showGroup", group)} />
-                      </h4>
-                    </div>
-                  )}
+                    {canShare(group) && (
+                      <div className="p-3 sharing-wrapper text-end ms-auto" id="share">
+                        <h4>
+                          {t("sharing.title", "Invite your friends")}{" "}
+                          <Sharing url={Router.url("showGroup", group)} />
+                        </h4>
+                      </div>
+                    )}
+                  </div>
 
                   {!!group?.editableBy(user) && (
                     <>

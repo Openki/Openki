@@ -70,14 +70,6 @@ $event-caption-body-bg: $event-body-bg;
   border-color: $gray-200;
 }
 
-.event-caption-wrap {
-  display: inline-block;
-}
-
-.event-caption-wrap + .event-caption-wrap {
-  @include td-margin(left, 15px);
-}
-
 .event-caption-wrap .btn:hover {
   border-color: transparent;
 }

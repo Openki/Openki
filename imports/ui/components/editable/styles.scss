@@ -98,11 +98,7 @@
   padding: 0.2em;
   font-size: small;
   transition: color 0.25s;
-
-  /* stylelint-disable-next-line no-descending-specificity */
-  &:hover {
-    cursor: pointer;
-  }
+  pointer-events: none;
 }
 
 .editable-icon-container {

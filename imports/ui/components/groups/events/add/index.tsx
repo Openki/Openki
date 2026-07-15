@@ -14,23 +14,11 @@ export function Add({ group }: Props) {
   return (
     <div id="group-event-add" className="event-caption-wrap">
       <a
-        className="btn p-0"
+        className="btn btn-add text-center page-component-btn fw-bold fs-4"
         href={Router.path("createEvent", undefined, { query: { groupId: group._id } })}
-        title={t("group.event.edit.add")}
       >
-        <div className="event-caption event-caption-placeholder event-caption-action event-caption-add">
-          <div className="event-caption-header-wrap">
-            <div className="event-caption-header">
-              <div className="event-caption-pseudoborder"></div>
-            </div>
-          </div>
-          <div className="event-caption-body-wrap">
-            <div className="event-caption-body"></div>
-          </div>
-          <span className="event-caption-icon">
-            <i className="fa-solid fa-plus fa-2x" />
-          </span>
-        </div>
+        <i className="fa-regular fa-calendar-plus me-1" />
+        {t("group.event.edit.add", "Create event")}
       </a>
     </div>
   );

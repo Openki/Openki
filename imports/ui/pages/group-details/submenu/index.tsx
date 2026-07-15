@@ -10,7 +10,6 @@ import { History } from "../../../components/groups/history";
 import { Files } from "../../../components/groups/Files";
 import { PricePolicy } from "/imports/ui/components/price-policy";
 import { CustomFieldDisplay } from "../../../components/groups/CustomFieldDisplay";
-import { GroupCategories } from "../../../components/groups/categories";
 
 import "./styles.scss";
 
@@ -123,12 +122,6 @@ export function Submenu({ group }: { group: GroupModel }) {
               }}
             >
               — {t("groupDetails.showMore", "show more")} —
-            </div>
-          )}
-
-          {!!group.categories?.length && (
-            <div className="group-details-categories mt-2">
-              <GroupCategories categories={group.categories} />
             </div>
           )}
         </div>
