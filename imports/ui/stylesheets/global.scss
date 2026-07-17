@@ -31,6 +31,14 @@ a:focus,
   background-color: css-var("openki-brand") !important;
 }
 
+.bg-group {
+  background-color: $group-bg !important;
+}
+
+.bg-event {
+  background-color: $event-body-bg !important;
+}
+
 .bg-venue,
 .bg-venue:hover {
   background-color: $venue-bg;

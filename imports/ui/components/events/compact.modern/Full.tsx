@@ -92,7 +92,7 @@ export function Full({
           <StatePanel event={event} />
         </ImagePlaceholder>
       )}
-      <div className="card-body">
+      <div className="card-body animated-bg bg-event">
         <h3 className="card-title min-h-[2lh] fw-bold">{event.title}</h3>
         <p className="card-text">
           <div className="panel-calendar">

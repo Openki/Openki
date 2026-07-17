@@ -230,7 +230,7 @@ export function Edit(props: Props) {
   return (
     <div className="edit-page">
       <form noValidate onSubmit={handleSave}>
-        <div className="edit-page-body group-edit-body mt-0">
+        <div className="edit-page-body group-edit-body mt-0 rounded-2 bg-body">
           {savedMessage && !!savedGroupId && (
             <AlertMessage savedGroupId={savedGroupId} onClose={() => setSavedMessage(false)} />
           )}

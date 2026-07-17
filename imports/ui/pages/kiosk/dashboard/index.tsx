@@ -1,8 +1,12 @@
 import React from "react";
+
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
-import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useDetails } from "/imports/api/organizations/publications";
+
+import { PublicSettings } from "/imports/utils/PublicSettings";
+import { CssFromQuery } from "/imports/ui/lib/css-from-query";
+import { useSearchParams } from "/imports/utils/react-meteor-router";
 
 import { MetaTags } from "/imports/ui/components/MetaTags";
 import { Dashboard } from "/imports/ui/components/dashboard";
@@ -21,6 +25,9 @@ export interface Props {
 
 export function KioskDashboardPage({ organizationId, groupQuery }: Props) {
   const region = useCurrentRegion();
+  const query = useSearchParams();
+  const style = new CssFromQuery(query).getCssRules();
+
   const [isLoading, organization] = useDetails(organizationId);
 
   if (isLoading()) {
@@ -44,6 +51,7 @@ export function KioskDashboardPage({ organizationId, groupQuery }: Props) {
         description={organization.claim}
         image={organization.publicLogoUrl()}
       />
+      <style>{style}</style>
       <AccountTasks />
 
       <div className="container my-3">

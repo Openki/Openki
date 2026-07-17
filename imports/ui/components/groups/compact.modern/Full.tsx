@@ -2,13 +2,15 @@ import React, { useEffect, useRef } from "react";
 import { Collapse } from "/imports/startup/client/bootstrap";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
-import { useSiteName } from "/imports/utils/getSiteName";
 
 import { useDetails as useRegionDetails } from "/imports/api/regions/publications";
 import { GroupModel } from "/imports/api/groups/groups";
 
+import { useSiteName } from "/imports/utils/getSiteName";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { ReactJoin } from "/imports/utils/ReactJoin";
+import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { cx } from "/imports/utils/cx";
 
 import { Discussion } from "../../groups/discussion.modern";
 import { CustomFieldDisplay } from "../../groups/CustomFieldDisplay";
@@ -18,6 +20,7 @@ import { Roles } from "./roles";
 
 export function Full({ group, animation }: { group: GroupModel; animation: "show" | "hide" }) {
   const { t } = useTranslation();
+  const { dateFormat, timeFormat } = useDateTimeFormat();
   const siteName = useSiteName();
   const user = useUser();
   const collapseElementRef = useRef<HTMLDivElement>(null);
@@ -50,6 +53,8 @@ export function Full({ group, animation }: { group: GroupModel; animation: "show
     group.editors.includes(organization),
   );
 
+  const locationPreview = group.nextEvent?.venue?.name || group.nextEvent?.venue?.address;
+
   return (
     <div className="card">
       {group?.publicUrlForDetailsImage() ? (
@@ -62,8 +67,11 @@ export function Full({ group, animation }: { group: GroupModel; animation: "show
       ) : (
         <ImagePlaceholder seed={group._id} regionId={group.region} />
       )}
-      <div className="card-body">
+      <div
+        className={cx("card-body animated-bg", group.hasState() === "upcomingEvent" && "bg-group")}
+      >
         <h3 className="card-title min-h-[2lh] fw-bold">{group.name}</h3>
+
         <div className="collapse" ref={collapseElementRef}>
           <p
             className="card-text"
@@ -72,15 +80,6 @@ export function Full({ group, animation }: { group: GroupModel; animation: "show
           {!!group._id && (
             <CustomFieldDisplay groupId={group._id} customClassName="card-text mb-1" />
           )}
-
-          {!!group.categories?.length && (
-            <p className="card-text">
-              <strong>{t("groups.details.categories", "Categories:")}</strong>{" "}
-              {group.categories.map((category) => t(`category.${category}`)).join(", ")}
-            </p>
-          )}
-
-          <Roles group={group} />
 
           {group.editableBy(user) && (
             <h4 className="card-title mt-3">
@@ -97,6 +96,34 @@ export function Full({ group, animation }: { group: GroupModel; animation: "show
                 <i className="fa-fw fa-solid fa-arrow-up-right-from-square" />
               </a>
             </h4>
+          )}
+
+          <hr className="hr-flush border-dark" />
+
+          <div className="mw-sm">
+            <Roles group={group} />
+          </div>
+
+          <hr className="hr-flush border-dark" />
+
+          {group.nextEvent && (
+            <>
+              <h4 className="card-title">{t("groups.details.nextEvent", "Next event")}</h4>
+              <div className="card d-inline-flex border-2">
+                <div className="card-body bg-event">
+                  <i className="fa-regular fa-fw fa-calendar" />{" "}
+                  {dateFormat(group.nextEvent.startLocal)} ·{" "}
+                  {timeFormat(group.nextEvent.startLocal)}
+                  <br />
+                  {!!locationPreview && (
+                    <>
+                      <i className="fa-solid fa-fw fa-location-dot" />
+                      {locationPreview}
+                    </>
+                  )}
+                </div>
+              </div>
+            </>
           )}
 
           <hr className="hr-flush border-dark" />

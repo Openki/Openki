@@ -6,6 +6,7 @@ import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useViewportSize } from "/imports/ui/lib/useViewportSize";
 
 import { ImagePlaceholder } from "/imports/ui/components/ImagePlaceholder";
+import { cx } from "/imports/utils/cx";
 
 export interface Props {
   group: GroupModel;
@@ -17,7 +18,7 @@ export function Thumb({ group }: Props) {
 
   return (
     <div
-      className="card me-1"
+      className={cx("card me-1 border-2", group.hasState() === "proposal" && "border-dashed")}
       style={isMobileScreen ? { width: 270, minWidth: 270 } : { width: 320, minWidth: 320 }}
     >
       {group?.publicUrlForCompactImage() ? (
@@ -28,7 +29,7 @@ export function Thumb({ group }: Props) {
       ) : (
         <ImagePlaceholder seed={group._id} regionId={group.region} />
       )}
-      <div className="card-body">
+      <div className={cx("card-body", group.hasState() === "upcomingEvent" && "bg-group")}>
         <h3 className="card-title line-clamp-2 min-h-[2lh] fw-bold">{group.name}</h3>
         <i className="fs-4 fa-solid fa-arrow-right-long" />
       </div>

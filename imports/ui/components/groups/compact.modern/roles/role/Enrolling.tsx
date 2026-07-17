@@ -101,7 +101,7 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
         aria-expanded="false"
         aria-controls={name}
       >
-        <strong>{roleSubscribe(roleType)}</strong>
+        <span className="fw-bold text-start">{roleSubscribe(roleType)}</span>
         <i
           className={cx("fa-solid fa-fw ms-auto", isCollapsed ? "fa-angle-down" : "fa-angle-up")}
         />

@@ -1,4 +1,5 @@
 @use "sass:color";
+@import "{}/imports/ui/stylesheets/variables/index";
 
 .panel-thumb {
   position: relative;
@@ -86,6 +87,14 @@
 
 .panel-animation .panel-calendar {
   height: calc(var(--bs-body-font-size) * var(--bs-body-line-height));
+}
+
+.panel .animated-bg {
+  transition: background-color 0.35s;
+}
+
+.panel .panel-animation .animated-bg {
+  background-color: $card-bg !important;
 }
 
 .panel .card-header {

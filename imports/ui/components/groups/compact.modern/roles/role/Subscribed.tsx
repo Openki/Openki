@@ -81,7 +81,7 @@ export function Subscribed({ roleType, group, showFirstSteps, onToggle }: Props)
         aria-controls={name}
         onClick={() => onToggle(!showFirstSteps)}
       >
-        <strong>{roleSubscribed(roleType)}</strong>
+        <span className="fw-bold text-start">{roleSubscribed(roleType)}</span>
         {!showFirstSteps && (
           <button
             type="button"
