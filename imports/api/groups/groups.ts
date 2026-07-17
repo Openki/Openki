@@ -130,6 +130,16 @@ export class Group {
     return isPrivate(this);
   }
 
+  hasState(this: GroupModel) {
+    if (this.nextEvent) {
+      return "upcomingEvent";
+    } else if (this.lastEvent) {
+      return "resting";
+    } else {
+      return "proposal";
+    }
+  }
+
   /**
    * Check whether a user can edit the group.
    */
@@ -278,15 +288,16 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
       const $or = [];
 
       if (filter.state.includes("proposal")) {
-        $or.push({ lastEvent: { $eq: null }, futureEvents: { $eq: 0 } });
+        $or.push({ lastEvent: { $eq: null }, nextEvent: { $eq: null } });
       }
 
       if (filter.state.includes("resting")) {
-        $or.push({ lastEvent: { $ne: null }, futureEvents: { $eq: 0 } });
+        $or.push({ lastEvent: { $ne: null }, nextEvent: { $eq: null } });
       }
 
       if (filter.state.includes("upcomingEvent")) {
-        $or.push({ futureEvents: { $gt: 0 } });
+        $or.push({ nextEvent: { $ne: null } });
+        
         if (filter.state.length === 1 && order.length === 0) {
           order.push(["nextEvent.start", "asc"]);
         }

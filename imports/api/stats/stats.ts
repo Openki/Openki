@@ -116,9 +116,9 @@ function calcStats(groups: GroupModel[], events: EventModel[]): Stat {
     // inspired from groups.findFilter in /imports/api/groups/groups
     groups: {
       total: notArchived.length,
-      proposed: notArchived.filter((g) => !g.lastEvent && !g.futureEvents).length,
-      resting: notArchived.filter((g) => g.lastEvent && !g.futureEvents).length,
-      upcoming: notArchived.filter((g) => g.futureEvents > 0).length,
+      proposed: notArchived.filter((g) => g.hasState() === "proposal").length,
+      resting: notArchived.filter((g) => g.hasState() === "resting").length,
+      upcoming: notArchived.filter((g) => g.hasState() === "upcomingEvent").length,
       archived: groups.filter((g) => g.archived).length,
       enrollments: members.length,
       users: uniq(members.map((m) => m.user)).length,

@@ -56,16 +56,12 @@ export function Header({ group }: { group: GroupModel }) {
     };
   }
 
-  function isProposal() {
-    return !group?.nextEvent && !group?.lastEvent;
-  }
-
   return (
     <div className="details-header" {...detailsHeaderAttr()}>
       {group.internal && <InternalIndicator />}
       {group.singleEvent && <SingleEventIndicator />}
       <div className="details-header-tags">
-        {isProposal() && (
+        {group.hasState() === "proposal" && (
           <div className="proposal-tag">
             <i className="fa-regular fa-lightbulb fa-fw" />
             {t("group.details.is-proposalTag", "Proposal")}

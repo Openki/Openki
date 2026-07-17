@@ -64,12 +64,18 @@ export function GroupCompact({ group, organizationTagEvents, categoryTagEvents }
   function groupStateClasses() {
     const classes = [];
 
-    if (group.nextEvent) {
-      classes.push("has-upcoming-events");
-    } else if (group.lastEvent) {
-      classes.push("has-past-events");
-    } else {
-      classes.push("is-proposal");
+    switch (group.hasState()) {
+      case "proposal":
+        classes.push("is-proposal");
+        break;
+      case "upcomingEvent":
+        classes.push("has-upcoming-events");
+        break;
+      case "resting":
+        classes.push("has-past-events");
+        break;
+      default:
+        throw new Error(`Unexpected value for group state: ${group.hasState()}`);
     }
 
     if (group.archived) {
