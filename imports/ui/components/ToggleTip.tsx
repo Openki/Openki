@@ -1,9 +1,9 @@
-import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Tooltip } from "/imports/startup/client/bootstrap";
 import { useEventListener } from "/imports/utils/useEventListener";
 
 /** A toggle tip that supports accessibility.
- *  *Hint: Do not use for informtations that are necessary for a user to complete a task*
+ *  *Hint: Do not use for information's that are necessary for a user to complete a task*
  */
 export function ToggleTip({ label, title }: { label: string; title: string }) {
   const triggerElementRef = useRef<HTMLButtonElement>(null);
