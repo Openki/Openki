@@ -297,7 +297,7 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
 
       if (filter.state.includes("upcomingEvent")) {
         $or.push({ nextEvent: { $ne: null } });
-        
+
         if (filter.state.length === 1 && order.length === 0) {
           order.push(["nextEvent.start", "asc"]);
         }

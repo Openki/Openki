@@ -95,7 +95,7 @@ export function CalendarPage() {
   return (
     <>
       <MetaTags title={t("calendar.windowtitle", "Calendar")} />
-      <style>{options.style.map((rule) => rule)}</style>
+      <style>{options.style}</style>
 
       {days().map((day) => (
         <React.Fragment key={day}>

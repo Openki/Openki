@@ -64,7 +64,7 @@ export function GroupListPage() {
   return (
     <>
       <MetaTags title={t("group.list.windowtitle", "Groups")} />
-      <style>{options.style.map((rule) => rule)}</style>
+      <style>{options.style}</style>
 
       {groups().length === 0 && (
         <h2 className="mt-5 text-center">
