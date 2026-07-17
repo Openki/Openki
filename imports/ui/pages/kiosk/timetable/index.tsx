@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
@@ -7,6 +7,7 @@ import { Session } from "meteor/session";
 import { EventEntity, EventModel, Events, OEvent } from "/imports/api/events/events";
 import { VenueModel } from "/imports/api/venues/venues";
 
+import { useEventListener } from "/imports/utils/useEventListener";
 import { textPlain } from "/imports/utils/html-tools";
 import * as UrlTools from "/imports/utils/url-tools";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
@@ -52,8 +53,7 @@ function Event({ entry }: { entry: OEvent & EventEntity & RelStartEnd }) {
   const [active, setActive] = useState(false);
 
   const elementRef = useRef<HTMLDivElement>(null);
-
-  function onClick(ev: MouseEvent) {
+  useEventListener(document, "click", (ev) => {
     let targetEl = ev.target; // clicked element
     do {
       if (targetEl === elementRef.current) {
@@ -62,17 +62,10 @@ function Event({ entry }: { entry: OEvent & EventEntity & RelStartEnd }) {
         return;
       }
       // Go up the DOM
-      targetEl = (targetEl as any)?.parentNode;
+      targetEl = (targetEl as Node).parentNode;
     } while (targetEl);
     // This is a click outside.
     setActive(false);
-  }
-
-  useEffect(() => {
-    document.addEventListener("click", onClick);
-    return () => {
-      document.removeEventListener("click", onClick);
-    };
   });
 
   return (

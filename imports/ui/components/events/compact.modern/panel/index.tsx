@@ -2,6 +2,7 @@ import React, { ReactNode, useEffect, useRef, useState } from "react";
 import scrollIntoView from "scroll-into-view-if-needed";
 
 import { useHash } from "/imports/utils/react-meteor-router";
+import { useEventListener } from "/imports/utils/useEventListener";
 
 import "./styles.scss";
 
@@ -73,17 +74,10 @@ export function Panel({
     }
   }, [close]);
 
-  useEffect(() => {
-    function escape(e: KeyboardEvent) {
-      if (e.key === "Escape") {
-        handleClose();
-      }
+  useEventListener(document, "keyup", (e) => {
+    if (e.key === "Escape") {
+      handleClose();
     }
-
-    document.addEventListener("keyup", escape);
-    return () => {
-      document.removeEventListener("keyup", escape);
-    };
   });
 
   return (

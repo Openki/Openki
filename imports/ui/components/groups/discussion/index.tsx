@@ -5,6 +5,7 @@ import { useUserId } from "/imports/utils/react-meteor-data";
 import * as GroupDiscussions from "/imports/api/group-discussions/publications";
 
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
+import { useEventListener } from "/imports/utils/useEventListener";
 
 import { LoadingRow } from "/imports/ui/pages/loading";
 import { Post } from "./post";
@@ -74,27 +75,17 @@ export function Discussion({ select, groupId, eventId }: Props) {
     return false;
   }
 
-  useEffect(() => {
-    const element = elementRef.current;
-    const handleNotifyAll = () => {
-      setEdit(true);
-      setNotifyAll(true);
-      window.location.hash = "#discussion";
-      routerAutoscroll.scheduleScroll();
-    };
-    element?.addEventListener("notifyAll", handleNotifyAll);
+  useEventListener(elementRef, "notifyAll", () => {
+    setEdit(true);
+    setNotifyAll(true);
+    window.location.hash = "#discussion";
+    routerAutoscroll.scheduleScroll();
+  });
 
-    const handleWriteComment = () => {
-      setEdit(true);
-      window.location.hash = "#discussion";
-      routerAutoscroll.scheduleScroll();
-    };
-    element?.addEventListener("writeComment", handleWriteComment);
-
-    return () => {
-      element?.removeEventListener("notifyAll", handleNotifyAll);
-      element?.removeEventListener("writeComment", handleWriteComment);
-    };
+  useEventListener(elementRef, "writeComment", () => {
+    setEdit(true);
+    window.location.hash = "#discussion";
+    routerAutoscroll.scheduleScroll();
   });
 
   useEffect(() => {
