@@ -8,7 +8,7 @@ import { useViewportSize } from "/imports/ui/lib/useViewportSize";
 
 export function Thumb({ event }: { event: EventModel }) {
   const { timeFormat } = useDateTimeFormat();
-  const locationPreview = [event.venue?.name, event.venue?.address].filter((v) => v)[0];
+  const locationPreview = event.venue?.name || event.venue?.address;
 
   const viewport = useViewportSize();
   const isMobileScreen = viewport.width <= ScssVars.screenSM;

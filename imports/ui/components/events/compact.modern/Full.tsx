@@ -74,7 +74,7 @@ export function Full({
   const organizedByOrganizations = visibleOrganizations?.filter((organization) =>
     event.editors.includes(organization),
   );
-  const locationPreview = [event.venue?.name, event.venue?.address].filter((v) => v)[0];
+  const locationPreview = event.venue?.name || event.venue?.address;
 
   return (
     <div className="card">
