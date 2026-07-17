@@ -126,8 +126,6 @@ export function Full({ group, animation }: { group: GroupModel; animation: "show
             </>
           )}
 
-          <hr className="hr-flush border-dark" />
-
           {!isRegionLoading() && !!organizedByOrganizations?.length && (
             <p className="card-text">
               <strong>{t("groups.details.organizedBy", "Organized by:")}</strong>{" "}
@@ -139,7 +137,12 @@ export function Full({ group, animation }: { group: GroupModel; animation: "show
             </p>
           )}
 
-          <Discussion groupId={group._id} />
+          {group.members.some((m) => m.user === user?._id) && (
+            <>
+              <hr className="hr-flush border-dark" />
+              <Discussion groupId={group._id} />
+            </>
+          )}
 
           <hr className="hr-flush border-dark" />
 
