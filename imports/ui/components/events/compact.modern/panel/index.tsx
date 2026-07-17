@@ -1,4 +1,4 @@
-import React, { JSX, useEffect, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import scrollIntoView from "scroll-into-view-if-needed";
 
 import { useHash } from "/imports/utils/react-meteor-router";
@@ -12,8 +12,8 @@ export function Panel({
   onChange,
 }: {
   id: string;
-  thumb: JSX.Element;
-  full: JSX.Element;
+  thumb: ReactNode;
+  full: ReactNode;
   onChange: (view: "thumb" | "full") => void;
 }) {
   const [expanded, setExpanded] = useState(false);
