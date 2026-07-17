@@ -16,7 +16,7 @@ function GroupMembers({
   onChange,
 }: {
   groupId: string;
-  isNew: boolean;
+  isNew?: boolean | undefined;
   notifyChecked: boolean;
   onChange: (newValue: boolean) => void;
 }) {
@@ -60,7 +60,7 @@ export function Notify({
   onMessageChange,
 }: {
   event: EventEditData;
-  isNew: boolean;
+  isNew?: boolean | undefined;
   checked: boolean;
   message: string;
   onToggle: (value: boolean) => void;

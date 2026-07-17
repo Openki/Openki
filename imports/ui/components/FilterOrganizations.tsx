@@ -39,7 +39,7 @@ export function FilterOrganizations({
   return (
     <ReactSelect2
       className="form-control"
-      multiple={true}
+      multiple
       value={selectedOrganizations}
       placeholder={t("filterOrganizations.placeholder.choose", "Choose organization")}
       noResults={t("filterOrganizations.noResults.noOrganizationsFound", "No organizations found")}

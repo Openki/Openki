@@ -24,7 +24,7 @@ export interface Props {
       })
     | undefined;
   small?: boolean;
-  containsPropose?: boolean;
+  containsPropose?: boolean | undefined;
   /** that should be added on propose a new group */
   organization?: string | undefined;
 }

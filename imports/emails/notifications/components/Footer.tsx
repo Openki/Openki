@@ -16,7 +16,7 @@ export interface Props {
 export function Footer({
   receiveNote,
   unsubscribe,
-  spamPrevention = false,
+  spamPrevention,
   children,
   campaign,
   lng,

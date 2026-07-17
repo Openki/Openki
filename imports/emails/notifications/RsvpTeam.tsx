@@ -49,7 +49,7 @@ export function RsvpTeam({
       <Footer
         receiveNote={t("email.base.receiveNote.groupTeam", { GROUP: group })}
         unsubscribe={unsubscribe}
-        spamPrevention={true}
+        spamPrevention
         campaign={campaign}
         lng={lng}
       />

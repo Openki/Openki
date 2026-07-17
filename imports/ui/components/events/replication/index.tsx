@@ -302,7 +302,7 @@ export function EventReplication({ event, afterSave, onCancel }: Props) {
       <div className="my-3">
         <Notify
           event={event}
-          isNew={true}
+          isNew
           checked={notifyChecked}
           message={addNotificationMessage}
           onToggle={(v) => setNotifyChecked(v)}

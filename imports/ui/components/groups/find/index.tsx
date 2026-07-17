@@ -297,7 +297,7 @@ export function Find({ query }: Props) {
               groups={results()}
               organizationTagEvents={organizationTagEvents()}
               categoryTagEvents={categoryTagEvents()}
-              containsPropose={true}
+              containsPropose
               organization={filter.asQuery["organization"]}
             />
             {hasMore() && (
