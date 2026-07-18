@@ -31,6 +31,7 @@ export function AccountManagementSection() {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showNewPasswordConfirm, setShowNewPasswordConfirm] = useState(false);
+  const [passwordErr, setPasswordErr] = useState(false);
 
   function isVisitor() {
     return user?.hasPrivilige("visitor");
@@ -53,13 +54,19 @@ export function AccountManagementSection() {
     };
   }
 
+  function resetFields() {
+    setOldPassword("");
+    setNewPassword("");
+    setNewPasswordConfirm("");
+  }
+
   async function handleChangePassword(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const old = oldPassword;
     const pass = newPassword;
     if (pass !== "") {
       if (pass !== newPasswordConfirm) {
-        Alert.warning(t("profile.passwordMismatch", "Sorry, your new passwords don't match"));
+        setPasswordErr(true);
         return;
       }
       const minLength = 5; // We've got _some_ standards
@@ -73,6 +80,7 @@ export function AccountManagementSection() {
 
         Alert.success(t("profile.passwordChangedSuccess", "You have changed your password."));
         setChangingPassword(false);
+        resetFields();
       } catch (err) {
         Alert.serverError(err, t("profile.passwordChangeError", "Could not change your password"));
       } finally {
@@ -156,6 +164,14 @@ export function AccountManagementSection() {
                         onToggle={() => setShowNewPasswordConfirm((v) => !v)}
                       />
                     </div>
+                    {passwordErr && (
+                      <div className="row">
+                        <div className="col-sm-4"></div>
+                        <div className="invalid-feedback d-block col-sm-8">
+                          {t("profile.passwordMismatch", "Sorry, your new passwords do not match.")}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="d-flex gap-2 justify-content-end">
@@ -170,7 +186,11 @@ export function AccountManagementSection() {
                   </Button>
                   <ButtonCancel
                     id="profile-accountManagement-changingPassword-cancel"
-                    onClick={() => setChangingPassword(false)}
+                    onClick={() => {
+                      setChangingPassword(false);
+                      setPasswordErr(false);
+                      resetFields();
+                    }}
                     disabled={isBusy}
                   />
                 </div>

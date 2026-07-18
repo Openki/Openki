@@ -885,7 +885,7 @@
   "profile.organizations": "My organizations",
   "profile.passwordChangedSuccess": "You have changed your password.",
   "profile.passwordChangeError": "Could not change your password",
-  "profile.passwordMismatch": "Sorry, your new passwords don't match",
+  "profile.passwordMismatch": "Sorry, your new passwords do not match.",
   "profile.passwordShort": "Your desired password is too short. Sorry.",
   "profile.preferenceslink": "Account settings",
   "profile.reallydelete": "Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.",
