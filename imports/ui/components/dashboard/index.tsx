@@ -10,7 +10,8 @@ import { cx } from "/imports/utils/cx";
 
 import { ScrollContainer } from "./ScrollContainer";
 
-import { mapping, ListOfEntities, ComponentWithEntities, StaticComponent } from "./mapping";
+import { ListOfEntities, ComponentWithEntities, StaticComponent } from "./ComponentBaseTypes";
+import { mapping } from "./ComponentConfigs";
 
 import "./styles.scss";
 
@@ -144,7 +145,7 @@ function DashboardComponent({
         | undefined;
     },
     urlParams: URLSearchParams,
-  ): { link: string | undefined; text: string | undefined } | false {
+  ) {
     if (config.showAll === false || settings.showAll === false) {
       return false;
     }
@@ -185,6 +186,7 @@ function DashboardComponent({
   });
 
   if (!("filter" in handler)) {
+    // StaticComponent
     return (
       <StaticComponent
         handler={handler}
@@ -196,6 +198,7 @@ function DashboardComponent({
     );
   }
 
+  // ListOfEntities / ComponentWithEntities
   return (
     <EntitiesComponent
       handler={handler as any}

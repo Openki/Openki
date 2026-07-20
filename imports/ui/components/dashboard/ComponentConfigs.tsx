@@ -12,51 +12,15 @@ import * as Groups from "/imports/api/groups/publications";
 import * as Events from "/imports/api/events/publications";
 import * as Organizations from "/imports/api/organizations/publications";
 
-import { Filtering } from "/imports/utils/filtering";
-import { Publication } from "/imports/utils/ServerPublishReact";
-
 import { Edit } from "../groups/edit";
 import { GroupCompact } from "../groups/compact";
-import { EventCompact } from "../../components/events/compact";
+import { EventCompact } from "../events/compact";
 import { EventCompact as EventCompactModern } from "../events/compact.modern";
-import { EventsMap } from "../../components/events/map";
+import { EventsMap } from "../events/map";
 import { CompactPropose } from "../groups/CompactPropose";
+import { ListOfEntities, ComponentWithEntities, StaticComponent } from "./ComponentBaseTypes";
 
-/** A list of entities. */
-export type ListOfEntitiesElementComponent<T> = React.FC<{
-  entity: T;
-  index: number;
-  params: Record<string, string>;
-}>;
-export interface ListOfEntities<T> {
-  route: string;
-  showAll?: { text?: string } | false;
-  filter: () => Filtering<any>;
-  find: Publication<any[], T[]>;
-  element: ListOfEntitiesElementComponent<T>;
-}
-
-/** A static component with entites eg. like eventMap */
-export type ComponentWithEntitiesComponent<T> = React.FC<{
-  entities: T[];
-  params: Record<string, string>;
-}>;
-export interface ComponentWithEntities<T> {
-  route: string;
-  showAll?: { text?: string } | false | undefined;
-  filter: () => Filtering<any>;
-  find: Publication<any[], T[]>;
-  component: ComponentWithEntitiesComponent<T>;
-}
-
-/** A static component eg. like propose */
-export type StaticComponentComponent = React.FC<{
-  params: Record<string, string>;
-}>;
-export interface StaticComponent {
-  showAll?: { link?: string; text?: string } | false | undefined;
-  component: StaticComponentComponent;
-}
+/* This file contains the entities that an admin can use to configure a dashboard. Look at the mapping at the end of the file. */
 
 const group: ListOfEntities<GroupModel> = {
   route: "search",
@@ -64,7 +28,7 @@ const group: ListOfEntities<GroupModel> = {
   find: Groups.useFindFilter,
   element: ({ entity, index, params }) => (
     <React.Fragment key={entity._id}>
-      {/* The sevent box should allways be the propose one, after then every 21 */}
+      {/* The seventh box should always be the propose one, after then every 21 */}
       {PublicSettings.feature.proposeGroupBox && (index - 6) % 21 === 0 && (
         <div className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
           <CompactPropose organization={params.organization} />
