@@ -9,6 +9,7 @@ import { VenueEntity } from "/imports/api/venues/venues";
 import { Filtering } from "/imports/utils/filtering";
 import * as FileStorage from "/imports/utils/FileStorage";
 import { LocalizedValue } from "/imports/utils/getLocalizedValue";
+import * as Predicates from "/imports/utils/predicates";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { Type } from "/imports/utils/CustomChecks";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
@@ -147,6 +148,10 @@ export const FindFilterPattern = {
 };
 export type FindFilter = Type<typeof FindFilterPattern>;
 
+export const FindParams = {
+  ids: Predicates.ids,
+};
+
 export class OrganizationsCollection extends Mongo.Collection<
   OrganizationEntity,
   OrganizationModel
@@ -164,17 +169,8 @@ export class OrganizationsCollection extends Mongo.Collection<
   }
 
   Filtering() {
-    return new Filtering({});
+    return new Filtering(FindParams);
   }
-
-  findFilter(
-    filter?: {
-      own?: false;
-    },
-    limit?: number,
-    skip?: number,
-    sort?: FieldSort[] | undefined,
-  ): Mongo.Cursor<OrganizationEntity, OrganizationModel>;
 
   /**
    * Find organizations for given filters
@@ -183,13 +179,6 @@ export class OrganizationsCollection extends Mongo.Collection<
    * @param skip skip this many before returning results
    * @param sort list of fields to sort by
    */
-  findFilter(
-    filter: FindFilter,
-    limit?: number,
-    skip?: number,
-    sort?: FieldSort[],
-  ): Mongo.Cursor<OrganizationEntity, OrganizationModel>;
-
   findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort?: FieldSort[]) {
     check(filter, Match.Maybe(FindFilterPattern));
     check(limit, Match.Maybe(Match.Integer));
