@@ -924,7 +924,6 @@
   "program.evening": "{DAYOFWEEK}, evening",
   "program.morningAfternoon": "{DAYOFWEEK}, morning & afternoon",
   "proposedGroupsDropdown.joinExistingGroupQuestion": "Maybe you would like to join an existing group?",
-  "qrCodeForPropose.title": "Dein Vorschlag",
   "region.create.plsGiveName": "Please give your region a name",
   "region.create.plsSelectPointOnMap": "Please add a marker on the map by clicking on the \"+\" sign.",
   "region.deleting.error": "Deleting the region went wrong",
