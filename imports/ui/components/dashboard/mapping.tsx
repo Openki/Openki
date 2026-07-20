@@ -23,7 +23,6 @@ import { EventsMap } from "../../components/events/map";
 import { CompactPropose } from "../groups/CompactPropose";
 
 /** A list of entities. */
-
 export type ListOfEntitiesElementComponent<T> = React.FC<{
   entity: T;
   index: number;
@@ -44,7 +43,7 @@ export type ComponentWithEntitiesComponent<T> = React.FC<{
 }>;
 export interface ComponentWithEntities<T> {
   route: string;
-  showAll?: { text?: string } | false;
+  showAll?: { text?: string } | false | undefined;
   filter: () => Filtering<any>;
   find: Publication<any[], T[]>;
   component: ComponentWithEntitiesComponent<T>;
@@ -55,6 +54,7 @@ export type StaticComponentComponent = React.FC<{
   params: Record<string, string>;
 }>;
 export interface StaticComponent {
+  showAll?: { link?: string; text?: string } | false | undefined;
   component: StaticComponentComponent;
 }
 
@@ -165,7 +165,7 @@ const eventsMap: ComponentWithEntities<EventModel> = {
 
 const propose: StaticComponent = {
   component: ({ params }) => (
-    <div className="container mw-md">
+    <div className="mw-md">
       <Edit {...params} />
     </div>
   ),

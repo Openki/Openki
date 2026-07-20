@@ -6,10 +6,11 @@ import { take } from "lodash-es";
 
 import { SortSpec } from "/imports/utils/sort-spec";
 import { LocalizedValue, useLocalizedSetting } from "/imports/utils/getLocalizedValue";
+import { cx } from "/imports/utils/cx";
 
 import { ScrollContainer } from "./ScrollContainer";
 
-import { mapping, ListOfEntities, ComponentWithEntities } from "./mapping";
+import { mapping, ListOfEntities, ComponentWithEntities, StaticComponent } from "./mapping";
 
 import "./styles.scss";
 
@@ -26,6 +27,34 @@ export interface Props {
   defaultOrganization?: string | undefined;
   limit?: number | undefined;
   fluid?: boolean | undefined;
+}
+
+function StaticComponent({
+  params,
+  handler,
+  showAll,
+  title,
+  fluid,
+}: {
+  params: Record<string, string>;
+  handler: StaticComponent;
+  showAll: { link: string | undefined; text: LocalizedValue | undefined } | false;
+  title?: LocalizedValue | undefined;
+  fluid?: boolean | undefined;
+}) {
+  const { getLocalizedValue } = useLocalizedSetting();
+
+  return (
+    <div className={cx("position-relative mb-4", fluid ? "container-fluid" : "container")}>
+      {showAll !== false && !!showAll?.link && (
+        <a className="btn btn-sm btn-success float-end" href={showAll.link}>
+          {getLocalizedValue(showAll.text)}
+        </a>
+      )}
+      {!!title && <h2>{getLocalizedValue(title)}</h2>}
+      <handler.component params={params} />
+    </div>
+  );
 }
 
 function EntitiesComponent<T>({
@@ -64,7 +93,7 @@ function EntitiesComponent<T>({
   }
 
   return (
-    <div className={`${fluid ? "container-fluid" : "container"} position-relative mb-4`}>
+    <div className={cx("position-relative mb-4", fluid ? "container-fluid" : "container")}>
       {showAll !== false && !!showAll?.link && data.length > limit && (
         <a className="btn btn-sm btn-success float-end" href={showAll.link}>
           {getLocalizedValue(showAll.text)}
@@ -126,7 +155,9 @@ function DashboardComponent({
         ("route" in config && config.route
           ? Router.path(config.route, undefined, { query: urlParams.toString() })
           : undefined),
-      text: getLocalizedValue(config.showAll?.text) || t("dashboard.showAll", "Show all >"),
+      text:
+        getLocalizedValue(settings.showAll?.text || config.showAll?.text) ||
+        t("dashboard.showAll", "Show all >"),
     };
   }
 
@@ -154,8 +185,15 @@ function DashboardComponent({
   });
 
   if (!("filter" in handler)) {
-    // StaticComponent
-    return <handler.component params={params} />;
+    return (
+      <StaticComponent
+        handler={handler}
+        params={params}
+        showAll={generateShowAll(handler, urlParams)}
+        title={settings.title}
+        fluid={fluid}
+      />
+    );
   }
 
   return (
