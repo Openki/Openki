@@ -55,20 +55,13 @@ export function KioskDashboardPage({ organizationId, groupQuery }: Props) {
       <AccountTasks />
 
       <div className="container my-3">
-        <div className="d-flex">
+        <div className="d-flex gap-3">
           <div className="flex-grow-1">
             <h1>{organization.name}</h1>
             <p className="lead" dangerouslySetInnerHTML={{ __html: organization.description }} />
           </div>
           {organization.publicLogoUrl() && (
-            <div style={{ width: "100px", height: "100px" }}>
-              <img
-                className="ms-3"
-                style={{ maxWidth: "100%", maxHeight: "100%" }}
-                src={organization.publicLogoUrl()}
-                alt={organization.name}
-              />
-            </div>
+            <img src={organization.publicLogoUrl()} alt={organization.name} />
           )}
         </div>
       </div>
