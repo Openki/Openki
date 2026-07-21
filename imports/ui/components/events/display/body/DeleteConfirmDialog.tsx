@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Confirm, ConfirmActions, ConfirmText } from "/imports/ui/components/delete-confirm-dialog";
+import { Confirm, ConfirmActions, ConfirmText } from "/imports/ui/components/Confirm";
 import { Button, ButtonClose } from "/imports/ui/components/Buttons";
 import { useTranslation } from "react-i18next";
 

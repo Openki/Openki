@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { EventModel } from "/imports/api/events/events";
 
 import { Button, ButtonClose } from "/imports/ui/components/Buttons";
-import { Confirm, ConfirmActions, ConfirmText } from "/imports/ui/components/delete-confirm-dialog";
+import { Confirm, ConfirmActions, ConfirmText } from "/imports/ui/components/Confirm";
 import { FormControl } from "/imports/ui/components/form-control";
 
 export interface Props {
@@ -23,7 +23,7 @@ export function CancelConfirmDialog({ event, onCancel, onClose }: Props) {
       <ConfirmText>
         {t(
           "event.reallyCancel",
-          'Please confirm the cancellation of this event. It will be displayed as "canceled" and registration will not be possible anymore. {NUM, plural, one{If the attending user has automated notifications enabled} other{those of the attending # users that have automated notifications enabled} } will be automatically informed by email about the cancellation of this event.',
+          'Please confirm the cancellation of this event. It will be displayed as "Canceled" and registration will not be possible anymore. {NUM, plural, =0{} other{{NUM, plural, one{If the attending user has automated notifications enabled} other{Those of the attending # users that have automated notifications enabled} } will be automatically informed by email about the cancellation of this event.} }',
           { NUM: event.participants?.length || 0 },
         )}
       </ConfirmText>

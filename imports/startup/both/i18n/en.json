@@ -291,7 +291,7 @@
   "event.not_exists": "Could not find this event. Maybe it was deleted, or never existed in the first place.",
   "event.not_exists.unlogged": "Log in/register",
   "event.organizationList.confirmOrgNotes": "All members of the organization will be able to edit the event.",
-  "event.reallyCancel": "Please confirm the cancellation of this event. It will be displayed as \"canceled\" and registration will not be possible anymore. {NUM, plural, one{If the attending user has automated notifications enabled} other{those of the attending # users that have automated notifications enabled} } will be automatically informed by email about the cancellation of this event.",
+  "event.reallyCancel": "Please confirm the cancellation of this event. It will be displayed as \"canceled\" and registration will not be possible anymore. {NUM, plural, =0{} other{{NUM, plural, one{If the attending user has automated notifications enabled} other{Those of the attending # users that have automated notifications enabled} } will be automatically informed by email about the cancellation of this event.} }",
   "event.reallyDelete": "Please confirm that you would like to delete this event. This cannot be undone, the event will be permanently deleted and not visible any more. If the event is already shared or published somewhere we strongly recommend to instead only canceling it.",
   "event.replicate.successCondensed": "Cloned event \"{TITLE}\" {NUM, plural, one{for} other{# times until} } {DATE}",
   "event.replication.changeToPattern": "Select frequency",

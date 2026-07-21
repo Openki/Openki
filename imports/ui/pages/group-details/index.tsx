@@ -91,7 +91,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
     return viewport.width <= ScssVars.screenMD;
   }
 
-  async function handleOnDelete() {
+  async function handleDelete() {
     setIsBusy(true);
 
     try {
@@ -129,7 +129,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
     }
   }
 
-  async function handleOnArchive() {
+  async function handleArchive() {
     setIsBusy(true);
     try {
       await GroupsMethods.archive(group._id);
@@ -272,7 +272,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
                           <ArchiveButton
                             disabled={isBusy}
                             className="btn-archive"
-                            onArchive={async () => handleOnArchive()}
+                            onArchive={async () => handleArchive()}
                           >
                             {t("group.archive.archiveButton.archive", "Archive")}
                           </ArchiveButton>
@@ -295,11 +295,10 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
                       </div>
                     ) : (
                       <DeleteConfirmDialog
-                        archiveButton={!group.archived}
                         disabled={isBusy}
                         group={group}
-                        onArchive={async () => handleOnArchive()}
-                        onDelete={handleOnDelete}
+                        onArchive={async () => handleArchive()}
+                        onDelete={handleDelete}
                         onClose={() => setExpanded(false)}
                       />
                     ))}

@@ -8,19 +8,17 @@ import { LocalTime } from "/imports/utils/local-time";
 
 import { Button, ButtonClose } from "../../components/Buttons";
 import { ArchiveButton } from "./ArchiveButton";
-import { Confirm, ConfirmActions, ConfirmText } from "/imports/ui/components/delete-confirm-dialog";
+import { Confirm, ConfirmActions, ConfirmText } from "/imports/ui/components/Confirm";
 
-export function EventDeleteConfirmDialog({
+export function DeleteConfirmDialog({
   group,
   disabled,
-  archiveButton,
   onArchive,
   onDelete,
   onClose,
 }: {
   group: GroupModel;
   disabled?: boolean | undefined;
-  archiveButton?: boolean | undefined;
   onArchive: () => void;
   onDelete: () => void;
   onClose: () => void;
@@ -97,7 +95,7 @@ export function EventDeleteConfirmDialog({
     <Confirm>
       <ConfirmText>{getDeleteWarning()}</ConfirmText>
       <ConfirmActions>
-        {!!archiveButton && (
+        {!group.archived && (
           <ArchiveButton className="btn-warning" disabled={disabled} onArchive={onArchive}>
             {t("group.delete.confirm.archiveButton", "Rather archive")}
           </ArchiveButton>
