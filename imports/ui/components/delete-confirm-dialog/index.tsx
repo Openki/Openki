@@ -5,21 +5,11 @@ import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
 
-export function FormActions({ children }: { children: ReactNode }) {
-  return (
-    <div className="d-flex justify-content-end flex-wrap gap-2 flex-column flex-sm-row">
-      {children}
-    </div>
-  );
-}
-
-export function ConfirmDialog({
+export function Confirm({
   variant = "danger",
-  text,
   children,
 }: {
   variant?: "danger" | "warning";
-  text: string;
   children: ReactNode;
 }) {
   return (
@@ -29,8 +19,18 @@ export function ConfirmDialog({
         variant === "warning" ? "border-warning" : "border-danger",
       )}
     >
-      <p className="fs-5 whitespace-pre-line">{text}</p>
-      <FormActions>{children}</FormActions>
+      {children}
+    </div>
+  );
+}
+
+export function ConfirmText({ children }: { children: ReactNode }) {
+  return <p className="fs-5 whitespace-pre-line">{children}</p>;
+}
+export function ConfirmActions({ children }: { children: ReactNode }) {
+  return (
+    <div className="d-flex justify-content-end flex-wrap gap-2 flex-column flex-sm-row">
+      {children}
     </div>
   );
 }

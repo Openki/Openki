@@ -11,17 +11,12 @@ import { useDetails } from "/imports/api/groups/publications";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
-import {
-  EventDeleteConfirmDialog,
-  Props as DeleteConfirmDialogProps,
-} from "./delete-confirm-dialog";
+import { DeleteConfirmDialog, Props as DeleteConfirmDialogProps } from "./DeleteConfirmDialog";
 import { CancelConfirmDialog, Props as CancelConfirmDialogProps } from "./cancel-confirm-dialog";
 import { EventReplication, Props as EventReplicationProps } from "../../replication";
 import { Content } from "../content";
 import { Files } from "../../../groups/Files";
 import { Button, ButtonDelete, ButtonEdit } from "../../../Buttons";
-
-import "./styles.scss";
 
 function GroupEvent({ event, groupId }: { event: EventModel; groupId: string }) {
   const { t } = useTranslation();
@@ -148,7 +143,7 @@ export function Display({
   }
   function deleteConfirmDialogAttr(): DeleteConfirmDialogProps {
     return {
-      onEventCancel: async () => {
+      onCancel: async () => {
         setCanceling(true);
         setExpanded(false);
       },
@@ -181,7 +176,7 @@ export function Display({
           Alert.serverError(err, t("eventDetails.eventRemoved.error", "Could not remove event"));
         }
       },
-      onCancel: async () => {
+      onClose: async () => {
         setExpanded(false);
       },
     };
@@ -296,7 +291,7 @@ export function Display({
                 </>
               )}
             </div>
-            {expanded && <EventDeleteConfirmDialog {...deleteConfirmDialogAttr()} />}
+            {expanded && <DeleteConfirmDialog {...deleteConfirmDialogAttr()} />}
             {canceling && <CancelConfirmDialog {...cancelConfirmDialogAttr()} />}
           </>
         )

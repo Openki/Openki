@@ -267,7 +267,7 @@
   "event.not_exists": "Cet événement n'a pu être trouvé. Peut-être qu'il a été supprimé, ou n'a jamais existé.",
   "event.not_exists.unlogged": "Se connecter/s'enregistrer",
   "event.organizationList.confirmOrgNotes": "Tous les membres du groupe peuvent modifier cet événement.",
-  "event.realycancel": "S'il te plaît, confirme l'annulation de cet événement. Il sera affiché comme « annulé » et les inscriptions ne seront plus possibles. {NUM, plural, =0{Comme personne n'est inscrit, personne ne sera informé} one{L'utilisateur inscrit sera informé de l'annulation par e-mail (s'il a activé les notifications automatiques)} other{Les # utilisateurs inscrits seront informés de l'annulation par e-mail (s'ils ont activé les notifications automatiques)} }.",
+  "event.reallyCancel": "S'il te plaît, confirme l'annulation de cet événement. Il sera affiché comme « annulé » et les inscriptions ne seront plus possibles. {NUM, plural, =0{Comme personne n'est inscrit, personne ne sera informé} one{L'utilisateur inscrit sera informé de l'annulation par e-mail (s'il a activé les notifications automatiques)} other{Les # utilisateurs inscrits seront informés de l'annulation par e-mail (s'ils ont activé les notifications automatiques)} }.",
   "event.reallyDelete": "Confirme que tu souhaites supprimer cet événement. Cette demande ne peut pas être annulée.",
   "event.replicate.successCondensed": "L'événement \"{TITLE}\" cloné {NUM, plural, one{pour} other{# fois jusqu'à} } {DATE}",
   "event.replication.changeToPattern": "Sélectionner la fréquence",

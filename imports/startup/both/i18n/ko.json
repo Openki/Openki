@@ -200,7 +200,7 @@
   "event.not_exists": "이벤트로 이동하는데 실패했습니다. 존재하지 않는/삭제된 이벤트입니다.",
   "event.not_exists.unlogged": "로그인/회원가입",
   "event.organizationList.confirmOrgNotes": "이 그룹의 모든 멤버들에게 해당 이벤트의 수정 권한이 부여됩니다.",
-  "event.realycancel": "이벤트를 정말로 취소할까요? 취소된 이벤트로 표시되고 이벤트에 참가 등록한 {NUM, plural, one{1명의 사용자에게} other{모든 #명의 사용자들에게 } } 이벤트 취소에 대한 자동 알림이 갈 것입니다.",
+  "event.reallyCancel": "이벤트를 정말로 취소할까요? 취소된 이벤트로 표시되고 이벤트에 참가 등록한 {NUM, plural, one{1명의 사용자에게} other{모든 #명의 사용자들에게 } } 이벤트 취소에 대한 자동 알림이 갈 것입니다.",
   "event.reallyDelete": "정말로 이벤트를 삭제할까요? 다른 사용자들에게도 이벤트가 삭제되며 이벤트 삭제는 되돌릴 수 없습니다. 삭제된 이벤트는 아무에게도 보여지지 않으며 영구적으로 삭제됩니다.",
   "event.replicate.successCondensed": "이벤트\"{TITLE}\"(을)를 {NUM, plural, one{1번} other{#번} } {DATE}까지 반복합니다",
   "event.replication.changeToPattern": "반복 빈도 설정",

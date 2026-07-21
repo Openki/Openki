@@ -6,24 +6,24 @@ import * as EventsPub from "/imports/api/events/publications";
 
 import { LocalTime } from "/imports/utils/local-time";
 
-import { Button, ButtonCancel } from "../../components/Buttons";
+import { Button, ButtonClose } from "../../components/Buttons";
 import { ArchiveButton } from "./ArchiveButton";
-import { ConfirmDialog } from "/imports/ui/components/delete-confirm-dialog";
+import { Confirm, ConfirmActions, ConfirmText } from "/imports/ui/components/delete-confirm-dialog";
 
-export function DeleteConfirmDialog({
+export function EventDeleteConfirmDialog({
   group,
   disabled,
   archiveButton,
   onArchive,
   onDelete,
-  onCancel,
+  onClose,
 }: {
   group: GroupModel;
   disabled?: boolean | undefined;
   archiveButton?: boolean | undefined;
   onArchive: () => void;
   onDelete: () => void;
-  onCancel: () => void;
+  onClose: () => void;
 }) {
   const { t } = useTranslation();
 
@@ -94,27 +94,30 @@ export function DeleteConfirmDialog({
   }
 
   return (
-    <ConfirmDialog text={getDeleteWarning()}>
-      {!!archiveButton && (
-        <ArchiveButton className="btn-warning" disabled={disabled} onArchive={onArchive}>
-          {t("group.delete.confirm.archiveButton", "Rather archive")}
-        </ArchiveButton>
-      )}
-      <Button
-        id="group-details-confirm-dialog-delete"
-        className="btn-danger"
-        disabled={disabled}
-        needsLogin
-        onClick={onDelete}
-        busyText={t("_button.deleting")}
-      >
-        {getDeleteLabel()}
-      </Button>
-      <ButtonCancel
-        id="group-details-confirm-dialog-cancel"
-        disabled={disabled}
-        onClick={onCancel}
-      />
-    </ConfirmDialog>
+    <Confirm>
+      <ConfirmText>{getDeleteWarning()}</ConfirmText>
+      <ConfirmActions>
+        {!!archiveButton && (
+          <ArchiveButton className="btn-warning" disabled={disabled} onArchive={onArchive}>
+            {t("group.delete.confirm.archiveButton", "Rather archive")}
+          </ArchiveButton>
+        )}
+        <Button
+          id="group-details-confirm-dialog-delete"
+          className="btn-danger"
+          disabled={disabled}
+          needsLogin
+          onClick={onDelete}
+          busyText={t("_button.deleting")}
+        >
+          {getDeleteLabel()}
+        </Button>
+        <ButtonClose
+          id="group-details-confirm-dialog-close"
+          disabled={disabled}
+          onClick={onClose}
+        />
+      </ConfirmActions>
+    </Confirm>
   );
 }

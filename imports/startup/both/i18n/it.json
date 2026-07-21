@@ -209,7 +209,7 @@
   "event.not_exists": "Impossibile trovare questo evento. Forse è stato eliminato o non è mai esistito.",
   "event.not_exists.unlogged": "Accedi/registrati",
   "event.organizationList.confirmOrgNotes": "Tutti i membri di questo gruppo potranno modificare questo evento.",
-  "event.realycancel": "Conferma l'annullamento di questo evento. Sarà visualizzato come \"annullato\" e {NUM, plural, one{un utente partecipante} other{tutti i # utenti partecipanti} } saranno automaticamente informati via email dell'annullamento di questo evento.",
+  "event.reallyCancel": "Conferma l'annullamento di questo evento. Sarà visualizzato come \"annullato\" e {NUM, plural, one{un utente partecipante} other{tutti i # utenti partecipanti} } saranno automaticamente informati via email dell'annullamento di questo evento.",
   "event.reallyDelete": "Conferma che desideri eliminare questo evento. Questo potrebbe confondere altri utenti e non può essere annullato. L'evento sarà eliminato permanentemente e non sarà più visibile.",
   "event.replicate.successCondensed": "Evento clonare \"{TITLE}\" {NUM, plural, one{per} other{# volte fino a} } {DATE}",
   "event.replication.changeToPattern": "Seleziona la frequenza",

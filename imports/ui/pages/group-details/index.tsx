@@ -300,7 +300,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
                         group={group}
                         onArchive={async () => handleOnArchive()}
                         onDelete={handleOnDelete}
-                        onCancel={() => setExpanded(false)}
+                        onClose={() => setExpanded(false)}
                       />
                     ))}
 
