@@ -114,7 +114,7 @@ export function Display({
   const [expanded, setExpanded] = useState(false);
 
   function isExpanded() {
-    return canceling || expanded;
+    return replicating || canceling || expanded;
   }
   function cancelConfirmDialogAttr(): CancelConfirmDialogProps {
     return {
@@ -224,7 +224,7 @@ export function Display({
       Alert.success(
         t(
           "event.details.message.eventHasBeenUncanceled",
-          "{EVENT} has been uncaneled. No notifications have been sent.",
+          "{EVENT} has been uncanceled. No notifications have been sent.",
           {
             EVENT: event.title,
           },
@@ -245,57 +245,48 @@ export function Display({
       ) : (
         <Content event={event} />
       )}
-      {replicating ? (
-        <EventReplication {...eventReplicationAttr()} />
-      ) : (
-        event.editableBy(user) && (
+      {event.editableBy(user) &&
+        (!isExpanded() ? (
+          <div className="actions">
+            <ButtonEdit id="events-display-body-edit" onClick={onEdit} />
+            <Button
+              id="events-display-body-repeat"
+              className="btn-edit"
+              onClick={handleShowReplication}
+            >
+              {t("event.details.repl_menu_btn", "Repeat")}
+            </Button>
+            <a
+              className="btn btn-edit"
+              href={Router.path("calEvent", event)}
+              title={t("event.detail.download_cal", "Download event to my calendar")}
+              onClick={handleDownload}
+            >
+              {t("event.details.download", "Download")}
+            </a>
+            {!event.canceled ? (
+              <Button id="events-display-body-cancel" className="btn-remove" onClick={handleCancel}>
+                {t("event.details.cancel", "Cancel this event")}
+              </Button>
+            ) : (
+              <Button
+                submit
+                id="events-display-body-uncancel"
+                className="btn-edit"
+                onClick={handleUncancel}
+              >
+                {t("event.details.uncancel", "Uncancel this event")}
+              </Button>
+            )}
+            <ButtonDelete id="events-display-confirmDelete" onClick={handleExpand} />
+          </div>
+        ) : (
           <>
-            <div className="actions">
-              {!isExpanded() && (
-                <>
-                  <ButtonEdit id="events-display-body-edit" onClick={onEdit} />
-                  <Button
-                    id="events-display-body-repeat"
-                    className="btn-edit"
-                    onClick={handleShowReplication}
-                  >
-                    {t("event.details.repl_menu_btn", "Repeat")}
-                  </Button>
-                  <a
-                    className="btn btn-edit"
-                    href={Router.path("calEvent", event)}
-                    title={t("event.detail.download_cal", "Download event to my calendar")}
-                    onClick={handleDownload}
-                  >
-                    {t("event.details.download", "Download")}
-                  </a>
-                  {!event.canceled ? (
-                    <Button
-                      id="events-display-body-cancel"
-                      className="btn-remove"
-                      onClick={handleCancel}
-                    >
-                      {t("event.details.cancel", "Cancel this event")}
-                    </Button>
-                  ) : (
-                    <Button
-                      submit
-                      id="events-display-body-uncancel"
-                      className="btn-edit"
-                      onClick={handleUncancel}
-                    >
-                      {t("event.details.uncancel", "Uncancel this event")}
-                    </Button>
-                  )}
-                  <ButtonDelete id="events-display-confirmDelete" onClick={handleExpand} />
-                </>
-              )}
-            </div>
+            {replicating && <EventReplication {...eventReplicationAttr()} />}
             {expanded && <DeleteConfirmDialog {...deleteConfirmDialogAttr()} />}
             {canceling && <CancelConfirmDialog {...cancelConfirmDialogAttr()} />}
           </>
-        )
-      )}
+        ))}
     </div>
   );
 }
