@@ -6,6 +6,7 @@ import { EventModel } from "/imports/api/events/events";
 import { Button, ButtonClose } from "/imports/ui/components/Buttons";
 import { Confirm, ConfirmActions, ConfirmText } from "/imports/ui/components/Confirm";
 import { FormControl } from "/imports/ui/components/form-control";
+import { useUserId } from "/imports/utils/react-meteor-data";
 
 export interface Props {
   event: EventModel;
@@ -15,8 +16,11 @@ export interface Props {
 
 export function CancelConfirmDialog({ event, onCancel, onClose }: Props) {
   const { t } = useTranslation();
+  const userId = useUserId();
 
   const [reason, setReason] = useState("");
+
+  const numberOfOtherParticipants = event.participants?.filter((p) => p.user !== userId).length || 0;
 
   return (
     <Confirm variant="warning">
@@ -24,10 +28,10 @@ export function CancelConfirmDialog({ event, onCancel, onClose }: Props) {
         {t(
           "event.reallyCancel",
           'Please confirm the cancellation of this event. It will be displayed as "Canceled" and registration will not be possible anymore. {NUM, plural, =0{} other{{NUM, plural, one{If the attending user has automated notifications enabled} other{Those of the attending # users that have automated notifications enabled} } will be automatically informed by email about the cancellation of this event.} }',
-          { NUM: event.participants?.length || 0 },
+          { NUM: numberOfOtherParticipants },
         )}
       </ConfirmText>
-      {!!event.participants?.length && (
+      {!!numberOfOtherParticipants && (
         <div className="mb-3">
           <FormControl
             id="event-cancel-message"
