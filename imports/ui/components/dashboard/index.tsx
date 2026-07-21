@@ -46,9 +46,9 @@ function StaticComponent({
   const { getLocalizedValue } = useLocalizedSetting();
 
   return (
-    <div className={cx("position-relative mb-4", fluid ? "container-fluid" : "container")}>
+    <div className={cx("position-relative mb-5", fluid ? "container-fluid" : "container")}>
       {showAll !== false && !!showAll?.link && (
-        <a className="btn btn-sm btn-success float-end" href={showAll.link}>
+        <a className="btn btn-link float-end" href={showAll.link}>
           {getLocalizedValue(showAll.text)}
         </a>
       )}
@@ -94,9 +94,9 @@ function EntitiesComponent<T>({
   }
 
   return (
-    <div className={cx("position-relative mb-4", fluid ? "container-fluid" : "container")}>
+    <div className={cx("position-relative mb-5", fluid ? "container-fluid" : "container")}>
       {showAll !== false && !!showAll?.link && data.length > limit && (
-        <a className="btn btn-sm btn-success float-end" href={showAll.link}>
+        <a className="btn btn-link float-end" href={showAll.link}>
           {getLocalizedValue(showAll.text)}
         </a>
       )}
@@ -158,7 +158,7 @@ function DashboardComponent({
           : undefined),
       text:
         getLocalizedValue(settings.showAll?.text || config.showAll?.text) ||
-        t("dashboard.showAll", "Show all >"),
+        t("dashboard.showAll", "Show all →"),
     };
   }
 

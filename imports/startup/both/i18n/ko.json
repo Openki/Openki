@@ -118,7 +118,7 @@
   "dashboard.lookingForVenues.title": "장소를 구하는 중",
   "dashboard.newProposals.title": "새로운 제안들",
   "dashboard.recentActivities.title": "최근 활동들",
-  "dashboard.showAll": "모두 보기 >",
+  "dashboard.showAll": "모두 보기 →",
   "dashboard.upcomingEvents.title": "다가오는 이벤트들",
   "deleteEventsModal.clearSelection": "전체 선택 해제",
   "deleteEventsModal.confirm": "이벤트의 삭제 확인",
