@@ -154,7 +154,6 @@
   "event.description.placeholder": "사람들이 이벤트에 대해 알 수 있도록 가능한 자세하게 설명해주세요. (예시: 준비물, 활동 주제, 학습 방식, 준비물 등)",
   "event.detail.download_cal": "이벤트를 내 달력으로 옮기기",
   "event.details.cancel": "이벤트 취소하기",
-  "event.details.close": "닫기",
   "event.details.download": "다운로드",
   "event.details.i-participate-no": "당신이 이 이벤트에 참여한다는 사실을 알리세요. 참여 등록은 하나의 약속입니다!",
   "event.details.i-participate-yes": "참가 등록을 완료했습니다. 참가 등록은 하나의 약속입니다!",
