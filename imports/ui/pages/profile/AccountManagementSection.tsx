@@ -7,6 +7,8 @@ import * as usersMethods from "/imports/api/users/methods";
 import { AccountsAsync } from "/imports/utils/promisify";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { cx } from "/imports/utils/cx";
+import { FormControl } from "/imports/ui/components/form-control";
+import { useValidation } from "/imports/ui/lib/useValidation";
 
 function EyeToggle({ show, onToggle }: { show: boolean; onToggle: () => void }) {
   return (
@@ -31,6 +33,29 @@ export function AccountManagementSection() {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showNewPasswordConfirm, setShowNewPasswordConfirm] = useState(false);
+  const [errors, checkValidity, , resetErrors] = useValidation({
+    passwordShort: {
+      field: "newpassword",
+      isValid: () => {
+        const minPasswordLength = 5;
+        return newPassword.length >= minPasswordLength;
+      },
+      text: () => t("profile.passwordShort", "Your desired password is too short. Sorry."),
+    },
+    passwordMismatch: {
+      field: "newpassword_confirm",
+      isValid: () => {
+        const pass = newPassword;
+        if (pass !== "") {
+          if (pass !== newPasswordConfirm) {
+            return false;
+          }
+        }
+        return true;
+      },
+      text: () => t("profile.passwordMismatch", "Sorry, your new passwords do not match."),
+    },
+  });
 
   function isVisitor() {
     return user?.hasPrivilige("visitor");
@@ -53,31 +78,29 @@ export function AccountManagementSection() {
     };
   }
 
+  function resetFields() {
+    setOldPassword("");
+    setNewPassword("");
+    setNewPasswordConfirm("");
+  }
+
   async function handleChangePassword(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
-    const old = oldPassword;
-    const pass = newPassword;
-    if (pass !== "") {
-      if (pass !== newPasswordConfirm) {
-        Alert.warning(t("profile.passwordMismatch", "Sorry, your new passwords don't match"));
-        return;
-      }
-      const minLength = 5; // We've got _some_ standards
-      if (pass.length < minLength) {
-        Alert.warning(t("profile.passwordShort", "Your desired password is too short. Sorry."));
-        return;
-      }
-      setIsBusy(true);
-      try {
-        await AccountsAsync.changePassword(old, pass);
+    if (!checkValidity()) {
+      return;
+    }
+    setIsBusy(true);
+    try {
+      await AccountsAsync.changePassword(oldPassword, newPassword);
 
-        Alert.success(t("profile.passwordChangedSuccess", "You have changed your password."));
-        setChangingPassword(false);
-      } catch (err) {
-        Alert.serverError(err, t("profile.passwordChangeError", "Could not change your password"));
-      } finally {
-        setIsBusy(false);
-      }
+      Alert.success(t("profile.passwordChangedSuccess", "You have changed your password."));
+      setChangingPassword(false);
+      resetFields();
+      resetErrors();
+    } catch (err) {
+      Alert.serverError(err, t("profile.passwordChangeError", "Could not change your password"));
+    } finally {
+      setIsBusy(false);
     }
   }
 
@@ -98,64 +121,80 @@ export function AccountManagementSection() {
           ) : (
             <div className="border border-success text-primary p-3">
               <form onSubmit={handleChangePassword}>
-                <div className="row mb-2">
-                  <label htmlFor="oldpassword" className="col-sm-4 col-form-label text-end">
+                <div className="row mb-2 d-flex align-items-top">
+                  <label
+                    htmlFor="oldpassword"
+                    className="col-sm-4 col-form-label text-start text-sm-end mt-4"
+                  >
                     {t("profile.input.oldPassword", "Your current password")}
                   </label>
                   <div className="col-sm-8">
-                    <div className="input-group">
-                      <input
-                        type={showOldPassword ? "text" : "password"}
-                        className="form-control"
-                        id="oldpassword"
-                        value={oldPassword}
-                        onChange={(e) => setOldPassword(e.currentTarget.value)}
-                      />
-                      <EyeToggle
-                        show={showOldPassword}
-                        onToggle={() => setShowOldPassword((v) => !v)}
-                      />
-                    </div>
+                    <FormControl
+                      id="oldpassword"
+                      label=""
+                      type={showOldPassword ? "text" : "password"}
+                      size="medium"
+                      value={oldPassword || ""}
+                      onChange={(value: string) => setOldPassword(value)}
+                      append={
+                        <EyeToggle
+                          show={showOldPassword}
+                          onToggle={() => setShowOldPassword((v) => !v)}
+                        />
+                      }
+                    />
                   </div>
                 </div>
-                <div className="row mb-2">
-                  <label htmlFor="newpassword" className="col-sm-4 col-form-label text-end">
+                <div className="row mb-2 d-flex align-items-top">
+                  <label
+                    htmlFor="newpassword"
+                    className="col-sm-4 col-form-label text-start text-sm-end mt-4"
+                  >
                     {t("profile.input.newPassword", "New password")}
                   </label>
                   <div className="col-sm-8">
-                    <div className="input-group">
-                      <input
-                        type={showNewPassword ? "text" : "password"}
-                        className="form-control"
-                        id="newpassword"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.currentTarget.value)}
-                      />
-                      <EyeToggle
-                        show={showNewPassword}
-                        onToggle={() => setShowNewPassword((v) => !v)}
-                      />
-                    </div>
+                    <FormControl
+                      id="newpassword"
+                      label=""
+                      type={showNewPassword ? "text" : "password"}
+                      size="medium"
+                      value={newPassword || ""}
+                      onChange={(value: string) => setNewPassword(value)}
+                      onBlur={() => checkValidity("newpassword")}
+                      error={errors.newpassword}
+                      append={
+                        <EyeToggle
+                          show={showNewPassword}
+                          onToggle={() => setShowNewPassword((v) => !v)}
+                        />
+                      }
+                    />
                   </div>
                 </div>
-                <div className="row mb-2">
-                  <label htmlFor="newpassword_confirm" className="col-sm-4 col-form-label text-end">
+                <div className="row mb-2 d-flex align-items-top">
+                  <label
+                    htmlFor="newpassword_confirm"
+                    className="col-sm-4 col-form-label text-start text-sm-end mt-4"
+                  >
                     {t("profile.input.repeatPassword", "Repeat new password")}
                   </label>
                   <div className="col-sm-8">
-                    <div className="input-group">
-                      <input
-                        type={showNewPasswordConfirm ? "text" : "password"}
-                        className="form-control"
-                        id="newpassword_confirm"
-                        value={newPasswordConfirm}
-                        onChange={(e) => setNewPasswordConfirm(e.currentTarget.value)}
-                      />
-                      <EyeToggle
-                        show={showNewPasswordConfirm}
-                        onToggle={() => setShowNewPasswordConfirm((v) => !v)}
-                      />
-                    </div>
+                    <FormControl
+                      id="newpassword_confirm"
+                      label=""
+                      type={showNewPasswordConfirm ? "text" : "password"}
+                      size="medium"
+                      value={newPasswordConfirm || ""}
+                      onChange={(value: string) => setNewPasswordConfirm(value)}
+                      onBlur={() => checkValidity("newpassword_confirm")}
+                      error={errors.newpassword_confirm}
+                      append={
+                        <EyeToggle
+                          show={showNewPasswordConfirm}
+                          onToggle={() => setShowNewPasswordConfirm((v) => !v)}
+                        />
+                      }
+                    />
                   </div>
                 </div>
                 <div className="d-flex gap-2 justify-content-end">
@@ -170,7 +209,11 @@ export function AccountManagementSection() {
                   </Button>
                   <ButtonCancel
                     id="profile-accountManagement-changingPassword-cancel"
-                    onClick={() => setChangingPassword(false)}
+                    onClick={() => {
+                      setChangingPassword(false);
+                      resetErrors();
+                      resetFields();
+                    }}
                     disabled={isBusy}
                   />
                 </div>
