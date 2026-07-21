@@ -145,7 +145,7 @@ export function Submenu({ group }: { group: GroupModel }) {
             <Files group={group} />
           </div>
         )}
-        {!group.isPrivate() && <PricePolicy dismissible wrap="group-details-price-policy" />}
+        {!group.isPrivate() && <PricePolicy dismissible wrap="mt-3" />}
       </div>
     </>
   );

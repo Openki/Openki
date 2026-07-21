@@ -6,10 +6,8 @@ import * as EventsPub from "/imports/api/events/publications";
 
 import { LocalTime } from "/imports/utils/local-time";
 
-import { Button, ButtonCancel } from "../../../components/Buttons";
-import { ButtonGroupArchive } from "../button-group-archive";
-
-import "./styles.scss";
+import { Button, ButtonCancel } from "../../components/Buttons";
+import { ArchiveButton } from "./ArchiveButton";
 
 export function ConfirmDialog({
   group,
@@ -38,32 +36,55 @@ export function ConfirmDialog({
     ? 0
     : events.filter((e) => LocalTime.fromString(e.startLocal) >= now).length;
 
-  function getDeleteLabel() {
+  function getDeleteWarning() {
     if (future > 0 && past > 0) {
       return t(
-        "group.delete.confirm.buttonBothPastAndFutureEvents",
-        "Delete {GROUP} and all its {NUM_PAST} passed and {NUM_FUTURE} upcoming events",
-        { GROUP: group.name, NUM_PAST: past, NUM_FUTURE: future },
+        "group.reallydelete.pastAndFutureEvents",
+        "Please confirm that you would like to delete {GROUP} and all its {NUM_PAST} passed and {NUM_FUTURE} upcoming events.\n⚠️ This cannot be undone.",
+        {
+          GROUP: <span className="fw-bold">{group.name}</span>,
+          NUM_PAST: past,
+          NUM_FUTURE: future,
+        },
       );
     }
 
     if (future > 0) {
       return t(
-        "group.delete.confirm.buttonFuture",
-        "Delete {GROUP} and its {NUM_FUTURE} upcoming events",
-        { GROUP: group.name, NUM_FUTURE: future },
+        "group.reallydelete.futureEvents",
+        "Please confirm that you would like to delete {GROUP} and its {NUM_FUTURE} upcoming events.\n⚠️ This cannot be undone.",
+        {
+          GROUP: <span className="fw-bold">{group.name}</span>,
+          NUM_FUTURE: future,
+        },
       );
     }
 
     if (past > 0) {
       return t(
-        "group.delete.confirm.buttonPast",
-        "Delete {GROUP} and its {NUM_PAST} passed events",
+        "group.reallydelete.pastEvents",
+        "Please confirm that you would like to delete {GROUP} and its {NUM_PAST} passed events.\n⚠️ This cannot be undone.",
         {
-          GROUP: group.name,
+          GROUP: <span className="fw-bold">{group.name}</span>,
           NUM_PAST: past,
         },
       );
+    }
+
+    return t(
+      "group.reallydelete",
+      "Please confirm that you would like to delete {GROUP}.\n⚠️ This cannot be undone.",
+      {
+        GROUP: <span className="fw-bold">{group.name}</span>,
+      },
+    );
+  }
+
+  function getDeleteLabel() {
+    if (future > 0 || past > 0) {
+      return t("group.delete.confirm.button", "Delete {GROUP} and its events", {
+        GROUP: group.name,
+      });
     }
 
     return t("group.delete.confirm.buttonZero", "Delete {GROUP}", {
@@ -72,23 +93,13 @@ export function ConfirmDialog({
   }
 
   return (
-    <div className="group-delete-confirm">
-      <p>
-        {t(
-          "group.reallydelete",
-          "Please confirm that you would like to delete {GROUP}. This cannot be undone.",
-          { GROUP: group.name },
-        )}
-      </p>
-      <div className="form-actions">
+    <div className="border border-danger border-5 p-3">
+      <p className="fs-5 whitespace-pre-line">{getDeleteWarning()}</p>
+      <div className="d-flex justify-content-end flex-wrap gap-2 flex-column flex-sm-row">
         {!!archiveButton && (
-          <ButtonGroupArchive
-            className="btn-warning"
-            disabled={disabled}
-            onArchive={async () => onArchive()}
-          >
+          <ArchiveButton className="btn-warning" disabled={disabled} onArchive={onArchive}>
             {t("group.delete.confirm.archiveButton", "Rather archive")}
-          </ButtonGroupArchive>
+          </ArchiveButton>
         )}
 
         <Button
@@ -96,7 +107,7 @@ export function ConfirmDialog({
           className="btn-danger"
           disabled={disabled}
           needsLogin
-          onClick={async () => onDelete()}
+          onClick={onDelete}
           busyText={t("_button.deleting")}
         >
           {getDeleteLabel()}
