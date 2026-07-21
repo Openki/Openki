@@ -30,7 +30,7 @@ export function Display({ region, onEdit, onDelete }: Props) {
   function deleteConfirmDialogAttr(): DeleteConfirmDialogProps {
     return {
       confirmText: t(
-        "region.reallydelete",
+        "region.reallyDelete",
         "Please confirm that you would like to delete this region with all groups, events and venues. This cannot be undone.",
       ),
       confirmButton: t("region.detail.remove", "Remove this region"),

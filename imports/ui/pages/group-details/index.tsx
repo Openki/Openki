@@ -22,9 +22,9 @@ import { Events } from "../../components/groups/events";
 import { Members } from "../../components/groups/members";
 import { Roles } from "../../components/groups/roles";
 import { Sharing } from "../../components/sharing";
-import { ButtonGroupArchive } from "./button-group-archive";
-import { ButtonGroupUnarchive } from "./button-group-unarchive";
-import { ConfirmDialog } from "./confirm-dialog";
+import { ArchiveButton } from "./ArchiveButton";
+import { UnarchiveButton } from "./UnarchiveButton";
+import { DeleteConfirmDialog } from "./DeleteConfirmDialog";
 import { Header } from "./header";
 import { Submenu } from "./submenu";
 import { ActionResult } from "/imports/ui/components/ActionResult";
@@ -91,7 +91,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
     return viewport.width <= ScssVars.screenMD;
   }
 
-  async function handleOnDelete() {
+  async function handleDelete() {
     setIsBusy(true);
 
     try {
@@ -129,7 +129,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
     }
   }
 
-  async function handleOnArchive() {
+  async function handleArchive() {
     setIsBusy(true);
     try {
       await GroupsMethods.archive(group._id);
@@ -259,59 +259,49 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
                     )}
                   </div>
 
-                  {!!group?.editableBy(user) && (
-                    <>
+                  {!!group?.editableBy(user) &&
+                    (!expanded ? (
                       <div className="actions">
-                        {!expanded && (
-                          <ButtonEdit
-                            id="group-details-edit"
-                            disabled={isBusy}
-                            onClick={handleOnEdit}
-                          />
-                        )}
+                        <ButtonEdit
+                          id="group-details-edit"
+                          disabled={isBusy}
+                          onClick={handleOnEdit}
+                        />
 
-                        {group.archived && (
-                          <ButtonGroupUnarchive
+                        {!group.archived ? (
+                          <ArchiveButton
+                            disabled={isBusy}
+                            className="btn-archive"
+                            onArchive={async () => handleArchive()}
+                          >
+                            {t("group.archive.archiveButton.archive", "Archive")}
+                          </ArchiveButton>
+                        ) : (
+                          <UnarchiveButton
                             disabled={isBusy}
                             onUnarchive={async () => handleUnarchive()}
                           />
                         )}
 
-                        {!expanded && !group.archived && (
-                          <ButtonGroupArchive
-                            disabled={isBusy}
-                            className="btn-archive"
-                            onArchive={async () => handleOnArchive()}
-                          >
-                            {t("group.archive.archiveButton.archive", "Archive")}
-                          </ButtonGroupArchive>
-                        )}
-
-                        {!expanded && (
-                          <ButtonDelete
-                            id="group-details-confirm-delete"
-                            onClick={async () => setExpanded(true)}
-                            label={
-                              group.singleEvent
-                                ? t("group.event.edit.deleteEvent", "Delete event")
-                                : t("group.delete.button", "Delete group")
-                            }
-                          />
-                        )}
-                      </div>
-
-                      {expanded && (
-                        <ConfirmDialog
-                          archiveButton={!group.archived}
-                          disabled={isBusy}
-                          group={group}
-                          onArchive={async () => handleOnArchive()}
-                          onDelete={handleOnDelete}
-                          onCancel={() => setExpanded(false)}
+                        <ButtonDelete
+                          id="group-details-confirm-delete"
+                          onClick={async () => setExpanded(true)}
+                          label={
+                            group.singleEvent
+                              ? t("group.event.edit.deleteEvent", "Delete event")
+                              : t("group.delete.button", "Delete group")
+                          }
                         />
-                      )}
-                    </>
-                  )}
+                      </div>
+                    ) : (
+                      <DeleteConfirmDialog
+                        disabled={isBusy}
+                        group={group}
+                        onArchive={async () => handleArchive()}
+                        onDelete={handleDelete}
+                        onClose={() => setExpanded(false)}
+                      />
+                    ))}
 
                   <Roles group={group} />
                 </>

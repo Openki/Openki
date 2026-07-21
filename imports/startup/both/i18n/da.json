@@ -202,7 +202,7 @@
   "profile.organization.member": "Medlem af gruppen \"{NAME}\"",
   "profile.passwordChangedSuccess": "Du har opdateret dit kodeord med succes.",
   "profile.passwordMismatch": "Beklager, dine nye kodeord er ikke ens",
-  "profile.reallydelete": "Bekræft venligst at du vil slette din profil. Dette kan ikke gøres om. Du vil være nød til at oprette en ny konto hvis du vil bruge denne hjemmeside igen.",
+  "profile.reallyDelete": "Bekræft venligst at du vil slette din profil. Dette kan ikke gøres om. Du vil være nød til at oprette en ny konto hvis du vil bruge denne hjemmeside igen.",
   "profile.updated": "Opdateret profil",
   "profile.users_profile_page": "{NAME}s profile",
   "report.open": "Rapporter et problem",

@@ -3,9 +3,10 @@ import { useTranslation } from "react-i18next";
 
 import { EventModel } from "/imports/api/events/events";
 
-import { Button } from "/imports/ui/components/Buttons";
-
-import "./styles.scss";
+import { Button, ButtonClose } from "/imports/ui/components/Buttons";
+import { Confirm, ConfirmActions, ConfirmText } from "/imports/ui/components/Confirm";
+import { FormControl } from "/imports/ui/components/form-control";
+import { useUserId } from "/imports/utils/react-meteor-data";
 
 export interface Props {
   event: EventModel;
@@ -15,46 +16,41 @@ export interface Props {
 
 export function CancelConfirmDialog({ event, onCancel, onClose }: Props) {
   const { t } = useTranslation();
+  const userId = useUserId();
 
   const [reason, setReason] = useState("");
 
-  return (
-    <div className="event-cancel-confirm">
-      <p>
-        {t(
-          "event.realycancel",
-          'Please confirm the cancellation of this event. It will be displayed as "canceled" and registration will not be possible anymore. {NUM, plural, one{If the attending user has automated notifications enabled} other{those of the attending # users that have automated notifications enabled} } will be automatically informed by email about the cancellation of this event.',
-          { NUM: event.participants?.length || 0 },
-        )}
-      </p>
-      {!!event.participants?.length && (
-        <>
-          <label className="form-label" htmlFor="event-cancel-message">
-            {t("event.cancel.reason", "Reason")}
-          </label>
-          <div className="mb-3">
-            <div className="input-group">
-              <span className="input-group-text">
-                <i className="fa-solid fa-pencil fa-fw" />
-              </span>
-              <textarea
-                rows={3}
-                className="form-control"
-                id="event-cancel-message"
-                maxLength={2000}
-                placeholder={t(
-                  "event.cancel.reason.placeholder",
-                  "Please add a reason here. (This message will be sent to all the registered users and not be visible here afterwards)",
-                )}
-                value={reason}
-                onChange={(e) => setReason(e.target.value)}
-              ></textarea>
-            </div>
-          </div>
-        </>
-      )}
+  const numberOfOtherParticipants =
+    event.participants?.filter((p) => p.user !== userId).length || 0;
 
-      <div className="form-actions">
+  return (
+    <Confirm variant="warning">
+      <ConfirmText>
+        {t(
+          "event.reallyCancel",
+          'Please confirm the cancellation of this event. It will be displayed as "Canceled" and registration will not be possible anymore. {NUM, plural, =0{} other{{NUM, plural, one{If the attending user has automated notifications enabled} other{Those of the attending # users that have automated notifications enabled} } will be automatically informed by email about the cancellation of this event.} }',
+          { NUM: numberOfOtherParticipants },
+        )}
+      </ConfirmText>
+      {!!numberOfOtherParticipants && (
+        <div className="mb-3">
+          <FormControl
+            id="event-cancel-message"
+            type="textarea"
+            prepend="fa-solid fa-pencil"
+            rows={3}
+            maxLength={2000}
+            placeholder={t(
+              "event.cancel.reason.placeholder",
+              "Please add a reason here. (This message will be sent to all the registered users and not be visible here afterwards)",
+            )}
+            value={reason}
+            onChange={setReason}
+            label={t("event.cancel.reason", "Reason")}
+          />
+        </div>
+      )}
+      <ConfirmActions>
         <Button
           id="events-cancel-confirm-dialog-cancel"
           needsLogin
@@ -64,14 +60,8 @@ export function CancelConfirmDialog({ event, onCancel, onClose }: Props) {
         >
           {t("event.cancel.confirm.button", "Cancel {EVENT}", { EVENT: event.title })}
         </Button>
-        <Button
-          id="events-cancel-confirm-dialog-close"
-          className="btn-edit"
-          onClick={() => onClose()}
-        >
-          {t("event.details.close", "Close")}
-        </Button>
-      </div>
-    </div>
+        <ButtonClose id="events-cancel-confirm-dialog-close" onClick={onClose} />
+      </ConfirmActions>
+    </Confirm>
   );
 }

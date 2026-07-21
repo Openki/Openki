@@ -193,6 +193,33 @@ export function ButtonCancel({
     </Button>
   );
 }
+export function ButtonClose({
+  id,
+  size,
+  block,
+  onClick,
+  disabled,
+}: {
+  id: string;
+  size?: Size | undefined;
+  block?: boolean | undefined;
+  onClick: () => void;
+  disabled?: boolean | undefined;
+}) {
+  const { t } = useTranslation();
+  return (
+    <Button
+      id={id}
+      block={block}
+      size={size}
+      className="btn-secondary"
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {t("_button.close")}
+    </Button>
+  );
+}
 
 export function ButtonSave(
   props: {

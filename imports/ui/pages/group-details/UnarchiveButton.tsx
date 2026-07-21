@@ -1,8 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Button } from "../../../components/Buttons";
+import { Button } from "../../components/Buttons";
 
-export function ButtonGroupUnarchive({
+export function UnarchiveButton({
   disabled,
   onUnarchive,
 }: {

@@ -39,7 +39,7 @@ export function AccountManagementSection() {
   function deleteConfirmAttr() {
     return {
       confirmText: t(
-        "profile.reallydelete",
+        "profile.reallyDelete",
         "Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.",
       ),
       confirmButton: t("profile.delete.confirm.button", "Delete my user and all its profile"),

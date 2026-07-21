@@ -1,9 +1,9 @@
 import React, { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Button } from "../../../components/Buttons";
+import { Button } from "../../components/Buttons";
 
-export function ButtonGroupArchive({
+export function ArchiveButton({
   className,
   disabled,
   onArchive,
@@ -11,7 +11,7 @@ export function ButtonGroupArchive({
 }: {
   className: string;
   disabled?: boolean | undefined;
-  onArchive: () => Promise<void>;
+  onArchive: () => void;
   children: ReactNode;
 }) {
   const { t } = useTranslation();
@@ -19,7 +19,7 @@ export function ButtonGroupArchive({
   return (
     <Button
       id="group-details-group-archive"
-      className={`${className}`}
+      className={className}
       disabled={disabled}
       needsLogin
       onClick={onArchive}

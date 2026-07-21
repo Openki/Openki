@@ -32,7 +32,7 @@ import { Regions } from "/imports/api/regions/regions";
 
 export function useLocalTimeZone(regionId: string): Zone;
 export function useLocalTimeZone(
-  conditon: { when: boolean },
+  condition: { when: boolean },
   regionId: string | undefined,
 ): Zone | undefined;
 export function useLocalTimeZone(

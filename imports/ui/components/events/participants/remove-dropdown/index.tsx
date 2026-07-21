@@ -20,7 +20,7 @@ export function RemoveDropdown({ userId, onClick }: Props) {
     <span className="dropdown ms-3">
       <button
         type="button"
-        className="btn btn-link"
+        className="btn btn-link px-0"
         aria-expanded="false"
         data-bs-toggle="dropdown"
         onClick={() => {
@@ -28,10 +28,11 @@ export function RemoveDropdown({ userId, onClick }: Props) {
             Tooltips.hide();
           }, 0);
         }}
-        data-bs-toggle2="tooltip"
-        data-bs-title={t("eventParticipant.remove", "Remove user")}
       >
-        <i className="fa-solid fa-ellipsis-vertical" />
+        {/* Give some padding to the tooltip element so the user can easy point on it */}
+        <span className="p-3" data-bs-title={t("eventParticipant.remove", "Remove user")}>
+          <i className="fa-solid fa-ellipsis-vertical" />
+        </span>
       </button>
       <ul className="dropdown-menu dropdown-menu-end dialog-dropdown">
         <li className="dropdown-header">
@@ -48,16 +49,7 @@ export function RemoveDropdown({ userId, onClick }: Props) {
           )}
         </li>
         <li className="dialog-dropdown-btn">
-          <button
-            type="button"
-            className="btn btn-danger"
-            onClick={() => {
-              setTimeout(() => {
-                Tooltips.hide();
-              }, 0);
-              onClick();
-            }}
-          >
+          <button type="button" className="btn btn-danger" onClick={() => onClick()}>
             {t("eventParticipant.remove.confirm", "Remove {USER}", { USER: userName })}
           </button>
         </li>

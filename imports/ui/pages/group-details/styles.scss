@@ -1,15 +1,5 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
-// ** Group buttons
-// ========================================================================================
-.group-delete-confirm {
-  $background-color: tint-color($danger, 20%);
-
-  background-color: $background-color;
-  border: 1px solid shade-color($background-color, 20%);
-  padding: 15px 15px 0;
-}
-
 // ** Content
 // ========================================================================================
 
@@ -60,12 +50,6 @@ $group-details-content-padding-horizontal: (
   height: 60px;
   position: absolute;
   width: 100%;
-}
-
-// ** Price Policy
-// ========================================================================================
-.group-details-price-policy {
-  margin-top: 10px;
 }
 
 // ** Sharing
