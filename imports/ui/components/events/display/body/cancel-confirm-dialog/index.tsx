@@ -20,7 +20,8 @@ export function CancelConfirmDialog({ event, onCancel, onClose }: Props) {
 
   const [reason, setReason] = useState("");
 
-  const numberOfOtherParticipants = event.participants?.filter((p) => p.user !== userId).length || 0;
+  const numberOfOtherParticipants =
+    event.participants?.filter((p) => p.user !== userId).length || 0;
 
   return (
     <Confirm variant="warning">
