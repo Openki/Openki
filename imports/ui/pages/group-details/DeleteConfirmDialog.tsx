@@ -8,8 +8,9 @@ import { LocalTime } from "/imports/utils/local-time";
 
 import { Button, ButtonCancel } from "../../components/Buttons";
 import { ArchiveButton } from "./ArchiveButton";
+import { ConfirmDialog } from "/imports/ui/components/delete-confirm-dialog";
 
-export function ConfirmDialog({
+export function DeleteConfirmDialog({
   group,
   disabled,
   archiveButton,
@@ -39,7 +40,7 @@ export function ConfirmDialog({
   function getDeleteWarning() {
     if (future > 0 && past > 0) {
       return t(
-        "group.reallydelete.pastAndFutureEvents",
+        "group.reallyDelete.pastAndFutureEvents",
         "Please confirm that you would like to delete {GROUP} and all its {NUM_PAST} passed and {NUM_FUTURE} upcoming events.\n⚠️ This cannot be undone.",
         {
           GROUP: <span className="fw-bold">{group.name}</span>,
@@ -51,7 +52,7 @@ export function ConfirmDialog({
 
     if (future > 0) {
       return t(
-        "group.reallydelete.futureEvents",
+        "group.reallyDelete.futureEvents",
         "Please confirm that you would like to delete {GROUP} and its {NUM_FUTURE} upcoming events.\n⚠️ This cannot be undone.",
         {
           GROUP: <span className="fw-bold">{group.name}</span>,
@@ -62,7 +63,7 @@ export function ConfirmDialog({
 
     if (past > 0) {
       return t(
-        "group.reallydelete.pastEvents",
+        "group.reallyDelete.pastEvents",
         "Please confirm that you would like to delete {GROUP} and its {NUM_PAST} passed events.\n⚠️ This cannot be undone.",
         {
           GROUP: <span className="fw-bold">{group.name}</span>,
@@ -72,7 +73,7 @@ export function ConfirmDialog({
     }
 
     return t(
-      "group.reallydelete",
+      "group.reallyDelete",
       "Please confirm that you would like to delete {GROUP}.\n⚠️ This cannot be undone.",
       {
         GROUP: <span className="fw-bold">{group.name}</span>,
@@ -93,31 +94,27 @@ export function ConfirmDialog({
   }
 
   return (
-    <div className="border border-danger border-5 p-3">
-      <p className="fs-5 whitespace-pre-line">{getDeleteWarning()}</p>
-      <div className="d-flex justify-content-end flex-wrap gap-2 flex-column flex-sm-row">
-        {!!archiveButton && (
-          <ArchiveButton className="btn-warning" disabled={disabled} onArchive={onArchive}>
-            {t("group.delete.confirm.archiveButton", "Rather archive")}
-          </ArchiveButton>
-        )}
-
-        <Button
-          id="group-details-confirm-dialog-delete"
-          className="btn-danger"
-          disabled={disabled}
-          needsLogin
-          onClick={onDelete}
-          busyText={t("_button.deleting")}
-        >
-          {getDeleteLabel()}
-        </Button>
-        <ButtonCancel
-          id="group-details-confirm-dialog-cancel"
-          disabled={disabled}
-          onClick={onCancel}
-        />
-      </div>
-    </div>
+    <ConfirmDialog text={getDeleteWarning()}>
+      {!!archiveButton && (
+        <ArchiveButton className="btn-warning" disabled={disabled} onArchive={onArchive}>
+          {t("group.delete.confirm.archiveButton", "Rather archive")}
+        </ArchiveButton>
+      )}
+      <Button
+        id="group-details-confirm-dialog-delete"
+        className="btn-danger"
+        disabled={disabled}
+        needsLogin
+        onClick={onDelete}
+        busyText={t("_button.deleting")}
+      >
+        {getDeleteLabel()}
+      </Button>
+      <ButtonCancel
+        id="group-details-confirm-dialog-cancel"
+        disabled={disabled}
+        onClick={onCancel}
+      />
+    </ConfirmDialog>
   );
 }

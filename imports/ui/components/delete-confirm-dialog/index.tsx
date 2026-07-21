@@ -1,7 +1,39 @@
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { cx } from "/imports/utils/cx";
+
 import "./styles.scss";
+
+export function FormActions({ children }: { children: ReactNode }) {
+  return (
+    <div className="d-flex justify-content-end flex-wrap gap-2 flex-column flex-sm-row">
+      {children}
+    </div>
+  );
+}
+
+export function ConfirmDialog({
+  variant = "danger",
+  text,
+  children,
+}: {
+  variant?: "danger" | "warning";
+  text: string;
+  children: ReactNode;
+}) {
+  return (
+    <div
+      className={cx(
+        "border border-5 p-3",
+        variant === "warning" ? "border-warning" : "border-danger",
+      )}
+    >
+      <p className="fs-5 whitespace-pre-line">{text}</p>
+      <FormActions>{children}</FormActions>
+    </div>
+  );
+}
 
 export interface Props {
   confirmText: string;

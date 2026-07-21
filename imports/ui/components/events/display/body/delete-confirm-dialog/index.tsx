@@ -1,62 +1,48 @@
 import React, { useState } from "react";
+
+import { ConfirmDialog } from "/imports/ui/components/delete-confirm-dialog";
+import { Button, ButtonCancel } from "/imports/ui/components/Buttons";
 import { useTranslation } from "react-i18next";
 
-import "./styles.scss";
-
 export interface Props {
-  confirmText: string;
-  confirmButton: string;
-  cancelButton: string;
+  onEventCancel: () => Promise<void>;
   onRemove: () => Promise<void>;
   onCancel: () => Promise<void>;
-  busyButton: string;
 }
 
-export function EventDeleteConfirmDialog(props: Props) {
+export function EventDeleteConfirmDialog({ onEventCancel, onRemove, onCancel }: Props) {
   const { t } = useTranslation();
   const [isBusy, setIsBusy] = useState(false);
 
   return (
-    <div className="event-delete-confirm-dialog">
-      <p>{props.confirmText}</p>
-      <div className="form-actions">
-        {!isBusy ? (
-          <button type="button" className="btn btn-danger text-nowrap js-cancel">
-            {props.cancelButton}
-          </button>
-        ) : (
-          <button type="button" className="btn btn-danger text-nowrap" disabled>
-            {props.cancelButton}
-          </button>
-        )}
-        {!isBusy ? (
-          <button
-            type="button"
-            className="btn btn-danger text-nowrap"
-            onClick={async () => {
-              setIsBusy(true);
-              await props.onRemove();
-            }}
-          >
-            {props.confirmButton}
-          </button>
-        ) : (
-          <button type="button" className="btn btn-danger text-nowrap" disabled>
-            <i className="fa-solid fa-circle-notch fa-spin fa-fw" />
-            {props.busyButton}
-          </button>
-        )}
-
-        <button
-          type="button"
-          className="btn btn-cancel text-nowrap"
-          onClick={async () => {
-            await props.onCancel();
-          }}
-        >
-          {t("_button.cancel")}
-        </button>
-      </div>
-    </div>
+    <ConfirmDialog
+      text={t(
+        "event.reallyDelete",
+        "Please confirm that you would like to delete this event. This cannot be undone, the event will be permanently deleted and not visible any more. If the event is already shared or published somewhere we strongly recommend to instead only canceling it.",
+      )}
+    >
+      <Button
+        id="event-details-confirm-dialog-event-cancel"
+        className="btn-warning"
+        onClick={onEventCancel}
+        disabled={isBusy}
+      >
+        {t("event.delete.confirm.cancel.button", "Rather mark as canceled")}
+      </Button>
+      <Button
+        id="event-details-confirm-dialog-delete"
+        className="btn-danger"
+        isBusy={isBusy}
+        needsLogin
+        onClick={async () => {
+          setIsBusy(true);
+          await onRemove();
+        }}
+        busyText={t("event.delete.confirm.button.busy", "Deleting event…")}
+      >
+        {t("event.delete.confirm.button", "Delete event without notifying anyone")}
+      </Button>
+      <ButtonCancel id="event-details-confirm-dialog-cancel" disabled={isBusy} onClick={onCancel} />
+    </ConfirmDialog>
   );
 }

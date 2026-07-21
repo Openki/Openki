@@ -375,7 +375,7 @@ export function UserprofilePage({ user }: Props) {
               <div className="border border-danger text-danger p-3">
                 <p>
                   {t(
-                    "profile.account.reallydelete",
+                    "profile.account.reallyDelete",
                     'Remove the user profile "{NAME}" permanently? {GROUPS, number} Groups created by this user (with {INTERESTED, number} members and {EVENTS, number} upcoming events) will also be removed.',
                     {
                       NAME: user.getDisplayName(),

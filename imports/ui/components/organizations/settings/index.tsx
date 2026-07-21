@@ -185,7 +185,7 @@ export function OrganizationSettings({ organization }: Props) {
   function deleteConfirmAttr() {
     return {
       confirmText: t(
-        "organizations.settings.reallydelete",
+        "organizations.settings.reallyDelete",
         "Please confirm that you would like to delete {ORGANIZATION}. This cannot be undone.",
         { ORGANIZATION: organization.name },
       ),

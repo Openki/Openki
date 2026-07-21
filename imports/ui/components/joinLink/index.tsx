@@ -22,7 +22,7 @@ export function JoinLink({ tenant }: Props) {
   function deleteConfirmAttr(): DeleteConfirmProps {
     return {
       confirmText: t(
-        "joinLink.reallydelete",
+        "joinLink.reallyDelete",
         "Please confirm that you would like to delete this join link.",
       ),
       confirmButton: t("joinLink.confirm.button", "Delete this join link"),

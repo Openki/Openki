@@ -36,7 +36,7 @@ export function Display({ venue, onEdit }: { venue: VenueModel; onEdit: () => vo
   function deleteConfirmDialogAttr(): DeleteConfirmDialogProps {
     return {
       confirmText: t(
-        "venue.reallydelete",
+        "venue.reallyDelete",
         "Please confirm that you would like to delete this venue. This cannot be undone.",
       ),
       confirmButton: t("venue.detail.remove", "Remove this venue"),

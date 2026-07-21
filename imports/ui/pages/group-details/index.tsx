@@ -24,7 +24,7 @@ import { Roles } from "../../components/groups/roles";
 import { Sharing } from "../../components/sharing";
 import { ArchiveButton } from "./ArchiveButton";
 import { UnarchiveButton } from "./UnarchiveButton";
-import { ConfirmDialog } from "./ConfirmDialog";
+import { DeleteConfirmDialog } from "./DeleteConfirmDialog";
 import { Header } from "./header";
 import { Submenu } from "./submenu";
 import { ActionResult } from "/imports/ui/components/ActionResult";
@@ -294,7 +294,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
                         />
                       </div>
                     ) : (
-                      <ConfirmDialog
+                      <DeleteConfirmDialog
                         archiveButton={!group.archived}
                         disabled={isBusy}
                         group={group}

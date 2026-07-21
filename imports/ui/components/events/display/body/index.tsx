@@ -11,12 +11,14 @@ import { useDetails } from "/imports/api/groups/publications";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
-import { Props as DeleteConfirmDialogProps } from "./delete-confirm-dialog";
+import {
+  EventDeleteConfirmDialog,
+  Props as DeleteConfirmDialogProps,
+} from "./delete-confirm-dialog";
 import { CancelConfirmDialog, Props as CancelConfirmDialogProps } from "./cancel-confirm-dialog";
 import { EventReplication, Props as EventReplicationProps } from "../../replication";
 import { Content } from "../content";
 import { Files } from "../../../groups/Files";
-import { DeleteConfirmDialog } from "../../../delete-confirm-dialog";
 import { Button, ButtonDelete, ButtonEdit } from "../../../Buttons";
 
 import "./styles.scss";
@@ -146,13 +148,10 @@ export function Display({
   }
   function deleteConfirmDialogAttr(): DeleteConfirmDialogProps {
     return {
-      confirmText: t(
-        "event.realydelete",
-        "Please confirm that you would like to delete this event. This cannot be undone, the event will be permanently deleted and not visible any more. If the event is allready shared or published somewhere we strongly recomend to instead only canceling it.",
-      ),
-      confirmButton: t("event.delete.confirm.button", "Delete event without notifying anyone"),
-      cancelButton: t("event.delete.confirm.cancel.button", "Rather mark as canceled"),
-      busyButton: t("event.delete.confirm.button.busy", "Deleting event…"),
+      onEventCancel: async () => {
+        setCanceling(true);
+        setExpanded(false);
+      },
       onRemove: async () => {
         const { title, region } = event;
         const group = event.groupId;
@@ -297,7 +296,7 @@ export function Display({
                 </>
               )}
             </div>
-            {expanded && <DeleteConfirmDialog {...deleteConfirmDialogAttr()} />}
+            {expanded && <EventDeleteConfirmDialog {...deleteConfirmDialogAttr()} />}
             {canceling && <CancelConfirmDialog {...cancelConfirmDialogAttr()} />}
           </>
         )
