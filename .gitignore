@@ -32,4 +32,5 @@ jsconfig.json
 
 tests/screenshots
 
+.env*
 .env.dev
