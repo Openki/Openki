@@ -1,0 +1,80 @@
+services:
+  # ─────────────────────────────────────────────
+  # MongoDB
+  # ─────────────────────────────────────────────
+  mongo:
+    image: dhi.io/mongodb:8-compat
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+
+  # ─────────────────────────────────────────────
+  # Garage - S3-compatible object storage
+  # ─────────────────────────────────────────────
+  garages3:
+    image: dxflrs/garage:v2.3.0
+    restart: unless-stopped
+    volumes:
+      - ./docker/garage.toml:/etc/garage.toml:ro
+      - garage-meta:/var/lib/garage/meta
+      - garage-data:/var/lib/garage/data
+    ports:
+      - "3900:3900" # S3 API (used by the app server)
+      - "3902:3902" # public web endpoint (used by the browser to load uploaded files)
+      - "3903:3903" # admin API
+    networks:
+      - app-network
+
+  # One-shot: creates the "openki-dev" bucket + access key on first start.
+  # Shares garages3's network namespace so the garage CLI talks to it over
+  # localhost. Re-running it is safe, it skips steps already done.
+  garages3-init:
+    image: dxflrs/garage:v2.3.0
+    depends_on:
+      - garages3
+    network_mode: "service:garages3"
+    volumes:
+      - ./docker/garage.toml:/etc/garage.toml:ro
+      - ./docker/garage-bootstrap.sh:/garage-bootstrap.sh:ro
+    entrypoint: ["/bin/sh", "/garage-bootstrap.sh"]
+    restart: "no"
+
+  # ─────────────────────────────────────────────
+  # Meteor app (dev mode, hot code reload + debugger)
+  # ─────────────────────────────────────────────
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.env
+    restart: unless-stopped
+    depends_on:
+      - mongo
+      - garages3-init
+    ports:
+      - "3000:3000" # app
+      - "9229:9229" # node --inspect debugger
+    environment:
+      ROOT_URL: http://localhost:3000
+      PORT: 3000
+      MONGO_URL: mongodb://mongo:27017/openki
+    volumes:
+      - .:/app
+      - app-node-modules:/app/node_modules
+      - app-meteor-local:/app/.meteor/local
+    networks:
+      - app-network
+
+volumes:
+  mongo-data:
+  garage-meta:
+  garage-data:
+  app-node-modules:
+  app-meteor-local:
+
+networks:
+  app-network:
+    driver: bridge

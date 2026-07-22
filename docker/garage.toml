@@ -1,0 +1,29 @@
+# Garage config for LOCAL DEVELOPMENT ONLY (used by docker-compose.dev.yml).
+# Single-node cluster, no replication. The secrets below are dev-only dummies
+# committed to the repo on purpose, same as the fake S3 creds in
+# settings/docker-dev.json - do NOT reuse them anywhere real.
+
+metadata_dir = "/var/lib/garage/meta"
+data_dir = "/var/lib/garage/data"
+db_engine = "sqlite"
+
+replication_factor = 1
+
+rpc_bind_addr = "[::]:3901"
+rpc_public_addr = "127.0.0.1:3901"
+rpc_secret = "6c5da465be624589c0e8b4ddbff9aa90dc2683e0cde94727f99362f1fd7333aa"
+
+[s3_api]
+s3_region = "garage"
+api_bind_addr = "[::]:3900"
+root_domain = ".s3.garage.localhost"
+
+[s3_web]
+bind_addr = "[::]:3902"
+root_domain = ".web.garage.localhost"
+index = "index.html"
+
+[admin]
+api_bind_addr = "[::]:3903"
+admin_token = "Zfy0iHoLF9UmealglDqCNWh2aK1yCKaCknWyGKeXEg4="
+metrics_token = "tzPao3hkKVmrWibWyRl8DIn0WOG+i+tXdOhzMfATEvI="
