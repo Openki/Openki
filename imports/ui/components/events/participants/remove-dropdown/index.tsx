@@ -28,6 +28,11 @@ export function RemoveDropdown({ userId, onClick }: Props) {
             Tooltips.hide();
           }, 0);
         }}
+        /* 
+          HACK: Is not possible to combine dropdown and tooltip. 
+          So we add aria-description to describe the button. 
+        */
+        aria-description={t("eventParticipant.remove", "Remove user")}
       >
         {/* Give some padding to the tooltip element so the user can easy point on it */}
         <span className="p-3" data-bs-title={t("eventParticipant.remove", "Remove user")}>
