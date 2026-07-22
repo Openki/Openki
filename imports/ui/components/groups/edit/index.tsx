@@ -165,14 +165,16 @@ export function Edit(props: Props) {
   } = useMeasureTime();
 
   const [editingCategories, setEditingCategories] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState(props.categories || []);
   /**
    * fullRoleSelection is used in the group edit view.
    * When disabled, a simpler view is shown. This is used in /frame/propose
    */
-  const [fullRoleSelection, setFullRoleSelection] = useState(true);
+  const fullRoleSelection = !props.isFrame;
   // For iframes: On true shows a simple role selection like: [I want to learn] [I can teach]
-  const [simpleRoleSelection, setSimpleRoleSelection] = useState(false);
+  // When we're in the propose frame, show a simplified role selection
+  const simpleRoleSelection =
+    props.isFrame && !props.hideRoleSelection && !!props.roles?.includes("mentor");
   // For iframes: Keep state of simple role selection
   const [simpleSelectedRole, setSimpleSelectedRole] = useState("participant");
 
@@ -246,18 +248,6 @@ export function Edit(props: Props) {
     setSimpleSelectedRole("participant");
     resetFocusTime();
   };
-
-  useEffect(() => {
-    // Show category selection right away for new groups
-    setEditingCategories(false);
-    setSelectedCategories(props.categories || []);
-
-    if (props.isFrame) {
-      // When we're in the propose frame, show a simplified role selection
-      setSimpleRoleSelection(!props.hideRoleSelection && !!props.roles?.includes("mentor"));
-      setFullRoleSelection(false);
-    }
-  }, [isNew, props.categories, props.isFrame, props.hideRoleSelection, props.roles]);
 
   function simpleRoleActiveClass(role: string) {
     // HACK using btn-add and btn-edit to show activation state
@@ -552,7 +542,7 @@ export function Edit(props: Props) {
               <div className="col-md">
                 {!editingCategories ? (
                   <>
-                    {props.categories?.length && (
+                    {!!props.categories?.length && (
                       <>
                         <div className="form-label">
                           {t("group.edit.categories", "Categories")}
