@@ -31,3 +31,5 @@ jsconfig.json
 .qlty/
 
 tests/screenshots
+
+.env.dev

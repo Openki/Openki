@@ -32,7 +32,7 @@ fi
 
 if ! /garage key list | grep -q "${KEY_NAME}"; then
   echo "[garage-bootstrap] importing dev access key"
-  /garage key import "${KEY_ID}" "${SECRET_KEY}" --name "${KEY_NAME}" --yes
+  /garage key import "${KEY_ID}" "${SECRET_KEY}" -n "${KEY_NAME}" --yes
 else
   echo "[garage-bootstrap] key ${KEY_NAME} already exists, skipping"
 fi
