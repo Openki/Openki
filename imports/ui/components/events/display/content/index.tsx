@@ -74,7 +74,7 @@ export function Content({ event }: { event: EventModel }) {
         </div>
         {!event.isPrivate() && (
           <>
-            <PricePolicy dismissible wrap="event-details-price-policy" />
+            <PricePolicy dismissible wrap="px-3" />
             <div className="p-3 text-end" id="share">
               <h4>
                 {t("sharing.title", "Invite your friends")}{" "}
