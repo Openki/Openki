@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { GroupModel } from "/imports/api/groups/groups";
 import { Subscribe, processChange } from "/imports/api/groups/subscription";
 import { Regions } from "/imports/api/regions/regions";
-import { UserModel } from "/imports/api/users/users";
+import { User, UserModel } from "/imports/api/users/users";
 
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { RoleEntity } from "/imports/utils/PublicSettings";
@@ -52,6 +52,11 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
     );
   }
 
+  function canSubscribe() {
+    const operator = user;
+    return groupSubscribe().validFor(operator || (new User() as UserModel));
+  }
+
   async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -86,6 +91,10 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
   });
 
   if (isRolesLoading()) {
+    return null;
+  }
+
+  if (!canSubscribe()) {
     return null;
   }
 
