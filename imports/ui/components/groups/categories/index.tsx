@@ -46,9 +46,9 @@ function CategoryLabelLinked({
 
 export interface GroupCategoriesProps {
   categories: string[];
-  onClick?: (categorie: string) => Promise<void>;
-  onMouseOver?: (categorie: string) => Promise<void>;
-  onMouseOut?: (categorie: string) => Promise<void>;
+  onClick?: (category: string) => Promise<void>;
+  onMouseOver?: (category: string) => Promise<void>;
+  onMouseOut?: (category: string) => Promise<void>;
 }
 
 export function GroupCategories({
@@ -63,19 +63,13 @@ export function GroupCategories({
   return (
     <div className="group-categories">
       <div className="tag-group multiline">
-        {categories.map((c) => (
+        {categories.map((category) => (
           <CategoryLabelLinked
-            key={c}
-            category={c}
-            onMouseOver={async () => {
-              await onMouseOver?.(c);
-            }}
-            onMouseOut={async () => {
-              await onMouseOut?.(c);
-            }}
-            onClick={async () => {
-              await onClick?.(c);
-            }}
+            key={category}
+            category={category}
+            onMouseOver={async () => await onMouseOver?.(category)}
+            onMouseOut={async () => await onMouseOut?.(category)}
+            onClick={async () => await onClick?.(category)}
           />
         ))}
       </div>

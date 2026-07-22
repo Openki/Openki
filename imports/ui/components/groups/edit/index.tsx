@@ -165,14 +165,16 @@ export function Edit(props: Props) {
   } = useMeasureTime();
 
   const [editingCategories, setEditingCategories] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState(props.categories || []);
   /**
    * fullRoleSelection is used in the group edit view.
    * When disabled, a simpler view is shown. This is used in /frame/propose
    */
-  const [fullRoleSelection, setFullRoleSelection] = useState(true);
+  const fullRoleSelection = !props.isFrame;
   // For iframes: On true shows a simple role selection like: [I want to learn] [I can teach]
-  const [simpleRoleSelection, setSimpleRoleSelection] = useState(false);
+  // When we're in the propose frame, show a simplified role selection
+  const simpleRoleSelection =
+    props.isFrame && !props.hideRoleSelection && !!props.roles?.includes("mentor");
   // For iframes: Keep state of simple role selection
   const [simpleSelectedRole, setSimpleSelectedRole] = useState("participant");
 
@@ -246,18 +248,6 @@ export function Edit(props: Props) {
     setSimpleSelectedRole("participant");
     resetFocusTime();
   };
-
-  useEffect(() => {
-    // Show category selection right away for new groups
-    setEditingCategories(isNew);
-    setSelectedCategories(props.categories || []);
-
-    if (props.isFrame) {
-      // When we're in the propose frame, show a simplified role selection
-      setSimpleRoleSelection(!props.hideRoleSelection && !!props.roles?.includes("mentor"));
-      setFullRoleSelection(false);
-    }
-  }, [isNew, props.categories, props.isFrame, props.hideRoleSelection, props.roles]);
 
   function simpleRoleActiveClass(role: string) {
     // HACK using btn-add and btn-edit to show activation state
@@ -550,26 +540,29 @@ export function Edit(props: Props) {
           <div className="row gap-3 mb-3">
             {!hideCategories() && (
               <div className="col-md">
-                {editingCategories ? (
-                  <SelectCategories {...selectCategoriesAttr()} />
-                ) : (
+                {!editingCategories ? (
                   <>
-                    <div className="form-label">{t("group.edit.categories", "Categories")}</div>
-                    {props.categories ? (
-                      <GroupCategories categories={props.categories} />
-                    ) : (
-                      <div>{t("group.edit.no.categories", "No categories")}</div>
-                    )}{" "}
+                    {!!props.categories?.length && (
+                      <>
+                        <div className="form-label">
+                          {t("group.edit.categories", "Categories")}
+                          <small> {t("_inputField.optional")}</small>
+                        </div>
+                        <GroupCategories categories={props.categories} />
+                      </>
+                    )}
                     <button
                       type="button"
-                      className="btn btn-edit"
-                      onClick={() => {
-                        setEditingCategories(true);
-                      }}
+                      className="btn btn-sm btn-edit"
+                      onClick={() => setEditingCategories(true)}
                     >
-                      {t("group.edit.edit_categories")}
+                      {!props.categories?.length
+                        ? t("group.edit.addCategories", "Add categories")
+                        : t("_button.edit")}
                     </button>
                   </>
+                ) : (
+                  <SelectCategories {...selectCategoriesAttr()} />
                 )}
               </div>
             )}
