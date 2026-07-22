@@ -54,9 +54,10 @@ export function SelectCategories(props: Props) {
 
   return (
     <>
-      <label className="form-label mb-0">
-        {t("group.edit.categoriesOptional", "Categories (optional)")}
-      </label>
+      <div className="form-label mb-0">
+        {t("group.edit.categories", "Categories")}
+        <small> {t("_inputField.optional")}</small>
+      </div>
       {availableCategories().map((category) => {
         return (
           <React.Fragment key={category}>

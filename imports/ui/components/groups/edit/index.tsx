@@ -550,28 +550,29 @@ export function Edit(props: Props) {
           <div className="row gap-3 mb-3">
             {!hideCategories() && (
               <div className="col-md">
-                {editingCategories ? (
-                  <SelectCategories {...selectCategoriesAttr()} />
-                ) : (
+                {!editingCategories ? (
                   <>
-                    {!isNew && (
-                      <div className="form-label">
-                        {t("group.edit.categoriesOptional", "Categories (optional)")}
-                      </div>
-                    )}
-                    {!isNew && props.categories && props.categories.length > 0 && (
-                      <GroupCategories categories={props.categories} />
+                    {props.categories?.length && (
+                      <>
+                        <div className="form-label">
+                          {t("group.edit.categories", "Categories")}
+                          <small> {t("_inputField.optional")}</small>
+                        </div>
+                        <GroupCategories categories={props.categories} />
+                      </>
                     )}
                     <button
                       type="button"
-                      className="btn btn-edit"
+                      className="btn btn-sm btn-edit"
                       onClick={() => setEditingCategories(true)}
                     >
-                      {isNew
+                      {!props.categories?.length
                         ? t("group.edit.addCategories", "Add categories")
-                        : t("group.edit.editCategories")}
+                        : t("_button.edit")}
                     </button>
                   </>
+                ) : (
+                  <SelectCategories {...selectCategoriesAttr()} />
                 )}
               </div>
             )}
