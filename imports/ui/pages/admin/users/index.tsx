@@ -45,7 +45,7 @@ export function AdminUsersPage() {
           <input
             className="form-control"
             placeholder={t("users.field.find.placeholder", "Type name of user")}
-            type="text"
+            type="search"
             onChange={(event) => {
               setUserSearch(event.currentTarget.value);
             }}

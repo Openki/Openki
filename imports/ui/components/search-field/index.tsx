@@ -35,7 +35,7 @@ export function SearchField({ search, color, onChange, onGo }: Props) {
       <div className="input-group input-group-lg">
         <input
           className="form-control search-input"
-          type="text"
+          type="search"
           id="find"
           defaultValue={search}
           placeholder={t("find.search_placeholder", "Everything")}

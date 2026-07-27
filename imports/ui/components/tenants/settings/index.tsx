@@ -49,7 +49,7 @@ export function Settings({ tenant }: Props) {
         <div className="mb-3">
           <FormControl
             id="tenant-settings-members-search"
-            type="text"
+            type="search"
             label={t(
               "tenant.settings.field.addMembers",
               "Add existing {SITENAME} members to {TENANT}.",
@@ -84,7 +84,7 @@ export function Settings({ tenant }: Props) {
         <div className="mb-3">
           <FormControl
             id="tenant-setting-admins-search"
-            type="text"
+            type="search"
             label={t(
               "tenant.settings.field.addAdmins",
               "Add an existing {SITENAME} user as a new admin to {TENANT}.",

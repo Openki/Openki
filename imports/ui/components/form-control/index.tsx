@@ -206,6 +206,7 @@ function createInputElement<K extends string>(props: Props<K>) {
     case "email":
     case "url":
     case "password":
+    case "search":
       return (
         <input
           type={type}
