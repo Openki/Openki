@@ -1,5 +1,4 @@
 {
-  "extensions": ["ttf", "woff2"],
   "map": {
     "node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400.ttf": "webfonts/fa-regular-400.ttf",
     "node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff2": "webfonts/fa-regular-400.woff2",
@@ -12,6 +11,32 @@
     "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-900.ttf": "webfonts/fa-brands-900.ttf",
     "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-900.woff2": "webfonts/fa-brands-900.woff2",
     "node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf": "webfonts/fa-solid-900.ttf",
-    "node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2": "webfonts/fa-solid-900.woff2"
+    "node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2": "webfonts/fa-solid-900.woff2",
+
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-200-normal.woff": "fonts/source-sans-pro-latin-200-normal.woff",
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-200-normal.woff2": "fonts/source-sans-pro-latin-200-normal.woff2",
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-300-normal.woff": "fonts/source-sans-pro-latin-300-normal.woff",
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-300-normal.woff2": "fonts/source-sans-pro-latin-300-normal.woff2",
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-400-normal.woff": "fonts/source-sans-pro-latin-400-normal.woff",
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-400-normal.woff2": "fonts/source-sans-pro-latin-400-normal.woff2",
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-600-normal.woff": "fonts/source-sans-pro-latin-600-normal.woff",
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-600-normal.woff2": "fonts/source-sans-pro-latin-600-normal.woff2",
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-700-normal.woff": "fonts/source-sans-pro-latin-700-normal.woff",
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-700-normal.woff2": "fonts/source-sans-pro-latin-700-normal.woff2",
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-900-normal.woff": "fonts/source-sans-pro-latin-900-normal.woff",
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-900-normal.woff2": "fonts/source-sans-pro-latin-900-normal.woff2",
+
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-200-italic.woff": "fonts/source-sans-pro-latin-200-italic.woff",
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-200-italic.woff2": "fonts/source-sans-pro-latin-200-italic.woff2",
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-300-italic.woff": "fonts/source-sans-pro-latin-300-italic.woff",
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-300-italic.woff2": "fonts/source-sans-pro-latin-300-italic.woff2",
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-400-italic.woff": "fonts/source-sans-pro-latin-400-italic.woff",
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-400-italic.woff2": "fonts/source-sans-pro-latin-400-italic.woff2",
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-600-italic.woff": "fonts/source-sans-pro-latin-600-italic.woff",
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-600-italic.woff2": "fonts/source-sans-pro-latin-600-italic.woff2",
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-700-italic.woff": "fonts/source-sans-pro-latin-700-italic.woff",
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-700-italic.woff2": "fonts/source-sans-pro-latin-700-italic.woff2",
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-900-italic.woff": "fonts/source-sans-pro-latin-900-italic.woff",
+    "node_modules/@fontsource/source-sans-pro/files/source-sans-pro-latin-900-italic.woff2": "fonts/source-sans-pro-latin-900-italic.woff2"
   }
 }
