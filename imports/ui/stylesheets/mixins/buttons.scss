@@ -3,33 +3,11 @@
 // Button mixins
 // --------------------------------------------------
 
-@mixin btn-base {
-  @include button-size(
-    $padding-base-vertical,
-    $padding-base-horizontal,
-    $font-size-base,
-    $line-height-base,
-    $btn-border-radius-base
-  );
-}
-
 @mixin btn-lg {
   @include button-size(
     $padding-large-vertical,
     $padding-large-horizontal,
-    $font-size-large,
-    $btn-border-radius-large
+    $font-size-lg,
+    $btn-border-radius-lg
   );
-}
-
-@mixin btn-sm {
-  @media (min-width: $screen-xs) {
-    @include button-size(
-      $padding-small-vertical,
-      $padding-small-horizontal,
-      $font-size-small,
-      $line-height-small,
-      $btn-border-radius-small
-    );
-  }
 }
