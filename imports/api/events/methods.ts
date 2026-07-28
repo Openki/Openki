@@ -198,7 +198,7 @@ export const save = ServerMethod(
       }
 
       if (!editFields.startLocal) {
-        throw new Meteor.Error(400, "Event date not provided");
+        throw new Meteor.Error(400, "Event start date not provided");
       }
 
       const testedOrganizations = await Promise.all(
@@ -212,9 +212,12 @@ export const save = ServerMethod(
       );
       editFields.organizations = testedOrganizations;
 
-      // Coerce faulty end dates
-      if (!editFields.endLocal || editFields.endLocal < editFields.startLocal) {
-        editFields.endLocal = editFields.startLocal;
+      // Validate end dates
+      if (!editFields.endLocal) {
+        throw new Meteor.Error(400, "Event end date not provided");
+      }
+      if (editFields.endLocal < editFields.startLocal) {
+        throw new Meteor.Error(400, "Event end date before start date");
       }
 
       editFields.internal = !!editFields.internal;
