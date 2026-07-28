@@ -7,9 +7,11 @@ import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 import { Role } from "./role";
 import { hasRoleUser } from "/imports/utils/group-role-utils";
 import { useUserId } from "/imports/utils/react-meteor-data";
+import { useTranslation } from "react-i18next";
 
 export function Roles({ group }: { group: GroupModel }) {
   const userId = useUserId();
+  const { t } = useTranslation();
 
   const [isLoading, regionRoles] = useRegionRoles(group.region);
 
