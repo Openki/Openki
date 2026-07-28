@@ -1,10 +1,30 @@
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 import scrollIntoView from "scroll-into-view-if-needed";
 
+import { ScrollBarHelper } from "/imports/startup/client/bootstrap";
 import { useHash } from "/imports/utils/react-meteor-router";
 import { useEventListener } from "/imports/utils/useEventListener";
+import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
+
+// Source: https://stackoverflow.com/questions/326069/how-to-identify-if-a-webpage-is-being-loaded-inside-an-iframe-or-directly-into-t/326076#326076
+const inIframe = window.self !== window.top;
+
+function scroll(element: HTMLElement, behavior: ScrollBehavior) {
+  if (inIframe) {
+    // in iframe we use the native scrollIntoView function, because it supports
+    // scrolling the parent window.
+    element.scrollIntoView({
+      behavior,
+    });
+  } else {
+    scrollIntoView(element, {
+      scrollMode: "if-needed",
+      behavior,
+    });
+  }
+}
 
 export function Panel({
   id,
@@ -26,13 +46,22 @@ export function Panel({
   const hashParams = new URLSearchParams(hash);
   const isShowed = id === hashParams.get("show");
 
+  function handleOpen() {
+    location.hash = `show=${id}`;
+    new ScrollBarHelper().hide();
+  }
+
   function handleClose() {
+    const x = window.scrollX;
+    const y = window.scrollY;
+
     location.hash = "";
+    new ScrollBarHelper().reset();
+
+    window.scrollTo(x, y);
 
     if (thumbRef.current) {
-      thumbRef.current.scrollIntoView({
-        behavior: "smooth",
-      });
+      scroll(thumbRef.current, "instant");
     }
   }
 
@@ -40,16 +69,7 @@ export function Panel({
     onChange(isShowed ? "full" : "thumb");
     if (isShowed) {
       if (thumbRef.current) {
-        // vertical, supported in iframes
-        thumbRef.current.scrollIntoView({
-          behavior: "smooth",
-        });
-        // horizontal
-        scrollIntoView(thumbRef.current, {
-          inline: "nearest",
-          scrollMode: "if-needed",
-          behavior: "smooth" as ScrollBehavior,
-        });
+        scroll(thumbRef.current, "smooth");
       }
       setExpanded(true);
     } else {
@@ -81,30 +101,18 @@ export function Panel({
   });
 
   return (
-    <div className="panel">
+    <div className={cx("panel", inIframe && "panel-iframe")}>
       <div className="panel-thumb" ref={thumbRef}>
-        <div
-          className="panel-thumb-body"
-          onClick={() => {
-            location.hash = `show=${id}`;
-          }}
-        >
+        <div className="panel-thumb-body" onClick={handleOpen}>
           {thumb}
         </div>
       </div>
       {expanded && (
         <div ref={fullRef}>
-          <div
-            className="panel-full-bg overflow-auto smooth-scroll"
-            onClick={() => {
-              handleClose();
-            }}
-          >
+          <div className="panel-full-bg overflow-auto smooth-scroll" onClick={handleClose}>
             <div
               className="panel-full"
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
+              onClick={(e) => e.stopPropagation()}
               style={{
                 left: thumbRef.current?.getBoundingClientRect().left,
                 right: thumbRef.current?.getBoundingClientRect().right,
@@ -116,12 +124,7 @@ export function Panel({
               <div className="panel-full-body">
                 {full}
                 <div className="panel-minimize">
-                  <button
-                    className="btn-close btn-close-circle"
-                    onClick={() => {
-                      location.hash = "";
-                    }}
-                  ></button>
+                  <button className="btn-close btn-close-circle" onClick={handleClose}></button>
                 </div>
               </div>
             </div>

@@ -1,4 +1,5 @@
 @use "sass:color";
+@import "{}/imports/ui/stylesheets/variables/index";
 
 .panel-thumb {
   position: relative;
@@ -34,6 +35,14 @@
   width: 92% !important;
   padding-bottom: 10px !important;
   height: auto !important;
+
+  // If the panel is opened in an iframe, we don't want to set the top position
+  // to 10px, because it will be cut off by the iframe. Instead, we use the position
+  // of the thumb, so that it will be positioned where the user was looking.
+  // This is useful in combination with the iframeHeightAdjust plugin.
+  .panel:not(.panel-iframe) & {
+    top: 10px !important;
+  }
 }
 
 @media (width >= 1200px) {
@@ -78,6 +87,14 @@
 
 .panel-animation .panel-calendar {
   height: calc(var(--bs-body-font-size) * var(--bs-body-line-height));
+}
+
+.panel .animated-bg {
+  transition: background-color 0.35s;
+}
+
+.panel .panel-animation .animated-bg {
+  background-color: $card-bg !important;
 }
 
 .panel .card-header {

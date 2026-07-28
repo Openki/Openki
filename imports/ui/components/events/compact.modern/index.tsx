@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { EventModel } from "/imports/api/events/events";
 
-import { Panel } from "./panel";
+import { Panel } from "../../panel";
 import { Full } from "./Full";
 import { Thumb } from "./Thumb";
 

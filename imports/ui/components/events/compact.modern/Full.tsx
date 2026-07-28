@@ -15,12 +15,12 @@ import { RegistrationParticipants } from "../display/registration.modern";
 import { Discussion } from "../../groups/discussion.modern";
 import { Display } from "../../location/display";
 
-import { OrganizationName } from "./OrganizationName";
+import { OrganizationName } from "../../OrganizationName";
 import { useDetails } from "/imports/api/groups/publications";
 import { StatePanel } from "./StatePanel";
 import { CustomFieldDisplay } from "../../groups/CustomFieldDisplay";
 import { ReactJoin } from "/imports/utils/ReactJoin";
-import { ImagePlaceholder } from "./ImagePlaceholder";
+import { ImagePlaceholder } from "../../ImagePlaceholder";
 
 function DisplayDiscussion({ eventId, groupId }: { eventId: string; groupId: string }) {
   const [isLoading, group] = useDetails(groupId);
@@ -92,7 +92,7 @@ export function Full({
           <StatePanel event={event} />
         </ImagePlaceholder>
       )}
-      <div className="card-body">
+      <div className="card-body animated-bg bg-event">
         <h3 className="card-title min-h-[2lh] fw-bold">{event.title}</h3>
         <p className="card-text">
           <div className="panel-calendar">

@@ -1,0 +1,9 @@
+@import "{}/imports/ui/stylesheets/variables/index";
+
+.group-edit-body {
+  @include media-breakpoint-up(sm) {
+    border-width: 2px;
+    border-color: $group-border-color;
+    border-style: $proposal-border-style;
+  }
+}

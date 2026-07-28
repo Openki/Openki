@@ -1,0 +1,19 @@
+@use "sass:color";
+@import "{}/imports/ui/stylesheets/variables/index";
+
+.group-role-btn {
+  &[data-bs-toggle="collapse"]:not(.collapsed) {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &[data-bs-toggle="collapse"].collapsed {
+    transition:
+      border-bottom-left-radius 0s ease 0.35s,
+      border-bottom-right-radius 0s ease 0.35s;
+  }
+}
+
+.role-unsubscribe-btn {
+  margin: -2px 0;
+}

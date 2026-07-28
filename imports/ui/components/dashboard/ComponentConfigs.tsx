@@ -1,6 +1,7 @@
 import React from "react";
 import { Router } from "meteor/iron:router";
 import { PublicSettings } from "/imports/utils/PublicSettings";
+import QRCode from "react-qr-code";
 
 import { Groups as GroupCollection, GroupModel } from "/imports/api/groups/groups";
 import { Events as EventCollection, EventModel } from "/imports/api/events/events";
@@ -13,11 +14,14 @@ import * as Events from "/imports/api/events/publications";
 import * as Organizations from "/imports/api/organizations/publications";
 
 import { Edit } from "../groups/edit";
+import { Edit as EditModern } from "../groups/edit.modern";
 import { GroupCompact } from "../groups/compact";
 import { EventCompact } from "../events/compact";
 import { EventCompact as EventCompactModern } from "../events/compact.modern";
+import { GroupCompact as GroupCompactModern } from "../groups/compact.modern";
 import { EventsMap } from "../events/map";
 import { CompactPropose } from "../groups/CompactPropose";
+import { CompactPropose as CompactModernPropose } from "../groups/CompactModernPropose";
 import { ListOfEntities, ComponentWithEntities, StaticComponent } from "./ComponentBaseTypes";
 
 /* This file contains the entities that an admin can use to configure a dashboard. Look at the mapping at the end of the file. */
@@ -37,6 +41,21 @@ const group: ListOfEntities<GroupModel> = {
       <div className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
         <GroupCompact group={entity} />
       </div>
+    </React.Fragment>
+  ),
+};
+
+const groupModern: ListOfEntities<GroupModel> = {
+  route: "search",
+  filter: GroupCollection.Filtering,
+  find: Groups.useFindFilter,
+  element: ({ entity, index, params }) => (
+    <React.Fragment key={entity._id}>
+      {/* The seventh box should always be the propose one, after then every 21 */}
+      {PublicSettings.feature.proposeGroupBox && (index - 6) % 21 === 0 && (
+        <CompactModernPropose organization={params.organization} />
+      )}
+      <GroupCompactModern group={entity} />
     </React.Fragment>
   ),
 };
@@ -135,8 +154,21 @@ const propose: StaticComponent = {
   ),
 };
 
+const proposeModern: StaticComponent = {
+  component: ({ params }) => (
+    <div className="mw-md">
+      <EditModern {...params} />
+    </div>
+  ),
+};
+
+const proposeQrCode: StaticComponent = {
+  component: ({ params }) => <QRCode value={Router.url("proposeGroup", {}, { query: params })} />,
+};
+
 export const mapping = {
   group,
+  groupModern,
   groupWithoutPropose,
   event,
   eventModern,
@@ -144,4 +176,6 @@ export const mapping = {
   organization,
   eventsMap,
   propose,
+  proposeModern,
+  proposeQrCode,
 } as const;

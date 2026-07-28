@@ -46,7 +46,8 @@ $event-trashcan-color: #bfbfbf;
 // ========================================================================================
 $group-border-width: 7px;
 $group-border-color: $blue-lighter;
-$has-upcoming-events-bg: $blue-lighter;
+$group-bg: $blue-lighter;
+$has-upcoming-events-bg: $group-bg;
 $proposal-border-style: dashed;
 $has-past-events-border-style: solid;
 

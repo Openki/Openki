@@ -2,7 +2,7 @@ import React from "react";
 import { StatePanel } from "./StatePanel";
 import { EventModel } from "/imports/api/events/events";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
-import { ImagePlaceholder } from "./ImagePlaceholder";
+import { ImagePlaceholder } from "../../ImagePlaceholder";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { useViewportSize } from "/imports/ui/lib/useViewportSize";
 
@@ -15,7 +15,7 @@ export function Thumb({ event }: { event: EventModel }) {
 
   return (
     <div
-      className="card me-1"
+      className="card me-3 border-2 border-dark-subtle"
       style={isMobileScreen ? { width: 270, minWidth: 270 } : { width: 320, minWidth: 320 }}
     >
       {event?.publicUrlForCompactImage() ? (
@@ -30,7 +30,7 @@ export function Thumb({ event }: { event: EventModel }) {
           <StatePanel event={event} />
         </ImagePlaceholder>
       )}
-      <div className="card-body">
+      <div className="card-body bg-event">
         <h3 className="card-title line-clamp-2 min-h-[2lh] fw-bold">{event.title}</h3>
         <p className="card-text text-truncate">
           <i className="fa-regular fa-fw fa-clock" /> {timeFormat(event.startLocal)} -{" "}
