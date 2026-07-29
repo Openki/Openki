@@ -187,7 +187,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
               error={errors.email}
             />
           </div>
-          <div className="col-auto">
+          <div className="col-auto align-self-center pt-3">
             <a
               className="text-body-secondary mt-2 d-inline-block"
               data-bs-toggle="collapse"
