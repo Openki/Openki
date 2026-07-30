@@ -38,7 +38,7 @@ interface CommonProps {
 }
 
 interface TextInputProps {
-  type: "text" | "tel" | "email" | "url" | "password";
+  type: "text" | "tel" | "email" | "url" | "password" | "search";
   autoFocus?: boolean | undefined;
   /** Used for instructions or an example of the required data format. */
   placeholder?: string | undefined;
