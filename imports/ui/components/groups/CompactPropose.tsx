@@ -45,7 +45,7 @@ export function CompactPropose({ organization, organizationTagEvents }: Props) {
       ref={elementRef}
     >
       <div className="group-compact-content ps-2 pe-2">
-        <div className="group-compact-title mb-0">
+        <div className="group-compact-title my-0">
           <form
             onSubmit={(event) => {
               event.preventDefault();
