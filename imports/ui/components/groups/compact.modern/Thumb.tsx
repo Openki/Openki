@@ -19,7 +19,7 @@ export function Thumb({ group }: Props) {
   return (
     <div
       className={cx(
-        "card me-3 border-2 ",
+        "card border-2",
         group.hasState() === "proposal" ? "border-dashed" : "border-dark-subtle",
       )}
       style={isMobileScreen ? { width: 270, minWidth: 270 } : { width: 320, minWidth: 320 }}

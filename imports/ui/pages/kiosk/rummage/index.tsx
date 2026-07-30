@@ -1,80 +1,53 @@
 import React from "react";
 
-import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
+import { FindParams } from "/imports/api/groups/groups";
+import { useFindFilter } from "/imports/api/groups/publications";
 
-import { useDetails } from "/imports/api/organizations/publications";
-
+import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 import { PublicSettings } from "/imports/utils/PublicSettings";
-import { CssFromQuery } from "/imports/ui/lib/css-from-query";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
+import { SortSpec } from "/imports/utils/sort-spec";
+import { useFiltering } from "/imports/utils/filtering";
+import { CssFromQuery } from "/imports/ui/lib/css-from-query";
 
-import { MetaTags } from "/imports/ui/components/MetaTags";
-import { Dashboard } from "/imports/ui/components/dashboard";
-import { Find } from "/imports/ui/components/groups/find";
-import { NotFound } from "/imports/ui/pages/not-found";
 import { LoadingPage } from "/imports/ui/pages/loading";
 import { AccountTasks } from "/imports/ui/components/account-tasks";
+import { GroupCompact } from "/imports/ui/components/groups/compact.modern";
+import { CompactPropose } from "/imports/ui/components/groups/CompactModernPropose";
 
-export interface Props {
-  organizationId: string;
-  groupQuery: Record<string, string | undefined> & {
-    organization: string;
-    region: string | undefined;
-  };
-}
-
-export function KioskDashboardPage({ organizationId, groupQuery }: Props) {
-  const region = useCurrentRegion();
-  const query = useSearchParams();
+export function KioskRummagePage() {
+  let query = useSearchParams();
   const style = new CssFromQuery(query).getCssRules();
+  const region = useCurrentRegionId();
+  query = { ...query, region };
 
-  const [isLoading, organization] = useDetails(organizationId);
+  const filter = useFiltering(FindParams, query);
+  const sort = query.sort ? SortSpec.fromString(query.sort) : SortSpec.unordered();
+
+  const [isLoading, groups] = useFindFilter(filter.asQuery, undefined, undefined, sort.spec());
 
   if (isLoading()) {
     return <LoadingPage />;
   }
 
-  if (!organization) {
-    return <NotFound />;
-  }
-
-  const dashboardAttr = {
-    list: organization.dashboard || PublicSettings.organizationDashboardDefault || [],
-    defaultRegion: region?._id || "",
-    defaultOrganization: organization._id,
-  };
-
   return (
     <>
-      <MetaTags
-        title={organization.name}
-        description={organization.claim}
-        image={organization.publicLogoUrl()}
-      />
+      <MetaTags title="Rummage" />
       <style>{style}</style>
       <AccountTasks />
-
-      <div className="container my-3">
-        <div className="d-flex gap-3">
-          <div className="flex-grow-1">
-            <h1>{organization.name}</h1>
-            <p className="lead" dangerouslySetInnerHTML={{ __html: organization.description }} />
-          </div>
-          {organization.publicLogoUrl() && (
-            <img src={organization.publicLogoUrl()} alt={organization.name} />
-          )}
+      <div className="container-fluid">
+        <div className="d-flex align-items-stretch flex-wrap gap-3 justify-content-center">
+          {groups.map((group, index) => (
+            <React.Fragment key={group._id}>
+              {/* The seventh box should always be the propose one, after then every 11 */}
+              {PublicSettings.feature.proposeGroupBox && (index - 6) % 10 === 0 && (
+                <CompactPropose />
+              )}
+              <GroupCompact group={group} />
+            </React.Fragment>
+          ))}
         </div>
       </div>
-
-      {dashboardAttr.list.length ? (
-        <div className="pb-4">
-          <Dashboard {...dashboardAttr} />
-        </div>
-      ) : (
-        <div className="container pb-4">
-          <Find query={groupQuery} />
-        </div>
-      )}
     </>
   );
 }
@@ -82,5 +55,6 @@ export function KioskDashboardPage({ organizationId, groupQuery }: Props) {
 // for Blaze
 
 import "./template.html";
+import { MetaTags } from "/imports/ui/components/MetaTags";
 
-Template.registerHelper("KioskDashboardPage", () => KioskDashboardPage);
+Template.registerHelper("KioskRummagePage", () => KioskRummagePage);
