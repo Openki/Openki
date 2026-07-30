@@ -114,7 +114,11 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
      * @default 5
      */
     minNumber: Number,
-    /** A link to a page that explains regions, if not set then none link is shown. */
+    /*
+     * A link to a page that explains regions, if not set then none link is shown.
+     * The value can be a string or a object with key & values for every language
+     * eg. `{ "en": "...", "de": "...", ... }`
+     */
     aboutLink: Match.Maybe(LocalizedValuePattern),
   },
 
@@ -427,8 +431,7 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
    * This setting can be a string or a object with key & values for every language
    * eg. `{ "en": "...", "de": "...", ... }`
    * @default {
-                en: "/info/faq#why-cant-i-charge-a-fixed-fee-as-a-mentor",
-                de: "/info/faq#dürfen-kurse-etwas-kosten",
+                en: "/info/faq#why-cant-i-charge-a-fixed-fee-as-a-mentor"
               }
    */
   pricePolicyLink: LocalizedValuePattern,
@@ -564,8 +567,7 @@ const defaults = {
   footerLinks: [] as { link: string; key?: string; title_key?: string; text?: string }[],
   faqLink: "/info/faq",
   pricePolicyLink: {
-    en: "/info/faq#why-cant-i-charge-a-fixed-fee-as-a-mentor",
-    de: "/info/faq#dürfen-kurse-etwas-kosten",
+    en: "/info/faq#why-cant-i-charge-a-fixed-fee-as-a-mentor"
   },
   groupGuideLink: {
     en: "https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf",

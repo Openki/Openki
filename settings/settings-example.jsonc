@@ -466,8 +466,7 @@
      * This setting can be a string or a object with key & values for every language
      * eg. `{ "en": "...", "de": "...", ... }`
      * Default: `{
-                   en: "/info/faq#why-cant-i-charge-a-fixed-fee-as-a-mentor",
-                   de: "/info/faq#dürfen-kurse-etwas-kosten",
+                   en: "/info/faq#why-cant-i-charge-a-fixed-fee-as-a-mentor"
                  }`
      */
     "pricePolicyLink": "...",
