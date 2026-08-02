@@ -35,7 +35,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 # Copy the compiled bundle from the builder stage
-COPY --from=builder /build/bundle .
+COPY --from=builder --chown=node:node /build/bundle .
+
+# Switch to non-root before installing/running anything app-related
+USER node
+
 
 # Install server-side npm dependencies that Meteor bundled
 RUN cd programs/server && npm install --omit=dev
