@@ -4,22 +4,6 @@ set -euo pipefail
 ver=$(git describe --abbrev=0)
 completeVer=$(git describe)
 
-: << 'COMMENT'
-                    Is $CI_COMMIT_BRANCH present?
-                           /          \
-                     (Yes)/            \(No)
-                         v              v
-         [Use Branch Name]        Is $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME present?
-                                             /          \
-                                       (Yes)/            \(No)
-                                           v              v
-                         [Use MR Source Name]        Is $CI_COMMIT_TAG present?
-                                                                 /          \
-                                                           (Yes)/            \(No)
-                                                               v              v
-                                                       "tag_trigger"    "other_trigger"
-COMMENT
-
 branch_ini=${CI_COMMIT_BRANCH:-${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME:-${CI_COMMIT_TAG:+tag_trigger}}}
 branch=${branch_ini:-other_trigger}
 
