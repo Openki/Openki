@@ -5,6 +5,7 @@ import { ScrollBarHelper } from "/imports/startup/client/bootstrap";
 import { useHash } from "/imports/utils/react-meteor-router";
 import { useEventListener } from "/imports/utils/useEventListener";
 import { cx } from "/imports/utils/cx";
+import { Draggable } from "/imports/ui/components/groups/compact.modern/Draggable";
 
 import "./styles.scss";
 
@@ -102,13 +103,15 @@ export function Panel({
 
   return (
     <div className={cx("panel", inIframe && "panel-iframe")}>
-      <div className="panel-thumb" ref={thumbRef}>
-        <div className="panel-thumb-body" onClick={handleOpen}>
-          {thumb}
+      <Draggable>
+        <div className="panel-thumb" ref={thumbRef}>
+          <div className="panel-thumb-body" onClick={handleOpen}>
+            {thumb}
+          </div>
         </div>
-      </div>
+      </Draggable>
       {expanded && (
-        <div ref={fullRef}>
+        <div ref={fullRef} className="position-relative" style={{ zIndex: 86400000 }}>
           <div className="panel-full-bg overflow-auto smooth-scroll" onClick={handleClose}>
             <div
               className="panel-full"
