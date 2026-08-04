@@ -139,14 +139,14 @@ export function GroupCompact({ group, organizationTagEvents, categoryTagEvents }
       ),
   );
 
-  if (isRegionRolesLoading()) {
-    return null;
-  }
-
   return (
     <div
       ref={elementRef}
-      className={`row mx-0 align-items-start group-compact ${groupStateClasses()} ${filterPreviewClasses()}`}
+      className={cx(
+        "row mx-0 align-items-start group-compact",
+        groupStateClasses(),
+        !isRegionRolesLoading() && filterPreviewClasses(),
+      )}
       style={groupCss()}
     >
       <div className={cx("group-compact-content", !group.nextEvent ? "col-10" : "col-8")}>
