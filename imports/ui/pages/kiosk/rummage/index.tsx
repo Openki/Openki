@@ -4,16 +4,17 @@ import { FindParams } from "/imports/api/groups/groups";
 import { useFindFilter } from "/imports/api/groups/publications";
 
 import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
-import { PublicSettings } from "/imports/utils/PublicSettings";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 import { SortSpec } from "/imports/utils/sort-spec";
 import { useFiltering } from "/imports/utils/filtering";
 import { CssFromQuery } from "/imports/ui/lib/css-from-query";
 
+import { MetaTags } from "/imports/ui/components/MetaTags";
 import { LoadingPage } from "/imports/ui/pages/loading";
 import { AccountTasks } from "/imports/ui/components/account-tasks";
 import { GroupCompact } from "/imports/ui/components/groups/compact.modern";
-import { CompactPropose } from "/imports/ui/components/groups/CompactModernPropose";
+
+import "./styles.scss";
 
 export function KioskRummagePage() {
   let query = useSearchParams();
@@ -49,6 +50,5 @@ export function KioskRummagePage() {
 // for Blaze
 
 import "./template.html";
-import { MetaTags } from "/imports/ui/components/MetaTags";
 
 Template.registerHelper("KioskRummagePage", () => KioskRummagePage);

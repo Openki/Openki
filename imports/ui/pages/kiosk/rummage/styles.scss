@@ -1,0 +1,9 @@
+.rummage .group-card {
+  transition: all 0.5s !important;
+}
+
+.rummage.sorted .group-card {
+  left: 0 !important;
+  top: 0 !important;
+  rotate: none !important;
+}

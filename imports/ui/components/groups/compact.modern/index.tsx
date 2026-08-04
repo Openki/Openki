@@ -28,6 +28,9 @@ export function GroupCompact({ group }: Props) {
     const box = elementRef.current;
     if (!box) return;
 
+    drag.current.currentLeft = drag.current.currentLeft - box.offsetLeft;
+    drag.current.currentTop = drag.current.currentTop - box.offsetTop;
+
     box.style.left = drag.current.currentLeft + "px";
     box.style.top = drag.current.currentTop + "px";
     box.style.rotate = random(-60, 60) + "deg";
@@ -41,18 +44,17 @@ export function GroupCompact({ group }: Props) {
 
       box.setPointerCapture(e.pointerId);
 
-      box.className = "shadow-lg";
-      box.style.cursor = "grabbing";
+      box.classList.add("shadow-lg", "cursor-grabbing");
       box.style.scale = "1.05";
       box.style.rotate = "";
 
+      // move current element to the top using the current milliseconds of today
       const now = new Date();
       const millisecondsToday =
         now.getHours() * 60 * 60 * 1000 +
         now.getMinutes() * 60 * 1000 +
         now.getSeconds() * 1000 +
         now.getMilliseconds();
-
       box.style.zIndex = String(millisecondsToday);
 
       e.preventDefault();
@@ -87,8 +89,7 @@ export function GroupCompact({ group }: Props) {
         box.releasePointerCapture(e.pointerId);
       }
 
-      box.className = "shadow-sm";
-      box.style.cursor = "grab";
+      box.classList.remove("shadow-lg", "cursor-grabbing");
       box.style.scale = "";
     };
 
@@ -113,18 +114,13 @@ export function GroupCompact({ group }: Props) {
     <div
       ref={elementRef}
       style={{
-        touchAction: "none",
-        cursor: "grab",
-        position: "absolute",
         transition: "box-shadow 0.3s, scale 0.3s, rotate 0.3s",
       }}
-      className="shadow-sm"
+      className="group-card shadow-sm position-relative touch-none cursor-grab"
     >
       <Panel
         id={group._id}
-        onChange={(view) => {
-          setView(view);
-        }}
+        onChange={(view) => setView(view)}
         thumb={<Thumb group={group} />}
         full={<Full group={group} animation={view === "full" ? "show" : "hide"} />}
       />
