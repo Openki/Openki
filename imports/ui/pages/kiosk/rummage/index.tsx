@@ -13,6 +13,8 @@ import { MetaTags } from "/imports/ui/components/MetaTags";
 import { LoadingPage } from "/imports/ui/pages/loading";
 import { AccountTasks } from "/imports/ui/components/account-tasks";
 import { GroupCompact } from "/imports/ui/components/groups/compact.modern";
+import { CompactPropose } from "/imports/ui/components/groups/CompactModernPropose";
+import { Draggable } from "/imports/ui/components/groups/compact.modern/Draggable";
 
 import "./styles.scss";
 
@@ -37,10 +39,15 @@ export function KioskRummagePage() {
       <style>{style}</style>
       <AccountTasks />
       <div className="container-fluid">
-        <div className="d-flex align-items-stretch flex-wrap gap-3 justify-content-center">
-          {groups.map((group) => (
-            <GroupCompact key={group._id} group={group} />
-          ))}
+        <div className="row gap-5">
+          <div className="col-8 d-flex align-items-stretch flex-wrap gap-3 justify-content-center rummage position-relative">
+            {groups.map((group) => (
+              <GroupCompact key={group._id} group={group} />
+            ))}
+            <Draggable>
+              <CompactPropose />
+            </Draggable>
+          </div>
         </div>
       </div>
     </>

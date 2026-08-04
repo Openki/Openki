@@ -6,19 +6,19 @@ export function Draggable({ children }: { children: ReactNode }) {
 
   const drag = useRef({
     isDragging: false,
-    pointerId: null as number | null,
+    pointerId: undefined as number | undefined,
     offsetX: 0,
     offsetY: 0,
-    currentLeft: random(-60, document.documentElement.clientWidth - 270),
-    currentTop: random(-60, document.documentElement.clientHeight - 270),
+    currentLeft: 0,
+    currentTop: 0,
   });
 
   useEffect(() => {
     const box = elementRef.current;
-    if (!box) return;
+    if (!box || !box.offsetParent) return;
 
-    drag.current.currentLeft = drag.current.currentLeft - box.offsetLeft;
-    drag.current.currentTop = drag.current.currentTop - box.offsetTop;
+    drag.current.currentLeft = random(-60, box.offsetParent.clientWidth - 270) - box.offsetLeft;
+    drag.current.currentTop = random(-60, box.offsetParent.clientHeight - 270) - box.offsetTop;
 
     box.style.left = drag.current.currentLeft + "px";
     box.style.top = drag.current.currentTop + "px";
@@ -70,7 +70,7 @@ export function Draggable({ children }: { children: ReactNode }) {
       }
 
       drag.current.isDragging = false;
-      drag.current.pointerId = null;
+      drag.current.pointerId = undefined;
 
       if (box.hasPointerCapture(e.pointerId)) {
         box.releasePointerCapture(e.pointerId);
