@@ -102,6 +102,7 @@ export function Draggable({ children }: { children: ReactNode }) {
       ref={elementRef}
       style={{
         transition: "box-shadow 0.3s, scale 0.3s, rotate 0.3s",
+        willChange: "left, top",
       }}
       className="group-card shadow-sm position-relative touch-none cursor-grab"
     >
