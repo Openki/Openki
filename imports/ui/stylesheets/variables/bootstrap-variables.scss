@@ -139,7 +139,7 @@ $theme-colors-border-subtle: map.merge(
 @import "{}/node_modules/bootstrap/scss/mixins"; // Required
 @import "{}/node_modules/bootstrap/scss/utilities"; // Optional
 
-// Add grid-breakpoints to max-width utilites: mw-sm, mw-md, ...
+// Add grid-breakpoints to max-width utilities: mw-sm, mw-md, ...
 
 $utilities: map.merge(
   $utilities,

@@ -1,24 +1,60 @@
-/* Utilities (named like in Tailwind CSS) */
+@use "sass:map";
 
-.border-dashed {
-  border-style: dashed;
-}
+/* 
+ * Utilities (named like in Tailwind CSS) created with the bootstrap api 
+ * See: https://getbootstrap.com/docs/5.3/utilities/api/
+ */
 
-.max-h-none {
-  max-height: none;
-}
-
-.cursor-pointer {
-  cursor: pointer;
-}
-
-.border-none {
-  border: none;
-}
-
-.whitespace-pre-line {
-  white-space: pre-line;
-}
+$utilities: map.merge(
+  $utilities,
+  (
+    "border": (
+      property: border-style,
+      class: border,
+      values: (
+        none: none,
+        dashed: dashed,
+      ),
+    ),
+    "cursor": (
+      property: cursor,
+      class: cursor,
+      values: (
+        pointer: pointer,
+        grab: grab,
+        grabbing: grabbing,
+      ),
+    ),
+    "max-h": (
+      property: max-height,
+      class: max-h,
+      values: (
+        none: none,
+      ),
+    ),
+    "min-h": (
+      property: min-height,
+      class: min-h,
+      values: (
+        \[2lh\]: 2lh,
+      ),
+    ),
+    "touch": (
+      property: touch-action,
+      class: touch,
+      values: (
+        none: none,
+      ),
+    ),
+    "whitespace": (
+      property: white-space,
+      class: whitespace,
+      values: (
+        pre-line: pre-line,
+      ),
+    ),
+  )
+);
 
 .line-clamp-2 {
   @include ellipsis-multiline(2);
@@ -28,7 +64,5 @@
   @include ellipsis-multiline(3);
 }
 
-/* stylelint-disable-next-line selector-class-pattern */
-.min-h-\[2lh\] {
-  min-height: 2lh;
-}
+// Optional Bootstrap Utilities
+@import "{}/node_modules/bootstrap/scss/utilities/api";
