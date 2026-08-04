@@ -37,14 +37,8 @@ export function KioskRummagePage() {
       <AccountTasks />
       <div className="container-fluid">
         <div className="d-flex align-items-stretch flex-wrap gap-3 justify-content-center">
-          {groups.map((group, index) => (
-            <React.Fragment key={group._id}>
-              {/* The seventh box should always be the propose one, after then every 11 */}
-              {PublicSettings.feature.proposeGroupBox && (index - 6) % 10 === 0 && (
-                <CompactPropose />
-              )}
-              <GroupCompact group={group} />
-            </React.Fragment>
+          {groups.map((group) => (
+            <GroupCompact key={group._id} group={group} />
           ))}
         </div>
       </div>
