@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
 import scrollIntoView from "scroll-into-view-if-needed";
 
 import { ScrollBarHelper } from "/imports/startup/client/bootstrap";
@@ -67,6 +67,29 @@ export function Panel({
     }
   }
 
+  const [rect, setRect] = useState<
+    | {
+        left: number;
+        top: number;
+        width: number;
+        height: number;
+      }
+    | undefined
+  >(undefined);
+
+  useLayoutEffect(() => {
+    if (!thumbRef.current) return;
+
+    const r = thumbRef.current.getBoundingClientRect();
+
+    setRect({
+      left: r.left,
+      top: r.top,
+      width: r.width,
+      height: r.height,
+    });
+  }, [expanded, thumbRef.current]);
+
   useEffect(() => {
     onChange(isShowed ? "full" : "thumb");
     if (isShowed) {
@@ -114,17 +137,7 @@ export function Panel({
       {expanded && (
         <div ref={fullRef} className="position-relative" style={{ zIndex: 86400000 }}>
           <div className="panel-full-bg overflow-auto smooth-scroll" onClick={handleClose}>
-            <div
-              className="panel-full"
-              onClick={(e) => e.stopPropagation()}
-              style={{
-                left: thumbRef.current?.getBoundingClientRect().left,
-                right: thumbRef.current?.getBoundingClientRect().right,
-                width: thumbRef.current?.clientWidth,
-                top: thumbRef.current?.getBoundingClientRect().top,
-                height: thumbRef.current?.clientHeight,
-              }}
-            >
+            <div className="panel-full" onClick={(e) => e.stopPropagation()} style={rect}>
               <div className="panel-full-body">
                 {full}
                 <div className="panel-minimize">
