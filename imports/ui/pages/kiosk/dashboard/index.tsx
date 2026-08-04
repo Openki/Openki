@@ -61,7 +61,9 @@ export function KioskDashboardPage({ organizationId, groupQuery }: Props) {
             <p className="lead" dangerouslySetInnerHTML={{ __html: organization.description }} />
           </div>
           {organization.publicLogoUrl() && (
-            <img src={organization.publicLogoUrl()} alt={organization.name} />
+            <div>
+              <img src={organization.publicLogoUrl()} alt={organization.name} />
+            </div>
           )}
         </div>
       </div>

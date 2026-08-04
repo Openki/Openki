@@ -34,11 +34,11 @@ const group: ListOfEntities<GroupModel> = {
     <React.Fragment key={entity._id}>
       {/* The seventh box should always be the propose one, after then every 21 */}
       {PublicSettings.feature.proposeGroupBox && (index - 6) % 21 === 0 && (
-        <div className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
+        <div style={{ inlineSize: "300px", minInlineSize: "300px" }}>
           <CompactPropose organization={params.organization} />
         </div>
       )}
-      <div className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
+      <div style={{ inlineSize: "300px", minInlineSize: "300px" }}>
         <GroupCompact group={entity} />
       </div>
     </React.Fragment>
@@ -65,7 +65,7 @@ const groupWithoutPropose: ListOfEntities<GroupModel> = {
   filter: GroupCollection.Filtering,
   find: Groups.useFindFilter,
   element: ({ entity }) => (
-    <div key={entity._id} className="me-2" style={{ inlineSize: "300px", minInlineSize: "300px" }}>
+    <div key={entity._id} style={{ inlineSize: "300px", minInlineSize: "300px" }}>
       <GroupCompact group={entity} />
     </div>
   ),
@@ -77,7 +77,7 @@ const event: ListOfEntities<EventModel> = {
   filter: EventCollection.Filtering,
   find: Events.useFindFilter,
   element: ({ entity }) => (
-    <div key={entity._id} className="me-2" style={{ inlineSize: "250px", minInlineSize: "250px" }}>
+    <div key={entity._id} style={{ inlineSize: "250px", minInlineSize: "250px" }}>
       <EventCompact event={entity} withDate={true} withImage={true} />
     </div>
   ),
@@ -116,7 +116,7 @@ const organization: ListOfEntities<OrganizationModel> = {
   filter: OrganizationCollection.Filtering,
   find: Organizations.useFindFilter,
   element: ({ entity }) => (
-    <div key={entity._id} className="me-2">
+    <div key={entity._id}>
       <div
         className="card card-organization border-0 rounded-0"
         style={bodyStyle(entity.publicLogoUrl())}

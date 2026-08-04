@@ -9,6 +9,7 @@ import { Thumb } from "./Thumb";
 export interface Props {
   group: GroupModel;
 }
+
 export function GroupCompact({ group }: Props) {
   const [view, setView] = useState("");
 

@@ -103,7 +103,7 @@ function EntitiesComponent<T>({
       {!!title && <h2>{getLocalizedValue(title)}</h2>}
       {"element" in handler ? (
         // ListOfEntities
-        <ScrollContainer>
+        <ScrollContainer className="align-items-stretch pb-3 gap-3">
           {take(data, limit).map((d, i) => (
             <handler.element key={i} entity={d} index={i} params={params} />
           ))}

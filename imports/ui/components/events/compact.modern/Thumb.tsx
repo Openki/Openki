@@ -15,7 +15,7 @@ export function Thumb({ event }: { event: EventModel }) {
 
   return (
     <div
-      className="card me-3 border-2 border-dark-subtle"
+      className="card border-2 border-dark-subtle"
       style={isMobileScreen ? { width: 270, minWidth: 270 } : { width: 320, minWidth: 320 }}
     >
       {event?.publicUrlForCompactImage() ? (
