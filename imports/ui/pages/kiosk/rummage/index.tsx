@@ -17,7 +17,7 @@ import { LoadingPage } from "/imports/ui/pages/loading";
 import { AccountTasks } from "/imports/ui/components/account-tasks";
 import { GroupCompact } from "/imports/ui/components/groups/compact.modern";
 import { CompactPropose } from "/imports/ui/components/groups/CompactModernPropose";
-import { Draggable } from "./Draggable";
+import { Draggable } from "/imports/ui/components/Draggable";
 import { Button } from "/imports/ui/components/Buttons";
 
 import "./styles.scss";
@@ -85,10 +85,10 @@ export function KioskRummagePage() {
             )}
           >
             <Draggable>
-              <CompactPropose />
-            </Draggable>{" "}
+              <CompactPropose organization={filter.asQuery.organization} />
+            </Draggable>
             {groups.map((group) => (
-              <GroupCompact key={group._id} group={group} />
+              <GroupCompact key={group._id} group={group} draggable />
             ))}
           </div>
           <div className="col-4 py-3">
