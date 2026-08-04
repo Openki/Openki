@@ -5,7 +5,8 @@ import { ScrollBarHelper } from "/imports/startup/client/bootstrap";
 import { useHash } from "/imports/utils/react-meteor-router";
 import { useEventListener } from "/imports/utils/useEventListener";
 import { cx } from "/imports/utils/cx";
-import { Draggable } from "/imports/ui/components/groups/compact.modern/Draggable";
+
+import { Draggable } from "/imports/ui/pages/kiosk/rummage/Draggable";
 
 import "./styles.scss";
 

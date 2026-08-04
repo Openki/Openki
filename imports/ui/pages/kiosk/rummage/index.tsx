@@ -17,7 +17,7 @@ import { LoadingPage } from "/imports/ui/pages/loading";
 import { AccountTasks } from "/imports/ui/components/account-tasks";
 import { GroupCompact } from "/imports/ui/components/groups/compact.modern";
 import { CompactPropose } from "/imports/ui/components/groups/CompactModernPropose";
-import { Draggable } from "/imports/ui/components/groups/compact.modern/Draggable";
+import { Draggable } from "./Draggable";
 import { Button } from "/imports/ui/components/Buttons";
 
 import "./styles.scss";
