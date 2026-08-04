@@ -1046,6 +1046,8 @@
   "richtext.button.unorderedlist.title": "unordered list",
   "richtext.link.placeholder": "Paste or type a link",
   "richtext.placeholder.default": "Type your text",
+  "rummagePage.sortBtn.shuffle": "Shuffle",
+  "rummagePage.sortBtn.sort": "Sort",
   "schedule.startDateLabel": "start:",
   "send.validation.email": "Send me a validation e-mail.",
   "send.validation.submit.busy": "Sending…",
