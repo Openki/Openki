@@ -8,19 +8,19 @@ import { Thumb } from "./Thumb";
 
 export interface Props {
   group: GroupModel;
+  draggable?: boolean | undefined;
 }
 
-export function GroupCompact({ group }: Props) {
+export function GroupCompact({ group, draggable }: Props) {
   const [view, setView] = useState("");
 
   return (
     <Panel
       id={group._id}
-      onChange={(view) => {
-        setView(view);
-      }}
+      onChange={(view) => setView(view)}
       thumb={<Thumb group={group} />}
       full={<Full group={group} animation={view === "full" ? "show" : "hide"} />}
+      draggable={draggable}
     />
   );
 }

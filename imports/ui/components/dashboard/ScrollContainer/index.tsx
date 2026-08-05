@@ -1,72 +1,83 @@
 import React, { useRef, useState, useLayoutEffect, ReactNode } from "react";
 import { observeSize } from "../../../lib/observeHeight";
+import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
 
-export function ScrollContainer({ children }: { children: ReactNode }) {
+export function ScrollContainer({
+  className,
+  children,
+}: {
+  className?: string | undefined;
+  children: ReactNode;
+}) {
   const elementRef = useRef<HTMLDivElement>(null);
-  const [scrollLeft, setScrollLeft] = useState(elementRef.current?.scrollLeft || 0);
+
+  const [scrollLeft, setScrollLeft] = useState(0);
   const [scrollLeftMax, setScrollLeftMax] = useState(0);
 
-  function chechScroll() {
+  function checkScroll() {
     const element = elementRef.current;
-    if (element) {
-      if (element.scrollWidth - element.clientWidth !== scrollLeftMax) {
-        setScrollLeftMax(element.scrollWidth - element.clientWidth);
-      }
-    }
-  }
-
-  useLayoutEffect(() => {
-    if (!elementRef.current) {
+    if (!element) {
       return;
     }
 
-    const observation = observeSize(elementRef.current, () => {
-      chechScroll();
-    });
+    setScrollLeftMax(element.scrollWidth - element.clientWidth);
+    setScrollLeft(element.scrollLeft);
+  }
+
+  useLayoutEffect(() => {
+    const element = elementRef.current;
+    if (!element) {
+      return;
+    }
+
+    checkScroll();
+
+    const observation = observeSize(element, checkScroll);
+
     return () => {
       observation.stop();
     };
-  });
+  }, []);
 
   return (
     <div
-      className="scroll-container d-flex align-items-stretch flex-row flex-nowrap pb-3 overflow-x-auto"
+      className={cx("scroll-container d-flex flex-row flex-nowrap overflow-x-auto", className)}
       style={{ scrollBehavior: "smooth" }}
       ref={elementRef}
-      onScroll={() => {
-        setScrollLeft(elementRef.current?.scrollLeft || 0);
+      onScroll={(event) => {
+        setScrollLeft(event.currentTarget.scrollLeft);
       }}
     >
       {children}
-      {scrollLeft !== 0 && (
+      {scrollLeft > 0 && (
         <a
           className="btn-scroll btn-scroll-left text-primary"
           onClick={() => {
             const element = elementRef.current;
             if (element) {
-              element.scrollLeft = element.scrollLeft - element.clientWidth * 0.9;
+              element.scrollLeft -= element.clientWidth * 0.9;
             }
           }}
         >
           <i className="fa-solid fa-angle-left fa-fw" />
         </a>
       )}
-      {elementRef.current &&
-        scrollLeft !== elementRef.current.scrollWidth - elementRef.current.clientWidth && (
-          <a
-            className="btn-scroll btn-scroll-right text-primary"
-            onClick={() => {
-              const element = elementRef.current;
-              if (element) {
-                element.scrollLeft = element.scrollLeft + element.clientWidth * 0.9;
-              }
-            }}
-          >
-            <i className="fa-solid fa-angle-right fa-fw" />
-          </a>
-        )}
+
+      {scrollLeft < scrollLeftMax && (
+        <a
+          className="btn-scroll btn-scroll-right text-primary"
+          onClick={() => {
+            const element = elementRef.current;
+            if (element) {
+              element.scrollLeft += element.clientWidth * 0.9;
+            }
+          }}
+        >
+          <i className="fa-solid fa-angle-right fa-fw" />
+        </a>
+      )}
     </div>
   );
 }

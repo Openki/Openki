@@ -567,7 +567,7 @@ const defaults = {
   footerLinks: [] as { link: string; key?: string; title_key?: string; text?: string }[],
   faqLink: "/info/faq",
   pricePolicyLink: {
-    en: "/info/faq#why-cant-i-charge-a-fixed-fee-as-a-mentor"
+    en: "/info/faq#why-cant-i-charge-a-fixed-fee-as-a-mentor",
   },
   groupGuideLink: {
     en: "https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf",

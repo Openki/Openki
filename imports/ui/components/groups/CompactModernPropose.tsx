@@ -25,7 +25,7 @@ export function CompactPropose({ organization }: Props) {
 
   return (
     <div
-      className="card me-1 border-dashed"
+      className="card border-2 border-dashed"
       ref={elementRef}
       style={isMobileScreen ? { width: 270, minWidth: 270 } : { width: 320, minWidth: 320 }}
     >

@@ -1,10 +1,12 @@
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
 import scrollIntoView from "scroll-into-view-if-needed";
 
 import { ScrollBarHelper } from "/imports/startup/client/bootstrap";
 import { useHash } from "/imports/utils/react-meteor-router";
 import { useEventListener } from "/imports/utils/useEventListener";
 import { cx } from "/imports/utils/cx";
+
+import { Draggable } from "../Draggable";
 
 import "./styles.scss";
 
@@ -30,11 +32,13 @@ export function Panel({
   id,
   thumb,
   full,
+  draggable,
   onChange,
 }: {
   id: string;
   thumb: ReactNode;
   full: ReactNode;
+  draggable?: boolean | undefined;
   onChange: (view: "thumb" | "full") => void;
 }) {
   const [expanded, setExpanded] = useState(false);
@@ -64,6 +68,29 @@ export function Panel({
       scroll(thumbRef.current, "instant");
     }
   }
+
+  const [rect, setRect] = useState<
+    | {
+        left: number;
+        top: number;
+        width: number;
+        height: number;
+      }
+    | undefined
+  >(undefined);
+
+  useLayoutEffect(() => {
+    if (!thumbRef.current) return;
+
+    const r = thumbRef.current.getBoundingClientRect();
+
+    setRect({
+      left: r.left,
+      top: r.top,
+      width: r.width,
+      height: r.height,
+    });
+  }, [expanded, thumbRef.current]);
 
   useEffect(() => {
     onChange(isShowed ? "full" : "thumb");
@@ -100,27 +127,28 @@ export function Panel({
     }
   });
 
+  const thumbElement = (
+    <div className="panel-thumb" ref={thumbRef}>
+      <div className="panel-thumb-body" onClick={handleOpen}>
+        {thumb}
+      </div>
+    </div>
+  );
+
   return (
     <div className={cx("panel", inIframe && "panel-iframe")}>
-      <div className="panel-thumb" ref={thumbRef}>
-        <div className="panel-thumb-body" onClick={handleOpen}>
-          {thumb}
-        </div>
-      </div>
+      {draggable ? <Draggable>{thumbElement}</Draggable> : thumbElement}
       {expanded && (
-        <div ref={fullRef}>
+        <div
+          ref={fullRef}
+          className="position-relative"
+          style={{
+            /* special case for draggable: 86400000 is the top z-index over all cards */
+            zIndex: 86400000,
+          }}
+        >
           <div className="panel-full-bg overflow-auto smooth-scroll" onClick={handleClose}>
-            <div
-              className="panel-full"
-              onClick={(e) => e.stopPropagation()}
-              style={{
-                left: thumbRef.current?.getBoundingClientRect().left,
-                right: thumbRef.current?.getBoundingClientRect().right,
-                width: thumbRef.current?.clientWidth,
-                top: thumbRef.current?.getBoundingClientRect().top,
-                height: thumbRef.current?.clientHeight,
-              }}
-            >
+            <div className="panel-full" onClick={(e) => e.stopPropagation()} style={rect}>
               <div className="panel-full-body">
                 {full}
                 <div className="panel-minimize">

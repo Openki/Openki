@@ -983,6 +983,15 @@ RouterAsync.route("kioskDashboard", {
   },
 });
 
+RouterAsync.route("kioskRummage", {
+  path: "kiosk/rummage",
+  template: "kioskRummagePage",
+  layoutTemplate: "kioskLayout",
+  async onRun() {
+    await import("../../ui/pages/kiosk/rummage");
+  },
+});
+
 RouterAsync.route("adminPanel", {
   path: "admin/panel",
   template: "adminPanelPage",

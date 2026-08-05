@@ -1,0 +1,19 @@
+.rummage {
+  max-block-size: 100vh;
+  overflow-y: clip;
+
+  &.animated .draggable {
+    transition: all 0.5s !important;
+  }
+
+  &.sorted {
+    max-block-size: auto;
+    overflow-y: auto;
+  }
+
+  &.sorted .draggable {
+    left: 0 !important;
+    top: 0 !important;
+    rotate: none !important;
+  }
+}
