@@ -57,8 +57,10 @@ export async function upload(directoryName: string, file: UploadFile) {
     const { Upload } = await import("@aws-sdk/lib-storage");
 
     // s3 is always defined here because we run within the Meteor.isServer block
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const s3 = (await createS3Client())!;
+    const s3 = await createS3Client();
+    if (!s3) {
+      throw new Error("Unexpected falsy: s3");
+    }
 
     const params: PutObjectCommandInput = {
       Bucket: getBucket(),

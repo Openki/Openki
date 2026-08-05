@@ -580,9 +580,8 @@ export const addParticipant = ServerMethod(
 );
 
 /**
- * Remove participant from the event.
- * If no participant is set, the currently logged in user is removed.
- * The participant can be removed with a remove token found in the event entity.
+ * Remove participant from the event. This Method can be called by the participant itself (1),
+ * by an editor of the event (2) or by a user with a valid token (3).
  */
 export const removeParticipant = ServerMethod(
   "event.removeParticipant",
@@ -591,40 +590,43 @@ export const removeParticipant = ServerMethod(
     check(participantId, Match.Optional(String));
     check(token, Match.Optional(String));
 
-    if (token && !participantId) {
-      throw new Meteor.Error(400, "participantId missed");
-    }
-
-    let operator: UserModel | null = null;
-    if (!token) {
-      operator = await Meteor.userAsync();
-      if (!operator) {
-        throw new Meteor.Error(401, "please log in");
-      }
-    }
-
     const event = await Events.findOneAsync(eventId);
     // ignore broken eventIds
     if (!event) {
       return;
     }
-    // dont allow participant-mutations if event has passed
+    // don't allow participant-mutations if event has passed
     if (moment().isAfter(event.end)) {
       throw new Meteor.Error(401, "cannot unregister, event has already passed");
     }
 
-    if (participantId) {
-      if (token) {
-        if (!event.participants?.find((p) => p.user === participantId && p.removeToken === token)) {
-          throw new Meteor.Error(403, "not enough authorization.");
-        }
-      } else if (!event.editableBy(operator)) {
-        // only users that have edit permissions (admin, teamOrganizationMembers, teamMembers) can remove other users.
+    if (token) {
+      // (3) remove participant from event participants (if token is valid)
+      if (!participantId) {
+        throw new Meteor.Error(400, "participantId missed");
+      }
+      if (!event.participants?.find((p) => p.user === participantId && p.removeToken === token)) {
         throw new Meteor.Error(403, "not enough authorization.");
       }
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      participantId = operator!._id;
+      let operator: UserModel | null = null;
+
+      operator = await Meteor.userAsync();
+      if (!operator) {
+        throw new Meteor.Error(401, "please log in");
+      }
+
+      if (participantId) {
+        // (2) remove other participant from event participants (if logged in and has
+        // edit permissions: admin, teamOrganizationMembers, teamMembers)
+
+        if (!event.editableBy(operator)) {
+          throw new Meteor.Error(403, "not enough authorization.");
+        }
+      } else {
+        // (1) remove self from event participants (if logged in)
+        participantId = operator._id;
+      }
     }
 
     await Events.updateAsync(
