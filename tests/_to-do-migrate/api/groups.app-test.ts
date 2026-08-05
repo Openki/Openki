@@ -17,7 +17,7 @@ if (Meteor.isClient) {
 
         // A previous test might have logged us in.
         if (Meteor.userId()) {
-          await MeteorAsync.logout();
+          await Meteor.logoutAsync();
         }
         Session.set("region", RegionDefault);
       });
@@ -44,7 +44,7 @@ if (Meteor.isClient) {
 
         const groupsAsGast = Groups.findFilter().fetch();
 
-        await MeteorAsync.loginWithPassword("Schufien", "greg");
+        await Meteor.loginWithPasswordAsync("Schufien", "greg");
         const schufien = (await Meteor.userAsync()) as UserModel;
 
         assert.ok(schufien);

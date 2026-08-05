@@ -1,9 +1,13 @@
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { WebApp } from "meteor/webapp";
+import type { ServerResponse } from "node:http";
 
 import { serverError } from "/imports/api/log/methods";
 
-WebApp.handlers.use("/robots.txt", (_req, res) => {
+WebApp.handlers.use("/robots.txt", (_req, response) => {
+  // We need this because there is an error in the Types of meteor. This may be removed in future.
+  const res = response as unknown as ServerResponse;
+
   try {
     res.writeHead(200, { "Content-Type": "text/plain" });
 

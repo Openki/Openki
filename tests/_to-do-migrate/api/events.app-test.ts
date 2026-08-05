@@ -16,7 +16,7 @@ if (Meteor.isClient) {
       it("Stores an event", async function () {
         this.timeout(5000);
 
-        await MeteorAsync.loginWithPassword("greg", "greg");
+        await Meteor.loginWithPasswordAsync("greg", "greg");
         const theFuture = new Date();
         theFuture.setHours(1000);
 
@@ -54,7 +54,7 @@ if (Meteor.isClient) {
         const textWithNonPrintables = "See what's hidden in your string… or behind﻿";
         const expectedText = "See what's hidden in your string… or behind";
 
-        await MeteorAsync.loginWithPassword("greg", "greg");
+        await Meteor.loginWithPasswordAsync("greg", "greg");
         const theFuture = new Date();
         theFuture.setHours(1000);
 
@@ -86,7 +86,7 @@ if (Meteor.isClient) {
       it("Updates time_lastedit from group", async function () {
         this.timeout(5000);
 
-        await MeteorAsync.loginWithPassword("greg", "greg");
+        await Meteor.loginWithPasswordAsync("greg", "greg");
 
         const groupId = "eb6aedecf9";
 
@@ -133,7 +133,7 @@ if (Meteor.isClient) {
 
         // A previous test might have logged us in.
         if (Meteor.userId()) {
-          await MeteorAsync.logout();
+          await Meteor.logoutAsync();
         }
         Session.set("region", RegionDefault);
 
@@ -158,7 +158,7 @@ if (Meteor.isClient) {
 
         const eventsAsGast = Events.findFilter().fetch();
 
-        await MeteorAsync.loginWithPassword("Schufien", "greg");
+        await Meteor.loginWithPasswordAsync("Schufien", "greg");
         const schufien = (await Meteor.userAsync()) as UserModel;
 
         assert.ok(schufien);

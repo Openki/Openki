@@ -1,6 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { ServiceConfiguration, ConfigError } from "meteor/service-configuration";
 import { Random } from "meteor/random";
+// @ts-expect-error: Some error in the types of the cookies meteor package.
 import { Cookies } from "meteor/ostrio:cookies";
 import { Accounts } from "meteor/accounts-base";
 

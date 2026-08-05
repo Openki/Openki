@@ -17,7 +17,7 @@ if (Meteor.isClient) {
         (await MeteorAsync.subscribe("userSearch", "Regula")).stop(); // load user from server
         const userId = Users.findOne({ username: "Regula" })?._id as string;
 
-        await MeteorAsync.loginWithPassword("Kopf", "greg");
+        await Meteor.loginWithPasswordAsync("Kopf", "greg");
 
         (await MeteorAsync.subscribe("tenant", tenantId)).stop(); // load tenant from server
         let tenant = Tenants.findOne(tenantId);
@@ -40,7 +40,7 @@ if (Meteor.isClient) {
         (await MeteorAsync.subscribe("userSearch", "Regula")).stop(); // load user from server
         const userId = Users.findOne({ username: "Regula" })?._id as string;
 
-        await MeteorAsync.loginWithPassword("Kopf", "greg");
+        await Meteor.loginWithPasswordAsync("Kopf", "greg");
 
         (await MeteorAsync.subscribe("tenant", tenantId)).stop(); // load tenant from server
         let tenant = Tenants.findOne(tenantId);
@@ -63,14 +63,14 @@ if (Meteor.isClient) {
         (await MeteorAsync.subscribe("userSearch", "Regula")).stop(); // load user from server
         const userId = Users.findOne({ username: "Regula" })?._id as string;
 
-        await MeteorAsync.loginWithPassword("Kopf", "greg");
+        await Meteor.loginWithPasswordAsync("Kopf", "greg");
 
         (await MeteorAsync.subscribe("tenant", tenantId)).stop(); // load tenant from server
         const tenant = Tenants.findOne(tenantId);
 
         assert.notInclude(tenant?.members || [], userId);
 
-        await MeteorAsync.loginWithPassword("Normalo", "greg");
+        await Meteor.loginWithPasswordAsync("Normalo", "greg");
 
         let hasFailed = false;
         try {

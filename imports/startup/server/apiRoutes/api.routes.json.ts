@@ -1,14 +1,20 @@
 import { Router } from "meteor/iron:router";
 import { WebApp } from "meteor/webapp";
+import type { ServerResponse } from "node:http";
+
 import { FilteringReadError } from "/imports/utils/filtering";
 import { NoActionError, orderedResults } from "./api.routes.utils";
+import { ApiEvent } from "/imports/Api";
 
-WebApp.handlers.use("/api", (_req, res, next) => {
+WebApp.handlers.use("/api", (_req, response, next) => {
+  // We need this because there is an error in the Types of meteor. This may be removed in future.
+  const res = response as unknown as ServerResponse;
+
   res.setHeader("Access-Control-Allow-Origin", "*");
   return next();
 });
 
-const jsonSendResponder = async function (res: any, process: any) {
+const jsonSendResponder = async function (res: any, process: () => Promise<ApiEvent[]>) {
   try {
     const body = {
       status: "success",
@@ -42,8 +48,6 @@ Router.route("api.0.json", {
   path: "/api/0/json/:handler",
   where: "server",
   async action() {
-    await jsonSendResponder(this.response, () => {
-      return orderedResults(this.params, this.params.handler);
-    });
+    await jsonSendResponder(this.response, () => orderedResults(this.params, this.params.handler));
   },
 });

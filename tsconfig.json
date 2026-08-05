@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     /* Basic Options */
-    "target": "es2018",
-    "module": "esnext",
+    "target": "ES2020",
+    "module": "ESNext",
     "lib": ["esnext", "dom"],
     "jsx": "preserve",
     "incremental": true,
@@ -22,7 +22,7 @@
     "suppressImplicitAnyIndexErrors": false, // Suppress --noImplicitAny errors for indexing objects lacking index signatures.
     "noImplicitAny": true, // Raise error on expressions and declarations with an implied "any" type.
     "noImplicitThis": true, // Raise error on this expressions with an implied "any" type.
-    "strictPropertyInitialization": true, // Enusre non-undefined class properties are initialized in the constructor.
+    "strictPropertyInitialization": true, // Ensure non-undefined class properties are initialized in the constructor.
     "strictFunctionTypes": true, // Disable bivariant parameter checking for function types.
     "strictNullChecks": true, // The null and undefined values are not in the domain of every type and are only assignable to themselves and any.
     "exactOptionalPropertyTypes": true, // Differentiate between undefined and not present
@@ -34,7 +34,6 @@
       "meteor/*": ["./node_modules/@types/meteor/*", "./.meteor/local/types/packages.d.ts"]
     },
     "moduleResolution": "node",
-    "allowUmdGlobalAccess": true, // Needed for leaflet meteor package
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "preserveSymlinks": true,

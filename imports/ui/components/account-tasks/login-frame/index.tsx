@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { MeteorAsync } from "/imports/utils/promisify";
 import { useSession, useSessionEquals } from "/imports/utils/react-meteor-data";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 import { useSiteName } from "/imports/utils/getSiteName";
@@ -123,7 +122,7 @@ export function LoginFrame({
 
         setIsBusy("Password");
         try {
-          await MeteorAsync.loginWithPassword(loginData.username, loginData.password);
+          await Meteor.loginWithPasswordAsync(loginData.username, loginData.password);
 
           onLogin();
 

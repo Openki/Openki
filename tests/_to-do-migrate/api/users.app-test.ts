@@ -16,7 +16,7 @@ if (Meteor.isClient) {
     this.timeout(30000);
 
     it("accepts login", async () => {
-      await MeteorAsync.loginWithPassword("Seee", "greg");
+      await Meteor.loginWithPasswordAsync("Seee", "greg");
     });
 
     describe("User modification", function () {
@@ -29,7 +29,7 @@ if (Meteor.isClient) {
           email: `${oldDummy}@openki.example`,
           password: "hunter2",
         });
-        MeteorAsync.loginWithPassword(oldDummy, "hunter2")
+        Meteor.loginWithPasswordAsync(oldDummy, "hunter2")
           .then(
             () =>
               new Promise<void>((resolve) => {

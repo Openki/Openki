@@ -28,13 +28,6 @@ export const MeteorAsync = {
           });
         });
     })(),
-  loginWithPassword:
-    Meteor.loginWithPassword &&
-    (promisify(Meteor.loginWithPassword) as (
-      user: string | { email: string } | { username: string } | { id: string },
-      password: string,
-    ) => Promise<void>),
-  logout: Meteor.logout && promisify(Meteor.logout),
   setTimeout:
     Meteor.setTimeout &&
     ((delay: number) =>

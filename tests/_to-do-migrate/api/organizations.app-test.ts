@@ -13,7 +13,7 @@ if (Meteor.isClient) {
       const randomName = `TEST${1000 + Math.floor(Math.random() * 9000)}`;
       const editRandomName = `TEST${1000 + Math.floor(Math.random() * 9000)}`;
 
-      await MeteorAsync.loginWithPassword("Seee", "greg");
+      await Meteor.loginWithPasswordAsync("Seee", "greg");
 
       const newOrganization = {
         name: randomName,
@@ -41,7 +41,7 @@ if (Meteor.isClient) {
 
       const randomName = `TEST${1000 + Math.floor(Math.random() * 9000)}`;
 
-      await MeteorAsync.loginWithPassword("Seee", "greg");
+      await Meteor.loginWithPasswordAsync("Seee", "greg");
 
       const newOrganization = {
         name: randomName,
