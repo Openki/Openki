@@ -17,7 +17,7 @@
 .page-component > .btn:first-child,
 /* 
   backwards compatibility: a Blaze component to a React component for. 
-  Can be removed after complet migration.
+  Can be removed after complete migration.
 */
 .page-component > div:not([class]) > .btn:first-child {
   width: 100%;
