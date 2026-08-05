@@ -44,7 +44,7 @@ export function error(errorString: string) {
  * @param errorOrMessage error object or message text
  * @param message the message text
  */
-export function serverError(errorOrMessage: Error | string, message?: string) {
+export function serverError(errorOrMessage: unknown, message?: string) {
   if (typeof message !== "string") {
     const errorMessage = i18n(
       "_serverErrorMessageOnly",

@@ -42,13 +42,21 @@ export const clientError = ServerMethod(
 );
 
 /** For logging errors on the server that have occurred on the server. */
-export async function serverError(error: Error) {
+export async function serverError(error: unknown) {
   try {
-    await Log.record("serverError", [], {
-      name: error.name,
-      message: error.message,
-      stack: error.stack,
-    });
+    if (error instanceof Error) {
+      await Log.record("serverError", [], {
+        name: error.name,
+        message: error.message,
+        stack: error.stack,
+      });
+    } else {
+      await Log.record("serverError", [], {
+        name: "UnknownError",
+        message: String(error),
+        stack: undefined,
+      });
+    }
   } catch {
     // ignore
   }
