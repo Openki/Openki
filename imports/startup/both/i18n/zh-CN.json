@@ -2,9 +2,14 @@
   "Please.login": "请登录或注册",
   "Profile.translate_this_page": "帮助我们翻译这个页面",
   "_button.cancel": "取消",
+  "_button.close": "关闭",
   "_button.delete": "删除",
+  "_button.deleting": "正在删除…",
   "_button.edit": "编辑",
   "_button.save": "保存",
+  "_clientError": "很抱歉，出现了错误：“{ERROR}”。",
+  "_event.state.canceled": "已取消",
+  "_event.state.fullyBooked": "已订满",
   "_inputField.optional": "（可选）",
   "_inputField.password": "密码",
   "_selection.pleaseSelect": "请选择",
@@ -129,5 +134,7 @@
   "group.subnav.descr": "描述",
   "group.subnav.history": "历史",
   "group.title.Discussion": "讨论",
-  "group.title.placeholder": "你在什么方面感兴趣？"
+  "group.title.placeholder": "你在什么方面感兴趣？",
+  "menue.Calendar": "日历",
+  "menue.Create": "创建"
 }
