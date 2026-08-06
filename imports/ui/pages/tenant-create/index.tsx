@@ -90,7 +90,7 @@ export function TenantCreatePage(props: Props) {
 
       Analytics.trackEvent("Tenant creations", "Tenant with region creations");
     } catch (err) {
-      if (!addError(err.reason)) {
+      if (!(err instanceof Meteor.Error && err.reason && addError(err.reason))) {
         // unknown error
         Alert.serverError(err, t("privateRegion.creating.error", "Creating the region went wrong"));
       }

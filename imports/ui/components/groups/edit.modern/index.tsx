@@ -214,7 +214,7 @@ export function Edit(props: Props) {
       setSavedMessage(true);
       resetFields();
     } catch (err) {
-      if (!addError(err.reason)) {
+      if (!(err instanceof Meteor.Error && err.reason && addError(err.reason))) {
         // unknown error
         Alert.serverError(err, t("message.groupChangesSaved.error", "Saving went wrong"));
       }

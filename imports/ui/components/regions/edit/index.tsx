@@ -82,7 +82,7 @@ export function Edit(props: Props) {
         }),
       );
     } catch (err) {
-      if (!addError(err.reason)) {
+      if (!(err instanceof Meteor.Error && err.reason && addError(err.reason))) {
         // unknown error
         Alert.serverError(err, t("region.saving.error", "Saving the region went wrong"));
       }

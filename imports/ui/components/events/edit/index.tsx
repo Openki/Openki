@@ -487,7 +487,7 @@ export function Edit({ event, isNew, afterSave, onCancel }: Props) {
         Router.go("showEvent", { _id: eventId });
       }
     } catch (err) {
-      if (!addError(err.reason)) {
+      if (!(err instanceof Meteor.Error && err.reason && addError(err.reason))) {
         // unknown error
         Alert.serverError(
           err,

@@ -8,6 +8,7 @@ import { useSession } from "/imports/utils/react-meteor-data";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
 import * as UsersMethods from "/imports/api/users/methods";
+import * as Alert from "/imports/api/alerts/alert";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 import { useValidation } from "/imports/ui/lib/useValidation";
@@ -107,7 +108,10 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
 
           Analytics.trackEvent("Registers", "Visitor", currentRegion?.nameEn);
         } catch (err) {
-          addError(err.reason);
+          if (!(err instanceof Meteor.Error && err.reason && addError(err.reason))) {
+            // unknown error
+            Alert.serverError(err);
+          }
         } finally {
           setIsBusy(false);
         }

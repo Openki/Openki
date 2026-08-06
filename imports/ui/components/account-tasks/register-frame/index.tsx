@@ -134,7 +134,10 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
 
           Analytics.trackEvent("Registers", "Registers with password", currentRegion?.nameEn);
         } catch (err) {
-          addError(err.reason);
+          if (!(err instanceof Meteor.Error && err.reason && addError(err.reason))) {
+            // unknown error
+            Alert.serverError(err);
+          }
         } finally {
           setIsBusy(false);
         }

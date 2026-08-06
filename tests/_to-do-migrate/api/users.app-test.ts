@@ -61,7 +61,7 @@ if (Meteor.isClient) {
         } catch (err) {
           if (err) {
             hasFailed = true;
-            if (err.reason === "Email already exists.") {
+            if (err instanceof Meteor.Error && err.reason === "Email already exists.") {
               expectedMessage = true;
             }
           }
@@ -82,7 +82,7 @@ if (Meteor.isClient) {
         } catch (err) {
           if (err) {
             hasFailed = true;
-            if (err.reason === "Username already exists.") {
+            if (err instanceof Meteor.Error && err.reason === "Username already exists.") {
               expectedMessage = true;
             }
           }

@@ -228,7 +228,7 @@ export function Edit({ venue, onSaved, onCanceled }: Props) {
         onSaved();
       }
     } catch (err) {
-      if (!addError(err.reason)) {
+      if (!(err instanceof Meteor.Error && err.reason && addError(err.reason))) {
         // unknown error
         Alert.serverError(err, t("venue.saving.error", "Could not save the venue"));
       }

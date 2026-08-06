@@ -75,7 +75,9 @@ export function VisitorToUserPage({ token, email }: Props) {
               Alert.success(t("visitorToUser.success.", "Your account is now created."));
               Router.go("profile");
             } catch (err) {
-              addError(err.reason);
+              if (!(err instanceof Meteor.Error && err.reason && addError(err.reason))) {
+                Alert.serverError(err);
+              }
             } finally {
               setIsBusy(false);
             }
