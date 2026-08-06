@@ -150,7 +150,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
             {showUserId() ? (
               <DiscussionProfileLink userId={post.userId} />
             ) : (
-              <span className="fw-bold">{t("discussion.anonymous", "Anonymous")}</span>
+              t("discussion.anonymous", "Anonymous")
             )}
             {!post.new && (
               <span className="discussion-post-header-sub">

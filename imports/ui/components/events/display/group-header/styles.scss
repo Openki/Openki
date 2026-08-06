@@ -22,15 +22,6 @@ $header-bg: color.adjust($blue-lighter, $lightness: -5%);
   }
 }
 
-.event-group-header-link {
-  cursor: pointer;
-}
-
-.event-group-header > h2 {
-  margin: 0;
-  padding-bottom: 5px;
-}
-
 .back-to-group-overview i {
   align-items: center;
   color: #38829c77;

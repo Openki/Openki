@@ -36,7 +36,7 @@ export function OrganizationTag({
   return (
     <div
       data-test={`organization-tag-${organizationId}`}
-      className={`tag tag-link organization-tag ${isTeam ? "organization-tag-is-team" : ""}`}
+      className={`fw-light tag tag-link organization-tag ${isTeam ? "organization-tag-is-team" : ""}`}
     >
       {isLoading() ? (
         <span className="placeholder" style={{ width: full ? "100px" : "40px" }}></span>

@@ -47,7 +47,7 @@ export function RegisterPanel({ event, onRegister }: Props) {
         <button
           id="register-panel-reserve"
           type="button"
-          className="btn btn-add btn-lg fw-bold"
+          className="btn btn-add btn-lg"
           onClick={() => setRegisterDropdown(true)}
         >
           {t("event.details.reserve-a-seat", "Reserve a seat")}

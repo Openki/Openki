@@ -14,7 +14,7 @@ export function Add({ group }: Props) {
   return (
     <div id="group-event-add" className="event-caption-wrap">
       <a
-        className="btn btn-add text-center page-component-btn fw-bold fs-4"
+        className="btn btn-add text-center page-component-btn"
         href={Router.path("createEvent", undefined, { query: { groupId: group._id } })}
       >
         <i className="fa-regular fa-calendar-plus me-1" />

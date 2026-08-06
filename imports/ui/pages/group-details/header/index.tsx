@@ -69,8 +69,12 @@ export function Header({ group }: { group: GroupModel }) {
         )}
         <Tag region={group.region} />
       </div>
-      <div className="group-details-title">
-        {group?.editableBy(user) ? <Editable {...editableNameAttr} /> : <h2>{group.name}</h2>}
+      <div className="group-details-title fs-2">
+        {group?.editableBy(user) ? (
+          <Editable className="fw-bold" {...editableNameAttr} />
+        ) : (
+          <h2 className="fw-bold mt-0">{group.name}</h2>
+        )}
       </div>
       <OrganizationList group={group} />
     </div>

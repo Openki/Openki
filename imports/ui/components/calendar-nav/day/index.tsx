@@ -83,7 +83,7 @@ export function Day(props: Props) {
           <div className="row justify-content-center align-items-center">
             {!props.hideSwitches && <Control {...controlAttr("previous")} />}
             <div className="col-auto">
-              <div className="lead">
+              <div className="fs-4">
                 <span className="d-none d-md-inline-block">{dateLong(props.date)}</span>
                 <span className="d-md-none">{dateShort(props.date)}</span>
               </div>

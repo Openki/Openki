@@ -119,13 +119,13 @@ export function ActionResult({ type, dismissible, icon, title, children, actions
           <h1 className="alert-heading d-flex align-items-center">
             <span className="flex-shrink-0 me-2">{icon}</span> {title}
           </h1>
-          {!!children && <p className={cx("lead", !actions?.length && "mb-0")}>{children}</p>}
+          {!!children && <p className={cx("fs-4", !actions?.length && "mb-0")}>{children}</p>}
           {!!actions?.length && (
             <>
               <hr className="border border-black" />
               <div className={cx("d-flex gap-3", stacked ? "flex-column" : "flex-row flex-wrap")}>
                 {(actions as Action[]).map((action, index) => (
-                  <div key={index} className="lead">
+                  <div key={index} className="fs-4">
                     {"description" in action ? <>{action.description} </> : ""}
                     {"href" in action ? (
                       <a

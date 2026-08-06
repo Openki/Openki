@@ -90,7 +90,7 @@ export function Add({ venue }: Props) {
     <div className="btn-group tag-btn organization-tag-btn align-top">
       <button
         type="button"
-        className="dropdown-toggle"
+        className="dropdown-toggle fw-light"
         aria-expanded="false"
         aria-haspopup="true"
         data-bs-toggle="dropdown"

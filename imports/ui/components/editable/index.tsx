@@ -10,6 +10,7 @@ import { Store } from "../../lib/editable";
 import "./styles.scss";
 
 export interface Props {
+  className?: string | undefined;
   text?: string | undefined;
   multiline?: boolean;
   placeholder?: string | undefined;
@@ -20,6 +21,7 @@ export interface Props {
 }
 
 export function Editable({
+  className,
   text = "",
   multiline,
   placeholder,
@@ -318,9 +320,12 @@ export function Editable({
       >
         <div
           ref={elementRef}
-          className={`editable ${editableClasses()} ${
-            characterLimitReached() || errors.input ? "is-invalid" : ""
-          }`}
+          className={cx(
+            "editable",
+            editableClasses(),
+            (characterLimitReached() || !!errors.input) && "is-invalid",
+            className,
+          )}
           onBlur={(event) => {
             if (!changed && !event.relatedTarget?.className.includes("medium-editor")) {
               setReadonly(true);

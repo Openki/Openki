@@ -96,7 +96,7 @@ export function CalendarNavWeek(props: Props) {
           <div className="row justify-content-center align-items-center">
             {!hideSwitches && <Control {...controlAttr("previous")} />}
             <div className="col-auto text-center">
-              <div className="lead">
+              <div className="fs-4">
                 {t("calendar.weekNumber", "Week")} {weekNr(date)}
               </div>
               <div>

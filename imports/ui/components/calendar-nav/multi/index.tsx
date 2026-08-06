@@ -106,7 +106,7 @@ export function Multi({ date, filter, isAttendeeFilterOn, setIsAttendeeFilterOn 
       <div className="calendar-nav">
         <Control {...controlAttr("previous")} />
         <div className="calendar-nav-moment">
-          <div className="lead">
+          <div className="fs-4">
             {t("calendar.weekNumber", "Week")} {weekNr(date)}
           </div>
           <div>

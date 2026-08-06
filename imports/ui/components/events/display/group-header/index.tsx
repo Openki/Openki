@@ -56,7 +56,7 @@ export function EventGroupHeader(props: Props) {
           </a>
         </>
       )}
-      <h2>{props.title}</h2>
+      <h2 className="m-0 pb-2 fw-bold">{props.title}</h2>
       {!!props.categories && <GroupCategories categories={props.categories} />}
       {!!props.group && <OrganizationList group={props.group} />}
       <Tag region={props.regionId} />

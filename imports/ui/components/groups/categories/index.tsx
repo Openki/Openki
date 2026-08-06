@@ -26,7 +26,7 @@ function CategoryLabelLinked({
 }) {
   const { t } = useTranslation();
   return (
-    <div className="tag tag-link category-tag">
+    <div className="tag tag-link category-tag fw-light">
       <a
         className={`js-category-label category-${category}`}
         data-category={category}

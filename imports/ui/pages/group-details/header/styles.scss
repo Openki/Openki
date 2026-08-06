@@ -76,24 +76,10 @@
 .group-details-title {
   @include editable-popout;
 
-  font-size: 30px;
   margin-bottom: 10px;
   margin-right: 100px;
 }
 
-.group-details-title > .editable {
-  font-size: 30px;
-  padding: 0;
-}
-
-.group-details-title > .editable-controls {
-  font-size: medium;
-  z-index: 100;
-}
-
-.group-details-title > h2 {
-  margin-top: 0;
-}
 
 // ** Categories
 // ========================================================================================

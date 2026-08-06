@@ -64,7 +64,7 @@ export function VenueTag({
 
   if (venue?._id) {
     return (
-      <div className={`tag tag-link ${className} venue-tag ${tagClassName()}`}>
+      <div className={`tag tag-link ${className} venue-tag ${tagClassName()} fw-light`}>
         <a
           data-bs-title={t("location.link.tooltip", "Show details of {VENUE}", {
             VENUE: venue.name,
@@ -91,7 +91,7 @@ export function RoomTag({ name }: { name: string | undefined }) {
     return null;
   }
   return (
-    <div className="tag">
+    <div className="tag fw-light">
       <i className="fa-solid fa-signs-post fa-fw" />
       &nbsp;
       {name}

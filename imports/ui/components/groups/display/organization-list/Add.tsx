@@ -63,7 +63,7 @@ export function Add({ group }: Props) {
   }
 
   return (
-    <div className="btn-group tag-btn organization-tag-btn align-top">
+    <div className="btn-group tag-btn organization-tag-btn align-top fw-light">
       <button
         type="button"
         className="dropdown-toggle"
