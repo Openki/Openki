@@ -19,6 +19,7 @@ import { Add } from "./add";
 import { DeleteEvents } from "../delete-events";
 import { Modal as DeleteEventsModal } from "../delete-events/modal";
 import { EventList } from "/imports/ui/components/events/list";
+import { Button } from "/imports/ui/components/Buttons";
 
 import "./styles.scss";
 
@@ -74,9 +75,6 @@ export function Events({ group }: Props) {
 
   function upcomingEventsCount() {
     return group.futureEvents;
-  }
-  function canAdd() {
-    return group.editableBy(user);
   }
   function haveOngoingEvents() {
     return ongoingEvents().length > 0;
@@ -142,15 +140,13 @@ export function Events({ group }: Props) {
                 </div>
                 <div className="mt-2 text-center">
                   {showHaveMoreEvents() && (
-                    <button
-                      type="button"
-                      className="btn btn-add"
-                      onClick={() => {
-                        setShowAllEvents(true);
-                      }}
+                    <Button
+                      id="group-events-showAll"
+                      className="btn-add"
+                      onClick={() => setShowAllEvents(true)}
                     >
                       {t("group.events.showAllEvents", "Show all")}
-                    </button>
+                    </Button>
                   )}
                 </div>
               </>
@@ -172,7 +168,7 @@ export function Events({ group }: Props) {
         </div>
       )}
 
-      {canAdd() && (
+      {group.editableBy(user) && (
         <div className="page-component">
           <Add group={group} />
         </div>
