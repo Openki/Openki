@@ -100,12 +100,7 @@ export function Discussion({ select, groupId, eventId }: Props) {
 
   // style fixes a problem that occurs during the transition to react. This can be removed when everything is changed to react.
   return (
-    <div
-      className="page-component discussion"
-      id="discussion"
-      ref={elementRef}
-      style={{ marginTop: "15px" }}
-    >
+    <div className="page-component discussion mt-4" id="discussion" ref={elementRef}>
       <div className="page-component-header">
         <h4>
           <i className="fa-solid fa-comments fa-fw" />

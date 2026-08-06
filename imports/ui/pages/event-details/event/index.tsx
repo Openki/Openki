@@ -146,7 +146,7 @@ export function Event({ event, isNew }: { event: EventModel; isNew: boolean }) {
           {mobileViewport() && !!event.groupId && (
             <DisplayDiscussion groupId={event.groupId} eventId={event._id} />
           )}
-          <div className="page-component mt-3">
+          <div className="page-component mt-5">
             <Report showGroupHint />
           </div>
         </div>

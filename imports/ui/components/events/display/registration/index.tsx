@@ -160,7 +160,7 @@ export function EventRegistration({ event }: Props) {
       {!event.noRsvp &&
         // when registration closed, only show participant list when more than 0 participants
         (!registrationClosed || !!event.participants?.length) && (
-          <div className="page-component">
+          <div className="page-component mt-4">
             <EventParticipants event={event} />
           </div>
         )}
