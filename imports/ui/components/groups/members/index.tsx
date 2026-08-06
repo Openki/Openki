@@ -68,8 +68,6 @@ export function Members({ group }: { group: GroupModel }) {
     <>
       <div className="page-component-header">
         <h4>
-          <i className="fa-solid fa-users fa-fw" />
-          &nbsp;
           {t(
             "group.details.members.title",
             "{NUM, plural, =0{No interested yet} one{1 interested} other{# interested} }",

@@ -102,11 +102,7 @@ export function Discussion({ select, groupId, eventId }: Props) {
   return (
     <div className="page-component discussion mt-4" id="discussion" ref={elementRef}>
       <div className="page-component-header">
-        <h4>
-          <i className="fa-solid fa-comments fa-fw" />
-          &nbsp;
-          {t("group.title.Discussion", "Discussion")}
-        </h4>
+        <h4>{t("group.title.Discussion", "Discussion")}</h4>
       </div>
 
       {isLoading() ? (

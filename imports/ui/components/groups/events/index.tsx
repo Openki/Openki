@@ -112,11 +112,7 @@ export function Events({ group }: Props) {
             {haveOngoingEvents() && (
               <>
                 <div className="page-component-header">
-                  <h4>
-                    <i className="fa-regular fa-calendar-days fa-fw" />
-                    &nbsp;
-                    {t("group.events.ongoinglist", "Ongoing events")}
-                  </h4>
+                  <h4>{t("group.events.ongoinglist", "Ongoing events")}</h4>
                 </div>
                 <div className="group-event-list">
                   <EventList dataEvents={ongoingEvents()} />
@@ -128,8 +124,6 @@ export function Events({ group }: Props) {
               <>
                 <div className="page-component-header event-display-container">
                   <h4>
-                    <i className="fa-regular fa-calendar-days fa-fw" />
-                    &nbsp;
                     {t(
                       "group.events.upcominglist",
                       "{NUM, plural, =0{No upcoming events yet} one{1 upcoming event} other{# upcoming events} }",
@@ -165,22 +159,14 @@ export function Events({ group }: Props) {
         ) : (
           <div className="page-component">
             <div className="page-component-header">
-              <h4>
-                <i className="fa-regular fa-calendar-days fa-fw" />
-                &nbsp;
-                {t("group.details.noEvents", "No events planned")}
-              </h4>
+              <h4>{t("group.details.noEvents", "No events planned")}</h4>
             </div>
           </div>
         )
       ) : (
         <div className="page-component">
           <div className="page-component-header">
-            <h4>
-              <i className="fa-regular fa-calendar-days fa-fw" />
-              &nbsp;
-              {t("group.details.eventsLoadingHeader", "Events")}
-            </h4>
+            <h4>{t("group.details.eventsLoadingHeader", "Events")}</h4>
           </div>
           <LoadingRow />
         </div>

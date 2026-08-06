@@ -164,8 +164,6 @@ export function EventParticipants({ event }: Props) {
           </div>
         )}
         <h4 data-test="events-participants-header">
-          <i className="fa-solid fa-users fa-fw" />
-          &nbsp;
           {t(
             "event.details.participants.title",
             "{NUM, plural, =0{No participants yet} one{1 Participant} other{# Participants} }",
