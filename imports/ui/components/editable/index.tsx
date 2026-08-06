@@ -2,10 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ValidationError, ValidationErrorDetail } from "meteor/mdg:validation-error";
 import MediumEditor from "medium-editor";
+
 import { Mapping, useValidation } from "../../lib/useValidation";
 import { useSession, useSessionEquals } from "../../../utils/react-meteor-data";
-import { ButtonSave, ButtonCancel } from "../Buttons";
 import { Store } from "../../lib/editable";
+import { cx } from "/imports/utils/cx";
+
+import { ButtonSave, ButtonCancel } from "../Buttons";
 
 import "./styles.scss";
 
@@ -88,9 +91,7 @@ export function Editable({
   function showControls() {
     return !!store && changed;
   }
-  function wrapClasses() {
-    return multiline ? "editable-wrap-multiline" : "editable-wrap-singleline";
-  }
+
   function editableClasses() {
     const classes: string[] = [];
 
@@ -312,7 +313,10 @@ export function Editable({
   return (
     <>
       <div
-        className={`editable-wrap ${wrapClasses()}`}
+        className={cx(
+          "editable-wrap",
+          multiline ? "editable-wrap-multiline" : "editable-wrap-singleline",
+        )}
         onClick={() => {
           onStartEditing?.();
           onEditEmptyText();
@@ -333,7 +337,7 @@ export function Editable({
           }}
           role="textbox"
           aria-multiline={multiline}
-        ></div>
+        />
 
         {characterLimitReached() ? (
           <div className="invalid-feedback">
@@ -357,15 +361,14 @@ export function Editable({
             className="btn btn-sm editable-icon-container"
             data-bs-title={t("_button.edit", "Edit")}
           >
-            {" "}
-            <i className="fa-solid fa-pencil editable-icon" />{" "}
+            <i className="fa-solid fa-pencil editable-icon" />
           </button>
         )}
       </div>
       {showControls() && (
         <div className="editable-controls">
-          {!characterLimitReached() && <ButtonSave id="editaible-save" onClick={handleSave} />}
-          <ButtonCancel id="editaible-cancel" onClick={handleCancel} />
+          {!characterLimitReached() && <ButtonSave id="editable-save" onClick={handleSave} />}
+          <ButtonCancel id="editable-cancel" onClick={handleCancel} />
         </div>
       )}
     </>

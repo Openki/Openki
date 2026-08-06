@@ -1,7 +1,10 @@
 import React from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
+
 import { useUser } from "/imports/utils/react-meteor-data";
+import { cx } from "/imports/utils/cx";
+
 import { Icon } from "../Icon";
 
 import "./styles.scss";
@@ -64,7 +67,7 @@ export function VenueTag({
 
   if (venue?._id) {
     return (
-      <div className={`tag tag-link ${className} venue-tag ${tagClassName()} fw-light`}>
+      <div className={cx("tag tag-link venue-tag fw-light", tagClassName(), className)}>
         <a
           data-bs-title={t("location.link.tooltip", "Show details of {VENUE}", {
             VENUE: venue.name,

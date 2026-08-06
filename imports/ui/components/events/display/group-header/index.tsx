@@ -4,6 +4,8 @@ import React from "react";
 
 import { GroupModel } from "/imports/api/groups/groups";
 
+import { cx } from "/imports/utils/cx";
+
 import { GroupCategories } from "../../../groups/categories";
 import { Tag } from "/imports/ui/components/regions/tag";
 import { OrganizationList } from "../../../groups/display/organization-list";
@@ -25,7 +27,7 @@ export function EventGroupHeader(props: Props) {
   const { t } = useTranslation();
   return (
     <div
-      className={`event-group-header${props.headerLink ? " event-group-header-link" : ""}`}
+      className={cx("event-group-header", props.headerLink && "cursor-pointer")}
       onClick={() => {
         if (props.headerLink) {
           Router.go(props.headerLink);

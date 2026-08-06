@@ -6,6 +6,7 @@ import { OrganizationModel } from "/imports/api/organizations/organizations";
 import { useDetails } from "/imports/api/organizations/publications";
 
 import { name } from "../../../lib/organization-name-helpers";
+import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
 
@@ -36,7 +37,7 @@ export function OrganizationTag({
   return (
     <div
       data-test={`organization-tag-${organizationId}`}
-      className={`fw-light tag tag-link organization-tag ${isTeam ? "organization-tag-is-team" : ""}`}
+      className={cx("fw-light tag tag-link organization-tag", isTeam && "organization-tag-is-team")}
     >
       {isLoading() ? (
         <span className="placeholder" style={{ width: full ? "100px" : "40px" }}></span>

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
+
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
-import { useTranslation } from "react-i18next";
+import { cx } from "/imports/utils/cx";
 
 import { Control } from "./Control";
 import { FilterOrganizations } from "../../FilterOrganizations";
@@ -85,7 +87,10 @@ export function CalendarNavWeek(props: Props) {
 
   return (
     <div
-      className={`flex-container calendar-nav-container${covering ? " calendar-nav-container-covering" : ""}`}
+      className={cx(
+        "flex-container calendar-nav-container",
+        covering && "calendar-nav-container-covering",
+      )}
       style={{ display: "block" }}
     >
       <div className="row align-items-center p-1">

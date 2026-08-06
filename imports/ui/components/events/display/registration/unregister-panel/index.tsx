@@ -45,15 +45,14 @@ export function UnregisterPanel({ event, onUnregister }: Props) {
   return (
     <>
       {!unregisterDropdown ? (
-        <button
-          type="button"
-          className="btn btn-add btn-lg"
-          onClick={() => {
-            setUnregisterDropdown(true);
-          }}
+        <Button
+          id="unregister-panel-withdraw"
+          size="large"
+          className="btn-add"
+          onClick={() => setUnregisterDropdown(true)}
         >
           {t("event.details.withdraw-registration", "Withdraw my registration")}
-        </button>
+        </Button>
       ) : (
         <div className="p-3 event-detail-register-dropdown">
           <p>

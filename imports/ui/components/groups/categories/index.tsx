@@ -28,7 +28,7 @@ function CategoryLabelLinked({
   return (
     <div className="tag tag-link category-tag fw-light">
       <a
-        className={`js-category-label category-${category}`}
+        className={`category-${category}`}
         data-category={category}
         data-bs-title={`${t("categories.showGroups", "Show all in {CATEGORY}", {
           CATEGORY: t(`category.${category}`),

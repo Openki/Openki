@@ -29,7 +29,15 @@ export interface Props {
   report?: boolean | undefined;
 }
 
-export function ActionResult({ type, dismissible, icon, title, children, actions, report }: Props) {
+export function ActionResult({
+  type,
+  dismissible,
+  icon,
+  title,
+  children,
+  actions: actionsWithUndefined,
+  report,
+}: Props) {
   const { t } = useTranslation();
 
   if (type === "success") {
@@ -41,19 +49,17 @@ export function ActionResult({ type, dismissible, icon, title, children, actions
 
     report = report ?? true;
   } else {
-    throw new Error('Unexpected value for param "type".');
+    throw new Error('Unexpected value for param "type": ' + type);
   }
 
   if (typeof icon === "string" && icon.startsWith("fa-")) {
     icon = <i className={cx(icon, "fa-fw")} />;
   }
 
-  actions = (actions || []).filter((a) => a);
+  const actions = (actionsWithUndefined || []).filter((a) => a) as Action[];
 
   // display actions stacked if there is a description or complex element
-  const stacked = (actions as Action[]).find(
-    (a) => "description" in a || !("href" in a || "button" in a),
-  );
+  const stacked = actions.find((a) => "description" in a || !("href" in a || "button" in a));
 
   const timeoutActionFocusRef = useRef(0);
   async function handleActionClick(
@@ -124,9 +130,9 @@ export function ActionResult({ type, dismissible, icon, title, children, actions
             <>
               <hr className="border border-black" />
               <div className={cx("d-flex gap-3", stacked ? "flex-column" : "flex-row flex-wrap")}>
-                {(actions as Action[]).map((action, index) => (
+                {actions.map((action, index) => (
                   <div key={index} className="fs-4">
-                    {"description" in action ? <>{action.description} </> : ""}
+                    {"description" in action && <>{action.description} </>}
                     {"href" in action ? (
                       <a
                         className={

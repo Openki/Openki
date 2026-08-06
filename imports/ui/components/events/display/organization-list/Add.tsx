@@ -74,7 +74,7 @@ export function Add({ event }: Props) {
       <ul className="dropdown-menu dialog-dropdown">
         <li className="dropdown-header">
           {t("groups.organizationList.add.addOrganization")}
-          <button type="button" className="btn-close"></button>
+          <button type="button" className="btn-close" />
         </li>
         <li>
           <hr className="dropdown-divider" />
