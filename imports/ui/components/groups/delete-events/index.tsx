@@ -9,13 +9,13 @@ export function DeleteEvents(props: { onShowEventsDeleteModal: () => void }) {
   return (
     <div>
       <button
-        className="btn btn-sm bin-button-container"
+        className="btn btn-primary btn-sm bin-button-container rounded-circle"
         data-bs-title={t("group.event.edit.deleteEvents", "Delete events")}
         onClick={() => {
           props.onShowEventsDeleteModal();
         }}
       >
-        <i className="fa-solid fa-trash-can delete-icon" />
+        <i className="fa-solid fa-trash-can" />
       </button>
     </div>
   );

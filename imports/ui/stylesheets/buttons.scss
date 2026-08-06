@@ -41,7 +41,8 @@
   :not(.btn-check) + &.btn:active,
   &.btn:first-child:active,
   &.btn.active,
-  &.btn.show {
+  &.btn.show,
+  &:focus-visible {
     color: $white;
   }
 }

@@ -1,29 +1,8 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .bin-button-container {
-  border-radius: 50%;
-  transition: background-color 0.2s ease;
-  align-self: center;
   height: 40px;
   width: 40px;
-
-  &:hover {
-    background-color: rgb(255 255 255 / 12%);
-    cursor: pointer;
-  }
-
-  &:focus {
-    outline: none;
-  }
-
-  &:focus-visible {
-    outline: 1px solid $gray-100;
-    outline-offset: 1px;
-  }
-}
-
-.delete-icon {
-  font-size: medium;
-  color: white;
-  pointer-events: none;
+  margin-top: -10px;
+  margin-bottom: -10px;
 }

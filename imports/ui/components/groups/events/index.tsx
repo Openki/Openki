@@ -137,7 +137,9 @@ export function Events({ group }: Props) {
                     )}
                   </h4>
                   <div>
-                    {haveEvents() && <DeleteEvents {...deleteGroupEventsArgs()} />}
+                    {group.editableBy(user) && haveEvents() && (
+                      <DeleteEvents {...deleteGroupEventsArgs()} />
+                    )}
                     {showModal && <DeleteEventsModal {...deleteEventsModalArgs()} />}
                   </div>
                 </div>
