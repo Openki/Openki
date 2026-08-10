@@ -3,7 +3,7 @@
 # Uses the official Meteor base image to install
 # dependencies and produce a self-contained bundle.
 # ─────────────────────────────────────────────
-FROM geoffreybooth/meteor-base:3.4 AS builder
+FROM geoffreybooth/meteor-base:3.5 AS builder
 
 # Copy the full source into the image
 WORKDIR /app
@@ -25,12 +25,12 @@ FROM node:22-slim AS runtime
 
 # Required by Meteor bundles
 ENV PORT=3000 \
-    NODE_ENV=production
+  NODE_ENV=production
 
 # Fibers / native modules need a build toolchain
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        python3 make g++ \
-    && rm -rf /var/lib/apt/lists/*
+  python3 make g++ \
+  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
