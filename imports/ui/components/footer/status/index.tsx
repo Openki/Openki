@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 export function Status() {
   const { t } = useTranslation();
-  const [errors, setErrors] = useState<Error[] | undefined>(undefined);
+  const [errors, setErrors] = useState<unknown[] | undefined>(undefined);
 
   useEffect(() => {
     if (!errors) {
@@ -22,7 +22,13 @@ export function Status() {
     <span
       className="text-danger"
       title={`${t("footer.errorInSettings", "Error(s) in settings:")}\n ${errors
-        .map((e) => e.message.replace("Match error: ", ""))
+        .map((e) => {
+          if (e instanceof Error) {
+            return e.message.replace("Match error: ", "");
+          } else {
+            return String(e);
+          }
+        })
         .join("\n ")}`}
     >
       <i className="fa-solid fa-circle" />
