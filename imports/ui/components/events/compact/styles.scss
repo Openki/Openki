@@ -26,16 +26,9 @@
 
 // ** Body
 // ========================================================================================
-.event-compact-body-wrap {
-  flex-grow: 1;
-}
 
 .event-compact-body {
-  @include ellipsis-multiline(5);
-
-  margin: 10px;
   max-height: $event-compact-height - 60px;
-  padding: 0;
 }
 
 // ** Header
@@ -45,9 +38,7 @@
 
   background: $event-header-bg;
   border-bottom: $event-compact-seperator-height solid $body-bg;
-  color: $gray-800;
   display: table;
-  padding: 7px;
 
   &.user-attends-event {
     background: $user-bg;
@@ -75,32 +66,6 @@
   background-color: color.adjust(color.adjust($event-header-bg, $lightness: 5%), $saturation: -50%);
 }
 
-// ** Title
-// ========================================================================================
-.event-compact-title {
-  display: inline;
-  font-weight: 600;
-  padding: 0;
-
-  a {
-    color: $gray-800 !important;
-  }
-}
-
-.event-compact-title::after {
-  // Simulate margin: 0 0 0.25rem;
-  content: "";
-  display: inline-block;
-  height: $h4-font-size + 0.9rem;
-  vertical-align: top;
-}
-
-// ** Description
-// ========================================================================================
-.event-compact-description {
-  color: $gray-800;
-  display: inline;
-}
 
 // event canceled
 // ============================================================================================

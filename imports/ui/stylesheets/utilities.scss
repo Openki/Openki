@@ -64,6 +64,10 @@ $utilities: map.merge(
   @include ellipsis-multiline(3);
 }
 
+.line-clamp-4 {
+  @include ellipsis-multiline(4);
+}
+
 // Optional Bootstrap Utilities
 /* stylelint-disable-next-line no-invalid-position-at-import-rule */
 @import "{}/node_modules/bootstrap/scss/utilities/api";

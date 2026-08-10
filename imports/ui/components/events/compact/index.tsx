@@ -2,14 +2,15 @@ import { Router } from "meteor/iron:router";
 import moment from "moment";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useUserId } from "/imports/utils/react-meteor-data";
 
 import { EventModel } from "/imports/api/events/events";
 
+import { useUserId } from "/imports/utils/react-meteor-data";
+import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { cx } from "/imports/utils/cx";
+
 import { InternalIndicator } from "/imports/ui/components/internal-indicator";
 import { RoomTag, VenueLink } from "/imports/ui/components/venues/link";
-
-import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
 import "./styles.scss";
 
@@ -71,7 +72,10 @@ export function EventCompact({
         )
       )}
       <div
-        className={`event-compact-header${event.attendedBy(userId) ? " user-attends-event" : ""}`}
+        className={cx(
+          "event-compact-header p-2",
+          event.attendedBy(userId) && " user-attends-event",
+        )}
       >
         {!!withDate && (
           <>
@@ -100,12 +104,12 @@ export function EventCompact({
               </>
             )}
       </div>
-      <div className="event-compact-body-wrap" style={bodyStyle(event, withImage)}>
-        <div className="event-compact-body">
+      <div className="flex-grow-1" style={bodyStyle(event, withImage)}>
+        <div className="event-compact-body m-2 line-clamp-4">
           {event.internal && <InternalIndicator />}
-          <h4 className="event-compact-title">
+          <h4 className="mb-1 fw-semibold">
             <a
-              className="stretched-link"
+              className="stretched-link text-body"
               href={Router.path("showEvent", event)}
               target={openInNewTab ? "_blank" : ""}
               rel="noreferrer"
@@ -113,11 +117,7 @@ export function EventCompact({
               {event.title}
             </a>
           </h4>
-          <br />
-          <p
-            className={`event-compact-description`}
-            dangerouslySetInnerHTML={{ __html: event.description }}
-          ></p>
+          <p className="text-body" dangerouslySetInnerHTML={{ __html: event.description }} />
         </div>
       </div>
     </div>
