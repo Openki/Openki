@@ -21,7 +21,7 @@ cache:
 
 variables:
   DISPLAY: ":99.0"
-  GIT_DEPTH: "0"           # Full history needed for git describe / git log
+  GIT_DEPTH: "0" # Full history needed for git describe / git log
   METEOR_ALLOW_SUPERUSER: "true"
   TOOL_NODE_FLAGS: "--max_old_space_size=4096"
   TARGET_BRANCH: "dev"
@@ -46,17 +46,17 @@ cleanup:
 prepare_version:
   stage: prepare
   before_script:
-    - git fetch --tags   # Required for git describe to find annotated tags
+    - git fetch --tags # Required for git describe to find annotated tags
   script:
     - bash update-version.sh
   artifacts:
     reports:
-      dotenv: build.env  # Exposes IMAGE_TAG to downstream jobs
+      dotenv: build.env # Exposes IMAGE_TAG to downstream jobs
     paths:
       - server/version.js
     expire_in: 1 hour
   rules:
-    - if: '$CI_COMMIT_BRANCH == $TARGET_BRANCH'
+    - if: "$CI_COMMIT_BRANCH == $TARGET_BRANCH"
       when: always
 
 # Unit / E2E / integration tests
@@ -91,14 +91,14 @@ code_quality:
 
     # Run only for merge requests targeting the "dev" branch
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $TARGET_BRANCH
-      when: always 
+      when: always
 
 # Semgrep SAST configuration
 # - Additional SAST settings: https://gitlab.com/Openki/Openki/-/security/configuration/sast
 semgrep-sast:
   rules:
     # Run security scanning only on the "server-config-21-docker-simple-setup" branch
-    - if: '$CI_COMMIT_BRANCH == $TARGET_BRANCH'
+    - if: "$CI_COMMIT_BRANCH == $TARGET_BRANCH"
       when: always
 
 # Global SAST settings
@@ -107,21 +107,20 @@ sast:
     # Exclude generated/vendor directories from scanning
     SAST_EXCLUDED_PATHS: "$DEFAULT_SAST_EXCLUDED_PATHS,.meteor/*,packages/*"
 
-
 # -------------------------------------------------------------------
 # Stage: build
 # Builds and pushes the Docker image using the tag from prepare
 # -------------------------------------------------------------------
 build_and_push_docker:
   stage: build
-  image: docker:29.6.1-cli
+  image: docker:29.7.2-cli
   services:
-    - docker:29.6.1-dind
+    - docker:29.7.2-dind
   variables:
     DOCKER_TLS_CERTDIR: "/certs"
   needs:
     - job: prepare_version
-      artifacts: true      # Pulls in server/version.js + IMAGE_TAG
+      artifacts: true # Pulls in server/version.js + IMAGE_TAG
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
@@ -129,9 +128,8 @@ build_and_push_docker:
     - docker build -t "$CI_REGISTRY_IMAGE:$IMAGE_TAG" .
     - docker push "$CI_REGISTRY_IMAGE:$IMAGE_TAG"
   rules:
-    - if: '$CI_COMMIT_BRANCH == $TARGET_BRANCH'
+    - if: "$CI_COMMIT_BRANCH == $TARGET_BRANCH"
       when: always
-
 
 # -------------------------------------------------------------------
 # Stage: Deploy
@@ -141,7 +139,7 @@ deploy_docker:
   stage: deploy
   needs:
     - job: prepare_version
-      artifacts: true  
+      artifacts: true
     - job: build_and_push_docker
       artifacts: true
   trigger:
@@ -150,9 +148,9 @@ deploy_docker:
   variables:
     IMAGE_TAG: $IMAGE_TAG
   rules:
-    - if: '$CI_COMMIT_BRANCH == $TARGET_BRANCH'
+    - if: "$CI_COMMIT_BRANCH == $TARGET_BRANCH"
       when: always
-  
+
 #Deploy branch dev
 deploy_dev:
   stage: deploy
@@ -162,7 +160,7 @@ deploy_dev:
     SOURCE_BRANCH: dev
     TARGET_HOST: dev
   rules:
-    - if: '$CI_COMMIT_BRANCH == $TARGET_BRANCH'
+    - if: "$CI_COMMIT_BRANCH == $TARGET_BRANCH"
       when: always
   trigger: Openki/sysadmin/deploy-config
 
