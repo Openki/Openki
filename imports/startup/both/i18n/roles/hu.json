@@ -1,8 +1,8 @@
 {
-  "host_description": "egy vendéglátó aki rendelkezésre állít egy helyiséget",
-  "host_short": "házigazda",
-  "host_subscribe": "Helyiséget biztosítok",
-  "mentor_description": "egy mentor",
-  "mentor_short": "mentor",
-  "mentor_subscribe": "Lehetnék mentor"
+  "host.description": "egy vendéglátó aki rendelkezésre állít egy helyiséget",
+  "host.short": "házigazda",
+  "host.subscribe": "Helyiséget biztosítok",
+  "mentor.description": "egy mentor",
+  "mentor.short": "mentor",
+  "mentor.subscribe": "Lehetnék mentor"
 }

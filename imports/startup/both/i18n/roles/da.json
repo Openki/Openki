@@ -1,13 +1,13 @@
 {
-  "host_description": "en vært der stiller et lokale til rådighed",
-  "host_short": "vært",
-  "host_subscribe": "Jeg har et lokale til at have for dette møde i",
-  "host_subscribed": "Du er sat på som vært",
-  "mentor_description": "en mentor",
-  "mentor_short": "mentor",
-  "mentor_subscribe": "Jeg kan være mentor",
-  "mentor_subscribed": "Du er sat på som mentor",
-  "team_short": "hold",
-  "team_subscribe": "Jeg hjælper med at organisere",
-  "team_subscribed": "Du er på holdet"
+  "host.description": "en vært der stiller et lokale til rådighed",
+  "host.short": "vært",
+  "host.subscribe": "Jeg har et lokale til at have for dette møde i",
+  "host.subscribed": "Du er sat på som vært",
+  "mentor.description": "en mentor",
+  "mentor.short": "mentor",
+  "mentor.subscribe": "Jeg kan være mentor",
+  "mentor.subscribed": "Du er sat på som mentor",
+  "team.short": "hold",
+  "team.subscribe": "Jeg hjælper med at organisere",
+  "team.subscribed": "Du er på holdet"
 }

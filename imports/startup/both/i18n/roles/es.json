@@ -1,9 +1,9 @@
 {
-  "host_find_roleNeeded": "Buscando host",
-  "mentor_find_roleNeeded": "Buscando mentor",
+  "host.find.roleNeeded": "Buscando host",
+  "mentor.find.roleNeeded": "Buscando mentor",
 
-  "host_subscribe": "Tengo un lugar para ofrecer",
-  "mentor_subscribe": "Puedo ser mentor",
+  "host.subscribe": "Tengo un lugar para ofrecer",
+  "mentor.subscribe": "Puedo ser mentor",
 
-  "team_subscribe": "Ayudo en organizarlo"
+  "team.subscribe": "Ayudo en organizarlo"
 }

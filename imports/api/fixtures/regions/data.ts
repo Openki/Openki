@@ -300,37 +300,37 @@ export const regions: {
             de: "{NAME} hat unterrichtet",
             fr: "{NAME} a enseigné",
           },
-          find_roleNeeded: {
+          "find.roleNeeded": {
             en: "Looking for a facilitator",
             de: "Sucht einen Moderator",
             fr: "Recherche un animateur",
           },
-          groupList_statusTitle_roleNeeded: {
+          "groupList.statusTitle.roleNeeded": {
             en: "Needs a facilitator",
             de: "Benötigt einen Moderator",
             fr: "Besoin d'un animateur",
           },
-          groupList_statusTitle_roleOccupied: {
+          "groupList.statusTitle.roleOccupied": {
             en: "Has a facilitator",
             de: "Hat einen Moderator",
             fr: "A un animateur",
           },
-          groupList_statusTitle_roleOccupiedByUser: {
+          "groupList.statusTitle.roleOccupiedByUser": {
             en: "You are a facilitator",
             de: "Sie sind Moderator",
             fr: "Vous êtes animateur",
           },
-          notification_join_mail_intro: {
+          "notification.join.mail.intro": {
             en: "{USERNAME} just joined {GROUP} as facilitator\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
             de: "{USERNAME} ist gerade als Moderator zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
             fr: "{USERNAME} vient de rejoindre {GROUP} en tant qu'animateur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
-          group_firstSteps: {
+          "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
             de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
             fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
           },
-          group_messageInfo: {
+          "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
             de: "Hinterlassen Sie eine Nachricht über Ihre Erfahrung zum Thema. Die Nachricht wird neben Ihrem Namen angezeigt.",
             fr: "Laissez un message sur votre expérience du sujet. Le message apparaîtra à côté de votre nom.",
@@ -384,37 +384,37 @@ export const regions: {
             de: "{NAME} hat gebaut",
             fr: "{NAME} a construit",
           },
-          find_roleNeeded: {
+          "find.roleNeeded": {
             en: "Looking for a builder",
             de: "Sucht einen Baumeister",
             fr: "Recherche un constructeur",
           },
-          groupList_statusTitle_roleNeeded: {
+          "groupList.statusTitle.roleNeeded": {
             en: "Needs a builder",
             de: "Benötigt einen Baumeister",
             fr: "Besoin d'un constructeur",
           },
-          groupList_statusTitle_roleOccupied: {
+          "groupList.statusTitle.roleOccupied": {
             en: "Has a builder",
             de: "Hat einen Baumeister",
             fr: "A un constructeur",
           },
-          groupList_statusTitle_roleOccupiedByUser: {
+          "groupList.statusTitle.roleOccupiedByUser": {
             en: "You are a builder",
             de: "Sie sind Baumeister",
             fr: "Vous êtes constructeur",
           },
-          notification_join_mail_intro: {
+          "notification.join.mail.intro": {
             en: "{USERNAME} just joined {GROUP} as builder\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
             de: "{USERNAME} ist gerade als Baumeister zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
             fr: "{USERNAME} vient de rejoindre {GROUP} en tant que constructeur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
-          group_firstSteps: {
+          "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
             de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
             fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
           },
-          group_messageInfo: {
+          "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
             de: "Hinterlassen Sie eine Nachricht über Ihre Erfahrung zum Thema. Die Nachricht wird neben Ihrem Namen angezeigt.",
             fr: "Laissez un message sur votre expérience du sujet. Le message apparaîtra à côté de votre nom.",
@@ -468,37 +468,37 @@ export const regions: {
             de: "{NAME} hat geforscht",
             fr: "{NAME} a recherché",
           },
-          find_roleNeeded: {
+          "find.roleNeeded": {
             en: "Looking for a researcher",
             de: "Sucht einen Forscher",
             fr: "Recherche un chercheur",
           },
-          groupList_statusTitle_roleNeeded: {
+          "groupList.statusTitle.roleNeeded": {
             en: "Needs a researcher",
             de: "Benötigt einen Forscher",
             fr: "Besoin d'un chercheur",
           },
-          groupList_statusTitle_roleOccupied: {
+          "groupList.statusTitle.roleOccupied": {
             en: "Has a researcher",
             de: "Hat einen Forscher",
             fr: "A un chercheur",
           },
-          groupList_statusTitle_roleOccupiedByUser: {
+          "groupList.statusTitle.roleOccupiedByUser": {
             en: "You are a researcher",
             de: "Sie sind Forscher",
             fr: "Vous êtes chercheur",
           },
-          notification_join_mail_intro: {
+          "notification.join.mail.intro": {
             en: "{USERNAME} just joined {GROUP} as researcher\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
             de: "{USERNAME} ist gerade als Forscher zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
             fr: "{USERNAME} vient de rejoindre {GROUP} en tant que chercheur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
-          group_firstSteps: {
+          "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
             de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
             fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
           },
-          group_messageInfo: {
+          "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
             de: "Hinterlassen Sie eine Nachricht über Ihre Erfahrung zum Thema. Die Nachricht wird neben Ihrem Namen angezeigt.",
             fr: "Laissez un message sur votre expérience du sujet. Le message apparaîtra à côté de votre nom.",
@@ -552,37 +552,37 @@ export const regions: {
             de: "{NAME} hat bearbeitet",
             fr: "{NAME} a édité",
           },
-          find_roleNeeded: {
+          "find.roleNeeded": {
             en: "Looking for an editor",
             de: "Sucht einen Redakteur",
             fr: "Recherche un éditeur",
           },
-          groupList_statusTitle_roleNeeded: {
+          "groupList.statusTitle.roleNeeded": {
             en: "Needs an editor",
             de: "Benötigt einen Redakteur",
             fr: "Besoin d'un éditeur",
           },
-          groupList_statusTitle_roleOccupied: {
+          "groupList.statusTitle.roleOccupied": {
             en: "Has an editor",
             de: "Hat einen Redakteur",
             fr: "A un éditeur",
           },
-          groupList_statusTitle_roleOccupiedByUser: {
+          "groupList.statusTitle.roleOccupiedByUser": {
             en: "You are an editor",
             de: "Sie sind Redakteur",
             fr: "Vous êtes éditeur",
           },
-          notification_join_mail_intro: {
+          "notification.join.mail.intro": {
             en: "{USERNAME} just joined {GROUP} as editor\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
             de: "{USERNAME} ist gerade als Redakteur zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
             fr: "{USERNAME} vient de rejoindre {GROUP} en tant qu'éditeur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
-          group_firstSteps: {
+          "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
             de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
             fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
           },
-          group_messageInfo: {
+          "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
             de: "Hinterlassen Sie eine Nachricht über Ihre Erfahrung zum Thema. Die Nachricht wird neben Ihrem Namen angezeigt.",
             fr: "Laissez un message sur votre expérience du sujet. Le message apparaîtra à côté de votre nom.",
@@ -636,37 +636,37 @@ export const regions: {
             de: "{NAME} hat organisiert",
             fr: "{NAME} a organisé",
           },
-          find_roleNeeded: {
+          "find.roleNeeded": {
             en: "Looking for an organizer",
             de: "Sucht einen Organisator",
             fr: "Recherche un organisateur",
           },
-          groupList_statusTitle_roleNeeded: {
+          "groupList.statusTitle.roleNeeded": {
             en: "Needs an organizer",
             de: "Benötigt einen Organisator",
             fr: "Besoin d'un organisateur",
           },
-          groupList_statusTitle_roleOccupied: {
+          "groupList.statusTitle.roleOccupied": {
             en: "Has an organizer",
             de: "Hat einen Organisator",
             fr: "A un organisateur",
           },
-          groupList_statusTitle_roleOccupiedByUser: {
+          "groupList.statusTitle.roleOccupiedByUser": {
             en: "You are an organizer",
             de: "Sie sind Organisator",
             fr: "Vous êtes organisateur",
           },
-          notification_join_mail_intro: {
+          "notification.join.mail.intro": {
             en: "{USERNAME} just joined {GROUP} as organizer\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
             de: "{USERNAME} ist gerade als Organisator zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
             fr: "{USERNAME} vient de rejoindre {GROUP} en tant qu'organisateur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
-          group_firstSteps: {
+          "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
             de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
             fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
           },
-          group_messageInfo: {
+          "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
             de: "Hinterlassen Sie eine Nachricht über Ihre Erfahrung zum Thema. Die Nachricht wird neben Ihrem Namen angezeigt.",
             fr: "Laissez un message sur votre expérience du sujet. Le message apparaîtra à côté de votre nom.",
@@ -720,37 +720,37 @@ export const regions: {
             de: "{NAME} hat entwickelt",
             fr: "{NAME} a développé",
           },
-          find_roleNeeded: {
+          "find.roleNeeded": {
             en: "Looking for a developer",
             de: "Sucht einen Entwickler",
             fr: "Recherche un développeur",
           },
-          groupList_statusTitle_roleNeeded: {
+          "groupList.statusTitle.roleNeeded": {
             en: "Needs a developer",
             de: "Benötigt einen Entwickler",
             fr: "Besoin d'un développeur",
           },
-          groupList_statusTitle_roleOccupied: {
+          "groupList.statusTitle.roleOccupied": {
             en: "Has a developer",
             de: "Hat einen Entwickler",
             fr: "A un développeur",
           },
-          groupList_statusTitle_roleOccupiedByUser: {
+          "groupList.statusTitle.roleOccupiedByUser": {
             en: "You are a developer",
             de: "Sie sind Entwickler",
             fr: "Vous êtes développeur",
           },
-          notification_join_mail_intro: {
+          "notification.join.mail.intro": {
             en: "{USERNAME} just joined {GROUP} as developer\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
             de: "{USERNAME} ist gerade als Entwickler zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
             fr: "{USERNAME} vient de rejoindre {GROUP} en tant que développeur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
-          group_firstSteps: {
+          "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
             de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
             fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
           },
-          group_messageInfo: {
+          "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
             de: "Hinterlassen Sie eine Nachricht über Ihre Erfahrung zum Thema. Die Nachricht wird neben Ihrem Namen angezeigt.",
             fr: "Laissez un message sur votre expérience du sujet. Le message apparaîtra à côté de votre nom.",
@@ -804,37 +804,37 @@ export const regions: {
             de: "{NAME} hat getestet",
             fr: "{NAME} a testé",
           },
-          find_roleNeeded: {
+          "find.roleNeeded": {
             en: "Looking for a tester",
             de: "Sucht einen Tester",
             fr: "Recherche un testeur",
           },
-          groupList_statusTitle_roleNeeded: {
+          "groupList.statusTitle.roleNeeded": {
             en: "Needs a tester",
             de: "Benötigt einen Tester",
             fr: "Besoin d'un testeur",
           },
-          groupList_statusTitle_roleOccupied: {
+          "groupList.statusTitle.roleOccupied": {
             en: "Has a tester",
             de: "Hat einen Tester",
             fr: "A un testeur",
           },
-          groupList_statusTitle_roleOccupiedByUser: {
+          "groupList.statusTitle.roleOccupiedByUser": {
             en: "You are a tester",
             de: "Sie sind Tester",
             fr: "Vous êtes testeur",
           },
-          notification_join_mail_intro: {
+          "notification.join.mail.intro": {
             en: "{USERNAME} just joined {GROUP} as tester\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
             de: "{USERNAME} ist gerade als Tester zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
             fr: "{USERNAME} vient de rejoindre {GROUP} en tant que testeur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
-          group_firstSteps: {
+          "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
             de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
             fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
           },
-          group_messageInfo: {
+          "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
             de: "Hinterlassen Sie eine Nachricht über Ihre Erfahrung zum Thema. Die Nachricht wird neben Ihrem Namen angezeigt.",
             fr: "Laissez un message sur votre expérience du sujet. Le message apparaîtra à côté de votre nom.",
@@ -888,37 +888,37 @@ export const regions: {
             de: "{NAME} hat produziert",
             fr: "{NAME} a produit",
           },
-          find_roleNeeded: {
+          "find.roleNeeded": {
             en: "Looking for a producer",
             de: "Sucht einen Produzenten",
             fr: "Recherche un producteur",
           },
-          groupList_statusTitle_roleNeeded: {
+          "groupList.statusTitle.roleNeeded": {
             en: "Needs a producer",
             de: "Benötigt einen Produzenten",
             fr: "Besoin d'un producteur",
           },
-          groupList_statusTitle_roleOccupied: {
+          "groupList.statusTitle.roleOccupied": {
             en: "Has a producer",
             de: "Hat einen Produzenten",
             fr: "A un producteur",
           },
-          groupList_statusTitle_roleOccupiedByUser: {
+          "groupList.statusTitle.roleOccupiedByUser": {
             en: "You are a producer",
             de: "Sie sind Produzent",
             fr: "Vous êtes producteur",
           },
-          notification_join_mail_intro: {
+          "notification.join.mail.intro": {
             en: "{USERNAME} just joined {GROUP} as producer\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
             de: "{USERNAME} ist gerade als Produzent zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
             fr: "{USERNAME} vient de rejoindre {GROUP} en tant que producteur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
-          group_firstSteps: {
+          "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
             de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
             fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
           },
-          group_messageInfo: {
+          "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
             de: "Hinterlassen Sie eine Nachricht über Ihre Erfahrung zum Thema. Die Nachricht wird neben Ihrem Namen angezeigt.",
             fr: "Laissez un message sur votre expérience du sujet. Le message apparaîtra à côté de votre nom.",
@@ -972,37 +972,37 @@ export const regions: {
             de: "{NAME} hat moderiert",
             fr: "{NAME} a modéré",
           },
-          find_roleNeeded: {
+          "find.roleNeeded": {
             en: "Looking for a moderator",
             de: "Sucht einen Moderator",
             fr: "Recherche un modérateur",
           },
-          groupList_statusTitle_roleNeeded: {
+          "groupList.statusTitle.roleNeeded": {
             en: "Needs a moderator",
             de: "Benötigt einen Moderator",
             fr: "Besoin d'un modérateur",
           },
-          groupList_statusTitle_roleOccupied: {
+          "groupList.statusTitle.roleOccupied": {
             en: "Has a moderator",
             de: "Hat einen Moderator",
             fr: "A un modérateur",
           },
-          groupList_statusTitle_roleOccupiedByUser: {
+          "groupList.statusTitle.roleOccupiedByUser": {
             en: "You are a moderator",
             de: "Sie sind Moderator",
             fr: "Vous êtes modérateur",
           },
-          notification_join_mail_intro: {
+          "notification.join.mail.intro": {
             en: "{USERNAME} just joined {GROUP} as moderator\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
             de: "{USERNAME} ist gerade als Moderator zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
             fr: "{USERNAME} vient de rejoindre {GROUP} en tant que modérateur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
-          group_firstSteps: {
+          "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
             de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
             fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
           },
-          group_messageInfo: {
+          "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
             de: "Hinterlassen Sie eine Nachricht über Ihre Erfahrung zum Thema. Die Nachricht wird neben Ihrem Namen angezeigt.",
             fr: "Laissez un message sur votre expérience du sujet. Le message apparaîtra à côté de votre nom.",
@@ -1056,37 +1056,37 @@ export const regions: {
             de: "{NAME} hat geplant",
             fr: "{NAME} a planifié",
           },
-          find_roleNeeded: {
+          "find.roleNeeded": {
             en: "Looking for a planner",
             de: "Sucht einen Planer",
             fr: "Recherche un planificateur",
           },
-          groupList_statusTitle_roleNeeded: {
+          "groupList.statusTitle.roleNeeded": {
             en: "Needs a planner",
             de: "Benötigt einen Planer",
             fr: "Besoin d'un planificateur",
           },
-          groupList_statusTitle_roleOccupied: {
+          "groupList.statusTitle.roleOccupied": {
             en: "Has a planner",
             de: "Hat einen Planer",
             fr: "A un planificateur",
           },
-          groupList_statusTitle_roleOccupiedByUser: {
+          "groupList.statusTitle.roleOccupiedByUser": {
             en: "You are a planner",
             de: "Sie sind Planer",
             fr: "Vous êtes planificateur",
           },
-          notification_join_mail_intro: {
+          "notification.join.mail.intro": {
             en: "{USERNAME} just joined {GROUP} as planner\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
             de: "{USERNAME} ist gerade als Planer zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
             fr: "{USERNAME} vient de rejoindre {GROUP} en tant que planificateur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
-          group_firstSteps: {
+          "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
             de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
             fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
           },
-          group_messageInfo: {
+          "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
             de: "Hinterlassen Sie eine Nachricht über Ihre Erfahrung zum Thema. Die Nachricht wird neben Ihrem Namen angezeigt.",
             fr: "Laissez un message sur votre expérience du sujet. Le message apparaîtra à côté de votre nom.",
@@ -1140,37 +1140,37 @@ export const regions: {
             de: "{NAME} hat kuratiert",
             fr: "{NAME} a conservé",
           },
-          find_roleNeeded: {
+          "find.roleNeeded": {
             en: "Looking for a curator",
             de: "Sucht einen Kurator",
             fr: "Recherche un conservateur",
           },
-          groupList_statusTitle_roleNeeded: {
+          "groupList.statusTitle.roleNeeded": {
             en: "Needs a curator",
             de: "Benötigt einen Kurator",
             fr: "Besoin d'un conservateur",
           },
-          groupList_statusTitle_roleOccupied: {
+          "groupList.statusTitle.roleOccupied": {
             en: "Has a curator",
             de: "Hat einen Kurator",
             fr: "A un conservateur",
           },
-          groupList_statusTitle_roleOccupiedByUser: {
+          "groupList.statusTitle.roleOccupiedByUser": {
             en: "You are a curator",
             de: "Sie sind Kurator",
             fr: "Vous êtes conservateur",
           },
-          notification_join_mail_intro: {
+          "notification.join.mail.intro": {
             en: "{USERNAME} just joined {GROUP} as curator\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
             de: "{USERNAME} ist gerade als Kurator zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
             fr: "{USERNAME} vient de rejoindre {GROUP} en tant que conservateur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
-          group_firstSteps: {
+          "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
             de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
             fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
           },
-          group_messageInfo: {
+          "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
             de: "Hinterlassen Sie eine Nachricht über Ihre Erfahrung zum Thema. Die Nachricht wird neben Ihrem Namen angezeigt.",
             fr: "Laissez un message sur votre expérience du sujet. Le message apparaîtra à côté de votre nom.",
@@ -1224,37 +1224,37 @@ export const regions: {
             de: "{NAME} hat gekocht",
             fr: "{NAME} a cuisiné",
           },
-          find_roleNeeded: {
+          "find.roleNeeded": {
             en: "Looking for a cook",
             de: "Sucht einen Koch",
             fr: "Recherche un cuisinier",
           },
-          groupList_statusTitle_roleNeeded: {
+          "groupList.statusTitle.roleNeeded": {
             en: "Needs a cook",
             de: "Benötigt einen Koch",
             fr: "Besoin d'un cuisinier",
           },
-          groupList_statusTitle_roleOccupied: {
+          "groupList.statusTitle.roleOccupied": {
             en: "Has a cook",
             de: "Hat einen Koch",
             fr: "A un cuisinier",
           },
-          groupList_statusTitle_roleOccupiedByUser: {
+          "groupList.statusTitle.roleOccupiedByUser": {
             en: "You are a cook",
             de: "Sie sind Koch",
             fr: "Vous êtes cuisinier",
           },
-          notification_join_mail_intro: {
+          "notification.join.mail.intro": {
             en: "{USERNAME} just joined {GROUP} as cook\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
             de: "{USERNAME} ist gerade als Koch zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
             fr: "{USERNAME} vient de rejoindre {GROUP} en tant que cuisinier\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
-          group_firstSteps: {
+          "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
             de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
             fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
           },
-          group_messageInfo: {
+          "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
             de: "Hinterlassen Sie eine Nachricht über Ihre Erfahrung zum Thema. Die Nachricht wird neben Ihrem Namen angezeigt.",
             fr: "Laissez un message sur votre expérience du sujet. Le message apparaîtra à côté de votre nom.",
@@ -1308,37 +1308,37 @@ export const regions: {
             de: "{NAME} hat entworfen",
             fr: "{NAME} a conçu",
           },
-          find_roleNeeded: {
+          "find.roleNeeded": {
             en: "Looking for a designer",
             de: "Sucht einen Designer",
             fr: "Recherche un designer",
           },
-          groupList_statusTitle_roleNeeded: {
+          "groupList.statusTitle.roleNeeded": {
             en: "Needs a designer",
             de: "Benötigt einen Designer",
             fr: "Besoin d'un designer",
           },
-          groupList_statusTitle_roleOccupied: {
+          "groupList.statusTitle.roleOccupied": {
             en: "Has a designer",
             de: "Hat einen Designer",
             fr: "A un designer",
           },
-          groupList_statusTitle_roleOccupiedByUser: {
+          "groupList.statusTitle.roleOccupiedByUser": {
             en: "You are a designer",
             de: "Sie sind Designer",
             fr: "Vous êtes designer",
           },
-          notification_join_mail_intro: {
+          "notification.join.mail.intro": {
             en: "{USERNAME} just joined {GROUP} as designer\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
             de: "{USERNAME} ist gerade als Designer zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
             fr: "{USERNAME} vient de rejoindre {GROUP} en tant que designer\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
-          group_firstSteps: {
+          "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
             de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
             fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
           },
-          group_messageInfo: {
+          "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
             de: "Hinterlassen Sie eine Nachricht über Ihre Erfahrung zum Thema. Die Nachricht wird neben Ihrem Namen angezeigt.",
             fr: "Laissez un message sur votre expérience du sujet. Le message apparaîtra à côté de votre nom.",
@@ -1392,37 +1392,37 @@ export const regions: {
             de: "{NAME} war Techniker",
             fr: "{NAME} était technicien",
           },
-          find_roleNeeded: {
+          "find.roleNeeded": {
             en: "Looking for a technician",
             de: "Sucht einen Techniker",
             fr: "Recherche un technicien",
           },
-          groupList_statusTitle_roleNeeded: {
+          "groupList.statusTitle.roleNeeded": {
             en: "Needs a technician",
             de: "Benötigt einen Techniker",
             fr: "Besoin d'un technicien",
           },
-          groupList_statusTitle_roleOccupied: {
+          "groupList.statusTitle.roleOccupied": {
             en: "Has a technician",
             de: "Hat einen Techniker",
             fr: "A un technicien",
           },
-          groupList_statusTitle_roleOccupiedByUser: {
+          "groupList.statusTitle.roleOccupiedByUser": {
             en: "You are a technician",
             de: "Sie sind Techniker",
             fr: "Vous êtes technicien",
           },
-          notification_join_mail_intro: {
+          "notification.join.mail.intro": {
             en: "{USERNAME} just joined {GROUP} as technician\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
             de: "{USERNAME} ist gerade als Techniker zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
             fr: "{USERNAME} vient de rejoindre {GROUP} en tant que technicien\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
-          group_firstSteps: {
+          "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
             de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
             fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
           },
-          group_messageInfo: {
+          "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
             de: "Hinterlassen Sie eine Nachricht über Ihre Erfahrung zum Thema. Die Nachricht wird neben Ihrem Namen angezeigt.",
             fr: "Laissez un message sur votre expérience du sujet. Le message apparaîtra à côté de votre nom.",
@@ -1476,37 +1476,37 @@ export const regions: {
             de: "{NAME} hat geführt",
             fr: "{NAME} a guidé",
           },
-          find_roleNeeded: {
+          "find.roleNeeded": {
             en: "Looking for a guide",
             de: "Sucht einen Führer",
             fr: "Recherche un guide",
           },
-          groupList_statusTitle_roleNeeded: {
+          "groupList.statusTitle.roleNeeded": {
             en: "Needs a guide",
             de: "Benötigt einen Führer",
             fr: "Besoin d'un guide",
           },
-          groupList_statusTitle_roleOccupied: {
+          "groupList.statusTitle.roleOccupied": {
             en: "Has a guide",
             de: "Hat einen Führer",
             fr: "A un guide",
           },
-          groupList_statusTitle_roleOccupiedByUser: {
+          "groupList.statusTitle.roleOccupiedByUser": {
             en: "You are a guide",
             de: "Sie sind Führer",
             fr: "Vous êtes guide",
           },
-          notification_join_mail_intro: {
+          "notification.join.mail.intro": {
             en: "{USERNAME} just joined {GROUP} as guide\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
             de: "{USERNAME} ist gerade als Führer zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
             fr: "{USERNAME} vient de rejoindre {GROUP} en tant que guide\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
-          group_firstSteps: {
+          "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
             de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
             fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
           },
-          group_messageInfo: {
+          "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
             de: "Hinterlassen Sie eine Nachricht über Ihre Erfahrung zum Thema. Die Nachricht wird neben Ihrem Namen angezeigt.",
             fr: "Laissez un message sur votre expérience du sujet. Le message apparaîtra à côté de votre nom.",
@@ -1560,37 +1560,37 @@ export const regions: {
             de: "{NAME} hat archiviert",
             fr: "{NAME} a archivé",
           },
-          find_roleNeeded: {
+          "find.roleNeeded": {
             en: "Looking for an archivist",
             de: "Sucht einen Archivar",
             fr: "Recherche un archiviste",
           },
-          groupList_statusTitle_roleNeeded: {
+          "groupList.statusTitle.roleNeeded": {
             en: "Needs an archivist",
             de: "Benötigt einen Archivar",
             fr: "Besoin d'un archiviste",
           },
-          groupList_statusTitle_roleOccupied: {
+          "groupList.statusTitle.roleOccupied": {
             en: "Has an archivist",
             de: "Hat einen Archivar",
             fr: "A un archiviste",
           },
-          groupList_statusTitle_roleOccupiedByUser: {
+          "groupList.statusTitle.roleOccupiedByUser": {
             en: "You are an archivist",
             de: "Sie sind Archivar",
             fr: "Vous êtes archiviste",
           },
-          notification_join_mail_intro: {
+          "notification.join.mail.intro": {
             en: "{USERNAME} just joined {GROUP} as archivist\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
             de: "{USERNAME} ist gerade als Archivar zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
             fr: "{USERNAME} vient de rejoindre {GROUP} en tant qu'archiviste\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
-          group_firstSteps: {
+          "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
             de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
             fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
           },
-          group_messageInfo: {
+          "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
             de: "Hinterlassen Sie eine Nachricht über Ihre Erfahrung zum Thema. Die Nachricht wird neben Ihrem Namen angezeigt.",
             fr: "Laissez un message sur votre expérience du sujet. Le message apparaîtra à côté de votre nom.",

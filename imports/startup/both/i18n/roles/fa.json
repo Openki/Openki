@@ -1,12 +1,12 @@
 {
-  "host_short": "برگذار کننده ",
-  "host_subscribe": "من یک اطاق برای برگذاری دارم",
-  "host_subscribed": "شما به حیث برگذار کننده تعین شدید",
-  "mentor_description": "استاد (مشاور)",
-  "mentor_short": "مشاور",
-  "mentor_subscribe": "من میتوانم مشاور باشم",
-  "mentor_subscribed": "شما به حیث مشاور (استاد) تعین شدید",
-  "team_short": "گروه",
-  "team_subscribe": "من میخواهم به سازمان کمک کنم",
-  "team_subscribed": "شما به گروه داخل شدید"
+  "host.short": "برگذار کننده ",
+  "host.subscribe": "من یک اطاق برای برگذاری دارم",
+  "host.subscribed": "شما به حیث برگذار کننده تعین شدید",
+  "mentor.description": "استاد (مشاور)",
+  "mentor.short": "مشاور",
+  "mentor.subscribe": "من میتوانم مشاور باشم",
+  "mentor.subscribed": "شما به حیث مشاور (استاد) تعین شدید",
+  "team.short": "گروه",
+  "team.subscribe": "من میخواهم به سازمان کمک کنم",
+  "team.subscribed": "شما به گروه داخل شدید"
 }

@@ -29,9 +29,7 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
       return translation;
     }
 
-    // NOTE: Until https://gitlab.com/Openki/Openki/-/work_items/2419 is solved,
-    // we use underscores `_` as separators for i18n keys related to roles.
-    const roleKey = `${role}_${key}`;
+    const roleKey = `${role}.${key}`;
 
     // Translations for common default roles exist in the roles namespace.
     if (i18n.exists(`roles:${roleKey}`)) {
@@ -77,37 +75,37 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
     },
 
     roleNeeded(type: RoleEntity["type"]) {
-      return getTranslation(type, "find_roleNeeded");
+      return getTranslation(type, "find.roleNeeded");
     },
 
     groupListRoleNeeded(type: RoleEntity["type"]) {
-      return getTranslation(type, "groupList_statusTitle_roleNeeded");
+      return getTranslation(type, "groupList.statusTitle.roleNeeded");
     },
 
     groupListRoleOccupied(type: RoleEntity["type"], variables: { NUM: number }) {
-      return getTranslation(type, "groupList_statusTitle_roleOccupied", variables);
+      return getTranslation(type, "groupList.statusTitle.roleOccupied", variables);
     },
 
     groupListRoleOccupiedByUser(type: RoleEntity["type"], variables: { NUM: number }) {
-      return getTranslation(type, "groupList_statusTitle_roleOccupiedByUser", variables);
+      return getTranslation(type, "groupList.statusTitle.roleOccupiedByUser", variables);
     },
 
     roleNotificationJoinEmail(
       type: RoleEntity["type"],
       variables: { USERNAME: JSX.Element | string; GROUP: JSX.Element | string },
     ) {
-      return getTranslation(type, "notification_join_mail_intro", variables);
+      return getTranslation(type, "notification.join.mail.intro", variables);
     },
 
     roleGroupFirstSteps(
       type: RoleEntity["type"],
       variables: { COORDINATION_GUIDE: JSX.Element | string },
     ) {
-      return getTranslation(type, "group_firstSteps", variables);
+      return getTranslation(type, "group.firstSteps", variables);
     },
 
     roleGroupMessageInfo(type: RoleEntity["type"]) {
-      return getTranslation(type, "group_messageInfo");
+      return getTranslation(type, "group.messageInfo");
     },
   };
 }

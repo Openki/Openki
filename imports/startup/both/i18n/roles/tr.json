@@ -1,15 +1,15 @@
 {
-  "host_groupList_statusTitle_roleOccupied": "Bir sunucusu var",
-  "mentor_groupList_statusTitle_roleOccupied": "Bir akıl hocası var",
-  "team_groupList_statusTitle_roleOccupied": "Bir organizasyon ekibi var",
-  "host_groupList_statusTitle_roleNeeded": "Bir sunucuya ihtiyacı var",
-  "mentor_groupList_statusTitle_roleNeeded": "Bir akıl hocasına ihtiyacı var",
-  "team_groupList_statusTitle_roleNeeded": "Bir organizatöre ihtiyacı var",
-  "host_groupList_statusTitle_roleOccupiedByUser": "Sunucusunuz",
-  "mentor_groupList_statusTitle_roleOccupiedByUser": "Akıl hocasınız",
-  "team_groupList_statusTitle_roleOccupiedByUser": "Organizatörsünüz",
+  "host.groupList.statusTitle.roleOccupied": "Bir sunucusu var",
+  "mentor.groupList.statusTitle.roleOccupied": "Bir akıl hocası var",
+  "team.groupList.statusTitle.roleOccupied": "Bir organizasyon ekibi var",
+  "host.groupList.statusTitle.roleNeeded": "Bir sunucuya ihtiyacı var",
+  "mentor.groupList.statusTitle.roleNeeded": "Bir akıl hocasına ihtiyacı var",
+  "team.groupList.statusTitle.roleNeeded": "Bir organizatöre ihtiyacı var",
+  "host.groupList.statusTitle.roleOccupiedByUser": "Sunucusunuz",
+  "mentor.groupList.statusTitle.roleOccupiedByUser": "Akıl hocasınız",
+  "team.groupList.statusTitle.roleOccupiedByUser": "Organizatörsünüz",
 
-  "mentor_description": "Eğitmen",
-  "mentor_short": "eğitmen",
-  "team_short": "Takım"
+  "mentor.description": "Eğitmen",
+  "mentor.short": "eğitmen",
+  "team.short": "Takım"
 }
