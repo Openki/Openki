@@ -179,8 +179,6 @@
   "group.history.eventRemoved": "{EVENT} kaldıran: {USER}",
   "group.history.eventUpdated": "{EVENT} güncelleyen: {USER}",
   "group.history.updated": "Kursu güncelleyen: {USER}",
-  "group.history.userSubscribed": "{USER} {ROLE} olarak katıldı",
-  "group.history.userUnsubscribed": "{USER} {ROLE} rolünü geri al",
   "group.list.windowtitle": "Kurslar",
   "group.organizationList.addOrgText": "Düzenleme yetkileri ver",
   "group.organizationList.confirmOrgNotes": "Grubun bütün üyeleri kursları değiştirebilir ve kurs için yeni etkinlikler yaratabilir.",

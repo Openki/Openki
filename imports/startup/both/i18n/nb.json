@@ -249,8 +249,6 @@
   "group.history.eventRemoved": "{EVENT} fjernet av {USER}",
   "group.history.eventUpdated": "{EVENT} oppdatert av {USER}",
   "group.history.updated": "Fag oppdatert av {USER}",
-  "group.history.userSubscribed": "{USER} tok del som {ROLE}",
-  "group.history.userUnsubscribed": "{USER} trekk tilbake {ROLE}",
   "group.list.windowtitle": "Fag",
   "group.organizationList.addOrgText": "Innvilg redigeringsmulighet",
   "group.organizationList.dropdownTitle.editOrganization": "Rediger gruppe",

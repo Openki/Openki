@@ -13,6 +13,7 @@
   "mentor.find.roleNeeded": "Letar efter en mentor",
   "mentor.groupList.statusTitle.roleNeeded": "Behöver en mentor ",
   "mentor.groupList.statusTitle.roleOccupied": "Har en mentor",
+  "notification.join.mail.subject": "{USER} gick med {GROUP}: {ROLE}",
   "mentor.groupList.statusTitle.roleOccupiedByUser": "Du är en mentor",
   "mentor.myList": "Jag undervisar",
   "mentor.short": "mentor",

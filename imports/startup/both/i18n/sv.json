@@ -291,7 +291,6 @@
   "notification.event.mail.notice": "Du kommer att få ett mejl om att du är med i kursen \"{GROUP}\". ",
   "notification.event.mail.subject.changed": "På {DATE}: {TITLE}",
   "notification.event.mail.subject.new": "Fixed {DATE}: {TITLE}",
-  "notification.join.mail.subject": "{USER} gick med {GROUP}: {ROLE}",
   "notification.mail.event.linkCalendar": "Lägg till detta event till min kalender",
   "notification.privateMessage.mail.subject": "Privat meddelande ifrån {SENDER}",
   "organization.claim.placeholder": "Kärnidén",

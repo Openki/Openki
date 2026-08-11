@@ -45,9 +45,12 @@ export const RoleEntityPattern = {
     "groupList.statusTitle.roleNeeded": Match.Maybe(LocalizedValuePattern),
     "groupList.statusTitle.roleOccupied": Match.Maybe(LocalizedValuePattern),
     "groupList.statusTitle.roleOccupiedByUser": Match.Maybe(LocalizedValuePattern),
+    "notification.join.mail.subject": Match.Maybe(LocalizedValuePattern),
     "notification.join.mail.intro": Match.Maybe(LocalizedValuePattern),
     "group.firstSteps": Match.Maybe(LocalizedValuePattern),
     "group.messageInfo": Match.Maybe(LocalizedValuePattern),
+    "group.history.userSubscribed": Match.Maybe(LocalizedValuePattern),
+    "group.history.userUnsubscribed": Match.Maybe(LocalizedValuePattern),
   }),
 };
 

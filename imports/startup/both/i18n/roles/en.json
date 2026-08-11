@@ -78,8 +78,12 @@
 
   "short": "{ROLE_upperFirst}",
   "subscribe": "I can be {ROLE}",
+  "group.messageInfo": "If you want leave a message about your experience as {ROLE}. The message will appear next to your name.",
   "subscribed": "You are listed as {ROLE}",
+  "group.firstSteps": "",
   "description": "{ROLE_upperFirst}",
+  "group.history.userSubscribed": "{USER} joined as {ROLE}",
+  "group.history.userUnsubscribed": "{USER} retract {ROLE}",
   "myList": "I am {ROLE} for",
   "myListPast": "I was {ROLE} for",
   "userList": "{NAME} is {ROLE} for",
@@ -88,7 +92,6 @@
   "groupList.statusTitle.roleNeeded": "Needs: {ROLE_upperFirst}",
   "groupList.statusTitle.roleOccupied": "Has: {ROLE_upperFirst}",
   "groupList.statusTitle.roleOccupiedByUser": "You are: {ROLE_upperFirst}",
-  "notification.join.mail.intro": "{USERNAME} just joined {GROUP} as {ROLE}",
-  "group.firstSteps": "",
-  "group.messageInfo": "If you want leave a message about your experience as {ROLE}. The message will appear next to your name."
+  "notification.join.mail.subject": "{USER} joined {GROUP}: {ROLE}",
+  "notification.join.mail.intro": "{USERNAME} just joined {GROUP} as {ROLE}"
 }

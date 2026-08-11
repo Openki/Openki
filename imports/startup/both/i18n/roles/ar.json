@@ -33,5 +33,8 @@
   "team.subscribe": "أنا اساعد في التنظيم",
   "team.subscribed": "أنت في الفريق",
   "team.userList": "{NAME} ينظم",
-  "team.userListPast": "{NAME} كان ينظم"
+  "team.userListPast": "{NAME} كان ينظم",
+  "group.history.userSubscribed": "{USER} منضم بدور {ROLE}",
+  "notification.join.mail.subject": "انضم {USER} إلى {GROUP}: {ROLE}",
+  "group.history.userUnsubscribed": "{USER} تم التنازل عن الدور {ROLE}"
 }
