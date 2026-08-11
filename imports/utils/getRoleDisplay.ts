@@ -18,7 +18,7 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
     // (2) In the default translations in the `i18n/roles/*.json` files, translatable by Weblate.
     //     The idea behind this is to monitor how customers use the role and to support them by
     //     integrating more and more standard roles into Openki.
-    // (3) When no specific is defined fallback to a generic string.
+    // (3) When no specific role is defined, fallback to a generic string.
 
     // (1) Check if a custom translation exists
     const translation = getLocalizedValue(
@@ -37,7 +37,7 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
       return i18n.t(`roles:${roleKey}`, { ...variables });
     }
 
-    // (3) None translation are found, just fallback to a generic string.
+    // (3) No translation found, just fallback to a generic string.
     const roleVariables = {
       ROLE: role,
       ROLE_upperFirst: upperFirst(role),
