@@ -27,7 +27,7 @@ export function Subscribed({ roleType, group, showFirstSteps, onToggle }: Props)
 
   const [isRolesLoading, roles] = useRegionRoles(group.region);
 
-  const { roleShort, roleSubscribed, roleGroupFirstSteps } = useRoleDisplay(roles);
+  const { roleSubscribed, roleGroupFirstSteps } = useRoleDisplay(roles);
 
   async function handleRoleUnsubscribeClick(
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -103,7 +103,6 @@ export function Subscribed({ roleType, group, showFirstSteps, onToggle }: Props)
           <span className="fw-bold">
             {t("group.roles.firstSteps.title", "Thank you for your interest in {GROUP}.", {
               GROUP: group.name,
-              ROLE: roleShort(roleType),
             })}
           </span>
           <br />
