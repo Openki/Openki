@@ -97,10 +97,7 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
       return getTranslation(type, "notification.join.mail.intro", variables);
     },
 
-    roleGroupFirstSteps(
-      type: RoleEntity["type"],
-      variables: { COORDINATION_GUIDE: JSX.Element | string },
-    ) {
+    roleGroupFirstSteps(type: RoleEntity["type"], variables: { GUIDE: JSX.Element | string }) {
       return getTranslation(type, "group.firstSteps", variables);
     },
 

@@ -107,9 +107,7 @@ export function Subscribed({ roleType, group, showFirstSteps, onToggle }: Props)
             })}
           </span>
           <br />
-          <span className="pre-line">
-            {roleGroupFirstSteps(roleType, { COORDINATION_GUIDE: <Guide /> })}
-          </span>
+          <span className="pre-line">{roleGroupFirstSteps(roleType, { GUIDE: <Guide /> })}</span>
           <br />
           <br />
           {t(

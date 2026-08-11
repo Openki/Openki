@@ -326,9 +326,9 @@ export const regions: {
             fr: "{USER} vient de rejoindre {GROUP} en tant qu'animateur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
-            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
-            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
-            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
+            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{GUIDE}",
+            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{GUIDE}",
+            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{GUIDE}",
           },
           "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
@@ -410,9 +410,9 @@ export const regions: {
             fr: "{USER} vient de rejoindre {GROUP} en tant que constructeur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
-            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
-            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
-            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
+            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{GUIDE}",
+            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{GUIDE}",
+            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{GUIDE}",
           },
           "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
@@ -494,9 +494,9 @@ export const regions: {
             fr: "{USER} vient de rejoindre {GROUP} en tant que chercheur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
-            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
-            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
-            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
+            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{GUIDE}",
+            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{GUIDE}",
+            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{GUIDE}",
           },
           "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
@@ -578,9 +578,9 @@ export const regions: {
             fr: "{USER} vient de rejoindre {GROUP} en tant qu'éditeur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
-            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
-            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
-            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
+            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{GUIDE}",
+            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{GUIDE}",
+            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{GUIDE}",
           },
           "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
@@ -662,9 +662,9 @@ export const regions: {
             fr: "{USER} vient de rejoindre {GROUP} en tant qu'organisateur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
-            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
-            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
-            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
+            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{GUIDE}",
+            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{GUIDE}",
+            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{GUIDE}",
           },
           "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
@@ -746,9 +746,9 @@ export const regions: {
             fr: "{USER} vient de rejoindre {GROUP} en tant que développeur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
-            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
-            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
-            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
+            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{GUIDE}",
+            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{GUIDE}",
+            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{GUIDE}",
           },
           "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
@@ -830,9 +830,9 @@ export const regions: {
             fr: "{USER} vient de rejoindre {GROUP} en tant que testeur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
-            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
-            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
-            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
+            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{GUIDE}",
+            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{GUIDE}",
+            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{GUIDE}",
           },
           "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
@@ -914,9 +914,9 @@ export const regions: {
             fr: "{USER} vient de rejoindre {GROUP} en tant que producteur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
-            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
-            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
-            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
+            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{GUIDE}",
+            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{GUIDE}",
+            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{GUIDE}",
           },
           "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
@@ -998,9 +998,9 @@ export const regions: {
             fr: "{USER} vient de rejoindre {GROUP} en tant que modérateur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
-            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
-            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
-            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
+            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{GUIDE}",
+            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{GUIDE}",
+            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{GUIDE}",
           },
           "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
@@ -1082,9 +1082,9 @@ export const regions: {
             fr: "{USER} vient de rejoindre {GROUP} en tant que planificateur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
-            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
-            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
-            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
+            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{GUIDE}",
+            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{GUIDE}",
+            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{GUIDE}",
           },
           "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
@@ -1166,9 +1166,9 @@ export const regions: {
             fr: "{USER} vient de rejoindre {GROUP} en tant que conservateur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
-            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
-            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
-            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
+            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{GUIDE}",
+            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{GUIDE}",
+            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{GUIDE}",
           },
           "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
@@ -1250,9 +1250,9 @@ export const regions: {
             fr: "{USER} vient de rejoindre {GROUP} en tant que cuisinier\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
-            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
-            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
-            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
+            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{GUIDE}",
+            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{GUIDE}",
+            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{GUIDE}",
           },
           "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
@@ -1334,9 +1334,9 @@ export const regions: {
             fr: "{USER} vient de rejoindre {GROUP} en tant que designer\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
-            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
-            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
-            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
+            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{GUIDE}",
+            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{GUIDE}",
+            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{GUIDE}",
           },
           "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
@@ -1418,9 +1418,9 @@ export const regions: {
             fr: "{USER} vient de rejoindre {GROUP} en tant que technicien\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
-            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
-            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
-            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
+            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{GUIDE}",
+            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{GUIDE}",
+            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{GUIDE}",
           },
           "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
@@ -1502,9 +1502,9 @@ export const regions: {
             fr: "{USER} vient de rejoindre {GROUP} en tant que guide\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
-            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
-            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
-            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
+            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{GUIDE}",
+            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{GUIDE}",
+            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{GUIDE}",
           },
           "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",
@@ -1586,9 +1586,9 @@ export const regions: {
             fr: "{USER} vient de rejoindre {GROUP} en tant qu'archiviste\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
-            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
-            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{COORDINATION_GUIDE}",
-            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{COORDINATION_GUIDE}",
+            en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{GUIDE}",
+            de: "Falls noch nicht geschehen, erwähnen Sie bitte Ihre Erfahrungen zum Thema in Ihrer persönlichen Nachricht.\n\n{GUIDE}",
+            fr: "Si ce n'est pas déjà fait, veuillez mentionner vos expériences sur le sujet dans votre message personnel.\n\n{GUIDE}",
           },
           "group.messageInfo": {
             en: "Leave a message about your experience on the topic. The message will appear next to your name.",

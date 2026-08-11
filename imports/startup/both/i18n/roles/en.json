@@ -11,7 +11,7 @@
   "team.groupList.statusTitle.roleOccupied": "Has a coordination-team",
   "team.groupList.statusTitle.roleOccupiedByUser": "You are part of the coordination team",
   "team.notification.join.mail.intro": "{USER} just joined {GROUP} as team",
-  "team.group.firstSteps": "If not done already, you can start with choosing the venue and, if needed, looking for mentor(s) and then fix a date.\n\n{COORDINATION_GUIDE}",
+  "team.group.firstSteps": "If not done already, you can start with choosing the venue and, if needed, looking for mentor(s) and then fix a date.\n\n{GUIDE}",
   "team.group.messageInfo": "Leave a message about your experience on the topic. The message will appear next to your name.",
 
   "participant.short": "interested",
@@ -41,7 +41,7 @@
   "mentor.groupList.statusTitle.roleOccupied": "Has a mentor",
   "mentor.groupList.statusTitle.roleOccupiedByUser": "You are a mentor",
   "mentor.notification.join.mail.intro": "{USER} just joined {GROUP} as mentor\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
-  "mentor.group.firstSteps": "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
+  "mentor.group.firstSteps": "If not done already, please mention your experiences on the topic in your personal message.\n\n{GUIDE}",
   "mentor.group.messageInfo": "Leave a message about your experience on the topic. The message will appear next to your name.",
 
   "facilitator.short": "facilitator",
@@ -57,7 +57,7 @@
   "facilitator.groupList.statusTitle.roleOccupied": "Has a facilitator",
   "facilitator.groupList.statusTitle.roleOccupiedByUser": "You are a facilitator",
   "facilitator.notification.join.mail.intro": "{USER} just joined {GROUP} as facilitator\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
-  "facilitator.group.firstSteps": "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
+  "facilitator.group.firstSteps": "If not done already, please mention your experiences on the topic in your personal message.\n\n{GUIDE}",
   "facilitator.group.messageInfo": "Leave a message about your experience on the topic. The message will appear next to your name.",
 
   "host.short": "host",
