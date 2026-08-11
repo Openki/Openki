@@ -17,11 +17,10 @@
   "mentor.subscribe": "Ich chönnt Mentor sii",
   "mentor.subscribed": "Du bisch als Mentor ufgfüert",
 
-  "participant.myList": "Ich bi intressiert a",
   "participant.short": "intressiert",
   "participant.subscribe": "Ich bi intressiert",
   "participant.subscribed": "Du bisch intressiert",
-  "participant.userList": "De/d'{NAME} isch intressiert a",
+
   "team.short": "Team",
   "team.subscribe": "Ich hilf z'organisiere",
   "team.subscribed": "Du bisch im Team"

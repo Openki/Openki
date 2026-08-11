@@ -17,7 +17,7 @@
   "team.groupList.statusTitle.roleOccupiedByUser": "Du er organisator",
   "group.history.userSubscribed": "{USER} tok del som {ROLE}",
   "group.history.userUnsubscribed": "{USER} trekk tilbake {ROLE}",
-  "team.myList": "Jeg organiserer",
+
   "team.short": "lag",
   "team.subscribe": "Jeg hjelper til å organisere"
 }

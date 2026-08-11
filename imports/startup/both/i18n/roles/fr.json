@@ -4,11 +4,11 @@
   "host.groupList.statusTitle.roleNeeded": "A besoin d'un hôte",
   "host.groupList.statusTitle.roleOccupied": "A un hôte",
   "host.groupList.statusTitle.roleOccupiedByUser": "Tu es hôte",
-  "host.myList": "Je fournis un lieu pour",
+
   "host.short": "Hôte.sse",
   "host.subscribe": "J'ai un lieu pour accueillir cet événement",
   "host.subscribed": "Tu es inscrit.e en tant qu'hôte.sse",
-  "host.userList": "{NAME} a spécifié un endroit pour",
+
   "mentor.description": "un mentor",
   "mentor.find.roleNeeded": "Cherche un mentor",
   "mentor.groupList.statusTitle.roleNeeded": "A besoin d'un mentor",
@@ -17,24 +17,21 @@
   "group.history.userSubscribed": "{USER} a rejoint comme {ROLE}",
   "notification.join.mail.subject": "{USER} a rejoint {GROUP} : {ROLE}",
   "group.history.userUnsubscribed": "{USER} n'est plus {ROLE}",
-  "mentor.myList": "J'enseigne",
+
   "mentor.short": "mentor",
   "mentor.subscribe": "Je peux être un mentor",
   "mentor.subscribed": "Tu es inscrit en tant que mentor",
-  "mentor.userList": "{NAME} enseigne",
-  "participant.myList": "Je suis intéressé(e) dans",
+
   "participant.short": "intéressé",
   "participant.subscribe": "Je suis intéressé.e",
   "participant.subscribed": "Tu es intéressé·e",
-  "participant.userList": "{NAME} intéressé.e à",
+
   "team.find.roleNeeded": "Cherche un organisateur",
   "team.groupList.statusTitle.roleNeeded": "A besoin d'un organisateur",
   "team.groupList.statusTitle.roleOccupied": "A une équipe d'organisation",
   "team.groupList.statusTitle.roleOccupiedByUser": "Tu es organisateur",
-  "team.myList": "J'organise",
+
   "team.short": "équipe",
   "team.subscribe": "J'aide à organiser",
-  "team.subscribed": "Tu fais partie de l'équipe",
-  "team.userList": "{NAME} organise",
-  "team.userListPast": "{NAME} a organisé"
+  "team.subscribed": "Tu fais partie de l'équipe"
 }

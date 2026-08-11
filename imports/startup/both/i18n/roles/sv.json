@@ -4,35 +4,32 @@
   "host.groupList.statusTitle.roleNeeded": "Behöver en värd",
   "host.groupList.statusTitle.roleOccupied": "Har en värd",
   "host.groupList.statusTitle.roleOccupiedByUser": "Du är en värd ",
-  "host.myList": "Jag erbjuder en plats till",
+
   "host.short": "värd",
   "host.subscribe": "Jag har en plats att anordna på",
   "host.subscribed": "Du är uppskriven som värd",
-  "host.userList": "{NAME} erbjuder en plats för ",
+
   "mentor.description": "en mentor",
   "mentor.find.roleNeeded": "Letar efter en mentor",
   "mentor.groupList.statusTitle.roleNeeded": "Behöver en mentor ",
   "mentor.groupList.statusTitle.roleOccupied": "Har en mentor",
   "notification.join.mail.subject": "{USER} gick med {GROUP}: {ROLE}",
   "mentor.groupList.statusTitle.roleOccupiedByUser": "Du är en mentor",
-  "mentor.myList": "Jag undervisar",
+
   "mentor.short": "mentor",
   "mentor.subscribe": "Jag kan vara en mentor",
   "mentor.subscribed": "Du är uppskriven som en mentor",
-  "mentor.userList": "{NAME} lär ut ",
-  "participant.myList": "Jag är intresserad av ",
+
   "participant.short": "intresserad",
   "participant.subscribe": "Jag är intresserad ",
   "participant.subscribed": "Du är intresserad",
-  "participant.userList": "{NAME} är intresserad av ",
+
   "team.find.roleNeeded": "Letar efter en organisatör",
   "team.groupList.statusTitle.roleNeeded": "Behöver en organisatör ",
   "team.groupList.statusTitle.roleOccupied": "Har ett organisatörs-team",
   "team.groupList.statusTitle.roleOccupiedByUser": "Du är organisatör ",
-  "team.myList": "Jag organiserar",
+
   "team.short": "team",
   "team.subscribe": "Jag hjälper till att organisera",
-  "team.subscribed": "Du är med i teamet ",
-  "team.userList": "{NAME} organiserar",
-  "team.userListPast": "{NAME} organiserade"
+  "team.subscribed": "Du är med i teamet "
 }

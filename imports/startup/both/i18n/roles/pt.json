@@ -4,7 +4,7 @@
   "host.groupList.statusTitle.roleNeeded": "Precisa de anfitriã@",
   "host.groupList.statusTitle.roleOccupied": "Tem anfitriã@",
   "host.groupList.statusTitle.roleOccupiedByUser": "Você é anfitriã@",
-  "host.myList": "Eu oferece um local para",
+
   "host.short": "host",
   "host.subscribe": "Eu tenho um local",
   "mentor.description": "um mentor",
@@ -12,23 +12,21 @@
   "mentor.groupList.statusTitle.roleNeeded": "Precisa de mentor@",
   "mentor.groupList.statusTitle.roleOccupied": "Tem mentor@",
   "mentor.groupList.statusTitle.roleOccupiedByUser": "Você é mentor@",
-  "mentor.myList": "Eu ensino",
+
   "mentor.short": "mentor",
   "mentor.subscribe": "Eu posso ser um mentor",
   "mentor.subscribed": "Você está listado como mentor",
-  "mentor.userList": "{NAME} ensina",
-  "participant.myList": "Eu sou interessado em",
+
   "participant.short": "interessado",
   "participant.subscribe": "Eu estou interessado",
   "participant.subscribed": "Você está interessado",
-  "participant.userList": "{NAME} está interessado em",
+
   "team.find.roleNeeded": "Procurando por um organziador",
   "team.groupList.statusTitle.roleNeeded": "Precisa de organizador@",
   "team.groupList.statusTitle.roleOccupied": "Tem um time organizador",
   "team.groupList.statusTitle.roleOccupiedByUser": "Você é organizador@",
-  "team.myList": "Eu estou organizando",
+
   "team.short": "equipe",
   "team.subscribe": "Eu ajudo a organizar\n",
-  "team.subscribed": "Você está na equipe",
-  "team.userList": "{NAME} está organizando"
+  "team.subscribed": "Você está na equipe"
 }

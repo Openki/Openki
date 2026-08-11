@@ -4,37 +4,34 @@
   "host.groupList.statusTitle.roleNeeded": "Needs a host",
   "host.groupList.statusTitle.roleOccupied": "Has a host",
   "host.groupList.statusTitle.roleOccupiedByUser": "You are host",
-  "host.myList": "I provide a place for",
+
   "host.short": "host",
   "host.subscribe": "I have a place to host this",
   "host.subscribed": "You are listed as host",
-  "host.userList": "{NAME} provides a place for",
+
   "mentor.description": "a mentor",
   "mentor.find.roleNeeded": "Looking for a mentor",
   "mentor.groupList.statusTitle.roleNeeded": "Needs a mentor",
   "mentor.groupList.statusTitle.roleOccupied": "Has a mentor",
   "mentor.groupList.statusTitle.roleOccupiedByUser": "You are mentor",
-  "mentor.myList": "I teach",
+
   "group.history.userSubscribed": "{USER} joined as {ROLE}",
   "notification.join.mail.subject": "{USER} joined {GROUP}: {ROLE}",
   "group.history.userUnsubscribed": "{USER} retract {ROLE}",
   "mentor.short": "mentor",
   "mentor.subscribe": "I can be a mentor",
   "mentor.subscribed": "You are listed as mentor",
-  "mentor.userList": "{NAME} teaches",
-  "participant.myList": "I am interested in",
+
   "participant.short": "interested",
   "participant.subscribe": "I am interested",
   "participant.subscribed": "You are interested",
-  "participant.userList": "{NAME} is interested in",
+
   "team.find.roleNeeded": "Looking for an organizer",
   "team.groupList.statusTitle.roleNeeded": "Needs an organizer",
   "team.groupList.statusTitle.roleOccupied": "Has an organizer-team",
   "team.groupList.statusTitle.roleOccupiedByUser": "You are organizer",
-  "team.myList": "I am organizing",
+
   "team.short": "team",
   "team.subscribe": "I help organize",
-  "team.subscribed": "You are on the team",
-  "team.userList": "{NAME} is organizing",
-  "team.userListPast": "{NAME} was organizing"
+  "team.subscribed": "You are on the team"
 }
