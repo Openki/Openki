@@ -8,7 +8,7 @@ export function resetPassword(username: string, url: string, lng: string): strin
   const siteName = Accounts.emailTemplates.siteName;
   const reportEmail = PrivateSettings.reporter.recipient;
 
-  return `${t("email.base.greeting", { USERNAME: username })}
+  return `${t("email.base.greeting", { USER: username })}
 				
 ${t("resetPassword.email.introduction", { SITE: siteName })}
 

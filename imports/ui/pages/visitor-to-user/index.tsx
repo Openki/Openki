@@ -50,8 +50,8 @@ export function VisitorToUserPage({ token, email }: Props) {
       <div className="container mw-md">
         <h1>{t("visitorToUser.title", "Create Account")}</h1>
         <p>
-          {t("visitorToUser.hi", "Hi {USERNAME}", {
-            USERNAME: user?.getDisplayName(),
+          {t("visitorToUser.hi", "Hi {USER}", {
+            USER: user?.getDisplayName(),
           })}
           <br />
           {t("visitorToUser.text", "Please choose a password to create your {SITENAME} account.", {

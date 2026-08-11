@@ -10,7 +10,7 @@
   "team.groupList.statusTitle.roleNeeded": "Needs a coordination team",
   "team.groupList.statusTitle.roleOccupied": "Has a coordination-team",
   "team.groupList.statusTitle.roleOccupiedByUser": "You are part of the coordination team",
-  "team.notification.join.mail.intro": "{USERNAME} just joined {GROUP} as team",
+  "team.notification.join.mail.intro": "{USER} just joined {GROUP} as team",
   "team.group.firstSteps": "If not done already, you can start with choosing the venue and, if needed, looking for mentor(s) and then fix a date.\n\n{COORDINATION_GUIDE}",
   "team.group.messageInfo": "Leave a message about your experience on the topic. The message will appear next to your name.",
 
@@ -24,7 +24,7 @@
   "participant.groupList.statusTitle.roleNeeded": "Nobody is interested",
   "participant.groupList.statusTitle.roleOccupied": "{NUM, plural, one{One person is} other{# persons are} } interested",
   "participant.groupList.statusTitle.roleOccupiedByUser": "{NUM, plural, one{You are interested} other{# persons are interested and you are one of them} }",
-  "participant.notification.join.mail.intro": "{USERNAME} just joined {GROUP}.",
+  "participant.notification.join.mail.intro": "{USER} just joined {GROUP}.",
   "participant.group.firstSteps": "You will get an e-mail notification as soon as a next date has been fixed.",
   "participant.group.messageInfo": "Leave a message, for example a greeting, wish or your interest. The message will appear next to your name.",
 
@@ -40,7 +40,7 @@
   "mentor.groupList.statusTitle.roleNeeded": "Needs a mentor",
   "mentor.groupList.statusTitle.roleOccupied": "Has a mentor",
   "mentor.groupList.statusTitle.roleOccupiedByUser": "You are a mentor",
-  "mentor.notification.join.mail.intro": "{USERNAME} just joined {GROUP} as mentor\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
+  "mentor.notification.join.mail.intro": "{USER} just joined {GROUP} as mentor\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
   "mentor.group.firstSteps": "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
   "mentor.group.messageInfo": "Leave a message about your experience on the topic. The message will appear next to your name.",
 
@@ -56,7 +56,7 @@
   "facilitator.groupList.statusTitle.roleNeeded": "Needs a facilitator",
   "facilitator.groupList.statusTitle.roleOccupied": "Has a facilitator",
   "facilitator.groupList.statusTitle.roleOccupiedByUser": "You are a facilitator",
-  "facilitator.notification.join.mail.intro": "{USERNAME} just joined {GROUP} as facilitator\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
+  "facilitator.notification.join.mail.intro": "{USER} just joined {GROUP} as facilitator\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
   "facilitator.group.firstSteps": "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
   "facilitator.group.messageInfo": "Leave a message about your experience on the topic. The message will appear next to your name.",
 
@@ -72,7 +72,7 @@
   "host.groupList.statusTitle.roleNeeded": "Needs a host",
   "host.groupList.statusTitle.roleOccupied": "Has a host",
   "host.groupList.statusTitle.roleOccupiedByUser": "You are host",
-  "host.notification.join.mail.intro": "{USERNAME} just joined {GROUP} as host",
+  "host.notification.join.mail.intro": "{USER} just joined {GROUP} as host",
   "host.group.firstSteps": "If not done already, please mention the venue(s) you have access to in your personal message.",
   "host.group.messageInfo": "Leave a message about the venue. The message will appear next to your name.",
 

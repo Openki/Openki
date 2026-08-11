@@ -34,7 +34,7 @@ export function Group({
     <>
       <tr>
         <td>
-          <h5 className="title">{t("email.base.greeting", { USERNAME: username })}</h5>
+          <h5 className="title">{t("email.base.greeting", { USER: username })}</h5>
           <p className="pre">
             {t(
               "notification.group.mail.intro",

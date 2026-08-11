@@ -39,14 +39,13 @@ export function Comment({
     <>
       <tr>
         <td>
-          <h5 className="title">{t("email.base.greeting", { USERNAME: username })}</h5>
+          <h5 className="title">{t("email.base.greeting", { USER: username })}</h5>
           <p>
             {commenter
-              ? t(
-                  "notification.comment.mail.intro",
-                  "There was a comment by {USERNAME} on {GROUP}:",
-                  { USERNAME: <a href={commenterLink}>{commenterName}</a>, GROUP: group },
-                )
+              ? t("notification.comment.mail.intro", "There was a comment by {USER} on {GROUP}:", {
+                  USER: <a href={commenterLink}>{commenterName}</a>,
+                  GROUP: group,
+                })
               : t(
                   "notification.comment.mail.intro.anon",
                   "There was an anonymous comment on {GROUP}:",
@@ -71,8 +70,8 @@ export function Comment({
               <>
                 <br />
                 <a href={commenterLink}>
-                  {t("notification.comment.mail.commenterlink", "➜ See profile from {USERNAME}", {
-                    USERNAME: commenterName,
+                  {t("notification.comment.mail.commenterlink", "➜ See profile from {USER}", {
+                    USER: commenterName,
                   })}
                 </a>
               </>

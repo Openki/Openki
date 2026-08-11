@@ -31,12 +31,12 @@ export function RsvpTeam({
     <>
       <tr>
         <td>
-          <h5 className="title">{t("email.base.greeting", { USERNAME: username })}</h5>
+          <h5 className="title">{t("email.base.greeting", { USER: username })}</h5>
           <p>
             {t(
               "notification.rsvp.team.mail.intro",
-              '{COMPANIONS, plural, =0{{USERNAME} } other{{USERNAME} and companion } }just reserved a seat for event "{EVENT}".',
-              { USERNAME: newParticipant, COMPANIONS: companionsOfNewParticipant, EVENT: event },
+              '{COMPANIONS, plural, =0{{USER} } other{{USER} and companion } }just reserved a seat for event "{EVENT}".',
+              { USER: newParticipant, COMPANIONS: companionsOfNewParticipant, EVENT: event },
             )}
           </p>
           <p className="fw-bold">

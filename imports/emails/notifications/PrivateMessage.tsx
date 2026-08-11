@@ -52,7 +52,7 @@ export function PrivateMessage({
       )}
       <tr>
         <td>
-          <h5 className="title">{t("email.base.greeting", { USERNAME: recipientName })}</h5>
+          <h5 className="title">{t("email.base.greeting", { USER: recipientName })}</h5>
           <p>
             {t(
               "notification.privateMessage.mail.intro",
@@ -78,8 +78,8 @@ export function PrivateMessage({
             </p>
           )}
           <p>
-            {t("notification.privateMessage.mail.userWrote", "{USERNAME} wrote:", {
-              USERNAME: (
+            {t("notification.privateMessage.mail.userWrote", "{USER} wrote:", {
+              USER: (
                 <>
                   <a href={senderLink}>{sender.getDisplayName()}</a>
                   {!!fromAddress && (

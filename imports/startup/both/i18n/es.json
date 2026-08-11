@@ -135,7 +135,7 @@
   "discussionPost.deleted.error": "No se pudo eliminar el comentario",
   "editableImage.accept.error": "Solo se permiten imágenes.",
   "email.base.farewell": "Si tiene alguna pregunta o sugerencia, no dude en ponerse en contacto con nosotros.",
-  "email.base.greeting": "Hola {USERNAME}",
+  "email.base.greeting": "Hola {USER}",
   "email.base.postscript": "Saludos cordiales, su equipo {SITE}",
   "email.base.profileLink": "Visita tu perfil",
   "email.base.unexpected": "Si no sabe por qué recibió este correo electrónico, ignórelo o envíenos una notificación a: {REPORTEMAIL}",

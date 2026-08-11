@@ -103,7 +103,7 @@
   "discussion.anonymous": "Anonym",
   "discussionPost.deleted": "Kommentaren har blitt slettet.",
   "editableImage.accept.error": "Kun bilder tillates.",
-  "email.base.greeting": "Hei {USERNAME}",
+  "email.base.greeting": "Hei {USER}",
   "email.base.profileLink": "Besøk profilen din",
   "event.delete.confirm.button": "Slett denne begivenheten",
   "event.delete.confirm.button.busy": "Sletter begivenhet …",

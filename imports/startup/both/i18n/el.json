@@ -69,7 +69,7 @@
   "category.♥undefined♥": "♥Εκτός κατηγοριών♥",
   "comment.delete.header": "Διαγραφή σχολίου",
   "discussion.anonymous": "Ανώνυμος",
-  "email.base.greeting": "Γεια σου {USERNAME}",
+  "email.base.greeting": "Γεια σου {USER}",
   "email.base.profileLink": "Επίσκεψη του προφίλ σου",
   "event.delete.confirm.button": "Διαγραφή συνάντησης",
   "event.delete.confirm.button.busy": "Διαγραφή συνάντησης…",

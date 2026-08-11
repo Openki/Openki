@@ -32,7 +32,7 @@ export function Invitation({
           <h5 className="title">
             {recipient
               ? t("email.base.greeting", {
-                  USERNAME: recipient.getDisplayName(),
+                  USER: recipient.getDisplayName(),
                 })
               : t("email.base.greeting.anoym")}
           </h5>

@@ -35,7 +35,7 @@ export function EventReminder({
     <>
       <tr>
         <td>
-          <h5 className="title">{t("email.base.greeting", { USERNAME: username })}</h5>
+          <h5 className="title">{t("email.base.greeting", { USER: username })}</h5>
           <p>
             {t(
               "notification.event.reminder.mail.intro",

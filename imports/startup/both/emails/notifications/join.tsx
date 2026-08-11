@@ -139,7 +139,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
       const groupLink = Router.url("showGroup", group, { query: { campaign } });
       const groupName = <a href={groupLink}>{group.name}</a>;
       const roleIntroduction = roleNotificationJoinEmail(body.newRole, {
-        USERNAME: <span className="fw-bold">{newParticipant.getDisplayName()}</span>,
+        USER: <span className="fw-bold">{newParticipant.getDisplayName()}</span>,
         GROUP: groupName,
       });
       return {

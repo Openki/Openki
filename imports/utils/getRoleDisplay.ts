@@ -92,7 +92,7 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
 
     roleNotificationJoinEmail(
       type: RoleEntity["type"],
-      variables: { USERNAME: JSX.Element | string; GROUP: JSX.Element | string },
+      variables: { USER: JSX.Element | string; GROUP: JSX.Element | string },
     ) {
       return getTranslation(type, "notification.join.mail.intro", variables);
     },

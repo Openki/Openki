@@ -60,9 +60,9 @@ export function RegisterPanel({ event, onRegister }: Props) {
             {user
               ? t(
                   "event.details.want-to-register",
-                  'Do you want to reserve a seat as {USERNAME} for the event "{EVENTTITLE}" on the {DATE}? Your reservation is binding.',
+                  'Do you want to reserve a seat as {USER} for the event "{EVENTTITLE}" on the {DATE}? Your reservation is binding.',
                   {
-                    USERNAME: user.getDisplayName(),
+                    USER: user.getDisplayName(),
                     EVENTTITLE: event.title,
                     DATE: <span className="fw-bold">{dateFormat(event.startLocal)}</span>,
                   },

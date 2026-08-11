@@ -8,7 +8,7 @@ export function verify(username: string, url: string, lng: string): string {
   const siteName = Accounts.emailTemplates.siteName;
   const reportEmail = PrivateSettings.reporter.recipient;
 
-  return `${t("email.base.greeting", { USERNAME: username })}
+  return `${t("email.base.greeting", { USER: username })}
 	
 ${t("verifyEmail.email.introduction", { SITE: siteName })}
 

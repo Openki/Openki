@@ -92,7 +92,7 @@
   "discussionPost.deleted.error": "Kommentar het nit chönne glöscht wärde",
   "editableImage.accept.error": "Nur Bilder vo ({SUPPORTEDMIME}) si erlaubt.",
   "email.base.farewell": "Bi Froge oder Unklarheite chönnet ihr eus gärn kontaktiere.",
-  "email.base.greeting": "Sali {USERNAME}",
+  "email.base.greeting": "Sali {USER}",
   "email.base.greeting.anoym": "Sali",
   "email.base.postscript": "Liebi Grüss, dis {SITE} Team",
   "email.base.profileLink": "Dis Profil aluege",

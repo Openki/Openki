@@ -43,9 +43,9 @@ export function Contribution({ userId }: Props) {
       href={getLocalizedValue(contribution.link)}
       data-bs-title={t(
         "user.hasContributed",
-        "{USERNAME} supported {SITENAME} with a donation. Click the {ICON} for how to contribute.",
+        "{USER} supported {SITENAME} with a donation. Click the {ICON} for how to contribute.",
         {
-          USERNAME: cachedUser.getDisplayName(),
+          USER: cachedUser.getDisplayName(),
           SITENAME: getSiteName(currentRegion),
           ICON: `<i class='${contribution.icon}' />`,
         },

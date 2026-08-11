@@ -9,7 +9,7 @@ export function visitor(username: string, email: string, lng: string): string {
   const siteName = Accounts.emailTemplates.siteName;
   const reportEmail = PrivateSettings.reporter.recipient;
 
-  return `${t("email.base.greeting", { USERNAME: username })}
+  return `${t("email.base.greeting", { USER: username })}
 	
 ${t("visitorEmail.email.introduction", { SITE: siteName })}
 

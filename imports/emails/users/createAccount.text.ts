@@ -13,7 +13,7 @@ export function createAccount(
   const siteName = Accounts.emailTemplates.siteName;
   const reportEmail = PrivateSettings.reporter.recipient;
 
-  return `${t("email.base.greeting", { USERNAME: username })}
+  return `${t("email.base.greeting", { USER: username })}
 				
 ${t("createAccount.email.introduction", { SITE: siteName })}
 

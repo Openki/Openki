@@ -321,9 +321,9 @@ export const regions: {
             fr: "Vous êtes animateur",
           },
           "notification.join.mail.intro": {
-            en: "{USERNAME} just joined {GROUP} as facilitator\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
-            de: "{USERNAME} ist gerade als Moderator zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
-            fr: "{USERNAME} vient de rejoindre {GROUP} en tant qu'animateur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
+            en: "{USER} just joined {GROUP} as facilitator\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
+            de: "{USER} ist gerade als Moderator zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
+            fr: "{USER} vient de rejoindre {GROUP} en tant qu'animateur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
@@ -405,9 +405,9 @@ export const regions: {
             fr: "Vous êtes constructeur",
           },
           "notification.join.mail.intro": {
-            en: "{USERNAME} just joined {GROUP} as builder\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
-            de: "{USERNAME} ist gerade als Baumeister zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
-            fr: "{USERNAME} vient de rejoindre {GROUP} en tant que constructeur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
+            en: "{USER} just joined {GROUP} as builder\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
+            de: "{USER} ist gerade als Baumeister zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
+            fr: "{USER} vient de rejoindre {GROUP} en tant que constructeur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
@@ -489,9 +489,9 @@ export const regions: {
             fr: "Vous êtes chercheur",
           },
           "notification.join.mail.intro": {
-            en: "{USERNAME} just joined {GROUP} as researcher\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
-            de: "{USERNAME} ist gerade als Forscher zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
-            fr: "{USERNAME} vient de rejoindre {GROUP} en tant que chercheur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
+            en: "{USER} just joined {GROUP} as researcher\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
+            de: "{USER} ist gerade als Forscher zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
+            fr: "{USER} vient de rejoindre {GROUP} en tant que chercheur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
@@ -573,9 +573,9 @@ export const regions: {
             fr: "Vous êtes éditeur",
           },
           "notification.join.mail.intro": {
-            en: "{USERNAME} just joined {GROUP} as editor\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
-            de: "{USERNAME} ist gerade als Redakteur zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
-            fr: "{USERNAME} vient de rejoindre {GROUP} en tant qu'éditeur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
+            en: "{USER} just joined {GROUP} as editor\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
+            de: "{USER} ist gerade als Redakteur zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
+            fr: "{USER} vient de rejoindre {GROUP} en tant qu'éditeur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
@@ -657,9 +657,9 @@ export const regions: {
             fr: "Vous êtes organisateur",
           },
           "notification.join.mail.intro": {
-            en: "{USERNAME} just joined {GROUP} as organizer\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
-            de: "{USERNAME} ist gerade als Organisator zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
-            fr: "{USERNAME} vient de rejoindre {GROUP} en tant qu'organisateur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
+            en: "{USER} just joined {GROUP} as organizer\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
+            de: "{USER} ist gerade als Organisator zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
+            fr: "{USER} vient de rejoindre {GROUP} en tant qu'organisateur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
@@ -741,9 +741,9 @@ export const regions: {
             fr: "Vous êtes développeur",
           },
           "notification.join.mail.intro": {
-            en: "{USERNAME} just joined {GROUP} as developer\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
-            de: "{USERNAME} ist gerade als Entwickler zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
-            fr: "{USERNAME} vient de rejoindre {GROUP} en tant que développeur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
+            en: "{USER} just joined {GROUP} as developer\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
+            de: "{USER} ist gerade als Entwickler zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
+            fr: "{USER} vient de rejoindre {GROUP} en tant que développeur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
@@ -825,9 +825,9 @@ export const regions: {
             fr: "Vous êtes testeur",
           },
           "notification.join.mail.intro": {
-            en: "{USERNAME} just joined {GROUP} as tester\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
-            de: "{USERNAME} ist gerade als Tester zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
-            fr: "{USERNAME} vient de rejoindre {GROUP} en tant que testeur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
+            en: "{USER} just joined {GROUP} as tester\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
+            de: "{USER} ist gerade als Tester zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
+            fr: "{USER} vient de rejoindre {GROUP} en tant que testeur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
@@ -909,9 +909,9 @@ export const regions: {
             fr: "Vous êtes producteur",
           },
           "notification.join.mail.intro": {
-            en: "{USERNAME} just joined {GROUP} as producer\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
-            de: "{USERNAME} ist gerade als Produzent zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
-            fr: "{USERNAME} vient de rejoindre {GROUP} en tant que producteur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
+            en: "{USER} just joined {GROUP} as producer\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
+            de: "{USER} ist gerade als Produzent zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
+            fr: "{USER} vient de rejoindre {GROUP} en tant que producteur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
@@ -993,9 +993,9 @@ export const regions: {
             fr: "Vous êtes modérateur",
           },
           "notification.join.mail.intro": {
-            en: "{USERNAME} just joined {GROUP} as moderator\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
-            de: "{USERNAME} ist gerade als Moderator zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
-            fr: "{USERNAME} vient de rejoindre {GROUP} en tant que modérateur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
+            en: "{USER} just joined {GROUP} as moderator\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
+            de: "{USER} ist gerade als Moderator zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
+            fr: "{USER} vient de rejoindre {GROUP} en tant que modérateur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
@@ -1077,9 +1077,9 @@ export const regions: {
             fr: "Vous êtes planificateur",
           },
           "notification.join.mail.intro": {
-            en: "{USERNAME} just joined {GROUP} as planner\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
-            de: "{USERNAME} ist gerade als Planer zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
-            fr: "{USERNAME} vient de rejoindre {GROUP} en tant que planificateur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
+            en: "{USER} just joined {GROUP} as planner\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
+            de: "{USER} ist gerade als Planer zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
+            fr: "{USER} vient de rejoindre {GROUP} en tant que planificateur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
@@ -1161,9 +1161,9 @@ export const regions: {
             fr: "Vous êtes conservateur",
           },
           "notification.join.mail.intro": {
-            en: "{USERNAME} just joined {GROUP} as curator\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
-            de: "{USERNAME} ist gerade als Kurator zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
-            fr: "{USERNAME} vient de rejoindre {GROUP} en tant que conservateur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
+            en: "{USER} just joined {GROUP} as curator\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
+            de: "{USER} ist gerade als Kurator zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
+            fr: "{USER} vient de rejoindre {GROUP} en tant que conservateur\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
@@ -1245,9 +1245,9 @@ export const regions: {
             fr: "Vous êtes cuisinier",
           },
           "notification.join.mail.intro": {
-            en: "{USERNAME} just joined {GROUP} as cook\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
-            de: "{USERNAME} ist gerade als Koch zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
-            fr: "{USERNAME} vient de rejoindre {GROUP} en tant que cuisinier\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
+            en: "{USER} just joined {GROUP} as cook\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
+            de: "{USER} ist gerade als Koch zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
+            fr: "{USER} vient de rejoindre {GROUP} en tant que cuisinier\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
@@ -1329,9 +1329,9 @@ export const regions: {
             fr: "Vous êtes designer",
           },
           "notification.join.mail.intro": {
-            en: "{USERNAME} just joined {GROUP} as designer\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
-            de: "{USERNAME} ist gerade als Designer zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
-            fr: "{USERNAME} vient de rejoindre {GROUP} en tant que designer\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
+            en: "{USER} just joined {GROUP} as designer\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
+            de: "{USER} ist gerade als Designer zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
+            fr: "{USER} vient de rejoindre {GROUP} en tant que designer\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
@@ -1413,9 +1413,9 @@ export const regions: {
             fr: "Vous êtes technicien",
           },
           "notification.join.mail.intro": {
-            en: "{USERNAME} just joined {GROUP} as technician\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
-            de: "{USERNAME} ist gerade als Techniker zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
-            fr: "{USERNAME} vient de rejoindre {GROUP} en tant que technicien\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
+            en: "{USER} just joined {GROUP} as technician\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
+            de: "{USER} ist gerade als Techniker zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
+            fr: "{USER} vient de rejoindre {GROUP} en tant que technicien\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
@@ -1497,9 +1497,9 @@ export const regions: {
             fr: "Vous êtes guide",
           },
           "notification.join.mail.intro": {
-            en: "{USERNAME} just joined {GROUP} as guide\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
-            de: "{USERNAME} ist gerade als Führer zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
-            fr: "{USERNAME} vient de rejoindre {GROUP} en tant que guide\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
+            en: "{USER} just joined {GROUP} as guide\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
+            de: "{USER} ist gerade als Führer zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
+            fr: "{USER} vient de rejoindre {GROUP} en tant que guide\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
@@ -1581,9 +1581,9 @@ export const regions: {
             fr: "Vous êtes archiviste",
           },
           "notification.join.mail.intro": {
-            en: "{USERNAME} just joined {GROUP} as archivist\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
-            de: "{USERNAME} ist gerade als Archivar zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
-            fr: "{USERNAME} vient de rejoindre {GROUP} en tant qu'archiviste\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
+            en: "{USER} just joined {GROUP} as archivist\n\nIf you like them to collaborate feel free to contact them. You can give them rights to edit {GROUP} and make them part of the coordination team by clicking the megaphone next to their name.",
+            de: "{USER} ist gerade als Archivar zu {GROUP} beigetreten\n\nWenn Sie möchten, dass sie zusammenarbeiten, können Sie sich gerne mit ihnen in Verbindung setzen. Sie können ihnen Rechte zur Bearbeitung von {GROUP} geben und sie Teil des Koordinierungsteams machen, indem Sie auf das Megafon neben ihrem Namen klicken.",
+            fr: "{USER} vient de rejoindre {GROUP} en tant qu'archiviste\n\nSi vous souhaitez qu'ils collaborent, n'hésitez pas à les contacter. Vous pouvez leur donner les droits pour modifier {GROUP} et les intégrer à l'équipe de coordination en cliquant sur le mégaphone à côté de leur nom.",
           },
           "group.firstSteps": {
             en: "If not done already, please mention your experiences on the topic in your personal message.\n\n{COORDINATION_GUIDE}",
