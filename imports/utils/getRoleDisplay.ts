@@ -34,7 +34,7 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
     // Translations for common default roles exist in the roles namespace.
     const roleKey = `${role}.${key}`;
     if (i18n.exists(`roles:${roleKey}`)) {
-      return i18n.t(`roles:${roleKey}`, { ...variables });
+      return variables ? i18n.t(`roles:${roleKey}`, variables) : i18n.t(`roles:${roleKey}`);
     }
 
     // (3) No translation found, just fallback to a generic string.
