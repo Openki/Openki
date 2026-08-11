@@ -71,8 +71,8 @@
   "notification.join.mail.subject": "{USER} joined {GROUP}: {ROLE}",
   "group.history.userSubscribed": "{USER} joined as {ROLE}",
   "group.history.userUnsubscribed": "{USER} retract {ROLE}",
-  "myList": "I am {ROLE} for",
-  "myListPast": "I was {ROLE} for",
-  "userList": "{NAME} is {ROLE} for",
-  "userListPast": "{NAME} was {ROLE} for"
+  "profile.myGroupListCurrent": "I am {ROLE} for",
+  "profile.myGroupListPast": "I was {ROLE} for",
+  "profile.userGroupListCurrent": "{NAME} is {ROLE} for",
+  "profile.userGroupListPast": "{NAME} was {ROLE} for"
 }

@@ -54,20 +54,20 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
       return getTranslation(type, "short");
     },
 
-    roleUserList(type: RoleEntity["type"], name: string) {
-      return getTranslation(type, "userList", { NAME: name });
+    roleProfileUserGroupListCurrent(type: RoleEntity["type"], name: string) {
+      return getTranslation(type, "profile.userGroupListCurrent", { NAME: name });
     },
 
-    roleUserListPast(type: RoleEntity["type"], name: string) {
-      return getTranslation(type, "userListPast", { NAME: name });
+    roleProfileUserGroupListPast(type: RoleEntity["type"], name: string) {
+      return getTranslation(type, "profile.userGroupListPast", { NAME: name });
     },
 
-    roleMyList(type: RoleEntity["type"]) {
-      return getTranslation(type, "myList");
+    roleProfileMyGroupListCurrent(type: RoleEntity["type"]) {
+      return getTranslation(type, "profile.myGroupListCurrent");
     },
 
-    roleMyListPast(type: RoleEntity["type"]) {
-      return getTranslation(type, "myListPast");
+    roleProfileMyGroupListPast(type: RoleEntity["type"]) {
+      return getTranslation(type, "profile.myGroupListPast");
     },
 
     roleSubscribe(type: RoleEntity["type"]) {
