@@ -33,9 +33,22 @@ export const RoleEntityPattern = {
    * `i18n/roles/*.json` will be used instead.
    */
   translations: Match.Maybe({
+    /** A short label that appears next to the user or can be used in a text. */
     short: Match.Maybe(LocalizedValuePattern),
+    /** 
+     * A call to action, shown on the button to subscribe as a role to a group. 
+     * 
+     * Default: "I can be {ROLE}" \
+     * Example: "I have a place to host this"
+     */
     subscribe: Match.Maybe(LocalizedValuePattern),
     subscribed: Match.Maybe(LocalizedValuePattern),
+    /**
+     * A short description, shown on group create/edit.
+     * 
+     * Default: "{ROLE_upperFirst}" \
+     * Example: "a host that provides a place"
+     */
     description: Match.Maybe(LocalizedValuePattern),
     "profile.myGroupListCurrent": Match.Maybe(LocalizedValuePattern),
     "profile.myGroupListPast": Match.Maybe(LocalizedValuePattern),
@@ -46,7 +59,25 @@ export const RoleEntityPattern = {
     "groupList.statusTitle.roleOccupied": Match.Maybe(LocalizedValuePattern),
     "groupList.statusTitle.roleOccupiedByUser": Match.Maybe(LocalizedValuePattern),
     "notification.join.mail.subject": Match.Maybe(LocalizedValuePattern),
+    /** 
+     * A message send to the coordination team, after a user has subscribe. `\n` can be used to 
+     * add a linebreak. The variable `{USER}` and `{GROUP}` are available.
+     * 
+     * Default: "{USER} just joined {GROUP} as {ROLE}" \
+     * Example: "{USER} just joined {GROUP} as mentor\n\nIf you like them to collaborate feel free 
+     *          to contact them. You can give them rights to edit {GROUP} and make them part of the 
+     *          coordination team by clicking the megaphone next to their name."
+     */
     "notification.join.mail.intro": Match.Maybe(LocalizedValuePattern),
+    /** 
+     * A message, shown after a user has subscribe. `\n` can be used to add a linebreak. 
+     * The variable `{GUIDE}` can be used to show the link from the `groupGuideLink` 
+     * setting from `settings.json`.
+     * 
+     * Default: "" \
+     * Example: "If not done already, please mention your experiences on the topic in your personal 
+     *          message.\n\n{GUIDE}"
+     */
     "group.firstSteps": Match.Maybe(LocalizedValuePattern),
     "group.messageInfo": Match.Maybe(LocalizedValuePattern),
     "group.history.userSubscribed": Match.Maybe(LocalizedValuePattern),
