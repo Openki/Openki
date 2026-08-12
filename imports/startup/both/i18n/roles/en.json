@@ -76,5 +76,19 @@
   "host.group.firstSteps": "If not done already, please mention the venue(s) you have access to in your personal message.",
   "host.group.messageInfo": "Leave a message about the venue. The message will appear next to your name.",
 
-  "translationNotFound": "No translation found for {ROLE} and {KEY}. Please add it to the role settings or contact your administrator to add one."
+  "short": "{ROLE_upperFirst}",
+  "subscribe": "I can be {ROLE}",
+  "subscribed": "You are listed as {ROLE}",
+  "description": "{ROLE_upperFirst}",
+  "myList": "I am {ROLE} for",
+  "myListPast": "I was {ROLE} for",
+  "userList": "{NAME} is {ROLE} for",
+  "userListPast": "{NAME} was {ROLE} for",
+  "find.roleNeeded": "Looking for {ROLE}",
+  "groupList.statusTitle.roleNeeded": "Needs: {ROLE_upperFirst}",
+  "groupList.statusTitle.roleOccupied": "Has: {ROLE_upperFirst}",
+  "groupList.statusTitle.roleOccupiedByUser": "You are: {ROLE_upperFirst}",
+  "notification.join.mail.intro": "{USERNAME} just joined {GROUP} as {ROLE}",
+  "group.firstSteps": "",
+  "group.messageInfo": "If you want leave a message about your experience as {ROLE}. The message will appear next to your name."
 }

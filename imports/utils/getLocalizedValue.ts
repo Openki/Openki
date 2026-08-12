@@ -41,7 +41,7 @@ export function getLocalizedValue(
   if (typeof setting === "string") {
     // check if translated key exist otherwise use setting
     if (i18n.exists(setting)) {
-      return variables ? i18n.t(setting, variables) : i18n.t(setting);
+      return i18n.t(setting, { ...variables });
     }
     return format(setting);
   }
