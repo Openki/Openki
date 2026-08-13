@@ -56,7 +56,7 @@
   "host.groupList.statusTitle.roleOccupied": "Has a host",
   "host.groupList.statusTitle.roleOccupiedByUser": "You are host",
 
-  "short": "{ROLE_upperFirst}",
+  "short": "{ROLE}",
   "description": "{ROLE_upperFirst}",
   "subscribe": "I can be {ROLE}",
   "group.messageInfo": "If you want leave a message about your experience as {ROLE}. The message will appear next to your name.",

@@ -20,12 +20,10 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
     //     integrating more and more standard roles into Openki.
     // (3) When no specific role is defined, fallback to a generic string.
 
+    const customTranslations = roles.find((r) => r.type === role)?.translations;
+
     // (1) Check if a custom translation exists
-    const translation = getLocalizedValue(
-      i18n,
-      roles.find((r) => r.type === role)?.translations?.[key],
-      variables,
-    );
+    const translation = getLocalizedValue(i18n, customTranslations?.[key], variables);
     if (translation) {
       return translation;
     }
@@ -37,10 +35,18 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
       return variables ? i18n.t(`roles:${roleKey}`, variables) : i18n.t(`roles:${roleKey}`);
     }
 
-    // (3) No translation found, just fallback to a generic string.
+    // (3) No translation found, just fallback to a generic string. Using short to build the
+    // fallback strings.
+    let label: string | undefined;
+    if (key !== "short") {
+      label = getLocalizedValue(i18n, customTranslations?.["short"], variables);
+    }
+    if (label === undefined) {
+      label = role;
+    }
     const roleVariables = {
-      ROLE: role,
-      ROLE_upperFirst: upperFirst(role),
+      ROLE: label,
+      ROLE_upperFirst: upperFirst(label),
     };
     return i18n.t(`roles:${key}`, { ...variables, ...roleVariables });
   }
