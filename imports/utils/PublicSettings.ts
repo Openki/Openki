@@ -33,7 +33,10 @@ export const RoleEntityPattern = {
    * `i18n/roles/*.json` will be used instead.
    */
   translations: Match.Maybe({
-    /** A short label that appears next to the user or can be used in a text. */
+    /**
+     * A short label that appears next to the user or can be used in a text.
+     * If you define your own role and it is specified, it will be used when generating fallback strings.
+     */
     short: Match.Maybe(LocalizedValuePattern),
     /**
      * A short description, shown on group create/edit.
@@ -70,8 +73,8 @@ export const RoleEntityPattern = {
      */
     "notification.join.mail.intro": Match.Maybe(LocalizedValuePattern),
 
-    /* 
-     * The following keys can be customized for each role, but this is not usually necessary and is 
+    /*
+     * The following keys can be customized for each role, but this is not usually necessary and is
      * only recommended if you wish to customize the role very specifically and precisely.
      */
     "group.messageInfo": Match.Maybe(LocalizedValuePattern),
@@ -81,7 +84,7 @@ export const RoleEntityPattern = {
     "groupList.statusTitle.roleOccupied": Match.Maybe(LocalizedValuePattern),
     "groupList.statusTitle.roleOccupiedByUser": Match.Maybe(LocalizedValuePattern),
 
-    /* 
+    /*
      * The following keys can be customized for each role, but this is usually neither necessary
      * nor recommended, as they already have good fallback options.
      */

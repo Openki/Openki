@@ -363,7 +363,7 @@
          * Default: false
          */
         "editable": false,
-        /**
+        /*
          * Each role can have custom translations.
          * You only need to include the keys you want to change.
          * If a key is not defined in your overrides, the default translation from
@@ -374,14 +374,17 @@
         "translations": {
           // In this case, only the short form will be using the custom translation
 
-          /** A short label that appears next to the user or can be used in a text. */
+          /*
+           * A short label that appears next to the user or can be used in a text.
+           * If you define your own role and it is specified, it will be used when generating fallback strings.
+           */
           "short": {
             "en": "participant",
             "de": "teilnehmer",
             "sv": "deltagare",
           },
 
-          /**
+          /*
            * A short description, shown on group create/edit.
            *
            * Default: "{ROLE}"
@@ -389,7 +392,7 @@
            */
           // description: { ... },
 
-          /**
+          /*
            * A call to action, shown on the button to subscribe as a role to a group.
            *
            * Default: "I can be {ROLE}"
@@ -397,7 +400,7 @@
            */
           // subscribe: { ... },
 
-          /**
+          /*
            * A message, shown after a user has subscribe. `\n` can be used to add a linebreak.
            * The variable `{GUIDE}` can be used to show the link from the `groupGuideLink`
            * setting from `settings.json`.
@@ -408,7 +411,7 @@
            */
           // "group.firstSteps": { ... },
 
-          /**
+          /*
            * A message send to the coordination team, after a user has subscribe. `\n` can be used to
            * add a linebreak. The variable `{USER}` and `{GROUP}` are available.
            *
@@ -453,20 +456,20 @@
          * with key & values for every language eg. `{ "en": "Edit", "de": "Bearbeiten", ... }`
          */
         "text": "footer.aboutOpenki",
-        /**
+        /*
          * Text that is shown on hover the link.
          * The value can be a translation key from i18next defined in code, a string or a object
          * with key & values for every language eg. `{ "en": "Edit", "de": "Bearbeiten", ... }`
          */
         "title": "navigation.footer.about.title",
 
-        /**
+        /*
          * Text from the link. The value is a translation key from i18next it must be
          * defined in code
          * Deprecated: use "text" field instead (May 2026)
          */
         "key": "footer.aboutOpenki",
-        /**
+        /*
          * text that is shown on hover the link
          * Deprecated: use "title" field instead (May 2026)
          */
@@ -603,7 +606,7 @@
     "recipient": "badabuff@openki.net",
   },
 
-  /**
+  /*
    * How many private messages each user can send to different users per hour.
    * If the limit is reached, the messages get blocked and an alert to is sent
    * to the reporter.recipient address.
