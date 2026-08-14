@@ -92,7 +92,7 @@ export class Venue {
       isNew /* Anyone can create a new location */ ||
       user._id === this.editor ||
       (this.editOrganization && user.organizations.includes(this.editOrganization)) ||
-      user.hasPrivilige("admin") // Admins can edit all venues
+      user.hasPrivilege("admin") // Admins can edit all venues
     );
   }
 }

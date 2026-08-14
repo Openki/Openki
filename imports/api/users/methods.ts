@@ -256,7 +256,7 @@ export const adminRemove = ServerMethod(
     check(options, Match.Maybe(AdminRemoveOptionsPattern));
 
     const operator = await Meteor.userAsync();
-    if (!operator?.hasPrivilige("admin")) {
+    if (!operator?.hasPrivilege("admin")) {
       return;
     }
 
@@ -319,7 +319,7 @@ export const addPrivilege = ServerMethod(
     check(privilege, String);
 
     const operator = await Meteor.userAsync();
-    if (!operator?.hasPrivilige("admin")) {
+    if (!operator?.hasPrivilege("admin")) {
       // At the moment, only admins can hand out privileges, so this is easy
       return;
     }
@@ -344,7 +344,7 @@ export const removePrivilege = ServerMethod(
     }
 
     const operator = await Meteor.userAsync();
-    if (!operator || (!operator.hasPrivilige("admin") && operator._id !== user._id)) {
+    if (!operator || (!operator.hasPrivilege("admin") && operator._id !== user._id)) {
       return;
     }
 
@@ -357,7 +357,7 @@ export const setHasContributed = ServerMethod("user.setHasContributed", async (u
 
   const operator = await Meteor.userAsync();
 
-  if (!operator || !operator.hasPrivilige("admin")) {
+  if (!operator || !operator.hasPrivilege("admin")) {
     return;
   }
 
@@ -381,7 +381,7 @@ export const unsetHasContributed = ServerMethod(
 
     const operator = await Meteor.userAsync();
 
-    if (!operator || !operator.hasPrivilige("admin")) {
+    if (!operator || !operator.hasPrivilege("admin")) {
       return;
     }
 

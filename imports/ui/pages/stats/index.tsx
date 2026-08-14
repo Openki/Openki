@@ -161,7 +161,7 @@ export function StatsPage() {
   }, [region]);
 
   function isAdmin() {
-    return user?.hasPrivilige("admin");
+    return user?.hasPrivilege("admin");
   }
   function regionName() {
     return currentRegion?.name || "";

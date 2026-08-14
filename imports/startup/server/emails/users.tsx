@@ -30,7 +30,7 @@ Accounts.emailTemplates.verifyEmail = {
     const userModel = user as UserModel;
     const t = i18next.getFixedT(userModel.locale);
 
-    if (userModel.hasPrivilige("visitor")) {
+    if (userModel.hasPrivilege("visitor")) {
       return t("visitorEmail.subject", "[{SITE}] Welcome to {SITE}, {NAME}", {
         SITE: Accounts.emailTemplates.siteName,
         NAME: userModel.getDisplayName(),
@@ -46,7 +46,7 @@ Accounts.emailTemplates.verifyEmail = {
 
   text(user: UserModel, url: string) {
     const userModel = user as UserModel;
-    if (userModel.hasPrivilige("visitor")) {
+    if (userModel.hasPrivilege("visitor")) {
       return visitor(userModel.getDisplayName(), userModel.emailAddress() || "", userModel.locale);
     }
 
@@ -60,7 +60,7 @@ Accounts.emailTemplates.verifyEmail = {
 
   async html(user: UserModel, url: string) {
     const userModel = user as UserModel;
-    if (userModel.hasPrivilige("visitor")) {
+    if (userModel.hasPrivilege("visitor")) {
       return renderToEmail(
         <Root
           subject={Accounts.emailTemplates.verifyEmail.subject?.(userModel)}
@@ -100,7 +100,7 @@ Accounts.emailTemplates.resetPassword = {
     const userModel = user as UserModel;
     const t = i18next.getFixedT(userModel.locale);
 
-    if (userModel.hasPrivilige("visitor")) {
+    if (userModel.hasPrivilege("visitor")) {
       return t("createAccount.subject", "[{SITE}] Login or create your account on {SITE}", {
         SITE: Accounts.emailTemplates.siteName,
       });
@@ -114,7 +114,7 @@ Accounts.emailTemplates.resetPassword = {
 
   text(user: UserModel, url: string) {
     const userModel = user as UserModel;
-    if (userModel.hasPrivilige("visitor")) {
+    if (userModel.hasPrivilege("visitor")) {
       return createAccount(
         userModel.getDisplayName(),
         `${url.replace("reset-password", "visitor-to-user")}?email=${userModel.emailAddress()}`,
@@ -133,7 +133,7 @@ Accounts.emailTemplates.resetPassword = {
 
   async html(user: UserModel, url: string) {
     const userModel = user as UserModel;
-    if (userModel.hasPrivilige("visitor")) {
+    if (userModel.hasPrivilege("visitor")) {
       return renderToEmail(
         <Root
           subject={Accounts.emailTemplates.resetPassword.subject?.(userModel)}

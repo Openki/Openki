@@ -91,7 +91,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
   const sender = await Users.findOneAsync(body.sender);
   const targetRecipient = await Users.findOneAsync(body.targetRecipient);
 
-  if (!sender?.hasPrivilige("admin") && PrivateSettings.allowedPrivateMessagesPerHour) {
+  if (!sender?.hasPrivilege("admin") && PrivateSettings.allowedPrivateMessagesPerHour) {
     // Check how many messages a user has sent and block if there are too many
     const observePeriod = new Date();
     observePeriod.setHours(observePeriod.getHours() - 1);
@@ -134,7 +134,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
   return {
     accepted(actualRecipient: UserModel) {
-      if (!actualRecipient.allowPrivateMessages && !sender?.hasPrivilige("admin")) {
+      if (!actualRecipient.allowPrivateMessages && !sender?.hasPrivilege("admin")) {
         throw new Error("User wishes to not receive private messages from users");
       }
     },
@@ -174,7 +174,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         customSiteName: undefined as string | undefined,
         customEmailLogo: undefined as string | undefined,
         shouldShowPMWarning:
-          !sender.hasPrivilige("admin") &&
+          !sender.hasPrivilege("admin") &&
           sender.createdAt.getTime() >= Date.now() - 10 * 24 * 60 * 60 * 1000, // 10 days
         fromAddress: "",
         group: undefined as JSX.Element | undefined,

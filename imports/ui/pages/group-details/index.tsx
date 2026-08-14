@@ -106,7 +106,7 @@ export function GroupDetailsPage({ edit, group, select }: Props) {
       let role;
       if (intersection(user?.badges || [], group.editors).length > 0) {
         role = "team";
-      } else if (user?.hasPrivilige("admin")) {
+      } else if (user?.hasPrivilege("admin")) {
         role = "admin";
       } else {
         role = "unknown";

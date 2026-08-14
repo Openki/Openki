@@ -125,7 +125,7 @@ export class Organization {
     }
     return (
       this.isNew() /* Anyone can create a new organization */ ||
-      user.hasPrivilige("admin") /* Admins can edit all organizations */ ||
+      user.hasPrivilege("admin") /* Admins can edit all organizations */ ||
       this.members?.some(
         (m) => m.user === user._id,
       ) /* User must be member of organization to edit it */

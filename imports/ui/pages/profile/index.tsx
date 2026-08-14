@@ -221,10 +221,10 @@ function LoggedIn({ user }: { user: UserModel }) {
   const [organizationsAreLoading, organizations] = Organizations.useFindFilter({ own: true });
 
   function isVisitor() {
-    return !!user?.hasPrivilige("visitor");
+    return !!user?.hasPrivilege("visitor");
   }
   function isAdmin() {
-    return user.hasPrivilige("admin");
+    return user.hasPrivilege("admin");
   }
   function hasTenants() {
     return user.tenants.length > 0;
@@ -260,7 +260,7 @@ export function ProfilePage() {
   const user = useUser();
 
   function isVisitor() {
-    return !!user?.hasPrivilige("visitor");
+    return !!user?.hasPrivilege("visitor");
   }
 
   if (query.unsubscribed || query["unsubscribe-error"] === "") {

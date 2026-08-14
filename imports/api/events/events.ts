@@ -130,7 +130,7 @@ export class OEvent {
     if (!user) {
       return false;
     }
-    if (user.hasPrivilige("admin")) {
+    if (user.hasPrivilege("admin")) {
       return true;
     }
     return intersection(user.badges, this.editors).length > 0;

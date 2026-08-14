@@ -23,14 +23,14 @@ export const [details, useDetails] = ServerPublishOne(
       const filter: Mongo.Selector<TenantEntity> = { _id: tenantId };
 
       // Only members of a tenant or admins can see a tenant
-      if (!user.hasPrivilige("admin")) {
+      if (!user.hasPrivilege("admin")) {
         filter.members = user._id;
       }
 
       const projection: Mongo.FieldSpecifier = { ...Tenants.publicFields };
       // Only admins can see all tenant admins. Note: Admin privileg is not something that is
       // likely to happen and reactive changes are not needed.
-      if (user.hasPrivilige("admin") || user.isTenantAdmin(tenantId)) {
+      if (user.hasPrivilege("admin") || user.isTenantAdmin(tenantId)) {
         projection.admins = 1;
       }
       return Tenants.find(filter, { projection });
@@ -58,14 +58,14 @@ export const [details, useDetails] = ServerPublishOne(
       const filter: Mongo.Selector<TenantEntity> = { _id: tenantId };
 
       // Only members of a tenant or admins can see a tenant
-      if (!user.hasPrivilige("admin")) {
+      if (!user.hasPrivilege("admin")) {
         filter.members = user._id;
       }
 
       const projection: Mongo.FieldSpecifier = { ...Tenants.publicFields };
       // Only admins can see all tenant admins. Note: Admin privileg is not something that is
       // likely to happen and reactive changes are not needed.
-      if (user.hasPrivilige("admin") || user.isTenantAdmin(tenantId)) {
+      if (user.hasPrivilege("admin") || user.isTenantAdmin(tenantId)) {
         projection.admins = 1;
       }
       return Tenants.findOne(filter, { projection });

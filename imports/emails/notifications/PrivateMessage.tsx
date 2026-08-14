@@ -60,7 +60,7 @@ export function PrivateMessage({
               {
                 USERTYPE: (
                   <span className="fw-bold">
-                    {sender.hasPrivilige("admin")
+                    {sender.hasPrivilege("admin")
                       ? t("notification.privateMessage.mail.fromAdmin", "an admin")
                       : t("notification.privateMessage.mail.fromUser", "a regular user")}
                   </span>

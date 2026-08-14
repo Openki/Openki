@@ -58,7 +58,7 @@ export const sendPrivateMessage = ServerMethod(
     if (!recipient) {
       throw new Meteor.Error(404, "no such user");
     }
-    if (!recipient.allowPrivateMessages && !operator.hasPrivilige("admin")) {
+    if (!recipient.allowPrivateMessages && !operator.hasPrivilege("admin")) {
       throw new Meteor.Error(401, "this user does not accept direct messages from users");
     }
 

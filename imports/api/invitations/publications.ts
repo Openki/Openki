@@ -36,7 +36,7 @@ export const [findFilter, useFindFilter] = ServerPublishMany(
 
     const user = await Meteor.userAsync();
 
-    if (!user || !(user.hasPrivilige("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
+    if (!user || !(user.hasPrivilege("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
       throw new Meteor.Error(401, "not permitted");
     }
 
@@ -47,7 +47,7 @@ export const [findFilter, useFindFilter] = ServerPublishMany(
 
     const user = Meteor.user();
 
-    if (!user || !(user.hasPrivilige("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
+    if (!user || !(user.hasPrivilege("admin") || (tenantId && user.isTenantAdmin(tenantId)))) {
       throw new Meteor.Error(401, "not permitted");
     }
 

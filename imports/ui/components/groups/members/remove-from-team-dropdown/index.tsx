@@ -18,7 +18,7 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
   const user = useUser();
 
   function isNotPrivilegedSelf() {
-    const notPrivilegedUser = !user?.hasPrivilige("admin");
+    const notPrivilegedUser = !user?.hasPrivilege("admin");
     return member.user === user?._id && notPrivilegedUser;
   }
 

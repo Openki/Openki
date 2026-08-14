@@ -8,7 +8,7 @@ export const region = ServerMethod("stats.region", async (regionId: string) => {
   check(regionId, String);
 
   const user = await Meteor.userAsync();
-  if (!user?.hasPrivilige("admin")) {
+  if (!user?.hasPrivilege("admin")) {
     return {} as Stats;
   }
 

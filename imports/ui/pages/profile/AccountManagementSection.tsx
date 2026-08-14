@@ -58,7 +58,7 @@ export function AccountManagementSection() {
   });
 
   function isVisitor() {
-    return user?.hasPrivilige("visitor");
+    return user?.hasPrivilege("visitor");
   }
 
   function deleteConfirmAttr() {

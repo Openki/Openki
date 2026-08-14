@@ -11,7 +11,7 @@ export function canDeletePost(
     return false;
   }
   return (
-    user.hasPrivilige("admin") /* is admin */ ||
+    user.hasPrivilege("admin") /* is admin */ ||
     hasRoleUser(group.members, "team", user._id) /* is in team of group */ ||
     post.userId === user._id // is creator
   );

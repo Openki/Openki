@@ -55,7 +55,7 @@ template.helpers({
   },
 
   isAdmin() {
-    return Meteor.user()?.hasPrivilige("admin");
+    return Meteor.user()?.hasPrivilege("admin");
   },
 
   isNotAdminPanel() {

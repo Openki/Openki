@@ -163,7 +163,7 @@ export class User {
     return (emailRecord && emailRecord.verified && emailRecord.address) || undefined;
   }
 
-  hasPrivilige(this: UserModel, role: Role) {
+  hasPrivilege(this: UserModel, role: Role) {
     return !!this.privileges?.includes(role);
   }
 
