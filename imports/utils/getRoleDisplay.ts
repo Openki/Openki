@@ -115,14 +115,14 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
       return getTranslation(type, "groupList.statusTitle.roleOccupiedByUser", variables);
     },
 
-    notificationJoinEmailSubject(
+    roleNotificationJoinEmailSubject(
       type: RoleEntity["type"],
       variables: { USER: string; GROUP: string },
     ) {
       return getTranslation(type, "notification.join.mail.subject", variables);
     },
 
-    notificationJoinEmailIntro(
+    roleNotificationJoinEmailIntro(
       type: RoleEntity["type"],
       variables: { USER: JSX.Element | string; GROUP: JSX.Element | string },
     ) {
@@ -137,14 +137,14 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
       return getTranslation(type, "group.messageInfo");
     },
 
-    groupHistoryUserSubscribed(
+    roleGroupHistoryUserSubscribed(
       type: RoleEntity["type"],
       variables: { USER: JSX.Element | string },
     ) {
       return getTranslation(type, "group.history.userSubscribed", variables);
     },
 
-    groupHistoryUserUnsubscribed(
+    roleGroupHistoryUserUnsubscribed(
       type: RoleEntity["type"],
       variables: { USER: JSX.Element | string },
     ) {

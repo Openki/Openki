@@ -95,7 +95,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
     },
 
     async vars(_locale: string, actualRecipient: UserModel, unsubToken: string) {
-      const { roleShort, notificationJoinEmailSubject, notificationJoinEmailIntro } =
+      const { roleShort, roleNotificationJoinEmailSubject, roleNotificationJoinEmailIntro } =
         getRoleDisplay(i18next, roles);
 
       const campaign = "joinNotify";
@@ -110,7 +110,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         throw new Error("Roles could not be loaded (0.o)");
       }
 
-      const subject = notificationJoinEmailSubject(body.newRole, {
+      const subject = roleNotificationJoinEmailSubject(body.newRole, {
         GROUP: truncate(group.name, { length: 10 }),
         USER: truncate(newParticipant.getDisplayName(), { length: 50 }),
       });
@@ -129,7 +129,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
 
       const groupLink = Router.url("showGroup", group, { query: { campaign } });
       const groupName = <a href={groupLink}>{group.name}</a>;
-      const roleIntroduction = notificationJoinEmailIntro(body.newRole, {
+      const roleIntroduction = roleNotificationJoinEmailIntro(body.newRole, {
         USER: <span className="fw-bold">{newParticipant.getDisplayName()}</span>,
         GROUP: groupName,
       });
