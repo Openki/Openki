@@ -1,16 +1,29 @@
-import type { JSX, ReactNode } from "react";
+import type { JSX } from "react";
 import { i18n } from "i18next";
 import { useTranslation } from "react-i18next";
 import { upperFirst } from "lodash-es";
 
 import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 import { RoleEntity } from "/imports/utils/PublicSettings";
+import { ReactElement } from "react-markdown/lib/react-markdown";
+import { PrimitiveType } from "intl-messageformat";
+import { $Dictionary } from "i18next/typescript/helpers";
 
 export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
   function getTranslation(
     role: RoleEntity["type"],
     key: keyof NonNullable<RoleEntity["translations"]>,
-    variables?: Record<string, ReactNode> | undefined,
+    variables?: Record<string, PrimitiveType> | undefined,
+  ): string;
+  function getTranslation(
+    role: RoleEntity["type"],
+    key: keyof NonNullable<RoleEntity["translations"]>,
+    variables?: Record<string, PrimitiveType | ReactElement> | undefined,
+  ): string | ReactElement | (string | ReactElement)[];
+  function getTranslation<T extends PrimitiveType | ReactElement>(
+    role: RoleEntity["type"],
+    key: keyof NonNullable<RoleEntity["translations"]>,
+    variables?: Record<string, T> | undefined,
   ) {
     // Translations for custom roles can be defined in multiple locations.
     // (1) As part of Region.roles in the DB and in the `defaultRoles` in the instance
@@ -32,14 +45,16 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
     // Translations for common default roles exist in the roles namespace.
     const roleKey = `${role}.${key}`;
     if (i18n.exists(`roles:${roleKey}`)) {
-      return variables ? i18n.t(`roles:${roleKey}`, variables) : i18n.t(`roles:${roleKey}`);
+      return variables
+        ? i18n.t(`roles:${roleKey}`, variables as $Dictionary)
+        : i18n.t(`roles:${roleKey}`);
     }
 
     // (3) No translation found, just fallback to a generic string. Using short to build the
     // fallback strings.
     let label: string | undefined;
     if (key !== "short") {
-      label = getLocalizedValue(i18n, customTranslations?.["short"], variables);
+      label = getLocalizedValue(i18n, customTranslations?.["short"]);
     }
     if (label === undefined) {
       label = role;
@@ -102,7 +117,7 @@ export function getRoleDisplay(i18n: i18n, roles: RoleEntity[]) {
 
     notificationJoinEmailSubject(
       type: RoleEntity["type"],
-      variables: { USER: JSX.Element | string; GROUP: JSX.Element | string },
+      variables: { USER: string; GROUP: string },
     ) {
       return getTranslation(type, "notification.join.mail.subject", variables);
     },
