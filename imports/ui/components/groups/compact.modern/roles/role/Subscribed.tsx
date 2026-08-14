@@ -68,6 +68,7 @@ export function Subscribed({ roleType, group, showFirstSteps, onToggle }: Props)
   }
 
   const name = `group-${group._id}-role-enrolled-${roleType}-content`;
+  const firstSteps = roleGroupFirstSteps(roleType, { GUIDE: <Guide /> });
   return (
     <div className="d-grid">
       <button
@@ -103,8 +104,12 @@ export function Subscribed({ roleType, group, showFirstSteps, onToggle }: Props)
               GROUP: group.name,
             })}
           </span>
-          <br />
-          <span className="pre-line">{roleGroupFirstSteps(roleType, { GUIDE: <Guide /> })}</span>
+          {Boolean(firstSteps) && (
+            <>
+              <br />
+              <span className="pre-line">{firstSteps}</span>
+            </>
+          )}
           <br />
           <br />
           {t(
