@@ -8,7 +8,7 @@ import { UserModel } from "/imports/api/users/users";
 
 import * as Predicates from "/imports/utils/predicates";
 import { Filtering } from "/imports/utils/filtering";
-import { PublicSettings, RoleEntity } from "/imports/utils/PublicSettings";
+import { PublicSettings, RoleEntity, RoleEntityDefault } from "/imports/utils/PublicSettings";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { Type } from "/imports/utils/CustomChecks";
 import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
@@ -150,8 +150,18 @@ export type FindFilter = Type<typeof FindFilterPattern>;
 export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionModel> {
   constructor() {
     super("Regions", {
-      transform(region) {
-        return assignIn(new Region(), region);
+      transform(regionEntity) {
+        const regionModel = assignIn(new Region(), regionEntity);
+
+        if (regionModel.roles) {
+          regionModel.roles = regionModel.roles.map((role) => ({
+            // set default value for undefined props
+            ...RoleEntityDefault,
+            ...role,
+          }));
+        }
+
+        return regionModel;
       },
     });
 

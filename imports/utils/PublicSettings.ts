@@ -12,7 +12,7 @@ export const RoleEntityPattern = {
   icon: String,
   /**
    * The role appears as "proposed only" in the member list.
-   * @default false
+   * @default true
    */
   proposal: Match.Maybe(Boolean),
   /**
@@ -23,7 +23,7 @@ export const RoleEntityPattern = {
   /**
    * The role can be edited (added/removed to the group) after a group has been created
    * by the editors of a group.
-   * @default false
+   * @default true
    */
   editable: Match.Maybe(Boolean),
   /**
@@ -99,6 +99,12 @@ export const RoleEntityPattern = {
 };
 
 export type RoleEntity = Type<typeof RoleEntityPattern>;
+
+export const RoleEntityDefault: Pick<RoleEntity, "proposal" | "preset" | "editable"> = {
+  proposal: true,
+  preset: false,
+  editable: true,
+};
 
 /** See `settings-example.jsonc` for full documentation */
 export const PublicSettingsPattern = Match.ObjectIncluding({
@@ -635,7 +641,12 @@ publicSettings.matomo = { ...defaults.matomo, ...Meteor.settings.public.matomo }
 publicSettings.feature.socialMediaButtons =
   Meteor.settings.public.feature.socialMediaButtons ?? defaults.feature.socialMediaButtons;
 
-publicSettings.defaultRoles = Meteor.settings.public.defaultRoles ?? defaults.defaultRoles;
+publicSettings.defaultRoles =
+  Meteor.settings.public.defaultRoles.map((role: RoleEntity) => ({
+    // set default value for undefined props
+    ...RoleEntityDefault,
+    ...role,
+  })) ?? defaults.defaultRoles;
 
 if (
   !publicSettings.defaultRoles?.some(
