@@ -14,7 +14,8 @@ function Anom({ className }: { className?: string | undefined }) {
 
   return (
     <img
-      className={cx("avatar-image", className, "placeholder-rainbow")}
+      data-test="avatar-image"
+      className={cx("d-block", className, "placeholder-rainbow")}
       src={`/logo/${PublicSettings.avatarLogo.src}`}
       alt={getLocalizedValue(PublicSettings.avatarLogo.alt)}
     />
@@ -45,7 +46,8 @@ function UserAvatar(props: {
 
   return (
     <img
-      className={cx("avatar-image", props.className)}
+      data-test="avatar-image"
+      className={cx("d-block", props.className)}
       style={{ filter: `hue-rotate(-${color()}deg)` }}
       src={`/logo/${PublicSettings.avatarLogo.src}`}
       alt={getLocalizedValue(PublicSettings.avatarLogo.alt)}

@@ -78,7 +78,7 @@ export function Member({ member, group }: { member: GroupMemberEntity; group: Gr
   }
 
   return (
-    <div className={cx("group-member", member.user === currentUser?._id && "is-own-user")}>
+    <div className={cx("group-member", member.user === currentUser?._id && "bg-user")}>
       <div className="d-flex flex-wrap align-items-center">
         <div className="me-1">
           <ProfileLink userId={member.user} />

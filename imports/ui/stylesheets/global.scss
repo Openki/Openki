@@ -55,6 +55,10 @@ a:focus,
   border-color: $user-bg !important;
 }
 
+.bg-user {
+  background: $user-bg;
+}
+
 .bg-user-subtle {
   background-color: color.adjust($user-bg, $lightness: 10%);
 }

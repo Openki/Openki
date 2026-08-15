@@ -7,22 +7,8 @@
 .event-participant {
   background: $event-page-component-bg;
   padding: 10px ($grid-gutter-width * 0.5);
-
-  &.is-own-user {
-    background: $user-bg;
-  }
 }
 
 .event-participant + .event-participant {
   margin-top: 3px;
-}
-
-.event-participants-contact:hover {
-  cursor: pointer;
-}
-
-.free-places {
-  display: block;
-  font-size: 16px;
-  text-align: end;
 }

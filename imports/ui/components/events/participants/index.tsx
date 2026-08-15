@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Modal } from "/imports/startup/client/bootstrap";
-import { useUser } from "/imports/utils/react-meteor-data";
 
 import { EventModel, EventParticipantEntity } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
+
+import { useUser } from "/imports/utils/react-meteor-data";
+import { cx } from "/imports/utils/cx";
 
 import { Contribution } from "../../Contribution";
 import { SendMessage, Props as SendMessageProps } from "../../SendMessage";
@@ -24,16 +26,12 @@ function EventParticipant({
   const { t } = useTranslation();
   const user = useUser();
 
-  function ownUserParticipantClass() {
-    if (participant.user === user?._id) {
-      return "is-own-user";
-    }
-    return "";
-  }
-
   return (
     <div
-      className={`event-participant ${ownUserParticipantClass()} d-flex flex-wrap align-items-center`}
+      className={cx(
+        "event-participant d-flex flex-wrap align-items-center",
+        participant.user === user?._id && "bg-user",
+      )}
     >
       <div className="me-1">
         <ProfileLink userId={participant.user} />
@@ -172,19 +170,19 @@ export function EventParticipants({ event }: Props) {
           {canNotifyAll() && (
             <i
               data-test="events-participants-notify-all"
-              className="fa-solid fa-envelope event-participants-contact float-end"
+              className="fa-solid fa-envelope cursor-pointer float-end"
               onClick={() => setShowModal(!showModal)}
             />
           )}
           <br />
           {!!event.maxParticipants && !event.canceled && (
-            <span className="free-places">
+            <div className="fs-6 text-end">
               {t(
                 "event.details.participants.free.places",
                 "{NUM, plural, =0{No free seats} one{one free seat} other{# free seats} }",
                 { NUM: howManyFreePlaces() },
               )}
-            </span>
+            </div>
           )}
         </h4>
       </div>

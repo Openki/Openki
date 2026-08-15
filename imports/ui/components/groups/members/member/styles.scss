@@ -4,10 +4,6 @@
 .group-member {
   background: $group-page-component-bg;
   padding: 10px ($grid-gutter-width * 0.5);
-
-  &.is-own-user {
-    background: $user-bg;
-  }
 }
 
 .group-member + .group-member {
