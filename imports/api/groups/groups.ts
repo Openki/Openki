@@ -109,11 +109,11 @@ export function isPrivate(group: { tenant: string }) {
 }
 
 export class Group {
-  members: GroupMemberEntity[] = [];
+  members: GroupEntity["members"] = [];
 
-  roles: string[] = [];
+  roles: GroupEntity["roles"] = [];
 
-  teamOrganizations: string[] = [];
+  teamOrganizations: GroupEntity["teamOrganizations"] = [];
 
   nextEvent: (GroupNextEventEntity & OEvent) | null = null;
 

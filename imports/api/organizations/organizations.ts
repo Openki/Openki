@@ -107,7 +107,7 @@ export interface OrganizationEntity {
 export type OrganizationModel = Organization & OrganizationEntity;
 
 export class Organization {
-  members = [] as OrganizationMemberEntity[];
+  members: OrganizationEntity["members"] = [];
 
   /**
    * Check if the organization is new (not yet saved).

@@ -62,23 +62,23 @@ export type VenueModel = Venue & VenueEntity;
  * Venue objects represent locations where events take place.
  */
 export class Venue {
-  public name = "";
+  name: VenueEntity["name"] = "";
 
-  public description = "";
+  description: VenueEntity["description"] = "";
 
-  public address = "";
+  address: VenueEntity["address"] = "";
 
-  public route = "";
+  route: VenueEntity["route"] = "";
 
-  public short = "";
+  short: VenueEntity["short"] = "";
 
-  public maxPeople = 0;
+  maxPeople: VenueEntity["maxPeople"] = 0;
 
-  public maxWorkplaces = 0;
+  maxWorkplaces: VenueEntity["maxWorkplaces"] = 0;
 
-  public facilities = {};
+  facilities: VenueEntity["facilities"] = {};
 
-  public allowParallelEvents = true;
+  allowParallelEvents: VenueEntity["allowParallelEvents"] = true;
 
   /**
    * Check whether a user can edit the venue.

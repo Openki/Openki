@@ -120,7 +120,7 @@ export type EventModel = OEvent & EventEntity;
 
 // Event is a built-in, so we use a different name for this class
 export class OEvent {
-  editors: string[] = [];
+  editors: EventEntity["editors"] = [];
 
   isPrivate(this: EventModel) {
     return !PublicSettings.publicTenants.includes(this.tenant);

@@ -2,13 +2,11 @@ import React from "react";
 
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
-import { GroupNextEventEntity } from "/imports/api/groups/groups";
-import { OEvent } from "/imports/api/events/events";
+import { GroupModel } from "/imports/api/groups/groups";
 
 import "./styles.scss";
 
-export function GroupCompactEvent(props: { event: GroupNextEventEntity & OEvent }) {
-  const { event } = props;
+export function GroupCompactEvent({ event }: { event: NonNullable<GroupModel["nextEvent"]> }) {
   const { dateShort, timeFormat, dateToRelativeString } = useDateTimeFormat();
 
   return (
