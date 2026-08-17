@@ -68,7 +68,8 @@ export function SafeString() {
 
 /**
  * Utility typ: An unsafe string that may contain html and needs to be sanitized with
- * `HtmlTools.saneHtml(...)` *Note: HTMLElement is only symbolic and should remind the developer that
+ * `HtmlTools.saneHtml(...)` \
+ * *Note: HTMLElement is only symbolic and should remind the developer that
  * this string could contain HTML.*
  */
 export type UnsafeString = string | HTMLElement;
