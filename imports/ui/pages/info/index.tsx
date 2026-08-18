@@ -79,7 +79,7 @@ export function InfoPage({ page }: Props) {
       <MetaTags title={page.title} />
 
       <div className="container mw-md info-page">
-        <ReactMarkdown linkTarget="_blank" skipHtml={true}>
+        <ReactMarkdown linkTarget="_blank" skipHtml>
           {page.body}
         </ReactMarkdown>
       </div>

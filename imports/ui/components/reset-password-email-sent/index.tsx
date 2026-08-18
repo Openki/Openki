@@ -10,7 +10,7 @@ export function ResetPasswordEmailSent() {
       type="success"
       icon="fa-regular fa-envelope"
       title={t("resetPassword.sendEmail.title", "Check your e-mail inbox.")}
-      report={true}
+      report
     >
       {t(
         "resetPassword.sendEmail",

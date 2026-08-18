@@ -40,10 +40,6 @@
   border-bottom: $event-compact-seperator-height solid $body-bg;
   display: table;
 
-  &.user-attends-event {
-    background: $user-bg;
-  }
-
   /* Move over stretched-link */
   .tag-group {
     position: relative;

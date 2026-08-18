@@ -19,55 +19,46 @@ function Groups({ search }: { search: string }) {
     ["name", "asc"],
   ]);
 
-  return !isLoading() && groups.length ? (
-    <div className="list-group proposed-groups mt-3">
-      <span className="list-group-item  border-0 border-bottom">
-        <h5 className="m-0">
-          <button
-            type="button"
-            className="btn btn-link"
-            onClick={() => {
-              setCollapsed(!collapsed);
-            }}
-          >
-            {collapsed ? (
-              <i className="fa-solid fa-angle-down fa-fw" />
-            ) : (
-              <i className="fa-solid fa-angle-up fa-fw" />
-            )}
-          </button>
-          {t(
-            "proposedGroupsDropdown.joinExistingGroupQuestion",
-            "Maybe you would like to join an existing group?",
-          )}
-        </h5>
-      </span>
-      {!collapsed && (
-        <>
-          {groups.map((group) => (
-            <a
-              className="list-group-item list-group-item-action border-0"
-              key={group._id}
-              href={Router.path("showGroup", group)}
-            >
-              {group.name}
-            </a>
-          ))}
-          <span className="list-group-item text-center border-0 border-top">
-            <button
-              type="button"
-              className="btn btn-cancel"
-              onClick={() => {
-                setCollapsed(true);
-              }}
-            >
-              {t("button.proposedGroups.close", "No thanks")}
+  return (
+    !isLoading() &&
+    groups.length > 0 && (
+      <div className="list-group proposed-groups mt-3">
+        <span className="list-group-item  border-0 border-bottom">
+          <h5 className="m-0">
+            <button type="button" className="btn btn-link" onClick={() => setCollapsed(!collapsed)}>
+              {collapsed ? (
+                <i className="fa-solid fa-angle-down fa-fw" />
+              ) : (
+                <i className="fa-solid fa-angle-up fa-fw" />
+              )}
             </button>
-          </span>
-        </>
-      )}
-    </div>
-  ) : null;
+            {t(
+              "proposedGroupsDropdown.joinExistingGroupQuestion",
+              "Maybe you would like to join an existing group?",
+            )}
+          </h5>
+        </span>
+        {!collapsed && (
+          <>
+            {groups.map((group) => (
+              <a
+                className="list-group-item list-group-item-action border-0"
+                key={group._id}
+                href={Router.path("showGroup", group)}
+              >
+                {group.name}
+              </a>
+            ))}
+            <span className="list-group-item text-center border-0 border-top">
+              <button type="button" className="btn btn-cancel" onClick={() => setCollapsed(true)}>
+                {t("button.proposedGroups.close", "No thanks")}
+              </button>
+            </span>
+          </>
+        )}
+      </div>
+    )
+  );
 }
 
 export function Title(props: {

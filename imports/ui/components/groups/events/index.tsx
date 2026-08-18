@@ -120,7 +120,7 @@ export function Events({ group }: Props) {
 
             {haveFutureEvents() && (
               <>
-                <div className="page-component-header event-display-container">
+                <div className="page-component-header d-flex align-items-center justify-content-between">
                   <h4>
                     {t(
                       "group.events.upcominglist",
@@ -136,7 +136,7 @@ export function Events({ group }: Props) {
                   </div>
                 </div>
                 <div className="group-event-list">
-                  <EventList dataEvents={futureEvents()} withDate={true} />
+                  <EventList dataEvents={futureEvents()} withDate />
                 </div>
                 <div className="mt-2 text-center">
                   {showHaveMoreEvents() && (

@@ -14,18 +14,6 @@ import { RoomTag, VenueLink } from "/imports/ui/components/venues/link";
 
 import "./styles.scss";
 
-function eventCompactClasses(event: EventModel, withDate?: boolean) {
-  const classes = [];
-  if (withDate) {
-    classes.push("has-date");
-  }
-  if (moment().isAfter(event.end) || event.isFullyBooked() || event.canceled) {
-    classes.push("is-past");
-  }
-
-  return classes.join(" ");
-}
-
 function bodyStyle(event: EventModel, withImage?: boolean | undefined) {
   if (!withImage) {
     return {};
@@ -63,7 +51,13 @@ export function EventCompact({
   const userId = useUserId();
 
   return (
-    <div className={`event-compact ${eventCompactClasses(event, withDate)}`}>
+    <div
+      className={cx(
+        "event-compact",
+        withDate && "has-date",
+        (moment().isAfter(event.end) || event.isFullyBooked() || event.canceled) && "is-past",
+      )}
+    >
       {event.canceled ? (
         <span className="event-canceled">{t("_event.state.canceled")}</span>
       ) : (
@@ -74,7 +68,7 @@ export function EventCompact({
       <div
         className={cx(
           "event-compact-header p-2",
-          event.attendedBy(userId) && " user-attends-event",
+          event.attendedBy(userId) && "bg-user",
         )}
       >
         {!!withDate && (
