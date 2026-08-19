@@ -123,7 +123,7 @@ export function Enrolling({ group, roleId, afterSubscribe }: Props) {
           <form noValidate onSubmit={handleSubmit}>
             <div className="mb-3">
               <FormControl
-                id="role-comment"
+                id={`role-${roleId}-comment`}
                 label={roleGroupMessageInfo(roleId)}
                 onChange={(value) => setComment(value)}
                 type="text"
@@ -151,6 +151,7 @@ export function Enrolling({ group, roleId, afterSubscribe }: Props) {
                 data-bs-target={`#${name}`}
                 aria-expanded="false"
                 aria-controls={name}
+                disabled={isBusy}
               >
                 {t("_button.cancel")}
               </button>

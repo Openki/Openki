@@ -8,7 +8,7 @@ import { EventEntity } from "/imports/api/events/events";
 import * as tenantDenormalizer from "./tenantDenormalizer";
 import * as interestedDenormalizer from "./interestedDenormalizer";
 
-import { hasRoleUser } from "../../utils/group-role-utils";
+import { hasCustomRoleUser, hasRoleUser } from "../../utils/group-role-utils";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import * as FileStorage from "/imports/utils/FileStorage";
@@ -18,9 +18,15 @@ import { StringEnum, Type } from "/imports/utils/CustomChecks";
 import { LocalizedValue } from "/imports/utils/getLocalizedValue";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
+export interface GroupCustomRole {
+  id: string;
+  label: string;
+}
+
 export interface GroupMember {
   user: string;
   roles: string[];
+  customRoles?: string[];
   comment?: string;
 }
 
@@ -75,6 +81,7 @@ export interface GroupEntity {
   time_lastedit: Date;
   /** [role-keys] */
   roles: string[];
+  customRoles?: GroupCustomRole[];
   members: GroupMember[];
   internal: boolean;
   singleEvent: boolean;
@@ -147,6 +154,10 @@ export class Group {
 
   userHasRole(this: GroupModel, userId: string | undefined | null, role: string) {
     return hasRoleUser(this.members, role, userId);
+  }
+
+  userHasCustomRole(this: GroupModel, userId: string | undefined | null, roleId: string) {
+    return hasCustomRoleUser(this.members, roleId, userId);
   }
 
   publicUrlForCompactImage(this: GroupModel) {

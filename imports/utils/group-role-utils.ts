@@ -33,3 +33,14 @@ export function hasRoleUser(
   }
   return members.some((member) => member.user === userId && member.roles.includes(role));
 }
+
+export function hasCustomRoleUser(
+  members: GroupMemberEntity[],
+  roleId: string,
+  userId: string | undefined | null,
+) {
+  if (!userId) {
+    return false;
+  }
+  return members.some((member) => member.user === userId && member.customRoles?.includes(roleId));
+}

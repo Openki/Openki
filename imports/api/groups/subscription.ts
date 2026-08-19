@@ -249,11 +249,11 @@ export class Subscribe extends Change<{
     }
 
     // Update member related calculated fields
-    await interestedDenormalizer.afterSubscribe(this.group._id);
+    await interestedDenormalizer.afterSubscribeToRole(this.group._id);
     await editorsDenormalizer.updateEditors(this.group._id);
 
-    await timeLastEditDenormalizer.afterSubscribe(this.group._id);
-    await historyDenormalizer.afterSubscribe(this.group._id, this.userId, this.role);
+    await timeLastEditDenormalizer.afterSubscribeToRole(this.group._id);
+    await historyDenormalizer.afterSubscribeToRole(this.group._id, this.userId, this.role);
 
     if (this.reason === "interested") {
       // Send notification to team
@@ -362,16 +362,21 @@ export class Unsubscribe extends Change<{
     await Groups.updateAsync(
       { _id: this.group._id },
       {
-        $pull: { members: { roles: { $size: 0 } } },
+        $pull: {
+          members: {
+            roles: { $size: 0 },
+            $or: [{ customRoles: { $exists: false } }, { customRoles: { $size: 0 } }],
+          } as any, // typescript don't know $or
+        },
       },
     );
 
     // Update member related calculated fields
-    await interestedDenormalizer.afterUnsubscribe(this.group._id);
+    await interestedDenormalizer.afterUnsubscribeFromRole(this.group._id);
     await editorsDenormalizer.updateEditors(this.group._id);
 
-    await timeLastEditDenormalizer.afterUnsubscribe(this.group._id);
-    await historyDenormalizer.afterUnsubscribe(this.group._id, this.userId, this.role);
+    await timeLastEditDenormalizer.afterUnsubscribeFromRole(this.group._id);
+    await historyDenormalizer.afterUnsubscribeFromRole(this.group._id, this.userId, this.role);
   }
 }
 

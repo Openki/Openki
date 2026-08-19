@@ -4,6 +4,7 @@ import { GroupModel } from "/imports/api/groups/groups";
 
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
 
+import { CustomRole } from "./custom-role";
 import { Role } from "./role";
 
 export function Roles({ group }: { group: GroupModel }) {
@@ -15,6 +16,9 @@ export function Roles({ group }: { group: GroupModel }) {
 
   return (
     <div id="subscribe">
+      {group.customRoles?.map((role) => (
+        <CustomRole key={role.id} group={group} role={role} />
+      ))}
       {regionRoles
         .filter((role) => group.roles?.includes(role.id))
         .map((role) => (

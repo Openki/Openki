@@ -1,13 +1,10 @@
 import React, { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { GroupModel } from "/imports/api/groups/groups";
-import { Subscribe, processChange } from "/imports/api/groups/subscription";
+import { GroupCustomRole, GroupModel } from "/imports/api/groups/groups";
 import { Regions } from "/imports/api/regions/regions";
-import { User, UserModel } from "/imports/api/users/users";
 
-import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
-import { RoleEntity } from "/imports/utils/PublicSettings";
+import { useCustomRoleDisplay } from "/imports/utils/getCustomRoleDisplay";
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useAccountTasks } from "/imports/utils/useAccountTasks";
 import { useEventListener } from "/imports/utils/useEventListener";
@@ -15,21 +12,19 @@ import { cx } from "/imports/utils/cx";
 import { Button } from "/imports/ui/components/Buttons";
 
 import { FormControl } from "/imports/ui/components/form-control";
-import { RoleIcon } from "/imports/ui/components/RoleIcon";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
-import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { subscribeToCustomRole } from "/imports/api/groups/methods";
 
 export interface Props {
   group: GroupModel;
-  roleType: RoleEntity["type"];
+  role: GroupCustomRole;
   afterSubscribe: () => void;
 }
 
-export function Enrolling({ group, roleType, afterSubscribe }: Props) {
+export function Enrolling({ group, role, afterSubscribe }: Props) {
   const { t } = useTranslation();
-  const [isRolesLoading, roles] = useRegionRoles(group.region);
-  const { roleSubscribe, roleGroupMessageInfo } = useRoleDisplay(roles);
+  const { roleSubscribe, roleGroupMessageInfo } = useCustomRoleDisplay();
   const { promptToLogin } = useAccountTasks();
   const collapseRef = useRef<HTMLDivElement>(null);
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -40,38 +35,22 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
   const member = group.members?.find((m) => m.user === user?._id);
   const [comment, setComment] = useState(member?.comment ?? "");
 
-  // Build a subscribe change
-  function groupSubscribe(newComment?: string, currentUser: UserModel | null = user) {
-    return new Subscribe(
-      group,
-      roles.map((r) => r.type),
-      currentUser?._id,
-      roleType,
-      "interested",
-      newComment,
-    );
-  }
-
-  function canSubscribe() {
-    const operator = user;
-    return groupSubscribe().validFor(operator || (new User() as UserModel));
-  }
-
   async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
 
     routerAutoscroll.cancelNext();
     setIsBusy(true);
     try {
-      const currentUser = await promptToLogin(roleType === "participant");
+      const currentUser = await promptToLogin();
       if (!currentUser) {
         return;
       }
-      await processChange(groupSubscribe(comment.trim(), currentUser));
+
+      subscribeToCustomRole(group._id, role.id, comment.trim());
 
       Analytics.trackEvent(
         "Enrollments in groups",
-        `Enrollments in groups as ${roleType}`,
+        `Enrollments in groups as ${role.label}`,
         Regions.findOne(group.region)?.nameEn,
       );
 
@@ -90,20 +69,12 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
     setIsCollapsed(true);
   });
 
-  if (isRolesLoading()) {
-    return null;
-  }
-
-  if (!canSubscribe()) {
-    return null;
-  }
-
-  const name = `group-role-enroll-${roleType}-content`;
+  const name = `group-role-enroll-${role.id}-content`;
 
   return (
     <>
       <button
-        data-test={`group-role-enroll-${roleType}`}
+        data-test={`group-role-enroll-${role.id}`}
         className="btn btn-success page-component-btn collapsed d-flex flex-row align-items-center gap-1"
         type="button"
         data-bs-toggle="collapse"
@@ -111,9 +82,9 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
         aria-expanded="false"
         aria-controls={name}
       >
-        <RoleIcon type={roleType} regionId={group.region} className="grouppage-role-icon" />
+        <i className="fa-fw" />
         &nbsp;
-        {roleSubscribe(roleType)}
+        {roleSubscribe(role.label)}
         <i
           className={cx("fa-solid fa-fw ms-auto", isCollapsed ? "fa-angle-down" : "fa-angle-up")}
         />
@@ -123,8 +94,8 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
           <form noValidate onSubmit={handleSubmit}>
             <div className="mb-3">
               <FormControl
-                id="role-comment"
-                label={roleGroupMessageInfo(roleType)}
+                id={`role-${role.id}-comment`}
+                label={roleGroupMessageInfo(role.label)}
                 onChange={(value) => setComment(value)}
                 type="text"
                 autoFocus
@@ -138,7 +109,6 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
                 id="group-roles-join"
                 className="btn-save"
                 needsLogin
-                visitorUserAllowed={roleType === "participant"}
                 isBusy={isBusy}
                 busyText={t("group.roles.join.busy", "Joining…")}
               >
@@ -151,6 +121,7 @@ export function Enrolling({ group, roleType, afterSubscribe }: Props) {
                 data-bs-target={`#${name}`}
                 aria-expanded="false"
                 aria-controls={name}
+                disabled={isBusy}
               >
                 {t("_button.cancel")}
               </button>

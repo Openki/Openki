@@ -47,14 +47,18 @@ function canShare(group: GroupModel) {
   }
 
   // only show share a group if there is a role to subscribe
-  if (!(
+  if (
+    // there is a normal role that a user can subscribe
     group.roles.some((r) => r !== "team") ||
-    (group.roles.includes("team") && !group.members.some((m) => m.roles.includes("team")))
-  )) {
-    return false;
+    // theres is a team role that a user can subscribe
+    (group.roles.includes("team") && !group.members.some((m) => m.roles.includes("team"))) ||
+    // there is custom role that a user can subscribe
+    group.customRoles?.length
+  ) {
+    return true;
   }
 
-  return true;
+  return false;
 }
 
 export function GroupDetailsPage({ edit, group, select }: Props) {

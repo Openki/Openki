@@ -3,13 +3,14 @@ import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 
 import { EventModel, Events } from "/imports/api/events/events";
-import { GroupModel } from "/imports/api/groups/groups";
+import { GroupCustomRole, GroupModel } from "/imports/api/groups/groups";
 import { RegionEntity } from "/imports/api/regions/regions";
 
 import { useUser } from "/imports/utils/react-meteor-data";
 import { useRoleDisplay } from "/imports/utils/getRoleDisplay";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useRegionRoles } from "/imports/ui/lib/useRegionRoles";
+import { useCustomRoleDisplay } from "/imports/utils/getCustomRoleDisplay";
 
 import { ProfileLink } from "../../profile-link";
 import { Contribution } from "../../Contribution";
@@ -76,6 +77,50 @@ export function UserUnsubscribedHistoryEntry({
   return (
     <>
       <RoleIcon id={role} regionId={regionId} />{" "}
+      {roleGroupHistoryUserUnsubscribed(role, {
+        USER: (
+          <>
+            <ProfileLink userId={user} />
+            <Contribution userId={user} />
+          </>
+        ),
+      })}
+    </>
+  );
+}
+export function UserSubscribedToCustomRoleHistoryEntry({
+  user,
+  role,
+}: {
+  user: string;
+  role: GroupCustomRole["label"];
+}) {
+  const { roleGroupHistoryUserSubscribed } = useCustomRoleDisplay();
+
+  return (
+    <>
+      {roleGroupHistoryUserSubscribed(role, {
+        USER: (
+          <>
+            <ProfileLink userId={user} />
+            <Contribution userId={user} />
+          </>
+        ),
+      })}
+    </>
+  );
+}
+export function UserUnsubscribedFromCustomRoleHistoryEntry({
+  user,
+  role,
+}: {
+  user: string;
+  role: GroupCustomRole["label"];
+}) {
+  const { roleGroupHistoryUserUnsubscribed } = useCustomRoleDisplay();
+
+  return (
+    <>
       {roleGroupHistoryUserUnsubscribed(role, {
         USER: (
           <>
@@ -307,6 +352,8 @@ const map = {
   updated: UpdatedHistoryEntry,
   userSubscribed: UserSubscribedHistoryEntry,
   userUnsubscribed: UserUnsubscribedHistoryEntry,
+  userSubscribedToCustomRole: UserSubscribedToCustomRoleHistoryEntry,
+  userUnsubscribedFromCustomRole: UserUnsubscribedFromCustomRoleHistoryEntry,
   organizationPromote: OrganizationPromoteHistoryEntry,
   organizationTeam: OrganizationTeamHistoryEntry,
   eventInserted: EventInsertedHistoryEntry,

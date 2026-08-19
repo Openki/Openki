@@ -10,6 +10,7 @@ import { Organizations } from "../organizations/organizations";
 import { Regions } from "/imports/api/regions/regions";
 import { GroupDiscussions } from "../group-discussions/group-discussions";
 import * as UpdateMethods from "/imports/utils/update-methods";
+import * as interestedDenormalizer from "./interestedDenormalizer";
 import * as historyDenormalizer from "./historyDenormalizer";
 import * as timeLastEditDenormalizer from "./timeLastEditDenormalizer";
 import * as nextEventDenormalizer from "./nextEventDenormalizer";
@@ -32,6 +33,7 @@ import { HtmlString, NotEmptyString, StringEnum, Type } from "/imports/utils/Cus
 import { OrganizationPromoters } from "/imports/utils/update-methods";
 import { resizeImage } from "../../utils/resize-image";
 import { loadRoles } from "/imports/api/regions/loadRoles";
+import { ValidationError } from "meteor/mdg:validation-error";
 
 export interface Method<T> {
   method: string;
@@ -280,6 +282,7 @@ export const save = ServerMethod("group.save", async (groupId: string, changes: 
       {
         user: user._id,
         roles: ["participant", "team"].filter((r) => !disabledRoles.includes(r)),
+        customRoles: [],
         comment: i18n("groups.creator.defaultMessage", "(has proposed this group)", {
           lng: user.locale,
         }),
@@ -489,6 +492,112 @@ export const editing = ServerMethod(
       enable,
       Meteor.userId() as string,
     );
+  },
+);
+
+export const subscribeToCustomRole = ServerMethod(
+  "group.subscribeToCustomRole",
+
+  async (groupId: string, roleId: string, comment?: string | undefined) => {
+    check(groupId, String);
+    check(roleId, String);
+    check(comment, Match.Optional(String));
+
+    const user = await Meteor.userAsync();
+    if (!user) {
+      throw new Meteor.Error(401, "please log in");
+    }
+
+    const group = await loadGroup(groupId);
+
+    const role = group.customRoles?.find((r) => r.id === roleId);
+
+    if (!role) {
+      throw new ValidationError([], `No role ${roleId}`);
+    }
+
+    // Do not allow subscribing when already subscribed
+    if (group.userHasCustomRole(user._id, roleId)) {
+      throw new ValidationError([], `Already subscribed as ${role.label}`);
+    }
+
+    // Add the user as member if she's not listed yet
+    await Groups.updateAsync(
+      { _id: group._id, "members.user": { $ne: user._id } },
+      { $addToSet: { members: { user: user._id, roles: [], customRoles: [] } } },
+    );
+
+    // Now that we're sure she's listed, add the role too
+    await Groups.updateAsync(
+      { _id: group._id, "members.user": user._id },
+      { $addToSet: { "members.$.customRoles": role.id } },
+    );
+
+    if (comment) {
+      await Groups.updateAsync(
+        { _id: group._id, "members.user": user._id },
+        { $set: { "members.$.comment": comment } },
+      );
+    }
+
+    // Update member related calculated fields
+    await interestedDenormalizer.afterSubscribeToCustomRole(group._id);
+    await timeLastEditDenormalizer.afterSubscribeToCustomRole(group._id);
+    await historyDenormalizer.afterSubscribeToCustomRole(group._id, user._id, role.label);
+
+    // Send notification to team
+
+    //await Notification.Join.record(group._id, user._id, role.id, comment);
+  },
+);
+export const unsubscribeFromCustomRole = ServerMethod(
+  "group.unsubscribeFromCustomRole",
+
+  async (groupId: string, roleId: string) => {
+    check(groupId, String);
+    check(roleId, String);
+
+    const userId = Meteor.userId();
+    if (!userId) {
+      throw new Meteor.Error(401, "please log in");
+    }
+
+    const group = await loadGroup(groupId);
+
+    const role = group.customRoles?.find((r) => r.id === roleId);
+
+    if (!role) {
+      throw new ValidationError([], `No role ${roleId}`);
+    }
+
+    // Do not allow unsubscribing when not subscribed
+    const userHasRole = group.userHasCustomRole(userId, roleId);
+    if (!userHasRole) {
+      throw new ValidationError([], `not subscribed with role ${role.label}`);
+    }
+
+    await Groups.updateAsync(
+      { _id: group._id, "members.user": userId },
+      { $pull: { "members.$.customRoles": roleId } },
+    );
+
+    // Housekeeping: Remove members that have no role left
+    await Groups.updateAsync(
+      { _id: group._id },
+      {
+        $pull: {
+          members: {
+            roles: { $size: 0 },
+            $or: [{ customRoles: { $exists: false } }, { customRoles: { $size: 0 } }],
+          } as any, // typescript don't know $or
+        },
+      },
+    );
+
+    // Update member related calculated fields
+    await interestedDenormalizer.afterUnsubscribeFromCustomRole(group._id);
+    await timeLastEditDenormalizer.afterUnsubscribeFromCustomRole(group._id);
+    await historyDenormalizer.afterUnsubscribeFromCustomRole(group._id, userId, role.label);
   },
 );
 

@@ -84,6 +84,7 @@ export function Subscribed({ roleId, group, showFirstSteps, onToggle }: Props) {
         onClick={() => onToggle(!showFirstSteps)}
       >
         <RoleIcon id={roleId} regionId={group.region} className="grouppage-role-icon" />
+        &nbsp;
         {roleSubscribed(roleId)}
         {!showFirstSteps && (
           <button
