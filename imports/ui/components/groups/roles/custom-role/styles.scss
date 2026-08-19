@@ -1,0 +1,22 @@
+@use "sass:color";
+@import "{}/imports/ui/stylesheets/variables/index";
+
+.role-unsubscribe-btn {
+  margin: -2px 0;
+}
+
+.group-role-enroll-options {
+  @include clearfix;
+
+  background: $group-page-component-bg;
+  padding: 15px 15px 0;
+}
+
+.group-role-first-steps {
+  background-color: color.adjust($user-bg, $lightness: 10%);
+  padding: 15px;
+}
+
+.grouppage-role-icon {
+  color: $group-page-role-icon-color;
+}
