@@ -30,12 +30,14 @@ function scroll(element: HTMLElement, behavior: ScrollBehavior) {
 
 export function Panel({
   id,
+  className,
   thumb,
   full,
   draggable,
   onChange,
 }: {
   id: string;
+  className?: string;
   thumb: ReactNode;
   full: ReactNode;
   draggable?: boolean | undefined;
@@ -71,8 +73,10 @@ export function Panel({
       height: r.height,
     });
 
-    location.hash = `show=${id}`;
-    new ScrollBarHelper().hide();
+    setTimeout(() => {
+      location.hash = `show=${id}`;
+      new ScrollBarHelper().hide();
+    }, 1);
   }
 
   function handleClose() {
@@ -114,7 +118,7 @@ export function Panel({
       setTimeout(() => {
         setExpanded(false);
         setClose(false);
-      }, 350);
+      }, 0.35 * 1000);
     }
   }, [close]);
 
@@ -125,7 +129,7 @@ export function Panel({
   });
 
   const thumbElement = (
-    <div className="panel-thumb" ref={thumbRef}>
+    <div className={cx("panel-thumb", !draggable && className)} ref={thumbRef}>
       <div className="panel-thumb-body" onClick={handleOpen}>
         {thumb}
       </div>
@@ -134,7 +138,7 @@ export function Panel({
 
   return (
     <div className={cx("panel", inIframe && "panel-iframe")}>
-      {draggable ? <Draggable>{thumbElement}</Draggable> : thumbElement}
+      {draggable ? <Draggable className={className}>{thumbElement}</Draggable> : thumbElement}
       {expanded && (
         <div
           ref={fullRef}

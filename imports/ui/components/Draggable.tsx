@@ -1,7 +1,14 @@
 import React, { ReactNode, useEffect, useRef } from "react";
 import { random } from "lodash-es";
+import { cx } from "/imports/utils/cx";
 
-export function Draggable({ children }: { children: ReactNode }) {
+export function Draggable({
+  className,
+  children,
+}: {
+  className?: string | undefined;
+  children: ReactNode;
+}) {
   const elementRef = useRef<HTMLDivElement>(null);
 
   const drag = useRef({
@@ -47,6 +54,7 @@ export function Draggable({ children }: { children: ReactNode }) {
       box.style.rotate = "";
       box.style.scale = "1.05";
       box.classList.add("shadow-lg", "cursor-grabbing", "select-none");
+      box.classList.remove("shadow-md");
 
       const now = new Date();
       const millisecondsToday =
@@ -113,6 +121,7 @@ export function Draggable({ children }: { children: ReactNode }) {
         box.releasePointerCapture(e.pointerId);
       }
 
+      box.classList.add("shadow-md");
       box.classList.remove("shadow-lg", "cursor-grabbing", "select-none");
       box.style.scale = "";
 
@@ -146,7 +155,10 @@ export function Draggable({ children }: { children: ReactNode }) {
         transition: "box-shadow 0.3s, scale 0.3s, rotate 0.3s",
         willChange: "left, top",
       }}
-      className="draggable shadow-sm position-relative touch-none cursor-grab d-flex align-items-stretch"
+      className={cx(
+        "draggable shadow-md position-relative touch-none cursor-grab d-flex align-items-stretch",
+        className,
+      )}
     >
       {children}
     </div>

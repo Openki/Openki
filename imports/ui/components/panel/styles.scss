@@ -27,6 +27,7 @@
 .panel-full {
   position: absolute;
   transition: all 0.35s;
+  will-change: left, top, right, bottom;
 }
 
 .panel-animation .panel-full {
@@ -79,14 +80,26 @@
   opacity: 1;
 }
 
-.panel-calendar {
+/** animate scroll in one line on showing full panel */
+.panel-show-line-1 {
   transition: height 0.35s;
   height: 0;
   overflow: hidden;
 }
 
-.panel-animation .panel-calendar {
+.panel-animation .panel-show-line-1 {
   height: calc(var(--bs-body-font-size) * var(--bs-body-line-height));
+}
+
+/** animate scroll out one line on showing full panel */
+.panel-hide-line-1 {
+  transition: height 0.35s;
+  height: calc(var(--bs-body-font-size) * var(--bs-body-line-height));
+  overflow: hidden;
+}
+
+.panel-animation .panel-hide-line-1 {
+  height: 0;
 }
 
 .panel .animated-bg {

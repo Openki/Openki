@@ -95,7 +95,7 @@ export function Full({
       <div className="card-body animated-bg bg-event">
         <h3 className="card-title min-h-[2lh] fw-bold">{event.title}</h3>
         <p className="card-text">
-          <div className="panel-calendar">
+          <div className="panel-show-line-1">
             <i className="fa-regular fa-fw fa-calendar" /> {dateFormat(event.startLocal)}
           </div>
           <i className="fa-regular fa-fw fa-clock" /> {timeFormat(event.startLocal)} -{" "}

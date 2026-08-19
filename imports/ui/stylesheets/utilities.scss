@@ -75,6 +75,10 @@ $utilities: map.merge(
   @include ellipsis-multiline(4);
 }
 
+.shadow-md {
+  box-shadow: 0.1rem 0.1rem 0.6rem rgb(0 0 0 / 25%);
+}
+
 // Optional Bootstrap Utilities
 /* stylelint-disable-next-line no-invalid-position-at-import-rule */
 @import "{}/node_modules/bootstrap/scss/utilities/api";

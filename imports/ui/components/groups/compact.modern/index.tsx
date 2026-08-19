@@ -17,6 +17,7 @@ export function GroupCompact({ group, draggable }: Props) {
   return (
     <Panel
       id={group._id}
+      className="rounded-2"
       onChange={(view) => setView(view)}
       thumb={<Thumb group={group} />}
       full={<Full group={group} animation={view === "full" ? "show" : "hide"} />}

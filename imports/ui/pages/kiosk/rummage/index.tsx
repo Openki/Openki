@@ -84,7 +84,7 @@ export function KioskRummagePage() {
               animated && "animated",
             )}
           >
-            <Draggable>
+            <Draggable className="rounded-2">
               <CompactPropose organization={filter.asQuery.organization} />
             </Draggable>
             {groups.map((group) => (
