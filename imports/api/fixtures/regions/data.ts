@@ -280,26 +280,6 @@ export const regions: {
             de: "ein Moderator",
             fr: "un animateur",
           },
-          myList: {
-            en: "I teach",
-            de: "Ich unterrichte",
-            fr: "J'enseigne",
-          },
-          userList: {
-            en: "{NAME} teaches",
-            de: "{NAME} unterrichtet",
-            fr: "{NAME} enseigne",
-          },
-          myListPast: {
-            en: "I taught",
-            de: "Ich habe unterrichtet",
-            fr: "J'ai enseigné",
-          },
-          userListPast: {
-            en: "{NAME} taught",
-            de: "{NAME} hat unterrichtet",
-            fr: "{NAME} a enseigné",
-          },
           "find.roleNeeded": {
             en: "Looking for a facilitator",
             de: "Sucht einen Moderator",
@@ -363,26 +343,6 @@ export const regions: {
             en: "a builder",
             de: "ein Baumeister",
             fr: "un constructeur",
-          },
-          myList: {
-            en: "I build",
-            de: "Ich baue",
-            fr: "Je construis",
-          },
-          userList: {
-            en: "{NAME} builds",
-            de: "{NAME} baut",
-            fr: "{NAME} construit",
-          },
-          myListPast: {
-            en: "I built",
-            de: "Ich habe gebaut",
-            fr: "J'ai construit",
-          },
-          userListPast: {
-            en: "{NAME} built",
-            de: "{NAME} hat gebaut",
-            fr: "{NAME} a construit",
           },
           "find.roleNeeded": {
             en: "Looking for a builder",
@@ -448,26 +408,6 @@ export const regions: {
             de: "ein Forscher",
             fr: "un chercheur",
           },
-          myList: {
-            en: "I research",
-            de: "Ich forsche",
-            fr: "Je recherche",
-          },
-          userList: {
-            en: "{NAME} researches",
-            de: "{NAME} forscht",
-            fr: "{NAME} recherche",
-          },
-          myListPast: {
-            en: "I researched",
-            de: "Ich habe geforscht",
-            fr: "J'ai recherché",
-          },
-          userListPast: {
-            en: "{NAME} researched",
-            de: "{NAME} hat geforscht",
-            fr: "{NAME} a recherché",
-          },
           "find.roleNeeded": {
             en: "Looking for a researcher",
             de: "Sucht einen Forscher",
@@ -531,26 +471,6 @@ export const regions: {
             en: "an editor",
             de: "ein Redakteur",
             fr: "un éditeur",
-          },
-          myList: {
-            en: "I edit",
-            de: "Ich bearbeite",
-            fr: "J'édite",
-          },
-          userList: {
-            en: "{NAME} edits",
-            de: "{NAME} bearbeitet",
-            fr: "{NAME} édite",
-          },
-          myListPast: {
-            en: "I edited",
-            de: "Ich habe bearbeitet",
-            fr: "J'ai édité",
-          },
-          userListPast: {
-            en: "{NAME} edited",
-            de: "{NAME} hat bearbeitet",
-            fr: "{NAME} a édité",
           },
           "find.roleNeeded": {
             en: "Looking for an editor",
@@ -616,26 +536,6 @@ export const regions: {
             de: "ein Organisator",
             fr: "un organisateur",
           },
-          myList: {
-            en: "I organize",
-            de: "Ich organisiere",
-            fr: "J'organise",
-          },
-          userList: {
-            en: "{NAME} organizes",
-            de: "{NAME} organisiert",
-            fr: "{NAME} organise",
-          },
-          myListPast: {
-            en: "I organized",
-            de: "Ich habe organisiert",
-            fr: "J'ai organisé",
-          },
-          userListPast: {
-            en: "{NAME} organized",
-            de: "{NAME} hat organisiert",
-            fr: "{NAME} a organisé",
-          },
           "find.roleNeeded": {
             en: "Looking for an organizer",
             de: "Sucht einen Organisator",
@@ -699,26 +599,6 @@ export const regions: {
             en: "a developer",
             de: "ein Entwickler",
             fr: "un développeur",
-          },
-          myList: {
-            en: "I develop",
-            de: "Ich entwickle",
-            fr: "Je développe",
-          },
-          userList: {
-            en: "{NAME} develops",
-            de: "{NAME} entwickelt",
-            fr: "{NAME} développe",
-          },
-          myListPast: {
-            en: "I developed",
-            de: "Ich habe entwickelt",
-            fr: "J'ai développé",
-          },
-          userListPast: {
-            en: "{NAME} developed",
-            de: "{NAME} hat entwickelt",
-            fr: "{NAME} a développé",
           },
           "find.roleNeeded": {
             en: "Looking for a developer",
@@ -784,26 +664,6 @@ export const regions: {
             de: "ein Tester",
             fr: "un testeur",
           },
-          myList: {
-            en: "I test",
-            de: "Ich teste",
-            fr: "Je teste",
-          },
-          userList: {
-            en: "{NAME} tests",
-            de: "{NAME} testet",
-            fr: "{NAME} teste",
-          },
-          myListPast: {
-            en: "I tested",
-            de: "Ich habe getestet",
-            fr: "J'ai testé",
-          },
-          userListPast: {
-            en: "{NAME} tested",
-            de: "{NAME} hat getestet",
-            fr: "{NAME} a testé",
-          },
           "find.roleNeeded": {
             en: "Looking for a tester",
             de: "Sucht einen Tester",
@@ -867,26 +727,6 @@ export const regions: {
             en: "a producer",
             de: "ein Produzent",
             fr: "un producteur",
-          },
-          myList: {
-            en: "I produce",
-            de: "Ich produziere",
-            fr: "Je produis",
-          },
-          userList: {
-            en: "{NAME} produces",
-            de: "{NAME} produziert",
-            fr: "{NAME} produit",
-          },
-          myListPast: {
-            en: "I produced",
-            de: "Ich habe produziert",
-            fr: "J'ai produit",
-          },
-          userListPast: {
-            en: "{NAME} produced",
-            de: "{NAME} hat produziert",
-            fr: "{NAME} a produit",
           },
           "find.roleNeeded": {
             en: "Looking for a producer",
@@ -952,26 +792,6 @@ export const regions: {
             de: "ein Moderator",
             fr: "un modérateur",
           },
-          myList: {
-            en: "I moderate",
-            de: "Ich moderiere",
-            fr: "Je modère",
-          },
-          userList: {
-            en: "{NAME} moderates",
-            de: "{NAME} moderiert",
-            fr: "{NAME} modère",
-          },
-          myListPast: {
-            en: "I moderated",
-            de: "Ich habe moderiert",
-            fr: "J'ai modéré",
-          },
-          userListPast: {
-            en: "{NAME} moderated",
-            de: "{NAME} hat moderiert",
-            fr: "{NAME} a modéré",
-          },
           "find.roleNeeded": {
             en: "Looking for a moderator",
             de: "Sucht einen Moderator",
@@ -1035,26 +855,6 @@ export const regions: {
             en: "a planner",
             de: "ein Planer",
             fr: "un planificateur",
-          },
-          myList: {
-            en: "I plan",
-            de: "Ich plane",
-            fr: "Je planifie",
-          },
-          userList: {
-            en: "{NAME} plans",
-            de: "{NAME} plant",
-            fr: "{NAME} planifie",
-          },
-          myListPast: {
-            en: "I planned",
-            de: "Ich habe geplant",
-            fr: "J'ai planifié",
-          },
-          userListPast: {
-            en: "{NAME} planned",
-            de: "{NAME} hat geplant",
-            fr: "{NAME} a planifié",
           },
           "find.roleNeeded": {
             en: "Looking for a planner",
@@ -1120,26 +920,6 @@ export const regions: {
             de: "ein Kurator",
             fr: "un conservateur",
           },
-          myList: {
-            en: "I curate",
-            de: "Ich kuratiere",
-            fr: "Je conserve",
-          },
-          userList: {
-            en: "{NAME} curates",
-            de: "{NAME} kuratiert",
-            fr: "{NAME} conserve",
-          },
-          myListPast: {
-            en: "I curated",
-            de: "Ich habe kuratiert",
-            fr: "J'ai conservé",
-          },
-          userListPast: {
-            en: "{NAME} curated",
-            de: "{NAME} hat kuratiert",
-            fr: "{NAME} a conservé",
-          },
           "find.roleNeeded": {
             en: "Looking for a curator",
             de: "Sucht einen Kurator",
@@ -1203,26 +983,6 @@ export const regions: {
             en: "a cook",
             de: "ein Koch",
             fr: "un cuisinier",
-          },
-          myList: {
-            en: "I cook",
-            de: "Ich koche",
-            fr: "Je cuisine",
-          },
-          userList: {
-            en: "{NAME} cooks",
-            de: "{NAME} kocht",
-            fr: "{NAME} cuisine",
-          },
-          myListPast: {
-            en: "I cooked",
-            de: "Ich habe gekocht",
-            fr: "J'ai cuisiné",
-          },
-          userListPast: {
-            en: "{NAME} cooked",
-            de: "{NAME} hat gekocht",
-            fr: "{NAME} a cuisiné",
           },
           "find.roleNeeded": {
             en: "Looking for a cook",
@@ -1288,26 +1048,6 @@ export const regions: {
             de: "ein Designer",
             fr: "un designer",
           },
-          myList: {
-            en: "I design",
-            de: "Ich entwerfe",
-            fr: "Je conçois",
-          },
-          userList: {
-            en: "{NAME} designs",
-            de: "{NAME} entwirft",
-            fr: "{NAME} conçoit",
-          },
-          myListPast: {
-            en: "I designed",
-            de: "Ich habe entworfen",
-            fr: "J'ai conçu",
-          },
-          userListPast: {
-            en: "{NAME} designed",
-            de: "{NAME} hat entworfen",
-            fr: "{NAME} a conçu",
-          },
           "find.roleNeeded": {
             en: "Looking for a designer",
             de: "Sucht einen Designer",
@@ -1371,26 +1111,6 @@ export const regions: {
             en: "a technician",
             de: "ein Techniker",
             fr: "un technicien",
-          },
-          myList: {
-            en: "I am a technician",
-            de: "Ich bin Techniker",
-            fr: "Je suis technicien",
-          },
-          userList: {
-            en: "{NAME} is a technician",
-            de: "{NAME} ist Techniker",
-            fr: "{NAME} est technicien",
-          },
-          myListPast: {
-            en: "I was a technician",
-            de: "Ich war Techniker",
-            fr: "J'étais technicien",
-          },
-          userListPast: {
-            en: "{NAME} was a technician",
-            de: "{NAME} war Techniker",
-            fr: "{NAME} était technicien",
           },
           "find.roleNeeded": {
             en: "Looking for a technician",
@@ -1456,26 +1176,6 @@ export const regions: {
             de: "ein Führer",
             fr: "un guide",
           },
-          myList: {
-            en: "I guide",
-            de: "Ich führe",
-            fr: "Je guide",
-          },
-          userList: {
-            en: "{NAME} guides",
-            de: "{NAME} führt",
-            fr: "{NAME} guide",
-          },
-          myListPast: {
-            en: "I guided",
-            de: "Ich habe geführt",
-            fr: "J'ai guidé",
-          },
-          userListPast: {
-            en: "{NAME} guided",
-            de: "{NAME} hat geführt",
-            fr: "{NAME} a guidé",
-          },
           "find.roleNeeded": {
             en: "Looking for a guide",
             de: "Sucht einen Führer",
@@ -1539,26 +1239,6 @@ export const regions: {
             en: "an archivist",
             de: "ein Archivar",
             fr: "un archiviste",
-          },
-          myList: {
-            en: "I archive",
-            de: "Ich archiviere",
-            fr: "J'archive",
-          },
-          userList: {
-            en: "{NAME} archives",
-            de: "{NAME} archiviert",
-            fr: "{NAME} archive",
-          },
-          myListPast: {
-            en: "I archived",
-            de: "Ich habe archiviert",
-            fr: "J'ai archivé",
-          },
-          userListPast: {
-            en: "{NAME} archived",
-            de: "{NAME} hat archiviert",
-            fr: "{NAME} a archivé",
           },
           "find.roleNeeded": {
             en: "Looking for an archivist",

@@ -4,34 +4,34 @@
   "host.groupList.statusTitle.roleNeeded": "Ha bisogno di un ospitante",
   "host.groupList.statusTitle.roleOccupied": "Ha un ospitante",
   "host.groupList.statusTitle.roleOccupiedByUser": "Sei ospitante",
-  "host.myList": "Fornisco un luogo per",
+
   "host.short": "ospitante",
   "host.subscribe": "Ho un posto per ospitare questo",
   "host.subscribed": "Sei elencato come ospitante",
-  "host.userList": "{NAME} fornisce un luogo per",
+
   "mentor.description": "un relatore/relatrice",
   "mentor.find.roleNeeded": "Cercando un relatore/relatrice",
   "mentor.groupList.statusTitle.roleNeeded": "Ha bisogno di un relatore/relatrice",
   "mentor.groupList.statusTitle.roleOccupied": "Ha un relatore/relatrice",
   "mentor.groupList.statusTitle.roleOccupiedByUser": "Sei relatore/relatrice",
-  "mentor.myList": "Insegno",
+  "group.history.userSubscribed": "{USER} iscritto come {ROLE}",
+  "notification.join.mail.subject": "{USER} si è unito a {GROUP}: {ROLE}",
+  "group.history.userUnsubscribed": "{USER} retract {ROLE}",
+
   "mentor.short": "relatore/relatrice",
   "mentor.subscribe": "Posso essere un relatore/relatrice",
   "mentor.subscribed": "Sei elencato come relatore/relatrice",
-  "mentor.userList": "{NAME} insegna",
-  "participant.myList": "Sono interessato a",
+
   "participant.short": "interessato",
   "participant.subscribe": "Sono interessato",
   "participant.subscribed": "Sei interessato",
-  "participant.userList": "{NAME} è interessato a",
+
   "team.find.roleNeeded": "Cercando un organizzatore",
   "team.groupList.statusTitle.roleNeeded": "Ha bisogno di un organizzatore",
   "team.groupList.statusTitle.roleOccupied": "Ha un team organizzatore",
   "team.groupList.statusTitle.roleOccupiedByUser": "Sei organizzatore",
-  "team.myList": "Sto organizzando",
+
   "team.short": "team",
   "team.subscribe": "Aiuto a organizzare",
-  "team.subscribed": "Sei nel team",
-  "team.userList": "{NAME} sta organizzando",
-  "team.userListPast": "{NAME} stava organizzando"
+  "team.subscribed": "Sei nel team"
 }

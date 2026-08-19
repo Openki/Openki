@@ -1,7 +1,9 @@
 import { Match } from "meteor/check";
 import { useTranslation } from "react-i18next";
-import IntlMessageFormat from "intl-messageformat";
+import IntlMessageFormat, { PrimitiveType } from "intl-messageformat";
 import { i18n } from "i18next";
+import { $Dictionary } from "i18next/typescript/helpers";
+import { ReactElement } from "react";
 
 /** allows localized value eg. with `getLocalizedValue(...)` to have a string per language. */
 export const LocalizedValuePattern = Match.OneOf(
@@ -11,6 +13,16 @@ export const LocalizedValuePattern = Match.OneOf(
 
 export type LocalizedValue = Match.PatternMatch<typeof LocalizedValuePattern>;
 
+export function getLocalizedValue(
+  i18n: i18n,
+  setting: LocalizedValue | undefined | null,
+  variables?: Record<string, PrimitiveType> | undefined,
+): string;
+export function getLocalizedValue(
+  i18n: i18n,
+  setting: LocalizedValue | undefined | null,
+  variables?: Record<string, PrimitiveType | ReactElement> | undefined,
+): string | ReactElement | (string | ReactElement)[];
 /**
  * Returns a localized value based on the locale. It is also supported to give a 
  * key from the translation files. 
@@ -23,7 +35,7 @@ export type LocalizedValue = Match.PatternMatch<typeof LocalizedValuePattern>;
 export function getLocalizedValue(
   i18n: i18n,
   setting: LocalizedValue | undefined | null,
-  variables?: Record<string, any> | undefined,
+  variables?: Record<string, PrimitiveType | ReactElement> | undefined,
 ) {
   const locale = i18n.resolvedLanguage || "en";
 
@@ -41,7 +53,7 @@ export function getLocalizedValue(
   if (typeof setting === "string") {
     // check if translated key exist otherwise use setting
     if (i18n.exists(setting)) {
-      return i18n.t(setting, { ...variables });
+      return i18n.t(setting, { ...variables } as $Dictionary);
     }
     return format(setting);
   }
@@ -63,15 +75,25 @@ export function getLocalizedValue(
   return format(translation);
 }
 
+interface GetLocalizedValue {
+  (
+    setting: LocalizedValue | undefined | null,
+    variables?: Record<string, PrimitiveType> | undefined,
+  ): string;
+
+  (
+    setting: LocalizedValue | undefined | null,
+    variables?: Record<string, PrimitiveType | ReactElement> | undefined,
+  ): string | ReactElement | (string | string | ReactElement)[];
+}
+
 export function useLocalizedSetting() {
   const { i18n } = useTranslation();
 
   return {
-    getLocalizedValue: (
+    getLocalizedValue: ((
       setting: LocalizedValue | undefined | null,
-      variables?: Record<string, any> | undefined,
-    ) => {
-      return getLocalizedValue(i18n, setting, variables);
-    },
+      variables?: Record<string, PrimitiveType | ReactElement> | undefined,
+    ) => getLocalizedValue(i18n, setting, variables)) as GetLocalizedValue,
   };
 }

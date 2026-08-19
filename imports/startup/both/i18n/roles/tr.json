@@ -11,5 +11,7 @@
 
   "mentor.description": "Eğitmen",
   "mentor.short": "eğitmen",
-  "team.short": "Takım"
+  "team.short": "Takım",
+  "group.history.userSubscribed": "{USER} {ROLE} olarak katıldı",
+  "group.history.userUnsubscribed": "{USER} {ROLE} rolünü geri al"
 }

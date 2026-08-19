@@ -27,8 +27,13 @@ export function GroupListSection({
   const [isLoadingRegion, region] = useDetails(regionId);
   const [isLoadingRoles, roles] = useRegionRoles(regionId);
 
-  const { roleShort, roleMyList, roleUserList, roleMyListPast, roleUserListPast } =
-    useRoleDisplay(roles);
+  const {
+    roleShort,
+    roleProfileMyGroupListCurrent,
+    roleProfileUserGroupListCurrent,
+    roleProfileMyGroupListPast,
+    roleProfileUserGroupListPast,
+  } = useRoleDisplay(roles);
   const id = user._id;
 
   const [isLoadingGroups, groups] = useFindFilter({
@@ -114,8 +119,8 @@ export function GroupListSection({
                         <i className={`${role.icon} fa-fw`} />
                       </div>{" "}
                       {ownProfile
-                        ? roleMyList(role.type)
-                        : roleUserList(role.type, user.getDisplayName())}
+                        ? roleProfileMyGroupListCurrent(role.type)
+                        : roleProfileUserGroupListCurrent(role.type, user.getDisplayName())}
                     </h3>
                     <GroupList groups={groupsByRole(role.type, false)} small={true} />
                   </React.Fragment>
@@ -130,8 +135,8 @@ export function GroupListSection({
                         <i className={`${role.icon} fa-fw`} />
                       </div>{" "}
                       {ownProfile
-                        ? roleMyListPast(role.type)
-                        : roleUserListPast(role.type, user.getDisplayName())}
+                        ? roleProfileMyGroupListPast(role.type)
+                        : roleProfileUserGroupListPast(role.type, user.getDisplayName())}
                     </h3>
                     <GroupList groups={groupsByRole(role.type, true)} small={true} />
                   </React.Fragment>

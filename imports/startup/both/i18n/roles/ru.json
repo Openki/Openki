@@ -4,34 +4,34 @@
   "host.groupList.statusTitle.roleNeeded": "Требуется место",
   "host.groupList.statusTitle.roleOccupied": "Есть организатор",
   "host.groupList.statusTitle.roleOccupiedByUser": "Вы даёте место",
-  "host.myList": "я предоставляю место для",
+
   "host.short": "хост",
   "host.subscribe": "у меня есть место для размещения этого",
   "host.subscribed": "вы указаны как организатор",
-  "host.userList": "{NAME} предоставляет место для",
+
   "mentor.description": "наставник",
   "mentor.find.roleNeeded": "Ищу наставника",
   "mentor.groupList.statusTitle.roleNeeded": "Требуется наставник",
   "mentor.groupList.statusTitle.roleOccupied": "Есть наставник",
   "mentor.groupList.statusTitle.roleOccupiedByUser": "Вы наставник",
-  "mentor.myList": "я обучаю",
+  "notification.join.mail.subject": "{USER} присоединился к {GROUP}: {ROLE}",
+  "group.history.userSubscribed": "{USER} присоединился как {ROLE}",
+  "group.history.userUnsubscribed": "{USER} отозвал {ROLE}",
+
   "mentor.short": "наставник",
   "mentor.subscribe": "я могу быть наставником",
   "mentor.subscribed": "вы указаны как наставник",
-  "mentor.userList": "{NAME} обучает",
-  "participant.myList": "мне интересно",
+
   "participant.short": "интересно",
   "participant.subscribe": "мне интересно",
   "participant.subscribed": "вам интересно",
-  "participant.userList": "{NAME} интересуется",
+
   "team.find.roleNeeded": "Ищу организатора",
   "team.groupList.statusTitle.roleNeeded": "Требуется организатор",
   "team.groupList.statusTitle.roleOccupied": "Есть команда организаторов",
   "team.groupList.statusTitle.roleOccupiedByUser": "Вы организатор",
-  "team.myList": "я организую",
+
   "team.short": "команду",
   "team.subscribe": "я помогаю организовать",
-  "team.subscribed": "Вы в команде",
-  "team.userList": "{NAME} организует",
-  "team.userListPast": "{NAME} организовывал"
+  "team.subscribed": "Вы в команде"
 }

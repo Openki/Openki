@@ -4,30 +4,28 @@
   "host.groupList.statusTitle.roleNeeded": "Χρειάζεται οικοδεσπότη",
   "host.groupList.statusTitle.roleOccupied": "Έχει οικοδεσπότη",
   "host.groupList.statusTitle.roleOccupiedByUser": "Είσαι οικοδεσπότης",
-  "host.myList": "Παρέχω μία αίθουσα για",
+
   "host.short": "οικοδεσποτης",
   "host.subscribe": "Έχω διαθέσιμη αίθουσα",
   "host.subscribed": "Είσαι ο οικοδεσπότης",
-  "host.userList": "{NAME} παρέχει μία αίθουσα για",
+
   "mentor.description": "ένας μέντορας",
   "mentor.find.roleNeeded": "Σε αναζήτηση μέντορα",
   "mentor.groupList.statusTitle.roleNeeded": "Χρειάζεται μέντορα",
   "mentor.groupList.statusTitle.roleOccupied": "Έχει μέντορα",
   "mentor.groupList.statusTitle.roleOccupiedByUser": "Είσαι μέντορας",
-  "mentor.myList": "Διδάσκω",
+
   "mentor.short": "μεντορας",
   "mentor.subscribe": "Μπορώ να γίνω μέντορας",
   "mentor.subscribed": "Είσαι ο μέντορας",
-  "mentor.userList": "{NAME} διδάσκει",
-  "participant.myList": "Ενδιαφέρομαι για",
+
   "participant.short": "ενδιαφερόμενος",
   "participant.subscribe": "Ενδιαφέρομαι",
   "participant.subscribed": "Ενδιαφέρεσαι",
   "team.groupList.statusTitle.roleNeeded": "Χρειάζεται διοργανωτή",
   "team.groupList.statusTitle.roleOccupiedByUser": "Είσαι διοργανωτής",
-  "team.myList": "Διοργανώνω",
+
   "team.short": "ομαδα",
   "team.subscribe": "Βοηθάω στην οργάνωση",
-  "team.subscribed": "Είστε στην ομάδα",
-  "team.userList": "{NAME} οργανώνει"
+  "team.subscribed": "Είστε στην ομάδα"
 }

@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import React, { JSX, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { Footer } from "./components/Footer";
 import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
@@ -6,7 +6,7 @@ import { Props as UnsubscribeLinkProps } from "./components/UnsubscribeLink";
 export interface Props {
   group: JSX.Element;
 
-  roleIntroduction: JSX.Element;
+  roleIntroduction: ReactNode;
   message: string | undefined;
   roleCounts: {
     role: string;

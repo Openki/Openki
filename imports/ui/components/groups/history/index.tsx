@@ -36,9 +36,8 @@ export function UserSubscribedHistoryEntry({
   role: string;
   regionId: RegionEntity["_id"];
 }) {
-  const { t } = useTranslation();
   const [isLoading, roles] = useRegionRoles(regionId);
-  const { roleShort } = useRoleDisplay(roles);
+  const { roleGroupHistoryUserSubscribed } = useRoleDisplay(roles);
 
   if (isLoading()) {
     return null;
@@ -47,14 +46,13 @@ export function UserSubscribedHistoryEntry({
   return (
     <>
       <RoleIcon type={role} regionId={regionId} />{" "}
-      {t("group.history.userSubscribed", "{USER} joined as {ROLE}", {
+      {roleGroupHistoryUserSubscribed(role, {
         USER: (
           <>
             <ProfileLink userId={user} />
             <Contribution userId={user} />
           </>
         ),
-        ROLE: roleShort(role),
       })}
     </>
   );
@@ -68,9 +66,8 @@ export function UserUnsubscribedHistoryEntry({
   role: string;
   regionId: RegionEntity["_id"];
 }) {
-  const { t } = useTranslation();
   const [isLoading, roles] = useRegionRoles(regionId);
-  const { roleShort } = useRoleDisplay(roles);
+  const { roleGroupHistoryUserUnsubscribed } = useRoleDisplay(roles);
 
   if (isLoading()) {
     return null;
@@ -79,14 +76,13 @@ export function UserUnsubscribedHistoryEntry({
   return (
     <>
       <RoleIcon type={role} regionId={regionId} />{" "}
-      {t("group.history.userUnsubscribed", "{USER} retract {ROLE}", {
+      {roleGroupHistoryUserUnsubscribed(role, {
         USER: (
           <>
             <ProfileLink userId={user} />
             <Contribution userId={user} />
           </>
         ),
-        ROLE: roleShort(role),
       })}
     </>
   );

@@ -4,34 +4,34 @@
   "host.groupList.statusTitle.roleNeeded": "Braucht einen Gastgeber",
   "host.groupList.statusTitle.roleOccupied": "Hat einen Gastgeber",
   "host.groupList.statusTitle.roleOccupiedByUser": "Du bist Gastgeber",
-  "host.myList": "Ich stelle einen Ort zur Verfügung für",
+
   "host.short": "Gastgeber_in",
   "host.subscribe": "Ich habe einen Ort, um das zu hosten",
   "host.subscribed": "Du bist als Host eingetragen",
-  "host.userList": "{NAME} hat einen Ort für",
+
   "mentor.description": "ein_e Schenker_in",
   "mentor.find.roleNeeded": "Noch ohne Schenker_in",
   "mentor.groupList.statusTitle.roleNeeded": "Braucht eine_n Schenker_in",
   "mentor.groupList.statusTitle.roleOccupied": "Hat eine_n Schenker_in",
   "mentor.groupList.statusTitle.roleOccupiedByUser": "Du bist Schenker_in",
-  "mentor.myList": "Ich schenke",
+  "notification.join.mail.subject": "{USER} ist der Lektion {GROUP} beigetreten: {ROLE}",
+  "group.history.userSubscribed": "{USER} beigetreten als {ROLE}",
+  "group.history.userUnsubscribed": "{USER} Rolle {ROLE} abgegeben",
+
   "mentor.short": "Schenker_in",
   "mentor.subscribe": "Ich kann Schenkende_r sein",
   "mentor.subscribed": "Du bist als Schenkende_r eingetragen",
-  "mentor.userList": "{NAME} unterrichtet",
-  "participant.myList": "Ich bin interessiert an",
+
   "participant.short": "interessiert",
   "participant.subscribe": "Interessiert mich",
   "participant.subscribed": "Du bist interessiert",
-  "participant.userList": "{NAME} ist interessiert an",
+
   "team.find.roleNeeded": "Suche nach Organisator_in",
   "team.groupList.statusTitle.roleNeeded": "Braucht eine_n Organisator_in",
   "team.groupList.statusTitle.roleOccupied": "Hat ein Organisationsteam",
   "team.groupList.statusTitle.roleOccupiedByUser": "Du bist Organisator_in",
-  "team.myList": "Ich organisiere",
+
   "team.short": "Team",
   "team.subscribe": "Ich helfe organisieren",
-  "team.subscribed": "Du bist im Team",
-  "team.userList": "{NAME} organisiert",
-  "team.userListPast": "{NAME} organisierte"
+  "team.subscribed": "Du bist im Team"
 }
