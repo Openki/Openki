@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import scrollIntoView from "scroll-into-view-if-needed";
 
 import { ScrollBarHelper } from "/imports/startup/client/bootstrap";
@@ -41,16 +41,36 @@ export function Panel({
   draggable?: boolean | undefined;
   onChange: (view: "thumb" | "full") => void;
 }) {
-  const [expanded, setExpanded] = useState(false);
-  const [close, setClose] = useState(false);
   const thumbRef = useRef<HTMLDivElement>(null);
   const fullRef = useRef<HTMLDivElement>(null);
+  const [expanded, setExpanded] = useState(false);
+  const [close, setClose] = useState(false);
+  const [rect, setRect] = useState<
+    | {
+        left: number;
+        top: number;
+        width: number;
+        height: number;
+      }
+    | undefined
+  >(undefined);
 
   const hash = (useHash() as string).slice(1);
   const hashParams = new URLSearchParams(hash);
   const isShowed = id === hashParams.get("show");
 
   function handleOpen() {
+    if (!thumbRef.current) return;
+
+    const r = thumbRef.current.getBoundingClientRect();
+
+    setRect({
+      left: r.left,
+      top: r.top,
+      width: r.width,
+      height: r.height,
+    });
+
     location.hash = `show=${id}`;
     new ScrollBarHelper().hide();
   }
@@ -68,29 +88,6 @@ export function Panel({
       scroll(thumbRef.current, "instant");
     }
   }
-
-  const [rect, setRect] = useState<
-    | {
-        left: number;
-        top: number;
-        width: number;
-        height: number;
-      }
-    | undefined
-  >(undefined);
-
-  useLayoutEffect(() => {
-    if (!thumbRef.current) return;
-
-    const r = thumbRef.current.getBoundingClientRect();
-
-    setRect({
-      left: r.left,
-      top: r.top,
-      width: r.width,
-      height: r.height,
-    });
-  }, [expanded, thumbRef.current]);
 
   useEffect(() => {
     onChange(isShowed ? "full" : "thumb");
