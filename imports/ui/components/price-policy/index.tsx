@@ -45,7 +45,7 @@ function More() {
         <i className="fa-solid fa-book fa-fw" />
       </div>
       <div className="icon-text-text">
-        {t("pricePolicy.moreAboutPricePolicy", "Read our price policy")}
+        {t("pricePolicy.moreAboutPricePolicy", "Read our pricing policy")}
       </div>
     </a>
   );
