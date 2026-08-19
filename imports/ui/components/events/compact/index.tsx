@@ -65,12 +65,7 @@ export function EventCompact({
           <span className="event-fully-booked">{t("_event.state.fullyBooked")}</span>
         )
       )}
-      <div
-        className={cx(
-          "event-compact-header p-2",
-          event.attendedBy(userId) && "bg-user",
-        )}
-      >
+      <div className={cx("event-compact-header p-2", event.attendedBy(userId) && "bg-user")}>
         {!!withDate && (
           <>
             <i className="fa-regular fa-calendar-days fa-fw" /> {dayOfWeek(event.startLocal)}{" "}
