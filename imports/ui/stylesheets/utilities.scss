@@ -46,6 +46,13 @@ $utilities: map.merge(
         none: none,
       ),
     ),
+    "select": (
+      property: user-select,
+      class: select,
+      values: (
+        none: none,
+      ),
+    ),
     "whitespace": (
       property: white-space,
       class: whitespace,
