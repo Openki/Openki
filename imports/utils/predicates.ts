@@ -3,18 +3,25 @@ import { union, difference, intersection, uniq } from "lodash-es";
 
 import { FilteringReadError } from "./filtering";
 
-export interface ParamWrapper<G = unknown, Q = G> {
-  merge(other: ParamWrapper<G, Q>): ParamWrapper<G, Q>;
-  without(predicate: ParamWrapper<G, Q>): ParamWrapper<G, Q> | undefined;
-  get(): G;
+export interface StateWrapper<State = unknown, Query = State> {
+  merge(other: StateWrapper<State, Query>): StateWrapper<State, Query>;
+  without(other: StateWrapper<State, Query>): StateWrapper<State, Query> | undefined;
+  get(): State;
   param(): string;
-  query(): Q;
-  equals(other: ParamWrapper<G, Q>): boolean;
+  query(): Query;
+  equals(other: StateWrapper<State, Query>): boolean;
 }
 
-export type Predicate<G, Q = G, P = string> = (param: P) => ParamWrapper<G, Q> | undefined;
+export type Predicate<State, Query = State> = (
+  paramOrState: string | State,
+) => StateWrapper<State, Query> | undefined;
 
-export const string: Predicate<string> = function (param: string) {
+export const string: Predicate<string> = function (paramOrState) {
+  if (paramOrState === undefined) {
+    return undefined;
+  }
+
+  const state = paramOrState;
   return {
     merge(other) {
       return other;
@@ -23,66 +30,85 @@ export const string: Predicate<string> = function (param: string) {
       return undefined;
     },
     get() {
-      return param;
+      return state;
     },
     param() {
-      return param;
+      return state;
     },
     query() {
-      return param;
+      return state;
     },
     equals(other) {
-      return param === other.get();
+      return state === other.get();
     },
   };
 };
 
-export const id: Predicate<string> = function (param) {
-  return string(param === "all" ? "" : param);
+export const id: Predicate<string> = function (paramOrState) {
+  return string(paramOrState === "all" ? "" : paramOrState);
 };
 
-export const ids: Predicate<string[]> = function (param) {
-  if (!param) {
+export const ids: Predicate<string[]> = function (paramOrState) {
+  if (paramOrState === undefined) {
     return undefined;
   }
-  const make = function (values: string[]): ParamWrapper<string[]> {
-    return {
-      merge(other) {
-        return make(union(values, other.get()));
-      },
-      without(predicate) {
-        const diff = difference(values, predicate.get());
-        if (diff.length === 0) {
-          return undefined;
-        }
-        return make(diff);
-      },
-      get() {
-        return values;
-      },
-      param() {
-        return values.join(",");
-      },
-      query() {
-        return values;
-      },
-      equals(other) {
-        const otherIds = other.get();
-        return (
-          values.length === otherIds.length &&
-          intersection(values, otherIds).length === values.length
-        );
-      },
-    };
+
+  let state;
+  if (typeof paramOrState === "string") {
+    state = paramOrState.split(",");
+  } else {
+    state = paramOrState;
+  }
+
+  if (state.length === 0) {
+    return undefined;
+  }
+
+  state = uniq(state);
+
+  return {
+    merge(other) {
+      return ids(union(state, other.get())) as StateWrapper<string[], string[]>;
+    },
+    without(predicate) {
+      return ids(difference(state, predicate.get()));
+    },
+    get() {
+      return state;
+    },
+    param() {
+      return state.join(",");
+    },
+    query() {
+      return state;
+    },
+    equals(other) {
+      const otherIds = other.get();
+      return (
+        state.length === otherIds.length && intersection(state, otherIds).length === state.length
+      );
+    },
   };
-  return make(uniq(param.split(",")));
 };
 
-export const flag: Predicate<boolean> = function (param) {
-  if (param === undefined) {
+export const flag: Predicate<boolean> = function (paramOrState) {
+  if (paramOrState === undefined) {
     return undefined;
   }
-  const state = Boolean(Number.parseInt(param, 2));
+
+  let state;
+  if (typeof paramOrState === "string") {
+    const int = Number.parseInt(paramOrState, 10);
+    if (int === 1) {
+      state = true;
+    } else if (int === 0) {
+      state = false;
+    } else {
+      throw new FilteringReadError("", "Invalid boolean");
+    }
+  } else {
+    state = paramOrState;
+  }
 
   return {
     merge(other) {
@@ -106,11 +132,17 @@ export const flag: Predicate<boolean> = function (param) {
   };
 };
 
-export const integer: Predicate<number> = function (param) {
-  if (param === undefined) {
+export const integer: Predicate<number> = function (paramOrState) {
+  if (paramOrState === undefined) {
     return undefined;
   }
-  const state = Number.parseInt(param, 10);
+
+  let state;
+  if (typeof paramOrState === "string") {
+    state = Number.parseInt(paramOrState, 10);
+  } else {
+    state = paramOrState;
+  }
 
   if (!Number.isInteger(state)) {
     throw new FilteringReadError("", "Invalid integer");
@@ -138,18 +170,20 @@ export const integer: Predicate<number> = function (param) {
   };
 };
 
-export const date: Predicate<moment.Moment, Date, string | moment.Moment> = function (param) {
-  if (!param) {
+export const date: Predicate<moment.Moment, Date> = function (paramOrState) {
+  if (paramOrState === undefined) {
     return undefined;
   }
-  let value: moment.Moment;
-  if (param === "now") {
-    value = moment().startOf("minute");
+
+  let state;
+  if (paramOrState === "now") {
+    state = moment().startOf("minute");
   } else {
-    value = moment(param, ["YYYY-MM-DD", moment.ISO_8601]); // Param is ISO date or moment() object
-    if (!value.isValid()) {
-      throw new FilteringReadError("", "Invalid date");
-    }
+    state = moment(paramOrState, ["YYYY-MM-DD", moment.ISO_8601]); // Param is ISO date or moment() object
+  }
+
+  if (!state.isValid()) {
+    throw new FilteringReadError("", "Invalid date");
   }
 
   return {
@@ -160,27 +194,27 @@ export const date: Predicate<moment.Moment, Date, string | moment.Moment> = func
       return undefined;
     },
     get() {
-      return moment(value);
+      return moment(state);
     },
     param() {
-      return value.toISOString();
+      return state.toISOString();
     },
     query() {
-      return value.toDate();
+      return state.toDate();
     },
     equals(other) {
-      return value.isSame(other.get());
+      return state.isSame(other.get());
     },
   };
 };
 
 export function createEnumPredicate<T extends readonly string[]>(...values: readonly [...T]) {
-  const enumPredicate: Predicate<T[number]> = function (param) {
-    if (param === undefined) {
+  const enumPredicate: Predicate<T[number]> = function (paramOrState) {
+    if (paramOrState === undefined) {
       return undefined;
     }
 
-    const state = values.find((v) => v.toUpperCase() === param.toUpperCase());
+    const state = values.find((v) => v.toUpperCase() === paramOrState.toUpperCase());
 
     if (state === undefined) {
       throw new FilteringReadError("", "Invalid value");
@@ -212,51 +246,57 @@ export function createEnumPredicate<T extends readonly string[]>(...values: read
 }
 
 export function createEnumsPredicate<T extends readonly string[]>(...states: readonly [...T]) {
-  const enumsPredicate: Predicate<T[number][]> = function (param) {
-    if (param === undefined) {
+  const enumsPredicate: Predicate<T[number][]> = function (paramOrState) {
+    if (paramOrState === undefined) {
       return undefined;
     }
 
-    const make = function (params: string[]): ParamWrapper<T[number][]> {
-      const values = params.map((v) => {
-        const state = states.find((s) => s.toUpperCase() === v.toUpperCase());
+    let state;
+    if (typeof paramOrState === "string") {
+      state = paramOrState.split(",");
+    } else {
+      state = paramOrState;
+    }
 
-        if (state === undefined) {
-          throw new FilteringReadError("", "Invalid value");
-        }
+    if (state.length === 0) {
+      return undefined;
+    }
+
+    state = uniq(state);
+
+    state = state.map((v) => {
+      const state = states.find((s) => s.toUpperCase() === v.toUpperCase());
+
+      if (state === undefined) {
+        throw new FilteringReadError("", "Invalid value");
+      }
+      return state;
+    });
+
+    return {
+      merge(other) {
+        return enumsPredicate(union(state, other.get())) as StateWrapper<T[number][], T[number][]>;
+      },
+      without(predicate) {
+        return enumsPredicate(difference(state, predicate.get()));
+      },
+      get() {
         return state;
-      });
-
-      return {
-        merge(other) {
-          return make(union(values, other.get()));
-        },
-        without(predicate) {
-          const diff = difference(values, predicate.get());
-          if (diff.length === 0) {
-            return undefined;
-          }
-          return make(diff);
-        },
-        get() {
-          return values;
-        },
-        param() {
-          return values.join(",");
-        },
-        query() {
-          return values;
-        },
-        equals(other) {
-          const otherStates = other.get();
-          return (
-            values.length === otherStates.length &&
-            intersection(values, otherStates).length === values.length
-          );
-        },
-      };
+      },
+      param() {
+        return state.join(",");
+      },
+      query() {
+        return state;
+      },
+      equals(other) {
+        const otherStates = other.get();
+        return (
+          state.length === otherStates.length &&
+          intersection(state, otherStates).length === state.length
+        );
+      },
     };
-    return make(uniq(param.split(",")));
   };
   return enumsPredicate;
 }

@@ -11,11 +11,11 @@ import { Geodata } from "/imports/api/Geodata";
 
 import { visibleTenantsAsync } from "/imports/utils/visible-tenants";
 import { Filtering } from "/imports/utils/filtering";
-import { ParamWrapper, Predicate } from "/imports/utils/predicates";
+import { StateWrapper, Predicate } from "/imports/utils/predicates";
 import { FieldSort } from "/imports/utils/sort-spec";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-type ExtractQuery<P> = P extends ParamWrapper<infer _G, infer Q> ? Q : never;
+type ExtractQuery<P> = P extends StateWrapper<infer _G, infer Q> ? Q : never;
 
 type ToFilter<T> = { [name in keyof T]: ExtractQuery<T[name]> };
 

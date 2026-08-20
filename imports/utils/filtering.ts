@@ -2,7 +2,7 @@ import { Tracker } from "meteor/tracker";
 import { useEffect, useMemo } from "react";
 import { useTracker } from "meteor/react-meteor-data";
 
-import { ParamWrapper, Predicate } from "/imports/utils/predicates";
+import { StateWrapper, Predicate } from "/imports/utils/predicates";
 
 export class FilteringReadError {
   constructor(
@@ -16,10 +16,7 @@ export class FilteringReadError {
  */
 type GetPredicateT1<C extends Predicate<any>> =
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  C extends Predicate<infer T1, infer _T2, infer _T3> ? T1 : unknown;
-type GetPredicateT3<C extends Predicate<any>> =
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  C extends Predicate<infer _T1, infer _T2, infer T3> ? T3 : unknown;
+  C extends Predicate<infer T1, infer _T2> ? T1 : unknown;
 
 export class Filtering<T extends Record<string, Predicate<any>>> {
   private _predicates: { [name in keyof T]+?: ReturnType<T[name]> } = {};
@@ -41,14 +38,38 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
     return this._predicates[name]?.get();
   }
 
-  add<N extends keyof T>(name: N, param: GetPredicateT3<T[N]> | string) {
+  set<N extends keyof T>(name: N, paramOrState: string | GetPredicateT1<T[N]>) {
     try {
       if (!this._availablePredicates[name]) {
         throw new FilteringReadError("", `No predicate ${name as string}`);
       }
-      const toAdd = this._availablePredicates[name](param);
+      const toAdd = this._availablePredicates[name](paramOrState);
+
+      this._predicates[name] = toAdd as any;
+
+      if (!this._predicates[name]) {
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+        delete this._predicates[name];
+      }
+
+      this._dep.changed();
+      return this;
+    } catch (e) {
+      if (e instanceof FilteringReadError) {
+        e.name = name as string;
+      }
+      throw e;
+    }
+  }
+
+  add<N extends keyof T>(name: N, paramOrState: string | GetPredicateT1<T[N]>) {
+    try {
+      if (!this._availablePredicates[name]) {
+        throw new FilteringReadError("", `No predicate ${name as string}`);
+      }
+      const toAdd = this._availablePredicates[name](paramOrState);
       if (!toAdd) {
-        return this; // Filter construction failed, leave as-is
+        return this; // Nothing to add leave as-is
       }
 
       const predicate = this._predicates[name];
@@ -58,10 +79,7 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
       } else {
         this._predicates[name] = toAdd as any;
       }
-      if (!this._predicates[name]) {
-        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-        delete this._predicates[name];
-      }
+
       this._dep.changed();
       return this;
     } catch (e) {
@@ -76,7 +94,7 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
     Object.entries(list).forEach(([name, value]) => {
       try {
         if (value !== undefined) {
-          this.add(name, value as string);
+          this.add(name, value);
         }
       } catch (e) {
         if (!(e instanceof FilteringReadError)) {
@@ -92,17 +110,18 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
     return this;
   }
 
-  remove<N extends keyof T>(name: N, param: GetPredicateT3<T[N]> | string) {
+  remove<N extends keyof T>(name: N, paramOrState: string | GetPredicateT1<T[N]>) {
     try {
       if (!this._availablePredicates[name]) {
         throw new FilteringReadError("", `No predicate ${name as string}`);
       }
-      const toRemove = this._availablePredicates[name](param);
+      const toRemove = this._availablePredicates[name](paramOrState);
 
       const predicate = this._predicates[name];
       if (predicate) {
         (this._predicates[name] as any) = predicate.without(toRemove as any);
       }
+
       if (!this._predicates[name]) {
         // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
         delete this._predicates[name];
@@ -121,10 +140,10 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
   toggle(name: keyof T): Filtering<T>;
 
   /** eg. for ids and enums */
-  toggle<N extends keyof T>(name: N, param: GetPredicateT3<T[N]> | string): Filtering<T>;
+  toggle<N extends keyof T>(name: N, paramOrState: string | GetPredicateT1<T[N]>): Filtering<T>;
 
-  toggle<N extends keyof T>(name: N, param?: GetPredicateT3<T[N]> | string) {
-    if (!param) {
+  toggle<N extends keyof T>(name: N, paramOrState?: string | GetPredicateT1<T[N]>) {
+    if (!paramOrState) {
       // overload: toggle(name)
       if (this.get(name)) {
         this.disable(name);
@@ -133,10 +152,10 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
       }
     }
     // overload: toggle(name, param)
-    else if (this.get(name)?.includes(param)) {
-      this.remove(name, param);
+    else if (this.get(name)?.includes(paramOrState)) {
+      this.remove(name, paramOrState);
     } else {
-      this.add(name, param);
+      this.add(name, paramOrState);
     }
 
     return this;
@@ -172,7 +191,7 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
       this._dep.depend();
     }
     const query: {
-      [name in keyof T]+?: ReturnType<Extract<ReturnType<T[name]>, ParamWrapper>["query"]>;
+      [name in keyof T]+?: ReturnType<Extract<ReturnType<T[name]>, StateWrapper>["query"]>;
     } = {};
     Object.entries(this._predicates).forEach(([name, value]) => {
       query[name as keyof T] = value?.query();
@@ -192,15 +211,17 @@ export function useFiltering<T extends Record<string, Predicate<any>>>(
   }, [filter, params]);
 
   return {
-    add: <N extends keyof T>(name: N, param: GetPredicateT3<T[N]> | string) =>
-      filter.add(name, param),
-    remove: <N extends keyof T>(name: N, param: GetPredicateT3<T[N]> | string) =>
-      filter.remove(name, param),
-    toggle: <N extends keyof T>(name: N, param?: GetPredicateT3<T[N]> | string) => {
-      if (param === undefined) {
+    set: <N extends keyof T>(name: N, paramOrState: string | GetPredicateT1<T[N]>) =>
+      filter.add(name, paramOrState),
+    add: <N extends keyof T>(name: N, paramOrState: string | GetPredicateT1<T[N]>) =>
+      filter.add(name, paramOrState),
+    remove: <N extends keyof T>(name: N, paramOrState: string | GetPredicateT1<T[N]>) =>
+      filter.remove(name, paramOrState),
+    toggle: <N extends keyof T>(name: N, paramOrState?: string | GetPredicateT1<T[N]>) => {
+      if (paramOrState === undefined) {
         filter.toggle(name);
       } else {
-        filter.toggle(name, param);
+        filter.toggle(name, paramOrState);
       }
     },
     enable: (name: keyof T) => {
