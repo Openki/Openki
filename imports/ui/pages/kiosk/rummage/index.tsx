@@ -74,7 +74,15 @@ export function KioskRummagePage() {
   return (
     <>
       <style>{style}</style>
-      <AccountTasks />
+      <div
+        className="position-relative"
+        style={{
+          /* special case for draggable: 86400000 is the top z-index over all cards and +1 over a open panel */
+          zIndex: 86400001,
+        }}
+      >
+        <AccountTasks />
+      </div>
       <div className="container-fluid">
         <div className="row">
           <div
