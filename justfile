@@ -28,7 +28,15 @@ install *ARGS:
 dev:
     meteor npm run debug
 
-# Fix linting and formatting errors and warn for serious problems
+# Start the containerized local development environment
+docker-dev:
+    docker compose -f docker-compose.dev.yml --env-file .env.dev up --force-recreate --always-recreate-deps
+
+# Fully rebuild the docker containers
+docker-dev-rebuild:
+    docker compose -f docker-compose.dev.yml --env-file .env.dev up --force-recreate --always-recreate-deps --build
+
+# Fix linting and formatting errors and warn for serious problems.
 fix:
     meteor npm run lint:fix || just oxlint-errors
 
