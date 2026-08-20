@@ -138,8 +138,7 @@ $kiosk-event-component-padding-horizontal: $grid-gutter-width * 0.5;
 // ========================================================================================
 .kiosk-event-today .kiosk-event-moment,
 .kiosk-event-upcoming .kiosk-event-moment {
-  @include td-float(left);
-
+  float: inline-start;
   text-align: start;
 }
 
@@ -147,8 +146,7 @@ $kiosk-event-component-padding-horizontal: $grid-gutter-width * 0.5;
 // ========================================================================================
 .kiosk-event-today .kiosk-event-location,
 .kiosk-event-upcoming .kiosk-event-location {
-  @include td-float(right);
-
+  float: inline-end;
   text-align: end;
 }
 
