@@ -49,7 +49,7 @@ export function Enrolling({ group, role, afterSubscribe }: Props) {
       subscribeToCustomRole(group._id, role.id, comment.trim());
 
       Analytics.trackEvent(
-        "Enrollments in groups",
+        "CustomRoles: Enrollments in groups",
         `Enrollments in groups as ${role.label}`,
         Regions.findOne(group.region)?.nameEn,
       );

@@ -35,7 +35,7 @@ export function Subscribed({ role, group, showFirstSteps, onToggle }: Props) {
     routerAutoscroll.cancelNext();
 
     Analytics.trackEvent(
-      "Unsubscribes from groups",
+      "CustomRoles: Unsubscribes from groups",
       `Unsubscribes from groups as ${role.label}`,
       Regions.findOne(group.region)?.nameEn,
     );
