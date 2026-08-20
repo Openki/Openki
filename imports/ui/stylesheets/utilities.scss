@@ -63,6 +63,10 @@ $utilities: map.merge(
   )
 );
 
+.truncate {
+  @include ellipsis;
+}
+
 .line-clamp-2 {
   @include ellipsis-multiline(2);
 }

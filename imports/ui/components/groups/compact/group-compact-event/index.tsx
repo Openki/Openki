@@ -12,12 +12,12 @@ export function GroupCompactEvent({ event }: { event: NonNullable<GroupModel["ne
   return (
     <div className="group-compact-next-event col">
       {!!event.venue?.name && (
-        <div className="group-compact-next-event-component">
+        <div className="truncate">
           <i className="fa-solid fa-house fa-fw" />
           &nbsp;{event.venue.name}
         </div>
       )}
-      <div className="group-compact-next-event-component">
+      <div className="truncate">
         <i className="fa-regular fa-clock fa-fw" />
         &nbsp;
         <span title={`${dateShort(event?.startLocal)} ${timeFormat(event?.startLocal)}`}>
@@ -25,7 +25,7 @@ export function GroupCompactEvent({ event }: { event: NonNullable<GroupModel["ne
         </span>
       </div>
       {!event.noRsvp && (
-        <div className="group-compact-next-event-component">
+        <div className="truncate">
           <i className="fa-solid fa-user fa-fw" />
           &nbsp;
           {event?.numberOfParticipants()}
