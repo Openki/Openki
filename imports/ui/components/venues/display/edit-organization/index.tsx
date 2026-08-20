@@ -4,8 +4,8 @@ import { useUser } from "/imports/utils/react-meteor-data";
 import { VenueModel } from "/imports/api/venues/venues";
 
 import { OrganizationTag } from "../../../organizations/tag";
-import { Add } from "./add";
-import { Remove } from "./remove";
+import { Add } from "./Add";
+import { Remove } from "./Remove";
 
 export interface Props {
   venue: VenueModel;

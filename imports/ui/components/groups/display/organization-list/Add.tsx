@@ -63,15 +63,15 @@ export function Add({ group }: Props) {
   }
 
   return (
-    <div className="btn-group tag-btn organization-tag-btn align-top fw-light">
+    <div className="btn-group tag-btn organization-tag-btn align-top">
       <button
         type="button"
-        className="dropdown-toggle"
+        className="dropdown-toggle fw-light"
         aria-expanded="false"
         aria-haspopup="true"
         data-bs-toggle="dropdown"
       >
-        <i className="fa-solid fa-plus fa-fw" />
+        <i className="fa-solid fa-plus fa-fw fw-light" />
         <span>{t("groups.organizationList.addText", "Link organization")}</span>
       </button>
       <ul className="dropdown-menu dialog-dropdown">

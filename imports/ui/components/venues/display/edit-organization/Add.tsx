@@ -95,7 +95,7 @@ export function Add({ venue }: Props) {
         aria-haspopup="true"
         data-bs-toggle="dropdown"
       >
-        <i className="fa-solid fa-plus fa-fw" />
+        <i className="fa-solid fa-plus fa-fw fw-light" />
         <span>{t("venues.editOrganization.add.btn", "Add a organization as hosts")}</span>
       </button>
       <div className="dropdown-menu dialog-dropdown dropdown-menu-scrollable-content">

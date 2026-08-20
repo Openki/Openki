@@ -68,7 +68,7 @@ export function Add({ event }: Props) {
         aria-haspopup="true"
         data-bs-toggle="dropdown"
       >
-        <i className="fa-solid fa-plus fa-fw" />
+        <i className="fa-solid fa-plus fa-fw fw-light" />
         <span>{t("groups.organizationList.addText")}</span>
       </button>
       <ul className="dropdown-menu dialog-dropdown">
