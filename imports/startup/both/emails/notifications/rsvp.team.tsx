@@ -136,7 +136,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         companionsOfNewParticipant:
           event.participants?.find((p) => p.user === newParticipant._id)?.companions || 0,
         subject,
-        participantsCount: event.numberOfParticipants(), 
+        participantsCount: event.numberOfParticipants(),
         customSiteUrl: Router.url("home", {}, { query: { campaign } }),
         customSiteName: siteName,
         customEmailLogo: emailLogo,

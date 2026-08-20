@@ -69,7 +69,7 @@ export function ForgotPwdFrame(props: Props) {
         </p>
         <div className="mb-3">
           <FormControl
-            id="forogt-pwd-mail"
+            id="forgot-pwd-mail"
             type="email"
             prepend="fa-solid fa-envelope"
             label={t("frame.login.email", "E-Mail")}
