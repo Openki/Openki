@@ -53,7 +53,7 @@ export function Draggable({
       // Rotate the element in normal position and move it to the front
       box.style.rotate = "";
       box.style.scale = "1.05";
-      box.classList.add("shadow-lg", "cursor-grabbing", "select-none");
+      box.classList.add("shadow-lg", "cursor-grabbing");
       box.classList.remove("shadow-md");
 
       const now = new Date();
@@ -122,7 +122,7 @@ export function Draggable({
       }
 
       box.classList.add("shadow-md");
-      box.classList.remove("shadow-lg", "cursor-grabbing", "select-none");
+      box.classList.remove("shadow-lg", "cursor-grabbing");
       box.style.scale = "";
 
       // After dragging, we prevent the resulting click
@@ -156,7 +156,7 @@ export function Draggable({
         willChange: "left, top",
       }}
       className={cx(
-        "draggable shadow-md position-relative touch-none cursor-grab d-flex align-items-stretch",
+        "draggable shadow-md position-relative touch-none cursor-grab d-flex align-items-stretch select-none",
         className,
       )}
     >
