@@ -13,7 +13,6 @@ import { Model as NotificationModel } from "../notification";
 import { RsvpTeam, Props } from "../../../../emails/notifications/RsvpTeam";
 
 import { getSiteName } from "/imports/utils/getSiteName";
-import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { LocalTime } from "/imports/utils/local-time";
 
 export interface Body {
@@ -137,8 +136,7 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         companionsOfNewParticipant:
           event.participants?.find((p) => p.user === newParticipant._id)?.companions || 0,
         subject,
-        participantsCount: event.numberOfParticipants(),
-        email: <span style={{ color: "blue" }}>{PrivateSettings.siteEmail}</span>,
+        participantsCount: event.numberOfParticipants(), 
         customSiteUrl: Router.url("home", {}, { query: { campaign } }),
         customSiteName: siteName,
         customEmailLogo: emailLogo,

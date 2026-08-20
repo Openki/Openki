@@ -50,7 +50,9 @@ export function Footer({
             <tr>
               <td style={{ paddingTop: "16px" }}>
                 {t("email.base.spamPrevention", {
-                  MAIL: <span style={{ color: "blue" }}>{PrivateSettings.siteEmail}</span>,
+                  MAIL: Boolean(PrivateSettings.siteEmail) && (
+                    <a href={"mailto:" + PrivateSettings.siteEmail}>{PrivateSettings.siteEmail}</a>
+                  ),
                 })}
               </td>
             </tr>

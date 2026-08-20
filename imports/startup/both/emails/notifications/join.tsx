@@ -12,7 +12,6 @@ import { UserModel, Users } from "/imports/api/users/users";
 
 import * as HtmlTools from "/imports/utils/html-tools";
 import { getSiteName } from "/imports/utils/getSiteName";
-import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { Model as NotificationModel } from "../notification";
 import { Join, Props } from "/imports/emails/notifications/Join";
 import { getRoleDisplay } from "/imports/utils/getRoleDisplay";
@@ -137,7 +136,6 @@ export async function Model(entry: { body: Body }): Promise<NotificationModel<Pr
         group: groupName,
         roleIntroduction,
         subject,
-        email: <span style={{ color: "blue" }}>{PrivateSettings.siteEmail}</span>,
         message: body.message ? HtmlTools.plainToHtml(body.message) : undefined,
         roleCounts,
         otherRecipients: recipients
