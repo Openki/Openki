@@ -1,47 +1,79 @@
 import React from "react";
+import { components, OptionProps } from "react-select";
 import { useTranslation } from "react-i18next";
 
 import { Categories } from "/imports/api/categories/categories";
 
-import { ReactSelect2 } from "../react-select2";
+import { cx } from "/imports/utils/cx";
+
+import { ReactSelect } from "/imports/ui/components/react-select";
+
 import "../groups/categories";
 
 import "./styles.scss";
 
 export interface Props {
   categories: string[] | undefined;
-  onAdd: (category: string) => void;
-  onRemove: (category: string) => void;
+  onChange: (categories: string[]) => void;
 }
 
-export function FilterCategories({ categories, onAdd, onRemove }: Props) {
-  const allCategories = Object.keys(Categories);
+interface CategoryOption {
+  value: string;
+  label: string;
+  isSubcategory?: boolean;
+}
+
+function CategoryOptionComponent(props: OptionProps<CategoryOption, true>) {
+  return (
+    <components.Option
+      {...props}
+      innerProps={{
+        ...props.innerProps,
+        className: cx(
+          props.innerProps.className,
+          props.data.isSubcategory && "ms-4 ps-3 categories-select-sub-option",
+        ),
+      }}
+    />
+  );
+}
+
+export function FilterCategories({ categories, onChange }: Props) {
   const { t } = useTranslation();
 
-  if (!allCategories) {
+  const allCategories = Object.keys(Categories);
+
+  if (!allCategories.length) {
     return null;
   }
 
+  const options: CategoryOption[] = allCategories.flatMap((category) => [
+    {
+      value: category,
+      label: t(`category.${category}`),
+    },
+    ...Categories[category].map((subcategory) => ({
+      value: subcategory,
+      label: t(`category.${subcategory}`),
+      isSubcategory: true,
+    })),
+  ]);
+
+  const value = options.filter((option) => categories?.includes(option.value));
+
   return (
-    <ReactSelect2
-      className="categories-select form-control"
-      multiple
-      value={categories}
+    <ReactSelect
+      isMulti
+      value={value}
+      options={options}
       placeholder={t("find.searchCategories.placeholder", "Choose categories")}
-      noResults={t("find.filter-no-categories-found", "No categories found")}
-      onSelect={onAdd}
-      onUnselect={onRemove}
-    >
-      {allCategories.map((category) => (
-        <React.Fragment key={category}>
-          <option value={category}>{t(`category.${category}`)}</option>
-          {Categories[category].map((subcategory) => (
-            <option key={subcategory} className="categories-select-sub-option" value={subcategory}>
-              {t(`category.${subcategory}`)}
-            </option>
-          ))}
-        </React.Fragment>
-      ))}
-    </ReactSelect2>
+      noOptionsMessage={() => t("find.filter-no-categories-found", "No categories found")}
+      components={{
+        Option: CategoryOptionComponent,
+      }}
+      onChange={(newValue) => {
+        onChange(newValue.map((o) => o.value));
+      }}
+    />
   );
 }

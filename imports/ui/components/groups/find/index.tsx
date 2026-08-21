@@ -135,8 +135,7 @@ export function Find({ query }: Props) {
         }
       },
       categories: filter.asQuery["categories"] || [],
-      onCategoryAdd: (category: string) => filter.add("categories", category),
-      onCategoryRemove: (category: string) => filter.remove("categories", category),
+      onCategoriesChange: (categories: string[]) => filter.set("categories", categories),
       needsRole: filter.asQuery["needsRole"] || [],
       onNeedsRoleClick: (role) => filter.toggle("needsRole", role),
       onNeedsRoleMouseOut: (role) => {

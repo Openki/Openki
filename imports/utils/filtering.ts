@@ -1,5 +1,5 @@
 import { Tracker } from "meteor/tracker";
-import { useEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useTracker } from "meteor/react-meteor-data";
 
 import { StateWrapper, Predicate } from "/imports/utils/predicates";
@@ -198,21 +198,37 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
     });
     return query;
   }
+
+  clone(): Filtering<T> {
+    const copy = new Filtering(this._availablePredicates);
+
+    copy.read(this.toParams());
+
+    return copy;
+  }
 }
 
 export function useFiltering<T extends Record<string, Predicate<any>>>(
   predicates: T,
   params: Partial<{ [name in keyof T]: string | undefined }>,
 ) {
-  const filter = useMemo(() => new Filtering(predicates), [predicates]);
+  const filter = useMemo(() => new Filtering(predicates).read(params), [predicates, params]);
 
-  useEffect(() => {
-    filter.read(params);
-  }, [filter, params]);
+  const update = useCallback(
+    (fn: (filter: Filtering<T>) => void): Filtering<T> => {
+      const next = filter.clone();
+
+      fn(next);
+
+      return next;
+    },
+    [filter],
+  );
 
   return {
+    update,
     set: <N extends keyof T>(name: N, paramOrState: string | GetPredicateT1<T[N]>) =>
-      filter.add(name, paramOrState),
+      filter.set(name, paramOrState),
     add: <N extends keyof T>(name: N, paramOrState: string | GetPredicateT1<T[N]>) =>
       filter.add(name, paramOrState),
     remove: <N extends keyof T>(name: N, paramOrState: string | GetPredicateT1<T[N]>) =>

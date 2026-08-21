@@ -51,6 +51,7 @@
     "react-leaflet": "5.0.0",
     "react-markdown": "8.0.7",
     "react-qr-code": "2.2.0",
+    "react-select": "5.10.2",
     "sanitize-html": "2.17.6",
     "seedrandom": "3.0.5",
     "select2": "4.0.13",

@@ -23,11 +23,9 @@ export interface Props {
   onChangeDate: (newDate: moment.Moment) => void;
   availableOrganizations: string[];
   selectedOrganizations: string[];
-  onAddOrganization: (organization: string) => void;
-  onRemoveOrganization: (organization: string) => void;
+  onChangeOrganizations: (organizations: string[]) => void;
   categories: string[];
-  onAddCategory: (category: string) => void;
-  onRemoveCategory: (category: string) => void;
+  onChangeCategories: (categories: string[]) => void;
   attendingEventsOnly: boolean;
   onChangeAttendingEventsOnly: (state: boolean) => void;
 }
@@ -63,15 +61,13 @@ export function CalendarNavWeek(props: Props) {
     return {
       availableOrganizations: props.availableOrganizations,
       selectedOrganizations: props.selectedOrganizations,
-      onAdd: props.onAddOrganization,
-      onRemove: props.onRemoveOrganization,
+      onChange: props.onChangeOrganizations,
     };
   }
   function filterCategoriesAttr() {
     return {
       categories: props.categories,
-      onAdd: props.onAddCategory,
-      onRemove: props.onRemoveCategory,
+      onChange: props.onChangeCategories,
     };
   }
 

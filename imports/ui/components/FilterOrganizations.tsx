@@ -1,54 +1,45 @@
-import { useTranslation } from "react-i18next";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
-import { useDetails } from "/imports/api/organizations/publications";
+import { ReactSelect } from "/imports/ui/components/react-select";
 
-import { ReactSelect2 } from "/imports/ui/components/react-select2";
-
-import { name } from "../lib/organization-name-helpers";
-
-interface OptionProps {
-  organizationId: string;
-}
-
-function Option({ organizationId }: OptionProps) {
-  const [isLoading, organization] = useDetails(organizationId);
-
-  return <option value={organizationId}>{isLoading() ? "..." : name(organization)}</option>;
-}
+import { OrganizationName } from "/imports/ui/components/OrganizationName";
 
 export interface Props {
   availableOrganizations: string[] | undefined;
   selectedOrganizations: string[] | undefined;
-  onAdd: (organization: string) => void;
-  onRemove: (organization: string) => void;
+  onChange: (organizations: string[]) => void;
 }
 
 export function FilterOrganizations({
-  availableOrganizations,
-  selectedOrganizations,
-  onAdd,
-  onRemove,
+  availableOrganizations = [],
+  selectedOrganizations = [],
+  onChange,
 }: Props) {
   const { t } = useTranslation();
 
-  if (!availableOrganizations) {
+  if (availableOrganizations.length === 0) {
     return null;
   }
 
   return (
-    <ReactSelect2
-      className="form-control"
-      multiple
-      value={selectedOrganizations}
+    <ReactSelect
+      isMulti
+      noOptionsMessage={() =>
+        t("filterOrganizations.noResults.noOrganizationsFound", "No organizations found")
+      }
+      value={selectedOrganizations.map((o) => ({
+        value: o,
+        label: <OrganizationName id={o} />,
+      }))}
       placeholder={t("filterOrganizations.placeholder.choose", "Choose organization")}
-      noResults={t("filterOrganizations.noResults.noOrganizationsFound", "No organizations found")}
-      onSelect={onAdd}
-      onUnselect={onRemove}
-    >
-      {availableOrganizations.map((organizationId) => (
-        <Option key={organizationId} organizationId={organizationId} />
-      ))}
-    </ReactSelect2>
+      onChange={(newValue) => {
+        onChange(newValue.map((o) => o.value));
+      }}
+      options={availableOrganizations.map((o) => ({
+        value: o,
+        label: <OrganizationName id={o} />,
+      }))}
+    />
   );
 }
