@@ -1,6 +1,6 @@
 import { debounce } from "lodash-es";
 import { useTranslation } from "react-i18next";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import "./styles.scss";
 
@@ -14,8 +14,14 @@ export interface Props {
 export function SearchField({ search, color, onChange, onGo }: Props) {
   const { t } = useTranslation();
 
-  // prevented unwanted input in the search
-  const handleSearch = useMemo(
+  const [value, setValue] = useState(search ?? "");
+
+  // URL/parent changed -> synchronize the input.
+  useEffect(() => {
+    setValue(search ?? "");
+  }, [search]);
+
+  const debouncedOnChange = useMemo(
     () =>
       debounce((newValue: string) => {
         onChange(newValue);
@@ -23,38 +29,44 @@ export function SearchField({ search, color, onChange, onGo }: Props) {
     [onChange],
   );
 
-  function handleChange(
-    e: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>,
-  ) {
+  useEffect(() => {
+    return () => {
+      debouncedOnChange.cancel();
+    };
+  }, [debouncedOnChange]);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const newValue = e.currentTarget.value;
-    handleSearch(newValue);
+
+    // Update input immediately.
+    setValue(newValue);
+
+    // Search after 200ms.
+    debouncedOnChange(newValue);
   }
 
   return (
-    <div className="search-field">
+    <form
+      className="search-field"
+      onSubmit={(event) => {
+        event.preventDefault();
+        onGo?.();
+      }}
+    >
       <div className="input-group input-group-lg">
         <input
-          className="form-control search-input"
+          className="form-control fs-5"
           type="search"
           id="find"
-          defaultValue={search}
+          value={value}
           placeholder={t("find.search_placeholder", "Everything")}
           onChange={handleChange}
-          // fix: onChange do not catch everything eg. when value is set over url and get deleted all at once
-          onKeyUp={handleChange}
           autoFocus
         />
-        <button
-          type="button"
-          className={"btn btn-" + (color || "success")}
-          onClick={(event) => {
-            event.preventDefault();
-            onGo?.();
-          }}
-        >
+        <button type="submit" className={"btn btn-" + (color || "success")}>
           {t("find.search_go", "Go!")}
         </button>
       </div>
-    </div>
+    </form>
   );
 }
