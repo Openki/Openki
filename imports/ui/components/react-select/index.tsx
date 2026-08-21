@@ -24,6 +24,10 @@ export function ReactSelect<
       styles={
         mergeStyles(
           {
+            menu: (styles) => ({
+              ...styles,
+              zIndex: 1000,
+            }),
             control: (styles) => ({
               ...styles,
               borderRadius: "var(--bs-border-radius)",
