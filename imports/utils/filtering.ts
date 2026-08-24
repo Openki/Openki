@@ -1,6 +1,4 @@
 import { Tracker } from "meteor/tracker";
-import { useCallback, useMemo } from "react";
-import { useTracker } from "meteor/react-meteor-data";
 
 import { StateWrapper, Predicate } from "/imports/utils/predicates";
 
@@ -198,36 +196,4 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
     });
     return query;
   }
-
-  clone(): Filtering<T> {
-    const copy = new Filtering(this._availablePredicates);
-
-    copy.read(this.toParams());
-
-    return copy;
-  }
-}
-
-export function useFiltering<T extends Record<string, Predicate<any>>>(
-  predicates: T,
-  params: Partial<{ [name in keyof T]: string | undefined }>,
-) {
-  const filter = useMemo(() => new Filtering(predicates).read(params), [predicates, params]);
-
-  const update = useCallback(
-    (fn: (filter: Filtering<T>) => void): Filtering<T> => {
-      const next = filter.clone();
-
-      fn(next);
-
-      return next;
-    },
-    [filter],
-  );
-
-  return {
-    update,
-    asQuery: useTracker(() => filter.toQuery()),
-    asParams: useTracker(() => filter.toParams()),
-  };
 }

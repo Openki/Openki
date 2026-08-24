@@ -3,14 +3,14 @@ import { useTranslation } from "react-i18next";
 
 import { useFindFilter as useGroupsFindFilter } from "/imports/api/groups/publications";
 import { Header } from "./Header";
-import { useFiltering } from "/imports/utils/filtering";
+import { Filtering } from "/imports/utils/filtering";
 import { FindParams } from "/imports/api/groups/groups";
 
 export interface Props {
   _id?: string;
   isFrame?: boolean;
   organization?: string;
-  groupsQuery: ReturnType<typeof useFiltering<typeof FindParams>>["asQuery"];
+  groupsQuery: ReturnType<Filtering<typeof FindParams>["toQuery"]>;
 }
 
 export function FindHeader(props: Props) {

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
@@ -10,7 +10,7 @@ import { Events, FindParams } from "/imports/api/events/events";
 
 import * as UrlTools from "/imports/utils/url-tools";
 import { reactiveNow } from "/imports/utils/reactive-now";
-import { Filtering, useFiltering } from "/imports/utils/filtering";
+import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
 import { useViewportSize } from "/imports/ui/lib/useViewportSize";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
@@ -43,22 +43,18 @@ export function ProgramPage(data: Record<string, string>) {
   const viewport = useViewportSize();
   const isMobileScreen = viewport.width <= ScssVars.screenXS;
 
-  const predicates = useMemo(
-    () => ({
-      ...FindParams,
-      count: Predicates.integer,
-      control: Predicates.flag,
-      hideSwitches: Predicates.flag,
-      hideCategories: Predicates.flag,
-      filterOrganizations: Predicates.ids,
-    }),
-    [],
-  );
-  const filter = useFiltering(predicates, data);
+  const filter = new Filtering({
+    ...FindParams,
+    count: Predicates.integer,
+    control: Predicates.flag,
+    hideSwitches: Predicates.flag,
+    hideCategories: Predicates.flag,
+    filterOrganizations: Predicates.ids,
+  }).read(data);
 
   const date = moment(reactiveNow.get());
-  const start = moment(filter.asQuery["start"]) || moment(date).startOf("week");
-  const end = moment(filter.asQuery["end"]) || moment(start).add(1, "week");
+  const start = filter.get("start") || moment(date).startOf("week");
+  const end = filter.get("end") || moment(start).add(1, "week");
 
   function calcSelectedDays() {
     const days = getDays(start, end);
@@ -74,11 +70,12 @@ export function ProgramPage(data: Record<string, string>) {
 
   function calendarNavAttr(): CalendarNavData {
     return {
-      hideSwitches: filter.asQuery["hideSwitches"] ?? false,
-      hideCategories: filter.asQuery["hideCategories"] ?? false,
-      search: filter.asQuery["search"] ?? "",
+      hideSwitches: filter.get("hideSwitches") ?? false,
+      hideCategories: filter.get("hideCategories") ?? false,
+      search: filter.get("search") ?? "",
       onChangeSearch: (newValue: string) => {
-        navigateWithFilter((filter) => filter.add("search", newValue));
+        filter.add("search", newValue);
+        update();
       },
       days: getDays(start, end),
       selectedDays,
@@ -88,14 +85,16 @@ export function ProgramPage(data: Record<string, string>) {
       onRemoveDay: (day) => {
         setSelectedDays((selectedDays) => selectedDays.filter((d) => !d.isSame(day)));
       },
-      availableOrganizations: filter.asQuery["filterOrganizations"] ?? [],
-      selectedOrganizations: filter.asQuery["organizations"] ?? [],
+      availableOrganizations: filter.get("filterOrganizations") ?? [],
+      selectedOrganizations: filter.get("organizations") ?? [],
       onChangeOrganizations: (organizations) => {
-        navigateWithFilter((filter) => filter.set("organizations", organizations));
+        filter.set("organizations", organizations);
+        update();
       },
-      categories: filter.asQuery["categories"] ?? [],
+      categories: filter.get("categories") ?? [],
       onChangeCategories: (categories) => {
-        navigateWithFilter((filter) => filter.set("categories", categories));
+        filter.set("categories", categories);
+        update();
       },
       attendingEventsOnly: isAttendeeFilterOn,
       onChangeAttendingEventsOnly: (state) => {
@@ -118,16 +117,12 @@ export function ProgramPage(data: Record<string, string>) {
 
   const routeName = useCurrentRouteName();
 
-  function navigateWithFilter(change: (filter: Filtering<typeof predicates>) => void) {
-    const next = filter.update(change);
+  function update() {
+    const query = filter.toParams();
 
-    const params = next.toParams() as Record<string, string>;
+    delete query.region; // HACK region is kept in the session (for bad reasons)
 
-    delete params.region; // HACK region is kept in the session (for bad reasons)
-
-    const query = UrlTools.paramsToQueryString(params);
-
-    Router.go(routeName, {}, query ? { query } : {});
+    Router.go(routeName, {}, { query });
   }
 
   return (
@@ -135,7 +130,7 @@ export function ProgramPage(data: Record<string, string>) {
       <MetaTags title={t("calendar.windowtitle", "Calendar")} />
 
       <AccountTasks />
-      {!!filter.asQuery["control"] && <CalendarNavProgram {...calendarNavAttr()} />}
+      {filter.get("control") && <CalendarNavProgram {...calendarNavAttr()} />}
       <div className="py-4">
         <Dashboard
           list={
@@ -190,7 +185,7 @@ export function ProgramPage(data: Record<string, string>) {
                 return [afternoon, evening];
               }) as ComponentSettings[]
           }
-          limit={filter.asQuery["count"] || 10}
+          limit={filter.get("count") || 10}
           fluid
         />
       </div>

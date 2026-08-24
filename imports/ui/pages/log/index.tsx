@@ -10,7 +10,6 @@ import { useFindFilter } from "/imports/api/log/publications";
 import { Log } from "/imports/api/log/log";
 
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
-import * as UrlTools from "/imports/utils/url-tools";
 import { MetaTags } from "/imports/ui/components/MetaTags";
 
 import { Entry } from "./log-entry";
@@ -41,19 +40,12 @@ export function LogPage({
   const [isLoading, logs] = useFindFilter(filter.toQuery(), overLimit);
 
   function updateUrl() {
-    const filterParams = filter.toParams();
-    const queryString = UrlTools.paramsToQueryString(filterParams);
-
-    const options: { query?: string } = {};
-
-    if (queryString.length) {
-      options.query = queryString;
-    }
+    const query = filter.toParams();
 
     routerAutoscroll.cancelNext();
 
     const router = Router.current();
-    Router.go(router.route.getName(), {}, options);
+    Router.go(router.route.getName(), {}, { query });
 
     return true;
   }

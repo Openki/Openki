@@ -35,7 +35,7 @@ import { Header } from "./Header";
 import { FindHeader } from "./FindHeader";
 import { AlertMessage } from "./AlertMessage";
 import { FormControl } from "/imports/ui/components/form-control";
-import { useFiltering } from "/imports/utils/filtering";
+import { Filtering } from "/imports/utils/filtering";
 import { RoleSelect } from "/imports/ui/components/groups/edit/RoleSelect";
 
 import "./styles.scss";
@@ -53,7 +53,7 @@ export type Props = {
   singleEvent?: boolean;
   hideCategories?: boolean;
   internal?: boolean;
-  groupsQuery?: ReturnType<typeof useFiltering<typeof FindParams>>["asQuery"];
+  groupsQuery?: ReturnType<Filtering<typeof FindParams>["toQuery"]>;
 } & Partial<GroupModel>;
 
 export function Edit(props: Props) {

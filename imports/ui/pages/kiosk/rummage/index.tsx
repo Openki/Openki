@@ -8,7 +8,7 @@ import { useDetails } from "/imports/api/organizations/publications";
 import { useCurrentRegionId } from "/imports/utils/useCurrentRegion";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 import { SortSpec } from "/imports/utils/sort-spec";
-import { useFiltering } from "/imports/utils/filtering";
+import { Filtering } from "/imports/utils/filtering";
 import { CssFromQuery } from "/imports/ui/lib/css-from-query";
 import { cx } from "/imports/utils/cx";
 
@@ -62,10 +62,9 @@ export function KioskRummagePage() {
   const region = useCurrentRegionId();
   query = { ...query, region };
 
-  const filter = useFiltering(FindParams, query);
+  const filter = new Filtering(FindParams).read(query);
   const sort = query.sort ? SortSpec.fromString(query.sort) : SortSpec.unordered();
-
-  const [isLoading, groups] = useFindFilter(filter.asQuery, undefined, undefined, sort.spec());
+  const [isLoading, groups] = useFindFilter(filter.toQuery(), undefined, undefined, sort.spec());
 
   if (isLoading()) {
     return <LoadingPage />;
@@ -93,14 +92,14 @@ export function KioskRummagePage() {
             )}
           >
             <Draggable className="rounded-2">
-              <CompactPropose organization={filter.asQuery.organization} />
+              <CompactPropose organization={filter.get("organization")} />
             </Draggable>
             {groups.map((group) => (
               <GroupCompact key={group._id} group={group} draggable />
             ))}
           </div>
           <div className="col-4 py-3">
-            <OrganizationDetails organizationId={filter.asQuery.organization} />
+            <OrganizationDetails organizationId={filter.get("organization")} />
 
             <div className="d-flex justify-content-center mt-5">
               <Button

@@ -13,7 +13,6 @@ import { MetaTags } from "/imports/ui/components/MetaTags";
 import * as Predicates from "/imports/utils/predicates";
 import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 import { useReactiveNow } from "/imports/utils/reactive-now";
-import * as UrlTools from "/imports/utils/url-tools";
 
 import { Props as CalendarNavData, Day } from "/imports/ui/components/calendar-nav/day";
 import { EventList } from "/imports/ui/components/events/list";
@@ -61,32 +60,26 @@ export function EventsPage(data: Record<string, string>) {
   const routerName = useCurrentRouteName();
 
   const update = () => {
-    const filterParams = filter.toParams() as Record<string, string>;
-    filterParams.count = limit.toString();
+    const query: Record<string, string> = filter.toParams();
+    query.count = limit.toString();
     if (data.control) {
-      filterParams.control = data.control;
+      query.control = data.control;
     } else {
-      delete filterParams.control;
+      delete query.control;
     }
     if (data.hideSwitches) {
-      filterParams.hideSwitches = data.hideSwitches;
+      query.hideSwitches = data.hideSwitches;
     } else {
-      delete filterParams.hideSwitches;
+      delete query.hideSwitches;
     }
     if (data.filterOrganizations) {
-      filterParams.filterOrganizations = data.filterOrganizations;
+      query.filterOrganizations = data.filterOrganizations;
     } else {
-      delete filterParams.filterOrganizations;
+      delete query.filterOrganizations;
     }
-    delete filterParams.region; // HACK region is kept in the session (for bad reasons)
-    const queryString = UrlTools.paramsToQueryString(filterParams);
+    delete query.region; // HACK region is kept in the session (for bad reasons)
 
-    const options: { query?: string } = {};
-    if (queryString.length) {
-      options.query = queryString;
-    }
-
-    Router.go(routerName, {}, options);
+    Router.go(routerName, {}, { query });
   };
 
   function control() {

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 
@@ -6,12 +6,11 @@ import { useFindFilter } from "/imports/api/groups/publications";
 import { FindParams } from "/imports/api/groups/groups";
 
 import { SortSpec } from "/imports/utils/sort-spec";
-import * as UrlTools from "/imports/utils/url-tools";
 import * as Tooltips from "/imports/utils/Tooltips";
 import * as RegionSelection from "/imports/utils/region-selection";
 import { FilterPreview } from "/imports/ui/lib/filter-preview";
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
-import { Filtering, useFiltering } from "/imports/utils/filtering";
+import { Filtering } from "/imports/utils/filtering";
 import { cx } from "/imports/utils/cx";
 import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 import * as Predicates from "/imports/utils/predicates";
@@ -33,82 +32,81 @@ export interface Props {
 
 export function Find({ query }: Props) {
   const { t } = useTranslation();
-  const [showingFilters, setShowingFilters] = useState(false);
+
   const groupBlockSize = 36;
 
-  const predicates = useMemo(
-    () => ({
-      ...FindParams,
-      groupsAmount: Predicates.integer,
-    }),
-    [],
-  );
-  const filter = useFiltering(predicates, query);
+  const filter = new Filtering({
+    ...FindParams,
+    groupsAmount: Predicates.integer,
+  }).read(query);
   const sort = query.sort ? SortSpec.fromString(query.sort) : SortSpec.unordered();
 
   // Add one to the limit so we know there is more to show
-  const { groupsAmount, ...groupsQuery } = filter.asQuery;
+  const { groupsAmount, ...groupsQuery } = filter.toQuery();
   const groupLimit = groupsAmount || groupBlockSize;
   const [isLoading, groups] = useFindFilter(groupsQuery, groupLimit + 1, 0, sort.spec());
 
+  let showingFiltersDefault = false;
+  Object.keys(filter.toParams()).forEach((name) => {
+    if (hiddenFilters.some((f) => f === name)) {
+      showingFiltersDefault = true;
+    }
+  });
+  const [showingFilters, setShowingFilters] = useState(showingFiltersDefault);
+
   const routeName = useCurrentRouteName();
 
-  function navigateWithFilter(change: (filter: Filtering<typeof predicates>) => void) {
-    const next = filter.update(change);
+  function update() {
+    const query = filter.toParams();
 
-    const params = next.toParams() as Record<string, string>;
+    delete query.region; // HACK region is kept in the session (for bad reasons)
+    delete query.internal;
 
-    delete params.region; // HACK region is kept in the session (for bad reasons)
-    delete params.internal;
-
-    const groupsAmount = next.get("groupsAmount");
-
+    const groupsAmount = filter.get("groupsAmount");
     if (groupsAmount && groupsAmount <= groupBlockSize) {
-      delete params.groupsAmount;
+      delete query.groupsAmount;
     }
-
-    const query = UrlTools.paramsToQueryString(params);
 
     routerAutoscroll.cancelNext();
 
-    Router.go(routeName, {}, query ? { query } : {});
+    Router.go(routeName, {}, { query });
   }
 
   function searchFieldAttr(): SearchFieldProps {
     return {
-      search: filter.asQuery["search"],
-      onChange: (newValue) =>
-        navigateWithFilter((filter) => {
-          filter.disable("groupsAmount");
-          filter.add("search", newValue);
-        }),
+      search: filter.get("search") ?? "",
+      onChange: (newValue) => {
+        filter.disable("groupsAmount");
+        filter.add("search", newValue);
+        update();
+      },
     };
   }
   function filterAttr(): FilterProps {
     return {
       showingFilters,
       // check if one of the filters indicated as filters is active
-      active: VisibleFilters.some((f) => filter.asQuery[f]),
+      active: VisibleFilters.some((f) => filter.get(f)),
       onToggleFilters: () => {
         if (showingFilters) {
-          navigateWithFilter((filter) => {
-            filter.disable("groupsAmount");
-            VisibleFilters.forEach((f) => filter.disable(f));
+          filter.disable("groupsAmount");
+          VisibleFilters.forEach((f) => filter.disable(f));
 
-            setShowingFilters(false);
-          });
+          setShowingFilters(false);
+
+          update();
         } else {
           setShowingFilters(true);
         }
       },
-      state: filter.asQuery["state"] || [],
-      onStateClick: (state) =>
-        navigateWithFilter((filter) => {
-          filter.disable("groupsAmount");
-          filter.toggle("state", state.name);
-        }),
+      state: filter.get("state") || [],
+      onStateClick: (state) => {
+        filter.disable("groupsAmount");
+        filter.toggle("state", state.name);
+        update();
+      },
       onStateMouseOver: (state) => {
-        if (!filter.asQuery["state"]) {
+        if (!filter.get("state")) {
           FilterPreview({
             property: "state",
             id: state.cssClass,
@@ -117,7 +115,7 @@ export function Find({ query }: Props) {
         }
       },
       onStateMouseOut: (state) => {
-        if (!filter.asQuery["state"]) {
+        if (!filter.get("state")) {
           FilterPreview({
             property: "state",
             id: state.cssClass,
@@ -125,14 +123,14 @@ export function Find({ query }: Props) {
           });
         }
       },
-      archived: filter.asQuery["archived"] || false,
-      onArchivedClick: () =>
-        navigateWithFilter((filter) => {
-          filter.disable("groupsAmount");
-          filter.toggle("archived");
-        }),
+      archived: filter.get("archived") ?? false,
+      onArchivedClick: () => {
+        filter.disable("groupsAmount");
+        filter.toggle("archived");
+        update();
+      },
       onArchivedMouseOver: () => {
-        if (!filter.asQuery["archived"]) {
+        if (!filter.get("archived")) {
           FilterPreview({
             property: "is",
             id: "archived",
@@ -141,7 +139,7 @@ export function Find({ query }: Props) {
         }
       },
       onArchivedMouseOut: () => {
-        if (!filter.asQuery["archived"]) {
+        if (!filter.get("archived")) {
           FilterPreview({
             property: "is",
             id: "archived",
@@ -149,18 +147,18 @@ export function Find({ query }: Props) {
           });
         }
       },
-      categories: filter.asQuery["categories"] || [],
-      onCategoriesChange: (categories) =>
-        navigateWithFilter((filter) => {
-          filter.disable("groupsAmount");
-          filter.set("categories", categories);
-        }),
-      needsRole: filter.asQuery["needsRole"] || [],
-      onNeedsRoleClick: (role) =>
-        navigateWithFilter((filter) => {
-          filter.disable("groupsAmount");
-          filter.toggle("needsRole", role);
-        }),
+      categories: filter.get("categories") ?? [],
+      onCategoriesChange: (categories) => {
+        filter.disable("groupsAmount");
+        filter.set("categories", categories);
+        update();
+      },
+      needsRole: filter.get("needsRole") ?? [],
+      onNeedsRoleClick: (role) => {
+        filter.disable("groupsAmount");
+        filter.toggle("needsRole", role);
+        update();
+      },
       onNeedsRoleMouseOut: (role) => {
         FilterPreview({
           property: "role",
@@ -180,11 +178,11 @@ export function Find({ query }: Props) {
 
   function newGroup() {
     const group: Partial<GroupEditProps> = {};
-    const search = filter.asQuery["search"];
+    const search = filter.get("search");
     if (search) {
       group.name = search;
     }
-    const organizationId = filter.asQuery["organization"];
+    const organizationId = filter.get("organization");
     if (organizationId) {
       group.organization = organizationId;
     }
@@ -200,15 +198,15 @@ export function Find({ query }: Props) {
     return groups.slice(0, groupLimit);
   }
   function filteredRegion() {
-    return !!filter.asQuery["region"];
+    return Boolean(filter.get("region"));
   }
   function activeFilters() {
-    return hiddenFilters.some((f) => filter.asQuery[f]);
+    return hiddenFilters.some((f) => filter.get(f));
   }
   function searchIsLimited() {
     const relevantFilters = hiddenFilters.slice(); // clone
     relevantFilters.push("region");
-    return relevantFilters.some((f) => filter.asQuery[f]);
+    return relevantFilters.some((f) => filter.get(f));
   }
   function organizationTagEvents() {
     return (organizationId: string) => {
@@ -257,12 +255,11 @@ export function Find({ query }: Props) {
           });
         },
         onClick: async () => {
-          navigateWithFilter((filter) => {
-            filter.disable("groupsAmount");
-            Tooltips.hide();
-            filter.add("categories", category);
-            window.scrollTo(0, 0);
-          });
+          filter.disable("groupsAmount");
+          Tooltips.hide();
+          filter.add("categories", category);
+          window.scrollTo(0, 0);
+          update();
         },
       };
     };
@@ -270,25 +267,15 @@ export function Find({ query }: Props) {
 
   function handleToggleFilter() {
     if (showingFilters) {
-      navigateWithFilter((filter) => {
-        filter.disable("groupsAmount");
-        filters.forEach((f) => filter.disable(f));
+      filter.disable("groupsAmount");
+      filters.forEach((f) => filter.disable(f));
 
-        setShowingFilters(false);
-      });
+      setShowingFilters(false);
+      update();
     } else {
       setShowingFilters(true);
     }
   }
-
-  // When there are filters set, show the filtering pane
-  useEffect(() => {
-    Object.keys(filter.asParams).forEach((name) => {
-      if (hiddenFilters.some((f) => f === name)) {
-        setShowingFilters(true);
-      }
-    });
-  });
 
   return (
     <>
@@ -313,18 +300,17 @@ export function Find({ query }: Props) {
               organizationTagEvents={organizationTagEvents()}
               categoryTagEvents={categoryTagEvents()}
               containsPropose
-              organization={filter.asQuery["organization"]}
+              organization={filter.get("organization")}
             />
             {hasMore() && (
               <div className="text-center mt-3">
                 <button
                   type="button"
                   className="btn btn-success"
-                  onClick={() =>
-                    navigateWithFilter((filter) =>
-                      filter.set("groupsAmount", groupLimit + groupBlockSize),
-                    )
-                  }
+                  onClick={() => {
+                    filter.set("groupsAmount", groupLimit + groupBlockSize);
+                    update();
+                  }}
                 >
                   {t("_button.more")}
                 </button>

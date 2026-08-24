@@ -8,7 +8,6 @@ import moment from "moment";
 import { Events } from "/imports/api/events/events";
 
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
-import * as UrlTools from "/imports/utils/url-tools";
 
 import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 
@@ -19,16 +18,9 @@ import { FormCheck } from "/imports/ui/components/FormCheck";
 import "../styles.scss";
 
 function updateUrl(routerName: string, filter: ReturnType<(typeof Events)["Filtering"]>) {
-  const filterParams = filter.toParams();
-  delete filterParams.region; // HACK region is kept in the session (for bad reasons)
-  const queryString = UrlTools.paramsToQueryString(filterParams);
-
-  const options: { query?: string } = {};
-  if (queryString.length) {
-    options.query = queryString;
-  }
-
-  Router.go(routerName, {}, options);
+  const query = filter.toParams();
+  delete query.region; // HACK region is kept in the session (for bad reasons)
+  Router.go(routerName, {}, { query });
 }
 
 function mvDateHandler(

@@ -9,7 +9,6 @@ import { VenueModel } from "/imports/api/venues/venues";
 
 import { useEventListener } from "/imports/utils/useEventListener";
 import { textPlain } from "/imports/utils/html-tools";
-import * as UrlTools from "/imports/utils/url-tools";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 
@@ -119,18 +118,12 @@ export function KioskTimetablePage(props: Props) {
     return m.locale(Session.get("timeLocale") || "en").format("H");
   }
   function controlDay(add: number) {
-    const filterParams = props.filter.toParams() as Record<string, string>;
+    const query: Record<string, string> = props.filter.toParams();
 
-    filterParams.control = props.control ? "1" : "0";
-    filterParams.day = `${props.day + add}`;
-    const queryString = UrlTools.paramsToQueryString(filterParams);
+    query.control = props.control ? "1" : "0";
+    query.day = `${props.day + add}`;
 
-    const options: { query?: string } = {};
-    if (queryString.length) {
-      options.query = queryString;
-    }
-
-    return Router.url(routeName, {}, options);
+    return Router.url(routeName, {}, { query });
   }
 
   return (

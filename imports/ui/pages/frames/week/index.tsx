@@ -10,7 +10,6 @@ import moment from "moment";
 import { EventModel, Events } from "/imports/api/events/events";
 import { useFindFilter } from "/imports/api/events/publications";
 
-import * as UrlTools from "/imports/utils/url-tools";
 import { reactiveNow } from "/imports/utils/reactive-now";
 import { Filtering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
@@ -135,32 +134,26 @@ export function WeekPage(data: Record<string, string>) {
   }
 
   function update() {
-    const filterParams = filter.toParams() as Record<string, string>;
-    filterParams.count = limit.toString();
+    const query: Record<string, string> = filter.toParams();
+    query.count = limit.toString();
     if (data.control) {
-      filterParams.control = data.control;
+      query.control = data.control;
     } else {
-      delete filterParams.control;
+      delete query.control;
     }
     if (data.hideSwitches) {
-      filterParams.hideSwitches = data.hideSwitches;
+      query.hideSwitches = data.hideSwitches;
     } else {
-      delete filterParams.hideSwitches;
+      delete query.hideSwitches;
     }
     if (data.filterOrganizations) {
-      filterParams.filterOrganizations = data.filterOrganizations;
+      query.filterOrganizations = data.filterOrganizations;
     } else {
-      delete filterParams.filterOrganizations;
+      delete query.filterOrganizations;
     }
-    delete filterParams.region; // HACK region is kept in the session (for bad reasons)
-    const queryString = UrlTools.paramsToQueryString(filterParams);
+    delete query.region; // HACK region is kept in the session (for bad reasons)
 
-    const options: { query?: string } = {};
-    if (queryString.length) {
-      options.query = queryString;
-    }
-
-    Router.go(Router.current().route.getName(), {}, options);
+    Router.go(Router.current().route.getName(), {}, { query });
   }
 
   return (
