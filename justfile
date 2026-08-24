@@ -32,6 +32,9 @@ dev:
 docker-dev:
     docker compose -f docker-compose.dev.yml --env-file .env.dev up --force-recreate --always-recreate-deps
 
+docker-watch:
+    docker compose watch -f docker-compose.dev.yml --env-file .env.dev
+
 # Fully rebuild the docker containers
 docker-dev-rebuild:
     docker compose -f docker-compose.dev.yml --env-file .env.dev up --force-recreate --always-recreate-deps --build

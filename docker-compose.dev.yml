@@ -78,8 +78,6 @@ services:
       MONGO_URL: mongodb://mongo:27017/openki
     volumes:
       - .:/app
-      - app-node-modules:/app/node_modules
-      - app-meteor:/app/.meteor
     networks:
       - app-network
     # Allow running the app service with `docker compose watch`
@@ -90,7 +88,7 @@ services:
           action: rebuild
         - path: package-lock.json
           action: rebuild
-        # Note that .dockerignore
+        # NOTE: `.dockerignore` should exclude everything not needed to build and run the app
         - path: .
           action: sync
 
@@ -98,8 +96,6 @@ volumes:
   mongo-data:
   garage-meta:
   garage-data:
-  app-node-modules:
-  app-meteor:
 
 networks:
   app-network:
