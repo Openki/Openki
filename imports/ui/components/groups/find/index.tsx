@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from "react";
-// import { Router } from "meteor/iron:router";
-// import { useCurrentRouteName, useParams } from "/imports/utils/react-meteor-router";
-
-import { SortSpec } from "/imports/utils/sort-spec";
-
-// import * as UrlTools from "/imports/utils/url-tools";
-import * as Tooltips from "/imports/utils/Tooltips";
-
-import * as RegionSelection from "/imports/utils/region-selection";
-import { FilterPreview } from "/imports/ui/lib/filter-preview";
-// import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
-
-import { Filter, VisibleFilters, type Props as FilterProps } from "../filter";
-
+import React, { useEffect, useMemo, useState } from "react";
+import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
-import { SearchField } from "/imports/ui/components/search-field";
-import { GroupList } from "../List";
-import { Edit, Props as GroupEditProps } from "../edit";
+
 import { useFindFilter } from "/imports/api/groups/publications";
 import { FindParams } from "/imports/api/groups/groups";
+
+import { SortSpec } from "/imports/utils/sort-spec";
+import * as UrlTools from "/imports/utils/url-tools";
+import * as Tooltips from "/imports/utils/Tooltips";
+import * as RegionSelection from "/imports/utils/region-selection";
+import { FilterPreview } from "/imports/ui/lib/filter-preview";
+import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
+import { Filtering, useFiltering } from "/imports/utils/filtering";
+import { cx } from "/imports/utils/cx";
+import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
+import * as Predicates from "/imports/utils/predicates";
+
+import { Filter, VisibleFilters, type Props as FilterProps } from "../filter";
+import { SearchField, type Props as SearchFieldProps } from "/imports/ui/components/search-field";
+import { GroupList } from "../List";
+import { Edit, Props as GroupEditProps } from "../edit";
 import { LoadingPage } from "/imports/ui/pages/loading";
-import { useFiltering } from "/imports/utils/filtering";
 
 import "./styles.scss";
 
@@ -35,49 +35,53 @@ export function Find({ query }: Props) {
   const { t } = useTranslation();
   const [showingFilters, setShowingFilters] = useState(false);
   const groupBlockSize = 36;
-  const [groupLimit, setGroupLimit] = useState(groupBlockSize);
-  const filter = useFiltering(FindParams, query);
+
+  const predicates = useMemo(
+    () => ({
+      ...FindParams,
+      groupsAmount: Predicates.integer,
+    }),
+    [],
+  );
+  const filter = useFiltering(predicates, query);
   const sort = query.sort ? SortSpec.fromString(query.sort) : SortSpec.unordered();
 
   // Add one to the limit so we know there is more to show
-  const [isLoading, groups] = useFindFilter(filter.asQuery, groupLimit + 1, 0, sort.spec());
-  // const searchParams = useParams();
-  // const currentRouterName = useCurrentRouteName();
+  const { groupsAmount, ...groupsQuery } = filter.asQuery;
+  const groupLimit = groupsAmount || groupBlockSize;
+  const [isLoading, groups] = useFindFilter(groupsQuery, groupLimit + 1, 0, sort.spec());
 
-  // Reflect filter selection in URI
-  // This creates a browser history entry so it is not done on every filter
-  // change. For example, when the search-field receives keydowns, the filter
-  // is updated but the change is not reflected in the URI.
-  // current disabled until migrate to new router
-  // function updateUrl() {
-  //   const urlParams = filter.asParams as Record<string, string>;
-  //   delete urlParams.region; // HACK region is kept in the session (for bad reasons)
-  //   delete urlParams.internal;
+  const routeName = useCurrentRouteName();
 
-  //   // used to keep scrollpos when navigating back
-  //   if (groupLimit > groupBlockSize) {
-  //     urlParams.groupsAmount = groupLimit.toString();
-  //   }
-  //   const queryString = UrlTools.paramsToQueryString(urlParams);
+  function navigateWithFilter(change: (filter: Filtering<typeof predicates>) => void) {
+    const next = filter.update(change);
 
-  //   const options: { query?: string; replaceState?: boolean } = {};
+    const params = next.toParams() as Record<string, string>;
 
-  //   if (queryString.length) {
-  //     options.query = queryString;
-  //   }
+    delete params.region; // HACK region is kept in the session (for bad reasons)
+    delete params.internal;
 
-  //   // fix: replace current state to prevent endless reloads on back
-  //   options.replaceState = true;
+    const groupsAmount = next.get("groupsAmount");
 
-  //   routerAutoscroll.cancelNext();
+    if (groupsAmount && groupsAmount <= groupBlockSize) {
+      delete params.groupsAmount;
+    }
 
-  //   Router.go(currentRouterName, { _id: searchParams._id }, options);
-  // }
+    const query = UrlTools.paramsToQueryString(params);
 
-  function searchFieldAttr() {
+    routerAutoscroll.cancelNext();
+
+    Router.go(routeName, {}, query ? { query } : {});
+  }
+
+  function searchFieldAttr(): SearchFieldProps {
     return {
       search: filter.asQuery["search"],
-      onChange: (newValue: string) => filter.add("search", newValue),
+      onChange: (newValue) =>
+        navigateWithFilter((filter) => {
+          filter.disable("groupsAmount");
+          filter.add("search", newValue);
+        }),
     };
   }
   function filterAttr(): FilterProps {
@@ -87,15 +91,22 @@ export function Find({ query }: Props) {
       active: VisibleFilters.some((f) => filter.asQuery[f]),
       onToggleFilters: () => {
         if (showingFilters) {
-          VisibleFilters.forEach((f) => filter.disable(f));
+          navigateWithFilter((filter) => {
+            filter.disable("groupsAmount");
+            VisibleFilters.forEach((f) => filter.disable(f));
 
-          setShowingFilters(false);
+            setShowingFilters(false);
+          });
         } else {
           setShowingFilters(true);
         }
       },
       state: filter.asQuery["state"] || [],
-      onStateClick: (state) => filter.toggle("state", state.name),
+      onStateClick: (state) =>
+        navigateWithFilter((filter) => {
+          filter.disable("groupsAmount");
+          filter.toggle("state", state.name);
+        }),
       onStateMouseOver: (state) => {
         if (!filter.asQuery["state"]) {
           FilterPreview({
@@ -115,7 +126,11 @@ export function Find({ query }: Props) {
         }
       },
       archived: filter.asQuery["archived"] || false,
-      onArchivedClick: () => filter.toggle("archived"),
+      onArchivedClick: () =>
+        navigateWithFilter((filter) => {
+          filter.disable("groupsAmount");
+          filter.toggle("archived");
+        }),
       onArchivedMouseOver: () => {
         if (!filter.asQuery["archived"]) {
           FilterPreview({
@@ -135,10 +150,17 @@ export function Find({ query }: Props) {
         }
       },
       categories: filter.asQuery["categories"] || [],
-      onCategoryAdd: (category: string) => filter.add("categories", category),
-      onCategoryRemove: (category: string) => filter.remove("categories", category),
+      onCategoriesChange: (categories) =>
+        navigateWithFilter((filter) => {
+          filter.disable("groupsAmount");
+          filter.set("categories", categories);
+        }),
       needsRole: filter.asQuery["needsRole"] || [],
-      onNeedsRoleClick: (role) => filter.toggle("needsRole", role),
+      onNeedsRoleClick: (role) =>
+        navigateWithFilter((filter) => {
+          filter.disable("groupsAmount");
+          filter.toggle("needsRole", role);
+        }),
       onNeedsRoleMouseOut: (role) => {
         FilterPreview({
           property: "role",
@@ -235,9 +257,12 @@ export function Find({ query }: Props) {
           });
         },
         onClick: async () => {
-          Tooltips.hide();
-          filter.add("categories", category);
-          window.scrollTo(0, 0);
+          navigateWithFilter((filter) => {
+            filter.disable("groupsAmount");
+            Tooltips.hide();
+            filter.add("categories", category);
+            window.scrollTo(0, 0);
+          });
         },
       };
     };
@@ -245,26 +270,16 @@ export function Find({ query }: Props) {
 
   function handleToggleFilter() {
     if (showingFilters) {
-      filters.forEach((f) => filter.disable(f));
-    }
-    setShowingFilters(!showingFilters);
-  }
-  // useEffect(() => {
-  //   updateUrl();
-  //   // update only when params has changed
-  // }, [JSON.stringify(filter.asParams)]);
+      navigateWithFilter((filter) => {
+        filter.disable("groupsAmount");
+        filters.forEach((f) => filter.disable(f));
 
-  // Read URL state
-  useEffect(() => {
-    if (query.groupsAmount) {
-      const groupsAmount = Number.parseInt(query.groupsAmount, 10);
-      if (groupsAmount > groupBlockSize) {
-        setGroupLimit(groupsAmount);
-      }
+        setShowingFilters(false);
+      });
     } else {
-      setGroupLimit(groupBlockSize);
+      setShowingFilters(true);
     }
-  }, [query]);
+  }
 
   // When there are filters set, show the filtering pane
   useEffect(() => {
@@ -277,14 +292,14 @@ export function Find({ query }: Props) {
 
   return (
     <>
-      <div className={`page-component row ${showingFilters ? "filter-expanded" : ""}`}>
+      <div className={cx("page-component row", showingFilters && "filter-expanded")}>
         <div className="col-12">
           <h1 className="find-heading">{t("find.WhatLearn?", "What do I want to learn?")}</h1>
         </div>
-        <div className={`col-12 ${!showingFilters ? "col-md-6 col-lg-7" : ""}`}>
+        <div className={cx("col-12", !showingFilters && "col-md-6 col-lg-7")}>
           <SearchField {...searchFieldAttr()} />
         </div>
-        <div className={`col-12 ${showingFilters ? "mb-3" : "col-md-6 col-lg-5"}`}>
+        <div className={cx("col-12", showingFilters ? "mb-3" : "col-md-6 col-lg-5")}>
           <Filter {...filterAttr()} />
         </div>
       </div>
@@ -305,9 +320,11 @@ export function Find({ query }: Props) {
                 <button
                   type="button"
                   className="btn btn-success"
-                  onClick={() => {
-                    setGroupLimit(groupLimit + groupBlockSize);
-                  }}
+                  onClick={() =>
+                    navigateWithFilter((filter) =>
+                      filter.set("groupsAmount", groupLimit + groupBlockSize),
+                    )
+                  }
                 >
                   {t("_button.more")}
                 </button>
@@ -327,9 +344,7 @@ export function Find({ query }: Props) {
                     <button
                       type="button"
                       className="btn btn-secondary"
-                      onClick={() => {
-                        RegionSelection.change("all");
-                      }}
+                      onClick={() => RegionSelection.change("all")}
                     >
                       <i className="fa-solid fa-location-dot" />{" "}
                       {t("find.searchAllRegions", "Search in all regions")}
@@ -349,7 +364,7 @@ export function Find({ query }: Props) {
       </div>
       <div className="page-component">
         <div className="container mw-md">
-          <Edit {...newGroup()} groupsQuery={filter.asQuery} />
+          <Edit {...newGroup()} groupsQuery={groupsQuery} />
         </div>
       </div>
     </>

@@ -49,8 +49,7 @@ function RolesButton(props: RolesButtonProps) {
 
 export interface Props {
   categories: string[];
-  onCategoryAdd: (category: string) => void;
-  onCategoryRemove: (category: string) => void;
+  onCategoriesChange: (categories: string[]) => void;
   needsRole: string[];
   onNeedsRoleClick: (role: string) => void;
   onNeedsRoleMouseOver: (role: string) => void;
@@ -83,11 +82,7 @@ export function AdditionalFilters(props: Props) {
       )}
       <div className="col-md-3 filter-component">
         <h4 className="filter-component-header">{t("find.filter.categories", "Categories")}</h4>
-        <FilterCategories
-          categories={props.categories}
-          onAdd={props.onCategoryAdd}
-          onRemove={props.onCategoryRemove}
-        />
+        <FilterCategories categories={props.categories} onChange={props.onCategoriesChange} />
       </div>
     </>
   );

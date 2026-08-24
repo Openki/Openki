@@ -90,21 +90,13 @@ export function WeekPage(data: Record<string, string>) {
         .read(data)
         .get("filterOrganizations"),
       selectedOrganizations: filter.get("organizations"),
-      onAddOrganization: (organization) => {
-        filter.add("organizations", organization);
-        update();
-      },
-      onRemoveOrganization: (organization) => {
-        filter.remove("organizations", organization);
+      onChangeOrganizations: (organizations) => {
+        filter.set("organizations", organizations);
         update();
       },
       categories: filter.get("categories"),
-      onAddCategory: (category) => {
-        filter.add("categories", category);
-        update();
-      },
-      onRemoveCategory: (category) => {
-        filter.remove("categories", category);
+      onChangeCategories: (categories) => {
+        filter.set("categories", categories);
         update();
       },
       attendingEventsOnly: isAttendeeFilterOn,

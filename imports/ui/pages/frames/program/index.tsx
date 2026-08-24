@@ -1,20 +1,21 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Router } from "meteor/iron:router";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useUserId } from "/imports/utils/react-meteor-data";
 import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
-
 import moment from "moment";
 
 import { Events, FindParams } from "/imports/api/events/events";
 
 import * as UrlTools from "/imports/utils/url-tools";
 import { reactiveNow } from "/imports/utils/reactive-now";
-import { Filtering } from "/imports/utils/filtering";
+import { Filtering, useFiltering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
-import { MetaTags } from "/imports/ui/components/MetaTags";
+import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import { ScssVars } from "/imports/ui/lib/scss-vars";
 
+import { MetaTags } from "/imports/ui/components/MetaTags";
 import { ComponentSettings, Dashboard } from "/imports/ui/components/dashboard";
 import { AccountTasks } from "/imports/ui/components/account-tasks";
 import {
@@ -42,18 +43,22 @@ export function ProgramPage(data: Record<string, string>) {
   const viewport = useViewportSize();
   const isMobileScreen = viewport.width <= ScssVars.screenXS;
 
-  const filter = new Filtering({
-    ...FindParams,
-    count: Predicates.integer,
-    control: Predicates.flag,
-    hideSwitches: Predicates.flag,
-    hideCategories: Predicates.flag,
-    filterOrganizations: Predicates.ids,
-  }).read(data);
+  const predicates = useMemo(
+    () => ({
+      ...FindParams,
+      count: Predicates.integer,
+      control: Predicates.flag,
+      hideSwitches: Predicates.flag,
+      hideCategories: Predicates.flag,
+      filterOrganizations: Predicates.ids,
+    }),
+    [],
+  );
+  const filter = useFiltering(predicates, data);
 
   const date = moment(reactiveNow.get());
-  const start = filter.get("start") || moment(date).startOf("week");
-  const end = filter.get("end") || moment(start).add(1, "week");
+  const start = moment(filter.asQuery["start"]) || moment(date).startOf("week");
+  const end = moment(filter.asQuery["end"]) || moment(start).add(1, "week");
 
   function calcSelectedDays() {
     const days = getDays(start, end);
@@ -69,39 +74,28 @@ export function ProgramPage(data: Record<string, string>) {
 
   function calendarNavAttr(): CalendarNavData {
     return {
-      hideSwitches: filter.get("hideSwitches"),
-      hideCategories: filter.get("hideCategories"),
-      search: filter.get("search"),
+      hideSwitches: filter.asQuery["hideSwitches"],
+      hideCategories: filter.asQuery["hideCategories"],
+      search: filter.asQuery["search"],
       onChangeSearch: (newValue: string) => {
-        filter.add("search", newValue);
-        update();
+        navigateWithFilter((filter) => filter.add("search", newValue));
       },
       days: getDays(start, end),
       selectedDays,
       onAddDay: (day) => {
-        setSelectedDays([...selectedDays, day].sort());
+        setSelectedDays((selectedDays) => [...selectedDays, day].sort());
       },
       onRemoveDay: (day) => {
-        setSelectedDays(selectedDays.filter((d) => !d.isSame(day)));
+        setSelectedDays((selectedDays) => selectedDays.filter((d) => !d.isSame(day)));
       },
-      availableOrganizations: filter.get("filterOrganizations"),
-      selectedOrganizations: filter.get("organizations"),
-      onAddOrganization: (organization) => {
-        filter.add("organizations", organization);
-        update();
+      availableOrganizations: filter.asQuery["filterOrganizations"],
+      selectedOrganizations: filter.asQuery["organizations"],
+      onChangeOrganizations: (organizations) => {
+        navigateWithFilter((filter) => filter.set("organizations", organizations));
       },
-      onRemoveOrganization: (organization) => {
-        filter.remove("organizations", organization);
-        update();
-      },
-      categories: filter.get("categories"),
-      onAddCategory: (category) => {
-        filter.add("categories", category);
-        update();
-      },
-      onRemoveCategory: (category) => {
-        filter.remove("categories", category);
-        update();
+      categories: filter.asQuery["categories"],
+      onChangeCategories: (categories) => {
+        navigateWithFilter((filter) => filter.set("categories", categories));
       },
       attendingEventsOnly: isAttendeeFilterOn,
       onChangeAttendingEventsOnly: (state) => {
@@ -124,18 +118,16 @@ export function ProgramPage(data: Record<string, string>) {
 
   const routeName = useCurrentRouteName();
 
-  function update() {
-    const filterParams = filter.toParams() as Record<string, string>;
+  function navigateWithFilter(change: (filter: Filtering<typeof predicates>) => void) {
+    const next = filter.update(change);
 
-    delete filterParams.region; // HACK region is kept in the session (for bad reasons)
-    const queryString = UrlTools.paramsToQueryString(filterParams);
+    const params = next.toParams() as Record<string, string>;
 
-    const options: { query?: string } = {};
-    if (queryString.length) {
-      options.query = queryString;
-    }
+    delete params.region; // HACK region is kept in the session (for bad reasons)
 
-    Router.go(routeName, {}, options);
+    const query = UrlTools.paramsToQueryString(params);
+
+    Router.go(routeName, {}, query ? { query } : {});
   }
 
   return (
@@ -143,7 +135,7 @@ export function ProgramPage(data: Record<string, string>) {
       <MetaTags title={t("calendar.windowtitle", "Calendar")} />
 
       <AccountTasks />
-      {!!filter.get("control") && <CalendarNavProgram {...calendarNavAttr()} />}
+      {!!filter.asQuery["control"] && <CalendarNavProgram {...calendarNavAttr()} />}
       <div className="py-4">
         <Dashboard
           list={
@@ -198,7 +190,7 @@ export function ProgramPage(data: Record<string, string>) {
                 return [afternoon, evening];
               }) as ComponentSettings[]
           }
-          limit={filter.get("count") || 10}
+          limit={filter.asQuery["count"] || 10}
           fluid
         />
       </div>
@@ -209,7 +201,5 @@ export function ProgramPage(data: Record<string, string>) {
 // for Blaze
 
 import "./template.html";
-import { useViewportSize } from "/imports/ui/lib/useViewportSize";
-import { ScssVars } from "/imports/ui/lib/scss-vars";
 
 Template.registerHelper("FrameProgramPage", () => ProgramPage);
