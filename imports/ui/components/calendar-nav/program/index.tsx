@@ -14,18 +14,18 @@ import { FormCheck } from "/imports/ui/components/FormCheck";
 import "../styles.scss";
 
 export interface Props {
-  hideSwitches?: boolean | undefined;
-  hideCategories?: boolean | undefined;
-  search: string | undefined;
+  hideSwitches: boolean;
+  hideCategories: boolean;
+  search: string;
   onChangeSearch: (newValue: string) => void;
   days: moment.Moment[];
   selectedDays: moment.Moment[];
   onAddDay: (day: moment.Moment) => void;
   onRemoveDay: (day: moment.Moment) => void;
-  availableOrganizations?: string[] | undefined;
-  selectedOrganizations?: string[] | undefined;
+  availableOrganizations: string[];
+  selectedOrganizations: string[];
   onChangeOrganizations: (organizations: string[]) => void;
-  categories?: string[] | undefined;
+  categories: string[];
   onChangeCategories: (categories: string[]) => void;
   attendingEventsOnly: boolean;
   onChangeAttendingEventsOnly: (state: boolean) => void;
@@ -65,7 +65,7 @@ export function CalendarNavProgram(props: Props) {
       <div className="container py-1">
         <div className="row align-items-center px-1">
           <div className="col-md-8 col-lg-6 p-1">
-            <SearchField {...searchFieldAttr()} color="primary" />
+            <SearchField {...searchFieldAttr()} variant="primary" />
           </div>
         </div>
         <div className="row align-items-center px-1">

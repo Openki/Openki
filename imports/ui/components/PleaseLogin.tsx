@@ -133,7 +133,7 @@ export function Form(
 
 export function Action(props: {
   visitorUserAllowed?: boolean;
-  children?: ReactNode;
+  children?: ReactNode | undefined;
   onRender: () => Promise<void>;
   onAbort?: (() => void) | undefined;
 }) {

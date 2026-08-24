@@ -8,7 +8,7 @@ export function ImagePlaceholder({
 }: {
   seed: string;
   regionId: string;
-  children?: ReactNode;
+  children?: ReactNode | undefined;
 }) {
   const [isLoading, region] = useDetails(regionId);
 

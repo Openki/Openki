@@ -84,7 +84,6 @@ export function Draggable({
         drag.current.isDragging = true;
 
         drag.current.offsetX = e.clientX - drag.current.currentLeft;
-
         drag.current.offsetY = e.clientY - drag.current.currentTop;
 
         box.setPointerCapture(e.pointerId);

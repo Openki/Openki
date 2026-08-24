@@ -62,7 +62,7 @@ export function AlertMessage({
         data-bs-dismiss="alert"
         aria-label={t("_button.close")}
         onClick={onClose}
-      ></button>
+      />
     </div>
   );
 }

@@ -92,10 +92,10 @@ export function EventsPage(data: Record<string, string>) {
   function control() {
     return data.control === "1";
   }
-  function calendarNavAttr() {
+  function calendarNavAttr(): CalendarNavData {
     return {
       hideSwitches: data.hideSwitches === "1",
-      search: filter.get("search"),
+      search: filter.get("search") ?? "",
       onChangeSearch: (newValue: string) => {
         filter.add("search", newValue);
         update();
@@ -105,17 +105,18 @@ export function EventsPage(data: Record<string, string>) {
         filter.add("after", newDate.startOf("day").toISOString());
         update();
       },
-      availableOrganizations: new Filtering({
-        filterOrganizations: Predicates.ids,
-      })
-        .read(data)
-        .get("filterOrganizations"),
-      selectedOrganizations: filter.get("organizations"),
+      availableOrganizations:
+        new Filtering({
+          filterOrganizations: Predicates.ids,
+        })
+          .read(data)
+          .get("filterOrganizations") ?? [],
+      selectedOrganizations: filter.get("organizations") ?? [],
       onChangeOrganizations: (organizations) => {
         filter.set("organizations", organizations);
         update();
       },
-      categories: filter.get("categories"),
+      categories: filter.get("categories") ?? [],
       onChangeCategories: (categories) => {
         filter.set("categories", categories);
         update();
@@ -124,7 +125,7 @@ export function EventsPage(data: Record<string, string>) {
       onChangeAttendingEventsOnly: (state) => {
         setIsAttendeeFilterOn(state);
       },
-    } as CalendarNavData;
+    };
   }
 
   if (isLoading()) {

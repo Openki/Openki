@@ -30,9 +30,9 @@ function CategoryLabelLinked({
       <a
         className={`category-${category}`}
         data-category={category}
-        data-bs-title={`${t("categories.showGroups", "Show all in {CATEGORY}", {
+        data-bs-title={t("categories.showGroups", "Show all in {CATEGORY}", {
           CATEGORY: t(`category.${category}`),
-        })}`}
+        })}
         onMouseOver={onMouseOver}
         onMouseOut={onMouseOut}
         onClick={onClick}

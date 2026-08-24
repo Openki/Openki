@@ -74,9 +74,9 @@ export function ProgramPage(data: Record<string, string>) {
 
   function calendarNavAttr(): CalendarNavData {
     return {
-      hideSwitches: filter.asQuery["hideSwitches"],
-      hideCategories: filter.asQuery["hideCategories"],
-      search: filter.asQuery["search"],
+      hideSwitches: filter.asQuery["hideSwitches"] ?? false,
+      hideCategories: filter.asQuery["hideCategories"] ?? false,
+      search: filter.asQuery["search"] ?? "",
       onChangeSearch: (newValue: string) => {
         navigateWithFilter((filter) => filter.add("search", newValue));
       },
@@ -88,12 +88,12 @@ export function ProgramPage(data: Record<string, string>) {
       onRemoveDay: (day) => {
         setSelectedDays((selectedDays) => selectedDays.filter((d) => !d.isSame(day)));
       },
-      availableOrganizations: filter.asQuery["filterOrganizations"],
-      selectedOrganizations: filter.asQuery["organizations"],
+      availableOrganizations: filter.asQuery["filterOrganizations"] ?? [],
+      selectedOrganizations: filter.asQuery["organizations"] ?? [],
       onChangeOrganizations: (organizations) => {
         navigateWithFilter((filter) => filter.set("organizations", organizations));
       },
-      categories: filter.asQuery["categories"],
+      categories: filter.asQuery["categories"] ?? [],
       onChangeCategories: (categories) => {
         navigateWithFilter((filter) => filter.set("categories", categories));
       },

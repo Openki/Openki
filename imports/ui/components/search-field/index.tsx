@@ -5,20 +5,20 @@ import React, { useEffect, useMemo, useState } from "react";
 import "./styles.scss";
 
 export interface Props {
-  search: string | undefined;
+  search: string;
   onChange: (newValue: string) => void;
   onGo?: () => void;
-  color?: string | undefined;
+  variant?: string | undefined;
 }
 
-export function SearchField({ search, color, onChange, onGo }: Props) {
+export function SearchField({ search, variant = "success", onChange, onGo }: Props) {
   const { t } = useTranslation();
 
-  const [value, setValue] = useState(search ?? "");
+  const [value, setValue] = useState(search);
 
   // URL/parent changed -> synchronize the input.
   useEffect(() => {
-    setValue(search ?? "");
+    setValue(search);
   }, [search]);
 
   const debouncedOnChange = useMemo(
@@ -63,7 +63,7 @@ export function SearchField({ search, color, onChange, onGo }: Props) {
           onChange={handleChange}
           autoFocus
         />
-        <button type="submit" className={"btn btn-" + (color || "success")}>
+        <button type="submit" className={`btn btn-${variant}`}>
           {t("find.search_go", "Go!")}
         </button>
       </div>

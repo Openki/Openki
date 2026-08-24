@@ -35,7 +35,7 @@ export function ActionResult({
   icon,
   title,
   children,
-  actions: actionsWithUndefined,
+  actions: actionsWithUndefined = [],
   report,
 }: Props) {
   const { t } = useTranslation();
@@ -56,7 +56,7 @@ export function ActionResult({
     icon = <i className={cx(icon, "fa-fw")} />;
   }
 
-  const actions = (actionsWithUndefined || []).filter((a) => a) as Action[];
+  const actions = actionsWithUndefined.filter((a) => a) as Action[];
 
   // display actions stacked if there is a description or complex element
   const stacked = actions.find((a) => "description" in a || !("href" in a || "button" in a));
