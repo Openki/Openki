@@ -1,3 +1,6 @@
 .meteor/local
 node_modules
 .git
+.gitlab
+ci
+cypress
