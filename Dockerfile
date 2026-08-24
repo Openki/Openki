@@ -14,7 +14,7 @@ RUN meteor npm ci
 
 # Build the production bundle
 # Output goes to /build as a standard Node app
-RUN meteor build --directory /build --server-only --allow-superuser
+RUN meteor build --directory /build --server-only --no-release-check
 
 
 # ─────────────────────────────────────────────
