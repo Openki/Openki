@@ -227,25 +227,6 @@ export function useFiltering<T extends Record<string, Predicate<any>>>(
 
   return {
     update,
-    set: <N extends keyof T>(name: N, paramOrState: string | GetPredicateT1<T[N]>) =>
-      filter.set(name, paramOrState),
-    add: <N extends keyof T>(name: N, paramOrState: string | GetPredicateT1<T[N]>) =>
-      filter.add(name, paramOrState),
-    remove: <N extends keyof T>(name: N, paramOrState: string | GetPredicateT1<T[N]>) =>
-      filter.remove(name, paramOrState),
-    toggle: <N extends keyof T>(name: N, paramOrState?: string | GetPredicateT1<T[N]>) => {
-      if (paramOrState === undefined) {
-        filter.toggle(name);
-      } else {
-        filter.toggle(name, paramOrState);
-      }
-    },
-    enable: (name: keyof T) => {
-      filter.enable(name);
-    },
-    disable: (name: keyof T) => {
-      filter.disable(name);
-    },
     asQuery: useTracker(() => filter.toQuery()),
     asParams: useTracker(() => filter.toParams()),
   };

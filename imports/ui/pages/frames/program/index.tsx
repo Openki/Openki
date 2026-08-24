@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useUserId } from "/imports/utils/react-meteor-data";
 import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
-
 import moment from "moment";
 
 import { Events, FindParams } from "/imports/api/events/events";
@@ -13,8 +12,10 @@ import * as UrlTools from "/imports/utils/url-tools";
 import { reactiveNow } from "/imports/utils/reactive-now";
 import { Filtering, useFiltering } from "/imports/utils/filtering";
 import * as Predicates from "/imports/utils/predicates";
-import { MetaTags } from "/imports/ui/components/MetaTags";
+import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import { ScssVars } from "/imports/ui/lib/scss-vars";
 
+import { MetaTags } from "/imports/ui/components/MetaTags";
 import { ComponentSettings, Dashboard } from "/imports/ui/components/dashboard";
 import { AccountTasks } from "/imports/ui/components/account-tasks";
 import {
@@ -200,7 +201,5 @@ export function ProgramPage(data: Record<string, string>) {
 // for Blaze
 
 import "./template.html";
-import { useViewportSize } from "/imports/ui/lib/useViewportSize";
-import { ScssVars } from "/imports/ui/lib/scss-vars";
 
 Template.registerHelper("FrameProgramPage", () => ProgramPage);
