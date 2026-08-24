@@ -77,7 +77,15 @@ services:
       PORT: 3000
       MONGO_URL: mongodb://mongo:27017/openki
     volumes:
-      - .:/app
+      - type: bind
+        source: .
+        target: /app
+      - type: bind
+        source: node_modules
+        target: /app
+      - type: bind
+        source: .meteor
+        target: /app
     networks:
       - app-network
     # Allow running the app service with `docker compose watch`
@@ -96,6 +104,8 @@ volumes:
   mongo-data:
   garage-meta:
   garage-data:
+  app-node-modules:
+  app-meteor:
 
 networks:
   app-network:
