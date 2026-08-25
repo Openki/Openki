@@ -13,7 +13,7 @@ import { useValidation } from "/imports/ui/lib/useValidation";
 function EyeToggle({ show, onToggle }: { show: boolean; onToggle: () => void }) {
   return (
     <span className="input-group-text p-0">
-      <button type="button" className="btn btn-outline-secondary text-dark" onClick={onToggle}>
+      <button type="button" className="btn btn-outline-secondary text-dark rounded-0" onClick={onToggle}>
         <i className={cx("fa-fw fa-solid", show ? "fa-eye-slash" : "fa-eye")} />
       </button>
     </span>

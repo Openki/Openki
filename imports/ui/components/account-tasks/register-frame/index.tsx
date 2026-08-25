@@ -11,6 +11,7 @@ import * as UsersMethods from "/imports/api/users/methods";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 import { useValidation } from "/imports/ui/lib/useValidation";
+import { cx } from "/imports/utils/cx";
 
 import { NotAllowedCharacter } from "../../../../startup/both/NotAllowedCharacter";
 import { DataProtectionLaw } from "../data-protection-law";
@@ -30,7 +31,7 @@ export interface Props {
 export function RegisterFrame({ username, password, email, allowNews, onRegister, onBack }: Props) {
   const { t } = useTranslation();
   const currentRegion = useCurrentRegion();
-  const sitename = useSiteName();
+  const siteName = useSiteName();
   const locale = useSession("locale");
   const [isBusy, setIsBusy] = useState(false);
   const [registerData, setRegisterData] = useState({ username, password, email, allowNews });
@@ -168,10 +169,10 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
             <span className="input-group-text p-0">
               <button
                 type="button"
-                className="btn btn-outline-secondary text-dark"
+                className="btn btn-outline-secondary text-dark rounded-0"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                <i className={`fa-fw fa-solid ${showPassword ? "fa-eye-slash" : "fa-eye"}`} />
+                <i className={cx("fa-fw fa-solid", showPassword ? "fa-eye-slash" : "fa-eye")} />
               </button>
             </span>
           }
@@ -221,7 +222,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
             label={t(
               "login.register.agreeEmails",
               "I agree on receiving occasional emails about {SITENAME}.",
-              { SITENAME: sitename },
+              { SITENAME: siteName },
             )}
             checked={registerData.allowNews}
             onChange={(checked) => setRegisterData({ ...registerData, allowNews: checked })}
