@@ -5,14 +5,14 @@ RUN apk add --no-cache python3 make g++ git bash curl
 
 # Install the defined Meteor version as a non-root user
 ENV METEOR_VERSION=3.5
-ENV METEOR_INSTALL="/usr/local/meteor"
-ENV PATH="$METEOR_INSTALL/bin:$PATH"
+# ENV METEOR_INSTALL="/usr/local/meteor"
+# ENV PATH="$METEOR_INSTALL/bin:$PATH"
 
-RUN curl https://install.meteor.com/?release=$METEOR_VERSION | sh && \
-    mv ~/.meteor $METEOR_INSTALL
+RUN curl https://install.meteor.com/?release=$METEOR_VERSION | sh
+# && \ mv ~/.meteor $METEOR_INSTALL
 
-# Uninstall packages we no longer need
-RUN apk del curl
+# RUN echo 'export METEOR_INSTALL="/usr/local/meteor"' >> /etc/bash.bashrc && \
+#     echo 'export PATH="$METEOR_INSTALL/bin:$PATH"' >> /etc/bash.bashrc
 
 USER node
 WORKDIR /app
@@ -24,10 +24,15 @@ WORKDIR /app
 COPY package*.json ./
 COPY ./.meteor ./.meteor/
 
-RUN meteor npm ci
+# TODO: Temporarily log as much as possible to know what is attempting to use bash and curl.
+# It is the meteor wrapper shell script, which for some reason is installing meteor a second time
+# and then failing with the error:
+# /home/node/.meteor/meteor: line 148: /home/node/.meteor/packages/meteor-tool/.3.5.0.e0rfhnhdewl++os.linux.x86_64+web.browser+web.browser.legacy+web.cordova/mt-os.linux.x86_64/dev_bundle/bin/node: cannot execute: required file not found
+# Error: building at STEP "RUN meteor npm ci --loglevel silly": while running runtime: exit status 127
+RUN meteor npm ci --loglevel silly
 
 EXPOSE 3000 9229
 
-# TODO: Once the app starts as expected, we should run the normal `debug` script defined in package.json
-# to start the other dev scripts as expected.
+# # TODO: Once the app starts as expected, we should run the normal `debug` script defined in package.json
+# # to start the other dev scripts as expected.
 CMD ["meteor", "--inspect=0.0.0.0:9229", "--settings", "settings/docker-dev.json"]
