@@ -274,7 +274,7 @@ export function Find({ query }: Props) {
 
   return (
     <>
-      <div className={cx("page-component row", showingFilters && "filter-expanded")}>
+      <div className="page-component row">
         <div className="col-12">
           <h1 className="find-heading">{t("find.WhatLearn?", "What do I want to learn?")}</h1>
         </div>

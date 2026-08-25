@@ -35,7 +35,12 @@ function CategoryLabelLinked({
         })}
         onMouseOver={onMouseOver}
         onMouseOut={onMouseOut}
-        onClick={onClick}
+        onClick={(e) => {
+          if (onClick) {
+            e.preventDefault();
+            onClick();
+          }
+        }}
         href={Router.url("search", {}, { query: { categories: category } })}
       >
         {t(`category.${category}`)}
@@ -57,7 +62,7 @@ export function GroupCategories({
   onMouseOut,
   onClick,
 }: GroupCategoriesProps) {
-  if (!categories?.length) {
+  if (categories.length === 0) {
     return null;
   }
   return (
@@ -67,9 +72,9 @@ export function GroupCategories({
           <CategoryLabelLinked
             key={category}
             category={category}
-            onMouseOver={async () => await onMouseOver?.(category)}
-            onMouseOut={async () => await onMouseOut?.(category)}
-            onClick={async () => await onClick?.(category)}
+            onMouseOver={onMouseOver ? async () => await onMouseOver(category) : undefined}
+            onMouseOut={onMouseOut ? async () => await onMouseOut(category) : undefined}
+            onClick={onClick ? async () => await onClick(category) : undefined}
           />
         ))}
       </div>

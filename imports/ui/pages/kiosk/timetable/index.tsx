@@ -11,6 +11,7 @@ import { useEventListener } from "/imports/utils/useEventListener";
 import { textPlain } from "/imports/utils/html-tools";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
+import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
 
@@ -69,16 +70,16 @@ function Event({ entry }: { entry: OEvent & EventEntity & RelStartEnd }) {
 
   return (
     <div
-      className={`timetable-event${entry.relStart > 0.5 ? " timetable-event-right" : ""}${
-        active ? " active" : ""
-      }`}
+      className={cx(
+        "timetable-event",
+        entry.relStart > 0.5 && "timetable-event-right",
+        active && "active",
+      )}
       style={position(entry)}
     >
       <div
         ref={elementRef}
-        className={`timetable-event-title${
-          entry.canceled ? " timetable-event-title-canceled" : ""
-        }`}
+        className={cx("timetable-event-title", entry.canceled && "timetable-event-title-canceled")}
       >
         {entry.title}
       </div>
@@ -167,7 +168,7 @@ export function KioskTimetablePage(props: Props) {
         </div>
       </div>
       <div className="timetable-header" style={{ zIndex: "1" }}>
-        {!!props.future_length && (
+        {Boolean(props.future_length) && (
           <div className="vertical-wrapper">
             <div
               className="vertical"
@@ -182,7 +183,10 @@ export function KioskTimetablePage(props: Props) {
             return (
               <div
                 key={index2}
-                className={`timetable-row ${isRoomRow(event.room, index2) ? "timetable-row-room" : ""}`}
+                className={cx(
+                  "timetable-row",
+                  isRoomRow(event.room, index2) && "timetable-row-room",
+                )}
               >
                 <div className="timetable-location text-start">
                   <span className="text-nowrap">
