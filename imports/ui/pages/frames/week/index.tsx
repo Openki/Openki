@@ -75,12 +75,12 @@ export function WeekPage(data: Record<string, string>) {
       hideSwitches: data.hideSwitches === "1",
       search: filter.get("search") ?? "",
       onChangeSearch: (newValue: string) => {
-        filter.add("search", newValue);
+        filter.set("search", newValue);
         update();
       },
       date: startOfWeek,
       onChangeDate: (newDate) => {
-        filter.add("after", newDate.startOf("week").toISOString());
+        filter.set("after", newDate.startOf("week"));
         update();
       },
       availableOrganizations:

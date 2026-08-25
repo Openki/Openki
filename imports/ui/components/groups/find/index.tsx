@@ -46,13 +46,8 @@ export function Find({ query }: Props) {
   const groupLimit = groupsAmount || groupBlockSize;
   const [isLoading, groups] = useFindFilter(groupsQuery, groupLimit + 1, 0, sort.spec());
 
-  let showingFiltersDefault = false;
-  Object.keys(filter.toParams()).forEach((name) => {
-    if (hiddenFilters.some((f) => f === name)) {
-      showingFiltersDefault = true;
-    }
-  });
-  const [showingFilters, setShowingFilters] = useState(showingFiltersDefault);
+  const active = VisibleFilters.some((f) => filter.get(f));
+  const [showingFilters, setShowingFilters] = useState(active);
 
   const routeName = useCurrentRouteName();
 
@@ -77,7 +72,7 @@ export function Find({ query }: Props) {
       search: filter.get("search") ?? "",
       onChange: (newValue) => {
         filter.disable("groupsAmount");
-        filter.add("search", newValue);
+        filter.set("search", newValue);
         update();
       },
     };
@@ -86,7 +81,7 @@ export function Find({ query }: Props) {
     return {
       showingFilters,
       // check if one of the filters indicated as filters is active
-      active: VisibleFilters.some((f) => filter.get(f)),
+      active,
       onToggleFilters: () => {
         if (showingFilters) {
           filter.disable("groupsAmount");
@@ -257,7 +252,7 @@ export function Find({ query }: Props) {
         onClick: async () => {
           filter.disable("groupsAmount");
           Tooltips.hide();
-          filter.add("categories", category);
+          filter.set("categories", [category]);
           window.scrollTo(0, 0);
           update();
         },

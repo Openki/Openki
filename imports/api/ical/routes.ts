@@ -43,7 +43,7 @@ Router.route("cal", {
     const filter = Events.Filtering();
     const query = (this.params.query as Record<string, unknown>) || {};
 
-    filter.add("start", moment().add(-2, "years")).read(query);
+    filter.set("start", moment().add(-2, "years")).read(query);
 
     await sendIcal(await Events.findFilter(filter.toQuery()).fetchAsync(), this.response);
   },

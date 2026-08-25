@@ -540,7 +540,7 @@ RouterAsync.route("venuesMap", {
     const filter = new Filtering(VenueParamPredicates);
     const region = CleanedRegion(Session.get("region"));
     if (region) {
-      filter.add("region", region);
+      filter.set("region", region);
     }
     filter.read(this.params.query);
     const query = filter.toQuery();
@@ -565,7 +565,7 @@ RouterAsync.route("eventsMap", {
 
     const filter = new Filtering(EventParamPredicates);
     if (region) {
-      filter.add("region", region);
+      filter.set("region", region);
     }
     filter.read(this.params.query);
     const query = filter.toQuery();

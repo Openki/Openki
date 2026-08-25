@@ -30,13 +30,13 @@ function useOptions() {
   const filter = Events.Filtering().read(query);
   if (startDate.isValid()) {
     if (query.ongoing !== "0") {
-      filter.add("start", startDate.toISOString());
+      filter.set("start", startDate);
     } else {
-      filter.add("after", startDate.toISOString());
+      filter.set("after", startDate);
     }
   }
   if (endDate && endDate.isValid()) {
-    filter.add("end", endDate.toISOString());
+    filter.set("end", endDate);
   }
 
   const filterQuery = filter.toQuery();

@@ -17,7 +17,7 @@ export type Predicate<State, Query = State> = (
 ) => StateWrapper<State, Query> | undefined;
 
 export const string: Predicate<string> = function (paramOrState) {
-  if (paramOrState === undefined) {
+  if (paramOrState === "") {
     return undefined;
   }
 
@@ -49,7 +49,7 @@ export const id: Predicate<string> = function (paramOrState) {
 };
 
 export const ids: Predicate<string[]> = function (paramOrState) {
-  if (paramOrState === undefined) {
+  if (paramOrState === "") {
     return undefined;
   }
 
@@ -92,7 +92,7 @@ export const ids: Predicate<string[]> = function (paramOrState) {
 };
 
 export const flag: Predicate<boolean> = function (paramOrState) {
-  if (paramOrState === undefined) {
+  if (paramOrState === "") {
     return undefined;
   }
 
@@ -108,6 +108,10 @@ export const flag: Predicate<boolean> = function (paramOrState) {
     }
   } else {
     state = paramOrState;
+  }
+
+  if (typeof state !== "boolean") {
+    throw new FilteringReadError("", "Invalid boolean");
   }
 
   return {
@@ -133,7 +137,7 @@ export const flag: Predicate<boolean> = function (paramOrState) {
 };
 
 export const integer: Predicate<number> = function (paramOrState) {
-  if (paramOrState === undefined) {
+  if (paramOrState === "") {
     return undefined;
   }
 
@@ -171,7 +175,7 @@ export const integer: Predicate<number> = function (paramOrState) {
 };
 
 export const date: Predicate<moment.Moment, Date> = function (paramOrState) {
-  if (paramOrState === undefined) {
+  if (paramOrState === "") {
     return undefined;
   }
 
@@ -197,7 +201,7 @@ export const date: Predicate<moment.Moment, Date> = function (paramOrState) {
       return moment(state);
     },
     param() {
-      return state.toISOString();
+      return state.format("YYYY-MM-DD");
     },
     query() {
       return state.toDate();
@@ -210,7 +214,7 @@ export const date: Predicate<moment.Moment, Date> = function (paramOrState) {
 
 export function createEnumPredicate<T extends readonly string[]>(...values: readonly [...T]) {
   const enumPredicate: Predicate<T[number]> = function (paramOrState) {
-    if (paramOrState === undefined) {
+    if (paramOrState === "") {
       return undefined;
     }
 
@@ -247,7 +251,7 @@ export function createEnumPredicate<T extends readonly string[]>(...values: read
 
 export function createEnumsPredicate<T extends readonly string[]>(...states: readonly [...T]) {
   const enumsPredicate: Predicate<T[number][]> = function (paramOrState) {
-    if (paramOrState === undefined) {
+    if (paramOrState === "") {
       return undefined;
     }
 

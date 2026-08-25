@@ -90,12 +90,12 @@ export function EventsPage(data: Record<string, string>) {
       hideSwitches: data.hideSwitches === "1",
       search: filter.get("search") ?? "",
       onChangeSearch: (newValue: string) => {
-        filter.add("search", newValue);
+        filter.set("search", newValue);
         update();
       },
       date,
       onChangeDate: (newDate) => {
-        filter.add("after", newDate.startOf("day").toISOString());
+        filter.set("after", newDate.startOf("day"));
         update();
       },
       availableOrganizations:

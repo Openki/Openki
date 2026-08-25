@@ -69,8 +69,8 @@ function useOptions() {
   }
 
   filter.read(query);
-  filter.add("after", scheduleStart);
-  filter.add("end", moment(scheduleStart).add(4, "week"));
+  filter.set("after", scheduleStart);
+  filter.set("end", moment(scheduleStart).add(4, "week"));
 
   return {
     scheduleStart,

@@ -23,12 +23,12 @@ export function CalendarPage(data: Record<string, string>) {
   const filter = Events.Filtering();
   // Read URL state
   const date = region?.calendarStartDate || new Date();
-  filter.clear().add("start", moment(date).startOf("week").toISOString()).read(data);
+  filter.set("start", moment(date).startOf("week")).read(data);
   // Show internal events only when a organization or venue is specified
   if (!data.organization && !data.venue && data.internal === undefined) {
-    filter.add("internal", "0");
+    filter.disable("internal");
   }
-  filter.add("region", region?._id || "all");
+  filter.set("region", region?._id || "all");
 
   const filterQuery = filter.toQuery();
 

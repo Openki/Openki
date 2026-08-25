@@ -74,7 +74,7 @@ export function ProgramPage(data: Record<string, string>) {
       hideCategories: filter.get("hideCategories") ?? false,
       search: filter.get("search") ?? "",
       onChangeSearch: (newValue: string) => {
-        filter.add("search", newValue);
+        filter.set("search", newValue);
         update();
       },
       days: getDays(start, end),
@@ -130,7 +130,7 @@ export function ProgramPage(data: Record<string, string>) {
       <MetaTags title={t("calendar.windowtitle", "Calendar")} />
 
       <AccountTasks />
-      {filter.get("control") && <CalendarNavProgram {...calendarNavAttr()} />}
+      {Boolean(filter.get("control")) && <CalendarNavProgram {...calendarNavAttr()} />}
       <div className="py-4">
         <Dashboard
           list={
@@ -139,14 +139,14 @@ export function ProgramPage(data: Record<string, string>) {
               .flatMap((day) => {
                 let afternoon;
                 {
-                  const f = Events.Filtering().read(data);
+                  const filter = Events.Filtering().read(data);
 
-                  f.add("after", day);
-                  f.add("end", moment(day).add(17.75, "hour"));
+                  filter.set("after", day);
+                  filter.set("end", moment(day).add(17.75, "hour"));
 
                   // filter isAttendeeFilterOn in addition to filtering that get's passed in via url
                   if (userId && isAttendeeFilterOn) {
-                    f.add("participant", userId);
+                    filter.set("participant", userId);
                   }
                   afternoon = {
                     title: t("program.morningAfternoon", "{DAYOFWEEK}, morning & afternoon", {
@@ -156,19 +156,19 @@ export function ProgramPage(data: Record<string, string>) {
                     }),
                     entity:
                       data.hideCategories !== "1" ? "eventModern" : "eventModernWithoutCategories",
-                    query: UrlTools.paramsToQueryString(f.toParams()),
+                    query: UrlTools.paramsToQueryString(filter.toParams()),
                   };
                 }
                 let evening;
                 {
-                  const f = Events.Filtering().read(data);
+                  const filter = Events.Filtering().read(data);
 
-                  f.add("after", moment(day).add(17.75, "hour"));
-                  f.add("end", moment(day).add(1, "day"));
+                  filter.set("after", moment(day).add(17.75, "hour"));
+                  filter.set("end", moment(day).add(1, "day"));
 
                   // filter isAttendeeFilterOn in addition to filtering that get's passed in via url
                   if (userId && isAttendeeFilterOn) {
-                    f.add("participant", userId);
+                    filter.set("participant", userId);
                   }
                   evening = {
                     title: t("program.evening", "{DAYOFWEEK}, evening", {
@@ -178,7 +178,7 @@ export function ProgramPage(data: Record<string, string>) {
                     }),
                     entity:
                       data.hideCategories !== "1" ? "eventModern" : "eventModernWithoutCategories",
-                    query: UrlTools.paramsToQueryString(f.toParams()),
+                    query: UrlTools.paramsToQueryString(filter.toParams()),
                   };
                 }
 

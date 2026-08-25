@@ -38,7 +38,7 @@ function mvDateHandler(
   } else {
     start.add(amount, unit).add(weekCorrection, "week").startOf("week");
   }
-  filter.add("start", start);
+  filter.set("start", start);
   updateUrl(routerName, filter);
   return false;
 }

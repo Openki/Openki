@@ -95,7 +95,7 @@ export function LogPage({
 
         const trStr = newValue.trim();
         if (trStr) {
-          filter.add("tr", trStr);
+          filter.set("tr", trStr);
         }
         updateUrl();
       }, 200),
@@ -115,7 +115,7 @@ export function LogPage({
         if (dateStr === "") {
           filter.disable("start");
         } else {
-          filter.add("start", dateStr);
+          filter.set("start", dateStr);
         }
 
         updateUrl();
@@ -136,7 +136,7 @@ export function LogPage({
 
         const relStr = newValue.trim();
         if (relStr) {
-          filter.add("rel", relStr);
+          filter.set("rel", relStr);
         }
 
         updateUrl();
@@ -149,22 +149,21 @@ export function LogPage({
   };
 
   const onTrackClick = useCallback((newTrack: string) => {
-    filter.add("tr", newTrack);
+    filter.set("tr", newTrack);
     setTrack(trFilter());
     updateUrl();
     window.scrollTo(0, 0);
   }, []);
 
   const onDateClick = useCallback((newDate: Date) => {
-    const start = moment(newDate).toISOString();
-    filter.add("start", start);
+    filter.set("start", moment(newDate));
     setDate(dateFilter());
     updateUrl();
     window.scrollTo(0, 0);
   }, []);
 
   const onIdClick = useCallback((newId: string) => {
-    filter.add("rel", newId);
+    filter.set("rel", newId);
     setId(relFilter());
     updateUrl();
     window.scrollTo(0, 0);

@@ -2,11 +2,13 @@ import { Tracker } from "meteor/tracker";
 
 import { StateWrapper, Predicate } from "/imports/utils/predicates";
 
-export class FilteringReadError {
+export class FilteringReadError extends Error {
   constructor(
     public name: string,
-    public message: string,
-  ) {}
+    message: string,
+  ) {
+    super(message);
+  }
 }
 
 /**
@@ -41,9 +43,9 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
       if (!this._availablePredicates[name]) {
         throw new FilteringReadError("", `No predicate ${name as string}`);
       }
-      const toAdd = this._availablePredicates[name](paramOrState);
+      const toSet = this._availablePredicates[name](paramOrState);
 
-      this._predicates[name] = toAdd as any;
+      this._predicates[name] = toSet as any;
 
       if (!this._predicates[name]) {
         // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
@@ -92,7 +94,7 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
     Object.entries(list).forEach(([name, value]) => {
       try {
         if (value !== undefined) {
-          this.add(name, value);
+          this.set(name, value);
         }
       } catch (e) {
         if (!(e instanceof FilteringReadError)) {
@@ -104,7 +106,7 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
   }
 
   readAndValidate(list: Partial<{ [name in keyof T]: string }>) {
-    Object.keys(list).forEach((name) => this.add(name, list[name] as string));
+    Object.keys(list).forEach((name) => this.set(name, list[name] as string));
     return this;
   }
 
@@ -160,7 +162,7 @@ export class Filtering<T extends Record<string, Predicate<any>>> {
   }
 
   enable(name: keyof T) {
-    this.add(name, "1");
+    this.set(name, "1");
     return this;
   }
 
