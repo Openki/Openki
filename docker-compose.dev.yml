@@ -76,16 +76,17 @@ services:
       ROOT_URL: ${ROOT_URL:-http://localhost:3000}
       PORT: 3000
       MONGO_URL: mongodb://mongo:27017/openki
+      METEOR_NO_RELEASE_CHECK: true
     volumes:
       - type: bind
         source: .
         target: /app
       - type: bind
-        source: node_modules
+        source: app-node-modules
         target: /app/node_modules
       - type: bind
-        source: .meteor
-        target: /app/.meteor
+        source: app-meteor
+        target: /app/.meteor:Z
     networks:
       - app-network
 
