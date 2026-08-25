@@ -88,17 +88,6 @@ services:
         target: /app/.meteor
     networks:
       - app-network
-    # Allow running the app service with `docker compose watch`
-    # to get hot reloading when files change.
-    develop:
-      watch:
-        - path: package.json
-          action: rebuild
-        - path: package-lock.json
-          action: rebuild
-        # NOTE: `.dockerignore` should exclude everything not needed to build and run the app
-        - path: .
-          action: sync
 
 volumes:
   mongo-data:
