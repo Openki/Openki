@@ -82,10 +82,10 @@ services:
         target: /app
       - type: bind
         source: node_modules
-        target: /app
+        target: /app/node_modules
       - type: bind
         source: .meteor
-        target: /app
+        target: /app/.meteor
     networks:
       - app-network
     # Allow running the app service with `docker compose watch`
