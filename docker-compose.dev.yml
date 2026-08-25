@@ -82,12 +82,8 @@ services:
       - type: bind
         source: .
         target: /app
-      - type: bind
-        source: app-node-modules
-        target: /app/node_modules
-      - type: bind
-        source: app-meteor
-        target: /app/.meteor:Z
+      - app-node-modules:/app/node_modules:Z
+      - app-meteor:/app/.meteor:Z
     networks:
       - app-network
 
