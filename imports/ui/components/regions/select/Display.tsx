@@ -14,8 +14,8 @@ export function Display({
 
   return (
     <li data-test="region-select-display" className={className}>
-      <a
-        className="nav-link text-white"
+      <button
+        className="btn btn-link nav-link text-white rounded-0 w-100"
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -25,7 +25,7 @@ export function Display({
         <i className="fa-solid fa-location-dot" />
         &nbsp;
         {currentRegion ? currentRegion.name : t("menue.All regions", "All regions")}
-      </a>
+      </button>
     </li>
   );
 }

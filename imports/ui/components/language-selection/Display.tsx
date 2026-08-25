@@ -1,5 +1,6 @@
 import React from "react";
 import { useSession } from "/imports/utils/react-meteor-data";
+import { cx } from "/imports/utils/cx";
 
 import { LanguagesRaw } from "/imports/api/languages/languages";
 
@@ -11,34 +12,18 @@ export interface Props {
 export function Display({ inNavbar, onClick }: Props) {
   const locale = useSession("locale");
 
-  function inNavbarClasses() {
-    if (inNavbar) {
-      return "nav-item text-center col col-lg-auto";
-    }
-    return "";
-  }
-  function inNavbarClassesLink() {
-    if (inNavbar) {
-      return "text-white";
-    }
-    return "";
-  }
-  function setLanguage() {
-    return LanguagesRaw[locale];
-  }
-
   return (
-    <div className={inNavbarClasses()}>
-      <a
-        className={`nav-link ${inNavbarClassesLink()}`}
+    <div className={cx(inNavbar && "nav-item text-center col col-lg-auto")}>
+      <button
+        className={cx("btn btn-link", inNavbar && "nav-link rounded-0 text-white w-100")}
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
           onClick();
         }}
       >
-        <i className="fa-solid fa-globe fa-fw" /> {setLanguage().short}
-      </a>
+        <i className="fa-solid fa-globe fa-fw" /> {LanguagesRaw[locale].short}
+      </button>
     </div>
   );
 }

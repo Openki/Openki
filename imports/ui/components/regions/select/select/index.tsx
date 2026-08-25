@@ -219,7 +219,7 @@ export function Select(props: Props) {
 
   return (
     <li className={cx("region-select", props.className)}>
-      <form className="d-flex region-search-form" tabIndex={0} onSubmit={handleSubmit}>
+      <form className="d-flex region-search-form" onSubmit={handleSubmit}>
         <div
           className={cx(
             "input-group input-group-outline",
@@ -232,7 +232,7 @@ export function Select(props: Props) {
           <input
             ref={searchElementRef}
             className="form-control"
-            type="text"
+            type="search"
             defaultValue={
               currentRegion ? currentRegion.name : t("menue.All regions", "All regions") || ""
             }
@@ -244,12 +244,11 @@ export function Select(props: Props) {
           <button
             className="btn dropdown-toggle"
             data-bs-toggle="dropdown"
-            role="button"
             aria-expanded="false"
             data-bs-auto-close="outside"
             tabIndex={-1}
             ref={dropdownToggleElementRef}
-          ></button>
+          />
           <ul className="dropdown-menu dropdown-menu-end mx-2" role="menu">
             <li className="dropdown-header dropdown-legend">
               <div className="dropdown-addon-right">

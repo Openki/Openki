@@ -84,13 +84,14 @@
   transition: text-shadow $default-transition-time;
 }
 
-.navbar-brand:hover {
+.navbar-brand:hover,
+.navbar-brand:focus {
   text-shadow: rgb(0 0 0 / 25%) 1px 1px 1px;
-}
 
-.navbar-brand:hover > .site-name,
-.navbar-brand:hover > .site-stage {
-  color: $white;
+  & > .site-name,
+  & > .site-stage {
+    color: $white;
+  }
 }
 
 .nav-item {
@@ -117,7 +118,8 @@
     border-bottom: 1px solid $navbar-default-border;
   }
 
-  &:hover {
+  &:hover,
+  &:focus {
     text-shadow: rgb(0 0 0 / 25%) 1px 1px 1px;
   }
 }
@@ -145,6 +147,11 @@
   position: absolute;
   transition: opacity $default-transition-time;
   width: 0;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  background-color: css-lighten("openki-brand", 5%);
 }
 
 .nav-link.active {

@@ -28,7 +28,7 @@ export function UserFrame() {
         </div>
         <div className="mb-3">
           <a
-            className="btn btn-secondary form-control"
+            className="btn btn-secondary w-100"
             href={Router.path("userprofile", currentUser)}
             onClick={() => {
               collapse();
@@ -41,7 +41,7 @@ export function UserFrame() {
         </div>
         <div className="mb-3">
           <a
-            className="btn btn-secondary form-control"
+            className="btn btn-secondary w-100"
             href={Router.path("profile")}
             onClick={() => {
               collapse();
@@ -56,7 +56,7 @@ export function UserFrame() {
           <button
             data-test="navbar-user-frame-logout-button"
             type="button"
-            className="btn btn-secondary form-control"
+            className="btn btn-secondary w-100"
             onClick={(event) => {
               event.preventDefault();
               collapse();

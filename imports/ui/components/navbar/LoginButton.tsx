@@ -13,29 +13,27 @@ export function LoginButton() {
 
   if (user) {
     return (
-      <a
+      <button
         data-test="navbar-login-button"
-        className="nav-link text-white"
+        className="btn btn-link nav-link text-white rounded-0 w-100"
         aria-expanded="false"
         data-bs-toggle="dropdown"
-        role="button"
       >
         <i className="fa-solid fa-user fa-fw" /> {user.getDisplayName()}
-      </a>
+      </button>
     );
   }
 
   return (
-    <a
+    <button
       data-test="navbar-login-button"
-      className="nav-link text-white"
-      role="button"
+      className="btn btn-link nav-link text-white rounded-0 w-100"
       onClick={() => {
         Session.set("pleaseLogin", true);
       }}
     >
       <i className="fa-solid fa-right-to-bracket fa-fw" />{" "}
       {t("login.navig.unlogged", "Log in/register")}
-    </a>
+    </button>
   );
 }

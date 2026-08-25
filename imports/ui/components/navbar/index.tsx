@@ -12,6 +12,7 @@ import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 import { useMeteorStatus } from "/imports/utils/react-meteor-data";
 import { useSiteName } from "/imports/utils/getSiteName";
 import { Introduction } from "../../lib/introduction";
+import { cx } from "/imports/utils/cx";
 
 import { Collapse } from "/imports/startup/client/bootstrap";
 import { RegionSelectWrap } from "../regions/select";
@@ -110,7 +111,7 @@ export function Navbar() {
 
   return (
     <>
-      <nav className={`navbar navbar-expand-lg fixed-top bg-brand`} data-bs-theme="dark">
+      <nav className="navbar navbar-expand-lg fixed-top bg-brand">
         {PublicSettings.testWarning && <TestWarningTicker />}
         {/* Brand and toggle get grouped for better mobile display  */}
         <div className="navbar-container container-fluid">
@@ -131,7 +132,7 @@ export function Navbar() {
             ) : status === "connecting" ? (
               <>
                 <span
-                  className="fa-solid fa-circle-notch fa-spin fa-fw connecting"
+                  className="fa-solid fa-circle-notch fa-spin fa-fw connecting text-white"
                   title={t("status.connecting", "Connecting to server")}
                 />
                 <span className="sr-only">{t("status.connecting")}</span>
@@ -140,14 +141,14 @@ export function Navbar() {
               <>
                 {/* not connected */}
                 <span
-                  className="fa-solid fa-circle-notch fa-fw no-connection"
+                  className="fa-solid fa-circle-notch fa-fw no-connection text-white"
                   title={t("status.notConnected", "No connection to server")}
                 />
                 <span className="sr-only">{t("status.notConnected")}</span>
               </>
             )}
 
-            <span className="site-name">{siteName}</span>
+            <span className="site-name text-white">{siteName}</span>
             <span className="site-stage">{siteStage()}</span>
           </a>
           <button
@@ -169,7 +170,10 @@ export function Navbar() {
                 <li className="nav-item text-center col col-lg-auto">
                   <a
                     href={Router.path("search")}
-                    className={`${currentRouteIs("search", "showGroup") ? "active" : ""} nav-link`}
+                    className={cx(
+                      "nav-link text-white",
+                      currentRouteIs("search", "showGroup") && "active",
+                    )}
                     onClick={() => close()}
                   >
                     <i className="fa-regular fa-lightbulb fa-fw" /> {t("menue.Groups", "Find")}
@@ -181,7 +185,10 @@ export function Navbar() {
                 <li className="nav-item text-center col col-lg-auto">
                   <a
                     href={Router.path("proposeGroup")}
-                    className={`${currentRouteIs("proposeGroup", "createEvent") ? "active" : ""} nav-link `}
+                    className={cx(
+                      "nav-link text-white",
+                      currentRouteIs("proposeGroup", "createEvent") && "active",
+                    )}
                     onClick={() => close()}
                   >
                     <i className="fa-solid fa-pencil fa-fw" /> {t("menue.Create", "Create")}
@@ -193,7 +200,10 @@ export function Navbar() {
                 <li className="nav-item text-center col col-lg-auto">
                   <a
                     href={Router.path("calendar")}
-                    className={`${currentRouteIs("calendar") ? "active" : ""} nav-link calendar-link`}
+                    className={cx(
+                      "nav-link calendar-link text-white",
+                      currentRouteIs("calendar") && "active",
+                    )}
                     onClick={() => close()}
                   >
                     <i className="fa-regular fa-calendar-days fa-fw" />{" "}
@@ -205,13 +215,13 @@ export function Navbar() {
               )}
               {links().map((link) => (
                 <li key={link.link} className="nav-item text-center col col-lg-auto">
-                  <a href={link.link} className="nav-link" onClick={() => close()}>
+                  <a href={link.link} className="nav-link text-white" onClick={() => close()}>
                     <i className={`${link.icon} fa-fw`} /> {link.text}
                   </a>
                 </li>
               ))}
             </ul>
-            <ul className="navbar-nav flex-row" data-bs-theme="light">
+            <ul className="navbar-nav flex-row">
               <RegionSelectWrap
                 className="nav-item text-center col col-lg-auto"
                 autoFocus
@@ -225,7 +235,7 @@ export function Navbar() {
                 }}
               />
             </ul>
-            <ul className="navbar-nav text-center" data-bs-theme="light">
+            <ul className="navbar-nav text-center">
               <li className="dropdown login-link">
                 <LoginButton />
                 <div className="dropdown-menu dropdown-menu-end login-dropdown">
@@ -237,7 +247,7 @@ export function Navbar() {
         </div>
       </nav>
       <div
-        className={`navbar-custom-modal ${navbarIsCollapsed ? "d-none" : ""}`}
+        className={cx("navbar-custom-modal", navbarIsCollapsed && "d-none")}
         onClick={() => close()}
       ></div>
     </>

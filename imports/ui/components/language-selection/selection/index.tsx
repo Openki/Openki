@@ -9,6 +9,7 @@ import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { MarkedName } from "/imports/utils/marked-name";
 import { useLocalizedSetting } from "/imports/utils/getLocalizedValue";
+import { cx } from "/imports/utils/cx";
 
 import "./styles.scss";
 
@@ -18,7 +19,7 @@ export interface Props {
   onClose?: (() => void) | undefined;
 }
 
-export function Selection(props: Props) {
+export function Selection({ inNavbar, onSelect, onClose }: Props) {
   const { t } = useTranslation();
   const locale = useSession("locale");
   const { getLocalizedValue } = useLocalizedSetting();
@@ -63,16 +64,10 @@ export function Selection(props: Props) {
     // The db user update happens in the /imports/startup/client/locale.ts in Tracker.autorun(() => { ...
     Session.set("locale", lg);
 
-    props.onSelect?.();
-    props.onClose?.();
+    onSelect?.();
+    onClose?.();
   }
 
-  function inNavbarClasses() {
-    if (props.inNavbar) {
-      return "nav-item text-center col col-lg-auto";
-    }
-    return "";
-  }
   function currentLanguage() {
     return Languages.find(locale).fetch()[0];
   }
@@ -99,7 +94,7 @@ export function Selection(props: Props) {
       throw new Error("Unexpected falsy: dropdownToggleElementRef.current");
     dropdownToggleElementRef.current.addEventListener("hide.bs.dropdown", (event) => {
       if (!searchHasFocus) {
-        props.onClose?.();
+        onClose?.();
         return true;
       }
 
@@ -133,7 +128,7 @@ export function Selection(props: Props) {
   }
 
   return (
-    <li className={`language-selection ${inNavbarClasses()}`}>
+    <li className={cx("language-selection", inNavbar && "nav-item text-center col col-lg-auto")}>
       <form className="d-flex language-selection-form" tabIndex={0} onSubmit={handleSubmit}>
         <div className="input-group input-group-outline input-group-sm p-2">
           <span className="input-group-text">
@@ -142,7 +137,7 @@ export function Selection(props: Props) {
           <input
             ref={searchElementRef}
             className="form-control"
-            type="text"
+            type="search"
             defaultValue={currentLanguage().name}
             onKeyUp={handleSearchKeyUp}
             onFocus={handleSearchFocus}
@@ -152,12 +147,11 @@ export function Selection(props: Props) {
           <button
             className="btn dropdown-toggle"
             data-bs-toggle="dropdown"
-            role="button"
             aria-expanded="false"
             data-bs-auto-close="outside"
             tabIndex={-1}
             ref={dropdownToggleElementRef}
-          ></button>
+          />
           <ul className="dropdown-menu dropdown-menu-end mx-2" role="menu">
             {languages() ? (
               <>
@@ -171,13 +165,13 @@ export function Selection(props: Props) {
                   <li key={language.lg}>
                     <a
                       href="#"
-                      className={`dropdown-item ${isCurrentLanguage(language) ? "fw-bold" : ""}`}
+                      className={cx("dropdown-item", isCurrentLanguage(language) && "fw-bold")}
                       title={language.english}
                       onClick={() => changeLanguage(language)}
                     >
                       {isCurrentLanguage(language) && (
                         <>
-                          <span className="checkmark fa-solid fa-check"></span>{" "}
+                          <span className="checkmark fa-solid fa-check" />{" "}
                         </>
                       )}
                       {!!language.translatedPercent && (
