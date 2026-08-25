@@ -41,15 +41,15 @@ export const RoleEntityPattern = {
     /**
      * A short description, shown on group create/edit.
      *
-     * Default: "{ROLE_upperFirst}" \
-     * Example: "a host that provides a place"
+     * @default: "{ROLE_upperFirst}"
+     * @example: "a host that provides a place"
      */
     description: Match.Maybe(LocalizedValuePattern),
     /**
      * A call to action, shown on the button to subscribe as a role to a group.
      *
-     * Default: "I can be {ROLE}" \
-     * Example: "I have a place to host this"
+     * @default: "I can be {ROLE}"
+     * @example: "I have a place to host this"
      */
     subscribe: Match.Maybe(LocalizedValuePattern),
     /**
@@ -57,8 +57,8 @@ export const RoleEntityPattern = {
      * The variable `{GUIDE}` can be used to show the link from the `groupGuideLink`
      * setting from `settings.json`.
      *
-     * Default: "" \
-     * Example: "If not done already, please mention your experiences on the topic in your personal
+     * @default: ""
+     * @example: "If not done already, please mention your experiences on the topic in your personal
      *          message.\n\n{GUIDE}"
      */
     "group.firstSteps": Match.Maybe(LocalizedValuePattern),
@@ -66,8 +66,8 @@ export const RoleEntityPattern = {
      * A message send to the coordination team, after a user has subscribe. `\n` can be used to
      * add a linebreak. The variable `{USER}` and `{GROUP}` are available.
      *
-     * Default: "{USER} just joined {GROUP} as {ROLE}" \
-     * Example: "{USER} just joined {GROUP} as mentor\n\nIf you like them to collaborate feel free
+     * @default: "{USER} just joined {GROUP} as {ROLE}"
+     * @example: "{USER} just joined {GROUP} as mentor\n\nIf you like them to collaborate feel free
      *          to contact them. You can give them rights to edit {GROUP} and make them part of the
      *          coordination team by clicking the megaphone next to their name."
      */

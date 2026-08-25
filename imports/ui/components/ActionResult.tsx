@@ -49,7 +49,7 @@ export function ActionResult({
 
     report = report ?? true;
   } else {
-    throw new Error('Unexpected value for param "type": ' + type);
+    throw new Error(`Unexpected value for param "type": ${type}`);
   }
 
   if (typeof icon === "string" && icon.startsWith("fa-")) {

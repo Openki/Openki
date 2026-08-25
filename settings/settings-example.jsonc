@@ -387,7 +387,7 @@
           /*
            * A short description, shown on group create/edit.
            *
-           * Default: "{ROLE}"
+           * Default: "{ROLE_upperFirst}"
            * Example: "a host that provides a place"
            */
           // description: { ... },
