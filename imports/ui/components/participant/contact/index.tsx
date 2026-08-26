@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Modal } from "/imports/startup/client/bootstrap";
 import { useUser } from "/imports/utils/react-meteor-data";
+import { useDirectMessagesWithUser } from "/imports/api/emails/publications";
 
 import { GroupModel } from "/imports/api/groups/groups";
 import * as emailMethods from "/imports/api/emails/methods";
@@ -125,7 +126,7 @@ export function ParticipantContact(props: Props) {
                 </span>
               ))}
           </div>
-          {showModal && (
+          {showModal && participant && (
             <ParticipantContactModal
               ref={modalRef}
               sendMessageAttr={sendMessageAttr}
@@ -145,17 +146,9 @@ function ParticipantContactModal({
 }: {
   ref: React.Ref<HTMLDivElement> | null;
   sendMessageAttr: () => SendMessageProps;
-  participant: UserModel | undefined;
+  participant: UserModel;
 }) {
   const { t } = useTranslation();
-
-  {
-    /* TODO: Load previous messages*/
-  }
-
-  {
-    /* IDEA: Create a shared component for showing the previous message history which can be used both in the modal and in the user profile */
-  }
 
   return (
     <div className="modal" tabIndex={-1} role="dialog" ref={ref}>
@@ -177,10 +170,37 @@ function ParticipantContactModal({
             ></button>
           </div>
           <div className="modal-body">
+            <PreviousDirectMessages otherUser={participant} />
             <SendMessage {...sendMessageAttr()} />
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+const DEFAULT_VISIBLE_MESSAGES = 2;
+
+// TODO: Add translation keys
+// TODO: Add button to show all messages
+function PreviousDirectMessages({ otherUser }: { otherUser: UserModel }) {
+  const [isLoading, previousMessages] = useDirectMessagesWithUser(otherUser._id);
+  const [showAll, setShowAll] = useState(false);
+  const visibleMessages = showAll
+    ? previousMessages
+    : previousMessages.slice(0, DEFAULT_VISIBLE_MESSAGES);
+
+  return (
+    <div>
+      <h4>Previous messages with {otherUser.getDisplayName()}:</h4>
+      <div>
+        {!isLoading() &&
+          visibleMessages.map((entry) => {
+            const date = entry.ts.toLocaleString();
+            return <div key={date}>{date}</div>;
+          })}
+      </div>
+      <button onClick={() => setShowAll(true)}>Show all</button>
     </div>
   );
 }
