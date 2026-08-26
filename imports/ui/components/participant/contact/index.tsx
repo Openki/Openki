@@ -10,6 +10,7 @@ import { EventModel } from "/imports/api/events/events";
 import * as Users from "/imports/api/users/publications";
 
 import { SendMessage, Props as SendMessageProps } from "../../SendMessage";
+import { type UserModel } from "/imports/api/users/users";
 
 export interface Props {
   participant: string;
@@ -125,33 +126,61 @@ export function ParticipantContact(props: Props) {
               ))}
           </div>
           {showModal && (
-            <div className="modal" tabIndex={-1} role="dialog" ref={modalRef}>
-              <div className="modal-dialog modal-sm" role="document">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h4 className="modal-title">
-                      <i className="fa-solid fa-paper-plane fa-fw" />
-                      &nbsp;
-                      {t("participantContactModal.writeMessageTo", "Write a message to {USER}", {
-                        USER: participant?.getDisplayName(),
-                      })}
-                    </h4>
-                    <button
-                      type="button"
-                      className="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label={t("_button.close")}
-                    ></button>
-                  </div>
-                  <div className="modal-body">
-                    <SendMessage {...sendMessageAttr()} />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ParticipantContactModal
+              ref={modalRef}
+              sendMessageAttr={sendMessageAttr}
+              participant={participant}
+            />
           )}
         </>
       )}
     </>
+  );
+}
+
+function ParticipantContactModal({
+  ref,
+  sendMessageAttr,
+  participant,
+}: {
+  ref: React.Ref<HTMLDivElement> | null;
+  sendMessageAttr: () => SendMessageProps;
+  participant: UserModel | undefined;
+}) {
+  const { t } = useTranslation();
+
+  {
+    /* TODO: Load previous messages*/
+  }
+
+  {
+    /* IDEA: Create a shared component for showing the previous message history which can be used both in the modal and in the user profile */
+  }
+
+  return (
+    <div className="modal" tabIndex={-1} role="dialog" ref={ref}>
+      <div className="modal-dialog modal-sm" role="document">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h4 className="modal-title">
+              <i className="fa-solid fa-paper-plane fa-fw" />
+              &nbsp;
+              {t("participantContactModal.writeMessageTo", "Write a message to {USER}", {
+                USER: participant?.getDisplayName(),
+              })}
+            </h4>
+            <button
+              type="button"
+              className="btn-close"
+              data-bs-dismiss="modal"
+              aria-label={t("_button.close")}
+            ></button>
+          </div>
+          <div className="modal-body">
+            <SendMessage {...sendMessageAttr()} />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
