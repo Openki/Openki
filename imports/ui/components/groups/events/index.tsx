@@ -51,11 +51,11 @@ export function Events({ group }: Props) {
 
   const [isLoading, events] = EventsPub.useForGroup(group._id);
 
-  function haveEvents() {
+  function hasEvents() {
     return events.sort(compareByStartDate).some((e) => e.end >= now);
   }
 
-  function haveMoreEvents() {
+  function hasMoreEvents() {
     return events.sort(compareByStartDate).filter((e) => e.end >= now).length > maxEventsShown;
   }
 
@@ -76,14 +76,14 @@ export function Events({ group }: Props) {
   function upcomingEventsCount() {
     return group.futureEvents;
   }
-  function haveOngoingEvents() {
+  function hasOngoingEvents() {
     return ongoingEvents().length > 0;
   }
-  function haveFutureEvents() {
+  function hasFutureEvents() {
     return futureEvents().length > 0;
   }
-  function showHaveMoreEvents() {
-    return haveMoreEvents() && !showAllEvents;
+  function showHasMoreEvents() {
+    return hasMoreEvents() && !showAllEvents;
   }
   function deleteGroupEventsArgs() {
     return {
@@ -105,9 +105,9 @@ export function Events({ group }: Props) {
   return (
     <>
       {!isLoading() ? (
-        haveEvents() ? (
+        hasEvents() ? (
           <div className="page-component">
-            {haveOngoingEvents() && (
+            {hasOngoingEvents() && (
               <>
                 <div className="page-component-header">
                   <h4>{t("group.events.ongoinglist", "Ongoing events")}</h4>
@@ -118,7 +118,7 @@ export function Events({ group }: Props) {
               </>
             )}
 
-            {haveFutureEvents() && (
+            {hasFutureEvents() && (
               <>
                 <div className="page-component-header d-flex align-items-center justify-content-between">
                   <h4>
@@ -129,7 +129,7 @@ export function Events({ group }: Props) {
                     )}
                   </h4>
                   <div>
-                    {group.editableBy(user) && haveEvents() && (
+                    {group.editableBy(user) && hasEvents() && (
                       <DeleteEvents {...deleteGroupEventsArgs()} />
                     )}
                     {showModal && <DeleteEventsModal {...deleteEventsModalArgs()} />}
@@ -139,7 +139,7 @@ export function Events({ group }: Props) {
                   <EventList dataEvents={futureEvents()} withDate />
                 </div>
                 <div className="mt-2 text-center">
-                  {showHaveMoreEvents() && (
+                  {showHasMoreEvents() && (
                     <Button
                       id="group-events-showAll"
                       className="btn-add"
@@ -174,7 +174,7 @@ export function Events({ group }: Props) {
         </div>
       )}
 
-      {!isLoading() && haveEvents() && (
+      {!isLoading() && hasEvents() && (
         <div className="page-component">
           <a
             href={Router.path("calGroup", group)}
