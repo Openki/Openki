@@ -1,7 +1,7 @@
 @use "sass:map";
 
-/* 
- * Utilities (named like in Tailwind CSS) created with the bootstrap api 
+/*
+ * Utilities (named like in Tailwind CSS) created with the bootstrap api
  * See: https://getbootstrap.com/docs/5.3/utilities/api/
  */
 
@@ -58,6 +58,14 @@ $utilities: map.merge(
       class: whitespace,
       values: (
         pre-line: pre-line,
+      ),
+    ),
+    "justify-self": (
+      property: justify-self,
+      class: justify-self,
+      values: (
+        start: start,
+        end: end,
       ),
     ),
   )

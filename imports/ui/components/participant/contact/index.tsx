@@ -12,6 +12,8 @@ import * as Users from "/imports/api/users/publications";
 
 import { SendMessage, Props as SendMessageProps } from "../../SendMessage";
 import { type UserModel } from "/imports/api/users/users";
+import { LogEntity } from "/imports/api/log/factory";
+import { cx } from "/imports/utils/cx";
 
 export interface Props {
   participant: string;
@@ -22,7 +24,8 @@ export interface Props {
 export function ParticipantContact(props: Props) {
   const modalRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
-  const [showModal, setShowModal] = useState(false);
+  // TODO: Temporary during development
+  const [showModal, setShowModal] = useState(true);
   const user = useUser();
   const [isLoading, participant] = Users.useDetails(props.participant);
 
@@ -179,28 +182,59 @@ function ParticipantContactModal({
   );
 }
 
+type DirectMessage = Pick<LogEntity, "_id" | "ts"> & {
+  // TODO: Handle other kinds of contexts
+  // for example events
+  body: { message: string; sender: string; targetRecipient: string; context?: { group?: string } };
+};
+
 const DEFAULT_VISIBLE_MESSAGES = 2;
 
 // TODO: Add translation keys
 // TODO: Add button to show all messages
 function PreviousDirectMessages({ otherUser }: { otherUser: UserModel }) {
+  // TODO: Improve type for returned messages
   const [isLoading, previousMessages] = useDirectMessagesWithUser(otherUser._id);
   const [showAll, setShowAll] = useState(false);
-  const visibleMessages = showAll
-    ? previousMessages
-    : previousMessages.slice(0, DEFAULT_VISIBLE_MESSAGES);
+  const visibleMessages = (
+    showAll ? previousMessages : previousMessages.slice(0, DEFAULT_VISIBLE_MESSAGES)
+  ) as DirectMessage[];
+
+  const currentUserId = Meteor.userId()!;
 
   return (
-    <div>
+    <div className="mb-4">
       <h4>Previous messages with {otherUser.getDisplayName()}:</h4>
       <span>
         Showing {visibleMessages.length} / {previousMessages.length}
       </span>
-      <div>
+      <div className="d-grid gap-2">
         {!isLoading() &&
-          visibleMessages.map((entry) => {
-            const date = entry.ts.toLocaleString();
-            return <div key={date}>{date}</div>;
+          visibleMessages.map(({ _id, ts, body }) => {
+            const wasSentByCurrentUser = body.sender === currentUserId;
+            return (
+              <div key={_id} className="d-grid gap-2">
+                <section
+                  className={cx(
+                    "p-3 mw-75 rounded-3 whitespace-pre-line",
+                    wasSentByCurrentUser
+                      ? "justify-self-end bg-primary-subtle"
+                      : "justify-self-start bg-secondary-subtle",
+                  )}
+                >
+                  {body.message}
+                </section>
+                <time
+                  dateTime={ts.toISOString()}
+                  className={cx(
+                    "small",
+                    wasSentByCurrentUser ? "justify-self-end" : "justify-self-start",
+                  )}
+                >
+                  {ts.toLocaleString()}
+                </time>
+              </div>
+            );
           })}
       </div>
       <button onClick={() => setShowAll(true)}>Show all</button>
