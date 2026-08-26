@@ -16,8 +16,6 @@ export const [directMessagesWithUser, useDirectMessagesWithUser] = ServerPublish
       tr: "Notification.Send",
       rel: { $all: [otherUserId, userId] },
       "body.model": "PrivateMessage",
-      "body.sender": userId,
-      "body.targetRecipient": otherUserId,
     };
     console.dir(query);
 
@@ -45,8 +43,6 @@ export const [directMessagesWithUser, useDirectMessagesWithUser] = ServerPublish
       tr: "Notification.Send",
       rel: { $all: [otherUserId, userId] },
       "body.model": "PrivateMessage",
-      "body.sender": userId,
-      "body.targetRecipient": otherUserId,
     };
 
     return Log.find(query, {
