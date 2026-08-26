@@ -193,6 +193,9 @@ function PreviousDirectMessages({ otherUser }: { otherUser: UserModel }) {
   return (
     <div>
       <h4>Previous messages with {otherUser.getDisplayName()}:</h4>
+      <span>
+        Showing {visibleMessages.length} / {previousMessages.length}
+      </span>
       <div>
         {!isLoading() &&
           visibleMessages.map((entry) => {
