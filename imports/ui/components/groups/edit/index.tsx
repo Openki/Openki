@@ -609,7 +609,7 @@ export function Edit({
               </div>
             )}
 
-            {!!selectedRegion && (
+            {!!selectedRegion && fullRoleSelection && (
               <RoleSelect
                 selectedRegion={selectedRegion}
                 value={roles}
@@ -619,7 +619,6 @@ export function Edit({
                 defaultUsersRoles={
                   group.members?.find((member) => member.user === user?._id)?.roles
                 }
-                fullRoleSelection={fullRoleSelection}
                 disabledCreateRoles={disabledCreateRoles}
               />
             )}

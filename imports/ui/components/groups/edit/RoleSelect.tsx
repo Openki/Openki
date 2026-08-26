@@ -23,8 +23,6 @@ interface Props {
 
   selectedRegion: string;
 
-  fullRoleSelection: boolean;
-
   onChange: (role: Props["value"]) => void;
 
   isNewGroup: boolean;
@@ -36,7 +34,6 @@ export function RoleSelect({
   defaultUsersRoles,
   disabledCreateRoles,
   selectedRegion,
-  fullRoleSelection,
   onChange,
   isNewGroup,
 }: Props) {
@@ -128,7 +125,6 @@ export function RoleSelect({
   }
 
   return (
-    fullRoleSelection &&
     availableRoles().length > 0 && (
       <div className="col-md">
         <div className="form-label">{t("group.edit.needs.role", "This group might need…")}</div>
