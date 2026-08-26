@@ -56,6 +56,7 @@
     "seedrandom": "3.0.5",
     "shareon": "2.8.1",
     "sitemap": "9.0.1",
+    "slugify": "1.6.9",
     "swr": "2.4.2",
     "tinycolor2": "1.6.0",
     "use-debounce": "10.1.1",
