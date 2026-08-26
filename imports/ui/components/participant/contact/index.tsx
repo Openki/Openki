@@ -208,18 +208,18 @@ function PreviousDirectMessages({ otherUser }: { otherUser: UserModel }) {
       <span>
         Showing {visibleMessages.length} / {previousMessages.length}
       </span>
-      <div className="d-grid gap-2">
+      <div className="d-grid gap-3">
         {!isLoading() &&
           visibleMessages.map(({ _id, ts, body }) => {
             const wasSentByCurrentUser = body.sender === currentUserId;
             return (
-              <div key={_id} className="d-grid gap-2">
+              <div key={_id} className="d-grid gap-1">
                 <section
                   className={cx(
-                    "p-3 mw-75 rounded-3 whitespace-pre-line",
+                    "p-3 max-w-75 rounded-3 whitespace-pre-line",
                     wasSentByCurrentUser
                       ? "justify-self-end bg-primary-subtle"
-                      : "justify-self-start bg-secondary-subtle",
+                      : "justify-self-start bg-secondary",
                   )}
                 >
                   {body.message}
@@ -231,7 +231,7 @@ function PreviousDirectMessages({ otherUser }: { otherUser: UserModel }) {
                     wasSentByCurrentUser ? "justify-self-end" : "justify-self-start",
                   )}
                 >
-                  {ts.toLocaleString()}
+                  {ts.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}
                 </time>
               </div>
             );

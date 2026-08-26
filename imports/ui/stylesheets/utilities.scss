@@ -39,6 +39,13 @@ $utilities: map.merge(
         \[2lh\]: 2lh,
       ),
     ),
+    "max-w": (
+      property: max-width,
+      class: max-w,
+      values: (
+        75: 75%,
+      ),
+    ),
     "touch": (
       property: touch-action,
       class: touch,
