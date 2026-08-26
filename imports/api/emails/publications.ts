@@ -24,7 +24,17 @@ export const [directMessagesWithUser, useDirectMessagesWithUser] = ServerPublish
     // TODO: Once the real data is returned as expected, this needs to return data in a different format
     // so we don't expose sensitive information to the client.
     // This means we need to transform each returned entry and can not simply return log entries as they are.
-    return Log.find(query, { sort: [["ts", "asc"]] });
+    return Log.find(query, {
+      sort: [["ts", "asc"]],
+      // TODO: Figure out why no data is returned when this projection is enabled.
+      // NOTE: The projection works when running a single query via the MongoDB Compass GUI
+      // IDEA: Maybe we can exclude fields using another method?
+      // projection: {
+      //   _id: 1,
+      //   body: 1,
+      //   ts: 1,
+      // },
+    });
   },
   (otherUserId) => {
     const userId = Meteor.userId();
@@ -38,8 +48,17 @@ export const [directMessagesWithUser, useDirectMessagesWithUser] = ServerPublish
       "body.sender": userId,
       "body.targetRecipient": otherUserId,
     };
-    console.dir(query);
 
-    return Log.find(query, { sort: [["ts", "asc"]] });
+    return Log.find(query, {
+      sort: [["ts", "asc"]],
+      // TODO: Figure out why no data is returned when this projection is enabled.
+      // NOTE: The projection works when running a single query via the MongoDB Compass GUI
+      // IDEA: Maybe we can exclude fields using another method?
+      // projection: {
+      //   _id: 1,
+      //   body: 1,
+      //   ts: 1,
+      // },
+    });
   },
 );
