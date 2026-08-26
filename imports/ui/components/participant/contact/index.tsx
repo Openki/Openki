@@ -197,17 +197,25 @@ function PreviousDirectMessages({ otherUser }: { otherUser: UserModel }) {
   const [isLoading, previousMessages] = useDirectMessagesWithUser(otherUser._id);
   const [showAll, setShowAll] = useState(false);
   const visibleMessages = (
-    showAll ? previousMessages : previousMessages.slice(0, DEFAULT_VISIBLE_MESSAGES)
+    showAll ? previousMessages : previousMessages.slice(-DEFAULT_VISIBLE_MESSAGES)
   ) as DirectMessage[];
 
   const currentUserId = Meteor.userId()!;
 
   return (
     <div className="mb-4">
-      <h4>Previous messages with {otherUser.getDisplayName()}:</h4>
-      <span>
-        Showing {visibleMessages.length} / {previousMessages.length}
-      </span>
+      <h4>Previous messages:</h4>
+      {previousMessages.length > visibleMessages.length && (
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <span>
+            Showing {visibleMessages.length} / {previousMessages.length}
+          </span>
+          <button onClick={() => setShowAll(true)} className="btn btn-secondary btn-sm">
+            Show all
+          </button>
+        </div>
+      )}
+
       <div className="d-grid gap-3">
         {!isLoading() &&
           visibleMessages.map(({ _id, ts, body }) => {
@@ -237,7 +245,6 @@ function PreviousDirectMessages({ otherUser }: { otherUser: UserModel }) {
             );
           })}
       </div>
-      <button onClick={() => setShowAll(true)}>Show all</button>
     </div>
   );
 }
