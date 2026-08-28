@@ -10,7 +10,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import {
   OrganizationModel,
   Organizations,
-  OrganizationMemberEntity,
+  OrganizationMember,
 } from "/imports/api/organizations/organizations";
 import * as OrganizationsMethods from "/imports/api/organizations/methods";
 import { UserModel } from "/imports/api/users/users";
@@ -32,7 +32,7 @@ function RemoveMember({
   user,
   notify,
   onRemove,
-}: OrganizationMemberEntity & { onRemove: (memberId: string, memberName: string) => void }) {
+}: OrganizationMember & { onRemove: (memberId: string, memberName: string) => void }) {
   const { t } = useTranslation();
   const userName = useTracker(() => getUserName(user));
   const currentUserId = useUserId();

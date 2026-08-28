@@ -3,7 +3,7 @@ import { Router } from "meteor/iron:router";
 import moment from "moment";
 import { Users } from "/imports/api/users/users";
 import { Groups } from "./api/groups/groups";
-import { Events } from "/imports/api/events/events";
+import { Events, isEventVenueRef } from "/imports/api/events/events";
 import { Organizations } from "./api/organizations/organizations";
 import { Venues } from "/imports/api/venues/venues";
 import { Regions } from "/imports/api/regions/regions";
@@ -48,12 +48,12 @@ export interface ApiEvent {
   slug: string | undefined;
   createdBy?: { id: string; name: string };
   venue?: {
-    id: string | undefined;
+    id?: string | undefined;
     name: string | undefined;
     address: string | undefined;
     loc: Geodata | undefined;
     level: number | undefined;
-    link: string | undefined;
+    link?: string | undefined;
   };
   group?: {
     id: string;
@@ -141,14 +141,23 @@ export const Api = {
       }
 
       if (ev.venue) {
-        evr.venue = {
-          id: ev.venue._id,
-          name: ev.venue.name,
-          address: ev.venue.address,
-          loc: ev.venue.loc,
-          level: ev.venue.level,
-          link: maybeUrl("venueDetails", ev.venue),
-        };
+        if (isEventVenueRef(ev.venue)) {
+          evr.venue = {
+            id: ev.venue._id,
+            name: ev.venue.name,
+            address: ev.venue.address,
+            loc: ev.venue.loc,
+            level: ev.venue.level,
+            link: maybeUrl("venueDetails", ev.venue),
+          };
+        } else {
+          evr.venue = {
+            name: ev.venue.name,
+            address: ev.venue.address,
+            loc: ev.venue.loc,
+            level: ev.venue.level,
+          };
+        }
       }
 
       if (ev.groupId) {

@@ -16,29 +16,28 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { FieldSort, FieldSortPattern, Sort } from "/imports/utils/sort-spec";
 import { Tuple, Type } from "/imports/utils/CustomChecks";
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
+import { VenueEntity } from "/imports/api/venues/venues";
 
-export interface EventParticipantEntity {
+export interface EventParticipant {
   user: string;
   companions?: number;
   removeToken: string;
 }
 
-export interface EventVenueEntity {
-  /**
-   * Optional reference to a document in the Venues collection. If this is set, the fields
-   * name, loc, and address are synchronized
-   */
-  _id?: string;
+export type EventVenueRef = Pick<
+  VenueEntity,
+  "_id" | "name" | "address" | "loc" | "level" | "editor" | "restrictedUse"
+>;
+
+export interface EventVenue {
   /** Descriptive name for the venue */
   name: string;
+  /** Address string where the event will take place */
+  address?: string;
   /** Event location in GeoJSON format */
   loc?: Geodata;
   /** Floor level for custom maps as integer */
   level?: number;
-  /** Address string where the event will take place */
-  address?: string;
-  editor?: string;
-  restrictedUse?: boolean;
 }
 
 /** DB-Model */
@@ -58,7 +57,11 @@ export interface EventEntity {
   startLocal: string;
   /** String of local date & time when event ends */
   endLocal: string;
-  venue?: EventVenueEntity;
+  /**
+   * Optional reference to a document in the Venues collection. If the _id is set, the fields
+   * name, address, loc, level, editor and restrictedUse are synchronized
+   */
+  venue?: EventVenue | EventVenueRef;
   /** (Where inside the building the event will take place) */
   room: string;
   /** userId */
@@ -83,7 +86,7 @@ export interface EventEntity {
   teamOrganizations: string[];
   /** ID of the replication parent, only cloned events have this */
   replicaOf?: string;
-  participants?: EventParticipantEntity[];
+  participants?: EventParticipant[];
   /** Registration is disabled */
   noRsvp: boolean;
   /** maximum participants of event, 0 means no participant limit */
@@ -117,6 +120,10 @@ export interface EventEntity {
 }
 
 export type EventModel = OEvent & EventEntity;
+
+export function isEventVenueRef(venue: EventEntity["venue"]): venue is EventVenueRef {
+  return !!(venue && "_id" in venue && venue._id);
+}
 
 // Event is a built-in, so we use a different name for this class
 export class OEvent {

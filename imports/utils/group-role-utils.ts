@@ -1,4 +1,4 @@
-import { GroupMemberEntity } from "/imports/api/groups/groups";
+import { GroupMember } from "/imports/api/groups/groups";
 
 /**
  * Determine whether there is a member with the given role
@@ -6,7 +6,7 @@ import { GroupMemberEntity } from "/imports/api/groups/groups";
  * @param role role key
  * @return true if there is a member with the given role, and false otherwise.
  */
-export function hasRole(members: GroupMemberEntity[] | undefined, role: string | undefined) {
+export function hasRole(members: GroupMember[] | undefined, role: string | undefined) {
   if (!members) {
     return false;
   }
@@ -24,7 +24,7 @@ export function hasRole(members: GroupMemberEntity[] | undefined, role: string |
  * @return whether the user has this role
  */
 export function hasRoleUser(
-  members: GroupMemberEntity[],
+  members: GroupMember[],
   role: string,
   userId: string | undefined | null,
 ) {

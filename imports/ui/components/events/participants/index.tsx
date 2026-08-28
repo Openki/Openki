@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Modal } from "/imports/startup/client/bootstrap";
 
-import { EventModel, EventParticipantEntity } from "/imports/api/events/events";
+import { EventModel, EventParticipant } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 
 import { useUser } from "/imports/utils/react-meteor-data";
@@ -20,7 +20,7 @@ function EventParticipant({
   participant,
   event,
 }: {
-  participant: EventParticipantEntity;
+  participant: EventParticipant;
   event: EventModel;
 }) {
   const { t } = useTranslation();

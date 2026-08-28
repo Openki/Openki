@@ -1,6 +1,6 @@
 import { Mongo } from "meteor/mongo";
 
-import { EventEntity, Events } from "/imports/api/events/events";
+import { EventEntity, Events, isEventVenueRef } from "/imports/api/events/events";
 import { VenueModel, Venues } from "/imports/api/venues/venues";
 
 /**
@@ -9,7 +9,7 @@ import { VenueModel, Venues } from "/imports/api/venues/venues";
 export async function updateVenue(eventIdOrSelector: string | Mongo.Selector<EventEntity>) {
   for (const event of await Events.find(eventIdOrSelector).fetchAsync()) {
     let venue: VenueModel | undefined;
-    if (event.venue?._id) {
+    if (isEventVenueRef(event.venue)) {
       venue = await Venues.findOneAsync(event.venue._id);
     }
 
@@ -26,6 +26,7 @@ export async function updateVenue(eventIdOrSelector: string | Mongo.Selector<Eve
           "venue.name": venue.name,
           "venue.address": venue.address,
           "venue.loc": venue.loc,
+          "venue.level": venue.level,
           "venue.editor": venue.editor,
           "venue.restrictedUse": venue.restrictedUse,
         },

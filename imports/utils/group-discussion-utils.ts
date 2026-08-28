@@ -1,10 +1,10 @@
-import { GroupMemberEntity } from "/imports/api/groups/groups";
+import { GroupMember } from "/imports/api/groups/groups";
 import { UserModel } from "/imports/api/users/users";
 import { hasRoleUser } from "./group-role-utils";
 
 export function canDeletePost(
   user: UserModel | undefined | null,
-  group: { members: GroupMemberEntity[] },
+  group: { members: GroupMember[] },
   post: { userId?: string },
 ) {
   if (!user) {

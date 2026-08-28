@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { EventModel } from "/imports/api/events/events";
+import { EventModel, isEventVenueRef } from "/imports/api/events/events";
 import { Regions } from "/imports/api/regions/regions";
 import { useTranslation } from "react-i18next";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
@@ -92,7 +92,7 @@ export function Event({ event, hideRsvp }: Props) {
           <div className="row">
             <div className="col-4 col-sm-2 fw-bold">{t("frame.eventsList.where", "Where:")}</div>
             <div className="col-8 col-sm-10">
-              {event.venue?._id ? (
+              {isEventVenueRef(event.venue) ? (
                 <a href={Router.path("venueDetails", event.venue)} target="_blank" rel="noreferrer">
                   {event.venue.name}
                 </a>

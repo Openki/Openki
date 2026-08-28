@@ -6,7 +6,7 @@ import { differenceBy, uniqBy } from "lodash-es";
 
 import { UserModel } from "/imports/api/users/users";
 import * as Alert from "/imports/api/alerts/alert";
-import { EventVenueEntity } from "/imports/api/events/events";
+import { EventEntity, EventVenueRef } from "/imports/api/events/events";
 import * as Regions from "/imports/api/regions/publications";
 import * as Venues from "/imports/api/venues/publications";
 import { useUser } from "/imports/utils/react-meteor-data";
@@ -22,7 +22,7 @@ import {
 import { ReactJoin } from "../../../../../utils/ReactJoin";
 import { Icon as VenueIcon } from "../../../venues/Icon";
 
-function toEventVenue(venue: EventVenueEntity) {
+function toEventVenue(venue: EventVenueRef) {
   return {
     _id: venue._id,
     name: venue.name,
@@ -31,11 +31,11 @@ function toEventVenue(venue: EventVenueEntity) {
     address: venue.address,
     editor: venue.editor,
     restrictedUse: venue.restrictedUse,
-  } as EventVenueEntity;
+  } as EventVenueRef;
 }
 
-export function filterUserVenues(user: UserModel | null, venues: EventVenueEntity[]) {
-  let userVenues: EventVenueEntity[] = [];
+export function filterUserVenues(user: UserModel | null, venues: EventVenueRef[]) {
+  let userVenues: EventVenueRef[] = [];
   if (user?.venues?.length) {
     userVenues = venues.filter((v) => v._id && user.venues.includes(v._id)).map(toEventVenue);
   }
@@ -50,7 +50,7 @@ function CustomMenu({
 }: {
   region: string;
   text: string;
-  results: EventVenueEntity[];
+  results: EventVenueRef[];
   menuProps: RenderMenuProps;
 }) {
   const { t } = useTranslation();
@@ -130,7 +130,7 @@ function CustomMenu({
         option={
           isLoading()
             ? {}
-            : ({ loc: region?.map?.center || region?.loc, name: text } as EventVenueEntity)
+            : ({ loc: region?.map?.center || region?.loc, name: text } as EventVenueRef)
         }
         position={userVenues.length + userVenues.length + 1}
       >
@@ -169,9 +169,9 @@ export function SearchBase({
   region: string;
   /** A selection of venues proposed to the user. */
   venues: string[];
-  onRequest: (query: string) => Promise<EventVenueEntity[]>;
-  value: EventVenueEntity | undefined;
-  onChange: (newValue: EventVenueEntity) => void;
+  onRequest: (query: string) => Promise<EventVenueRef[]>;
+  value: EventEntity["venue"] | undefined;
+  onChange: (newValue: EventVenueRef) => void;
   onBlur: FocusEventHandler<HTMLInputElement>;
 }) {
   const { t } = useTranslation();
@@ -181,7 +181,7 @@ export function SearchBase({
 
   const [isLoadingAllVenues, allVenues] = Venues.useFindFilter({ region: region });
 
-  const [options, setOptions] = useState<EventVenueEntity[]>([]);
+  const [options, setOptions] = useState<EventVenueRef[]>([]);
 
   const handleSearch = async (query: string) => {
     setIsLoading(true);
@@ -196,7 +196,7 @@ export function SearchBase({
         )
         .map(toEventVenue);
 
-      const externalVenues: EventVenueEntity[] = await request;
+      const externalVenues: EventVenueRef[] = await request;
 
       setOptions([...filteredVenues, ...externalVenues]);
     } catch (reason) {
@@ -222,7 +222,7 @@ export function SearchBase({
       filterBy={() => true}
       isLoading={isLoading}
       labelKey={(option) => {
-        const venue = option as EventVenueEntity;
+        const venue = option as EventVenueRef;
         return [venue.name, venue.address].filter((v) => v).join(", ");
       }}
       minLength={0}
@@ -251,12 +251,12 @@ export function SearchBase({
       renderMenu={(results, menuProps, state) => (
         <CustomMenu
           region={region}
-          results={results as EventVenueEntity[]}
+          results={results as EventVenueRef[]}
           menuProps={menuProps}
           text={state.text}
         />
       )}
-      onChange={(newValue) => onChange(newValue[0] as EventVenueEntity)}
+      onChange={(newValue) => onChange(newValue[0] as EventVenueRef)}
       onBlur={onBlur}
     />
   );

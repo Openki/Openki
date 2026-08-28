@@ -2,7 +2,7 @@ import React, { FocusEventHandler, ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { isEmpty } from "lodash-es";
 
-import { EventVenueEntity } from "/imports/api/events/events";
+import { EventEntity } from "/imports/api/events/events";
 import { useFindFilter as useOrganizationsFindFilter } from "/imports/api/organizations/publications";
 import { useDetails as useGroupDetails } from "/imports/api/groups/publications";
 
@@ -14,14 +14,11 @@ import { Search } from "./search";
 import { Timetable } from "./Timetable";
 import { FormControl } from "/imports/ui/components/form-control";
 import { Button } from "/imports/ui/components/Buttons";
-import {
-  OrganizationEntity,
-  OrganizationVenueEntity,
-} from "/imports/api/organizations/organizations";
+import { OrganizationEntity, OrganizationVenueRef } from "/imports/api/organizations/organizations";
 
 export interface Props {
   region: string;
-  value?: EventVenueEntity | undefined;
+  value?: EventEntity["venue"] | undefined;
   event: {
     _id?: string | undefined;
     groupId?: string | undefined;
@@ -29,13 +26,13 @@ export interface Props {
     startLocal: string;
     endLocal: string;
   };
-  onChange: (newValue: EventVenueEntity | undefined) => void;
+  onChange: (newValue: EventEntity["venue"] | undefined) => void;
   errors: Partial<Record<"venue" | "startEndVenue", ReactNode>>;
   onBlur: FocusEventHandler<HTMLInputElement>;
 }
 
-function getVenueIds(groups: OrganizationEntity[] = []): OrganizationVenueEntity["_id"][] {
-  const venueIds: OrganizationVenueEntity["_id"][] = [];
+function getVenueIds(groups: OrganizationEntity[] = []): OrganizationVenueRef["_id"][] {
+  const venueIds: OrganizationVenueRef["_id"][] = [];
 
   for (const group of groups) {
     for (const venue of group.venues ?? []) {

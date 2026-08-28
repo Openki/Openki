@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { GroupMemberEntity } from "../../../imports/api/groups/groups";
+import { GroupMember } from "../../../imports/api/groups/groups";
 
 import { hasRole, hasRoleUser } from "../../../imports/utils/group-role-utils";
 
 describe("Role check", () => {
-  const members: GroupMemberEntity[] = [
+  const members: GroupMember[] = [
     { user: "user1", roles: ["role1", "role1000"], comment: "" },
     { user: "user2", roles: ["role2", "role1000"], comment: "" },
     { user: "user3", roles: ["role3"], comment: "" },

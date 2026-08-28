@@ -1,6 +1,6 @@
 import React, { type FocusEventHandler } from "react";
 
-import { EventVenueEntity } from "/imports/api/events/events";
+import { EventEntity } from "/imports/api/events/events";
 import * as Regions from "/imports/api/regions/publications";
 
 import { NominatimSearch } from "/imports/ui/components/events/edit-venue/search/NominatimSearch";
@@ -13,8 +13,8 @@ export function Search(props: {
   autofocus?: boolean | undefined;
   region: string;
   venues: string[];
-  value: EventVenueEntity | undefined;
-  onChange: (newValue: EventVenueEntity) => void;
+  value: EventEntity["venue"] | undefined;
+  onChange: (newValue: EventEntity["venue"]) => void;
   onBlur: FocusEventHandler<HTMLInputElement>;
 }) {
   const [isLoadingRegion, region] = Regions.useDetails(props.region);

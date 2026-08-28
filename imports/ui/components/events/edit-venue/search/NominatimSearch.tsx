@@ -1,7 +1,7 @@
 import React, { FocusEventHandler } from "react";
 import { map } from "lodash-es";
 
-import { EventVenueEntity } from "/imports/api/events/events";
+import { EventEntity } from "/imports/api/events/events";
 import * as Regions from "/imports/api/regions/publications";
 
 import { RegionModel } from "/imports/api/regions/regions";
@@ -10,7 +10,7 @@ import { SearchBase } from "/imports/ui/components/events/edit-venue/search/Sear
 async function requestVenuesFromNominatim(
   region: RegionModel | undefined,
   query: string,
-): Promise<EventVenueEntity[]> {
+): Promise<EventEntity["venue"][]> {
   const nominatimQuery: Record<string, any> = {
     format: "json",
     q: query,
@@ -80,8 +80,8 @@ export function NominatimSearch({
   autofocus?: boolean | undefined;
   region: string;
   venues: string[];
-  value: EventVenueEntity | undefined;
-  onChange: (newValue: EventVenueEntity) => void;
+  value: EventEntity["venue"] | undefined;
+  onChange: (newValue: EventEntity["venue"]) => void;
   onBlur: FocusEventHandler<HTMLInputElement>;
 }) {
   const [isLoadingRegion, region] = Regions.useDetails(regionId);
