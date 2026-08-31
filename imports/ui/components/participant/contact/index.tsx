@@ -54,6 +54,8 @@ export function ParticipantContact(props: Props) {
   }
 
   const userHasVerifiedEmail = Boolean(user?.hasVerifiedEmail());
+  const [isLoadingMessages, previousMessages] = useDirectMessagesWithUser(props.participant);
+  const showEmailOptions = !isLoadingMessages() && previousMessages.length === 0;
 
   function sendMessageAttr(): SendMessageProps {
     return {
@@ -81,6 +83,7 @@ export function ParticipantContact(props: Props) {
           Modal.getOrCreateInstance(element).hide();
         }
       },
+      showEmailOptions,
     };
   }
 
@@ -191,11 +194,11 @@ type DirectMessage = Pick<LogEntity, "_id" | "ts"> & {
 const DEFAULT_VISIBLE_MESSAGES = 2;
 
 // TODO: Add translation keys
-// TODO: Add button to show all messages
 function PreviousDirectMessages({ otherUser }: { otherUser: UserModel }) {
   // TODO: Improve type for returned messages
   const [isLoading, previousMessages] = useDirectMessagesWithUser(otherUser._id);
-  const [showAll, setShowAll] = useState(false);
+  // TODO: Change this back after testing
+  const [showAll, setShowAll] = useState(true);
   const visibleMessages = (
     showAll ? previousMessages : previousMessages.slice(-DEFAULT_VISIBLE_MESSAGES)
   ) as DirectMessage[];

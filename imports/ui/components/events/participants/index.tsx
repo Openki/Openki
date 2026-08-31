@@ -109,6 +109,7 @@ export function EventParticipants({ event }: Props) {
         const element = modalRef.current as unknown as Element;
         Modal.getOrCreateInstance(element).hide();
       },
+      showEmailOptions: true,
     };
   }
 

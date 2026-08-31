@@ -23,6 +23,7 @@ import { ButtonDelete } from "../../components/Buttons";
 import { Contribution } from "../../components/Contribution";
 import { GroupListSection } from "../../components/profiles/group-list-section";
 import { SendMessage, Props as SendMessageProps } from "../../components/SendMessage";
+import { useDirectMessagesWithUser } from "/imports/api/emails/publications";
 
 export interface Props {
   user: UserModel;
@@ -80,6 +81,10 @@ export function UserprofilePage({ user }: Props) {
 
     return inviteOrganizations.length > 0;
   }
+
+  const [isLoadingMessages, previousMessages] = useDirectMessagesWithUser(user._id);
+  const showEmailOptions = !ownUser() && !isLoadingMessages() && previousMessages.length === 0;
+
   function sendMessageAttr(): SendMessageProps {
     return {
       autoFocus: false,
@@ -89,6 +94,7 @@ export function UserprofilePage({ user }: Props) {
       onSend: async (message, options) => {
         await emailMethods.sendPrivateMessage(user._id, message, options);
       },
+      showEmailOptions,
     };
   }
   function numberOfGroupsAffectedByDelete() {

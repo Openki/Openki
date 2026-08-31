@@ -22,9 +22,11 @@ export interface Props {
       sendCopy: boolean;
     },
   ) => Promise<void>;
+  showEmailOptions: boolean;
 }
 
 export function SendMessage(props: Props) {
+  const showEmailOptions = props.showEmailOptions ?? false;
   const { t } = useTranslation();
   const user = useUser();
   const [isBusy, setIsBusy] = useState(false);
@@ -88,40 +90,40 @@ export function SendMessage(props: Props) {
           disabled={!hasVerifiedEmail}
         />
       </div>
-      {hasVerifiedEmail ? (
-        <>
-          <FormCheck
-            type="box"
-            id="send-message-send-copy"
-            label={t("profile.mail.copy", "Send me a copy of this message")}
-            onChange={(checked) => setSendCopy(checked)}
-          />
-          <FormCheck
-            type="box"
-            id="send-message-reveal-address"
-            label={t("profile.mail.attachmail", "Attach my e-mail address")}
-            onChange={(checked) => setRevealAddress(checked)}
-          />
-        </>
-      ) : (
-        !!user && (
-          <div className="card mb-3">
-            <div className="card-header bg-warning fw-bold">
-              <i className="fa-regular fa-circle-check pe-1" />
-              {t("sendMessage.plsVerifyEmail", "Please verify your e-mail address")}
+      {hasVerifiedEmail
+        ? showEmailOptions && (
+            <>
+              <FormCheck
+                type="box"
+                id="send-message-send-copy"
+                label={t("profile.mail.copy", "Send me a copy of this message")}
+                onChange={(checked) => setSendCopy(checked)}
+              />
+              <FormCheck
+                type="box"
+                id="send-message-reveal-address"
+                label={t("profile.mail.attachmail", "Attach my e-mail address")}
+                onChange={(checked) => setRevealAddress(checked)}
+              />
+            </>
+          )
+        : !!user && (
+            <div className="card mb-3">
+              <div className="card-header bg-warning fw-bold">
+                <i className="fa-regular fa-circle-check pe-1" />
+                {t("sendMessage.plsVerifyEmail", "Please verify your e-mail address")}
+              </div>
+              <div className="card-body p-3">
+                <p>
+                  {t(
+                    "userprofile.infoForUnverifiedMail",
+                    "Verify your e-mail address to send direct messages.",
+                  )}
+                </p>
+                <VerifyEmail />
+              </div>
             </div>
-            <div className="card-body p-3">
-              <p>
-                {t(
-                  "userprofile.infoForUnverifiedMail",
-                  "Verify your e-mail address to send direct messages.",
-                )}
-              </p>
-              <VerifyEmail />
-            </div>
-          </div>
-        )
-      )}
+          )}
 
       <div className="form-actions">
         <Button
