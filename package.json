@@ -80,7 +80,6 @@
     "@types/react-dom": "19.2.3",
     "@types/sanitize-html": "2.16.1",
     "@types/seedrandom": "3.0.8",
-    "@types/select2": "4.0.57",
     "@types/tinycolor2": "1.4.6",
     "@types/uuid": "10.0.0",
     "autoprefixer": "10.5.2",
