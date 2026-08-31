@@ -225,7 +225,7 @@ function PreviousDirectMessages({ otherUser }: { otherUser: UserModel }) {
               <div key={_id} className="d-grid gap-1">
                 <section
                   className={cx(
-                    "p-3 max-w-75 rounded-3 whitespace-pre-line",
+                    "py-2 px-3 max-w-75 rounded-3 whitespace-pre-line",
                     wasSentByCurrentUser
                       ? "justify-self-end bg-primary-subtle"
                       : "justify-self-start bg-secondary",
