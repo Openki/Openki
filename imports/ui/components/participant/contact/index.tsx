@@ -200,7 +200,7 @@ function PreviousDirectMessages({ otherUser }: { otherUser: UserModel }) {
     showAll ? previousMessages : previousMessages.slice(-DEFAULT_VISIBLE_MESSAGES)
   ) as DirectMessage[];
 
-  const currentUserId = Meteor.userId()!;
+  const currentUserId = Meteor.userId();
 
   return (
     <div className="mb-4">
@@ -218,6 +218,7 @@ function PreviousDirectMessages({ otherUser }: { otherUser: UserModel }) {
 
       <div className="d-grid gap-3">
         {!isLoading() &&
+          Boolean(currentUserId) &&
           visibleMessages.map(({ _id, ts, body }) => {
             const wasSentByCurrentUser = body.sender === currentUserId;
             return (
