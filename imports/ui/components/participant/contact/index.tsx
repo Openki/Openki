@@ -14,6 +14,9 @@ import { SendMessage, Props as SendMessageProps } from "../../SendMessage";
 import { type UserModel } from "/imports/api/users/users";
 import { LogEntity } from "/imports/api/log/factory";
 import { cx } from "/imports/utils/cx";
+import { Router } from "meteor/iron:router";
+import { useDetails as useEventDetails } from "/imports/api/events/publications";
+import { useDetails as useGroupDetails } from "/imports/api/groups/publications";
 
 export interface Props {
   participant: string;
@@ -185,10 +188,16 @@ function ParticipantContactModal({
   );
 }
 
+// TODO: Return this type from the Meteor publication instead
 type DirectMessage = Pick<LogEntity, "_id" | "ts"> & {
   // TODO: Handle other kinds of contexts
   // for example events
-  body: { message: string; sender: string; targetRecipient: string; context?: { group?: string } };
+  body: {
+    message: string;
+    sender: string;
+    targetRecipient: string;
+    context?: { group?: string; event?: string };
+  };
 };
 
 const DEFAULT_VISIBLE_MESSAGES = 2;
@@ -225,7 +234,9 @@ function PreviousDirectMessages({ otherUser }: { otherUser: UserModel }) {
           visibleMessages.map(({ _id, ts, body }) => {
             const wasSentByCurrentUser = body.sender === currentUserId;
             return (
+              // IDEA: Use CSS Classes to conditionally style the children
               <div key={_id} className="d-grid gap-1">
+                <MessageContext context={body.context} />
                 <section
                   className={cx(
                     "py-2 px-3 max-w-75 rounded-3 whitespace-pre-line",
@@ -250,5 +261,47 @@ function PreviousDirectMessages({ otherUser }: { otherUser: UserModel }) {
           })}
       </div>
     </div>
+  );
+}
+
+function MessageContext({ context }: { context?: { group?: string; event?: string } | undefined }) {
+  if (context?.group) {
+    return <GroupMessageContext groupId={context.group} />;
+  } else if (context?.event) {
+    return <EventMessageContext eventId={context.event} />;
+  }
+
+  return null;
+}
+
+function GroupMessageContext({ groupId }: { groupId: string }) {
+  // eslint-disable-next-line
+  const [isLoading, group] = useGroupDetails(groupId!);
+  const url = !isLoading() && group && Router.url("showGroup", group);
+  const label = url && group.name;
+
+  return (
+    url &&
+    label && (
+      <span className="small">
+        Via <a href={url}>{label}</a>
+      </span>
+    )
+  );
+}
+
+function EventMessageContext({ eventId }: { eventId: string }) {
+  // eslint-disable-next-line
+  const [isLoading, event] = useEventDetails(eventId!);
+  const url = !isLoading() && event && Router.url("showEvent", event);
+  const label = url && event.title;
+
+  return (
+    url &&
+    label && (
+      <span className="small">
+        Via <a href={url}>{label}</a>
+      </span>
+    )
   );
 }
