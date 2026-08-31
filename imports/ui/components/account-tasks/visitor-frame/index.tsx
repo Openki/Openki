@@ -13,7 +13,7 @@ import * as Alert from "/imports/api/alerts/alert";
 import * as Analytics from "/imports/ui/lib/analytics";
 import { useValidation } from "/imports/ui/lib/useValidation";
 
-import { NotAllowedCharacter } from "../../../../startup/both/NotAllowedCharacter";
+import { NotAllowedCharacters } from "../../../../startup/both/NotAllowedCharacter";
 import { DataProtectionLaw } from "../data-protection-law";
 import { FormCheck } from "/imports/ui/components/FormCheck";
 import { FormControl } from "/imports/ui/components/form-control";
@@ -43,7 +43,7 @@ export function VistiorFrame({ username, email, allowNews, onRegister, onBack }:
     "Not allowed character": {
       text: () =>
         t("register.warning.notAllowedCharacter", "{CHARACTERS} not allowed in username.", {
-          CHARACTERS: NotAllowedCharacter.join(", "),
+          CHARACTERS: NotAllowedCharacters.join(", "),
         }),
       field: "username",
     },

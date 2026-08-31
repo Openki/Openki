@@ -1,1 +1,1 @@
-export const NotAllowedCharacter = ["*", "@", "#"];
+export const NotAllowedCharacters = ["*", "@", "#"];

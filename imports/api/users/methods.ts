@@ -18,7 +18,7 @@ import * as StringTools from "/imports/utils/string-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { HtmlString, StringEnum, Type, UnsafeString } from "/imports/utils/CustomChecks";
-import { NotAllowedCharacter } from "/imports/startup/both/NotAllowedCharacter";
+import { NotAllowedCharacters } from "/imports/startup/both/NotAllowedCharacter";
 
 /**
  * Set user region
@@ -106,7 +106,7 @@ export const updateUsername = ServerMethod(
       );
     }
 
-    if (NotAllowedCharacter.find((c) => username.includes(c))) {
+    if (NotAllowedCharacters.find((c) => username.includes(c))) {
       throw new ValidationError(
         [{ name: "username", type: "notAllowedCharacter" }],
         "Not allowed character",
