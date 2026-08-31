@@ -114,9 +114,7 @@
     "extract-translations": "echo 'Extracting translations...' && rm -f imports/startup/both/i18n/en.json && npx i18next --silent"
   },
   "meteor": {
-    "modern": {
-      "transpiler": true
-    }
+    "modern": true
   },
   "repository": {
     "type": "git",
