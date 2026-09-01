@@ -110,6 +110,9 @@ export function EventParticipants({ event }: Props) {
         const element = modalRef.current as unknown as Element;
         Modal.getOrCreateInstance(element).hide();
       },
+      // When sending a message to all participants, show the email options
+      // to allow the event organizer to send an email notification and include their email
+      // for easy communication with the participants.
       showEmailOptions: true,
     };
   }
