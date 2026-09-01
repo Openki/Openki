@@ -234,26 +234,23 @@ function PreviousDirectMessages({ otherUser }: { otherUser: UserModel }) {
           visibleMessages.map(({ _id, ts, body }) => {
             const wasSentByCurrentUser = body.sender === currentUserId;
             return (
-              // IDEA: Use CSS Classes to conditionally style the children
-              <div key={_id} className="d-grid gap-1">
+              <div
+                key={_id}
+                className={cx(
+                  "d-flex flex-column gap-1",
+                  wasSentByCurrentUser ? "align-items-end" : "align-items-start",
+                )}
+              >
                 <MessageContext context={body.context} />
                 <section
                   className={cx(
                     "py-2 px-3 max-w-75 rounded-3 whitespace-pre-line",
-                    wasSentByCurrentUser
-                      ? "justify-self-end bg-primary-subtle"
-                      : "justify-self-start bg-secondary",
+                    wasSentByCurrentUser ? "bg-primary-subtle" : "bg-secondary",
                   )}
                 >
                   {body.message}
                 </section>
-                <time
-                  dateTime={ts.toISOString()}
-                  className={cx(
-                    "small",
-                    wasSentByCurrentUser ? "justify-self-end" : "justify-self-start",
-                  )}
-                >
+                <time dateTime={ts.toISOString()} className="small">
                   {ts.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}
                 </time>
               </div>
