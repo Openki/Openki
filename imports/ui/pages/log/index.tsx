@@ -221,29 +221,31 @@ export function LogPage({
           </div>
         )}
         <table className="table">
-          <tr>
-            <th>ID</th>
-            <th>Track</th>
-            <th>Timestamp</th>
-            <th>Rel</th>
-            <th>Body</th>
-          </tr>
-
-          {results().map((entry, i) => (
-            <Entry
-              key={"interval" in entry ? i : entry._id}
-              entry={entry}
-              onTrackClick={onTrackClick}
-              onDateClick={onDateClick}
-              onIdClick={onIdClick}
-            />
-          ))}
-
-          {!results().length && !isLoading() && (
+          <tbody>
             <tr>
-              <td>Nothing found.</td>
+              <th>ID</th>
+              <th>Track</th>
+              <th>Timestamp</th>
+              <th>Rel</th>
+              <th>Body</th>
             </tr>
-          )}
+
+            {results().map((entry, i) => (
+              <Entry
+                key={"interval" in entry ? i : entry._id}
+                entry={entry}
+                onTrackClick={onTrackClick}
+                onDateClick={onDateClick}
+                onIdClick={onIdClick}
+              />
+            ))}
+
+            {!results().length && !isLoading() && (
+              <tr>
+                <td>Nothing found.</td>
+              </tr>
+            )}
+          </tbody>
         </table>
 
         {hasMore() && (
