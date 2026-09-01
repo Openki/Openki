@@ -10,19 +10,19 @@ export const [findFilter, useFindFilter] = ServerPublishMany(
   "log",
   async (filter: FindFilter, limit: number) => {
     check(limit, Match.Integer);
+    const user = await Meteor.userAsync();
 
-    // Non-admins get an empty list
-    if (!(await Meteor.userAsync())?.hasPrivilege("admin")) {
-      return Log.findFilter({}, 0);
+    if (!user || !user.hasPrivilege("admin")) {
+      throw new Meteor.Error(401, "not permitted");
     }
 
     return Log.findFilter(filter, limit);
   },
   (filter, limit) => {
     check(limit, Match.Integer);
+    const user = Meteor.user();
 
-    // Non-admins get an empty list
-    if (!Meteor.user()?.hasPrivilege("admin")) {
+    if (!user || !user.hasPrivilege("admin")) {
       return Log.findFilter({}, 0);
     }
 
