@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Modal } from "/imports/startup/client/bootstrap";
-import { useUser } from "/imports/utils/react-meteor-data";
+import { useSession, useUser } from "/imports/utils/react-meteor-data";
 import { useDirectMessagesWithUser } from "/imports/api/emails/publications";
 
 import { GroupModel } from "/imports/api/groups/groups";
@@ -213,6 +213,8 @@ function PreviousDirectMessages({ otherUser }: { otherUser: UserModel }) {
   ) as DirectMessage[];
 
   const currentUserId = Meteor.userId();
+  const currentYear = new Date().getFullYear();
+  const locale = useSession("locale");
 
   return (
     <div className="mb-4">
@@ -251,7 +253,14 @@ function PreviousDirectMessages({ otherUser }: { otherUser: UserModel }) {
                   {body.message}
                 </section>
                 <time dateTime={ts.toISOString()} className="small">
-                  {ts.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}
+                  {ts.toLocaleString(locale, {
+                    day: "numeric",
+                    month: "long",
+                    year: ts.getFullYear() !== currentYear ? "numeric" : undefined,
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hour12: false,
+                  })}
                 </time>
               </div>
             );
